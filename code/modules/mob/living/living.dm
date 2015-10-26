@@ -673,7 +673,7 @@ Sorry Giacom. Please don't be mad :(
 	return name
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")

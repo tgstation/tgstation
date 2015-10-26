@@ -37,7 +37,7 @@ var/list/ai_list = list()
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
-	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -85,7 +85,7 @@ var/list/ai_list = list()
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -476,7 +476,7 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 

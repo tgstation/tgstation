@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+ *		CHAINSAWS
  */
 
 /*##################################################################
@@ -369,3 +370,39 @@
 		qdel(C4)
 		explosive = C42
 		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
+	update_icon()
+
+// CHAINSAW
+/obj/item/weapon/twohanded/required/chainsaw
+	name = "chainsaw"
+	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
+	icon_state = "chainsaw_off"
+	flags = CONDUCT
+	force = 13
+	w_class = 5
+	throwforce = 13
+	throw_speed = 2
+	throw_range = 4
+	materials = list(MAT_METAL=13000)
+	origin_tech = "materials=2;engineering=2;combat=2"
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = "swing_hit"
+	sharpness = IS_SHARP
+	action_button_name = "Pull the starting cord"
+	var/on = 0
+
+/obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
+	on = !on
+	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
+	force = on ? 21 : 13
+	throwforce = on ? 21 : 13
+	icon_state = "chainsaw_[on ? "on" : "off"]"
+
+	if(hitsound == "swing_hit")
+		hitsound = 'sound/weapons/chainsawhit.ogg'
+	else
+		hitsound = "swing_hit"
+
+	if(src == user.get_active_hand()) //update inhands
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
