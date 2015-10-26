@@ -134,7 +134,7 @@
 	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 	//The above isn't correct. This is because it's an area, not a single axis, so it's squared //Koriath
 
-	sunfrac = sunfrac * (1-(current_dirt/(DIRTLIMIT+1)))
+	sunfrac = sunfrac * (1-(current_dirt/(DIRTLIMIT+1)*(current_dirt/(DIRTLIMIT+1)))) //quadradtic progression so low levels of dirt barely affect it, but it grows quickly after a while.
 	//this will make it produce less when it's dirtier
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
