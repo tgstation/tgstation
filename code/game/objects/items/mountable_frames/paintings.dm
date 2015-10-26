@@ -1,3 +1,4 @@
+//The paintings in the following list are those that have a chance to be bought in merch computers, or to appear when spawned randomly.
 var/global/list/available_paintings = list(
 	"duck",
 	"mario",
@@ -13,17 +14,20 @@ var/global/list/available_paintings = list(
 	"Sadclown",
 	"hospital",
 	"prophecy",
-	"anatomy",
 	"Mime",
 	"wizard",
 	"bland",
 	"Blu",
 	"Kate",
-	"daddy",
-	"beach",
-	"b_girl",
-	"carp",
+
 	)
+	//The following paintings either appear under certain conditions or have to be varedited by admins
+	//"narsie", transformed from other paintings by Nar-Sie. Has a chance to spawn on the asteroid in temple ruins.
+	//"justice", spawned in the courtroom/IAA office if there is no courtroom
+	//"blank", crafted with wood, TODO: give a way to players to paint on them
+	//"anatomy", TODO: add one in medbay/surgery.
+	//"carp", TODO: make wall trophies their own items
+	//"daddy", TODO: well it's not a painting...so make it its own item...?
 
 /obj/item/mounted/frame/painting
 	name = "painting"
@@ -123,12 +127,6 @@ var/global/list/available_paintings = list(
 		if("daddy")
 			name = "\improper I <3 Daddy!"
 			desc = "'NanoTransen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting NanoTransen related merchandise without proper warrant is strickly prohibited. Luckly for you, you can now own your very own contraband NanoTransen merch without the threat of *REDACTED*!'"
-		if("beach")
-			name = "\improper Pristine Beach"
-			desc = "A beautiful beach that reminds you of cool breezes, soft waves, and greys screaming in pain."
-		if("b_girl")
-			name = "\improper Beach Star Yamamoto!"
-			desc = "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
 		if("carp")
 			name = "\improper 'Singing' Mounted Carp"
 			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
@@ -262,12 +260,6 @@ var/global/list/available_paintings = list(
 		if("daddy")
 			name = "\improper I <3 Daddy!"
 			desc = "'NanoTransen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting NanoTransen related merchandise without proper warrant is strickly prohibited. Luckly for you, you can now own your very own contraband NanoTransen merch without the threat of *REDACTED*!'"
-		if("beach")
-			name = "\improper Pristine Beach"
-			desc = "A beautiful beach that reminds you of cool breezes, soft waves, and greys screaming in pain."
-		if("b_girl")
-			name = "\improper Beach Star Yamamoto!"
-			desc = "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
 		if("carp")
 			name = "\improper 'Singing' Mounted Carp"
 			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
