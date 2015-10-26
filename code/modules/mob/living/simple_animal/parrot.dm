@@ -806,16 +806,11 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			loc = get_turf(H)
-			H.buckled_mob = src
-			buckled = H
-			pixel_y = 9
-			pixel_x = pick(-8,8) //pick left or right shoulder
-			icon_state = "parrot_sit"
-			parrot_state = PARROT_PERCH
-			src << "<span class='notice'>You sit on [H]'s shoulder.</span>"
+			if(H.buckled_mob) //Already has a parrot, or is being eaten by a slime
+				continue
+			perch_on_human(H)
 			return
-		src << "<span class='warning'>There is nobody nearby to sit on!</span>"
+		src << "<span class='warning'>There is nobody nearby that you can sit on!</span>"
 	else
 		icon_state = "parrot_fly"
 		parrot_state = PARROT_WANDER
@@ -826,6 +821,18 @@
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
 
+
+
+/mob/living/simple_animal/parrot/proc/perch_on_human(mob/living/carbon/human/H)
+	if(!H)
+		return
+	loc = get_turf(H)
+	H.buckle_mob(src, force=1)
+	pixel_y = 9
+	pixel_x = pick(-8,8) //pick left or right shoulder
+	icon_state = "parrot_sit"
+	parrot_state = PARROT_PERCH
+	src << "<span class='notice'>You sit on [H]'s shoulder.</span>"
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
