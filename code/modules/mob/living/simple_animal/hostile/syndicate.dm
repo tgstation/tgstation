@@ -135,6 +135,7 @@
 	flying = 1
 	speak_emote = list("states")
 	gold_core_spawnable = 1
+	armour_penetration = 100
 
 /mob/living/simple_animal/hostile/viscerator/death(gibbed)
 	..(gibbed)
