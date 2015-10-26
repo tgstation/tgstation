@@ -12,6 +12,6 @@ The easiest way to do merging is to install the merge driver. For this, open `vg
 
 [merge "merge-dmm"]
 	name = mapmerge driver
-	driver = ./tools/mapmerge/mapmerge.sh %O %A %B
+	driver = ./maptools/mapmerge.sh %O %A %B
 
 After this, merging maps should happen automagically unless there are conflicts(a tile that both you and someone else changed). If there are conflicts, you will unfortunately still be stuck with opening both versions in a map editor, and manually resolving the issues.
