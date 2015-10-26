@@ -174,7 +174,8 @@
 
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/Move()
 	..()
-	internal_battery.use(2) //Example use: 100 charge to get from the cargo desk to medbay side entrance
+	if(internal_battery)
+		internal_battery.use(2) //Example use: 100 charge to get from the cargo desk to medbay side entrance
 
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/getMovementDelay()
 	if(internal_battery && internal_battery.charge)
