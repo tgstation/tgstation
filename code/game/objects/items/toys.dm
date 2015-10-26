@@ -101,6 +101,18 @@
 	item_state = "syndballoon"
 	w_class = 4
 
+/obj/item/toy/syndicateballoon/nanotrasen
+	name = "nanotrasen balloon"
+	desc = "There is a tag on the back that reads \"FUK SYNDIES!11!\"."
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	force = 0
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ntballoon"
+	item_state = "ntballoon"
+	w_class = 4
+
 /*
  * Fake singularity
  */
