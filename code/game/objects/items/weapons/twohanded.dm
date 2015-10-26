@@ -142,10 +142,8 @@
 	if(H != null)
 		user << "<span class='notice'>\The [src.name] is too cumbersome to carry in one hand!</span>"
 		return
-	var/obj/item/weapon/twohanded/offhand/O = new(user)
-	user.put_in_inactive_hand(O)
+	wield(user)
 	..()
-	wielded = 1
 
 
 /obj/item/weapon/twohanded/
