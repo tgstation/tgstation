@@ -305,7 +305,7 @@
 
 /obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
 	..()
-	if(!istype(C, /obj/item))
+	if(!istype(C))
 		user << "<span class='warning'>The potion can only be used on items!</span>"
 		return
 	if(C.slowdown <= 0)
