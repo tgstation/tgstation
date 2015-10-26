@@ -448,6 +448,8 @@
 	var/mob/living/carbon/human/MST = master
 
 	if((MST && MST.stat == DEAD) || !MST)
+		if(lingseek)
+			return //everything is fine
 		if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
 			//hardset_dna(H, null, null, null, null, /datum/species/human )
 			H.real_name = "Lingseek"
@@ -469,6 +471,13 @@
 		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
 		new /obj/item/device/meeseeks_box/malf(H.loc)
 		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+	for(var/mob/M in viewers(7, H.loc))
+		if(lingseek)
+			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound.</span>"
+		else
+			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
+		H.drop_everything()
+		qdel(H)
 	return
 
 /*
