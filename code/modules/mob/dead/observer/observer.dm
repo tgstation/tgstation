@@ -27,7 +27,6 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
-	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -147,10 +146,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					if(isnum(G.dom_timer))
 						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
 
-/mob/dead/observer/verb/reenter_corpse()
-	set category = "Ghost"
-	set name = "Re-enter Corpse"
-	if(!client)	return
+/mob/dead/observer/proc/reenter_corpse()
 	if(!(mind && mind.current))
 		src << "<span class='warning'>You have no body.</span>"
 		return
@@ -171,17 +167,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << sound(sound)
 
 /mob/dead/observer/proc/dead_tele()
-	set category = "Ghost"
-	set name = "Teleport"
-	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
-		usr << "Not when you're not dead!"
-		return
-	usr.verbs -= /mob/dead/observer/proc/dead_tele
-	spawn(30)
-		usr.verbs += /mob/dead/observer/proc/dead_tele
 	var/A
 	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
+	if(!istype(src, /mob/dead/observer))
+		return
 	var/area/thearea = A
 	if(!thearea)	return
 
@@ -190,17 +179,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
-		usr << "No area available."
+		src << "No area available."
 
-	usr.loc = pick(L)
+	loc = pick(L)
 
-/mob/dead/observer/verb/follow()
-	set category = "Ghost"
-	set name = "Orbit" // "Haunt"
-	set desc = "Follow and orbit a mob."
-
+/mob/dead/observer/proc/follow()
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	if(!istype(src, /mob/dead/observer))
+		return
 	var/mob/target = mobs[input]
 	ManualFollow(target)
 
@@ -227,31 +214,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		pixel_y = 0
 		animate(src, pixel_y = 2, time = 10, loop = -1)
 
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set category = "Ghost"
-	set name = "Jump to Mob"
-	set desc = "Teleport to a mob"
+/mob/dead/observer/proc/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+	var/list/dest = list() //List of possible destinations (mobs)
+	var/target = null	   //Chosen target.
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	dest += getmobs() //Fill list, prompt user with list
+	target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+	if(!istype(src, /mob/dead/observer))
+		return
+	if (!target)//Make sure we actually have a target
+		return
+	else
+		var/mob/M = dest[target] //Destination mob
+		var/mob/A = src			 //Source mob
+		var/turf/T = get_turf(M) //Turf of the destination mob
 
-
-		var/list/dest = list() //List of possible destinations (mobs)
-		var/target = null	   //Chosen target.
-
-		dest += getmobs() //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
-
-		if (!target)//Make sure we actually have a target
-			return
+		if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
+			A.loc = T
 		else
-			var/mob/M = dest[target] //Destination mob
-			var/mob/A = src			 //Source mob
-			var/turf/T = get_turf(M) //Turf of the destination mob
-
-			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
-			else
-				A << "This mob is not located in the game world."
+			A << "This mob is not located in the game world."
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -276,17 +257,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
 
-/mob/dead/observer/verb/toggle_ghostsee()
-	set name = "Toggle Ghost Vision"
-	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
-	set category = "Ghost"
+/mob/dead/observer/proc/toggle_ghostsee()
 	ghostvision = !(ghostvision)
 	updateghostsight()
-	usr << "You [(ghostvision?"now":"no longer")] have ghost vision."
+	src << "You [(ghostvision?"now":"no longer")] have ghost vision."
 
-/mob/dead/observer/verb/toggle_darkness()
-	set name = "Toggle Darkness"
-	set category = "Ghost"
+/mob/dead/observer/proc/toggle_darkness()
 	seedarkness = !(seedarkness)
 	updateghostsight()
 
@@ -348,10 +324,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
 	return 1
 
-/mob/dead/observer/verb/view_manfiest()
-	set name = "View Crew Manifest"
-	set category = "Ghost"
-
+/mob/dead/observer/proc/view_manifest()
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
