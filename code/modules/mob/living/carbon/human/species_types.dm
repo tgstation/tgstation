@@ -379,7 +379,7 @@
 		stage_counter += 1 //extreme pain will make them progress a level
 
 	if(lingseek && H.hallucination<50 && stage == 3) //lingseeks are WILD
-		H.hallucination = 50
+		H.hallucination = 25
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
@@ -401,6 +401,7 @@
 			H << "<span class='warning'>Something is wrong. Some$thi&ng is/ verywr)orscv/)oiu3)(/&34sSDF#DSF%$#</span>"
 			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel2.ogg', 40, 0, 1)
 			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+			M.status_flags |= GOTTAGOFAST //nightmares darting around the station
 		else
 			id = "meeseeks_2"
 			H << "<span class='warning'>You are starting to feel desperate! You must help your master quickly! Meeseeks are not used to exist for this long!</span>"
@@ -417,7 +418,6 @@
 		stage_two = stage_three *2 //prevents the stage 2 from activating twice
 
 	if(stage_counter > stage_three)
-
 		stage = 3
 		if(lingseek)
 			id = "lingseek_3"
@@ -427,6 +427,7 @@
 			H.mind.store_memory("KILL")
 			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel3.ogg', 40, 0, 1)
 			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+			M.status_flags |= GOTTAGOREALLYFAST //rocket powered nightmare fuel
 		else
 			id = "meeseeks_3"
 			H << "<span class='danger'>EXISTENCE IS PAIN! YOU CAN'T TAKE IT ANYMORE!</span>"
