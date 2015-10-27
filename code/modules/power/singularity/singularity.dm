@@ -222,8 +222,9 @@
 			allowed_size = STAGE_FOUR
 		if(2000 to INFINITY)
 			allowed_size = STAGE_FIVE
-		if((3000 to INFINITY) && consumedSupermatter)
-			allowed_size = STAGE_SIX
+		if(3000 to INFINITY)
+			if(consumedSupermatter)
+				allowed_size = STAGE_SIX
 	if(current_size != allowed_size)
 		expand()
 	return 1
