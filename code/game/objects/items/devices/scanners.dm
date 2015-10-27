@@ -233,19 +233,19 @@ Subject's pulse: ??? BPM"}
 					message += text("<br><span class='danger'>Internal bleeding detected. Advanced scan required for location.</span>")
 					break
 		if(H.vessel)
-			var/blood_volume = round(H.vessel.get_reagent_amount("blood"), 1)
-			var/blood_percent =  round(blood_volume / 560, 1)
-			blood_percent *= 100
-			if(blood_volume <= BLOOD_VOLUME_SAFE)
-				message += "<br><span class='notice'>Notice: Blood Level Fine: [blood_percent]% [blood_volume]cl</span>" //Still about fine
-			else if(blood_volume <= BLOOD_VOLUME_OKAY)
-				message += "<br><span class='warning'>Warning: Blood Level Low: [blood_percent]% [blood_volume]cl</span>"
-			else if(blood_volume <= BLOOD_VOLUME_BAD)
-				message += "<br><span class='warning'><b>Danger: Blood Level Serious: [blood_percent]% [blood_volume]cl</span>"
-			else if(blood_volume <= BLOOD_VOLUME_SURVIVE)
-				message += "<br><span class='warning'><b>Danger: Blood Level Critical: [blood_percent]% [blood_volume]cl</span>"
-			else
-				message += "<br><span class='notice'>Blood Level Normal: [blood_percent]% ([blood_volume]cl)</span>"
+			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+			var/blood_percent =  round((blood_volume / 560) * 100)
+			switch(blood_volume)
+				if(BLOOD_VOLUME_SAFE to 1000000000)
+					message += "<br><span class='notice'>Blood Level Normal: [blood_percent]% ([blood_volume]cl)</span>"
+				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+					message += "<br><span class='notice'>Notice: Blood Level Fine: [blood_percent]% [blood_volume]cl</span>" //Still about fine
+				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+					message += "<br><span class='warning'>Warning: Blood Level Low: [blood_percent]% [blood_volume]cl</span>"
+				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+					message += "<br><span class='warning'><b>Danger: Blood Level Serious: [blood_percent]% [blood_volume]cl</span>"
+				if(-1000000000 to BLOOD_VOLUME_SURVIVE)
+					message += "<br><span class='warning'><b>Danger: Blood Level Critical: [blood_percent]% [blood_volume]cl</span>"
 		message += "<br><span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] BPM</font></span>"
 	user << message //Here goes
 	return message //To read last scan
