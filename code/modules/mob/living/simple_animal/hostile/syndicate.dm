@@ -53,19 +53,6 @@
 	maxHealth = 150
 	health = 150
 
-/mob/living/simple_animal/hostile/syndicate/melee/attackby(obj/item/O, mob/user, params)
-	if(O.force)
-		var/damage = O.force
-		if (O.damtype == STAMINA)
-			damage = 0
-		health -= damage
-		visible_message("<span class='danger'>[user] has attacked [src] with [O]!</span>")
-		playsound(loc, O.hitsound, 25, 1, -1)
-	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage!</span>"
-		visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
-
-
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
 	if(prob(65))
