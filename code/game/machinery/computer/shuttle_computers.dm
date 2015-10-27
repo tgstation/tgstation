@@ -52,13 +52,6 @@
 
 	return "[span_s][name][span_e]"
 
-/obj/machinery/computer/shuttle_control/attack_ai(mob/user as mob)
-	src.add_hiddenprint(user)
-	if(allow_silicons)
-		return attack_hand(user)
-	else
-		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
-
 /obj/machinery/computer/shuttle_control/attack_hand(mob/user as mob)
 	if(..(user))
 		return
@@ -133,6 +126,10 @@
 /obj/machinery/computer/shuttle_control/Topic(href, href_list)
 	if(..())
 		return
+	if(issilicon(usr) && !allow_silicons)
+		usr << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
+		return
+
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
