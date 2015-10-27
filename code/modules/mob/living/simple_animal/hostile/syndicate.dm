@@ -122,6 +122,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
+	density = 0 //Projectiles will pass through them so they dont immmediatly die to nuke op friendly fire
 	health = 15
 	maxHealth = 15
 	melee_damage_lower = 15
@@ -135,6 +136,7 @@
 	flying = 1
 	speak_emote = list("states")
 	gold_core_spawnable = 1
+	armour_penetration = 100
 
 /mob/living/simple_animal/hostile/viscerator/death(gibbed)
 	..(gibbed)
