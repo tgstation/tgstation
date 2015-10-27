@@ -21,7 +21,6 @@
 
 
 /datum/surgery_step/manipulate_organs
-	time = 64
 	name = "manipulate organs"
 	implements = list(/obj/item/organ/internal = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
 	var/implements_extract = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)

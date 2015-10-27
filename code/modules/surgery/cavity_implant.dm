@@ -10,7 +10,6 @@
 	name = "implant item"
 	accept_hand = 1
 	accept_any_item = 1
-	time = 32
 	var/obj/item/IC = null
 
 /datum/surgery_step/handle_cavity/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

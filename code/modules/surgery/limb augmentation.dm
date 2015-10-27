@@ -7,7 +7,6 @@
 /datum/surgery_step/replace
 	name = "sever muscules"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/wirecutters = 55)
-	time = 32
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -17,7 +16,6 @@
 /datum/surgery_step/add_limb
 	name = "replace limb"
 	implements = list(/obj/item/robot_parts = 100)
-	time = 32
 	var/obj/item/organ/limb/L = null // L because "limb"
 
 

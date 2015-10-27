@@ -9,7 +9,6 @@
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/pen = 25)
-	time = 64
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to fix [target]'s eyes.", "<span class='notice'>You begin to fix [target]'s eyes...</span>")
