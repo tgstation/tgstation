@@ -125,11 +125,7 @@
 
 // Ghosts
 
-#define ui_ghost_jumptomob "SOUTH:6,WEST"
-#define ui_ghost_orbit "SOUTH:6,WEST+1"
-#define ui_ghost_reenter_corpse "SOUTH:6,WEST+2"
-#define ui_ghost_teleport "SOUTH:6,WEST+3"
-#define ui_ghost_toggle_darkness "SOUTH:6,WEST+11"
-#define ui_ghost_toggle_ghostsee "SOUTH:6,WEST+12"
-#define ui_ghost_toggle_inquisition "SOUTH:6,WEST+13"
-#define ui_ghost_view_manifest "SOUTH:6,WEST+14"
+#define ui_ghost_jumptomob "SOUTH:6,CENTER-2:16"
+#define ui_ghost_orbit "SOUTH:6,CENTER-1:16"
+#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:16"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:16"

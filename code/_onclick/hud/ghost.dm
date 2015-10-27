@@ -35,39 +35,12 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/obj/screen/ghost/toggle_darkness
-	name = "Toggle Darkness"
-	icon_state = "toggle_darkness"
-
-/obj/screen/ghost/toggle_darkness/Click()
-	var/mob/dead/observer/G = usr
-	G.toggle_darkness()
-
-/obj/screen/ghost/toggle_ghostsee
-	name = "Toggle Ghost Vision"
-	icon_state = "toggle_ghostsee"
-
-/obj/screen/ghost/toggle_ghostsee/Click()
-	var/mob/dead/observer/G = usr
-	G.toggle_ghostsee()
-
-/obj/screen/ghost/toggle_inquisition
-	name = "Toggle Inquisitiveness"
-	icon_state = "toggle_inquisition"
-
-/obj/screen/ghost/toggle_inquisition/Click()
-	var/mob/dead/observer/G = usr
-	G.toggle_inquisition()
-
-/obj/screen/ghost/view_manifest
-	name = "View Manifest"
-	icon_state = "view_manifest"
-
-/obj/screen/ghost/view_manifest/Click()
-	var/mob/dead/observer/G = usr
-	G.view_manifest()
-
 /datum/hud/proc/ghost_hud()
+	var/mob/dead/observer/G = mymob
+	if(!G.ghost_hud_enabled)
+		mymob.client.screen -= adding
+		return
+
 	adding = list()
 
 	var/obj/screen/using
@@ -86,22 +59,6 @@
 
 	using = new /obj/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
-	adding += using
-
-	using = new /obj/screen/ghost/toggle_darkness()
-	using.screen_loc = ui_ghost_toggle_darkness
-	adding += using
-
-	using = new /obj/screen/ghost/toggle_ghostsee()
-	using.screen_loc = ui_ghost_toggle_ghostsee
-	adding += using
-
-	using = new /obj/screen/ghost/toggle_inquisition()
-	using.screen_loc = ui_ghost_toggle_inquisition
-	adding += using
-
-	using = new /obj/screen/ghost/view_manifest()
-	using.screen_loc = ui_ghost_view_manifest
 	adding += using
 
 	mymob.client.screen += adding
