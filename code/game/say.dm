@@ -95,7 +95,7 @@ var/list/freqtoname = list(
 
 	var/atom/movable/source = speech.speaker.GetSource()
 	say_testing(speech.speaker, "Checking if [src]([type]) understands [source]([source.type])")
-	if(!say_understands(source))
+	if(!say_understands(source, speech.language))
 		say_testing(speech.speaker," We don't understand this fuck, adding stars().")
 		filtered_speech=filtered_speech.scramble()
 		pooled=1
