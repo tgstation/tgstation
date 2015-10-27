@@ -56,7 +56,7 @@
 
 			var/turf/item_loc = get_turf(marked_item)
 
-			else if(user.z != item_loc.z)
+			if(user.z != item_loc.z)
 				user << "<span class='warning'>Your phylactery is out of range!</span>"
 				return
 
