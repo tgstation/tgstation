@@ -40,6 +40,8 @@
 	update_icon()
 	if(isrobot(user))
 		user << "<span class='notice'>You free up your module.</span>"
+	else if(istype(src, /obj/item/weapon/twohanded/required))
+		user << "<span class='notice'>You drop \the [name].</span>"
 	else
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
@@ -129,7 +131,7 @@
 
 /obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
 	if(wielded)
-		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
 	return ..()
 
@@ -138,12 +140,10 @@
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
-		user << "<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>"
+		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
 		return
-	var/obj/item/weapon/twohanded/offhand/O = new(user)
-	user.put_in_inactive_hand(O)
+	wield(user)
 	..()
-	wielded = 1
 
 
 /obj/item/weapon/twohanded/
