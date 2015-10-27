@@ -86,6 +86,7 @@
 /obj/item/weapon/grenade/spawnergrenade/beenade/postPrime(var/list/spawned_atoms)
 	if(!spawned_atoms || !spawned_atoms.len)
 		return
+	playsound(get_turf(src), 'sound/effects/bees.ogg', 100, 1)
 	for(var/A in spawned_atoms)
 		var/mob/living/simple_animal/bee/BEE = A
 		if(!istype(BEE))
