@@ -24,7 +24,6 @@
 	environment_smash = 1
 	robust_searching = 1
 	stat_attack = 2
-	gold_core_spawnable = 1
 	faction = list("zombie")
 	var/mob/living/carbon/human/stored_corpse = null
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
