@@ -1,6 +1,0 @@
-author: Probe1
-delete-after: true
-changes: 
-	- bugfix: Bunch of broken wiring fixed across Meta and Box.  Bunch of vents and scrubbers that weren't connected to anything removed.  Fixed an APC in Xenobio that had gained sentience and tried to activate skynet and destroy us all.  Also some silly misaligned firelocks on Meta were fixed.
-	- tweak: Chapel vend shuffled around; chaplain locker replaced with vend.
-	- tweak: Xenobio waste scrubber in the cycling airlock chamber rerouted so crawly things can no longer bypass said cycling airlocks and escape.  
