@@ -142,7 +142,6 @@
 /mob/living/simple_animal/hostile/zombie/holder
 	name = "infection holder"
 	desc = "You shouldn't be seeing this."
-	maxbodytemp = 100000000000000000000
 	unsuitable_atmos_damage = 0
 	stat_attack = 2
 	gold_core_spawnable = 0
