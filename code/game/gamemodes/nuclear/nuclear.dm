@@ -240,6 +240,18 @@
 	var/radio_freq = SYND_FREQ
 	var/tank_slot = slot_r_hand
 
+	if(synd_mob.overeatduration) //We need to do this here and now, otherwise a lot of gear will fail to spawn
+		synd_mob << "<span class='notice'>Your intensive physical training to become a Nuclear Operative has paid off and made you fit again!</span>"
+		synd_mob.overeatduration = 0 //Fat-B-Gone
+		if(synd_mob.nutrition > 400) //We are also overeating nutriment-wise
+			synd_mob.nutrition = 400 //Fix that
+		//synd_mob.handle_chemicals_in_body() //Update now, don't wait for the next life.dm call
+		synd_mob.mutations.Remove(M_FAT)
+		synd_mob.update_mutantrace(0)
+		synd_mob.update_mutations(0)
+		synd_mob.update_inv_w_uniform(0)
+		synd_mob.update_inv_wear_suit()
+
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
 	R.set_frequency(radio_freq)
 	synd_mob.equip_to_slot_or_del(R, slot_ears)
