@@ -6,6 +6,7 @@
 	icon_living = "zombie_s"
 	icon_dead = "zombie_dead"
 	turns_per_move = 5
+	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
 	maxHealth = 120
@@ -59,8 +60,9 @@
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
 	spawn(rand(800,1200))
-		visible_message("<span class='danger'>[src] staggers to their feet!</span>")
-		src.revive()
+		if(src)
+			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
+			src.revive()
 
 /mob/living/simple_animal/hostile/zombie/proc/Zombify(mob/living/carbon/human/H)
 	H.set_species(/datum/species/zombie)
@@ -150,7 +152,7 @@
 /mob/living/simple_animal/hostile/zombie/holder/New()
 	..()
 	spawn(rand(800,1200))
-		if(istype(loc, /mob/living/carbon/human))
+		if(src && istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
 			Zombify(H)
 		qdel(src)
