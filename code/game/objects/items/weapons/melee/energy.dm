@@ -50,6 +50,8 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
+	sharpness = IS_SHARP
+	embedded_impact_pain_multiplier = 10
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	var/hacked = 0
@@ -72,6 +74,7 @@
 		force = force_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
+		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
@@ -85,6 +88,7 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
+		throw_speed = initial(throw_speed)
 		if(attack_verb_on.len)
 			attack_verb = list()
 		icon_state = initial(icon_state)
