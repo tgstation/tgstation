@@ -441,6 +441,7 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
+	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
