@@ -9,7 +9,7 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 10
+	maxHealth = 100
 	health = 100
 	speed = 1
 	harm_intent_damage = 8
