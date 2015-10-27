@@ -81,6 +81,7 @@
 #include "code\ATMOSPHERICS\components\binary_devices\binary_atmos_base.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\circulator.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\dp_vent_pump.dm"
+#include "code\ATMOSPHERICS\components\binary_devices\MSGS.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\passive_gate.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\pump.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\valve.dm"
