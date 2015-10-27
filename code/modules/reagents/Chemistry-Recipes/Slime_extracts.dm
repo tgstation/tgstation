@@ -395,6 +395,8 @@
 	P.amount = 10
 	P.loc = get_turf(holder.my_atom)
 
+//Red
+
 /datum/chemical_reaction/slimemutator
 	name = "Slime Mutator"
 	id = "m_slimemutator"
@@ -424,6 +426,22 @@
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!</span>"), 1)
+
+
+/datum/chemical_reaction/slimespeed
+	name = "Slime Speed"
+	id = "m_speed"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/red
+	required_other = 1
+
+/datum/chemical_reaction/slimemutator/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/speed/P = new /obj/item/slimepotion/speed
+	P.loc = get_turf(holder.my_atom)
+
 
 //Pink
 /datum/chemical_reaction/docility
