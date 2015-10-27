@@ -89,7 +89,7 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	acolytes_needed = round(num_players()/5,1) //Scales the escape requirement with the amount of people in the round; for every 5 players, one cultist added to the count, i.e. 25 players = 5 to escape
+	acolytes_needed = round(num_players()/3,1) //Scales the escape requirement with the amount of people in the round; for every 3 players, one cultist added to the count, i.e. 30 players = 10 to escape
 	acolytes_needed = Clamp(acolytes_needed, 1, 15) //Max at 15 and minimum at 1 - before the update, people rarely got even 15
 
 	for(var/cultists_number = 1 to recommended_enemies)
