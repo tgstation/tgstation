@@ -871,7 +871,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			else
 				hardset_dna(character, null, null, null, null, /datum/species/human)
 			character.dna.mutant_color = mutant_color
-			character.update_mutcolor()
+			character.update_body_parts()
 
 		character.gender = gender
 		character.age = age

@@ -201,29 +201,29 @@
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-
-	if(affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
-		if(user)
-			if(H != user)
-				user.visible_message("<span class='green'>[user] fixes some of the dents on [H].</span>", "<span class='green'>You fix dents on [H].</span>")
+	var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+	if(limbdata.exists())
+		var/obj/item/organ/limb/affecting = limbdata.organitem
+		if(affecting.organtype == ORGAN_ROBOTIC && user.a_intent != "harm")
+			if(user)
+				if(H != user)
+					user.visible_message("<span class='green'>[user] fixes some of the dents on [H].</span>", "<span class='green'>You fix dents on [H].</span>")
+				else
+					var/t_himself = "itself"
+					if(user.gender == MALE)
+						t_himself = "himself"
+					else if(user.gender == FEMALE)
+						t_himself = "herself"
+					user.visible_message("<span class='notice'>[user] starts to fix dents on [t_himself]...</span>", "<span class='notice'>You begin fixing dents [src] on yourself...</span>")
+					if(!do_mob(user, H, self_delay))
+						return
+					user.visible_message("<span class='green'>[user] fixes some of the dents on [t_himself].</span>", "<span class='green'>You fixed some of the dents on yourself.</span>")
+			if(src.remove_fuel(0))
+				item_heal_robotic(H, user, 30, 0)
+				return
 			else
-				var/t_himself = "itself"
-				if(user.gender == MALE)
-					t_himself = "himself"
-				else if(user.gender == FEMALE)
-					t_himself = "herself"
-				user.visible_message("<span class='notice'>[user] starts to fix dents on [t_himself]...</span>", "<span class='notice'>You begin fixing dents [src] on yourself...</span>")
-				if(!do_mob(user, H, self_delay))
-					return
-				user.visible_message("<span class='green'>[user] fixes some of the dents on [t_himself].</span>", "<span class='green'>You fixed some of the dents on yourself.</span>")
-		if(src.remove_fuel(0))
-			item_heal_robotic(H, user, 30, 0)
-			return
-		else
-			return
-	else
-		return ..()
+				return
+	return ..()
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)

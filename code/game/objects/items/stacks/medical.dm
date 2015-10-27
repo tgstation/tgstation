@@ -61,17 +61,18 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-		if(stop_bleeding)
-			if(!H.bleedsuppress) //so you can't stack bleed suppression
-				H.suppress_bloodloss(stop_bleeding)
-		if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
-			if(affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
-				H.update_damage_overlays(0)
-
-			M.updatehealth()
-		else
-			user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
+		var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+		if(limbdata.exists())
+			var/obj/item/organ/limb/affecting = limbdata.organitem
+			if(stop_bleeding)
+				if(!H.bleedsuppress) //so you can't stack bleed suppression
+					H.suppress_bloodloss(stop_bleeding)
+			if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
+				if(affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
+					H.update_damage_overlays(0)
+					M.updatehealth()
+			else
+				user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 

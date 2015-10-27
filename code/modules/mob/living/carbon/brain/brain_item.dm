@@ -26,6 +26,10 @@
 
 		qdel(brainmob)
 
+		if(M.organsystem)
+			var/datum/organ/setter = M.getorgan("brain")
+			setter.set_organitem(src)
+
 		//Update the body's icon so it doesnt appear debrained anymore
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -88,7 +92,13 @@
 
 //since these people will be dead M != usr
 
-	if(!M.getorgan(/obj/item/organ/internal/brain))
+	var/B = null
+	if(M.organsystem)
+		var/datum/organ/C = M.getorgan("brain")
+		B = C.organitem
+	else
+		B = M.getorgan(/obj/item/organ/internal/brain)
+	if(!B)
 		user.drop_item()
 		for(var/mob/O in viewers(M, null))
 			if(O == (user || M))

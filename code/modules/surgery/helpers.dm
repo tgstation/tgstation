@@ -6,7 +6,8 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M
-			affecting = H.get_organ(check_zone(selected_zone))
+			var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+			affecting = limbdata.organitem
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
 			var/datum/surgery/current_surgery
@@ -22,7 +23,7 @@
 				for(var/datum/surgery/S in all_surgeries)
 					if(!S.possible_locs.Find(selected_zone))
 						continue
-					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+					if(affecting && S.requires_organic_bodypart && affecting.organtype == ORGAN_ROBOTIC)
 						continue
 					if(!S.can_start(user, M))
 						continue

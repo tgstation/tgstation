@@ -7,6 +7,8 @@
 
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 
+	var/datum/organsystem/organsystem = null
+
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed

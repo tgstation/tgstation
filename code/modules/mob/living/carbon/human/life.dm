@@ -422,7 +422,7 @@
 		stat = UNCONSCIOUS
 		if(disabilities & HUSK)
 			disabilities &= ~HUSK
-		update_base_icon_state()
+		//update_base_icon_state()
 		dead_mob_list -= src
 		living_mob_list |= list(src)
 		emote("gasp")

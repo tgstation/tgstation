@@ -5,6 +5,29 @@
 	. += ..()
 	. += config.human_delay
 
+	//This part is based on Baycode. |- Ricotez
+
+//If we're riding in a wheelchair, we need to only check our hands.
+/*
+	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
+	. += get_penalty_for_limb(/datum/organ/limb/l_arm)
+	. += get_penalty_for_limb(/datum/organ/limb/r_arm)
+	*/
+//If we're not, we need to check our legs.
+	//else
+	. += get_penalty_for_limb("l_leg")
+	. += get_penalty_for_limb("r_leg")
+
+mob/living/carbon/human/proc/get_penalty_for_limb(limb)
+	var/datum/organ/limb/E = organsystem.getorgan(limb)
+	//Doubled values because we don't have separate arms/hands and legs/feet yet. Obviously need to be halved once that is the case.
+	if(!E || !E.exists())
+		. += 8
+	if(E.status & ORGAN_SPLINTED)
+		. += 1
+	else if(E.status & ORGAN_BROKEN)
+		. += 3
+
 /mob/living/carbon/human/Process_Spacemove(var/movement_dir = 0)
 
 	if(..())

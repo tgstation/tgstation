@@ -18,11 +18,49 @@
 	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
 	//initialise organs
-	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
-					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
-	for(var/obj/item/organ/limb/O in organs)
+
+	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
+	/obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)*/
+
+	organsystem = new/datum/organsystem/humanoid/human
+
+	//YES THIS IS KIND OF WEIRD but it's how BYOND works, I would have much rather used getorgan().set_organitem |- Ricotez
+	var/datum/organ/setter
+	setter = getorgan("chest")
+	setter.set_organitem(new/obj/item/organ/limb/chest)
+	setter = getorgan("head")
+	setter.set_organitem(new/obj/item/organ/limb/head)
+	setter = getorgan("l_arm")
+	setter.set_organitem(new/obj/item/organ/limb/l_arm)
+	setter = getorgan("r_arm")
+	setter.set_organitem(new/obj/item/organ/limb/r_arm)
+	setter = getorgan("l_leg")
+	setter.set_organitem(new/obj/item/organ/limb/l_leg)
+	setter = getorgan("r_leg")
+	setter.set_organitem(new/obj/item/organ/limb/r_leg)
+
+	//I really want to deprecate this list, but it's defined at a really high level and used by everything that does not use my organsystems. So for now, update this list too. |- Ricotez
+	organs = list(organsystem.getorgan("chest"), organsystem.getorgan("head"), organsystem.getorgan("l_arm"), organsystem.getorgan("r_arm"), organsystem.getorgan("l_leg"), organsystem.getorgan("r_leg"))
+
+	setter = getorgan("appendix")
+	setter.set_organitem(new/obj/item/organ/internal/appendix)
+	setter = getorgan("heart")
+	setter.set_organitem(new/obj/item/organ/internal/heart)
+	setter = getorgan("brain")
+	setter.set_organitem(new/obj/item/organ/internal/brain)
+
+	for(var/datum/organ/limb/O in organsystem.organlist)
 		O.owner = src
+		if(O.organitem)
+			O.organitem.owner = src
+
+	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
+	internal_organs += getorgan("appendix")
+	internal_organs += getorgan("heart")
+	internal_organs += getorgan("brain")
+
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
 	randomize_human(src)
@@ -152,20 +190,22 @@
 				Paralyse(10)
 
 	var/update = 0
-	for(var/obj/item/organ/limb/temp in organs)
-		switch(temp.name)
-			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
-			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+	for(var/datum/organ/limb/limbdata in organsystem.organlist)
+		if(limbdata.exists())
+			var/obj/item/organ/limb/temp = limbdata.organitem
+			switch(temp.name)
+				if("head")
+					update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+				if("chest")
+					update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				if("l_arm")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("r_arm")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("l_leg")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("r_leg")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	update_damage_overlays(0)
 
 	..()

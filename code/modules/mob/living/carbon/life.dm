@@ -292,7 +292,19 @@
 		silent = 0
 	else
 		updatehealth()
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health <= config.health_threshold_dead)
+			death()
+			eye_blind = max(eye_blind, 1)
+			silent = 0
+			return 1
+		else if(organsystem)
+			var/datum/organ/B = getorgan("brain")
+			if(!B.exists())
+				death()
+				eye_blind = max(eye_blind, 1)
+				silent = 0
+				return 1
+		else if(!getorgan(/obj/item/organ/internal/brain))
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0

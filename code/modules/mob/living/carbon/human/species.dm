@@ -112,6 +112,7 @@
 	else
 		return "[id]"
 
+/*
 /datum/species/proc/update_color(var/mob/living/carbon/human/H)
 	H.remove_overlay(SPECIES_LAYER)
 
@@ -140,9 +141,14 @@
 		H.overlays_standing[SPECIES_LAYER]	+= standing
 
 	H.apply_overlay(SPECIES_LAYER)
+*/
 
 /datum/species/proc/handle_hair(var/mob/living/carbon/human/H)
 	H.remove_overlay(HAIR_LAYER)
+
+	var/datum/organ/head = H.getorgan("head")
+	if(!head.exists())
+		return //We're very well not going to render hair if this human has no head, are we?
 
 	var/datum/sprite_accessory/S
 	var/list/standing	= list()
@@ -169,7 +175,8 @@
 			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
-	if(!H.getorgan(/obj/item/organ/internal/brain))
+	var/datum/organ/brain = H.getorgan("brain")
+	if(!brain.exists())
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
 	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
@@ -316,9 +323,15 @@
 		if(slot_l_hand)
 			if(H.l_hand)
 				return 0
+			if(!H.exists("l_arm"))
+				H << "<span class='warning'>You don't have a left hand!</span>"
+				return 0
 			return 1
 		if(slot_r_hand)
 			if(H.r_hand)
+				return 0
+			if(!H.exists("r_arm"))
+				H << "<span class='warning'>You don't have a right hand!</span>"
 				return 0
 			return 1
 		if(slot_wear_mask)
@@ -326,11 +339,15 @@
 				return 0
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
+			if(!H.exists("head"))
+				return 0
 			return 1
 		if(slot_back)
 			if(H.back)
 				return 0
 			if( !(I.slot_flags & SLOT_BACK) )
+				return 0
+			if(!H.exists("chest"))
 				return 0
 			return 1
 		if(slot_wear_suit)
@@ -338,17 +355,25 @@
 				return 0
 			if( !(I.slot_flags & SLOT_OCLOTHING) )
 				return 0
+			if(!H.exists("chest"))
+				return 0
 			return 1
 		if(slot_gloves)
 			if(H.gloves)
 				return 0
 			if( !(I.slot_flags & SLOT_GLOVES) )
 				return 0
+			if(!H.exists("l_arm") && !H.exists("r_arm")) //Can still wear gloves with just 1 hand.
+				H << "<span class='warning'>You need hands before you can wear [I.name]!</span>"
+				return 0
 			return 1
 		if(slot_shoes)
 			if(H.shoes)
 				return 0
 			if( !(I.slot_flags & SLOT_FEET) )
+				return 0
+			if(!H.exists("l_leg") && !H.exists("r_leg")) //Can still wear shoes with just 1 foot.
+				H << "<span class='warning'>You need feet before you can wear [I.name]!</span>"
 				return 0
 			return 1
 		if(slot_belt)
@@ -359,12 +384,16 @@
 					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
-				return
+				return 0
+			if(!H.exists("chest"))
+				return 0
 			return 1
 		if(slot_glasses)
 			if(H.glasses)
 				return 0
 			if( !(I.slot_flags & SLOT_EYES) )
+				return 0
+			if(!H.exists("head"))
 				return 0
 			return 1
 		if(slot_head)
@@ -372,17 +401,23 @@
 				return 0
 			if( !(I.slot_flags & SLOT_HEAD) )
 				return 0
+			if(!H.exists("head"))
+				return 0
 			return 1
 		if(slot_ears)
 			if(H.ears)
 				return 0
 			if( !(I.slot_flags & SLOT_EARS) )
 				return 0
+			if(!H.exists("head"))
+				return 0
 			return 1
 		if(slot_w_uniform)
 			if(H.w_uniform)
 				return 0
 			if( !(I.slot_flags & SLOT_ICLOTHING) )
+				return 0
+			if(!H.exists("chest"))
 				return 0
 			return 1
 		if(slot_wear_id)
@@ -394,6 +429,8 @@
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
+			if(!H.exists("chest"))
+				return 0
 			return 1
 		if(slot_l_store)
 			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
@@ -403,6 +440,8 @@
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
 					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+				return 0
+			if(!H.exists("chest"))
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -416,6 +455,8 @@
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
 					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+				return 0
+			if(!H.exists("chest"))
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -439,6 +480,8 @@
 				if(!disable_warning)
 					H << "The [I.name] is too big to attach."  //should be src?
 				return 0
+			if(!H.exists("chest"))
+				return 0
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
 			return 0
@@ -447,11 +490,17 @@
 				return 0
 			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
 				return 0
+			if(!H.exists("l_arm") && !H.exists("r_arm")) //Can still be handcuffed with one hand, but the cuffs won't do much.
+				H << "<span class='warning'>You cannot be cuffed without hands!</span>"
+				return 0
 			return 1
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
 			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
+				return 0
+			if(!H.exists("l_arm") && !H.exists("r_arm")) //Can still be legcuffed with one foot, but the cuffs won't do much.
+				H << "<span class='warning'>You cannot be legcuffed without feet!</span>"
 				return 0
 			return 1
 		if(slot_in_backpack)
@@ -631,26 +680,31 @@
 
 	if(H.healthdoll)
 		H.healthdoll.overlays.Cut()
-		if(H.stat == DEAD)
-			H.healthdoll.icon_state = "healthdoll_DEAD"
-		else
-			H.healthdoll.icon_state = "healthdoll_OVERLAY"
-			for(var/obj/item/organ/limb/L in H.organs)
+		H.healthdoll.icon_state = "healthdoll_SHADE"
+		var/list/healthdollorgans = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+		for(var/HDO in healthdollorgans)
+			var/datum/organ/limb/O = H.getorgan(HDO)
+			var/obj/item/organ/limb/L = O.organitem
+			var/icon_name = "full"
+			if(O.exists())
 				var/damage = L.burn_dam + L.brute_dam
 				var/comparison = (L.max_damage/5)
-				var/icon_num = 0
-				if(damage)
-					icon_num = 1
-				if(damage > (comparison))
-					icon_num = 2
-				if(damage > (comparison*2))
-					icon_num = 3
-				if(damage > (comparison*3))
-					icon_num = 4
-				if(damage > (comparison*4))
-					icon_num = 5
-				if(icon_num)
-					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+				if(H.stat == DEAD)
+					icon_name = "dead"
+				else if(damage > (comparison*4))
+					icon_name = "5"
+				else if(damage > (comparison*3))
+					icon_name = "4"
+				else if(damage > (comparison*2))
+					icon_name = "3"
+				else if(damage > (comparison))
+					icon_name = "2"
+				else if(damage)
+					icon_name = "1"
+			else if((O.status & ORGAN_DESTROYED)) //The organ no longer exists, but the wound is still there.
+				icon_name = "destroyed"
+			H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[HDO][icon_name]")
+			//Else the organ does not exist but there is no damage either, so we don't render anything at all.
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
@@ -848,7 +902,17 @@
 					return 0
 
 
-				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
+				var/obj/item/organ/limb/affecting
+				var/datum/organ/limb/targetorgan = H.get_organ(ran_zone(M.zone_sel.selecting))
+				if(!targetorgan.exists())
+					//If target organ does not exist, the attack misses.
+					//Combined with the slight randomness of attack zones, this means that targets with less limbs are less likely to get hit.
+					//I'm not sure if I want to keep it that way, but I suppose that less limbs makes you a smaller target. |- Ricotez
+					playsound(H.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
+					return 0
+				else
+					affecting = targetorgan.organitem
 				var/armor_block = H.run_armor_check(affecting, "melee")
 
 				if(M.dna)
@@ -878,7 +942,15 @@
 
 				if(H.w_uniform)
 					H.w_uniform.add_fingerprint(M)
-				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
+				var/obj/item/organ/limb/affecting
+				var/datum/organ/limb/targetorgan = H.get_organ(ran_zone(M.zone_sel.selecting))
+				if(!targetorgan.exists())
+					//If target organ does not exist, the disarm misses.
+					//Same story as attacks. |- Ricotez
+					H.visible_message("<span class='warning'>[M] has attempted to push [H]!</span>")
+					return 0
+				else
+					affecting = targetorgan.organitem
 				var/randn = rand(1, 100)
 				if(randn <= 25)
 					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
@@ -927,11 +999,16 @@
 								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
 
-/datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
+/datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/datum/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
 	if((user != H) && H.check_shields(I.force, "the [I.name]"))
+		return 0
+
+	if(!affecting.exists()) //If the targeted limb does not exist, only display a message and return.
+		H.visible_message("<span class='danger'>[user] tried to [pick(I.attack_verb)] [H] in the [hit_area] with [I], but there's no [hit_area] to hit!</span>", \
+						"<span class='userdanger'>[user] tried to [pick(I.attack_verb)] [H] in the [hit_area] with [I], but there's no [hit_area] to hit!</span>")
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)
@@ -951,7 +1028,7 @@
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
-		if(affecting.status == ORGAN_ORGANIC)
+		if(affecting.organitem.type == ORGAN_ORGANIC)
 			I.add_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
@@ -1047,7 +1124,8 @@
 		organ = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
-		organ = H.get_organ(check_zone(def_zone))
+		var/datum/organ/O = H.get_organ(check_zone(def_zone))
+		organ = O.organitem
 	if(!organ)	return 0
 
 	damage = (damage * blocked)

@@ -470,7 +470,8 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 				O << sound(ghost_sound)
 
 /proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = limbdata.organitem
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -479,7 +480,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 	else
 		dam = 0
 
-	if(affecting.status == ORGAN_ROBOTIC)
+	if(affecting.organtype == ORGAN_ROBOTIC)
 		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
@@ -509,3 +510,6 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 	if(!istype(P))
 		return null
 	return P
+
+mob/proc/active_hand_exists()
+	return 1

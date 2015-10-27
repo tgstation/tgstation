@@ -1,13 +1,20 @@
 
 /mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
+	if (handcuffed)
+		if(organsystem)
+			var/datum/organ/limb/LH = getorgan("l_arm")
+			var/datum/organ/limb/RH = getorgan("r_arm")
+			return LH.exists() && RH.exists() //Handcuffs only work if you have 2 hands.
+		else
+			return 1
 	return 0
 
 /mob/living/carbon/human/canBeHandcuffed()
-	return 1
+	var/datum/organ/limb/LH = getorgan("l_arm")
+	var/datum/organ/limb/RH = getorgan("r_arm")
+	return LH.exists() || RH.exists() //You can wear cuffs as long as you have at least 1 hand. (Won't do much good unless you have 2.
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
@@ -55,10 +62,11 @@
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
-	var/obj/item/organ/limb/O = get_organ("head")
-	if(!O)
+	var/datum/organ/limb/H = getorgan("head")
+	if(!H.exists())
 		return if_no_face
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	var/obj/item/organ/limb/head/O = H.organitem
+	if( (O.status_flags & DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name ) //Disfigured or headless, use ID if possible.
 		return if_no_face
 	return real_name
 
