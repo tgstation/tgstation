@@ -393,8 +393,12 @@
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -405,8 +409,12 @@
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(!ghost)
