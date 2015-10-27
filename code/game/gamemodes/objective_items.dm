@@ -30,10 +30,10 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/jetpack
-	name = "a jetpack"
-	targetitem = /obj/item/weapon/tank/jetpack
-	difficulty = 3
-	excludefromjob = list("Chief Engineer")
+	name = "the void jetpack"
+	targetitem = /obj/item/weapon/tank/jetpack/void
+	difficulty = 5
+	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
