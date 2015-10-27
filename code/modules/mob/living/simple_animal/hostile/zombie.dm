@@ -9,8 +9,8 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 100
-	health = 100
+	maxHealth = 120
+	health = 120
 	speed = 1
 	harm_intent_damage = 8
 	melee_damage_lower = 20
@@ -40,6 +40,11 @@
 		var/mob/living/L = target
 		if(ishuman(L) && L.stat)
 			var/mob/living/carbon/human/H = L
+			for(var/mob/living/simple_animal/hostile/zombie/holder/Z in H) //No instant heals for people who are already zombies
+				src << "<span class='userdanger'>They'll be getting up on their own, just give them a minute!</span>"
+				Z.faction = src.faction //Just in case zombies somehow ended up on different "teams"
+				H.faction = src.faction
+				return
 			Zombify(H)
 		else if (L.stat) //So they don't get stuck hitting a corpse
 			L.gib()
