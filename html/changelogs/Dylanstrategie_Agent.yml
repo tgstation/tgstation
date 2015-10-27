@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Non-antagonists can now use Agent IDs properly

@@ -313,10 +313,8 @@
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
-		if(istype(user, /mob/living) && user.mind)
-			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over \the [I], copying its access.</span>"
-				src.access |= I.access //Don't copy access if user isn't an antag -- to prevent metagaym
+		user << "<span class='notice'>The [src]'s microscanners activate as you pass it over \the [I], copying its access.</span>"
+		access |= I.access
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
