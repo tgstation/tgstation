@@ -860,7 +860,7 @@ proc/populate_seed_list()
 	seed_name = "blood tomato"
 	display_name = "blood tomato plant"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato)
-	mutants = list("killer")
+	mutants = list("killertomato")
 	packet_icon = "seed-bloodtomato"
 	plant_icon = "bloodtomato"
 	chems = list("nutriment" = list(1,10), "blood" = list(1,5))
