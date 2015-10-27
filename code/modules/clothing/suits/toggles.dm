@@ -106,7 +106,6 @@
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	if(suit)
 		suit.helmet = null
-		qdel(suit)
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
@@ -146,6 +145,8 @@
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = src.loc
 	if(!helmettype)
+		return
+	if(!helmet)
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
