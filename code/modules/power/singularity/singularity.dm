@@ -225,7 +225,6 @@
 				allowed_size = STAGE_SIX
 			else
 				allowed_size = STAGE_FIVE
-			allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
 	return 1
