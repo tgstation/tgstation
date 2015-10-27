@@ -120,21 +120,12 @@ var/global/list/moneytypes = list(
 	return 0
 
 /obj/item/weapon/spacecash/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /turf) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack))
-		var/turf/T = get_turf(A)
-		var/collected = 0
-		for(var/obj/item/weapon/spacecash/cash in T)
-			if(cash.worth == src.worth)
-				collected += collect_from(cash)
-		if(collected)
-			update_icon()
-			user << "<span class='notice'>You add [collected] credit [amount > 1 ? "chips":"chip"] to your stack of cash.</span>"
-	else if(istype(A,/obj/item/weapon/spacecash))
+	if(istype(A, /obj/item/weapon/spacecash))
 		var/obj/item/weapon/spacecash/cash = A
 		var/collected = src.collect_from(cash)
 		if(collected)
 			update_icon()
-			user << "<span class='notice'>You add [collected] credit [amount > 1 ? "chips":"chip"] to your stack of cash.</span>"
+			user << "<span class='notice'>You add [collected] [src.name][amount > 1 ? "s":""] to your stack of cash.</span>"
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "cash10"
