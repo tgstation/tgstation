@@ -1613,6 +1613,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/device/t_scanner = 5,
 		/obj/item/weapon/screwdriver = 5,
 		/obj/item/weapon/solder = 3,
+		/obj/item/device/silicate_sprayer = 2
 		)
 	contraband = list(
 		/obj/item/weapon/weldingtool/hugetank = 2,

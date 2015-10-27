@@ -1,0 +1,6 @@
+author: PJB3005
+delete-after: true
+changes:
+  - rscadd: "Added the silicate sprayer, a tool for engineers to repair damaged windows, it requires silicate, however there are now silicate tanks around the station for this purpose."
+  - rscadd: "You can find a silicate sprayer in the nearest YouTool and autolathe."
+  - rscadd: "There is also an <i>advanced</i> version that has the ability to reinforce windows, ask R&D (nicely)!"

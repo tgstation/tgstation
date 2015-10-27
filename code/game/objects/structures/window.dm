@@ -89,12 +89,11 @@
 			damage_overlay.icon = icon('icons/obj/structures.dmi')
 			damage_overlay.dir = src.dir
 
+		overlays.Cut()
+
 		if(health < initial(health))
 			var/damage_fraction = Clamp(round((initial(health) - health) / initial(health) * 5) + 1, 1, 5) //gives a number, 1-5, based on damagedness
 			damage_overlay.icon_state = "[cracked_base][damage_fraction]"
-			overlays += damage_overlay
-		else
-			damage_overlay.icon_state = ""
 			overlays += damage_overlay
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)

@@ -99,6 +99,10 @@
 
 #define isvehicle(A) (istype(A, /obj/structure/bed/chair/vehicle))
 
+#define issilicatesprayer(A) (istype(A, /obj/item/device/silicate_sprayer))
+
+#define iswindow(A) (istype(A, /obj/structure/window))
+
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)

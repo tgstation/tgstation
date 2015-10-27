@@ -205,6 +205,7 @@
 	src.modules += new /obj/item/taperoll/engineering(src)
 	src.modules += new /obj/item/device/rcd/tile_painter(src)
 	src.modules += new /obj/item/device/material_synth/robot(src)
+	src.modules += new /obj/item/device/silicate_sprayer(src)
 	sensor_augs = list("Mesons", "Disable")
 
 	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
