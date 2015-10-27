@@ -305,7 +305,13 @@
 	BEE.feral = 25
 	BEE.icon_state = "bees1-feral"
 
-	if(ismob(A))
-		BEE.loc = A.loc
-		BEE.target = A
+	if(istype(A,/mob/living))
+		var/mob/living/M = A
+		visible_message("<span class='warning'>\the [M.name] is hit by \the [src.name] in the [parse_zone(def_zone)]!</span>")
+		M.bullet_act(src, def_zone)
+		admin_warn(M)
+		BEE.loc = M.loc
+		BEE.target = M
+	else
+		BEE.newTarget()
 	bullet_die()
