@@ -15,6 +15,7 @@
 	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
+	var/round_end_countdown = 25		// Post round murder death kill countdown
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -236,6 +237,8 @@
 					config.use_age_restriction_for_jobs = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
+				if("round_end_countdown")
+					config.round_end_countdown = text2num(value)
 				if("log_ooc")
 					config.log_ooc = 1
 				if("log_access")
