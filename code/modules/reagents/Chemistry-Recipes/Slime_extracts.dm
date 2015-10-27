@@ -165,6 +165,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/pizzaslice,
 		/obj/item/weapon/reagent_containers/food/snacks/salad,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
 		/obj/item/weapon/reagent_containers/food/snacks/soup,
 		/obj/item/weapon/reagent_containers/food/snacks/grown,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
@@ -392,7 +393,7 @@
 /datum/chemical_reaction/slimeplasma/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
-	P.amount = 10
+	P.amount = 3
 	P.loc = get_turf(holder.my_atom)
 
 //Red
