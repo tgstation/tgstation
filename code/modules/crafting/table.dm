@@ -6,7 +6,7 @@
 
 
 /obj/structure/table/MouseDrop(atom/over)
-	if(over != usr)
+	if(over != usr || !usr.IsAdvancedToolUser())
 		return
 	interact(usr)
 
