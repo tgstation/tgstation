@@ -275,3 +275,37 @@
 	weaken = 5
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS
 	penetration = 10
+
+/obj/item/projectile/bullet/beegun
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "beegun"
+	damage = 5
+	damage_type = TOX
+	flag = "bio"
+
+/obj/item/projectile/bullet/beegun/OnFired()
+	..()
+	playsound(starting, 'sound/effects/bees.ogg', 75, 1)
+
+/obj/item/projectile/bullet/beegun/Bump(atom/A as mob|obj|turf|area)
+	if (!A)
+		return 0
+	if((A == firer) && !reflected)
+		loc = A.loc
+		return 0
+	if(bumped)
+		return 0
+	bumped = 1
+
+	var/turf/T = get_turf(src)
+	var/mob/living/simple_animal/bee/BEE = new(T)
+	BEE.strength = 1
+	BEE.toxic = 5
+	BEE.mut = 2
+	BEE.feral = 25
+	BEE.icon_state = "bees1-feral"
+
+	if(ismob(A))
+		BEE.loc = A.loc
+		BEE.target = A
+	bullet_die()

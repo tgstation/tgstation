@@ -95,3 +95,40 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 	dir = pick(cardinal)
+
+/obj/item/weapon/gun/gatling/beegun
+	name = "bee gun"
+	desc = "The apocalypse hasn't even begun!"//I'm not even sorry
+	icon_state = "beegun"
+	item_state = "beegun0"
+	origin_tech = "materials=4;combat=6;biotech=5"
+	recoil = 0
+
+/obj/item/weapon/gun/gatling/beegun/update_wield(mob/user)
+	item_state = "beegun[wielded ? 1 : 0]"
+	if(wielded)
+		slowdown = 10
+	else
+		slowdown = 0
+
+/obj/item/weapon/gun/gatling/beegun/process_chambered()
+	if(in_chamber) return 1
+	if(current_shells)
+		current_shells--
+		update_icon()
+		in_chamber = new/obj/item/projectile/bullet/beegun()
+		return 1
+	return 0
+
+/obj/item/weapon/gun/gatling/beegun/update_icon()
+	switch(current_shells)
+		if(150 to INFINITY)
+			icon_state = "beegun100"
+		if(100 to 149)
+			icon_state = "beegun75"
+		if(50 to 99)
+			icon_state = "beegun50"
+		if(1 to 49)
+			icon_state = "beegun25"
+		else
+			icon_state = "beegun0"

@@ -243,12 +243,14 @@
 
 		animate(src, pixel_x = rand(-12,12), pixel_y = rand(-12,12), time = 10, easing = SINE_EASING)
 
+	/*
 	if(!parent && prob(10))
 		strength -= 1
 		if(strength <= 0)
 			returnToPool(src)
 		else if(strength <= 5)
 			icon_state = "bees[strength]"
+	*/
 
 	if(feral > 0)
 		if(strength <= 5)
