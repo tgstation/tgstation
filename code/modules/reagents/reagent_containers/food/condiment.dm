@@ -143,7 +143,7 @@
 			if("rice")
 				name = "rice sack"
 				desc = "A taste of Asia in the kitchen."
-				icon_state = "enzyme"
+				icon_state = "rice"
 				item_state = null
 			if("soysauce")
 				name = "soy sauce"
