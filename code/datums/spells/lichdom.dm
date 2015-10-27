@@ -53,7 +53,10 @@
 			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
 				user << "<span class='warning'>Your phylactery is gone!</span>"
 				return
-			else if(user.z != marked_item.z)
+
+			var/turf/item_loc = get_turf(marked_item)
+
+			else if(user.z != item_loc.z)
 				user << "<span class='warning'>Your phylactery is out of range!</span>"
 				return
 
@@ -61,7 +64,7 @@
 				var/mob/dead/observer/O = user
 				O.reenter_corpse()
 
-			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(get_turf(marked_item))
+			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(item_loc)
 
 			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
@@ -82,10 +85,10 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
-				var/wheres_wizdo = dir2text(get_dir(get_turf(old_body), get_turf(marked_item)))
+				var/wheres_wizdo = dir2text(get_dir(get_turf(old_body), item_loc))
 				if(wheres_wizdo)
 					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-					old_body.Beam(marked_item,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
+					old_body.Beam(item_loc,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell
