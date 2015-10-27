@@ -51,6 +51,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
+	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
