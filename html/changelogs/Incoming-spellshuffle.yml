@@ -1,7 +1,0 @@
-author: Incoming5643
-delete-after: True
-
-changes: 
-  - rscadd: "The spell Charge has been added to the spellbook. It can be used to extend the life of magic and energy weapons and even reset the cooldowns of held wizards! It cannot reset your own cooldowns."
-  - rscadd: "The Staff of Healing has been added to the spellbook. Heals all damage and raises the dead! Can't be used on yourself however."
-  - bugfix: "The exploit that allowed you to use the staff of healing on yourself by suicide has been fixed."

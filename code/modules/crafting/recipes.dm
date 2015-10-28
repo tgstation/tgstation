@@ -240,3 +240,12 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 100
 	category = CAT_WEAPON
+
+/datum/table_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/device/camera/spooky
+	time = 15
+	reqs = list(/obj/item/device/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/device/camera = 1)
+	category = CAT_MISC

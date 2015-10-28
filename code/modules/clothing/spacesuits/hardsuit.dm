@@ -45,7 +45,6 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 2
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
@@ -232,7 +231,6 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
 	item_color = "syndi"
-	slowdown = 1
 	w_class = 3
 	action_button_name = "Toggle Helmet"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
@@ -280,7 +278,6 @@
 	name = "gem-encrusted hardsuit"
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
-	slowdown = 1
 	w_class = 3
 	unacidable = 1
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
@@ -306,7 +303,6 @@
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
-	slowdown = 1
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical

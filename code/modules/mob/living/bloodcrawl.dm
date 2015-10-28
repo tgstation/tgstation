@@ -95,7 +95,7 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	flags = NODROP
+	flags = NODROP|ABSTRACT
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
