@@ -127,10 +127,6 @@
 	if(!mob.canmove)
 		return 0
 
-	if(!mob.lastarea)
-		mob.lastarea = get_area(mob.loc)
-
-
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)

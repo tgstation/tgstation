@@ -325,12 +325,6 @@
 	var/mob/living/L = A
 	if(!L.ckey)	return
 
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-
-	L.lastarea = newarea
-
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
