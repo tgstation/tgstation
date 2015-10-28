@@ -425,6 +425,10 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
 				if("APPEARANCE_PERMABAN")
 					typedesc = "<b>APPEARANCE/NAME BAN</b>"
+				if("OOC_PERMABAN")
+					typedesc = "<b>PERMA OOCBAN</b>"
+				if("OOC_TEMPBAN")
+					typedesc = "<b>TEMP OOCBAN</b>"
 
 
 			// AUTOFIXED BY fix_string_idiocy.py
