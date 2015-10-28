@@ -89,7 +89,7 @@
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
-	using.screen_loc = ui_mommi_panel
+	using.screen_loc = ui_borg_panel
 	using.layer = 19
 	src.adding += using
 
@@ -107,7 +107,7 @@
 	mymob.throw_icon.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.throw_icon.icon_state = "store"
 	mymob.throw_icon.name = "store"
-	mymob.throw_icon.screen_loc = ui_borg_store
+	mymob.throw_icon.screen_loc = ui_mommi_store
 
 	// Temp
 	mymob.bodytemp = getFromPool(/obj/screen)

@@ -9,7 +9,6 @@
 						LANGUAGE_MONKEY = 0, LANGUAGE_UNATHI = 0, LANGUAGE_SIIK_TAJR = 0,
 						LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0, LANGUAGE_MONKEY = 0)
 	add_languages(R)
-	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
 	//src.modules += new /obj/item/device/flashlight(src)   // Broken

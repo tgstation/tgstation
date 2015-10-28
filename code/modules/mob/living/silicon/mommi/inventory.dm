@@ -6,10 +6,10 @@
 	return module_active
 
 /mob/living/silicon/robot/mommi/get_all_slots()
-	return list(tool_state, sight_state, head_state)
+	return list(tool_state, head_state)
 
 /mob/living/silicon/robot/mommi/get_equipped_items()
-	return list(sight_state, head_state)
+	return head_state
 
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/is_in_modules() called tick#: [world.time]")
@@ -77,10 +77,6 @@
 		if(module_active==tool_state)
 			module_active=null
 		unequip_tool()
-	else if (W == sight_state)
-		if(module_active==sight_state)
-			module_active=null
-		unequip_sight()
 	else if (W == head_state)
 		unequip_head()
 
@@ -144,23 +140,11 @@
 	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag) && candrop)
 		TS = tool_state
 		drop_item(TS)
-	if(sight_state == module_active)
-		TS = sight_state
-		if(istype(sight_state,/obj/item/borg/sight))
-			sight_mode &= ~sight_state:sight_mode
-		if (client)
-			client.screen -= sight_state
-		contents -= sight_state
-		module_active = null
-		sight_state = null
-		//inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-		if(istype(tool_state,/obj/item/borg/sight))
-			sight_mode &= ~tool_state:sight_mode
 		if (client)
 			client.screen -= tool_state
 		contents -= tool_state
@@ -178,17 +162,6 @@
 	unequip_tool()
 	unequip_head()
 
-/mob/living/silicon/robot/mommi/proc/unequip_sight()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_sight() called tick#: [world.time]")
-	if(sight_state)
-		if(istype(sight_state,/obj/item/borg/sight))
-			sight_mode &= ~sight_state:sight_mode
-		if (client)
-			client.screen -= sight_state
-		contents -= sight_state
-		sight_state = null
-		//inv_sight.icon_state = "sight"
-
 // Unequips an object from the MoMMI's head
 /mob/living/silicon/robot/mommi/proc/unequip_head()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_head() called tick#: [world.time]")
@@ -199,11 +172,6 @@
 
 		// Put the hat in the MoMMI's claw
 		put_in_active_hand(head_state)
-
-		// Do that thing that unequip_sight and unequip_tool do
-		if(istype(head_state,/obj/item/borg/sight))
-			sight_mode &= ~head_state:sight_mode
-		contents -= head_state
 
 		// Remove the head_state icon from the client's screen
 		if (client)
@@ -221,8 +189,6 @@
 		var/obj/item/TS=tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-		if(istype(tool_state,/obj/item/borg/sight))
-			sight_mode &= ~tool_state:sight_mode
 		if (client)
 			client.screen -= tool_state
 		contents -= tool_state
@@ -234,9 +200,7 @@
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)
-	if(sight_state == O)
-		return 1
-	else if(tool_state == O) // Sight
+	if(tool_state == O) // Sight
 		return 1
 	else
 		return 0
@@ -251,69 +215,46 @@
 
 //module_active(module) - Checks whether there is a module active in the slot specified by "module".
 /mob/living/silicon/robot/mommi/module_active(var/module)
-	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+	if(!(module in INV_SLOT_TOOL))
 		return
 
-	switch(module)
-		if(INV_SLOT_TOOL)
-			if(tool_state)
-				return 1
-		if(INV_SLOT_SIGHT)
-			if(sight_state)
-				return 1
+	if(INV_SLOT_TOOL)
+		if(tool_state)
+			return 1
 	return 0
 
 //get_selected_module() - Returns the slot number of the currently selected module.  Returns 0 if no modules are selected.
 /mob/living/silicon/robot/mommi/get_selected_module()
 	if(tool_state && module_active == tool_state)
 		return INV_SLOT_TOOL
-	else if(sight_state && module_active == sight_state)
-		return INV_SLOT_SIGHT
-
 	return 0
 
 //select_module(module) - Selects the module slot specified by "module"
 /mob/living/silicon/robot/mommi/select_module(var/module)
-	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+	if(!(module in INV_SLOT_TOOL))
 		return
 	if(!module_active(module)) return
 
-	switch(module)
-		if(INV_SLOT_TOOL)
-			if(module_active != tool_state)
-				inv_tool.icon_state = "inv1 +a"
-				//inv_sight.icon_state = "sight"
-				module_active = tool_state
-				return
-		if(INV_SLOT_SIGHT)
-			if(module_active != sight_state)
-				inv_tool.icon_state = "inv1"
-				//inv_sight.icon_state = "sight+a"
-				module_active = sight_state
-				return
-	return
+	if(INV_SLOT_TOOL)
+		if(module_active != tool_state)
+			inv_tool.icon_state = "inv1 +a"
+			module_active = tool_state
+			return
 
 //deselect_module(module) - Deselects the module slot specified by "module"
 /mob/living/silicon/robot/mommi/deselect_module(var/module)
-	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+	if(!(module in INV_SLOT_TOOL))
 		return
 
-	switch(module)
-		if(INV_SLOT_TOOL)
-			if(module_active == tool_state)
-				inv_tool.icon_state = "inv1"
-				module_active = null
-				return
-		if(INV_SLOT_SIGHT)
-			if(module_active == sight_state)
-				//inv_sight.icon_state = "sight"
-				module_active = null
-				return
-	return
+	if(INV_SLOT_TOOL)
+		if(module_active == tool_state)
+			inv_tool.icon_state = "inv1"
+			module_active = null
+			return
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/mommi/toggle_module(var/module)
-	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+	if(!(module in INV_SLOT_TOOL))
 		return
 	if(module_selected(module))
 		deselect_module(module)

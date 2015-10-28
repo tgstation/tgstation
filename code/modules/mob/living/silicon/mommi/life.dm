@@ -39,21 +39,21 @@
 
 
 /mob/living/silicon/robot/mommi/use_power()
-	if (src.cell)
-		if(src.cell.charge <= 0)
+	if(cell)
+		if(cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
+			stat = 1
 		else if (src.cell.charge <= MOMMI_LOW_POWER)
 			uneq_all()
-			src.cell.use(1)
+			cell.use(1)
 		else
-			if(src.sight_state)
-				src.cell.use(5)
-			if(src.tool_state)
-				src.cell.use(5)
-			src.cell.use(1)
-			src.blinded = 0
-			src.stat = 0
+			if(sensor_mode)
+				cell.use(5)
+			if(tool_state)
+				cell.use(5)
+			cell.use(1)
+			blinded = 0
+			stat = 0
 	else
 		uneq_all()
 		src.stat = 1
@@ -131,41 +131,11 @@
 /
 /mob/living/silicon/robot/mommi/handle_regular_hud_updates()
 	handle_sensor_modes()
-	/*src.sight &= ~SEE_MOBS
-	src.sight &= ~SEE_TURFS
-	src.sight &= ~SEE_OBJS
-	src.sight &= ~BLIND
-	src.see_in_dark = 8
-	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	if (src.stat == DEAD)
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else
-		if (M_XRAY in mutations || src.sight_mode & BORGXRAY)
-			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		if ((src.sight_mode & BORGTHERM) || sensor_mode == THERMAL_VISION)
-			src.sight |= SEE_MOBS
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		if (sensor_mode == NIGHT)
-			see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-			see_in_dark = 8
-		if ((src.sight_mode & BORGMESON) || (sensor_mode == MESON_VISION))
-			src.sight |= SEE_TURFS
-			src.see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
-	*/
 
-
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
 	switch(sensor_mode)
-		if (SEC_HUD)
+		if(SEC_HUD)
 			process_sec_hud(src, 1)
-		if (MED_HUD)
+		if(MED_HUD)
 			process_med_hud(src)
 
 	if (src.healths)
@@ -280,8 +250,6 @@
 				// This way of doing it ensures that shit we pick up will be visible, wheras shit inside of us isn't.
 				if(I!=src.cell && I!=src.radio && I!=src.camera && I!=src.mmi)
 					src.client.screen += I
-	if(src.sight_state)
-		src.sight_state:screen_loc = ui_inv1
 	if(src.tool_state)
 		src.tool_state:screen_loc = ui_inv2
 	if(src.head_state)

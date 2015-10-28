@@ -977,10 +977,7 @@
 					R.emagged = 0
 					if (R.activated(R.module.emag))
 						R.module_active = null
-					if(R.sight_state == R.module.emag)
-						R.sight_state = null
-						R.contents -= R.module.emag
-					else if(R.tool_state == R.module.emag)
+					if(R.tool_state == R.module.emag)
 						R.tool_state = null
 						R.contents -= R.module.emag
 					log_admin("[key_name_admin(usr)] has unemag'ed [R].")
@@ -1010,10 +1007,7 @@
 							var/mob/living/silicon/robot/mommi/M=R
 							if (M.activated(M.module.emag))
 								M.module_active = null
-							if(M.sight_state == M.module.emag)
-								M.sight_state = null
-								M.contents -= M.module.emag
-							else if(M.tool_state == M.module.emag)
+							if(M.tool_state == M.module.emag)
 								M.tool_state = null
 								M.contents -= M.module.emag
 						if (R.module)

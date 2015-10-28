@@ -1234,6 +1234,7 @@
 	<BODY>
 	<B>Activated Modules</B>
 	<BR>
+	Sight Mode: <A HREF=?src=\ref[src];vision=0>[sensor_mode ? "[vision_types_list[sensor_mode]]" : "No sight module enabled"]</A><BR>
 	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
 	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
 	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
@@ -1321,6 +1322,9 @@
 		checklaws()
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
+	if(href_list["vision"])
+		sensor_mode()
+		installed_modules()
 	return
 
 /mob/living/silicon/robot/verb/sensor_mode()
@@ -1359,6 +1363,17 @@
 				sensor_mode = 0
 				src << "<span class='notice'>Sensor augmentations disabled.</span>"
 		handle_sensor_modes()
+		update_sight_hud()
+
+/mob/living/silicon/robot/proc/unequip_sight()
+	sensor_mode = 0
+	update_sight_hud()
+
+/mob/living/silicon/robot/proc/update_sight_hud()
+	if(sensor_mode == 0)
+		sensor.icon_state = "sight"
+	else
+		sensor.icon_state = "sight+a"
 
 /mob/living/silicon/robot/proc/radio_menu()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/radio_menu() called tick#: [world.time]")
