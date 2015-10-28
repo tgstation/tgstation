@@ -315,10 +315,6 @@
 	hair_alpha = 0
 	speedmod = 1
 	armor = 0
-	brutemod = 0
-	burnmod = 0
-	coldmod = 0
-	heatmod = 0
 	punchmod = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
@@ -352,13 +348,13 @@
 	return message
 
 /datum/species/golem/meeseeks/spec_life(mob/living/carbon/human/H)
+	if(!lingseek)
+		//handle clone damage before all else
+		if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
+			max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
 
-	//handle clone damage before all else
-	if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
-		max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
-
-	if(H.getCloneLoss() < max_clone_damage)
-		H.adjustCloneLoss(1)
+		if(H.getCloneLoss() < max_clone_damage)
+			H.adjustCloneLoss(1)
 
 	if(prob(5) && !H.stat)
 		if(stage <3)
@@ -388,7 +384,7 @@
 		stage_counter += 1 //extreme pain will make them progress a level
 
 	if(lingseek && H.hallucination<50 && stage == 3) //lingseeks are WILD
-		H.hallucination = 25
+		H.hallucination += 25
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
