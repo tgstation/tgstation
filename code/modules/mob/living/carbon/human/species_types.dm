@@ -250,7 +250,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(recently_changed)
-		var/datum/action/split_body/S = new
+		var/datum/action/innate/split_body/S = new
 		S.Grant(H)
 
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
@@ -264,20 +264,20 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	..()
 
-/datum/action/split_body
+/datum/action/innate/split_body
 	name = "Split Body"
-	action_type = AB_INNATE
 	check_flags = AB_CHECK_ALIVE
 	button_icon_state = "split"
 	background_icon_state = "bg_alien"
 
-/datum/action/split_body/Activate()
+/datum/action/innate/split_body/CheckRemoval()
 	var/mob/living/carbon/human/H = owner
-	if(!ishuman(owner) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
-		owner << "<span class='warning'>Your biology is no longer compatible!</span>"
-		Remove(owner)
-		return
+	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
+		return 1
+	return 0
 
+/datum/action/innate/split_body/Activate()
+	var/mob/living/carbon/human/H = owner
 	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
 	H.notransform = 1
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
@@ -293,8 +293,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 			S.volume = 80
 			H.notransform = 0
-			var/datum/action/swap_body/callforward = new /datum/action/swap_body()
-			var/datum/action/swap_body/callback = new /datum/action/swap_body()
+			var/datum/action/innate/swap_body/callforward = new /datum/action/innate/swap_body()
+			var/datum/action/innate/swap_body/callback = new /datum/action/innate/swap_body()
 			callforward.body = spare
 			callforward.Grant(H)
 			callback.body = H
@@ -306,16 +306,21 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
 	H.notransform = 0
 
-/datum/action/swap_body
+/datum/action/innate/swap_body
 	name = "Swap Body"
-	action_type = AB_INNATE
 	check_flags = AB_CHECK_ALIVE
 	button_icon_state = "slimeswap"
 	background_icon_state = "bg_alien"
 	var/mob/living/carbon/human/body
 
-/datum/action/swap_body/Activate()
-	if(!body || !istype(body) || body.stat != CONSCIOUS || qdeleted(body))
+/datum/action/innate/swap_body/CheckRemoval()
+	var/mob/living/carbon/human/H = owner
+	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
+		return 1
+	return 0
+
+/datum/action/innate/swap_body/Activate()
+	if(!body || !istype(body) || !body.dna || !body.dna.species || !body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
 		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
 		Remove(owner)
 		return
