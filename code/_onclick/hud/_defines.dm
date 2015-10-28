@@ -123,4 +123,9 @@
 
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
+// Ghosts
 
+#define ui_ghost_jumptomob "SOUTH:6,CENTER-2:16"
+#define ui_ghost_orbit "SOUTH:6,CENTER-1:16"
+#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:16"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:16"
