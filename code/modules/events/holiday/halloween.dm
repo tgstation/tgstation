@@ -11,7 +11,7 @@
 	for(var/mob/living/carbon/human/H in mob_list)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
-		if(H.dna)
+		if(H.dna && !config.mutant_races ) // Make the JOIN_WITH_MUTANT_RACE config option stick through Halloween.
 			if(prob(50))
 				hardset_dna(H, null, null, null, null, /datum/species/skeleton)
 			else
