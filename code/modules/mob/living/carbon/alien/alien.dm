@@ -141,7 +141,7 @@
 	if(getBruteLoss() < 200)
 		return pick (list("xltrails_1", "xltrails2"))
 	else
-		return pick (list("xlttrails_1", "xlttrails2"))
+		return pick (list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
