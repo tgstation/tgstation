@@ -77,10 +77,6 @@
 		if(module_active==tool_state)
 			module_active=null
 		unequip_tool()
-	else if (W == sight_state)
-		if(module_active==sight_state)
-			module_active=null
-		unequip_sight()
 	else if (W == head_state)
 		unequip_head()
 
@@ -144,23 +140,11 @@
 	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag) && candrop)
 		TS = tool_state
 		drop_item(TS)
-	if(sight_state == module_active)
-		TS = sight_state
-		if(istype(sight_state,/obj/item/borg/sight))
-			sight_mode &= ~sight_state:sight_mode
-		if (client)
-			client.screen -= sight_state
-		contents -= sight_state
-		module_active = null
-		sight_state = null
-		//inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-		if(istype(tool_state,/obj/item/borg/sight))
-			sight_mode &= ~tool_state:sight_mode
 		if (client)
 			client.screen -= tool_state
 		contents -= tool_state
@@ -178,17 +162,6 @@
 	unequip_tool()
 	unequip_head()
 
-/mob/living/silicon/robot/mommi/proc/unequip_sight()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_sight() called tick#: [world.time]")
-	if(sight_state)
-		if(istype(sight_state,/obj/item/borg/sight))
-			sight_mode &= ~sight_state:sight_mode
-		if (client)
-			client.screen -= sight_state
-		contents -= sight_state
-		sight_state = null
-		//inv_sight.icon_state = "sight"
-
 // Unequips an object from the MoMMI's head
 /mob/living/silicon/robot/mommi/proc/unequip_head()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_head() called tick#: [world.time]")
@@ -199,11 +172,6 @@
 
 		// Put the hat in the MoMMI's claw
 		put_in_active_hand(head_state)
-
-		// Do that thing that unequip_sight and unequip_tool do
-		if(istype(head_state,/obj/item/borg/sight))
-			sight_mode &= ~head_state:sight_mode
-		contents -= head_state
 
 		// Remove the head_state icon from the client's screen
 		if (client)
@@ -221,8 +189,6 @@
 		var/obj/item/TS=tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-		if(istype(tool_state,/obj/item/borg/sight))
-			sight_mode &= ~tool_state:sight_mode
 		if (client)
 			client.screen -= tool_state
 		contents -= tool_state

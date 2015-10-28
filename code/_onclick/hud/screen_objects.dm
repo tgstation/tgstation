@@ -462,10 +462,7 @@
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/person = usr
 				person.sensor_mode()
-				if(person.sensor_mode == 0)
-					icon_state = "sight"
-				else
-					icon_state = "sight+a"
+				person.update_sight_hud()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))

@@ -123,7 +123,6 @@
 
 /obj/item/weapon/robot_module/medical/New()
 	..()
-	//src.modules += new /obj/item/borg/sight/hud/med(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 	src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg(src,src)
@@ -256,7 +255,6 @@
 
 /obj/item/weapon/robot_module/security/New()
 	..()
-	//src.modules += new /obj/item/borg/sight/hud/sec(src)
 	src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 	src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
@@ -365,7 +363,6 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	src.modules += new /obj/item/weapon/storage/bag/ore(src)
 	src.modules += new /obj/item/weapon/pickaxe/drill/borg(src)

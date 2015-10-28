@@ -259,4 +259,3 @@
 		R.module.modules += new /obj/item/weapon/storage/bag/food/borg(R.module)
 
 		return 1
-		

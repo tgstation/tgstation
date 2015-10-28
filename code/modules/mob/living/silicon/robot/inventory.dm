@@ -20,9 +20,6 @@
 	if(!istype(module))
 		return 0
 
-	if(istype(module, /obj/item/borg/sight))
-		sight_mode &= ~module:sight_mode
-
 	if(client)
 		client.screen -= module
 
@@ -81,22 +78,16 @@
 		O.layer = 20
 		O.screen_loc = inv1.screen_loc
 		O.forceMove(src)
-		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode |= module_state_1:sight_mode
 	else if(!module_state_2)
 		module_state_2 = O
 		O.layer = 20
 		O.screen_loc = inv2.screen_loc
 		O.forceMove(src)
-		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode |= module_state_2:sight_mode
 	else if(!module_state_3)
 		module_state_3 = O
 		O.layer = 20
 		O.screen_loc = inv3.screen_loc
 		O.forceMove(src)
-		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode |= module_state_3:sight_mode
 	else
 		src << "<span class='notice'>You need to disable a module first!</span>"
 
@@ -119,6 +110,7 @@
 		module_state_3 = null
 		inv3.icon_state = "inv3"
 
+	unequip_sight()
 	updateicon()
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)

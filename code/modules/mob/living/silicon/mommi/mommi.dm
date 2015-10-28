@@ -439,34 +439,16 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		var/obj/item/TS
 		if(!(locate(O) in src.module.modules) && O != src.module.emag)
 			return
-		if(istype(O,/obj/item/borg/sight))
-			TS = sight_state
-			if(sight_state)
-				contents -= sight_state
-				sight_mode &= ~sight_state:sight_mode
-				if (client)
-					client.screen -= sight_state
-			sight_state = O
-			O.layer = 20
-			contents += O
-			sight_mode |= sight_state:sight_mode
-
-			//inv_sight.icon_state = "sight+a"
-			inv_tool.icon_state = "inv1"
-			module_active=sight_state
-		else
-			TS = tool_state
-			if(tool_state)
-				contents -= tool_state
-				if (client)
-					client.screen -= tool_state
-			tool_state = O
-			O.layer = 20
-			contents += O
-
-			//inv_sight.icon_state = "sight"
-			inv_tool.icon_state = "inv1 +a"
-			module_active=tool_state
+		TS = tool_state
+		if(tool_state)
+			contents -= tool_state
+			if (client)
+				client.screen -= tool_state
+		tool_state = O
+		O.layer = 20
+		contents += O
+		inv_tool.icon_state = "inv1 +a"
+		module_active=tool_state
 		if(TS && istype(TS))
 			if(src.is_in_modules(TS))
 				TS.loc = src.module
