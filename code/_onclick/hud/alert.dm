@@ -257,6 +257,34 @@ so as to remain in compliance with the most up-to-date laws."
 	icon_state = "low_mech_integrity"
 
 
+//GHOSTS
+//TODO: expand this system to replace the pollCandidates Yes/No messages
+/obj/screen/alert/notify_cloning
+	name = "Revival"
+	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
+	icon_state = "ghost_frame"
+	timeout = 300
+
+/obj/screen/alert/notify_cloning/Click()
+	if(!usr || !usr.client) return
+	var/mob/dead/observer/G = usr
+	G.reenter_corpse()
+
+/obj/screen/alert/notify_jump
+	name = "Body created"
+	desc = "A body was created. You can enter it."
+	icon_state = "ghost_frame"
+	timeout = 300
+	var/jump_target = null
+
+/obj/screen/alert/notify_jump/Click()
+	if(!usr || !usr.client) return
+	if(!jump_target) return
+	var/mob/dead/observer/G = usr
+	var/turf/T = get_turf(jump_target)
+	if(T && isturf(T))
+		G.loc = T
+
 //OBJECT-BASED
 
 /obj/screen/alert/buckled

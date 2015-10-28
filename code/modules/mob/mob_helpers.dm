@@ -460,12 +460,25 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/atom/source = null, var/image/alert_overlay = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
+			if(source)
+				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
+				if(A)
+					A.desc = message
+					A.jump_target = get_turf(source)
+					if(!alert_overlay)
+						var/old_layer = source.layer
+						source.layer = FLOAT_LAYER
+						A.overlays += source
+						source.layer = old_layer
+					else
+						alert_overlay.layer = FLOAT_LAYER
+						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))

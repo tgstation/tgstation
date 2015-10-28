@@ -1,0 +1,23 @@
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscadd (general adding of nice things)
+#   rscdel (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+author: Tkdrg
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a Ghost On-screen HUD. It can be toggled using the \"Toggle Ghost HUD\" verb. Thank you Razharas for the sprites!"
+  - rscadd: "Ghosts can now use the \"Toggle med/sec HUD\" verb to see the basic secHUD (jobs only) or the medHUD of humans."
+  - rscadd: "Ghost will now get clickable icon alerts from events such as being put in a cloner, drones being created, Nar-sie being summoned, among others. The older chat messages were kept. These alerts can not be toggled."

@@ -165,9 +165,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/proc/notify_cloning(var/message, var/sound)
+/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)
 		src << "<span class='ghostalert'>[message]</span>"
+		if(source)
+			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
+			if(A)
+				A.desc = message
+				var/old_layer = source.layer
+				source.layer = FLOAT_LAYER
+				A.overlays += source
+				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)

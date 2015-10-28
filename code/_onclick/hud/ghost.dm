@@ -1,5 +1,3 @@
-//TODO: add sec/med huds to ghosts
-//TODO: pop-up buttons for cloning,defib,drones,holoparasites,slimes,etcetc
 /obj/screen/ghost
 	icon = 'icons/mob/screen_ghost.dmi'
 
