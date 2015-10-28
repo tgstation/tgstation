@@ -460,7 +460,11 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
+		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks 
+			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
+			return // avert lingseeks. get the hell out of here
+			/*
+			// AHAH, now it's a Lingseeks!
 			H.real_name = "Lingseek"
 			id = "lingseek_1"
 			H.regenerate_icons()
@@ -472,6 +476,7 @@
 			stage_three = 25 //fast stage progression
 			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
 			return // get me the hell out of here.
+			*/
 			
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
