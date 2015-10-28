@@ -91,11 +91,11 @@ REAGENT SCANNER
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;biotech=1"
 	var/last_reading = null
-	var/verbosity = 1
+	var/mode = 1
 
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!user.hallucinating())
-		last_reading = healthanalyze(M, user, verbosity)
+		last_reading = healthanalyze(M, user, mode)
 	else
 		if((M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 			user.show_message("<span class='game say'><b>\The [src] beeps</b>, \"It's dead, Jim.\"</span>", MESSAGE_HEAR ,"<span class='notice'>\The [src] glows black.</span>")
@@ -115,7 +115,7 @@ REAGENT SCANNER
 		user << last_reading
 
 //Note : Used directly by other objects. Could benefit of OOP, maybe ?
-proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/verbosity = 0, var/skip_checks = 0, var/silent = 0)
+proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, var/skip_checks = 0, var/silent = 0)
 	var/message = ""
 	if(!skip_checks)
 		//writepanic("[__FILE__].[__LINE__] \\/proc/healthanalyze() called tick#: [world.time]")
@@ -152,7 +152,7 @@ Subject's pulse: ??? BPM"}
 	message += "<br><span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<br><span class='notice'>Time of Death: [M.tod]</span>"
-	if(istype(M, /mob/living/carbon/human) && verbosity)
+	if(istype(M, /mob/living/carbon/human) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1, 1)
 		message += "<br><span class='notice'>Localized Damage, Brute/Burn:</span>"
@@ -250,13 +250,13 @@ Subject's pulse: ??? BPM"}
 	user << message //Here goes
 	return message //To read last scan
 
-/obj/item/device/healthanalyzer/verb/toggle_verbosity()
-	set name = "Switch Verbosity"
+/obj/item/device/healthanalyzer/verb/toggle_mode()
+	set name = "Switch mode"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/healthanalyzer/verb/toggle_verbosity()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/healthanalyzer/verb/toggle_mode()  called tick#: [world.time]")
 
-	verbosity = !verbosity
-	usr << "The scanner will [verbosity ? "now show specific limb damage" : "no longer show specific limb damage"]."
+	mode = !mode
+	usr << "The scanner will [mode ? "now show specific limb damage" : "no longer show specific limb damage"]."
 
 /obj/item/device/analyzer
 	desc = "A hand-held environment scanner which reports data about gas mixtures."
