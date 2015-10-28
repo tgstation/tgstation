@@ -45,6 +45,7 @@
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
+	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 
 
 /mob/living/simple_animal/revenant/Life()
@@ -165,6 +166,7 @@
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained > 90)
 						essence_regen_cap += 25
+						perfectsouls += 1
 						src << "<span class='info'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
@@ -198,6 +200,7 @@
 	if(statpanel("Status"))
 		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
 		stat(null, "Stolen essence: [essence_accumulated]E")
+		stat(null, "Stolen perfect souls: [perfectsouls]")
 
 
 /mob/living/simple_animal/revenant/New()
