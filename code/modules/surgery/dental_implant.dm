@@ -31,7 +31,7 @@
 	name = "activate pill"
 
 /datum/action/item_action/hands_free/activate_pill/Trigger()
-	user << "<span class='caution'>You grit your teeth and burst the implanted [target]!</span>
+	owner << "<span class='caution'>You grit your teeth and burst the implanted [target]!</span>"
 	if(CheckRemoval(owner))
 		return 0
 	if(target.reagents.total_volume)
