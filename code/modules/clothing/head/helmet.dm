@@ -41,6 +41,7 @@
 	cold_protection = HEAD
 	species_fit = list("Vox")
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 	siemens_coefficient = 0.5
 	eyeprot = 1
 
