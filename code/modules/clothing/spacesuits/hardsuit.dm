@@ -39,6 +39,18 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
+	if(msg && ishuman(loc))
+		loc << "\icon[src] <b><span class='robot'>[msg]</span></b>"
+
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+	..()
+	display_visor_message("Radiation pulse detected! Magnitide: [severity] RADs.")
+
+/obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
+	..()
+	display_visor_message("[severity > 1 ? "Light" : "Heavy"] electromagnetic pulse detected!")
+
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
@@ -316,6 +328,11 @@
 	unacidable = 1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	var/obj/machinery/doppler_array/integrated/bomb_radar
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/New()
+	..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
 	user.scanner.Grant(user)
