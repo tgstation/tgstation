@@ -918,6 +918,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/html_mob_check()
 	return 1
 
+/mob/dead/observer/dexterity_check()
+	return 1
+
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overriden here and in /mob/living for different point span classes and sanity checks
