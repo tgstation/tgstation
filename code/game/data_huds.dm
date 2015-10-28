@@ -181,30 +181,32 @@
  Diagnostic HUDs!
 ************************************************/
 
-//For the charge meter!
-/proc/RoundCell(var/charge)
-	var/icon_name = ""
-	switch(charge)
-		if(0.75 to INFINITY)
-			icon_name = "batthigh"
-		if(0.5 to 0.75)
-			icon_name = "battmed"
-		if(0.25 to 0.5)
-			icon_name = "battlow"
-		if(0.01 to 0.25)
-			icon_name = "battwarn"
+//For Diag health and cell bars!
+/proc/RoundDiagBar(value)
+	switch(value * 100)
+		if(95 to INFINITY)
+			return "max"
+		if(80 to 100)
+			return "good"
+		if(60 to 80)
+			return "high"
+		if(40 to 60)
+			return "med"
+		if(20 to 40)
+			return "low"
+		if(1 to 20)
+			return "crit"
 		else
-			icon_name = "battempty"
-	return icon_name
-
+			return "dead"
+	return "dead"
 
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	if(stat == DEAD)
-		holder.icon_state = "hudhealth-100"
+		holder.icon_state = "huddiagdead"
 	else
-		holder.icon_state = "hud[RoundHealth(health/maxHealth*100)]"
+		holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/silicon/proc/diag_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
@@ -220,8 +222,8 @@
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	if (cell)
-		var/chargelvl = cell.charge/cell.maxcharge
-		holder.icon_state = "hud[RoundCell(chargelvl)]"
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
 
@@ -230,25 +232,17 @@
 ~~~~~~~~~~~~~~~~~~~~~*/
 /obj/mecha/proc/diag_hud_set_mechhealth()
 	var/image/holder = hud_list[DIAG_MECH_HUD]
-	var/mechhealth = (health/initial(health))*100
-	switch(mechhealth)
-		if(75 to 100)
-			holder.icon_state = "hudmechgood"
-		if(50 to 74)
-			holder.icon_state = "hudmechmed"
-		if(25 to 49)
-			holder.icon_state = "hudmechbad"
-		if(0 to 24)
-			holder.icon_state = "hudmechcrit"
+	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
 
 
 /obj/mecha/proc/diag_hud_set_mechcell()
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	if (cell)
 		var/chargelvl = cell.charge/cell.maxcharge
-		holder.icon_state = "hud[RoundCell(chargelvl)]"
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
 
 /obj/mecha/proc/diag_hud_set_mechstat()
 	var/image/holder = hud_list[DIAG_STAT_HUD]

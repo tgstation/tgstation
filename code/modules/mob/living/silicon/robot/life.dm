@@ -31,6 +31,7 @@
 		uneq_all()
 		stat = UNCONSCIOUS
 		update_headlamp(1)
+	diag_hud_set_borgcell()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()

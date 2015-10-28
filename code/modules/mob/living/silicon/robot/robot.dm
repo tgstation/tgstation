@@ -482,6 +482,7 @@
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
 		update_icons()
+		diag_hud_set_borgcell()
 
 	else if (wires.IsInteractionTool(W))
 		if (wiresexposed)
@@ -713,6 +714,7 @@
 			user << "<span class='notice'>You remove \the [cell].</span>"
 			cell = null
 			update_icons()
+			diag_hud_set_borgcell()
 
 	if(!opened)
 		if(..()) // hulk attack
