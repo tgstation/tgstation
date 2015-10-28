@@ -96,6 +96,12 @@
 	if(goodmove)
 		Move(dest)
 
+/mob/living/simple_animal/bee/proc/newTarget()
+	var/list/neabyMobs = list()
+	for(var/mob/living/G in view(src,7))
+		neabyMobs += G
+	target = pick(neabyMobs)
+
 /mob/living/simple_animal/bee/Life()
 	if(timestopped) return 0 //under effects of time magick
 
@@ -213,9 +219,7 @@
 				wander = 0
 
 			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
-				for(var/mob/living/carbon/G in view(src,7))
-					target = G
-					break
+				newTarget()
 
 		if(target_turf)
 			var/tdir=get_dir(src,target_turf) // This was called thrice.  Optimize.
@@ -243,12 +247,14 @@
 
 		animate(src, pixel_x = rand(-12,12), pixel_y = rand(-12,12), time = 10, easing = SINE_EASING)
 
+	/*
 	if(!parent && prob(10))
 		strength -= 1
 		if(strength <= 0)
 			returnToPool(src)
 		else if(strength <= 5)
 			icon_state = "bees[strength]"
+	*/
 
 	if(feral > 0)
 		if(strength <= 5)

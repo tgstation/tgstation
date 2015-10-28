@@ -21,8 +21,10 @@
 			if(M:eyecheck() <= 0)
 				flick("e_flash", M.flash) // flash dose faggots
 
+		var/list/spawned_atoms = list()
 		for(var/i=1, i<=deliveryamt, i++)
 			var/atom/movable/x = new spawner_type
+			spawned_atoms += x
 			x.loc = T
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
@@ -30,13 +32,15 @@
 			if(L && istype(L))
 				handle_faction(x,L)
 			// Spawn some hostile critters
-
+		postPrime(spawned_atoms)
 	del(src)
 	return
 
 /obj/item/weapon/grenade/spawnergrenade/proc/handle_faction(var/mob/living/spawned, var/mob/living/L)
 	return
 
+/obj/item/weapon/grenade/spawnergrenade/proc/postPrime(var/list/spawned_atoms)
+	return
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
 	name = "manhack delivery grenade"
@@ -70,3 +74,26 @@
 	spawner_type = /mob/living/simple_animal/hostile/carp
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/grenade/spawnergrenade/beenade
+	name = "bee-nade"
+	icon_state = "beenade"
+	spawner_type = /mob/living/simple_animal/bee
+	deliveryamt = 15
+	origin_tech = "materials=3;magnets=4;biotech=4"
+
+
+/obj/item/weapon/grenade/spawnergrenade/beenade/postPrime(var/list/spawned_atoms)
+	if(!spawned_atoms || !spawned_atoms.len)
+		return
+	playsound(get_turf(src), 'sound/effects/bees.ogg', 100, 1)
+	for(var/A in spawned_atoms)
+		var/mob/living/simple_animal/bee/BEE = A
+		if(!istype(BEE))
+			continue
+		BEE.strength = 1
+		BEE.toxic = 5
+		BEE.mut = 2
+		BEE.feral = 25
+		BEE.icon_state = "bees1-feral"
+		BEE.newTarget()
