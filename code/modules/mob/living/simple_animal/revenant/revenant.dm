@@ -160,8 +160,8 @@
 				reveal(30)
 				stun(30)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=30)
-				if(target && in_range(src, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=25)
+				if(do_after(src, 30, 9, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained > 90)
 						essence_regen_cap += 25
