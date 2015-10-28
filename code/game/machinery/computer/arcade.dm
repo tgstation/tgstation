@@ -346,6 +346,7 @@
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
+	var/list/graps = list()
 	var/lings_aboard = 0
 	var/spaceport_raided = 0
 	var/spaceport_freebie = 0
@@ -368,6 +369,7 @@
 		"You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
 		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!"
 		)
+	graps = list('Orion_pluto.png','Orion_astro.png','Orion_Prox.gif','Orion_space.png','Orion_rigel.gif','Orion_Tau.png','Orion_Blackhole.gif','ori_station.png','Orion_win.gif') // because i know how to name shit.
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
@@ -427,14 +429,17 @@
 			gameStatus = ORION_STATUS_START
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+		playsound(src.loc, 'sound/arcade/orion/Ori_fail.ogg', 50, 0, extrarange = -3, falloff = 10)
 
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
 		var/title = stops[turns]
 		var/subtext = stopblurbs[turns]
+		user << browse_rsc(graps[turns],"turngrap")
 		dat = "<center><h1>[title]</h1></center>"
-		dat += "[subtext]"
+		dat += "</br><center><img src=turngrap></center>"
+		dat += "<div id=\"text_box\" data-list=\"[subtext]\" onload=\"writemsg(this)\" onunload=\"stoptimer()\"><p id=\"parText\"></p></div>" //wew, escape characters
 		dat += "<h3><b>Crew:</b></h3>"
 		dat += english_list(settlers)
 		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
@@ -445,12 +450,21 @@
 			dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];continue=1'>Continue</a></P>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
+		if(title == "Orion Prime")
+			playsound(src.loc, 'sound/arcade/orion/Ori_win.ogg', 50, 0, extrarange = -3, falloff = 10)
+
 	else
-		dat = "<center><h2>The Orion Trail</h2></center>"
+		//var/image/shipfly = image('orianim.dmi',"ship_move");
+		user << browse_rsc('Orion_poster.png',"shipimg")
+		playsound(src.loc, 'sound/arcade/orion/Ori_begin.ogg', 50, 0, extrarange = -3, falloff = 10)
+		//dat = "<center><h2>The Orion Trail</h2></center>" Commenting out for a test right now
+		dat = "<br><center><img src=shipimg></center>" //LIFE LIKE TEXTURES
 		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a></b></center>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
+	popup.add_stylesheet("arcade", 'html/browser/chroma_green.css')
+	popup.add_script("arcade",'html/typing.js')
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -621,7 +635,7 @@
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/Gunshot.ogg', 100, 1)
+			playsound(loc,'sound/arcade/orion/kill_crew.ogg', 100, 1)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -761,6 +775,8 @@
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_FLUX)
+			usr << browse_rsc('Ori_flux.gif',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			eventdat += "This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
 			eventdat += "<br>What will you do?"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];slow=1'>Slow Down</a> <a href='byond://?src=\ref[src];keepspeed=1'>Continue</a></P>"
@@ -775,6 +791,8 @@
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_BREAKDOWN)
+			usr << browse_rsc('Orion_break.gif',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			eventdat += "Oh no! The engine has broken down!"
 			eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
 			if(engine >= 1)
@@ -784,6 +802,8 @@
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_MALFUNCTION)
+			usr << browse_rsc('Orion_malf.gif',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			eventdat += "The ship's systems are malfunctioning!"
 			eventdat += "<br>You can replace the broken electronics with spares, or you can spend 3 days troubleshooting the AI."
 			if(electronics >= 1)
@@ -793,6 +813,8 @@
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_COLLISION)
+			usr << browse_rsc('Orion_Collison.png',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			eventdat += "Something hit us! Looks like there's some hull damage."
 			if(prob(25))
 				var/sfood = rand(5,15)
@@ -817,6 +839,8 @@
 			settlers = list()
 
 		if(ORION_TRAIL_LING)
+			usr << browse_rsc('Orion_lingsus2.gif',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
 			if(settlers.len <= 2)
 				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
@@ -880,6 +904,8 @@
 
 
 		if(ORION_TRAIL_SPACEPORT)
+			usr << browse_rsc('ori_station.png',"shipimg")
+			eventdat += "<center><img src=shipimg></center>"
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
 				eventdat += "The Spaceport is on high alert! they wont let you dock since you tried to attack them!"
@@ -1011,6 +1037,7 @@
 /obj/machinery/computer/arcade/orion_trail/proc/win()
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
+
 	if(emagged)
 		new /obj/item/weapon/orion_ship(src.loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
