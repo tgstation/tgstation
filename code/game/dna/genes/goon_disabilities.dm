@@ -435,8 +435,9 @@
 			if(H.mind)
 				H.mind.transfer_to(nH) //Transfer mind to the new body - to regain vampire/changeling/antag status!
 			//H.decomp_stage = 4
+			H.drop_all()
 			H.gib(1)
 		else
 			M.visible_message("<span class='danger'>[usr.name] melts into a pile of bloody viscera!</span>")
+			M.drop_all()
 			M.gib(1)
-
