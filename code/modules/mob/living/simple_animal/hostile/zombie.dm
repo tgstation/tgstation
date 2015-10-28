@@ -146,12 +146,22 @@
 
 /mob/living/simple_animal/hostile/zombie/holder
 	name = "infection holder"
+	icon_state = "none"
+	icon_living = "none"
+	icon_dead = "none"
 	desc = "You shouldn't be seeing this."
+	invisibility = INVISIBILITY_OBSERVER
 	unsuitable_atmos_damage = 0
 	stat_attack = 2
 	gold_core_spawnable = 0
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
+	density = 0
+	
+/mob/living/simple_animal/hostile/zombie/holder/Life()
+	..()
+	if(loc && !istype(loc, /mob/living/carbon/human))
+		qdel(src)
 
 /mob/living/simple_animal/hostile/zombie/holder/New()
 	..()
