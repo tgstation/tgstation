@@ -620,8 +620,7 @@ var/list/mechtoys = list(
 				A.anchored = 1
 				del(src)
 	else
-		attack_hand(user)
-	return
+		return ..()
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 

@@ -17,7 +17,7 @@ var/global/list/rnd_machines = list()
 	var/base_state	= ""
 	var/build_time	= 0
 
-	machine_flags	= SCREWTOGGLE | CROWDESTROY
+	machine_flags	= SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	var/nano_file	= ""
 
