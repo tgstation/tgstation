@@ -1,6 +1,0 @@
-author: Cyadox
-delete-after: True
-changes: 
-- bugfix: Removes Dissolve's ability to eat some worn items, no more naked ACKs!
-- tweak: Admin's Drop Everything slightly optimized
-- rscadd: All mobs now have a drop_all() procedure, removing all equipped items instantly.
