@@ -460,24 +460,10 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks 
+		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
-			/*
-			// AHAH, now it's a Lingseeks!
-			H.real_name = "Lingseek"
-			id = "lingseek_1"
-			H.regenerate_icons()
-			if( H.mind )
-				H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
-			lingseek = 1
-			stage = 1
-			stage_two = 20
-			stage_three = 25 //fast stage progression
-			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
-			return // get me the hell out of here.
-			*/
-			
+
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
@@ -497,6 +483,21 @@
 		H.drop_everything()
 		qdel(H)
 	return
+
+/datum/species/golem/meeseeks/proc/make_lingseek(var/mob/living/carbon/human/H)
+	if(lingseek)
+		return 0 //already done
+	H.real_name = "Lingseek"
+	id = "lingseek_1"
+	H.regenerate_icons()
+	if( H.mind )
+		H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
+	lingseek = 1
+	stage = 1
+	stage_two = 20
+	stage_three = 25 //fast stage progression
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
+	return 1
 
 /*
  FLIES
