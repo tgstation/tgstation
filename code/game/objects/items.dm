@@ -146,7 +146,7 @@
 	if(isMoMMI(user))
 		var/in_range = in_range(src, user) || src.loc == user
 		if(in_range)
-			if(src == user:tool_state || src == user:sight_state)
+			if(src == user:tool_state)
 				return 0
 			attack_hand(user)
 	else if(isrobot(user))

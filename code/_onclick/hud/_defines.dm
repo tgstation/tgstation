@@ -48,7 +48,7 @@
 #define ui_inv3 "CENTER:16,SOUTH:5"			//borgs
 #define ui_borg_module "CENTER+1:16,SOUTH:5" //borgs
 #define ui_borg_store "CENTER+2:16,SOUTH:5"	//borgs
-#define ui_mommi_panel "CENTER+1:16,SOUTH:5"
+#define ui_mommi_store "CENTER+1:16,SOUTH:5"
 #define ui_mommi_module "CENTER:16,SOUTH:5"
 #define ui_mommi_sight "CENTER-2:16,SOUTH:5"
 #define ui_mommi_hats "CENTER-3:16,SOUTH:5"

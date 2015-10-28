@@ -17,6 +17,7 @@
 	#define MESON_VISION 3 // Engineering borg and mommis
 	#define NIGHT 4 // night vision
 	#define THERMAL_VISION 5 // combat borgs thermals
+	var/global/list/vision_types_list = list("Security Hud","Medical Hud", "Meson Vision", "Night Vision", "Thermal Vision")
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 

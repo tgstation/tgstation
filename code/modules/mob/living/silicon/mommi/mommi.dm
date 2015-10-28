@@ -26,11 +26,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	mob_bump_flag = ROBOT
 	mob_swap_flags = ALLMOBS
 	mob_push_flags = 0
-	//var/obj/screen/inv_sight = null
 
-//one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
-	var/sight_state = null
 	var/head_state = null
 
 	modtype = "robot" // Not sure what this is, but might be cool to have seperate loadouts for MoMMIs (e.g. paintjobs and tools)
@@ -392,7 +389,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	<BR>
 	<B>Activated Modules</B>
 	<BR>
-	Sight Mode: [sight_state ? "<A HREF=?src=\ref[src];mod=\ref[sight_state]>[sight_state]</A>" : "No module selected"]<BR>
+	Sight Mode: <A HREF=?src=\ref[src];vision=0>[sensor_mode ? "[vision_types_list[sensor_mode]]" : "No sight module enabled"]</A><BR>
 	Utility Module: [tool_state ? "<A HREF=?src=\ref[src];mod=\ref[tool_state]>[tool_state]</A>" : "No module selected"]<BR>
 	<BR>
 	<B>Installed Modules</B><BR><BR>"}
