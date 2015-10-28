@@ -123,7 +123,7 @@ var/list/uplink_items = list()
 	desc = "A Trainer's belt containing 6 random hostile mobs loyal to you alone."
 	item = /obj/item/weapon/storage/belt/lazarus/antag
 	cost = 4
-	job = list("Shaft Miner")
+	job = list("Shaft Miner", "Quartermaster")
 
 //Clown
 /datum/uplink_item/jobspecific/clowngrenade
@@ -139,7 +139,7 @@ var/list/uplink_items = list()
 	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
 	item = /obj/item/device/detective_scanner/forger
 	cost = 3
-	job = list("Detective")
+	job = list("Detective", "Head of Security")
 
 /datum/uplink_item/jobspecific/conversionkit
 	name = "Conversion Kit Bundle"
@@ -221,9 +221,9 @@ var/list/uplink_items = list()
 //Medical Doctor
 /datum/uplink_item/jobspecific/wheelchair
 	name = "Syndicate Wheelchair"
-	desc = "A combat-mofidied motorized wheelchair pre-loaded with a hyper power cell. Forward thrust is sufficient to knock down and run over victims."
+	desc = "A combat-modified motorized wheelchair pre-loaded with a hyper power cell. Forward thrust is sufficient to knock down and run over victims."
 	item = /obj/item/syndicate_wheelchair_kit
-	cost = 6
+	cost = 5
 	job = list("Medical Doctor", "Chief Medical Officer")
 
 //Engineer
@@ -232,7 +232,7 @@ var/list/uplink_items = list()
 	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
 	item = /obj/item/clothing/gloves/yellow/power
 	cost = 7
-	job = list("Station Engineer","Chief Engineer")
+	job = list("Station Engineer", "Chief Engineer")
 
 //Atmos Tech
 /datum/uplink_item/jobspecific/contortionist
@@ -240,7 +240,7 @@ var/list/uplink_items = list()
 	desc = "A highly flexible jumpsuit that will help you navigate the ventilation loops of the station internally. Comes with pockets and ID slot, but can't be used without stripping off most gear, including backpack, belt, helmet, and exosuit. Free hands are also necessary to crawl around inside."
 	item = /obj/item/clothing/under/contortionist
 	cost = 7
-	job = list("Atmospheric Technician","Chief Engineer")
+	job = list("Atmospheric Technician", "Chief Engineer")
 
 //Geneticist
 /datum/uplink_item/jobspecific/radgun
@@ -248,7 +248,7 @@ var/list/uplink_items = list()
 	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/radgun
 	cost = 6
-	job = list("Geneticist", "Chief Medical Officer")
+	job = list("Geneticist", "Chief Medical Officer", "Research Director")
 
 //Atmospheric Technician
 /datum/uplink_item/jobspecific/flaregun
@@ -256,7 +256,7 @@ var/list/uplink_items = list()
 	desc = "A modified flaregun, identical in most appearances to the regular kind, as well as 7 rounds of flare ammunition. Capable of firing flares at lethal velocity, as well as firing shotgun ammunition."
 	item = /obj/item/weapon/storage/box/syndie_kit/flaregun
 	cost = 4
-	job = list("Atmospheric Technician")
+	job = list("Atmospheric Technician", "Chief Engineer")
 
 //Mechanic
 /datum/uplink_item/jobspecific/dev_analyser
@@ -264,7 +264,7 @@ var/list/uplink_items = list()
 	desc = "A device analyser with the safety features disabled. Allows the user to replicate any kind of Syndicate equipment."
 	item = /obj/item/device/device_analyser/syndicate
 	cost = 4
-	job = list("Mechanic")
+	job = list("Mechanic", "Chief Engineer", "Research Director")
 
 //IAA - Internal Affairs Agent
 /datum/uplink_item/jobspecific/briefcase_smg
