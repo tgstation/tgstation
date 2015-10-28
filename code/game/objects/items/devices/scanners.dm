@@ -377,6 +377,7 @@ MASS SPECTROMETER
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
+	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=1"

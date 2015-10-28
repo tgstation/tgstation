@@ -693,7 +693,7 @@
 		if(!M.suiciding && !(M.disabilities & NOCLONE))
 			if(!M)
 				return
-			if(M.notify_ghost_cloning())
+			if(M.notify_ghost_cloning(source = M))
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
