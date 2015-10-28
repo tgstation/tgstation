@@ -123,7 +123,7 @@ var/list/uplink_items = list()
 	desc = "A Trainer's belt containing 6 random hostile mobs loyal to you alone."
 	item = /obj/item/weapon/storage/belt/lazarus/antag
 	cost = 4
-	job = list("Shaft Miner", "Quartermaster")
+	job = list("Shaft Miner")
 
 //Clown
 /datum/uplink_item/jobspecific/clowngrenade
@@ -139,7 +139,7 @@ var/list/uplink_items = list()
 	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
 	item = /obj/item/device/detective_scanner/forger
 	cost = 3
-	job = list("Detective", "Head of Security")
+	job = list("Detective")
 
 /datum/uplink_item/jobspecific/conversionkit
 	name = "Conversion Kit Bundle"
@@ -248,7 +248,7 @@ var/list/uplink_items = list()
 	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/radgun
 	cost = 6
-	job = list("Geneticist", "Chief Medical Officer", "Research Director")
+	job = list("Geneticist", "Chief Medical Officer")
 
 //Atmospheric Technician
 /datum/uplink_item/jobspecific/flaregun
@@ -256,7 +256,7 @@ var/list/uplink_items = list()
 	desc = "A modified flaregun, identical in most appearances to the regular kind, as well as 7 rounds of flare ammunition. Capable of firing flares at lethal velocity, as well as firing shotgun ammunition."
 	item = /obj/item/weapon/storage/box/syndie_kit/flaregun
 	cost = 4
-	job = list("Atmospheric Technician", "Chief Engineer")
+	job = list("Atmospheric Technician")
 
 //Mechanic
 /datum/uplink_item/jobspecific/dev_analyser
@@ -264,7 +264,7 @@ var/list/uplink_items = list()
 	desc = "A device analyser with the safety features disabled. Allows the user to replicate any kind of Syndicate equipment."
 	item = /obj/item/device/device_analyser/syndicate
 	cost = 4
-	job = list("Mechanic", "Chief Engineer", "Research Director")
+	job = list("Mechanic")
 
 //IAA - Internal Affairs Agent
 /datum/uplink_item/jobspecific/briefcase_smg
