@@ -96,12 +96,12 @@
 			charge_counter = charge_max
 			return
 		user << "<span class='info'>You have unlocked Defile!</span>"
-		name = "Defile (20E)"
+		name = "Defile (30E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
 		return
-	if(!user.castcheck(-20))
+	if(!user.castcheck(-30))
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
@@ -149,12 +149,12 @@
 			charge_counter = charge_max
 			return
 		user << "<span class='info'>You have unlocked Malfunction!</span>"
-		name = "Malfunction (20E)"
+		name = "Malfunction (45E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
 		return
-	if(!user.castcheck(-20))
+	if(!user.castcheck(-45))
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
