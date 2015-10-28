@@ -11,6 +11,7 @@
 			var/mob/dead/observer/G = src.mob
 			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
 				log_admin("[key_name(usr)] checked advanced who in-round")
+				message_admins("[key_name_admin(usr)] checked advanced who in-round")
 			for(var/client/C in clients)
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
