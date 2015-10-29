@@ -181,10 +181,21 @@
 	category				= "Regular pipes"
 	flags					= RCD_RANGE | RCD_GET_TURF
 
-	var/pipe_id			= PIPE_SIMPLE_STRAIGHT
-	var/pipe_type		= PIPE_BINARY
-	var/selected_dir	= NORTH
+	var/pipe_id				= PIPE_SIMPLE_STRAIGHT
+	var/pipe_type			= PIPE_BINARY
+	var/selected_dir		= NORTH
 	var/layer				= PIPING_LAYER_DEFAULT //Layer selected, at 0, no layer picker will be available (disposals).
+
+/datum/rcd_schematic/pipe/New(var/obj/item/device/rcd/n_master)
+	. = ..()
+	if(n_master) // So we don't do this in case we're created for asset registering.
+		selected_dir = get_base_dir()
+	
+/datum/rcd_schematic/pipe/proc/get_base_dir()
+	if(pipe_type == PIPE_BENT)
+		return NORTHEAST
+
+	return NORTH
 
 /datum/rcd_schematic/pipe/register_assets()
 	var/list/dir_list = get_dirs()
@@ -200,6 +211,10 @@
 
 	send_asset(client, "RPD-layer-blended-1.png")
 	send_asset(client, "RPD-layer-blended-4.png")
+
+	send_asset(client, "RPD_0_4.png")
+	send_asset(client, "RPD_0_1.png")
+
 
 /datum/rcd_schematic/pipe/proc/get_dirs()
 	switch(pipe_type)
@@ -229,7 +244,8 @@
 
 	. += "<h4>Layers</h4>"
 
-	. += {"
+	if(layer)
+		. += {"
 		<div class="layer_holder">
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=1"><div class="layer vertical one 			[layer == 1 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=2"><div class="layer vertical two 			[layer == 2 ? "selected" : ""]"></div></a>
@@ -252,41 +268,41 @@
 
 	switch(pipe_type)
 		if(PIPE_BINARY)
-			. += render_dir_image(NORTH,	"Vertical")
-			. += render_dir_image(EAST,		"Horizontal")
+			. += render_dir_image(NORTH,		"Vertical")
+			. += render_dir_image(EAST,			"Horizontal")
 
 		if(PIPE_UNARY)
-			. += render_dir_image(NORTH,	"North")
-			. += render_dir_image(EAST,		"East")
-			. += render_dir_image(SOUTH,	"South")
-			. += render_dir_image(WEST,		"West")
+			. += render_dir_image(NORTH,		"North")
+			. += render_dir_image(EAST,			"East")
+			. += render_dir_image(SOUTH,		"South")
+			. += render_dir_image(WEST,			"West")
 
 		if(PIPE_BENT)
-			. += render_dir_image(9,		"West to North")
-			. += render_dir_image(5,		"North to East")
+			. += render_dir_image(NORTHWEST,	"West to North")
+			. += render_dir_image(NORTHEAST,	"North to East")
 			. += "<br/>"
-			. += render_dir_image(10,		"South to West")
-			. += render_dir_image(6,		"East to South")
+			. += render_dir_image(SOUTHWEST,	"South to West")
+			. += render_dir_image(SOUTHEAST,	"East to South")
 
 		if(PIPE_TRINARY)
-			. += render_dir_image(NORTH,	"West South East")
-			. += render_dir_image(EAST,		"North West South")
+			. += render_dir_image(NORTH,		"West South East")
+			. += render_dir_image(EAST,			"North West South")
 			. += "<br/>"
-			. += render_dir_image(SOUTH,	"East North West")
-			. += render_dir_image(WEST,		"South East North")
+			. += render_dir_image(SOUTH,		"East North West")
+			. += render_dir_image(WEST,			"South East North")
 
 		if(PIPE_TRIN_M)
-			. += render_dir_image(NORTH,	"West South East")
-			. += render_dir_image(EAST,		"North West South")
+			. += render_dir_image(NORTH,		"West South East")
+			. += render_dir_image(EAST,			"North West South")
 			. += "<br/>"
-			. += render_dir_image(SOUTH,	"East North West")
-			. += render_dir_image(WEST,		"South East North")
+			. += render_dir_image(SOUTH,		"East North West")
+			. += render_dir_image(WEST,			"South East North")
 			. += "<br/>"
-			. += render_dir_image(6,		"West South East")
-			. += render_dir_image(5,		"North West South")
+			. += render_dir_image(6,			"West South East")
+			. += render_dir_image(5,			"North West South")
 			. += "<br/>"
-			. += render_dir_image(9,		"East North West")
-			. += render_dir_image(10,		"South East North")
+			. += render_dir_image(9,			"East North West")
+			. += render_dir_image(10,			"South East North")
 
 	. += "</p>"
 
@@ -329,6 +345,16 @@
 	P.update()
 	P.add_fingerprint(user)
 
+/datum/rcd_schematic/pipe/select(var/mob/user, var/datum/rcd_schematic/old_schematic)
+	if(!istype(old_schematic, /datum/rcd_schematic/pipe))
+		return ..()
+
+	var/datum/rcd_schematic/pipe/P = old_schematic
+	if(P.layer)
+		layer = P.layer
+
+	return ..()
+	
 //Disposal piping.
 /datum/rcd_schematic/pipe/disposal
 	category		= "Disposal Pipes"
@@ -455,7 +481,8 @@ var/global/list/disposalpipeID2State = list(
 	pipe_type	= PIPE_UNARY
 
 /datum/rcd_schematic/pipe/layer_adapter/register_icon(var/dir)
-	register_asset("RPD_[pipe_id]_[dir]_[layer].png", new/icon('icons/obj/atmospherics/pipe_adapter.dmi', "adapter_[layer]", dir))
+	for(var/layer = PIPING_LAYER_MIN to PIPING_LAYER_MAX)
+		register_asset("RPD_[pipe_id]_[dir]_[layer].png", new/icon('icons/obj/atmospherics/pipe_adapter.dmi', "adapter_[layer]", dir))
 
 /datum/rcd_schematic/pipe/layer_adapter/send_icon(var/client/client, var/dir)
 	send_asset(client, "RPD_[pipe_id]_[dir]_[layer].png")

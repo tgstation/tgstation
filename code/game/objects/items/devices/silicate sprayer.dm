@@ -76,13 +76,17 @@
 	if(!iswindow(A)) // We can only fix windows.
 		return
 
+	if(!get_amount())
+		user << "<span class='notice'>\The [src] is out of silicate!</span>"
+		return 1
+
 	var/obj/structure/window/W = A
 
 	var/diff = initial(W.health) - W.health
 	if(!diff) // Not damaged.
 		user << "<span class='notice'>\The [W] is already in perfect condition!</span>"
 		return 1
-
+		
 	diff = min(diff, get_amount() / SILICATE_PER_DAMAGE)
 		
 	W.health += diff
@@ -134,6 +138,10 @@
 
 	if(!iswindow(A))
 		return
+
+	if(!get_amount())
+		user << "<span class='notice'>\The [src] is out of silicate!</span>"
+		return 1
 
 	var/obj/structure/window/W = A
 	var/initial_health = initial(W.health)
