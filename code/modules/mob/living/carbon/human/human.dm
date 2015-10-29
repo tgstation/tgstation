@@ -25,6 +25,7 @@
 	/obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)*/
 
 	organsystem = new/datum/organsystem/humanoid/human
+	organsystem.set_owner(src)
 
 	//YES THIS IS KIND OF WEIRD but it's how BYOND works, I would have much rather used getorgan().set_organitem |- Ricotez
 	var/datum/organ/setter
@@ -51,11 +52,6 @@
 	setter = getorgan("brain")
 	setter.set_organitem(new/obj/item/organ/internal/brain)
 
-	for(var/datum/organ/limb/O in organsystem.organlist)
-		O.owner = src
-		if(O.organitem)
-			O.organitem.owner = src
-
 	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
 	internal_organs += getorgan("appendix")
 	internal_organs += getorgan("heart")
@@ -71,6 +67,8 @@
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 	internal_organs += new /obj/item/organ/butt //Could be argued to not actually be an internal organ
+
+	update_body_parts()
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)

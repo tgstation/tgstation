@@ -8,6 +8,14 @@
 	w_class = 2
 	var/w_class_on = 4
 
+	can_dismember = 1
+	can_behead = 1
+	dismember_threshold = 0
+	behead_threshold = 20
+	dismember_prob = 50
+	behead_prob = 25
+	dismember_nobleed = 1 //Limbs cut off by an esword are instantly cauterized.
+
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \

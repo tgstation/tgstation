@@ -27,6 +27,18 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 
+	//This whole part assumes monkeys don't have organsystems yet, and dumps robotic limbs on the floor
+	//while destroying the rest of the organsystem.
+	//Please change this once monkeys get their own organsystems. |- Ricotez
+	if(organsystem)
+		var/list/checklist = new/list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg" ) //Organs we have to check for being robotic limbs.
+		for(var/organname in checklist)
+			var/datum/organ/O = organsystem.organlist[organname]
+			if(O.status & ORGAN_ROBOTIC) //We dump robotic limbs on the floor.
+				visible_message("<span class='notice'>The [O.name] falls to the floor.</span>", "<span class='notice'>Your [O.name] disconnects from your body and falls to the floor.</span>")
+				O.dismember(ORGAN_REMOVED)
+		qdel(organsystem) //We delete the organsystem for now. Once monkeys get their own organsystem, we will have to transfer and update the organs instead. |- Ricotez
+
 	//Make mob invisible and spawn animation
 	regenerate_icons()
 	notransform = 1
@@ -161,7 +173,7 @@
 	animation.master = src
 	flick("monkey2h", animation)
 	sleep(22)
-	var/mob/living/carbon/human/O = new( loc )
+	var/mob/living/carbon/human/O = new( loc )	//This also creates a new organsystem. If monkeys get their own organsystem we will have to transfer and update the organs instead. |- Ricotez
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
 	qdel(animation)
@@ -252,6 +264,7 @@
 		return
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)
 
 	return ..()
 
@@ -340,6 +353,7 @@
 	invisibility = 101
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
@@ -386,6 +400,7 @@
 	invisibility = 101
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
 
@@ -421,6 +436,7 @@
 	invisibility = 101
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)	//Until ayy lmaos have an organsystem
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -451,6 +467,7 @@
 	invisibility = 101
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -498,6 +515,7 @@
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
+	qdel(organsystem)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "harm"
@@ -529,6 +547,7 @@
 
 	for(var/t in organs)
 		qdel(t)
+	qdel(organsystem)
 
 	var/mob/new_mob = new mobpath(src.loc)
 

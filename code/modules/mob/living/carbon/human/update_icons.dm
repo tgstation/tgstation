@@ -181,7 +181,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(dna)
 		dna.species.handle_body(src)
 
-/mob/living/carbon/human/proc/update_body_parts()
+//Temporary solution for a type problem. This will be resolved once I expand organsystems to all subtypes of carbon. |- Ricotez
+/mob/living/carbon/proc/update_body_parts()
+	return
+
+/mob/living/carbon/human/update_body_parts()
 	icon_state = ""//Reset here as apposed to having a null one due to some getFlatIcon calls at roundstart.
 
 	//CHECK FOR UPDATE

@@ -1372,6 +1372,7 @@
 #include "code\modules\organs\augments_external.dm"
 #include "code\modules\organs\augments_eyes.dm"
 #include "code\modules\organs\augments_internal.dm"
+#include "code\modules\organs\dismemberment.dm"
 #include "code\modules\organs\helpers.dm"
 #include "code\modules\organs\organdata.dm"
 #include "code\modules\organs\organdata_limbs.dm"

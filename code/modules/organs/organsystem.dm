@@ -9,9 +9,16 @@
 
 /datum/organsystem
 	var/list/organlist = new/list()
+	var/mob/owner = null
 
 /datum/organsystem/proc/getorgan(name)
 	return organlist["[name]"]
+
+/datum/organsystem/proc/set_owner(var/mob/O)
+	owner = O
+	for(var/limbname in organlist)
+		var/datum/organ/organdata = organlist[limbname]
+		organdata.owner = O
 
 /datum/organsystem/Destroy()
 	for(var/datum/organ/O in organlist)
@@ -23,17 +30,19 @@
 /datum/organsystem/humanoid //All humanoids have the following basic structure.
 
 	New()
+		..()
 		organlist["chest"]	= new/datum/organ/limb/chest/()
 		organlist["head"]	= new/datum/organ/limb/head/(getorgan("chest"))
 		organlist["l_arm"]	= new/datum/organ/limb/l_arm/(getorgan("chest"))
 		organlist["r_arm"]	= new/datum/organ/limb/r_arm/(getorgan("chest"))
 		organlist["l_leg"]	= new/datum/organ/limb/l_leg/(getorgan("chest"))
 		organlist["r_leg"]	= new/datum/organ/limb/r_leg/(getorgan("chest"))
-		organlist["brain"]	= new/datum/organ/brain/(getorgan("head"))
+		organlist["brain"]	= new/datum/organ/internal/brain/(getorgan("head"))
 
-/datum/organsystem/humanoid/human //Only humans have appendices and hearts.
+/datum/organsystem/humanoid/human //Only humans have appendices, hearts and butts.
 
 	New()
 		..()
-		organlist["appendix"]	= new/datum/organ/appendix/(getorgan("chest"))
-		organlist["heart"]		= new/datum/organ/heart/(getorgan("chest"))
+		organlist["appendix"]	= new/datum/organ/internal/appendix/(getorgan("chest"))
+		organlist["heart"]		= new/datum/organ/internal/heart/(getorgan("chest"))
+		organlist["butt"]		= new/datum/organ/butt/(getorgan("chest"))

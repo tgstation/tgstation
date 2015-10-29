@@ -44,6 +44,24 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
+/mob/living/carbon/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+	if(organsystem)
+		if(def_zone == "groin")
+			def_zone = "chest"
+		var/datum/organ/limb/L = getorgan(def_zone)
+		if(!L.exists())
+			return
+		else
+			var/datum/organ/O = I.handle_dismemberment(getorgan(def_zone))
+			if(O)
+				visible_message("<span class='danger'>[user]'s [O.name] goes flying off!</span>", "<span class='userdanger'>Your [O.name] goes flying off!</span>")
+				var/turf/location = src.loc
+				if(istype(location, /turf/simulated))
+					location.add_blood_floor(src)
+			else
+				..() //We only make the recursive call if dismemberment failed, because that means the attack continues like it normally would.
+	else
+		..() //If the mob has no organsystem, dismemberment is not possible.
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

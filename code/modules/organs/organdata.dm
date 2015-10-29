@@ -11,7 +11,7 @@
 
 /datum/organ
 	var/name = "organ"
-	var/mob/owner = null
+	var/mob/living/carbon/owner = null
 	var/status = ORGAN_REMOVED		//Status of organ. 0 is a normal, human organ, but it starts out at ORGAN_REMOVED in case you want to add empty organ slots to an organsystem. See _DEFINES/organ.dm for possible statuses..
 	var/vital = 0					//Whether this organ is vital. Doesn't do anything right now, if it stays that way this can be removed. |- Ricotez
 	var/destroyed_dam = 0 			//Amount of (brute) damage to count in damage checks if status of this organ is set to ORGAN_DESTROYED. Only applies to limbs right now. |- Ricotez
@@ -35,22 +35,16 @@
 		parent.children.Add(src)
 	return ..()
 
-/datum/organ/proc/remove_organitem() //Use this for surgical removal of an organ. Don't forget to do something about the organitem.
-	status = ORGAN_REMOVED
-	var/obj/item/organ/O = organitem
-	organitem = null
-	return O
-
-/datum/organ/proc/destroy_organitem() //Use this for forceful removal of an organ. Does not actually destroy the organ, you will have to qdel the return value for that.
-	status = ORGAN_DESTROYED
-	var/obj/item/organ/O = organitem
-	organitem = null
-	return O
+/datum/organ/proc/regenerate_organitem()
+	var/obj/item/organ/neworgan = new organitem_type
+	set_organitem(neworgan)
 
 /datum/organ/proc/set_organitem(var/obj/item/organ/O) //Sets this organ's organitem, but only if it does not already have an organitem.
 	if(O && !organitem && istype(O, organitem_type))
 		organitem = O
 		status = organitem.status
+		organitem.owner = owner
+		organitem.organdatum = src
 
 /datum/organ/proc/exists() //Decide whether this organ has a pysical representation in the body right now.
 	return organitem && !(status & ORGAN_DESTROYED) && !(status & ORGAN_REMOVED) && !(status & ORGAN_NOBLEED)
@@ -58,17 +52,38 @@
 	//But in case you want to test something, you can also just set a limb's status to one of these flags by varediting it without removing the physical item.
 	//As far as the code is concerned, the limb is missing if any of those are true. The damage won't even be counted.
 
+//Call this proc with the type of dismemberment that happens and it will send the organitem to the ground below the target.
+/datum/organ/proc/dismember(var/dism_type)
+	if(exists())
+		status = dism_type
+		organitem.status = dism_type
+		organitem.owner = null
+		organitem.organdatum = null
+		organitem.loc = owner.loc
+		var/obj/item/organ/O = organitem //We save the organ to a separate var...
+		organitem = null //...so we can delete its reference here.
+		O.organdatum = null
+		owner.update_body_parts() //Obviously we need to update the icon.
+		return O //We return the organ object in case we want some information from it.
+	else
+		return null //If dismemberment failed because the limb does not exist, we return null.
 
-/datum/organ/brain
+/datum/organ/butt
+	name = "butt"
+	organitem_type = /obj/item/organ/butt
+
+/datum/organ/internal/brain
 	name = "brain"
 	vital = 1
 	organitem_type = /obj/item/organ/internal/brain
 
-/datum/organ/heart
+/datum/organ/internal/heart
 	name = "heart"
 	vital = 1
 	organitem_type = /obj/item/organ/internal/heart
 
-/datum/organ/appendix
+/datum/organ/internal/appendix
 	name = "appendix"
 	organitem_type = /obj/item/organ/internal/appendix
+
+
