@@ -1,0 +1,12 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed gold slime monsters attacking adamantine golems.
+  - bugfix: Improved a bunch of code related to hostile mob target acquisition.
+  - rscadd: Rabid slimes now remember their friends and don't attack them. This should ease the task of good xenobiologists, and even add more use to rabid slimes.
+  - rscadd: Simple Animals can now deal damage other than brute.
+  - rscadd: Rabid slimes for instance now deal clone damage instead of brute. They also now move on top of their target.
+  - rscadd: Simple Animal Aliens now take double damage from burn sources.
+  - bugfix: Simple Animal Aliens now use the proper deaths sprites, instead of the deprecated sideway ones.
+  - rscadd: Simple Animal Aliens can finally be meat-spiked.
+  - rscadd: Simple Animal Aliens no longer attack Carbon Aliens.
