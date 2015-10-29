@@ -4239,7 +4239,7 @@
 "bDA" = (/obj/structure/table,/obj/item/weapon/crowbar,/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/obj/item/clothing/gloves/color/fyellow,/turf/simulated/floor/plasteel,/area/storage/primary)
 "bDB" = (/obj/structure/table,/obj/item/weapon/storage/belt/utility,/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/plasteel,/area/storage/primary)
 "bDC" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plasteel,/area/storage/primary)
-"bDD" = (/turf/simulated/floor/plasteel{icon_state = "delivery"},/area/storage/primary)
+"bDD" = (/obj/machinery/autolathe{icon_state = "autolathe"; name = "public autolathe"},/turf/simulated/floor/plasteel{icon_state = "delivery"},/area/storage/primary)
 "bDE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/storage/primary)
 "bDF" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel,/area/storage/primary)
 "bDG" = (/obj/structure/bed/chair{dir = 4},/obj/machinery/newscaster{pixel_x = -32; pixel_y = 0},/turf/simulated/floor/plasteel/black,/area/hallway/primary/central)
