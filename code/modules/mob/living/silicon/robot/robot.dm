@@ -237,7 +237,7 @@
 	if(forced_module)
 		modtype = forced_module
 	else
-		modtype = input("Please, select a module!", "Robot", null, null) in modules
+		modtype = input("Please, select a module!", "Robot", null, null) as null|anything in modules
 	// END forced modules.
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.

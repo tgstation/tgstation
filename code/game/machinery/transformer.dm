@@ -157,7 +157,7 @@
 		if("force_class")
 			var/list/modules = list("(Robot's Choice)")
 			modules += getAvailableRobotModules()
-			var/sel_mod = input("Please, select a module!", "Robot", null, null) in modules
+			var/sel_mod = input("Please, select a module!", "Robot", null, null) as null|anything in modules
 			if(sel_mod == "(Robot's Choice)")
 				force_borg_module = null
 			else

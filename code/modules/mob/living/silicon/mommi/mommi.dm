@@ -121,7 +121,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 	var/list/modules = list("MoMMI")
 	if(modules.len)
-		modtype = input("Please, select a module!", "Robot", null, null) in modules
+		modtype = input("Please, select a module!", "Robot", null, null) as null|anything in modules
 	else
 		modtype=modules[0]
 
