@@ -43,7 +43,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
-	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -331,8 +330,6 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
-				if("tickcomp")
-					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
