@@ -8,7 +8,7 @@
 			H = M
 			affecting = H.get_organ(check_zone(selected_zone))
 
-		if(M.lying || isslime(M))	//if they're prone or a slime
+		if(M.lying || isslime(M) || M == user)	//if they're prone, a slime, or self-surgery
 			var/datum/surgery/current_surgery
 
 			for(var/datum/surgery/S in M.surgeries)
