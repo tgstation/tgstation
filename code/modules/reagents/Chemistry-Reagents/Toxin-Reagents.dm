@@ -620,7 +620,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-/datum/reagent/toxin/acid/reaction_mob(mob/living/C, method=TOUCH, reac_volume)
+/datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
 		return
 	reac_volume = round(reac_volume,0.1)
