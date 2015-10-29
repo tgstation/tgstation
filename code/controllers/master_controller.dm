@@ -217,14 +217,6 @@ datum/controller/game_controller/proc/cachedamageicons()
 	log_startup_progress("  Initialized [count] atmos devices in [stop_watch(watch)]s.")
 
 	watch = start_watch()
-	log_startup_progress("Sending assets to clients...")
-	// MOVED from minimap hell.
-	for (var/client/C in clients)
-		C.send_html_resources()
-	log_startup_progress("  Finished sending assets in [stop_watch(watch)]s.")
-
-
-	watch = start_watch()
 	log_startup_progress("Generating in-game minimaps...")
 	generateMiniMaps()
 	log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
