@@ -40,16 +40,17 @@
 		SetLuminosity(brightness_on)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
-	if(msg && ishuman(loc))
-		loc << "\icon[src] <b><span class='robot'>[msg]</span></b>"
+	var/mob/wearer = loc
+	if(msg && ishuman(wearer))
+		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
-	display_visor_message("Radiation pulse detected! Magnitide: [severity] RADs.")
+	display_visor_message("Radiation pulse detected! Magnitide: <span class='green'>[severity]</span> RADs.")
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()
-	display_visor_message("[severity > 1 ? "Light" : "Heavy"] electromagnetic pulse detected!")
+	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
 
 
 /obj/item/clothing/suit/space/hardsuit

@@ -88,7 +88,7 @@ var/list/doppler_arrays = list()
 		var/obj/item/clothing/head/helmet/space/hardsuit/helm = loc
 		if(!helm || !istype(helm, /obj/item/clothing/head/helmet/space/hardsuit))
 			return
-		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shockwave: [light_impact_range]")
+		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
 	else
 		for(var/message in messages)
 			say(message)
