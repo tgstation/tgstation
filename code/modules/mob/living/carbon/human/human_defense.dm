@@ -130,6 +130,9 @@ emp_act
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
 
+	if(try_dismember(I, user, check_zone(user.zone_sel.selecting)))
+		return	//If dismemberment succeeds stop here
+
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
@@ -461,3 +464,23 @@ emp_act
 		..()
 
 	return
+
+/mob/living/carbon/human/proc/try_dismember(var/obj/item/I, var/mob/living/user, zone)
+	if(organsystem)
+		if(zone == "groin")
+			zone = "chest"
+		var/datum/organ/limb/L = getorgan(zone)
+		if(!L.exists())
+			return 0
+		else
+			var/datum/organ/O = I.handle_dismemberment(L)
+			if(O)
+				visible_message("<span class='danger'>[user]'s [O.name] goes flying off!</span>", "<span class='userdanger'>Your [O.name] goes flying off!</span>")
+				var/turf/location = src.loc
+				if(istype(location, /turf/simulated))
+					location.add_blood_floor(src)
+				return 1	//Dismemberment succesful
+			else
+				return 0 //Attack continues normally
+	else
+		return 0 //If the mob has no organsystem, dismemberment is not possible.

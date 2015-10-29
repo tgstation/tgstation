@@ -250,7 +250,7 @@
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
-	if((lfoot.exists() || rfoot.exists()) && H.socks)
+	if(lfoot.exists() && rfoot.exists() && H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)

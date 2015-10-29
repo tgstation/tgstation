@@ -48,7 +48,7 @@
 	if(organsystem)
 		if(def_zone == "groin")
 			def_zone = "chest"
-		var/datum/organ/limb/L = getorgan(def_zone)
+		var/datum/organ/limb/L = getorgan(check_zone(user.zone_sel.selecting))
 		if(!L.exists())
 			return
 		else
