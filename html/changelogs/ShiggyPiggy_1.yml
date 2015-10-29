@@ -1,0 +1,4 @@
+author: ShiggyPiggy
+changes: 
+ -bugfix: Fixed the leather shoes showing a pixel of skin.
+delete-after: true
