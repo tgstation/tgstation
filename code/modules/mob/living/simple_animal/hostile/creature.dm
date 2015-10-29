@@ -32,6 +32,12 @@
 
 	supernatural = 1
 
+/mob/living/simple_animal/hostile/creature/cult/CanAttack(var/atom/the_target)
+	//IF WE ARE CULT MONSTERS (those who spawn after Nar-Sie has risen) THEN WE DON'T ATTACK CULTISTS
+	if(iscultist(the_target))
+		return 0
+	return ..(the_target)
+
 /mob/living/simple_animal/hostile/creature/cult/cultify()
 	return
 

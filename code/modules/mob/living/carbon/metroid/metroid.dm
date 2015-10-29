@@ -1126,18 +1126,22 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return
 	if(client)
 		return
+
+	var/rabid_type = /mob/living/simple_animal/hostile/slime
+	var/rabid_age = "baby"
 	if(isslimeadult(src))
-		var/mob/living/simple_animal/hostile/slime/adult/pet = new /mob/living/simple_animal/hostile/slime/adult(loc)
-		pet.icon_state = "[colour] adult slime eat"
-		pet.icon_living = "[colour] adult slime eat"
-		pet.icon_dead = "[colour] baby slime dead"
-		pet.colour = "[colour]"
-	else
-		var/mob/living/simple_animal/hostile/slime/pet = new /mob/living/simple_animal/hostile/slime(loc)
-		pet.icon_state = "[colour] baby slime eat"
-		pet.icon_living = "[colour] baby slime eat"
-		pet.icon_dead = "[colour] baby slime dead"
-		pet.colour = "[colour]"
+		rabid_type = /mob/living/simple_animal/hostile/slime/adult
+		rabid_age = "adult"
+
+	var/mob/living/simple_animal/hostile/slime/rabid = new rabid_type(loc)
+	rabid.icon_state = "[colour] [rabid_age] slime eat"
+	rabid.icon_living = "[colour] [rabid_age] slime eat"
+	rabid.icon_dead = "[colour] baby slime dead"
+	rabid.colour = "[colour]"
+
+	for(var/mob/M in Friends)
+		rabid.friends += M
+
 	del (src)
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////

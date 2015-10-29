@@ -38,6 +38,8 @@
 	search_objects = 0
 	wanted_objects = list(/obj/machinery/atmospherics/unary/vent_pump)
 
+	environment_smash = 0//spiderlings cannot smash tables and windows anymore when getting stomped
+
 /mob/living/simple_animal/hostile/giant_spider/spiderling/New()
 	..()
 	pixel_x = rand(6,-6)

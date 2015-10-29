@@ -41,16 +41,14 @@
 
 
 /mob/living/simple_animal/hostile/slime/adult/Die()
-	var/mob/living/simple_animal/hostile/slime/S1 = new /mob/living/simple_animal/hostile/slime (src.loc)
-	S1.icon_state = "[src.colour] baby slime eat"
-	S1.icon_living = "[src.colour] baby slime eat"
-	S1.icon_dead = "[src.colour] baby slime dead"
-	S1.colour = "[src.colour]"
-	var/mob/living/simple_animal/hostile/slime/S2 = new /mob/living/simple_animal/hostile/slime (src.loc)
-	S2.icon_state = "[src.colour] baby slime eat"
-	S2.icon_living = "[src.colour] baby slime eat"
-	S2.icon_dead = "[src.colour] baby slime dead"
-	S2.colour = "[src.colour]"
+	for(var/i=0;i<2;i++)
+		var/mob/living/simple_animal/hostile/slime/rabid = new /mob/living/simple_animal/hostile/slime (src.loc)
+		rabid.icon_state = "[src.colour] baby slime eat"
+		rabid.icon_living = "[src.colour] baby slime eat"
+		rabid.icon_dead = "[src.colour] baby slime dead"
+		rabid.colour = "[src.colour]"
+		for(var/mob/M in friends)
+			rabid.friends += M
 	del(src)
 
 /mob/living/simple_animal/hostile/slime/Life()
@@ -61,93 +59,105 @@
 
 /mob/living/simple_animal/hostile/slime/proc/calm()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")
+	var/calmed_type = /mob/living/carbon/slime
 	switch(colour)
 		if("grey")
-			new /mob/living/carbon/slime(loc)
+			calmed_type =  /mob/living/carbon/slime
 		if("metal")
-			new /mob/living/carbon/slime/metal(loc)
+			calmed_type =  /mob/living/carbon/slime/metal
 		if("orange")
-			new /mob/living/carbon/slime/orange(loc)
+			calmed_type =  /mob/living/carbon/slime/orange
 		if("purple")
-			new /mob/living/carbon/slime/purple(loc)
+			calmed_type =  /mob/living/carbon/slime/purple
 		if("blue")
-			new /mob/living/carbon/slime/blue(loc)
+			calmed_type =  /mob/living/carbon/slime/blue
 		if("dark purple")
-			new /mob/living/carbon/slime/darkpurple(loc)
+			calmed_type =  /mob/living/carbon/slime/darkpurple
 		if("dark blue")
-			new /mob/living/carbon/slime/darkblue(loc)
+			calmed_type =  /mob/living/carbon/slime/darkblue
 		if("yellow")
-			new /mob/living/carbon/slime/yellow(loc)
+			calmed_type =  /mob/living/carbon/slime/yellow
 		if("silver")
-			new /mob/living/carbon/slime/silver(loc)
+			calmed_type =  /mob/living/carbon/slime/silver
 		if("gold")
-			new /mob/living/carbon/slime/gold(loc)
+			calmed_type =  /mob/living/carbon/slime/gold
 		if("pink")
-			new /mob/living/carbon/slime/pink(loc)
+			calmed_type =  /mob/living/carbon/slime/pink
 		if("red")
-			new /mob/living/carbon/slime/red(loc)
+			calmed_type =  /mob/living/carbon/slime/red
 		if("green")
-			new /mob/living/carbon/slime/green(loc)
+			calmed_type =  /mob/living/carbon/slime/green
 		if("light pink")
-			new /mob/living/carbon/slime/lightpink(loc)
+			calmed_type =  /mob/living/carbon/slime/lightpink
 		if("oil")
-			new /mob/living/carbon/slime/oil(loc)
+			calmed_type =  /mob/living/carbon/slime/oil
 		if("black")
-			new /mob/living/carbon/slime/black(loc)
+			calmed_type =  /mob/living/carbon/slime/black
 		if("adamantine")
-			new /mob/living/carbon/slime/adamantine(loc)
+			calmed_type =  /mob/living/carbon/slime/adamantine
 		if("bluespace")
-			new /mob/living/carbon/slime/bluespace(loc)
+			calmed_type =  /mob/living/carbon/slime/bluespace
 		if("pyrite")
-			new /mob/living/carbon/slime/pyrite(loc)
+			calmed_type =  /mob/living/carbon/slime/pyrite
 		if("cerulean")
-			new /mob/living/carbon/slime/cerulean(loc)
+			calmed_type =  /mob/living/carbon/slime/cerulean
 		if("sepia")
-			new /mob/living/carbon/slime/sepia(loc)
+			calmed_type =  /mob/living/carbon/slime/sepia
+
+	var/mob/living/carbon/slime/calmed = new calmed_type(loc)
+	for(var/mob/M in friends)
+		calmed.Friends += M
+
 	del(src)
 
 /mob/living/simple_animal/hostile/slime/adult/calm()
+	var/calmed_type = /mob/living/carbon/slime
 	switch(colour)
 		if("grey")
-			new /mob/living/carbon/slime/adult(loc)
+			calmed_type =  /mob/living/carbon/slime/adult
 		if("metal")
-			new /mob/living/carbon/slime/adult/metal(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/metal
 		if("orange")
-			new /mob/living/carbon/slime/adult/orange(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/orange
 		if("purple")
-			new /mob/living/carbon/slime/adult/purple(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/purple
 		if("blue")
-			new /mob/living/carbon/slime/adult/blue(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/blue
 		if("dark purple")
-			new /mob/living/carbon/slime/adult/darkpurple(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/darkpurple
 		if("dark blue")
-			new /mob/living/carbon/slime/adult/darkblue(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/darkblue
 		if("yellow")
-			new /mob/living/carbon/slime/adult/yellow(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/yellow
 		if("silver")
-			new /mob/living/carbon/slime/adult/silver(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/silver
 		if("gold")
-			new /mob/living/carbon/slime/adult/gold(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/gold
 		if("pink")
-			new /mob/living/carbon/slime/adult/pink(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/pink
 		if("red")
-			new /mob/living/carbon/slime/adult/red(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/red
 		if("green")
-			new /mob/living/carbon/slime/adult/green(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/green
 		if("light pink")
-			new /mob/living/carbon/slime/adult/lightpink(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/lightpink
 		if("oil")
-			new /mob/living/carbon/slime/adult/oil(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/oil
 		if("black")
-			new /mob/living/carbon/slime/adult/black(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/black
 		if("adamantine")
-			new /mob/living/carbon/slime/adult/adamantine(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/adamantine
 		if("bluespace")
-			new /mob/living/carbon/slime/adult/bluespace(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/bluespace
 		if("pyrite")
-			new /mob/living/carbon/slime/adult/pyrite(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/pyrite
 		if("cerulean")
-			new /mob/living/carbon/slime/adult/cerulean(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/cerulean
 		if("sepia")
-			new /mob/living/carbon/slime/adult/sepia(loc)
+			calmed_type =  /mob/living/carbon/slime/adult/sepia
+
+	var/mob/living/carbon/slime/calmed = new calmed_type(loc)
+	for(var/mob/M in friends)
+		calmed.Friends += M
+
 	del(src)
