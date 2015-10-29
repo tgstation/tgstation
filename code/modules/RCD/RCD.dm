@@ -117,7 +117,10 @@
 		if(!istype(C))
 			return 1
 
-		if(!(selected ? selected.deselect(usr, C) : 1 && C.select(usr, selected)))
+		if(selected && !selected.deselect(usr, C))
+			return 1
+
+		if(!C.select(usr, selected))
 			return 1
 
 		spark()
