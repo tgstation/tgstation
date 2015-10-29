@@ -126,7 +126,7 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/New()
 
 	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
