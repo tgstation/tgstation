@@ -189,7 +189,8 @@
 				Paralyse(10)
 
 	var/update = 0
-	for(var/datum/organ/limb/limbdata in organsystem.organlist)
+	for(var/limb in list_limbs())
+		var/datum/organ/limb/limbdata = getorgan(limb)
 		if(limbdata.exists())
 			var/obj/item/organ/limb/temp = limbdata.organitem
 			switch(temp.name)

@@ -27,7 +27,8 @@
 //These procs fetch a cumulative total damage from all organs
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/datum/organ/limb/O in organsystem.organlist)
+	for(var/limb in list_limbs())
+		var/datum/organ/limb/O = getorgan(limb)
 		if(O.status & ORGAN_DESTROYED)
 			amount += O.destroyed_dam //A destroyed limb is basically a severe brute wound, right?
 		else if(O.counts_for_damage())
@@ -38,7 +39,8 @@
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/datum/organ/limb/O in organsystem.organlist)
+	for(var/limb in list_limbs())
+		var/datum/organ/limb/O = getorgan(limb)
 		if(O.counts_for_damage()) //A limb only counts for burns if it's actually there.
 			var/obj/item/organ/limb/L = O.organitem
 			amount += L.burn_dam
@@ -72,7 +74,8 @@
 //Returns a list of damaged organs
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
 	var/list/obj/item/organ/limb/parts = list()
-	for(var/datum/organ/limb/O in organsystem.organlist)
+	for(var/limb in list_limbs())
+		var/datum/organ/limb/O = getorgan(limb)
 		if(O.counts_for_damage())
 			var/obj/item/organ/limb/L = O.organitem
 			if((brute && L.brute_dam) || (burn && L.burn_dam))
@@ -82,7 +85,8 @@
 //Returns a list of damageable organs
 /mob/living/carbon/human/proc/get_damageable_organs()
 	var/list/obj/item/organ/limb/parts = list()
-	for(var/datum/organ/limb/O in organs)
+	for(var/limb in list_limbs())
+		var/datum/organ/limb/O = getorgan(limb)
 		if(O.counts_for_damage())
 			var/obj/item/organ/limb/L = O.organitem
 			if(L.brute_dam + L.burn_dam < L.max_damage)

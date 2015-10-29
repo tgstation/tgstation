@@ -96,7 +96,7 @@
 		inv_box.icon_state = "hand_r_active"
 	//If player has no right hand, we draw a nice X on it.
 	if(mycarbon && mycarbon.organsystem)
-		var/datum/organ/limb/limbdata = mycarbon.getorgan("l_arm")
+		var/datum/organ/limb/limbdata = mycarbon.getorgan("r_arm")
 		if(!limbdata.exists())
 			inv_box.overlays += image("icons/mob/screen_gen.dmi", "x")
 	inv_box.screen_loc = ui_rhand
