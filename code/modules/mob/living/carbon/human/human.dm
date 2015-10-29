@@ -214,7 +214,7 @@
 			dam_zone = M.zone_sel.selecting
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor)
+		apply_damage(damage, M.melee_damage_type, affecting, armor)
 		src.visible_message("<span class='danger'>[M] [M.attacktext] [src] in \the [affecting.display_name]!</span>")
 
 

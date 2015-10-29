@@ -178,7 +178,11 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='warning'><B>[M]</B> [M.attacktext] \the [src] !</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		if(M.zone_sel && M.zone_sel.selecting)
+			dam_zone = M.zone_sel.selecting
+		var/datum/organ/external/affecting = ran_zone(dam_zone)
+		apply_damage(damage,M.melee_damage_type, affecting)
 		updatehealth()
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)

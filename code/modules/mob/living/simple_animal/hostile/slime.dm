@@ -10,6 +10,7 @@
 	maxHealth = 150
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	melee_damage_type = CLONE
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
@@ -56,6 +57,16 @@
 	..()
 	if(bodytemperature < 273.15)
 		calm()
+
+
+/mob/living/simple_animal/hostile/slime/MoveToTarget()
+	..()
+	if(target && target.Adjacent(src))
+		forceMove(get_turf(target))
+
+/mob/living/simple_animal/hostile/slime/AttackingTarget()
+	forceMove(get_turf(target))
+	..()
 
 /mob/living/simple_animal/hostile/slime/proc/calm()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")

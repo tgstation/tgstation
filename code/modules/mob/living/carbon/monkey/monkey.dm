@@ -569,7 +569,11 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		if(M.zone_sel && M.zone_sel.selecting)
+			dam_zone = M.zone_sel.selecting
+		var/datum/organ/external/affecting = ran_zone(dam_zone)
+		apply_damage(damage,M.melee_damage_type, affecting)
 		updatehealth()
 
 
