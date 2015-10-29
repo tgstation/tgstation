@@ -315,10 +315,6 @@
 	hair_alpha = 0
 	speedmod = 1
 	armor = 0
-	brutemod = 0
-	burnmod = 0
-	coldmod = 0
-	heatmod = 0
 	punchmod = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
@@ -334,6 +330,7 @@
 	var/max_clone_damage = 0 //controls the increase of clone damage
 	var/master = null //if master dies, Meeseeks dies too.
 	var/lingseek = 0 //to control specific lingseek behaviour
+	dangerous_existence = 1 // Meeseeks does not want to exist.
 
 /datum/species/golem/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
@@ -351,13 +348,13 @@
 	return message
 
 /datum/species/golem/meeseeks/spec_life(mob/living/carbon/human/H)
+	if(!lingseek)
+		//handle clone damage before all else
+		if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
+			max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
 
-	//handle clone damage before all else
-	if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
-		max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
-
-	if(H.getCloneLoss() < max_clone_damage)
-		H.adjustCloneLoss(1)
+		if(H.getCloneLoss() < max_clone_damage)
+			H.adjustCloneLoss(1)
 
 	if(prob(5) && !H.stat)
 		if(stage <3)
@@ -387,7 +384,7 @@
 		stage_counter += 1 //extreme pain will make them progress a level
 
 	if(lingseek && H.hallucination<50 && stage == 3) //lingseeks are WILD
-		H.hallucination = 25
+		H.hallucination += 25
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
@@ -459,18 +456,11 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		else if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
-			//hardset_dna(H, null, null, null, null, /datum/species/human )
-			H.real_name = "Lingseek"
-			id = "lingseek_1"
-			H.regenerate_icons()
-			lingseek = 1
-			stage = 1
-			stage_two = 20
-			stage_three = 25 //fast stage progression
-			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
-			return // get me the hell out of here.
-		else if(!lingseek) //just to be sure
+		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
+			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
+			return // avert lingseeks. get the hell out of here
+
+		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
 			H.drop_everything()
@@ -489,6 +479,21 @@
 	H.drop_everything()
 	qdel(H)
 	return
+
+/datum/species/golem/meeseeks/proc/make_lingseek(var/mob/living/carbon/human/H)
+	if(lingseek)
+		return 0 //already done
+	H.real_name = "Lingseek"
+	id = "lingseek_1"
+	H.regenerate_icons()
+	if( H.mind )
+		H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
+	lingseek = 1
+	stage = 1
+	stage_two = 20
+	stage_three = 25 //fast stage progression
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
+	return 1
 
 /*
  FLIES
