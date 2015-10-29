@@ -459,6 +459,8 @@
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
+		else
+			make_lingseek(H)
 
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
