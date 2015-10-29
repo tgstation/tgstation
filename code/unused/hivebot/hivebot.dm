@@ -18,7 +18,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/pick_module() called tick#: [world.time]")
 	if(src.module)
 		return
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Combat", "Engineering")
+	var/mod = input("Please, select a module!", "Robot", null, null) as null|anything in list("Combat", "Engineering")
 	if(src.module)
 		return
 	switch(mod)

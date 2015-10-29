@@ -237,7 +237,7 @@
 	if(forced_module)
 		modtype = forced_module
 	else
-		modtype = input("Please, select a module!", "Robot", null, null) in modules
+		modtype = input("Please, select a module!", "Robot", null, null) as null|anything in modules
 	// END forced modules.
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
@@ -1514,7 +1514,7 @@
 
 	lockcharge = 1  //Locks borg until it select an icon to avoid secborgs running around with a standard sprite
 
-	var/icontype = input("Select an icon! [triesleft>0 ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
+	var/icontype = input("Select an icon! [triesleft>0 ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) as null|anything in module_sprites
 
 	if(icontype)
 		icon_state = module_sprites[icontype]
