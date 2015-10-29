@@ -7,6 +7,7 @@
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_His = "Its"
 	var/t_his = "its"
 	var/t_him = "it"
 	var/t_has = "has"
@@ -16,6 +17,7 @@
 
 	if( slot_w_uniform in obscured && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
+		t_His = "Their"
 		t_his = "their"
 		t_him = "them"
 		t_has = "have"
@@ -26,10 +28,12 @@
 		switch(gender)
 			if(MALE)
 				t_He = "He"
+				t_His = "His"
 				t_his = "his"
 				t_him = "him"
 			if(FEMALE)
 				t_He = "She"
+				t_His = "Her"
 				t_his = "her"
 				t_him = "her"
 
@@ -55,6 +59,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
+	else if(!exists("head"))
+		msg += "<span class='warning'>[t_His] head is missing!</span>"
 
 	//suit/armor
 	if(wear_suit)
@@ -83,6 +89,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
+	else if(!exists("l_arm"))
+		msg += "<span class='warning'>[t_His] left arm is missing!</span>"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -90,6 +98,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
+	else if(!exists("r_arm"))
+		msg += "<span class='warning'>[t_His] right arm is missing!</span>"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
@@ -122,6 +132,12 @@
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
+
+	if(!exists("l_leg"))
+		msg += "<span class='warning'>[t_His] left leg is missing!</span>"
+
+	if(!exists("r_leg"))
+		msg += "<span class='warning'>[t_His] right leg is missing!</span>"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))

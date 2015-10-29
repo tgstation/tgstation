@@ -77,6 +77,7 @@
 /obj/item/organ/internal/heart
 	name = "heart"
 	icon_state = "heart-on"
+	desc = "Some days, your heart is just not in it."
 	zone = "chest"
 	slot = "heart"
 	origin_tech = "biotech=3"
@@ -88,6 +89,12 @@
 		icon_state = "heart-on"
 	else
 		icon_state = "heart-off"
+
+/obj/item/organ/internal/heart/examine(mob/user)
+	if(beating)
+		user << "It's still beating."
+	else
+		user << "It stopped beating."
 
 /obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -110,6 +117,7 @@
 /obj/item/organ/internal/appendix
 	name = "appendix"
 	icon_state = "appendix"
+	desc = "The greyshirt of the organs."
 	zone = "groin"
 	slot = "appendix"
 	var/inflamed = 0

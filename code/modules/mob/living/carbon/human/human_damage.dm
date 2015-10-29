@@ -6,7 +6,9 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	for(var/datum/organ/limb/O in organsystem.organlist) //hardcoded to streamline things a bit
+	var/list/limblist = list_limbs()
+	for(var/limbname in limblist)
+		var/datum/organ/limb/O = getorgan(limbname)
 		if(O.status & ORGAN_DESTROYED)
 			total_brute += O.destroyed_dam
 		else if(O.counts_for_damage())

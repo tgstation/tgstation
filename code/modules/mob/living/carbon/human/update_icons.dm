@@ -118,11 +118,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	update_transform()
 
-//LIST OF LIMBS TO RENDER
-//Update this list if you want to render more limbs.
-/mob/living/carbon/human/proc/get_limbs_to_render()
-	return list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
-
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/update_damage_overlays()
@@ -131,7 +126,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
-	var/limblist = get_limbs_to_render()
+	var/limblist = list_limbs()
 	for(var/limbname in limblist) //Update this list if we ever want to render more body parts. |- Ricotez
 		var/datum/organ/limb/limbdata = getorgan(limbname)
 		if(!limbdata.exists())
@@ -206,7 +201,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	var/limblist = get_limbs_to_render()
+	var/limblist = list_limbs()
 	for(var/limbname in limblist)
 		var/image/temp = generate_limb_icon(getorgan(limbname))
 		if(temp)

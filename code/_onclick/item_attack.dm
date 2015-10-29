@@ -59,9 +59,9 @@
 				if(istype(location, /turf/simulated))
 					location.add_blood_floor(src)
 			else
-				..() //We only make the recursive call if dismemberment failed, because that means the attack continues like it normally would.
+				..(I, user, def_zone) //We only make the recursive call if dismemberment failed, because that means the attack continues like it normally would.
 	else
-		..() //If the mob has no organsystem, dismemberment is not possible.
+		..(I, user, def_zone) //If the mob has no organsystem, dismemberment is not possible.
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

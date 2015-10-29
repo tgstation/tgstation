@@ -156,6 +156,14 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+	can_dismember = 1
+	can_behead = 1
+	dismember_threshold = 24 //Need at least one hit in before you can dismember a limb.
+	behead_threshold = 48
+	dismember_prob = 40
+	behead_prob = 15
+	dismember_nobleed = 0
+
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
@@ -198,6 +206,14 @@
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
+
+	can_dismember = 1
+	can_behead = 1
+	dismember_threshold = 0
+	behead_threshold = 0
+	dismember_prob = 75 //This will probably have to be balanced in the future, but for now chop-chop. |- Ricotez
+	behead_prob = 45
+	dismember_nobleed = 1
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	item_color = pick("red", "blue", "green", "purple")
@@ -318,6 +334,14 @@
 	var/wield_cooldown = 0
 	var/max_fuel = 40
 //	bleedcap = 0 //You can bleed anytime bby
+
+	can_dismember = 1
+	can_behead = 1
+	dismember_threshold = 0
+	behead_threshold = 0
+	dismember_prob = 75 //This will probably have to be balanced in the future, but for now chop-chop.
+	behead_prob = 45
+	dismember_nobleed = 9
 
 /obj/item/weapon/twohanded/chainsaw/New()
 	..()
