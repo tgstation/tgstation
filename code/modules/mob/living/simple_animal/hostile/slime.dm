@@ -50,7 +50,7 @@
 		rabid.colour = "[src.colour]"
 		for(var/mob/M in friends)
 			rabid.friends += M
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/slime/Life()
 	if(timestopped) return 0 //under effects of time magick
@@ -78,7 +78,7 @@
 	for(var/mob/M in friends)
 		calmed.Friends += M
 
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/slime/adult/calm()
 	var/calmed_type = /mob/living/carbon/slime/adult
@@ -89,4 +89,4 @@
 	for(var/mob/M in friends)
 		calmed.Friends += M
 
-	del(src)
+	qdel(src)
