@@ -72,7 +72,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")
 	var/calmed_type = /mob/living/carbon/slime
 	if(colour != "grey")
-		calmed_type = text2path("/mob/living/carbon/slime/" + colour)
+		var/path_end = replacetext(colour, " ", "")
+		calmed_type = text2path("/mob/living/carbon/slime/" + path_end)
 
 	var/mob/living/carbon/slime/calmed = new calmed_type(loc)
 	for(var/mob/M in friends)
@@ -83,7 +84,8 @@
 /mob/living/simple_animal/hostile/slime/adult/calm()
 	var/calmed_type = /mob/living/carbon/slime/adult
 	if(colour != "grey")
-		calmed_type = text2path("/mob/living/carbon/slime/adult" + colour)
+		var/path_end = replacetext(colour, " ", "")
+		calmed_type = text2path("/mob/living/carbon/slime/adult" + path_end)
 
 	var/mob/living/carbon/slime/calmed = new calmed_type(loc)
 	for(var/mob/M in friends)
