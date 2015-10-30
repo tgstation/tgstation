@@ -2,7 +2,6 @@
 #Maps must be the full path to them
 #Maps should be 255x255 or smaller and be bounded.  Falling off the edge of the map will result in undefined behavior. 
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
-#UNCOMMENT THE AWAY MISSION LINE IN SPACE_LEVELS.TXT IN THE CONFIG FOLDER IF YOU HAVE AWAY MISSIONS ENABLED! FAILURE TO DO THIS WILL CAUSE RUNTIMES!!
 
 #!!IMPORTANT NOTES FOR HOSTING AWAY MISSIONS!!: 
 #Do NOT tick the maps during compile -- the game uses this list to decide which map to load. Ticking the maps will result in them ALL being loaded at once.
