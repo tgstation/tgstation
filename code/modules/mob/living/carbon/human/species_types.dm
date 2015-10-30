@@ -456,12 +456,14 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
+		
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
+			if( findtext( H.real_name , "Mr. Meeseeks" ) ) // Transformation Sting, eg.
+				make_lingseek(H)
+				return
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
-		else
-			make_lingseek(H)
-
+		
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
