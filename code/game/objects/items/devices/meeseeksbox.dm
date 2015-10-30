@@ -118,7 +118,7 @@
 				var/mob/living/carbon/human/M = new /mob/living/carbon/human
 				hardset_dna(M, null, null, "Abomination", null, /datum/species/golem/meeseeks)
 				M.set_cloned_appearance()
-				M.job = "Mr. Meeseeks"
+				M.job = "Lingseek"
 				M.dna.species.auto_equip(M)
 				M.loc = user.loc
 				M.key = C.key
