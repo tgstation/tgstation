@@ -272,7 +272,7 @@
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
 	item_state = "brownjsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/clothing/suit/necklace)
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -284,7 +284,7 @@
 	item_state = "hostrench"
 	burn_state = -1 //Not Burnable
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/clothing/suit/necklace)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -314,7 +314,7 @@
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	item_state = "militaryjacket"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/clothing/suit/necklace)
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
@@ -434,3 +434,25 @@
 
 /obj/item/clothing/head/winterhood/miner
 	icon_state = "winterhood_miner"
+
+
+/obj/item/clothing/suit/necklace
+	name = "gold necklace"
+	desc = "Damn, it feels good to be a gangster."
+	icon_state = "bling"
+	item_state = "bling"
+	blood_overlay_type = "armor"
+	armor = list(melee = 0, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+	var/hit_reflect_chance = 20
+	w_class = 2
+	strip_delay = 40
+	put_on_delay = 20
+	burn_state = -1 //wont burn in fires
+	body_parts_covered = CHEST
+	allowed = list()
+
+/obj/item/clothing/suit/necklace/IsReflect(def_zone) //relevant protection zones for the necklace
+	if(!(def_zone in list("chest", "groin")))
+		return 0
+	if (prob(hit_reflect_chance))
+		return 1

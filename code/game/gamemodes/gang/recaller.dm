@@ -98,6 +98,12 @@
 			else
 				dat += "Uzi Ammo<br>"
 
+			dat += "(10 Influence) "
+			if(points >=10)
+				dat += "<a href='?src=\ref[src];purchase=necklace'>Gold Necklace</a><br>"
+			else
+				dat += "Gold Necklace<br>"
+
 			dat += "<br>"
 
 		//////////////////
@@ -208,6 +214,10 @@
 			if("switchblade")
 				if(gang.points >= 10)
 					item_type = /obj/item/weapon/switchblade
+					pointcost = 10
+			if("necklace")
+				if(gang.points >=10)
+					item_type = /obj/item/clothing/suit/necklace
 					pointcost = 10
 			if("pistol")
 				if(gang.points >= 25)
