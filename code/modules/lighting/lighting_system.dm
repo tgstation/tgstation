@@ -38,6 +38,7 @@
 /datum/light_source
 	var/atom/owner
 	var/radius = 0
+	var/cap = 0
 	var/changed = 1
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
@@ -130,7 +131,7 @@
 #else
 	distance = max(abs(x - L.__x), abs(y - L.__y))
 #endif
-	return LIGHTING_CAP * (L.radius - distance) / L.radius
+	return ( L.cap ? L.cap : LIGHTING_CAP ) * (L.radius - distance) / L.radius
 //LIGHTING_CAP == strength for now
 
 
@@ -178,7 +179,8 @@
 //If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its
 //queues are complete.
 //if we have a light already it is merely updated, rather than making a new one.
-/atom/proc/SetLuminosity(new_luminosity)
+//The second arg allows you to scale the light cap for calculating falloff. (0 for default, null for no change)
+/atom/proc/SetLuminosity(new_luminosity, new_cap)
 	if(new_luminosity < 0)
 		new_luminosity = 0
 
@@ -187,10 +189,12 @@
 			return
 		light = new(src)
 	else
-		if(light.radius == new_luminosity)
+		if(light.radius == new_luminosity && (new_cap == null || light.cap == new_cap))
 			return
 	light.radius = new_luminosity
 	luminosity = new_luminosity
+	if (new_cap != null)
+		light.cap = new_cap
 	light.changed()
 
 /atom/proc/AddLuminosity(delta_luminosity)
