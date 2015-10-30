@@ -77,6 +77,7 @@
 			lich << "<span class='warning'>Your bones clatter and shutter as they're pulled back into this world!</span>"
 			charge_max += 600
 			var/mob/old_body = current_body
+			var/turf/body_loc = get_turf(old_body)
 			current_body = lich
 			lich.Weaken(10+10*resurrections)
 			++resurrections
@@ -85,10 +86,10 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
-				var/wheres_wizdo = dir2text(get_dir(get_turf(old_body), item_loc))
+				var/wheres_wizdo = dir2text(get_dir(body_loc, item_loc))
 				if(wheres_wizdo)
-					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-					old_body.Beam(item_loc,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
+					body_loc.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
+					body_loc.Beam(item_loc,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell
