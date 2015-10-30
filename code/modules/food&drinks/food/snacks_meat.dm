@@ -139,6 +139,10 @@
 			user.drop_item()
 			loc = get_turf(O)
 			return Expand()
+	if(istype(O, /obj/machinery/computer/camera_advanced/xenobio))
+		var/obj/machinery/computer/camera_advanced/xenobio/X = O
+		user << "<span class='notice'>You feed [src] to the [X]. It now has [X.monkeys] monkey cubes stored.</span>"
+		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)

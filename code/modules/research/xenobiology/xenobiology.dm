@@ -674,4 +674,5 @@
 		if(X.monkeys > 0)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
+			X.monkeys --
 
