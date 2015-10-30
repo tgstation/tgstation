@@ -193,10 +193,21 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 /obj/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
-wall or lattice strucure, to push yourself off of if you want to move. A jetpack would enable free range of motion. A pair of \
-magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extuingisher, \
+wall or lattice structure, to push yourself off of if you want to move. A jetpack would enable free range of motion. A pair of \
+magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher, \
 or shoot a gun to move around via Newton's 3rd Law of motion."
 	icon_state = "weightless"
+
+/obj/screen/alert/fire
+	name = "On Fire"
+	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
+	icon_state = "fire"
+
+/obj/screen/alert/fire/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		return L.resist()
+
 
 //ALIENS
 
@@ -207,7 +218,7 @@ or shoot a gun to move around via Newton's 3rd Law of motion."
 
 /obj/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
-	name = "Burning"
+	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 	icon_state = "alien_fire"
 
@@ -222,12 +233,12 @@ or shoot a gun to move around via Newton's 3rd Law of motion."
 /obj/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
+Recharging stations are available in robotics, the dormitory's bathrooms. and the AI satellite."
 	icon_state = "emptycell"
 
 /obj/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low. Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
+	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory's bathrooms. and the AI satellite."
 	icon_state = "lowcell"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
@@ -256,6 +267,34 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "Mech integrity is low."
 	icon_state = "low_mech_integrity"
 
+
+//GHOSTS
+//TODO: expand this system to replace the pollCandidates Yes/No messages
+/obj/screen/alert/notify_cloning
+	name = "Revival"
+	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
+	icon_state = "ghost_frame"
+	timeout = 300
+
+/obj/screen/alert/notify_cloning/Click()
+	if(!usr || !usr.client) return
+	var/mob/dead/observer/G = usr
+	G.reenter_corpse()
+
+/obj/screen/alert/notify_jump
+	name = "Body created"
+	desc = "A body was created. You can enter it."
+	icon_state = "ghost_frame"
+	timeout = 300
+	var/jump_target = null
+
+/obj/screen/alert/notify_jump/Click()
+	if(!usr || !usr.client) return
+	if(!jump_target) return
+	var/mob/dead/observer/G = usr
+	var/turf/T = get_turf(jump_target)
+	if(T && isturf(T))
+		G.loc = T
 
 //OBJECT-BASED
 

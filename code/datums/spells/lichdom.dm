@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/lichdom
 	name = "Bind Soul"
-	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing. So long as both your body and the item remain intact you can revive from death, though the time between reincarnations grows steadily with use."
+	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing. So long as both your body and the item remain intact and on the same plane you can revive from death, though the time between reincarnations grows steadily with use."
 	school = "necromancy"
 	charge_max = 10
 	clothes_req = 0
@@ -14,14 +14,26 @@
 
 	var/obj/marked_item
 	var/mob/living/current_body
+	var/resurrections = 0
+	var/existence_stops_round_end = 0
 
 	action_icon_state = "skeleton"
 
 /obj/effect/proc_holder/spell/targeted/lichdom/New()
-	if(ticker.mode.round_ends_with_antag_death)
+	if(initial(ticker.mode.round_ends_with_antag_death))
+		existence_stops_round_end = 1
 		ticker.mode.round_ends_with_antag_death = 0
-
 	..()
+
+/obj/effect/proc_holder/spell/targeted/lichdom/Destroy()
+	for(var/datum/mind/M in ticker.mode.wizards) //Make sure no other bones are about
+		for(var/obj/effect/proc_holder/spell/S in M.spell_list)
+			if(istype(S,/obj/effect/proc_holder/spell/targeted/lichdom) && S != src)
+				return ..()
+	if(existence_stops_round_end)
+		ticker.mode.round_ends_with_antag_death = 1
+	..()
+
 /obj/effect/proc_holder/spell/targeted/lichdom/cast(list/targets)
 	for(var/mob/user in targets)
 		var/list/hand_items = list()
@@ -40,6 +52,9 @@
 
 			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
 				user << "<span class='warning'>Your phylactery is gone!</span>"
+				return
+			else if(user.z != marked_item.z)
+				user << "<span class='warning'>Your phylactery is out of range!</span>"
 				return
 
 			if(isobserver(user))
@@ -60,8 +75,8 @@
 			charge_max += 600
 			var/mob/old_body = current_body
 			current_body = lich
-			lich.Weaken(10)
-
+			lich.Weaken(10+10*resurrections)
+			++resurrections
 			if(old_body && old_body.loc)
 				if(iscarbon(old_body))
 					var/mob/living/carbon/C = old_body
@@ -70,6 +85,7 @@
 				var/wheres_wizdo = dir2text(get_dir(get_turf(old_body), get_turf(marked_item)))
 				if(wheres_wizdo)
 					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
+					old_body.Beam(marked_item,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell

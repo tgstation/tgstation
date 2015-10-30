@@ -230,3 +230,22 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 200
 	category = CAT_WEAPON
+
+/datum/table_recipe/chainsaw
+	name = "Chainsaw"
+	result = /obj/item/weapon/twohanded/required/chainsaw
+	reqs = list(/obj/item/weapon/circular_saw = 1,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 100
+	category = CAT_WEAPON
+
+/datum/table_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/device/camera/spooky
+	time = 15
+	reqs = list(/obj/item/device/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/device/camera = 1)
+	category = CAT_MISC

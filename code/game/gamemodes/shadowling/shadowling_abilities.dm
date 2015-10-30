@@ -583,7 +583,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 					return
 				usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
 									"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
-				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.")
+				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.", source = thrallToRevive)
 				if(!do_mob(usr, thrallToRevive, 30))
 					usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
 					charge_counter = charge_max

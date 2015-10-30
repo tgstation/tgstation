@@ -29,7 +29,8 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+		var/image/alert_overlay = image('icons/mob/mob.dmi', "harvester")
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay)
 
 	narsie_spawn_animation()
 
