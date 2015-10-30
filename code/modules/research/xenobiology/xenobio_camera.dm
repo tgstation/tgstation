@@ -15,8 +15,7 @@
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A highly advanced console recovered from the wreckage of an Abductor saucer. It's been repurposed for the rather more mundane use of handling slimes."
-	var/team = 0
-	networks = list("RD")
+	networks = list("SS13")
 	off_action = new/datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
