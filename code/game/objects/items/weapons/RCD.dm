@@ -21,7 +21,7 @@ RCD
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
 	var/working = 0
@@ -229,8 +229,9 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
+	..()
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
-	src.spark_system = new /datum/effect/effect/system/spark_spread
+	src.spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src

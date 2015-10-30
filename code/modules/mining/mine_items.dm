@@ -178,7 +178,7 @@
 		used = TRUE
 		sleep(50)
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
-		PoolOrNew(/obj/effect/effect/smoke, src.loc)
+		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()
 		qdel(src)
 

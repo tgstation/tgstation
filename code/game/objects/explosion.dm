@@ -74,7 +74,7 @@
 		SSmachine.postpone(postponeCycles)
 
 		if(heavy_impact_range > 1)
-			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
+			var/datum/effect_system/explosion/E = new/datum/effect_system/explosion()
 			E.set_up(epicenter)
 			E.start()
 

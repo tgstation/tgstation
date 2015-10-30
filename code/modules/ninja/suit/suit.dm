@@ -25,7 +25,7 @@ Contents:
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.

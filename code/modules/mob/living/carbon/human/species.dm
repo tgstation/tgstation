@@ -682,7 +682,10 @@
 				var/obj/item/clothing/glasses/G = H.glasses
 				H.sight |= G.vision_flags
 				H.see_in_dark = G.darkness_view
-				H.see_invisible = min(G.invis_view, H.see_invisible)
+				if(G.invis_override)
+					H.see_invisible = G.invis_override
+				else
+					H.see_invisible = min(G.invis_view, H.see_invisible)
 		if(H.druggy)	//Override for druggy
 			H.see_invisible = see_temp
 
@@ -1164,22 +1167,24 @@
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
-	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
-		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
-		H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
-		H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
-	else
-		H.clear_alert("too_much_oxy")
+	if(safe_oxygen_max)
+		if(O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
+			var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+		else
+			H.clear_alert("too_much_oxy")
 
 	//Too little oxygen!
-	if(safe_oxygen_min && O2_pp < safe_oxygen_min)
-		gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
-		H.throw_alert("oxy", /obj/screen/alert/oxy)
-	else
-		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
-		gas_breathed = breath.oxygen/6
-		H.clear_alert("oxy")
+	if(safe_oxygen_min)
+		if(O2_pp < safe_oxygen_min)
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
+		else
+			H.failed_last_breath = 0
+			H.adjustOxyLoss(-5)
+			gas_breathed = breath.oxygen/6
+			H.clear_alert("oxy")
 
 	//Exhale
 	breath.oxygen -= gas_breathed
@@ -1190,31 +1195,33 @@
 	//-- CO2 --//
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-	if(safe_co2_max && CO2_pp > safe_co2_max && !(NOBREATH in specflags))
-		if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
-			H.co2overloadtime = world.time
-		else if(world.time - H.co2overloadtime > 120)
-			H.Paralyse(3)
-			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
-			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-				H.adjustOxyLoss(8)
-			H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
-		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			spawn(0) H.emote("cough")
+	if(safe_co2_max)
+		if(CO2_pp > safe_co2_max && !(NOBREATH in specflags))
+			if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
+				H.co2overloadtime = world.time
+			else if(world.time - H.co2overloadtime > 120)
+				H.Paralyse(3)
+				H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
+				if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
+					H.adjustOxyLoss(8)
+				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
+			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+				spawn(0) H.emote("cough")
 
-	else
-		H.co2overloadtime = 0
-		H.clear_alert("too_much_co2")
+		else
+			H.co2overloadtime = 0
+			H.clear_alert("too_much_co2")
 
 	//Too little CO2!
-	if(safe_co2_min && CO2_pp < safe_co2_min)
-		gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
-		H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
-	else
-		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
-		gas_breathed = breath.carbon_dioxide/6
-		H.clear_alert("not_enough_co2")
+	if(safe_co2_min)
+		if(CO2_pp < safe_co2_min)
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
+			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+		else
+			H.failed_last_breath = 0
+			H.adjustOxyLoss(-5)
+			gas_breathed = breath.carbon_dioxide/6
+			H.clear_alert("not_enough_co2")
 
 	//Exhale
 	breath.carbon_dioxide -= gas_breathed
@@ -1225,24 +1232,26 @@
 	//-- TOX --//
 
 	//Too much toxins!
-	if(safe_toxins_max && Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
-		var/ratio = (breath.toxins/safe_toxins_max) * 10
-		if(H.reagents)
-			H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
-		H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
-	else
-		H.clear_alert("tox_in_air")
+	if(safe_toxins_max)
+		if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
+			var/ratio = (breath.toxins/safe_toxins_max) * 10
+			if(H.reagents)
+				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
+			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		else
+			H.clear_alert("tox_in_air")
 
 
 	//Too little toxins!
-	if(safe_toxins_min && Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
-		gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
-		H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-	else
-		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
-		gas_breathed = breath.toxins/6
-		H.clear_alert("not_enough_tox")
+	if(safe_toxins_min)
+		if(Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
+			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
+			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else
+			H.failed_last_breath = 0
+			H.adjustOxyLoss(-5)
+			gas_breathed = breath.toxins/6
+			H.clear_alert("not_enough_tox")
 
 	//Exhale
 	breath.toxins -= gas_breathed

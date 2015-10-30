@@ -57,7 +57,7 @@
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	var/obj/effect/teleport_abductor/F = new(place)
-	var/datum/effect/effect/system/spark_spread/S = new
+	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,place)
 	S.start()
 	sleep(80)
@@ -68,7 +68,7 @@
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	var/obj/effect/teleport_abductor/F = new(place)
-	var/datum/effect/effect/system/spark_spread/S = new
+	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,place)
 	S.start()
 	sleep(80)
