@@ -53,10 +53,11 @@
 			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
 				user << "<span class='warning'>Your phylactery is gone!</span>"
 				return
+				
+			var/turf/user_turf = get_turf(user)
+			var/turf/item_turf = get_turf(marked_item)
 
-			var/turf/item_loc = get_turf(marked_item)
-
-			if(user.z != item_loc.z)
+			if(user_turf.z != item_turf.z)
 				user << "<span class='warning'>Your phylactery is out of range!</span>"
 				return
 
@@ -64,7 +65,7 @@
 				var/mob/dead/observer/O = user
 				O.reenter_corpse()
 
-			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(item_loc)
+			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(item_turf)
 
 			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
@@ -77,7 +78,7 @@
 			lich << "<span class='warning'>Your bones clatter and shutter as they're pulled back into this world!</span>"
 			charge_max += 600
 			var/mob/old_body = current_body
-			var/turf/body_loc = get_turf(old_body)
+			var/turf/body_turf = get_turf(old_body)
 			current_body = lich
 			lich.Weaken(10+10*resurrections)
 			++resurrections
@@ -86,10 +87,10 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
-				var/wheres_wizdo = dir2text(get_dir(body_loc, item_loc))
+				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 				if(wheres_wizdo)
-					body_loc.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-					body_loc.Beam(item_loc,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
+					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
+					body_turf.Beam(item_turf,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell
