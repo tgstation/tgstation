@@ -321,6 +321,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..(user, slot)
 	user.scanner.Grant(user)
+	user.scanner.devices += 1
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
 		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
 	else
@@ -330,7 +331,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
 	..(user)
-	user.scanner.devices -= 1
+	user.scanner.devices = max(0, user.scanner.devices - 1)
 	if(onboard_hud_enabled && !(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic)))
 		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
 		DHUD.remove_hud_from(user)
