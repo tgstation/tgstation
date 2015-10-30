@@ -23,7 +23,9 @@
 	if(config)
 		if(config.starlight)
 			for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-				SetLuminosity(3)
+				SetLuminosity(2)
+				light.radius++
+				light.changed()
 				return
 			SetLuminosity(0)
 
