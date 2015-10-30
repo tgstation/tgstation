@@ -483,7 +483,7 @@
 	return
 
 
-/obj/machinery/shieldgen/attack_ghost(mob/user)
+/obj/machinery/shieldwallgen/attack_ghost(mob/user)
 	if(isAdminGhost(user))
 		src.attack_hand(user)
 

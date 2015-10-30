@@ -200,9 +200,10 @@
 
 	. = ..()
 
-	connected.connected = null
-	qdel(connected)
-	connected = null
+	if(connected)
+		connected.connected = null
+		qdel(connected)
+		connected = null
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = "sleeper_[occupant ? "1" : "0"][orient == "LEFT" ? null : "-r"]"
