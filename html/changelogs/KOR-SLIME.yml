@@ -34,3 +34,4 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "Added an experimental control console for Xenobiology. Ask the admins if you'd like to try it out. It may not work on maps other than Box if they have renamed the Xenobiology Lab."
+  - rscadd: "Injecting blood into a cerulean slime will yield a special one use set of blueprints that will allow you to expand the territory your camera can cover."
