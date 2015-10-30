@@ -235,7 +235,7 @@
 
 	for(var/obj/item/organ/limb/L in organs)
 		for(var/obj/item/I in L.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L.getDisplayName()]!</B>\n"
+			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L]!</B>\n"
 
 
 	if(fire_stacks > 0)

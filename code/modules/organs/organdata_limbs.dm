@@ -28,11 +28,6 @@
 	healthdoll = 1
 	can_be_damaged = 1
 
-/datum/organ/limb/head/dismember()
-	var/obj/item/organ/limb/head/H = organitem
-	H.behead()
-	..()
-
 /datum/organ/limb/l_arm
 	name = "l_arm"
 	body_part = ARM_LEFT

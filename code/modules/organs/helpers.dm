@@ -6,6 +6,14 @@
 		return organsystem.getorgan(organ)
 	return (locate(organ) in internal_organs) //If the mob does not have an organ system, we fall back on the old system where you give the path, i.e. /obj/item/organ/brain
 
+/mob/proc/add_organ()
+	return
+
+/mob/living/carbon/add_organ(organ)
+	if(organsystem)
+		return organsystem.add_organ(organ)	//Adds an organ HARDPOINT to the organsystem (used for suborgans)
+	else return 0
+
 mob/living/carbon/exists(var/organname)
 	if(organsystem)
 		var/datum/organ/O = getorgan(organname)
@@ -38,7 +46,6 @@ mob/proc/exists(var/organname)
 			// We don't have mouth organs now, but who knows?
 		if(zone == "chest")
 			returnorg = getorganszone("groin")
-
 
 	for(var/obj/item/organ/internal/O in internal_organs)
 		if(zone == O.zone)

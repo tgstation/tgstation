@@ -219,10 +219,10 @@
 
 	handle_mutant_bodyparts(H)
 
-	var/datum/organ/limb/head = H.organsystem.getorgan("head")
-	var/datum/organ/limb/chest = H.organsystem.getorgan("chest")
-	var/datum/organ/limb/lfoot = H.organsystem.getorgan("l_foot")
-	var/datum/organ/limb/rfoot = H.organsystem.getorgan("r_foot")
+	var/datum/organ/limb/head = H.getorgan("head")
+	var/datum/organ/limb/chest = H.getorgan("chest")
+	var/datum/organ/limb/lfoot = H.getorgan("l_leg")
+	var/datum/organ/limb/rfoot = H.getorgan("r_leg")
 
 	// lipstick
 	if(head.exists() && H.lip_style && LIPS in specflags)

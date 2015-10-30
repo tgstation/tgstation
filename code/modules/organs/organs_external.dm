@@ -1,20 +1,7 @@
-/obj/item/organ
-	name = "organ"
-	icon = 'icons/obj/surgery.dmi'
-	var/mob/living/carbon/owner = null
-	var/status = 0
-	var/organtype = ORGAN_ORGANIC
-	var/status_flags
-	var/datum/organ/organdatum
-	var/list/suborgans = list()
-
 /obj/item/organ/butt
 	name = "butt"
+	hardpoint = "butt"
 	icon_state = "butt"
-
-//Old Datum Limbs:
-// code/modules/unused/limbs.dm
-
 
 /obj/item/organ/limb
 	name = "limb"
@@ -26,10 +13,9 @@
 	var/max_damage = 0
 	var/list/embedded_objects = list()
 
-
-
 /obj/item/organ/limb/chest
 	name = "chest"
+	hardpoint = "chest"
 	desc = "Not a treasure chest, sadly."
 	icon_state = "chest"
 	max_damage = 200
@@ -38,63 +24,41 @@
 
 /obj/item/organ/limb/head
 	name = "head"
+	hardpoint = "head"
 	desc = "What a way to get a head in life."
 	icon_state = "head"
 	max_damage = 200
 	body_part = HEAD
-	var/mob/living/carbon/brain/brainmob = null //We're not using this until someone is beheaded.
+//	var/mob/living/carbon/brain/brainmob = null //We're not using this until someone is beheaded.
 
 /obj/item/organ/limb/head/examine(mob/user)
 	..()
-	if(brainmob && brainmob.client)
-		user << "You see a faint spark of life in their eyes."
+	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
+	if(B)
+		if(B.brainmob && B.brainmob.client)
+			user << "You see a faint spark of life in their eyes."
+		else
+			user << "Their eyes are completely lifeless. Perhaps they will regain some of their luster later."
 	else
-		user << "Their eyes are completely lifeless. Perhaps they will regain some of their luster later."
+		user << "There's no brain in this head."
 
-/obj/item/organ/limb/head/proc/behead() //Always use this when beheading someone.
-	suborgans["brain"] = owner.getorgan("brain")
-	if(istype(/mob/living/carbon/human, owner)) //Temporary solution until I expand the organsystems to all subtypes of carbon.
-		var/mob/living/carbon/human/H = owner
-		H.internal_organs -= suborgans["brain"] //Goodbye brain
-	transfer_identity()
+/**
+  *	Transforms a person into a brainmob. Since the brain will still be inside of the head, we can just use transfer_identity() on the brain.
+  * Call this upon beheading someone to properly transfer their mind to their head.
+ **/
+/obj/item/organ/limb/head/proc/transfer_identity()
+	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
+	B.transfer_identity(owner)
 
-/obj/item/organ/limb/head/proc/transfer_identity() //Copied from /obj/item/organ/brain. Use this to turn a human into a head.
-	var/obj/item/organ/internal/brain/brain = suborgans["brain"]
-	brainmob = new(src)
-	brainmob.name = owner.name
-	brainmob.real_name = owner.real_name
-	if(istype(/mob/living/carbon/human, owner)) //Only humans have DNA right now.
-		var/mob/living/carbon/human/H = owner
-		brainmob.dna = H.dna
-	brainmob.timeofhostdeath = owner.timeofdeath
-	name = "[brainmob.name]'s head"
-	brain.name = "[brainmob.real_name]'s brain"
-	if(owner.mind)
-		owner.mind.transfer_to(brainmob)
-	brainmob << "<span class='notice'>You can no longer feel the rest of your body.</span>"
-
-/obj/item/organ/limb/head/proc/transfer_identity_from_head_to_brain() //Prepare brain for removal from this head. Call right before you pull the brain out.
-	var/obj/item/organ/internal/brain/brain = suborgans["brain"]
-	if(brain && brainmob)
-		brain.brainmob = brainmob
-		brainmob.container = brain
-		brainmob.loc = brain
-		brainmob = null
-
-/obj/item/organ/limb/head/proc/transfer_identity_from_brain_to_head() //Achieves the reverse effect. Call right after you stuff the brain in.
-	var/obj/item/organ/internal/brain/brain = suborgans["brain"]
-	if(brain && brain.brainmob)
-		brainmob = brain.brainmob
-		brain.brainmob = null
-		brainmob.container = src
-		brainmob.loc = src
-
+/**
+  *
+ **/
 /obj/item/organ/limb/head/attackby(var/obj/item/O as obj, var/mob/user as mob, params) //Copied from MMI
 	user.changeNext_move(CLICK_CD_MELEE)
-	var/obj/item/organ/internal/brain/brain = suborgans["brain"]
+	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
 	if(istype(O,/obj/item/organ/internal/brain))
 		var/obj/item/organ/internal/brain/newbrain = O
-		if(brain)
+		if("brain" in suborgans)
 			user << "<span class='warning'>There's already a brain in this head!</span>"
 			return
 		if(!newbrain.brainmob)
@@ -102,32 +66,24 @@
 			return
 
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
-
-		brain = newbrain
+		add_suborgan(newbrain)
 		newbrain.loc = src
-		transfer_identity_from_brain_to_head()
-
 		user.drop_item()
-
-		brain = newbrain
 
 		return
 
 	if(istype(O,/obj/item/weapon/circular_saw))
-		if(brain)
+		if(B)
 			playsound(src.loc, 'sound/weapons/circsawhit.ogg', 100, 1)
 			user.visible_message("[user] starts cutting into \the [src] with \the [O].", \
 								 "<span class='notice'>You start cutting into \the [src] with \the [O]...</span>", \
 								 "<span class='italics'>You hear the sound of a saw.</span>")
 
 			if(do_after(user, 40))
-				transfer_identity_from_head_to_brain()
-				if(brain)
-					user.put_in_hands(brain) //Give the brain to the surgeon
-					brain = null //Brain is gone from the head now
+				B = remove_suborgan("brain")
+				if(B)
+					user.put_in_hands(B) //Give the brain to the surgeon
 					user << "<span class='notice'>You pull the brain out of the head.</span>"
-					if(brain.brainmob)
-						brain.brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 				else
 					user << "<span class='notice'>Something else removed the brain before you were done.</span>"
 
@@ -136,14 +92,9 @@
 
 	..()
 
-/obj/item/organ/limb/head/Destroy() //copypasted from MMIs.
-	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
-	..()
-
 /obj/item/organ/limb/l_arm
-	name = "l_arm"
+	name = "left arm"
+	hardpoint = "l_arm"
 	desc = "Looks like someone has been disarmed."
 	icon_state = "l_arm"
 	max_damage = 75
@@ -151,7 +102,8 @@
 
 
 /obj/item/organ/limb/l_leg
-	name = "l_leg"
+	name = "left leg"
+	hardpoint = "l_leg"
 	desc = "Looks like someone's leg legged it."
 	icon_state = "l_leg"
 	max_damage = 75
@@ -159,7 +111,8 @@
 
 
 /obj/item/organ/limb/r_arm
-	name = "r_arm"
+	name = "right arm"
+	hardpoint = "r_arm"
 	desc = "Looks like someone has been disarmed."
 	icon_state = "r_arm"
 	max_damage = 75
@@ -167,7 +120,8 @@
 
 
 /obj/item/organ/limb/r_leg
-	name = "r_leg"
+	name = "right leg"
+	hardpoint = "r_arm"
 	desc = "Looks like someone's leg legged it."
 	icon_state = "r_leg"
 	max_damage = 75
@@ -245,18 +199,6 @@
 			burnstate = tburn
 			return 1
 		return 0
-
-//Returns a display name for the organ
-/obj/item/organ/limb/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
-	switch(name)
-		if("l_leg")		return "left leg"
-		if("r_leg")		return "right leg"
-		if("l_arm")		return "left arm"
-		if("r_arm")		return "right arm"
-		if("chest")     return "chest"
-		if("head")		return "head"
-		else			return name
-
 
 //Remove all embedded objects from all limbs on the human mob
 /mob/living/carbon/human/proc/remove_all_embedded_objects()

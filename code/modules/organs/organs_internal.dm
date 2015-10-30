@@ -3,12 +3,14 @@
 	force = 1
 	w_class = 2
 	throwforce = 0
+
+// I should delete most of these
 	var/zone = "chest"
 	var/slot
 	var/vital = 0
 	var/organ_action_name = null
 
-/obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
+/*/obj/item/organ/internal/Insert(mob/living/carbon/M, special = 0)	//I don't want this to override anything for now
 	if(!iscarbon(M) || owner == M)
 		return
 
@@ -20,7 +22,7 @@
 	M.internal_organs |= src
 	loc = null
 	if(organ_action_name)
-		action_button_name = organ_action_name
+		action_button_name = organ_action_name*/
 
 
 /obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
@@ -59,7 +61,7 @@
 /obj/item/organ/internal/attack(mob/living/carbon/M, mob/user)
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(status == ORGAN_ORGANIC)
+		if(organtype == ORGAN_ORGANIC)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = prepare_eat()
 			if(S)
 				H.drop_item()
@@ -117,7 +119,7 @@
 /obj/item/organ/internal/appendix
 	name = "appendix"
 	icon_state = "appendix"
-	desc = "The greyshirt of the organs."
+	desc = "The greyshirt of organs."
 	zone = "groin"
 	slot = "appendix"
 	var/inflamed = 0

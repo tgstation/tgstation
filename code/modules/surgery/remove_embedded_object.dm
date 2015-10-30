@@ -33,9 +33,9 @@
 				L.embedded_objects -= I
 
 			if(objects > 0)
-				user.visible_message("<span class='notice'>[user] sucessfully removes [objects] objects from [H]'s [L.getDisplayName()]!</span>")
+				user.visible_message("<span class='notice'>[user] sucessfully removes [objects] objects from [H]'s [L]!</span>")
 			else
-				user.visible_message("<span class='notice'>[user] finds no objects embedded in [H]'s [L.getDisplayName()].</span>")
+				user.visible_message("<span class='notice'>[user] finds no objects embedded in [H]'s [L].</span>")
 
 	else
 		user.visible_message("<span class='notice'>[user] can't find [target]'s [parse_zone(user.zone_sel.selecting)], let alone any objects embedded in it!</span>")

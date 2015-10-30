@@ -27,32 +27,8 @@
 	organsystem = new/datum/organsystem/humanoid/human
 	organsystem.set_owner(src)
 
-	//YES THIS IS KIND OF WEIRD but it's how BYOND works, I would have much rather used getorgan().set_organitem |- Ricotez
-	var/datum/organ/setter
-	setter = getorgan("chest")
-	setter.set_organitem(new/obj/item/organ/limb/chest)
-	setter = getorgan("head")
-	setter.set_organitem(new/obj/item/organ/limb/head)
-	setter = getorgan("l_arm")
-	setter.set_organitem(new/obj/item/organ/limb/l_arm)
-	setter = getorgan("r_arm")
-	setter.set_organitem(new/obj/item/organ/limb/r_arm)
-	setter = getorgan("l_leg")
-	setter.set_organitem(new/obj/item/organ/limb/l_leg)
-	setter = getorgan("r_leg")
-	setter.set_organitem(new/obj/item/organ/limb/r_leg)
-
 	//I really want to deprecate this list, but it's defined at a really high level and used by everything that does not use my organsystems. So for now, update this list too. |- Ricotez
 	organs = list(organsystem.getorgan("chest"), organsystem.getorgan("head"), organsystem.getorgan("l_arm"), organsystem.getorgan("r_arm"), organsystem.getorgan("l_leg"), organsystem.getorgan("r_leg"))
-
-	setter = getorgan("appendix")
-	setter.set_organitem(new/obj/item/organ/internal/appendix)
-	setter = getorgan("heart")
-	setter.set_organitem(new/obj/item/organ/internal/heart)
-	setter = getorgan("brain")
-	setter.set_organitem(new/obj/item/organ/internal/brain)
-	setter = getorgan("butt")
-	setter.set_organitem(new/obj/item/organ/butt)
 
 	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
 	internal_organs += getorgan("appendix")
@@ -327,14 +303,14 @@
 			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
+			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L]!</span>","<span class='notice'>You attempt to remove [I] from your [L], it will take [time_taken/10] seconds.</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = usr))
 				L.embedded_objects -= I
 				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
-				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L.getDisplayName()]!</span>","<span class='userdanger'>You successfully remove [I] from your [L.getDisplayName()]!</span>")
+				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L]!</span>","<span class='userdanger'>You successfully remove [I] from your [L]!</span>")
 			return
 
 		if(href_list["item"])
@@ -437,7 +413,7 @@
 										status = "sustained major trauma!"
 										span = "userdanger"
 									if(brutedamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+										usr << "<span class='[span]'>The [org] appears to have [status]</span>"
 							if(getFireLoss())
 								usr << "<b>Analysis of skin burns:</b>"
 								for(var/obj/item/organ/limb/org in organs)
@@ -452,7 +428,7 @@
 										status = "major burns!"
 										span = "userdanger"
 									if(burndamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+										usr << "<span class='[span]'>The [org] appears to have [status]</span>"
 							if(getOxyLoss())
 								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
 							if(getToxLoss() > 20)
@@ -768,10 +744,10 @@
 						status += "numb"
 					if(status == "")
 						status = "OK"
-					src << "\t [status == "OK" ? "\blue" : "\red"] Your [org.getDisplayName()] is [status]."
+					src << "\t [status == "OK" ? "\blue" : "\red"] Your [org] is [status]."
 
 					for(var/obj/item/I in org.embedded_objects)
-						src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+						src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org]!</a>"
 				else
 					if(limbdata.status & ORGAN_DESTROYED)
 						src << "\t \red Your [limbdata.getDisplayName()] is missing and the wound bleeds terribly!"

@@ -626,6 +626,19 @@ var/global/list/limb_icon_cache = list()
 	var/icon_render_key = ""
 
 //simplifies species and mutations into one var
+/obj/item/organ/limb/proc/get_race()
+	var/sm_type = "human"
+	var/datum/species/race = dna ? dna.species : null
+	if(race)
+		sm_type = race.id
+
+	if(HULK in dna.mutations)
+		sm_type = "hulk"
+	if(HUSK in dna.mutations)
+		sm_type = "husk"
+
+	return sm_type
+
 /mob/living/carbon/human/proc/get_race()
 	var/sm_type = "human"
 	var/datum/species/race = dna ? dna.species : null
@@ -638,7 +651,6 @@ var/global/list/limb_icon_cache = list()
 		sm_type = "husk"
 
 	return sm_type
-
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
@@ -684,10 +696,12 @@ var/global/list/limb_icon_cache = list()
 	if(!affecting.exists()) //If the limb does not exist, we render nothing right now.
 		return 0	//I'll replace this with bloody stumps for destroyed limbs as soon as the sprites are ready. |- Ricotez
 
+	var/obj/item/organ/limb/LI = affecting.organitem
+
 	var/image/I
 	var/should_draw_gender = FALSE
 	var/icon_gender = (gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
-	var/race = get_race() //simplified physical appearence of mob
+	var/race = LI.get_race() //simplified physical appearence of mob
 	var/should_draw_greyscale = FALSE
 
 	if(race == "adamantine") //temporary.
@@ -730,14 +744,14 @@ var/global/list/limb_icon_cache = list()
 	var/draw_color
 
 	if(dna && dna.species)
-		if(dna.species.use_skintones)
+		if(LI.dna.species.use_skintones)
 			draw_color = skintone2hex(skin_tone)
 		else
-			if(MUTCOLORS in dna.species.specflags)
+			if(MUTCOLORS in LI.dna.species.specflags)
 				//If you ever want to add the option to force default mutant colours, add var/mutant_colors to configuration and remove the comments here. |- Ricotez
 				//if(!config.mutant_colors)
 					//dna.mutant_color = dna.species.default_color
-				draw_color = dna.mutant_color
+				draw_color = LI.dna.mutant_color
 
 	if(draw_color)
 		I.color = "#[draw_color]"

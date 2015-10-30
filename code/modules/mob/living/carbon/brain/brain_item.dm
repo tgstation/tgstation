@@ -36,9 +36,9 @@
 			H.update_hair(0)
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/M, special = 0)
-	..()
 	if(!special)
 		transfer_identity(M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_hair(0)
@@ -54,18 +54,25 @@
 			brainmob.client.screen.len = null //clear the hud
 
 
-/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
-	name = "[L.name]'s brain"
+/**
+  * Transfers a person from their original mob to a brainmob inside of this brain.
+  * Relies on the organ's owner now, so please call this BEFORE the brain is removed from a mob or the owner var will be set to null.
+ **/
+/obj/item/organ/internal/brain/proc/transfer_identity()
+	if(!owner)
+		return
+	name = "[owner]'s brain"
 	brainmob = new(src)
-	brainmob.name = L.real_name
-	brainmob.real_name = L.real_name
-	brainmob.timeofhostdeath = L.timeofdeath
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		brainmob.dna = C.dna
-	if(L.mind)
-		L.mind.transfer_to(brainmob)
-	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
+	brainmob.name = owner.real_name
+	brainmob.real_name = owner.real_name
+	brainmob.dna = owner.dna
+	brainmob.timeofhostdeath = owner.timeofdeath
+	if(owner.mind)
+		owner.mind.transfer_to(brainmob)
+	if(organdatum && organdatum.parent) //If the organdatum is not null, this brain is a suborgan. We check for the parent just in case.
+		brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just \a [organdatum.parent]."
+	else
+		brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 
 
 /obj/item/organ/internal/brain/examine(mob/user)

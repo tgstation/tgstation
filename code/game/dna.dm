@@ -26,6 +26,8 @@
 	var/list/mutations = list()   //All mutations are from now on here
 	var/mob/living/carbon/holder
 
+	var/obj/item/organ/holder_organ
+
 /datum/dna/New(mob/living/carbon/new_holder)
 	if(new_holder && istype(new_holder))
 		holder = new_holder
@@ -38,6 +40,16 @@
 		hardset_dna(destination, null, null, null, null, species.type)
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
+
+/datum/dna/proc/copy_dna(datum/dna/new_dna)
+	new_dna.unique_enzymes = unique_enzymes
+	new_dna.struc_enzymes = struc_enzymes
+	new_dna.uni_identity = uni_identity
+	new_dna.blood_type = blood_type
+	new_dna.mutant_color = mutant_color
+	new_dna.species = new species.type
+	new_dna.real_name = real_name
+	new_dna.mutations = mutations
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
