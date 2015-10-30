@@ -1168,10 +1168,10 @@
 	desc = "On dark nights, the ducks gather and unleash hell upon the station."
 	icon = 'icons/obj/ducks.dmi'
 	icon_state = "1"
-	number_of_ducks = 1
-	tied = 0
+	var/number_of_ducks = 1
+	var/tied = 0
 	w_class = 1.0
-	var/cooldown = 0)
+	var/cooldown = 0
 
 /obj/item/toy/ducks/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -1189,6 +1189,12 @@
 
 		else
 			playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
+	for(var/mob/M in viewers(7, H.loc))
+		if(number_of_ducks<4)
+			M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
+		else
+			M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
+		M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 /obj/item/toy/ducks/attackby(obj/item/C, mob/living/user, params)
 	if(istype(C,/obj/item/stack/cable_coil))
