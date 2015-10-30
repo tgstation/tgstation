@@ -32,6 +32,8 @@
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
 
+	starting_materials = list(MAT_PLASTIC = 10*CC_PER_SHEET_METAL) // Recipe calls for 10 sheets.
+
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
 	name = "Internals crate"
