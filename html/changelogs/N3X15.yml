@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: Fixed vulnerability allowing ghosts to fuck with Shield Generators.

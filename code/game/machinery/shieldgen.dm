@@ -228,7 +228,8 @@
 	checkhp()
 
 /obj/machinery/shieldgen/attack_ghost(mob/user)
-	if(isAdminGhost(user)) src.attack_hand(user)
+	if(isAdminGhost(user))
+		src.attack_hand(user)
 	return
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
@@ -480,6 +481,11 @@
 		power()
 		return 1
 	return
+
+
+/obj/machinery/shieldgen/attack_ghost(mob/user)
+	if(isAdminGhost(user))
+		src.attack_hand(user)
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
 	if(..())
