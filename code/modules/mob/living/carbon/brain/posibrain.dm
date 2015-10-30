@@ -9,6 +9,7 @@ var/global/posibrain_notif_cooldown = 0
 	origin_tech = "biotech=3;programming=2"
 	var/notified = 0
 	var/askDelay = 10 * 60 * 1
+	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
 	brainmob = null
 	req_access = list(access_robotics)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
@@ -28,6 +29,9 @@ var/global/posibrain_notif_cooldown = 0
 			posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
+	if(used)
+		user << "[src]'s activation switch is locked, it appears to already have been programmed!"
+		return
 	if(brainmob && !brainmob.key && !notified)
 		//Start the process of notified for a new user.
 		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
@@ -47,7 +51,7 @@ var/global/posibrain_notif_cooldown = 0
 
 //Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/device/mmi/posibrain/proc/activate(mob/user)
-	if((brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
+	if(used || (brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
 		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
@@ -81,7 +85,7 @@ var/global/posibrain_notif_cooldown = 0
 	return
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
-	if(brainmob && brainmob.key) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
+	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
 		candidate << "This brain has already been taken! Please try your possesion again later!"
 		return
 	notified = 0
@@ -97,6 +101,7 @@ var/global/posibrain_notif_cooldown = 0
 
 	visible_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	update_icon()
+	used = 1
 
 
 /obj/item/device/mmi/posibrain/examine()
