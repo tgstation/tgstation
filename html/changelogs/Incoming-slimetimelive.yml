@@ -1,8 +1,0 @@
-
-author: Incoming5643
-
-delete-after: True
-
-changes: 
-  - rscadd: "Slimepeople can now split if they contain 200 units of slime jelly, and slimepeople will now slowly generate slime jelly up to 200 units provided they are very well fed. Split slimepeople are NOT player controlled, but rather the original slime person can swap between the two mobs at will. If one of the slimepeople should die under player control, the player won't be able to swap back to their living body. Splitting only creates a new body, any items you have on you are not duplicated."
-  - rscadd: "Slimepeople now take half damage from sources of heat, but double damage from sources of cold. Lasers good, Space bad."
