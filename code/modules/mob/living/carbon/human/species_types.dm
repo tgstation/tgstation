@@ -471,8 +471,8 @@
 /datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	if(lingseek)
 		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
-		new /obj/item/device/meeseeks_box/malf(H.loc)
-		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		new /obj/item/device/meeseeks_box/malf(get_turf(H))
+		new /obj/effect/decal/cleanable/lingseek_gibs(get_turf(H))
 	for(var/mob/M in viewers(7, H.loc))
 		if(lingseek)
 			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
