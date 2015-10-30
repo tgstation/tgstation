@@ -6,7 +6,7 @@
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "ghost"
+	icon_state = "ghost1"
 	layer = 4
 	stat = DEAD
 	density = 0
