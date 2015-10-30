@@ -17,8 +17,8 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
-			usr << "<span class='info'><b>You transmit to [M]:</b> [msg]</span>"
-			M << "<span class='deadsay'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
+			usr << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
+			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -42,7 +42,7 @@
 		if(!user.castcheck(-100))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Overload Lights!</span>"
+		user << "<span class='revennotice'>You have unlocked Overload Lights!</span>"
 		name = "Overload Lights (40E)"
 		panel = "Revenant Abilities"
 		locked = 0
@@ -63,6 +63,7 @@
 					s.start()
 					new/obj/effect/overlay/temp/revenant(L.loc)
 					sleep(20)
+					flick("[L.base_state]2", L)
 					for(var/mob/living/carbon/human/M in range(shock_range, L))
 						if(M == user)
 							return
@@ -95,7 +96,7 @@
 		if(!user.castcheck(-75))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Defile!</span>"
+		user << "<span class='revennotice'>You have unlocked Defile!</span>"
 		name = "Defile (30E)"
 		panel = "Revenant Abilities"
 		locked = 0
@@ -148,7 +149,7 @@
 		if(!user.castcheck(-150))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Malfunction!</span>"
+		user << "<span class='revennotice'>You have unlocked Malfunction!</span>"
 		name = "Malfunction (45E)"
 		panel = "Revenant Abilities"
 		locked = 0
@@ -176,7 +177,7 @@
 					new/obj/effect/overlay/temp/revenant(mach.loc)
 					mach.emag_act(null)
 				else
-					if(istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
+					if(!istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 						mach.emp_act(1)
 			for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
