@@ -320,7 +320,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	return 0
 
 /datum/action/innate/swap_body/Activate()
-	if(!body || !istype(body) || !body.dna || !body.dna.species || !body.dna.species.id == "slime" || body.stat == DEAD || qdeleted(body))
+	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
 		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
 		Remove(owner)
 		return
