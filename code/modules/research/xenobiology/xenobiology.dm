@@ -545,7 +545,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area.name == "Xenobiology Lab")
+	if(new_area.name && new_area.name == "Xenobiology Lab")
 		return ..()
 	else
 		return
@@ -569,6 +569,7 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio()
+	eyeobj.loc = get_turf(src)
 	eyeobj.origin = src
 	eyeobj.visible_icon = 1
 	eyeobj.icon = 'icons/obj/abductor.dmi'
