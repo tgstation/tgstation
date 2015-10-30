@@ -14,7 +14,7 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)
+	var/message_a = say_quote("\"[html_encode(message)]\"")
 	var/rendered = text("<i><span class='game say'>Hivemind, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
 	for (var/mob/S in player_list)
 		if((!S.stat && S.hivecheck()) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))

@@ -70,6 +70,11 @@
 	speaker << "[type]/render_message(): message_classes = {[list2text(message_classes, ", ")]}"
 #endif
 	var/rendered=message
+	// Sanity
+	if(!lquote)
+		lquote="\""
+	if(!rquote)
+		rquote="\""
 	rendered="<span class='[list2text(message_classes, " ")]'>[lquote][rendered][rquote]</span>"
 	if(language)
 		rendered=language.render_speech(src, rendered)

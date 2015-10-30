@@ -293,7 +293,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/blackbox_msg = "[speech.speaker] [speech.speaker.say_quote(speech.message)]"
+		var/enc_message = speech.speaker.say_quote("\"[speech.message]\"") // Does not need to be html_encoded - N3X
+		var/blackbox_msg = "[speech.speaker] [enc_message]"
 
 		if(istype(blackbox))
 			switch(speech.frequency)

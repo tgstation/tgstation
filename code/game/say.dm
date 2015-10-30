@@ -181,7 +181,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 		else
 			say_testing(speech.speaker," We <i>do</i> understand this gentle\[wo\]man.")
 
-		rendered=html_encode(rendered)
+		rendered="[speech.lquote][html_encode(rendered)][speech.rquote]"
 
 		if(AM)
 			return AM.say_quote(rendered)

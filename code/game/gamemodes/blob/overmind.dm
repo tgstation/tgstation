@@ -81,7 +81,7 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)
+	var/message_a = say_quote("\"[html_encode(message)]\"")
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/camera/blob/S in mob_list)
