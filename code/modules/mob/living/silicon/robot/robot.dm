@@ -1370,10 +1370,11 @@
 	update_sight_hud()
 
 /mob/living/silicon/robot/proc/update_sight_hud()
-	if(sensor_mode == 0)
-		sensor.icon_state = "sight"
-	else
-		sensor.icon_state = "sight+a"
+	if(sensor)
+		if(sensor_mode == 0)
+			sensor.icon_state = "sight"
+		else
+			sensor.icon_state = "sight+a"
 
 /mob/living/silicon/robot/proc/radio_menu()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/radio_menu() called tick#: [world.time]")
