@@ -106,7 +106,7 @@
 				mode = SHUTTLE_STRANDED
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				world << 'sound/effects/hyperspace_begin.ogg'
-				sleep(75) //I TRIED PUTTING A SPAWN() HERE AND IT MADE THE SHUTTLE EXPLODE. DON'T TOUCH THIS. Also it's 75 so it times up with the launch.
+				sleep(55) //I TRIED PUTTING A SPAWN() HERE AND IT MADE THE SHUTTLE EXPLODE. DON'T TOUCH THIS. Also it's 55 so it times up with the launch.
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
 					if(M.z == ZLEVEL_STATION) //Will not launch from the mine/planet

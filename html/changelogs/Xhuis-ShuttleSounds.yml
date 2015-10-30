@@ -2,4 +2,4 @@ author: Xhuis
 delete-after: True
 
 changes: 
-  - soundadd: "The emergency shuttle now plays a unique sound when launching from the station and arriving at Central Command."
+  - soundadd: "The emergency shuttle now plays unique sounds (thanks to Cuboos for creating them) when launching from the station and arriving at Central Command."
