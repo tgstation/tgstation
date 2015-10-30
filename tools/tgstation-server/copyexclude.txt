@@ -6,4 +6,4 @@ gitrepo\data\
 gitrepo\bot\
 gitrepo\cfg\
 gitrepo\.git\
-
+gitrepo\_maps\_maps\RandomZLevels\fileList.txt
