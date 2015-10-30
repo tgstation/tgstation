@@ -199,6 +199,8 @@ var/datum/global_hud/global_hud = new()
 		drone_hud(ui_style)
 	else if(isswarmer(mymob))
 		swarmer_hud()
+	else if(isguardian(mymob))
+		guardian_hud()
 
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
