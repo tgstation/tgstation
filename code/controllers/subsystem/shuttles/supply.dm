@@ -5,7 +5,7 @@
 	var/ordernumber = 0
 
 /obj/docking_port/mobile/supply
-	name = "supply shuttle"
+	name = "Supply Shuttle"
 	id = "supply"
 	callTime = 1200
 
@@ -70,7 +70,7 @@
 
 
 /obj/docking_port/mobile/supply/proc/sell()
-	if(z != ZLEVEL_CENTCOM)		//we only sell when we are -at- centcomm
+	if(z != ZLEVEL_CENTCOM)		//we only sell when we are -at- Centcom
 		return 1
 
 	var/plasma_count = 0
@@ -239,8 +239,8 @@
 	if(temp)
 		dat = temp
 	else
-		dat += {"<div class='statusDisplay'>Shuttle Location: [SSshuttle.supply.name]<BR>
-		<HR>Supply Points: [SSshuttle.points]<BR></div>
+		dat += {"<div class='statusDisplay'>Shuttle Location: [SSshuttle.supply.getStatusText()]<BR>
+		<HR>Supply Points: [round(SSshuttle.points,0.1)]<BR></div>
 
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
@@ -270,7 +270,7 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<div class='statusDisplay'><b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/cat in all_supply_groups )
@@ -278,7 +278,7 @@
 		else
 			last_viewed_group = href_list["order"]
 			var/cat = text2num(last_viewed_group)
-			temp = "<div class='statusDisplay'><b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><BR></div><BR>"
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_type in SSshuttle.supply_packs )
@@ -287,7 +287,7 @@
 				temp += "<A href='?src=\ref[src];doorder=[supply_type]'>[N.name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
+			say("[round((reqtime - world.time)/10,0.1)] second\s remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
@@ -311,20 +311,17 @@
 		if(!O) return
 		O.generateRequisition(loc)
 
-		reqtime = (world.time + 5) % 1e5
-
-		temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
-		temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+		reqtime = (world.time + 20)
 
 	else if (href_list["vieworders"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-			temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
+			temp += "<b>[SO.object.name]</b> <font color = 'red'>(Cost: <b>[SO.object.cost]</b>)</font> approved by <font color = 'green'>[SO.orderedby] (<b>[SO.orderedbyRank]</b>)</font> [SO.comment ? "([SO.comment])":""]<BR>"
 
 	else if (href_list["viewrequests"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
-			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]<BR>"
+			temp += "#[SO.ordernum] - <b>[SO.object.name]</b> <font color = 'red'>(Cost: <b>[SO.object.cost]</b>)</font> <font color = 'green'>[SO.orderedby] (<b>[SO.orderedbyRank]</b>)</font><BR>"
 
 	else if (href_list["mainmenu"])
 		temp = null
@@ -350,11 +347,11 @@
 		var/inTransit = (SSshuttle.supply.mode != SHUTTLE_IDLE)
 		var/canOrder = atDepot && !inTransit
 
-		dat += {"<div class='statusDisplay'><B>Supply shuttle</B><HR>
+		dat += {"<div class='statusDisplay'><B>Supply Shuttle</B><HR>
 		Location: [SSshuttle.supply.getStatusText()]<BR>
-		<HR>\nSupply Points: [SSshuttle.points]<BR>\n</div><BR>
+		<HR>\nSupply Points: [round(SSshuttle.points,0.1)]<BR>\n</div><BR>
 		[canOrder ? "\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>" : "\n*Must be away to order items*<BR>\n<BR>"]
-		[inTransit ? "\n*Shuttle already called*<BR>\n<BR>": atDepot ? "\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to centcom</A><BR>\n<BR>"]
+		[inTransit ? "\n*Shuttle already called*<BR>\n<BR>": atDepot ? "\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to Centcom</A><BR>\n<BR>"]
 		[SSshuttle.shuttle_loan ? (SSshuttle.shuttle_loan.dispatched ? "\n*Shuttle loaned to Centcom*<BR>\n<BR>" : "\n<A href='?src=\ref[src];send=1;loan=1'>Loan shuttle to Centcom (5 mins duration)</A><BR>\n<BR>") : "\n*No pending external shuttle requests*<BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
@@ -395,12 +392,11 @@
 				else
 					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			else
-				temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				SSshuttle.toggleShuttle("supply", "supply_home", "supply_away", 1)
 				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms]", "cargo")
 		else
 			if(href_list["loan"] && SSshuttle.shuttle_loan)
-				if(!SSshuttle.shuttle_loan.dispatched && SSshuttle.supply.mode == SHUTTLE_IDLE) // Must either be at centcom, or at the station. No redirecting off course!
+				if(!SSshuttle.shuttle_loan.dispatched && SSshuttle.supply.mode == SHUTTLE_IDLE) // Must either be at Centcom, or at the station. No redirecting off course!
 					SSshuttle.shuttle_loan.loan_shuttle()
 					temp = "The supply shuttle has been loaned to Centcom.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
@@ -408,7 +404,6 @@
 					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			else
 				if(!SSshuttle.supply.request(SSshuttle.getDock("supply_home")))
-					temp = "The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
 
 	else if (href_list["order"])
@@ -417,7 +412,7 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<div class='statusDisplay'><b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/cat in all_supply_groups )
@@ -425,7 +420,7 @@
 		else
 			last_viewed_group = href_list["order"]
 			var/cat = text2num(last_viewed_group)
-			temp = "<div class='statusDisplay'><b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><BR></div><BR>"
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_type in SSshuttle.supply_packs )
@@ -445,17 +440,12 @@
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
+			say("[round((reqtime - world.time)/10,0.1)] second\s remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
 		if(!SSshuttle.supply_packs[href_list["doorder"]])
 			return
-
-		var/timeout = world.time + 600
-		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
-		if(world.time > timeout)	return
-//		if(!reason)	return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -466,14 +456,11 @@
 		else if(issilicon(usr))
 			idname = usr.real_name
 
-		var/datum/supply_order/O = SSshuttle.generateSupplyOrder(href_list["doorder"], idname, idrank, reason)
+		var/datum/supply_order/O = SSshuttle.generateSupplyOrder(href_list["doorder"], idname, idrank)
 		if(!O)	return
 		O.generateRequisition(loc)
 
-		reqtime = (world.time + 5) % 1e5
-
-		temp = "Order request placed.<BR>"
-		temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"
+		reqtime = (world.time + 20)
 
 	else if(href_list["confirmorder"])
 		//Find the correct supply_order datum
@@ -498,10 +485,10 @@
 		temp += "<BR><BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["vieworders"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
+		temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
+		temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-			temp += "#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""]<BR>"// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "#[SO.ordernum] - <b>[SO.object.name]</b> <font color = 'red'>(Cost: <b>[SO.object.cost]</b>)</font> approved by <font color = 'green'>[SO.orderedby] (<b>[SO.orderedbyRank]</b>)</font>[SO.comment ? " ([SO.comment])":""]<BR>"// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 /*
 	else if (href_list["cancelorder"])
 		var/datum/supply_order/remove_supply = href_list["cancelorder"]
@@ -511,13 +498,14 @@
 
 		for(var/S in supply_shuttle_shoppinglist)
 			var/datum/supply_order/SO = S
-			temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
+			temp += "#[SO.ordernum] - <b>[SO.object.name]</b> <font color = 'red'>(Cost: <b>[SO.object.cost]</b>)</font> approved by <font color = 'green'>[SO.orderedby] (<b>[SO.orderedbyRank]</b>)</font>[SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 */
 	else if (href_list["viewrequests"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
+		temp = "<div class='statusDisplay'>Supply Points: [round(SSshuttle.points,0.1)]<BR>"
+		temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
-			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.getDockedId() == "supply_away" ? "<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>" : ""]<BR>"
+			temp += "<b>[SO.object.name]</b> <font color = 'red'>(Cost: <b>[SO.object.cost]</b>)</font> <font color = 'green'>[SO.orderedby] (<b>[SO.orderedbyRank]</b>)</font> [SSshuttle.supply.getDockedId() == "supply_away" ? "<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>" : ""]<BR>"
 
 		temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 
