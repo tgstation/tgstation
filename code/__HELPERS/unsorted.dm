@@ -1379,6 +1379,7 @@ B --><-- A
 		animate(src, transform = shift, 2)
 		sleep(0.6) //the effect breaks above 0.6 delay
 	animate(src, transform = initial_transform, 2)
+	orbiting = null
 
 
 /atom/movable/proc/stop_orbit()
