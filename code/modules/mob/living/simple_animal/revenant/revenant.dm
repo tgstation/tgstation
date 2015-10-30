@@ -391,13 +391,11 @@
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
 	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
 	if(client_to_revive)
-		for(var/mob/M in mob_list)
-			if(M.stat == DEAD && M.client == client_to_revive) //Only recreates the mob if the mob the client is in is dead
-				message_admins("[M.client] was a revenant and died. Re-making them into the new revenant formed by ectoplasm.")
+		for(var/mob/M in dead_mob_list)
+			if(M.client == client_to_revive) //Only recreates the mob if the mob the client is in is dead
 				R.client = client_to_revive
 				key_of_revenant = client_to_revive.key
-				break
-	else
+	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
 		var/list/candidates = get_candidates(BE_REVENANT)
 		if(!candidates.len)
@@ -420,8 +418,8 @@
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
-	message_admins("[key_of_revenant] has been made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was spawned as a revenant by reforming ectoplasm.")
+	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
+	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 	qdel(src)
 	if(src) //Should never happen, but just in case

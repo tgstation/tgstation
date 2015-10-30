@@ -176,7 +176,7 @@
 					new/obj/effect/overlay/temp/revenant(mach.loc)
 					mach.emag_act(null)
 				else
-					if(istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
+					if(!istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 						mach.emp_act(1)
 			for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
