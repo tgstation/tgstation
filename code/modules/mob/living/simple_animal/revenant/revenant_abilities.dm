@@ -63,6 +63,7 @@
 					s.start()
 					new/obj/effect/overlay/temp/revenant(L.loc)
 					sleep(20)
+					flick("[L.base_state]2", L)
 					for(var/mob/living/carbon/human/M in range(shock_range, L))
 						if(M == user)
 							return
