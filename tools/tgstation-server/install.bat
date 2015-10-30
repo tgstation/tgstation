@@ -39,6 +39,8 @@ xcopy gitrepo\data gamedata\data /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\config gamedata\config /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\cfg gamedata\cfg /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\bot bot /Y /X /K /R /H /I /C /V /E /Q >nul
+xcopy gitrepo\_maps\RandomZLevels\fileList.txt ..\..\..\..\gamedata\config\awaymissionconfig.txt >nul /Y /X /K /R /H /I /C /V /E /Q >nul
+
 echo (2/3)
 xcopy gitrepo gamecode\a /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
 mkdir gamecode\a\.git\logs\
@@ -55,12 +57,14 @@ mklink gamecode\a\CORE_DATA.py ..\..\bot\CORE_DATA.py
 mklink /d gamecode\a\data ..\..\gamedata\data
 mklink /d gamecode\a\config ..\..\gamedata\config
 mklink /d gamecode\a\cfg ..\..\gamedata\cfg
+mklink gamecode\a\_maps\RandomZLevels\fileList.txt ..\..\..\..\gamedata\config\awaymissionconfig.txt >nul
 
 mklink gamecode\b\nudge.py ..\..\bot\nudge.py
 mklink gamecode\b\CORE_DATA.py ..\..\bot\CORE_DATA.py
 mklink /d gamecode\b\data ..\..\gamedata\data
 mklink /d gamecode\b\config ..\..\gamedata\config
 mklink /d gamecode\b\cfg ..\..\gamedata\cfg
+mklink gamecode\b\_maps\RandomZLevels\fileList.txt ..\..\..\..\gamedata\config\awaymissionconfig.txt >nul
 
 mklink /d gamefolder gamecode\a
 
