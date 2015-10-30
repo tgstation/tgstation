@@ -2200,6 +2200,19 @@
 	..()
 	return
 
+//Hotfix for Fakedeath never ending.
+/datum/reagent/zombiepowder/on_removal(var/amount)
+	if(!..(amount))
+		return 0
+	if(!holder) return 1
+	var/newvol = max(0,volume-amount)
+	var/mob/living/carbon/M = holder.my_atom
+	if(M)
+		if(newvol >= 1)
+			M.status_flags |= FAKEDEATH
+		else
+			M.status_flags &= ~FAKEDEATH
+	return 1
 /*
 /datum/reagent/zombiepowder/Del()
 				if(holder && ismob(holder.my_atom))

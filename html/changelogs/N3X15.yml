@@ -1,2 +1,6 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: "MoMMIs, machines, and Binary Chat are no longer missing quotation marks."
+  - bugfix: "An XSS exploit in blob telepathy has been fixed."
+  - bugfix: "Zombie powder should no longer give people FAKEDEATH forever when used with charcoal."
+  - bugfix: "Plastic crates give out 10 plastic sheets when recycled."
