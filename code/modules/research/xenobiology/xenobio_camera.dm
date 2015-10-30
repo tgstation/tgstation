@@ -99,6 +99,7 @@
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.loc = remote_eye.loc
 			S.visible_message("[S] warps in!")
+			X.stored_slimes -= S
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
