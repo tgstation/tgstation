@@ -1,0 +1,8 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "The number of roundstart head revolutionaries nows depends on the roundstart security force as well as the roundstart heads"
+  - rscadd: "The maximum number of head revs is 3, the minimum is 1. If there is fewer than three station heads there will never be more than that number of head revs at roundstart. For every three vacant security roles (Head of Security/Warden/Security Officer/Detective) at roundstart the number of starting head revs will be reduced by 1."
+  - rscadd: "Head revolutionaries can be gained during play if the security/head roles are filled. They are drawn from existing revolutionaries."

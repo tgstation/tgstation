@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+ *		CHAINSAWS
  */
 
 /*##################################################################
@@ -30,7 +31,8 @@
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
 	if(!wielded || !user) return
 	wielded = 0
-	force = force_unwielded
+	if(force_unwielded)
+		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
 		name = copytext(name,1,sf)
@@ -39,6 +41,8 @@
 	update_icon()
 	if(isrobot(user))
 		user << "<span class='notice'>You free up your module.</span>"
+	else if(istype(src, /obj/item/weapon/twohanded/required))
+		user << "<span class='notice'>You drop \the [name].</span>"
 	else
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
@@ -57,7 +61,8 @@
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	wielded = 1
-	force = force_wielded
+	if(force_wielded)
+		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
 	if(isrobot(user))
@@ -128,7 +133,7 @@
 
 /obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
 	if(wielded)
-		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
 	return ..()
 
@@ -137,12 +142,10 @@
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
-		user << "<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>"
+		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
 		return
-	var/obj/item/weapon/twohanded/offhand/O = new(user)
-	user.put_in_inactive_hand(O)
+	wield(user)
 	..()
-	wielded = 1
 
 
 /obj/item/weapon/twohanded/
@@ -370,3 +373,38 @@
 		explosive = C42
 		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
+
+// CHAINSAW
+/obj/item/weapon/twohanded/required/chainsaw
+	name = "chainsaw"
+	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
+	icon_state = "chainsaw_off"
+	flags = CONDUCT
+	force = 13
+	w_class = 5
+	throwforce = 13
+	throw_speed = 2
+	throw_range = 4
+	materials = list(MAT_METAL=13000)
+	origin_tech = "materials=2;engineering=2;combat=2"
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = "swing_hit"
+	sharpness = IS_SHARP
+	action_button_name = "Pull the starting cord"
+	var/on = 0
+
+/obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
+	on = !on
+	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
+	force = on ? 21 : 13
+	throwforce = on ? 21 : 13
+	icon_state = "chainsaw_[on ? "on" : "off"]"
+
+	if(hitsound == "swing_hit")
+		hitsound = 'sound/weapons/chainsawhit.ogg'
+	else
+		hitsound = "swing_hit"
+
+	if(src == user.get_active_hand()) //update inhands
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()

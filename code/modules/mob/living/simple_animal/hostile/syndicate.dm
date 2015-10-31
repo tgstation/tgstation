@@ -50,22 +50,8 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
-
-/mob/living/simple_animal/hostile/syndicate/melee/attackby(obj/item/O, mob/user, params)
-	if(O.force)
-		if(prob(80))
-			var/damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			health -= damage
-			visible_message("<span class='danger'>[user] has attacked [src] with [O]!</span>")
-		else
-			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
-		playsound(loc, O.hitsound, 25, 1, -1)
-	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage!</span>"
-		visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
-
+	maxHealth = 150
+	health = 150
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return

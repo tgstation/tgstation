@@ -101,26 +101,26 @@
 	if(bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
-	var/tally = 0
+	. = ..()
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
-		tally += (health_deficiency / 25)
+		. += (health_deficiency / 25)
 
 	if(bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+		. += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
 		if(reagents.has_reagent("morphine")) // morphine slows slimes down
-			tally *= 2
+			. *= 2
 
 		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
-			tally *= 5
+			. *= 5
 
 	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
+		. *= 2
 
-	return tally + config.slime_delay
+	. += config.slime_delay
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -297,9 +297,6 @@
 		if(prob(10 + force_effect))
 			discipline_slime(user)
 	..()
-
-/mob/living/simple_animal/slime/show_inv(mob/user)
-	return
 
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))

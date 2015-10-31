@@ -17,8 +17,8 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
-			usr << "<span class='info'><b>You transmit to [M]:</b> [msg]</span>"
-			M << "<span class='deadsay'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
+			usr << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
+			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -26,10 +26,10 @@
 	name = "Overload Lights (100E)"
 	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
 	panel = "Revenant Abilities (Locked)"
-	charge_max = 250
+	charge_max = 200
 	clothes_req = 0
 	range = 5
-	var/shock_range = 1
+	var/shock_range = 2
 	var/shock_damage = 20
 	var/reveal = 80
 	var/stun = 40
@@ -42,13 +42,13 @@
 		if(!user.castcheck(-100))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Overload Lights!</span>"
-		name = "Overload Lights (50E)"
+		user << "<span class='revennotice'>You have unlocked Overload Lights!</span>"
+		name = "Overload Lights (40E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
 		return
-	if(!user.castcheck(-50))
+	if(!user.castcheck(-40))
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
@@ -60,15 +60,14 @@
 					L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(4, 0, L)
-					sleep(10)
 					s.start()
 					new/obj/effect/overlay/temp/revenant(L.loc)
 					sleep(20)
+					flick("[L.base_state]2", L)
 					for(var/mob/living/carbon/human/M in range(shock_range, L))
 						if(M == user)
 							return
-						spawn(0)
-							M.Beam(L,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+						M.Beam(L,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
 						M.electrocute_act(shock_damage, "[L.name]", safety=1)
 						var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
 						z.set_up(4, 0, M)
@@ -83,7 +82,7 @@
 	name = "Defile (75E)"
 	desc = "Twists and corrupts the nearby area. Also dispels holy auras on floors."
 	panel = "Revenant Abilities (Locked)"
-	charge_max = 200
+	charge_max = 150
 	clothes_req = 0
 	range = 3
 	var/reveal = 80
@@ -97,13 +96,13 @@
 		if(!user.castcheck(-75))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Defile!</span>"
-		name = "Defile (40E)"
+		user << "<span class='revennotice'>You have unlocked Defile!</span>"
+		name = "Defile (30E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
 		return
-	if(!user.castcheck(-40))
+	if(!user.castcheck(-30))
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
@@ -136,7 +135,7 @@
 	name = "Malfunction (150E)"
 	desc = "Corrupts and damages nearby machines and mechanical objects."
 	panel = "Revenant Abilities (Locked)"
-	charge_max = 250
+	charge_max = 200
 	clothes_req = 0
 	range = 4
 	var/reveal = 80
@@ -150,13 +149,13 @@
 		if(!user.castcheck(-150))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Malfunction!</span>"
-		name = "Malfunction (40E)"
+		user << "<span class='revennotice'>You have unlocked Malfunction!</span>"
+		name = "Malfunction (45E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
 		return
-	if(!user.castcheck(-40))
+	if(!user.castcheck(-45))
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
@@ -167,6 +166,10 @@
 					bot.locked = 0
 					bot.open = 1
 					bot.Emag(null)
+			for(var/mob/living/carbon/human/human in T.contents)
+				human << "<span class='warning'>You feel disoriented.</span>"
+				new/obj/effect/overlay/temp/revenant(human.loc)
+				human.emp_act(1)
 			for(var/obj/machinery/mach in T.contents)
 				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc) || istype(mach, /obj/machinery/power/smes) || istype(mach, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery //Also doesn't work on bots so they can go do stuff faster(god this is so ugly)
 					continue
@@ -174,7 +177,7 @@
 					new/obj/effect/overlay/temp/revenant(mach.loc)
 					mach.emag_act(null)
 				else
-					if(istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
+					if(!istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 						mach.emp_act(1)
 			for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"

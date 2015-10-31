@@ -177,3 +177,5 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
 	if(!fire_res_on_core)
 		health -= getFireLoss()
+	diag_hud_set_status()
+	diag_hud_set_health()

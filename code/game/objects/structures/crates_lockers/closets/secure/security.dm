@@ -19,6 +19,7 @@
 	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/weapon/cartridge/captain(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/weapon/storage/box/silver_ids(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
