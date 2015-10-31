@@ -1214,6 +1214,7 @@
 			if(!tied)
 				number_of_ducks += 1
 				icon_state = "[number_of_ducks]"
+				qdel(C) //stop duck breeding
 				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
