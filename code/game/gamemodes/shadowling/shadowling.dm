@@ -256,6 +256,10 @@ Made by Xhuis
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
+/datum/species/shadow/ling/get_spans()
+	var/list/say_span = list(SPAN_CHILLER)
+	return say_span //Shadowlings talk in chiller, honk
+
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs
 	var/light_amount = 0

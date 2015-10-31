@@ -6,7 +6,7 @@
 	if(H.dna.species.id == "l_shadowling" && is_thrall(H)) return 1
 	if(!is_shadow_or_thrall(usr)) usr << "<span class='warning'>You can't wrap your head around how to do this.</span>"
 	else if(is_thrall(usr)) usr << "<span class='warning'>You aren't powerful enough to do this.</span>"
-	else if(is_shadow(usr)) usr << "<span class='warning'>Your telepathic ability is suppressed. Hatch or regenerate first.</span>"
+	else if(is_shadow(usr)) usr << "<span class='warning'>Your telepathic ability is suppressed. Hatch or use Rapid Re-Hatch first.</span>"
 	return 0
 
 
@@ -15,22 +15,25 @@
 	desc = "Stuns and mutes a target for a decent duration."
 	panel = "Shadowling Abilities"
 	charge_max = 300
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/target in targets)
 		if(!ishuman(target))
+			usr << "<span class='warning'>You may only glare at humans!</span>"
 			revert_cast()
 			return
 		if(!shadowling_check(usr))
 			revert_cast()
 			return
 		if(target.stat)
+			usr << "<span class='warning'>[target] must be conscious!</span>"
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			usr << "<span class='danger'>You don't see why you would want to paralyze an ally.</span>"
+			usr << "<span class='warning'>You cannot glare at allies!</span>"
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target
@@ -49,6 +52,7 @@
 	desc = "Extinguishes most nearby light sources."
 	panel = "Shadowling Abilities"
 	charge_max = 150 //Short cooldown because people can just turn the lights back on
+	human_req = 1
 	clothes_req = 0
 	range = 5
 	action_icon_state = "veil"
@@ -132,6 +136,7 @@
 	panel = "Shadowling Abilities"
 	range = 5
 	charge_max = 250
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
 	sound = 'sound/effects/ghost2.ogg'
@@ -163,6 +168,7 @@
 	desc = "Allows you to enslave a conscious, non-braindead, non-catatonic human to your will. This takes some time to cast."
 	panel = "Shadowling Abilities"
 	charge_max = 0
+	human_req = 1
 	clothes_req = 0
 	range = 1 //Adjacent to user
 	action_icon_state = "enthrall"
@@ -174,28 +180,27 @@
 	if(!(usr.mind in ticker.mode.shadows)) return
 	if(user.dna.species.id != "shadowling")
 		if(ticker.mode.thralls.len >= 5)
-			user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
 			revert_cast()
 			return
 	for(var/mob/living/carbon/human/target in targets)
 		if(!in_range(usr, target))
-			usr << "<span class='warning'>You need to be closer to enthrall [target].</span>"
+			usr << "<span class='warning'>You need to be closer to enthrall [target]!</span>"
 			revert_cast()
 			return
 		if(!target.key || !target.mind)
-			usr << "<span class='warning'>The target has no mind.</span>"
+			usr << "<span class='warning'>The target has no mind!</span>"
 			revert_cast()
 			return
 		if(target.stat)
-			usr << "<span class='warning'>The target must be conscious.</span>"
+			usr << "<span class='warning'>The target must be conscious!</span>"
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			usr << "<span class='warning'>You can not enthrall allies.</span>"
+			usr << "<span class='warning'>You can not enthrall allies!</span>"
 			revert_cast()
 			return
 		if(!ishuman(target))
-			usr << "<span class='warning'>You can only enthrall humans.</span>"
+			usr << "<span class='warning'>You can only enthrall humans!</span>"
 			revert_cast()
 			return
 		if(enthralling)
@@ -255,11 +260,13 @@
 	desc = "Allows you to silently communicate with all other shadowlings and thralls."
 	panel = "Shadowling Abilities"
 	charge_max = 0
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind/cast(mob/living/user)
 	if(!is_shadow(user))
+		user << "<span class='warning'>You must be a shadowling to do that!</span>"
 		return
 	var/text = stripped_input(user, "What do you want to say your thralls and fellow shadowlings?.", "Hive Chat", "")
 	if(!text)
@@ -279,6 +286,10 @@
 	action_icon_state = "regen_armor"
 
 /obj/effect/proc_holder/spell/self/shadowling_regenarmor/cast(mob/living/carbon/human/user)
+	if(!is_shadow(user))
+		user << "<span class='warning'>You must be a shadowling to do this!</span>"
+		revert_cast()
+		return
 	user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and shifts around their body!</span>", \
 						 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 	user.adjustCloneLoss(user.getCloneLoss())
@@ -424,6 +435,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	panel = "Shadowling Abilities"
 	range = 7
 	charge_max = 300
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "screech"
 	sound = 'sound/effects/screech.ogg'
@@ -464,13 +476,14 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	panel = "Shadowling Abilities"
 	range = 3
 	charge_max = 100
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "drain_life"
 	var/targetsDrained
 	var/list/nearbyTargets
 
 /obj/effect/proc_holder/spell/aoe_turf/drain_life/cast(list/targets, mob/living/carbon/human/U = usr)
-	if(!shadowling_check(usr))
+	if(!shadowling_check(U))
 		revert_cast()
 		return
 	targetsDrained = 0
@@ -503,6 +516,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	panel = "Shadowling Abilities"
 	range = 1
 	charge_max = 600
+	human_req = 1
 	clothes_req = 0
 	include_user = 0
 	action_icon_state = "revive_thrall"
@@ -596,12 +610,13 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	desc = "Extends the time of the emergency shuttle's arrival by fifteen minutes. This can only be used once."
 	panel = "Shadowling Abilities"
 	range = 1
+	human_req = 1
 	clothes_req = 0
 	charge_max = 600
 	action_icon_state = "extend_shuttle"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle/cast(list/targets, mob/living/carbon/human/U = usr)
-	if(!shadowling_check(usr))
+	if(!shadowling_check(U))
 		revert_cast()
 		return
 	for(var/mob/living/carbon/human/target in targets)
@@ -647,19 +662,22 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	desc = "Stuns and mutes a target for a short duration."
 	panel = "Thrall Abilities"
 	charge_max = 450
+	human_req = 1
 	clothes_req = 0
 	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets)
 	for(var/mob/living/target in targets)
 		if(!ishuman(target) || !target)
+			usr << "<span class='warning'>You nay only glare at humans!</span>"
 			revert_cast()
 			return
 		if(target.stat)
+			usr << "<span class='warning'>[target] must be conscious!</span>"
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			usr << "<span class='danger'>You don't see why you would want to paralyze an ally.</span>"
+			usr << "<span class='warning'>You cannot glare at allies!</span>"
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target

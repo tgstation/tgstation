@@ -86,6 +86,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.chiller				{font-family: "Chiller", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .big					{font-size: 3;}
