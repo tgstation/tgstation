@@ -43,7 +43,7 @@
 	var/mob/living/carbon/C = user
 	if(!sample)
 		sample = I
-		C.drop_item(I, src)
+		if(!C.drop_item(I, src)) return 1
 
 	attack_hand(user)
 
@@ -66,11 +66,11 @@
 	if(..())
 		return
 	user.set_machine(src)
-	var/dat= ""
+	var/dat = list()
 	if(curing)
-		dat = "Antibody isolation in progress"
+		dat += "Antibody isolation in progress"
 	else if(isolating)
-		dat = "Pathogen isolation in progress"
+		dat += "Pathogen isolation in progress"
 	else
 		dat += "<BR>Blood sample:"
 		dat += "<br><table cellpadding='10'><tr><td>"
@@ -92,14 +92,14 @@
 				dat += "Please check container contents."
 			dat += "</td></tr><tr><td><A href='?src=\ref[src];action=sample'>Eject container</a>"
 		else
-			dat = "Please insert a container."
+			dat += "Please insert a container."
 		dat += "</td></tr></table><br>"
-
 		dat += "<hr>"
-
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
-	return
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "iso_centrifuge", "Isolation Centrifuge", 400, 300, src)
+	popup.set_content(dat)
+	popup.open()
+	onclose(user, "iso_centrifuge")
 
 /obj/machinery/centrifuge/process()
 
@@ -132,7 +132,7 @@
 /obj/machinery/centrifuge/Topic(href, href_list)
 
 	if(..())
-		return
+		return 1
 
 	if(usr)
 		usr.set_machine(src)
@@ -167,7 +167,7 @@
 
 		if("sample")
 			if(sample)
-				sample.loc = src.loc
+				sample.forceMove(src.loc)
 				sample = null
 
 	src.add_fingerprint(usr)

@@ -111,16 +111,16 @@
 /obj/machinery/disease2/diseaseanalyser/attack_hand(var/mob/user as mob)
 	user.set_machine(src)
 	var/dat = list()
-	dat += "Currently stored samples: [src.contents.len]"
+	dat += "Currently stored samples: [src.contents.len]<br><hr>"
 	if (src.contents.len > 0)
 		dat += "<table cellpadding='1' style='width: 100%;text-align:center;'><td>Name</td><td>Symptoms</td><td>Antibodies</td><td>Transmission</td><td>Options</td>"
 		for(var/obj/item/weapon/virusdish/B in src.contents)
 			var/ID = B.virus2.uniqueID
 			if("[ID]" in virusDB) //If it's in the DB they might have given it a name
 				var/datum/data/record/v = virusDB["[ID]"]
-				dat += "<BR><tr><td>[v.fields["name"]]</td>"
+				dat += "<tr><td>[v.fields["name"]]</td>"
 			else //Use ID instead
-				dat += "<br><tr><td>[B.virus2.name()]</td>"
+				dat += "<tr><td>[B.virus2.name()]</td>"
 			dat+="<td>"
 			if(!B.analysed)
 				dat += "Awaiting analysis.</td><td></td><td></td>"
@@ -138,6 +138,7 @@
 			dat += "</tr>"
 		dat += "</table>"
 	dat = list2text(dat)
-	var/datum/browser/popup = new(user, "disease_analyzer", "Viral Storage & Analysis Unit V1.3", 600, 350, src)
+	var/datum/browser/popup = new(user, "disease_analyzer", "Viral Storage & Analysis Unit", 600, 350, src)
 	popup.set_content(dat)
 	popup.open()
+	onclose(user, "disease_analyzer")

@@ -24,7 +24,6 @@
 	var/virusing
 
 	var/last_notice
-
 /obj/machinery/disease2/incubator/New()
 	. = ..()
 
@@ -81,13 +80,13 @@
 				src.updateUsrDialog()
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	if(usr) usr.set_machine(src)
 
 	if (href_list["ejectchem"])
 		if(beaker)
-			beaker.loc = src.loc
+			beaker.forceMove(src.loc)
 			beaker = null
 	if(!dish)
 		return
@@ -126,8 +125,6 @@
 				B.data["virus2"] = virus
 
 				say("Injection complete.")
-
-
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
@@ -135,9 +132,9 @@
 	if(stat & BROKEN)
 		return
 	user.set_machine(src)
-	var/dat = ""
+	var/dat = list()
 	if(!dish)
-		dat = "Please insert dish into the incubator.<BR>"
+		dat += "Please insert dish into the incubator.<BR>"
 	var/string = "Off"
 	if(on)
 		string = "On"
@@ -161,12 +158,12 @@
 		if(beaker)
 			dat += "Breed viral culture in beaker: <A href='?src=\ref[src];virus=1'> Start</a>"
 			dat += "<BR>"
-	dat += "<BR><BR>"
-	dat += "<A href='?src=\ref[src];flush=1'>Flush system</a><BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse("<TITLE>Pathogenic incubator</TITLE>incubator menu:<BR><BR>[dat]", "window=incubator;size=575x400")
-	onclose(user, "incubator")
-	return
+	dat += "<br><hr><A href='?src=\ref[src];flush=1'>Flush system</a><BR>"
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "dish_incubator", "Pathogenic Incubator", 575, 400, src)
+	popup.set_content(dat)
+	popup.open()
+	onclose(user, "dish_incubator")
 
 /obj/machinery/disease2/incubator/process()
 	if(dish && on && dish.virus2)
