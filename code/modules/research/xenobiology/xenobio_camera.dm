@@ -14,19 +14,20 @@
 
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
-	desc = "A highly advanced console recovered from the wreckage of an Abductor saucer. It's been repurposed for the rather more mundane use of handling slimes."
+	desc = "A computer used for remotely handling slimes."
 	networks = list("SS13")
 	off_action = new/datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
 	var/datum/action/innate/feed_slime/feed_slime_action = new
+	var/datum/action/innate/monkey_recycle/monkey_recycle_action = new
 
 	var/list/stored_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
 
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "camera"
+	icon_screen = "slime_comp"
+	icon_keyboard = "rd_key"
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio()
@@ -52,6 +53,9 @@
 	feed_slime_action.target = src
 	feed_slime_action.Grant(user)
 
+	monkey_recycle_action.target = src
+	monkey_recycle_action.Grant(user)
+
 
 /obj/machinery/computer/camera_advanced/xenobio/attack_hand(mob/user)
 	if(!ishuman(user)) //AIs using it might be weird
@@ -70,6 +74,7 @@
 	origin.slime_place_action.Remove(C)
 	origin.slime_up_action.Remove(C)
 	origin.feed_slime_action.Remove(C)
+	origin.monkey_recycle_action.Remove(C)
 	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
 	remote_eye.user = null
 	if(C.client)
@@ -85,7 +90,7 @@
 
 /datum/action/innate/slime_place
 	name = "Place Slimes"
-	button_icon_state = "beam_down"
+	button_icon_state = "slime_down"
 
 /datum/action/innate/slime_place/Activate()
 	if(!target || !ishuman(owner))
@@ -102,7 +107,7 @@
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
-	button_icon_state = "beam_up"
+	button_icon_state = "slime_up"
 
 /datum/action/innate/slime_pick_up/Activate()
 	if(!target || !ishuman(owner))
@@ -123,7 +128,7 @@
 
 /datum/action/innate/feed_slime
 	name = "Feed Slimes"
-	button_icon_state = "beam_down"
+	button_icon_state = "monkey_down"
 
 /datum/action/innate/feed_slime/Activate()
 	if(!target || !ishuman(owner))
@@ -137,3 +142,22 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
+			owner << "[X] now has [X.monkeys] monkeys left."
+
+
+/datum/action/innate/monkey_recycle
+	name = "Recycle Monkeys"
+	button_icon_state = "monkey_up"
+
+/datum/action/innate/monkey_recycle/Activate()
+	if(!target || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/C = owner
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+
+	if(cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
+			if(M.stat)
+				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
+				X.monkeys += 0.2
