@@ -285,7 +285,7 @@
 
 /turf/proc/init_lighting()
 	var/area/A = loc
-	if(!A.lighting_use_dynamic || istype(src, /turf/space))
+	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/space))
 		lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
@@ -323,16 +323,30 @@
 
 	lighting_changed = 0
 
+/turf/proc/get_lumcount()
+	var/light_amount
+	if(!src || !istype(src))
+		return
+	var/area/A = src.loc
+	if(!A || !istype(src))
+		return
+	if(IS_DYNAMIC_LIGHTING(A))
+		light_amount = src.lighting_lumcount
+	else
+		light_amount =  LIGHTING_CAP
+	return light_amount
+
 /area
-	var/lighting_use_dynamic = 1	//Turn this flag off to make the area fullbright
+	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
 
 /area/New()
 	. = ..()
-	if(!lighting_use_dynamic)
+	if(lighting_use_dynamic != DYNAMIC_LIGHTING_ENABLED)
 		luminosity = 1
 
 /area/proc/SetDynamicLighting()
-	lighting_use_dynamic = 1
+	if (lighting_use_dynamic == DYNAMIC_LIGHTING_DISABLED)
+		lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	luminosity = 0
 	for(var/turf/T in src.contents)
 		T.init_lighting()

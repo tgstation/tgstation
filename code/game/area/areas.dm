@@ -37,8 +37,9 @@
 		power_light = 1
 		power_equip = 1
 		power_environ = 1
-		luminosity = 1
-		lighting_use_dynamic = 0
+
+		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
