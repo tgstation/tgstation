@@ -11,7 +11,7 @@
 	state = 2
 
 /obj/structure/bookcase/random/New()
-	if(!book_count)
+	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
 	if(!establish_db_connection())
@@ -26,18 +26,18 @@
 		update_icon()
 		return
 
-	var/static/l = format_table_name("library")
-	var/c = category? "AND category='[category]'" :""
-	var/q = "SELECT * FROM [l] WHERE isnull(deleted) [c] GROUP BY title ORDER BY rand() LIMIT [book_count];"
-	var/DBQuery/query = dbcon.NewQuery(q)
-	query.Execute()
-	while(query.NextRow())
-		var/obj/item/weapon/book/B = new(src)
-		B.author	=	query.item[2]
-		B.title		=	query.item[3]
-		B.dat		=	query.item[4]
-		B.name		=	"Book: [B.title]"
-		B.icon_state=	"book[rand(1,7)]"
+	var/c = category? " AND category='[sanitizeSQL(category)]'" :""
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY rand() LIMIT [book_count];") // isdeleted copyright (c) not me
+	if(query.Execute())
+		while(query.NextRow())
+			var/obj/item/weapon/book/B = new(src)
+			B.author	=	query.item[2]
+			B.title		=	query.item[3]
+			B.dat		=	query.item[4]
+			B.name		=	"Book: [B.title]"
+			B.icon_state=	"book[rand(1,7)]"
+	else
+		log_game("SQL ERROR populating library bookshelf.  Category: \[[category]\], Count: [book_count], Error: \[[query.ErrorMsg()]\]\n")
 	update_icon()
 
 /obj/structure/bookcase/random/fiction
