@@ -237,7 +237,7 @@
 					usr << "<span class='notice'>You begin rearranging [target]'s memories.</span>"
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly.</span>")
 					target << "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>" //Ow the edge
-			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling, 45 for someone with a loyalty implant
+			if(!do_mob(usr, target, 70)) //around 21 seconds total for enthralling, 36 for someone with a loyalty implant
 				usr << "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>"
 				target << "<span class='userdanger'>A spike of pain drives into your head, wiping your memory. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>"
 				enthralling = 0
