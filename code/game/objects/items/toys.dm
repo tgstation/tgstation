@@ -1189,13 +1189,13 @@
 
 		else
 			playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
-	for(var/mob/M in viewers(7, H.loc))
+	for(var/mob/M in viewers(7, user.loc))
 		if(number_of_ducks<4)
 			M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
 		else
 			M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
-
-		if(!M.check_ear_prot())
+		var/mob/living/L = M
+		if( istype(L) && !L.check_ear_prot())
 			M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 /obj/item/toy/ducks/attackby(obj/item/C, mob/living/user, params)
@@ -1213,9 +1213,9 @@
 
 	else if(istype(C,/obj/item/toy/ducks))
 		var/obj/item/toy/ducks/D = C
-		if(C.number_of_ducks + number_of_ducks <=4)
+		if(D.number_of_ducks + number_of_ducks <=4)
 			if(!tied)
-				number_of_ducks += C.number_of_ducks
+				number_of_ducks += D.number_of_ducks
 				icon_state = "[number_of_ducks]"
 				user.drop_item()
 				qdel(C) //stop duck breeding
