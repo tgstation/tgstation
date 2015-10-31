@@ -437,6 +437,12 @@
 	return
 
 
+/obj/machinery/suit_storage_unit/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	container_resist()
+
+
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
 	if(islocked)

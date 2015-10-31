@@ -280,7 +280,7 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
-		user << "<span class='notice'>It won't budge!</span>"
+		container_resist()
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
