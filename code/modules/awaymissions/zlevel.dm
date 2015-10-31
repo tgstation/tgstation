@@ -4,7 +4,7 @@
 
 	var/list/potentialRandomZlevels = list()
 	world << "<span class='boldannounce'>Searching for away missions...</span>"
-	var/list/Lines = file2list("config/fileList.txt")
+	var/list/Lines = file2list("config/awaymissionconfig.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)
