@@ -130,13 +130,12 @@
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "telebaton_0" //Needed!
-	item_state = null //Needed!
+	icon_state = "supermatter_sword"
+	item_state = "supermatter_sword"
 	slot_flags = null
 	w_class = 4
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
-
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
@@ -156,18 +155,23 @@
 		if(!istype(T,/turf/space))
 			consume_turf(T)
 
-/obj/item/weapon/melee/supermatter_sword/afterattack(target)
+/obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user)
 	..()
+	if(user && target == user)
+		user.drop_item()
 	if(Adjacent(target))
 		consume_everything(target)
 
 /obj/item/weapon/melee/supermatter_sword/throw_impact(target)
 	..()
+	if(ismob(target))
+		var/mob/M
+		if(src.loc == M) //target caught the sword
+			M.drop_item()
 	consume_everything(target)
 
 /obj/item/weapon/melee/supermatter_sword/pickup(user)
 	..()
-	user << "<span class='warning'><b>Here we go.</b></span>"
 	balanced = 0
 
 /obj/item/weapon/melee/supermatter_sword/ex_act(severity, target)
@@ -177,6 +181,11 @@
 
 /obj/item/weapon/melee/supermatter_sword/acid_act()
 	visible_message("<span class='danger'>\The acid smacks into \the [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	consume_everything()
+
+/obj/item/weapon/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
+	visible_message("<span class='danger'>[P] smacks into \the [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
 
@@ -199,8 +208,4 @@
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
 	T.ChangeTurf(/turf/space)
-	for(var/direction in cardinal)
-		if(T.atmos_adjacent_turfs & direction)
-			var/turf/simulated/S = get_step(src, direction)
-			if(istype(S))
-				SSair.add_to_active(S)
+	T.CalculateAdjacentTurfs()
