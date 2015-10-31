@@ -1,9 +1,7 @@
-/obj/item/organ/internal/gland
+/obj/item/organ/internal/heart/gland	//They're a type of heart now
 	name = "fleshy mass"
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/abductor.dmi'
-	zone = "chest"
-	slot = "gland"
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	origin_tech = "materials=4;biotech=5"
@@ -14,32 +12,35 @@
 	var/human_only = 0
 	var/active = 0
 
-/obj/item/organ/internal/gland/proc/ownerCheck()
+/obj/item/organ/internal/heart/gland/update_icon()	//Overriding heart's proc
+	return
+
+/obj/item/organ/internal/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
 		return 1
 	if(!human_only && iscarbon(owner))
 		return 1
 	return 0
 
-/obj/item/organ/internal/gland/proc/Start()
+/obj/item/organ/internal/heart/gland/proc/Start()
 	active = 1
 	next_activation = world.time + rand(cooldown_low,cooldown_high)
 
 
-/obj/item/organ/internal/gland/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/gland/Remove(var/mob/living/carbon/M, special = 0)
 	active = 0
 	if(initial(uses) == 1)
 		uses = initial(uses)
 	..()
 
-/obj/item/organ/internal/gland/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/gland/Insert(var/mob/living/carbon/M, special = 0)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 	//>no defines
 	//thanks tg
 		Start()
 
-/obj/item/organ/internal/gland/on_life()
+/obj/item/organ/internal/heart/gland/on_life()
 	if(!active)
 		return
 	if(!ownerCheck())
@@ -52,30 +53,30 @@
 	if(!uses)
 		active = 0
 
-/obj/item/organ/internal/gland/proc/activate()
+/obj/item/organ/internal/heart/gland/proc/activate()
 	return
 
-/obj/item/organ/internal/gland/heals
+/obj/item/organ/internal/heart/gland/heals
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
 	icon_state = "health"
 
-/obj/item/organ/internal/gland/heals/activate()
+/obj/item/organ/internal/heart/gland/heals/activate()
 	owner << "<span class='notice'>You feel curiously revitalized.</span>"
 	owner.adjustBruteLoss(-20)
 	owner.adjustOxyLoss(-20)
 	owner.adjustFireLoss(-20)
 
-/obj/item/organ/internal/gland/slime
+/obj/item/organ/internal/heart/gland/slime
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
 	icon_state = "slime"
 
-/obj/item/organ/internal/gland/slime/activate()
+/obj/item/organ/internal/heart/gland/slime/activate()
 	owner << "<span class='warning'>You feel nauseous!</span>"
 	if(owner.is_muzzled())
 		owner << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
@@ -94,14 +95,14 @@
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
-/obj/item/organ/internal/gland/mindshock
+/obj/item/organ/internal/heart/gland/mindshock
 	origin_tech = "materials=4;biotech=5;magnets=3"
 	cooldown_low = 300
 	cooldown_high = 300
 	uses = -1
 	icon_state = "mindshock"
 
-/obj/item/organ/internal/gland/mindshock/activate()
+/obj/item/organ/internal/heart/gland/mindshock/activate()
 	owner << "<span class='notice'>You get a headache.</span>"
 
 	var/turf/T = get_turf(owner)
@@ -111,7 +112,7 @@
 		H << "<span class='alien'>You hear a buzz in your head </span>"
 		H.confused += 20
 
-/obj/item/organ/internal/gland/pop
+/obj/item/organ/internal/heart/gland/pop
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 900
 	cooldown_high = 1800
@@ -119,34 +120,34 @@
 	human_only = 1
 	icon_state = "species"
 
-/obj/item/organ/internal/gland/pop/activate()
+/obj/item/organ/internal/heart/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
 	var/species = pick(list(/datum/species/lizard,/datum/species/slime,/datum/species/plant/pod,/datum/species/fly))
 	hardset_dna(owner, null, null, null, null, species)
 	owner.regenerate_icons()
 	return
 
-/obj/item/organ/internal/gland/ventcrawling
+/obj/item/organ/internal/heart/gland/ventcrawling
 	origin_tech = "materials=4;biotech=5;bluespace=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
 	icon_state = "vent"
 
-/obj/item/organ/internal/gland/ventcrawling/activate()
+/obj/item/organ/internal/heart/gland/ventcrawling/activate()
 	owner << "<span class='notice'>You feel very stretchy.</span>"
 	owner.ventcrawler = 2
 	return
 
 
-/obj/item/organ/internal/gland/viral
+/obj/item/organ/internal/heart/gland/viral
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
 	icon_state = "viral"
 
-/obj/item/organ/internal/gland/viral/activate()
+/obj/item/organ/internal/heart/gland/viral/activate()
 	owner << "<span class='warning'>You feel sick.</span>"
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
@@ -157,49 +158,49 @@
 	owner.med_hud_set_status()
 
 
-/obj/item/organ/internal/gland/emp //TODO : Replace with something more interesting
+/obj/item/organ/internal/heart/gland/emp //TODO : Replace with something more interesting
 	origin_tech = "materials=4;biotech=5;magnets=3"
 	cooldown_low = 900
 	cooldown_high = 1600
 	uses = 10
 	icon_state = "emp"
 
-/obj/item/organ/internal/gland/emp/activate()
+/obj/item/organ/internal/heart/gland/emp/activate()
 	owner << "<span class='warning'>You feel a spike of pain in your head.</span>"
 	empulse(get_turf(owner), 2, 5, 1)
 
-/obj/item/organ/internal/gland/spiderman
+/obj/item/organ/internal/heart/gland/spiderman
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = 10
 	icon_state = "spider"
 
-/obj/item/organ/internal/gland/spiderman/activate()
+/obj/item/organ/internal/heart/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
 	owner.faction |= "spiders"
 	new /obj/effect/spider/spiderling(owner.loc)
 
-/obj/item/organ/internal/gland/egg
+/obj/item/organ/internal/heart/gland/egg
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
 
-/obj/item/organ/internal/gland/egg/activate()
+/obj/item/organ/internal/heart/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 
-/obj/item/organ/internal/gland/bloody
+/obj/item/organ/internal/heart/gland/bloody
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
 
-/obj/item/organ/internal/gland/bloody/activate()
+/obj/item/organ/internal/heart/gland/bloody/activate()
 	owner.adjustBruteLoss(15)
 
 	owner.visible_message("<span class='danger'>[owner]'s skin erupts with blood!</span>",\
@@ -215,14 +216,14 @@
 			H.w_uniform.add_blood(owner)
 			H.update_inv_w_uniform(0)
 
-/obj/item/organ/internal/gland/bodysnatch
+/obj/item/organ/internal/heart/gland/bodysnatch
 	origin_tech = "materials=4;biotech=7"
 	cooldown_low = 600
 	cooldown_high = 600
 	human_only = 1
 	uses = 1
 
-/obj/item/organ/internal/gland/bodysnatch/activate()
+/obj/item/organ/internal/heart/gland/bodysnatch/activate()
 	owner << "<span class='warning'>You feel something moving around inside you...</span>"
 	//spawn cocoon with clone greytide snpc inside
 	if(ishuman(owner))
@@ -267,13 +268,13 @@
 			M.loc = src.loc
 		qdel(src)
 
-/obj/item/organ/internal/gland/plasma
+/obj/item/organ/internal/heart/gland/plasma
 	cooldown_low = 2400
 	cooldown_high = 3000
 	origin_tech = "materials=4;biotech=5;plasma=3"
 	uses = 1
 
-/obj/item/organ/internal/gland/plasma/activate()
+/obj/item/organ/internal/heart/gland/plasma/activate()
 	owner << "<span class='warning'>You feel bloated.</span>"
 	sleep(150)
 	if(!owner) return

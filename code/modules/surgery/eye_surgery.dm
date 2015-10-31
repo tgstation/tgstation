@@ -1,3 +1,5 @@
+//I really want to make eye damage stored in an eye organ
+
 /datum/surgery/eye_surgery
 	name = "eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)

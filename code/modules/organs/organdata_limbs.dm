@@ -1,3 +1,16 @@
+// These two only serve to represent the groin and eyes target zones. You probably shouldn't mess with these
+
+/datum/organ/abstract/
+
+/datum/organ/abstract/remove(var/dism_type, var/newloc)
+	return null
+
+/datum/organ/abstract/eyesocket
+	name = "eyes"
+
+/datum/organ/abstract/groin
+	name = "groin"
+
 /datum/organ/limb/
 	name = "limb"
 	var/icon_position = 0

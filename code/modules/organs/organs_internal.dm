@@ -3,35 +3,13 @@
 	force = 1
 	w_class = 2
 	throwforce = 0
-
-// I should delete most of these
-	var/zone = "chest"
-	var/slot
+	var/zone ="error"
+	var/slot = "error"
 	var/vital = 0
+
 	var/organ_action_name = null
 
-/*/obj/item/organ/internal/Insert(mob/living/carbon/M, special = 0)	//I don't want this to override anything for now
-	if(!iscarbon(M) || owner == M)
-		return
-
-	var/obj/item/organ/internal/replaced = M.getorganslot(slot)
-	if(replaced)
-		replaced.Remove(M, special = 1)
-
-	owner = M
-	M.internal_organs |= src
-	loc = null
-	if(organ_action_name)
-		action_button_name = organ_action_name*/
-
-
-/obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
-	owner = null
-	if(M)
-		M.internal_organs -= src
-		if(vital && !special)
-			M.death()
-
+/obj/item/organ/internal/proc/Remove()
 	if(organ_action_name)
 		action_button_name = null
 
@@ -55,7 +33,7 @@
 
 /obj/item/organ/internal/Destroy()
 	if(owner)
-		Remove(owner, 1)
+		organdatum.dismember(ORGAN_REMOVED, 1)
 	..()
 
 /obj/item/organ/internal/attack(mob/living/carbon/M, mob/user)
@@ -80,10 +58,7 @@
 	name = "heart"
 	icon_state = "heart-on"
 	desc = "Some days, your heart is just not in it."
-	zone = "chest"
-	slot = "heart"
 	origin_tech = "biotech=3"
-	vital = 1
 	var/beating = 1
 
 /obj/item/organ/internal/heart/update_icon()
@@ -120,8 +95,6 @@
 	name = "appendix"
 	icon_state = "appendix"
 	desc = "The greyshirt of organs."
-	zone = "groin"
-	slot = "appendix"
 	var/inflamed = 0
 
 /obj/item/organ/internal/appendix/update_icon()

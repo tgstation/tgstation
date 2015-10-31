@@ -17,13 +17,16 @@
 //The proc for inserting organs. Inserts the organ and adds all its suborgans to the organsystem
 /obj/item/organ/proc/Insert(mob/living/carbon/M)
 	if(!iscarbon(M) || owner == M)
-		return
+		return 0
 
 	var/datum/organ/OR = M.getorgan(hardpoint)
 	if(!OR.exists())
-		OR.set_organitem(src)
-		for (var/i in suborgans)
-			M.add_organ(i)
+		if(OR.set_organitem(src))
+			for (var/i in suborgans)
+				M.add_organ(i)
+		else return 0
+	else return 0
+	return 1
 
 /**
   * Overwrite the DNA stored in this organ.

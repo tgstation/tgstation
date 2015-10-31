@@ -61,10 +61,12 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/head/robot(src)
 				if("chest")
-					for(var/obj/item/organ/internal/I in target.getorganszone(target_zone, 1))
+					for(var/datum/organ/internal/I in target.get_internal_organs("chest"))
 						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
-							I.Remove(target, special = 1)
-							qdel(I)
+							I.dismember(ORGAN_REMOVED, special = 1)
+					for(var/datum/organ/internal/I in target.get_internal_organs("groin"))
+						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
+							I.dismember(ORGAN_REMOVED, special = 1)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)

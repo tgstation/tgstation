@@ -1,5 +1,4 @@
-#define MAX_BRAIN_IMPLANT	2
-#define MAX_CHEST_IMPLANT	3
+//Handled in organ_manipulation.dm
 
 /datum/surgery_step/organ/internal/cyberimp/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/cyberimp/implant, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to implant [target] with [implant].</span>")
@@ -81,4 +80,3 @@
 		user.visible_message("<span class='notice'>[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!</span>")
 		user.drop_item()
 		implant.Insert(target)
-

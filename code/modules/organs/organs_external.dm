@@ -3,6 +3,18 @@
 	hardpoint = "butt"
 	icon_state = "butt"
 
+// These two only serve to represent the groin and eyes target zones. You probably shouldn't mess with these
+/obj/item/organ/abstract/groin
+	name = "groin"
+	hardpoint = "groin"
+
+/obj/item/organ/abstract/eyesocket
+	name = "eyesocket"
+	hardpoint = "eyes"
+
+/obj/item/organ/abstract/Insert(mob/living/carbon/M)
+	return null
+
 /obj/item/organ/limb
 	name = "limb"
 	var/body_part = null

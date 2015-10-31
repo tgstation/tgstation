@@ -9,9 +9,10 @@
 /mob/proc/add_organ()
 	return
 
+//Adds an organ DATUM to the organsystem (used for suborgans). You probably shouldn't call this proc in most cases
 /mob/living/carbon/add_organ(organ)
 	if(organsystem)
-		return organsystem.add_organ(organ)	//Adds an organ HARDPOINT to the organsystem (used for suborgans)
+		return organsystem.add_organ(organ)
 	else return 0
 
 mob/living/carbon/exists(var/organname)
@@ -30,32 +31,53 @@ mob/living/carbon/exists(var/organname)
 mob/proc/exists(var/organname)
 	return 1
 
-//Delete this later maybe
-
-/mob/proc/getorganszone(zone)
+/mob/proc/get_internal_organs(zone)
 	return
 
-/mob/proc/getorganslot(slot)
-	return
-
-/mob/living/carbon/getorganszone(zone, var/subzones = 0)
+//Return all the datum/organ/internal that are the selected organ's suborgans
+/mob/living/carbon/get_internal_organs(zone)
 	var/list/returnorg = list()
-	if(subzones)
-		if(zone == "head")
-			returnorg = getorganszone("eyes") + getorganszone("mouth")
-			// We don't have mouth organs now, but who knows?
-		if(zone == "chest")
-			returnorg = getorganszone("groin")
 
-	for(var/obj/item/organ/internal/O in internal_organs)
-		if(zone == O.zone)
-			returnorg += O
+	var/datum/organ/PO = getorgan(zone)
+	if(PO && PO.exists() && isorgan(PO.organitem))
+		var/obj/item/organ/OI = PO.organitem
+		for(var/organname in OI.suborgans)
+			var/datum/organ/RO = OI.suborgans[organname]
+			if(RO.exists() && istype(RO, /datum/organ/internal))	//Only internal organs, not limbs etc.
+				returnorg += RO
 	return returnorg
 
-/mob/living/carbon/getorganslot(slot)
-	for(var/obj/item/organ/internal/O in internal_organs)
-		if(slot == O.slot)
-			return O
+/mob/proc/has_organ_slot()
+	return 0
+
+//Returns whether the zone has a slot for the organ
+/mob/living/carbon/has_organ_slot(zone, organname)
+	var/datum/organ/PO = getorgan(zone)
+	if(PO && PO.exists())
+		if(isorgan(PO.organitem))
+			var/obj/item/organ/OI = PO.organitem
+			var/datum/organ/RO = OI.suborgans[organname]
+			return (RO && !RO.exists())
+	return 0
+
+/mob/proc/get_cyberimps()
+	return 0
+
+//How many cybernetic implants in this zone?
+/mob/living/carbon/get_cyberimps(zone)
+	var/datum/organ/PO = getorgan(zone)
+	var/i = 0
+	if(PO && PO.exists())
+		if(isorgan(PO.organitem))
+			var/obj/item/organ/OI = PO.organitem
+			for(var/organname in OI.suborgans)
+				var/datum/organ/RO = OI.suborgans[organname]
+				if(RO && RO.exists() && istype(RO, /datum/organ/internal/cyberimp))
+					i++
+	return i
 
 proc/isorgan(atom/A)
+	return istype(A, /obj/item/organ)
+
+proc/isinternalorgan(atom/A)
 	return istype(A, /obj/item/organ/internal)

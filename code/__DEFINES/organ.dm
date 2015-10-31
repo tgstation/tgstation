@@ -11,3 +11,6 @@
 #define ORGAN_ORGANIC	0 //Or you could just use 0.
 #define ORGAN_ROBOTIC	1
 #define ORGAN_ALIEN	2 //For future purposes.
+
+#define MAX_BRAIN_IMPLANT	2
+#define MAX_CHEST_IMPLANT	3

@@ -78,12 +78,27 @@
 
 		var/datum/organ/limb/head/H = getorgan("head")
 		var/obj/item/organ/limb/head/head = H.organitem
+		organlist["eyes"]	= new/datum/organ/abstract/eyesocket(head, new/obj/item/organ/abstract/eyesocket())
 		organlist["brain"]	= new/datum/organ/internal/brain(head, new/obj/item/organ/internal/brain())
 
-/datum/organsystem/humanoid/human //Only humans have appendices, hearts and butts
+		organlist["cavity"]	= new/datum/organ/cavity(coreitem, null)
+
+/datum/organsystem/humanoid/human //Only humans have appendices, hearts, implants etc.
 
 	New(var/mob/O)
 		..(O)
-		organlist["butt"]	= new/datum/organ/butt(coreitem, new/obj/item/organ/butt())
-		organlist["appendix"]	= new/datum/organ/internal/appendix(coreitem, new/obj/item/organ/internal/appendix())
-		organlist["heart"]		= new/datum/organ/internal/heart(coreitem, new/obj/item/organ/internal/heart())
+		organlist["heart"]					= new/datum/organ/internal/heart(coreitem, new/obj/item/organ/internal/heart())
+		organlist["nutriment_implant"] 		= new/datum/organ/internal/cyberimp/chest/nutriment(coreitem, null)
+		organlist["reviver_implant"] 		= new/datum/organ/internal/cyberimp/chest/reviver(coreitem, null)
+
+		organlist["groin"]					= new/datum/organ/abstract/groin(coreitem, new/obj/item/organ/abstract/groin())
+		var/datum/organ/abstract/groin/G 	= getorgan("groin")
+		var/obj/item/organ/abstract/groin 	= G.organitem
+		organlist["butt"]					= new/datum/organ/butt(groin, new/obj/item/organ/butt())
+		organlist["appendix"]				= new/datum/organ/internal/appendix(groin, new/obj/item/organ/internal/appendix())
+
+		var/datum/organ/limb/head/H = getorgan("head")
+		var/obj/item/organ/limb/head/head = H.organitem
+
+		organlist["antidrop_implant"]		= new/datum/organ/internal/cyberimp/brain/anti_drop(head, null)
+		organlist["antistun_implant"]		= new/datum/organ/internal/cyberimp/brain/anti_stun(head, null)

@@ -26,10 +26,6 @@
 
 		qdel(brainmob)
 
-		if(M.organsystem)
-			var/datum/organ/setter = M.getorgan("brain")
-			setter.set_organitem(src)
-
 		//Update the body's icon so it doesnt appear debrained anymore
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

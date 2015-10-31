@@ -38,7 +38,7 @@
 			var/obj/item/organ/internal/O
 			var/obj/item/weapon/implant/I
 
-			if(isorgan(organ))
+			if(isinternalorgan(organ))
 				O = organ
 				O.Remove(C)
 			else

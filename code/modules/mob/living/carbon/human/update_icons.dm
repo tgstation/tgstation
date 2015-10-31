@@ -696,7 +696,10 @@ var/global/list/limb_icon_cache = list()
 	if(!affecting.exists()) //If the limb does not exist, we render nothing right now.
 		return 0	//I'll replace this with bloody stumps for destroyed limbs as soon as the sprites are ready. |- Ricotez
 
-	var/obj/item/organ/limb/LI = affecting.organitem
+	var/obj/item/organ/limb/LI = null
+	if(isorgan(affecting.organitem))	//Should always be true!
+		LI = affecting.organitem
+	else return -1
 
 	var/image/I
 	var/should_draw_gender = FALSE
@@ -713,8 +716,7 @@ var/global/list/limb_icon_cache = list()
 	if(race == "human" || race == "plant" || race == "lizard")
 		should_draw_greyscale = TRUE
 
-
-	if(affecting.organitem.organtype & ORGAN_ROBOTIC)
+	if(LI.organtype & ORGAN_ROBOTIC)
 		if(should_draw_gender)
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
 		else

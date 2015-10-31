@@ -19,7 +19,7 @@
 
 	var/obj/item/organ/parent						//The organ this organ is a part of. For example, of this is the brain, its parent will be the head.
 	var/organitem_type = /obj/item/organ	//Typepath of the organ item(s) this datum may be associated with.
-	var/obj/item/organ/organitem			//The actual physical organ item this datum is associated with.
+	var/obj/item/organitem			//The actual physical organ item this datum is associated with.
 //	var/datum/organsystem/organsystem		//The organsystem this organdatum is associated with. Doesn't get set now, ever
 
 /**
@@ -61,8 +61,10 @@
  **/
 /datum/organ/proc/regenerate_organitem(var/datum/dna/D)
 	var/obj/item/organ/neworgan = new organitem_type()
-	set_dna(D)
-	return set_organitem(neworgan)
+	if(neworgan.organtype == ORGAN_ORGANIC)
+		set_dna(D)
+		return set_organitem(neworgan)
+	else return null
 
 /**
   * Set this organdatum's organitem, but only if it does not already have an organitem.
@@ -73,9 +75,13 @@
 /datum/organ/proc/set_organitem(var/obj/item/organ/O) //Sets this organ's organitem, but only if it does not already have an organitem.
 	if(O && !organitem && istype(O, organitem_type))	//Verify that O is not null, that there is not already an organ and that O is of the right type.
 		organitem = O
-		status = organitem.status
-		organitem.owner = owner
-		organitem.organdatum = src
+		organitem.loc = owner
+		if(isorgan(organitem))
+			var/obj/item/organ/OI = organitem
+			status = OI.status
+			OI.owner = owner
+			OI.organdatum = src
+		else status = 0	//Intact
 		return 1
 	return 0
 
@@ -87,8 +93,9 @@
   * @return		Whether DNA was succesfully changed.
  **/
 /datum/organ/proc/set_dna(var/datum/dna/D) //Set this organ's DNA.
-	if(organitem)
-		organitem.set_dna(D)
+	if(organitem && isorgan(organitem))
+		var/obj/item/organ/OI = organitem
+		OI.set_dna(D)
 		return 1
 	return 0
 
@@ -102,8 +109,9 @@
  **/
 /datum/organ/proc/set_owner(var/mob/O)
 	owner = O
-	if(organitem)
-		organitem.set_owner(O)
+	if(organitem && isorgan(organitem))
+		var/obj/item/organ/OI = organitem
+		OI.set_owner(O)
 
 /**
   * Decide whether this organ is physically represented in the body right now.
@@ -124,7 +132,6 @@
   * @return 			A reference to the organ that got removed, in case there's something else we want to do with it.
  **/
 /datum/organ/proc/dismember(var/dism_type)
-	world << "Test: dismember() called."
 	return remove(dism_type, owner.loc)
 
 /**
@@ -137,14 +144,11 @@
   * @return 			A reference to the organ that got removed, in case there's something else we want to do with it.
  **/
 /datum/organ/proc/remove(var/dism_type, var/newloc)
-	world << "Test: remove() called."
 	if(exists())
-		world << "Test: exists()."
 		status = dism_type					//We change the organdatum status to the type of dismemberment (ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED).
 		var/obj/item/organ/O = prepare_organitem_for_removal()	//We use the convenient preparation proc to nullify the necessary variables.
 		O.loc = owner.loc					//The organitem ends up at the new location. newloc
 		owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
-		world << "Test: About to return O."
 		return O							//We return the organ object in case we want some information from it.
 	else
 		return null							//If dismemberment failed because the limb does not exist, we return null.
@@ -157,15 +161,13 @@
   * @return 	A reference to the organitem that was prepared. Necessary to continue operations, since it's no longer in the datum.
  **/
 /datum/organ/proc/prepare_organitem_for_removal()
-	world << "Test: prepare_organitem_for_removal() called."
+	if(isorgan(organitem))
+		var/obj/item/organ/OI = organitem
+		OI.set_owner(null)			//We recursively nullify the owner (and with that, the organsystem) of this organ and all its suborgans.
+		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 
-	organitem.set_owner(null)			//We recursively nullify the owner (and with that, the organsystem) of this organ and all its suborgans.
-	organitem.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
-
-	world << "Test: about to remove suborgans from the organsystem."
-	for(var/i in organitem.suborgans)	//Removing the suborgans from the organsystem
-		world << "Test: [i]."
-		owner.organsystem.remove_organ(i)
+		for(var/i in OI.suborgans)	//Removing the suborgans from the organsystem
+			owner.organsystem.remove_organ(i)
 
 	var/obj/item/organ/O = organitem	//We save the organ to a separate var...
 	organitem = null					//...so we can delete its reference here.
@@ -173,31 +175,13 @@
 
 /datum/organ/proc/getDisplayName()
 	switch(name)
-		if("l_leg")		return "left leg"
-		if("r_leg")		return "right leg"
-		if("l_arm")		return "left arm"
-		if("r_arm")		return "right arm"
+		if("eyes")				return "eyesocket"
+		if("l_leg")				return "left leg"
+		if("r_leg")				return "right leg"
+		if("l_arm")				return "left arm"
+		if("r_arm")				return "right arm"
+		if("antidrop_implant")	return "antidrop implant"
+		if("antistun_implant")	return "antistun implant"
+		if("reviver_implant")	return "reviver implant"
+		if("nutriment_implant")	return "nutriment implant"
 		else			return name
-
-//////////// END OF PROCS
-
-/datum/organ/internal
-	var/vital = 0	//Whether this organ is vital. Doesn't do anything right now, if it stays that way this can be removed. |- Ricotez
-
-/datum/organ/butt
-	name = "butt"
-	organitem_type = /obj/item/organ/butt
-
-/datum/organ/internal/brain
-	name = "brain"
-	vital = 1
-	organitem_type = /obj/item/organ/internal/brain
-
-/datum/organ/internal/heart
-	name = "heart"
-	vital = 1
-	organitem_type = /obj/item/organ/internal/heart
-
-/datum/organ/internal/appendix
-	name = "appendix"
-	organitem_type = /obj/item/organ/internal/appendix

@@ -35,7 +35,7 @@
 /obj/item/organ/internal/body_egg/process()
 	if(!owner)	return
 	if(!(src in owner.internal_organs))
-		Remove(owner)
+		organdatum.dismember(ORGAN_REMOVED)
 		return
 	egg_process()
 
