@@ -458,7 +458,7 @@
 			return //everything is fine
 		
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
-			if( findtext( H.real_name , "Mr. Meeseeks" ) ) // Transformation Sting, eg.
+			if( findtext( H.real_name , "Mr. Meeseeks" ) || H.job == "Lingseek") // Transformation Sting, eg.
 				make_lingseek(H)
 				return
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
