@@ -276,7 +276,7 @@
 	desc = "Do you like Huey Lewis and the News?"
 	icon_state = "raincoat"
 	item_state = "raincoat"
-	allowed = list (/obj/item/weapon/twohanded/fireaxe)
+	allowed = list (/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/tank/internals/emergency_oxygen)
 
 // WINTER COATS
 
