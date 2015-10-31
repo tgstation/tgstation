@@ -77,7 +77,7 @@
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
 
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD,ANTAG_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,ANTAG_HUD)
 
 /obj/mecha/New()
 	..()
@@ -727,6 +727,18 @@
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
+
+		//transfer HUD icons
+		for(var/hud_type in occupant.hud_possible)
+			if(hud_type in hud_possible)
+				var/image/mech_hud = hud_list[hud_type]
+				var/image/occupant_hud = occupant.hud_list[hud_type]
+				mech_hud.icon_state = occupant_hud.icon_state
+		//add mech to the huds
+		for(var/datum/atom_hud/hud in huds)
+			if(occupant in hud.hudatoms)
+				hud.add_to_hud(src)
+		
 		return 1
 	else
 		return 0
@@ -801,6 +813,14 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
+		for(var/hud_type in occupant.hud_possible)
+			if(hud_type in hud_possible)
+				var/image/holder = hud_list[hud_type]
+				holder.icon_state = ""
+		//remove mech from huds
+		for(var/datum/atom_hud/hud in huds)
+			if(occupant in hud.hudatoms)
+				hud.remove_from_hud(src)
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		RemoveActions(brain)
