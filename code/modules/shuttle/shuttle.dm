@@ -149,7 +149,7 @@
 	*/
 
 /obj/docking_port/stationary/transit
-	name = "In Transit"
+	name = "In transit"
 	turf_type = /turf/space/transit
 
 /obj/docking_port/stationary/transit/New()
@@ -519,7 +519,7 @@
 			dst = previous
 		else
 			dst = destination
-		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)]mins)"
+		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] mins)"
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle Console"
