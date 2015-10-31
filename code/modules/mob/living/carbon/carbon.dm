@@ -37,7 +37,7 @@
 			src.bodytemperature += 2
 
 /mob/living/carbon/movement_delay()
-	. = 0
+	. = ..()
 	if(legcuffed)
 		. += legcuffed.slowdown
 
