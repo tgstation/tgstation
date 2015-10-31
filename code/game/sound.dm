@@ -78,11 +78,6 @@
 /mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
 		return
-	if(blind)
-		var/image/I = image('icons/effects/sound.dmi',turf_source)
-		I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
-		I.mouse_opacity = 0
-		client.show_image(I,10)
 	..()
 
 /client/proc/playtitlemusic()
@@ -107,4 +102,5 @@
 			if ("hiss") soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 			if ("pageturn") soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("gunshot") soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
+			if ("chainsaw_attack") soundin = pick('sound/weapons/chainsawAttack1.ogg', 'sound/weapons/chainsawAttack2.ogg','sound/weapons/chainsawAttack3.ogg') //Credit goes to where Hotline Miami 2 got the chainsaw sounds from.
 	return soundin

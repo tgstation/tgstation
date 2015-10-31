@@ -409,8 +409,8 @@
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
-				var/tloss = 1500 //brain damage starts setting in on the patient after some time left rotting
+				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20, target = M)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total

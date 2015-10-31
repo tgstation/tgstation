@@ -102,10 +102,13 @@
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
+	icon_state = "meatseeks"
+	desc = "A multidimensional piece of meat. Don't take too long cooking it."
 
-
-
-
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
+	icon_state = "lingseak"
+	desc = "Something is wrong. SOMETHING IS VERY WRONG."
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 

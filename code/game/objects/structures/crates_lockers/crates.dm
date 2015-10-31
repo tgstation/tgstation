@@ -87,7 +87,9 @@
 	icon_crate = "radiation"
 	icon_state = "radiation"
 
-/obj/structure/closet/crate/radiation/New()
+/obj/structure/closet/crate/radiation/suits
+
+/obj/structure/closet/crate/radiation/suits/New()
 	..()
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)

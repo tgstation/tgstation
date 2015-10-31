@@ -13,7 +13,7 @@ Contents:
 /datum/round_event_control/ninja
 	name = "Space Ninja"
 	typepath = /datum/round_event/ninja
-	max_occurrences = 1
+	max_occurrences = 0 // 1 is too many for a 15-man crew.
 	earliest_start = 30000 // 1 hour
 
 

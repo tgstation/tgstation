@@ -81,9 +81,9 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
-	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())	return
-
+/*	if(!holder || check_rights_for(src, R_ADMIN))
+		if(!is_content_unlocked())	return // Remove paywall
+*/
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)

@@ -37,7 +37,7 @@
 	var/overlay_layer = 10+1
 	if(layer != MOB_LAYER)
 		overlay_layer=TURF_LAYER+0.2
-	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)
+	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""][scrambledcodes?"":"-unrestricted"]",overlay_layer)	//Scrambledcodes bit is for illegals module
 	if(anchored)
 		overlays += image(icon,"[subtype]-park",overlay_layer)
 

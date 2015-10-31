@@ -72,7 +72,7 @@
 //saw bone
 /datum/surgery_step/saw
 	name = "saw bone"
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchenknife/butcher = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/twohanded/chainsaw = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchenknife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -85,3 +85,14 @@
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1
+
+
+/datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
+    if (istype(tool, /obj/item/weapon/twohanded/chainsaw))
+        var/obj.item/weapon/twohanded/chainsaw/CHS = tool
+        if(CHS.wielded)
+            return 1
+        else
+            return 0
+    
+    return 1

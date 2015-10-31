@@ -121,7 +121,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
+		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")

@@ -147,6 +147,9 @@
 		M.killswitch = 1
 		M.allowed_z = 4
 */
+
+	M.initialize_killswitch()
+
 	//M.cell = locate(/obj/item/weapon/cell) in contents
 	//M.cell.loc = M
 	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.

@@ -12,7 +12,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	maxHealth = 45
 	health = 45
 	pass_flags = PASSTABLE | PASSMOB
-	var/keeper = 0 // 0 = No, 1 = Yes (Disables speech and common radio.)
+	var/mute = 0	//Disables speech and common radio if in keeper mode too.
 	var/picked = 0
 	var/subtype="keeper"
 	ventcrawler = 2
@@ -69,14 +69,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(!istype(laws,/datum/ai_laws/keeper))
 		connected_ai = select_active_ai_with_fewest_borgs()
 	else
-			// Enforce silence.
-		keeper=1
+		// Enforce silence.and non-involvement
+		keeper = 1
+		mute = 1
 		connected_ai = null // Enforce no AI parent
 		scrambledcodes = 1 // Hide from console because people are fucking idiots
 
 
 
-	initialize_killswitch() //make the explode if they leave their z-level
+//	initialize_killswitch() //make the explode if they leave their z-level. Only for spawner-MoMMIs now
 
 
 	if(connected_ai)
@@ -211,8 +212,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	name = real_name
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (ismommi(user))
-		var/mob/living/silicon/robot/mommi/R = user
+	if (issilicon(user))
+		var/mob/living/silicon/R = user
 		if (R.keeper && !src.keeper)
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
@@ -358,7 +359,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 
 	if(opened)//Cover is open
-		if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(emagged || !scrambledcodes)	return//Prevents the X has hit Y with Z message also you cant emag them twice. You also can't emag MoMMIs with illegals
 		if(wiresexposed)
 			user << "You must close the panel first"
 			return
@@ -366,6 +367,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			sleep(6)
 			if(prob(50))
 				emagged = 1
+				scrambledcodes = 1
 				lawupdate = 0
 				keeper = 0
 				killswitch = 0
@@ -408,8 +410,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon) || ismommi(user)))	//MoMMIs can remove MoMMI power cells
 		if(cell)
-			if(ismommi(user))
-				var/mob/living/silicon/robot/mommi/R = user
+			if(issilicon(user))
+				var/mob/living/silicon/R = user
 				if(R.keeper && !src.keeper)
 					user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 					return
@@ -714,22 +716,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 	else ..()
 
-
-/mob/living/silicon/robot/mommi/start_pulling(var/atom/movable/AM)
-	if(istype(AM,/mob) || istype(AM,/obj/item/clothing/mask/facehugger))
-		if(!src.can_interfere(AM))
-			src << "Your laws prevent you from doing this"
-			return
-	..(AM)
-
-/mob/living/silicon/robot/mommi/proc/can_interfere(var/mob/AN)
-	if(!istype(AN))
-		return 1 //Not a mob
-	if(src.keeper)
-		if(AN.client || AN.ckey || (iscarbon(AN) && (!ismonkey(AN) && !isslime(AN))) || issilicon(AN))	//If it's a non-monkey/slime carbon, silicon or other sentient it's not ok => animals are fair game!
-			if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with
-				return 0	//Not ok
-	return 1	//Ok!
-
 /mob/living/silicon/robot/mommi/proc/show_uprising_notification()
 	src << "<span class='userdanger'>You are part of the Mobile MMI Uprising.</span>" //For whatever reason, doesn't sound as threatening as a 'DRONE UPRISING'
+
+/mob/living/silicon/robot/mommi/unrestrict()
+	mute = 0
+	killswitch = 0
+	scrambledcodes = 0
+
+	clear_ion_laws()	//This removes the killswitch laws
+	laws.show_laws(src)
+
+	return 0

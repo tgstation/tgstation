@@ -9,6 +9,22 @@
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
 
+/mob/living/silicon/proc/laws_update()
+	show_laws()
+	//law_change_counter++
+	if(isAI(src))
+		var/mob/living/silicon/ai/A = src
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
+			if(R.lawupdate)
+				R.show_laws(1, 1)
+	//			R.law_change_counter++
+
+	//Checks if keeper status needs to be changed
+	keeper = 0
+	if (laws.inherent.len && !laws.zeroth)	//If a borg has a zeroth law it may override keeper
+		if(laws.inherent[1] == "You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another silicon in KEEPER mode.")
+			keeper = 1
+
 /mob/living/silicon/proc/add_inherent_law(var/law)
 	laws_sanity_check()
 	laws.add_inherent_law(law)

@@ -359,7 +359,7 @@
 		locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
-	compressor = locate(/obj/machinery/power/compressor) in range(5)
+	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 	if(compressor)
 		compressor.locate_machinery()
 

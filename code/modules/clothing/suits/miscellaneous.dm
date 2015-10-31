@@ -3,6 +3,7 @@
  *		Lasertag
  *		Costume
  *		Misc
+ *		Winter Coats
  */
 
 /*
@@ -269,6 +270,13 @@
 	item_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	
+/obj/item/clothing/suit/raincoat
+	name = "Raincoat"
+	desc = "Do you like Huey Lewis and the News?"
+	icon_state = "raincoat"
+	item_state = "raincoat"
+	allowed = list (/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/tank/internals/emergency_oxygen)
 
 // WINTER COATS
 

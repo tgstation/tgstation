@@ -32,6 +32,11 @@
 	if (ismommi(user))
 		user << "<span class='warning'>You cannot interface with this machine.</span>"
 		return
+	if(user && issilicon(user))
+		var/mob/living/silicon/R = user
+		if(R.keeper)
+			user << "Your laws forbid you from doing this"
+			return
 	if (src.z > 6)
 		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return

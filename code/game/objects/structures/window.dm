@@ -468,8 +468,8 @@
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
-/obj/structure/window/reinforced/tinted/fulltile //noticed during a round that these are nearly impossible to break, Crowbar fireaxe fire all do no damage to them and they did not break
-	icon = 'icons/obj/smooth_structures/tinted_window.dmi' //I think it might be something to do with them having no maxhealth = 100 Not certain though
+/obj/structure/window/reinforced/tinted/fulltile //This is the correct type for the tinted windows on the map
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi' //some double nigger was using map instanced non-fulltile twindows that could only be hit from certain angles
 	icon_state = "tinted_window"
 	dir = 5
 	fulltile = 1

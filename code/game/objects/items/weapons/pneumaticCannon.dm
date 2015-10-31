@@ -9,7 +9,7 @@
 	item_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
-	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
+	var/maxWeightClass = 17 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
@@ -104,7 +104,7 @@
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
 	w_class = 3
-	maxWeightClass = 10
+	maxWeightClass = 8
 	gasPerThrow = 5
 
 /datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but

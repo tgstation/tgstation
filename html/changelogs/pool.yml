@@ -34,7 +34,7 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "Added pools and pool tiles."
-  - rscadd: "Added a pool area north of the boxing ring.
+  - rscadd: "Added a pool area north of the boxing ring."
   - rscadd: "You can get pool tiles from cargo"
   - rscadd: "Pools apply chems on mobs standing in them using TOUCH reactions."
-  - rscadd: "Added a forensics crate to cargo.
+  - rscadd: "Added a forensics crate to cargo."

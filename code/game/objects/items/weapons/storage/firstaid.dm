@@ -106,6 +106,22 @@
 	new /obj/item/device/healthanalyzer(src)
 	return
 
+/obj/item/weapon/storage/firstaid/radiation
+	name = "radiation exposure treatment kit"
+	desc = "The tin foil was not enough."
+	icon_state = "radfirstaid2"
+	item_state = "firstaid-brute"
+
+/obj/item/weapon/storage/firstaid/radiation/New()
+	..()
+	new /obj/item/weapon/reagent_containers/syringe/pentetic(src)
+	new /obj/item/weapon/reagent_containers/syringe/pentetic(src)
+	new /obj/item/weapon/reagent_containers/syringe/pentetic(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/device/healthanalyzer(src)
+
 /obj/item/weapon/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."

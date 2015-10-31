@@ -23,6 +23,8 @@
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
+	if(href_list["stickyban"])
+		stickyban(href_list["stickyban"],href_list)
 
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])

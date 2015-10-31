@@ -66,6 +66,8 @@ var/list/freqtospan = list(
 /atom/movable/proc/say_quote(input, list/spans)
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	if(!islist(spans))
+		spans = list()
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
 		spans |= SPAN_YELL
