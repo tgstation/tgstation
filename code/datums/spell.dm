@@ -10,7 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
-	var/sound = "sound/weapons/badZap.ogg"
+	var/sound = null //The sound the spell makes when it is cast
 	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
@@ -145,6 +145,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(replacetext(invocation," ","`"))
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+	if(sound)
+		playMagSound()
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
@@ -408,3 +410,30 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
 			return 0
 	return 1
+
+/obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
+	range = -1 //Duh
+
+/obj/effect/proc_holder/spell/self/choose_targets(mob/user = usr)
+	if(!user)
+		revert_cast()
+		return
+	perform(user)
+
+/obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
+	name = "Lesser Heal"
+	desc = "Heals a small amount of brute and burn damage."
+	human_req = 1
+	clothes_req = 0
+	charge_max = 100
+	cooldown_min = 50
+	invocation = "Victus sano!"
+	invocation_type = "whisper"
+	school = "restoration"
+	sound = 'sound/magic/Staff_Healing.ogg'
+
+/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
+	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
+	user.adjustBruteLoss(-10)
+	user.adjustFireLoss(-10)
