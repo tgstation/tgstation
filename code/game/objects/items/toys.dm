@@ -1212,13 +1212,14 @@
 			user << "<span class='notice'>You don't have enough wires!</span>"
 
 	else if(istype(C,/obj/item/toy/ducks))
-		if(number_of_ducks<4)
+		var/obj/item/toy/ducks/D = C
+		if(C.number_of_ducks + number_of_ducks <=4)
 			if(!tied)
-				number_of_ducks += 1
+				number_of_ducks += C.number_of_ducks
 				icon_state = "[number_of_ducks]"
 				user.drop_item()
 				qdel(C) //stop duck breeding
-				user << "<span class='notice'>You add another duck to the stack.</span>"
+				user << "<span class='notice'>You combine the ducks into a single stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
 		else
