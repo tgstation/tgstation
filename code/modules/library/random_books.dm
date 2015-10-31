@@ -11,7 +11,7 @@
 	state = 2
 /obj/structure/bookcase/random/New()
 	..()
-	if(ticker && ticker.game_state >= GAME_STATE_PLAYING)
+	if(ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		initialize()
 
 /obj/structure/bookcase/random/initialize()
