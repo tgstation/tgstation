@@ -1087,7 +1087,7 @@
 
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
-	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor™"
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-MeteorÂ™"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = 2.0
@@ -1116,7 +1116,7 @@
  */
 /obj/item/toy/redbutton
 	name = "big red button"
-	desc = "A big, plastic red button. Reads 'From HonkCo Pranks©' on the back."
+	desc = "A big, plastic red button. Reads 'From HonkCo PranksÂ©' on the back."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = 2.0
@@ -1216,6 +1216,7 @@
 			if(!tied)
 				number_of_ducks += 1
 				icon_state = "[number_of_ducks]"
+				user.drop_item()
 				qdel(C) //stop duck breeding
 				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
