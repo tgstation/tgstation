@@ -456,10 +456,14 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
+		
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
+			if( findtext( H.real_name , "Mr. Meeseeks" ) || H.job == "Lingseek") // Transformation Sting, eg.
+				make_lingseek(H)
+				return
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
-
+		
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
@@ -469,15 +473,15 @@
 /datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	if(lingseek)
 		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
-		new /obj/item/device/meeseeks_box/malf(H.loc)
-		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		new /obj/item/device/meeseeks_box/malf(get_turf(H))
+		new /obj/effect/decal/cleanable/lingseek_gibs(get_turf(H))
 	for(var/mob/M in viewers(7, H.loc))
 		if(lingseek)
 			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
 		else
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-		H.drop_everything()
-		qdel(H)
+	H.drop_everything()
+	qdel(H)
 	return
 
 /datum/species/golem/meeseeks/proc/make_lingseek(var/mob/living/carbon/human/H)
