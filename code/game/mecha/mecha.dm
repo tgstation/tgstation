@@ -79,7 +79,6 @@
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
-
 /obj/mecha/New()
 	..()
 	events = new
@@ -91,6 +90,7 @@
 	spark_system.attach(src)
 	add_cell()
 	SSobj.processing |= src
+	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
 	prepare_huds()
@@ -140,6 +140,7 @@
 		if(internal_tank)
 			qdel(internal_tank)
 	SSobj.processing.Remove(src)
+	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null

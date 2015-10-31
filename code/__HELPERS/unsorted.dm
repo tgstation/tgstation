@@ -366,13 +366,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else		. = pick(ais)
 	return .
 
-//Returns a list of all mobs with their name
-/proc/getmobs()
-
+//Returns a list of all items of interest with their name
+/proc/getpois(mobs_only=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
-	var/list/creatures = list()
+	var/list/pois = list()
 	var/list/namecounts = list()
+	
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -388,10 +388,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-		creatures[name] = M
+		pois[name] = M
 
-	return creatures
+	if(!mobs_only)
+		for(var/atom/A in poi_list)
+			if(!A || !A.loc)
+				continue
+			var/name = A.name
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			pois[name] = A
 
+	return pois
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
