@@ -543,6 +543,9 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src] deadmined themself.")
 		message_admins("[src] deadmined themself.")
 		deadmin()
+		for(var/datum/atom_hud/H in huds)
+			if(istype(H, /datum/atom_hud/antag))
+				H.remove_hud_from(src)
 		verbs += /client/proc/readmin
 		deadmins += ckey
 		src << "<span class='interface'>You are now a normal player.</span>"
