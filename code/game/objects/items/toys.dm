@@ -1194,7 +1194,9 @@
 			M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
 		else
 			M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
-		M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
+
+		if(!M.check_ear_prot())
+			M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 /obj/item/toy/ducks/attackby(obj/item/C, mob/living/user, params)
 	if(istype(C,/obj/item/stack/cable_coil))
@@ -1214,6 +1216,7 @@
 			if(!tied)
 				number_of_ducks += 1
 				icon_state = "[number_of_ducks]"
+				qdel(C) //stop duck breeding
 				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
