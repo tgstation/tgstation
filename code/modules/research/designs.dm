@@ -289,6 +289,7 @@ datum/design/diagnostic_hud
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
+	category = list("Equipment")
 
 datum/design/diagnostic_hud_night
 	name = "Night Vision Diagnostic HUD"
@@ -298,6 +299,7 @@ datum/design/diagnostic_hud_night
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$plasma" = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
+	category = list("Equipment")
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
