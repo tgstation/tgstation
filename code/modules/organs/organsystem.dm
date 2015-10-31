@@ -19,10 +19,6 @@
 /datum/organsystem/proc/getorgan(var/name)
 	return organlist[name]
 
-/datum/organsystem/proc/initialize(var/mob/living/carbon/O)
-	set_owner(O)
-	set_dna(O.dna)
-
 /**
   * Set the owner of this organsystem and all organs contained in it.
   * This will recursively go through all organs to ensure their owners are all properly set.
@@ -45,7 +41,6 @@
 
 //Pretty hacky, but it will have to do. This proc is only used for inserting suborgans already inside other organs, eg. brains already inside heads. Returns success
 /datum/organsystem/proc/add_organ(var/datum/organ/O)
-	world << "Test: add_organ called."
 	var/obj/item/organ/P = O.parent
 	if(organlist[P.hardpoint] && (organlist[P.hardpoint] == P.organdatum))	//If the organlist contains the organ's parent...
 		organlist[P.hardpoint] = O	//We insert the new organ datum

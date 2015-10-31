@@ -155,6 +155,9 @@
 					else
 						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
 
+			if(H.organsystem && H.dna)
+				H.organsystem.set_dna(H.dna)
+
 			H.regenerate_icons()
 
 		if("gender")

@@ -39,6 +39,10 @@
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				updateappearance(M)
+
+		if(M.organsystem)
+			M.organsystem.set_dna(M.dna)
+
 		log_attack(log_msg)
 	else
 		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"

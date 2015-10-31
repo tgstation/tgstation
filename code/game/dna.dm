@@ -42,14 +42,14 @@
 		destination.dna.mutations = mutations
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
-	new_dna.unique_enzymes = unique_enzymes
-	new_dna.struc_enzymes = struc_enzymes
-	new_dna.uni_identity = uni_identity
-	new_dna.blood_type = blood_type
-	new_dna.mutant_color = mutant_color
-	new_dna.species = new species.type
-	new_dna.real_name = real_name
-	new_dna.mutations = mutations
+	unique_enzymes = new_dna.unique_enzymes
+	struc_enzymes = new_dna.struc_enzymes
+	uni_identity = new_dna.uni_identity
+	blood_type = new_dna.blood_type
+	mutant_color = new_dna.mutant_color
+	species = new new_dna.species.type
+	real_name = new_dna.real_name
+	mutations = new_dna.mutations
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
@@ -160,6 +160,9 @@
 
 	check_dna_integrity(owner)
 
+	if(owner.organsystem)
+		owner.organsystem.set_dna(owner.dna)
+
 	owner.regenerate_icons()
 	return
 
@@ -190,6 +193,10 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
+
+	if(character.organsystem)
+		character.organsystem.set_dna(character.dna)
+
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
