@@ -9,8 +9,12 @@
 	var/book_count = 2
 	anchored = 1
 	state = 2
-
 /obj/structure/bookcase/random/New()
+	..()
+	if(ticker && ticker.game_state >= GAME_STATE_PLAYING)
+		initialize()
+
+/obj/structure/bookcase/random/initialize()
 	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
@@ -57,7 +61,7 @@
 	name = "bookcase (Reference)"
 	category = "Reference"
 	var/ref_book_prob = 20
-/obj/structure/bookcase/random/reference/New()
+/obj/structure/bookcase/random/reference/initialize()
 	while(book_count > 0 && prob(ref_book_prob))
 		book_count--
 		new /obj/item/weapon/book/manual/random(src)
