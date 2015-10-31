@@ -49,6 +49,7 @@
 /datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class ='notice'>[user] inserts [tool] into [target].</span>")
 	var/obj/item/organ/internal/heart/gland/G = tool
+	user.drop_item()
 	G.Insert(target, 2)
 	return 1
 

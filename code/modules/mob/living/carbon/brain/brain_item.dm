@@ -1,5 +1,6 @@
 /obj/item/organ/internal/brain
 	name = "brain"
+	hardpoint = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain"
 	throw_speed = 3

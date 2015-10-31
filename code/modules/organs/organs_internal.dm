@@ -56,6 +56,7 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	hardpoint = "heart"
 	icon_state = "heart-on"
 	desc = "Some days, your heart is just not in it."
 	origin_tech = "biotech=3"
@@ -78,7 +79,7 @@
 	beating = 1
 	update_icon()
 
-/obj/item/organ/internal/heart/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/Remove(special = 0)
 	..()
 	spawn(120)
 		beating = 0
@@ -93,6 +94,7 @@
 
 /obj/item/organ/internal/appendix
 	name = "appendix"
+	hardpoint = "appendix"
 	icon_state = "appendix"
 	desc = "The greyshirt of organs."
 	var/inflamed = 0
@@ -105,14 +107,14 @@
 		icon_state = "appendix"
 		name = "appendix"
 
-/obj/item/organ/internal/appendix/Remove(mob/living/carbon/M, special = 0)
-	for(var/datum/disease/appendicitis/A in M.viruses)
+/obj/item/organ/internal/appendix/Remove(special = 0)
+	for(var/datum/disease/appendicitis/A in owner.viruses)
 		A.cure()
 		inflamed = 1
 	update_icon()
 	..()
 
-/obj/item/organ/internal/appendix/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/appendix/Insert(mob/living/carbon/M)
 	..()
 	if(inflamed)
 		M.AddDisease(new /datum/disease/appendicitis)

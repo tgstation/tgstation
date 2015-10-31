@@ -55,7 +55,7 @@
 	if(isinternalorgan(tool))
 		current_type = "insert"
 		I = tool
-		if(target.has_organ_slot(target_zone, I.hardpoint))
+		if(!target.has_organ_slot(target_zone, I.hardpoint))
 			user << "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 
@@ -69,17 +69,18 @@
 			user << "<span class='notice'>There are no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 		else
-			for(var/obj/item/organ/internal/O in organs)
-				O.on_find(user)
-				organs -= O
-				organs[O.name] = O
+			for(var/datum/organ/internal/O in organs)
+				if(O.exists())
+					var/obj/item/organ/internal/OI = O.organitem
+					OI.on_find(user)
+					organs -= O
+					organs[O.name] = O
 
-			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
-			if(I && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
-				OR = organs[I]
-				if(!(OR && OR.exists())) return -1
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
+			var/organname = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
+			OR = target.getorgan(organname)
+			if(OR && OR.exists() && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
+				user.visible_message("[user] begins to extract [OR] from [target]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [OR] from [target]'s [parse_zone(target_zone)]...</span>")
 			else
 				return -1
 
@@ -94,17 +95,18 @@
 		return 1
 	else if(current_type == "insert")
 		I = tool
+		user.drop_item()
 		if(I.Insert(target))
 			user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
 		else return -1
 
 	else if(current_type == "extract")
-		if(OR && OR.exists() && OR.owner == target)
+		if(OR && OR.owner == target)
+			OR.dismember(ORGAN_REMOVED)
 			user.visible_message("[user] successfully extracts [OR] from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You successfully extract [OR] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
-			OR.dismember(ORGAN_REMOVED)
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")

@@ -14,7 +14,7 @@
 	name = "extract butt"
 	accept_hand = 1
 	time = 64
-	var/datum/organ/A = null
+	var/datum/organ/butt/A = null
 
 /datum/surgery_step/extract_butt/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	A = target.getorgan("butt")

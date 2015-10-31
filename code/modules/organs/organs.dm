@@ -20,7 +20,7 @@
 		return 0
 
 	var/datum/organ/OR = M.getorgan(hardpoint)
-	if(!OR.exists())
+	if(OR && !OR.exists())
 		if(OR.set_organitem(src))
 			for (var/i in suborgans)
 				M.add_organ(i)
@@ -70,7 +70,7 @@
 	var/datum/organ/O = suborgans[name]
 	if(O)
 		suborgans -= O
-		return O
+		return O.organitem
 	return null
 
 //returns suborgan[name].organitem

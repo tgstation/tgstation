@@ -60,7 +60,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/carrier = 0 //If our host is only a carrier
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
-	var/list/required_organs = list()
+	var/list/required_organs = list()	//I should probably turn this into a list of names
 
 	var/list/strain_data = list() //dna_spread special bullshit
 
@@ -166,10 +166,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
 			for(var/obj/item/organ/O in required_organs)
-				if(!locate(O) in H.organs)
-					if(!locate(O) in H.internal_organs)
-						cure()
-						return
+				var/datum/organ/OR = H.getorgan(O.hardpoint)
+				if(!(OR && OR.exists()))
+					return
 
 	SSdisease.processing += src
 
