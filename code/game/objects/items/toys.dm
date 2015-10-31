@@ -101,6 +101,12 @@
 	item_state = "syndballoon"
 	w_class = 4
 
+/obj/item/toy/syndicateballoon/nanotrasen
+	name = "nanotrasen balloon"
+	desc = "There is a tag on the back that reads \"FUK SYNDIES!11!\"."
+	icon_state = "ntballoon"
+	item_state = "ntballoon"
+
 /*
  * Fake singularity
  */

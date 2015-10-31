@@ -1044,6 +1044,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "conveyor assembly crate"
 
+/datum/supply_packs/misc/pride
+	name = "Nanotrasen Pride Crate"
+	contains = list(/obj/item/toy/syndicateballoon/nanotrasen,)
+	cost = 200
+	containername = "nanotrasen pride crate"
+
+
 /datum/supply_packs/misc/watertank
 	name = "Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
