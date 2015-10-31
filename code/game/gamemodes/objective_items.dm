@@ -82,7 +82,7 @@
 	difficulty = 15
 
 /datum/objective_item/steal/nuke_core/New()
-	special_equipment += new /obj/item/weapon/storage/box/syndie_kit/nuke()
+	special_equipment += /obj/item/weapon/storage/box/syndie_kit/nuke
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
