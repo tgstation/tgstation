@@ -12,7 +12,7 @@
 	var/splicing = 0
 	var/scanning = 0
 	var/spliced = 0
-	
+
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
@@ -24,7 +24,7 @@
 		if(!dish)
 
 			dish = I
-			c.drop_item(I, src)
+			if(!c.drop_item(I, src)) return 1
 	if(istype(I,/obj/item/weapon/diseasedisk))
 		user << "You upload the contents of the disk into the buffer"
 		memorybank = I:effect
@@ -43,16 +43,16 @@
 	if(..())
 		return
 	user.set_machine(src)
-	var/dat
+	var/dat = list()
 	if(splicing)
-		dat = "Splicing in progress."
+		dat += "Splicing in progress."
 	else if(scanning)
-		dat = "Scanning in progress."
+		dat += "Scanning in progress."
 	else if(burning)
-		dat = "Data disk burning in progress."
+		dat += "Data disk burning in progress."
 	else
 		if(dish)
-			dat = "Virus dish inserted."
+			dat += "Virus dish inserted."
 
 		dat += "<BR>Current DNA strand : "
 		if(memorybank)
@@ -85,10 +85,11 @@
 			dat += "<BR><BR><A href='?src=\ref[src];eject=1'>Eject disk</a>"
 		else
 			dat += "<BR>Please insert dish."
-
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
-	return
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "disease_splicer", "Disease Splicer", 400, 500, src)
+	popup.set_content(dat)
+	popup.open()
+	onclose(user, "disease_splicer")
 
 /obj/machinery/computer/diseasesplicer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -120,7 +121,7 @@
 
 /obj/machinery/computer/diseasesplicer/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 
 	if(usr) usr.set_machine(src)
 
@@ -137,7 +138,8 @@
 			dish.virus2.uniqueID = rand(0,10000)
 			dish.virus2.addToDB()
 			spliced = 0
-		dish.loc = src.loc
+
+		dish.forceMove(src.loc)
 		dish = null
 
 	else if(href_list["splice"])
