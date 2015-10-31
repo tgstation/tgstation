@@ -39,6 +39,19 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
+	var/mob/wearer = loc
+	if(msg && ishuman(wearer))
+		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+	..()
+	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+
+/obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
+	..()
+	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
+
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
@@ -317,6 +330,11 @@
 	var/onboard_hud_enabled = 0 //stops conflicts with another diag HUD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	var/obj/machinery/doppler_array/integrated/bomb_radar
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/New()
+	..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..(user, slot)
