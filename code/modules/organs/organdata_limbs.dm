@@ -1,12 +1,9 @@
-// These two only serve to represent the groin and eyes target zones. You probably shouldn't mess with these
+// This only serves to represent the groin target zone
 
 /datum/organ/abstract/
 
 /datum/organ/abstract/remove(var/dism_type, var/newloc)
 	return null
-
-/datum/organ/abstract/eyesocket
-	name = "eyes"
 
 /datum/organ/abstract/groin
 	name = "groin"
@@ -32,6 +29,13 @@
 	organitem_type = /obj/item/organ/limb/chest
 	healthdoll = 1
 	can_be_damaged = 1
+
+/datum/organ/limb/chest/switch_organitem(var/obj/item/organ/neworgan)
+	var/obj/item/oldorgan = ..(neworgan)
+	if(oldorgan)
+		if(owner && owner.organsystem.coreitem == oldorgan)
+			owner.organsystem.coreitem = organitem
+		qdel(neworgan)	//dont' want any extra chests around. They're pointless anyway due to being core items that can't be placed anywhere
 
 /datum/organ/limb/head
 	name = "head"

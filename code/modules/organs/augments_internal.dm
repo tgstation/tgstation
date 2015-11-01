@@ -264,7 +264,7 @@
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
-	var/list/boxed = list(/obj/item/organ/internal/cyberimp/eyes/xray,/obj/item/organ/internal/cyberimp/eyes/thermals,
+	var/list/boxed = list(/obj/item/organ/internal/eyes/cyberimp/xray,/obj/item/organ/internal/eyes/cyberimp/thermals,
 						/obj/item/organ/internal/cyberimp/brain/anti_stun, /obj/item/organ/internal/cyberimp/chest/reviver)
 	var/amount = 5
 

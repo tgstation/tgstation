@@ -9,9 +9,9 @@
 		return 0
 	var/mob/living/carbon/human/H = user
 	if(H.dna && istype(H.dna.species, /datum/species/abductor))
-		return 1
+		return ..()
 	if((locate(/obj/item/weapon/implant/abductor) in H))
-		return 1
+		return ..()
 	return 0
 
 /datum/surgery_step/extract_organ

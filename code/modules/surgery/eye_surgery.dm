@@ -7,7 +7,6 @@
 	possible_locs = list("eyes")
 	requires_organic_bodypart = 0
 
-
 //fix eyes
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"

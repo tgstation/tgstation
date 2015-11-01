@@ -10,7 +10,7 @@
 	return
 
 //Adds an organ DATUM to the organsystem (used for suborgans). You probably shouldn't call this proc in most cases
-/mob/living/carbon/add_organ(organ)
+/mob/living/carbon/add_organ(var/datum/organ/organ)
 	if(organsystem)
 		return organsystem.add_organ(organ)
 	else return 0
@@ -40,11 +40,15 @@ mob/proc/exists(var/organname)
 
 	var/datum/organ/PO = getorgan(zone)
 	if(PO && PO.exists() && isorgan(PO.organitem))
+		if(istype(PO, /datum/organ/internal))	//If we've already found an internal organ we can skip the next step
+			returnorg += PO
+			return returnorg
 		var/obj/item/organ/OI = PO.organitem
 		for(var/organname in OI.suborgans)
-			var/datum/organ/RO = OI.suborgans[organname]
-			if(RO.exists() && istype(RO, /datum/organ/internal))	//Only internal organs, not limbs etc.
-				returnorg += RO
+			if(!(organname == "eyes" || organname == "mouth"))	//They're their own damage zones
+				var/datum/organ/RO = OI.suborgans[organname]
+				if(RO.exists() && istype(RO, /datum/organ/internal))	//Only internal organs, not limbs etc.
+					returnorg += RO
 	return returnorg
 
 /mob/proc/has_organ_slot()

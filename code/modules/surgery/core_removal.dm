@@ -6,7 +6,7 @@
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/carbon/target)
 	if(target.stat == DEAD)
-		return 1
+		return ..()
 	return 0
 
 

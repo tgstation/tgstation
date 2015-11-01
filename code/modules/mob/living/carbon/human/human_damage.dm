@@ -9,12 +9,15 @@
 	var/list/limblist = list_limbs()
 	for(var/limbname in limblist)
 		var/datum/organ/limb/O = getorgan(limbname)
-		if(O.status & ORGAN_DESTROYED)
-			total_brute += O.destroyed_dam
-		else if(O.counts_for_damage())
-			var/obj/item/organ/limb/L = O.organitem
-			total_brute += L.brute_dam
-			total_burn += L.burn_dam
+		if(O)
+			if(O.status == ORGAN_DESTROYED)
+				total_brute += O.destroyed_dam
+			else if(O.status == ORGAN_NOBLEED)
+				total_brute += O.destroyed_dam/2
+			else if(O.counts_for_damage())
+				var/obj/item/organ/limb/L = O.organitem
+				total_brute += L.brute_dam
+				total_burn += L.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )

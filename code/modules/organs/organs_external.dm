@@ -3,14 +3,10 @@
 	hardpoint = "butt"
 	icon_state = "butt"
 
-// These two only serve to represent the groin and eyes target zones. You probably shouldn't mess with these
+// This only serves to represent the groin target zone.
 /obj/item/organ/abstract/groin
 	name = "groin"
 	hardpoint = "groin"
-
-/obj/item/organ/abstract/eyesocket
-	name = "eyesocket"
-	hardpoint = "eyes"
 
 /obj/item/organ/abstract/Insert(mob/living/carbon/M)
 	return null
@@ -42,6 +38,11 @@
 	max_damage = 200
 	body_part = HEAD
 //	var/mob/living/carbon/brain/brainmob = null //We're not using this until someone is beheaded.
+
+/obj/item/organ/limb/head/create_suborgan_slots()
+	new/datum/organ/internal/brain(src, null)
+	new/datum/organ/internal/cyberimp/brain/anti_drop(src, null)
+	new/datum/organ/internal/cyberimp/brain/anti_stun(src, null)
 
 /obj/item/organ/limb/head/examine(mob/user)
 	..()
@@ -135,7 +136,7 @@
 
 /obj/item/organ/limb/r_leg
 	name = "right leg"
-	hardpoint = "r_arm"
+	hardpoint = "r_leg"
 	desc = "Looks like someone's leg legged it."
 	icon_state = "r_leg"
 	max_damage = 75

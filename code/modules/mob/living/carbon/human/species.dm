@@ -1011,7 +1011,7 @@
 	if((user != H) && H.check_shields(I.force, "the [I.name]"))
 		return 0
 
-	if(!affecting.exists()) //If the targeted limb does not exist, only display a message and return.
+	if(!affecting.exists() && I.attack_verb && I.attack_verb.len) //If the targeted limb does not exist, only display a message and return.
 		H.visible_message("<span class='danger'>[user] tried to [pick(I.attack_verb)] [H] in the [hit_area] with [I], but there's no [hit_area] to hit!</span>", \
 						"<span class='userdanger'>[user] tried to [pick(I.attack_verb)] [H] in the [hit_area] with [I], but there's no [hit_area] to hit!</span>")
 		return 0

@@ -119,7 +119,7 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 100)
 	construction_time = 75
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	build_path = /obj/item/organ/internal/eyes/cyberimp/hud/medical
 	category = list("Misc")
 
 /datum/design/cyberimp_security_hud
@@ -130,7 +130,7 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 300, MAT_GOLD = 300)
 	construction_time = 75
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
+	build_path = /obj/item/organ/internal/eyes/cyberimp/hud/security
 	category = list("Misc")
 
 /datum/design/cyberimp_xray
@@ -141,7 +141,7 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_URANIUM = 500, MAT_DIAMOND = 1000)
 	construction_time = 75
-	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
+	build_path = /obj/item/organ/internal/eyes/cyberimp/xray
 	category = list("Misc")
 
 /datum/design/cyberimp_thermals
@@ -152,7 +152,7 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_DIAMOND = 1000)
 	construction_time = 75
-	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
+	build_path = /obj/item/organ/internal/eyes/cyberimp/thermals
 	category = list("Misc")
 
 /datum/design/cyberimp_antidrop

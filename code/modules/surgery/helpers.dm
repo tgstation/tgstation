@@ -3,10 +3,12 @@
 		var/mob/living/carbon/human/H
 		var/obj/item/organ/limb/affecting
 		var/selected_zone = user.zone_sel.selecting
+		var/datum/organ/organdata
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M
-			var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+			var/datum/organ/limb/limbdata = H.get_organ(check_zone(selected_zone))
+			organdata = H.get_organ(selected_zone)	//This can be eyes, mouth or groin too
 			affecting = limbdata.organitem
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
@@ -25,7 +27,7 @@
 						continue
 					if(affecting && S.requires_organic_bodypart && affecting.organtype == ORGAN_ROBOTIC)
 						continue
-					if(!S.can_start(user, M))
+					if(!S.can_start(user, M, organdata))
 						continue
 
 					for(var/path in S.species)

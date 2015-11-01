@@ -622,7 +622,7 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/check_eye_prot()
 	var/number = ..()
-	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+	for(var/obj/item/organ/internal/eyes/cyberimp/EFP in internal_organs)
 		number += EFP.flash_protect
 	return number
 

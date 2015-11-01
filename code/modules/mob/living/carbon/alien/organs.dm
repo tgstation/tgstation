@@ -72,7 +72,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/structure/alien/weeds) in owner.loc)
+	if(owner && locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
 			owner.adjustPlasma(plasma_rate)
 		else

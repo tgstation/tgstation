@@ -145,11 +145,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	var/datum/organ/H = getorgan("head")
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
 		return
 
-	if(dna)
-		dna.species.handle_hair(src)
+	if(H && H.exists() && isorgan(H.organitem))
+		var/obj/item/organ/limb/head/HE = H.organitem
+		if(HE.dna)
+			HE.dna.species.handle_hair(src)
 
 /mob/living/carbon/human/proc/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
@@ -627,16 +630,18 @@ var/global/list/limb_icon_cache = list()
 
 //simplifies species and mutations into one var
 /obj/item/organ/limb/proc/get_race()
+
 	var/sm_type = "human"
-	var/datum/species/race = dna ? dna.species : null
-	if(race)
-		sm_type = race.id
+	if(dna)
+		var/datum/species/race = dna ? dna.species : null
+		if(race)
+			sm_type = race.id
 
-	if(HULK in dna.mutations)
-		sm_type = "hulk"
-	if(HUSK in dna.mutations)
-		sm_type = "husk"
-
+		if(HULK in dna.mutations)
+			sm_type = "hulk"
+		if(HUSK in dna.mutations)
+			sm_type = "husk"
+	else sm_type = "robotic"
 	return sm_type
 
 /mob/living/carbon/human/proc/get_race()
@@ -694,7 +699,9 @@ var/global/list/limb_icon_cache = list()
 //draws an icon from a limb
 /mob/living/carbon/human/proc/generate_limb_icon(var/datum/organ/limb/affecting)
 	if(!affecting.exists()) //If the limb does not exist, we render nothing right now.
-		return 0	//I'll replace this with bloody stumps for destroyed limbs as soon as the sprites are ready. |- Ricotez
+		if(affecting.status & ORGAN_DESTROYED)
+			return 0	//I'll replace this with bloody stumps for destroyed limbs as soon as the sprites are ready. |- Ricotez
+		else return 0
 
 	var/obj/item/organ/limb/LI = null
 	if(isorgan(affecting.organitem))	//Should always be true!
@@ -713,10 +720,10 @@ var/global/list/limb_icon_cache = list()
 	if(affecting.body_part == HEAD || affecting.body_part == CHEST)
 		should_draw_gender = TRUE
 
-	if(race == "human" || race == "plant" || race == "lizard")
+	if(race == "human" || race == "plant" || race == "lizard")	//+pod, jelly and slime
 		should_draw_greyscale = TRUE
 
-	if(LI.organtype & ORGAN_ROBOTIC)
+	if(LI.organtype == ORGAN_ROBOTIC)
 		if(should_draw_gender)
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
 		else
@@ -745,7 +752,7 @@ var/global/list/limb_icon_cache = list()
 	//Greyscale Colouring
 	var/draw_color
 
-	if(dna && dna.species)
+	if(LI.dna && LI.dna.species)
 		if(LI.dna.species.use_skintones)
 			draw_color = skintone2hex(skin_tone)
 		else

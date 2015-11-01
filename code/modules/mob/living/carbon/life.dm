@@ -299,7 +299,7 @@
 			return 1
 		else if(organsystem)
 			var/datum/organ/B = getorgan("brain")
-			if(!B.exists())
+			if(!(B && B.exists()))
 				death()
 				eye_blind = max(eye_blind, 1)
 				silent = 0

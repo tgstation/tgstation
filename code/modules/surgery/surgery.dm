@@ -12,10 +12,13 @@
 	var/obj/item/organ/organ									//Operable body part
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
+//Generally speaking, you can't operate on non-existing organs
+/datum/surgery/proc/can_start(mob/user, mob/living/carbon/target, datum/organ/organdata = null)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
-	return 1
+	if(organdata && organdata.exists())
+		return 1
+	else return 0
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)

@@ -6,7 +6,6 @@
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
-
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"
 	time = 32

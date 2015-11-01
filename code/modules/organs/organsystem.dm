@@ -42,8 +42,9 @@
 //Pretty hacky, but it will have to do. This proc is only used for inserting suborgans already inside other organs, eg. brains already inside heads. Returns success
 /datum/organsystem/proc/add_organ(var/datum/organ/O)
 	var/obj/item/organ/P = O.parent
-	if(organlist[P.hardpoint] && (organlist[P.hardpoint] == P.organdatum))	//If the organlist contains the organ's parent...
-		organlist[P.hardpoint] = O	//We insert the new organ datum
+	var/datum/organ/newparent = organlist[P.hardpoint]
+	if(newparent && newparent.exists())	//If the organlist contains the organ's parent...
+		organlist[O.name] = O	//We insert the new organ datum
 		O.set_owner(owner)		//We need to do this here because set_owner is called for the parent before inserting all the suborgans
 		return 1
 	else return 0
@@ -78,7 +79,7 @@
 
 		var/datum/organ/limb/head/H = getorgan("head")
 		var/obj/item/organ/limb/head/head = H.organitem
-		organlist["eyes"]	= new/datum/organ/abstract/eyesocket(head, new/obj/item/organ/abstract/eyesocket())
+		organlist["eyes"]	= new/datum/organ/internal/eyes(head, new/obj/item/organ/internal/eyes())
 		organlist["brain"]	= new/datum/organ/internal/brain(head, new/obj/item/organ/internal/brain())
 
 		organlist["cavity"]	= new/datum/organ/cavity(coreitem, null)

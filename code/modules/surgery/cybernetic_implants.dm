@@ -4,20 +4,20 @@
 	user.visible_message("<span class='notice'>[user] begins to implant [target] with [implant].</span>")
 
 //[[[[EYES]]]]
-/datum/surgery/organ/internal/cyberimp/eyes
+/datum/surgery/organ/internal/eyes/cyberimp
 	name = "eye cybernetic implant"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/organ/internal/cyberimp/eyes, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/organ/internal/eyes/cyberimp, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	possible_locs = list("eyes")
 
-/datum/surgery_step/organ/internal/cyberimp/eyes
+/datum/surgery_step/organ/internal/eyes/cyberimp
 	name = "insert eye cybernetic implant"
-	implements = list(/obj/item/organ/internal/cyberimp/eyes = 100)
+	implements = list(/obj/item/organ/internal/eyes/cyberimp = 100)
 	time = 32
 
-/datum/surgery_step/organ/internal/cyberimp/eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/cyberimp/eyes/implant, datum/surgery/surgery)
+/datum/surgery_step/organ/internal/eyes/cyberimp/success(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/eyes/cyberimp/implant, datum/surgery/surgery)
 	if(implant)
 		var/full = 0
-		if(locate(/obj/item/organ/internal/cyberimp/eyes,target.internal_organs))
+		if(locate(/obj/item/organ/internal/eyes/cyberimp,target.internal_organs))
 			full = 1
 		insert(user,target,implant,target_zone,full)
 		return 1

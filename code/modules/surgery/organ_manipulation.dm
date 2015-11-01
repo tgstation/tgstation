@@ -17,9 +17,6 @@
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
 
-
-
-
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
@@ -103,9 +100,13 @@
 
 	else if(current_type == "extract")
 		if(OR && OR.owner == target)
-			OR.dismember(ORGAN_REMOVED)
-			user.visible_message("[user] successfully extracts [OR] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [OR] from [target]'s [parse_zone(target_zone)].</span>")
+			I = OR.dismember(ORGAN_REMOVED)
+			if(I.name == parse_zone(target_zone))	//To prevent things like "extracts eyes from target's eyes!
+				user.visible_message("[user] successfully extracts [I.name] from [target]!",
+				"<span class='notice'>You successfully extract [I.name] from [target].</span>")
+			else
+				user.visible_message("[user] successfully extracts [I.name] from [target]'s [parse_zone(target_zone)]!",
+					"<span class='notice'>You successfully extract [I.name] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",

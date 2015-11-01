@@ -20,7 +20,7 @@
 	var/obj/item/organ/parent						//The organ this organ is a part of. For example, of this is the brain, its parent will be the head.
 	var/organitem_type = /obj/item/organ	//Typepath of the organ item(s) this datum may be associated with.
 	var/obj/item/organitem			//The actual physical organ item this datum is associated with.
-//	var/datum/organsystem/organsystem		//The organsystem this organdatum is associated with. Doesn't get set now, ever
+//	var/datum/organsystem/organsystem		//The organsystem this organdatum is associated with. Doesn't get set right now, ever
 
 /**
   * Constructor.
@@ -73,10 +73,12 @@
   * @return		Whether the new organitem was succesfully set.
  **/
 /datum/organ/proc/set_organitem(var/obj/item/organ/O) //Sets this organ's organitem, but only if it does not already have an organitem.
+	world << "set_organitem: O = [O], organitem = [organitem], istype = [istype(O, organitem_type)]!"
 	if(O && !organitem && istype(O, organitem_type))	//Verify that O is not null, that there is not already an organ and that O is of the right type.
 		organitem = O
 		organitem.loc = owner
 		if(isorgan(organitem))
+			world << "[organitem] [isorgan(organitem)]!"
 			var/obj/item/organ/OI = organitem
 			status = OI.status
 			OI.owner = owner
@@ -95,8 +97,9 @@
 /datum/organ/proc/set_dna(var/datum/dna/D) //Set this organ's DNA.
 	if(organitem && isorgan(organitem))
 		var/obj/item/organ/OI = organitem
-		OI.set_dna(D)
-		return 1
+		if(OI.organtype == ORGAN_ORGANIC)
+			OI.set_dna(D)
+			return 1
 	return 0
 
 /**
@@ -166,12 +169,38 @@
 		OI.set_owner(null)			//We recursively nullify the owner (and with that, the organsystem) of this organ and all its suborgans.
 		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 
-		for(var/i in OI.suborgans)	//Removing the suborgans from the organsystem
+//Removing the suborgans from the organsystem. Do note that this assumes a simple system with only one layer of suborgans beneath each removed organ,
+//eg. heads have eyes, brains and neural augments but none of those have suborgans. Chest is an exception, but you should NEVER remove the core of an organsystem
+		for(var/i in OI.suborgans)
 			owner.organsystem.remove_organ(i)
 
-	var/obj/item/organ/O = organitem	//We save the organ to a separate var...
+	var/obj/item/O = organitem	//We save the organ to a separate var...
 	organitem = null					//...so we can delete its reference here.
 	return O							//We return the organ so we can finish whatever we were doing with it.
+
+//Used so the organsystem doesn't shit itself when changing coreitem and so you can augment your head without removing your brain. This proc is such a clusterfuck
+/datum/organ/proc/switch_organitem(var/obj/item/organ/neworgan)
+	if(isorgan(organitem))
+		var/obj/item/organ/OI = organitem
+		OI.owner = null			//We nullify the owner of this organ.
+		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
+	organitem.loc = owner.loc					//The organitem ends up at the datum's owner's location
+	var/obj/item/oldorgan = organitem
+	organitem = null
+	set_organitem(neworgan)
+
+	if(isorgan(oldorgan))
+		var/obj/item/organ/OI = oldorgan
+		for(var/organname in OI.suborgans)
+			var/datum/organ/suborgan = OI.suborgans[organname]
+			suborgan.set_parent(neworgan)
+			OI.suborgans[organname] = null
+		OI.create_suborgan_slots()	//Creates empty organ datums for the old organ
+
+	set_owner(owner)	//So the new organitem gets its owner set
+	if(owner)
+		owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
+	return oldorgan							//We return the organ so we can finish whatever we were doing with it.
 
 /datum/organ/proc/getDisplayName()
 	switch(name)
