@@ -73,28 +73,27 @@
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
-		switch(S.type)
-			if(/obj/item/stack/sheet/glass)
-				if(S.get_amount() < 5)
-					user << "<span class='warning'>You need five sheets of glass to create a reflector!</span>"
-					return
-				else
-					S.use(5)
-					new /obj/structure/reflector/single (src.loc)
-					qdel(src)
-			if(/obj/item/stack/sheet/rglass)
-				if(S.get_amount() < 10)
-					user << "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>"
-					return
-				else
-					S.use(10)
-					new /obj/structure/reflector/double (src.loc)
-					qdel(src)
-			if(/obj/item/stack/sheet/mineral/diamond)
-				if(S.get_amount() < 1)
-					S.use(1)
-					new /obj/structure/reflector/box (src.loc)
-					qdel(src)
+		if(istype(W, /obj/item/stack/sheet/glass))
+			if(S.get_amount() < 5)
+				user << "<span class='warning'>You need five sheets of glass to create a reflector!</span>"
+				return
+			else
+				S.use(5)
+				new /obj/structure/reflector/single (src.loc)
+				qdel (src)
+		if(istype(W,/obj/item/stack/sheet/rglass))
+			if(S.get_amount() < 10)
+				user << "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>"
+				return
+			else
+				S.use(10)
+				new /obj/structure/reflector/double (src.loc)
+				qdel(src)
+		if(istype(W, /obj/item/stack/sheet/mineral/diamond))
+			if(S.get_amount() >= 1)
+				S.use(1)
+				new /obj/structure/reflector/box (src.loc)
+				qdel(src)
 
 /obj/structure/reflector/proc/get_reflection(srcdir,pdir)
 	return 0
