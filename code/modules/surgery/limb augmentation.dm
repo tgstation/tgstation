@@ -98,7 +98,7 @@
 		user << "<span class='warning'>You can't fit the chainsaw in while [target]'s hands are full!</span>"
 		return 0
 	else
-		user.visible_message("[user] finshes installing the chainsaw!", "<span class='notice'>You install the chainsaw.</span>")
+		user.visible_message("[user] finishes installing the chainsaw!", "<span class='notice'>You install the chainsaw.</span>")
 		user.unEquip(tool)
 		qdel(tool)
 		var/obj/item/weapon/mounted_chainsaw/sawarms = new(target)
@@ -134,5 +134,5 @@
 	for(var/obj/item/weapon/mounted_chainsaw/V in hands)
 		qdel(V)
 		new /obj/item/weapon/twohanded/required/chainsaw(get_turf(target))
-		user.visible_message("[user] carefully saws [target]'s arms free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
+		user.visible_message("[user] carefully saws [target]'s arm free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
 		return 1
