@@ -10,11 +10,15 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
+	mag_load_sound = null
+	mag_unload_sound = null		//Shotguns have their own procs related to loading, unloading, etc.
+	chamber_sound = null
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		playsound(loc, 'sound/effects/wep_magazines/insertShotgun.ogg', 80)
 		A.update_icon()
 		update_icon()
 
@@ -92,13 +96,15 @@
 	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = 0
+	mag_load_sound = 'sound/effects/wep_magazines/rifle_load.ogg'
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/pump(mob/M)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	if(bolt_open)
 		pump_reload(M)
+		playsound(loc, 'sound/effects/wep_magazines/rifle_bolt_forward.ogg', 80)
 	else
 		pump_unload(M)
+		playsound(loc, 'sound/effects/wep_magazines/rifle_bolt_back.ogg', 80)
 	bolt_open = !bolt_open
 	update_icon()	//I.E. fix the desc
 	return 1
@@ -259,6 +265,9 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
+	mag_load_sound = 'sound/effects/wep_magazines/bulldog_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/bulldog_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/bulldog_chamber.ogg'
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	action_button_name = null
 

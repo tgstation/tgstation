@@ -8,6 +8,9 @@
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
+	var/mag_load_sound = 'sound/effects/wep_magazines/handgun_generic_load.ogg'
+	var/mag_unload_sound = 'sound/effects/wep_magazines/handgun_generic_unload.ogg'
+	var/chamber_sound = 'sound/effects/wep_magazines/generic_chamber.ogg'
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -58,6 +61,7 @@
 			chamber_round()
 			A.update_icon()
 			update_icon()
+			playsound(loc, mag_load_sound, 80)
 			return 1
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
@@ -110,11 +114,13 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
+		playsound(loc, mag_unload_sound, 80)
 		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
 	else if(chambered)
 		AC.loc = get_turf(src)
 		AC.SpinAnimation(10, 1)
 		chambered = null
+		playsound(loc, chamber_sound, 80)
 		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
