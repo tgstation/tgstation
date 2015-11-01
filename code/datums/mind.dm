@@ -71,6 +71,8 @@
 
 		SSnano.user_transferred(current, new_character)
 
+		if(isliving(current))
+			remove_old_implants(current)
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
 			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
@@ -84,6 +86,7 @@
 	new_character.mind = src							//and associate our new body with ourself
 	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
 	transfer_actions(new_character)
+	inherit_new_implants(new_character)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -1477,6 +1480,14 @@
 			spell.action.background_icon_state = spell.action_background_icon_state
 		spell.action.Grant(new_character)
 	return
+
+/datum/mind/proc/remove_old_implants(var/mob/living/old_character)
+	for(var/obj/item/weapon/implant/I in old_character)
+		I.removed(old_character) //Should not delete the implant
+
+/datum/mind/proc/inherit_new_implants(var/mob/living/new_character)
+	for(var/obj/item/weapon/implant/I in new_character)
+		I.implant(new_character)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
