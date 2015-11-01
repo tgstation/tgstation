@@ -127,7 +127,7 @@
 	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 
 /datum/surgery_step/chainsaw_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to check [target] for a chainsaw to remove.", "<span class='notice'>You check [target] for a chainsaw to remove...</span>")
+	user.visible_message("[user] begins sawing the chainsaw off of [target]'s arms.", "<span class='notice'>You begin removing [target]'s chainsaw...</span>")
 
 /datum/surgery_step/chainsaw_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/list/hands = get_both_hands(target)
