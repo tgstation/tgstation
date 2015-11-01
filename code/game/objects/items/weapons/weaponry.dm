@@ -166,16 +166,16 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 20
+	force = 3
 	w_class = 2
-	throwforce = 15
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -183,12 +183,12 @@
 	if(extended)
 		force = 20
 		w_class = 3
-		throwforce = 15
+		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 	else
-		force = 1
+		force = 3
 		w_class = 2
 		throwforce = 5
 		icon_state = "switchblade"
@@ -274,3 +274,17 @@
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling the [src.name]! It looks like \he's trying to visit the astral plane.</span>")
 	return (OXYLOSS)
+
+/obj/item/weapon/mounted_chainsaw
+        name = "mounted chainsaw"
+        desc = "A chainsaw that has replaced your arm."
+        icon_state = "chainsaw_on"
+        flags = ABSTRACT | NODROP
+        w_class = 5.0
+        force = 21
+        throwforce = 0
+        throw_range = 0
+        throw_speed = 0
+        sharpness = IS_SHARP
+        attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+        hitsound = "sound/weapons/chainsawhit.ogg"

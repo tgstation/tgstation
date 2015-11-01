@@ -7,6 +7,7 @@
 	height = 11
 	dir = 4
 	travelDir = -90
+	roundstart_move = "emergency_away"
 
 /obj/docking_port/mobile/emergency/New()
 	..()
@@ -122,7 +123,14 @@
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+				open_dock()
 
+/obj/docking_port/mobile/emergency/proc/open_dock()
+	for(var/obj/machinery/door/poddoor/shuttledock/D in airlocks)
+		var/turf/T = get_step(D, D.checkdir)
+		if(!istype(T,/turf/space))
+			spawn(0)
+				D.open()
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"

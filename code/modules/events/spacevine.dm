@@ -361,7 +361,7 @@
 		return
 
 	if(istype(W, /obj/item/weapon/scythe))
-		for(var/obj/effect/spacevine/B in orange(src,1))
+		for(var/obj/effect/spacevine/B in orange(1,src))
 			if(prob(80))
 				qdel(B)
 		qdel(src)

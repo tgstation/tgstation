@@ -75,9 +75,6 @@
 	for(var/obj/item/organ/internal/I in src)
 		I.Insert(M, 1)
 
-	if(!origin && owner.mind)
-		origin = owner.mind
-
 	if(origin)
 		origin.transfer_to(M)
 		if(!origin.changeling)

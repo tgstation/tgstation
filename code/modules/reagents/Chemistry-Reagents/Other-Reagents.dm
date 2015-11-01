@@ -84,6 +84,12 @@
 			newVirus.holder = blood_prop
 	return
 
+/datum/reagent/liquidgibs
+	name = "Liquid gibs"
+	id = "liquidgibs"
+	color = "#FF9966"
+	description = "You don't even want to think about what's in here."
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -188,6 +194,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
@@ -357,7 +364,7 @@
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 		H.set_species(mutation)
-		if(mutation == /datum/species/slime)
+		if(mutation.id == "slime")
 			H.faction |= "slime"
 		else
 			H.faction -= "slime"
@@ -1013,6 +1020,13 @@
 	description = "Volatile."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
+
+/datum/reagent/lye
+	name = "Lye"
+	id = "lye"
+	description = "Also known as sodium hydroxide."
+	reagent_state = LIQUID
+	color = "#FFFFD6" // very very light yellow
 
 /datum/reagent/drying_agent
 	name = "Drying agent"

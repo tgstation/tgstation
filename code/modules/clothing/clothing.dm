@@ -47,6 +47,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING
+	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
 	strip_delay = 20
@@ -77,6 +78,14 @@ BLIND     // can't see anything
 	strip_delay = 20
 	put_on_delay = 40
 
+
+/obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+
+
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
@@ -90,6 +99,13 @@ BLIND     // can't see anything
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 
+
+/obj/item/clothing/head/worn_overlays(var/isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+
 //Mask
 /obj/item/clothing/mask
 	name = "mask"
@@ -101,6 +117,13 @@ BLIND     // can't see anything
 	var/mask_adjusted = 0
 	var/ignore_maskadjust = 1
 	var/adjusted_flags = null
+
+
+/obj/item/clothing/mask/worn_overlays(var/isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(blood_DNA && (body_parts_covered & HEAD))
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -153,10 +176,28 @@ BLIND     // can't see anything
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
+
+/obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		var/bloody = 0
+		if(blood_DNA)
+			bloody = 1
+		else
+			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
+
+		if(bloody)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+
+
 /obj/item/clothing/shoes/clean_blood()
 	..()
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_shoes()
+
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -171,6 +212,15 @@ BLIND     // can't see anything
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+
+
+/obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+
+
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -205,7 +255,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -234,6 +284,21 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
+
+
+/obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
+	. = list()
+
+	if(!isinhands)
+		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
+
+		if(hastie)
+			var/tie_color = hastie.item_color
+			if(!tie_color)
+				tie_color = hastie.icon_state
+			. += image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
@@ -288,8 +353,8 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
+/proc/generate_female_clothing(index,t_color,icon,type)
+	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)

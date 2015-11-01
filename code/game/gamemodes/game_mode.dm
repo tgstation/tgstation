@@ -303,6 +303,7 @@
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_MONKEY)		roletext="monkey"
 		if(BE_ABDUCTOR)		roletext="abductor"
+		if(BE_SHADOWLING)	roletext="shadowling"
 
 
 	// Ultimate randomizing code right here
@@ -400,7 +401,7 @@
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
+			heads |= player.mind
 	return heads
 
 
@@ -411,8 +412,26 @@
 	var/list/heads = list()
 	for(var/mob/player in mob_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
+			heads |= player.mind
 	return heads
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/game_mode/proc/get_living_sec()
+	var/list/sec = list()
+	for(var/mob/living/carbon/human/player in mob_list)
+		if(player.stat!=2 && player.mind && (player.mind.assigned_role in security_positions))
+			sec |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/game_mode/proc/get_all_sec()
+	var/list/sec = list()
+	for(var/mob/living/carbon/human/player in mob_list)
+		if(player.mind && (player.mind.assigned_role in security_positions))
+			sec |= player.mind
 
 //////////////////////////
 //Reports player logouts//

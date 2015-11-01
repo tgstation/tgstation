@@ -106,6 +106,8 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	if(!M)
+		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
@@ -283,6 +285,24 @@ Doesn't work on other aliens/AI.*/
 
 	return 1
 
+/obj/effect/proc_holder/alien/sneak
+	name = "Sneak"
+	desc = "Blend into the shadows to stalk your prey."
+	var/active = 0
+
+	action_icon_state = "alien_sneak"
+
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
+	if(!active)
+		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
+		user.sneaking = 1
+		active = 1
+		user << "<span class='noticealien'>You blend into the shadows...</span>"
+	else
+		user.alpha = initial(user.alpha)
+		user.sneaking = 0
+		active = 0
+		user << "<span class='noticealien'>You reveal yourself!</span>"
 
 
 /mob/living/carbon/proc/getPlasma()

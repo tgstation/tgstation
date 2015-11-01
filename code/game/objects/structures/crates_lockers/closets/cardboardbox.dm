@@ -4,6 +4,7 @@
 	icon_state = "cardboard"
 	health = 10
 	mob_storage_capacity = 1
+	burn_state = 0 //Burnable
 	burntime = 20
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
@@ -16,9 +17,11 @@
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
 		return
-	step(src, direction)
 	move_delay = 1
-	spawn(config.walk_speed)
+	if(step(src, direction))
+		spawn(config.walk_speed)
+			move_delay = 0
+	else
 		move_delay = 0
 
 /obj/structure/closet/cardboard/open()

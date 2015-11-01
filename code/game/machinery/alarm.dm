@@ -220,7 +220,7 @@
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -1111,7 +1111,8 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert(src)
+	if(!A.fire)
+		A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 

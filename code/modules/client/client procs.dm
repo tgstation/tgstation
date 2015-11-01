@@ -107,6 +107,18 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	if(protected_config.autoadmin)
+		if(!admin_datums[ckey])
+			var/datum/admin_rank/autorank
+			for(var/datum/admin_rank/R in admin_ranks)
+				if(R.name == protected_config.autoadmin_rank)
+					autorank = R
+					break
+			if(!autorank)
+				world << "Autoadmin rank not found"
+			else
+				var/datum/admins/D = new(autorank, ckey)
+				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
 		admins += src
@@ -193,6 +205,12 @@ var/next_external_rsc = 0
 
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
+
+
+	//This is down here because of the browse() calls in tooltip/New()
+	if(!tooltips)
+		tooltips = new /datum/tooltip(src)
+
 
 //////////////
 //DISCONNECT//

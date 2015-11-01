@@ -27,8 +27,27 @@
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
+	time = 30
+	category = CAT_WEAPON
+
+/datum/table_recipe/lance
+	name = "explosive lance (grenade)"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/grenade = 1)
+	parts = list(/obj/item/weapon/grenade = 1)
+	time = 30
+	category = CAT_WEAPON
+
+/datum/table_recipe/lance2
+	name = "explosive lance (C4)"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/c4 = 1)
+	parts = list(/obj/item/weapon/c4 = 1)
 	time = 80
 	category = CAT_WEAPON
+
 
 /datum/table_recipe/molotov
 	name = "Molotov"
@@ -211,3 +230,22 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 200
 	category = CAT_WEAPON
+
+/datum/table_recipe/chainsaw
+	name = "Chainsaw"
+	result = /obj/item/weapon/twohanded/required/chainsaw
+	reqs = list(/obj/item/weapon/circular_saw = 1,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 100
+	category = CAT_WEAPON
+
+/datum/table_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/device/camera/spooky
+	time = 15
+	reqs = list(/obj/item/device/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/device/camera = 1)
+	category = CAT_MISC

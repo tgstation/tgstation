@@ -7,6 +7,9 @@ STATIONNAME Space Station 13
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
+# Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+ROUND_END_COUNTDOWN 90
+
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
@@ -153,9 +156,6 @@ ALLOW_HOLIDAYS
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.9
 
-## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
-TICKCOMP 0
-
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
@@ -222,3 +222,7 @@ ANNOUNCE_ADMIN_LOGOUT
 ##A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
 ##A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
 #MAPROTATIONCHANCEDELTA 0.75
+
+##AUTOADMIN
+##Uncomment to automatically give that admin rank to all players
+#AUTOADMIN Game Admin

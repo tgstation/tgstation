@@ -25,6 +25,11 @@
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
 
+/obj/item/weapon/soap/homemade
+	desc = "A homemade bar of soap. Smells of... well...."
+	icon_state = "soapgibs"
+	cleanspeed = 45 // a little faster to reward chemists for going to the effort
+
 /obj/item/weapon/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	icon_state = "soapdeluxe"
@@ -38,7 +43,7 @@
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
 	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
-	PoolOrNew(/obj/effect/effect/foam, loc)
+	PoolOrNew(/obj/effect/particle_effect/foam, loc)
 	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)

@@ -159,7 +159,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	charge_max = 300
+	charge_max = 400
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
@@ -354,5 +354,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()
