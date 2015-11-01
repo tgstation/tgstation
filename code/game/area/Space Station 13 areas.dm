@@ -91,12 +91,16 @@ var/list/teleportlocs = list()
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+
+/area/space/nearstation
+	icon_state = "space_near"
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
@@ -104,7 +108,7 @@ var/list/teleportlocs = list()
 	name = "Shuttle"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = 1
 	valid_territory = 0
 	icon_state = "shuttle"
@@ -150,7 +154,7 @@ var/list/teleportlocs = list()
 	icon_state = "start"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 // CENTCOM
@@ -600,7 +604,7 @@ var/list/teleportlocs = list()
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 
 /area/holodeck/alphadeck
 	name = "Holodeck Alpha"
@@ -676,30 +680,30 @@ var/list/teleportlocs = list()
 /area/solar
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 
-	auxport
+/area/solar/auxport
 		name = "Fore Port Solar Array"
 		icon_state = "panelsA"
 
-	auxstarboard
+/area/solar/auxstarboard
 		name = "Fore Starboard Solar Array"
 		icon_state = "panelsA"
 
-	fore
+/area/solar/fore
 		name = "Fore Solar Array"
 		icon_state = "yellow"
 
-	aft
+/area/solar/aft
 		name = "Aft Solar Array"
 		icon_state = "aft"
 
-	starboard
+/area/solar/starboard
 		name = "Aft Starboard Solar Array"
 		icon_state = "panelsS"
 
-	port
+/area/solar/port
 		name = "Aft Port Solar Array"
 		icon_state = "panelsP"
 
@@ -1252,25 +1256,25 @@ var/list/teleportlocs = list()
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/NewAIMain
 	name = "AI Main New"
@@ -1374,7 +1378,7 @@ var/list/teleportlocs = list()
 	name = "Beach"
 	icon_state = "away"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
