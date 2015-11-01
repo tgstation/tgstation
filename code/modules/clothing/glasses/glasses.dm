@@ -105,8 +105,8 @@
 	tint = 1
 
 /obj/item/clothing/glasses/sunglasses/reagent
-	name = "sunscanners"
-	desc = "Strangely ancient technology used to help provide rudimentary eye color. Outfitted with apparatus to scan individual reagents."
+	name = "beer goggles"
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
 	scan_reagents = 1
 
 /obj/item/clothing/glasses/sunglasses/garb
