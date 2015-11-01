@@ -145,8 +145,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(replacetext(invocation," ","`"))
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
-	if(sound)
-		playMagSound()
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
@@ -177,6 +175,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
+	if(sound)
+		playMagSound()
 	if(prob(critfailchance))
 		critfail(targets)
 	else
