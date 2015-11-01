@@ -65,7 +65,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/captain
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/captain
 	MASK_TYPE = /obj/item/clothing/mask/gas
-	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine
