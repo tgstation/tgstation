@@ -355,15 +355,15 @@ var/datum/subsystem/job/SSjob
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
 			world.log << "Couldn't find a round start latejoin spawn point."
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					S = T
-					continue
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						S = T
+						continue
 		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
 			H.loc = S.loc
 
