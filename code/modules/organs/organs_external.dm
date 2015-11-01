@@ -45,9 +45,10 @@
 
 /obj/item/organ/limb/head/examine(mob/user)
 	..()
-	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
-	if(B)
-		if(B.brainmob && B.brainmob.client)
+	var/datum/organ/internal/brain/B = suborgans["brain"]
+	if(B.exists())
+		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
+		if(brain.brainmob && brain.brainmob.client)
 			user << "You see a faint spark of life in their eyes."
 		else
 			user << "Their eyes are completely lifeless. Perhaps they will regain some of their luster later."
@@ -59,18 +60,20 @@
   * Call this upon beheading someone to properly transfer their mind to their head.
  **/
 /obj/item/organ/limb/head/proc/transfer_identity()
-	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
-	B.transfer_identity(owner)
+	var/datum/organ/internal/brain/B = suborgans["brain"]
+	if(B.exists())
+		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
+		brain.transfer_identity(owner)
 
 /**
   *
  **/
 /obj/item/organ/limb/head/attackby(var/obj/item/O as obj, var/mob/user as mob, params) //Copied from MMI
 	user.changeNext_move(CLICK_CD_MELEE)
-	var/obj/item/organ/internal/brain/B = getsuborgan("brain")
+	var/datum/organ/internal/brain/B = suborgans["brain"]
 	if(istype(O,/obj/item/organ/internal/brain))
 		var/obj/item/organ/internal/brain/newbrain = O
-		if("brain" in suborgans)
+		if(B && B.exists())
 			user << "<span class='warning'>There's already a brain in this head!</span>"
 			return
 		if(!newbrain.brainmob)
@@ -78,23 +81,22 @@
 			return
 
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
-		add_suborgan(newbrain)
-		newbrain.loc = src
 		user.drop_item()
+		set_suborgan(newbrain)
 
 		return
 
 	if(istype(O,/obj/item/weapon/circular_saw))
-		if(B)
+		if(B && B.exists())
 			playsound(src.loc, 'sound/weapons/circsawhit.ogg', 100, 1)
 			user.visible_message("[user] starts cutting into \the [src] with \the [O].", \
 								 "<span class='notice'>You start cutting into \the [src] with \the [O]...</span>", \
 								 "<span class='italics'>You hear the sound of a saw.</span>")
 
 			if(do_after(user, 40))
-				B = remove_suborgan("brain")
-				if(B)
-					user.put_in_hands(B) //Give the brain to the surgeon
+				var/oldbrain = remove_suborgan("brain")
+				if(oldbrain)
+					user.put_in_hands(oldbrain) //Give the brain to the surgeon
 					user << "<span class='notice'>You pull the brain out of the head.</span>"
 				else
 					user << "<span class='notice'>Something else removed the brain before you were done.</span>"

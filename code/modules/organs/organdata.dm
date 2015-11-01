@@ -122,7 +122,6 @@
  **/
 /datum/organ/proc/exists() //Decide whether this organ has a pysical representation in the body right now.
 	return organitem && !(status & ORGAN_DESTROYED) && !(status & ORGAN_REMOVED) && !(status & ORGAN_NOBLEED)
-
 /**
   * Properly dismember an organ, setting the status of this organdatum to dism_type.
   * The organ will be deposited to the floor below the owner.
@@ -147,8 +146,9 @@
 	if(exists())
 		status = dism_type					//We change the organdatum status to the type of dismemberment (ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED).
 		var/obj/item/organ/O = prepare_organitem_for_removal()	//We use the convenient preparation proc to nullify the necessary variables.
-		O.loc = owner.loc					//The organitem ends up at the new location. newloc
-		owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
+		O.loc = newloc					//The organitem ends up at the new location. newloc
+		if(owner)
+			owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
 		return O							//We return the organ object in case we want some information from it.
 	else
 		return null							//If dismemberment failed because the limb does not exist, we return null.

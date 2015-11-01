@@ -66,14 +66,23 @@
 		return 1
 	return 0
 
-/obj/item/organ/proc/remove_suborgan(var/name)
+/obj/item/organ/proc/remove_suborgan(var/name, var/special = 1)	//Usually special=0 affects the owner
 	var/datum/organ/O = suborgans[name]
-	if(O)
-		suborgans -= O
-		return O.organitem
+	if(O.exists())
+		var/obj/item/organ/OI = O.organitem
+		if(O.remove(ORGAN_REMOVED, loc, special))
+			return OI
 	return null
 
-//returns suborgan[name].organitem
+/obj/item/organ/proc/set_suborgan(var/obj/item/organ/O)
+	var/datum/organ/OD = suborgans[O.hardpoint]
+	if(!OD.exists())
+		OD.set_organitem(O)
+		O.loc = src
+		return 1
+	else return null
+
+//returns suborgans[name].organitem
 /obj/item/organ/proc/getsuborgan(var/name)
 	var/datum/organ/SO = suborgans[name]
 	return SO.organitem

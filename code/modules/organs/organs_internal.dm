@@ -108,9 +108,10 @@
 		name = "appendix"
 
 /obj/item/organ/internal/appendix/Remove(special = 0)
-	for(var/datum/disease/appendicitis/A in owner.viruses)
-		A.cure()
-		inflamed = 1
+	if(owner)
+		for(var/datum/disease/appendicitis/A in owner.viruses)
+			A.cure()
+			inflamed = 1
 	update_icon()
 	..()
 
