@@ -167,3 +167,18 @@
 /obj/machinery/atmospherics/miner/air/AddAir()
 		air_contents.oxygen = (internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature))*O2STANDARD
 		air_contents.nitrogen = (internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature))*N2STANDARD
+
+/obj/machinery/atmospherics/miner/dirty // A rough combination of all the gases, for those pressed for space
+	name = "\improper Dirty Gas Miner"
+	internal_pressure=3500
+	
+/obj/machinery/atmospherics/miner/air/AddAir()
+		var/molarpool = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		air_contents.oxygen = molarpool * 0.3
+		air_contents.nitrogen = molarpool * 0.3
+		air_contents.toxins = molarpool * 0.2
+		air_contents.carbon_dioxide = molarpool * 0.1
+		
+		var/datum/gas/sleeping_agent/trace_gas = new
+		air_contents.trace_gases += trace_gas
+		trace_gas.moles = molarpool * 0.1
