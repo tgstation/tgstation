@@ -399,7 +399,7 @@ var/global/list/rockTurfEdgeCache
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in ultra_range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -621,6 +621,9 @@ var/global/list/rockTurfEdgeCache
 		src.overlays += rockTurfEdgeCache[WEST_EDGING]
 
 /turf/simulated/mineral/updateMineralOverlays()
+	return
+
+/turf/simulated/wall/updateMineralOverlays()
 	return
 
 /turf/proc/fullUpdateMineralOverlays()

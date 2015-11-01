@@ -4,7 +4,7 @@
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 	var/thrusters = 0
-	var/datum/action/mecha/mech_toggle_thrusters/thrusters_action = new
+	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
 /obj/mecha/combat/CheckParts(atom/holder)
 	var/obj/item/weapon/stock_parts/capacitor/C = locate() in holder
@@ -52,11 +52,11 @@
 		return 1
 	return 0
 
-/datum/action/mecha/mech_toggle_thrusters
+/datum/action/innate/mecha/mech_toggle_thrusters
 	name = "Toggle Thrusters"
 	button_icon_state = "mech_thrusters_off"
 
-/datum/action/mecha/mech_toggle_thrusters/Activate()
+/datum/action/innate/mecha/mech_toggle_thrusters/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/M = chassis

@@ -1,6 +1,11 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+LAST_COMPILE_TIME: 1446350947
+DIR: _maps _maps\map_files _maps\map_files\TgStation code code\_onclick code\_onclick\hud code\controllers code\controllers\subsystem code\controllers\subsystem\shuttles code\datums code\game code\game\gamemodes code\game\gamemodes\abduction code\game\gamemodes\nuclear 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 508.1299
+WINDOW: code\game\gamemodes\nuclear\nuclear.dm
+FILE: code\game\gamemodes\nuclear\nuclear.dm
 */
 // END_INTERNALS

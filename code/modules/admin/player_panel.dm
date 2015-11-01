@@ -83,7 +83,7 @@
 					body += "<a href='?_src_=holder;subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?_src_=holder;secretsadmin=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a href='?_src_=holder;secrets=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 

@@ -204,6 +204,8 @@
 	if(!src)
 		return
 
+	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
+
 	if(consenting_candidates.len)
 		var/client/C = null
 		C = pick(consenting_candidates)
@@ -295,7 +297,24 @@
 	M.mutator_used = TRUE
 	qdel(src)
 
+/obj/item/slimepotion/speed
+	name = "slime speed potion"
+	desc = "A potent chemical mix that will remove the slowdown from any item."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
 
+/obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
+	..()
+	if(!istype(C))
+		user << "<span class='warning'>The potion can only be used on items!</span>"
+		return
+	if(C.slowdown <= 0)
+		user << "<span class='warning'>The [C] can't be made any faster!</span>"
+		return..()
+	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
+	C.color = "#FF0000"
+	C.slowdown = 0
+	qdel(src)
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -367,15 +386,19 @@
 	unacidable = 1
 	layer = TURF_LAYER
 
-	New()
-		..()
-		SSobj.processing |= src
+/obj/effect/golemrune/New()
+	..()
+	SSobj.processing |= src
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -386,8 +409,12 @@
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(!ghost)
@@ -397,6 +424,7 @@
 	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
 	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
@@ -421,6 +449,7 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
+	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140

@@ -8,6 +8,7 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = 6
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
@@ -85,7 +86,7 @@
 /obj/effect/proc_holder/alien/royal/queen/promote
 	name = "Create Royal Parasite"
 	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian."
-	plasma_cost = 450 //Plasma cost used on promotion, not spawning the parasite.
+	plasma_cost = 500 //Plasma cost used on promotion, not spawning the parasite.
 
 	action_icon_state = "alien_queen_promote"
 
@@ -118,7 +119,7 @@
 	flags = ABSTRACT|NODROP
 	icon = 'icons/mob/alien.dmi'
 
-/obj/item/queenpromote/attack(mob/living/M, mob/living/user)
+/obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || istype(M, /mob/living/carbon/alien/humanoid/royal))
 		user << "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>"
 		return
@@ -128,8 +129,8 @@
 
 	var/mob/living/carbon/alien/humanoid/A = M
 	if(A.stat == CONSCIOUS && A.mind && A.key)
-		if(!A.usePlasma(450))
-			user << "<span class='noticealien'>You must have 450 plasma stored to use this!</span>"
+		if(!user.usePlasma(500))
+			user << "<span class='noticealien'>You must have 500 plasma stored to use this!</span>"
 			return
 
 		A << "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>"

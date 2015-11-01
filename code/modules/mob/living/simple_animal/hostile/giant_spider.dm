@@ -83,7 +83,7 @@
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = 1
-			Goto(pick(orange(20, src)), move_to_delay)
+			Goto(pick(ultra_range(20, src, 1)), move_to_delay)
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)
@@ -114,11 +114,13 @@
 			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
-				Web()
+				spawn()
+					Web()
 			else
 				//third, lay an egg cluster there
 				if(fed)
-					LayEggs()
+					spawn()
+						LayEggs()
 				else
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
@@ -136,7 +138,8 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				Wrap()
+				spawn()
+					Wrap()
 
 	else
 		busy = 0

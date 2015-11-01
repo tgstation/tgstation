@@ -86,7 +86,7 @@
 	origin_tech = "combat=5;powerstorage=5"
 
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
-	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
+	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
 	target.take_organ_damage(0,30)

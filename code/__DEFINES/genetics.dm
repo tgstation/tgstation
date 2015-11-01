@@ -64,7 +64,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	24
+#define DNA_STRUC_ENZYMES_BLOCKS	20
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff

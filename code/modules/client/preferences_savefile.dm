@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	11
+#define SAVEFILE_VERSION_MAX	12
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -36,6 +36,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 11)
 		chat_toggles = TOGGLES_DEFAULT_CHAT
 		toggles = TOGGLES_DEFAULT
+	if(current_version < 12)
+		ignoring = list()
 
 
 //should this proc get fairly long (say 3 versions long),
@@ -106,6 +108,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			>> toggles
 	S["ghost_form"]			>> ghost_form
 	S["preferred_map"]		>> preferred_map
+	S["ignoring"]			>> ignoring
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -140,6 +143,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_form"]			<< ghost_form
 	S["preferred_map"]		<< preferred_map
+	S["ignoring"]			<< ignoring
 
 	return 1
 
@@ -191,13 +195,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			>> backbag
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
-	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
-	S["feature_human_ears"]				>> features["ears"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
+	if(!config.mutant_humans)
+		features["tail_human"] = "none"
+		features["ears"] = "none"
+	else
+		S["feature_human_tail"]				>> features["tail_human"]
+		S["feature_human_ears"]				>> features["ears"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]

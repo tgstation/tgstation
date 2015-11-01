@@ -97,7 +97,7 @@
 	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
-	for(var/mob/living/M in view(range,A))
+	for(var/mob/M in view(range,A))
 		M << msg
 
 	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
@@ -910,3 +910,22 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	</form></body></html>
 	"}
 	usr << browse(dat, "window=dressup;size=550x600")
+
+/client/proc/toggle_antag_hud()
+	set category = "Admin"
+	set name = "Toggle AntagHUD"
+	set desc = "Toggles the Admin AntagHUD"
+
+	if(!holder) return
+
+	var/datum/atom_hud/magical = huds[ANTAG_HUD_WIZ]
+	var/adding_hud = (usr in magical.hudusers) ? 0 : 1
+
+	for(var/datum/atom_hud/H in huds)
+		if(istype(H, /datum/atom_hud/antag))
+			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+
+	usr << "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"]."
+	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -100,4 +100,5 @@
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	return
+	else
+		..()

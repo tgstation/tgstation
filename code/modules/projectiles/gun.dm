@@ -122,14 +122,14 @@
 
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(istype(target, /mob/) && !(target in user.contents) && target != user && user.a_intent == "harm")
-			//We make sure that it is a mob, it's not us or part of us.
-			return //Flogging action
-		else if(ishuman(target) && ishuman(user))
-			if(user.zone_sel.selecting == "mouth")
-				handle_suicide(user, target, params)
-				return
-		else
+		if(target in user.contents) //can't shoot stuff inside us.
+			return
+		if(!ismob(target) || user.a_intent == "harm") //melee attack
+			return
+		if(user.zone_sel.selecting == "mouth")
+			handle_suicide(user, target, params)
+			return
+		if(target == user) //so we can't shoot ourselves (unless mouth selected)
 			return
 
 	//Exclude lasertag guns from the CLUMSY check.
@@ -203,6 +203,8 @@
 
 	if(burst_size > 1)
 		for(var/i = 1 to burst_size)
+			if(!user)
+				break
 			if(!issilicon(user))
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
@@ -240,10 +242,11 @@
 		spawn(fire_delay)
 			semicd = 0
 
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	if(user)
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
@@ -391,10 +394,11 @@
 	semicd = 1
 
 	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
-		if(user == target && user)
-			user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
-		else if(user && target && target.Adjacent(user))
-			target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+		if(user)
+			if(user == target)
+				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+			else if(target && target.Adjacent(user))
+				target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
 		semicd = 0
 		return
 
