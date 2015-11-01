@@ -285,6 +285,24 @@ Doesn't work on other aliens/AI.*/
 
 	return 1
 
+/obj/effect/proc_holder/alien/sneak
+	name = "Sneak"
+	desc = "Blend into the shadows to stalk your prey."
+	var/active = 0
+
+	action_icon_state = "alien_sneak"
+
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
+	if(!active)
+		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
+		user.sneaking = 1
+		active = 1
+		user << "<span class='noticealien'>You blend into the shadows...</span>"
+	else
+		user.alpha = initial(user.alpha)
+		user.sneaking = 0
+		active = 0
+		user << "<span class='noticealien'>You reveal yourself!</span>"
 
 
 /mob/living/carbon/proc/getPlasma()

@@ -31,7 +31,8 @@
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
 	if(!wielded || !user) return
 	wielded = 0
-	force = force_unwielded
+	if(force_unwielded)
+		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
 		name = copytext(name,1,sf)
@@ -60,7 +61,8 @@
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	wielded = 1
-	force = force_wielded
+	if(force_wielded)
+		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
 	if(isrobot(user))
