@@ -343,6 +343,9 @@
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
 
+			//Humans only
+			Commando.set_species("human")
+
 			//Greet the commando
 			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
 			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
@@ -526,6 +529,9 @@
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			ERTOperative.mind.objectives += missionobj
+
+			//Humans only
+			ERTOperative.set_species("human")
 
 			//Greet the commando
 			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
