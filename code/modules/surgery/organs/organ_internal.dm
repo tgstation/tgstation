@@ -176,13 +176,3 @@
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] collapses in on itself!</span>")
 			qdel(src)
-
-/obj/item/organ/internal/shadowtumor/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(M.mind && !is_thrall(M))
-		ticker.mode.add_thrall(M.mind)
-
-/obj/item/organ/internal/shadowtumor/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(M.mind && is_thrall(M))
-		ticker.mode.remove_thrall(M.mind, 0)

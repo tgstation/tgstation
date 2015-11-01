@@ -106,25 +106,3 @@
 			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
 	darkness_view = new_dark_view
 	return
-
-
-/obj/structure/shadow_vortex
-	name = "vortex"
-	desc = "A swirling hole in the fabric of reality. Eye-watering chimes sound from its depths."
-	density = 0
-	anchored = 1
-	icon = 'icons/effects/genetics.dmi'
-	icon_state = "shadow_portal"
-
-/obj/structure/shadow_vortex/New()
-	src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
-	playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
-	sleep(100)
-	qdel(src)
-
-/obj/structure/shadow_vortex/Crossed(td)
-	..()
-	if(ismob(td))
-		td << "<span class='userdanger'>You enter the rift. Deafening chimes jingle in your ears. You are swallowed in darkness.</span>"
-	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)
-	qdel(td)

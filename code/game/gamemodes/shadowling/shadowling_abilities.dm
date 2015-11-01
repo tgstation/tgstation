@@ -228,7 +228,7 @@
 						usr << "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>"
 						usr.visible_message("<span class='warning'>[usr] pauses, then dips their head in concentration!</span>")
 						target << "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>"
-						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
+						sleep(100) //10 seconds - not spawn() so the enthralling takes longer
 						usr << "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>"
 						usr.visible_message("<span class='warning'>[user] relaxes again.</span>")
 						for(var/obj/item/weapon/implant/loyalty/L in target)
@@ -238,8 +238,8 @@
 				if(3)
 					usr << "<span class='notice'>You begin planting the tumor that will control the new thrall...</span>"
 					usr.visible_message("<span class='warning'>A strange energy passes from [usr]'s hands into [target]'s head!</span>")
-					target << "<span class='boldannounce'>You feel a disembodied pain inside of your head as your mind remains blank.</span>"
-			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling, 45 for someone with a loyalty implant
+					target << "<span class='boldannounce'>You feel your memories twisting, morphing. A sense of horror dominates your mind.</span>"
+			if(!do_mob(usr, target, 70)) //around 21 seconds total for enthralling, 31 for someone with a loyalty implant
 				usr << "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>"
 				target << "<span class='userdanger'>You wrest yourself away from [usr]'s hands and compose yourself</span>"
 				enthralling = 0
@@ -251,8 +251,7 @@
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
 		target.mind.special_role = "thrall"
-		var/obj/item/organ/internal/shadowtumor/T = new(get_turf(target))
-		T.Insert(target) //The tumor itself handles the enthralling
+		ticker.mode.add_thrall(target.mind)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind //Lets a shadowling talk to its allies
@@ -823,10 +822,8 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 
 		usr << "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>"
 		target << "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>"
-		ticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
-		var/datum/mind/thrall_mind = target.mind
-		thrall_mind.spell_list.Add(new /obj/effect/proc_holder/spell/self/shadowling_hivemind)
+		ticker.mode.add_thrall(target.mind)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift //Permanent version of shadow walk with no drawback. Toggleable.
