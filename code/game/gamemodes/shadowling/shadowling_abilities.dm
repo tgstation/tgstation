@@ -57,6 +57,7 @@
 	range = 5
 	action_icon_state = "veil"
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
+	var/admin_override = 0 //Requested by Shadowlight213. Allows anyone to cast the spell, not just shadowlings.
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(obj/item/I) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
 	if(istype(I, /obj/item/device/flashlight))
@@ -80,7 +81,7 @@
 	H.SetLuminosity(blacklistLuminosity) //I hate lightcode for making me do it this way
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
-	if(!shadowling_check(usr))
+	if(!shadowling_check(usr) && !admin_override)
 		revert_cast()
 		return
 	usr << "<span class='shadowling'>You silently disable all nearby lights.</span>"
