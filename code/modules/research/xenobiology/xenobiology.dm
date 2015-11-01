@@ -543,3 +543,18 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/obj/item/areaeditor/blueprints/slime
+	name = "cerulean prints"
+	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	color = "#2956B2"
+
+/obj/item/areaeditor/blueprints/slime/edit_area()
+	var/success = ..()
+	var/area/A = get_area(src)
+	if(success)
+		for(var/turf/T in A)
+			T.color = "#2956B2"
+		qdel(src)
+
