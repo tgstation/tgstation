@@ -17,7 +17,7 @@
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
-	if(wet_setting == TURF_WET_WATER || TURF_WET_LUBE)
+	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
