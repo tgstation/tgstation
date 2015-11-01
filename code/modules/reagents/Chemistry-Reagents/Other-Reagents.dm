@@ -3,6 +3,7 @@
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 			name = "Blood"
 			id = "blood"
+			can_synth = 0
 			color = "#C80000" // rgb: 200, 0, 0
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
@@ -89,6 +90,7 @@
 	//data must contain virus type
 	name = "Vaccine"
 	id = "vaccine"
+	can_synth = 0 //for the chem synth
 	color = "#C81040" // rgb: 200, 16, 64
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
@@ -262,6 +264,7 @@
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
 	synth_cost = 10
+	can_synth = 1
 	description = "A corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
@@ -269,6 +272,7 @@
 	name = "Unstable Mutation Toxin"
 	id = "unstablemutationtoxin"
 	synth_cost = 20
+	can_synth = 0
 	description = "An unstable and unpredictable corruptive toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
@@ -298,6 +302,7 @@
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
 	synth_cost = 30
+	can_synth = 0
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
@@ -467,6 +472,7 @@
 /datum/reagent/glycerol
 	name = "Glycerol"
 	id = "glycerol"
+	can_synth = 1
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -505,6 +511,7 @@
 	name = "Gold"
 	id = "gold"
 	synth_cost = 5
+	can_synth = 0
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
@@ -512,6 +519,7 @@
 /datum/reagent/silver
 	name = "Silver"
 	id = "silver"
+	can_synth = 0
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
@@ -520,6 +528,7 @@
 	name ="Uranium"
 	id = "uranium"
 	synth_cost = 5
+	can_synth = 0
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
@@ -647,6 +656,7 @@
 	name = "Nanomachines"
 	id = "nanomachines"
 	synth_cost = 25
+	can_synth = 0
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 
@@ -658,6 +668,7 @@
 	name = "Xenomicrobes"
 	id = "xenomicrobes"
 	synth_cost = 50
+	can_synth = 0
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
 

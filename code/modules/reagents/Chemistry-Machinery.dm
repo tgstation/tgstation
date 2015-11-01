@@ -19,6 +19,7 @@
 	var/recharged = 0
 	var/recharge_delay = 5  //Time it game ticks between recharges
 	var/image/icon_beaker = null //cached overlay
+	var/synth_coeff = 2.0   //coefficient to adjust how expensive synthesizing chems is compared to normal method. 200% is the default
 	var/uiname = "Chem Dispenser 5000"
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
@@ -125,7 +126,7 @@
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
-			var/relative_cost = text2num(href_list["synth_cost"])
+			var/relative_cost = synth_coeff*text2num(href_list["synth_cost"])
 			var/energy_consumption = 0.1 * min(amount*relative_cost, energy * 10, space*relative_cost)
 			R.add_reagent(href_list["dispense"], 10 * energy_consumption / relative_cost)
 			energy = max(energy - energy_consumption, 0)
@@ -323,8 +324,12 @@
 		if(beaker)
 			var/obj/item/weapon/reagent_containers/glass/B = beaker
 			for(var/datum/reagent/R in B.reagents.reagent_list)
-				if(R.can_synth && add_known_reagent(R.id))
-					usr << "Reagent analyzed, identified as [R.name] and added to database."
+				if(R.can_synth)
+					if(R.can_synth == 1 || (R.can_synth == 2 && emagged))
+						add_known_reagent(R.id)
+						usr << "Reagent analyzed, identified as [R.name] and added to database."
+					else
+						usr << "Illegal Reagent detected. NT safety regulations forbid replication of [R.name]."
 				else
 					usr << "Unable to scan reagent."
 		return 1
@@ -336,6 +341,12 @@
 		dispensable_reagents += r_id
 		return 1
 	return 0
+
+/obj/machinery/chem_dispenser/constructable/synth/emag_act(mob/user as mob)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'> You you disable the safety regulation unit.</span>"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
