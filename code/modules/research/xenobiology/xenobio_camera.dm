@@ -7,7 +7,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area.name && new_area.name == "Xenobiology Lab")
+	if(new_area && new_area.name == "Xenobiology Lab" || new_area && istype(new_area, /area/toxins/xenobiology ))
 		return ..()
 	else
 		return
@@ -161,4 +161,3 @@
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
 				X.monkeys += 0.2
-				qdel(M)
