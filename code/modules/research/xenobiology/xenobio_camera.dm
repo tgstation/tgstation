@@ -161,3 +161,4 @@
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
 				X.monkeys += 0.2
+				qdel(M)
