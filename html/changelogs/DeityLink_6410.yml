@@ -1,0 +1,10 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed an issue with pAI directives now being properly displayed to admins.
+  - rscadd: pAIs, the name of their master, and their directives now appear on the round end scoreboard along the other silicons.
+  - rscadd: pAIs emotions now properly appear on the round end scoreboard.
+  - bugfix: Changed the MedicalHUD and SecurityHUD descriptions to reflect the fact that they work on more than just "humans".
+  - bugfix: Fixed antag madness wizard spellbooks having only 10 uses instead of 30.
+  - bugfix: Fixed antag madness deathsquads not wearing the deathsquad armor.
+  - rscadd: Added Bee Guns to the list of guns that can be spawned by Summon Guns.
