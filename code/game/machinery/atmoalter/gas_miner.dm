@@ -172,7 +172,7 @@
 	name = "\improper Dirty Gas Miner"
 	internal_pressure=3500
 	
-/obj/machinery/atmospherics/miner/air/AddAir()
+/obj/machinery/atmospherics/miner/dirty/AddAir()
 		var/molarpool = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 		air_contents.oxygen = molarpool * 0.3
 		air_contents.nitrogen = molarpool * 0.3
