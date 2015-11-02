@@ -16,7 +16,7 @@
 
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	desc = "A heads-up display that scans the humanoid carbon lifeforms in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 
 /obj/item/clothing/glasses/hud/health/process_hud(var/mob/M)
@@ -26,7 +26,7 @@
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
+	desc = "A heads-up display that scans the humanoid carbon lifeforms in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 
 /obj/item/clothing/glasses/hud/security/jensenshades

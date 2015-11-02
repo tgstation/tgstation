@@ -130,26 +130,30 @@
 /obj/item/device/paicard/proc/setEmotion(var/emotion)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/setEmotion() called tick#: [world.time]")
 	if(pai)
+		var/face = "pai-happy"
 		src.overlays.len = 0
+		pai.overlays.len = 0
 		switch(emotion)
-			if(1) src.overlays += "pai-happy"
-			if(2) src.overlays += "pai-cat"
-			if(3) src.overlays += "pai-extremely-happy"
-			if(4) src.overlays += "pai-face"
-			if(5) src.overlays += "pai-laugh"
-			if(6) src.overlays += "pai-off"
-			if(7) src.overlays += "pai-sad"
-			if(8) src.overlays += "pai-angry"
-			if(9) src.overlays += "pai-what"
-			if(10) src.overlays += "pai-longface"
-			if(11) src.overlays += "pai-sick"
-			if(12) src.overlays += "pai-high"
-			if(13) src.overlays += "pai-love"
-			if(14) src.overlays += "pai-electric"
-			if(15) src.overlays += "pai-pissed"
-			if(16) src.overlays += "pai-nose"
-			if(17) src.overlays += "pai-kawaii"
-			if(18) src.overlays += "pai-cry"
+			if(1) face = "pai-happy"
+			if(2) face = "pai-cat"
+			if(3) face = "pai-extremely-happy"
+			if(4) face = "pai-face"
+			if(5) face = "pai-laugh"
+			if(6) face = "pai-off"
+			if(7) face = "pai-sad"
+			if(8) face = "pai-angry"
+			if(9) face = "pai-what"
+			if(10) face = "pai-longface"
+			if(11) face = "pai-sick"
+			if(12) face = "pai-high"
+			if(13) face = "pai-love"
+			if(14) face = "pai-electric"
+			if(15) face = "pai-pissed"
+			if(16) face = "pai-nose"
+			if(17) face = "pai-kawaii"
+			if(18) face = "pai-cry"
+		src.overlays.len += "[face]"
+		pai.overlays.len += "[face]"//we also update the mob's overlay so it appears properly on the scoreboard.
 
 /obj/item/device/paicard/proc/alertUpdate()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/alertUpdate() called tick#: [world.time]")

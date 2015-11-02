@@ -1325,12 +1325,16 @@ var/global/floorIsLava = 0
 			var/mob/living/silicon/robot/R = S
 			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
 		else if (ispAI(S))
-			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
+			var/mob/living/silicon/pai/pAI = S
+			usr << "<b>pAI [key_name(S, usr)]'s laws (master: [pAI.master] ):</b>"
 		else
 			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
 
-		if (S.laws == null)
+		if (S.laws == null && !ispAI(S))
 			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
+		else if(ispAI(S))
+			var/mob/living/silicon/pai/pAI = S
+			pAI.show_directives(usr)
 		else
 			S.laws.show_laws(usr)
 	if(!ai_number)

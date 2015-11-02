@@ -90,6 +90,23 @@
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
 
 
+/mob/living/silicon/pai/proc/show_directives(var/who)
+	if (src.pai_law0)
+		who << "Prime Directive: [src.pai_law0]"
+
+	if (src.pai_laws)
+		who << "Additional Directives: [src.pai_laws]"
+
+/mob/living/silicon/pai/proc/write_directives()
+	var/dat = ""
+	if (src.pai_law0)
+		dat += "Prime Directive: [src.pai_law0]"
+
+	if (src.pai_laws)
+		dat += "<br>Additional Directives: [src.pai_laws]"
+
+	return dat
+
 // this function shows the information about being silenced as a pAI in the Status panel
 /mob/living/silicon/pai/proc/show_silenced()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/show_silenced() called tick#: [world.time]")
