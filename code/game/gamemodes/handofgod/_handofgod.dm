@@ -31,7 +31,7 @@ var/global/list/global_handofgod_structuretypes = list()
 /datum/game_mode/hand_of_god/announce()
 	world << "<B>The current game mode is - Hand of God!</B>"
 	world << "<B>Two cults are onboard the station, seeking to overthrow the other, and anyone who stands in their way.</B>"
-	world << "<B>Followers</B> - complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. Remember - there is no you, there is only the cult."
+	world << "<B>Followers</B> - Complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. Remember - there is no you, there is only the cult."
 	world << "<B>Prophets</B> - Command your cult by the will of your deity.  You are a high-value target, so be careful!"
 	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Loyalty implants and holy water will revert them to neutral, hopefully nonviolent crew."
 
@@ -57,7 +57,7 @@ var/global/list/global_handofgod_structuretypes = list()
 			break
 		var/datum/mind/follower = pick_n_take(antag_candidates)
 		unassigned_followers += follower
-		log_game("[follower.key] (ckey) has been selected as a follower, However teams have not been decided yet.")
+		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")
 
 	while(unassigned_followers.len > (required_enemies / 2))
 		var/datum/mind/chosen = pick_n_take(unassigned_followers)
@@ -104,7 +104,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		ticker.mode.forge_deity_objectives(blue_god)
 		remove_hog_follower(blue_god,0)
 		add_god(blue_god,"blue")
-
+	..()
 
 ///////////////////
 //Objective Procs//
@@ -162,10 +162,12 @@ var/global/list/global_handofgod_structuretypes = list()
 ///////////////
 
 /datum/game_mode/proc/greet_hog_follower(datum/mind/follower_mind,colour)
-	if(colour)
-		follower_mind.current << "<span class='danger'><B>You are a follwer of the [colour] cult's god!</span>"
+	if(follower_mind in blue_deity_prophets || follower_mind in red_deity_prophets)
+		follower_mind.current << "<span class='danger'><B>You have been appointed as the prophet of the [colour] deity! You are the only one who can communicate with your deity at will. Guide your followers, but be wary, for many will want you dead.</span>"
+	else if(colour)
+		follower_mind.current << "<span class='danger'><B>You are a follower of the [colour] cult's deity!</span>"
 	else
-		follower_mind.current << "<span class='danger'><B>You are a follwer of a cult's god!</span>"
+		follower_mind.current << "<span class='danger'><B>You are a follower of a cult's deity!</span>"
 
 
 /////////////////
@@ -178,7 +180,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		H << "<span class='danger'>Your loyalty implant blocked the influence of the [colour] deity. </span>"
 		return 0
 	if((follower_mind in red_deity_followers) || (follower_mind in red_deity_prophets) || (follower_mind in blue_deity_followers) || (follower_mind in blue_deity_prophets))
-		H << "<span class='danger'>You already belong to a deity, your strong faith has blocked out the conversion attempt by the followers of the [colour] deity.</span>"
+		H << "<span class='danger'>You already belong to a deity. Your strong faith has blocked out the conversion attempt by the followers of the [colour] deity.</span>"
 		return 0
 	var/obj/item/weapon/nullrod/N = locate() in H
 	if(N)
@@ -191,7 +193,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		blue_deity_followers += follower_mind
 
 	H.faction |= "[colour] god"
-
+	follower_mind.current << "<span class='danger'><FONT size = 3>You are now a follower of the [colour] deity! Follow your deity's prophet in order to complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. And remember - there is no you, there is only the cult.</FONT></span>"
 	update_hog_icons_added(follower_mind, colour)
 	follower_mind.special_role = "Hand of God: [capitalize(colour)] Follower"
 	follower_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [colour] follower cult!</font>"
@@ -225,7 +227,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		follower_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been deconverted from a deity's cult!</font>"
 		follower_mind.current << "<span class='danger'><b>Your mind has been cleared from the brainwashing the followers have done to you.  Now you serve yourself and the crew.</b></span>"
 		for(var/mob/living/M in view(follower_mind.current))
-			M << "[follower_mind.current] looks like their faith is shattered, they're no longer a cultist!"
+			M << "[follower_mind.current] looks like their faith is shattered. They're no longer a cultist!"
 
 
 
@@ -326,7 +328,7 @@ var/global/list/global_handofgod_structuretypes = list()
 				else
 					text += "survived"
 			else
-				text += "ceased existing, guess they got deleted rofl"
+				text += "ceased existing"
 			text += ")"
 			if(red_deity_prophets.len)
 				for(var/datum/mind/red_prophet in red_deity_prophets)
@@ -377,7 +379,7 @@ var/global/list/global_handofgod_structuretypes = list()
 				else
 					text += "survived"
 			else
-				text += "ceased existing, guess they got deleted rofl"
+				text += "ceased existing"
 			text += ")"
 			if(blue_deity_prophets.len)
 				for(var/datum/mind/blue_prophet in blue_deity_prophets)
