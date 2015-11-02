@@ -269,16 +269,19 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		//Authenticate
 		if (href_list["auth"])
-			if(auth)
-				auth = 0
-				screen = 0
+			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+				message = noserver
 			else
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
-				if(dkey && dkey != "")
-					if(src.linkedServer.decryptkey == dkey)
-						auth = 1
-					else
-						message = incorrectkey
+				if(auth)
+					auth = 0
+					screen = 0
+				else
+					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					if(dkey && dkey != "")
+						if(src.linkedServer.decryptkey == dkey)
+							auth = 1
+						else
+							message = incorrectkey
 
 		//Turn the server on/off.
 		if (href_list["active"])
