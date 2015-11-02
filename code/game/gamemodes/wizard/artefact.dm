@@ -542,7 +542,7 @@ var/global/list/multiverse = list()
 			if("r_arm","l_arm")
 				//use active hand on random nearby mob
 				var/list/nearby_mobs = list()
-				for(var/mob/living/L in range(target,1))
+				for(var/mob/living/L in range(1, target))
 					if(L!=target)
 						nearby_mobs |= L
 				if(nearby_mobs.len)

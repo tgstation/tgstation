@@ -17,8 +17,8 @@
 	var/phasing = 0
 	var/phasing_energy_drain = 200
 	max_equip = 3
-	var/datum/action/mecha/mech_switch_damtype/switch_damtype_action = new
-	var/datum/action/mecha/mech_toggle_phasing/phasing_action = new
+	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
+	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
 
 /obj/mecha/combat/phazon/Bump(atom/obstacle)
 	if(phasing && get_charge()>=phasing_energy_drain && !throwing)
@@ -63,11 +63,11 @@
 	phasing_action.Remove(user)
 
 
-/datum/action/mecha/mech_switch_damtype
+/datum/action/innate/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
 
-/datum/action/mecha/mech_switch_damtype/Activate()
+/datum/action/innate/mecha/mech_switch_damtype/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/phazon/P = chassis
@@ -87,11 +87,11 @@
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 
 
-/datum/action/mecha/mech_toggle_phasing
+/datum/action/innate/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
 	button_icon_state = "mech_phasing_off"
 
-/datum/action/mecha/mech_toggle_phasing/Activate()
+/datum/action/innate/mecha/mech_toggle_phasing/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/phazon/P = chassis

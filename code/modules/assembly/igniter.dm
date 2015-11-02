@@ -4,7 +4,7 @@
 	icon_state = "igniter"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	heat = 1000
 
 /obj/item/device/assembly/igniter/New()

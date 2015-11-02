@@ -15,19 +15,16 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-	if(config)
-		if(config.starlight)
-			update_starlight()
+
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
 	if(config)
 		if(config.starlight)
-			for(var/turf/T in orange(src,1))
-				if(istype(T,/turf/simulated))
-					SetLuminosity(3)
-					return
+			for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+				SetLuminosity(4,1)
+				return
 			SetLuminosity(0)
 
 /turf/space/attack_paw(mob/user)

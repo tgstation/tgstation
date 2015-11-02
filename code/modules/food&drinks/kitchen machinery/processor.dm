@@ -152,10 +152,13 @@
 
 	default_deconstruction_crowbar(O)
 
-	var/what = O
-	if (istype(O, /obj/item/weapon/grab))
+	var/atom/movable/what = O
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		if(!user.Adjacent(G.affecting))
+			return
+		if(G.affecting.buckled || G.affecting.buckled_mob)
+			user << "<span class='warning'>[G.affecting] is attached to somthing!</span>"
 			return
 		what = G.affecting
 
@@ -163,10 +166,11 @@
 	if (!P)
 		user << "<span class='warning'>That probably won't blend!</span>"
 		return 1
+
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
 	user.drop_item()
-	what:loc = src
+	what.loc = src
 	return
 
 /obj/machinery/processor/attack_hand(mob/user)

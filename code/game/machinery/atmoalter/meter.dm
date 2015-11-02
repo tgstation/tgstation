@@ -102,8 +102,8 @@
 				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
-		return
-	..()
+	else
+		..()
 
 /obj/machinery/meter/attack_ai(mob/user)
 	return src.attack_hand(user)

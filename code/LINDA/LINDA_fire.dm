@@ -57,6 +57,9 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
+	dir = pick(cardinal)
+	air_update_turf()
+
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
@@ -165,12 +168,6 @@
 			else
 				T.to_be_destroyed = 0
 				T.max_fire_temperature_sustained = 0
-
-/obj/effect/hotspot/New()
-	..()
-	dir = pick(cardinal)
-	air_update_turf()
-	return
 
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()

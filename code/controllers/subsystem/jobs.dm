@@ -202,7 +202,6 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
-	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(ticker)
@@ -374,16 +373,22 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/proc/setup_officer_positions()
-	var/officer_positions = 5 //Number of open security officer positions at round start
+	var/datum/job/J = SSjob.GetJob("Security Officer")
+	if(!J)
+		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
 
 	if(config.security_scaling_coeff > 0)
-		officer_positions = min(12, max(5, round(unassigned.len/config.security_scaling_coeff))) //Scale between 5 and 12 officers
-		var/datum/job/J = SSjob.GetJob("Security Officer")
-		if(J  || J.spawn_positions > 0)
+		if(J.spawn_positions > 0)
+			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len/config.security_scaling_coeff))) //Scale between configured minimum and 12 officers
 			Debug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
-	for(var/i=officer_positions-5, i>0, i--) //Spawn some extra eqipment lockers if we have more than 5 officers
+
+	//Spawn some extra eqipment lockers if we have more than 5 officers
+	var/equip_needed = J.total_positions
+	if(equip_needed < 0) // -1: infinite available slots
+		equip_needed = 12
+	for(var/i=equip_needed-5, i>0, i--)
 		if(secequipment.len)
 			var/spawnloc = secequipment[1]
 			new /obj/structure/closet/secure_closet/security(spawnloc)
@@ -397,8 +402,8 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/J in occupations)
 		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
 		var/datum/regex/results = regex_find(jobstext, regex)
-		J.total_positions = results.str(2)
-		J.spawn_positions = results.str(3)
+		J.total_positions = text2num(results.str(2))
+		J.spawn_positions = text2num(results.str(3))
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

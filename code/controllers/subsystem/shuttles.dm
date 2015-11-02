@@ -58,7 +58,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
-
+	initial_move()
 	..()
 
 
@@ -200,6 +200,18 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(M.dock(getDock(dockId)))
 			return 2
 	return 0	//dock successful
+
+/datum/subsystem/shuttle/proc/initial_move()
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(!M.roundstart_move)
+			continue
+		for(var/obj/docking_port/stationary/S in stationary)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
+				S.width = M.width
+				S.height = M.height
+				S.dwidth = M.dwidth
+				S.dheight = M.dheight
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
 
 /datum/supply_order
 	var/ordernum

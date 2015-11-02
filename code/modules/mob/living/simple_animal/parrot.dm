@@ -112,7 +112,8 @@
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player, \
-			  /mob/living/simple_animal/parrot/proc/toggle_mode)
+			  /mob/living/simple_animal/parrot/proc/toggle_mode,
+			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
 
 
 /mob/living/simple_animal/parrot/death(gibbed)
@@ -120,6 +121,13 @@
 		held_item.loc = src.loc
 		held_item = null
 	walk(src,0)
+
+	if(buckled)
+		buckled.buckled_mob = null
+	buckled = null
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
+
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Stat()
@@ -181,7 +189,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !usr.Adjacent(loc))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -480,7 +488,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))
+		if(Adjacent(parrot_interest))
 
 			if(isliving(parrot_interest))
 				steal_from_mob()
@@ -508,7 +516,7 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))
+		if(Adjacent(parrot_perch))
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
@@ -548,7 +556,7 @@
 			a_intent = "harm"
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))
+		if(Adjacent(parrot_interest))
 
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
@@ -587,7 +595,8 @@
 /mob/living/simple_animal/parrot/movement_delay()
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
-	..()
+		//Because the most appropriate place to set icon_state is movement_delay(), clearly
+	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
@@ -787,6 +796,46 @@
 	src << "<span class='warning'>There is no perch nearby to sit on!</span>"
 	return
 
+
+/mob/living/simple_animal/parrot/proc/perch_mob_player()
+	set name = "Sit on Human's Shoulder"
+	set category = "Parrot"
+	set desc = "Sit on a nice comfy human being!"
+
+	if(stat || !client)
+		return
+
+	if(icon_state == "parrot_fly")
+		for(var/mob/living/carbon/human/H in view(src,1))
+			if(H.buckled_mob) //Already has a parrot, or is being eaten by a slime
+				continue
+			perch_on_human(H)
+			return
+		src << "<span class='warning'>There is nobody nearby that you can sit on!</span>"
+	else
+		icon_state = "parrot_fly"
+		parrot_state = PARROT_WANDER
+		if(buckled)
+			src << "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>"
+			buckled.buckled_mob = null
+		buckled = null
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
+
+
+
+/mob/living/simple_animal/parrot/proc/perch_on_human(mob/living/carbon/human/H)
+	if(!H)
+		return
+	loc = get_turf(H)
+	H.buckle_mob(src, force=1)
+	pixel_y = 9
+	pixel_x = pick(-8,8) //pick left or right shoulder
+	icon_state = "parrot_sit"
+	parrot_state = PARROT_PERCH
+	src << "<span class='notice'>You sit on [H]'s shoulder.</span>"
+
+
 /mob/living/simple_animal/parrot/proc/toggle_mode()
 	set name = "Toggle mode"
 	set category = "Parrot"
@@ -801,6 +850,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = "harm"
+	src << "You will now [a_intent] others..."
 	return
 
 /*

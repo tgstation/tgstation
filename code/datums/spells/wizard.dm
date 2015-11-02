@@ -67,7 +67,7 @@
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
-	smoke_amt = 10
+	smoke_amt = 4
 
 	action_icon_state = "smoke"
 
@@ -101,7 +101,7 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 1
+	smoke_amt = 0
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
@@ -133,7 +133,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
-	smoke_amt = 5
+	smoke_amt = 2
 	sound1="sound/magic/Teleport_diss.ogg"
 	sound2="sound/magic/Teleport_app.ogg"
 
@@ -159,7 +159,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	charge_max = 300
+	charge_max = 400
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
@@ -338,7 +338,7 @@
 			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/Tail_swing.ogg'
@@ -354,5 +354,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()

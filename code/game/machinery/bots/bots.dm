@@ -261,7 +261,7 @@
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else
 			if(W.force) //if force is non-zero
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(5, 1, src)
 				switch(W.damtype)
 					if("fire")
@@ -281,7 +281,7 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(prob(75) && Proj.damage > 0)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
 		..()

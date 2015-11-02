@@ -208,6 +208,8 @@ var/datum/global_hud/global_hud = new()
 		swarmer_hud()
 	else if(is_handofgod_god(mymob))
 		hoggod_hud()
+	else if(isguardian(mymob))
+		guardian_hud()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)

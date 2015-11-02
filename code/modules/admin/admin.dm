@@ -66,6 +66,11 @@ var/global/floorIsLava = 0
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
 		body += "(<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
+	if(jobban_isbanned(M, "OOC"))
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBAN</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'>OOCBAN</A> | "
+
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;jumpto=\ref[M]'><b>Jump to</b></A> | "
 	body += "<A href='?_src_=holder;getmob=\ref[M]'>Get</A> | "

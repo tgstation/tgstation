@@ -48,8 +48,8 @@
 	L << "<span class='danger'><B>You are paralyzed from the intense shock!</B></span>"
 	L.Weaken(5)
 	var/turf/Lturf = get_turf(L)
-	new /obj/effect/effect/sparks/electricity(Lturf)
-	new /obj/effect/effect/sparks(Lturf)
+	new /obj/effect/particle_effect/sparks/electricity(Lturf)
+	new /obj/effect/particle_effect/sparks(Lturf)
 
 
 /obj/structure/divine/trap/fire
@@ -63,7 +63,7 @@
 	L.Weaken(1)
 	var/turf/Lturf = get_turf(L)
 	new /obj/effect/hotspot(Lturf)
-	new /obj/effect/effect/sparks(Lturf)
+	new /obj/effect/particle_effect/sparks(Lturf)
 
 
 /obj/structure/divine/trap/chill
@@ -76,7 +76,7 @@
 	L << "<span class='danger'><B>You're frozen solid!</B></span>"
 	L.Weaken(1)
 	L.bodytemperature -= 300
-	new /obj/effect/effect/sparks(get_turf(L))
+	new /obj/effect/particle_effect/sparks(get_turf(L))
 
 
 /obj/structure/divine/trap/damage
@@ -90,7 +90,7 @@
 	L.Weaken(5)
 	L.adjustBruteLoss(35)
 	var/turf/Lturf = get_turf(L)
-	new /obj/effect/effect/sparks(Lturf)
+	new /obj/effect/particle_effect/sparks(Lturf)
 	new /obj/structure/flora/rock(Lturf)
 
 

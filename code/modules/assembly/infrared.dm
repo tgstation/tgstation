@@ -159,7 +159,7 @@
 /***************************IBeam*********************************/
 
 /obj/effect/beam/i_beam
-	name = "i beam"
+	name = "infrared beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	var/obj/effect/beam/i_beam/next = null

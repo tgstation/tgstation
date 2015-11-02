@@ -90,6 +90,9 @@ var/list/announcement_systems = list()
 			user << "<span class='notice'>You reset [src]'s firmware.</span>"
 			broken = 0
 			update_icon()
+			return
+
+	return ..()
 
 /obj/machinery/announcement_system/attack_hand(mob/user)
 	if(can_be_used_by(user))
