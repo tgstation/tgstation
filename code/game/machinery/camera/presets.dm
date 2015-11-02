@@ -49,7 +49,7 @@
 		number = 1
 		var/area/A = get_area(src)
 		if(A)
-			for(var/obj/machinery/camera/autoname/C in world)
+			for(var/obj/machinery/camera/autoname/C in machines)
 				if(C == src) continue
 				var/area/CA = get_area(C)
 				if(CA.type == A.type)

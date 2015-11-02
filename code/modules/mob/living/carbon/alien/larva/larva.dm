@@ -13,6 +13,8 @@
 	var/max_grown = 200
 	var/time_of_birth
 
+	rotate_on_lying = 0
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
 	regenerate_icons()

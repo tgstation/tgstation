@@ -400,12 +400,10 @@
 		B.reagents.clear_reagents() //Just in case!
 		B.icon_state = null //Invisible
 		B.reagents.add_reagent("blindness_smoke", 10)
-		var/datum/effect/effect/system/smoke_spread/chem/S = new
+		var/datum/effect_system/smoke_spread/chem/S = new
 		S.attach(B)
 		if(S)
-			S.set_up(B.reagents, 10, 0, B.loc)
-			S.start()
-			sleep(10)
+			S.set_up(B.reagents, 4, 0, B.loc)
 			S.start()
 		qdel(B)
 
@@ -466,7 +464,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
 				S << 'sound/misc/interference.ogg'
 				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
 				S.Weaken(6)
@@ -585,7 +583,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 					return
 				usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
 									"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
-				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.")
+				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.", source = thrallToRevive)
 				if(!do_mob(usr, thrallToRevive, 30))
 					usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
 					charge_counter = charge_max

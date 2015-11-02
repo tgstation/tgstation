@@ -12,7 +12,9 @@ env:
     - DM_MAPFILE="ministation"
     - DM_MAPFILE="DiscStation"
     - DM_MAPFILE="dreamstation"
-  
+    - DM_MAPFILE="birdstation"
+    - DM_MAPFILE="asteroidstation"
+
 cache:
   directories:
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}

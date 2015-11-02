@@ -67,7 +67,7 @@
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 		spark_system.start()

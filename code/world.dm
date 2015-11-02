@@ -5,6 +5,8 @@
 	view = "15x15"
 	cache_lifespan = 7
 
+var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+
 /world/New()
 	map_ready = 1
 
@@ -140,7 +142,7 @@
 	if(time)
 		delay = time
 	else
-		delay = ticker.restart_timeout
+		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
@@ -188,6 +190,7 @@
 	join_motd = file2text("config/motd.txt")
 
 /world/proc/load_configuration()
+	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")

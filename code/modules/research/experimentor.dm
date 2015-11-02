@@ -229,8 +229,8 @@
 		loaded_item = null
 
 /obj/machinery/r_n_d/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1,0, where, 0)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, where)
 	smoke.start()
 
 /obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
@@ -319,8 +319,8 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", "experimentor")
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -331,8 +331,8 @@
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -418,8 +418,8 @@
 			R.my_atom = src
 			R.add_reagent("frostoil" , 50)
 			investigate_log("Experimentor has released frostoil gas.", "experimentor")
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -440,8 +440,8 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
-			var/datum/effect/effect/system/smoke_spread/smoke = new
-			smoke.set_up(1,0, src.loc, 0)
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(0, src.loc)
 			smoke.start()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -457,27 +457,23 @@
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
-			var/list/throwAt = list()
-			for(var/i in oview(7,src))
-				if(istype(i,/obj/item) || istype(i,/mob/living))
-					throwAt.Add(i)
-			var/counter
-			for(counter = 1, counter < throwAt.len, ++counter)
-				var/cast = throwAt[counter]
-				cast:throw_at(src,10,1)
+			spawn(0)
+				for(var/atom/movable/AM in oview(7,src))
+					if(!AM.anchored)
+						AM.throw_at(src,10,1)
+
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", "experimentor")
-			var/list/oViewStuff = oview(7,src)
 			var/list/throwAt = list()
-			for(var/i in oViewStuff)
-				if(istype(i,/obj/item) || istype(i,/mob/living))
-					throwAt.Add(i)
-			var/counter
-			for(counter = 1, counter < throwAt.len, ++counter)
-				var/cast = throwAt[counter]
-				cast:throw_at(pick(throwAt),10,1)
+			for(var/atom/movable/AM in oview(7,src))
+				if(!AM.anchored)
+					throwAt.Add(AM)
+			spawn(0)
+				for(var/counter = 1, counter < throwAt.len, ++counter)
+					var/atom/movable/cast = throwAt[counter]
+					cast.throw_at(pick(throwAt),10,1)
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
@@ -646,8 +642,8 @@
 //////////////// RELIC PROCS /////////////////////////////
 
 /obj/item/weapon/relic/proc/throwSmoke(turf/where)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1,0, where, 0)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, where)
 	smoke.start()
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)

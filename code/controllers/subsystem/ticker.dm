@@ -7,7 +7,6 @@ var/datum/subsystem/ticker/ticker
 	can_fire = 1
 	priority = 0
 
-	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
 
@@ -139,6 +138,7 @@ var/datum/subsystem/ticker/ticker
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
 			qdel(mode)
+			mode = null
 			SSjob.ResetOccupations()
 			return 0
 
@@ -150,6 +150,7 @@ var/datum/subsystem/ticker/ticker
 	if(!Debug2)
 		if(!can_continue)
 			qdel(mode)
+			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -213,7 +214,7 @@ var/datum/subsystem/ticker/ticker
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
+	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)
 		for(var/mob/M in mob_list)
 			M.buckled = temp_buckle				//buckles the mob so it can't do anything
@@ -290,8 +291,11 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	qdel(cinematic)
-					if(temp_buckle)	qdel(temp_buckle)
+					if(cinematic)
+						qdel(cinematic)
+						cinematic = null
+					if(temp_buckle)
+						qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -483,4 +487,5 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	maprotate()
+	spawn(-1) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
+		maprotate()

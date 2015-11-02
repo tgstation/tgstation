@@ -289,9 +289,10 @@
 */
 
 /obj/machinery/door/airlock/glass_large
-	name = "glass airlock"
-	icon = 'icons/obj/doors/Door2x1glassfull.dmi'
+	name = "large glass airlock"
+	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = 0
-	doortype = null //(double glass door) there's no door assembly sprites for this one.
+	doortype = null
 	glass = 1
 	bound_width = 64 // 2x1

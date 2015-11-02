@@ -7,8 +7,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-	//Dimensions of the lefthand_file and righthand_file vars
+	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
+	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	var/worn_x_dimension = 32
+	var/worn_y_dimension = 32
+	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_x_dimension = 32
 	var/inhand_y_dimension = 32
 
@@ -37,7 +41,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
+
+	var/item_color = null //this needs deprecating, soonish
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
@@ -167,6 +173,31 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		pronoun = "It is"
 
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
+
+	if(user.research_scanner) //Mob has a research scanner active.
+		var/msg = "*--------* <BR>"
+
+		if(origin_tech)
+			msg += "<span class='notice'>Testing potentials:</span><BR>"
+			var/list/techlvls = params2list(origin_tech)
+			for(var/T in techlvls) //This needs to use the better names.
+				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
+			msg += "Research reliability: [reliability]% <BR>"
+			if(crit_fail)
+				msg += "<span class='danger'>Critical failure detected in subject!</span><BR>"
+		else
+			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+
+
+		if(materials.len)
+			msg += "<span class='notice'>Extractable materials:<BR>"
+			for(var/mat in materials)
+				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
+		else
+			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
+		msg += "*--------*"
+		user << msg
+
 
 /obj/item/attack_hand(mob/user)
 	if (!user) return

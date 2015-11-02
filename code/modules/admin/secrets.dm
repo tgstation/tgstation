@@ -200,7 +200,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 			else if (ticker.mode)
 				alert("The game mode is [ticker.mode.name]")
@@ -303,7 +303,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
@@ -376,7 +376,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.broken()
 
 		if("whiteout")
@@ -385,7 +385,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","WO")
 			message_admins("[key_name_admin(usr)] fixed all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.fix()
 
 		if("floorlava")
@@ -477,7 +477,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","EgL")
-			for(var/obj/machinery/door/airlock/W in world)
+			for(var/obj/machinery/door/airlock/W in machines)
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -558,7 +558,7 @@
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list(access_brig)
@@ -566,7 +566,7 @@
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list()

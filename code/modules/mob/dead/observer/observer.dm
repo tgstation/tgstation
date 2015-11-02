@@ -22,6 +22,8 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
+	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -106,8 +108,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	if (orbiting)
-		stop_orbit()
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -163,9 +163,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/proc/notify_cloning(var/message, var/sound)
+/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)
 		src << "<span class='ghostalert'>[message]</span>"
+		if(source)
+			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
+			if(A)
+				A.desc = message
+				var/old_layer = source.layer
+				source.layer = FLOAT_LAYER
+				A.overlays += source
+				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -348,7 +356,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
 	return 1
 
-/mob/dead/observer/verb/view_manfiest()
+/mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
@@ -377,8 +385,36 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(href_list["reenter"])
 			reenter_corpse()
 
-
 //We don't want to update the current var
 //But we will still carry a mind.
 /mob/dead/observer/mind_initialize()
 	return
+
+/mob/dead/observer/verb/toggle_ghosthud()
+	set name = "Toggle Ghost HUD"
+	set desc = "Toggles your ghost's on-screen HUD"
+	set category = "Ghost"
+	ghost_hud_enabled = !ghost_hud_enabled
+	hud_used.ghost_hud()
+
+/mob/dead/observer/proc/show_me_the_hud(hud_index)
+	var/datum/atom_hud/H = huds[hud_index]
+	H.add_hud_to(src)
+	data_hud_seen = hud_index
+
+/mob/dead/observer/verb/toggle_ghost_med_sec_hud()
+	set name = "Toggle Sec/Med HUD"
+	set desc = "Toggles whether you see medical/security HUDs"
+	set category = "Ghost"
+
+	if(data_hud_seen) //remove old huds
+		var/datum/atom_hud/H = huds[data_hud_seen]
+		H.remove_hud_from(src)
+
+	switch(data_hud_seen) //give new huds
+		if(0)
+			show_me_the_hud(DATA_HUD_SECURITY_BASIC)
+		if(DATA_HUD_SECURITY_BASIC)
+			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
+		if(DATA_HUD_MEDICAL_ADVANCED)
+			data_hud_seen = 0

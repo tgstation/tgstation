@@ -308,7 +308,7 @@
 			qdel(S)
 
 /obj/machinery/microwave/proc/broke()
-	var/datum/effect/effect/system/spark_spread/s = new
+	var/datum/effect_system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
 	icon_state = "mwb" // Make it look all busted up and shit

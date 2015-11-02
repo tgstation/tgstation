@@ -94,7 +94,7 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/T in range(25, src))
+					for(var/obj/machinery/telecomms/T in ultra_range(25, src))
 						if(T.network == network)
 							machinelist.Add(T)
 
@@ -126,9 +126,3 @@
 	..()
 	src.updateUsrDialog()
 	return
-
-/obj/machinery/computer/telecomms/monitor/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"

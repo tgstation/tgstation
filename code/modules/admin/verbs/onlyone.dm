@@ -1,5 +1,5 @@
 /client/proc/only_one()
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 
@@ -51,7 +51,7 @@
 
 
 /client/proc/only_me()
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 

@@ -246,7 +246,7 @@
 	..()
 	spawn(100)
 		if(!istype(loc, /mob))
-			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
 			qdel(src)

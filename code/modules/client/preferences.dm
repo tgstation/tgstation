@@ -83,6 +83,8 @@ var/list/preferences_datums = list()
 
 	var/unlock_content = 0
 
+	var/list/ignoring = list()
+
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
 	custom_names["ai"] = pick(ai_names)
@@ -653,8 +655,6 @@ var/list/preferences_datums = list()
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!istype(user, /mob/new_player))	return
-
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)

@@ -11,25 +11,26 @@
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
 	if(can_buckle && buckled_mob)
-		user_unbuckle_mob(user)
+		if(user_unbuckle_mob(user))
+			return 1
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M))
-		user_buckle_mob(M, user)
+		if(user_buckle_mob(M, user))
+			return 1
 
 
 //Cleanup
 /atom/movable/Destroy()
 	. = ..()
-	unbuckle_mob()
+	unbuckle_mob(force=1)
 
 //procs that handle the actual buckling and unbuckling
-/atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || (buckle_requires_restraints && !M.restrained()) || M == src)
+/atom/movable/proc/buckle_mob(mob/living/M, force = 0)
+	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return 0
-
-	if (isslime(M) || isAI(M))
+	if(!M.can_buckle() && !force)
 		if(M == usr)
 			M << "<span class='warning'>You are unable to buckle yourself to the [src]!</span>"
 		else
@@ -41,19 +42,19 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
-	M.throw_alert("buckled", new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 
 	return 1
 
-/obj/buckle_mob(mob/living/M)
+/obj/buckle_mob(mob/living/M, force = 0)
 	. = ..()
 	if(.)
 		if(burn_state == 1) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob()
-	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
+/atom/movable/proc/unbuckle_mob(force=0)
+	if(buckled_mob && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
@@ -73,7 +74,7 @@
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
 	if(!in_range(user, src) || user.stat || user.restrained())
-		return
+		return 0
 
 	add_fingerprint(user)
 
@@ -88,6 +89,8 @@
 				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
 				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
+		return 1
+
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
 	var/mob/living/M = unbuckle_mob()

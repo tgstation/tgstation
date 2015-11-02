@@ -188,9 +188,6 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
@@ -255,6 +252,8 @@
 /obj/structure/closet/wardrobe/robotics_black/New()
 	..()
 	contents = list()
+	new /obj/item/clothing/glasses/hud/diagnostic(src)
+	new /obj/item/clothing/glasses/hud/diagnostic(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)

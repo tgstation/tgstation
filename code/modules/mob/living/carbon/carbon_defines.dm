@@ -27,3 +27,5 @@
 	var/remote_view = 0
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
+
+	var/rotate_on_lying = 1

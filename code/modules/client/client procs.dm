@@ -45,7 +45,7 @@
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
-		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
 		return 0
 	return 1
 
@@ -92,7 +92,7 @@ var/next_external_rsc = 0
 
 	TopicData = null							//Prevent calls to client.Topic from connect
 
-	if(connection != "seeker")					//Invalid connection type.
+	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
@@ -107,6 +107,18 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	if(protected_config.autoadmin)
+		if(!admin_datums[ckey])
+			var/datum/admin_rank/autorank
+			for(var/datum/admin_rank/R in admin_ranks)
+				if(R.name == protected_config.autoadmin_rank)
+					autorank = R
+					break
+			if(!autorank)
+				world << "Autoadmin rank not found"
+			else
+				var/datum/admins/D = new(autorank, ckey)
+				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
 		admins += src
@@ -121,6 +133,16 @@ var/next_external_rsc = 0
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
+
+	if (connection == "web")
+		if (!config.allowwebclient)
+			src << "Web client is disabled"
+			del(src)
+			return 0
+		if (config.webclientmembersonly && !IsByondMember())
+			src << "Sorry, but the web client is restricted to byond members only."
+			del(src)
+			return 0
 
 	if( (world.address == address || !address) && !host )
 		host = key
@@ -183,6 +205,12 @@ var/next_external_rsc = 0
 
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
+
+
+	//This is down here because of the browse() calls in tooltip/New()
+	if(!tooltips)
+		tooltips = new /datum/tooltip(src)
+
 
 //////////////
 //DISCONNECT//

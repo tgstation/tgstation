@@ -7,7 +7,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 

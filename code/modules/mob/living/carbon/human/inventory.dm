@@ -85,11 +85,55 @@
 	return null
 
 
+//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
+	if(!..()) //a check failed or the item has already found its slot
+		return
+	switch(slot)
+		if(slot_belt)
+			belt = I
+			update_inv_belt()
+		if(slot_wear_id)
+			wear_id = I
+			sec_hud_set_ID()
+			update_inv_wear_id()
+		if(slot_ears)
+			ears = I
+			update_inv_ears()
+		if(slot_glasses)
+			glasses = I
+			update_inv_glasses()
+		if(slot_gloves)
+			gloves = I
+			update_inv_gloves()
+		if(slot_shoes)
+			shoes = I
+			update_inv_shoes()
+		if(slot_wear_suit)
+			wear_suit = I
+			if(I.flags_inv & HIDEJUMPSUIT)
+				update_inv_w_uniform()
+			update_inv_wear_suit()
+		if(slot_w_uniform)
+			w_uniform = I
+			update_suit_sensors()
+			update_inv_w_uniform()
+		if(slot_l_store)
+			l_store = I
+			update_inv_pockets()
+		if(slot_r_store)
+			r_store = I
+			update_inv_pockets()
+		if(slot_s_store)
+			s_store = I
+			update_inv_s_store()
+		else
+			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+
 /mob/living/carbon/human/unEquip(obj/item/I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-
 
 	if(I == wear_suit)
 		if(s_store)
@@ -125,16 +169,6 @@
 	else if(I == belt)
 		belt = null
 		update_inv_belt()
-	else if(I == wear_mask)
-		wear_mask = null
-		if(I.flags & BLOCKHAIR)
-			update_hair()	//rebuild hair
-		if(internal)
-			if(internals)
-				internals.icon_state = "internal0"
-			internal = null
-		sec_hud_set_ID()
-		update_inv_wear_mask()
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
@@ -149,95 +183,28 @@
 		s_store = null
 		update_inv_s_store()
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-//set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, redraw_mob = 1)
-	if(!slot)	return
-	if(!istype(I))	return
+/mob/living/carbon/human/wear_mask_update(obj/item/I, unequip = 1)
+	if(I.flags & BLOCKHAIR)
+		update_hair()
+	if(unequip && internal)
+		if(internals)
+			internals.icon_state = "internal0"
+		internal = null
+	sec_hud_set_security_status()
+	..()
 
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
+/mob/living/carbon/human/head_update(obj/item/I)
+	if(I.flags & BLOCKHAIR)
+		update_hair()
+	if(I.flags_inv & HIDEEYES)
+		update_inv_glasses()
+	if(I.flags_inv & HIDEEARS)
+		update_body()
+	sec_hud_set_security_status()
+	..()
 
-	I.screen_loc = null // will get moved if inventory is visible
-	I.loc = src
-	I.equipped(src, slot)
-	I.layer = 20
 
-	switch(slot)
-		if(slot_back)
-			back = I
-			update_inv_back(redraw_mob)
-		if(slot_wear_mask)
-			wear_mask = I
-			if(wear_mask.flags & BLOCKHAIR)
-				update_hair(redraw_mob)	//rebuild hair
-			sec_hud_set_ID()
-			update_inv_wear_mask(redraw_mob)
-		if(slot_handcuffed)
-			handcuffed = I
-			update_inv_handcuffed(redraw_mob)
-		if(slot_legcuffed)
-			legcuffed = I
-			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
-			l_hand = I
-			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
-			r_hand = I
-			update_inv_r_hand(redraw_mob)
-		if(slot_belt)
-			belt = I
-			update_inv_belt(redraw_mob)
-		if(slot_wear_id)
-			wear_id = I
-			sec_hud_set_ID()
-			update_inv_wear_id(redraw_mob)
-		if(slot_ears)
-			ears = I
-			update_inv_ears(redraw_mob)
-		if(slot_glasses)
-			glasses = I
-			update_inv_glasses(redraw_mob)
-		if(slot_gloves)
-			gloves = I
-			update_inv_gloves(redraw_mob)
-		if(slot_head)
-			head = I
-			if(head.flags & BLOCKHAIR)
-				update_hair(redraw_mob)	//rebuild hair
-			if(head.flags_inv & HIDEEARS)
-				update_body(redraw_mob)
-			update_inv_head(redraw_mob)
-		if(slot_shoes)
-			shoes = I
-			update_inv_shoes(redraw_mob)
-		if(slot_wear_suit)
-			wear_suit = I
-			if(I.flags_inv & HIDEJUMPSUIT)
-				update_inv_w_uniform()
-			update_inv_wear_suit(redraw_mob)
-		if(slot_w_uniform)
-			w_uniform = I
-			update_suit_sensors()
-			update_inv_w_uniform(redraw_mob)
-		if(slot_l_store)
-			l_store = I
-			update_inv_pockets(redraw_mob)
-		if(slot_r_store)
-			r_store = I
-			update_inv_pockets(redraw_mob)
-		if(slot_s_store)
-			s_store = I
-			update_inv_s_store(redraw_mob)
-		if(slot_in_backpack)
-			if(get_active_hand() == I)
-				unEquip(I)
-			I.loc = back
-		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
-			return
+
 
 //Cycles through all clothing slots and tests them for destruction
 /mob/living/carbon/human/proc/shred_clothing(bomb,shock)
