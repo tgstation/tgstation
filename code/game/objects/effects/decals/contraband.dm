@@ -52,7 +52,7 @@ list(name = "- Red Rum", desc = " Looking at this poster makes you want to kill.
 list(name = "- CC 64K Ad", desc = " The latest portable computer from Comrade Computing, with a whole 64kB of ram!"),
 list(name = "- Punch Shit", desc = " Fight things for no reason, like a man!"),
 list(name = "- The Griffin", desc = " The Griffin commands you to be the worst you can be. Will you?"),
-list(name = "- Lizard", desc = " This lewd poster depicts a lizard preparing to mate."),
+list(name = "- Lizard: Director's Cut", desc = " This lewd poster depicts a lizard preparing to mate. Despite the advances in technology, the lizard still looks fake."),
 list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm."),
 list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!") )
 
