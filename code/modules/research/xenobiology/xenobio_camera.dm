@@ -7,7 +7,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == "Xenobiology Lab" || new_area && istype(new_area, /area/toxins/xenobiology ))
+	if(new_area && new_area.name == "Xenobiology Lab" || istype(new_area, /area/toxins/xenobiology ))
 		return ..()
 	else
 		return
