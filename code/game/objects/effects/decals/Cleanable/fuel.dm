@@ -52,7 +52,7 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
 		icon_state = "mustard"
-		anchored = 0
+		anchored = 1 //Why the fuck was this set to 0
 		volatility = 0.01
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/New(newLoc, amt = 1, d = 0)
