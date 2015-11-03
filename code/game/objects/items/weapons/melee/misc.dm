@@ -134,6 +134,8 @@
 	item_state = "supermatter_sword"
 	slot_flags = null
 	w_class = 4
+	force = 0.001
+	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 
