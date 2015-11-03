@@ -20,7 +20,7 @@
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
-		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw","hecate","osipr","gatling","bison","ricochet","spur", "nagant")
+		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw","hecate","osipr","gatling","bison","ricochet","spur","nagant","beegun")
 		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
 		if(!summon_type)
 			switch (randomizeguns)
@@ -82,6 +82,8 @@
 					new /obj/item/device/modkit/spur_parts(get_turf(H))
 				if("nagant")
 					new /obj/item/weapon/gun/projectile/nagant(get_turf(H))
+				if("beegun")
+					new /obj/item/weapon/gun/gatling/beegun(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")

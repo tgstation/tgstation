@@ -14,7 +14,8 @@
 			if (C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
 
-			entry += " - Playing as [C.mob.real_name]"
+			if(C.mob.real_name)
+				entry += " - Playing as [C.mob.real_name]"
 
 			switch (C.mob.stat)
 				if (UNCONSCIOUS)
@@ -28,6 +29,8 @@
 							entry += " - <font color='gray'>Observing</font>"
 						else
 							entry += " - <font color='black'><b>DEAD</b></font>"
+					else if (isnewplayer(C.mob))
+						entry += " - <i>Lobby</i>"
 					else
 						entry += " - <font color='black'><b>DEAD</b></font>"
 

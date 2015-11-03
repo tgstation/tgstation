@@ -441,9 +441,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(new/obj/item/clothing/shoes/swat, slot_shoes)
 			M.equip_to_slot_or_del(new/obj/item/clothing/mask/gas/swat, slot_wear_mask)
 			M.equip_to_slot_or_del(new/obj/item/weapon/storage/backpack/security, slot_back)
-			M.equip_to_slot_or_del(new/obj/item/weapon/card/id/centcom, slot_wear_id)
+			var/obj/item/weapon/card/id/centcom/ID = new(M)
+			ID.icon_state = "deathsquad"
+			M.equip_to_slot_or_del(ID, slot_wear_id)
 			M.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/space/rig/deathsquad, slot_head)
-			M.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/swat, slot_wear_suit)
+			M.equip_to_slot_or_del(new/obj/item/clothing/suit/space/rig/deathsquad, slot_wear_suit)
 			M.equip_to_slot_or_del(new/obj/item/clothing/gloves/swat, slot_gloves)
 			M.equip_to_slot_or_del(new/obj/item/weapon/gun/energy/pulse_rifle/M1911, slot_belt)
 			M.equip_to_slot_or_del(new/obj/item/weapon/tank/emergency_oxygen/double, slot_s_store)
@@ -538,10 +540,10 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(S, slot_r_hand)
 
 			var/obj/item/weapon/teleportation_scroll/T = new/obj/item/weapon/teleportation_scroll(M)
-			S.uses = 10
+			T.uses = 10
 			M.equip_to_slot_or_del(T, slot_l_store)
 
-			M << "You will find a list of available spells in your spell book. It many more spells than normal spellbooks."
+			M << "You will find a list of available spells in your spell book. It has many more spells than normal spellbooks."
 			M << "In your pockets you will find a teleport scroll.It has twice as many uses as normal teleport scrolls."
 
 			M.regenerate_icons()
