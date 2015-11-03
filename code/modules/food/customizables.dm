@@ -13,6 +13,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/I,mob/user,params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich(get_turf(src),I) //boy ain't this a mouthful
 		F.attackby(I, user, params)
 		qdel(src)
@@ -20,6 +23,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/I,mob/user,params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/burger(get_turf(src),I)
 		F.attackby(I, user, params)
 		qdel(src)
@@ -27,6 +33,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/I,mob/user,params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza(get_turf(src),I)
 		F.attackby(I, user, params)
 		qdel(src)
@@ -34,6 +43,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti/attackby(obj/item/I,mob/user,params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta(get_turf(src),I)
 		F.attackby(I, user, params)
 		qdel(src)
@@ -43,6 +55,9 @@
 
 /obj/item/trash/plate/attackby(obj/item/I,mob/user,params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom)) //no platestacking even with recursive food, for now
+			user << "<span class='warning'>That's already got a plate!</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom(get_turf(src),I)
 		F.attackby(I, user, params)
 		qdel(src)
@@ -61,6 +76,9 @@
 		new/obj/item/weapon/reagent_containers/mortar(get_turf(src))
 		qdel(src)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		var/obj/F = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src),I)
 		F.attackby(I, user,params)
 		qdel(src)
@@ -72,7 +90,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-	var/ingMax = 600
+	var/ingMax = 50
 	var/list/ingredients = list()
 	var/stackIngredients = 0
 	var/fullyCustom = 0
@@ -93,6 +111,9 @@
 		user << "<span class='warning'>That's already looking pretty stuffed.</span>"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
+		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			return
 		S.reagents.trans_to(src,S.reagents.total_volume)
 		user.drop_item(I, src)
 		src.ingredients += S
@@ -354,6 +375,9 @@
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(src.ingredients.len < src.ingMax)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = I
+			if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+				user << "<span class='warning'>Sorry, no recursive food.</span>"
+				return
 			user.drop_item(I, src)
 			user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
 			S.reagents.trans_to(src,S.reagents.total_volume)

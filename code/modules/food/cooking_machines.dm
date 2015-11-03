@@ -14,6 +14,7 @@
 var/global/deepFriedEverything = 0
 var/global/deepFriedNutriment = 0
 var/global/foodNesting = 0
+var/global/recursiveFood = 0
 var/global/ingredientLimit = 10
 
 /client/proc/configFood()
@@ -24,16 +25,19 @@ var/global/ingredientLimit = 10
 	. = (alert("Deep Fried Everything?",,"Yes","No")=="Yes")
 	if(.)	deepFriedEverything = 1
 	else	deepFriedEverything = 0
-	. = (alert("Cereal Cereal Cereal?",,"Yes","No")=="Yes")
+	. = (alert("Food Nesting?",,"Yes","No")=="Yes")
 	if(.)	foodNesting = 1
 	else	foodNesting = 0
+	. = (alert("Enable recursive food? (WARNING: May cause server instability!)",,"Yes","No")=="Yes")
+	if(.)	recursiveFood = 1
+	else	recursiveFood = 0
 	. = (input("Deep Fried Nutriment? (1 to 50)"))
 	. = text2num(.)
 	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = . //This is absolutely terrible
 	else usr << "That wasn't a valid number."
-	. = (input("Ingredient Limit? (1 to 100)"))
+	. = (input("Ingredient Limit? (1 to 50)"))
 	. = text2num(.)
-	if(isnum(.) && (. in 1 to 100)) ingredientLimit = .
+	if(isnum(.) && (. in 1 to 50)) ingredientLimit = .
 	else usr << "That wasn't a valid number."
 	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
 	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
@@ -160,6 +164,7 @@ var/global/ingredientLimit = 10
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/validateIngredient() called tick#: [world.time]")
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
+	else if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable)) . = "It would be a straining topological exercise."
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || istype(I,/obj/item/weapon/holder) || deepFriedEverything) . = "valid"
 	else if(istype(I,/obj/item/weapon/reagent_containers)) . = "transto"
 	else if(istype(I,/obj/item/organ))
