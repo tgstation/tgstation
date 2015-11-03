@@ -1,14 +1,18 @@
 
-/obj/effect/flower_bud_enemy
+
+/obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
 	desc = "a large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = 4
+	opacity = 0
+	canSmoothWith = list()
+	smooth = SMOOTH_FALSE
 	var/growth_time = 1200
 
 
-/obj/effect/flower_bud_enemy/New()
+/obj/structure/alien/resin/flower_bud_enemy/New()
 	..()
 	var/list/anchors = list()
 	anchors += locate(x-2,y+2,z)
@@ -68,7 +72,8 @@
 		for(var/mob/living/L in grasping)
 			if(L.stat == DEAD)
 				var/datum/beam/B = grasping[L]
-				B.End()
+				if(B)
+					B.End()
 				grasping -= L
 
 			//Can attack+pull multiple times per cycle

@@ -305,8 +305,8 @@
 
 
 /datum/spacevine_mutation/flowering/on_grow(obj/effect/spacevine/holder)
-	if(holder.energy == 2 && prob(severity) && !locate(/obj/effect/flower_bud_enemy) in range(5,holder))
-		var/obj/effect/flower_bud_enemy/FBE = new /obj/effect/flower_bud_enemy (get_turf(holder))
+	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
+		var/obj/structure/alien/resin/flower_bud_enemy/FBE = new /obj/structure/alien/resin/flower_bud_enemy (get_turf(holder))
 		FBE.layer = holder.layer+0.1
 
 
