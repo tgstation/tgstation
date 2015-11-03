@@ -269,7 +269,7 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		//Authenticate
 		if (href_list["auth"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
 				message = noserver
 			else
 				if(auth)
