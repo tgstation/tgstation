@@ -521,8 +521,7 @@ var/global/datum/controller/gameticker/ticker
 		flat = getFlatIcon(pAI)
 		end_icons += flat
 		var/tempstate = end_icons.len
-		ai_completions += {"<br><b><img src="logo_[tempstate].png"> [pAI.name] (Played by: [pAI.key]) [pAI.stat!=2?"survived":"perished"] as a pAI whose master was [pAI.master]! Its directives were:</b>"}
-		ai_completions += "<br>[pAI.write_directives()]"
+		ai_completions += {"<br><b><img src="logo_[tempstate].png"> [pAI.name] (Played by: [pAI.key]) [pAI.stat!=2?"survived":"perished"] as a pAI whose master was [pAI.master]! Its directives were:</b><br>[pAI.write_directives()]"}
 
 	mode.declare_completion()//To declare normal completion.
 
