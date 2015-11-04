@@ -85,7 +85,7 @@
 	var/calmed_type = /mob/living/carbon/slime/adult
 	if(colour != "grey")
 		var/path_end = replacetext(colour, " ", "")
-		calmed_type = text2path("/mob/living/carbon/slime/adult" + path_end)
+		calmed_type = text2path("/mob/living/carbon/slime/adult/" + path_end)
 
 	var/mob/living/carbon/slime/calmed = new calmed_type(loc)
 	for(var/mob/M in friends)
