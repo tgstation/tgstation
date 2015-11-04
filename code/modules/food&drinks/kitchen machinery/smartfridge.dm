@@ -171,7 +171,7 @@
 				var/itemName = sanitize(O)
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += " [N] </font>"
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[itemName];amount=1'>Vend</A> "
+				dat += "<a href='byond://?src=\ref[src];vend=\ref[N];amount=1'>Vend</A> "
 				if(N > 5)
 					dat += "(<a href='byond://?src=\ref[src];vend=\ref[itemName];amount=5'>x5</A>)"
 					if(N > 10)
@@ -193,7 +193,7 @@
 		return
 	usr.set_machine(src)
 
-	var/N = href_list["vend"]
+	var/N = locate(href_list["vend"])
 	var/amount = text2num(href_list["amount"])
 
 	if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
