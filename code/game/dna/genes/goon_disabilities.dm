@@ -168,7 +168,7 @@
 		speech.message = replacetext(speech.message,"yes",pick("sure", "yea"))
 		speech.message = replacetext(speech.message,"faggot","square")
 		speech.message = replacetext(speech.message,"muh valids","my kicks")
-		speech.message = replacetext(speech.message," vox ","bird")
+		speech.message = replacetext(speech.message," vox "," bird ")
 
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))

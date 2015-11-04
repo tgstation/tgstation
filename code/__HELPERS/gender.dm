@@ -2,19 +2,19 @@
 // From The Big BYOND Book:
 // The grammatical gender of the object may be set using this variable. The possible values are "neuter", "male", "female", and "plural". The default is "neuter".
 
-                    //     LABEL        SUBJ    OBJ     REF           POS     PP
-                    //                  I       me      myself        my      mine
+                          //     LABEL        SUBJ    OBJ     REF           POS     PP
+                          //                  I       me      myself        my      mine
 var/global/list/genders=list(
-	"male"   = new /gender("male",      "he",   "him",  "himself",    "his",  "his"),
-	"female" = new /gender("female",    "she",  "her",  "herself",    "her",  "hers"),
-	"neuter" = new /gender("neutral",   "it",   "its",  "itself",     "its",  "its"),
-	"plural" = new /gender("plural",    "they", "them", "themselves", "their","their"), // Not sure about PP - N3X
+	"male"   = new /datum/gender("male",      "he",   "him",  "himself",    "his",  "his"),
+	"female" = new /datum/gender("female",    "she",  "her",  "herself",    "her",  "hers"),
+	"neuter" = new /datum/gender("neutral",   "it",   "its",  "itself",     "its",  "its"),
+	"plural" = new /datum/gender("plural",    "they", "them", "themselves", "their","their"), // Not sure about PP - N3X
 	// For formatting purposes
-	"you"    = new /gender("you",       "you",  "your", "yourself",   "your", "your", complex=1),
-	"me"     = new /gender("me",        "I",    "me",   "myself",     "my",   "mine", complex=1)
+	"you"    = new /datum/gender("you",       "you",  "your", "yourself",   "your", "your", complex=1),
+	"me"     = new /datum/gender("me",        "I",    "me",   "myself",     "my",   "mine", complex=1)
 )
 
-/gender
+/datum/gender
 	/**
 	 * Used primarily for debugging.
 	 */
@@ -48,7 +48,7 @@ var/global/list/genders=list(
 
 	var/_complex=0
 
-/gender/New(var/label,var/subj,var/obj,var/ref,var/pos,var/pp, var/complex=0)
+/datum/gender/New(var/label,var/subj,var/obj,var/ref,var/pos,var/pp, var/complex=0)
 	name=label
 	subject=subj
 	objective=obj
@@ -57,35 +57,35 @@ var/global/list/genders=list(
 	possessivePronoun=pp
 	_complex=complex
 
-/gender/proc/getHim()
+/datum/gender/proc/getHim()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHim() called tick#: [world.time]")
 	if(_complex)
 		warning("getHim() unsupported for gender [name]}")
 		return ""
 	return objective
 
-/gender/proc/getHis()
+/datum/gender/proc/getHis()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHis() called tick#: [world.time]")
 	if(_complex)
 		warning("getHis() unsupported for gender [name]}")
 		return ""
 	return possessive
 
-/gender/proc/getHimself()
+/datum/gender/proc/getHimself()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHimself() called tick#: [world.time]")
 	if(_complex)
 		warning("getHimself() unsupported for gender [name]}")
 		return ""
 	return reflexive
 
-/gender/proc/getHers()
+/datum/gender/proc/getHers()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHers() called tick#: [world.time]")
 	if(_complex)
 		warning("getHers() unsupported for gender [name]}")
 		return ""
 	return possessivePronoun
 
-/gender/proc/getHe()
+/datum/gender/proc/getHe()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHe() called tick#: [world.time]")
 	if(_complex)
 		warning("getHe() unsupported for gender [name]}")
@@ -107,7 +107,7 @@ var/global/list/genders=list(
 *
 * SO HERE'S WHAT YOU GET:
 */
-/gender/proc/replace(var/s)
+/datum/gender/proc/replace(var/s)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/replace() called tick#: [world.time]")
 	// I
 	if(findtext(s,"$sub"))
@@ -181,7 +181,7 @@ var/global/list/genders=list(
 
 /proc/gender_replace(var/gender,var/text)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gender_replace() called tick#: [world.time]")
-	var/gender/G = genders[gender]
+	var/datum/gender/G = genders[gender]
 	if(!G)
 		warning("Invalid gender \"[gender]\" given to gender_replace().")
 		return text // FUCK YOU
