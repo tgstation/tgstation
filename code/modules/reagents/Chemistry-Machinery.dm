@@ -400,6 +400,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
+	var/windowtype = "chem_master" //For the browser windows
 	var/useramount = 30 // Last used amount
 	//var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
@@ -509,7 +510,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return 1
 
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
-
+		if(windowtype != "chem_master") //Only the chemmaster will accept pill bottles
+			user << "<span class='warning'>This [name] does not come with a pill dispenser unit built-in.</span>"
+			return
 		if(src.loaded_pill_bottle)
 			user << "<span class='warning'>There already is a pill bottle loaded in the machine.</span>"
 			return
@@ -535,14 +538,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return 1
 
 	else if(href_list["close"])
-		usr << browse(null, "window=chemmaster")
+		usr << browse(null, "window=[windowtype]")
 		usr.unset_machine()
 		return 1
 
 	if(beaker)
 		var/datum/reagents/R = beaker.reagents
 		if(href_list["analyze"])
-			var/dat = ""
+			var/dat = list()
 			if(!condi)
 				if(href_list["name"] == "Blood")
 					var/datum/reagent/blood/G
@@ -553,12 +556,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					var/A = G.name
 					var/B = G.data["blood_type"]
 					var/C = G.data["blood_DNA"]
-					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[A]<BR><BR>Description:<BR>Blood Type: [B]<br>DNA: [C]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+					dat += "Chemical infos:<BR><BR>Name:<BR>[A]<BR><BR>Description:<BR>Blood Type: [B]<br>DNA: [C]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 				else
-					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+					dat += "Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			else
-				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			usr << browse(dat, "window=chem_master;size=575x400")
+				dat += "Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			//usr << browse(dat, "window=chem_master;size=575x400")
+			dat = list2text(dat)
+			var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 585, 400, src)
+			popup.set_content(dat)
+			popup.open()
+			onclose(usr, "[windowtype]")
 			return 1
 
 		else if(href_list["add"])
@@ -686,7 +694,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 		else if(href_list["change_pill"])
 			#define MAX_PILL_SPRITE 20 //Max icon state of the pill sprites
-			var/dat = "<table>"
+			var/dat = list()
+			dat += "<table>"
 			for(var/i = 1 to MAX_PILL_SPRITE)
 				if(i%4 == 1)
 					dat += "<tr>"
@@ -697,7 +706,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					dat +="</tr>"
 
 			dat += "</table>"
-			usr << browse(dat, "window=chem_master")
+			dat = list2text(dat)
+			var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 585, 400, src)
+			popup.set_content(dat)
+			popup.open()
+			onclose(usr, "[windowtype]")
+			//usr << browse(dat, "window=[windowtype]")
 			return 1
 
 		/*
@@ -770,21 +784,21 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 			*/
 
-	var/dat = ""
+	var/dat = list()
 	if(!beaker)
-		dat = "Please insert a beaker.<BR>"
+		dat += "Please insert a beaker.<BR>"
 		if(!condi)
 			if(src.loaded_pill_bottle)
 				dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
 			else
 				dat += "No pill bottle inserted.<BR><BR>"
-		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
+		//dat += "<A href='?src=\ref[src];close=1'>Close</A>"
 	else
 		var/datum/reagents/R = beaker.reagents
 		dat += "<A href='?src=\ref[src];eject=1'>Eject beaker and Clear Buffer</A><BR>"
 		if(src.loaded_pill_bottle)
 			dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
-		else
+		else if(windowtype == "chem_master")
 			dat += "No pill bottle inserted.<BR><BR>"
 		if(!R.total_volume)
 			dat += "Beaker is empty."
@@ -833,11 +847,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
-	if(!condi)
-		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
-	else
-		user << browse("<TITLE>Condimaster 3000</TITLE>Condimaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
-	onclose(user, "chem_master")
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "[windowtype]", "[name]", 575, 400, src)
+	popup.set_content(dat)
+	popup.open()
+	onclose(user, "[windowtype]")
 	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(var/num)
@@ -878,6 +892,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	name = "\improper CondiMaster 3000"
 	condi = 1
 	chem_board = /obj/item/weapon/circuitboard/condimaster
+	windowtype = "condi_master"
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -1398,7 +1413,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
 	var/beaker_contents = ""
-	var/dat = ""
+	var/dat = list()
 
 	if(!inuse)
 		for (var/obj/item/O in holdingitems)
@@ -1420,7 +1435,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				beaker_contents += "Nothing<br>"
 
 
-		dat = {"
+		dat += {"
 	<b>Processing chamber contains:</b><br>
 	[processing_chamber]<br>
 	[beaker_contents]<hr>
@@ -1438,7 +1453,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
-	user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder", src)
+	popup.set_content(dat)
+	popup.open()
 	onclose(user, "reagentgrinder")
 	return
 
