@@ -23,14 +23,23 @@
 /obj/item/weapon/paper_bin/getFireFuel()
 	return amount
 
-/obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+/obj/item/weapon/paper_bin/MouseDrop(over_object)
+	if(!usr.restrained() && !usr.stat && (usr.contents.Find(src) || Adjacent(usr)))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
-			if( !usr.get_active_hand() )		//if active hand is empty
-				src.loc = user
-				user.put_in_hands(src)
-				user.visible_message("<span class='notice'>[user] picks up the [src].</span>", "<span class='notice'>You grab [src] from the floor!</span>")
-
+			if(istype(over_object,/obj/screen)) //We're being dragged into the user's UI...
+				var/obj/screen/O = over_object
+				switch(O.name)
+					if("r_hand") //We're dragging and dropping over the user's hand slot!
+						usr.u_equip(src,0)
+						usr.put_in_r_hand(src)
+					if("l_hand")
+						usr.u_equip(src,0)
+						usr.put_in_l_hand(src)
+			else if(istype(over_object,/mob/living)) //We're being dragged on a living mob's sprite...
+				if(usr == over_object) //It's the user!
+					if( !usr.get_active_hand() )		//if active hand is empty
+						usr.put_in_hands(src)
+						usr.visible_message("<span class='notice'>[usr] picks up the [src].</span>", "<span class='notice'>You pick up \the [src].</span>")
 	return
 
 
