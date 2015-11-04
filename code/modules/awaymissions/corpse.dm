@@ -30,6 +30,7 @@
 	var/corpseoxy = null //set suffocation damage on the corpse
 	var/roundstart = TRUE
 	var/death = TRUE
+	var/flavour_text = "The mapper forgot to set this!"
 	density = 1
 
 /obj/effect/landmark/corpse/initialize()
@@ -100,6 +101,7 @@
 		M.equip_to_slot_or_del(W, slot_wear_id)
 	if(ckey)
 		M.ckey = ckey
+		M << "[flavour_text]"
 	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
@@ -296,6 +298,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
+	flavour_text = "You are a Nanotrasen Commander!"
 
 /obj/effect/landmark/corpse/attack_ghost(mob/user)
 	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
