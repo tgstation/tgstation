@@ -8,7 +8,7 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(stat == DEAD)
+	if(stat == DEAD || status_flags & FAKEDEATH)
 		return
 
 	var/datum/speech/speech = create_speech(message)

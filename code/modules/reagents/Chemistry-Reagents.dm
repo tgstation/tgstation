@@ -2206,8 +2206,8 @@
 		return 0
 	if(!holder) return 1
 	var/newvol = max(0,volume-amount)
-	var/mob/living/carbon/M = holder.my_atom
-	if(M)
+	if(iscarbon(holder.my_atom))
+		var/mob/living/carbon/M = holder.my_atom
 		if(newvol >= 1)
 			M.status_flags |= FAKEDEATH
 		else
