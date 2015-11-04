@@ -72,11 +72,11 @@
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
-/mob/living/simple_animal/hostile/carp/IsInvalidTarget(atom/A)
-	if(ismob(A) && A.reagents)
-		if(pheromones_act == PHEROMONES_NEUTRAL && A.reagents.has_reagent("carppheromones"))
-			return 1 //Carps who avoid pheromones don't target mobs with pheromones in their system. They just ignore them!
-	return ..(A)
+/mob/living/simple_animal/hostile/carp/CanAttack(var/atom/the_target)
+	if(ismob(the_target) && the_target.reagents)
+		if(pheromones_act == PHEROMONES_NEUTRAL && the_target.reagents.has_reagent("carppheromones"))
+			return 0 //Carps who avoid pheromones don't target mobs with pheromones in their system. They just ignore them!
+	return ..(the_target)
 
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()

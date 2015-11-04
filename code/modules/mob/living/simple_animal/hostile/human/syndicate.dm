@@ -15,6 +15,14 @@
 
 	faction = "syndicate"
 
+/mob/living/simple_animal/hostile/humanoid/syndicate/CanAttack(var/atom/the_target)
+	//IF WE ARE SYNDICATE MOBS WE DON'T ATTACK NUKE OPS (we still attack regular traitors, as to not blow up their cover)
+	if(ismob(the_target))
+		var/mob/M = the_target
+		if(isnukeop(M))
+			return 0
+	return ..(the_target)
+
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/humanoid/syndicate/melee

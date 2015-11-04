@@ -46,7 +46,7 @@
 	if(!stat)
 		if(size > SIZE_TINY && istype(loc, /obj/item/weapon/holder)) //If somebody picked us up and we're big enough to fight!
 			var/mob/living/L = loc.loc
-			if(!istype(L) || (L.faction != src.faction) || IsInvalidTarget(L)) //If we're not being held by a mob, OR we're being held by a mob who isn't from our faction OR we're being held by a mob whom we don't consider a valid target!
+			if(!istype(L) || (L.faction != src.faction) || !CanAttack(L)) //If we're not being held by a mob, OR we're being held by a mob who isn't from our faction OR we're being held by a mob whom we don't consider a valid target!
 				returnToPool(loc)
 			else
 				return 0
@@ -88,10 +88,6 @@
 		L += Objects
 	return L
 
-/mob/living/simple_animal/hostile/proc/IsInvalidTarget(atom/A)
-	if(isMoMMI(A))
-		return 1
-
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/proc/FindTarget() called tick#: [world.time]")
 	var/list/Targets = list()
@@ -103,8 +99,6 @@
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
-			if(IsInvalidTarget(A)) continue
-
 			Targets += A
 			continue
 	Target = PickTarget(Targets)
@@ -132,27 +126,34 @@
 		return 0
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
+		//WE ONLY ATTACK LIVING MOBS UNLESS SPECIFIED OTHERWISE
 		if(L.stat > stat_attack || (L.stat != stat_attack && stat_exclusive == 1))
 			return 0
+		//WE DON'T ATTACK INVULNERABLE MOBS (such as etheral jaunting mobs, or passengers of the adminbus)
 		if(L.flags & INVULNERABLE)
 			return 0
+		//WE DON'T ATTACK MOMMI
+		if(isMoMMI(L))
+			return 0
+		//WE DON'T OUR OWN FACTION UNLESS SPECIFIED OTHERWISE
 		if((L.faction == src.faction && !attack_same) || (L.faction != src.faction && attack_same == 2) || (L.faction != attack_faction && attack_faction))
 			return 0
+		//IF OUR FACTION IS A REFERENCE TO A SPECIFIC MOB THEN WE DON'T ATTACK HIM (examples include viscerator grenades, staff of animation mimics, asteroid monsters)
 		if((faction == "\ref[L]") && !attack_same)
 			return 0
-		if(isnukeop(L) && (faction == "syndicate"))
-			return 0
-		if(iscultist(L) && (faction == "cult"))
-			return 0
-		if(isslime(L) && (faction == "slimesummon"))
-			return 0
+		//IF WE ARE GOLD SLIME+PLASMA MONSTERS THEN WE DON'T ATTACK SLIMES/SLIME PEOPLE/ADAMANTINE GOLEMS
+		if(faction == "slimesummon")
+			if(isslime(L))
+				return 0
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if(H.dna)
+					if((H.dna.mutantrace == "slime") || (H.dna.mutantrace == "adamantine"))
+						return 0
+		//IF WE ARE MOBS SPAWNED BY THE ADMINBUS THEN WE DON'T ATTACK TEST DUMMIES OR IAN (wait what? man that's snowflaky as fuck)
 		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))
 			return 0
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna)
-				if((H.dna.mutantrace == "slime") && (faction == "slimesummon"))
-					return 0
+		//WE DON'T ATTACK OUR FRIENDS (used by lazarus injectors, and rabid slimes)
 		if(L in friends)
 			return 0
 		return 1

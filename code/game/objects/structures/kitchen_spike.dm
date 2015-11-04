@@ -11,7 +11,7 @@
 	var/mob/living/occupant = null
 	var/meat_remaining = 0
 
-	var/list/allowed_mobs = list(/mob/living/carbon/monkey = "spikebloody", /mob/living/carbon/alien = "spikebloodygreen") //Associated with icon states
+	var/list/allowed_mobs = list(/mob/living/carbon/monkey = "spikebloody", /mob/living/carbon/alien = "spikebloodygreen", /mob/living/simple_animal/hostile/alien = "spikebloodygreen") //Associated with icon states
 
 /obj/structure/kitchenspike/attack_paw(mob/user as mob)
 	return src.attack_hand(usr)

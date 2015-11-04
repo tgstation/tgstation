@@ -64,6 +64,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/melee_damage_type = BRUTE
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -321,7 +322,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			O.show_message("<span class='warning'><B>\The [M]</B> [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		adjustBruteLoss(damage,M.melee_damage_type)
+		updatehealth()
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return

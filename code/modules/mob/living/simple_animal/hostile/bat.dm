@@ -49,10 +49,10 @@
 /mob/living/simple_animal/hostile/scarybat/Process_Spacemove(var/check_drift = 0)
 	return ..()	//No drifting in space for space carp!	//original comments do not steal
 
-/mob/living/simple_animal/hostile/scarybat/IsInvalidTarget(atom/A)
-	..()
-	if(A == owner)
-		return 1
+/mob/living/simple_animal/hostile/scarybat/CanAttack(var/atom/the_target)
+	if(the_target == owner)
+		return 0
+	return ..(the_target)
 
 /mob/living/simple_animal/hostile/scarybat/FindTarget()
 	. = ..()
@@ -78,6 +78,12 @@
 	var/enroute = 0
 
 	supernatural = 1
+
+/mob/living/simple_animal/hostile/scarybat/cult/CanAttack(var/atom/the_target)
+	//IF WE ARE CULT MONSTERS (those who spawn after Nar-Sie has risen) THEN WE DON'T ATTACK CULTISTS
+	if(iscultist(the_target))
+		return 0
+	return ..(the_target)
 
 /mob/living/simple_animal/hostile/scarybat/cult/cultify()
 	return
