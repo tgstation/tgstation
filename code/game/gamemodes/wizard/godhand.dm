@@ -71,7 +71,45 @@
 	if(user.lying || user.handcuffed)
 		user << "<span class='warning'>You can't reach out!</span>"
 		return
-	var/mob/M = target
-	M.Stun(2)
-	new /obj/structure/closet/statue(M.loc, M)
+	var/mob/living/L = target
+	if(!(ishuman(L) || ismonkey(L) || iscorgi(L)))
+		return
+	L.Stun(2)
+	var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(L.loc, user, 1)
+	S.name = "statue of [L.name]"
+	S.desc = "An incredibly lifelike marble carving."
+	S.faction = list("\ref[user]")
+	if(L.mind)
+		L.mind.transfer_to(S)
+	if(L.buckled)
+		L.buckled.unbuckle_mob()
+	L.loc = S
+	S.victim = L
+	S.timer = 240
+	S.intialTox = L.getToxLoss()
+	S.intialFire = L.getFireLoss()
+	S.intialBrute = L.getBruteLoss()
+	S.intialOxy = L.getOxyLoss()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		name = "statue of [H.name]"
+		H.bleedsuppress = 1
+		S.overlays.Cut()
+		var/list/overlays_to_gray = list()
+		overlays_to_gray = H.overlays_standing.Copy()
+		for(var/icon/I in overlays_to_gray)
+			I = I.GrayScale()
+		S.overlays = overlays_to_gray
+	/*	//if(H.gender == "female")
+		//	S.icon_state = "human_female"
+	else if(ismonkey(L))
+		name = "statue of a monkey"
+		//S.icon_state = "monkey"
+	else if(iscorgi(L))
+		name = "statue of a corgi"
+		//S.icon_state = "corgi"
+		//desc = "If it takes forever, I will wait for you..."
+	*/
+	qdel(src)
 	..()
+

@@ -45,12 +45,21 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
+	var/active = 1
+	var/timer = -1
+
+	var/mob/living/victim = null
+	var/intialTox = 0 	//these are here to keep the internal mob from taking damage from things that logically wouldn't affect a rock
+	var/intialFire = 0	//it's a little sloppy I know but it was this or the GODMODE flag. Lesser of two evils.
+	var/intialBrute = 0
+	var/intialOxy = 0
+
 	gold_core_spawnable = 1
 
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
+/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator, var/not_active)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -64,7 +73,12 @@
 	if(creator)
 		src.creator = creator
 
+	if(not_active)
+		src.active = 0
+
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
+	if(!active)
+		return 0
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
@@ -73,6 +87,19 @@
 
 /mob/living/simple_animal/hostile/statue/Life()
 	..()
+	if(victim)//Go-go gadget stasis field
+		timer--
+		victim.setToxLoss(intialTox)
+		victim.adjustFireLoss(intialFire - victim.getFireLoss())
+		victim.adjustBruteLoss(intialBrute - victim.getBruteLoss())
+		victim.setOxyLoss(intialOxy)
+		if(timer == 1)
+			if(mind)
+				mind.transfer_to(victim)
+			victim.loc = src.loc
+		if(timer == 0)
+			qdel(src)
+
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target
@@ -83,10 +110,14 @@
 				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
+	if(!active)
+		return
 	if(can_be_seen(get_turf(loc)))
 		if(client)
 			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
 			return
+	if(target == creator) //Player statues aren't supposed to do this, and yet...
+		src << "<span class='warning'>You cannot attack your creator!</span>"
 	else
 		..()
 
