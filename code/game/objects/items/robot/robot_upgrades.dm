@@ -209,8 +209,15 @@
 /obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
+	if(isMoMMI(R))
+		R << "<span class='warning'>Your self-protection systems prevent that.</span>"
+		message_admins("[key_name_admin(usr)] ([usr.type]) tried to use \a [name] on [R] (a [R.type]).")
+		return 0
+
 	if(R.emagged == 1)
 		return 0
+
+	message_admins("[key_name_admin(usr)] ([usr.type]) used \a [name] on [R] (a [R.type]).")
 
 	R.SetEmagged(2)
 	return 1
