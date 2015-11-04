@@ -535,8 +535,8 @@
 	return max(0, enemy_minimum_age - C.player_age)
 
 
-/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type)
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [role_type]?", "[role_type]", null, FALSE, 100)
+/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [role_type]?", "[role_type]", null, pref, 100)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)

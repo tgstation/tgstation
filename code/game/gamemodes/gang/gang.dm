@@ -185,7 +185,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.special_role = "[G.name] Gangster"
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, "Gangster"))
-		replace_jobbaned_player(gangster_mind.current, "Gangster")
+		replace_jobbaned_player(gangster_mind.current, "Gangster", BE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
