@@ -111,6 +111,12 @@
 		user << "<span class='warning'>That's already looking pretty stuffed.</span>"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
+		if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/customizable))
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/SC = S
+			if(src.fullyCustom && SC.fullyCustom)
+				user << "<span class='warning'>You slap yourself on the back of the head for thinking that stacking plates is an interesting dish.</span>"
+				message_admins("<span class='warning'>POSSIBLE EXPLOIT ATTEMPT:</span> [key_name_admin(user)] tried to stack multiple plates together, which used to generate excessive atom names, resulting in crashes. See <a href='https://github.com/d3athrow/vgstation13/issues/6402'>#6402</a>.")
+				return
 		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
 			user << "<span class='warning'>Sorry, no recursive food.</span>"
 			return
