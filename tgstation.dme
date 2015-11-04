@@ -255,6 +255,7 @@
 #include "code\datums\spells\mind_transfer.dm"
 #include "code\datums\spells\projectile.dm"
 #include "code\datums\spells\santa.dm"
+#include "code\datums\spells\shapeshift.dm"
 #include "code\datums\spells\summonitem.dm"
 #include "code\datums\spells\touch_attacks.dm"
 #include "code\datums\spells\trigger.dm"
