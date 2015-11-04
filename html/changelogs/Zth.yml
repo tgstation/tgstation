@@ -1,0 +1,6 @@
+author: Zth
+
+delete-after: True
+
+changes: 
+  - bugfix: Decloner fixed. Use with caution
