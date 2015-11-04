@@ -11,15 +11,17 @@
 	var/sleep_time = 3
 	var/finished = 0
 	var/target_oldloc = null
+	var/turf_target = 0
 	var/origin_oldloc = null
+	var/turf_origin = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam)
 	endtime = world.time+time
 	origin = beam_origin
-	origin_oldloc = origin.loc
+	origin_oldloc = get_turf(origin)
 	target = beam_target
-	target_oldloc = target.loc
+	target_oldloc = get_turf(target)
 	max_distance = maxdistance
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
@@ -27,9 +29,10 @@
 	beam_type = btype
 
 /datum/beam/proc/Start()
+	CheckTurf()
 	Draw()
 	while(!finished && target && world.time<endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
-		if(origin.loc != origin_oldloc || target.loc != target_oldloc)
+		if(!(turf_target && turf_origin) && ((!turf_origin && origin.loc != origin_oldloc) || (!turf_target && target.loc != target_oldloc))
 			Reset()
 			Draw()
 		sleep(sleep_time)
@@ -48,6 +51,12 @@
 	origin = null
 	return ..()
 
+/datum/beam/proc/CheckTurf()
+	if(origin == origin_oldloc)
+		turf_origin = 1
+	if(target == target_oldloc)
+		turf_target = 1
+
 /datum/beam/proc/Draw()
 	var/Angle=round(Get_Angle(origin,target))
 
@@ -58,9 +67,13 @@
 	var/DY=(32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
 	var/N=0
 	var/length=round(sqrt((DX)**2+(DY)**2))
-	
+
 	for(N,N<length,N+=32)
-		var/obj/effect/ebeam/X= new beam_type(origin.loc)
+		var/obj/effect/ebeam/X= new beam_type()
+		if(turf_origin)
+			X.loc = origin
+		else
+			X.loc = origin.loc
 		X.owner=src
 		elements |= X
 		if(N+32>length)
