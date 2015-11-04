@@ -254,8 +254,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 				H << "<span class='notice'>You feel very bloated!</span>"
 		if(S.volume < 200)
 			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.reagents.add_reagent("slimejelly", 1)
+				H.nutrition -= 2
 
 	..()
 
