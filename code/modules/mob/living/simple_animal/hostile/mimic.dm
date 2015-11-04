@@ -124,8 +124,13 @@ var/global/list/crate_mimic_disguises = list(\
 	maxHealth = 100
 	health = 100
 
-/mob/living/simple_animal/hostile/mimic/crate/New()
-	environment_disguise() //Disguise ourselves appropriately
+/mob/living/simple_animal/hostile/mimic/crate/New(loc, atom/new_disguise = null)
+	if(ispath(new_disguise))
+		copied_object = new_disguise
+	else if(istype(new_disguise))
+		copied_object = new_disguise.type
+	else
+		environment_disguise()
 
 	..()
 
@@ -395,10 +400,6 @@ var/global/list/item_mimic_disguises = list(
 	copied_object = /obj/item/target //Default form for us if we accidentally morph into an item with no icon. Gets overridden on New()
 
 	var/icon/mouth_overlay = icon('icons/mob/mob.dmi', icon_state = "mimic_mouth")
-
-/mob/living/simple_animal/hostile/mimic/crate/item/New()
-	environment_disguise()
-	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/item/initialize()
 	return //Don't take any items!
