@@ -266,7 +266,7 @@
 	if(machine)
 		if(!machine.check_eye(src))		reset_view(null)
 	else
-		if(!client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)			reset_view(null)
 
 	dna.species.handle_vision(src)
 
