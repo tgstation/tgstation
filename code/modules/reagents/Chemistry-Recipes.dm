@@ -792,7 +792,7 @@ datum
 
 					if(ismob(holder.my_atom.loc))
 						var/mob/mob_holder = holder.my_atom.loc
-						mob_holder.update_icons() //Without this, the item visually disappears from the mob's hand!
+						mob_holder.drop_item(holder.my_atom) //Bandaid to work around items becoming invisible when their appearance is changed!
 
 
 /////////////////////////////////////OLD SLIME CORE REACTIONS ///////////////////////////////
