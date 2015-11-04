@@ -1,2 +1,4 @@
 author: N3X15
-changes: []
+changes:
+  - tweak: "MoMMIs can no longer use illegal weapons modules on themselves."
+  - tweak: "Illegal weapons module use is logged."
