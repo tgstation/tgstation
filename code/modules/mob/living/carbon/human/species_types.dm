@@ -319,7 +319,10 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
 		Remove(owner)
 		return
-
+	if(body.stat == UNCONSCIOUS)
+		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+		return
+		
 	owner.mind.transfer_to(body)
 
 /*
