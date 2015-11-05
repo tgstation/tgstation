@@ -54,9 +54,10 @@
 		return ..()
 
 /mob/living/silicon/ai/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
-	. = ..()
-	if(.)
-		return .
+	say_testing(src, "[type]/handle_inherent_channels([message_mode])")
+
+	if(..(speech, message_mode))
+		return 1
 
 	if(message_mode == MODE_HOLOPAD)
 		holopad_talk(speech)
@@ -64,7 +65,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/datum/speech/speech)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/holopad_talk() called tick#: [world.time]")
+	say_testing(src, "[type]/holopad_talk()")
 	var/turf/turf = get_turf(src)
 	log_say("[key_name(src)] (@[turf.x],[turf.y],[turf.z]) Holopad: [speech.message]")
 
@@ -75,7 +76,7 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		send_speech(speech, 7, "R")
+		T.send_speech(speech, 7, "R")
 		src << "<i><span class='[speech.render_wrapper_classes()]'>Holopad transmitted, <span class='name'>[real_name]</span> [speech.render_message()]</span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
