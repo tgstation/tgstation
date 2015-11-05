@@ -60,8 +60,10 @@
 
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
+	var/list/sec = get_living_sec()
+	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
-	while(heads.len < head_revolutionaries.len) //das vi danya
+	while(weighted_score < head_revolutionaries.len) //das vi danya
 		var/datum/mind/trotsky = pick(head_revolutionaries)
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
@@ -170,13 +172,14 @@
 ////////////////////////////////////////////
 /datum/game_mode/revolution/proc/check_heads()
 	var/list/heads = get_all_heads()
+	var/list/sec = get_all_sec()
 	if(heads_to_kill.len < heads.len)
 		var/list/new_heads = heads - heads_to_kill
 		for(var/datum/mind/head_mind in new_heads)
 			for(var/datum/mind/rev_mind in head_revolutionaries)
 				mark_for_death(rev_mind, head_mind)
 
-	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < heads.len)
+	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 		latejoin_headrev()
 
 ///////////////////////////////

@@ -24,12 +24,6 @@
 			return A
 	return 0
 
-/proc/in_range(source, user)
-	if(get_dist(source, user) <= 1)
-		return 1
-
-	return 0 //not in range and not telekinetic
-
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
@@ -125,25 +119,16 @@
 
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(atom/O)
+//Sped this up again for real this time
+/proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_atoms = list()
-
+	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-
 		if(A.flags & HEAR)
-			found_atoms |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
+			. += A
 		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_atoms
+		processing_list += A.contents
 
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
@@ -437,3 +422,10 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
+#define RANGE_TURFS(RADIUS, CENTER) \
+  block( \
+    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+  )

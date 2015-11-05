@@ -1,6 +1,0 @@
-
-author: Incoming5643
-delete-after: True
-
-changes: 
-  - rscadd: "Syndicate bomb payloads will now detonate if set on fire long enough. Note that the casings for the bombs is fireproof, so if you want to set fire to a bombcore you'll need to remove it from the case first (cut all wires, then crowbar it out). A reassurance from our explosives department: it is, and always has been, impossible to detonate a syndicate bomb that isn't ticking with wirecutters alone."

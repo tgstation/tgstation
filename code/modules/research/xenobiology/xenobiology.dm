@@ -297,7 +297,24 @@
 	M.mutator_used = TRUE
 	qdel(src)
 
+/obj/item/slimepotion/speed
+	name = "slime speed potion"
+	desc = "A potent chemical mix that will remove the slowdown from any item."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
 
+/obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
+	..()
+	if(!istype(C))
+		user << "<span class='warning'>The potion can only be used on items!</span>"
+		return
+	if(C.slowdown <= 0)
+		user << "<span class='warning'>The [C] can't be made any faster!</span>"
+		return..()
+	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
+	C.color = "#FF0000"
+	C.slowdown = 0
+	qdel(src)
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -376,8 +393,12 @@
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -388,8 +409,12 @@
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(!ghost)
@@ -424,6 +449,7 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
+	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
@@ -517,3 +543,18 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/obj/item/areaeditor/blueprints/slime
+	name = "cerulean prints"
+	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	color = "#2956B2"
+
+/obj/item/areaeditor/blueprints/slime/edit_area()
+	var/success = ..()
+	var/area/A = get_area(src)
+	if(success)
+		for(var/turf/T in A)
+			T.color = "#2956B2"
+		qdel(src)
+

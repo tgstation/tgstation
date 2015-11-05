@@ -92,12 +92,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	if(ismob(M))
-		var/mob/O = M
-		if(!O.lastarea)
-			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
-
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
 		if(loopsanity == 0)

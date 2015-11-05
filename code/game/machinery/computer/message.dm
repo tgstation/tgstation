@@ -12,7 +12,7 @@
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
 	//Sparks effect - For emag
-	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
@@ -269,16 +269,19 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		//Authenticate
 		if (href_list["auth"])
-			if(auth)
-				auth = 0
-				screen = 0
+			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
+				message = noserver
 			else
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
-				if(dkey && dkey != "")
-					if(src.linkedServer.decryptkey == dkey)
-						auth = 1
-					else
-						message = incorrectkey
+				if(auth)
+					auth = 0
+					screen = 0
+				else
+					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					if(dkey && dkey != "")
+						if(src.linkedServer.decryptkey == dkey)
+							auth = 1
+						else
+							message = incorrectkey
 
 		//Turn the server on/off.
 		if (href_list["active"])

@@ -171,7 +171,7 @@ var/global/list/pipeID2State = list(
 
 /obj/item/pipe/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))

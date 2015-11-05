@@ -136,7 +136,7 @@ var/global/list/RPD_recipes=list(
 	w_class = 3
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
 	var/p_type = 0
 	var/p_conntype = 0
@@ -158,7 +158,7 @@ var/global/list/RPD_recipes=list(
 
 /obj/item/weapon/pipe_dispenser/New()
 	. = ..()
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 

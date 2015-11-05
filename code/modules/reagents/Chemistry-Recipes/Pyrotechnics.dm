@@ -11,7 +11,7 @@
 		return
 	holder.remove_reagent("nitroglycerin", created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/2, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
@@ -26,7 +26,7 @@
 
 /datum/chemical_reaction/nitroglycerin_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(round(created_volume/2, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
@@ -40,7 +40,7 @@
 
 /datum/chemical_reaction/potassium_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/10, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
@@ -64,7 +64,7 @@
 /datum/chemical_reaction/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(created_volume/6, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
@@ -180,7 +180,7 @@
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
@@ -201,7 +201,7 @@
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
@@ -224,7 +224,7 @@
 	holder.remove_reagent("smoke_powder", created_volume)
 	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
@@ -246,7 +246,7 @@
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	var/smoke_radius = round(sqrt(created_volume / 2), 1)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)

@@ -36,7 +36,7 @@
 	var/maint_access = 0
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effect/effect/system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
@@ -70,11 +70,13 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
-	var/datum/action/mecha/mech_eject/eject_action = new
-	var/datum/action/mecha/mech_toggle_internals/internals_action = new
-	var/datum/action/mecha/mech_cycle_equip/cycle_action = new
-	var/datum/action/mecha/mech_toggle_lights/lights_action = new
-	var/datum/action/mecha/mech_view_stats/stats_action = new
+	var/datum/action/innate/mecha/mech_eject/eject_action = new
+	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
+	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
+	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
+	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
+
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 
 /obj/mecha/New()
@@ -90,6 +92,13 @@
 	SSobj.processing |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
+
 	return
 
 /obj/mecha/Destroy()
@@ -314,7 +323,10 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-
+//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
@@ -482,6 +494,7 @@
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -494,7 +507,7 @@
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-
+	diag_hud_set_mechstat()
 
 /////////////////////////////////////
 //////////// AI piloting ////////////
@@ -907,17 +920,16 @@ var/year_integer = text2num(year) // = 2013???
 	stats_action.Remove(user)
 
 
-/datum/action/mecha
+/datum/action/innate/mecha
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
-	action_type = AB_INNATE
 	var/obj/mecha/chassis
 
 
-/datum/action/mecha/mech_eject
+/datum/action/innate/mecha/mech_eject
 	name = "Eject From Mech"
 	button_icon_state = "mech_eject"
 
-/datum/action/mecha/mech_eject/Activate()
+/datum/action/innate/mecha/mech_eject/Activate()
 	if(!owner || !iscarbon(owner))
 		return
 	if(!chassis || chassis.occupant != owner)
@@ -925,11 +937,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.go_out()
 
 
-/datum/action/mecha/mech_toggle_internals
+/datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
 	button_icon_state = "mech_internals_off"
 
-/datum/action/mecha/mech_toggle_internals/Activate()
+/datum/action/innate/mecha/mech_toggle_internals/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.use_internal_tank = !chassis.use_internal_tank
@@ -938,11 +950,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 
 
-/datum/action/mecha/mech_cycle_equip
+/datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/mecha/mech_cycle_equip/Activate()
+/datum/action/innate/mecha/mech_cycle_equip/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	if(chassis.equipment.len == 0)
@@ -970,11 +982,11 @@ var/year_integer = text2num(year) // = 2013???
 			return
 
 
-/datum/action/mecha/mech_toggle_lights
+/datum/action/innate/mecha/mech_toggle_lights
 	name = "Toggle Lights"
 	button_icon_state = "mech_lights_off"
 
-/datum/action/mecha/mech_toggle_lights/Activate()
+/datum/action/innate/mecha/mech_toggle_lights/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.lights = !chassis.lights
@@ -988,11 +1000,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
 
 
-/datum/action/mecha/mech_view_stats
+/datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
 	button_icon_state = "mech_view_stats"
 
-/datum/action/mecha/mech_view_stats/Activate()
+/datum/action/innate/mecha/mech_view_stats/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")

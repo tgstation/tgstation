@@ -207,20 +207,20 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(istype(target,/mob/living) && message)
 			target << text("[message]")
 		if(sparks_spread)
-			var/datum/effect/effect/system/spark_spread/sparks = new
+			var/datum/effect_system/spark_spread/sparks = new
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
 			sparks.start()
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effect/effect/system/smoke_spread/smoke = new
+				var/datum/effect_system/smoke_spread/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effect/effect/system/smoke_spread/bad/smoke = new
+				var/datum/effect_system/smoke_spread/bad/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 3)
-				var/datum/effect/effect/system/smoke_spread/sleeping/smoke = new
+				var/datum/effect_system/smoke_spread/sleeping/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 

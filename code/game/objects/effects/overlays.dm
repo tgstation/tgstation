@@ -19,6 +19,40 @@
 	..()
 	spawn(10) qdel(src)
 
+/obj/effect/overlay/temp
+	anchored = 1
+	layer = 3.3
+	var/duration = 10
+	var/randomdir = 1
+
+/obj/effect/overlay/temp/New()
+	if(randomdir)
+		dir = pick(cardinal)
+	spawn(duration)
+		qdel(src)
+
+/obj/effect/overlay/temp/revenant
+	name = "spooky lights"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "spooky lights"
+	icon_state = "purplecrack"
+	duration = 6
+
+/obj/effect/overlay/temp/emp
+	name = "emp sparks"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empdisable"
+
+/obj/effect/overlay/temp/emp/pulse
+	name = "emp pulse"
+	icon_state = "emp pulse"
+	duration = 20
+	randomdir = 0
+
+
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'

@@ -7,17 +7,17 @@
 
 	L.loc = src.loc
 
-	if(issilicon(L))
+	if(istype(L,/mob/living/silicon))
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	else
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/gib = 1
-	if(iscarbon(L))
+	if(istype(L,/mob/living/carbon))
 		gib = 0
 		add_blood(L)
 
-	if(!blood && !issilicon(L))
+	if(!blood && !istype(L,/mob/living/silicon))
 		blood = 1
 		update_icon()
 	L.Paralyse(5)

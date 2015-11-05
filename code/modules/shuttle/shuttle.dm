@@ -21,7 +21,10 @@
 	//these objects are indestructable
 /obj/docking_port/Destroy()
 	return QDEL_HINT_LETMELIVE
-
+/obj/docking_port/singularity_pull()
+	return
+/obj/docking_port/singularity_act()
+	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
