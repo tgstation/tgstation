@@ -108,7 +108,9 @@
 				mode = SHUTTLE_STRANDED
 			if(time_left <= 50 && !sound_played) //4 seconds left - should sync up with the launch
 				sound_played = 1
-				c
+				for(var/area/shuttle/escape/E in world)
+					for(var/mob/M in E)
+						E << 'sound/effects/hyperspace_begin.ogg'
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
