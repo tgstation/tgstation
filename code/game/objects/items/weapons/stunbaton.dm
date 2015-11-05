@@ -9,7 +9,8 @@
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 7
+	var/staminaforce = 100
+	var/stutter_time = 7
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
@@ -106,7 +107,7 @@
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.adjustStaminaLoss(staminaforce)
 		deductcharge(hitcost)
 		return
 
@@ -143,19 +144,18 @@
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(stunforce)
-	L.Weaken(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.adjustStaminaLoss(staminaforce)
+	L.apply_effect(STUTTER, stutter_time)
 
-	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+	L.visible_message("<span class='danger'>[user] has disabled [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has disabled you with [src]!</span>")
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(hit_appends)
 
-	add_logs(user, L, "stunned")
+	add_logs(user, L, "disabled")
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
@@ -172,6 +172,7 @@
 	item_state = "prod"
 	force = 3
 	throwforce = 5
-	stunforce = 5
+	staminaforce = 95
+	stutter_time = 5
 	hitcost = 2500
 	slot_flags = null
