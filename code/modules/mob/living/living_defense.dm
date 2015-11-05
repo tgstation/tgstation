@@ -78,7 +78,19 @@
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
 		src.visible_message("<span class='warning'>[src] has been hit by [O].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
+		var/zone_normal_name
+		switch(zone)
+			if("l_arm")
+				zone_normal_name = "left arm"
+			if("r_arm")
+				zone_normal_name = "right arm"
+			if("l_leg")
+				zone_normal_name = "left leg"
+			if("r_leg")
+				zone_normal_name = "right leg"
+			else
+				zone_normal_name = zone
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone_normal_name].", "Your armor has softened hit to your [zone_normal_name].")
 		if(armor < 2)
 			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.is_sharp(), O)
 
