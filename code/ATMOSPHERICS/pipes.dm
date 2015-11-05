@@ -1104,6 +1104,8 @@
 	icon_state = "adapter_1"
 	baseicon = "adapter"
 
+	color = PIPE_COLOR_GREY
+
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
 
