@@ -7,6 +7,7 @@
 	var/making_mage = 0
 	var/mages_made = 1
 	var/time_checked = 0
+	var/exhausted_pool = 0
 	rage = 1
 
 /datum/game_mode/wizard/announce()
@@ -56,11 +57,12 @@
 			time_checked = world.time
 			make_more_mages()
 	else
-		if(wizards.len >= max_mages)
+		if(!making_mage && (wizards.len >= max_mages || exhausted_pool >= 5))
 			finished = 1
 			return 1
 		else
 			make_more_mages()
+			return 0
 	return ..() // Check for shuttle and nuke.
 
 /datum/game_mode/wizard/raginmages/proc/make_more_mages()
@@ -85,10 +87,12 @@
 				candidates += G
 		if(!candidates.len)
 			message_admins("No candidates found, sleeping until another mage check...")
+			exhausted_pool++
 			making_mage = 0
 			mages_made--
 			return
 		else
+			exhausted_pool = 0
 			shuffle(candidates)
 			for(var/mob/i in candidates)
 				if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard

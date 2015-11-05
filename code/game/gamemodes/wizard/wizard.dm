@@ -231,7 +231,7 @@
 				continue
 			traitors_alive++
 
-	if (wizards_alive || traitors_alive)
+	if (wizards_alive || traitors_alive || (rage && src:making_mage))
 		return ..()
 	else
 		finished = 1
