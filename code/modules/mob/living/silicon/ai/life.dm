@@ -54,7 +54,6 @@
 				if (!loc.power_equip && !istype(src.loc,/obj/item))
 					//stage = 5
 					blind = 1
-
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
 			//stage = 4.5
@@ -66,8 +65,8 @@
 				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			var/area/home = get_area(src)
-			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
-			if(home.powered(EQUIP))
+			//if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
+			if(home && home.powered(EQUIP))
 				home.use_power(1000, EQUIP)
 
 			if (src:aiRestorePowerRoutine==2)
@@ -80,6 +79,12 @@
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
+			else if (src.aiRestorePowerRoutine == -1)
+				src << "Alert cancelled. External power source detected."
+				src:aiRestorePowerRoutine = 0
+				src.blind.layer = 0
+				return
+
 		else
 
 			//stage = 6
@@ -104,8 +109,14 @@
 					//var/time = time2text(world.realtime,"hh:mm:ss")
 					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 					spawn(20)
+						if(!src.aiRestorePowerRoutine)
+							blind = 0
+							return // Checking for premature changes.
 						src << "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."
 						sleep(50)
+						if(!src.aiRestorePowerRoutine)
+							blind = 0
+							return // Checking for premature changes.
 						if (loc.power_equip)
 							if (!istype(T, /turf/space))
 								src << "Alert cancelled. Power has been restored without our assistance."
@@ -114,14 +125,23 @@
 								return
 						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
 						sleep(20)
+						if(!src.aiRestorePowerRoutine)
+							blind = 0
+							return // Checking for premature changes.
 						src << "Emergency control system online. Verifying connection to power network."
 						sleep(50)
+						if(!src.aiRestorePowerRoutine)
+							blind = 0
+							return // Checking for premature changes.
 						if (istype(T, /turf/space))
 							src << "Unable to verify! No power connection detected!"
 							src:aiRestorePowerRoutine = 2
 							return
 						src << "Connection verified. Searching for APC in power network."
 						sleep(50)
+						if(!src.aiRestorePowerRoutine)
+							blind = 0
+							return // Checking for premature changes.
 						var/obj/machinery/power/apc/theAPC = null
 /*
 						for (var/something in loc)
@@ -132,6 +152,9 @@
 */
 						var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
 						for (PRP=1, PRP<=4, PRP++)
+							if(!src.aiRestorePowerRoutine)
+								blind = 0
+								return // Checking for premature changes.
 							var/area/AIarea = get_area(src)
 							for (var/obj/machinery/power/apc/APC in AIarea)
 								if (!(APC.stat & BROKEN))
@@ -156,8 +179,16 @@
 								if (4)
 									src << "Transfer complete. Forcing APC to execute program."
 									sleep(50)
+									if(!src.aiRestorePowerRoutine)
+										theAPC = null
+										blind = 0
+										return // Checking for premature changes.
 									src << "Receiving control information from APC."
 									sleep(2)
+									if(!src.aiRestorePowerRoutine)
+										theAPC = null
+										blind = 0
+										return // Checking for premature changes.
 									//bring up APC dialog
 									theAPC.attack_ai(src)
 									src:aiRestorePowerRoutine = 3
