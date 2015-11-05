@@ -1123,20 +1123,29 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(prob(50))
 				disfigure("brute")
 		if(burn_dam > 40)
-			disfigure("burn")
+			disfigure((used_weapon != WPN_LOW_BODY_TEMP) ? "burn" : "frostbite")
 
 /datum/organ/external/head/proc/disfigure(var/type = "brute")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/head/proc/disfigure() called tick#: [world.time]")
 	if(disfigured)
 		return
+
 	if(type == "brute")
-		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
-		"<span class='danger'>Your face becomes an unrecognizable, mangled mess!</span>",	\
-		"<span class='warning'>You hear a sickening crack.</span>")
-	else
-		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into a mangled mess!</span>",	\
-		"<span class='danger'>Your face melts away into an unrecognizable, mangled mess!</span>",	\
-		"<span class='warning'>You hear a sickening sizzle.</span>")
+		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",
+		                      "<span class='danger'>Your face becomes an unrecognizable, mangled mess!</span>",
+		                      "<span class='warning'>You hear a sickening crack.</span>")
+	else if (type == "burn")
+		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into a mangled mess!</span>",
+		                      "<span class='danger'>Your face melts away into an unrecognizable, mangled mess!</span>",
+		                      "<span class='warning'>You hear a sickening sizzle.</span>")
+	else if (type == "frostbite")
+		owner.visible_message("<span class='warning'>[owner]'s frozen face blisters and cracks.</span>",
+		                      "<span class='danger'>Your face blisters and numbs away!</span>",
+							  "<span class='warning'>You hear a sickening crackling.</span>")
+	else // Generic message, shouldn't happen
+		owner.visible_message("<span class='warning'>[owner]'s face disfigures.</span>",
+		                      "<span class='danger'>Your face becomes an unrecognizable, mangled mess!</span>")
+
 	disfigured = 1
 
 /****************************************************
