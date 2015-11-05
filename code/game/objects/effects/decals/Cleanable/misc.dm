@@ -15,6 +15,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
+	layer = TURF_LAYER
 
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user as mob)
 	user.visible_message("<span class='notice'>[user] wipes away \the [src].</span>")
