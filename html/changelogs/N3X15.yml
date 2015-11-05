@@ -1,3 +1,4 @@
 author: N3X15
 changes:
   - bugfix: Pipe layer adapters now start off as gray.
+  - bugfix: Whispered text is darker.
