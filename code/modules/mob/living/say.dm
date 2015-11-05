@@ -214,6 +214,7 @@ var/list/department_radio_keys = list(
 		rendered_message = speech.message
 	if(!client)
 		return
+	say_testing(src, "[src] ([src.type]) has heard a message (lang=[speech.language ? speech.language.name : "null"])")
 	var/deaf_message
 	var/deaf_type
 	var/type = 2

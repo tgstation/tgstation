@@ -130,7 +130,8 @@
 
 	//Languages are handled after.
 	if (!speaking)
-		if(other) other = other.GetSource()
+		if(other)
+			other = other.GetSource()
 		if(!other || !ismob(other))
 			return 1
 		if(other.universal_speak)

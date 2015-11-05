@@ -4,13 +4,13 @@
 /mob/living/carbon/human/say_quote(text)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, [text]";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
 			return "gibbers, [text]";
+	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "asks, [text]";
 	if (ending == "!")
@@ -31,6 +31,7 @@
 	if (src.slurring)
 		speech.message = slur(speech.message)
 
+	// Should be handled via a virus-specific proc.
 	if(viruses)
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = text2list(speech.message, " ") //List each word in the message
@@ -179,7 +180,6 @@
 			return 1
 		if (istype(other, /mob/living/carbon/slime))
 			return 1
-
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))

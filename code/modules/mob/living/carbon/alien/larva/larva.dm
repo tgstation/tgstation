@@ -298,7 +298,9 @@
 	onclose(user, "mob[name]")
 	return
 
+/* Why?
 /mob/living/carbon/alien/larva/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(speaking && speaking.name == LANGUAGE_SOL_COMMON)
 		return 1
 	return ..()
+*/
