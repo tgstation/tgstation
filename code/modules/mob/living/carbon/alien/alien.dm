@@ -48,13 +48,16 @@
 		hud_used.vampire_blood_display.maptext_height = 32
 		hud_used.vampire_blood_display.maptext = "<div align='left' valign='top' style='position:relative; top:0px; left:6px'> P:<font color='#E9DAE9' size='1'>[storedPlasma]</font><br>  / <font color='#BE7DBE' size='1'>[max_plasma]</font></div>"
 	return
-	
+
+/*
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
 		..(amount * 2)
 	else
 		..(amount)
 	return
+*/
+//No longer weak to fire
 
 /mob/living/carbon/alien/proc/getPlasma()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/getPlasma() called tick#: [world.time]")
