@@ -11,10 +11,10 @@
 	throw_speed = 3
 	throw_range = 7
 	var/spray_maxrange = 3 //what the sprayer will set spray_currentrange to in the attack_self.
-	var/spray_currentrange = 3 //the range of tiles the sprayer will reach when in fixed mode.
+	var/spray_currentrange = 1
 	amount_per_transfer_from_this = 5
 	volume = 250
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5, 10)
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
@@ -64,39 +64,25 @@
 	var/range = max(min(spray_currentrange, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
+	reagents.trans_to(D, amount_per_transfer_from_this)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
-	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
 	var/wait_step = max(round(2+3/range), 2)
 
 	spawn(0)
 		for(var/i=0, i<range, i++)
 			step_towards(D,A)
 			sleep(wait_step)
-
-			for(var/atom/T in get_turf(D))
-				if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
-					continue
-				if(puff_reagent_left <= 0)
-					break
-				D.reagents.reaction(T, VAPOR)
-				if(ismob(T)) //mobs are obstacles that consume part of the puff, shortening its range.
-					puff_reagent_left -= 1
-
-			if(puff_reagent_left > 0)
-				D.reagents.reaction(get_turf(D), VAPOR)
-				puff_reagent_left -= 1
-
-			if(puff_reagent_left <= 0) // we used all the puff so we delete it.
-				qdel(D)
-				return
+			for(var/atom/movable/AM in get_turf(D))
+				if((ismob(AM) && AM.density) || AM == A)
+					D.reagents.reaction(AM, VAPOR)
+					qdel(D)
+					return
+		D.reagents.reaction(get_turf(D), VAPOR)
 		qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
-
-	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	spray_currentrange = (spray_currentrange == 1 ? spray_maxrange : 1)
-	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	if(..())
+		spray_currentrange = (spray_currentrange == spray_maxrange ? initial(spray_currentrange) : spray_maxrange)
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 
@@ -117,6 +103,8 @@
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	list_reagents = list("cleaner" = 250)
+	amount_per_transfer_from_this = 3
+	possible_transfer_amounts = list(3, 10)
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
@@ -127,7 +115,6 @@
 	item_state = "pepperspray"
 	volume = 40
 	spray_maxrange = 4
-	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
 //water flower
@@ -138,11 +125,10 @@
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list()
+	spray_currentrange = 3
 	volume = 10
 	list_reagents = list("water" = 10)
-
-/obj/item/weapon/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
-	return
 
 //chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
@@ -154,8 +140,7 @@
 	throwforce = 0
 	w_class = 3
 	spray_maxrange = 7
-	spray_currentrange = 7
-	amount_per_transfer_from_this = 10
+	spray_currentrange = 3
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
 
@@ -171,11 +156,6 @@
 		if(reagents.total_volume < 1)
 			return
 		..(the_targets[i])
-
-/obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(mob/user)
-
-	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You adjust the output switch. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)
