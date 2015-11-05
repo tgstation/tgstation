@@ -1,0 +1,7 @@
+ 
+author: phil235
+
+delete-after: True
+
+changes: 
+  - tweak: "Spray puffs no longer react with every turf and objects they cross, it now can only hit one thing but it reacts with the full volume of the puff instead of a fraction. It hits dense mob it crosses and is stopped by it. If it isn't stopped it reacts with the clicked target or with the turf it is on if target was out of range. Spray range is now consistent with transfer amount: highest amount means highest range. The low transfer amount of the spray cleaner is now 3 units instead of 5 to compensate for the nerf."

@@ -35,7 +35,7 @@
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
 				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
-				return
+				return 1
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return
