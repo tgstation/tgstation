@@ -208,7 +208,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 			H << "<span class='danger'>You feel empty!</span>"
 
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume < 200)
+		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
 				H.nutrition -= 2.5
