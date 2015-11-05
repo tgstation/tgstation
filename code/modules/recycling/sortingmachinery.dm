@@ -24,7 +24,9 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	"Hydroponics",
 	"Janitor Closet",
 	"Genetics",
-	"Telecomms"
+	"Telecomms",
+	"Mechanics",
+	"Telescience"
 	)
 
 /obj/structure/bigDelivery
