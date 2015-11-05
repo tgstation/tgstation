@@ -8,6 +8,7 @@
 	dir = 4
 	travelDir = -90
 	roundstart_move = "emergency_away"
+	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
 /obj/docking_port/mobile/emergency/New()
 	..()
@@ -102,11 +103,15 @@
 
 		if(SHUTTLE_DOCKED)
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
-				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+				sound_played = 0
 				mode = SHUTTLE_STRANDED
+			if(time_left <= 50 && !sound_played) //4 seconds left - should sync up with the launch
+				sound_played = 1
+				for(var/area/shuttle/escape/E in world)
+					for(var/mob/M in E)
+						M << 'sound/effects/hyperspace_begin.ogg' //Play the launch sound to all mobs on the shuttle
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
-				world << 'sound/effects/hyperspace_begin.ogg'
-				sleep(55) //I TRIED PUTTING A SPAWN() HERE AND IT MADE THE SHUTTLE EXPLODE. DON'T TOUCH THIS. Also it's 55 so it times up with the launch.
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
 					if(M.z == ZLEVEL_STATION) //Will not launch from the mine/planet
@@ -123,7 +128,9 @@
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
 					M.dock(SSshuttle.getDock("[M.id]_away"))
 				//now move the actual emergency shuttle to centcomm
-				world << 'sound/effects/hyperspace_end.ogg'
+				for(var/area/shuttle/escape/E in world)
+					for(var/mob/M in E)
+						E << 'sound/effects/hyperspace_end.ogg'
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0
