@@ -124,6 +124,7 @@
 	nodamage = 1
 
 /obj/item/projectile/energy/osipr
+	name = "dark energy ball"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "dark"
 	kill_count = 100

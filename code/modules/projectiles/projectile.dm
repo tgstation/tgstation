@@ -306,7 +306,8 @@ var/list/impact_master = list()
 			update_pixel()
 			pixel_x = PixelX
 			pixel_y = PixelY
-		penetration = max(0, penetration - A.penetration_dampening)
+		if(penetration > 0)//a negative penetration value means that the projectile can keep moving through obstacles
+			penetration = max(0, penetration - A.penetration_dampening)
 		if(isturf(A))				//if the bullet goes through a wall, we leave a nice mark on it
 			damage -= (damage/4)	//and diminish the bullet's damage a bit
 			var/turf/T = A
