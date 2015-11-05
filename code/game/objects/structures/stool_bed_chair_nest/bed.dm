@@ -16,6 +16,8 @@
 	locked_should_lie = 1
 	dense_when_locking = 0
 	anchored = 1
+	var/sheet_type = /obj/item/stack/sheet/metal
+	var/sheet_amt = 1
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -155,5 +157,15 @@
 		new/obj/item/roller(get_turf(src))
 
 		qdel(src)
+
+/obj/structure/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(iswrench(W))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		getFromPool(sheet_type, get_turf(src), 2)
+		qdel(src)
+		return
+
+	. = ..()
 
 #undef ROLLERBED_Y_OFFSET
