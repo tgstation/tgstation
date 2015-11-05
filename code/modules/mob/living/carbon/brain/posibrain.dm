@@ -29,14 +29,12 @@ var/global/posibrain_notif_cooldown = 0
 			posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(used)
-		user << "[src]'s activation switch is locked, it appears to already have been programmed!"
-		return
 	if(brainmob && !brainmob.key && !notified)
-		//Start the process of notified for a new user.
+		//Start the process of requesting a new ghost.
 		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 		ping_ghosts("requested")
 		notified = 1
+		used = 0
 		update_icon()
 		spawn(askDelay) //Seperate from the global cooldown.
 			notified = 0
@@ -123,7 +121,7 @@ var/global/posibrain_notif_cooldown = 0
 			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
-		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+		msg += "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
 	usr << msg
 	return
