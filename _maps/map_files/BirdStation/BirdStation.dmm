@@ -1093,7 +1093,7 @@
 "ava" = (/obj/structure/cable/cyan{icon_state = "2-4"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "avb" = (/obj/structure/cable/cyan{icon_state = "4-8"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "avc" = (/obj/structure/cable/cyan{icon_state = "1-8"},/obj/structure/cable/cyan{icon_state = "4-8"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
-"avd" = (/obj/machinery/power/smes{charge = 3e+006; input_level = 10000; output_level = 2000},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plasteel/black,/area/engine/gravity_generator)
+"avd" = (/obj/machinery/power/smes{charge = 5e+006; input_level = 10000; output_level = 4000},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plasteel/black,/area/engine/gravity_generator)
 "ave" = (/obj/structure/cable/cyan{icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/cyan/hidden,/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "avf" = (/obj/structure/cable/cyan{icon_state = "4-8"},/obj/machinery/atmospherics/components/unary/vent_pump/on{icon_state = "vent_map"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "avg" = (/obj/effect/landmark/start{name = "Assistant"},/obj/structure/cable/cyan{icon_state = "4-8"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
