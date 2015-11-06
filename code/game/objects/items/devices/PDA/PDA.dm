@@ -343,10 +343,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-cargo"
 
+/obj/item/device/pda/cargo/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_cargo
+
 /obj/item/device/pda/quartermaster
 	name = "Quartermaster PDA"
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-q"
+
+/obj/item/device/pda/quartermaster/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_cargo
 
 /obj/item/device/pda/shaftminer
 	name = "Mining PDA"

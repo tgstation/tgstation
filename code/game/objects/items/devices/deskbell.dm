@@ -200,6 +200,13 @@
 
 //////////////////
 
+/obj/item/device/deskbell/signaler/cargo
+	name = "Cargo desk bell"
+
+/obj/item/device/deskbell/signaler/cargo/New()
+	. = ..()
+	frequency = deskbell_freq_cargo
+
 /obj/item/device/deskbell/signaler/hop
 	name = "HoP desk bell"
 
@@ -347,6 +354,7 @@
 //these frequencies are set by default on the PDAs of the corresponding jobs
 //they are determined at roundstart, and unlike radio frequencies (yet) are randomized
 var/global/list/deskbell_default_frequencies = list()
+var/global/deskbell_freq_cargo = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
 var/global/deskbell_freq_hop = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
 var/global/deskbell_freq_medbay = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
 var/global/deskbell_freq_brig = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
