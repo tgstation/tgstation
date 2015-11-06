@@ -5,8 +5,7 @@
 	locked_should_lie = 0
 	dense_when_locking = 0
 
-	var/sheet_type = /obj/item/stack/sheet/metal
-	var/sheet_amt = 2
+	sheet_amt = 1
 
 /obj/structure/bed/chair/New()
 	..()

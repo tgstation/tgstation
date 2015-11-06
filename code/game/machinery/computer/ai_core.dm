@@ -207,7 +207,7 @@ That prevents a few funky behaviors.
 										U << "<span class='danger'>ERROR:</span> Remote transfer interface disabled."//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
-							T.aiRestorePowerRoutine = 0//So the AI initially has power.
+							//T.aiRestorePowerRoutine = 0//So the AI initially has power.
 							T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
 							T.loc = C//Throw AI into the card.
 							C.name = "inteliCard - [T.name]"
@@ -218,6 +218,10 @@ That prevents a few funky behaviors.
 							T.cancel_camera()
 							T << "You have been downloaded to a mobile storage device. Remote device connection severed."
 							U << "<span class='notice'><b>Transfer successful</b>:</span> [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+							//fix blindness from powerloss
+							if(T.aiRestorePowerRoutine)
+								T.aiRestorePowerRoutine = -1
+								T.blind.layer = 0
 
 			if("INACTIVE")//Inactive AI object.
 				var/obj/structure/AIcore/deactivated/T = target

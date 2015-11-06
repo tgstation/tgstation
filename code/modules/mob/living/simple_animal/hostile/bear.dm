@@ -152,23 +152,3 @@
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()
 	..(5)
-
-/mob/living/simple_animal/hostile/bear/AttackingTarget()
-	. = ..()
-
-	var/damage = rand(20,30)
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
-		H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
-		return H
-	else if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(damage)
-		return L
-	else if(istype(target,/obj/mecha))
-		var/obj/mecha/M = target
-		M.attack_animal(src)
-		return M
