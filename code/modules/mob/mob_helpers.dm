@@ -1,3 +1,11 @@
+/proc/RemoveAllFactionIcons(var/datum/mind/M)
+	ticker.mode.update_cult_icons_removed(M)
+	ticker.mode.update_rev_icons_removed(M)
+	ticker.mode.update_wizard_icons_removed(M)
+
+/proc/ClearRoles(var/datum/mind/M)
+	ticker.mode.remove_revolutionary(M)
+
 /proc/isAdminGhost(A)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isAdminGhost() called tick#: [world.time]")
 	if(isobserver(A))

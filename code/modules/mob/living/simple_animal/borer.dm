@@ -80,6 +80,10 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		if(U.id!="")
 			borer_avail_unlocks.Add(U)
 
+/mob/living/simple_animal/borer/Login()
+	if(mind)
+		RemoveAllFactionIcons(mind)
+
 /mob/living/simple_animal/borer/Life()
 	if(timestopped) return 0 //under effects of time magick
 
@@ -503,7 +507,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		detach()
 
 // Try to reset everything, also while handling invalid host/host_brain states.
-mob/living/simple_animal/borer/proc/detach()
+/mob/living/simple_animal/borer/proc/detach()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/detach() called tick#: [world.time]")
 	if(host)
 		if(istype(host,/mob/living/carbon/human))

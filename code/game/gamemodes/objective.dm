@@ -8,7 +8,7 @@ var/list/potential_theft_objectives=list(
 )
 
 
-datum/objective
+/datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
@@ -44,7 +44,7 @@ datum/objective
 
 
 
-datum/objective/assassinate
+/datum/objective/assassinate
 	find_target()
 		..()
 		if(target && target.current)
@@ -65,14 +65,14 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current && !blocked)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || isborer(target.current)) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
 
 
 
-datum/objective/mutiny
+/datum/objective/mutiny
 	find_target()
 		..()
 		if(target && target.current)
@@ -100,7 +100,7 @@ datum/objective/mutiny
 			return 0
 		return 1
 
-datum/objective/mutiny/rp
+/datum/objective/mutiny/rp
 	find_target()
 		..()
 		if(target && target.current)
@@ -135,7 +135,7 @@ datum/objective/mutiny/rp
 			return 0
 		return rval
 
-datum/objective/anti_revolution/execute
+/datum/objective/anti_revolution/execute
 	find_target()
 		..()
 		if(target && target.current)
@@ -160,7 +160,7 @@ datum/objective/anti_revolution/execute
 			return 0
 		return 1
 
-datum/objective/anti_revolution/brig
+/datum/objective/anti_revolution/brig
 	var/already_completed = 0
 
 	find_target()
@@ -194,7 +194,7 @@ datum/objective/anti_revolution/brig
 			return 0
 		return 0
 
-datum/objective/anti_revolution/demote
+/datum/objective/anti_revolution/demote
 	find_target()
 		..()
 		if(target && target.current)
@@ -227,7 +227,7 @@ datum/objective/anti_revolution/demote
 				return 0
 		return 1
 
-datum/objective/debrain//I want braaaainssss
+/datum/objective/debrain//I want braaaainssss
 	find_target()
 		..()
 		if(target && target.current)
@@ -261,7 +261,7 @@ datum/objective/debrain//I want braaaainssss
 		return 0
 
 
-datum/objective/protect//The opposite of killing a dude.
+/datum/objective/protect//The opposite of killing a dude.
 	find_target()
 		..()
 		if(target && target.current)
@@ -284,13 +284,13 @@ datum/objective/protect//The opposite of killing a dude.
 		if(!target)			//If it's a free objective.
 			return 1
 		if(target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || isborer(target.current))
 				return 0
 			return 1
 		return 0
 
 
-datum/objective/hijack
+/datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping without any organic life-forms, other than yourself."
 
 	check_completion()
@@ -316,7 +316,7 @@ datum/objective/hijack
 		return 1
 
 
-datum/objective/block
+/datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 	check_completion()
@@ -337,7 +337,7 @@ datum/objective/block
 						return 0
 		return 1
 
-datum/objective/silence
+/datum/objective/silence
 	explanation_text = "Do not allow anyone to escape the station.  Only allow the shuttle to be called when everyone is dead and your story is the only one left."
 
 	check_completion()
@@ -358,14 +358,14 @@ datum/objective/silence
 		return 1
 
 
-datum/objective/escape
+/datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
 	check_completion()
 		if(blocked) return 0
 		if(issilicon(owner.current))
 			return 0
-		if(isbrain(owner.current))
+		if(isbrain(owner.current) || isborer(target.current))
 			return 0
 		if(emergency_shuttle.location<2)
 			return 0
@@ -400,11 +400,11 @@ datum/objective/escape
 		else
 			return 0
 
-datum/objective/die
+/datum/objective/die
 	explanation_text = "Die a glorious death."
 
 	check_completion()
-		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(target.current))
 			return 1		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 1
@@ -412,12 +412,12 @@ datum/objective/die
 
 
 
-datum/objective/survive
+/datum/objective/survive
 	explanation_text = "Stay alive until the end."
 
 	check_completion()
 		if(blocked) return 0
-		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(target.current))
 			return 0		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
@@ -425,7 +425,7 @@ datum/objective/survive
 
 
 
-datum/objective/multiply
+/datum/objective/multiply
 	explanation_text = "Procreate, and protect your spawn."
 	var/already_completed=0
 	check_completion()
@@ -443,7 +443,7 @@ datum/objective/multiply
 		return 0
 
 // Similar to the anti-rev objective, but for traitors
-datum/objective/brig
+/datum/objective/brig
 	var/already_completed = 0
 
 	find_target()
@@ -479,7 +479,7 @@ datum/objective/brig
 		return 0
 
 // Harm a crew member, making an example of them
-datum/objective/harm
+/datum/objective/harm
 	var/already_completed = 0
 
 	find_target()
@@ -523,7 +523,7 @@ datum/objective/harm
 		return 0
 
 
-datum/objective/nuclear
+/datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 
 
@@ -581,7 +581,7 @@ datum/objective/nuclear
 		if(!steal_target) return 1 // Free Objective
 		return steal_target.check_completion(owner)
 
-datum/objective/capture
+/datum/objective/capture
 	proc/gen_amount_goal()
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand(5,10)
@@ -620,7 +620,7 @@ datum/objective/capture
 			return 0
 		return 1
 
-datum/objective/blood
+/datum/objective/blood
 	proc/gen_amount_goal(low = 150, high = 400)
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand(low,high)
@@ -634,7 +634,7 @@ datum/objective/blood
 			return 1
 		else
 			return 0
-datum/objective/absorb
+/datum/objective/absorb
 	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand (lowbound,highbound)

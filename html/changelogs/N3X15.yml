@@ -5,3 +5,4 @@ changes:
   - bugfix: Fixed holopads not working properly and being rebroadcast to the entire station.
   - bugfix: Hopefully fix the issue with borers permanently setting DNA blocks to on.
   - bugfix: "Borers: When detaching from a host, unlocks that are re-locked can be researched again.  Primarily applies to genetic unlocks."
+  - bugfix: "Borers now count as dead to traitor objectives."
