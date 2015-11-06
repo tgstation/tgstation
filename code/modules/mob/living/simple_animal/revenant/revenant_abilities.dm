@@ -77,7 +77,7 @@
 	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
 	charge_max = 200
 	range = 5
-	stun = 40
+	stun = 35
 	cast_amount = 45
 	var/shock_range = 2
 	var/shock_damage = 18
@@ -100,7 +100,7 @@
 						if(!L.on) //wait, wait, don't shock me
 							return
 						flick("[L.base_state]2", L)
-						for(var/mob/living/carbon/human/M in range(shock_range, L))
+						for(var/mob/living/carbon/human/M in view(shock_range, L))
 							if(M == user)
 								return
 							M.Beam(L,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
@@ -116,12 +116,12 @@
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	charge_max = 150
 	range = 3
-	stun = 30
+	stun = 25
 	unlock_amount = 75
 	cast_amount = 40
 	action_icon_state = "defile"
 	var/stamdamage= 25
-	var/toxdamage = 3
+	var/toxdamage = 5
 	var/confusion = 50
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
