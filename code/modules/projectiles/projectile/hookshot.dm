@@ -150,11 +150,11 @@
 	bullet_die()
 
 
-/obj/item/projectile/gravitywell/cultify()
+/obj/item/projectile/hookshot/cultify()
 	return
 
-/obj/item/projectile/gravitywell/singularity_act()
+/obj/item/projectile/hookshot/singularity_act()
 	return
 
-/obj/item/projectile/gravitywell/ex_act()
+/obj/item/projectile/hookshot/ex_act()
 	return
