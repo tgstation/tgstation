@@ -26,6 +26,7 @@
 	slowdown = 2
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
+	var/list/hands_nodrop_states
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/atom/movable/overlay/phase_underlay = null
@@ -75,6 +76,7 @@
 /obj/item/clothing/suit/space/chronos/proc/finish_chronowalk()
 	var/mob/living/carbon/human/user = src.loc
 	if(istype(user))
+		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.color = "#ffffff"
@@ -82,6 +84,10 @@
 		user.notransform = 0
 		user.anchored = 0
 		teleporting = 0
+		if(user.l_hand && !hands_nodrop_states[1])
+			user.l_hand.flags &= ~NODROP
+		if(user.r_hand && !hands_nodrop_states[2])
+			user.r_hand.flags &= ~NODROP
 		if(phase_underlay && !qdeleted(phase_underlay))
 			qdel(phase_underlay)
 			phase_underlay = null
@@ -116,44 +122,57 @@
 		if(user.buckled)
 			user.buckled.unbuckle_mob()
 
-		var/icon/user_icon = getFlatIcon(user)
-		user_icon.Blend("#ffffff")
-		phase_underlay = new(user.loc)
-		phase_underlay.icon = user_icon
-		phase_underlay.density = 1
-		phase_underlay.anchored = 1
-		phase_underlay.master = user
-		phase_underlay.animate_movement = NO_STEPS
-		phase_underlay.alpha = 0
-		phase_underlay.mouse_opacity = 0
-		phase_underlay.name = user.name
-		phase_underlay.transform = user.transform
-		phase_underlay.pixel_x = user.pixel_x
-		phase_underlay.pixel_y = user.pixel_y
+		phase_underlay = create_phase_underlay(user)
+
+		hands_nodrop_states = list(0, 0)
+		if(user.l_hand)
+			hands_nodrop_states[1] = user.l_hand.flags & NODROP
+			user.l_hand.flags |= NODROP
+		if(user.r_hand)
+			hands_nodrop_states[2] = user.r_hand.flags & NODROP
+			user.r_hand.flags |= NODROP
 
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
 		user.anchored = 1
+		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
 		spawn(3)
-			if(teleporting && activated && user && !qdeleted(user) && phase_underlay && !qdeleted(phase_underlay))
+			if(teleporting && activated && user && phase_underlay && !qdeleted(phase_underlay))
 				animate(user, alpha = 0, time = 2)
 				animate(phase_underlay, alpha = 255, time = 2)
 				sleep(2)
-				if(teleporting && activated && user && !qdeleted(user) && phase_underlay && !qdeleted(phase_underlay))
+				if(teleporting && activated && user && phase_underlay && !qdeleted(phase_underlay))
 					phase_underlay.loc = to_turf
 					user.loc = to_turf
 					animate(user, alpha = 255, time = phase_in_ds)
 					animate(phase_underlay, alpha = 0, time = phase_in_ds)
 					sleep(phase_in_ds)
-					if(teleporting && activated && user && !qdeleted(user) && phase_underlay && !qdeleted(phase_underlay))
+					if(teleporting && activated && phase_underlay && !qdeleted(phase_underlay))
 						animate(user, color = "#ffffff", time = 3)
 						sleep(3)
 			if(teleporting && user && !qdeleted(user))
 				user.loc = to_turf //this will cover if bad things happen before the teleport, yes it is redundant
 				finish_chronowalk()
+
+/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
+	var/icon/user_icon = getFlatIcon(user)
+	user_icon.Blend("#ffffff")
+	var/atom/movable/overlay/phase = new(user.loc)
+	phase.icon = user_icon
+	phase.density = 1
+	phase.anchored = 1
+	phase.master = user
+	phase.animate_movement = NO_STEPS
+	phase.alpha = 0
+	phase.mouse_opacity = 0
+	phase.name = user.name
+	phase.transform = user.transform
+	phase.pixel_x = user.pixel_x
+	phase.pixel_y = user.pixel_y
+	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -265,9 +284,9 @@
 				src.loc = get_turf(user)
 				user.reset_view(src)
 				user.set_machine(src)
-			var/step = get_step(src, direction)
+			var/atom/step = get_step(src, direction)
 			if(step)
-				if(istype(step, /turf/space))
+				if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
 					if(!src.Move(step))
 						src.loc = step
 				else
