@@ -41,7 +41,7 @@
 			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
-			B.notify_ghost_cloning("Someone has put your brain in a MMI!")
+			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob

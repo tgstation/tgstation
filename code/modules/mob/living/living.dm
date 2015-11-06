@@ -577,6 +577,19 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
+/mob/living/movement_delay()
+	. = ..()
+	if(isturf(loc))
+		var/turf/T = loc
+		. += T.slowdown
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += config.run_speed
+		if("walk")
+			. += config.walk_speed
+
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
 	if(!has_gravity(M))
 		return

@@ -165,6 +165,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/pizzaslice,
 		/obj/item/weapon/reagent_containers/food/snacks/salad,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
 		/obj/item/weapon/reagent_containers/food/snacks/soup,
 		/obj/item/weapon/reagent_containers/food/snacks/grown,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
@@ -392,8 +393,10 @@
 /datum/chemical_reaction/slimeplasma/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
-	P.amount = 10
+	P.amount = 3
 	P.loc = get_turf(holder.my_atom)
+
+//Red
 
 /datum/chemical_reaction/slimemutator
 	name = "Slime Mutator"
@@ -424,6 +427,22 @@
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!</span>"), 1)
+
+
+/datum/chemical_reaction/slimespeed
+	name = "Slime Speed"
+	id = "m_speed"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/red
+	required_other = 1
+
+/datum/chemical_reaction/slimespeed/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/speed/P = new /obj/item/slimepotion/speed
+	P.loc = get_turf(holder.my_atom)
+
 
 //Pink
 /datum/chemical_reaction/docility
@@ -501,7 +520,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
-	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg')
+	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
 
 //Bluespace
 /datum/chemical_reaction/slimefloor2
@@ -548,6 +567,22 @@
 /datum/chemical_reaction/slimepsteroid2/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/enhancer/P = new /obj/item/slimepotion/enhancer
+	P.loc = get_turf(holder.my_atom)
+
+
+
+/datum/chemical_reaction/slime_territory
+	name = "Slime Territory"
+	id = "s_territory"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/cerulean
+	required_other = 1
+
+/datum/chemical_reaction/slime_territory/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/areaeditor/blueprints/slime/P = new /obj/item/areaeditor/blueprints/slime
 	P.loc = get_turf(holder.my_atom)
 
 //Sepia

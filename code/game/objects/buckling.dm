@@ -42,7 +42,7 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
-	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
 
 	return 1
 

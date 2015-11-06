@@ -37,7 +37,7 @@
 			src.bodytemperature += 2
 
 /mob/living/carbon/movement_delay()
-	. = 0
+	. = ..()
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -144,6 +144,10 @@
 		mode() // Activate held item
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+	if(on_fire)
+		M << "<span class='warning'>You can't put them out with just your bare hands!"
+		return
+
 	if(health >= 0)
 
 		if(lying)
