@@ -25,7 +25,7 @@
 	action_button_name = "Toggle Chronosuit"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
-	var/list/hands_nodrop_states
+	var/hands_nodrop_states
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/atom/movable/overlay/phase_underlay = null
@@ -83,9 +83,9 @@
 		user.notransform = 0
 		user.anchored = 0
 		teleporting = 0
-		if(user.l_hand && !hands_nodrop_states[1])
+		if(user.l_hand && !(hands_nodrop_states & 1))
 			user.l_hand.flags &= ~NODROP
-		if(user.r_hand && !hands_nodrop_states[2])
+		if(user.r_hand && !(hands_nodrop_states & 2))
 			user.r_hand.flags &= ~NODROP
 		if(phase_underlay && !qdeleted(phase_underlay))
 			qdel(phase_underlay)
@@ -123,12 +123,12 @@
 
 		phase_underlay = create_phase_underlay(user)
 
-		hands_nodrop_states = list(0, 0)
+		hands_nodrop_states = 0
 		if(user.l_hand)
-			hands_nodrop_states[1] = user.l_hand.flags & NODROP
+			hands_nodrop_states |= (user.l_hand.flags & NODROP) ? 1 : 0
 			user.l_hand.flags |= NODROP
 		if(user.r_hand)
-			hands_nodrop_states[2] = user.r_hand.flags & NODROP
+			hands_nodrop_states |= (user.r_hand.flags & NODROP) ? 2 : 0
 			user.r_hand.flags |= NODROP
 
 		user.animate_movement = NO_STEPS
