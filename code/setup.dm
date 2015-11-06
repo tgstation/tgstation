@@ -669,6 +669,10 @@ var/list/liftable_structures = list(\
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
+// Special 'weapons', used in damage procs
+#define WPN_HIGH_BODY_TEMP "High Body Temperature"
+#define WPN_LOW_BODY_TEMP  "Low Body Temperature"
+
 ///////////////////ORGAN DEFINES///////////////////
 
 #define ORGAN_CUT_AWAY		1

@@ -272,23 +272,51 @@
 		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
-			return
+	if (iscarbon(M) && user.a_intent != I_HURT)
+		return consume(user, M)
+	else
+		return ..()
+
+/obj/item/asteroid/hivelord_core/attack_self(mob/user as mob)
+	if (iscarbon(user))
+		return consume(user, user)
+
+/obj/item/asteroid/hivelord_core/proc/consume(var/mob/living/user, var/mob/living/carbon/target)
+	if (inert)
+		user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+		return TRUE
+
+	if (target.stat == DEAD)
+		user << "<span class='notice'>[src] are useless on the dead.</span>"
+		return
+
+	// revive() requires a check for suiciding
+	if (target.suiciding)
+		user << "<span class='notice'>It's dead, Jim.</span>"
+		return
+
+	if (!target.hasmouth)
+		if (target != user)
+			user << "<span class='warning'>You attempt to feed \the [src] to [target], but you realize they don't have a mouth. How dumb!</span>"
 		else
-			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
-				return
-			if(H != user)
-				H.visible_message("<span class='notice'>[user] forces [H] to eat [src]... they quickly regenerate all injuries!</span>")
-			else
-				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
-			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			H.revive()
-			qdel(src)
-	..()
+			user << "<span class='warning'>You don't have a mouth to eat \the [src] with.</span>"
+		return
+
+	// Delay feeding to others, just like in regular food
+	if (target != user)
+		user.visible_message("<span class='danger'>[user] attempts to feed [target] \the [src].</span>", "<span class='danger'>You attempt to feed [target] \the [src].</span>")
+		if (!do_mob(user, target))
+			return
+		user.visible_message("<span class='notice'>[user] feeds [target] the [src]... They look better!</span>")
+	else
+		user << "<span class='notice'>You chomp into \the [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
+
+	playsound(get_turf(src), 'sound/items/eatfood.ogg', rand(10, 50), 1)
+	target.revive()
+
+	user.drop_from_inventory(src)
+	qdel(src)
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
