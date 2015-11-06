@@ -132,7 +132,6 @@ Made by Xhuis
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hatch(null))
-	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind(null))
 	spawn(0)
 		update_shadow_icons_added(shadow_mind)
