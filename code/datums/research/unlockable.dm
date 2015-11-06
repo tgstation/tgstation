@@ -41,6 +41,12 @@
 	tree.unlocking=0
 	return 1
 
+// INTERNAL: Relock
+/datum/unlockable/proc/relock()
+	unlocked=0
+	relock_action()
+	return 1
+
 // Do this, then wait and unlock.
 /datum/unlockable/proc/begin_unlock()
 	return
@@ -84,7 +90,7 @@
 /**
  * How to remove the unlockable (such as when detached)
  */
-/datum/unlockable/proc/remove_action()
+/datum/unlockable/proc/relock_action()
 	return
 
 /datum/unlockable/proc/can_buy()

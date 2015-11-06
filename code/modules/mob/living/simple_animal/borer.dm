@@ -527,8 +527,10 @@ mob/living/simple_animal/borer/proc/detach()
 		// Remove any unlocks that affect the host.
 		for(var/uid in research.unlocked.Copy())
 			var/datum/unlockable/borer/U = research.get(uid)
-			if(U && U.remove_on_detach)
-				U.remove_action()
+			if(U)
+				if(U.remove_on_detach)
+					U.relock()
+				U.on_detached()
 
 		host.on_emote.Remove(eh_emote)
 
@@ -636,6 +638,12 @@ mob/living/simple_animal/borer/proc/detach()
 	host_brain.real_name = M.real_name
 
 	eh_emote = host.on_emote.Add(src,"host_emote")
+
+	// Tell our upgrades that we've attached.
+	for(var/uid in research.unlocked.Copy())
+		var/datum/unlockable/borer/U = research.get(uid)
+		if(U)
+			U.on_attached()
 
 	// /vg/ - Our users are shit, so we start with control over host.
 	if(config.borer_takeover_immediately)

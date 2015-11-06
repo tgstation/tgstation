@@ -35,6 +35,14 @@
 /datum/unlockable/borer/can_buy()
 	return ..() && borer.host && !borer.stat && !borer.controlling && borer.host.stat != DEAD
 
+// When the borer detaches from a host.
+/datum/unlockable/borer/proc/on_detached()
+	return
+
+// Ditto, but attached.
+/datum/unlockable/borer/proc/on_attached()
+	return
+
 
 /////////////////////////
 // Borer unlocks
@@ -126,7 +134,7 @@
 
 	borer << "<span class='info'>You feel the genetic changes take hold in your host.</span>"
 
-/datum/unlockable/borer/gene_unlock/remove_action()
+/datum/unlockable/borer/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
 	for(var/block=1;block<DNA_SE_LENGTH;block++)
 		if(assigned_blocks[block] == gene_name)
@@ -191,7 +199,7 @@
 	borer << "<span class='info'>You learned [name]!</span>"
 	borer.update_verbs(borer.host != null)
 
-/datum/unlockable/borer/verb_unlock/remove_action()
+/datum/unlockable/borer/verb_unlock/relock_action()
 	if(give_when_attached)
 		borer.attached_verbs-=verb_type
 	if(give_when_detached)
