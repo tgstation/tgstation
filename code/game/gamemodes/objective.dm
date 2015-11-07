@@ -365,7 +365,7 @@ var/list/potential_theft_objectives=list(
 		if(blocked) return 0
 		if(issilicon(owner.current))
 			return 0
-		if(isbrain(owner.current) || isborer(target.current))
+		if(isbrain(owner.current) || isborer(owner.current))
 			return 0
 		if(emergency_shuttle.location<2)
 			return 0
