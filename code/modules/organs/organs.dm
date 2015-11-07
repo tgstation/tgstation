@@ -14,6 +14,9 @@
 
 //////////// START OF PROCS
 
+/obj/item/organ/proc/Remove()
+	return null
+
 //The proc for inserting organs. Inserts the organ and adds all its suborgans to the organsystem
 /obj/item/organ/proc/Insert(mob/living/carbon/M)
 	world << "Called Insert([M])"
@@ -26,11 +29,12 @@
 		world << "[OR] [OR.exists()]"
 		if(OR.set_organitem(src))
 			world << "Organitem set!"
-			for (var/i in suborgans)
-				M.add_organ(suborgans[i])
-		else return 0
-	else return 0
-	return 1
+			if(suborgans.len)
+				for (var/i in suborgans)
+					M.add_organ(suborgans[i])
+			world << "About to return 1!"
+			return 1
+	return 0
 
 /**
   * Overwrite the DNA stored in this organ.

@@ -133,7 +133,7 @@
   * @param dism_type 	The type of dismemberment. Please only use ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED for this one.
   * @return 			A reference to the organ that got removed, in case there's something else we want to do with it.
  **/
-/datum/organ/proc/dismember(var/dism_type)
+/datum/organ/proc/dismember(var/dism_type, var/special = 0)
 	return remove(dism_type, owner.loc)
 
 /**
@@ -145,9 +145,12 @@
   * @param newloc 		The location the organ should end up at.
   * @return 			A reference to the organ that got removed, in case there's something else we want to do with it.
  **/
-/datum/organ/proc/remove(var/dism_type, var/newloc)
+/datum/organ/proc/remove(var/dism_type, var/newloc, var/special = 0)
 	if(exists())
 		status = dism_type					//We change the organdatum status to the type of dismemberment (ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED).
+		if(isorgan(organitem))
+			var/obj/item/organ/OI = organitem
+			OI.Remove(special)	//Special stuff the organ needs done when removed
 		var/obj/item/organ/O = prepare_organitem_for_removal()	//We use the convenient preparation proc to nullify the necessary variables.
 		O.loc = newloc					//The organitem ends up at the new location. newloc
 		if(owner)

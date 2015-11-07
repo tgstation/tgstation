@@ -140,8 +140,8 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen Deceased</span>"
-	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in H.internal_organs
-	if(!GlandTest)
+	var/datum/organ/internal/heart/HE = H.getorgan("heart")
+	if(!istype(HE.organitem, /obj/item/organ/internal/heart/gland))
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null && H.ckey != null)

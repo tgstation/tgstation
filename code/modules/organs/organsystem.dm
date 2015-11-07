@@ -89,8 +89,7 @@
 	New(var/mob/O)
 		..(O)
 		organlist["heart"]					= new/datum/organ/internal/heart(coreitem, new/obj/item/organ/internal/heart())
-		organlist["nutriment_implant"] 		= new/datum/organ/internal/cyberimp/chest/nutriment(coreitem, null)
-		organlist["reviver_implant"] 		= new/datum/organ/internal/cyberimp/chest/reviver(coreitem, null)
+		organlist["cyberimp_chest"] 		= new/datum/organ/internal/cyberimp/chest(coreitem, null)
 
 		organlist["groin"]					= new/datum/organ/abstract/groin(coreitem, new/obj/item/organ/abstract/groin())
 		var/datum/organ/abstract/groin/G 	= getorgan("groin")
@@ -100,6 +99,4 @@
 
 		var/datum/organ/limb/head/H = getorgan("head")
 		var/obj/item/organ/limb/head/head = H.organitem
-
-		organlist["antidrop_implant"]		= new/datum/organ/internal/cyberimp/brain/anti_drop(head, null)
-		organlist["antistun_implant"]		= new/datum/organ/internal/cyberimp/brain/anti_stun(head, null)
+		organlist["cyberimp_brain"]		= new/datum/organ/internal/cyberimp/brain(head, null)

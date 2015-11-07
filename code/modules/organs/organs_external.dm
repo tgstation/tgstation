@@ -41,8 +41,8 @@
 
 /obj/item/organ/limb/head/create_suborgan_slots()
 	new/datum/organ/internal/brain(src, null)
-	new/datum/organ/internal/cyberimp/brain/anti_drop(src, null)
-	new/datum/organ/internal/cyberimp/brain/anti_stun(src, null)
+	new/datum/organ/internal/cyberimp/brain(src, null)
+	new/datum/organ/internal/cyberimp/chest(src, null)
 
 /obj/item/organ/limb/head/examine(mob/user)
 	..()
@@ -65,6 +65,9 @@
 	if(B.exists())
 		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
 		brain.transfer_identity(owner)
+
+/obj/item/organ/limb/head/Remove()
+	transfer_identity()
 
 /**
   *

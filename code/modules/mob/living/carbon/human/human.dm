@@ -40,8 +40,8 @@
 	ready_dna(src)
 	randomize_human(src)
 
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
+/*	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)*/
 	make_blood()
 
 	..()

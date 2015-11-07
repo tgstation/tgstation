@@ -14,30 +14,32 @@
 	var/mob/living/carbon/brain/brainmob = null
 
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/M, special = 0)
+	if(..())
+		name = "brain"
+		if(brainmob)
+			if(M.key)
+				M.ghostize()
+
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(M)
+			else
+				M.key = brainmob.key
+
+			qdel(brainmob)
+
+			//Update the body's icon so it doesnt appear debrained anymore
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_hair(0)
+		return 1
+	return 0
+
+/obj/item/organ/internal/brain/Remove(special = 0)
 	..()
-	name = "brain"
-	if(brainmob)
-		if(M.key)
-			M.ghostize()
-
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(M)
-		else
-			M.key = brainmob.key
-
-		qdel(brainmob)
-
-		//Update the body's icon so it doesnt appear debrained anymore
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.update_hair(0)
-
-/obj/item/organ/internal/brain/Remove(mob/living/carbon/M, special = 0)
 	if(!special)
-		transfer_identity(M)
-	..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
+		transfer_identity()
+	if(owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		H.update_hair(0)
 
 /obj/item/organ/internal/brain/prepare_eat()

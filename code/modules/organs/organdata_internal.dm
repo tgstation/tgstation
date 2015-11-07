@@ -15,6 +15,13 @@
 	return remove(dism_type, owner.loc, special)
 
 /datum/organ/internal/remove(var/dism_type, var/newloc, var/special = 0)
+	var/obj/item/O = ..(dism_type, newloc, special)
+	if(O)
+		if(owner && vital && !special)
+			owner.death()
+	return O
+
+/*/datum/organ/internal/remove(var/dism_type, var/newloc, var/special = 0)
 	if(exists())
 		status = dism_type					//We change the organdatum status to the type of dismemberment (ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED).
 		if(isorgan(organitem))
@@ -31,7 +38,7 @@
 			owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
 		return O							//We return the organ object in case we want some information from it.
 	else
-		return null							//If dismemberment failed because the limb does not exist, we return null.
+		return null							*/ //If dismemberment failed because the limb does not exist, we return null.
 
 
 /datum/organ/internal/brain
@@ -52,39 +59,12 @@
 	name = "eyes"
 
 /datum/organ/internal/cyberimp
-	var/zone = null
-	var/maximps = 0
 	organitem_type = /obj/item/organ/internal/cyberimp
 
-//Might redefine these so there's only cyberimp/brain and cyberimp/chest.
-/datum/organ/internal/cyberimp/set_organitem(var/obj/item/organ/O)
-	if(owner && owner.get_cyberimps(zone) >= maximps)
-		return 0
-	return ..()
-
 /datum/organ/internal/cyberimp/brain
+	name = "cyberimp_brain"
 	organitem_type = /obj/item/organ/internal/cyberimp/brain
-	maximps = MAX_BRAIN_IMPLANT
-
-/datum/organ/internal/cyberimp/brain/anti_drop
-	name = "antidrop_implant"
-	organitem_type = /obj/item/organ/internal/cyberimp/brain/anti_drop
-
-/datum/organ/internal/cyberimp/brain/anti_stun
-	name = "antistun_implant"
-	organitem_type = /obj/item/organ/internal/cyberimp/brain/anti_stun
 
 /datum/organ/internal/cyberimp/chest
+	name = "cyberimp_chest"
 	organitem_type = /obj/item/organ/internal/cyberimp/chest
-	maximps = MAX_CHEST_IMPLANT
-
-/datum/organ/internal/cyberimp/chest/nutriment
-	name = "nutriment_implant"
-	organitem_type = /obj/item/organ/internal/cyberimp/chest/nutriment
-
-/datum/organ/internal/cyberimp/chest/reviver
-	name = "reviver_implant"
-	organitem_type = /obj/item/organ/internal/cyberimp/chest/reviver
-
-/datum/organ/internal/gland/
-	name = "abductor_gland"

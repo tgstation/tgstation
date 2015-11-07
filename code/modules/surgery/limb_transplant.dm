@@ -42,9 +42,8 @@
 			var/mob/living/carbon/human/H = target
 			user.drop_item()
 			if(LI)
-				if(!LI.Insert(H))
-					world << "Error inserting [LI] the [LI.type] in [LI.hardpoint]!"
-					return -1
+				if(LI.Insert(H))
+					H.organs += LI
 			else	//Robotic limb, time for SNOWFLAKE CODE
 				var/obj/item/organ/limb/RL = null
 				switch(target_zone)

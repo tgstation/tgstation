@@ -9,7 +9,7 @@
 
 	var/organ_action_name = null
 
-/obj/item/organ/internal/proc/Remove()
+/obj/item/organ/internal/Remove()
 	if(organ_action_name)
 		action_button_name = null
 
@@ -75,9 +75,11 @@
 		user << "It stopped beating."
 
 /obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
-	..()
-	beating = 1
-	update_icon()
+	if(..())
+		beating = 1
+		update_icon()
+		return 1
+	return 0
 
 /obj/item/organ/internal/heart/Remove(special = 0)
 	..()
@@ -116,9 +118,11 @@
 	..()
 
 /obj/item/organ/internal/appendix/Insert(mob/living/carbon/M)
-	..()
-	if(inflamed)
-		M.AddDisease(new /datum/disease/appendicitis)
+	if(..())
+		if(inflamed)
+			M.AddDisease(new /datum/disease/appendicitis)
+		return 1
+	return 0
 
 /obj/item/organ/internal/appendix/prepare_eat()
 	var/obj/S = ..()

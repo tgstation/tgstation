@@ -94,9 +94,11 @@
 		I = tool
 		user.drop_item()
 		if(I.Insert(target))
+			target.internal_organs += I
 			user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
-		else return -1
+		else
+			return -1
 
 	else if(current_type == "extract")
 		if(OR && OR.owner == target)
@@ -107,6 +109,7 @@
 			else
 				user.visible_message("[user] successfully extracts [I.name] from [target]'s [parse_zone(target_zone)]!",
 					"<span class='notice'>You successfully extract [I.name] from [target]'s [parse_zone(target_zone)].</span>")
+			target.internal_organs -=I
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",

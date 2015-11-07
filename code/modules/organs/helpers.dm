@@ -61,7 +61,9 @@ mob/proc/exists(var/organname)
 		if(isorgan(PO.organitem))
 			var/obj/item/organ/OI = PO.organitem
 			var/datum/organ/RO = OI.suborgans[organname]
-			return (RO && !RO.exists())
+			return RO
+	else if (PO && zone == organname)	//For eyes, mainly
+		return PO
 	return 0
 
 /mob/proc/get_cyberimps()

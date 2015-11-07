@@ -34,9 +34,9 @@
 
 /obj/item/organ/internal/body_egg/process()
 	if(!owner)	return
-	if(!(src in owner.internal_organs))
+/*	if(!(src in owner.internal_organs))	//Should be handled elsewhere. SHOULD
 		organdatum.dismember(ORGAN_REMOVED)
-		return
+		return*/
 	egg_process()
 
 /obj/item/organ/internal/body_egg/proc/egg_process()

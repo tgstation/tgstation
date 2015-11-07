@@ -22,6 +22,7 @@
 
 /obj/item/organ/internal/cyberimp/brain
 	name = "cybernetic brain implant"
+	hardpoint = "cyberimp_brain"
 	desc = "injectors of extra sub-routines for the brain"
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
@@ -38,7 +39,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop
 	name = "Anti-drop implant"
-	hardpoint = "antidrop_implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	var/active = 0
 	var/l_hand_ignore = 0
@@ -122,7 +122,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
-	hardpoint = "antistun_implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = "brain_antistun"
@@ -150,6 +149,7 @@
 
 /obj/item/organ/internal/cyberimp/chest
 	name = "cybernetic torso implant"
+	hardpoint = "cyberimp_chest"
 	desc = "implants for the organs in your torso"
 	icon_state = "chest_implant"
 	implant_overlay = "chest_implant_overlay"
@@ -157,7 +157,6 @@
 
 /obj/item/organ/internal/cyberimp/chest/nutriment
 	name = "Nutriment pump implant"
-	hardpoint = "nutriment_implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
@@ -198,7 +197,6 @@
 
 /obj/item/organ/internal/cyberimp/chest/reviver
 	name = "Reviver implant"
-	hardpoint = "reviver_implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"

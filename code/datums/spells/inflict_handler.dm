@@ -28,8 +28,15 @@
 			if("gib")
 				target.gib()
 			if("gib_brain")
-				if(ishuman(target) || ismonkey(target))
-					var/mob/living/carbon/C_target = target
+				var/mob/living/carbon/C_target = null
+				if(iscarbon(target))
+					C_target = target
+
+				if(C_target.organsystem)
+					var/datum/organ/internal/brain/B = C_target.getorgan("brain")
+					if(B && B.exists())
+						B.dismember(ORGAN_REMOVED)
+				else if(ismonkey(target))
 					var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
 					if(B)
 						B.loc = get_turf(C_target)
