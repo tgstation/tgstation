@@ -33,5 +33,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - soundadd: "Added a new and better sounding flashbag sound and a ringing sound for flashbake deaf effect"
+  - soundadd: "Added a new and better sounding flashbang sound and a ringing sound for flashbang deaf effect"
 
