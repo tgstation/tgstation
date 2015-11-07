@@ -21,7 +21,8 @@
 
 /obj/effect/overlay/temp
 	anchored = 1
-	layer = 3.3
+	layer = 4.1
+	mouse_opacity = 0
 	var/duration = 10
 	var/randomdir = 1
 
@@ -37,7 +38,7 @@
 	icon_state = "purplesparkles"
 
 /obj/effect/overlay/temp/revenant/cracks
-	name = "spooky lights"
+	name = "glowing cracks"
 	icon_state = "purplecrack"
 	duration = 6
 
