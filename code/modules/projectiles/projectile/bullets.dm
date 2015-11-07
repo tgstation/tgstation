@@ -14,7 +14,7 @@
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
 	weaken = 3
-	stamina = 50
+	stamina = 25
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -42,7 +42,7 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stamina = 65 //two round bursts from the c20r knocks people down
+	stamina = 35
 
 
 /obj/item/projectile/bullet/midbullet2
