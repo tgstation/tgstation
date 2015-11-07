@@ -44,7 +44,7 @@
 
 /obj/item/clothing/suit/cloak/cap
 	name = "captain's cloak"
-	desc = "Worm by the commander of Space Station 13."
+	desc = "Worn by the commander of Space Station 13."
 	icon_state = "capcloak"
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
 
