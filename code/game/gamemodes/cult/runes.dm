@@ -61,18 +61,24 @@ Word definitions:
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
-		user << "<span class='notice'>You carefully erase [src].</span>"
+		user.visible_message("<span class='warning'>[user] quietly murmurs under their breath, and [src] fades away.</span>", \
+							"<span class='danger'>You carefully undo the lines of [src].</span>")
 		qdel(src)
 		return
 	else if(istype(I, /obj/item/weapon/nullrod))
-		user << "<span class='notice'>You disrupt the magic with [I].</span>"
+		if(iscultist(user))
+			user.drop_item()
+			user.visible_message("<span class='warning'>[I] suddenly glows with white light, forcing [user] to drop it in pain!</span>", \
+								"<span class='warning'><b>[I] suddenly glows with a white light that sears your hand, forcing you to drop it!</b></span>")
+			return
+		user << "<span class='warning'>You disrupt the heretical magic with [I]!</span>"
 		qdel(src)
 		return
 	return
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>You aren't able to understand the words of [src].</span>"
+		user << "<span class='warning'>You can't speak the words of [src] without fumbling over them.</span>"
 		return
 	if(can_invoke(user))
 		invoke(user)
@@ -194,7 +200,7 @@ var/list/teleport_runes = list()
 			potential_runes.Add(T)
 
 	if(!potential_runes.len)
-		user << "<span class='warning'>There are no runes with the same keyword!</span>"
+		user << "<span class='warning'>There are no identical runes with the same keyword!</span>"
 		fail_invoke()
 		log_game("Teleport rune failed - no candidates with matching keyword")
 		return
@@ -233,7 +239,7 @@ var/list/teleport_other_runes = list()
 			potential_runes.Add(T)
 
 	if(!potential_runes.len)
-		user << "<span class='warning'>There are no runes with the same keyword!</span>"
+		user << "<span class='warning'>There are no identical runes with the same keyword!</span>"
 		fail_invoke()
 		log_game("Teleport Other rune failed - no candidates with matching keyword")
 		return
@@ -274,7 +280,7 @@ var/list/teleport_other_runes = list()
 	grammar = "karazet nahlizet ego"
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
-	visible_message("<span class='warning'>A frayed tome materializes on the surface of [src], which dissolves into nothing.</span>")
+	visible_message("<span class='warning'>[src] twists and morphs into a rectangular outline, which forms into a frayed tome.</span>")
 	new /obj/item/weapon/tome(get_turf(src))
 	qdel(src)
 
@@ -370,9 +376,9 @@ var/list/teleport_other_runes = list()
 			return
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	color = rgb(255, 0, 0)
+	sac(offering)
 	spawn(5)
 		color = initial(color)
-	sac(offering)
 
 /obj/effect/rune/sacrifice/proc/sac(mob/living/T)
 	var/sacrifice_fulfilled
@@ -606,11 +612,11 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "Emits a large electromagnetic pulse, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
-	color = rgb(255, 0, 0)
+	color = rgb(100, 100, 255)
 	grammar = "mgar karazet balaq"
 
 /obj/effect/rune/emp/invoke(mob/living/user)
-	visible_message("<span class='warning'>[src] wavers for a moment before vanishing.</span>")
+	visible_message("<span class='warning'>[src] wavers for a moment before vanishing in a cascade of blue sparks.</span>")
 	for(var/mob/living/carbon/C in orange(1,src))
 		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
 	playsound(get_turf(src), 'sound/items/Welder2.ogg', 25, 1)
@@ -682,7 +688,7 @@ var/list/teleport_other_runes = list()
 			affecting = null
 			var/mob/dead/observer/G = user.get_ghost()
 			if(G)
-				G << "<span class='warning'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
+				G << "<span class='warning'><b>You suddenly feel your physical form pass on. Your body has been killed!</b></span>"
 			return
 		sleep(10)
 	rune_in_use = 0
@@ -739,10 +745,10 @@ var/list/teleport_other_runes = list()
 	grammar = "mgar jatkaa karazet"
 
 /obj/effect/rune/blind/invoke(mob/living/user)
-	visible_message("<span class='warning'>[src] emits a blinding red flash!</span>")
+	visible_message("<span class='warning'>[src] vanishes in a blinding red flash!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
 		if(!iscultist(C) && !C.null_rod_check())
-			C << "<span class='warning'><b>You can't see!</b></span>"
+			C << "<span class='userdanger'>White light suddenly drapes over your vision! You can't see!</span>"
 			C.flash_eyes(1, 1)
 			C.eye_blurry += 50
 			C.eye_blind += 20
@@ -762,7 +768,7 @@ var/list/teleport_other_runes = list()
 	visible_message("<span class='warning'>[src] explodes in a bright flash!</span>")
 	for(var/mob/living/M in viewers(src))
 		if(!iscultist(M) && !M.null_rod_check())
-			M << "<span class='warning'><b>You are disoriented by [src]!</b></span>"
+			M << "<span class='warning'><b>You are disoriented by a flash of white light!</b></span>"
 			M.Weaken(3)
 			M.Stun(3)
 			M.flash_eyes(1,1)
@@ -929,7 +935,7 @@ var/list/teleport_other_runes = list()
 	user.adjustBruteLoss(-drained_amount)
 	target << "<span class='warning'>You feel extremely weak.</span>"
 	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
-						 "<span class='danger'>[target]'s blood flows into you, healing your wounds and revitalizing your spirit.</span>")
+						 "<span class='danger'>[target]'s blood flows into you, cleansing your wounds and revitalizing your spirit.</span>")
 
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -943,14 +949,16 @@ var/list/teleport_other_runes = list()
 	grammar = "mgar karazet nahlizet"
 
 /obj/effect/rune/blood_boil/invoke(mob/living/user)
-	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
+	visible_message("<span class='warning'>[src] bubbles and hisses before suddenly exploding!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
-		if(!iscultist(C))
+		if(!iscultist(C) && !C.stat)
 			if(C.null_rod_check())
 				C << "<span class='userdanger'>The null rod suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='userdanger'>Agonizing heat overwhelms you!</span>"
-			C.take_overall_damage(51,51)
+			C.take_overall_damage(75)
+			C.adjust_fire_stacks(5)
+			C.IgniteMob()
 	for(var/mob/living/carbon/M in orange(1,src))
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
@@ -987,7 +995,7 @@ var/list/teleport_other_runes = list()
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	visible_message("<span class='warning'>A cloud of red mist forms above [src], shaping itself into... a human.</span>")
 	user << "<span class='warning'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind)
@@ -1001,7 +1009,7 @@ var/list/teleport_other_runes = list()
 
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
-								  "<span class='userdanger'>Your link to the world fades. Your form breaks apart.</span>")
+								  "<span class='userdanger'>Your link to the physical world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
 			new_human.unEquip(I)
 		new_human.dust()

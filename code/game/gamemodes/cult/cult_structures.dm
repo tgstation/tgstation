@@ -4,31 +4,31 @@
 	icon = 'icons/obj/cult.dmi'
 
 /obj/structure/cult/talisman
-	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie"
+	name = "sacrificial altar"
+	desc = "An altar made of tough wood and draped with an ornamental, bloodstained cloth."
 	icon_state = "talismanaltar"
 
-
 /obj/structure/cult/forge
-	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
+	name = "runed forge"
+	desc = "A combination furnace and anvil. It glows with the heat of the lava flowing through its channel."
 	icon_state = "forge"
+	luminosity = 2
 
 /obj/structure/cult/pylon
-	name = "pylon"
-	desc = "A floating crystal that hums with an unearthly energy"
+	name = "energy pylon"
+	desc = "A hovering red crystal that thrums with energy and light. Kept aloft by two metal prongs."
 	icon_state = "pylon"
 	luminosity = 5
 
 /obj/structure/cult/tome
-	name = "desk"
-	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
+	name = "research desk"
+	desc = "A writing desk covered in strange volumes written in an unknown tongue."
 	icon_state = "tomealtar"
 	luminosity = 1
 
 /obj/effect/gateway
 	name = "gateway"
-	desc = "You're pretty sure that abyss is staring back"
+	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1

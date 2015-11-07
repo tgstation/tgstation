@@ -185,9 +185,10 @@ Rite of Disorientation
 	cultist_desc = "A talisman that will make all runes within a small radius invisible."
 	invocation = "Kla'atu barada nikt'o!"
 	health_cost = 1
+	uses = 3
 
 /obj/item/weapon/paper/talisman/hide_runes/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand.</span>", \
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand!</span>", \
 						 "<span class='warning'>You speak the words of the talisman, veiling nearby runes.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.visible_message("<span class='danger'>[R] fades away.</span>")
@@ -200,6 +201,7 @@ Rite of Disorientation
 	cultist_desc = "A talisman that reveals nearby invisible runes."
 	invocation = "Nikt'o barada kla'atu!"
 	health_cost = 1
+	uses = 3
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
@@ -216,7 +218,7 @@ Rite of Disorientation
 	health_cost = 3
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand!</span>", \
 						 "<span class='warning'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.desc = "A rune drawn in crayon."
@@ -286,3 +288,37 @@ Rite of Disorientation
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+
+
+//Rite of the Unseen Glance: Blinds everyone nearby for a decent time
+/obj/item/weapon/paper/talisman/blind
+	cultist_name = "Talisman of Blinding"
+	cultist_desc = "A talisman that will blind all nearby non-cultists."
+	invocation = "Sti kaliesin!"
+	health_cost = 4
+
+/obj/item/weapon/paper/talisman/blind/invoke(mob/living/user)
+	user.visible_message("<span class='warning'>[user]'s hand flashes a bright red!</span>", \
+						 "<span class='warning'>You speak the words of the talisman, blinding all heretics nearby.</span>")
+	for(var/mob/living/carbon/C in viewers(user))
+		if(!iscultist(C) && !C.null_rod_check())
+			C << "<span class='userdanger'>White light suddenly drapes over your vision! You can't see!</span>"
+			C.flash_eyes(1, 1)
+			C.eye_blurry += 25
+			C.eye_blind += 10
+
+
+//Rite of the Unheard Whisper: Deafens everyone nearby for a decent time
+/obj/item/weapon/paper/talisman/deafen
+	cultist_name = "Talisman of Blinding"
+	cultist_desc = "A talisman that will blind all nearby non-cultists."
+	invocation = "Sti kaliedir!"
+	health_cost = 4
+
+/obj/item/weapon/paper/talisman/deafen/invoke(mob/living/user)
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand!</span>", \
+						 "<span class='warning'>You speak the words of the talisman, deafening all heretics nearby.</span>")
+	for(var/mob/living/carbon/C in range(7,src))
+		if(!iscultist(C) && !C.null_rod_check())
+			C << "<span class='warning'>The world around you goes quiet.</span>"
+			C.adjustEarDamage(0,25)

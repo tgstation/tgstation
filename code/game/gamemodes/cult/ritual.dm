@@ -100,14 +100,17 @@ It also contains rune words, which are soon to be removed.
 				if("(Back...)")
 					return open_tome(user)
 				if("Information")
-					read_tome(user)
+					if(user.canUseTopic(src))
+						read_tome(user)
 		if("Scribe Rune")
-			scribe_rune(user)
+			if(user.canUseTopic(src))
+				scribe_rune(user)
 		if("Commune")
-			var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
-			if(!input)
-				return
-			cultist_commune(user, 1, 0, input)
+			if(user.canUseTopic(src))
+				var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
+				if(!input)
+					return
+				cultist_commune(user, 1, 0, input)
 
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
@@ -226,7 +229,7 @@ It also contains rune words, which are soon to be removed.
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
 	disappear.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Tome summoning</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
+	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
 
 	text += "<font color='red'><b>Talismans of Veiling, Revealing, and Disguising</b></font><br>These talismans all function identically to their rune counterparts, but with less range. In addition, \
 	the Talisman of True Sight will not reveal spirits. They will disappear after one use.<br><br>"
@@ -265,6 +268,8 @@ It also contains rune words, which are soon to be removed.
 				chosen_keyword = the_keyword
 			break
 	if(!rune_to_scribe)
+		return
+	if(!user.canUseTopic(src))
 		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
