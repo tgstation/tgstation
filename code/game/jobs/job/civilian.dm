@@ -82,7 +82,7 @@ Mime
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
-	H.add_mutations.Add(mutations_list[MUT_MUTE])
+	H.dna.add_mutation(MUT_MUTE)
 	H.rename_self("mime")
 
 /*
