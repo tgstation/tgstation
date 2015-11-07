@@ -3,7 +3,7 @@
 //Don't hear deadchat and are NOT normal ghosts
 //Admin-spawn or random event
 
-#define INVISIBILITY_REVENANT 30
+#define INVISIBILITY_REVENANT 50
 
 /mob/living/simple_animal/revenant
 	name = "revenant"
@@ -14,6 +14,8 @@
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
+	alpha = 160
+	layer = 5
 	healable = 0
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
@@ -51,7 +53,6 @@
 
 
 /mob/living/simple_animal/revenant/Life()
-	..()
 	ear_damage = 0
 	ear_deaf = 0 //YOU CAN'T DEAFEN A REVENANT
 	if(revealed && essence <= 0)
@@ -60,6 +61,7 @@
 		unreveal_time = 0
 		revealed = 0
 		invisibility = INVISIBILITY_REVENANT
+		alpha = 160
 		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
@@ -67,6 +69,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
+	..()
 
 
 /mob/living/simple_animal/revenant/proc/reveal(time)
@@ -76,6 +79,7 @@
 		return
 	revealed = 1
 	invisibility = 0
+	alpha = 255
 	if(!unreveal_time)
 		src << "<span class='revendanger'>You have been revealed!</span>"
 	else
@@ -112,8 +116,7 @@
 
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
-	if(client.inquisitive_ghost)
-		A.examine(src)
+	A.examine(src)
 	if(ishuman(A) && in_range(src, A))
 		Harvest(A)
 
@@ -163,15 +166,17 @@
 				src << "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>"
 				if(target.stat != DEAD)
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
-				icon_state = "revenant_draining"
-				reveal(27)
-				stun(27)
+				reveal(46)
+				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=24)
-				if(do_after(src, 30, 9, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
+				if(do_after(src, 50, 15, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
+					if(essence_drained <= 90 && target.stat != DEAD)
+						essence_regen_cap += 5
+						src << "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					if(essence_drained > 90)
-						essence_regen_cap += 25
+						essence_regen_cap += 15
 						perfectsouls += 1
 						src << "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					src << "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
@@ -236,9 +241,9 @@
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_light(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 
 
 /mob/living/simple_animal/revenant/death()

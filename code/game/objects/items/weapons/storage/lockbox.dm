@@ -54,8 +54,8 @@
 		locked = 0
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
+		if(user)
+			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)

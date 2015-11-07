@@ -12,14 +12,21 @@
 	var/finished = 0
 	var/target_oldloc = null
 	var/origin_oldloc = null
+	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam)
 	endtime = world.time+time
 	origin = beam_origin
 	origin_oldloc = origin.loc
+	if(isarea(origin_oldloc))
+		origin_oldloc = origin
 	target = beam_target
 	target_oldloc = target.loc
+	if(isarea(target_oldloc))
+		target_oldloc = target
+	if(origin_oldloc == origin && target_oldloc == target)
+		static_beam = 1
 	max_distance = maxdistance
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
@@ -29,7 +36,7 @@
 /datum/beam/proc/Start()
 	Draw()
 	while(!finished && target && world.time<endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
-		if(origin.loc != origin_oldloc || target.loc != target_oldloc)
+		if(!static_beam && (origin.loc != origin_oldloc || target.loc != target_oldloc))
 			Reset()
 			Draw()
 		sleep(sleep_time)
@@ -58,9 +65,9 @@
 	var/DY=(32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
 	var/N=0
 	var/length=round(sqrt((DX)**2+(DY)**2))
-	
+
 	for(N,N<length,N+=32)
-		var/obj/effect/ebeam/X= new beam_type(origin.loc)
+		var/obj/effect/ebeam/X= new beam_type(origin_oldloc)
 		X.owner=src
 		elements |= X
 		if(N+32>length)

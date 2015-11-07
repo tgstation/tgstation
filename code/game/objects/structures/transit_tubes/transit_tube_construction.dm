@@ -49,14 +49,14 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(-90)
 
 /obj/structure/c_transit_tube/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -69,7 +69,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(90)
@@ -79,7 +79,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_flip()

@@ -12,13 +12,13 @@
 	var/obj/item/weapon/tank/jetpack/J = H.back
 	J.toggle()
 	J.Topic(null, list("stat" = 1))
-			
+
 
 /datum/outfit/tournament
 
 /datum/outfit/tournament/
 	name = "tournament standard red"
-	
+
 	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
@@ -30,7 +30,7 @@
 
 /datum/outfit/tournament/red
 	name = "tournament standard green"
-	
+
 	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament/gangster
@@ -156,7 +156,7 @@
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H)
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attachTie(new /obj/item/clothing/tie/waistcoat(H))
-	
+
 	//Could use a type
 	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
 	for(var/obj/item/briefcase_item in sec_briefcase)
@@ -172,7 +172,7 @@
 	pda.owner = H.real_name
 	pda.ownjob = "Reaper"
 	pda.update_label()
-	
+
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
@@ -340,7 +340,7 @@
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
-	
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
@@ -359,7 +359,15 @@
 	name = "Death Commando Officer"
 	head = /obj/item/clothing/head/helmet/space/beret
 
+/datum/outfit/chrono_agent
+	name = "Timeline Eradication Agent"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/space/chronos
+	back = /obj/item/weapon/chrono_eraser
+	head = /obj/item/clothing/head/helmet/space/chronos
+	mask = /obj/item/clothing/mask/breath
+	suit_store = /obj/item/weapon/tank/internals/oxygen
 
 
 
-			
+
