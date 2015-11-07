@@ -3,14 +3,7 @@
 	desc = "An explosion of flavour in every bite"
 	condi = 1
 	chem_board = /obj/item/weapon/circuitboard/snackbar_machine
-
-/obj/machinery/chem_master/snackbar_machine/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-
-	if(istype(B, /obj/item/weapon/storage/pill_bottle))
-		user << "<span class='warning'>This condiment master does not come with a pill dispenser unit built-in.</span>"
-		return ..()
-
-	. = ..()
+	windowtype = "snackbar_machine"
 
 /obj/machinery/chem_master/snackbar_machine/Topic(href, href_list)
 
@@ -42,9 +35,9 @@
 
 	user.set_machine(src)
 
-	var/dat = ""
+	var/dat = list()
 	if(!beaker)
-		dat = "Please insert a beaker.<BR>"
+		dat += "Please insert a beaker.<BR>"
 	else
 		var/datum/reagents/R = beaker.reagents
 		dat += "<A href='?src=\ref[src];eject=1'>Eject beaker and Clear Buffer</A><BR>"
@@ -74,7 +67,9 @@
 			dat += "<A href='?src=\ref[src];createbar=1'>Create snack bar (10 units max)</A>"
 		else
 			dat += "Buffer is empty.<BR>"
-
-	user << browse("<TITLE>SnackBar Machine</TITLE>SnackBar Machine menu:<BR><BR>[dat]", "window=snackbar_machine;size=575x400")
-	onclose(user, "snackbar_machine")
+	dat = list2text(dat)
+	var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 575, 400, src)
+	popup.set_content(dat)
+	popup.open()
+	onclose(user, "[windowtype]")
 	return
