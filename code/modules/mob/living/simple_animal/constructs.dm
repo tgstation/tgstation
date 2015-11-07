@@ -33,6 +33,8 @@
 	mob_swap_flags = HUMAN|SIMPLE_ANIMAL|SLIME|MONKEY
 	mob_push_flags = ALLMOBS
 
+	meat_type = 0
+
 	var/list/construct_spells = list()
 
 /mob/living/simple_animal/construct/construct_chat_check(setting)

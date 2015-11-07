@@ -19,6 +19,7 @@
 	faction = "slimesummon"
 	speed = 4
 	can_butcher = 0
+	meat_type = null
 
 	var/colour = "grey"
 

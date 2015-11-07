@@ -28,6 +28,7 @@
 	status_flags = CANPUSH
 	supernatural = 1
 	flying = 1
+	meat_type = null
 
 
 /mob/living/simple_animal/shade/cultify()

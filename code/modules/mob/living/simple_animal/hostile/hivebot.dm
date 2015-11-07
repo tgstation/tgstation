@@ -29,6 +29,7 @@
 	minbodytemp = 0
 	speed = 4
 	size = SIZE_BIG
+	meat_type = null
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"

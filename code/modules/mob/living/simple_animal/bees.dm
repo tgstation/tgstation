@@ -33,6 +33,8 @@
 	maxbodytemp = 360
 
 	holder_type = null //Can't pick BEES up!
+	flying = 1
+	meat_type = 0
 
 	var/max_hive_dist=5
 

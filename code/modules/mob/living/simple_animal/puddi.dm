@@ -16,6 +16,8 @@
 	response_disarm = "squishes"
 	response_harm   = "slaps"
 
+	meat_type = null
+
 /mob/living/simple_animal/puddi/happy
 	icon_state = "livingpuddi-happy"
 	icon_living = "livingpuddi-happy"
