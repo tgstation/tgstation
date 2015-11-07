@@ -7,6 +7,7 @@
 	density = 1
 	layer = 2
 	var/finished = 0
+	var/admin = 0 //Can't be rotated or deconstructed
 
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
@@ -36,6 +37,8 @@
 
 
 /obj/structure/reflector/attackby(obj/item/weapon/W, mob/user, params)
+	if(admin)
+		return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user << "Unweld the [src] first!"
@@ -143,6 +146,10 @@
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
 	return new_dir
 
+/obj/structure/reflector/single/mapping
+	admin = 1
+	anchored = 1
+
 //DOUBLE
 
 /obj/structure/reflector/double
@@ -160,6 +167,10 @@
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
 
+/obj/structure/reflector/double/mapping
+	admin = 1
+	anchored = 1
+
 //BOX
 
 /obj/structure/reflector/box
@@ -176,3 +187,21 @@
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
+
+
+/obj/structure/reflector/box/mapping
+	admin = 1
+	anchored = 1
+
+/obj/structure/reflector/ex_act()
+	if(admin)
+		return
+	else
+		..()
+
+
+/obj/structure/reflector/singularity_act()
+	if(admin)
+		return
+	else
+		..()
