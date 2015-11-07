@@ -21,7 +21,8 @@
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
 	if (get_dist(user, src) > 1 || user.eye_blind)
-		off_action.Activate()
+		if(user == current_user)
+			off_action.Activate()
 		return 0
 	return 1
 

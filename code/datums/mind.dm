@@ -1069,10 +1069,10 @@
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
 					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)

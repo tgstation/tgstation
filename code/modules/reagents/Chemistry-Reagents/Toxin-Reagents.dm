@@ -33,7 +33,7 @@
 		return
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
+	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -454,7 +454,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method != INGEST)
+	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("itching_powder", reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
@@ -625,7 +625,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.take_organ_damage(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		return
+	if(method == INJECT)
+		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, toxpwr, reac_volume)
 

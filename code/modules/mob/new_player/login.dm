@@ -1,5 +1,6 @@
 /mob/new_player/Login()
-	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
+	..()
+
 	if(join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 
@@ -20,7 +21,6 @@
 		loc = locate(1,1,1)
 
 	sight |= SEE_TURFS
-	player_list |= src
 
 /*
 	var/list/watch_locations = list()
@@ -32,8 +32,7 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
-	if(ckey in deadmins)
-		verbs += /client/proc/readmin
+
 	spawn(40)
 		if(client)
 			client.playtitlemusic()

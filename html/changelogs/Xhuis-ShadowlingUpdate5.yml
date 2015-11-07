@@ -1,0 +1,13 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - tweak: "Shadowling abilities now require the user to be human."
+  - tweak: "Enthralling now takes 21 seconds (down from 30)."
+  - tweak: "Regenerate Chitin has been renamed to Rapid Re-Hatch."
+  - tweak: "Dethralling surgery's final step now requires a flash, penlight, or flashlight."
+  - tweak: "Dethralling surgery now produces a black tumor, which has a high biological tech origin but dies quickly in the light."
+  - rscdel: "Shadowlings no longer have Enthrall before hatching."
+  - rscadd: "Shadowling clothing now has icons to better reflect its existence."
+  - rscdel: "Ascendant Broadcast has been removed."
+  - rscdel: "Destroy Engines is now removed from the user after it is used once."
