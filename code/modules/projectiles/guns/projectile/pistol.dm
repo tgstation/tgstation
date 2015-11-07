@@ -8,6 +8,9 @@
 	can_suppress = 1
 	burst_size = 1
 	fire_delay = 0
+	mag_load_sound = 'sound/effects/wep_magazines/handgun_generic_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/handgun_generic_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/generic_chamber.ogg'
 	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()

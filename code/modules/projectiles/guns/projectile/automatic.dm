@@ -6,6 +6,9 @@
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
+	mag_load_sound = 'sound/effects/wep_magazines/smg_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/smg_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/smg_chamber.ogg'
 	action_button_name = "Toggle Firemode"
 
 /obj/item/weapon/gun/projectile/automatic/proto
@@ -118,6 +121,9 @@
 	fire_delay = 2
 	can_suppress = 0
 	burst_size = 0
+	mag_load_sound = 'sound/effects/wep_magazines/ar_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/ar_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/ar_chamber.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
 	return
@@ -149,6 +155,9 @@
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 3
+	mag_load_sound = null 	//Snowflake code here
+	mag_unload_sound = 'sound/effects/wep_magazines/lmg_unload.ogg'
+	chamber_sound = null 	//Can't chamber like other guns
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
@@ -186,6 +195,7 @@
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
+		playsound(loc, 'sound/effects/wep_magazines/lmg_load.ogg', 80)
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
@@ -207,6 +217,9 @@
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
+	mag_load_sound = 'sound/effects/wep_magazines/heavyar_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/heavyar_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/heavyar_chamber.ogg'
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
@@ -282,6 +295,9 @@
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
+	mag_load_sound = 'sound/effects/wep_magazines/bulldog_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/bulldog_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/bulldog_chamber.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -295,3 +311,6 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
+	mag_load_sound = 'sound/effects/wep_magazines/heavyar_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/heavyar_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/heavyar_chamber.ogg'

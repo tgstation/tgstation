@@ -12,6 +12,9 @@
 	can_suppress = 0
 	clumsy_check = 0
 	needs_permit = 0
+	mag_load_sound = 'sound/effects/wep_magazines/smg_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/smg_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/smg_chamber.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
@@ -26,6 +29,9 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
+	mag_load_sound = 'sound/effects/wep_magazines/handgun_generic_load.ogg'
+	mag_unload_sound = 'sound/effects/wep_magazines/handgun_generic_unload.ogg'
+	chamber_sound = 'sound/effects/wep_magazines/generic_chamber.ogg'
 	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/update_icon()
