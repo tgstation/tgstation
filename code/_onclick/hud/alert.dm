@@ -274,7 +274,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 
 //GHOSTS
-//TODO: expand this system to replace the pollCandidates Yes/No messages
+//TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
 /obj/screen/alert/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
@@ -291,15 +291,20 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "A body was created. You can enter it."
 	icon_state = "ghost_frame"
 	timeout = 300
-	var/jump_target = null
+	var/atom/jump_target = null
+	var/attack_not_jump = null
 
 /obj/screen/alert/notify_jump/Click()
 	if(!usr || !usr.client) return
 	if(!jump_target) return
 	var/mob/dead/observer/G = usr
-	var/turf/T = get_turf(jump_target)
-	if(T && isturf(T))
-		G.loc = T
+	if(!istype(G)) return
+	if(attack_not_jump)
+		jump_target.attack_ghost(G)
+	else
+		var/turf/T = get_turf(jump_target)
+		if(T && isturf(T))
+			G.loc = T
 
 //OBJECT-BASED
 
