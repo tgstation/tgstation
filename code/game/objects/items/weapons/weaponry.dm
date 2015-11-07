@@ -278,7 +278,7 @@
 /obj/item/weapon/mounted_chainsaw
         name = "mounted chainsaw"
         desc = "A chainsaw that has replaced your arm."
-        icon_state = "chainsaw_on"
+        icon_state = "mounted_chainsaw"
         flags = ABSTRACT | NODROP
         w_class = 5.0
         force = 21
