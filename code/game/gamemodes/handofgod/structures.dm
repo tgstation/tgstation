@@ -52,11 +52,12 @@
 
 
 /obj/structure/divine/attackby(obj/item/I, mob/user)
-	if(!I)
+	if(!I || (I.flags & ABSTRACT))
 		return 0
-
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	playsound(get_turf(src), I.hitsound, 50, 1)
-	visible_message("<span class='danger'>\The [src] has been attack with \the [I][(user ? " by [user]" : ".")]!</span>")
+	visible_message("<span class='danger'>\The [src] has been attacked with \the [I][(user ? " by [user]" : ".")]!</span>")
 	health = max(0, health-I.force)
 	healthcheck()
 
@@ -128,48 +129,48 @@
 		var/obj/item/stack/sheet/metal/M = I
 		if(metal_cost)
 			var/spend = min(metal_cost, M.amount)
-			user << "<span class='notice'>You add [spend] metal to \the [src]"
+			user << "<span class='notice'>You add [spend] metal to \the [src]."
 			metal_cost = max(0, metal_cost - spend)
 			M.use(spend)
 			check_completion()
 		else
-			user << "<span class='notice'>\the [src] does not require anymore metal"
+			user << "<span class='notice'>\The [src] does not require any more metal!"
 		return
 
 	if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(glass_cost)
 			var/spend = min(glass_cost, G.amount)
-			user << "<span class='notice'>You add [spend] glass to \the [src]"
+			user << "<span class='notice'>You add [spend] glass to \the [src]."
 			glass_cost = max(0, glass_cost - spend)
 			G.use(spend)
 			check_completion()
 		else
-			user << "<span class='notice'>\the [src] does not require anymore glass"
+			user << "<span class='notice'>\The [src] does not require any more glass!"
 		return
 
 	if(istype(I, /obj/item/stack/sheet/lessergem))
 		var/obj/item/stack/sheet/lessergem/LG = I
 		if(lesser_gem_cost)
 			var/spend = min(lesser_gem_cost, LG.amount)
-			user << "<span class='notice'>You add [spend] lesser gems to \the [src]"
+			user << "<span class='notice'>You add [spend] lesser gems to \the [src]."
 			lesser_gem_cost = max(0, lesser_gem_cost - spend)
 			LG.use(spend)
 			check_completion()
 		else
-			user << "<span class='notice'>\the [src] does not require anymore lesser gems"
+			user << "<span class='notice'>\The [src] does not require any more lesser gems!"
 		return
 
 	if(istype(I, /obj/item/stack/sheet/greatergem))
 		var/obj/item/stack/sheet/greatergem/GG = I //GG!
 		if(greater_gem_cost)
 			var/spend = min(greater_gem_cost, GG.amount)
-			user << "<span class='notice'>You add [spend] greater gems to \the [src]"
+			user << "<span class='notice'>You add [spend] greater gems to \the [src]."
 			greater_gem_cost = max(0, greater_gem_cost - spend)
 			GG.use(spend)
 			check_completion()
 		else
-			user << "<span class='notice'>\the [src] does not require anymore greater gems"
+			user << "<span class='notice'>\The [src] does not require any more greater gems!"
 		return
 
 	..()
@@ -200,7 +201,7 @@
 
 /obj/structure/divine/nexus
 	name = "nexus"
-	desc = "It anchors a deity to this world. It radiates an unusual aura. Culstists protect this at all costs. It looks well protected from explosion shock."
+	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosion shock."
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
@@ -222,6 +223,7 @@
 			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
 			qdel(deity)
 		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
+		qdel(src)
 
 
 /obj/structure/divine/nexus/New()
@@ -234,6 +236,7 @@
 		deity.update_followers()
 		deity.add_faith(faith_regen_rate + (powerpylons.len / 5) + (deity.alive_followers / 3))
 		deity.max_faith = initial(deity.max_faith) + (deity.alive_followers*10) //10 followers = 100 max faith, so disaster() at around 20 followers
+		deity.check_death()
 
 
 /obj/structure/divine/nexus/Destroy()
@@ -264,7 +267,7 @@
 */
 
 /obj/structure/divine/convertaltar
-	name = "conversion taltar"
+	name = "conversion altar"
 	desc = "An altar dedicated to a deity.  Cultists can \"forcefully teach\" their non-aligned crewmembers to join their side and take up their deity."
 	icon_state = "convertaltar"
 	density = 0
@@ -283,7 +286,7 @@
 	if(!H.mind)
 		user << "<span class='danger'>Only sentients may serve your deity.</span>"
 		return
-	if((side == "red" && is_handofgod_redcultist(user))	|| (side == "blue" && is_handofgod_bluecultist(user)))
+	if((side == "red" && is_handofgod_redcultist(user) && !is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(user) && !is_handofgod_bluecultist(H)))
 		user << "<span class='notice'>You invoke the conversion ritual.</span>"
 		ticker.mode.add_hog_follower(H.mind, side)
 	else
@@ -353,7 +356,7 @@
 
 /obj/structure/divine/healingfountain
 	name = "healing fountain"
-	desc = "A fountain containing the waters of life... or death, depending on where your allegiances lie"
+	desc = "A fountain containing the waters of life... or death, depending on where your allegiances lie."
 	icon_state = "fountain"
 	metal_cost = 15
 	glass_cost = 10
@@ -364,14 +367,14 @@
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
 	if(last_process + time_between_uses > world.time)
-		user << "<span class='notice'>The foundtain appears to be empty.</span>"
+		user << "<span class='notice'>The fountain appears to be empty.</span>"
 		return
 	last_process = world.time
 	if(!is_handofgod_cultist(user))
 		user << "<span class='danger'><B>The water burns!</b></spam>"
 		user.reagents.add_reagent("hell_water",20)
 	else
-		user << "<span class='notice'>The water feels warm ans soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
+		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
 		user.reagents.add_reagent("doctorsdelight",20)
 	update_icons()
 	spawn(time_between_uses)
@@ -381,7 +384,7 @@
 
 /obj/structure/divine/healingfountain/update_icons()
 	if(last_process + time_between_uses > world.time)
-		icon_state = "fountain-dry"
+		icon_state = "fountain"
 	else
 		icon_state = "fountain-[side]"
 
@@ -411,7 +414,7 @@
 
 /obj/structure/divine/defensepylon
 	name = "defense pylon"
-	desc = "A plyon which is blessed to withstand many blows, and fire strong bolts at nonbelivers."
+	desc = "A pylon which is blessed to withstand many blows, and fire strong bolts at nonbelievers. A god can toggle it."
 	icon_state = "defensepylon"
 	health = 150
 	maxhealth = 150
@@ -424,6 +427,7 @@
 	..()
 	pylon_gun = new()
 	pylon_gun.base = src
+	pylon_gun.faction = list("[side] god")
 
 
 /obj/structure/divine/defensepylon/Destroy()
@@ -431,26 +435,40 @@
 	return ..()
 
 
+/obj/structure/divine/defensepylon/examine(mob/user)
+        ..()
+        user << "<span class='notice'>\The [src] looks [pylon_gun.on ? "on" : "off"].</span>"
+
+
 /obj/structure/divine/defensepylon/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
 	if(..() && pylon_gun)
-		pylon_gun.faction = "[side] god"
+		pylon_gun.faction = list("[side] god")
 		pylon_gun.side = side
 
+/obj/structure/divine/defensepylon/attack_god(mob/camera/god/user)
+	if(user.side == side)
+		pylon_gun.on = !pylon_gun.on
+		icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
 
-//This sits inside the defenspylon, to avoid copypasta
+
+//This sits inside the defensepylon, to avoid copypasta
 /obj/machinery/gun_turret/defensepylon_internal_turret
 	name = "defense pylon"
-	desc = "A plyon which is blessed to withstand many blows, and fire strong bolts at nonbelivers."
+	desc = "A plyon which is blessed to withstand many blows, and fire strong bolts at nonbelievers."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "defensepylon"
 	health = 200
-	base_icon_state = "defenspylon"
+	base_icon_state = "defensepylon"
 	scan_range = 7
-	faction = "rofl I'm not supposed to exist"
+	faction = null
 	projectile_type = /obj/item/projectile/beam/pylon_bolt
 	fire_sound = 'sound/weapons/emitter2.ogg'
 	var/side = "neutral"
+	var/on = 1
 
+/obj/machinery/gun_turret/defensepylon_internal_turret/process()
+	if(on)
+		..()
 
 /obj/machinery/gun_turret/defensepylon_internal_turret/fire(atom/target)
 	var/obj/item/projectile/A = ..()

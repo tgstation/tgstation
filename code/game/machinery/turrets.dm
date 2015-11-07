@@ -86,17 +86,24 @@
 	take_damage(15)
 	return
 
-/obj/machinery/gun_turret/proc/validate_target(atom/target)
-	if(get_dist(target, base)>scan_range)
-		return 0
-	if(istype(target, /mob))
+
+/obj/machinery/gun_turret/proc/should_target(atom/target)
+	if(ismob(target))
 		var/mob/M = target
-		if(!M.stat)
+		if(!M.stat && !(faction in M.faction))
 			return 1
 	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
-		if(M.occupant)
+		if(M.occupant && should_target(M.occupant))
 			return 1
+	return 0
+
+
+/obj/machinery/gun_turret/proc/validate_target(atom/target)
+	if(get_dist(target, base)>scan_range)
+		return 0
+	if(should_target(target))
+		return 1
 	return 0
 
 
@@ -116,17 +123,12 @@
 	var/list/pos_targets = list()
 	var/target = null
 	for(var/mob/living/M in view(scan_range,base))
-		if(M.stat)
-			continue
-		if(faction in M.faction)
+		if(!should_target(M))
 			continue
 		pos_targets += M
 	for(var/obj/mecha/M in oview(scan_range, base))
-		if(M.occupant)
-			if(faction in M.occupant.faction)
-				continue
-		if(!M.occupant)
-			continue //Don't shoot at empty mechs.
+		if(!should_target(M))
+			continue
 		pos_targets += M
 	if(pos_targets.len)
 		target = pick(pos_targets)

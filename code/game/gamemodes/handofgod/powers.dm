@@ -132,12 +132,15 @@
 		src << "You lack the strength to smite this far from your nexus."
 		return
 
+	var/has_smitten = 0 //Hast thou been smitten, infidel?
 	for(var/mob/living/L in get_turf(src))
 		L.adjustFireLoss(20)
 		L.adjustBruteLoss(20)
 		L.Weaken(2)
 		L << "<span class='danger'><B>You feel the wrath of [name]!<B></span>"
-	add_faith(-40)
+		has_smitten = 1
+	if(has_smitten)
+		add_faith(-40)
 
 
 /mob/camera/god/verb/holyslumber()
@@ -157,7 +160,7 @@
 
 /mob/camera/god/verb/disaster()
 	set category = "Deity"
-	set name = "Invokle Disaster (300)" //difficult to reach without lots of followers
+	set name = "Invoke Disaster (300)" //difficult to reach without lots of followers
 	set desc = "Tug at the fibres of reality itself and bend it to your whims!"
 
 	if(!ability_cost(300,0,1))
@@ -175,7 +178,7 @@
 	set name = "Construct Nexus"
 	set desc = "Instantly creates your nexus, You can only do this once, make sure you're happy with it!"
 
-	if(!ability_cost(0,1,0) || z != 1)
+	if(!ability_cost(0,1,0))
 		return
 
 	place_nexus()

@@ -28,11 +28,21 @@
 
 	//Force nexuses after 2 minutes in hand of god mode
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
-		spawn(1200)
-			if(src)
-				if(!god_nexus)
-					place_nexus()
-					src << "<span class='danger'>You failed to place your nexus, and it has been placed for you!</span>"
+		addtimer(src,"forceplacenexus",1200)
+
+
+/mob/camera/god/proc/forceplacenexus()
+	if(god_nexus)
+		return
+
+	if(ability_cost(0,1,0))
+		place_nexus()
+
+	else
+		if(blobstart.len) //we're on invalid turf, try to pick from blobstart
+			loc = pick(blobstart)
+		place_nexus() //if blobstart fails, places on dense turf, but better than nothing
+	src << "<span class='danger'>You failed to place your nexus, and it has been placed for you!</span>"
 
 
 /mob/camera/god/update_icons()
@@ -55,8 +65,8 @@
 	src << "You are a deity and are worshipped by a cult!  You are rather weak right now, but that will change as you gain more followers."
 	src << "You will need to place an anchor to this world, a <b>Nexus</b>, in two minutes.  If you don't, one will be placed immediately below you."
 	src << "Your <b>Follower</b> count determines how many people believe in you and are a part of your cult."
-	src << "Your <b>Nexus Integrity</b> tells you the condition of your nexus.  If your nexus is destroyed, you will die."
-	src << "Your <b>Faith</b> is used to interact with the world.  This will regenerate on it's own, and it goes faster when you have more followers and power pylons."
+	src << "Your <b>Nexus Integrity</b> tells you the condition of your nexus.  If your nexus is destroyed, you will die. Place your Nexus on a safe, isolated place, that is still accessible to your followers."
+	src << "Your <b>Faith</b> is used to interact with the world.  This will regenerate on its own, and it goes faster when you have more followers and power pylons."
 	src << "The first thing you should do after placing your nexus is to <b>appoint a prophet</b>.  Only prophets can hear you talk, unless you use an expensive power."
 	update_health_hud()
 
@@ -75,7 +85,7 @@
 
 
 /mob/camera/god/proc/place_nexus()
-	if(god_nexus)
+	if(god_nexus || (z != 1))
 		return 0
 
 	var/obj/structure/divine/nexus/N = new(get_turf(src))
@@ -103,6 +113,15 @@
 
 	if(hud_used && hud_used.deity_follower_display)
 		hud_used.deity_follower_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='red'>[alive_followers]     </font></div>"
+
+
+/mob/camera/god/proc/check_death()
+	if(!alive_followers)
+		src << "<span class='userdanger'>You no longer have any followers. You shudder as you feel your existence cease...</span>"
+		if(god_nexus && !qdeleted(god_nexus))
+			god_nexus.visible_message("<span class='danger'>\The [src] suddenly disappears!</span>")
+			qdel(god_nexus)
+		qdel(src)
 
 
 /mob/camera/god/say(msg)
