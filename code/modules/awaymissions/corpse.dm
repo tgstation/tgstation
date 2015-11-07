@@ -6,7 +6,7 @@
 
 /obj/effect/landmark/corpse
 	name = "Unknown"
-	var/mobname = null  //Unused now but it'd fuck up maps to remove it now
+	var/mobname = null  //Use for the ghost spawner variant, so they don't come out named "sleeper"
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
 	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
@@ -298,6 +298,7 @@
 /obj/effect/landmark/corpse/commander/alive
 	death = FALSE
 	roundstart = FALSE
+	mobname = "Nanotrasen Commander"
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
