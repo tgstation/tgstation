@@ -707,11 +707,11 @@
 	adding += using
 
 	using = new /obj/screen/guardian/ToggleLight()
-	using.screen_loc = ui_back
+	using.screen_loc = ui_inventory
 	adding += using
 
 	using = new /obj/screen/guardian/Communicate()
-	using.screen_loc = ui_inventory
+	using.screen_loc = ui_back
 	adding += using
 
 	mymob.client.screen = list()

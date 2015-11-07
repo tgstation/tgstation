@@ -51,10 +51,11 @@
 
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
+
 	if(ckey in deadmins)
 		verbs += /client/proc/readmin
 
-	client.screen += client.void
+	add_click_catcher()
 
 	sync_mind()
 

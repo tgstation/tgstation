@@ -134,7 +134,7 @@
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
-		throw_alert("handcuffed", /obj/screen/alert/handcuffed, new_master = src.handcuffed)
+		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		if(hud_used)	//hud handcuff icons
 			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
 			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
