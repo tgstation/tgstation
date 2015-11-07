@@ -70,9 +70,16 @@
 	var/list/slime_mutation[4]
 
 /mob/living/simple_animal/slime/New()
+	var/datum/action/innate/slime/feed/F = new
+	F.Grant(src)
 	if(is_adult)
+		var/datum/action/innate/slime/reproduce/R = new
+		R.Grant(src)
 		health = 200
 		maxHealth = 200
+	else
+		var/datum/action/innate/slime/evolve/E = new
+		E.Grant(src)
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)

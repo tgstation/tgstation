@@ -9,6 +9,8 @@
 			M.regenerate_icons()
 			is_adult = 0
 			maxHealth = 150
+			var/datum/action/innate/slime/evolve/E = new
+			E.Grant(src)
 			revive()
 			regenerate_icons()
 			number = rand(1, 1000)
