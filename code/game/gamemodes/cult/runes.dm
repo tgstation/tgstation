@@ -706,7 +706,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/wall/examine(mob/user)
 	..()
 	if(density)
-		user << "<span class='warning'>There is a barely perceptible shimmering of the air above [src].</span>"
+		user << "<span class='warning'>The air above [src] shimmers almost imperceptibly.</span>"
 
 /obj/effect/rune/wall/invoke(mob/living/user)
 	density = !density
@@ -1013,3 +1013,32 @@ var/list/teleport_other_runes = list()
 		for(var/obj/I in new_human)
 			new_human.unEquip(I)
 		new_human.dust()
+
+
+//Rite of Corruption: Converts all nearby walls and floors to cult versions.
+/obj/effect/rune/corrupt
+	cultist_name = "Corrupt"
+	cultist_desc = "Twists and defiles the nearby area to make it suitable for Nar-Sie and the cult. Also forms runed metal."
+	invocation = "Examinis tol'barah!"
+	icon_state = "4"
+	color = rgb(50, 40, 40)
+	grammar = "nahlizet karazet ire"
+
+/obj/effect/rune/corrupt/invoke(mob/living/user)
+	visible_message("<span class='warning'>[src]'s surface shifts and expands outward, corrupting the nearby area!</span>")
+	for(var/mob/living/carbon/C in viewers(src))
+		if(!iscultist(C) && !C.stat)
+			if(C.null_rod_check())
+				C << "<span class='userdanger'>The null rod suddenly pulses a deathly cold!</span>"
+				continue
+			C << "<span class='userdanger'>A wave of exhaustion washes over you...</span>"
+			C.adjustStaminaLoss(25)
+	for(var/turf/simulated/floor/plasteel/F in range(5, src)) //Convert normal floors into cult floors
+		F.ChangeTurf(/turf/simulated/floor/plasteel/cult)
+	for(var/turf/simulated/wall/W in range(3, src)) //Convert normal walls into cult walls
+		W.ChangeTurf(/turf/simulated/wall/cult)
+	for(var/obj/item/stack/sheet/metal/M in range(5, src)) //Convert metal into runed metal
+		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(M))
+		R.amount = M.amount
+		qdel(M)
+	qdel(src)
