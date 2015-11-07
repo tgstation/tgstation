@@ -112,7 +112,7 @@
 	name = "Hulk"
 	quality = POSITIVE
 	get_chance = 15
-	lowest_value = 256 * 12
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
@@ -297,6 +297,22 @@
 	owner.resize = 1.25
 	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+
+/datum/mutation/human/jellybones
+	name = "Jelly Bones"
+	quality = POSITIVE
+	get_chance = 25
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>Your bones feel like they're made of jelly, you could probably squeeze into a vent.</span>"
+	text_lose_indication = "<span class='notice'>Your bones feel solid again.</span>"
+
+/datum/mutation/human/jellybones/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.ventcrawler = 1
+
+/datum/mutation/human/jellybones/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.ventcrawler = 0
 
 /datum/mutation/human/clumsy
 
@@ -631,7 +647,8 @@
 /datum/mutation/human/laser_eyes
 	name = "Laser Eyes"
 	quality = POSITIVE
-	dna_block = NON_SCANNABLE
+	get_chance = 15
+	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 
