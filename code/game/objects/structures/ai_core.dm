@@ -160,7 +160,10 @@
 				if(!user.drop_item())
 					return
 
-				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
+				ticker.mode.remove_cultist(M.brainmob.mind, 1)
+				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
+
 				M.loc = src
 				brain = M
 				user << "<span class='notice'>Added a brain.</span>"

@@ -13,7 +13,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
-	antag_flag = ROLE_REV
+	antag_flag = BE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 1
@@ -190,7 +190,7 @@
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
 			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
-				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
+				if(khrushchev.current.client.prefs.be_special & BE_REV)
 					promotable_revs += khrushchev
 		if(promotable_revs)
 			var/datum/mind/stalin = pick(promotable_revs)

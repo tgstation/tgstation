@@ -53,7 +53,7 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(ROLE_WIZARD)
+			var/list/candidates = get_candidates(BE_WIZARD)
 			if(candidates.len)
 				src.used = 1
 				var/client/C = pick(candidates)
@@ -138,7 +138,7 @@
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
-	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
@@ -174,7 +174,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
+	var/list/demon_candidates = get_candidates(BE_ALIEN)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return

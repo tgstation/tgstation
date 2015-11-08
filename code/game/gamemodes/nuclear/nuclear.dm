@@ -8,7 +8,7 @@
 	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
-	antag_flag = ROLE_OPERATIVE
+	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
