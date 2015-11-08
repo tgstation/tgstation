@@ -57,7 +57,7 @@ To draw a rune, use an arcane tome and select the Scribe Rune function.
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
-		user.visible_message("<span class='warning'>[user] quietly murmurs under their breath, and [src] fades away.</span>", \
+		user.visible_message("<span class='warning'>[user] presses [I] to [src], which crumbles to dust.</span>", \
 							"<span class='danger'>You carefully undo the lines of [src].</span>")
 		qdel(src)
 		return
@@ -468,11 +468,13 @@ var/list/teleport_other_runes = list()
 		for(var/mob/living/M in range(1,src))
 			if(iscultist(M))
 				M.say("TOK-LYR RQA-NAP G'OLT-ULOFT!!")
-		world << 'sound/effects/dimensional_rend.ogg'
-		world << "<b><i>Rip... <span class='big'>Rrrip...</span> <span class='reallybig'>RRRRRRRRRR--</span></i></b>"
-		sleep(40)
+		world << 'sound/effects/narsie_rises.ogg'
+		world << "<span class='userdanger'>A hellish cacaphony bombards from all around as something awful tears through the world...</span>"
+		icon_state = "rune_large_distorted"
+		sleep(55)
 		new /obj/singularity/narsie/large(get_turf(user)) //Causes Nar-Sie to spawn even if the rune has been removed
 		cult_mode.eldergod = 0
+		qdel(src)
 	else
 		fail_invoke()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
