@@ -9,4 +9,4 @@
 		#define EMPTY_AREA_1 "Empty Area 1"
 		#define EMPTY_AREA_2 "Empty Area 2"
 		#define AWAY_MISSION "Away Mission"
-		#define AWAY_MISSION_LIST list(AWAY_MISSION = UNAFFECTED)
+		#define AWAY_MISSION_LIST list(AWAY_MISSION = SELFLOOPING)
