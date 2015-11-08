@@ -9,18 +9,7 @@ They are drawn with an arcane tome in blood, and are distinguishable to cultists
 Fake runes can be drawn in crayon to fool people.
 Runes can either be invoked by one's self or with many different cultists. Each rune has a specific incantation that the cultists will say when invoking it.
 
-To draw a rune, use an arcane tome and enter the words required. These words are in the tongue of the Geometer and must be entered as such.
-Word definitions:
-"ire" is Travel
-"ego" is Self
-"nahlizet" is Blood
-"certum" is Join
-"veri" is Hell
-"jatkaa" is Other
-"mgar" is Destroy
-"balaq" is Technology
-"karazet" is See
-"geeri" is Hide
+To draw a rune, use an arcane tome and select the Scribe Rune function.
 
 */
 
@@ -35,7 +24,6 @@ Word definitions:
 	unacidable = 1
 	layer = TURF_LAYER
 	color = rgb(255,0,0)
-	mouse_opacity = 2
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/grammar //This is only framework at the moment, but may be required to draw runes in the future
@@ -58,6 +46,14 @@ Word definitions:
 		user << "<b>Required Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
+		if(req_pylons)
+			user << "<b>Required Pylons:</b> [req_pylons]"
+		if(req_forges)
+			user << "<b>Required Forges:</b> [req_forges]"
+		if(req_archives)
+			user << "<b>Required Archives:</b> [req_archives]"
+		if(req_altars)
+			user << "<b>Required Altars:</b> [req_altars]"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
@@ -98,8 +94,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/can_invoke(var/mob/living/user)
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
 	if(!structure_check(req_pylons, req_forges, req_archives, req_altars))
+		user << "<span class='warning'>[src] lacks the nearby structures it requires!</span>"
 		return 0
 	if(!keyword && req_keyword)
+		user << "<span class='warning'>[src] requires no keyword!</span>"
 		return 0
 	if(req_cultists <= 1)
 		if(invocation)
@@ -138,13 +136,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/forges = 0
 	var/archives = 0
 	var/altars = 0
-	for(var/obj/structure/cult/pylon in orange(3,src))
+	for(var/obj/structure/cult/pylon/P in range(3,src))
 		pylons++
-	for(var/obj/structure/cult/forge in orange(3,src))
+	for(var/obj/structure/cult/forge/F in range(3,src))
 		forges++
-	for(var/obj/structure/cult/tome in orange(3,src))
+	for(var/obj/structure/cult/tome/T in range(3,src))
 		archives++
-	for(var/obj/structure/cult/talisman in orange(3,src))
+	for(var/obj/structure/cult/talisman/A in range(3,src))
 		altars++
 	if(pylons >= rpylons && forges >= rforges && archives >= rarchives && altars >= raltars)
 		return 1
@@ -182,7 +180,6 @@ var/list/teleport_runes = list()
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
 	color = rgb(0, 0, 255)
-	grammar = "ire ego"
 	req_keyword = 1
 
 /obj/effect/rune/teleport/New()
@@ -221,7 +218,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Sas'so c'arta forbica!"
 	icon_state = "1"
 	color = rgb(200, 0, 0)
-	grammar = "ire jatkaa"
 	req_keyword = 1
 
 /obj/effect/rune/teleport_other/New()
@@ -277,7 +273,7 @@ var/list/teleport_other_runes = list()
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	icon_state = "5"
 	color = rgb(0, 0, 255)
-	grammar = "karazet nahlizet ego"
+	req_archives = 1
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] twists and morphs into a rectangular outline, which forms into a frayed tome.</span>")
@@ -292,7 +288,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
 	color = rgb(255, 0, 0)
-	grammar = "certum nahlizet ego"
 	req_cultists = 2
 
 /obj/effect/rune/convert/invoke(mob/living/user)
@@ -332,7 +327,8 @@ var/list/teleport_other_runes = list()
 	icon_state = "3"
 	invocation = "Ih wah'kd in teh'tin!"
 	color = rgb(255, 255, 255)
-	grammar = "veri nahlizet certum"
+	req_altars = 1
+	req_pylons = 2
 	var/rune_in_use = 0
 
 /obj/effect/rune/sacrifice/New()
@@ -341,6 +337,7 @@ var/list/teleport_other_runes = list()
 
 /obj/effect/rune/sacrifice/invoke(mob/living/user)
 	if(rune_in_use)
+		fail_invoke()
 		return
 	rune_in_use = 1
 	var/turf/T = get_turf(src)
@@ -354,6 +351,7 @@ var/list/teleport_other_runes = list()
 	else if(possible_targets.len) //Otherwise, if there's a target at all, pick the only one
 		offering = possible_targets[possible_targets.len]
 	if(!offering)
+		fail_invoke()
 		rune_in_use = 0
 		return
 	if(offering.null_rod_check())
@@ -431,7 +429,8 @@ var/list/teleport_other_runes = list()
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	grammar = "veri certum ego"
+	req_pylons = 4
+	req_altars = 1
 	var/used
 
 /obj/effect/rune/narsie/invoke(mob/living/user)
@@ -487,7 +486,7 @@ var/list/teleport_other_runes = list()
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
 	color = rgb(255, 0, 0)
-	grammar = "nahlizet certum veri"
+	req_altars = 1
 
 /obj/effect/rune/raise_dead/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -519,7 +518,7 @@ var/list/teleport_other_runes = list()
 		log_game("Raise Dead rune failed - catalyst corpse moved")
 		return
 	if(!(mob_to_revive in T.contents))
-		user << "<span class='warning'>The corpse to revived has been moved!</span>"
+		user << "<span class='warning'>The corpse to revive has been moved!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target moved")
 		return
@@ -556,7 +555,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Kla'atu barada nikt'o!"
 	icon_state = "1"
 	color = rgb(0,0,255)
-	grammar = "geeri karazet nahlizet"
 
 /obj/effect/rune/hide_runes/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] darkens to black and vanishes.</span>")
@@ -578,7 +576,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Nikt'o barada kla'atu!"
 	icon_state = "4"
 	color = rgb(255, 255, 255)
-	grammar = "karazet geeri nahlizet"
 
 /obj/effect/rune/true_sight/invoke()
 	visible_message("<span class='warning'>[src] explodes in a flash of blinding light!</span>")
@@ -598,7 +595,7 @@ var/list/teleport_other_runes = list()
 	invocation = "By'o isit!"
 	icon_state = "4"
 	color = rgb(0, 150, 0)
-	grammar = "geeri nahlizet jatkaa"
+	req_pylons = 1
 
 /obj/effect/rune/make_runes_fake/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] flares brightly, then slowly dulls and appears mundane.</span>")
@@ -613,7 +610,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
 	color = rgb(100, 100, 255)
-	grammar = "mgar karazet balaq"
 
 /obj/effect/rune/emp/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] wavers for a moment before vanishing in a cascade of blue sparks.</span>")
@@ -633,7 +629,8 @@ var/list/teleport_other_runes = list()
 	color = rgb(0, 0, 255)
 	var/rune_in_use = 0 //One at a time, please!
 	var/mob/living/affecting = null
-	grammar = "veri ire ego"
+	req_altars = 1
+	req_pylons = 2
 
 /obj/effect/rune/astral/examine(mob/user)
 	..()
@@ -701,7 +698,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
 	color = rgb(255, 0, 0)
-	grammar = "mgar ire ego"
 
 /obj/effect/rune/wall/examine(mob/user)
 	..()
@@ -722,7 +718,6 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Deafen"
 	cultist_desc = "Causes all non-followers nearby to lose their hearing."
 	invocation = "Sti kaliedir!"
-	grammar = "geeri jatkaa karazet"
 	color = rgb(0, 255, 0)
 	icon_state = "4"
 
@@ -742,7 +737,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Sti kaliesin!"
 	icon_state = "4"
 	color = rgb(0, 0, 255)
-	grammar = "mgar jatkaa karazet"
 
 /obj/effect/rune/blind/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] vanishes in a blinding red flash!</span>")
@@ -762,7 +756,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Fuu ma'jin!"
 	icon_state = "2"
 	color = rgb(100, 0, 100)
-	grammar = "certum geeri balaq"
 
 /obj/effect/rune/stun/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] explodes in a bright flash!</span>")
@@ -783,7 +776,7 @@ var/list/teleport_other_runes = list()
 	req_cultists = 2
 	icon_state = "5"
 	color = rgb(0, 255, 0)
-	grammar = "certum jatkaa ego"
+	req_pylons = 2
 
 /obj/effect/rune/summon/invoke(mob/living/user)
 	var/list/cultists = list()
@@ -819,7 +812,7 @@ var/list/teleport_other_runes = list()
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
 	color = rgb(0, 0, 255)
-	grammar = "veri balaq certum"
+	req_archives = 1
 
 /obj/effect/rune/imbue/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -868,7 +861,8 @@ var/list/teleport_other_runes = list()
 	invocation = "Ethra p'ni dedol!"
 	icon_state = "5"
 	color = rgb(150, 150, 150)
-	grammar = "ire veri balaq"
+	req_forges = 1
+	req_pylons = 1
 
 /obj/effect/rune/construct_shell/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -897,7 +891,7 @@ var/list/teleport_other_runes = list()
 	invocation = "N'ath reth sh'yro eth draggathnor!"
 	icon_state = "4"
 	color = rgb(255, 0, 0)
-	grammar = "veri mgar jatkaa"
+	req_forges = 1
 
 /obj/effect/rune/armor/invoke(mob/living/user)
 	visible_message("<span class='warning'>With the sound of clanging metal, [src] crumbles to dust!</span>")
@@ -916,7 +910,7 @@ var/list/teleport_other_runes = list()
 	invocation = "Yu'gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!" //that's a mouthful
 	icon_state = "2"
 	color = rgb(255, 0, 0)
-	grammar = "ire nahlizet ego"
+	req_pylons = 1
 
 /obj/effect/rune/leeching/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -946,7 +940,6 @@ var/list/teleport_other_runes = list()
 	icon_state = "4"
 	color = rgb(255, 0, 0)
 	req_cultists = 3
-	grammar = "mgar karazet nahlizet"
 
 /obj/effect/rune/blood_boil/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] bubbles and hisses before suddenly exploding!</span>")
@@ -974,7 +967,8 @@ var/list/teleport_other_runes = list()
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	color = rgb(255, 0, 0)
-	grammar = "nahlizet karazet ire"
+	req_altars = 1
+	req_pylons = 2
 
 /obj/effect/rune/manifest/invoke(mob/living/user)
 	if(!(user in get_turf(src)))
@@ -1022,7 +1016,6 @@ var/list/teleport_other_runes = list()
 	invocation = "Examinis tol'barah!"
 	icon_state = "4"
 	color = rgb(50, 40, 40)
-	grammar = "nahlizet karazet ire"
 
 /obj/effect/rune/corrupt/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src]'s surface shifts and expands outward, corrupting the nearby area!</span>")
@@ -1033,11 +1026,11 @@ var/list/teleport_other_runes = list()
 				continue
 			C << "<span class='userdanger'>A wave of exhaustion washes over you...</span>"
 			C.adjustStaminaLoss(25)
-	for(var/turf/simulated/floor/plasteel/F in range(5, src)) //Convert normal floors into cult floors
-		F.ChangeTurf(/turf/simulated/floor/plasteel/cult)
-	for(var/turf/simulated/wall/W in range(3, src)) //Convert normal walls into cult walls
+	for(var/turf/simulated/floor/F in range(2, src)) //Convert normal floors into cult floors
+		F.ChangeTurf(/turf/simulated/floor/engine/cult)
+	for(var/turf/simulated/wall/W in range(2, src)) //Convert normal walls into cult walls
 		W.ChangeTurf(/turf/simulated/wall/cult)
-	for(var/obj/item/stack/sheet/metal/M in range(5, src)) //Convert metal into runed metal
+	for(var/obj/item/stack/sheet/metal/M in range(2, src)) //Convert metal into runed metal
 		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(M))
 		R.amount = M.amount
 		qdel(M)

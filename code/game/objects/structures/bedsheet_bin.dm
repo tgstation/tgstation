@@ -154,7 +154,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
-	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
+	desc = "Comfy! But disturbing on a fundamental level."
 	icon_state = "sheetcult"
 	item_color = "cult"
 

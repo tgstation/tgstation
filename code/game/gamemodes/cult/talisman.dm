@@ -3,7 +3,6 @@
 Talismans are portable versions of runes that resemble blank sheets of paper. They may have different effects than their parent runes and are created by using a Rite of Binding with a paper on top and
 a compatible rune somewhere nearby. A list of compatible runes can found below.
 
-Basic Runes:
 Rite of Translocation
 Rite of Knowledge
 Rite of Obscurity
@@ -11,6 +10,8 @@ Rite of True Sight
 Rite of False Truths
 Rite of Disruption
 Rite of Disorientation
+Rite of the Unseen Glance
+Rite of the Unheard Whisper
 
 */
 
@@ -19,7 +20,7 @@ Rite of Disorientation
 	var/cultist_desc = "A basic talisman. It serves no purpose."
 	var/invocation = "Naise meam!"
 	var/uses = 1
-	var/health_cost = 0 //The amount of health taken from the user when invoking the talisman
+	var/health_cost = 0 //The amount of brute damage dealt to the user upon invocation
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	..()
@@ -72,11 +73,12 @@ Rite of Disorientation
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Allows you to summon an arcane tome.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a Rite of Dislocation with the keyword of \"veri\".<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
-	dat += "<A href='?src=\ref[src];rune=conceal'>Kla'atu barada nikt'o!</A> - Allows you to conceal nearby runes.<BR>"
-	dat += "<A href='?src=\ref[src];rune=reveal'>Nikt'o barada kla'atu!</A> - Allows you to reveal nearby runes.<BR>"
+	dat += "<A href='?src=\ref[src];rune=conceal'>Kla'atu barada nikt'o!</A> - Allows you to conceal nearby runes. Three uses.<BR>"
+	dat += "<A href='?src=\ref[src];rune=reveal'>Nikt'o barada kla'atu!</A> - Allows you to reveal nearby runes. Three uses.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
 	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"
+	dat += "<A href='?src=\ref[src];rune=runedmetal'>Violius!</A> - Twenty sheets of runed metal for construction of cult structures.<BR>"
 	var/datum/browser/popup = new(user, "talisman", "", 800, 600)
 	popup.set_content(dat)
 	popup.open()
@@ -113,6 +115,10 @@ Rite of Disorientation
 					usr.put_in_hands(T)
 				if("construct")
 					new /obj/structure/constructshell(get_turf(usr))
+				if("runedmetal")
+					var/obj/item/stack/sheet/runed_metal/T = new(usr)
+					T.amount = 20
+					usr.put_in_hands(T)
 			src.uses--
 			if(src.uses <= 0)
 				if(iscarbon(usr))
