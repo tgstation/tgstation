@@ -53,17 +53,6 @@
 		return 0
 	return ..()
 
-/obj/machinery/computer/upload/ai/emag_act(mob/user)
-	user << "You flood the AI's laws with data pertaining to the clown's left leg and an atmospheric pipe in the Research sector."
-	current = select_active_ai(user)
-	current.clear_inherent_laws()
-	for(var/i = 0, i < 10, i++)
-		current.add_ion_law(generate_ion_law())
-	current.laws_update()
-	return
-
-
-
 /obj/machinery/computer/upload/borg
 	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
