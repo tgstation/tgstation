@@ -27,6 +27,7 @@
 #define ANTAG_HUD_CULT		6
 #define ANTAG_HUD_REV		7
 #define ANTAG_HUD_OPS		8
-
 #define ANTAG_HUD_WIZ		9
 #define ANTAG_HUD_SHADOW    10
+#define ANTAG_HUD_HOG_BLUE 11
+#define ANTAG_HUD_HOG_RED 12
