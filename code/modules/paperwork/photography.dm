@@ -437,9 +437,7 @@
 
 /obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/info, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/injectaialbum() called tick#: [world.time]")
-	var/numberer = 1
-	for(var/datum/picture in src.aipictures)
-		numberer++
+	var/numberer = length(aipictures) + 1
 	var/datum/picture/P = new()
 	P.fields["name"] = "Image [numberer]"
 	P.fields["icon"] = icon
