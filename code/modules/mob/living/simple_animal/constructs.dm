@@ -33,7 +33,7 @@
 	mob_swap_flags = HUMAN|SIMPLE_ANIMAL|SLIME|MONKEY
 	mob_push_flags = ALLMOBS
 
-	meat_type = 0
+	meat_type = /obj/item/weapon/ectoplasm
 
 	var/list/construct_spells = list()
 
@@ -54,6 +54,17 @@
 				M << "<span class='sinister'><b>[src.name]:</b> [html_encode(speech.message)]</span>"
 		return 1
 
+/mob/living/simple_animal/construct/gib()
+	death(1)
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	dead_mob_list -= src
+
+	qdel(src)
+
 /mob/living/simple_animal/construct/cultify()
 	return
 
@@ -69,7 +80,8 @@
 
 /mob/living/simple_animal/construct/Die()
 	..()
-	new /obj/item/weapon/ectoplasm (src.loc)
+	for(var/i=0;i<3;i++)
+		new /obj/item/weapon/ectoplasm (src.loc)
 	for(var/mob/M in viewers(src, null))
 		if((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[src] collapses in a shattered heap. </span>")
