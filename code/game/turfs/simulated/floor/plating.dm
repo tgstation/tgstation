@@ -193,7 +193,4 @@
 		L.IgniteMob()
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/RCD))
-		return ..()
-	else
-		return
+	return
