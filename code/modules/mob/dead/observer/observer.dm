@@ -121,8 +121,8 @@
 		if(src.invisibility != 0)
 			M.invisibility = 0
 			user.visible_message(
-				"<span class='warning'>[user] drags ghost, [M], to our plan of reality!</span>",
-				"<span class='warning'>You drag [M] to our plan of reality!</span>"
+				"<span class='warning'>[user] drags ghost, [M], to our plane of reality!</span>",
+				"<span class='warning'>You drag [M] to our plane of reality!</span>"
 			)
 		else
 			user.visible_message (
@@ -135,8 +135,8 @@
 		if(src.invisibility == 0)
 			M.invisibility = 60
 			user.visible_message(
-				"<span class='warning'>[user] banishes the ghost from our plan of reality!</span>",
-				"<span class='warning'>You banish the ghost from our plan of reality!</span>"
+				"<span class='warning'>[user] banishes the ghost from our plane of reality!</span>",
+				"<span class='warning'>You banish the ghost from our plane of reality!</span>"
 			)
 
 /mob/dead/observer/get_multitool(var/active_only=0)
