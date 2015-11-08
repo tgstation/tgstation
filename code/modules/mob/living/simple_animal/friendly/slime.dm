@@ -15,6 +15,8 @@
 	var/colour = "grey"
 
 	can_butcher = 0
+	meat_type = null
+
 	mob_bump_flag = SLIME
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
@@ -36,6 +38,8 @@
 
 	size = SIZE_BIG
 	can_butcher = 0
+	meat_type = null
+
 	var/colour = "grey"
 
 /mob/living/simple_animal/adultslime/New()
