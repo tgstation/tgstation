@@ -108,7 +108,7 @@
 		return
 	if(perp.shoes)
 		var/obj/item/clothing/shoes/S = perp.shoes
-		S.track_blood = max(amount,S.track_blood)                //Adding blood to shoes
+		S.track_blood = max(0,amount,S.track_blood)                //Adding blood to shoes
 
 		if(!blood_overlays[S.type]) //If there isn't a precreated blood overlay make one
 			S.generate_blood_overlay()
