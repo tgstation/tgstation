@@ -502,13 +502,17 @@ Thanks.
 	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
 
 	// shut down various types of badness
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
+	toxloss = 0
+	oxyloss = 0
+	cloneloss = 0
+	bruteloss = 0
+	fireloss = 0
+	brainloss = 0
+	halloss = 0
+	paralysis = 0
+	stunned = 0
+	weakened = 0
+	jitteriness = 0
 	germ_level = 0
 	next_pain_time = 0
 	traumatic_shock = 0

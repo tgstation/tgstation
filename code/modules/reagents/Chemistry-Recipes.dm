@@ -1289,6 +1289,7 @@ datum
 					/obj/item/weapon/reagent_containers/food/snacks/snackbar,
 					/obj/item/weapon/reagent_containers/food/snacks/grown,
 					)
+				blocked += typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)	//silver-slime spawned customizable food is borked
 
 				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked
 				// BORK BORK BORK
