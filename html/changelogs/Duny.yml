@@ -1,2 +1,20 @@
 author: Duny
-changes: []
+changes: 
+  - wip: All changes listed are about Defficiency.
+  - bugfix: Fixed disposaled items not landing on the mass driver, effectively preventing disposing of them due to the particular way deff's disposals work.
+  - rscadd: Added a space cleaner bottle in chemistry and a bar of soap in surgery.
+  - tweak: Replaced the windows on the right side of the toxins launch room with walls, to avoid the windows breaking upon being hit by whatever the disposal outlet launches at them (usually corpses).
+  - tweak: Replace the old firelocks on the research outpost with the new ones.
+  - bugfix: Made the Nanotrasen-approved Maintenance Path Indicators unmovable.
+  - tweak: Added a cyborg recharging station in the bridge.
+  - rscadd: Added three gadget bags and ten sheets of plastic to R&D.
+  - rscdel: Removed all points of sale and EFTPOS scanners.
+  - bugfix: Added a camera in the new science entrance.
+  - tweak: Removed the closet and moved the body bags in cloning to genetics to make cloning less cramped.
+  - tweak: Added two mining vending machines and an ATM to the mining outpost, repurposed the room in cargo to a delivery/storage room from which cargo techs can take the ores the miners bring from the asteroid to deliver to the rest of the station and store drills R&D made for the miners or whatever just be the usual goys and ignore it entirely then complain about it having no point or turn it into some dank disco break room for cargo. Your imagination is the limit.
+  - tweak: Removed the research shuttle entirely and replaced it with break room. The mining shuttle now covers both the mining and research outposts.
+  - rscadd: Added two security suit storages units to the armory.
+  - tweak: Added a camera in space near the armory, and security airlocks now have randomized wires. Come at me greytide, I don't give a fuck.
+  - rscadd: Added a cute little bathroom in security near interrogation.
+  - bugfix: Fixed (maybe, who the fuck knows) getting thrown in unlogical directions during pod/shuttle transit.
+  - bugfix: Removed a metric fuckton of blind spots in the station's camera network.
