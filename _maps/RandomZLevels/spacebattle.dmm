@@ -344,7 +344,7 @@
 "gF" = (/obj/structure/closet/crate,/obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c10,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "gG" = (/obj/effect/decal/cleanable/blood,/turf/simulated/wall/shuttle{icon_state = "swall3"},/area/awaymission/spacebattle/cruiser)
 "gH" = (/obj/effect/landmark/corpse/doctor{mobname = "Adam Smith"; name = "Adam Smith"},/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel,/area/awaymission/spacebattle/cruiser)
-"gI" = (/obj/structure/optable,/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/spacebattle/cruiser)
+"gI" = (/obj/structure/table/optable,/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/spacebattle/cruiser)
 "gJ" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/spacebattle/cruiser)
 "gK" = (/obj/machinery/vending/coffee,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
 "gL" = (/mob/living/simple_animal/hostile/syndicate/melee/space,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
@@ -741,3 +741,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

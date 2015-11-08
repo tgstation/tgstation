@@ -574,7 +574,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 // Operating Table / Beds / Lockers
 
-/obj/structure/optable/abductor
+/obj/structure/table/optable/abductor
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
 	can_buckle = 1

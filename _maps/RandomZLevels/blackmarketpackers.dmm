@@ -37,7 +37,7 @@
 "aK" = (/obj/item/bodybag,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aL" = (/obj/item/weapon/storage/box/syringes,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aM" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
-"aN" = (/obj/structure/optable,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
+"aN" = (/obj/structure/table/optable,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aO" = (/obj/machinery/computer/operating,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aP" = (/turf/simulated/wall/shuttle{icon_state = "swall3"},/area/awaymission/BMPship/Aft)
 "aQ" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 9},/area/awaymission/BMPship/Aft)
@@ -87,7 +87,6 @@
 "bI" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/awaymission/BMPship/Fore)
 "bJ" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/awaymission/BMPship/Fore)
 "bK" = (/turf/simulated/wall/shuttle{icon_state = "swall2"},/area/awaymission/BMPship/Aft)
-"bL" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
 "bM" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
 "bN" = (/obj/machinery/gateway,/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
 "bO" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
@@ -223,7 +222,6 @@
 "eo" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel{dir = 8; icon_state = "warning"},/area/awaymission/BMPship/Aft)
 "ep" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plasteel,/area/awaymission/BMPship/Aft)
 "eq" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
-"er" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{dir = 4; icon_state = "warning"},/area/awaymission/BMPship/Aft)
 "es" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
 "et" = (/turf/simulated/floor/engine,/area/awaymission/BMPship/Aft)
 "eu" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/BMPship/Fore)
@@ -502,14 +500,14 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaasaFaGaHaIaJaKaLaMaNaOaPaQaRaSaTaUaVaVaVaVaVaVaWaEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafagagahagagagagagagagaiaaaaaaaaaaaaasaXaYaHaHaZaHaHaHbaaHaHbbbcbdbdbebdbdbfbgbhbdbibjaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacababacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabkblbmbnbobpbqbpbqbpbrbsaaaaaaaaaaasbtaYaHbuaHaHaHaGaHbvbwbwbxbybzbdbAbdbdbBbCbDbEbdbjaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabFbGbHbnbIararararararbJaaaaaaasawaFaHbuaYaHbuaHaHaHaZaHaHaHbKbcbLbdbdbdbdbMbNbObdbdbPaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabFbGbHbnbIararararararbJaaaaaaasawaFaHbuaYaHbuaHaHaHaZaHaHaHbKbceqbdbdbdbdbMbNbObdbdbPaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabQbRbGbnarbSbSbTbSbSbUbVaaaaaaawbWbtbuaHbXbYaHaHaHbZcabXbZcaaPbccbcccdcdcecdcdcdcdbzcfaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacgchcicjckclcmcmcmcmcmcncmcmcmcncoaxaxaxaxaAcpcpcpaCaxaxaxaxbWcqcrcsctcrcrcucvcwcxcyczaPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacAcBcCcCcDcCcEcFcGcHcIcJcKcIcLcGcMcNcOcPcQcRcMcMcMcMcScTcUcScVcWaxaxaxaxaxaxaxaxayaAcXaCcoaEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacAcBcCcCcCcYcCcEcMcZcHdadadadbcLcMcMdcdddddddecMcMcMcMdfdfcMdfcMdgdhdhdidjdkdldkdmaPdndodpdqazaxayaEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacAcBcCcCcCcCdrdscEcMcMcHdadtdadacLcMcMdudvdwdxdycMcMcMcMcMcMdzcMcMaPdidAdibKdBdCdDdEaPdFdodndndGdHcWazaxaEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacAcBcCcCdIdJdKcCdLcEcMcMdMdNdNdOdNdPcMcMdQcMdRdSdSdSdSdSdSdSdSdSdTcMdgdidUdidqaxaxaxaxbWdFdVdWdXdYdZbbeaebecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacjcCcCcCedeecCcCefdcegeheieieieieieidTcMdccMejcMekelelelelelelelejcMaPdiemdididididienaPeoepbdeqbderesetebecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacjcCcCcCedeecCcCefdcegeheieieieieieidTcMdccMejcMekelelelelelelelejcMaPdiemdididididienaPeoepbdeqbdfwesetebecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeudKevcCcCcCcCcCewexeieyelelelelelezeAcMeBcMejeCeDeEeDeDeDeDeFeGeHeIbbdiemeJeKeKeLdidiaPeMeNbdeOePeQbKetebecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeReSeTcCeUcCcCcCdLdQcMcMeleVeWeVeXeYejeZejcMejcMfaelelelelelelelejfbfcfdfeffbdfgfhdidiaPfieNbdeqbdfjcWayaxfkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeReSeTcCcCflfmfmfndccMcMeleVeVeYeXeYfoeifpeifqcMcMcMcMcMfrcMcMcMejcMfsdiemftbdbdfudidiaPfvepbdeqbdfwcWazaxaEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -575,3 +573,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+
