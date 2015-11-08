@@ -90,6 +90,10 @@
 		src << alert("You are currently not whitelisted to play an adult Diona.")
 		return 0
 
+	if(stat == DEAD)
+		src << "You cannot evolve if you are dead!"
+		return
+
 	if(donors.len < 5)
 		src << "You are not yet ready for your growth..."
 		return
@@ -115,10 +119,9 @@
 	adult.name = src.name
 	adult.real_name = src.real_name
 	src.mind.transfer_to(adult)
-
-	for (var/obj/item/W in src.contents)
-		src.drop_from_inventory(W)
+	src.drop_all()
 	del(src)
+
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()
 	if (istype(other, /mob/living/carbon/human))

@@ -1,0 +1,7 @@
+author: Probe1
+
+delete-after: True
+
+changes: 
+  - bugfix: Diona nymphs now properly drop all items on evoolution.
+  - bugfix: Diona nymphs can no longer evolve after death
