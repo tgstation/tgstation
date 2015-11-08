@@ -62,7 +62,8 @@
 
 	var/finished = 0
 
-	var/eldergod = 1 //for the summon god objective
+	var/eldergod = 1 //for the summon god objective - if 0, success
+	var/demons_summoned = 0 //For the Summon Demons objective - if 1, success
 
 	var/acolytes_needed = 10 //for the survive objective
 	var/acolytes_survived = 0
@@ -76,12 +77,11 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
-		cult_objectives += "survive"
-		cult_objectives += "sacrifice"
-	else
-		cult_objectives += "eldergod"
-		cult_objectives += "sacrifice"
+	var/list/possible_objectives = list("survive" = 1, "slaughter" = 2, "eldergod" = 2) //Escape has a 20% chance, Slaughter Demons 40%, and Nar-Sie 40%
+	var/chosen_objective = pickweight(possible_objectives)
+	cult_objectives += "sacrifice" //Cultists will always have a sacrifice objective
+	cult_objectives += chosen_objective
+	message_admins("Chosen objective for the cult: \"[chosen_objective]\"")
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -143,7 +143,9 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
+				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it, and the sacrifice must be completed."
+			if("slaughter")
+				explanation = "Bring the Slaughter via the rune 'Call Forth The Slaughter'. It will only work if nine acolytes stand on and around it, and the sacrifice must be completed."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
@@ -233,6 +235,9 @@
 		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
 	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
+	if(cult_objectives.Find("slaughter"))
+		if(!demons_summoned)
+			cult_fail++
 	if(cult_objectives.Find("sacrifice"))
 		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
@@ -295,6 +300,13 @@
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
+				if("slaughter")
+					if(demons_summoned)
+						explanation = "Bring the Slaughter. <span class='greenannounce'>Success!</span>"
+						feedback_add_details("cult_objective","cult_demons|SUCCESS")
+					else
+						explanation = "Bring the Slaughter. <span class='boldannounce'>Fail.</span>"
+						feedback_add_details("cult_objective","cult_demons|FAIL")
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 
 	world << text

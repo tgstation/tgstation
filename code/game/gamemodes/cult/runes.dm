@@ -431,7 +431,7 @@ var/list/teleport_other_runes = list()
 	pixel_y = -32
 	req_pylons = 4
 	req_altars = 1
-	var/used
+	var/used = 0
 
 /obj/effect/rune/narsie/invoke(mob/living/user)
 	if(used)
@@ -478,6 +478,74 @@ var/list/teleport_other_runes = list()
 	else
 		fail_invoke()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
+		return
+
+
+//Ritual of the Slaughter: Calls forth three cult-aligned slaughter demons.
+/obj/effect/rune/slaughter
+	cultist_name = "Call Forth The Slaughter"
+	cultist_desc = "Calls forth the doom of the Geometer. Three slaughter demons will appear to wreak havoc on the station."
+	invocation = null
+	req_cultists = 9
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "rune_large"
+	pixel_x = -32
+	pixel_y = -32
+	req_altars = 4
+	color = rgb(100, 0, 0)
+	var/used = 0
+
+/obj/effect/rune/slaughter/invoke(mob/living/user)
+	if(used)
+		return
+	if(ticker.mode.name == "cult")
+		var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(!("slaughter" in cult_mode.cult_objectives))
+			message_admins("[usr.real_name]([user.ckey]) tried to summon demons when the objective was wrong")
+			for(var/mob/living/M in range(1,src))
+				if(iscultist(M))
+					M << "<span class='cult'><i>\"YOUR SOUL BURNS WITH YOUR ARROGANCE!!!\"</i></span>"
+					if(M.reagents)
+						M.reagents.add_reagent("hell_water", 10)
+					M.Weaken(5)
+			fail_invoke()
+			log_game("Summon Demons rune failed - improper objective")
+			return
+		else
+			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+				for(var/mob/living/M in orange(1,src))
+					if(iscultist(M))
+						M << "<span class='warning'>The sacrifice is not complete. The Slaughter cannot begin!</span>"
+				fail_invoke()
+				log_game("Summon Demons rune failed - sacrifice not complete")
+				return
+		if(cult_mode.demons_summoned)
+			for(var/mob/living/M in range(1,src))
+				if(iscultist(M))
+					M << "<span class='warning'>The Slaughter has already begun!</span>"
+				log_game("Summon Demons rune failed - already summoned")
+				return
+		//BEGIN THE SLAUGHTER
+		used = 1
+		for(var/mob/living/M in range(1,src))
+			if(iscultist(M))
+				M.say("TOK-LYR RQA-NAP SHA-NEX!!")
+		world << 'sound/effects/narsie_rises.ogg'
+		world << "<span class='userdanger'>A hellish cacaphony bombards from all around as something awful tears through the world...</span>"
+		icon_state = "rune_large_distorted"
+		sleep(55)
+		world << "<span class='cult'><i>\"THE SLAUGHTER HAS COME\"</i></span>"
+		visible_message("<span class='warning'>[src] melts away into blood, and three horrific figures emerge from within!</span>")
+		var/turf/T = get_turf(src)
+		new /mob/living/simple_animal/slaughter/cult(T)
+		new /mob/living/simple_animal/slaughter/cult(T, pick(NORTH, EAST, SOUTH, WEST))
+		new /mob/living/simple_animal/slaughter/cult(T, pick(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
+		cult_mode.demons_summoned = 1
+		SSshuttle.emergency.request(null, 0.3)
+		qdel(src)
+	else
+		fail_invoke()
+		log_game("Summon Demons rune failed - gametype is not cult")
 		return
 
 

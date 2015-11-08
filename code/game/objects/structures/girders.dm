@@ -125,7 +125,7 @@
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
-		
+
 		if(!istype(W,/obj/item/stack/sheet))
 			return
 
@@ -309,6 +309,8 @@
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
 /obj/structure/cultgirder
+	name = "runed plate"
+	desc = "A bulky formation of engraved metal. It seems to repel most attempts to touch it." //Allusion to the fact that you can't build walls with it
 	icon= 'icons/obj/cult.dmi'
 	icon_state= "cultgirder"
 	anchored = 1

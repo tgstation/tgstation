@@ -55,7 +55,7 @@
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(!iscarbon(G.affecting))
-			user << "<span class='warning'>You may only dunk carbon-based creatuers!</span>"
+			user << "<span class='warning'>You may only dunk carbon-based creatures!</span>"
 			return 0
 		if(G.affecting.stat == DEAD)
 			user << "<span class='warning'>[G.affecting] is dead!</span>"
@@ -145,19 +145,7 @@
 	luminosity = 5
 	health = 50 //Very fragile
 	death_message = "<span class='warning'>The pylon's crystal vibrates and glows fiercely before violently shattering!</span>"
-	death_sound = 'sound/effects/Glassbr2.ogg'
-
-/obj/structure/cult/pylon/destroy_structure()
-	var/turf/T = get_turf(src)
-	..()
-	for(var/mob/living/M in range(5, T))
-		if(!issilicon(M))
-			M.visible_message("<span class='warning'>Deadly shards of red crystal impact [M]!</span>", \
-							"<span class='userdanger'>Deadly red crystal shards fly into you!</span>")
-			M.adjustBruteLoss(rand(5,10))
-		else
-			M.visible_message("<span class='warning'>Red crystal shards bounce off of [M]'s casing!</span>", \
-							"<span class='userdanger'>Red crystal shards bounce off of your casing!</span>")
+	death_sound = 'sound/effects/pylon_shatter.ogg'
 
 /obj/structure/cult/tome
 	name = "research desk"
@@ -204,6 +192,7 @@
 	name = "engraved floor"
 	desc = "A runed floor inlaid with shifting symbols."
 	icon_state = "cult"
+	var/can_pry_up = 0
 
 /turf/simulated/floor/engine/cult/narsie_act()
 	return
@@ -224,8 +213,25 @@
 
 /turf/simulated/floor/engine/cult/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='warning'>[src] is too tightly pressed to pry up!</span>"
-		return 0
+		if(!can_pry_up)
+			user << "<span class='warning'>[src] is too tightly pressed to pry up!</span>"
+			return 0
+		user.visible_message("<span class='notice'>[user] pries up [src].</span>", \
+							"<span class='notice'>You pry up [src].</span>")
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/item/stack/sheet/runed_metal (get_turf(src))
+		ChangeTurf(/turf/simulated/floor/plating)
+		return 1
+	if(istype(I, /obj/item/weapon/storage/book/bible)) //Smack it with a bible to make it removable
+		if(iscultist(user))
+			user << "<span class='warning'>Nar-Sie does not condone the use of heretical relics!</span>"
+			return 0
+		if(can_pry_up)
+			user << "<span class='warning'>[src] can't become any weaker!</span>"
+			return 0
+		user << "<span class='danger'>[src] weakens in the presence of holy energy!</span>"
+		can_pry_up = 1
+		return 1
 	if(istype(I, /obj/item/weapon/nullrod))
 		if(iscultist(user))
 			return ..()
@@ -243,12 +249,16 @@
 	walltype = "cult"
 	builtin_sheet = null
 	canSmoothWith = null
+	var/can_weld = 0
 
 /turf/simulated/wall/cult/break_wall()
+	var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+	R.amount = 2
 	new /obj/effect/decal/cleanable/blood(src)
 	return (new /obj/structure/cultgirder(src))
 
 /turf/simulated/wall/cult/devastate_wall()
+	new /obj/item/stack/sheet/runed_metal (get_turf(src))
 	new /obj/effect/decal/cleanable/blood(src)
 	new /obj/effect/decal/remains/human(src)
 
@@ -257,8 +267,19 @@
 
 /turf/simulated/wall/cult/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
-		user << "<span class='warning'>[src] seems immune to the heat!</span>"
-		return 0
+		if(!can_weld)
+			user << "<span class='warning'>[src] seems impervious to the heat!</span>"
+			return 0
+	if(istype(I, /obj/item/weapon/storage/book/bible))
+		if(iscultist(user))
+			user << "<span class='warning'>Nar-Sie does not condone the use of heretical relics!</span>"
+			return 0
+		if(can_weld)
+			user << "<span class='warning'>[src] can't become any weaker!</span>"
+			return 0
+		user << "<span class='danger'>[src] weakens in the presence of holy energy!</span>"
+		can_weld = 1
+		return 1
 	if(istype(I, /obj/item/weapon/nullrod))
 		if(iscultist(user))
 			return ..()
@@ -403,7 +424,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>[src] can't seem to be manipulated...</span>"
+		user << "<span class='warning'>[src] is cold and unyielding...</span>"
 		return
 	..()
 
