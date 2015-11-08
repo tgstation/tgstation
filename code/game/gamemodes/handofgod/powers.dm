@@ -177,7 +177,6 @@
 	for(var/mob/living/L in get_turf(src))
 		L.adjustFireLoss(20)
 		L.adjustBruteLoss(20)
-		L.Weaken(2)
 		L << "<span class='danger'><B>You feel the wrath of [name]!<B></span>"
 		has_smitten = 1
 	if(has_smitten)

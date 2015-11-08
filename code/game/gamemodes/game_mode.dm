@@ -519,7 +519,7 @@
 	return max(0, enemy_minimum_age - C.player_age)
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	ticker.mode.remove_cultist(newborgie, 1)
-	ticker.mode.remove_revolutionary(newborgie, 1)
-	ticker.mode.remove_gangster(newborgie, 1, remove_bosses=1)
-	ticker.mode.remove_hog_follower(newborgie, 1)
+	ticker.mode.remove_cultist(newborgie, 0)
+	ticker.mode.remove_revolutionary(newborgie, 0)
+	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
+	ticker.mode.remove_hog_follower(newborgie, 0)
