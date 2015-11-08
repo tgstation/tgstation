@@ -176,7 +176,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
 	being_used = 1
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 
 	shuffle(candidates)
 

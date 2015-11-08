@@ -193,7 +193,7 @@
 /datum/round_event/morph/proc/get_morph(end_if_fail = 0)
 	key_of_morph = null
 	if(!key_of_morph)
-		var/list/candidates = get_candidates(ROLE_ALIEN)
+		var/list/candidates = get_candidates(BE_ALIEN)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0

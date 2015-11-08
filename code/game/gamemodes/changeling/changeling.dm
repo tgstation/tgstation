@@ -15,7 +15,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
-	antag_flag = ROLE_CHANGELING
+	antag_flag = BE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -105,8 +105,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
-		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character.client, ROLE_CHANGELING) && !jobban_isbanned(character.client, "Syndicate"))
+		if(character.client.prefs.be_special & BE_CHANGELING)
+			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()

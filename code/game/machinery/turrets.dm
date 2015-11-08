@@ -15,17 +15,13 @@
 	var/base_icon_state = "syndieturret"
 	var/projectile_type = /obj/item/projectile/bullet
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
-	var/atom/base = null //where do to range calculations, firing projectiles, etc. from. allows for turrets inside of things to work
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
 
 /obj/machinery/gun_turret/New()
 	..()
-	if(!base)
-		base = src
 	take_damage(0) //check your health
 	icon_state = "[base_icon_state]" + "0"
-
 
 /obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
@@ -59,7 +55,6 @@
 				die()
 				return
 			state = 2
-
 	update_icon()
 	return
 
@@ -86,24 +81,17 @@
 	take_damage(15)
 	return
 
-
-/obj/machinery/gun_turret/proc/should_target(atom/target)
-	if(ismob(target))
+/obj/machinery/gun_turret/proc/validate_target(atom/target)
+	if(get_dist(target, src)>scan_range)
+		return 0
+	if(istype(target, /mob))
 		var/mob/M = target
-		if(!M.stat && !(faction in M.faction))
+		if(!M.stat)
 			return 1
 	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
-		if(M.occupant && should_target(M.occupant))
+		if(M.occupant)
 			return 1
-	return 0
-
-
-/obj/machinery/gun_turret/proc/validate_target(atom/target)
-	if(get_dist(target, base)>scan_range)
-		return 0
-	if(should_target(target))
-		return 1
 	return 0
 
 
@@ -122,13 +110,18 @@
 /obj/machinery/gun_turret/proc/get_target()
 	var/list/pos_targets = list()
 	var/target = null
-	for(var/mob/living/M in view(scan_range,base))
-		if(!should_target(M))
+	for(var/mob/living/M in view(scan_range,src))
+		if(M.stat)
+			continue
+		if(faction in M.faction)
 			continue
 		pos_targets += M
-	for(var/obj/mecha/M in oview(scan_range, base))
-		if(!should_target(M))
-			continue
+	for(var/obj/mecha/M in oview(scan_range, src))
+		if(M.occupant)
+			if(faction in M.occupant.faction)
+				continue
+		if(!M.occupant)
+			continue //Don't shoot at empty mechs.
 		pos_targets += M
 	if(pos_targets.len)
 		target = pick(pos_targets)
@@ -139,11 +132,11 @@
 	if(!target)
 		cur_target = null
 		return
-	src.dir = get_dir(base,target)
+	src.dir = get_dir(src,target)
 	var/turf/targloc = get_turf(target)
 	if(!src)
 		return
-	var/turf/curloc = get_turf(base)
+	var/turf/curloc = get_turf(src)
 	if (!targloc || !curloc)
 		return
 	if (targloc == curloc)
@@ -155,4 +148,3 @@
 	A.xo = targloc.x - curloc.x
 	A.fire()
 	return
-

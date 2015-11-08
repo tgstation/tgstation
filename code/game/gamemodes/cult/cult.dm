@@ -51,7 +51,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	antag_flag = ROLE_CULTIST
+	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 20

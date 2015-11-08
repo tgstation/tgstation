@@ -9,7 +9,7 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
-	antag_flag = ROLE_BLOB
+	antag_flag = BE_BLOB
 
 	required_players = 30
 	required_enemies = 1
@@ -52,7 +52,7 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/get_blob_candidates()
 	var/list/candidates = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (ROLE_BLOB in player.client.prefs.be_special))
+		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (player.client.prefs.be_special & BE_BLOB))
 			if(age_check(player.client))
 				candidates += player
 	return candidates
