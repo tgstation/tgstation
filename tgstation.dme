@@ -360,6 +360,7 @@
 #include "code\game\gamemodes\gang\gang_pen.dm"
 #include "code\game\gamemodes\gang\recaller.dm"
 #include "code\game\gamemodes\handofgod\_handofgod.dm"
+#include "code\game\gamemodes\handofgod\actions.dm"
 #include "code\game\gamemodes\handofgod\god.dm"
 #include "code\game\gamemodes\handofgod\items.dm"
 #include "code\game\gamemodes\handofgod\objectives.dm"

@@ -103,6 +103,47 @@
 	if(choice && choice.current && choice.current.stat != DEAD)
 		src << "You choose [choice.current] as your prophet."
 		choice.make_Handofgod_prophet(side)
+
+
+		//Prophet gear
+		var/mob/living/carbon/human/H = choice.current
+		var/popehat = null
+		var/popestick = null
+
+		switch(side)
+			if("red")
+				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/red
+				popestick = /obj/item/weapon/godstaff/red
+			if("blue")
+				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
+				popestick = /obj/item/weapon/godstaff/blue
+
+		if(popehat)
+			var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = new popehat()
+			P.assign_deity(src)
+
+			H.unEquip(H.head)
+			H << "<span class='boldnotice'>A powerful hat has been bestowed upon your head, you will need to wear this to speak with your god...</span>"
+			H.equip_to_slot_or_del(P,slot_head)
+
+		if(popestick)
+			var/obj/item/weapon/godstaff/G = new popestick()
+			G.god = src
+			var/success = ""
+			if(!H.put_in_any_hand_if_possible(G, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1))
+				if(!H.equip_to_slot_if_possible(G,slot_in_backpack,0,1,1))
+					G.loc = get_turf(H)
+					success = "It is on the floor..."
+				else
+					success = "It is in your backpack..."
+			else
+				success = "It is in your hands..."
+
+			if(success)
+				H << "<span class='boldnotice'>A powerful staff has been bestowed upon you, you can use this to convert the false god's structures!</span>"
+				H << "<span class=boldnotice'>[success]</span>"
+		//end prophet gear
+
 		add_faith(-100)
 
 
@@ -141,21 +182,6 @@
 		has_smitten = 1
 	if(has_smitten)
 		add_faith(-40)
-
-
-/mob/camera/god/verb/holyslumber()
-	set category = "Deity"
-	set name = "Holy Slumber (20)"
-	set desc = "Knocks out the mortal below you for a brief amount of time."
-
-	if(!ability_cost(20,0,1))
-		return
-
-	for(var/mob/living/L in get_turf(src))
-		src << "You whisper a lullaby into the ears of [L]. Moments later they drift off..."
-		L << "<span class='danger'><B>You hear a lullaby so soft...</B></span>"
-		L.SetSleeping(40)
-	add_faith(-20)
 
 
 /mob/camera/god/verb/disaster()
@@ -220,20 +246,7 @@
 	if(!ability_cost(75,1,1))
 		return
 
-	var/construct = input("Choose what you wish to create.", "Divine Construction") as null|anything in global_handofgod_structuretypes
-	if(!construct || !global_handofgod_structuretypes[construct] || !ability_cost(75,1,1)) //check again, they might try to cheat the input window.
-		return
-
-	var/obj/structure/divine/construct_type = global_handofgod_structuretypes[construct] //it's a path but we need to initial() some vars
-	if(!construct_type)
-		return
-
-	add_faith(-75)
-
-	var/obj/structure/divine/construction_holder/CH = new(get_turf(src))
-	CH.assign_deity(src)
-	CH.setup_construction(construct_type)
-	CH.visible_message("<span class='notice'>[src] has created a transparent, unfinished [construct]. It can be finished by adding materials.</span>")
+	structure_construction_ui(src)
 
 
 /mob/camera/god/verb/construct_traps()
@@ -244,16 +257,7 @@
 	if(!ability_cost(20,1,1))
 		return
 
-	var/trap = input("Choose what you wish to create.", "Divine Traps") as null|anything in global_handofgod_traptypes
-	if(!trap || !global_handofgod_traptypes[trap] || !ability_cost(20,1,1))
-		return
-
-	src << "You lay \a [trap]."
-	add_faith(-20)
-
-	var/traptype = global_handofgod_traptypes[trap]
-	new traptype (get_turf(src))
-
+	trap_construction_ui(src)
 
 
 

@@ -9,6 +9,7 @@
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	languages = HUMAN | MONKEY | ALIEN | ROBOT | SLIME | DRONE | SWARMER
 	hud_possible = list(ANTAG_HUD)
+	mouse_opacity = 0 //can't be clicked
 
 	var/faith = 100 //For initial prophet appointing/stupid purchase
 	var/max_faith = 100
@@ -160,3 +161,77 @@
 
 /mob/camera/god/Move(NewLoc, Dir = 0)
 	loc = NewLoc
+
+
+
+/mob/camera/god/Topic(href, href_list)
+	if(href_list["create_structure"])
+		if(!ability_cost(75,1,1))
+			return
+
+		var/obj/structure/divine/construct_type = text2path(href_list["create_structure"]) //it's a path but we need to initial() some vars
+		if(!construct_type)
+			return
+
+		add_faith(-75)
+		var/obj/structure/divine/construction_holder/CH = new(get_turf(src))
+		CH.assign_deity(src)
+		CH.setup_construction(construct_type)
+		CH.visible_message("<span class='notice'>[src] has created a transparent, unfinished [initial(construct_type.name)]. It can be finished by adding materials.</span>")
+		src << "<span class='boldnotice'>You may click a construction site to cancel it, but only faith is refunded.</span>"
+		structure_construction_ui(src)
+		return
+
+	if(href_list["place_trap"])
+		if(!ability_cost(20,1,1))
+			return
+
+		var/atom/trap_type = text2path(href_list["place_trap"])
+		if(!trap_type)
+			return
+
+		src << "You lay \a [initial(trap_type.name)]"
+		add_faith(-20)
+		new trap_type(get_turf(src))
+		return
+
+	..()
+
+
+/mob/camera/god/proc/structure_construction_ui(mob/camera/god/user)
+	var/dat = ""
+	for(var/t in global_handofgod_structuretypes)
+		if(global_handofgod_structuretypes[t])
+			var/obj/structure/divine/apath = global_handofgod_structuretypes[t]
+			dat += "<center><B>[capitalize(t)]</B></center><BR>"
+			var/imgstate = initial(apath.autocolours) ? "[initial(apath.icon_state)]-[side]" : "[initial(apath.icon_state)]"
+			var/icon/I = icon('icons/obj/hand_of_god_structures.dmi',imgstate)
+			var/img_component = lowertext(t)
+			//I hate byond, but atleast it autocaches these so it's only 1*number_of_structures worth of actual calls
+			user << browse_rsc(I,"hog_structure-[img_component].png")
+			dat += "<center><img src='hog_structure-[img_component].png' height=64 width=64></center>"
+			dat += "Description: [initial(apath.desc)]<BR>"
+			dat += "<center><a href='?src=\ref[src];create_structure=[apath]'>Construct [capitalize(t)]</a></center><BR><BR>"
+
+	var/datum/browser/popup = new(src, "structures","Construct Structure",350,500)
+	popup.set_content(dat)
+	popup.open()
+
+
+/mob/camera/god/proc/trap_construction_ui(mob/camera/god/user)
+	var/dat = ""
+	for(var/t in global_handofgod_traptypes)
+		if(global_handofgod_traptypes[t])
+			var/obj/structure/divine/trap/T = global_handofgod_traptypes[t]
+			dat += "<center><B>[capitalize(t)]</B></center><BR>"
+			var/icon/I = icon('icons/obj/hand_of_god_structures.dmi',"[initial(T.icon_state)]")
+			world << I
+			var/img_component = lowertext(t)
+			user << browse_rsc(I,"hog_trap-[img_component].png")
+			dat += "<center><img src='hog_trap-[img_component].png' height=64 width=64></center>"
+			dat += "Description: [initial(T.desc)]<BR>"
+			dat += "<center><a href='?src=\ref[src];place_trap=[T]'>Place [capitalize(t)]</a></center><BR><BR>"
+
+	var/datum/browser/popup = new(src, "traps", "Place Trap",350,500)
+	popup.set_content(dat)
+	popup.open()

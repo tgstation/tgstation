@@ -40,12 +40,12 @@
 	item_state = "banner-red"
 	desc = "A banner with the logo of the red deity."
 
-/obj/item/weapon/banner/red/examine()
+/obj/item/weapon/banner/red/examine(mob/user)
 	..()
-	if(is_handofgod_redcultist(usr))
-		usr << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
-	else if(is_handofgod_bluecultist(usr))
-		usr << "A heretical banner that should be destroyed posthaste."
+	if(is_handofgod_redcultist(user))
+		user << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
+	else if(is_handofgod_bluecultist(user))
+		user << "A heretical banner that should be destroyed posthaste."
 
 
 /obj/item/weapon/banner/blue
@@ -54,13 +54,13 @@
 	item_state = "banner-blue"
 	desc = "A banner with the logo of the blue deity"
 
-/obj/item/weapon/banner/blue/examine()
+/obj/item/weapon/banner/blue/examine(mob/user)
 	..()
 
-	if(is_handofgod_redcultist(usr))
-		usr << "A heretical banner that should be destroyed posthaste."
-	else if(is_handofgod_bluecultist(usr))
-		usr << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
+	if(is_handofgod_redcultist(user))
+		user << "A heretical banner that should be destroyed posthaste."
+	else if(is_handofgod_bluecultist(user))
+		user << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
 
 
 /obj/item/weapon/storage/backpack/bannerpack
@@ -89,6 +89,7 @@
 	icon_state = "crusader"
 	w_class = 4 //bulky
 	slowdown = 2.0 //gotta pretend we're balanced.
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
@@ -100,9 +101,9 @@
 /obj/item/clothing/suit/armor/plate/crusader/examine(mob/user)
 	..()
 	if(!is_handofgod_cultist(user))
-		usr << "Armour that's comprised of metal and cloth."
+		user << "Armour that's comprised of metal and cloth."
 	else
-		usr << "Armour that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armour were trying to avoid being murdered.  Since they're not around anymore, you're not sure if they were successful or not."
+		user << "Armour that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armour were trying to avoid being murdered.  Since they're not around anymore, you're not sure if they were successful or not."
 
 
 /obj/item/clothing/head/helmet/plate/crusader
@@ -110,7 +111,6 @@
 	icon_state = "crusader"
 	w_class = 3 //normal
 	flags = BLOCKHAIR
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
@@ -120,12 +120,88 @@
 	icon_state = "crusader-red"
 
 
-/obj/item/clothing/head/helmet/plate/examine(mob/user)
+/obj/item/clothing/head/helmet/plate/crusader/examine(mob/user)
 	..()
 	if(!is_handofgod_cultist(user))
-		usr << "A brownish hood."
+		user << "A brownish hood."
 	else
-		usr << "A hood that's very protective, despite being made of cloth.  Due to the tendency of the wearer to be targeted for assassinations, being protected from being shot in the face was very important.."
+		user << "A hood that's very protective, despite being made of cloth.  Due to the tendency of the wearer to be targeted for assassinations, being protected from being shot in the face was very important.."
+
+
+
+//Prophet helmet
+/obj/item/clothing/head/helmet/plate/crusader/prophet
+	name = "Prophet's Hat"
+	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	flags = 0
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50) //religion protects you from disease and radiation, honk.
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	var/datum/action/innate/godspeak/speak2god
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/proc/assign_deity(mob/camera/god/G)
+	if(speak2god)
+		if(speak2god.owner)
+			speak2god.Remove(speak2god.owner)
+	else
+		speak2god = new()
+	speak2god.god = G
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/user, slot)
+	if(slot == slot_head)
+		if(speak2god)
+			speak2god.Grant(user)
+			user << "<span class='boldnotice'>You gain the ability to speak to the god this hat belongs to!</span>"
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/dropped(mob/user)
+	if(speak2god)
+		if(speak2god.owner == user)
+			speak2god.Remove(user)
+			user << "<span class='boldnotice'>You lose the ability to speak to the god this hat belongs to!</span>"
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/red
+	icon_state = "prophet-red"
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/blue
+	icon_state = "prophet-blue"
+
+
+/obj/item/clothing/head/helmet/plate/crusader/prophet/examine(mob/user)
+	..()
+	if(!is_handofgod_cultist(user))
+		user << "A brownish, religious-looking hat."
+	else
+		user << "A hat bestowed upon a prophet of gods and demigods."
+		if(speak2god && speak2god.god)
+			user << "This hat belongs to the [speak2god.god.side] god."
+
+
+
+//Structure conversion staff
+/obj/item/weapon/godstaff
+	name = "godstaff"
+	icon_state = "godstaff-red"
+	var/mob/camera/god/god = null
+
+/obj/item/weapon/godstaff/examine(mob/user)
+	..()
+	if(!is_handofgod_cultist(user))
+		user << "It's a stick..?"
+	else
+		user << "A powerful staff capable of changing the allegiance of god/demigod structures."
+
+
+/obj/item/weapon/godstaff/red
+	icon_state = "godstaff-red"
+
+/obj/item/weapon/godstaff/blue
+	icon_state = "godstaff-blue"
+
 
 
 /obj/item/clothing/gloves/plate

@@ -54,6 +54,15 @@
 /obj/structure/divine/attackby(obj/item/I, mob/user)
 	if(!I || (I.flags & ABSTRACT))
 		return 0
+
+	//Structure conversion/capture
+	if(istype(I, /obj/item/weapon/godstaff))
+		var/obj/item/weapon/godstaff/G = I
+		if(G.god && deity != G.god)
+			assign_deity(G.god, alert_old_deity = TRUE)
+			visible_message("<span class='boldnotice'>\The [src] has been captured by [user]!</span>")
+		return
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(get_turf(src), I.hitsound, 50, 1)
@@ -107,6 +116,13 @@
 /obj/structure/divine/construction_holder/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
 	if(..())
 		color = side
+
+
+/obj/structure/divine/construction_holder/attack_god(mob/camera/god/user)
+	if(user.side == side && construction_result)
+		user.add_faith(75)
+		visible_message("<span class='danger'>[user] has cancelled \the [initial(construction_result.name)]")
+		qdel(src)
 
 
 /obj/structure/divine/construction_holder/proc/setup_construction(construct_type)
@@ -250,8 +266,8 @@
 	icon_state = "conduit"
 	health = 150
 	maxhealth = 150
-	metal_cost = 25
-	glass_cost = 10
+	metal_cost = 20
+	glass_cost = 5
 
 
 /* //No good sprites, and not enough items to make it viable yet
@@ -271,7 +287,7 @@
 	desc = "An altar dedicated to a deity.  Cultists can \"forcefully teach\" their non-aligned crewmembers to join their side and take up their deity."
 	icon_state = "convertaltar"
 	density = 0
-	metal_cost = 20
+	metal_cost = 15
 	can_buckle = 1
 
 
@@ -299,7 +315,7 @@
 	desc = "An altar designed to perform blood sacrifice for a deity.  The cultists performing the sacrifice will gain a powerful material to use in their forge.  Sacrificing a prophet will yield even better results."
 	icon_state = "sacrificealtar"
 	density = 0
-	metal_cost = 30
+	metal_cost = 25
 	can_buckle = 1
 
 
@@ -358,8 +374,8 @@
 	name = "healing fountain"
 	desc = "A fountain containing the waters of life... or death, depending on where your allegiances lie."
 	icon_state = "fountain"
-	metal_cost = 15
-	glass_cost = 10
+	metal_cost = 10
+	glass_cost = 5
 	autocolours = FALSE
 	var/time_between_uses = 1800
 	var/last_process = 0
@@ -396,8 +412,8 @@
 	density = 1
 	health = 30
 	maxhealth = 30
-	metal_cost = 10
-	glass_cost = 30
+	metal_cost = 5
+	glass_cost = 20
 
 
 /obj/structure/divine/powerpylon/New()
@@ -418,8 +434,8 @@
 	icon_state = "defensepylon"
 	health = 150
 	maxhealth = 150
-	metal_cost = 30
-	glass_cost = 40
+	metal_cost = 25
+	glass_cost = 30
 	var/obj/machinery/gun_turret/defensepylon_internal_turret/pylon_gun
 
 
@@ -475,6 +491,22 @@
 	if(A)
 		A.color = side
 
+/obj/machinery/gun_turret/defensepylon_internal_turret/validate_target(atom/target)
+	. = ..()
+	if(.)
+		var/badtarget = 0
+		switch(side)
+			if("blue")
+				badtarget = is_handofgod_bluecultist(target)
+			if("red")
+				badtarget = is_handofgod_redcultist(target)
+			else
+				badtarget = 1
+		if(badtarget)
+			return 0
+
+
+
 
 /obj/item/projectile/beam/pylon_bolt
 	name = "divine bolt"
@@ -486,8 +518,8 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
-	metal_cost = 20
-	glass_cost = 20
+	metal_cost = 15
+	glass_cost = 15
 
 
 /obj/structure/divine/shrine/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)

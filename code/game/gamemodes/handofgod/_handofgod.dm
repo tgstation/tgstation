@@ -201,6 +201,7 @@ var/global/list/global_handofgod_structuretypes = list()
 
 
 /datum/game_mode/proc/add_god(datum/mind/god_mind, colour = "No Colour")
+	remove_hog_follower(god_mind, announce = 0)
 	if(colour == "red")
 		red_deities += god_mind
 	if(colour == "blue")
