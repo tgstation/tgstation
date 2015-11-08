@@ -20,6 +20,8 @@
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline"),
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid"),
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid", "tricordrazine"))
+								   // salglu_solution , perfluorodecalin , iron , limejuice -- very mild brute/burn , oxy , blood , toxin remedies
+								   // must re-enable perfluorodecalin .
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
