@@ -252,6 +252,7 @@
 	return
 */
 /obj/machinery/teleport/hub/Crossed(AM as mob|obj)
+	if(AM == src)	return//DUH
 	if(istype(AM,/obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = AM
 		B.wait = 1
