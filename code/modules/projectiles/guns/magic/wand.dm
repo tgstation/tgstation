@@ -123,8 +123,8 @@
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user)
 	do_teleport(user, user, 10)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(10, 0, user.loc)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(3, user.loc)
 	smoke.start()
 	charges--
 	..()

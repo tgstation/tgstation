@@ -74,7 +74,7 @@ proc/get_location_modifier(mob/M)
 		return 1
 	else if(locate(/obj/structure/table, T))
 		return 0.8
-	else if(locate(/obj/structure/stool/bed, T))
+	else if(locate(/obj/structure/bed, T))
 		return 0.7
 	else
 		return 0.5

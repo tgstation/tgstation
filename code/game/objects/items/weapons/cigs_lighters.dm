@@ -135,7 +135,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return
 	if(istype(glass))	//you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
@@ -173,7 +174,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = "fire"
 		force = 4
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
-			var/datum/effect/effect/system/reagents_explosion/e = new()
+			var/datum/effect_system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 			e.start()
 			if(ismob(loc))
@@ -182,7 +183,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(src)
 			return
 		if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
-			var/datum/effect/effect/system/reagents_explosion/e = new()
+			var/datum/effect_system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
 			e.start()
 			if(ismob(loc))
@@ -377,7 +378,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
 			var/mob/living/M = loc
-			M << "<span class='notice'>Your [name] goes out, and you empty the ash.</span>"
+			M << "<span class='notice'>Your [name] goes out.</span>"
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off

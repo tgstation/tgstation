@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	item_state = "pill"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 50
 	var/apply_type = INGEST
 	var/apply_method = "swallow"

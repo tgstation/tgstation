@@ -12,19 +12,19 @@
 	var/smoke = 5
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
-	var/datum/effect/effect/system/smoke_spread/smoke_system = new
+	var/datum/effect_system/smoke_spread/smoke_system = new
 	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
-	var/datum/action/mecha/mech_smoke/smoke_action = new
-	var/datum/action/mecha/mech_zoom/zoom_action = new
+	var/datum/action/innate/mecha/mech_smoke/smoke_action = new
+	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 
 /obj/mecha/combat/marauder/New()
 	..()
-	smoke_system.set_up(3, 0, src)
+	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 
 /obj/mecha/combat/marauder/Destroy()
@@ -133,11 +133,11 @@
 	ME.attach(src)
 
 
-/datum/action/mecha/mech_smoke
+/datum/action/innate/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
 
-/datum/action/mecha/mech_smoke/Activate()
+/datum/action/innate/mecha/mech_smoke/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/marauder/M = chassis
@@ -148,11 +148,11 @@
 		spawn(M.smoke_cooldown)
 			M.smoke_ready = 1
 
-/datum/action/mecha/mech_zoom
+/datum/action/innate/mecha/mech_zoom
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
 
-/datum/action/mecha/mech_zoom/Activate()
+/datum/action/innate/mecha/mech_zoom/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/marauder/M = chassis

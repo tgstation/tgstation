@@ -398,8 +398,11 @@ var/list/teleport_other_runes = list()
 						M << "<span class='cult'>\"I accept this meager sacrifice.\"</span>"
 		if(T.mind)
 			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+			stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 			if(!stone.transfer_soul("FORCE", T, usr)) //If it cannot be added
 				qdel(stone)
+			if(stone)
+				stone.invisibility = 0
 			if(!T)
 				rune_in_use = 0
 				return

@@ -107,7 +107,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -144,11 +144,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return
 	..()
-	return
 
 
 /obj/structure/particle_accelerator/Move()

@@ -41,11 +41,11 @@
 	fire_sound = 'sound/weapons/pulse.ogg'
 
 /obj/item/ammo_casing/energy/laser/bluetag
-	projectile_type = /obj/item/projectile/lasertag/bluetag
+	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/lasertag/redtag
+	projectile_type = /obj/item/projectile/beam/lasertag/redtag
 	select_name = "redtag"
 
 /obj/item/ammo_casing/energy/xray

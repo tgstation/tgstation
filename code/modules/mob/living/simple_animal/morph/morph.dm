@@ -30,6 +30,7 @@
 	wander = 0
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 
 	var/morphed = 0
 	var/atom/movable/form = null
@@ -55,6 +56,8 @@
 	if(istype(A,/obj/screen))
 		return 0
 	if(istype(A,/obj/singularity))
+		return 0
+	if(istype(A,/mob/living/simple_animal/hostile/morph))
 		return 0
 	return 1
 
@@ -120,23 +123,18 @@
 	speed = initial(speed)
 
 	morph_time = world.time + MORPH_COOLDOWN
-	return
 
-/mob/living/simple_animal/hostile/morph/death()
+/mob/living/simple_animal/hostile/morph/death(gibbed)
 	if(morphed)
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
-
-	//Dump eaten stuff
-	for(var/obj/O in src)
-		O.loc = loc
-
-	for(var/mob/M in src)
-		M.loc = loc
-
-	..(0)
-	return
+	if(gibbed)
+		for(var/atom/movable/AM in src)
+			AM.loc = loc
+			if(prob(90))
+				step(AM, pick(alldirs))
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
@@ -169,7 +167,7 @@
 				L.loc = src
 				adjustBruteLoss(-50)
 			return
-	if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src,20, target = I))

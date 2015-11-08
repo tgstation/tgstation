@@ -16,7 +16,7 @@ Borg Hypospray
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
@@ -83,22 +83,21 @@ Borg Hypospray
 				R.cell.use(charge_cost) 					//Take power from borg...
 				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "<span class='notice'>The injector is empty.</span>"
 		return
-	if (!( istype(M) ))
+	if(!istype(M))
 		return
-	if (R.total_volume && M.can_inject(user, 1, penetrate_thick = bypass_protection))
+	if(R.total_volume && M.can_inject(user, 1, bypass_protection))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
-		R.reaction(M, INGEST, fraction)
+		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
-	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]

@@ -281,6 +281,26 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 
+datum/design/diagnostic_hud
+	name = "Diagnostic HUD"
+	desc = "A HUD used to analyze and determine faults within robotic machinery."
+	id = "dianostic_hud"
+	req_tech = list("magnets" = 3, "engineering" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic
+	category = list("Equipment")
+
+datum/design/diagnostic_hud_night
+	name = "Night Vision Diagnostic HUD"
+	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
+	id = "dianostic_hud_night"
+	req_tech = list("magnets" = 5, "engineering" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$plasma" = 300)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
+	category = list("Equipment")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
@@ -377,6 +397,16 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
+	category = list("Equipment")
+
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
+	id = "scigoggles"
+	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 
 /////////////////////////////////////////

@@ -94,6 +94,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/unlock_content = 0
 
+	var/list/ignoring = list()
+
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
 	custom_names["ai"] = pick(ai_names)
@@ -663,8 +665,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!istype(user, /mob/new_player))	return
-
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)

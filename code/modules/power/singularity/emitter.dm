@@ -62,7 +62,7 @@
 
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -163,7 +163,7 @@
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 
 		if(prob(35))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
 

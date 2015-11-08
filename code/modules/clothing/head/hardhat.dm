@@ -73,7 +73,7 @@
 	item_color = "atmos"
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
-	flags = STOPSPRESSUREDMAGE
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT

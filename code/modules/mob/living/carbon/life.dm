@@ -69,16 +69,6 @@
 
 				breath = loc.remove_air(breath_moles)
 
-				//Harmful gasses
-				if(!has_smoke_protection())
-					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
-						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/initial(S.lifetime)
-							S.reagents.reaction(src,INGEST, fraction)
-							var/amount = round(S.reagents.total_volume*fraction,0.1)
-							S.reagents.copy_to(src, amount)
-							S.lifetime--
-
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
@@ -104,7 +94,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
 
@@ -134,7 +124,7 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -165,7 +155,7 @@
 		var/ratio = (breath.toxins/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air")
+		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -207,7 +197,14 @@
 
 
 /mob/living/carbon/proc/handle_changeling()
-	return
+	if(mind && hud_used)
+		if(mind.changeling)
+			mind.changeling.regenerate(src)
+			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+		else
+			hud_used.lingchemdisplay.invisibility = 101
+
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(radiation)
@@ -291,7 +288,7 @@
 	CheckStamina()
 
 	if(sleeping)
-		throw_alert("asleep")
+		throw_alert("asleep", /obj/screen/alert/asleep)
 		handle_dreams()
 		adjustStaminaLoss(-10)
 		sleeping = max(sleeping-1, 0)

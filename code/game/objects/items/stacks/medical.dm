@@ -29,10 +29,6 @@
 		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
 		return 1
 
-	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return 1
-
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(stop_bleeding)

@@ -39,6 +39,7 @@
 							"Construction",
 							"T-Comm",
 							"Security",
+							"Machinery",
 							"Medical",
 							"Misc"
 							)
@@ -360,7 +361,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7))
@@ -373,7 +374,7 @@
 
 	if(hack)
 		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & 4) && ("hacked" in D.category))
+			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 				files.known_designs += D
 	else
 		for(var/datum/design/D in files.known_designs)
