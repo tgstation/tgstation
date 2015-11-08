@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - tweak: Shades, Constructs, and Gibs no longer leave bloody gibs behind when they get gibbed.
-  - tweak: Shades and Constructs now leave some ectoplasm behind when they get gibbed.
-  - tweak: Shades and Constructs now leave 3 ectoplasms instead of 1 when they die.
