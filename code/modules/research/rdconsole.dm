@@ -117,13 +117,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallTechName() called tick#: [world.time]")
 	var/datum/tech/check_tech
 	var/return_name = null
-	for(var/T in typesof(/datum/tech) - /datum/tech)
-		check_tech = null
+
+	for (var/T in typesof(/datum/tech) - /datum/tech)
 		check_tech = new T()
-		if(check_tech.id == ID)
+
+		if (check_tech.id == ID)
 			return_name = check_tech.name
-			del(check_tech)
-			check_tech = null
 			break
 
 	return return_name
