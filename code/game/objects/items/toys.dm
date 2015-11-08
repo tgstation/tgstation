@@ -1213,3 +1213,250 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
+
+
+
+/*
+ * Action Figures
+ */
+
+/obj/item/toy/figure
+	name = "Non-Specific Action Figure action figure"
+	desc = "A \"Space Life\" brand... wait, what the hell is this thing?"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "nuketoy"
+	var/cooldown = 0
+	var/toysay = "What the fuck did you do?"
+	var/obj/item/toy/accessory/hastoy = null
+
+/obj/item/toy/figure/attack_self(mob/user as mob)
+	if(!cooldown)
+		user << "<span class='notice'>The [src] says \"[toysay]\".</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		cooldown = 1
+		spawn(30) cooldown = 0
+
+/*/obj/item/toy/figure/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(!cooldown)
+			user << "<span class='notice'>The [src] says \"[toysay]\".</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+			cooldown = 1
+			spawn(30) cooldown = 0
+			return
+*/
+/obj/item/toy/figure/cmo
+	name = "Chief Medical Officer action figure"
+	desc = "A \"Space Life\" brand Chief Medical Officer action figure."
+	icon_state = "cmo"
+	toysay = "Suit sensors!"
+
+/obj/item/toy/figure/assistant
+	name = "Assistant action figure"
+	desc = "A \"Space Life\" brand Assistant action figure."
+	icon_state = "assistant"
+	toysay = "Grey tide world wide!"
+
+/obj/item/toy/figure/atmos
+	name = "Atmospheric Technician action figure"
+	desc = "A \"Space Life\" brand Atmospheric Technician action figure."
+	icon_state = "atmos"
+	toysay = "Glory to Atmosia!"
+
+/obj/item/toy/figure/bartender
+	name = "Bartender action figure"
+	desc = "A \"Space Life\" brand Bartender action figure."
+	icon_state = "bartender"
+	toysay = "Where is Pun Pun?"
+
+/obj/item/toy/figure/borg
+	name = "Cyborg action figure"
+	desc = "A \"Space Life\" brand Cyborg action figure."
+	icon_state = "borg"
+	toysay = "I. LIVE. AGAIN."
+
+/obj/item/toy/figure/botanist
+	name = "Botanist action figure"
+	desc = "A \"Space Life\" brand Botanist action figure."
+	icon_state = "botanist"
+	toysay = "Dude, I see colors..."
+
+/obj/item/toy/figure/captain
+	name = "Captain action figure"
+	desc = "A \"Space Life\" brand Captain action figure."
+	icon_state = "captain"
+	toysay = "Any heads of staff?"
+
+/obj/item/toy/figure/cargotech
+	name = "Cargo Technician action figure"
+	desc = "A \"Space Life\" brand Cargo Technician action figure."
+	icon_state = "cargotech"
+	toysay = "For Cargonia!"
+
+/obj/item/toy/figure/ce
+	name = "Chief Engineer action figure"
+	desc = "A \"Space Life\" brand Chief Engineer action figure."
+	icon_state = "ce"
+	toysay = "Wire the solars!"
+
+/obj/item/toy/figure/chaplain
+	name = "Chaplain action figure"
+	desc = "A \"Space Life\" brand Chaplain action figure."
+	icon_state = "chaplain"
+	toysay = "Praise Space Jesus!"
+
+/obj/item/toy/figure/chef
+	name = "Chef action figure"
+	desc = "A \"Space Life\" brand Chef action figure."
+	icon_state = "chef"
+	toysay = "Pun-Pun is a tasty burger."
+
+/obj/item/toy/figure/chemist
+	name = "Chemist action figure"
+	desc = "A \"Space Life\" brand Chemist action figure."
+	icon_state = "chemist"
+	toysay = "Get your pills!"
+
+/obj/item/toy/figure/clown
+	name = "Clown action figure"
+	desc = "A \"Space Life\" brand Clown action figure."
+	icon_state = "clown"
+	toysay = "Honk!"
+
+/obj/item/toy/figure/ian
+	name = "Ian action figure"
+	desc = "A \"Space Life\" brand Ian action figure."
+	icon_state = "ian"
+	toysay = "Arf!"
+
+/obj/item/toy/figure/detective
+	name = "Detective action figure"
+	desc = "A \"Space Life\" brand Detective action figure."
+	icon_state = "detective"
+	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
+
+/obj/item/toy/figure/dsquad
+	name = "Death Squad Officer action figure"
+	desc = "A \"Space Life\" brand Death Squad Officer action figure."
+	icon_state = "dsquad"
+	toysay = "Eliminate all threats!"
+
+/obj/item/toy/figure/engineer
+	name = "Engineer action figure"
+	desc = "A \"Space Life\" brand Engineer action figure."
+	icon_state = "engineer"
+	toysay = "Oh god, the singularity is loose!"
+
+/obj/item/toy/figure/geneticist
+	name = "Geneticist action figure"
+	desc = "A \"Space Life\" brand Geneticist action figure."
+	icon_state = "geneticist"
+	toysay = "Smash!"
+
+/obj/item/toy/figure/hop
+	name = "Head of Personel action figure"
+	desc = "A \"Space Life\" brand Head of Personel action figure."
+	icon_state = "hop"
+	toysay = "Giving out all access!"
+
+/obj/item/toy/figure/hos
+	name = "Head of Security action figure"
+	desc = "A \"Space Life\" brand Head of Security action figure."
+	icon_state = "hos"
+	toysay = "Get the justice chamber ready, I think we got a joker here."
+
+/obj/item/toy/figure/qm
+	name = "Quartermaster action figure"
+	desc = "A \"Space Life\" brand Quartermaster action figure."
+	icon_state = "qm"
+	toysay = "Please sign this form in triplicate and we will see about geting you a welding mask within 3 business days."
+
+/obj/item/toy/figure/janitor
+	name = "Janitor action figure"
+	desc = "A \"Space Life\" brand Janitor action figure."
+	icon_state = "janitor"
+	toysay = "Look at the signs, you idiot."
+
+/obj/item/toy/figure/lawyer
+	name = "Lawyer action figure"
+	desc = "A \"Space Life\" brand Lawyer action figure."
+	icon_state = "lawyer"
+	toysay = "My client is a dirty traitor!"
+
+/obj/item/toy/figure/librarian
+	name = "Librarian action figure"
+	desc = "A \"Space Life\" brand Librarian action figure."
+	icon_state = "librarian"
+	toysay = "One day while..."
+
+/obj/item/toy/figure/md
+	name = "Medical Doctor action figure"
+	desc = "A \"Space Life\" brand Medical Doctor action figure."
+	icon_state = "md"
+	toysay = "The patient is already dead!"
+
+/obj/item/toy/figure/mime
+	name = "Mime action figure"
+	desc = "A \"Space Life\" brand Mime action figure."
+	icon_state = "mime"
+	toysay = "..."
+
+/obj/item/toy/figure/miner
+	name = "Shaft Miner action figure"
+	desc = "A \"Space Life\" brand Shaft Miner action figure."
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
+/obj/item/toy/figure/ninja
+	name = "Ninja action figure"
+	desc = "A \"Space Life\" brand Ninja action figure."
+	icon_state = "ninja"
+	toysay = "Oh god! Stop shooting, I'm friendly!"
+
+/obj/item/toy/figure/wizard
+	name = "Wizard action figure"
+	desc = "A \"Space Life\" brand Wizard action figure."
+	icon_state = "wizard"
+	toysay = "Ei Nath!"
+
+/obj/item/toy/figure/rd
+	name = "Research Director action figure"
+	desc = "A \"Space Life\" brand Research Director action figure."
+	icon_state = "rd"
+	toysay = "Blowing all of the borgs!"
+
+/obj/item/toy/figure/roboticist
+	name = "Roboticist action figure"
+	desc = "A \"Space Life\" brand Roboticist action figure."
+	icon_state = "roboticist"
+	toysay = "Big stompy mechs!"
+
+/obj/item/toy/figure/scientist
+	name = "Scientist action figure"
+	desc = "A \"Space Life\" brand Scientist action figure."
+	icon_state = "scientist"
+	toysay = "For science!"
+
+/obj/item/toy/figure/syndie
+	name = "Nuclear Operative action figure"
+	desc = "A \"Space Life\" brand Nuclear Operative action figure."
+	icon_state = "syndie"
+	toysay = "Get that fucking disk!"
+
+/obj/item/toy/figure/secofficer
+	name = "Security Officer action figure"
+	desc = "A \"Space Life\" brand Security Officer action figure."
+	icon_state = "secofficer"
+	toysay = "I am the law!"
+
+/obj/item/toy/figure/virologist
+	name = "Virologist action figure"
+	desc = "A \"Space Life\" brand Virologist action figure."
+	icon_state = "virologist"
+	toysay = "The cure is potassium!"
+
+/obj/item/toy/figure/warden
+	name = "Warden action figure"
+	desc = "A \"Space Life\" brand Warden action figure."
+	icon_state = "warden"
+	toysay = "Seventeen minutes for coughing at an officer!"
