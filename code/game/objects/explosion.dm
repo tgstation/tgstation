@@ -68,6 +68,7 @@
 							shake_camera(M, 10, 2)
 						else
 							M.playsound_local(epicenter, get_sfx("explosion_small"), 100, 1, frequency, falloff = 5)
+							shake_camera(M, 4, 1)
 
 						//You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 
