@@ -12,6 +12,8 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
+	ANTAG_HUD_HOG_BLUE = new/datum/atom_hud/antag(),\
+	ANTAG_HUD_HOG_RED = new/datum/atom_hud/antag(),\
 	)
 
 /datum/atom_hud
@@ -20,6 +22,8 @@ var/datum/atom_hud/huds = list( \
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 /datum/atom_hud/proc/remove_hud_from(mob/M)
+	if(!M)
+		return
 	if(src in M.permanent_huds)
 		return
 	for(var/atom/A in hudatoms)
@@ -27,28 +31,34 @@ var/datum/atom_hud/huds = list( \
 	hudusers -= M
 
 /datum/atom_hud/proc/remove_from_hud(atom/A)
+	if(!A)
+		return
 	for(var/mob/M in hudusers)
 		remove_from_single_hud(M, A)
 	hudatoms -= A
 
 /datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M.client)
+	if(!M || !M.client || !A)
 		return
 	for(var/i in hud_icons)
 		M.client.images -= A.hud_list[i]
 
 /datum/atom_hud/proc/add_hud_to(mob/M)
+	if(!M)
+		return
 	hudusers |= M
 	for(var/atom/A in hudatoms)
 		add_to_single_hud(M, A)
 
 /datum/atom_hud/proc/add_to_hud(atom/A)
+	if(!A)
+		return
 	hudatoms |= A
 	for(var/mob/M in hudusers)
 		add_to_single_hud(M, A)
 
 /datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M.client)
+	if(!M || !M.client || !A)
 		return
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
@@ -64,3 +74,12 @@ var/datum/atom_hud/huds = list( \
 	for(var/datum/atom_hud/hud in (huds|gang_huds))
 		if(src in hud.hudusers)
 			hud.add_hud_to(src)
+
+/mob/new_player/reload_huds()
+	return
+
+/mob/proc/add_click_catcher()
+	client.screen += client.void
+
+/mob/new_player/add_click_catcher()
+	return

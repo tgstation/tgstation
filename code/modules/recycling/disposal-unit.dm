@@ -98,13 +98,15 @@
 	return 1
 
 // mouse drop another mob or self
-//
+
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
-	if(istype(target) && user == target)
+	if(istype(target))
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
+		return
+	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.buckled_mob)
 		return
@@ -132,6 +134,7 @@
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
+			target.LAssailant = user
 		update()
 
 // can breath normally in the disposal

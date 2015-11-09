@@ -170,11 +170,16 @@
 			if(BANTYPE_ANY_FULLBAN)
 				bantype_str = "ANY"
 				bantype_pass = 1
+			if(BANTYPE_ANY_JOB)
+				bantype_str = "ANYJOB"
+				bantype_pass = 1
 		if( !bantype_pass ) return
 
 	var/bantype_sql
 	if(bantype_str == "ANY")
 		bantype_sql = "(bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now() ) )"
+	else if(bantype_str == "ANYJOB")
+		bantype_sql = "(bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now() ) )"
 	else
 		bantype_sql = "bantype = '[bantype_str]'"
 
