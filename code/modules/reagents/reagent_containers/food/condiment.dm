@@ -267,3 +267,11 @@
 		..()
 		reagents.add_reagent("vinegar", 50)
 
+/obj/item/weapon/reagent_containers/food/condiment/exotic
+	name = "Exotic Bottle"
+	desc = "If you can see this label, something is wrong."
+	//~9% chance of anything but special sauce, which is .09 chance
+	var/list/possible_condiments = list("enzyme"=10,"blackpepper"=10,"vinegar"=10,"sodiumchloride"=10,"cinnamon"=10,"chefspecial"=1,"frostoil"=10,"soysauce"=10,"capsaicin"=10,"honey"=10,"ketchup"=10,"coco"=10)
+	New()
+		..()
+		reagents.add_reagent(pickweight(possible_condiments), 30)

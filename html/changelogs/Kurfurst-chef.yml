@@ -1,0 +1,14 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: The food crate has been renamed to "basic cooking crate" and now contains more flour at the cost of no bananas or malt vinegar.
+ - rscadd: New crate: "Fruit crate", contains a large assortment of fruit at random.
+ - rscadd: New crate: "Exotic garnishes", contains a random selection of all kinds of goodies, ranging from coco to honey to soysauce and more. There might be something special, too. Requires kitchen access.
+ - rscadd: New crate: "Trophy meats", contains all sorts of exciting meats for bored, advanced chefs. Requires kitchen access.
+ - rscadd: New recipes for Malt Vinegar and Sprinkles.
+ - tweak: Refactored Dropper slightly
+ - rscadd: New premium item at the kitchen vendor: baster! It's a big dropper.
+ - tweak: Droppers and Basters are now allowed to be used directly on the microwave.
+ - rscdel: Removed the non-exotic seed crate, as the vendor recharge packs obsoleted it.
+ - bugfix: Fixed a bug where, although some hydroponics crates had access requirements, they did not actually use a crate which could use access requirements.
+ - tweak: Removed hydroponics access from some harmless crates.

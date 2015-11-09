@@ -173,7 +173,8 @@
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
+	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) || \
+	        istype(O,/obj/item/weapon/reagent_containers/dropper) \
 		)
 		if (!O.reagents)
 			return 1
