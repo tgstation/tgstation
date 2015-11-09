@@ -106,11 +106,11 @@
 	color = "#0000C8"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	if(M.stat != DEAD && M.bodytemperature < 270)
+	if(M.stat != DEAD && M.bodytemperature < 260)
 		M.adjustCloneLoss(-4)
 		M.adjustOxyLoss(-10)
-		M.adjustBruteLoss(-3)
-		M.adjustFireLoss(-3)
+		M.adjustBruteLoss(-12)
+		M.adjustFireLoss(-12)
 		M.adjustToxLoss(-3)
 		M.status_flags &= ~DISFIGURED
 
@@ -306,7 +306,10 @@
 	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+			if(istype(R, /datum/reagent/toxin)
+				M.reagents.remove_reagent(R.id,2)
+			if(prob(50))
+				M.reagents.remove_reagent(R.id,1)
 	..()
 	return
 
@@ -346,9 +349,9 @@
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,2.5)
+			M.reagents.remove_reagent(R.id,5)
 	if(M.health > 20)
-		M.adjustToxLoss(2.5*REM)
+		M.adjustToxLoss(5*REM)
 	..()
 	return
 
@@ -377,37 +380,44 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	if(M.radiation > 0)
-		M.radiation -= 4
-	M.adjustToxLoss(-2*REM)
+	if(M.radiation >= 7)
+		M.radiation -= 7
+	if(prob(75))
+		M.adjustToxLoss(-4*REM)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM)
+		M.adjustBruteLoss(1*REM)
+		M.adjustBurnLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,2)
+			M.reagents.remove_reagent(R.id,4)
 	..()
 	return
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
-	description = "If you have less than 50 brute damage, it heals 0.25 unit. If overdosed it will deal 0.5 brute damage if the patient has less than 50 brute damage already."
+	description = "Painkiller, 55% chance to heal some brute damage, stabilizes temperature"
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(-0.25*REM)
+	if(prob(55))
+		M.adjustBruteLoss(-2*REM)
+	if(M.bodytemperature > 310)
+		M.bodytemperature = max(310, M.bodytemperature - (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < 311)
+		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.status_flags |= IGNORESLOWDOWN
 	..()
 	return
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(0.5*REM)
+	if(prob(8))
+		M.adjustToxLoss(pick(1,2)*REM)
 	..()
 	return
 
@@ -420,9 +430,9 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(-3*REM)
+	M.adjustOxyLoss(-6*REM)
 	if(M.losebreath >= 4)
-		M.losebreath -= 2
+		M.losebreath -= 4
 	..()
 	return
 
@@ -435,37 +445,59 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM)
+	M.adjustOxyLoss(-25*REM)
 	M.silent = max(M.silent, 5)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM)
-		M.adjustFireLoss(-0.5*REM)
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
 	..()
 	return
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Reduces stun times, increases run speed. If overdosed it will deal toxin and oxyloss damage."
+	description = "Reduces stun times, increases run speed. Effectively a weaker Epinephrine."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
-	addiction_threshold = 30
+	overdose_threshold = 35
+	addiction_threshold = 25
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
+	M.jitteriness += 3
+	M.drowsyness -= 3
+	if(M.losebreath > 3)
+		M.losebreath = 3
+	if(M.getOxyLoss() > 75)
+		M.adjustOxyLoss(-1*REM)
+	if(M.health > 0)
+		if(prob(33))
+			M.adjustBruteLoss(-1*REM)
+			M.adjustFireLoss(-1*REM)
+		if(prob(8))
+			M.adjustToxLoss(-1*REM)
+	if(M.health < 0)
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
+		if(prob(25))
+			M.adjustToxLoss(-1*REM)
+
 	M.adjustStaminaLoss(-1*REM)
 	..()
 	return
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM)
-		M.losebreath++
+	if(prob(8))
+		M.adjustToxLoss(pick(1,2)*REM)
+	if(prob(15))
+		M.adjustToxLoss(pick(1,2)*REM)
+	if(prob(5))
+		M.Dizzy(5)
+		M.Weaken(2)
 	..()
 	return
 
@@ -497,16 +529,19 @@
 /datum/reagent/medicine/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
-	description = "Purges body of lethal Histamine and reduces jitteriness while causing minor drowsiness."
+	description = "Purges body of lethal histamines and itching powder, reduces jitteriness while causing drowsiness."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/M)
-	if(prob(50))
+	if(prob(3))
 		M.drowsyness += 1
+		M.Weaken(1)
+		M << "You feel tired."
 	M.jitteriness -= 1
-	M.reagents.remove_reagent("histamine",1.5)
+	M.reagents.remove_reagent("histamine",3)
+	M.reagents.remove_reagent("itching_powder",3)
 	..()
 	return
 
@@ -618,10 +653,10 @@
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
 	if(M.health > -60)
-		M.adjustToxLoss(0.5*REM)
+		M.adjustToxLoss(1*REM)
 	if(M.health < -25)
-		M.adjustBruteLoss(-1.5*REM)
-		M.adjustFireLoss(-1.5*REM)
+		M.adjustBruteLoss(3*REM)
+		M.adjustFireLoss(3*REM)
 	if(M.oxyloss > 65)
 		M.setOxyLoss(65)
 	if(M.losebreath > 5)
@@ -629,13 +664,14 @@
 	if(prob(20))
 		M.Dizzy(5)
 		M.Jitter(5)
+	if(M.heart_attack && prob(25))
+		M.heart_attack = 0
 	..()
 	return
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.5*REM)
-	M.Dizzy(1)
-	M.Jitter(1)
+	if(prob(8))
+		M.adjustToxLoss(pick(-1, -2)*REM)
 	..()
 	return
 
@@ -650,9 +686,9 @@
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/M)
 	if(M.health < -10 && M.health > -65)
-		M.adjustToxLoss(-0.5*REM)
-		M.adjustBruteLoss(-0.5*REM)
-		M.adjustFireLoss(-0.5*REM)
+		M.adjustToxLoss(-1*REM)
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35)
 	if(M.losebreath >= 4)
@@ -660,18 +696,21 @@
 	if(M.losebreath < 0)
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM)
-	if(prob(20))
-		M.AdjustParalysis(-1)
-		M.AdjustStunned(-1)
-		M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	M.jitteriness += 3
+	M.drowsyness -= 3
+	M.reagents.remove_reagent("histamine",15)
 	..()
 	return
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM)
-		M.adjustToxLoss(1*REM)
-		M.losebreath++
+	if(prob(8))
+		M.adjustToxLoss(pick(1,2)*REM)
+	if(prob(5))
+		M.Dizzy(5)
+		M.Weaken(2)
 	..()
 	return
 
@@ -686,8 +725,10 @@
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+		var/end_health = M.getBruteLoss() + M.getFireLoss()
+		if(end_health >= 150)
+			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then explodes.</span>")
+			M.gib(1)
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(!M.suiciding && !(M.disabilities & NOCLONE))
@@ -699,7 +740,6 @@
 			else
 				M.stat = 1
 				M.adjustOxyLoss(-20)
-				M.adjustToxLoss(-20)
 				dead_mob_list -= M
 				living_mob_list |= list(M)
 				M.emote("gasp")
@@ -708,8 +748,8 @@
 	return
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(0.5*REM)
-	M.adjustFireLoss(0.5*REM)
+	M.adjustBruteLoss(2*REM)
+	M.adjustFireLoss(2*REM)
 	..()
 	return
 
@@ -748,8 +788,9 @@
 	M.drowsyness = 0
 	M.slurring = 0
 	M.confused = 0
-	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
-	M.adjustToxLoss(-0.2*REM)
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 8*REM, 0, 1)
+	if(M.health > 25
+		M.adjustToxLoss(-2*REM)
 	..()
 
 /datum/reagent/medicine/stimulants
@@ -792,7 +833,7 @@
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
 	if(M.sleeping)
 		M.sleeping--
-	M.reagents.remove_reagent("sugar", 3)
+	M.reagents.remove_reagent("sugar", 5)
 	..()
 	return
  // TREK CHEMS
