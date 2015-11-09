@@ -1,0 +1,6 @@
+author: Wizardcrying
+
+delete-after: true
+
+changes:
+  - bugfix: Disallows the destruction of a janicart's trashbag and its contents by putting on another trashbag. No atom smashing janicart for you, janitors.  
