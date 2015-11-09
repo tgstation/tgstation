@@ -199,7 +199,7 @@
 		else
 			if(light_message)
 				light_message = 0
-				H << "<span class='warning'>Darkness envelopes you.</span>"
+				H << "<span class='warning'>Darkness envelops you.</span>"
 			if (light_amount < 2) //heal in the dark
 				H.heal_overall_damage(1,1)
 
@@ -683,8 +683,9 @@
 			H.Dizzy(4) //This will get annoying fast now that it can actually get triggered
 		if(!mind_message_minds)
 			mind_message_minds = 1
-			H << "<span class='alert'>You feel no minds nearby. Your thoughts echoe in the distance.</span>"
-		else
+			H << "<span class='alert'>You feel no minds nearby. Your thoughts echo in the distance.</span>"
+	else
+		if(mind_message_minds)
 			mind_message_minds = 0
 			H << "<span class='alert'>You hear the thoughts of another.</span>"
 	return
