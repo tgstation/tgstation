@@ -201,7 +201,7 @@
 				light_message = 0
 				H << "<span class='warning'>Darkness envelopes you.</span>"
 			if (light_amount < 2) //heal in the dark
-			H.heal_overall_damage(1,1)
+				H.heal_overall_damage(1,1)
 
 /datum/species/shadow/handle_vision(mob/living/carbon/human/H) //Nightvision does not function without these lines.
 	H.see_in_dark = 8
