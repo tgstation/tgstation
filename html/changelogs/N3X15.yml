@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: Borers can hear from inside of their hosts again.
