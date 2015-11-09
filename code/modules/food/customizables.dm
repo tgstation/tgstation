@@ -90,7 +90,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-	var/ingMax = 50
+	var/ingMax = 100
 	var/list/ingredients = list()
 	var/stackIngredients = 0
 	var/fullyCustom = 0
@@ -118,7 +118,7 @@
 				message_admins("<span class='warning'>POSSIBLE EXPLOIT ATTEMPT:</span> [key_name_admin(user)] tried to stack multiple plates together, which used to generate excessive atom names, resulting in crashes. See <a href='https://github.com/d3athrow/vgstation13/issues/6402'>#6402</a>.")
 				return
 		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
-			user << "<span class='warning'>Sorry, no recursive food.</span>"
+			user << "<span class='warning'>[pick("Sorry, no recursive food.","That would be a straining topological exercise.","This world just isn't ready for your cooking genius.","It's possible that you may have a problem.","It won't fit.","You don't think that would taste very good.","Quit goofin' around.")]</span>"
 			return
 		S.reagents.trans_to(src,S.reagents.total_volume)
 		user.drop_item(I, src)
@@ -382,7 +382,7 @@
 		if(src.ingredients.len < src.ingMax)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = I
 			if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
-				user << "<span class='warning'>Sorry, no recursive food.</span>"
+				user << "<span class='warning'>[pick("Sorry, no recursive food.","That would be a straining topological exercise.","This world just isn't ready for your cooking genius.","It's possible that you may have a problem.","It won't fit.","You don't think that would taste very good.","Quit goofin' around.")]</span>"
 				return
 			user.drop_item(I, src)
 			user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
