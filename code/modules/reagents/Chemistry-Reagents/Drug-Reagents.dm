@@ -455,14 +455,15 @@
 //No overdose since if you don't have this drug in your system you get fucked up by addiction.
 //Bullshit, you get mutated now. Patch new body mutations once dismemberment gets here.
 //copypasted from unstable, minus the good mutations, and with more chance to activate.
-/datum/reagent/drug/happyhappy/overdose_process(var/mob/living/M as mob)
+/datum/reagent/drug/happyhappy/overdose_process(var/mob/living/carbon/M as mob)
 	if(!..())
 		return
+	if(holder.has_reagent("ryetalyn"))
+		holder.remove_reagent("ryetalyn", 5*REM)
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(50)) || method==INGEST || method == PATCH)
+	else if(prob(15))
 		randmuti(M)
-		randmutb(M)
 		domutcheck(M, null)
 		updateappearance(M)
 	..()
