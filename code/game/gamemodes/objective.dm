@@ -6,6 +6,45 @@
 	var/completed = 0					//currently only used for custom objectives.
 	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/required_role = null			//If the objective can only be done by a certain role, such as absorb for changelings.
+	var/randomgen = 1
+
+/proc/generate_objectives(var/datum/mind/M, var/objectives_made = 2, var/has_escape = TRUE)
+	var/list/objective_types = (typesof(/datum/objective/default) - /datum/objective/default)
+	var/list/escape_objective_types = (typesof(/datum/objective/escape_obj) - /datum/objective/escape_obj)
+	for(var/datum/objective/O in objective_types)
+		if(O.required_role != M.special_role)
+			objective_types -= O
+		if(!O.randomgen)
+			objective_types -= O
+	for(var/i = 1, i <= objectives_made, i++)
+		if(i == objectives_made && has_escape)
+			var/datum/objective/holder_obj = pick(escape_objective_types)
+			add_objective(M, holder_obj)
+			return
+		else
+			var/datum/objective/holder_obj = pick(objective_types)
+			var/datum/objective/O = new holder_obj
+			if(!O.martyr_compatible)
+				escape_objective_types -= list(/datum/objective/escape_obj/martyr)
+			add_objective(M, holder_obj)
+
+
+/proc/add_objective(var/datum/mind/M, var/datum/objective/O, var/announce_new_objectives = 0)
+	var/datum/objective/objective = new O
+	objective.owner = M
+	M.objectives += objective
+	objective.find_target()
+	objective.extra_prep()
+	objective.update_explanation_text()
+	if(announce_new_objectives)
+		if(M.special_role)
+			M.current << "<B>You are the [M.special_role].</B>"
+		var/obj_count = 1
+		for(var/datum/objective/OBJ in M.objectives)
+			M.current << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+			obj_count++
+	return objective
 
 /datum/objective/New(var/text)
 	if(text)
@@ -13,6 +52,9 @@
 
 /datum/objective/proc/check_completion()
 	return completed
+
+/datum/objective/proc/extra_prep()
+	return
 
 /datum/objective/proc/is_unique_objective(possible_target)
 	for(var/datum/objective/O in owner.objectives)
@@ -60,25 +102,27 @@
 
 /datum/objective/proc/give_special_equipment()
 
-/datum/objective/assassinate
+// Default objectives are ones you can put on any antag type and they should be able to complete it.
+
+/datum/objective/default/assassinate
 	var/target_role_type=0
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/default/assassinate/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
 	..()
 	return target
 
-/datum/objective/assassinate/check_completion()
+/datum/objective/default/assassinate/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		return 0
 	return 1
 
-/datum/objective/assassinate/update_explanation_text()
+/datum/objective/default/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
@@ -115,18 +159,18 @@
 
 
 
-/datum/objective/maroon
+/datum/objective/default/maroon
 	var/target_role_type=0
 	dangerrating = 5
 	martyr_compatible = 1
 
-/datum/objective/maroon/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/default/maroon/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
 	..()
 	return target
 
-/datum/objective/maroon/check_completion()
+/datum/objective/default/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
@@ -134,7 +178,7 @@
 			return 0
 	return 1
 
-/datum/objective/maroon/update_explanation_text()
+/datum/objective/default/maroon/update_explanation_text()
 	if(target && target.current)
 		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
 	else
@@ -142,17 +186,17 @@
 
 
 
-/datum/objective/debrain//I want braaaainssss
+/datum/objective/default/debrain//I want braaaainssss
 	var/target_role_type=0
 	dangerrating = 20
 
-/datum/objective/debrain/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/default/debrain/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
 	..()
 	return target
 
-/datum/objective/debrain/check_completion()
+/datum/objective/default/debrain/check_completion()
 	if(!target)//If it's a free objective.
 		return 1
 	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
@@ -166,7 +210,7 @@
 			return 1
 	return 0
 
-/datum/objective/debrain/update_explanation_text()
+/datum/objective/default/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
@@ -175,18 +219,18 @@
 
 
 
-/datum/objective/protect//The opposite of killing a dude.
+/datum/objective/default/protect//The opposite of killing a dude.
 	var/target_role_type=0
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/default/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
 	..()
 	return target
 
-/datum/objective/protect/check_completion()
+/datum/objective/default/protect/check_completion()
 	if(!target)			//If it's a free objective.
 		return 1
 	if(target.current)
@@ -195,7 +239,7 @@
 		return 1
 	return 0
 
-/datum/objective/protect/update_explanation_text()
+/datum/objective/default/protect/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
@@ -204,12 +248,12 @@
 
 
 
-/datum/objective/hijack
+/datum/objective/escape_obj/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
 	dangerrating = 25
 	martyr_compatible = 0 //Technically you won't get both anyway.
 
-/datum/objective/hijack/check_completion()
+/datum/objective/escape_obj/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
 	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
@@ -263,12 +307,12 @@
 						return 1
 	return 0
 
-/datum/objective/block
+/datum/objective/escape_obj/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 	dangerrating = 25
 	martyr_compatible = 1
 
-/datum/objective/block/check_completion()
+/datum/objective/escape_obj/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
 	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
@@ -287,11 +331,11 @@
 	return 1
 
 
-/datum/objective/escape
+/datum/objective/escape_obj/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
 
-/datum/objective/escape/check_completion()
+/datum/objective/escape_obj/escape/check_completion()
 	if(issilicon(owner.current))
 		return 0
 	if(isbrain(owner.current))
@@ -314,16 +358,16 @@
 
 	return 0
 
-/datum/objective/escape/escape_with_identity
+/datum/objective/escape_obj/escape/escape_with_identity
 	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
-/datum/objective/escape/escape_with_identity/find_target()
+/datum/objective/escape_obj/escape/escape_with_identity/find_target()
 	target = ..()
 	update_explanation_text()
 
-/datum/objective/escape/escape_with_identity/update_explanation_text()
+/datum/objective/escape_obj/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
 		target_real_name = target.current.real_name
 		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
@@ -339,7 +383,7 @@
 	else
 		explanation_text = "Free Objective."
 
-/datum/objective/escape/escape_with_identity/check_completion()
+/datum/objective/escape_obj/escape/escape_with_identity/check_completion()
 	if(!target_real_name)
 		return 1
 	if(!ishuman(owner.current))
@@ -352,7 +396,7 @@
 	return 0
 
 
-/datum/objective/survive
+/datum/objective/escape_obj/survive
 	explanation_text = "Stay alive until the end."
 	dangerrating = 3
 
@@ -364,11 +408,11 @@
 	return 1
 
 
-/datum/objective/martyr
+/datum/objective/escape_obj/martyr
 	explanation_text = "Die a glorious death."
 	dangerrating = 1
 
-/datum/objective/martyr/check_completion()
+/datum/objective/escape_obj/martyr/check_completion()
 	if(!owner.current) //Gibbed, etc.
 		return 1
 	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
@@ -380,35 +424,30 @@
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
-/datum/objective/nuclear/check_completion()
-	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
-		return 1
-	return 0
-
 
 var/global/list/possible_items = list()
-/datum/objective/steal
+/datum/objective/default/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 	martyr_compatible = 0
 
-/datum/objective/steal/get_target()
+/datum/objective/default/steal/get_target()
 	return steal_target
 
-/datum/objective/steal/New()
+/datum/objective/default/steal/New()
 	..()
 	if(!possible_items.len)//Only need to fill the list when it's needed.
 		init_subtypes(/datum/objective_item/steal,possible_items)
 
-/datum/objective/steal/find_target()
+/datum/objective/default/steal/find_target()
 	var/approved_targets = list()
 	for(var/datum/objective_item/possible_item in possible_items)
 		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
 
-/datum/objective/steal/proc/set_target(datum/objective_item/item)
+/datum/objective/default/steal/proc/set_target(datum/objective_item/item)
 	if(item)
 		targetinfo = item
 
@@ -421,7 +460,7 @@ var/global/list/possible_items = list()
 		explanation_text = "Free objective"
 		return
 
-/datum/objective/steal/proc/select_target() //For admins setting objectives manually.
+/datum/objective/default/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
 	if (!new_target) return
@@ -441,7 +480,7 @@ var/global/list/possible_items = list()
 		set_target(new_target)
 	return steal_target
 
-/datum/objective/steal/check_completion()
+/datum/objective/default/steal/check_completion()
 	if(!steal_target)	return 1
 	if(!isliving(owner.current))	return 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
@@ -458,7 +497,7 @@ var/global/list/possible_items = list()
 				return 1
 	return 0
 
-/datum/objective/steal/give_special_equipment()
+/datum/objective/default/steal/give_special_equipment()
 	if(owner && owner.current && targetinfo)
 		if(istype(owner.current, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = owner.current
@@ -468,24 +507,25 @@ var/global/list/possible_items = list()
 				H.update_icons()
 
 var/global/list/possible_items_special = list()
-/datum/objective/steal/special //ninjas are so special they get their own subtype good for them
-
-/datum/objective/steal/special/New()
+/datum/objective/default/steal/special //ninjas are so special they get their own subtype good for them
+	randomgen = 0
+/datum/objective/default/steal/special/New()
 	..()
 	if(!possible_items_special.len)
 		init_subtypes(/datum/objective_item/special,possible_items)
 		init_subtypes(/datum/objective_item/stack,possible_items)
 
-/datum/objective/steal/special/find_target()
+/datum/objective/default/steal/special/find_target()
 	return set_target(pick(possible_items_special))
 
 
 
-/datum/objective/steal/exchange
+/datum/objective/default/steal/exchange
 	dangerrating = 10
 	martyr_compatible = 0
+	randomgen = 0
 
-/datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
+/datum/objective/default/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
@@ -495,7 +535,7 @@ var/global/list/possible_items_special = list()
 	steal_target = targetinfo.targetitem
 
 
-/datum/objective/steal/exchange/update_explanation_text()
+/datum/objective/default/steal/exchange/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Acquire [targetinfo.name] held by [target.name], the [target.assigned_role] and syndicate agent"
@@ -503,10 +543,11 @@ var/global/list/possible_items_special = list()
 		explanation_text = "Free Objective"
 
 
-/datum/objective/steal/exchange/backstab
+/datum/objective/default/steal/exchange/backstab
 	dangerrating = 3
+	randomgen = 0
 
-/datum/objective/steal/exchange/backstab/set_faction(faction)
+/datum/objective/default/steal/exchange/backstab/set_faction(faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
@@ -591,10 +632,11 @@ var/global/list/possible_items_special = list()
 
 
 
-/datum/objective/absorb
+/datum/objective/default/absorb
 	dangerrating = 10
+	required_role = "changeling"
 
-/datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
+/datum/objective/default/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
 	if (ticker)
 		var/n_p = 1 //autowin
@@ -611,7 +653,7 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount
 
-/datum/objective/absorb/check_completion()
+/datum/objective/default/absorb/check_completion()
 	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
 		return 1
 	else
@@ -619,30 +661,39 @@ var/global/list/possible_items_special = list()
 
 
 
-/datum/objective/destroy
+/datum/objective/default/destroy
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/destroy/find_target()
+/datum/objective/default/destroy/find_target()
 	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
 	update_explanation_text()
 	return target
 
-/datum/objective/destroy/check_completion()
+/datum/objective/default/destroy/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		return 0
 	return 1
 
-/datum/objective/destroy/update_explanation_text()
+/datum/objective/default/destroy/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/default/destroy/extra_prep()
+	if(!target)
+		if(owner)
+			generate_objectives(owner, 1, FALSE) // Generate another objective to replace this one.
+			owner.objectives -= src
+			qdel(src)
+			return
+	return
 
 /datum/objective/summon_guns
 	explanation_text = "Steal at least five guns!"
@@ -830,6 +881,5 @@ var/global/list/possible_items_special = list()
 /datum/objective/changeling_team_objective/impersonate_department/impersonate_heads
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
-
 
 

@@ -99,11 +99,9 @@
 	M.real_name = newname
 	M.name = newname
 	M.dna.update_dna_identity()
-	var/datum/objective/protect/new_objective = new /datum/objective/protect
-	new_objective.owner = M:mind
-	new_objective:target = usr:mind
+	var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
+	new_objective.target = usr:mind
 	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
-	M.mind.objectives += new_objective
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
@@ -138,7 +136,7 @@
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE, 3000, "operative")
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
@@ -199,11 +197,9 @@
 	S.mind.assigned_role = "Slaughter Demon"
 	S.mind.special_role = "Slaughter Demon"
 	ticker.mode.traitors += S.mind
-	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
-	new_objective.owner = S.mind
+	var/datum/objective/default/assassinate/new_objective = add_objective(S.mind, /datum/objective/default/assassinate)
 	new_objective.target = usr.mind
 	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
-	S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
 	new_objective2.explanation_text = "Kill everyone else while you're at it."

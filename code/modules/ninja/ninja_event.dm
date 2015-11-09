@@ -76,64 +76,37 @@ Contents:
 				else if(M.assigned_role in command_positions)
 					possible_targets[M] = 1						//good-guy
 
+/*
+	Alright, so, if I had my way I'd axe all this retarded bullshit entirely, but I know some people would complain because
+	porting ninja specifics to the random gen system would go horribly. I can at the very least axe 99% of the autism
+	and make ninja code slightly more bearable.
+	- Iamgoofball
+*/
 	var/list/objectives = list(1,2,3,4)
-	while(Mind.objectives.len < 6)	//still not enough objectives!
-		switch(pick_n_take(objectives))
+	while(Mind.objectives.len < 6)	//still not enough objectives! // WHY DOES THIS CALL FOR 6 OBJECTIVES
+		switch(pick_n_take(objectives)) // BUT THEN PREVENT YOU FROM GETTING 4 IN THE END
 			if(1)	//research
-				var/datum/objective/download/O = new /datum/objective/download()
-				O.owner = Mind
-				O.gen_amount_goal()
-				Mind.objectives += O
+				add_objective(Mind, /datum/objective/download)
 
 			if(2)	//steal
-				var/datum/objective/steal/special/O = new /datum/objective/steal/special()
-				O.owner = Mind
-				Mind.objectives += O
+				add_objective(Mind, /datum/objective/default/steal/special)
 
 			if(3)	//protect/kill
-				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
-
-				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
-					O.owner = Mind
-					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
-					Mind.objectives += O
-				else										//protect
-					var/datum/objective/protect/O = new /datum/objective/protect()
-					O.owner = Mind
-					O.target = M
-					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
-					Mind.objectives += O
+				if(prob(50))
+					add_objective(Mind, /datum/objective/default/assassinate)
+				else
+					add_objective(Mind, /datum/objective/default/protect)
 			if(4)	//debrain/capture
-				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
-
-				if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/debrain/O = new /datum/objective/debrain()
-					O.owner = Mind
-					O.target = M
-					O.explanation_text = "Steal the brain of [M.current.real_name]."
-					Mind.objectives += O
-				else										//capture
-					var/datum/objective/capture/O = new /datum/objective/capture()
-					O.owner = Mind
-					O.gen_amount_goal()
-					Mind.objectives += O
+				if(prob(50))
+					add_objective(Mind, /datum/objective/default/debrain)
+				else
+					add_objective(Mind, /datum/objective/capture)
 			else
 				break
 
 	//Add a survival objective since it's usually broad enough for any round type.
-	var/datum/objective/O = new /datum/objective/survive()
-	O.owner = Mind
-	Mind.objectives += O
+	add_objective(Mind, /datum/objective/escape_obj/survive)
+
 
 	//add some RP-fluff
 	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
