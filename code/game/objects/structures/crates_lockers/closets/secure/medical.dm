@@ -226,4 +226,5 @@
 		sleep(2)
 		new /obj/item/clothing/suit/space/paramedic(src)
 		new /obj/item/clothing/head/helmet/space/paramedic(src)
+		new /obj/item/clothing/shoes/magboots(src)
 		return
