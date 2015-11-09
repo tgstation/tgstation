@@ -167,14 +167,11 @@
 			user << "<span class='info'>\The [src] was bitten multiple times!</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
-
 	if(istype(W,/obj/item/weapon/pen)) //Renaming food
 		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null) as text|null), 1, MAX_NAME_LEN*3)
 		if(n_name && Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
-	if(istype(W,/obj/item/weapon/storage) || istype(W,/obj/item/weapon/reagent_containers/food/condiment))
-		return ..() // -> item/attackby()
 	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
 		var/obj/item/weapon/kitchen/utensil/fork/fork = W
 		if(slices_num || slice_path)
@@ -183,13 +180,15 @@
 		else
 			return fork.load_food(src, user)
 
+	if (..()) return
+
 	if((slices_num <= 0 || !slices_num) || !slice_path) //If the food item isn't sliceable, we have no more business to do here, return
 		return 0
 
 	if(W.w_class <= 2 && W.is_sharp() < 0.8) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
 			return 0
-		user << "<span class='notice'>You slip [W] inside [src].</span>"
+		user << "<span class='notice'>You slip \the [W] inside [src].</span>"
 		user.drop_item(W, src)
 		add_fingerprint(user)
 		contents += W
