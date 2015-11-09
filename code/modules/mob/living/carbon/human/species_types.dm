@@ -174,7 +174,7 @@
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "Shadow"	//Used to be ???
 	id = "shadow"
-	darksight = 8
+//	darksight = 8 //Doesn't work as intended
 	sexes = 0
 	roundstart = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
@@ -195,6 +195,10 @@
 		else if (light_amount < 2) //heal in the dark
 			H.heal_overall_damage(1,1)
 
+/datum/species/shadow/handle_vision(mob/living/carbon/human/H) //Nightvision does not function without these lines.
+	H.see_in_dark = 8
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
+
 /*
  SLIMEPEOPLE
 */
@@ -204,7 +208,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	darksight = 3
+//	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
@@ -238,6 +242,11 @@
 /datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "slimejelly")
 		return 1
+		
+/datum/species/slime/handle_vision(mob/living/carbon/human/H)
+	H.see_in_dark = 3
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
+		
 /*
  JELLYPEOPLE
 */
@@ -456,12 +465,14 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
+		
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
+			if( findtext( H.real_name , "Mr. Meeseeks" ) || H.job == "Lingseek") // Transformation Sting, eg.
+				make_lingseek(H)
+				return
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
-		else
-			make_lingseek(H)
-
+		
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
@@ -471,8 +482,8 @@
 /datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	if(lingseek)
 		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
-		new /obj/item/device/meeseeks_box/malf(H.loc)
-		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		new /obj/item/device/meeseeks_box/malf(get_turf(H))
+		new /obj/effect/decal/cleanable/lingseek_gibs(get_turf(H))
 	for(var/mob/M in viewers(7, H.loc))
 		if(lingseek)
 			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
@@ -593,7 +604,7 @@
 /datum/species/abductor
 	name = "Abductor"
 	id = "abductor"
-	darksight = 3
+//	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
 	roundstart = 1
@@ -656,6 +667,10 @@
 			H.Dizzy(4) //This will get annoying fast now that it can actually get triggered
 			H << "<span class='alert'>You feel no minds nearby. Your mind echoes in the distance.</span>"
 	return
+
+/datum/species/abductor/handle_vision(mob/living/carbon/human/H)
+	H.see_in_dark = 3
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
