@@ -14,7 +14,7 @@
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
 	weaken = 3
-	stamina = 25
+	stamina = 50
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -42,7 +42,7 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stamina = 35
+	stamina = 65 //two round bursts from the c20r knocks people down
 
 
 /obj/item/projectile/bullet/midbullet2
@@ -61,8 +61,8 @@
 /obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"
 	damage = 5
-	stun = 3
-	weaken = 3
+	stun = 5
+	weaken = 5
 	stutter = 5
 	jitter = 20
 	range = 7
@@ -98,8 +98,8 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
 	damage = 30
-	weaken = 4
-	stun = 4
+	weaken = 8
+	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
