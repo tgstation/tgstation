@@ -7,7 +7,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == "Xenobiology Lab" || new_area && istype(new_area, /area/toxins/xenobiology ))
+	if(new_area && new_area.name == "Xenobiology Lab" || istype(new_area, /area/toxins/xenobiology ))
 		return ..()
 	else
 		return
@@ -121,6 +121,8 @@
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
 			if(!S.ckey)
+				if(S.buckled)
+					S.Feedstop(silent=1)
 				S.visible_message("[S] vanishes in a flash of light!")
 				S.loc = X
 				X.stored_slimes += S
@@ -138,7 +140,7 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
-		if(X.monkeys > 0)
+		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --

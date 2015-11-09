@@ -22,7 +22,6 @@
 		new_dir = 0
 		return ..() //Hits as normal, explodes or emps or whatever
 
-	visible_message("<span class='notice'>[P] bounces off of the [src]</span>")
 	reflect_turf = get_step(loc,new_dir)
 
 	P.original = reflect_turf

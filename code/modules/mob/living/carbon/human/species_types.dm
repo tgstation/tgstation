@@ -211,7 +211,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.nutrition -= 2.5
 		if(S.volume < 50)
 			if(prob(5))
 				H << "<span class='danger'>You feel drained!</span>"
@@ -255,7 +255,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 200)
 			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.nutrition -= 2.5
 
 	..()
 
@@ -319,7 +319,10 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
 		Remove(owner)
 		return
-
+	if(body.stat == UNCONSCIOUS)
+		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+		return
+		
 	owner.mind.transfer_to(body)
 
 /*
@@ -334,7 +337,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 

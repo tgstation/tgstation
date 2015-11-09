@@ -44,10 +44,11 @@
 
 
 /obj/item/device/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
-	crit_fail = 1
-	update_icon()
-	var/turf/T = get_turf(src)
-	T.visible_message("The [src.name] burns out!")
+	if(!crit_fail)
+		crit_fail = 1
+		update_icon()
+		var/turf/T = get_turf(src)
+		T.visible_message("The [src.name] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)

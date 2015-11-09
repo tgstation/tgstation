@@ -273,6 +273,21 @@
 				M.bodytemperature -= 240
 				M << "<span class='notice'>You feel a chill!</span>"
 
+
+/datum/chemical_reaction/slimefireproof
+	name = "Slime Fireproof"
+	id = "m_fireproof"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/darkblue
+	required_other = 1
+
+/datum/chemical_reaction/slimefireproof/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/fireproof/P = new /obj/item/slimepotion/fireproof
+	P.loc = get_turf(holder.my_atom)
+
 //Orange
 /datum/chemical_reaction/slimecasp
 	name = "Slime Capsaicin Oil"

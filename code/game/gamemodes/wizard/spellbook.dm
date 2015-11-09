@@ -218,6 +218,14 @@
 	log_name = "CH"
 	category = "Assistance"
 	cost = 1
+
+/datum/spellbook_entry/shapeshift
+	name = "Wild Shapeshift"
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift/wild
+	log_name = "WS"
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0

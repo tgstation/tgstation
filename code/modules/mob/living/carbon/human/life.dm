@@ -266,7 +266,7 @@
 	if(machine)
 		if(!machine.check_eye(src))		reset_view(null)
 	else
-		if(!client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)			reset_view(null)
 
 	dna.species.handle_vision(src)
 
@@ -294,16 +294,6 @@
 
 				// make it so you can only puke so fast
 				lastpuke = 0
-
-
-/mob/living/carbon/human/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
