@@ -13,6 +13,8 @@
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot)
 
+	. = ..() //Default return value. If 1, item can be equipped. If 0, it can't be.
+
 	if(species_restricted && istype(M,/mob/living/carbon/human))
 
 		var/wearable = null
@@ -30,9 +32,10 @@
 				if(H.species.name in species_restricted)
 					wearable = 1
 
-			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
-				M << "<span class='warning'>Your species cannot wear [src].</span>"
-				return 0
+			if(.) //If normally we CAN equip this item,
+				if(!wearable && (slot != 15 && slot != 16)) //But we are a species that CAN'T wear it (sidenote: slots 15 and 16 are pockets)
+					M << "<span class='warning'>Your species cannot wear [src].</span>" //Let us know
+					return 0
 
 	return ..()
 

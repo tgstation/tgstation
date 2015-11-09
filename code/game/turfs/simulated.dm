@@ -89,6 +89,7 @@
 				if(M.CheckSlip() < 1) //No slipping
 					return ..()
 				if(M.m_intent == "run")
+					sleep(1)
 					M.stop_pulling()
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the wet floor!</span>", \
@@ -99,6 +100,7 @@
 
 			if(2) //Lube
 				M.stop_pulling()
+				sleep(1)
 				step(M, M.dir)
 				spawn(1)
 					step(M, M.dir)
@@ -118,6 +120,7 @@
 				if(!M.CheckSlip() < 1) //No slipping
 					return ..()
 				if((M.m_intent == "run") && prob(30))
+					sleep(1)
 					M.stop_pulling()
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the icy floor!</span>", \

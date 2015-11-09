@@ -37,6 +37,7 @@
 	minbodytemp = 0
 
 	environment_smash = 1
+	meat_type = null
 
 /mob/living/simple_animal/hostile/necro/zombie
 	name = "zombie"

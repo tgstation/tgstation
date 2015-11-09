@@ -200,8 +200,8 @@ var/global/list/image/fluidtrack_cache=list()
 			state=going_state
 			truedir=truedir>>4
 		var/icon/add = icon('icons/effects/fluidtracks.dmi', state, truedir)
-		add.Blend(track.basecolor,ICON_MULTIPLY)
-		flat.Blend(add,ICON_OVERLAY)
+		add.SwapColor("#FFFFFF",track.basecolor)
+		overlays += add
 
 		track.fresh=0
 		stack[stack_idx]=track

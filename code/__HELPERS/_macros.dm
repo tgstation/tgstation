@@ -137,6 +137,10 @@
 
 //1 line helper procs compressed into defines.
 #define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+//x is the number you want to clamp
+//y is the minimum
+//z is the maximum
+
 
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
 

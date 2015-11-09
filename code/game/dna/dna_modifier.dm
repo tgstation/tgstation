@@ -371,11 +371,10 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/O as obj, mob/user as mob)
 	..()
 	if (istype(O, /obj/item/weapon/disk/data)) //INSERT SOME diskS
-		if (!src.disk)
-			user.drop_item(O, src)
-			src.disk = O
-			user << "You insert [O]."
-			nanomanager.update_uis(src) // update all UIs attached to src()
+		if (!disk)
+			if (user.drop_item(O, src))
+				disk = O
+				user << "You insert [O]."
 	return
 
 /obj/machinery/computer/scan_consolenew/ex_act(severity)
@@ -599,7 +598,6 @@
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
 		src.connected.locked = 1//lock it
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 		sleep(10*src.radiation_duration) // sleep for radiation_duration seconds
 
@@ -700,7 +698,6 @@
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
 		src.connected.locked = 1//lock it
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 		sleep(10*src.radiation_duration) // sleep for radiation_duration seconds
 
@@ -759,7 +756,6 @@
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
 		src.connected.locked = 1 //lock it
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 		sleep(10*src.radiation_duration) // sleep for radiation_duration seconds
 
@@ -886,7 +882,6 @@
 			irradiating = 2
 			var/lock_state = src.connected.locked
 			src.connected.locked = 1//lock it
-			nanomanager.update_uis(src) // update all UIs attached to src
 
 			sleep(2 SECONDS)
 

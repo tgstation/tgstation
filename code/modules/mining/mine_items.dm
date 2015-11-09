@@ -540,6 +540,7 @@ proc/move_mining_shuttle()
 	projectiletype = /obj/item/projectile/beam
 	projectilesound = 'sound/weapons/Laser.ogg'
 	wanted_objects = list(/obj/item/weapon/ore)
+	meat_type = null
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))

@@ -65,9 +65,10 @@
 					if(dist <= round(max_range + world.view - 2, 1))
 						if(devastation_range > 0)
 							M.playsound_local(epicenter, get_sfx("explosion"), 100, 1, frequency, falloff = 5) // get_sfx() is so that everyone gets the same sound
+							shake_camera(M, 10, 2)
 						else
 							M.playsound_local(epicenter, get_sfx("explosion_small"), 100, 1, frequency, falloff = 5)
-						shake_camera(M, 10, 2)
+							shake_camera(M, 4, 1)
 
 						//You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 
@@ -76,10 +77,10 @@
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 						if(devastation_range > 0)
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+							M << "<span class='warning'>You feel something shake the structure...</span>"
+							shake_camera(M, 4, 1)
 						else
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
-						M << "<span class='warning'>You feel something shake the structure...</span>"
-						shake_camera(M, 4, 1)
 
 		var/close = trange(world.view+round(devastation_range,1), epicenter)
 		//To all distanced mobs play a different sound
