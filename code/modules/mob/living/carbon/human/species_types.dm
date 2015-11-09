@@ -181,6 +181,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 	dangerous_existence = 1
+	var/light_message = 0 //to prevent message spamming
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -190,10 +191,17 @@
 		if(A)
 			if(A.lighting_use_dynamic)	light_amount = T.get_lumcount() * 10
 			else						light_amount =  10
-		if(light_amount > 2) //if there's enough light, start dying
+		if(light_amount > 7) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
-			H.heal_overall_damage(1,1)
+			if(!light_message)
+				light_message = 1
+				H << "<span class='warning'>The light burns you!</span>"
+		else
+			if(light_message)
+				light_message = 0
+				H << "<span class='warning'>Darkness envelopes you.</span>"
+			if (light_amount < 2) //heal in the dark
+				H.heal_overall_damage(1,1)
 
 /datum/species/shadow/handle_vision(mob/living/carbon/human/H) //Nightvision does not function without these lines.
 	H.see_in_dark = 8
@@ -242,11 +250,11 @@
 /datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "slimejelly")
 		return 1
-		
+
 /datum/species/slime/handle_vision(mob/living/carbon/human/H)
 	H.see_in_dark = 3
 	H.see_invisible = SEE_INVISIBLE_MINIMUM
-		
+
 /*
  JELLYPEOPLE
 */
@@ -465,14 +473,14 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		
+
 		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
 			if( findtext( H.real_name , "Mr. Meeseeks" ) || H.job == "Lingseek") // Transformation Sting, eg.
 				make_lingseek(H)
 				return
 			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
 			return // avert lingseeks. get the hell out of here
-		
+
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
@@ -615,6 +623,8 @@
 	var/abductor = 0 //If they're part of the gamemode
 	var/team = 1
 	var/tele_target = null //The target for telepathic comunication between species
+	var/mind_message_pain = 0
+	var/mind_message_minds = 0 //controls the spam of mind messages
 
 /datum/species/abductor/handle_speech(message)
 	//Hacks
@@ -656,16 +666,27 @@
 			if(M.health < M.getMaxHealth())
 				pain_felt += (M.getMaxHealth() - M.health) / M.getMaxHealth() //coefficient, goes from 0% to 1 if it's in crit. >1 if it's closer to death
 	if(pain_felt)
-		H.AdjustWeakened(-pain_felt)
-		H.adjustStaminaLoss(-pain_felt)
+		H.AdjustWeakened(-pain_felt*4)
+		H.adjustStaminaLoss(-pain_felt*3) // people in crit or closer than that CAN in fact down an ayy.
 		H.Jitter(pain_felt) //comically low levels of jitter
-		if(prob(10))
+		if(!mind_message_pain)
+			mind_message_pain = 1
 			H << "<span class='alert'>You feel someone in pain!</span>"
+		else
+			mind_message_pain = 0
+			H << "<span class='alert'>You feel peace in your mind.</span>"
+	else
+		mind_message_pain = 0
 	if(!alone_test)
-		H.adjustStaminaLoss(-1)
+		H.adjustStaminaLoss(-rand(1,3)) //can knock someone out, since they recover 2 per tick.
 		if(prob(10))
 			H.Dizzy(4) //This will get annoying fast now that it can actually get triggered
-			H << "<span class='alert'>You feel no minds nearby. Your mind echoes in the distance.</span>"
+		if(!mind_message_minds)
+			mind_message_minds = 1
+			H << "<span class='alert'>You feel no minds nearby. Your thoughts echoe in the distance.</span>"
+		else
+			mind_message_minds = 0
+			H << "<span class='alert'>You hear the thoughts of another.</span>"
 	return
 
 /datum/species/abductor/handle_vision(mob/living/carbon/human/H)
