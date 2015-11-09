@@ -1186,7 +1186,7 @@
 				else
 					playsound(loc, 'sound/items/ducks/DuckArmy.ogg', (number_of_ducks-3)*50, 0) //horrible one. Volume is either 50 or 100 for 5 ducks
 				icon_state = "[number_of_ducks]"
-				for(var/mob/M in viewers(7, H.loc))
+				for(var/mob/living/M in viewers(7,loc))
 					if(number_of_ducks<4)
 						M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
 					else
@@ -1196,7 +1196,7 @@
 
 		else
 			playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
-			for(var/mob/M in viewers(7, H.loc))
+			for(var/mob/living/M in viewers(7,loc))
 				if(number_of_ducks<4)
 					M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
 				else
@@ -1219,11 +1219,15 @@
 			user << "<span class='notice'>The stack of ducks is already tied!</span>"
 
 	else if(istype(C,/obj/item/toy/ducks))
+		var/obj/item/toy/ducks/D = C
 		if(number_of_ducks<4)
 			if(!tied)
-				number_of_ducks += 1
+				var/ducks_transfer = min(D.number_of_ducks,5-number_of_ducks)
+				number_of_ducks += ducks_transfer
 				icon_state = "[number_of_ducks]"
-				qdel(C) //stop duck breeding
+				D.number_of_ducks -= ducks_transfer
+				if(D.number_of_ducks <1)
+					qdel(D) //stop duck breeding
 				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
@@ -1235,9 +1239,10 @@
 		if(tied)
 			attack_self(user)
 			return
-		var/mob/M = loc
-		M.put_in_hands(new /obj/item/toy/ducks)
-		number_of_ducks -= 1
-		icon_state = "[number_of_ducks]"
-		usr << "<span class='notice'>You remove one duck from the stack.</span>"
+		if(number_of_ducks >1)
+			var/mob/M = loc
+			M.put_in_hands(new /obj/item/toy/ducks)
+			number_of_ducks -= 1
+			icon_state = "[number_of_ducks]"
+			usr << "<span class='notice'>You remove one duck from the stack.</span>"
 	..()
