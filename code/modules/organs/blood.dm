@@ -175,7 +175,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/take_blood() called tick#: [world.time]")
 	var/datum/reagent/B = (container ? get_blood(container.reagents) : null)
 	if(!B) B = new /datum/reagent/blood
-	B.holder = container.reagents
+	B.holder = (container? container.reagents : null)
 	B.volume += amount
 
 	//set reagent data
