@@ -1,3 +1,41 @@
+<<<<<<< HEAD
+Jim
+Gulstaff
+Gandalf
+Grimm
+Mordenkainen
+Elminister
+Saruman
+Vaarsuvius
+Yoda
+Zul
+Nihilus
+Vecna
+Mogan
+Circe
+Prospero
+Raistlin
+Rasputin
+Tzeentch
+Khelben
+Dumbledor
+Houdini
+Terefi
+Urza
+Tenser
+Zagyg
+Mystryl
+Boccob
+Merlin
+Archchancellor
+Radagast
+Kreol
+Kaschei
+Lina
+Morgan
+Alatar
+Palando
+=======
 Alatar
 Archchancellor
 Boccob
@@ -34,3 +72,4 @@ Vecna
 Yoda
 Zagyg
 Zul
+>>>>>>> 7451acd893480818375775dc6dff8a47206988cf
