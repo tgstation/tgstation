@@ -14,7 +14,7 @@
 	H.name = H.real_name
 	H.dna.generate_uni_identity(H)
 	H.underwear = random_underwear(H.gender)
-	H.skin_tone = random_skin_tone()
+	H.set_skin_tone(random_skin_tone())
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = random_facial_hair_style(H.gender)
 	H.hair_color = random_short_color()

@@ -82,7 +82,7 @@
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
 	underwear = random_underwear(gender)
-	skin_tone = random_skin_tone()
+	set_skin_tone(random_skin_tone())
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()

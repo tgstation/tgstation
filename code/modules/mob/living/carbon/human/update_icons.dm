@@ -641,38 +641,11 @@ var/global/list/limb_icon_cache = list()
 			sm_type = "hulk"
 		if(HUSK in dna.mutations)
 			sm_type = "husk"
-	else sm_type = "robotic"
-	return sm_type
-
-/mob/living/carbon/human/proc/get_race()
-	var/sm_type = "human"
-	var/datum/species/race = dna ? dna.species : null
-	if(race)
-		sm_type = race.id
-
-	if(HULK in mutations)
-		sm_type = "hulk"
-	if(HUSK in mutations)
-		sm_type = "husk"
-
+	else sm_type = "non-human"
 	return sm_type
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
-	var/race = get_race()
-
-	. = "[race]"
-
-	switch(race)
-		if("human")
-			. += "-coloured-[skin_tone]"
-		if("plant")
-			. += "-coloured"
-		if("lizard")
-			. += "-coloured"
-		else
-			. += "-not_coloured"
-
 	. += "-[gender]"
 
 	for(var/limbname in organsystem.organlist)
@@ -681,12 +654,20 @@ var/global/list/limb_icon_cache = list()
 		if(!limbdata.exists())
 			. += "-removed"
 		else
-			. += "-fine"
-			if(!(limbdata.status & ORGAN_ROBOTIC))
-				. += "-organic"
-			else
-				. += "-robotic"
-
+			if(istype(limbdata.organitem, /obj/item/organ/limb/))
+				var/obj/item/organ/limb/LI = limbdata.organitem
+				. += "-fine"
+				if(!(LI.organtype & ORGAN_ROBOTIC))
+					. += "-organic"
+					var/race = LI.get_race()
+					. += "[race]"
+					switch(race)
+						if("human" || "plant" || "lizard")
+							. += "-coloured-[LI.dna.mutant_color]"
+						else
+							. += "-not_coloured"
+				else
+					. += "-robotic"
 
 //change the human's icon to the one matching it's key
 /mob/living/carbon/human/proc/load_limb_from_cache()
@@ -753,14 +734,11 @@ var/global/list/limb_icon_cache = list()
 	var/draw_color
 
 	if(LI.dna && LI.dna.species)
-		if(LI.dna.species.use_skintones)
-			draw_color = skintone2hex(skin_tone)
-		else
-			if(MUTCOLORS in LI.dna.species.specflags)
-				//If you ever want to add the option to force default mutant colours, add var/mutant_colors to configuration and remove the comments here. |- Ricotez
-				//if(!config.mutant_colors)
-					//dna.mutant_color = dna.species.default_color
-				draw_color = LI.dna.mutant_color
+		if(dna.species.use_skintones || MUTCOLORS in LI.dna.species.specflags)
+			//If you ever want to add the option to force default mutant colours, add var/mutant_colors to configuration and remove the comments here. |- Ricotez
+			//if(!config.mutant_colors)
+				//dna.mutant_color = dna.species.default_color
+			draw_color = LI.dna.mutant_color
 
 	if(draw_color)
 		I.color = "#[draw_color]"

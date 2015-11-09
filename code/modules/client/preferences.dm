@@ -880,7 +880,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.hair_color = hair_color
 		character.facial_hair_color = facial_hair_color
 
-		character.skin_tone = skin_tone
+		character.set_skin_tone(skin_tone)
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear

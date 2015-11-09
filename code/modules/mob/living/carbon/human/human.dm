@@ -44,6 +44,8 @@
 		I.Insert(src)*/
 	make_blood()
 
+	set_skin_tone(skin_tone)	//So DNA gets it set properly
+
 	..()
 	var/mob/M = src
 	faction |= "\ref[M]"
@@ -822,3 +824,11 @@
 		..(I, cuff_break = 1)
 	else
 		..()
+
+
+/mob/living/carbon/human/proc/set_skin_tone(var/newskintone)
+	src.skin_tone = newskintone
+	if(dna.species.use_skintones)	//Can be removed if you want ligger-niggers from antivitiligo etc.
+		hardset_dna(src, null, null, null, null, null, skintone2hex(newskintone))
+		return 1
+	return 0
