@@ -167,8 +167,6 @@
 			user << "<span class='info'>\The [src] was bitten multiple times!</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
-	if (..()) return
-
 	if(istype(W,/obj/item/weapon/pen)) //Renaming food
 		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null) as text|null), 1, MAX_NAME_LEN*3)
 		if(n_name && Adjacent(user) && !user.stat)
@@ -181,6 +179,8 @@
 			return
 		else
 			return fork.load_food(src, user)
+
+	if (..()) return
 
 	if((slices_num <= 0 || !slices_num) || !slice_path) //If the food item isn't sliceable, we have no more business to do here, return
 		return 0

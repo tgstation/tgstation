@@ -107,9 +107,10 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
-	if((src.contents.len >= src.ingMax) || (src.contents.len >= ingredientLimit))
-		user << "<span class='warning'>That's already looking pretty stuffed.</span>"
-	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		if((src.contents.len >= src.ingMax) || (src.contents.len >= ingredientLimit))
+			user << "<span class='warning'>That's already looking pretty stuffed.</span>"
+			return
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/customizable))
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/SC = S
