@@ -11,8 +11,8 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
-	stun = 5
-	weaken = 5
+	stun = 3
+	weaken = 3
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -122,7 +122,7 @@
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 5
+	weaken = 2
 	range = 7
 
 /obj/item/projectile/energy/bolt //ebow bolts
@@ -131,8 +131,8 @@
 	damage = 15
 	damage_type = TOX
 	nodamage = 0
-	weaken = 5
-	stutter = 5
+	weaken = 2
+	stutter = 2
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
