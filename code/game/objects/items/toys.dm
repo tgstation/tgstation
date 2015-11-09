@@ -1175,51 +1175,56 @@
 
 /obj/item/toy/ducks/attack_self(mob/user)
 	if (cooldown < world.time)
-		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
+		cooldown = (world.time + 100) // Sets cooldown at 10 seconds
 		if(tied)
 			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(get_turf(src))
 			C.amount = 1
+			tied = 0
 			spawn(30) //countdown so you can throw it to a safe distance
 				if(number_of_ducks<4)
 					playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
 				else
 					playsound(loc, 'sound/items/ducks/DuckArmy.ogg', (number_of_ducks-3)*50, 0) //horrible one. Volume is either 50 or 100 for 5 ducks
-			tied = 0
-			icon_state = "[number_of_ducks]"
+				icon_state = "[number_of_ducks]"
+				for(var/mob/M in viewers(7, H.loc))
+					if(number_of_ducks<4)
+						M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
+					else
+						M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
+					if(!M.check_ear_prot())
+						M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 		else
 			playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
-	for(var/mob/M in viewers(7, user.loc))
-		if(number_of_ducks<4)
-			M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
-		else
-			M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
-		var/mob/living/L = M
-		if( istype(L) && !L.check_ear_prot())
-			M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
+			for(var/mob/M in viewers(7, H.loc))
+				if(number_of_ducks<4)
+					M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
+				else
+					M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
+
+				if(!M.check_ear_prot())
+					M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 /obj/item/toy/ducks/attackby(obj/item/C, mob/living/user, params)
 	if(istype(C,/obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		if (coil.use(1))
-			if(!tied)
+		if(!tied)
+			var/obj/item/stack/cable_coil/coil = C
+			if (coil.use(1))
 				tied = 1
 				icon_state = "[number_of_ducks]-tied"
 				user << "<span class='notice'>You tie the stack of ducks.</span>"
 			else
-				user << "<span class='notice'>The stack of ducks is already tied!</span>"
+				user << "<span class='notice'>You don't have enough wires!</span>"
 		else
-			user << "<span class='notice'>You don't have enough wires!</span>"
+			user << "<span class='notice'>The stack of ducks is already tied!</span>"
 
 	else if(istype(C,/obj/item/toy/ducks))
-		var/obj/item/toy/ducks/D = C
-		if(D.number_of_ducks + number_of_ducks <=4)
+		if(number_of_ducks<4)
 			if(!tied)
-				number_of_ducks += D.number_of_ducks
+				number_of_ducks += 1
 				icon_state = "[number_of_ducks]"
-				user.drop_item()
 				qdel(C) //stop duck breeding
-				user << "<span class='notice'>You combine the ducks into a single stack.</span>"
+				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
 		else
