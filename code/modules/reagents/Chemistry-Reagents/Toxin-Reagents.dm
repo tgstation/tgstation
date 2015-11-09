@@ -5,7 +5,7 @@
 	name = "Toxin"
 	id = "toxin"
 	synth_cost = 5
-	can_synth = 2
+	can_synth = 1
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/toxpwr = 1.5
@@ -192,7 +192,7 @@
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
-	synth_cost = 2
+	synth_cost = 1
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
@@ -225,6 +225,7 @@
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
+	synth_cost = 1
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
