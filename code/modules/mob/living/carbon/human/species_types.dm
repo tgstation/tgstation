@@ -181,7 +181,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 	dangerous_existence = 1
-	light_message = 0 //to prevent message spamming
+	var/light_message = 0 //to prevent message spamming
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
