@@ -553,7 +553,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")
-			usr.client.only_me()
+			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
