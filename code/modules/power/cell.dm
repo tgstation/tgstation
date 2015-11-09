@@ -147,7 +147,7 @@
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
 	rating = 2
@@ -158,7 +158,7 @@
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
 	rating = 2.5

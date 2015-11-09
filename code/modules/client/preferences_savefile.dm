@@ -30,6 +30,69 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
+
+/datum/preferences/proc/update_antagchoices(current_version)
+	if((!islist(be_special) || old_be_special ) && current_version < 12)
+		//Archived values of when antag pref defines were a bitfield+fitflags
+		var/B_traitor = 1
+		var/B_operative = 2
+		var/B_changeling = 4
+		var/B_wizard = 8
+		var/B_malf = 16
+		var/B_rev = 32
+		var/B_alien = 64
+		var/B_pai = 128
+		var/B_cultist = 256
+		var/B_blob = 512
+		var/B_ninja = 1024
+		var/B_monkey = 2048
+		var/B_gang = 4096
+		var/B_shadowling = 8192
+		var/B_abductor = 16384
+		var/B_revenant = 32768
+
+		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor,B_revenant)
+
+		be_special = list()
+
+		for(var/flag in archived)
+			if(old_be_special & flag)
+				//this is shitty, but this proc should only be run once per player and then never again for the rest of eternity,
+				switch(flag)
+					if(1) //why aren't these the variables above? Good question, it's because byond complains the expression isn't constant, when it is.
+						be_special += ROLE_TRAITOR
+					if(2)
+						be_special += ROLE_OPERATIVE
+					if(4)
+						be_special += ROLE_CHANGELING
+					if(8)
+						be_special += ROLE_WIZARD
+					if(16)
+						be_special += ROLE_MALF
+					if(32)
+						be_special += ROLE_REV
+					if(64)
+						be_special += ROLE_ALIEN
+					if(128)
+						be_special += ROLE_PAI
+					if(256)
+						be_special += ROLE_CULTIST
+					if(512)
+						be_special += ROLE_BLOB
+					if(1024)
+						be_special += ROLE_NINJA
+					if(2048)
+						be_special += ROLE_MONKEY
+					if(4096)
+						be_special += ROLE_GANG
+					if(8192)
+						be_special += ROLE_SHADOWLING
+					if(16384)
+						be_special += ROLE_ABDUCTOR
+					if(32768)
+						be_special += ROLE_REVENANT
+
+
 /datum/preferences/proc/update_preferences(current_version)
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
@@ -103,6 +166,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
 	S["be_special"]			>> be_special
+
+	if(islist(S["be_special"]))
+		S["be_special"] >> be_special
+	else //force update and store the old bitflag version of be_special
+		needs_update = 11
+		S["be_special"] >> old_be_special
+
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
@@ -113,12 +183,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update)		//needs_update = savefile_version if we need an update (positive integer)
+		update_antagchoices(needs_update)
 
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
-	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))

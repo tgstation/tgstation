@@ -33,6 +33,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
@@ -186,3 +187,18 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 		user << "<span class='warning'>You aren't able to think of anything [src] could build...</span>"
 		return
 	..()
+
+/obj/item/stack/sheet/lessergem
+	name = "lesser gems"
+	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
+	singular_name = "lesser gem"
+	icon_state = "sheet-lessergem"
+	origin_tech = "materials=4"
+
+
+/obj/item/stack/sheet/greatergem
+	name = "greater gems"
+	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
+	singular_name = "greater gem"
+	icon_state = "sheet-greatergem"
+	origin_tech = "materials=8"

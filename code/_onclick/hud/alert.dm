@@ -303,24 +303,19 @@ so as to remain in compliance with the most up-to-date laws."
 
 //OBJECT-BASED
 
-/obj/screen/alert/buckled
+/obj/screen/alert/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 
-/obj/screen/alert/handcuffed
+/obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
-/obj/screen/alert/handcuffed/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
-
-/obj/screen/alert/legcuffed
+/obj/screen/alert/restrained/legcuffed
 	name = "Legcuffed"
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
 
-/obj/screen/alert/legcuffed/Click()
+/obj/screen/alert/restrained/Click()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()

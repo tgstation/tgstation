@@ -116,10 +116,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
-		var/area/A = T.loc
-		if(A)
-			if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5
-			else						light_amount =  5
+		light_amount = min(10,T.get_lumcount()) - 5
 		H.nutrition += light_amount
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
@@ -175,10 +172,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
-		var/area/A = T.loc
-		if(A)
-			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-			else						light_amount =  10
+		light_amount = T.get_lumcount()
+
 		if(light_amount > 2) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
 		else if (light_amount < 2) //heal in the dark
@@ -216,7 +211,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.nutrition -= 2.5
 		if(S.volume < 50)
 			if(prob(5))
 				H << "<span class='danger'>You feel drained!</span>"
@@ -260,7 +255,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 200)
 			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.nutrition -= 2.5
 
 	..()
 
@@ -324,7 +319,10 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
 		Remove(owner)
 		return
-
+	if(body.stat == UNCONSCIOUS)
+		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+		return
+		
 	owner.mind.transfer_to(body)
 
 /*
@@ -339,7 +337,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 

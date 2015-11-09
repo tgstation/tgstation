@@ -109,7 +109,7 @@
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
 	energy_drain = 60
-	origin_tech = "materials=3;combat=2;powerstorage=3;plasma=3"
+	origin_tech = "materials=3;combat=2;powerstorage=3;plasmatech=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/Laser.ogg'
 

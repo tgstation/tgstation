@@ -51,7 +51,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	antag_flag = BE_CULTIST
+	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 20
@@ -188,7 +188,7 @@
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
 		if(jobban_isbanned(cult_mind.current, "Cultist"))
-			replace_jobbaned_player(cult_mind.current, "Cultist", BE_CULTIST)
+			replace_jobbaned_player(cult_mind.current, "Cultist")
 		return 1
 
 
