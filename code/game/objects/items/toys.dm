@@ -1126,12 +1126,12 @@
 	burn_state = 0 //Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
 
-// Attack mob
+//Attack mob
 /obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
+	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
 	return ..()
 
-// Attack self
+//Attack self
 /obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
 	user << "<span class='notice'>You pet [src]. D'awww.</span>"
