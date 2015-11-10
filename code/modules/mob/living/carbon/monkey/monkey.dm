@@ -8,48 +8,56 @@
 	pass_flags = PASSTABLE
 	languages = MONKEY
 	ventcrawler = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
+	unique_name = 1
 
 /mob/living/carbon/monkey/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	gender = pick(MALE, FEMALE)
+	real_name = name
+	if(good_mutations.len) //genetic mutations have been set up.
+		initialize()
+
 	internal_organs += new /obj/item/organ/internal/appendix
 	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/internal/brain
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 
-	if(name == "monkey")
-		name = text("monkey ([rand(1, 1000)])")
-	real_name = name
-	gender = pick(MALE, FEMALE)
-
 	..()
+
+/mob/living/carbon/monkey/initialize()
+	create_dna(src)
+	dna.initialize_dna(random_blood_type())
 
 /mob/living/carbon/monkey/prepare_data_huds()
 	//Prepare our med HUD...
 	..()
 	//...and display it.
-	for(var/datum/atom_hud/data/medical/hud in huds)
+	for(var/datum/atom_hud/data/human/medical/hud in huds)
 		hud.add_to_hud(src)
 
 /mob/living/carbon/monkey/movement_delay()
-	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("morphine")) return -1
+		if(reagents.has_reagent("morphine"))
+			return -1
 
-		if(reagents.has_reagent("nuka_cola")) return -1
+		if(reagents.has_reagent("nuka_cola"))
+			return -1
 
+	. = ..()
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+	if(health_deficiency >= 45)
+		. += (health_deficiency / 25)
 
 	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+		. += (283.222 - bodytemperature) / 10 * 1.75
+	return . + config.monkey_delay
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
@@ -106,7 +114,7 @@
 				if (prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					add_logs(M, src, "pushed", admin=0)
+					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 				else
@@ -158,7 +166,19 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 
@@ -191,14 +211,14 @@
 /mob/living/carbon/monkey/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
 			return
-		if(2.0)
+		if(2)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
 			adjustEarDamage(30,120)
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)

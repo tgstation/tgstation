@@ -58,7 +58,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	set_broken()
 	if(main_part)
 		qdel(main_part)
-	..()
+	return ..()
 
 //
 // Part generator which is mostly there for looks
@@ -126,7 +126,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
 		qdel(O)
-	..()
+	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
@@ -350,8 +350,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 
 /obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	for(var/mob/living/L in view(7, src))
-		L.irradiate(20)
+	radiation_pulse(get_turf(src), 3, 7, 20)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()

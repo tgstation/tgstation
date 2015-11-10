@@ -134,7 +134,7 @@
 		S.remove_from_storage(O,src)
 
 	O.loc = src
-	var/n = O.name
+	var/n ="\ref[O]"
 
 	if(item_quants[n])
 		item_quants[n]++
@@ -168,18 +168,19 @@
 		for (var/O in item_quants)
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
-				var/itemName = sanitize(O)
-				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
+				var/obj/item/item = locate(O)
+				var/obj/item/itemName = sanitize(item.name)
+				dat += "<FONT color = 'blue'><B>[capitalize(itemName)]</B>:"
 				dat += " [N] </font>"
-				dat += "<a href='byond://?src=\ref[src];vend=[itemName];amount=1'>Vend</A> "
+				dat += "<a href='byond://?src=\ref[src];vend=[O];amount=1'>Vend</A> "
 				if(N > 5)
-					dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=5'>x5</A>)"
+					dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=5'>x5</A>)"
 					if(N > 10)
-						dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=10'>x10</A>)"
+						dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=10'>x10</A>)"
 						if(N > 25)
-							dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=25'>x25</A>)"
+							dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=25'>x25</A>)"
 				if(N > 1)
-					dat += "(<a href='?src=\ref[src];vend=[itemName];amount=[N]'>All</A>)"
+					dat += "(<a href='?src=\ref[src];vend=\ref[O];amount=[N]'>All</A>)"
 
 				dat += "<br>"
 
@@ -203,14 +204,13 @@
 
 	var/i = amount
 	for(var/obj/O in contents)
-		if(O.name == N)
+		if(locate(N) == O)
 			O.loc = src.loc
 			i--
 			if(i <= 0)
 				break
 
-	src.updateUsrDialog()
-	return
+	updateUsrDialog()
 
 
 // ----------------------------

@@ -139,51 +139,6 @@
 /obj/machinery/recharge_station/proc/restock_modules()
 	if(occupant)
 		var/mob/living/silicon/robot/R = occupant
-		if(R.module && R.module.modules)
-			var/list/um = R.contents|R.module.modules // Makes single list of active (R.contents) and inactive (R.module.modules) modules
+		if(R && R.module)
 			var/coeff = recharge_speed / 200
-			for (var/datum/robot_energy_storage/st in R.module.storages)
-				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
-			for(var/obj/O in um)
-				//General
-				if(istype(O,/obj/item/device/flash))
-					var/obj/item/device/flash/F = O
-					if(F.broken)
-						F.broken = 0
-						F.times_used = 0
-						F.icon_state = "flash"
-				// Security
-				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
-					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O
-					if(T.power_supply.charge < T.power_supply.maxcharge)
-						var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-						T.power_supply.give(S.e_cost * coeff)
-						T.update_icon()
-					else
-						T.charge_tick = 0
-				if(istype(O,/obj/item/weapon/melee/baton))
-					var/obj/item/weapon/melee/baton/B = O
-					if(B.bcell)
-						B.bcell.charge = B.bcell.maxcharge
-				//Service
-				if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
-					if(O.reagents.get_reagent_amount("enzyme") < 50)
-						O.reagents.add_reagent("enzyme", 2 * coeff)
-				//Janitor
-				if(istype(O, /obj/item/device/lightreplacer))
-					var/obj/item/device/lightreplacer/LR = O
-					var/i = 1
-					for(1, i <= coeff, i++)
-						LR.Charge(R)
-
-			if(R && R.module)
-				R.module.respawn_consumable(R)
-
-			//Emagged items for janitor and medical borg
-			if(R.module.emag)
-				if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
-					var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
-					if(S.name == "Fluacid spray")
-						S.reagents.add_reagent("facid", 2 * coeff)
-					else if(S.name == "lube spray")
-						S.reagents.add_reagent("lube", 2 * coeff)
+			R.module.respawn_consumable(R, coeff)

@@ -20,7 +20,7 @@
 /obj/machinery/computer/atmos_alert/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, receive_frequency)
-	..()
+	return ..()
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

@@ -1,9 +1,9 @@
 #define MORPH_COOLDOWN 50
 
 /mob/living/simple_animal/hostile/morph
-	name = "Morph"
-	real_name = "Morph"
-	desc = "some amorphous blob"
+	name = "morph"
+	real_name = "morph"
+	desc = "A revolting, pulsating pile of flesh."
 	speak_emote = list("gurgles")
 	emote_hear = list("gurgles")
 	icon = 'icons/mob/animal.dmi'
@@ -20,6 +20,7 @@
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -27,16 +28,26 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	idle_vision_range = 1 // Only attack when target is close
 	wander = 0
+	attacktext = "glomps"
+	attack_sound = 'sound/effects/blobattack.ogg'
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 
 	var/morphed = 0
 	var/atom/movable/form = null
 	var/morph_time = 0
 
+	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
+							You may take the form of anything nearby by middle-clicking it. This process will alert any nearby \
+							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
+							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
+							You can attack any item or dead creature to consume it - creatures will fully restore your health. \
+							Finally, you can restore yourself to your original form while morphed by middle-clicking yourself.</b>"
+
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
 		if(get_dist(user,src)<=3)
-			user << "<span class='notice'>Looks odd!</span>"
+			user << "<span class='warning'>It doesn't look quite right...</span>"
 	else
 		..()
 	return
@@ -45,6 +56,8 @@
 	if(istype(A,/obj/screen))
 		return 0
 	if(istype(A,/obj/singularity))
+		return 0
+	if(istype(A,/mob/living/simple_animal/hostile/morph))
 		return 0
 	return 1
 
@@ -56,6 +69,7 @@
 		if(istype(A) && allowed(A))
 			assume(A)
 	else
+		src << "<span class='warning'>Your chameleon skin is still repairing itself!</span>"
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
@@ -71,10 +85,14 @@
 	else
 		overlays = target.overlays.Copy()
 
+	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
+					"<span class='notice'>You twist your body and assume the form of [target].</span>")
+
 	name = target.name
 	icon = target.icon
 	icon_state = target.icon_state
 	overlays = target.overlays
+
 
 	//Morphed is weaker
 	melee_damage_lower = 5
@@ -92,6 +110,8 @@
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 
+	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
+					"<span class='notice'>You reform to your normal body.</span>")
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -103,22 +123,18 @@
 	speed = initial(speed)
 
 	morph_time = world.time + MORPH_COOLDOWN
-	return
 
-/mob/living/simple_animal/hostile/morph/death()
+/mob/living/simple_animal/hostile/morph/death(gibbed)
 	if(morphed)
-		visible_message("<span class='danger'>The [src] dissolves!</span>")
+		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
+						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
-
-	//Dump eaten stuff
-	for(var/obj/O in src)
-		O.loc = loc
-
-	for(var/mob/M in src)
-		M.loc = loc
-
-	..(0)
-	return
+	if(gibbed)
+		for(var/atom/movable/AM in src)
+			AM.loc = loc
+			if(prob(90))
+				step(AM, pick(alldirs))
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
@@ -147,15 +163,15 @@
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
-				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
+				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
 				L.loc = src
 				adjustBruteLoss(-50)
 			return
-	if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src,20, target = I))
-				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
+				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
 				I.loc = src
 			return
 	target.attack_animal(src)
@@ -177,7 +193,7 @@
 /datum/round_event/morph/proc/get_morph(end_if_fail = 0)
 	key_of_morph = null
 	if(!key_of_morph)
-		var/list/candidates = get_candidates(BE_ALIEN)
+		var/list/candidates = get_candidates(ROLE_ALIEN)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0
@@ -197,15 +213,10 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	var/info = {"<B>You are a Morph, a shapeshifting alien creature.</B>
- You can assume the shape of anything in sight by Shift-Clicking it.
- You can only transform every 5 seconds.
- To return to your basic form Shift-Click on yourself.
- Base form is slow but strong, you're much weaker and faster when disguised.
- You can eat items and corpses by clicking on them,eating corpses will heal you."}
-	S << info
-	message_admins("[key_of_morph] has been made into Morph by an event.")
-	log_game("[key_of_morph] was spawned as a Morph by an event.")
+	S << S.playstyle_string
+	S << 'sound/magic/Mutate.ogg'
+	message_admins("[key_of_morph] has been made into morph by an event.")
+	log_game("[key_of_morph] was spawned as a morph by an event.")
 	return 1
 
 /datum/round_event/morph/start()
@@ -213,11 +224,11 @@
 
 
 /datum/round_event/morph/proc/find_morph()
-	message_admins("Attempted to spawn a Morph but there was no players available. Will try again momentarily.")
+	message_admins("Attempted to spawn a morph but there was no players available. Will try again momentarily.")
 	spawn(50)
 		if(get_morph(1))
-			message_admins("Situation has been resolved, [key_of_morph] has been spawned as a Morph.")
-			log_game("[key_of_morph] was spawned as a Morph by an event.")
+			message_admins("Situation has been resolved, [key_of_morph] has been spawned as a morph.")
+			log_game("[key_of_morph] was spawned as a morph by an event.")
 			return 0
-		message_admins("Unfortunately, no candidates were available for becoming a Morph. Shutting down.")
+		message_admins("Unfortunately, no candidates were available for becoming a morph. Shutting down.")
 	return kill()

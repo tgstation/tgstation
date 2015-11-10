@@ -12,7 +12,7 @@
 
 /obj/item/weapon/implant/uplink/implant(mob/source)
 	var/obj/item/weapon/implant/imp_e = locate(src.type) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		imp_e.hidden_uplink.uses += hidden_uplink.uses
 		qdel(src)
 		return 1

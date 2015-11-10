@@ -107,6 +107,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/Destroy()
 	if(target.client) target.client.images.Remove(current_image)
 	active = 0
+	return ..()
 
 #define FAKE_FLOOD_EXPAND_TIME 30
 #define FAKE_FLOOD_MAX_RADIUS 7
@@ -139,28 +140,29 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		radius++
 		if(radius > FAKE_FLOOD_MAX_RADIUS)
 			qdel(src)
+			return
 		Expand()
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-	return
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
-	if(!flood_turfs) //for qdel
-		return
 	for(var/turf/T in circlerangeturfs(loc,radius))
 		if((T in flood_turfs)|| T.blocks_air)
 			continue
 		flood_images += image(image_icon,T,image_state,MOB_LAYER)
 		flood_turfs += T
-	if(target.client) target.client.images |= flood_images
-	return
+	if(target.client)
+		target.client.images |= flood_images
 
 /obj/effect/hallucination/fake_flood/Destroy()
 	SSobj.processing.Remove(src)
-	del(flood_turfs)
-	if(target.client) target.client.images.Remove(flood_images)
+	qdel(flood_turfs)
+	flood_turfs = list()
+	if(target.client)
+		target.client.images.Remove(flood_images)
 	target = null
-	del(flood_images)
-	return
+	qdel(flood_images)
+	flood_images = list()
+	return ..()
 
 /obj/effect/hallucination/simple/xeno
 	image_icon = 'icons/mob/alien.dmi'
@@ -188,19 +190,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(!U.welded)
 			pump = U
 			break
-	xeno = new(pump.loc,target)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
-	sleep(10)
-	var/xeno_name = xeno.name
-	target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
-	sleep(10)
-	qdel(xeno)
-	target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+	if(pump)
+		xeno = new(pump.loc,target)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		var/xeno_name = xeno.name
+		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		sleep(10)
+		qdel(xeno)
+		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
 /obj/effect/hallucination/singularity_scare
@@ -480,7 +483,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target = T
 	var/image/I = null
 	var/count = 0
-	for(var/obj/machinery/door/airlock/A in range(target,7))
+	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
 		count++

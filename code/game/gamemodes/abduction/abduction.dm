@@ -6,7 +6,7 @@
 /datum/game_mode/abduction
 	name = "abduction"
 	config_tag = "abduction"
-	antag_flag = BE_ABDUCTOR
+	antag_flag = ROLE_ABDUCTOR
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
@@ -107,7 +107,7 @@
 		H = agent.current
 		L = agent_landmarks[team_number]
 		H.loc = L.loc
-		hardset_dna(H, null, null, null, null, /datum/species/abductor)
+		H.set_species(/datum/species/abductor)
 		S = H.dna.species
 		S.agent = 1
 		S.team = team_number
@@ -115,13 +115,12 @@
 		equip_common(H,team_number)
 		equip_agent(H,team_number)
 		greet_agent(agent,team_number)
-		H.regenerate_icons()
 
 		scientist = scientists[team_number]
 		H = scientist.current
 		L = scientist_landmarks[team_number]
 		H.loc = L.loc
-		hardset_dna(H, null, null, null, null, /datum/species/abductor)
+		H.set_species(/datum/species/abductor)
 		S = H.dna.species
 		S.scientist = 1
 		S.team = team_number
@@ -129,7 +128,6 @@
 		equip_common(H,team_number)
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
-		H.regenerate_icons()
 	return ..()
 
 //Used for create antag buttons
@@ -156,7 +154,7 @@
 	H = agent.current
 	L = agent_landmarks[team_number]
 	H.loc = L.loc
-	hardset_dna(H, null, null, null, null, /datum/species/abductor)
+	H.set_species(/datum/species/abductor)
 	S = H.dna.species
 	S.agent = 1
 	S.team = team_number
@@ -164,13 +162,13 @@
 	equip_common(H,team_number)
 	equip_agent(H,team_number)
 	greet_agent(agent,team_number)
-	H.regenerate_icons()
+
 
 	scientist = scientists[team_number]
 	H = scientist.current
 	L = scientist_landmarks[team_number]
 	H.loc = L.loc
-	hardset_dna(H, null, null, null, null, /datum/species/abductor)
+	H.set_species(/datum/species/abductor)
 	S = H.dna.species
 	S.scientist = 1
 	S.team = team_number
@@ -178,7 +176,7 @@
 	equip_common(H,team_number)
 	equip_scientist(H,team_number)
 	greet_scientist(scientist,team_number)
-	H.regenerate_icons()
+
 
 
 /datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor,team_number)
@@ -277,9 +275,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greentext'><b>[team_name] team fullfilled its mission!</b></span>"
+			world << "<span class='greenannounce'>[team_name] team fullfilled its mission!</span>"
 		else
-			world << "<span class='greentext'><b>[team_name] team failed its mission.</b></span>"
+			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
 	..()
 	return 1
 
@@ -332,7 +330,7 @@
 		if(!owner.current || !ishuman(owner.current))
 			return 0
 		var/mob/living/carbon/human/H = owner.current
-		if(!H.dna || !H.dna.species || !(H.dna.species.id == "abductor"))
+		if(H.dna.species.id != "abductor")
 			return 0
 		var/datum/species/abductor/S = H.dna.species
 		ab_team = S.team
@@ -359,7 +357,7 @@
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()
-	var/list/jobs = SSjob.occupations
+	var/list/jobs = SSjob.occupations.Copy()
 	for(var/datum/job/J in jobs)
 		if(J.current_positions < 1)
 			jobs -= J

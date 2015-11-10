@@ -47,7 +47,7 @@
 		qdel(ghostimage)
 		ghostimage = null;
 		updateallghostimages()
-	..()
+	return ..()
 
 /mob/camera/blob/Login()
 	..()
@@ -96,7 +96,7 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)
+	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)

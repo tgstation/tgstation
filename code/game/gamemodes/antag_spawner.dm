@@ -1,7 +1,7 @@
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 	var/used = 0
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
@@ -53,7 +53,7 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(BE_WIZARD)
+			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
 				src.used = 1
 				var/client/C = pick(candidates)
@@ -64,7 +64,7 @@
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
-	PoolOrNew(/obj/effect/effect/smoke, T)
+	PoolOrNew(/obj/effect/particle_effect/smoke, T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
@@ -98,6 +98,7 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
+	M.dna.update_dna_identity()
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = M:mind
 	new_objective:target = usr:mind
@@ -119,29 +120,45 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
 
 /obj/item/weapon/antag_spawner/borg_tele
-	name = "Syndicate Cyborg Teleporter"
-	desc = "A single-use teleporter used to deploy a Syndicate Cyborg on the field."
+	name = "syndicate cyborg teleporter"
+	desc = "A single-use teleporter designed to deploy a single Syndicate cyborg onto the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/TC_cost = 0
+	var/borg_to_spawn
+	var/list/possible_types = list("Assault", "Medical")
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "The teleporter is out of power."
+		user << "<span class='warning'>[src] is out of power!</span>"
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	if(!(user.mind in ticker.mode.syndicates))
+		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
+		return 0
+	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
+	if(!borg_to_spawn)
+		return
+	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
-	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
+	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
+		used = 0
+		return
+	var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
-	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
+	var/mob/living/silicon/robot/R
+	switch(borg_to_spawn)
+		if("Medical")
+			R = new /mob/living/silicon/robot/syndicate/medical(T)
+		else
+			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
@@ -157,7 +174,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(BE_ALIEN)
+	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return

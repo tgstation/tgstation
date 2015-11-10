@@ -13,11 +13,11 @@
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain,/obj/item/organ/internal/brain/alien))
 			icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
@@ -28,8 +28,8 @@
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O,/obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			user << "<span class='warning'>There's already a brain in the MMI!</span>"
 			return
@@ -41,7 +41,7 @@
 			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
-			B.notify_ghost_cloning("Someone has put your brain in a MMI!")
+			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob
@@ -85,16 +85,20 @@
 		update_icon()
 		name = "Man-Machine Interface"
 
-/obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	if(check_dna_integrity(H))
-		brainmob.dna = H.dna
+	brainmob.name = L.real_name
+	brainmob.real_name = L.real_name
+	if(L.has_dna())
+		var/mob/living/carbon/C = L
+		if(!brainmob.dna)
+			brainmob.dna = new /datum/dna(brainmob)
+		C.dna.copy_dna(brainmob.dna)
 	brainmob.container = src
 
-	if(istype(H))
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
 
@@ -147,7 +151,7 @@
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
-	..()
+	return ..()
 
 /obj/item/device/mmi/examine(mob/user)
 	..()

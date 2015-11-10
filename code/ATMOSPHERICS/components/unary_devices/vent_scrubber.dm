@@ -1,3 +1,6 @@
+#define SIPHONING	0
+#define SCRUBBING	1
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map"
 
@@ -22,7 +25,7 @@
 	var/list/turf/simulated/adjacent_turfs = list()
 
 	var/on = 0
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
@@ -48,10 +51,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
+	radio_connection = null
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
-	..()
+		initial_loc = null
+	for(var/I in adjacent_turfs)
+		I = null
+	return ..()
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!powered(power_channel))
 		return 0
@@ -62,14 +69,14 @@
 
 	var/amount = idle_power_usage
 
-	if (scrubbing)
+	if(scrubbing & SCRUBBING)
 		if (scrub_CO2)
 			amount += idle_power_usage
 		if (scrub_Toxins)
 			amount += idle_power_usage
 		if (scrub_N2O)
 			amount += idle_power_usage
-	else
+	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
 	if (widenet)
@@ -86,13 +93,13 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		icon_state = "scrub_on"
-	else
+	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
@@ -142,7 +149,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[NODE1])
+	if (!NODE1)
 		on = 0
 	//broadcast_status()
 	if(!on || welded)
@@ -159,9 +166,9 @@
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
@@ -312,3 +319,6 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+#undef SIPHONING
+#undef SCRUBBING

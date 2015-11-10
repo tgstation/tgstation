@@ -76,14 +76,14 @@
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;notes=show;ckey="+ckey+"'>N</a> - "
+					body += "<a href='?_src_=holder;shownoteckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?_src_=holder;secretsadmin=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a href='?_src_=holder;secrets=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 
@@ -438,6 +438,48 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deities.len || ticker.mode.red_deity_prophets || ticker.mode.blue_deity_prophets || ticker.mode.red_deity_followers || ticker.mode.blue_deity_followers)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deities)
+				var/mob/M = N.current
+				dat += "<tr><td>Red Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deities.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deities)
+				var/mob/M = N.current
+				dat += "<tr><td>Blue Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deity_prophets.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Prophets</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deity_prophets)
+				var/mob/M = N.current
+				dat += "<tr><td>Red Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deity_prophets.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Prophets</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deity_prophets)
+				var/mob/M = N.current
+				dat += "<tr><td>Blue Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deity_followers.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Followers</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deity_followers)
+				var/mob/M = N.current
+				dat += "<tr><td>Red Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deity_followers.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Followers</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deity_followers)
+				var/mob/M = N.current
+				dat += "<tr><td>Blue Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.traitors.len > 0)

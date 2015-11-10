@@ -15,9 +15,9 @@
 	var/temp = null
 	var/frequency = 1451
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = 2
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/weapon/implant/tracking/W in tracked_implants)
 					if (!W.implanted || !ismob(W.loc))
 						continue
 					else
@@ -129,7 +129,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
@@ -142,14 +142,14 @@ Frequency:
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in world)
+	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target
 			else
 				L["[com.id] (Inactive)"] = com.target
 	var/list/turfs = list(	)
-	for(var/turf/T in orange(10))
+	for(var/turf/T in ultra_range(10, orange=1))
 		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
 		if(T.y>world.maxy-8 || T.y<8)	continue
 		turfs += T

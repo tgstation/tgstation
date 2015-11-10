@@ -94,14 +94,14 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
-	if(!Targets.len)//We didnt find nothin!
-		return
 	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
 		for(var/atom/A in Targets)
 			var/target_dist = get_dist(src, target)
 			var/possible_target_distance = get_dist(src, A)
 			if(target_dist < possible_target_distance)
 				Targets -= A
+	if(!Targets.len)//We didnt find nothin!
+		return
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
@@ -215,31 +215,29 @@
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death(gibbed)
-	LoseAggro()
+	LoseTarget()
 	..(gibbed)
-	walk(src, 0)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	var/tturf = get_turf(target)
 	if(rapid)
 		spawn(1)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(4)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(6)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 	else
-		Shoot(tturf, src.loc, src)
+		Shoot(target, src.loc, src)
 		if(casingtype)
 			new casingtype
 	ranged_cooldown = ranged_cooldown_cap
@@ -249,17 +247,16 @@
 	if(target == start)
 		return
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+	var/obj/item/projectile/A = new projectiletype(src.loc)
 	playsound(user, projectilesound, 100, 1)
 	if(!A)	return
-
-	if (!istype(target, /turf))
-		qdel(A)
-		return
 	A.current = target
 	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
+	if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+		newtonian_move(get_dir(target, user))
+	A.original = target
 	A.fire()
 	return
 

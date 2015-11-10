@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "syndicate pistol"
+	name = "stechkin pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
@@ -16,7 +16,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911
-	name = "M1911 pistol"
+	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
 	w_class = 3

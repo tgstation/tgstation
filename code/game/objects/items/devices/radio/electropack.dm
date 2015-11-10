@@ -6,12 +6,16 @@
 	item_state = "electropack"
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	w_class = 5.0
+	w_class = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
+
+/obj/item/device/electropack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
 	if(radio_controller)
@@ -20,7 +24,7 @@
 /obj/item/device/electropack/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
@@ -107,7 +111,7 @@
 		step(M, pick(cardinal))
 
 		M << "<span class='danger'>You feel a sharp shock!</span>"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()
 

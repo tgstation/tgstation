@@ -29,7 +29,7 @@
 			if("gib_brain")
 				if(ishuman(target) || ismonkey(target))
 					var/mob/living/carbon/C_target = target
-					var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
+					var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
 					if(B)
 						B.loc = get_turf(C_target)
 						B.transfer_identity(C_target)

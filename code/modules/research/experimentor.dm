@@ -62,25 +62,22 @@
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 		if(ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items += 15
 				valid_items += I
 				probWeight++
-			qdel(tempCheck)
 
 		if(ispath(I,/obj/item/weapon/reagent_containers/food))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items += rand(1,max(2,35-probWeight))
 				valid_items += I
-			qdel(tempCheck)
 
 		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null)
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
-			qdel(tempCheck)
 
 
 /obj/machinery/r_n_d/experimentor/New()
@@ -127,7 +124,9 @@
 	if(exchange_parts(user, O))
 		return
 
-	default_deconstruction_crowbar(O)
+	if(panel_open && istype(O, /obj/item/weapon/crowbar))
+		default_deconstruction_crowbar(O)
+		return
 
 	if(!checkCircumstances(O))
 		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
@@ -138,10 +137,10 @@
 	if (!linked_console)
 		user << "<span class='warning'>The [src] must be linked to an R&D console first!</span>"
 		return
-	if (busy)
-		user << "<span class='warning'>The [src] is busy right now.</span>"
+	if (loaded_item)
+		user << "<span class='warning'>The [src] is already loaded.</span>"
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (istype(O, /obj/item))
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
@@ -154,7 +153,6 @@
 			return
 		if(!user.drop_item())
 			return
-		busy = 1
 		loaded_item = O
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
@@ -231,8 +229,8 @@
 		loaded_item = null
 
 /obj/machinery/r_n_d/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1,0, where, 0)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, where)
 	smoke.start()
 
 /obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
@@ -288,9 +286,7 @@
 			ejectItem()
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
-			for(var/mob/living/m in oview(1, src))
-				m.irradiate(25)
-				investigate_log("Experimentor has irradiated [m]", "experimentor") //One entry per person so we know what was irradiated.
+			radiation_pulse(get_turf(src), 1, 1, 25, 1)
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")
@@ -323,8 +319,8 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", "experimentor")
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -335,8 +331,8 @@
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -422,8 +418,8 @@
 			R.my_atom = src
 			R.add_reagent("frostoil" , 50)
 			investigate_log("Experimentor has released frostoil gas.", "experimentor")
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -444,8 +440,8 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
-			var/datum/effect/effect/system/smoke_spread/smoke = new
-			smoke.set_up(1,0, src.loc, 0)
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(0, src.loc)
 			smoke.start()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -455,33 +451,29 @@
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		if(linked_console.linked_lathe)
-			linked_console.linked_lathe.m_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.materials[MAT_METAL]))
-			linked_console.linked_lathe.g_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.materials[MAT_GLASS]))
+			for(var/material in exp_on.materials)
+				linked_console.linked_lathe.materials.insert_amount( min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (exp_on.materials[material])), material)
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
-			var/list/throwAt = list()
-			for(var/i in oview(7,src))
-				if(istype(i,/obj/item) || istype(i,/mob/living))
-					throwAt.Add(i)
-			var/counter
-			for(counter = 1, counter < throwAt.len, ++counter)
-				var/cast = throwAt[counter]
-				cast:throw_at(src,10,1)
+			spawn(0)
+				for(var/atom/movable/AM in oview(7,src))
+					if(!AM.anchored)
+						AM.throw_at(src,10,1)
+
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", "experimentor")
-			var/list/oViewStuff = oview(7,src)
 			var/list/throwAt = list()
-			for(var/i in oViewStuff)
-				if(istype(i,/obj/item) || istype(i,/mob/living))
-					throwAt.Add(i)
-			var/counter
-			for(counter = 1, counter < throwAt.len, ++counter)
-				var/cast = throwAt[counter]
-				cast:throw_at(pick(throwAt),10,1)
+			for(var/atom/movable/AM in oview(7,src))
+				if(!AM.anchored)
+					throwAt.Add(AM)
+			spawn(0)
+				for(var/counter = 1, counter < throwAt.len, ++counter)
+					var/atom/movable/cast = throwAt[counter]
+					cast.throw_at(pick(throwAt),10,1)
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
@@ -544,7 +536,6 @@
 
 	spawn(resetTime)
 		icon_state = "h_lathe"
-		busy = 0
 		recentlyExperimented = 0
 
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
@@ -562,7 +553,6 @@
 		if(D)
 			linked_console = D
 	else if(scantype == "eject")
-		busy = 0
 		ejectItem()
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
@@ -578,7 +568,7 @@
 		experiment(dotype,process)
 		use_power(750)
 		if(dotype != FAIL)
-			if(process.origin_tech)
+			if(process && process.origin_tech)
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
@@ -652,8 +642,8 @@
 //////////////// RELIC PROCS /////////////////////////////
 
 /obj/item/weapon/relic/proc/throwSmoke(turf/where)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1,0, where, 0)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, where)
 	smoke.start()
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)
@@ -681,7 +671,7 @@
 	user << message
 	var/animals = rand(1,25)
 	var/counter
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
+	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/dog/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
@@ -703,7 +693,8 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at(pick(oview(7,get_turf(src))),10,1)
+		spawn()
+			R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
 		for(counter = 1; counter <= dupes.len; counter++)

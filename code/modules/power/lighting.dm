@@ -11,61 +11,20 @@
 
 
 
-/obj/item/light_fixture_frame
+/obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = CONDUCT
-	var/fixture_type = "tube"
-	var/obj/machinery/light/newlight = null
-	var/sheets_refunded = 2
+	result_path = /obj/machinery/light_construct
+	inverse = 1
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-		qdel(src)
-		return
-	..()
-
-/obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>[src.name] cannot be placed on this spot!</span>"
-		return
-	usr << "<span class='notice'>You begin attaching [src] to the wall...</span>"
-	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
-	var/constrdir = usr.dir
-	var/constrloc = usr.loc
-	if (!do_after(usr, 30, target = src))
-		return
-	switch(fixture_type)
-		if("bulb")
-			newlight = new /obj/machinery/light_construct/small(constrloc)
-		if("tube")
-			newlight = new /obj/machinery/light_construct(constrloc)
-	newlight.dir = constrdir
-	newlight.fingerprints = src.fingerprints
-	newlight.fingerprintshidden = src.fingerprintshidden
-	newlight.fingerprintslast = src.fingerprintslast
-
-	usr.visible_message("[usr.name] attaches [src] to the wall.", \
-		"<span class='notice'>You attach [src] to the wall.</span>")
-	qdel(src)
-
-/obj/item/light_fixture_frame/small
+/obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"
-	desc = "Used for building small lights."
-	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = CONDUCT
-	fixture_type = "bulb"
-	sheets_refunded = 1
+	result_path = /obj/machinery/light_construct/small
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+
 
 /obj/machinery/light_construct
 	name = "light fixture frame"
@@ -79,10 +38,10 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
+/obj/machinery/light_construct/New(loc, ndir, building)
 	..()
-	if (fixture_type == "bulb")
-		icon_state = "bulb-construct-stage1"
+	if(building)
+		dir = ndir
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
@@ -95,89 +54,72 @@
 			user << "The casing is closed."
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user, params)
-	src.add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wrench))
-		if (src.stage == 1)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			usr << "<span class='notice'>You begin deconstructing [src]...</span>"
-			if (!do_after(usr, 30, target = src))
+	add_fingerprint(user)
+	switch(stage)
+		if(1)
+			if(istype(W, /obj/item/weapon/wrench))
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
+				if (!do_after(usr, 30, target = src))
+					return
+				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+				user.visible_message("[user.name] deconstructs [src].", \
+					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+				qdel(src)
 				return
-			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-			user.visible_message("[user.name] deconstructs [src].", \
-				"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
-			qdel(src)
-		if (src.stage == 2)
-			usr << "<span class='warning'>You have to remove the wires first!</span>"
-			return
 
-		if (src.stage == 3)
-			usr << "<span class='warning'>You have to unscrew the case first!</span>"
-			return
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = W
+				if(coil.use(1))
+					switch(fixture_type)
+						if ("tube")
+							icon_state = "tube-construct-stage2"
+						if("bulb")
+							icon_state = "bulb-construct-stage2"
+					stage = 2
+					user.visible_message("[user.name] adds wires to [src].", \
+						"<span class='notice'>You add wires to [src].</span>")
+				else
+					user << "<span class='warning'>You need one length of cable to wire [src]!</span>"
+				return
+		if(2)
+			if(istype(W, /obj/item/weapon/wrench))
+				usr << "<span class='warning'>You have to remove the wires first!</span>"
+				return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
-		if (src.stage != 2) return
-		src.stage = 1
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage1"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-		return
+			if(istype(W, /obj/item/weapon/wirecutters))
+				stage = 1
+				switch(fixture_type)
+					if ("tube")
+						icon_state = "tube-construct-stage1"
+					if("bulb")
+						icon_state = "bulb-construct-stage1"
+				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
+				user.visible_message("[user.name] removes the wiring from [src].", \
+					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
+				playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				return
 
-	if(istype(W, /obj/item/stack/cable_coil))
-		if (src.stage != 1) return
-		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
-			switch(fixture_type)
-				if ("tube")
-					src.icon_state = "tube-construct-stage2"
-				if("bulb")
-					src.icon_state = "bulb-construct-stage2"
-			src.stage = 2
-			user.visible_message("[user.name] adds wires to [src].", \
-				"<span class='notice'>You add wires to [src].</span>")
-		else
-			user << "<span class='warning'>You need one length of cable to wire [src]!</span>"
-		return
-
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if (src.stage == 2)
-			switch(fixture_type)
-				if ("tube")
-					src.icon_state = "tube-empty"
-				if("bulb")
-					src.icon_state = "bulb-empty"
-			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
-
-			switch(fixture_type)
-
-				if("tube")
-					newlight = new /obj/machinery/light/built(src.loc)
-				if ("bulb")
-					newlight = new /obj/machinery/light/small/built(src.loc)
-
-			newlight.dir = src.dir
-			src.transfer_fingerprints_to(newlight)
-			qdel(src)
-			return
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user.visible_message("[user.name] closes [src]'s casing.", \
+					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
+				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+				switch(fixture_type)
+					if("tube")
+						newlight = new /obj/machinery/light/built(loc)
+					if ("bulb")
+						newlight = new /obj/machinery/light/small/built(loc)
+				newlight.dir = dir
+				transfer_fingerprints_to(newlight)
+				qdel(src)
+				return
 	..()
+
 
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
-	desc = "A small light fixture under construction."
-	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-stage1"
-	anchored = 1
-	layer = 5
-	stage = 1
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
@@ -254,7 +196,7 @@
 	if(A)
 		on = 0
 //		A.update_lights()
-	..()
+	return ..()
 
 /obj/machinery/light/update_icon()
 
@@ -369,7 +311,7 @@
 		//If xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
 
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
-
+		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if(W.damtype == STAMINA)
 			return
@@ -379,7 +321,6 @@
 								"<span class='danger'>You hit the light, and it smashes!</span>", \
 								 "<span class='italics'>You hear a tinkle of breaking glass.</span>")
 			if(on && (W.flags & CONDUCT))
-				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
@@ -404,18 +345,15 @@
 					newlight.icon_state = "bulb-construct-stage2"
 			newlight.dir = src.dir
 			newlight.stage = 2
-			newlight.fingerprints = src.fingerprints
-			newlight.fingerprintshidden = src.fingerprintshidden
-			newlight.fingerprintslast = src.fingerprintslast
+			transfer_fingerprints_to(newlight)
 			qdel(src)
 			return
 
 		user << "<span class='userdanger'>You stick \the [W] into the light socket!</span>"
 		if(has_power() && (W.flags & CONDUCT))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
@@ -558,7 +496,7 @@
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 	status = LIGHT_BROKEN

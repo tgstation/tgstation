@@ -10,7 +10,6 @@ var/list/same_wires = list()
 var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
 
 /datum/wires
-
 	var/random = 0 // Will the wires be different for every single instance.
 	var/atom/holder = null // The holder
 	var/holder_type = null // The holder type; used to make sure that the holder is the correct type.
@@ -46,6 +45,11 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	holder = null
+	signallers = list()
+	return ..()
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
@@ -64,13 +68,33 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		src.wires[colour] = index
 		//wires = shuffle(wires)
 
+/datum/wires/proc/IsInteractionTool(obj/item/I)
+	if(istype(I, /obj/item/device/multitool))
+		return 1
+
+	if(istype(I, /obj/item/weapon/wirecutters))
+		return 1
+
+	if(istype(I, /obj/item/device/assembly))
+		var/obj/item/device/assembly/A = I
+		if(A.attachable)
+			return 1
+
+	return 0
+
 
 /datum/wires/proc/Interact(mob/living/user)
-
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()
 	if(html)
+		if(user.machine != holder)
+			for(var/A in signallers)
+				if(istype(signallers[A], /obj/item))
+					var/obj/item/I = signallers[A]
+					if(I.on_found(user))
+						return
+
 		user.set_machine(holder)
 	else
 		user.unset_machine()
@@ -205,6 +229,11 @@ var/const/POWER = 8
 		return index
 	else
 		CRASH("[colour] is not a key in wires.")
+
+/datum/wires/proc/GetColour(index)
+	for(var/colour in wires)
+		if(wires[colour] == index)
+			return colour
 
 //
 // Is Index/Colour Cut procs

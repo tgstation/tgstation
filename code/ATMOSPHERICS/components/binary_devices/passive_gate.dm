@@ -25,7 +25,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
 	if(!on)
@@ -40,8 +40,8 @@ Passive gate is similar to the regular pump except:
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
@@ -124,11 +124,7 @@ Passive gate is similar to the regular pump except:
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = Clamp(
-			text2num(signal.data["set_output_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")

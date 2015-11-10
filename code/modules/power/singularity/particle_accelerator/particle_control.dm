@@ -29,7 +29,9 @@
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
 		toggle_power()
-	..()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
 	if(construction_state >= 3)

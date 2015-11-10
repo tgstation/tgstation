@@ -49,7 +49,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 2
 	throw_range = 3
 	plant_type = 2
@@ -68,7 +68,7 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/twohanded/required/chainsaw))
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
 		var/old_plank_amount = plank.amount
@@ -110,7 +110,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 
@@ -128,7 +128,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
@@ -172,7 +172,7 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
@@ -258,7 +258,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -295,14 +295,14 @@
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
 	..()
-	if(is_sharp(W))
+	if(W.is_sharp())
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
@@ -310,11 +310,12 @@
 		return
 
 /obj/item/weapon/grown/snapcorn
+	seed = /obj/item/seeds/snapcornseed
 	name = "snap corn"
 	desc = "A cob with snap pops"
 	icon_state = "snapcorn"
 	item_state = "corncob"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

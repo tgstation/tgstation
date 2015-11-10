@@ -193,21 +193,21 @@
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
-		if(1.0)
+		if(1)
 			return "north"
-		if(2.0)
+		if(2)
 			return "south"
-		if(4.0)
+		if(4)
 			return "east"
-		if(8.0)
+		if(8)
 			return "west"
-		if(5.0)
+		if(5)
 			return "northeast"
-		if(6.0)
+		if(6)
 			return "southeast"
-		if(9.0)
+		if(9)
 			return "northwest"
-		if(10.0)
+		if(10)
 			return "southwest"
 		else
 	return
@@ -587,3 +587,44 @@ for(var/t in test_times)
 			return "#4B0082"
 		else
 			return "#FFFFFF"
+
+
+//This is a weird one:
+//It returns a list of all var names found in the string
+//These vars must be in the [var_name] format
+//It's only a proc because it's used in more than one place
+
+//Takes a string and a datum
+//The string is well, obviously the string being checked
+//The datum is used as a source for var names, to check validity
+//Otherwise every single word could technically be a variable!
+/proc/string2listofvars(var/t_string, var/datum/var_source)
+	if(!t_string || !var_source)
+		return list()
+
+	. = list()
+
+	var/var_found = findtext(t_string,"\[") //Not the actual variables, just a generic "should we even bother" check
+	if(var_found)
+		//Find var names
+
+		// "A dog said hi [name]!"
+		// text2list() --> list("A dog said hi ","name]!"
+		// list2text() --> "A dog said hi name]!"
+		// text2list() --> list("A","dog","said","hi","name]!")
+
+		t_string = replacetext(t_string,"\[","\[ ")//Necessary to resolve "word[var_name]" scenarios
+		var/list/list_value = text2list(t_string,"\[")
+		var/intermediate_stage = list2text(list_value)
+
+		list_value = text2list(intermediate_stage," ")
+		for(var/value in list_value)
+			if(findtext(value,"]"))
+				value = text2list(value,"]") //"name]!" --> list("name","!")
+				for(var/A in value)
+					if(var_source.vars.Find(A))
+						. += A
+
+
+
+

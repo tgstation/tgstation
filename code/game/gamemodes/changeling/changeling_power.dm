@@ -20,6 +20,9 @@
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
 	return
 
+/obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
+	return
+
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
 	if(!user || !user.mind || !user.mind.changeling)

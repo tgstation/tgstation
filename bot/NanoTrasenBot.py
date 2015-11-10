@@ -25,7 +25,6 @@ import irchat
 #
 # PSYCO
 write_to_a_file = False #Only affects psyco
-write_youtube_to_file = True #True = YTCV4 will load, false = YTCV3 will load
 try:
    import psyco
 except ImportError:
@@ -82,16 +81,12 @@ from random import choice as fsample
 from C_rtd import rtd
 from C_heaortai import heaortai
 from C_srtd import srtd
-if write_youtube_to_file:
-   from YTCv4 import YTCV4 as YTCV2
-else:
-   from YTCv3 import YTCV2 #Downgraded version supports Cache disabling, but is slower
 from save_load import save,load
 if psyco_exists:
    def psyco_bond(func):
       psyco.bind(func)
       return func.__name__+" Psycofied"
-   for a in [rtd,srtd,C_heaortai.heaortai,sbna,YTCV2,fsample,C_rot13.rot13,C_eightball.eightball,fsample,
+   for a in [rtd,srtd,C_heaortai.heaortai,sbna,fsample,C_rot13.rot13,C_eightball.eightball,fsample,
              C_eightball.eightball,C_sarcasticball.sarcasticball,Marakov_Chain.form_sentence,Marakov_Chain.give_data]:
       print psyco_bond(a)
 
@@ -843,144 +838,6 @@ while True:
             elif influx.split(" ")[0].lower().replace(",","").replace(":","") in SName+[Name.lower()] and "who created you" in influx.lower():
                conn.privmsg(targetchannel, "I was created by Skibiliano.")
    # The part ends here >
-            elif parse_xkcd and "xkcd.com/" in influx.lower():
-               if influx.lower()[0:3] == "www":
-                  data = "http://"+influx
-               elif influx.lower()[0:3] == "xkc":
-                  data = "http://"+influx
-               else:
-                  data = influx
-               data = data.split(" ")
-               for i in data:
-                  if "http://" in i and "xkcd" in i:
-                     churn = xkcdparser.xkcd(i)
-                     if churn == "NOTHING":
-                        pass
-                     else:
-                        conn.privmsg(targetchannel,sender+" : XKCD - "+churn)
-                     break
-                  else:
-                     pass
-            elif automatic_youtube_reveal and "youtube.com/watch?v=" in influx.lower():
-               temporal_list2 = []
-               temporal_data = influx.split(" ")
-               temporal_list = []
-               for block in temporal_data:
-                  if "youtube.com/watch?v=" in block:
-                     temporal_list.append(block)
-               for temdata in temporal_list:
-                  
-                  if temdata[0:3] == "you":
-                     temdata = "http://www."+temdata
-                  elif temdata[0:3] == "www":
-                     temdata = "http://"+temdata
-                  elif temdata[0:4] == "http":
-                     pass
-                  #Obscure ones
-                  elif temdata[0:3] == "ww.":
-                     temdata = "http://w"+temdata
-                  elif temdata[0:3] == "w.y":
-                     temdata = "http://ww"+temdata
-                  elif temdata[0:3] == ".yo":
-                     temdata = "http://www"+temdata
-                  elif temdata[0:3] == "ttp":
-                     temdata = "h"+temdata
-                  elif temdata[0:3] == "tp:":
-                     temdata = "ht"+temdata
-                  elif temdata[0:3] == "p:/" or temdata[0:3] == "p:\\":
-                     temdata = "htt"+temdata
-                  elif temdata[0:3] == "://" or temdata[0:3] == ":\\\\":
-                     temdata = "http"+temdata
-                  elif temdata[0:2] == "//" or temdata[0:2] == "\\\\":
-                     if temdata[2] == "y":
-                        temdata = "http://www."+temdata[2:]
-                     elif temdata[2] == "w":
-                        temdata = "http:"+temdata
-                     else:
-                        pass
-                  if debug:
-                     print truesender+":"+temdata
-                  arg = temdata
-                  check = temdata.lower()
-
-                  if cache_youtube_links == True:
-                     result = YTCV2(arg)
-                  else:
-                     result = YTCV2(arg,0)
-                  if type(result) == str:
-                     ### To remove ="
-                     if result[0:4] == 'nt="':
-                        result = result[4:]
-                        pass
-                     elif result[0:2] == '="':
-                        result = result[2:]
-                        pass
-                     else:
-                        pass
-                     if "&quot;" in result:
-                        result.replace("&quot;",'"')
-                     if len(temporal_list) == 1:
-                        conn.privmsg(targetchannel,sender+" : "+result)
-                        break
-                     else:
-                        temporal_list2.append(result)
-                  else:
-                     if len(temporal_list) == 1:
-                        conn.privmsg(targetchannel,sender+" : The video does not exist")
-                        break
-                     else:
-                        temporal_list2.append("The video does not exist")
-               if len(temporal_list) == 1:
-                  pass
-               else:
-                  conn.privmsg(targetchannel,sender+" : "+str(reduce(lambda x,y: x+" :-And-: "+y,temporal_list2)))
-            elif RegExpCheckerForWebPages("((http://)|(https://))|([a-zA-Z0-9]+[.])|([a-zA-Z0-9](3,)\.+[a-zA-Z](2,))",influx,1):
-               arg2 = RegExpCheckerForWebPages("(http://)|([a-zA-Z0-9]+[.])|([a-zA-Z0-9](3,)\.+[a-zA-Z](2,))",influx,0)
-               if arg2 == 404:
-                  pass
-               else:
-                  if arg2[:7] == "http://":
-                     pass
-                  elif arg2[:4] == "www.":
-                     arg2 = "http://"+arg2
-                  else:
-                     arg2 = "http://"+arg2
-                  try:
-                     arg = Whoopshopchecker.TitleCheck(arg2)
-                     if len(arg2) == 0:
-                        pass
-                     else:
-                        conn.privmsg(targetchannel,sender+" : "+arg)
-                  except:
-                     #conn.privmsg(targetchannel,sender+" : An odd error occurred")
-                     pass
-            elif respond_of_course and "take over the" in influx.lower() or respond_of_course and "conquer the" in influx.lower():
-               if debug:
-                  print truesender+":<RULE>:"+influx
-               conn.privmsg(targetchannel,"Of course!")
-            elif respond_khan and "khan" in influx.lower():
-               if respond_khan:
-                  if debug:
-                     print truesender+":<KHAN>:"+influx
-                  if "khan " in influx.lower():
-                     conn.privmsg(targetchannel,"KHAAAAAAN!")
-                  elif " khan" in influx.lower():
-                     conn.privmsg(targetchannel,"KHAAAAAN!")
-                  elif influx.lower() == "khan":
-                     conn.privmsg(targetchannel,"KHAAAAAAAAAN!")
-                  elif influx.lower() == "khan?":
-                     conn.privmsg(targetchannel,"KHAAAAAAAAAAAAAN!")
-                  elif influx.lower() == "khan!":
-                     conn.privmsg(targetchannel,"KHAAAAAAAAAAAAAAAAAAN!")
-            elif respond_khan and influx.lower().count("k") + influx.lower().count("h") + influx.lower().count("a") + influx.lower().count("n") + influx.lower().count("!") + influx.lower().count("?") == len(influx):
-               if "k" in influx.lower() and "h" in influx.lower() and "a" in influx.lower() and "n" in influx.lower():
-                  if debug:
-                     print truesender+":<KHAN>:"+influx
-                  conn.privmsg(targetchannel,"KHAAAAN!")
-            elif influx.split(" ")[0].lower() in ["thanks","danke","tack"] and len(influx.split(" ")) > 1 and influx.split(" ")[1].lower().replace("!","").replace("?","").replace(".","").replace(",","") in SName+[lowname]:
-               conn.privmsg(targetchannel,"No problem %s" %(sender))
-            elif "happy birthday" in influx.lower() and birthday_announced == time.gmtime(time.time())[0]:
-               conn.privmsg(targetchannel,sender+" : Thanks :)")
             elif influx.split(" ")[0].lower().replace(",","").replace(".","").replace("!","").replace("?","") in SName+[lowname] and "call me" in influx.lower():
                if allow_callnames == True:
                   arg = influx.split(" ")
@@ -1189,20 +1046,6 @@ while True:
                      else:
                         conn.privmsg(targetchannel,"Hiya "+sender)
                      secdice = random.randint(0,10)
-                     if time.gmtime(time.time())[1] == 12 and time.gmtime(time.time())[2] == 15 and birthday_announced < time.gmtime(time.time())[0]:
-                        birthday_announced = time.gmtime(time.time())[0]
-                        conn.privmsg(channel,"Hey everybody! I just noticed it's my birthday!")
-                        time.sleep(0.5)
-                        tag = random.choice(["birthday","robot+birthday","happy+birthday+robot"])
-                        arg1 = urllib2.urlopen("http://www.youtube.com/results?search_query=%s&page=&utm_source=opensearch"%tag)
-                        arg1 = arg1.read().split("\n")
-                        arg2 = []
-                        for i in arg1:
-                           if "watch?v=" in i:
-                              arg2.append(i)
-                        arg3 = random.choice(arg2)
-                        
-                        conn.privmsg(channel,"Here's a video of '%s' which I found! %s (%s)"%(tag.replace("+"," "),"http://www.youtube.com"+arg3[arg3.find('/watch?v='):arg3.find('/watch?v=')+20],YTCV2("http://www.youtube.com"+arg3[arg3.find('/watch?v='):arg3.find('/watch?v=')+20])))
                      if truesender.lower() in tell_list.keys():
                         try:
                            conn.privmsg(channel, "Also, "+truesender+" : "+tell_list[truesender.lower()][0])

@@ -26,11 +26,6 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "green glow"
 
-/obj/effect/decal/cleanable/greenglow/New()
-	..()
-	spawn(1200)// 2 minutes
-		qdel(src)
-
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
 
@@ -114,7 +109,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

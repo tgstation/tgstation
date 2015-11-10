@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = 2
 	materials = list(MAT_METAL=100)
 	throwforce = 2
 	throw_speed = 3
@@ -51,10 +51,12 @@
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/device/assembly/proc/pulsed(radio = 0)
-	if(holder && (wires & WIRE_RECEIVE))
-		activate()
+	if(wires & WIRE_RECEIVE)
+		spawn(0)
+			activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
-		activate()
+		spawn(0)
+			activate()
 	return 1
 
 
@@ -103,12 +105,6 @@
 			user << "<span class='notice'>\The [src] can now be attached!</span>"
 		return
 	..()
-	return
-
-
-/obj/item/device/assembly/process()
-	SSobj.processing.Remove(src)
-	return
 
 
 /obj/item/device/assembly/examine(mob/user)

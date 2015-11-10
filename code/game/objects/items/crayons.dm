@@ -91,7 +91,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2.0
+	w_class = 2
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/toy/crayon
@@ -134,6 +134,23 @@
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
+/obj/item/toy/crayon/spraycan/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(capped)
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, but nothing happens! Maybe they should have uncapped it first! Nonetheless--</span>")
+		user.say("MEDIOCRE!!")
+	else
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, spraying silver paint across their teeth!</span>")
+		user.say("WITNESS ME!!")
+		playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		colour = "#C0C0C0"
+		update_icon()
+		H.lip_style = "spray_face"
+		H.lip_color = colour
+		H.update_body()
+		uses = max(0, uses - 10)
+	return (OXYLOSS)
+
 /obj/item/toy/crayon/spraycan/New()
 	..()
 	name = "spray can"
@@ -171,7 +188,7 @@
 		if(iscarbon(target))
 			if(uses)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-				var/mob/living/carbon/human/C = target
+				var/mob/living/carbon/C = target
 				user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
 				target << "<span class='userdanger'>[user] sprays [src] into your face!</span>"
 				if(C.client)
@@ -180,9 +197,11 @@
 					if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
 						C.confused = max(C.confused, 3)
 						C.Weaken(3)
-				C.lip_style = "spray_face"
-				C.lip_color = colour
-				C.update_body()
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					H.lip_style = "spray_face"
+					H.lip_color = colour
+					H.update_body()
 				uses = max(0,uses-10)
 		..()
 

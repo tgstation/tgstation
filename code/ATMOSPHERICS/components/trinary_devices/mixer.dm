@@ -29,10 +29,10 @@
 				overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color)
 				continue
 			overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && nodes[NODE1] && nodes[NODE2] && nodes[NODE3])
+	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
@@ -48,20 +48,20 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	var/datum/gas_mixture/air3 = airs[AIR3]
+	var/datum/gas_mixture/air3 = AIR3
 	air3.volume = 300
-	airs[AIR3] = air3
+	AIR3 = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0
-	if(!(nodes[NODE1] && nodes[NODE2] && nodes[NODE3]))
+	if(!(NODE1 && NODE2 && NODE3))
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
-	var/datum/gas_mixture/air3 = airs[AIR3]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air3 = AIR3
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -107,14 +107,14 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		var/datum/pipeline/parent1 = parents[PARENT1]
+		var/datum/pipeline/parent1 = PARENT1
 		parent1.update = 1
 
 	if(transfer_moles2)
-		var/datum/pipeline/parent2 = parents[PARENT2]
+		var/datum/pipeline/parent2 = PARENT2
 		parent2.update = 1
 
-	var/datum/pipeline/parent3 = parents[PARENT3]
+	var/datum/pipeline/parent3 = PARENT3
 	parent3.update = 1
 
 	return 1

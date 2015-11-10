@@ -2,20 +2,23 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
 			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
 			new /obj/item/device/camera_bug(src)
+			new /obj/item/device/multitool/ai_detect(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
 			return
 
 		if("stealth")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
+			new /obj/item/device/rad_laser(src)
 			new /obj/item/device/chameleon(src)
+			new /obj/item/weapon/soap/syndie(src)
 			return
 
 		if("bond")
@@ -30,9 +33,10 @@
 		if("screwed")
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
-			new /obj/item/device/powersink(src)
+			new /obj/item/device/sbeacondrop/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
 			return
 
 		if("guns")
@@ -58,6 +62,7 @@
 			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/adrenalin(src)
 			new /obj/item/weapon/implanter/explosive(src)
+			new /obj/item/weapon/implanter/storage(src)
 			return
 
 		if("hacker")
@@ -65,6 +70,7 @@
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/weapon/aiModule/toyAI(src)
+			new /obj/item/device/multitool/ai_detect(src)
 			return
 
 		if("lordsingulo")
@@ -73,6 +79,15 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/weapon/card/emag(src)
 			return
+
+		if("sabotage")
+			new /obj/item/weapon/c4 (src)
+			new /obj/item/weapon/c4 (src)
+			new /obj/item/device/doorCharge(src)
+			new /obj/item/device/doorCharge(src)
+			new /obj/item/device/camera_bug(src)
+			new /obj/item/device/sbeacondrop/powersink(src)
+			new /obj/item/weapon/cartridge/syndicate(src)
 
 		if("darklord")
 			new /obj/item/weapon/melee/energy/sword/saber(src)
@@ -136,6 +151,20 @@
 	O.update_icon()
 	return
 
+/obj/item/weapon/storage/box/syndie_kit/bioterror
+	name = "bioterror syringe box"
+
+/obj/item/weapon/storage/box/syndie_kit/bioterror/New()
+	..()
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	return
+
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
@@ -145,6 +174,15 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenalin(O)
 	O.update_icon()
+	return
+
+
+/obj/item/weapon/storage/box/syndie_kit/imp_storage
+	name = "boxed storage implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
+	..()
+	new /obj/item/weapon/implanter/storage(src)
 	return
 
 
@@ -173,6 +211,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
+	storage_slots = 14
 
 /obj/item/weapon/storage/box/syndie_kit/chemical/New()
 	..()
@@ -198,4 +237,3 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
-	new /obj/item/weapon/paper/nuke_plans(src)

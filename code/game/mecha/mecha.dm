@@ -34,9 +34,9 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
-	var/dna	//dna-locking the mech
+	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effect/effect/system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
@@ -70,11 +70,13 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
-	var/datum/action/mecha/mech_eject/eject_action = new
-	var/datum/action/mecha/mech_toggle_internals/internals_action = new
-	var/datum/action/mecha/mech_cycle_equip/cycle_action = new
-	var/datum/action/mecha/mech_toggle_lights/lights_action = new
-	var/datum/action/mecha/mech_view_stats/stats_action = new
+	var/datum/action/innate/mecha/mech_eject/eject_action = new
+	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
+	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
+	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
+	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
+
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 
 /obj/mecha/New()
@@ -90,6 +92,13 @@
 	SSobj.processing |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
+
 	return
 
 /obj/mecha/Destroy()
@@ -137,7 +146,7 @@
 		loc.assume_air(cabin_air)
 		air_update_turf()
 	else
-		del(cabin_air)
+		qdel(cabin_air)
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
@@ -240,7 +249,7 @@
 					loc.assume_air(leaked_gas)
 					air_update_turf()
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
 
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
@@ -276,7 +285,7 @@
 				if(t_air)
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
-					del(removed)
+					qdel(removed)
 
 	if(occupant)
 		if(cell)
@@ -285,22 +294,22 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge","lowcell",1)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge","lowcell",2)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge","lowcell",3)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge","emptycell")
+					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
 		var/integrity = health/initial(health)*100
 		switch(integrity)
 			if(30 to 45)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 1)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
 			if(15 to 35)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 2)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
 			if(-INFINITY to 15)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 3)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
 
@@ -314,7 +323,10 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-
+//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
@@ -482,6 +494,7 @@
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -494,7 +507,7 @@
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-
+	diag_hud_set_mechstat()
 
 /////////////////////////////////////
 //////////// AI piloting ////////////
@@ -557,7 +570,7 @@
 			else if(AI.stat || !AI.client)
 				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
 				return
-			else if(occupant || dna) //Normal AIs cannot steal mechs!
+			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
 				return
 			AI.control_disabled = 0
@@ -623,7 +636,7 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.parents["p1"]
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
 	log_message("Connected to gas port.")
@@ -653,10 +666,10 @@
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
-	if(dna)
-		if(check_dna_integrity(user))
+	if(dna_lock)
+		if(user.has_dna())
 			var/mob/living/carbon/C = user
-			if(C.dna.unique_enzymes==src.dna)
+			if(C.dna.unique_enzymes==dna_lock)
 				passed = 1
 	else if(operation_allowed(user))
 		passed = 1
@@ -664,10 +677,13 @@
 		user << "<span class='warning'>Access denied.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/simple_animal/slime/S in range(1,user))
-		if(S.Victim == user)
-			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
-			return
+	if(user.buckled)
+		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
+		log_append_to_last("Permission denied.")
+		return
+	if(user.buckled_mob) //mob attached to us
+		user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you!</span>"
+		return
 
 	visible_message("[user] starts to climb into [src.name].")
 
@@ -676,6 +692,10 @@
 			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+		else if(user.buckled)
+			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
+		else if(user.buckled_mob)
+			user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you.</span>"
 		else
 			moved_inside(user)
 	else
@@ -711,8 +731,8 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
-		user << "<span class='warning'>Stop it!</span>"
+	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
@@ -900,17 +920,16 @@ var/year_integer = text2num(year) // = 2013???
 	stats_action.Remove(user)
 
 
-/datum/action/mecha
+/datum/action/innate/mecha
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
-	action_type = AB_INNATE
 	var/obj/mecha/chassis
 
 
-/datum/action/mecha/mech_eject
+/datum/action/innate/mecha/mech_eject
 	name = "Eject From Mech"
 	button_icon_state = "mech_eject"
 
-/datum/action/mecha/mech_eject/Activate()
+/datum/action/innate/mecha/mech_eject/Activate()
 	if(!owner || !iscarbon(owner))
 		return
 	if(!chassis || chassis.occupant != owner)
@@ -918,11 +937,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.go_out()
 
 
-/datum/action/mecha/mech_toggle_internals
+/datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
 	button_icon_state = "mech_internals_off"
 
-/datum/action/mecha/mech_toggle_internals/Activate()
+/datum/action/innate/mecha/mech_toggle_internals/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.use_internal_tank = !chassis.use_internal_tank
@@ -931,11 +950,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 
 
-/datum/action/mecha/mech_cycle_equip
+/datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/mecha/mech_cycle_equip/Activate()
+/datum/action/innate/mecha/mech_cycle_equip/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	if(chassis.equipment.len == 0)
@@ -963,11 +982,11 @@ var/year_integer = text2num(year) // = 2013???
 			return
 
 
-/datum/action/mecha/mech_toggle_lights
+/datum/action/innate/mecha/mech_toggle_lights
 	name = "Toggle Lights"
 	button_icon_state = "mech_lights_off"
 
-/datum/action/mecha/mech_toggle_lights/Activate()
+/datum/action/innate/mecha/mech_toggle_lights/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.lights = !chassis.lights
@@ -981,11 +1000,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
 
 
-/datum/action/mecha/mech_view_stats
+/datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
 	button_icon_state = "mech_view_stats"
 
-/datum/action/mecha/mech_view_stats/Activate()
+/datum/action/innate/mecha/mech_view_stats/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")

@@ -10,8 +10,8 @@
 	var/on = 1
 	var/health = 0 //do not forget to set health for your bot!
 	var/maxhealth = 0
-	var/fire_dam_coeff = 1.0
-	var/brute_dam_coeff = 1.0
+	var/fire_dam_coeff = 1
+	var/brute_dam_coeff = 1
 	var/open = 0//Maint panel
 	var/locked = 1
 	var/hacked = 0 //Used to differentiate between being hacked by silicons and emagged by humans.
@@ -70,17 +70,16 @@
 	#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
 	#define BOT_HEALING			10	// healing people (medbots)
 	#define BOT_RESPONDING		11	// responding to a call from the AI
-	#define BOT_LOADING			12	// loading/unloading
-	#define BOT_DELIVER			13	// moving to deliver
-	#define BOT_GO_HOME			14	// returning to home
-	#define BOT_BLOCKED			15	// blocked
-	#define BOT_NAV				16	// computing navigation
-	#define BOT_WAIT_FOR_NAV	17	// waiting for nav computation
-	#define BOT_NO_ROUTE		18	// no destination beacon found (or no route)
+	#define BOT_DELIVER			12	// moving to deliver
+	#define BOT_GO_HOME			13	// returning to home
+	#define BOT_BLOCKED			14	// blocked
+	#define BOT_NAV				15	// computing navigation
+	#define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
+	#define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
-	"Proceeding to AI waypoint", "Loading/Unloading", "Navigating to Delivery Location", "Navigating to Home", \
+	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 
@@ -112,13 +111,13 @@
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
 /obj/machinery/bot/Destroy()
+	SSbot.processing -= src
 	qdel(Radio)
 	qdel(botcard)
-	..()
+	return ..()
 
 
 /obj/machinery/bot/proc/explode()
-	SSbot.processing -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
@@ -262,7 +261,7 @@
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else
 			if(W.force) //if force is non-zero
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(5, 1, src)
 				switch(W.damtype)
 					if("fire")
@@ -282,7 +281,7 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(prob(75) && Proj.damage > 0)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
 		..()
@@ -297,15 +296,15 @@
 
 /obj/machinery/bot/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			explode()
 			return
-		if(2.0)
+		if(2)
 			health -= rand(5,10)*fire_dam_coeff
 			health -= rand(10,20)*brute_dam_coeff
 			healthcheck()
 			return
-		if(3.0)
+		if(3)
 			if (prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff

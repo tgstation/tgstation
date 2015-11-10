@@ -135,7 +135,7 @@
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
-	..()
+	return ..()
 
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
@@ -165,13 +165,13 @@
 			if(target)
 				loadProgram(target)
 			active = 0
-			for(var/mob/M in range(10,src))
+			for(var/mob/M in ultra_range(10,src))
 				M.show_message("The holodeck overloads!")
 
 
 			for(var/turf/T in linkedholodeck)
 				if(prob(30))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
@@ -240,7 +240,7 @@
 				spawn(20)
 					if(istype(target,/area/holodeck/source_burntest))
 						var/turf/T = get_turf(L)
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(2, 1, T)
 						s.start()
 						if(T)
@@ -332,7 +332,7 @@
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = 1.0
+	anchored = 1
 	flags = ON_BORDER
 
 
@@ -343,11 +343,11 @@
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
-	force = 3.0
+	force = 3
 	throw_speed = 2
 	throw_range = 5
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	hitsound = "swing_hit"
 	flags = NOSHIELD
 	var/active = 0
@@ -463,7 +463,7 @@
 	var/area/currentarea = null
 	var/eventstarted = 0
 
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6

@@ -14,7 +14,7 @@
 
 	layer = 21
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = 5
 
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
@@ -44,7 +44,7 @@
 			assailant.client.screen -= hud
 		assailant = null
 	qdel(hud)
-	..()
+	return ..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/get_mob_if_throwable()
@@ -207,9 +207,9 @@
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
+				if(!do_mob(user, affecting, 60)) return
 			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
+				if(!do_mob(user, affecting, 130)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)

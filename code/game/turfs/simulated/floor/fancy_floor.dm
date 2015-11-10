@@ -26,7 +26,6 @@
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
-	ignoredirt = 1
 
 /turf/simulated/floor/grass/New()
 	..()
@@ -48,7 +47,7 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
 /turf/simulated/floor/carpet/New()
@@ -74,3 +73,15 @@
 /turf/simulated/floor/carpet/burn_tile()
 	burnt = 1
 	update_icon()
+
+
+
+/turf/simulated/floor/fakespace
+	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
+	floor_tile = /obj/item/stack/tile/fakespace
+	broken_states = list("damaged")
+
+/turf/simulated/floor/fakespace/New()
+	..()
+	icon_state = "[rand(0,25)]"

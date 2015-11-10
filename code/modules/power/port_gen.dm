@@ -97,7 +97,7 @@ display round(lastgen) and plasmatank amount
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
-	var/heat = 0
+	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/initialize()
 	..()
@@ -119,7 +119,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
-	..()
+	return ..()
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
@@ -171,24 +171,24 @@ display round(lastgen) and plasmatank amount
 	if (power_output > 4)
 		upper_limit = 400
 		bias = power_output - consumption * (4 - consumption)
-	if (heat < lower_limit)
-		heat += 4 - consumption
+	if (current_heat < lower_limit)
+		current_heat += 4 - consumption
 	else
-		heat += rand(-7 + bias, 7 + bias)
-		if (heat < lower_limit)
-			heat = lower_limit
-		if (heat > upper_limit)
-			heat = upper_limit
+		current_heat += rand(-7 + bias, 7 + bias)
+		if (current_heat < lower_limit)
+			current_heat = lower_limit
+		if (current_heat > upper_limit)
+			current_heat = upper_limit
 
-	if (heat > 300)
+	if (current_heat > 300)
 		overheat()
 		qdel(src)
 	return
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
 
-	if (heat > 0)
-		heat = max(heat - 2, 0)
+	if (current_heat > 0)
+		current_heat = max(current_heat - 2, 0)
 		src.updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
@@ -271,7 +271,7 @@ display round(lastgen) and plasmatank amount
 	dat += text("Current stack: [stack_percent]% <br>")
 	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
-	dat += text("Heat: [heat]<br>")
+	dat += text("Heat: [current_heat]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	user << browse("[dat]", "window=port_gen")
 	onclose(user, "port_gen")

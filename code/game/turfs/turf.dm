@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -26,22 +26,22 @@
 
 	flags = 0
 
+	var/image/obscured	//camerachunks
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
-/turf/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
 
-// Adds the adjacent turfs to the current atmos processing
-/turf/Del()
+/turf/Destroy()
+	// Adds the adjacent turfs to the current atmos processing
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -92,12 +92,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	if(ismob(M))
-		var/mob/O = M
-		if(!O.lastarea)
-			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
-
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
 		if(loopsanity == 0)
@@ -196,7 +190,14 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src_object))
+			return 0
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src) //No check needed, put everything inside
 	return 1
 
@@ -224,38 +225,44 @@
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
 
-/turf/handle_slip(mob/slipper, s_amount, w_amount, obj/O, lube)
+/turf/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
 	if(has_gravity(src))
-		var/mob/living/carbon/M = slipper
-		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
-			return 0
-		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
-			if(O)
-				M << "<span class='notice'>You slipped on the [O.name]!</span>"
-			else
-				M << "<span class='notice'>You slipped!</span>"
-			M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
-			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		var/obj/buckled_obj
+		var/oldlying = C.lying
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return 0
+		else
+			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return 0
+			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+				return 0
 
-			M.accident(M.l_hand)
-			M.accident(M.r_hand)
+		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
-			var/olddir = M.dir
-			M.Stun(s_amount)
-			M.Weaken(w_amount)
-			M.stop_pulling()
-			if(lube&SLIDE)
-				for(var/i=1, i<5, i++)
-					spawn (i)
-						step(M, olddir)
-						M.spin(1,1)
-				if(M.lying) //did I fall over?
-					M.adjustBruteLoss(2)
+		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
+		C.accident(C.l_hand)
+		C.accident(C.r_hand)
 
-
-			return 1
-	return 0 // no success. Used in clown pda and wet floors
+		var/olddir = C.dir
+		C.Stun(s_amount)
+		C.Weaken(w_amount)
+		C.stop_pulling()
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob()
+			step(buckled_obj, olddir)
+		else if(lube&SLIDE)
+			for(var/i=1, i<5, i++)
+				spawn (i)
+					step(C, olddir)
+					C.spin(1,1)
+		if(C.lying != oldlying && lube) //did we actually fall?
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
+		return 1
 
 /turf/singularity_act()
 	if(intact)
@@ -273,6 +280,9 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
+/turf/proc/visibilityChanged()
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /turf/indestructible
 	name = "wall"
@@ -280,6 +290,7 @@
 	density = 1
 	blocks_air = 1
 	opacity = 1
+	explosion_block = 50
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
@@ -299,8 +310,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"
@@ -312,6 +322,6 @@
 
 /turf/indestructible/fakedoor
 	name = "Centcom Access"
-	icon = 'icons/obj/doors/Doorele.dmi'
-	icon_state = "door_closed"
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	icon_state = "fake_door"
 

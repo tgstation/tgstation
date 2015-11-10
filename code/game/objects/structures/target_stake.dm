@@ -10,7 +10,7 @@
 /obj/structure/target_stake/Destroy()
 	if(pinned_target)
 		pinned_target.nullPinnedLoc()
-	..()
+	return ..()
 
 /obj/structure/target_stake/proc/nullPinnedTarget()
 	pinned_target = null

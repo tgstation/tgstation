@@ -22,10 +22,10 @@
 	/turf/simulated/wall,
 	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/obj/structure/falsewall/reinforced,
 	/turf/simulated/wall/rust,
 	/turf/simulated/wall/r_wall/rust)
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/New()
 	..()
@@ -65,16 +65,16 @@
 		dismantle_wall(1,1)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			//SN src = null
 			src.ChangeTurf(src.baseturf)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
-		if(3.0)
+		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
 			else
@@ -144,7 +144,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if(is_hot(W))
+		if(W.is_hot())
 			thermitemelt(user)
 		return
 
@@ -159,28 +159,13 @@
 
 /turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
-	if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
+	if(istype(W,/obj/item/wallframe))
+		var/obj/item/wallframe/F = W
+		if(F.try_build(src))
+			F.attach(src)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 

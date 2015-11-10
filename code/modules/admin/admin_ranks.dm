@@ -11,7 +11,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	switch(name)
 		if("Removed",null,"")
 			spawn(-1)
-				del(src)
+				qdel(src)
 			throw EXCEPTION("invalid admin-rank name")
 			return
 	if(init_rights)	rights = init_rights

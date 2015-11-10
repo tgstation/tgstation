@@ -21,10 +21,9 @@
 		all_the_same = 1
 
 	for(var/mob/living/carbon/human/H in mob_list) //yes, even the dead
-		if(H.dna)
-			hardset_dna(H, null, null, null, null, new_species)
-			H.real_name = new_species.random_name(H.gender,1)
-			H.regenerate_icons()
-			H << "<span class='notice'>You feel somehow... different?</span>"
+		H.set_species(new_species)
+		H.real_name = new_species.random_name(H.gender,1)
+		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
+		H << "<span class='notice'>You feel somehow... different?</span>"
 		if(!all_the_same)
 			new_species = pick(all_species)

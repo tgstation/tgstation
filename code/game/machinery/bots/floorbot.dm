@@ -4,11 +4,11 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -16,11 +16,11 @@
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	var/created_name = "Floorbot"
 
 //Floorbot
@@ -29,7 +29,7 @@
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -216,7 +216,7 @@
 				nag()
 
 	if(prob(5))
-		visible_message("[src] makes an excited booping beeping sound!")
+		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
 	if(!target && emagged < 2 && amount > 0)
@@ -260,9 +260,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, src, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 			else
-				path = get_path_to(loc, target, src, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -289,7 +289,7 @@
 					F.break_tile_to_plating()
 				else
 					F.ReplaceWithLattice()
-				visible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
+				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				spawn(50)
 					amount ++
 					anchored = 0
@@ -455,11 +455,10 @@ obj/machinery/bot/floorbot/process_scan(scan_target)
 			T.amount = amount
 			amount = 0
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)

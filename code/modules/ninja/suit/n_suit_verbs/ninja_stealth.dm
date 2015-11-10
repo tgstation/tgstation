@@ -18,7 +18,7 @@ Contents:
 			U << "<span class='warning'>You don't have enough power to enable Stealth!</span>"
 			return
 		s_active=!s_active
-		animate(U, U.alpha = 0,time = 15)
+		animate(U, alpha = 0,time = 15)
 		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
 						"<span class='notice'>You are now invisible to normal detection.</span>")
 	return
@@ -30,7 +30,7 @@ Contents:
 		return 0
 	if(s_active)
 		s_active=!s_active
-		animate(U, U.alpha = 255, time = 15)
+		animate(U, alpha = 255, time = 15)
 		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
 						"<span class='notice'>You are now visible.</span>")
 		return 1

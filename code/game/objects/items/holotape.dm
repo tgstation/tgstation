@@ -5,12 +5,13 @@
 /obj/item/tapeproj
 	icon = 'icons/obj/holotape.dmi'
 	icon_state = "rollstart"
-	w_class = 2.0
+	w_class = 2
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/holotape
 	var/icon_base
 	var/charging = 0
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/holotape
 	icon = 'icons/obj/holotape.dmi'
@@ -244,10 +245,10 @@
 			for (var/obj/item/holotape/P in cur)
 				if(P.icon_state == icon_dir)
 					N = 0
-					del(P)
+					qdel(P)
 			cur = get_step(cur,dir[i])
 
-	del(src)
+	qdel(src)
 	return
 
 #undef MAX_TAPE_RANGE

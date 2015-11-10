@@ -100,7 +100,8 @@ field_generator power level display
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		switch(state)
-			if(0 && !isinspace())
+			if(0)
+				if(isinspace()) return
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
@@ -149,7 +150,6 @@ field_generator power level display
 					return
 	else
 		..()
-		return
 
 
 /obj/machinery/field/generator/emp_act()
@@ -171,7 +171,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	src.cleanup()
-	..()
+	return ..()
 
 
 

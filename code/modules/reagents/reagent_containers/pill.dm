@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	item_state = "pill"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 50
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
@@ -132,6 +132,12 @@
 	desc = "Used to dull pain."
 	icon_state = "pill5"
 	list_reagents = list("sal_acid" = 24)
+	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/oxandrolone
+	name = "oxandrolone pill"
+	desc = "Used to stimulate burn healing."
+	icon_state = "pill5"
+	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin

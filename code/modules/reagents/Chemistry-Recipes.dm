@@ -21,43 +21,18 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-
+var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
+var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
-		var/blocked = list(/mob/living/simple_animal/hostile,
-			/mob/living/simple_animal/hostile/pirate,
-			/mob/living/simple_animal/hostile/pirate/ranged,
-			/mob/living/simple_animal/hostile/russian,
-			/mob/living/simple_animal/hostile/russian/ranged,
-			/mob/living/simple_animal/hostile/syndicate,
-			/mob/living/simple_animal/hostile/syndicate/melee,
-			/mob/living/simple_animal/hostile/syndicate/melee/space,
-			/mob/living/simple_animal/hostile/syndicate/ranged,
-			/mob/living/simple_animal/hostile/syndicate/ranged/space,
-			/mob/living/simple_animal/hostile/alien/queen/large,
-			/mob/living/simple_animal/hostile/mushroom,
-			/mob/living/simple_animal/hostile/asteroid,
-			/mob/living/simple_animal/hostile/retaliate,
-			/mob/living/simple_animal/hostile/asteroid/basilisk,
-			/mob/living/simple_animal/hostile/asteroid/goldgrub,
-			/mob/living/simple_animal/hostile/asteroid/goliath,
-			/mob/living/simple_animal/hostile/asteroid/hivelord,
-			/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-			/mob/living/simple_animal/hostile/carp/holocarp,
-			/mob/living/simple_animal/hostile/mining_drone,
-			/mob/living/simple_animal/hostile/poison,
-			/mob/living/simple_animal/hostile/blob,
-			/mob/living/simple_animal/ascendant_shadowling
-			)//exclusion list for things you don't want the reaction to create.
-		var/list/meancritters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-		var/list/nicecritters = list(/mob/living/simple_animal/crab,
-		                        /mob/living/simple_animal/mouse,
-		                        /mob/living/simple_animal/lizard,
-		                        /mob/living/simple_animal/parrot,
-		                        /mob/living/simple_animal/butterfly,
-		                        /mob/living/simple_animal/cow,
-		                        /mob/living/simple_animal/chicken) // and possible friendly mobs
-		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet
+		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
+			for (var/T in typesof(/mob/living/simple_animal))
+				var/mob/living/simple_animal/SA = T
+				switch(initial(SA.gold_core_spawnable))
+					if(1)
+						chemical_mob_spawn_meancritters += T
+					if(2)
+						chemical_mob_spawn_nicecritters += T
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
@@ -77,22 +52,17 @@
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
+			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
-				var/chosen = pick(nicecritters)
-				var/mob/living/simple_animal/C = new chosen
-				C.faction |= mob_faction
-				C.loc = get_turf(holder.my_atom)
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(C, pick(NORTH,SOUTH,EAST,WEST))
+				chosen = pick(chemical_mob_spawn_nicecritters)
 			else
-				var/chosen = pick(meancritters)
-				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction |= mob_faction
-				C.loc = get_turf(holder.my_atom)
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(C, pick(NORTH,SOUTH,EAST,WEST))
+				chosen = pick(chemical_mob_spawn_meancritters)
+			var/mob/living/simple_animal/C = new chosen
+			C.faction |= mob_faction
+			C.loc = get_turf(holder.my_atom)
+			if(prob(50))
+				for(var/j = 1, j <= rand(1, 3), j++)
+					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))

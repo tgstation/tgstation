@@ -290,6 +290,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					newname = pick(mime_names)
 				if("ai")
 					newname = pick(ai_names)
+				if("deity")
+					newname = pick(clown_names|ai_names|mime_names) //pick any old name
 				else
 					return
 
@@ -672,7 +674,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0, progress = 1)
+	//This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -682,23 +685,23 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holding = user.get_active_hand()
 	var/timefraction = round(time/numticks)
 	var/image/progbar
+	var/continue_looping = 1
 	for(var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
-			user.client.images |= progbar
+			assign_progress_bar(user, progbar)
 		sleep(timefraction)
 		if(!user || !target)
-			if(user && user.client)
-				user.client.images -= progbar
+			continue_looping = 0
+			
+		if (continue_looping && !uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
+			continue_looping = 0
+		
+		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
+		if(!continue_looping)
 			return 0
-		if (!uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
-			if(user && user.client)
-				user.client.images -= progbar
-			return 0
-		if(user && user.client)
-			user.client.images -= progbar
-	if(user && user.client)
-		user.client.images -= progbar
+			
+	cancel_progress_bar(user, progbar)
 	return 1
 
 /proc/make_progress_bar(current_number, goal_number, atom/target)
@@ -708,8 +711,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
 		progbar.pixel_y = 32
 		return progbar
+		
+/proc/cancel_progress_bar(mob/user, image/progbar)
+	if(user && user.client && progbar)
+		user.client.images -= progbar
+	
+/proc/assign_progress_bar(mob/user, image/progbar)
+	if(user && user.client && progbar)
+		user.client.images |= progbar
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
 		return 0
 
@@ -721,46 +732,43 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		Tloc = target.loc
 
 	var/delayfraction = round(delay/numticks)
+	
 	var/atom/Uloc = user.loc
+	
 	var/holding = user.get_active_hand()
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
+		
 	var/image/progbar
+	
+	var/continue_looping = 1 
 	for (var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
-			if(progbar)
-				user.client.images |= progbar
+			assign_progress_bar(user, progbar)
+		
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-			return 0
+			continue_looping = 0
 
-		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-			return 0 // Target no longer exists or has moved
+		if(continue_looping && Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
+			continue_looping = 0
 
-		if(needhand)
+		if(continue_looping && needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
-					if(user && user.client && progbar)
-						user.client.images -= progbar
-					return 0
-			if(user.get_active_hand() != holding)
-				if(user && user.client && progbar)
-					user.client.images -= progbar
-				return 0
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-		if(user && user.client && progbar)
-			user.client.images -= progbar
-	if(user && user.client && progbar)
-		user.client.images -= progbar
+					continue_looping = 0
+			if(continue_looping && user.get_active_hand() != holding)
+				continue_looping = 0
+		
+		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
+		if(!continue_looping)
+			return 0
+	
+	cancel_progress_bar(user,progbar)
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
@@ -1108,90 +1116,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/is_hot(obj/item/W)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/O = W
-		if(O.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
-		if(O.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
-		if(O.lit == 1)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/candle))
-		var/obj/item/candle/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/device/flashlight/flare))
-		var/obj/item/device/flashlight/flare/O = W
-		if(O.on)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		return 3800
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/O = W
-		if(O.active)
-			return 3500
-		else
-			return 0
-	if(istype(W, /obj/item/device/assembly/igniter))
-		return 1000
-	else
-		return 0
-
-//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
-/proc/is_sharp(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	var/list/sharp_things_1 = list(\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/shard,\
-	/obj/item/weapon/broken_bottle,\
-	/obj/item/weapon/twohanded/fireaxe,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/throwing_star,\
-	/obj/item/clothing/glasses/sunglasses/garb,\
-	/obj/item/clothing/glasses/sunglasses/gar,\
-	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
-	/obj/item/clothing/glasses/meson/gar,\
-	/obj/item/weapon/twohanded/spear)
-
-	//Because is_sharp is used for food or something.
-	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchen/knife,\
-	/obj/item/weapon/scalpel)
-
-	if(is_type_in_list(W,sharp_things_1))
-		return 1
-
-	if(is_type_in_list(W,sharp_things_2))
-		return 2 //cutting food
-
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/E = W
-		if(E.active)
-			return 1
-		else
-			return 0
-
 /proc/is_pointed(obj/item/W)
 	if(istype(W, /obj/item/weapon/pen))
 		return 1
@@ -1207,7 +1131,7 @@ var/global/list/common_tools = list(
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
 /proc/can_embed(obj/item/W)
-	if(is_sharp(W))
+	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
@@ -1227,17 +1151,29 @@ var/list/WALLITEMS = list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
-	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
 	)
-/proc/gotwallitem(loc, dir)
+
+var/list/WALLITEMS_EXTERNAL = list(
+	/obj/machinery/camera, /obj/machinery/camera_assembly,
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+var/list/WALLITEMS_INVERSE = list(
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+
+/proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(O.dir == dir)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
 				return 1
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
@@ -1245,9 +1181,16 @@ var/list/WALLITEMS = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
+		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
+				return 1
+
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -1396,36 +1339,146 @@ B --><-- A
 */
 
 
-/atom/movable/var/atom/orbiting = null
 //This is just so you can stop an orbit.
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
+/atom/movable/var/orbitid = 0
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
 	if(!istype(A))
 		return
+	orbitid++
+	var/myid = orbitid
+	if (orbiting)
+		stop_orbit()
+		//sadly this is the only way to ensure the original orbit proc stops
+		//and resets the atom's transform before we continue.
+		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
+		sleep(2.6+world.tick_lag)
+		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
+			return
 	orbiting = A
+	var/lastloc = loc
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
-	spawn
-		while(orbiting)
-			loc = orbiting.loc
 
-			angle += angle_increment
+	while(orbiting && orbiting.loc && orbitid == myid)
+		var/targetloc = get_turf(orbiting)
+		if (!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
+		lastloc = loc
+		angle += angle_increment
 
-			var/matrix/shift = matrix(initial_transform)
-			shift.Translate(radius,0)
-			if(clockwise)
-				shift.Turn(angle)
-			else
-				shift.Turn(-angle)
-			animate(src,transform = shift,2)
-
-			sleep(0.6) //the effect breaks above 0.6 delay
-		animate(src,transform = initial_transform,2)
+		var/matrix/shift = matrix(initial_transform)
+		shift.Translate(radius,0)
+		if(clockwise)
+			shift.Turn(angle)
+		else
+			shift.Turn(-angle)
+		animate(src, transform = shift, 2)
+		sleep(0.6) //the effect breaks above 0.6 delay
+	animate(src, transform = initial_transform, 2)
+	orbiting = null
 
 
 /atom/movable/proc/stop_orbit()
 	if(orbiting)
 		loc = get_turf(orbiting)
 		orbiting = null
+
+
+//Center's an image.
+//Requires:
+//The Image
+//The x dimension of the icon file used in the image
+//The y dimension of the icon file used in the image
+// eg: center_image(I, 32,32)
+// eg2: center_image(I, 96,96)
+
+/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+	if(!I)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return I
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+	var/y_offset = -((y_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	I.pixel_x = x_offset
+	I.pixel_y = y_offset
+
+	return I
+
+//similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
+/proc/ultra_range(dist=0, center=usr, orange=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/turf/t_center = get_turf(center)
+	if(!t_center)
+		return list()
+
+	var/list/L = list()
+	var/turf/T
+	var/y
+	var/x
+	var/c_dist = 1
+
+	if(!orange)
+		L += t_center
+		L += t_center.contents
+
+	while( c_dist <= dist )
+		y = t_center.y + c_dist
+		x = t_center.x - c_dist + 1
+		for(x in x to t_center.x+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y + c_dist - 1
+		x = t_center.x + c_dist
+		for(y in t_center.y-c_dist to y)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y - c_dist
+		x = t_center.x + c_dist - 1
+		for(x in t_center.x-c_dist to x)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y - c_dist + 1
+		x = t_center.x - c_dist
+		for(y in y to t_center.y+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+		c_dist++
+
+	return L

@@ -8,8 +8,8 @@
 	icon_state = "autolathe"
 	density = 1
 
-	var/operating = 0.0
-	anchored = 1.0
+	var/operating = 0
+	anchored = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0
@@ -39,6 +39,7 @@
 							"Construction",
 							"T-Comm",
 							"Security",
+							"Machinery",
 							"Medical",
 							"Misc"
 							)
@@ -58,6 +59,13 @@
 	wires = new(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
+
+/obj/machinery/autolathe/Destroy()
+	qdel(wires)
+	wires = null
+	qdel(materials)
+	materials = null
+	return ..()
 
 /obj/machinery/autolathe/interact(mob/user)
 	if(!is_operational())
@@ -109,7 +117,7 @@
 	if (stat)
 		return 1
 
-	var/material_amount = materials.can_insert(O)
+	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
 		return 1
@@ -353,7 +361,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7))
@@ -366,7 +374,7 @@
 
 	if(hack)
 		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & 4) && ("hacked" in D.category))
+			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 				files.known_designs += D
 	else
 		for(var/datum/design/D in files.known_designs)

@@ -180,7 +180,7 @@
 			query_tree += val
 		pos++
 
-	del(parser)
+	qdel(parser)
 
 	return querys
 

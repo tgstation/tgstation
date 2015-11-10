@@ -8,8 +8,8 @@
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
-	force = 5.0
-	w_class = 2.0
+	force = 5
+	w_class = 2
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
@@ -31,7 +31,7 @@
 
 /obj/item/device/multitool/ai_detect/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
 	if(track_delay > world.time)

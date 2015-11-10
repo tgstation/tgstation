@@ -61,11 +61,11 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
-					var/datum/surgery_step/xenomorph_removal/xeno_removal = new
-					xeno_removal.remove_xeno(user, target) // remove an alien if there is one
+					for(var/obj/item/organ/internal/I in target.getorganszone(target_zone, 1))
+						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
+							I.Remove(target, special = 1)
+							qdel(I)
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
-					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
-						A.cure(1)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
@@ -74,3 +74,34 @@
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
 	return 1
+
+
+/datum/surgery/chainsaw
+        name = "chainsaw augmentation"
+        steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
+        /datum/surgery_step/incise, /datum/surgery_step/chainsaw)
+        species = list(/mob/living/carbon/human)
+        possible_locs = list("r_arm", "l_arm")
+        requires_organic_bodypart = 0
+
+
+/datum/surgery_step/chainsaw
+        time = 64
+        name = "insert chainsaw"
+        implements = list(/obj/item/weapon/twohanded/required/chainsaw = 100)
+
+/datum/surgery_step/chainsaw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+        user.visible_message("[user] begins to install the chainsaw onto [target].", "<span class='notice'>You begin to install the chainsaw onto [target]...</span>")
+
+/datum/surgery_step/chainsaw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+        if(target.l_hand && target.r_hand)
+                user << "<span class='warning'>You can't fit the chainsaw in while [target]'s hands are full!</span>"
+                return 0
+        else
+                user.visible_message("[user] finshes installing the chainsaw!", "<span class='notice'>You install the chainsaw.</span>")
+                user.unEquip(tool)
+                qdel(tool)
+                var/obj/item/weapon/mounted_chainsaw/sawarms = new(target)
+                target.put_in_hands(sawarms)
+
+                return 1

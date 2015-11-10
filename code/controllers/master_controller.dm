@@ -19,12 +19,16 @@ var/global/datum/controller/game_controller/master_controller = new()
 	if(master_controller != src)
 		if(istype(master_controller))
 			Recover()
-			master_controller.Del()
+			qdel(master_controller)
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 
 		master_controller = src
 	calculateGCD()
+
+/datum/controller/game_controller/Destroy()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 
 /*
@@ -61,6 +65,8 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	for(var/datum/subsystem/S in subsystems)
 		S.Initialize(world.timeofday, zlevel)
 		sleep(-1)
+
+	crewmonitor.generateMiniMaps()
 
 	world << "<span class='boldannounce'>Initializations complete</span>"
 
@@ -103,7 +109,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 								var/oldwait = SS.wait
 								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/(SS.wait/10)))-1
 								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-SS.dwait_buffer+GlobalCostDelta)*SS.dwait_delta)
-								SS.wait = Clamp(round(NewWait,world.tick_lag),SS.dwait_lower,SS.dwait_upper)
+								SS.wait = Clamp(NewWait,SS.dwait_lower,SS.dwait_upper)
 								if (oldwait != SS.wait)
 									calculateGCD()
 							SS.next_fire += SS.wait

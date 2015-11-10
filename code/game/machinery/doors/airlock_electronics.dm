@@ -1,11 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/item/weapon/airlock_electronics
+/obj/item/weapon/electronics/airlock
 	name = "airlock electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
-	w_class = 2.0 //It should be tiny! -Agouri
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 	req_access = list(access_maint_tunnels)
 
@@ -14,8 +10,8 @@
 	var/last_configurator = null
 	var/locked = 1
 
-/obj/item/weapon/airlock_electronics/attack_self(mob/user)
-	if (!ishuman(user))
+/obj/item/weapon/electronics/airlock/attack_self(mob/user)
+	if (!ishuman(user) && !usr.has_unlimited_silicon_privilege)
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
@@ -67,9 +63,9 @@
 	popup.open()
 	onclose(user, "airlock")
 
-/obj/item/weapon/airlock_electronics/Topic(href, href_list)
+/obj/item/weapon/electronics/airlock/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || !ishuman(usr))
+	if (usr.stat || usr.restrained() || (!ishuman(usr) && !usr.has_unlimited_silicon_privilege))
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
@@ -95,7 +91,7 @@
 
 	attack_self(usr)
 
-/obj/item/weapon/airlock_electronics/proc/toggle_access(acc)
+/obj/item/weapon/electronics/airlock/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")

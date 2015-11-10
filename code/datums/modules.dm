@@ -24,7 +24,7 @@ var/list/modules = list(			// global associative list
 	var/mneed = mods.inmodlist(type)		// find if this type has modules defined
 
 	if(!mneed)		// not found in module list?
-		del(src)	// delete self, thus ending proc
+		qdel(src)	// delete self, thus ending proc
 
 	var/needed = mods.getbitmask(type)		// get a bitmask for the number of modules in this object
 	status = needed

@@ -81,10 +81,12 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	spawn(5)
-		locate_machinery()
-		if(!turbine)
-			stat |= BROKEN
+
+/obj/machinery/power/compressor/initialize()
+	..()
+	locate_machinery()
+	if(!turbine)
+		stat |= BROKEN
 
 
 #define COMPFRICTION 5e5
@@ -200,22 +202,12 @@
 
 	outturf = get_step(src, dir)
 
-	spawn(5)
 
-// compressor is found in the opposite direction
-
-		locate_machinery()
-		if(!compressor)
-			stat |= BROKEN
-
-
-// THIS MAKES IT WORK!!!!!
-
-// OLD FIX . Dunno how other engines handle this but this is how it should work: Turbine and compressor should be
-// treated as walls to avoid conductivity and gas spread. This was the problem of the original turbine which was just
-// a machinery - it didn't block the gas passage.
-// /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0)
-//		return !density
+/obj/machinery/power/turbine/initialize()
+	..()
+	locate_machinery()
+	if(!compressor)
+		stat |= BROKEN
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
@@ -350,13 +342,13 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/initialize()
 	..()
-	spawn(5)
+	spawn(10)
 		locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
-	compressor = locate(/obj/machinery/power/compressor) in range(5)
+	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())

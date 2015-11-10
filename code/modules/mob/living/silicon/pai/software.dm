@@ -9,7 +9,6 @@
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
-															"chatroom client" = 5,
 															"medical records" = 15,
 															"security records" = 15,
 															//"camera jack" = 10,
@@ -67,8 +66,6 @@
 				left_part = src.softwareCamera()
 			if("signaller")
 				left_part = src.softwareSignal()
-			if("chatroom")
-				src.chatroom() //snowflake? maybe, but it's less effort this way
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -287,8 +284,6 @@
 	for(var/s in src.software)
 		if(s == "digital messenger")
 			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
-		if(s == "chatroom client")
-			dat += "<a href='byond://?src=\ref[src];software=chatroom;sub=0'>Chatroom Client</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -372,10 +367,10 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		var/turf/T = get_turf(P.loc)
-		for (var/mob/v in viewers(T))
-			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
-		if(!check_dna_integrity(M))
+		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+						"<span class='notice'>You press your thumb against [P].</span>",\
+						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		if(!M.has_dna())
 			P << "<b>No DNA detected</b>"
 			return
 		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
@@ -645,7 +640,3 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
 	return dat
-
-/mob/living/silicon/pai/proc/chatroom()
-	pda.mode = 5
-	pda.attack_self(src)

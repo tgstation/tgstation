@@ -78,3 +78,14 @@
 	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
+
+/obj/item/weapon/gun/syringe/syndicate
+	name = "dart pistol"
+	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	icon_state = "syringe_pistol"
+	item_state = "gun" //Smaller inhand
+	w_class = 2
+	origin_tech = "combat=2;syndicate=2"
+	force = 2 //Also very weak because it's smaller
+	suppressed = 1 //Softer fire sound
+	can_unsuppress = 0 //Permanently silenced

@@ -8,7 +8,7 @@
 	var/atmos_supeconductivity = 0
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	del(giver)
+	qdel(giver)
 	return 0
 
 /turf/return_air()
@@ -55,21 +55,23 @@
 
 /turf/simulated/New()
 	..()
-
+	levelupdate()
+	if(smooth)
+		smooth_icon(src)
+	visibilityChanged()
 	if(!blocks_air)
 		air = new
-
 		air.oxygen = oxygen
 		air.carbon_dioxide = carbon_dioxide
 		air.nitrogen = nitrogen
 		air.toxins = toxins
-
 		air.temperature = temperature
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
+	visibilityChanged()
 	if(active_hotspot)
-		active_hotspot.Kill()
-	..()
+		qdel(active_hotspot)
+	return ..()
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
@@ -290,7 +292,7 @@
 /atom/movable/var/pressure_resistance = 5
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
-	if(!anchored)
+	if(!anchored && !pulledby)
 		if(pressure_difference > pressure_resistance)
 			spawn step(src, direction)
 		return 1

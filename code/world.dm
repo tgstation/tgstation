@@ -5,6 +5,8 @@
 	view = "15x15"
 	cache_lifespan = 7
 
+var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+
 /world/New()
 	map_ready = 1
 
@@ -19,10 +21,6 @@
 #endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-//	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
-//		log = file("data/logs/runtime/[copytext(revdata.revision,1,8)].log")
-//	else
-//		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
@@ -46,7 +44,6 @@
 	investigate_reset()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -128,18 +125,24 @@
 			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
-#define CHAT_PULLR	64 //for some reason this has to be here, not sure why. Look in preferences.dm for the "proper" definition.
+#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 				for(var/client/C in clients)
 					if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
+	if (reason == 1) //special reboot, do none of the normal stuff
+		if (usr)
+			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
+			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
+		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		return ..(1)
 	var/delay
 	if(time)
 		delay = time
 	else
-		delay = ticker.restart_timeout
+		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
@@ -156,7 +159,6 @@
 	#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
-	//mergeSort(del_counter, /proc/cmp_descending_associative)	//still testing the sorting procs. Use notepad++ to sort the resultant logfile for now.
 	for(var/index in del_counter)
 		var/count = del_counter[index]
 		if(count > 10)
@@ -170,9 +172,7 @@
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-	// Note: all clients automatically connect to the world after it restarts
 	..(0)
-
 
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
@@ -190,10 +190,14 @@
 	join_motd = file2text("config/motd.txt")
 
 /world/proc/load_configuration()
+	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
+	if (config.maprotation && SERVERTOOLS)
+		config.loadmaplist("config/maps.txt")
+
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
@@ -296,3 +300,92 @@ var/failed_db_connections = 0
 		return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
+
+
+/proc/maprotate()
+	if (!SERVERTOOLS)
+		return
+	var/players = clients.len
+	var/list/mapvotes = list()
+	//count votes
+	for (var/client/c in clients)
+		var/vote = c.prefs.preferred_map
+		if (!vote)
+			if (config.defaultmap)
+				mapvotes[config.defaultmap.name] += 1
+			continue
+		mapvotes[vote] += 1
+
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			mapvotes.Remove(map)
+		if (!(map in config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/votablemap/VM = config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.minusers > 0 && players < VM.minusers)
+			mapvotes.Remove(map)
+			continue
+		if (VM.maxusers > 0 && players > VM.maxusers)
+			mapvotes.Remove(map)
+			continue
+
+		mapvotes[map] = mapvotes[map]*VM.voteweight
+
+	var/pickedmap = pickweight(mapvotes)
+	if (!pickedmap)
+		return
+	var/datum/votablemap/VM = config.maplist[pickedmap]
+	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
+	. = changemap(VM)
+	if (. == 0)
+		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
+
+var/datum/votablemap/nextmap
+
+/proc/changemap(var/datum/votablemap/VM)
+	if (!SERVERTOOLS)
+		return
+	if (!istype(VM))
+		return
+
+	log_game("Changing map to [VM.name]([VM.friendlyname])")
+	var/file = file("setnewmap.bat")
+	file << "\nset MAPROTATE=[VM.name]\n"
+	. = shell("..\\bin\\maprotate.bat")
+	switch (.)
+		if (null)
+			message_admins("Failed to change map: Could not run map rotator")
+			log_game("Failed to change map: Could not run map rotator")
+		if (0)
+			log_game("Changed to map [VM.friendlyname]")
+			nextmap = VM
+		//1x: file errors
+		if (11)
+			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
+			log_game("Failed to change map: File error: Map rotator script couldn't find file listing new map")
+		if (12)
+			message_admins("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
+			log_game("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
+		//2x: conflicting operation errors
+		if (21)
+			message_admins("Failed to change map: Conflicting operation error: Current server update operation detected")
+			log_game("Failed to change map: Conflicting operation error: Current server update operation detected")
+		if (22)
+			message_admins("Failed to change map: Conflicting operation error: Current map rotation operation detected")
+			log_game("Failed to change map: Conflicting operation error: Current map rotation operation detected")
+		//3x: external errors
+		if (31)
+			message_admins("Failed to change map: External error: Could not compile new map:[VM.name]")
+			log_game("Failed to change map: External error: Could not compile new map:[VM.name]")
+
+		else
+			message_admins("Failed to change map: Unknown error: Error code #[.]")
+			log_game("Failed to change map: Unknown error: Error code #[.]")

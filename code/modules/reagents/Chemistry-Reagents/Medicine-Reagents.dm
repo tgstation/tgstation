@@ -163,22 +163,43 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustFireLoss(-volume)
+/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
 			M.emote("scream")
 		if(method == INGEST)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should have splashed it on, or applied a patch?</span>"
 	..()
-	return
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM)
+	..()
+
+/datum/reagent/medicine/oxandrolone
+	name = "Oxandrolone"
+	id = "oxandrolone"
+	description = "Stimulates healing of severe burns. If you have more than 50 burn damage, it heals 2 units; otherwise, 0.5. If overdosed it will exacerbate existing burns, causing burn and brute damage."
+	reagent_state = LIQUID
+	color = "#f7ffa5"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 25
+
+/datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/M)
+	if(M.getFireLoss() > 50)
+		M.adjustFireLoss(-2*REM)
+	else
+		M.adjustFireLoss(-0.5*REM)
+	..()
+	return
+
+/datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M)
+	M.adjustFireLoss(2.5*REM) // it's going to be healing either 2 or 0.5
+	M.adjustBruteLoss(0.5*REM)
 	..()
 	return
 
@@ -189,25 +210,23 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustBruteLoss(-volume)
+/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
-			if(M.stat)
-				M.emote("scream")
+			M.emote("scream")
 		if(method == INGEST)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
 	..()
-	return
+
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM)
 	..()
-	return
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -222,7 +241,6 @@
 		M.adjustBruteLoss(-0.5*REM)
 		M.adjustFireLoss(-0.5*REM)
 	..()
-	return
 
 /datum/reagent/medicine/mine_salve
 	name = "Miner's Salve"
@@ -239,20 +257,19 @@
 	M.adjustBruteLoss(-0.25*REM)
 	M.adjustFireLoss(-0.25*REM)
 	..()
-	return
 
-/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(method == TOUCH)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+			method = VAPOR //so it's correctly absorbed in reagent/reaction_mob()
 		if(method == INGEST)
 			if(show_message)
 				M << "<span class='notice'>That tasted horrible.</span>"
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
-	return
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
 	if(iscarbon(M))
@@ -267,15 +284,15 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, volume,show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustBruteLoss(-1.5*volume)
-			M.adjustFireLoss(-1.5*volume)
+/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustBruteLoss(-1.5*reac_volume)
+			M.adjustFireLoss(-1.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
-	return
+
 
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
@@ -570,15 +587,23 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	if(M.eye_blind > 0 && current_cycle > 20)
-		if(prob(30))
+	if(current_cycle > 15)
+		if(M.disabilities & BLIND)
+			if(prob(20))
+				M.disabilities &= ~BLIND
+				M.disabilities &= NEARSIGHT
+				M.eye_blurry = 35
+
+		else if(M.disabilities & NEARSIGHT)
+			M.disabilities &= ~NEARSIGHT
+			M.eye_blurry = 10
+
+		else if(M.eye_blind || M.eye_blurry)
 			M.eye_blind = 0
-		else if(prob(80))
-			M.eye_blind = 0
-			M.eye_blurry = 1
-		if(M.eye_blurry > 0)
-			if(prob(80))
-				M.eye_blurry = 0
+			M.eye_blurry = 0
+		else if(M.eye_stat > 0)
+			M.eye_stat -= 1
+
 	..()
 	return
 
@@ -659,16 +684,16 @@
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(NOCLONE in M.mutations))
+		if(!M.suiciding && !(M.disabilities & NOCLONE))
 			if(!M)
 				return
-			if(M.notify_ghost_cloning())
+			if(M.notify_ghost_cloning(source = M))
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
@@ -707,7 +732,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
@@ -883,5 +908,22 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.adjustFireLoss(2*REM)
+	..()
+	return
+
+datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+	name = "Restorative Nanites"
+	id = "syndicate_nanites"
+	description = "Miniature medical robots that swiftly restore bodily damage. May begin to attack their host's cells in high amounts."
+	reagent_state = SOLID
+	color = "#555555"
+
+datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-5*REM) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM)
+	M.adjustOxyLoss(-15*REM)
+	M.adjustToxLoss(-5*REM)
+	M.adjustBrainLoss(-15*REM)
+	M.adjustCloneLoss(-3*REM)
 	..()
 	return

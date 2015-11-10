@@ -30,15 +30,15 @@
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	var/wires = 0.0
+	var/wires = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
-	var/obj/item/device/flash/handheld/flash1 = null
-	var/obj/item/device/flash/handheld/flash2 = null
+	var/obj/item/device/assembly/flash/handheld/flash1 = null
+	var/obj/item/device/assembly/flash/handheld/flash2 = null
 
 /obj/item/robot_parts/robot_suit
 	name = "cyborg endoskeleton"
@@ -218,9 +218,7 @@
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
 					O.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010</span>")
 
-			ticker.mode.remove_cultist(BM.mind, 1)
-			ticker.mode.remove_revolutionary(BM.mind, 1)
-			ticker.mode.remove_gangster(BM.mind, 1, remove_bosses=1)
+			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
@@ -321,7 +319,7 @@
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wires = 1.0
+			src.wires = 1
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"
@@ -329,12 +327,12 @@
 
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/device/flash/handheld))
-		var/obj/item/device/flash/handheld/F = W
+	if(istype(W, /obj/item/device/assembly/flash/handheld))
+		var/obj/item/device/assembly/flash/handheld/F = W
 		if(src.flash1 && src.flash2)
 			user << "<span class='warning'>You have already inserted the eyes!</span>"
 			return
-		else if(F.broken)
+		else if(F.crit_fail)
 			user << "<span class='warning'>You can't use a broken flash!</span>"
 			return
 		else

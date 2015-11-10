@@ -272,17 +272,16 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		source = M.get_blood(M.vessel)
 	else if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
-		if(donor.dna)
-			source = new()
-			source.data["blood_DNA"] = donor.dna.unique_enzymes
-			source.data["blood_type"] = donor.dna.blood_type
+		source = new()
+		source.data["blood_DNA"] = donor.dna.unique_enzymes
+		source.data["blood_type"] = donor.dna.blood_type
 
 	// Are we dripping or splattering?
 	var/list/drips = list()
 	// Only a certain number of drips (or one large splatter) can be on a given turf.
 	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 		drips |= drop.drips
-		del(drop)
+		qdel(drop)
 	if(!large && drips.len < 3)
 		decal_type = /obj/effect/decal/cleanable/blood/drip
 

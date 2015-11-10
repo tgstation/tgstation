@@ -10,12 +10,12 @@
 	if(istype(src, /mob/living/silicon))
 		var/mob/living/silicon/S = src
 		desig = trim_left(S.designation + " " + S.job)
-	var/message_a = say_quote(message)
+	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/M in player_list)
 		if(M.binarycheck() || (M in dead_mob_list))
 			if(istype(M, /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[name]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				M << renderedAI
 			else
 				M << rendered

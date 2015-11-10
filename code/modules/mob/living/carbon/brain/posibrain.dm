@@ -22,7 +22,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
 	if(!posibrain_notif_cooldown)
-		notify_ghosts("Positronic brain [msg] in [get_area(src)]! <a href=?src=\ref[src];activate=1>(Click to enter)</a>", 'sound/effects/ghost2.ogg')
+		notify_ghosts("Positronic brain [msg] in [get_area(src)]! <a href=?src=\ref[src];activate=1>(Click to enter)</a>", 'sound/effects/ghost2.ogg', source = src)
 		posibrain_notif_cooldown = 1
 		spawn(askDelay) //Global one minute cooldown to avoid spam.
 			posibrain_notif_cooldown = 0
@@ -55,17 +55,21 @@ var/global/posibrain_notif_cooldown = 0
 		return
 	transfer_personality(user)
 
-/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	name = "positronic brain ([H])"
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
-	brainmob.timeofhostdeath = H.timeofdeath
+/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/C)
+	name = "positronic brain ([C])"
+	brainmob.name = C.real_name
+	brainmob.real_name = C.real_name
+	brainmob.dna = C.dna
+	if(C.has_dna())
+		if(!brainmob.dna)
+			brainmob.dna = new /datum/dna(brainmob)
+		C.dna.copy_dna(brainmob.dna)
+	brainmob.timeofhostdeath = C.timeofdeath
 	brainmob.stat = 0
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
+	if(C.mind)
+		C.mind.transfer_to(brainmob)
 
 	brainmob.mind.remove_all_antag()
 	brainmob.mind.wipe_memory()
@@ -122,7 +126,7 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/New()
 
 	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","ANNS","KOS","TKRG","XAL","STLP","CBOS","DNCN","FXMC","DRSD"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src

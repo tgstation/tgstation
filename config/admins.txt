@@ -92,7 +92,19 @@ Dunc = Game Master
 MMMiracles = Game Master
 bear1ake = Game Master
 <<<<<<< HEAD
+<<<<<<< HEAD
 dorsidwarf = Game Master
 =======
 CoreOverload = Game Master
 >>>>>>> 761009778324d9ef18a018d7ce88eb9b6dd7c4a2
+=======
+CoreOverload = Game Master
+Jalleo = Game Master
+Anonus Tanir = Game Master
+FoxPMcCloud = Game Master
+Xhuis = Game Master
+Astralenigma = Game Master
+Tokiko1 = Game Master
+SuperSayu = Game Master
+Lzimann = Game Master
+>>>>>>> 7451acd893480818375775dc6dff8a47206988cf

@@ -37,8 +37,7 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
-	..()
-	return
+	return ..()
 
 //process()
 	//return
@@ -66,7 +65,7 @@
 			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
@@ -98,7 +97,7 @@
 		if(allowed(user) || src.emergency == 1)
 			open()
 		else
-			flick("door_deny", src)
+			do_animate("deny")
 	return
 
 
@@ -136,23 +135,8 @@
 			close()
 		return
 	if(src.density)
-		flick("door_deny", src)
+		do_animate("deny")
 	return
-
-/obj/machinery/door/emag_act(mob/user)
-	if(density && hasPower() && !emagged)
-		flick("door_spark", src)
-		sleep(6)
-		open()
-		emagged = 1
-		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
-		if(istype(src, /obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/A = src
-			A.lights = 0
-			A.locked = 1
-			A.loseMainPower()
-			A.loseBackupPower()
-			A.update_icon()
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
@@ -174,7 +158,7 @@
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
 		if(prob(80))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 1, src)
 			s.start()
 		return
@@ -210,7 +194,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 
@@ -274,6 +258,10 @@
 
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
+
+/obj/machinery/door/proc/update_freelook_sight()
+	if(!glass && cameranet)
+		cameranet.updateVisibility(src, 0)
 
 /obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

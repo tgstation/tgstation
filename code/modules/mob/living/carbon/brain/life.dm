@@ -45,12 +45,12 @@
 	if(status_flags & GODMODE) return
 
 	if(exposed_temperature > bodytemperature)
-		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		adjustFireLoss(20.0*discomfort)
+		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1)
+		adjustFireLoss(20*discomfort)
 
 	else
-		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		adjustFireLoss(5.0*discomfort)
+		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1)
+		adjustFireLoss(5*discomfort)
 
 
 /mob/living/carbon/brain/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
@@ -144,8 +144,12 @@
 /mob/living/carbon/brain/handle_status_effects()
 	return
 
+/mob/living/carbon/brain/handle_changeling()
+	return
+
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	handle_vision()
 	handle_hud_icons_health()
 	update_action_buttons()
 	return 1
+

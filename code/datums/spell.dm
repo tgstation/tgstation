@@ -10,7 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
-	var/sound = "sound/weapons/badZap.ogg"
+	var/sound = null //The sound the spell makes when it is cast
 	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
@@ -40,7 +40,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/selection_type = "view" //can be "range" or "view"
 	var/spell_level = 0 //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
-	var/cooldown_min = 0 //This defines what spell quickened four timeshas as a cooldown. Make sure to set this for every spell
+	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -175,6 +175,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
+	if(sound)
+		playMagSound()
 	if(prob(critfailchance))
 		critfail(targets)
 	else
@@ -207,21 +209,21 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(istype(target,/mob/living) && message)
 			target << text("[message]")
 		if(sparks_spread)
-			var/datum/effect/effect/system/spark_spread/sparks = new
+			var/datum/effect_system/spark_spread/sparks = new
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
 			sparks.start()
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effect/effect/system/smoke_spread/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // if more than one smoke, spread it around
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effect/effect/system/smoke_spread/bad/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
+				var/datum/effect_system/smoke_spread/bad/smoke = new
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 3)
-				var/datum/effect/effect/system/smoke_spread/sleeping/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
+				var/datum/effect_system/smoke_spread/sleeping/smoke = new
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 
 
@@ -408,3 +410,30 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
 			return 0
 	return 1
+
+/obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
+	range = -1 //Duh
+
+/obj/effect/proc_holder/spell/self/choose_targets(mob/user = usr)
+	if(!user)
+		revert_cast()
+		return
+	perform(user)
+
+/obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
+	name = "Lesser Heal"
+	desc = "Heals a small amount of brute and burn damage."
+	human_req = 1
+	clothes_req = 0
+	charge_max = 100
+	cooldown_min = 50
+	invocation = "Victus sano!"
+	invocation_type = "whisper"
+	school = "restoration"
+	sound = 'sound/magic/Staff_Healing.ogg'
+
+/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
+	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
+	user.adjustBruteLoss(-10)
+	user.adjustFireLoss(-10)

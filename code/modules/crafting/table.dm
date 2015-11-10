@@ -6,7 +6,7 @@
 
 
 /obj/structure/table/MouseDrop(atom/over)
-	if(over != usr)
+	if(over != usr || !usr.IsAdvancedToolUser())
 		return
 	interact(usr)
 
@@ -56,46 +56,49 @@
 		else
 			possible_tools += I.type
 	possible_tools += table_contents
-	var/i = R.tools.len
-	var/I
-	for(var/A in R.tools)
-		I = possible_tools.Find(A)
-		if(I)
-			possible_tools.Cut(I, I+1)
-			i--
-		else
-			break
-	return !i
+	main_loop:
+		for(var/A in R.tools)
+			for(var/I in possible_tools)
+				if(ispath(I,A))
+					possible_tools -= I
+					continue main_loop
+			return 0
+	return 1
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
 	var/send_feedback = 1
-	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time, target = src))
-			if(!check_contents(R) || !check_tools(user, R))
+	if(check_contents(R))
+		if(check_tools(user, R))
+			if(do_after(user, R.time, target = src))
+				if(!check_contents(R))
+					return ", missing component."
+				if(!check_tools(user, R))
+					return ", missing tool."
+				var/atom/movable/I = new R.result (loc)
+				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+					var/obj/item/weapon/reagent_containers/food/snacks/S = I
+					S.create_reagents(S.volume)
+					feedback_add_details("food_made","[S.type]")
+					send_feedback = 0
+				var/list/parts = del_reqs(R, I)
+				for(var/A in parts)
+					if(istype(A, /obj/item))
+						var/atom/movable/B = A
+						B.loc = I
+						B.pixel_x = initial(B.pixel_x)
+						B.pixel_y = initial(B.pixel_y)
+					else
+						if(!I.reagents)
+							I.reagents = new /datum/reagents()
+						I.reagents.reagent_list.Add(A)
+				I.CheckParts()
+				if(send_feedback)
+					feedback_add_details("object_crafted","[I.type]")
 				return 0
-			var/atom/movable/I = new R.result (loc)
-			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
-				var/obj/item/weapon/reagent_containers/food/snacks/S = I
-				S.create_reagents(S.volume)
-				feedback_add_details("food_made","[S.name]")
-				send_feedback = 0
-			var/list/parts = del_reqs(R, I)
-			for(var/A in parts)
-				if(istype(A, /obj/item))
-					var/atom/movable/B = A
-					B.loc = I
-					B.pixel_x = initial(B.pixel_x)
-					B.pixel_y = initial(B.pixel_y)
-				else
-					if(!I.reagents)
-						I.reagents = new /datum/reagents()
-					I.reagents.reagent_list.Add(A)
-			I.CheckParts()
-			if(send_feedback)
-				feedback_add_details("object_crafted","[I.name]")
-			return 1
-	return 0
+			return "."
+		return ", missing tool."
+	return ", missing component."
 
 /obj/structure/table/proc/del_reqs(datum/table_recipe/R, atom/movable/resultobject)
 	var/list/Deletion = list()
@@ -224,10 +227,11 @@
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
 		interact(usr)
-		if(construct_item(usr, TR))
+		var/fail_msg = construct_item(usr, TR)
+		if(!fail_msg)
 			usr << "<span class='notice'>[TR.name] constructed.</span>"
 		else
-			usr << "<span class ='warning'>Construction failed.</span>"
+			usr << "<span class ='warning'>Construction failed[fail_msg]</span>"
 		busy = 0
 		interact(usr)
 	if(href_list["forwardCat"])

@@ -86,22 +86,14 @@
 
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
-	underwear = random_underwear(gender)
-	skin_tone = random_skin_tone()
-	hair_style = random_hair_style(gender)
-	facial_hair_style = random_facial_hair_style(gender)
-	hair_color = random_short_color()
-	facial_hair_color = hair_color
-	eye_color = "blue"
 	age = rand(AGE_MIN,AGE_MAX)
-	ready_dna(src,random_blood_type())
 	//job handling
-	var/list/jobs = SSjob.occupations
+	var/list/jobs = SSjob.occupations.Copy()
 	for(var/datum/job/J in jobs)
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
 	myjob = pick(jobs)
-	src.job = myjob.title
+	job = myjob.title
 	if(!graytide)
 		myjob.equip(src)
 	myjob.apply_fingerprints(src)
@@ -120,25 +112,18 @@
 
 /mob/living/carbon/human/interactive/New()
 	..()
-	gender = pick(MALE,FEMALE)
-	if(gender == MALE)
-		name = "[pick(first_names_male)] [pick(last_names)]"
-		real_name = name
-	else
-		name = "[pick(first_names_female)] [pick(last_names)]"
-		real_name = name
 	random()
 	MYID = new(src)
 	MYID.name = "[src.real_name]'s ID Card ([myjob.title])"
 	MYID.assignment = "[myjob.title]"
 	MYID.registered_name = src.real_name
 	MYID.access = myjob.access
-	src.equip_to_slot_or_del(MYID, slot_wear_id)
+	equip_to_slot_or_del(MYID, slot_wear_id)
 	MYPDA = new(src)
-	MYPDA.owner = src.real_name
+	MYPDA.owner = real_name
 	MYPDA.ownjob = "Crew"
-	MYPDA.name = "PDA-[src.real_name] ([myjob.title])"
-	src.equip_to_slot_or_del(MYPDA, slot_belt)
+	MYPDA.name = "PDA-[real_name] ([myjob.title])"
+	equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_sel = new /obj/screen/zone_sel()
 	zone_sel.selecting = "chest"
 	if(prob(10)) //my x is augmented
@@ -186,7 +171,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 25
 	else if(TRAITS & TRAIT_DUMB)
-		mutations |= CLUMSY
+		disabilities |= CLUMSY
 		smartness = 75
 
 	if(TRAITS & TRAIT_MEAN)
@@ -293,7 +278,9 @@
 
 /mob/living/carbon/human/interactive/Life()
 	..()
-	if(isnotfunc()) return
+	if(isnotfunc())
+		walk(src,0)
+		return
 	if(a_intent != "disarm")
 		a_intent = "disarm"
 	//---------------------------
@@ -369,9 +356,7 @@
 						if(!l_hand || !r_hand)
 							var/obj/item/clothing/C = TARGET
 							take_to_slot(C)
-							if(equip_to_appropriate_slot(C))
-								C.update_icon()
-							else
+							if(!equip_to_appropriate_slot(C))
 								var/obj/item/I = get_item_by_slot(C)
 								unEquip(I)
 								equip_to_appropriate_slot(C)
@@ -382,7 +367,6 @@
 									equip_to_appropriate_slot(MYPDA)
 								if(MYID in src.loc)
 									equip_to_appropriate_slot(MYID)
-							update_icons()
 			//THIEVING SKILLS END
 			//-------------TOUCH ME
 			if(istype(TARGET,/obj/structure))
@@ -411,17 +395,17 @@
 		doing |= TRAVEL
 		if(nearby.len > 4)
 			//i'm crowded, time to leave
-			TARGET = pick(target_filter(orange(MAX_RANGE_FIND,src)))
+			TARGET = pick(target_filter(ultra_range(MAX_RANGE_FIND,src,1)))
 		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to chase an item
-			TARGET = locate(/obj/item) in orange(MIN_RANGE_FIND,src)
+			TARGET = locate(/obj/item) in ultra_range(MIN_RANGE_FIND,src,1)
 		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to leave
-			TARGET = locate(/obj/machinery/door) in orange(MIN_RANGE_FIND,src) // this is a sort of fix for the current pathing.
+			TARGET = locate(/obj/machinery/door) in ultra_range(MIN_RANGE_FIND,src,1) // this is a sort of fix for the current pathing.
 		else
 			//else, target whatever, or go to our department
 			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-				TARGET = pick(target_filter(orange(MIN_RANGE_FIND,src)))
+				TARGET = pick(target_filter(ultra_range(MIN_RANGE_FIND,src,1)))
 			else
 				TARGET = pick(get_area_turfs(job2area(myjob)))
 		tryWalk(TARGET)

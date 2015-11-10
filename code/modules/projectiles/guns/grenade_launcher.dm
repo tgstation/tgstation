@@ -4,10 +4,10 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "riotgun"
 	item_state = "riotgun"
-	w_class = 4.0
+	w_class = 4
 	throw_speed = 2
 	throw_range = 7
-	force = 5.0
+	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	materials = list(MAT_METAL=2000)

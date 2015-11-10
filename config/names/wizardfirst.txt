@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Jim
 Gulstaff
 Gandalf
@@ -34,3 +35,41 @@ Lina
 Morgan
 Alatar
 Palando
+=======
+Alatar
+Archchancellor
+Boccob
+Circe
+Dumbledor
+Elminister
+Gandalf
+Grimm
+Gulstaff
+Houdini
+Jim
+Kaschei
+Khelben
+Kreol
+Lina
+Merlin
+Mogan
+Mordenkainen
+Morgan
+Mystryl
+Nihilus
+Palando
+Prospero
+Radagast
+Raistlin
+Rasputin
+Saruman
+Tenser
+Terefi
+Tzeentch
+Urza
+Vaarsuvius
+Vecna
+Yoda
+Zagyg
+Zul
+>>>>>>> 7451acd893480818375775dc6dff8a47206988cf

@@ -20,7 +20,7 @@ effective or pretty fucking useless.
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
 	throwforce = 5
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
@@ -39,7 +39,7 @@ effective or pretty fucking useless.
 
 	add_logs(user, null, "knocked down people in the area", src)
 
-	for(var/mob/living/carbon/human/M in orange(10, user))
+	for(var/mob/living/carbon/human/M in ultra_range(10, user, 1))
 		spawn()
 			if(prob(50))
 
@@ -77,7 +77,7 @@ effective or pretty fucking useless.
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=400)
@@ -98,7 +98,7 @@ effective or pretty fucking useless.
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				M.irradiate(intensity*10)
+				M.rad_act(intensity*10)
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 

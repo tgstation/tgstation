@@ -29,8 +29,9 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
-
+	if(radio_connection)
+		radio_connection = null
+	return ..()
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = 1
 
@@ -48,8 +49,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/output_starting_pressure = air2.return_pressure()
 
@@ -128,11 +129,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = Clamp(
-			text2num(signal.data["set_output_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")

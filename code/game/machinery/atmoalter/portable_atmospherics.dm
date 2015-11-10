@@ -30,7 +30,7 @@
 /obj/machinery/portable_atmospherics/Destroy()
 	qdel(air_contents)
 	SSair.atmos_machinery -= src
-	..()
+	return ..()
 
 /obj/machinery/portable_atmospherics/update_icon()
 	return null
@@ -47,7 +47,7 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.parents[PARENT1]
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
 	anchored = 1 //Prevent movement
@@ -100,4 +100,5 @@
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	return
+	else
+		..()

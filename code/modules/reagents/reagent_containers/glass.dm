@@ -88,7 +88,7 @@
 			user << "<span class='notice'>[src] is full.</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
@@ -120,9 +120,7 @@
 			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
-		return
-	var/hotness = is_hot(I)
+	var/hotness = I.is_hot()
 	if(hotness)
 		var/added_heat = (hotness / 100) //ishot returns a temperature
 		if(reagents)
@@ -253,11 +251,13 @@
 	icon_state = "bucket"
 	item_state = "bucket"
 	materials = list(MAT_METAL=200)
-	w_class = 3.0
+	w_class = 3
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | BLOCKHAIR
+	slot_flags = SLOT_HEAD
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
@@ -275,3 +275,10 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equipped(mob/user, slot)
+	..()
+	if(slot == slot_head && reagents.total_volume)
+		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
+		reagents.reaction(user, TOUCH)
+		reagents.clear_reagents()

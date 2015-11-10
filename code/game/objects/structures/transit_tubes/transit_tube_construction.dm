@@ -7,7 +7,11 @@
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
 	layer = 3.1 //same as the built tube
-	anchored = 0.0
+	anchored = 0
+
+/obj/structure/c_transit_tube/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
 /obj/structure/c_transit_tube/proc/tube_turn(angle)
@@ -45,17 +49,27 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(-90)
+
+/obj/structure/c_transit_tube/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/c_transit_tube/verb/rotate_ccw()
 	set name = "Rotate Tube CCW"
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(90)
@@ -65,7 +79,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_flip()
@@ -138,5 +152,5 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
-	anchored = 0.0
+	anchored = 0
 	density = 0

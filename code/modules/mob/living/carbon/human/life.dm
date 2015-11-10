@@ -8,7 +8,7 @@
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 #define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
 #define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
@@ -38,9 +38,8 @@
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
 
 		//heart attack stuff
 		handle_heart()
@@ -50,8 +49,7 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	if(dna)
-		dna.species.spec_life(src) // for mutantraces
+	dna.species.spec_life(src) // for mutantraces
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -86,24 +84,26 @@
 				if(4)
 					emote("drool")
 				if(5)
-					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY"))
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
 
+/mob/living/carbon/human/handle_chemicals_in_body()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
+
 /mob/living/carbon/human/breathe()
-	if(!dna || !dna.species.breathe(src))
+	if(!dna.species.breathe(src))
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna || !dna.species.check_breath(breath, src))
-		..()
+	dna.species.check_breath(breath, src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	if(dna)
-		dna.species.handle_environment(environment, src)
+	dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -123,7 +123,7 @@
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			bodytemperature += 11
 		else
-			bodytemperature += BODYTEMP_HEATING_MAX
+			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
 
 
 /mob/living/carbon/human/IgniteMob()
@@ -164,7 +164,7 @@
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -229,7 +229,7 @@
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -259,24 +259,19 @@
 
 /mob/living/carbon/human/handle_chemicals_in_body()
 	..()
-	if(dna)
-		dna.species.handle_chemicals_in_body(src)
-
-	return //TODO: DEFERRED
+	dna.species.handle_chemicals_in_body(src)
 
 /mob/living/carbon/human/handle_vision()
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 	if(machine)
 		if(!machine.check_eye(src))		reset_view(null)
 	else
-		if(!client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)			reset_view(null)
 
-	if(dna)
-		dna.species.handle_vision(src)
+	dna.species.handle_vision(src)
 
 /mob/living/carbon/human/handle_hud_icons()
-	if(dna)
-		dna.species.handle_hud_icons(src)
+	dna.species.handle_hud_icons(src)
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
@@ -299,16 +294,6 @@
 
 				// make it so you can only puke so fast
 				lastpuke = 0
-
-
-/mob/living/carbon/human/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
@@ -340,7 +325,8 @@
 	if(!heart_attack)
 		return
 	else
-		losebreath += 5
+		if(losebreath < 3)
+			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
 

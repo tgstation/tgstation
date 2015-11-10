@@ -1,18 +1,12 @@
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 150
-	health = 150
-	storedPlasma = 100
-	max_plasma = 150
+	maxHealth = 125
+	health = 125
 	icon_state = "alienh_s"
-	plasma_rate = 5
 
 /mob/living/carbon/alien/humanoid/hunter/New()
-	create_reagents(100)
-	if(name == "alien hunter")
-		name = text("alien hunter ([rand(1, 1000)])")
-	real_name = name
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
@@ -94,10 +88,16 @@
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-			L.Weaken(5)
-			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
-			step_towards(src,L)
+			var/blocked = 0
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if(H.check_shields(90, "the [name]", src, 1))
+					blocked = 1
+			if(!blocked)
+				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
+				L.Weaken(5)
+				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
+				step_towards(src,L)
 
 			toggle_leap(0)
 			pounce_cooldown = !pounce_cooldown

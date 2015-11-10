@@ -97,7 +97,7 @@
 	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
-	for(var/mob/living/M in view(range,A))
+	for(var/mob/M in view(range,A))
 		M << msg
 
 	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
@@ -198,7 +198,7 @@
 		var/list/candidates = list()
 		for(var/mob/M in player_list)
 			if(M.stat != DEAD)		continue	//we are not dead!
-			if(!M.client.prefs.be_special & BE_ALIEN)	continue	//we don't want to be an alium
+			if(!(ROLE_ALIEN in M.client.prefs.be_special))	continue	//we don't want to be an alium
 			if(M.client.is_afk())	continue	//we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)	continue	//we have a live body we are tied to
 			candidates += M.ckey
@@ -208,11 +208,12 @@
 			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
 	if(!istext(ckey))	return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
-		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
+		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(spawn_here)
+		if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
 		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
 		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
@@ -262,7 +263,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
+					if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
+					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
@@ -300,15 +302,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.blood_type = record_found.fields["blood_type"]
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
 	else
-		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
-		A.real_name = G_found.real_name
 		A.copy_to(new_character)
+		A.real_name = G_found.real_name
+		new_character.dna.update_dna_identity()
 
-	if(!new_character.real_name)
-		new_character.real_name = new_character.dna.species.random_name(new_character.gender,1)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -316,13 +316,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
-	if(!new_character.mind.assigned_role)	new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
-
-	//DNA
-	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
-	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
-		ready_dna(new_character)
+	if(!new_character.mind.assigned_role)
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	new_character.key = G_found.key
 
@@ -692,27 +687,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/reset_all_tcs()
-	set category = "Admin"
-	set name = "Reset Telecomms Scripts"
-	set desc = "Blanks all telecomms scripts from all telecomms servers"
-	if(!holder)
-		usr << "Admin only."
-		return
-
-	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
-
-	for(var/obj/machinery/telecomms/server/S in telecomms_list)
-		var/datum/TCS_Compiler/C = S.Compiler
-		S.rawcode = ""
-		C.Compile("")
-	for(var/obj/machinery/computer/telecomms/traffic/T in machines)
-		T.storedcode = ""
-	log_admin("[key_name(usr)] blanked all telecomms scripts.")
-	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
-	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/admin_change_sec_level()
 	set category = "Special Verbs"
 	set name = "Set Security Level"
@@ -747,3 +721,211 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
 	message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>).")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/reset_latejoin_spawns()
+	set category = "Debug"
+	set name = "Remove Latejoin Spawns"
+
+	if(!check_rights(R_DEBUG))	return
+
+	latejoin.Cut()
+
+	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
+	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")
+
+
+
+
+var/list/datum/outfit/custom_outfits = list() //Admin created outfits
+
+/client/proc/create_outfits()
+	set category = "Debug"
+	set name = "Create Custom Outfit"
+
+	if(!check_rights(R_DEBUG))	return
+
+	holder.create_outfit()
+
+/datum/admins/proc/create_outfit()
+	var/list/uniforms = typesof(/obj/item/clothing/under)
+	var/list/suits = typesof(/obj/item/clothing/suit)
+	var/list/gloves = typesof(/obj/item/clothing/gloves)
+	var/list/shoes = typesof(/obj/item/clothing/shoes)
+	var/list/headwear = typesof(/obj/item/clothing/head)
+	var/list/glasses = typesof(/obj/item/clothing/glasses)
+	var/list/masks = typesof(/obj/item/clothing/mask)
+	var/list/ids = typesof(/obj/item/weapon/card/id)
+
+	var/uniform_select = "<select name=\"outfit_uniform\"><option value=\"\">None</option>"
+	for(var/path in uniforms)
+		uniform_select += "<option value=\"[path]\">[path]</option>"
+	uniform_select += "</select>"
+
+	var/suit_select = "<select name=\"outfit_suit\"><option value=\"\">None</option>"
+	for(var/path in suits)
+		suit_select += "<option value=\"[path]\">[path]</option>"
+	suit_select += "</select>"
+
+	var/gloves_select = "<select name=\"outfit_gloves\"><option value=\"\">None</option>"
+	for(var/path in gloves)
+		gloves_select += "<option value=\"[path]\">[path]</option>"
+	gloves_select += "</select>"
+
+	var/shoes_select = "<select name=\"outfit_shoes\"><option value=\"\">None</option>"
+	for(var/path in shoes)
+		shoes_select += "<option value=\"[path]\">[path]</option>"
+	shoes_select += "</select>"
+
+	var/head_select = "<select name=\"outfit_head\"><option value=\"\">None</option>"
+	for(var/path in headwear)
+		head_select += "<option value=\"[path]\">[path]</option>"
+	head_select += "</select>"
+
+	var/glasses_select = "<select name=\"outfit_glasses\"><option value=\"\">None</option>"
+	for(var/path in glasses)
+		glasses_select += "<option value=\"[path]\">[path]</option>"
+	glasses_select += "</select>"
+
+	var/mask_select = "<select name=\"outfit_mask\"><option value=\"\">None</option>"
+	for(var/path in masks)
+		mask_select += "<option value=\"[path]\">[path]</option>"
+	mask_select += "</select>"
+
+	var/id_select = "<select name=\"outfit_id\"><option value=\"\">None</option>"
+	for(var/path in ids)
+		id_select += "<option value=\"[path]\">[path]</option>"
+	id_select += "</select>"
+
+	var/dat = {"
+	<html><head><title>Create Outfit</title></head><body>
+	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<input type="hidden" name="src" value="\ref[src]">
+	<input type="hidden" name="create_outfit" value="1">
+	<table>
+		<tr>
+			<th>Name:</th>
+			<td>
+				<input type="text" name="outfit_name" value="Custom Outfit">
+			</td>
+		</tr>
+		<tr>
+			<th>Uniform:</th>
+			<td>
+			   [uniform_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Suit:</th>
+			<td>
+				[suit_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Back:</th>
+			<td>
+				<input type="text" name="outfit_back" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Belt:</th>
+			<td>
+				<input type="text" name="outfit_belt" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Gloves:</th>
+			<td>
+				[gloves_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Shoes:</th>
+			<td>
+				[shoes_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Head:</th>
+			<td>
+				[head_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Mask:</th>
+			<td>
+				[mask_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Ears:</th>
+			<td>
+				<input type="text" name="outfit_ears" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Glasses:</th>
+			<td>
+				[glasses_select]
+			</td>
+		</tr>
+		<tr>
+			<th>ID:</th>
+			<td>
+				[id_select]
+			</td>
+		</tr>
+		<tr>
+			<th>Left Pocket:</th>
+			<td>
+				<input type="text" name="outfit_l_pocket" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Right Pocket:</th>
+			<td>
+				<input type="text" name="outfit_r_pocket" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Suit Store:</th>
+			<td>
+				<input type="text" name="outfit_s_store" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Right Hand:</th>
+			<td>
+				<input type="text" name="outfit_r_hand" value="">
+			</td>
+		</tr>
+		<tr>
+			<th>Left Hand:</th>
+			<td>
+				<input type="text" name="outfit_l_hand" value="">
+			</td>
+		</tr>
+	</table>
+	<br>
+	<input type="submit" value="Save">
+	</form></body></html>
+	"}
+	usr << browse(dat, "window=dressup;size=550x600")
+
+/client/proc/toggle_antag_hud()
+	set category = "Admin"
+	set name = "Toggle AntagHUD"
+	set desc = "Toggles the Admin AntagHUD"
+
+	if(!holder) return
+
+	var/datum/atom_hud/magical = huds[ANTAG_HUD_WIZ]
+	var/adding_hud = (usr in magical.hudusers) ? 0 : 1
+
+	for(var/datum/atom_hud/H in huds)
+		if(istype(H, /datum/atom_hud/antag))
+			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+
+	usr << "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"]."
+	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

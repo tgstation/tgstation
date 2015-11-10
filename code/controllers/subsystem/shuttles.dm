@@ -24,10 +24,13 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/points_per_decisecond = 0.005	//points gained every decisecond
 	var/points_per_slip = 2				//points gained per slip returned
 	var/points_per_crate = 5			//points gained per crate returned
-	var/points_per_intel = 100			//points gained per intel returned
+	var/points_per_intel = 250			//points gained per intel returned
 	var/points_per_plasma = 5			//points gained per plasma returned
+	var/points_per_design = 25			//points gained per max reliability research design returned (only for initilally unreliable designs)
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
+	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/list/techLevels = list()
+	var/list/researchDesigns = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
@@ -55,21 +58,18 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
-
+	initial_move()
 	..()
 
 
 /datum/subsystem/shuttle/fire()
 	points += points_per_decisecond * wait
-
-	var/i=1
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing
 			P.check()
-			++i
 			continue
-		mobile.Cut(i, i+1)
+		mobile.Remove(thing)
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -109,7 +109,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
-	call_reason = html_encode(trim(call_reason))
+	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."
@@ -118,9 +118,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, emergency_reason, 1)
+		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 1, signal_origin, emergency_reason, 0)
+		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -128,21 +128,23 @@ var/datum/subsystem/shuttle/SSshuttle
 	return
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(canRecall())
+		emergency.cancel(get_area(user))
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		return 1
+
+/datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-
 	if(ticker.mode.name == "meteor")
 		return
-
-	if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
-	else if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-		return
-
-	emergency.cancel(get_area(user))
-	log_game("[key_name(user)] has recalled the shuttle.")
-	message_admins("[key_name_admin(user)] has recalled the shuttle.")
+	else
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
@@ -199,18 +201,17 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
-
-/*
-/proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L) && isturf(L.loc))
-		if(prob(88))
-			var/turf/T = get_step(L, dir)
-			if(T)
-				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1))
-						return
-				L.Move(get_step(L, dir), dir)
-*/
+/datum/subsystem/shuttle/proc/initial_move()
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(!M.roundstart_move)
+			continue
+		for(var/obj/docking_port/stationary/S in stationary)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
+				S.width = M.width
+				S.height = M.height
+				S.dwidth = M.dwidth
+				S.dheight = M.dheight
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
 
 /datum/supply_order
 	var/ordernum
@@ -284,6 +285,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			A:amount = object.amount
 		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
 
+	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
+		var/obj/structure/closet/critter/CritCrate = Crate
+		if(CritCrate.content_mob)
+			var/mob/crittername = CritCrate.content_mob
+			slip.info += "<li>[initial(crittername.name)]</li>"
+
 	if((errors & MANIFEST_ERROR_ITEM))
 		//secure and large crates cannot lose items
 		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/largecrate/"))
@@ -306,7 +313,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/obj/structure/largecrate/LC = Crate
 		LC.manifest = slip
 		LC.update_icon()
-	
+
 	return Crate
 
 /datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
@@ -327,11 +334,3 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return O
 
-/*
-/datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
-	if(!A)
-		return
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
-		if(M.areaInstance == A)
-			return M
-*/

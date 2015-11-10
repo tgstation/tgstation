@@ -16,7 +16,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -30,7 +30,7 @@
 	if(connected)
 		qdel(connected)
 		connected = null
-	..()
+	return ..()
 
 /obj/structure/bodycontainer/on_log()
 	update_icon()
@@ -40,6 +40,12 @@
 
 /obj/structure/bodycontainer/alter_health()
 	return src.loc
+
+/obj/structure/bodycontainer/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	if(!open())
+		open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -135,7 +141,7 @@ var/global/list/crematoriums = new/list()
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	crematoriums.Remove(src)
-	..()
+	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
@@ -176,10 +182,11 @@ var/global/list/crematoriums = new/list()
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
 				M.emote("scream")
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			if(user)
+				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			else
+				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
 			M.ghostize()
 			qdel(M)
@@ -194,26 +201,6 @@ var/global/list/crematoriums = new/list()
 		update_icon()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
-/*
-Crematorium Switch
-*/
-/obj/machinery/crema_switch/attack_hand(mob/user)
-	if(src.allowed(usr))
-		for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
-			if (C.id != id)
-				continue
-
-			C.cremate(user)
-	else
-		usr << "<span class='danger'>Access denied.</span>"
-	return
-
-/obj/machinery/crema_switch/attackby(obj/item/W, mob/user, params)
-	if(W.GetID())
-		attack_hand(user)
-	else
-		return ..()
-
 
 /*
  * Generic Tray
@@ -225,7 +212,7 @@ Crematorium Switch
 	density = 1
 	layer = 2.9
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1.0
+	anchored = 1
 	pass_flags = LETPASSTHROW
 
 /obj/structure/tray/Destroy()
@@ -233,7 +220,7 @@ Crematorium Switch
 		connected.connected = null
 		connected.update_icon()
 		connected = null
-	..()
+	return ..()
 
 /obj/structure/tray/attack_paw(mob/user)
 	return src.attack_hand(user)

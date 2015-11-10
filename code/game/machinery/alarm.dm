@@ -81,9 +81,9 @@
 	// breathable air according to human/Life()
 	var/list/TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
 		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 	)
@@ -91,25 +91,25 @@
 /*
 	// breathable air according to wikipedia
 		"oxygen"         = new/datum/tlv(   9,  12, 158, 296), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0,-1.0, 0.5,   1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1, 0.5,   1), // Partial pressure, kpa
 */
 /obj/machinery/alarm/server
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), /* kpa */
-		"temperature"    = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // K
+		"oxygen"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1, -1,-1,-1), /* kpa */
+		"temperature"    = new/datum/tlv(-1, -1,-1,-1), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room
 	TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
 		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
 	)
@@ -122,12 +122,9 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/alarm/New(nloc, ndir, nbuild)
+/obj/machinery/alarm/New(loc, ndir, nbuild)
 	..()
 	wires = new(src)
-	if(nloc)
-		loc = nloc
-
 	if(ndir)
 		dir = ndir
 
@@ -151,7 +148,9 @@
 /obj/machinery/alarm/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
@@ -221,7 +220,7 @@
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -296,7 +295,7 @@
 		environment_data += list(list("name" = "Toxins", "value" = environment.toxins / total * 100, "unit" = "%", "danger_level" = plasma_danger))
 
 		cur_tlv = TLV["other"]
-		var/other_moles = 0.0
+		var/other_moles = 0
 		for(var/datum/gas/G in environment.trace_gases)
 			other_moles+=G.moles
 		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
@@ -455,7 +454,7 @@
 				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
-					tlv.vars[varname] = -1.0
+					tlv.vars[varname] = -1
 				else if (env=="temperature" && newval>5000)
 					tlv.vars[varname] = 5000
 				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
@@ -655,7 +654,7 @@
 	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
 
 	cur_tlv = TLV["other"]
-	var/other_moles = 0.0
+	var/other_moles = 0
 	for(var/datum/gas/G in environment.trace_gases)
 		other_moles+=G.moles
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
@@ -753,7 +752,7 @@
 				if (do_after(user, 20, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
-						new /obj/item/weapon/airalarm_electronics( src.loc )
+						new /obj/item/weapon/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
@@ -780,7 +779,7 @@
 						update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/airalarm_electronics))
+			if(istype(W, /obj/item/weapon/electronics/airalarm))
 				if(user.unEquip(W))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					buildstage = 1
@@ -791,7 +790,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				new /obj/item/alarm_frame( user.loc )
+				new /obj/item/wallframe/alarm( user.loc )
 				qdel(src)
 				return
 
@@ -810,7 +809,8 @@
 /obj/machinery/alarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -819,58 +819,20 @@
 AIR ALARM CIRCUIT
 Just a object used in constructing air alarms
 */
-/obj/item/weapon/airalarm_electronics
+/obj/item/weapon/electronics/airalarm
 	name = "air alarm electronics"
-	icon = 'icons/obj/module.dmi'
 	icon_state = "airalarm_electronics"
-	desc = "Looks like a circuit. Probably is."
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
-
 
 /*
 AIR ALARM ITEM
 Handheld air alarm frame, for placing on walls
-Code shamelessly copied from apc_frame
 */
-/obj/item/alarm_frame
+/obj/item/wallframe/alarm
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
-	flags = CONDUCT
-
-/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		qdel(src)
-		return
-	..()
-
-/obj/item/alarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-
-	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
-		return
-
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Air Alarm cannot be placed on this spot!</span>"
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Air Alarm cannot be placed in this area!</span>"
-		return
-
-	if(gotwallitem(loc, ndir))
-		usr << "<span class='warning'>There's already an item on this wall!</span>"
-		return
-
-	new /obj/machinery/alarm(loc, ndir, 1)
-
-	qdel(src)
+	result_path = /obj/machinery/alarm
 
 
 /*
@@ -881,11 +843,11 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	var/detecting = 1.0
-	var/time = 10.0
-	var/timing = 0.0
+	var/detecting = 1
+	var/time = 10
+	var/timing = 0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -894,7 +856,6 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
-
 	src.overlays = list()
 
 	var/area/A = src.loc
@@ -938,7 +899,8 @@ FIRE ALARM
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -964,9 +926,9 @@ FIRE ALARM
 	..()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
@@ -976,12 +938,13 @@ FIRE ALARM
 	if(panel_open)
 		switch(buildstage)
 			if(2)
-				if (istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+					return
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -991,18 +954,18 @@ FIRE ALARM
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
+					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
-						return
-
-					coil.use(5)
-
-					buildstage = 2
-					user << "<span class='notice'>You wire \the [src].</span>"
-					update_icon()
+					else
+						coil.use(5)
+						buildstage = 2
+						user << "<span class='notice'>You wire \the [src].</span>"
+						update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -1014,26 +977,27 @@ FIRE ALARM
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
 							else
 								user << "<span class='notice'>You pry out the circuit.</span>"
-								new /obj/item/weapon/firealarm_electronics(user.loc)
+								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
+					return
 			if(0)
-				if(istype(W, /obj/item/weapon/firealarm_electronics))
+				if(istype(W, /obj/item/weapon/electronics/firealarm))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
 					update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
-					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
+					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
-		return
-
-	return
+					return
+	return ..()
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
@@ -1147,18 +1111,16 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert(src)
+	if(!A.fire)
+		A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
-/obj/machinery/firealarm/New(loc, dir, building)
+/obj/machinery/firealarm/New(loc, ndir, building)
 	..()
 
-	if(loc)
-		src.loc = loc
-
-	if(dir)
-		src.dir = dir
+	if(ndir)
+		src.dir = ndir
 
 	if(building)
 		buildstage = 0
@@ -1178,59 +1140,21 @@ FIRE ALARM
 FIRE ALARM CIRCUIT
 Just a object used in constructing fire alarms
 */
-/obj/item/weapon/firealarm_electronics
+/obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
 FIRE ALARM ITEM
 Handheld fire alarm frame, for placing on walls
-Code shamelessly copied from apc_frame
 */
-/obj/item/firealarm_frame
+/obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building Fire Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = CONDUCT
-
-
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		qdel(src)
-		return
-	..()
-
-/obj/item/firealarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-
-	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
-		return
-
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>"
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Fire Alarm cannot be placed in this area.</span>"
-		return
-
-	if(gotwallitem(loc, ndir))
-		usr << "<span class='warning'>There's already an item on this wall!</span>"
-		return
-
-	new /obj/machinery/firealarm(loc, ndir, 1)
-
-	qdel(src)
+	result_path = /obj/machinery/firealarm
 
 /*
  * Party button

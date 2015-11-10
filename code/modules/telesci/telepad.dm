@@ -104,8 +104,8 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "rcs"
 	flags = CONDUCT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	var/rcharges = 10
@@ -127,7 +127,7 @@
 
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
 		rcharges = 10
@@ -151,7 +151,7 @@
 /obj/item/weapon/rcs/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		user << "<span class='caution'>You emag the RCS. Click on it to toggle between modes.</span>"

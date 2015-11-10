@@ -40,11 +40,35 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 
+/obj/item/clothing/glasses/hud/diagnostic
+	name = "Diagnostic HUD"
+	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
+	icon_state = "diagnostichud"
+	hud_type = DATA_HUD_DIAGNOSTIC
+
+/obj/item/clothing/glasses/hud/diagnostic/night
+	name = "Night Vision Diagnostic HUD"
+	desc = "A robotics diagnostic HUD fitted with a light amplifier."
+	icon_state = "diagnostichudnight"
+	item_state = "glasses"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
+
+
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
+
+/obj/item/clothing/glasses/hud/security/chameleon
+	name = "Chamleon Security HUD"
+	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
+	flash_protect = 1
+
+/obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
+	chameleon(user)
+
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "Eyepatch HUD"
@@ -76,6 +100,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
 	name = "giga HUD gar glasses"

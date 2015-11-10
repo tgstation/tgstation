@@ -18,3 +18,7 @@
 
 	feedback_add_details("changeling_powers","CAM")
 	return 1
+
+/obj/effect/proc_holder/changeling/digitalcamo/on_refund(mob/user)
+	user.digitalcamo = 0
+	user.digitalinvis = 0

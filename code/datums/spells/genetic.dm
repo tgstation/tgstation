@@ -18,6 +18,8 @@
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 	playMagSound()
 	for(var/mob/living/carbon/target in targets)
+		if(!target.dna)
+			continue
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
 		target.disabilities |= disabilities

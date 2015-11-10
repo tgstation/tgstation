@@ -209,12 +209,12 @@
 
 /obj/item/weapon/storage/box/flashes/New()
 	..()
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -650,11 +650,15 @@
 	icon_state = "hugbox"
 	foldable = null
 
+/obj/item/weapon/storage/box/hug/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on \his jugular! Guess it wasn't such a hugbox after all..</span>")
+	return (BRUTELOSS)
+
 /obj/item/weapon/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] hugs the [src].</span>","<span class='notice'>You hug the [src].</span>")
+	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	return
 
 /obj/item/weapon/storage/box/hug/medical/New()
@@ -662,3 +666,35 @@
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+/obj/item/ammo_casing/shotgun/rubbershot
+
+/obj/item/weapon/storage/box/rubbershot
+	name = "box of rubber shots"
+	desc = "A box full of rubber shots, designed for riot shotguns."
+	icon_state = "rubbershot_box"
+
+/obj/item/weapon/storage/box/rubbershot/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+
+/obj/item/weapon/storage/box/lethalshot
+	name = "box of lethal shotgun shots"
+	desc = "A box full of lethal shots, designed for riot shotguns."
+	icon_state = "lethalshot_box"
+
+/obj/item/weapon/storage/box/lethalshot/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)

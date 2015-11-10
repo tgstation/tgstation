@@ -6,6 +6,8 @@
 
 	earliest_start = 48000 // 1 hour 20 minutes
 
+	gamemode_blacklist = list("blob") // Just in case blob survives that long
+
 /datum/round_event/blob
 	announceWhen	= 12
 	endWhen			= 120

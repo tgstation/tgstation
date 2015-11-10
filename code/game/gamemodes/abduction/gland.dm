@@ -75,20 +75,9 @@
 
 /obj/item/organ/internal/gland/slime/activate()
 	owner << "<span class='warning'>You feel nauseous!</span>"
-	if(owner.is_muzzled())
-		owner << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+	owner.vomit(20)
 
-	owner.visible_message("<span class='danger'>[owner] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
-
-	owner.nutrition -= 20
-	owner.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(owner)
-	pos.add_vomit_floor(owner)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-
-	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(pos)
+	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(get_turf(owner))
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
@@ -119,10 +108,8 @@
 
 /obj/item/organ/internal/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/slime,/datum/species/plant/pod,/datum/species/fly))
-	hardset_dna(owner, null, null, null, null, species)
-	owner.regenerate_icons()
-	return
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	owner.set_species(species)
 
 /obj/item/organ/internal/gland/ventcrawling
 	origin_tech = "materials=4;biotech=5;bluespace=3"
@@ -175,8 +162,7 @@
 
 /obj/item/organ/internal/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
-	if(uses == initial(uses))
-		owner.faction += "spiders"
+	owner.faction |= "spiders"
 	new /obj/effect/spider/spiderling(owner.loc)
 
 /obj/item/organ/internal/gland/egg
@@ -242,7 +228,7 @@
 
 /obj/effect/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
+	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
 	//There's no define for this / get all items ?
 	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\
@@ -269,7 +255,7 @@
 /obj/item/organ/internal/gland/plasma
 	cooldown_low = 2400
 	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=5;plasma=3"
+	origin_tech = "materials=4;biotech=5;plasmatech=3"
 	uses = 1
 
 /obj/item/organ/internal/gland/plasma/activate()

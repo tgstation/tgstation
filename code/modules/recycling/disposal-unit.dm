@@ -49,7 +49,7 @@
 	eject()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -98,15 +98,17 @@
 	return 1
 
 // mouse drop another mob or self
-//
+
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
-	if(istype(target) && user == target)
+	if(istype(target))
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(target.buckled)
+	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+		return
+	if(target.buckled || target.buckled_mob)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
@@ -132,6 +134,7 @@
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
+			target.LAssailant = user
 		update()
 
 // can breath normally in the disposal
@@ -275,6 +278,9 @@
 //How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src)
 	return 1
 
