@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed bug that allowed players to press a replicator's buttons when it was already processing an item.
+  - soundadd: Added sounds to replicators and autocloners.
+  - rscadd: Replicators and autocloners can now be wrenched into place.
+  - tweak: Reduced the number of ticks required for a mob to spawn from the autocloner by a factor of 4 (now from 60 to 360 ticks, down from 240 to 1440 ticks)
+  - rscadd: Replicators and autocloners can now be destroyed by damaging projectiles or by being hit with weapons of force higher than 10. Their destruction produces a small (but damaging) explosion.
