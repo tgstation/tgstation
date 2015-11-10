@@ -142,11 +142,8 @@
 /obj/machinery/computer/merch/update_icon()
 
 	if(stat & BROKEN)
+		icon_state = "comm_logsb"
+	else if(stat & NOPOWER)
 		icon_state = "comm_logs0"
 	else
-		if(stat & NOPOWER)
-			src.icon_state = "comm_logs"
-			stat |= NOPOWER
-		else
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
+		icon_state = initial(icon_state)
