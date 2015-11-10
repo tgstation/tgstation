@@ -1094,6 +1094,10 @@
 		user << "You align yourself with the [user.ventcrawl_layer]\th output."
 		return 1
 	else
+		if(direction != dir && user.ventcrawl_layer != PIPING_LAYER_DEFAULT) // The mob is moving to the single pipe outlet, we need to align it if it's on a layer that's not the default layer
+			user.ventcrawl_layer = PIPING_LAYER_DEFAULT
+			user << "You are redirected into the [user.ventcrawl_layer]\th piping layer."
+		
 		return ..()
 
 
