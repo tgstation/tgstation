@@ -160,7 +160,26 @@
 	temperature = TCMB
 
 /turf/simulated/floor/plating/lava
+	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "lava"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+
+/turf/simulated/floor/plating/lava/New()
+	..()
+	spawn(1)
+		update_icon()
+
+/turf/simulated/floor/plating/lava/update_icon()
+	if(!..())
+		return 0
+	if(!broken && !burnt)
+		if(smooth)
+			smooth_icon(src)
+	else
+		make_plating()
+		if(smooth)
+			smooth_icon_neighbors(src)
 
 /turf/simulated/floor/plating/lava/airless
 	oxygen = 0
@@ -174,3 +193,30 @@
 /turf/simulated/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
+
+/turf/simulated/floor/plating/hole
+	name = "hole"
+	desc = "Yep, thats a hole."
+	icon_state = "hole"
+	var/tp_x = 0 //hole drop-point
+	var/tp_y = 0
+	var/tp_z = 0
+
+/turf/simulated/floor/plating/hole/Entered(atom/movable/H)
+	if(!istype(H))
+		return
+	if(istype(H, /obj))
+		var/obj/O = H
+		O.visible_message("[H] falls down \the [src]!")
+		O.x = tp_x
+		O.y = tp_y
+		O.z = tp_z
+	else if (istype(H, /mob/living))
+		var/mob/living/M = H
+		M.visible_message("[M] falls down \the [src]!", \
+			"<span class='warning'>You fall down \the [src]!</span>")
+		M.x = tp_x
+		M.y = tp_y
+		M.z = tp_z
+		M.Weaken(6)
+		M.emote("scream")
