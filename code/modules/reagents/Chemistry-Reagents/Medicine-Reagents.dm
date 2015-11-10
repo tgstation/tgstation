@@ -164,7 +164,7 @@
 	color = "#C8A5DC"
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
 		if(method == PATCH)
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
@@ -183,7 +183,7 @@
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
-	description = "Stimulates healing of severe burns. If you have more than 50 burn damage, it heals 2 units; otherwise, 0.5. If overdosed it will exacerbate existing burns, causing burn and brute damage."
+	description = "Stimulates healing of severe burns. If you have more than 50 burn damage, it heals 4 units; otherwise, 0.5. If overdosed it will exacerbate existing burns, causing burn and brute damage."
 	reagent_state = LIQUID
 	color = "#f7ffa5"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -191,15 +191,15 @@
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/M)
 	if(M.getFireLoss() > 50)
-		M.adjustFireLoss(-2*REM)
+		M.adjustFireLoss(-4*REM)
 	else
-		M.adjustFireLoss(-0.5*REM)
+		M.adjustFireLoss(-1*REM)
 	..()
 	return
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M)
-	M.adjustFireLoss(2.5*REM) // it's going to be healing either 2 or 0.5
-	M.adjustBruteLoss(0.5*REM)
+	M.adjustFireLoss(5*REM)
+	M.adjustBruteLoss(1*REM)
 	..()
 	return
 
@@ -211,7 +211,7 @@
 	color = "#C8A5DC"
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
 		if(method == PATCH)
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
@@ -285,7 +285,7 @@
 	color = "#C8A5DC"
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
 		if(method == PATCH)
 			M.adjustBruteLoss(-1.5*reac_volume)
 			M.adjustFireLoss(-1.5*reac_volume)
@@ -306,7 +306,7 @@
 	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			if(istype(R, /datum/reagent/toxin)
+			if(istype(R, /datum/reagent/toxin))
 				M.reagents.remove_reagent(R.id,2)
 			if(prob(50))
 				M.reagents.remove_reagent(R.id,1)
@@ -386,7 +386,7 @@
 		M.adjustToxLoss(-4*REM)
 	if(prob(33))
 		M.adjustBruteLoss(1*REM)
-		M.adjustBurnLoss(1*REM)
+		M.adjustFireLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -664,8 +664,10 @@
 	if(prob(20))
 		M.Dizzy(5)
 		M.Jitter(5)
-	if(M.heart_attack && prob(25))
-		M.heart_attack = 0
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.heart_attack && prob(25))
+			H.heart_attack = 0
 	..()
 	return
 
@@ -789,7 +791,7 @@
 	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 8*REM, 0, 1)
-	if(M.health > 25
+	if(M.health > 25)
 		M.adjustToxLoss(-2*REM)
 	..()
 
@@ -966,5 +968,28 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM)
+	..()
+	return
+
+/datum/reagent/medicine/haloperidol
+	name = "Haloperidol"
+	id = "haloperidol"
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs by 5. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. 20% chance of +1 BRAIN."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,5)
+	M.drowsyness += 2
+	if(M.jitteriness >= 3)
+		M.jitteriness -= 3
+	if(M.hallucination >= 5)
+		M.hallucination -= 5
+	if(prob(20))
+		M.adjustBrainLoss(1*REM)
+	M.adjustStaminaLoss(2.5*REM)
 	..()
 	return

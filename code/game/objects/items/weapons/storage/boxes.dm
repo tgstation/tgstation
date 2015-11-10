@@ -63,7 +63,6 @@
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
 /obj/item/weapon/storage/box/engineer
@@ -73,7 +72,6 @@
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
 /obj/item/weapon/storage/box/security
@@ -83,7 +81,6 @@
 	contents = list()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
 /obj/item/weapon/storage/box/gloves
