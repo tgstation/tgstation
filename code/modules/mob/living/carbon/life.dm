@@ -21,12 +21,11 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing()
-	if(SSmob.times_fired%2==1)
-		breathe() //Breathe every 2 ticks
+	if(istype(loc, /obj/))
+		var/obj/location_as_object = loc
+		location_as_object.handle_internal_lifeform(src,0)
 	else
-		if(istype(loc, /obj/))
-			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src,0)
+		breathe()
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
@@ -47,7 +46,10 @@
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
-		adjustOxyLoss(15)
+		if(health < -51)
+			adjustOxyLoss(1)
+		else
+			adjustOxyLoss(15)
 		if(prob(10))
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
@@ -91,7 +93,8 @@
 
 	//CRIT
 	if(health <= config.health_threshold_crit)
-		adjustOxyLoss(1)
+		if(health < -51)
+			adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
@@ -118,9 +121,15 @@
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
 			if(O2_partialpressure < 5)
-				adjustOxyLoss(10)
+				if(health < -1)
+					adjustOxyLoss(1)
+				else
+					adjustOxyLoss(10)
 			else if(O2_partialpressure < 10)
-				adjustOxyLoss(5)
+				if(health < -1)
+					adjustOxyLoss(1)
+				else
+					adjustOxyLoss(5)
 			failed_last_breath = 1
 			oxygen_used = breath.oxygen*ratio/6
 		else

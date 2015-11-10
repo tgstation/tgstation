@@ -1142,18 +1142,9 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(H.reagents.has_reagent("epinephrine"))
-			return
-		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)	return 1
-			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			H.failed_last_breath = 1
-		else
-			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			H.failed_last_breath = 1
-
 		H.throw_alert("oxy", /obj/screen/alert/oxy)
-
+		H.losebreath++
+		H.failed_last_breath = 1
 		return 0
 
 	var/gas_breathed = 0
@@ -1175,16 +1166,34 @@
 		else
 			H.clear_alert("too_much_oxy")
 
-	//Too little oxygen!
-	if(safe_oxygen_min)
-		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
-			H.throw_alert("oxy", /obj/screen/alert/oxy)
+	//OXYGEN
+	if(O2_pp < safe_oxygen_min) //Not enough oxygen
+		if(prob(20))
+			spawn(0)
+				H.emote("gasp")
+		if(O2_pp > 0)
+			var/ratio = safe_oxygen_min/O2_pp
+			if(O2_pp < 5)
+				if(H.health < -1)
+					H.adjustOxyLoss(1)
+				else
+					H.adjustOxyLoss(10)
+			else if(O2_pp <= 15)
+				if(H.health < -1)
+					H.adjustOxyLoss(1)
+				else
+					H.adjustOxyLoss(5)
+			H.failed_last_breath = 1
+			gas_breathed = breath.oxygen*ratio/6
 		else
-			H.failed_last_breath = 0
-			H.adjustOxyLoss(-5)
-			gas_breathed = breath.oxygen/6
-			H.clear_alert("oxy")
+			H.losebreath++
+			H.failed_last_breath = 1
+		H.throw_alert("oxy", /obj/screen/alert/oxy)
+	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.oxygen/6
+		H.clear_alert("oxy")
 
 	//Exhale
 	breath.oxygen -= gas_breathed
