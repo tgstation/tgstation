@@ -9466,7 +9466,7 @@
 "dAb" = (/obj/machinery/alarm{pixel_y = 24; req_one_access = list(24,11,47)},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/spectro)
 "dAc" = (/obj/structure/rack,/obj/item/clothing/suit/fire/heavy{name = "thermal protection suit"},/obj/item/clothing/gloves/black{name = "warm gloves"},/obj/item/clothing/ears/earmuffs,/turf/simulated/floor{dir = 4; icon_state = "whitegreen"},/area/research_outpost/spectro)
 "dAd" = (/obj/machinery/power/apc{dir = 1; pixel_y = 24; pixel_x = 0},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
-"dAe" = (/obj/machinery/computer/shuttle_control/research,/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
+"dAe" = (/obj/machinery/computer/shuttle_control/mining,/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
 "dAf" = (/obj/machinery/alarm{pixel_y = 24; req_one_access = list(24,11,47)},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
 "dAg" = (/obj/structure/rack,/obj/item/clothing/suit/bio_suit/anomaly,/obj/item/clothing/head/bio_hood/anomaly,/obj/item/clothing/gloves/latex,/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
 "dAh" = (/turf/simulated/wall/r_wall,/area/research_outpost/bathroom)
