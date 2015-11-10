@@ -31,7 +31,7 @@ var/list/uplink_items = list()
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
-	
+
 	for(var/category in uplink_items)
 		for(var/datum/uplink_item/I in uplink_items[category])
 			if(I.gamemodes.len)
@@ -406,7 +406,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
-	desc = "An assortment of deadly chemicals packed into a compact box. Hard to utilize if there is no method of application."
+	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
