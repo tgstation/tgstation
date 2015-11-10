@@ -87,6 +87,12 @@
 				spam_flag = 0
 	return
 
+/obj/item/weapon/paper/attack_robot(var/mob/user as mob)
+	if(istype(user,/mob/living/silicon/robot/mommi) && Adjacent(user))
+		attack_hand(user)
+	else
+		attack_ai(user)
+
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
 	var/dist
 	if(istype(user) && user.current) //is AI
