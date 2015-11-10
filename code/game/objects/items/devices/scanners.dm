@@ -49,9 +49,9 @@ MASS SPECTROMETER
 
 			if(O.level != 1)
 				continue
-			
+
 			var/mob/living/L = locate() in O
-			
+
 			if(O.invisibility == 101)
 				O.invisibility = 0
 				if(L)
@@ -126,10 +126,14 @@ MASS SPECTROMETER
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+	if(M.medical_effects.len)
+		user << "<span class='userdanger'>Medical Emergency:</span>
+		for(var/datum/medical_effect/E in M.medical_effects)
+			user << "<span class = 'danger'><b>[E.name]</b></span>"
+			user << "<span class = 'danger'>Description: [E.description]</span>"
+			user << "<span class = 'danger'>Reccomended Treatment: [E.reccomended_treatment]</span>"
+			user << "<span class = 'danger'>Stage: [E.stage]</span>"
+		user << "<span class='userdanger'>---------------</span>
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions

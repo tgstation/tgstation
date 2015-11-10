@@ -493,15 +493,16 @@
 				M.losebreath += 10
 				M.adjustOxyLoss(rand(5,25))
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(!H.heart_attack)
-						H.heart_attack = 1 // rip in pepperoni
-						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
-					else
-						H.losebreath += 10
-						H.adjustOxyLoss(rand(5,25))
+				var/has_HA = 1
+				for(var/datum/medical_effect/E in M.medical_effects)
+					if(istype(E, /datum/medical_effect/cardiac_arrest))
+						has_HA = 1
+						break
+				if(!has_HA)
+					H.add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
+				else
+					H.losebreath += 10
+					H.adjustOxyLoss(rand(5,25))
 	..()
 
 /datum/reagent/toxin/pancuronium

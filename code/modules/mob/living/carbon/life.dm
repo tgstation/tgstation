@@ -239,6 +239,40 @@
 	if(reagents)
 		reagents.metabolize(src)
 
+/mob/living/carbon/handle_medical_effects()
+	for(var/datum/medical_effect/E in medical_effects)
+		E.process(src)
+
+/mob/living/carbon/proc/add_medical_effect(var/datum/medical_effect/E, stage = 1)
+	for(var/datum/medical_effect/MED in medical_effects)
+		if(istype(MED, E.type))
+			return
+	var/datum/medical_effect/ME = new E
+	ME.stage = stage
+	medical_effects += ME
+	return
+
+/mob/living/carbon/proc/remove_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/ME in medical_effects)
+		if(istype(ME, E.type))
+			medical_effects -= ME
+	return
+
+/mob/living/carbon/proc/has_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/MED in medical_effects)
+		if(istype(MED, E.type))
+			return 1
+
+/mob/living/carbon/handle_critical()
+	if(health <= config.health_threshold_crit)
+		if(health > -51)
+			adjustOxyLoss(1)
+		if(health < -100)
+			adjustOxyLoss(1)
+			var/total_health = -100 - getBrainLoss()
+			if(prob(total_health / -20))
+				death()
+			return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)
@@ -263,6 +297,11 @@
 	if(..()) //alive
 
 		if(!getorgan(/obj/item/organ/internal/brain))
+			death()
+			return
+
+		if(getBrainLoss() >= 120) // braindeath
+			visible_message("<span class = 'danger'>[src]'s expression becomes completely blank, a lifeless look in their eyes.</span>")
 			death()
 			return
 

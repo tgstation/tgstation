@@ -664,10 +664,8 @@
 	if(prob(20))
 		M.Dizzy(5)
 		M.Jitter(5)
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack && prob(25))
-			H.heart_attack = 0
+	if(prob(25))
+		M.remove_medical_effect(/datum/medical_effect/cardiac_failure)
 	..()
 	return
 

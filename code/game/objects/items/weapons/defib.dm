@@ -429,11 +429,10 @@
 						playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
 						var/mob/living/carbon/human/HU = M
 						M.emote("scream")
-						if(!HU.heart_attack)
-							HU.heart_attack = 1
-							if(!HU.stat)
-								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
-									"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+						M.add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
+						if(!HU.stat)
+							HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
+								"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 						HU.apply_damage(50, BURN, "chest")
 						add_logs(user, M, "overloaded the heart of", defib)
 						M.Weaken(5)
