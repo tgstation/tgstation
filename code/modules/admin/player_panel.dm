@@ -444,42 +444,48 @@
 			dat += "<br><table cellspacing=5><tr><td><B>Red Deity</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.red_deities)
 				var/mob/M = N.current
-				dat += "<tr><td>Red Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Red Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.blue_deities.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.blue_deities)
 				var/mob/M = N.current
-				dat += "<tr><td>Blue Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Blue Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.red_deity_prophets.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Prophets</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.red_deity_prophets)
 				var/mob/M = N.current
-				dat += "<tr><td>Red Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Red Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.blue_deity_prophets.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Prophets</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.blue_deity_prophets)
 				var/mob/M = N.current
-				dat += "<tr><td>Blue Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Blue Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.red_deity_followers.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Followers</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.red_deity_followers)
 				var/mob/M = N.current
-				dat += "<tr><td>Red Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Red Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.blue_deity_followers.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Followers</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.blue_deity_followers)
 				var/mob/M = N.current
-				dat += "<tr><td>Blue Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+				if(M)
+					dat += "<tr><td>Blue Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.traitors.len > 0)
