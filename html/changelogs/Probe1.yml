@@ -1,0 +1,8 @@
+author: Probe1
+
+delete-after: True
+
+changes: 
+  - bugfix: Security and Medical once again have EVA access.
+  - tweak: Except Paramedics.  They have a sick ass suit already.
+
