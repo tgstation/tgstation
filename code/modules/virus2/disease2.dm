@@ -88,12 +88,12 @@ var/global/list/disease2_list = list()
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
-
+/*
 	if(mob.radiation > 50)
 		if(prob(1))
 			majormutate()
 			log += "<br />[timestamp()] MAJORMUTATE (rads)!"
-
+*/
 
 	//Space antibiotics stop disease completely (temporary)
 	if(mob.reagents.has_reagent("spaceacillin"))
