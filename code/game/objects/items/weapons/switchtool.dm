@@ -173,7 +173,7 @@
 	desc = "A switchtool containing most of the necessary items for impromptu surgery. For the surgeon on the go."
 
 	w_class = 3.0
-	origin_tech = "materials=9;bluespace=5;biotech=5"
+	origin_tech = "materials=4;bluespace=3;biotech=3"
 	stored_modules = list("/obj/item/weapon/scalpel:scalpel" = null,
 						"/obj/item/weapon/circular_saw:circular saw" = null,
 						"/obj/item/weapon/surgicaldrill:surgical drill" = null,
