@@ -8,4 +8,7 @@
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
 		return 0
+	if(getOxyLoss() > 10)
+		emote("gasp")
+		return 0
 	return ..()

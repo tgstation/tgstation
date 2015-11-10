@@ -21,8 +21,8 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing()
-	if(SSmob.times_fired%4==2 || failed_last_breath)
-		breathe() //Breathe per 4 ticks, unless suffocating
+	if(SSmob.times_fired%2==1)
+		breathe() //Breathe every 2 ticks
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -47,6 +47,7 @@
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
+		adjustOxyLoss(15)
 		if(prob(10))
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
@@ -89,9 +90,7 @@
 		return
 
 	//CRIT
-	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
-			return
+	if(health <= config.health_threshold_crit)
 		adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
@@ -118,11 +117,14 @@
 				emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
-			adjustOxyLoss(min(5*ratio, 3))
+			if(O2_partialpressure < 5)
+				adjustOxyLoss(10)
+			else if(O2_partialpressure < 10)
+				adjustOxyLoss(5)
 			failed_last_breath = 1
 			oxygen_used = breath.oxygen*ratio/6
 		else
-			adjustOxyLoss(3)
+			losebreath++
 			failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
@@ -251,13 +253,9 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(!getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
-
-		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
-			Paralyse(3)
-			stat = UNCONSCIOUS
 
 		if(sleeping)
 			stat = UNCONSCIOUS
