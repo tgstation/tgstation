@@ -307,7 +307,7 @@
 		returnToPool(B)
 
 	for(var/mob/living/simple_animal/hostile/carp/holocarp/holocarp in linkedholodeck)
-		del(holocarp)
+		qdel(holocarp)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
