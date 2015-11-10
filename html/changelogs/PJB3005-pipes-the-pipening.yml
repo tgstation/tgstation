@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Made ventcrawling through layer manifolds less of a pain; you now get aligned to the third layer if you're crawling in the direction with only 1 pipe.
