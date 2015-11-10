@@ -72,7 +72,7 @@
 		else if(!shuttle.linked_area)
 			dat = "<h2><font color='red'>UNABLE TO FIND [uppertext(shuttle.name)]</font></h2>"
 		else if(!shuttle.linked_port)
-			dat += {"<h2><font color='red'>This shuttle has no docking port speciied.</font></h2><br>
+			dat += {"<h2><font color='red'>This shuttle has no docking port specified.</font></h2><br>
 				<a href='?src=\ref[src];link_to_port=1'>Scan for docking ports</a>"}
 		else if(shuttle.moving)
 			dat += "<center><h3>Currently moving [shuttle.destination_port.areaname ? "to [shuttle.destination_port.areaname]" : ""]</h3></center>"
