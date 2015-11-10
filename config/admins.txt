@@ -99,3 +99,4 @@ Xhuis = Game Master
 Astralenigma = Game Master
 Tokiko1 = Game Master
 SuperSayu = Game Master
+Lzimann = Game Master

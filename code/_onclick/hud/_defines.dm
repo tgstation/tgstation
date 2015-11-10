@@ -123,9 +123,15 @@
 
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
-// Ghosts
+//Ghosts
 
 #define ui_ghost_jumptomob "SOUTH:6,CENTER-2:16"
 #define ui_ghost_orbit "SOUTH:6,CENTER-1:16"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER:16"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:16"
+
+//Hand of God, god
+
+#define ui_deityhealth "EAST-1:28,CENTER-2:13"
+#define ui_deitypower	"EAST-1:28,CENTER-1:15"
+#define ui_deityfollowers "EAST-1:28,CENTER:17"
