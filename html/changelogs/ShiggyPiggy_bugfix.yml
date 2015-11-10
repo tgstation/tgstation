@@ -1,0 +1,4 @@
+author: ShiggyPiggy
+changes: 
+  - bugfix: Fixed an issue where blood drips of any color had an "It's red." description.
+delete-after: true
