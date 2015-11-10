@@ -65,10 +65,11 @@
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)
 			H.verbs |= H.species.abilities
-	if(ckey in deadmins)
-		verbs += /client/proc/readmin
 
 	if(client)
+		if(ckey in deadmins)
+			client.verbs += /client/proc/readmin
+
 		if(M_FARSIGHT in mutations)
 			client.view = max(client.view, world.view+2)
 	CallHook("Login", list("client" = src.client, "mob" = src))
