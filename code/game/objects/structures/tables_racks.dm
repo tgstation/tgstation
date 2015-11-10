@@ -28,6 +28,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/mob/tableclimber
+	var/deconstructable = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
@@ -203,6 +204,8 @@
 #define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(destroy_type, mob/user)
+	if(!deconstructable)
+		return
 
 	if(destroy_type == TBL_DESTROY)
 		for(var/i = 1, i <= framestackamount, i++)

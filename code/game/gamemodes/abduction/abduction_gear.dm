@@ -579,6 +579,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
+	deconstructable = 0
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
