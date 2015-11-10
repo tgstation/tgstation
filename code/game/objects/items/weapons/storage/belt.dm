@@ -302,7 +302,12 @@
 	can_hold = list("/obj/item/device/mobcapsule")
 
 /obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
-	var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile
+	var/blocked = list(/mob/living/simple_animal/hostile,
+	/mob/living/simple_animal/hostile/hivebot/tele,
+	/mob/living/simple_animal/hostile/necro/copy,
+	/mob/living/simple_animal/hostile/humanoid,
+	)
+	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 	critters = shuffle(critters)
 	while(contents.len < 6)
 		var/obj/item/device/mobcapsule/MC = new /obj/item/device/mobcapsule(src)
