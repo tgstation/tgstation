@@ -1,6 +1,0 @@
-author: Probe1
-
-delete-after: True
-
-changes: 
-  - bugfix: Removed hivebot/tele and several invisible parent mobs from the master trainer belt list.  The hivebot/tele (beacon) was causing miners to get shrekt by their own capsules.
