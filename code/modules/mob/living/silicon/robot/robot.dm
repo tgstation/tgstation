@@ -240,6 +240,9 @@
 		modtype = input("Please, select a module!", "Robot", null, null) as null|anything in modules
 	// END forced modules.
 
+	if(!modtype)
+		return
+
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
 
 	if(module)
@@ -1521,11 +1524,9 @@
 		icon_state = module_sprites[icontype]
 		lockcharge = null
 	else
-		src << "Something is badly wrong with the sprite selection. Harass a coder."
-		icon_state = module_sprites[1]
-		base_icon = icon_state
-		lockcharge = null
+		triesleft++
 		return
+
 
 	overlays -= "eyes"
 	base_icon = icon_state
