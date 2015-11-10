@@ -22,7 +22,7 @@
 	fire_fuel = 10
 
 	var/health = 50
-	var/busy = 0
+	var/tmp/busy = 0
 	var/list/valid_types = list(/obj/item/weapon/book, \
 								/obj/item/weapon/tome, \
 								/obj/item/weapon/spellbook, \
@@ -42,7 +42,7 @@
 	if(health <= 0)
 		visible_message("<span class='warning'>\The [src] breaks apart!</span>")
 		getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
-		Destroy(src)
+		qdel(src)
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 
@@ -51,7 +51,7 @@
 	if(is_type_in_list(O, valid_types))
 		user.drop_item(O, src)
 		update_icon()
-	else if(istype(O, /obj/item/weapon/crowbar) && user.a_intent == I_HELP) //Only way to deconstruct, needs help intent
+	else if(iscrowbar(O) && user.a_intent == I_HELP) //Only way to deconstruct, needs help intent
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 		user.visible_message("<span class='warning'>[user] starts disassembling \the [src].</span>", \
 		"<span class='notice'>You start disassembling \the [src].</span>")
@@ -63,12 +63,12 @@
 			"<span class='notice'>You disassemble \the [src].</span>")
 			busy = 0
 			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 5)
-			Destroy(src)
+			qdel(src)
 			return
 		else
 			busy = 0
 		return
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(iswrench(O))
 		anchored = !anchored
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] [anchored ? "":"un"]anchors \the [src] [anchored ? "to":"from"] the floor.</span>", \
@@ -85,10 +85,8 @@
 		user.visible_message("<span class='warning'>\The [user] hits \the [src] with \the [O].</span>", \
 		"<span class='warning'>You hit \the [src] with \the [O].</span>")
 		healthcheck()
-		return
-
 	else
-		..() //Weapon checks for weapons without brute or burn damage type and grab check
+		return ..() //Weapon checks for weapons without brute or burn damage type and grab check
 
 /obj/structure/bookcase/attack_hand(var/mob/user as mob)
 	if(contents.len)
@@ -107,23 +105,22 @@
 		if(1.0)
 			for(var/obj/item/I in contents)
 				qdel(I)
-			Destroy(src)
+			qdel(src)
 			return
 		if(2.0)
 			for(var/obj/item/I in contents)
 				if(prob(50))
 					qdel(I)
-			Destroy(src)
+			qdel(src)
 			return
 		if(3.0)
 			if(prob(50))
-				Destroy(src)
+				qdel(src)
 			return
 	return
 
 /obj/structure/bookcase/Destroy()
 
-	density = 0 //Sanity while we do the rest
 	for(var/obj/item/I in contents)
 		if(is_type_in_list(I, valid_types))
 			I.forceMove(get_turf(src))
