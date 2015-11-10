@@ -541,7 +541,7 @@
 		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		if(do_after(user, used_digging.digspeed) && user) //the better the drill, the faster the digging
-			playsound(loc, 'sound/items/shovel.ogg', 50, 1)
+			playsound(src, 'sound/items/shovel.ogg', 50, 1)
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
