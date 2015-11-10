@@ -571,7 +571,7 @@ turf/simulated/floor/proc/update_icon()
 			user << "<span class='warning'>You must remove the plating first.</span>"
 	else if(istype(C, /obj/item/weapon/pickaxe/shovel))
 		if(is_grass_floor())
-			playsound(loc, 'sound/items/shovel.ogg', 50, 1)
+			playsound(src, 'sound/items/shovel.ogg', 50, 1)
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
 			user << "<span class='notice'>You shovel the grass.</span>"
