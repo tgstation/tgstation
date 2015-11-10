@@ -403,6 +403,9 @@
 		user << "<span class='notice'>You fill [RG] from [src].</span>"
 		return
 
+	if(O.flags&ABSTRACT)
+		return
+
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
