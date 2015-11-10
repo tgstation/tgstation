@@ -257,6 +257,13 @@
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= T.dna
+
+	if(istype(src,/mob/living/carbon/human))
+		var/mob/living/carbon/human/thechangeling = src
+		var/avail_blood = T.vessel.get_reagent_amount("blood")
+		for(var/datum/reagent/blood/B in thechangeling.vessel.reagent_list)
+			B.volume = min(BLOOD_VOLUME_MAX, avail_blood + B.volume)
+
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2

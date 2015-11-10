@@ -20,7 +20,6 @@
 		/obj/item/weapon/stock_parts/scanning_module
 	)
 	var/mob/living/carbon/occupant
-	var/locked
 
 	light_color = LIGHT_COLOR_GREEN
 	light_range_on = 3
@@ -217,7 +216,7 @@
 
 /obj/machinery/bodyscanner/proc/go_out(var/exit = loc)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/go_out() called tick#: [world.time]")
-	if((!(src.occupant) || locked))
+	if(!src.occupant)
 		return
 	for(var/obj/O in src)
 		O.loc = src.loc

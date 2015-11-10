@@ -2,6 +2,7 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
+var/const/BLOOD_VOLUME_MAX = 560
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
@@ -48,7 +49,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
 		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
+		if(blood_volume < BLOOD_VOLUME_MAX && blood_volume)
 			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 			if(B) // Make sure there's some blood at all
 				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
