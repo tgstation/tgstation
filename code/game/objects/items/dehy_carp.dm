@@ -8,7 +8,7 @@
 	var/mob/owner = null	//Carp doesn't attack owner, set when using in hand
 	var/owned = 0	//Boolean, no owner to begin with
 
-// Attack self
+//Attack self
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
 	src.add_fingerprint(user)	//Anyone can add their fingerprints to it with this
 	if(!owned)
@@ -33,11 +33,11 @@
 	//Animation
 	icon = 'icons/mob/animal.dmi'
 	flick("carp_swell", src)
-	// Wait for animation to end
+	//Wait for animation to end
 	sleep(6)
 	//Make space carp
 	var/mob/living/simple_animal/hostile/carp/C = new /mob/living/simple_animal/hostile/carp(get_turf(src))
-	// Make carp non-hostile to user, and their allies
+	//Make carp non-hostile to user, and their allies
 	if(owner)
 		var/list/factions = owner.faction
 		for(var/F in factions)
