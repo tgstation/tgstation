@@ -40,7 +40,7 @@ var/global/list/blood_list = list()
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
-	desc = "It's red."
+	desc = "Dried, crusty, and slightly upsetting."
 	gender = PLURAL
 	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
