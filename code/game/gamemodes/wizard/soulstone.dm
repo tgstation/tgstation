@@ -238,7 +238,7 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/list/candidates = get_candidates(BE_CULTIST)
+	var/list/candidates = get_candidates(ROLE_CULTIST)
 
 	shuffle(candidates)
 
