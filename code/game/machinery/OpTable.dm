@@ -109,9 +109,7 @@
 /obj/machinery/optable/proc/check_victim()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/check_victim() called tick#: [world.time]")
 	if (victim)
-		var/mob/living/carbon/human/H = locate() in src
-
-		if (victim == H)
+		if (victim.loc == src.loc)
 			if (victim.lying)
 				if (victim.pulse)
 					icon_state = "table2-active"
@@ -135,7 +133,7 @@
 		user << "<span class='bnotice'>The table is already occupied!</span>"
 
 	C.unlock_from()
-	C.loc = src.loc
+	C.forceMove(loc)
 
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
