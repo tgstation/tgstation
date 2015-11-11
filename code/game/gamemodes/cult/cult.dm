@@ -40,10 +40,12 @@
 		user.whisper(message)
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
-			if(clear || !ishuman(user))
-				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+			if(istype(user, /mob/living/simple_animal/slaughter/cult)) //Harbringers of the Slaughter
+				M << "<span class='userdanger'><i>Harbringer of the Slaughter: </i><span class='boldannounce'>\"[message]\"</span>"
+			else if(clear || !ishuman(user))
+				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]: </i>\"[message]\"</span>"
 			else //Emergency comms
-				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+				M << "<span class='ghostalert'><i>Acolyte ???: </i>\"[message]\"</span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
