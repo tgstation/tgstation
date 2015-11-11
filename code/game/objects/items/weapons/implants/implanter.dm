@@ -58,11 +58,11 @@
 	name = "implanter-greytide"
 	desc = "Greytide Stationwide."
 
-	New()
-		src.imp = new /obj/item/weapon/implant/traitor(src)
-		..()
-		update()
-		return
+/obj/item/weapon/implanter/traitor/New()
+	src.imp = new /obj/item/weapon/implant/traitor(src)
+	..()
+	update()
+	return
 
 /obj/item/weapon/implanter/loyalty
 	name = "implanter-loyalty"

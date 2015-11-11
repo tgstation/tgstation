@@ -145,6 +145,10 @@ obj/item/device/mmi/Destroy()
 		else
 			user << "<span class='warning'>Access denied.</span>"
 		return
+
+	if(istype(O, /obj/item/weapon/implanter))
+		return//toplel
+
 	if(brainmob)
 		O.attack(brainmob, user)//Oh noooeeeee
 		return
