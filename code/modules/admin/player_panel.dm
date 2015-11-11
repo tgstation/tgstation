@@ -440,7 +440,7 @@
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.red_deities.len || ticker.mode.red_deity_prophets || ticker.mode.blue_deity_prophets || ticker.mode.red_deity_followers || ticker.mode.blue_deity_followers)
+		if(ticker.mode.red_deities.len || ticker.mode.red_deity_prophets.len || ticker.mode.blue_deity_prophets.len || ticker.mode.red_deity_followers.len || ticker.mode.blue_deity_followers.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Red Deity</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.red_deities)
 				var/mob/M = N.current
