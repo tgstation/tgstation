@@ -870,7 +870,7 @@
 
 		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 		if(blood_volume >= 300)
-			mspeed += 1
+			. += 1
 
 		if(grav)
 			if(H.status_flags & GOTTAGOFAST)
