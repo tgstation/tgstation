@@ -30,7 +30,6 @@ var/list/lightning_sound = list('sound/effects/lightning/chainlightning1.ogg', '
 	var/turf/turf_source = get_turf(source)
 	if(!turf_source)
 		error("Warning : [source] trying to play sound '[soundin]', but turf could not be found.")
-		world << "Warning : [source] trying to play sound '[soundin]', but turf could not be found."
 		return
 
 /* What's going on in this block?
