@@ -40,9 +40,6 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit)
-		losebreath++
-
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
@@ -93,8 +90,6 @@
 
 	//CRIT
 	if(health <= config.health_threshold_crit)
-		if(health < -51)
-			adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
@@ -244,9 +239,8 @@
 		E.process(src)
 
 /mob/living/carbon/proc/add_medical_effect(var/datum/medical_effect/E, stage = 1)
-	for(var/datum/medical_effect/MED in medical_effects)
-		if(istype(MED, E.type))
-			return
+	if(has_medical_effect(E))
+		return
 	var/datum/medical_effect/ME = new E
 	ME.stage = stage
 	medical_effects += ME
@@ -254,23 +248,27 @@
 
 /mob/living/carbon/proc/remove_medical_effect(var/datum/medical_effect/E)
 	for(var/datum/medical_effect/ME in medical_effects)
-		if(istype(ME, E.type))
+		if(istype(ME, E))
 			medical_effects -= ME
 	return
 
 /mob/living/carbon/proc/has_medical_effect(var/datum/medical_effect/E)
 	for(var/datum/medical_effect/MED in medical_effects)
-		if(istype(MED, E.type))
+		if(istype(MED, E))
 			return 1
 
 /mob/living/carbon/handle_critical()
 	if(health <= config.health_threshold_crit)
-		if(health > -51)
+		world << round(health)
+		add_medical_effect(/datum/medical_effect/shock)
+		if(health >= -51)
 			adjustOxyLoss(1)
-		if(health < -100)
+		if(health <= -100)
 			adjustOxyLoss(1)
-			var/total_health = -100 - getBrainLoss()
-			if(prob(total_health / -20))
+			var/total_health = health - getBrainLoss()
+			var/kill_prob = total_health / -100
+			world << "KP = [kill_prob]"
+			if(prob(kill_prob))
 				death()
 			return
 

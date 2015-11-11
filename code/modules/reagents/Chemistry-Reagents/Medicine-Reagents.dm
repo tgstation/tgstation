@@ -231,15 +231,17 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. 33% chance to restore 1 unit of blood. Rolls a chance to fix shock."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
+/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM)
-		M.adjustFireLoss(-0.5*REM)
+		M.adjustBruteLoss(-2*REM)
+		M.adjustFireLoss(-2*REM)
+	if(prob(33))
+		M.remove_medical_effect(/datum/medical_effect/shock)
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -540,8 +542,8 @@
 		M.Weaken(1)
 		M << "You feel tired."
 	M.jitteriness -= 1
-	M.reagents.remove_reagent("histamine",3)
-	M.reagents.remove_reagent("itching_powder",3)
+	M.reagents.remove_reagent("histamine",15)
+	M.reagents.remove_reagent("itching_powder",5)
 	..()
 	return
 
@@ -651,7 +653,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
-/datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
+/datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
 	if(M.health > -60)
 		M.adjustToxLoss(1*REM)
 	if(M.health < -25)
@@ -684,7 +686,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-/datum/reagent/medicine/epinephrine/on_mob_life(mob/living/M)
+/datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
 	if(M.health < -10 && M.health > -65)
 		M.adjustToxLoss(-1*REM)
 		M.adjustBruteLoss(-1*REM)
@@ -701,7 +703,9 @@
 	M.AdjustWeakened(-1)
 	M.jitteriness += 3
 	M.drowsyness -= 3
-	M.reagents.remove_reagent("histamine",15)
+	M.reagents.remove_reagent("histamine",6)
+	if(prob(33))
+		M.remove_medical_effect(/datum/medical_effect/cardiac_failure)
 	..()
 	return
 

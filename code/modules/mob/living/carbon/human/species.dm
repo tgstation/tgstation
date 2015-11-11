@@ -868,6 +868,10 @@
 
 			mspeed += speedmod
 
+		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+		if(blood_volume >= 300)
+			mspeed += 1
+
 		if(grav)
 			if(H.status_flags & GOTTAGOFAST)
 				mspeed -= 1
@@ -1140,6 +1144,11 @@
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
+
+	if(H.health <= config.health_threshold_crit)
+		H.throw_alert("oxy", /obj/screen/alert/oxy)
+		H.failed_last_breath = 1
+		return 0
 
 	if(!breath || (breath.total_moles() == 0))
 		H.throw_alert("oxy", /obj/screen/alert/oxy)
