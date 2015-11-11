@@ -25,7 +25,7 @@
 		<td valign='top'>
 			<div align='center'><font size='3'><b>Hatestation 13</b></font></div>
 			
-			<p><div align='center'><font size='3'><a href="https://8ch.net/v">Forum</a> | <a href="http://www.tgstation13.org/wiki/Main_Page">Wiki</a> | <a href="https://github.com/Zaers/-tg-station">Source</a></font></div></p>
+			<p><div align='center'><font size='3'><a href="https://8ch.net/v">Forum</a> | <a href="https://8station.miraheze.org/wiki/Main_Page">Wiki</a> | <a href="https://github.com/Zaers/-tg-station">Source</a></font></div></p>
 			<font size='2'><b>Visit our IRC channel:</b> #hatestation on irc.rizon.net</font>
 			</td>
 	</tr>
@@ -36,12 +36,12 @@
 		<td valign='top'>
 			<font size='2'><b>Current Project Maintainers:</b><br></font>
 			<font size='2'><b>Currently Active GitHub contributor list:</b> <a href='https://github.com/Zaers/-tg-station/graphs/contributors'>-Click Here-</a><br></font>
-			<font size='2'><b>Coders:</b> Riesen, HONK-Science, Auron1213, Zaers<br></font> 
+			<font size='2'><b>Coders:</b> Riesen, HONK-Science, Auron1213, Zaers, Asd396, Octareenroon91, Koriath<br></font> 
 			<font size='2'><b>Mappers:</b> Riesen, Zaers<br></font>
 			<font size='2'><b>Spriters:</b> KwataX11, Anon<br></font>
 			<font size='2'><b>Sounds:</b> Riesen<br></font>
 			<font size='2'><b>Main Testers:</b> Riesen, Zaers, Anyone who has submitted a bug to the issue tracker, The players<br></font>
-			<font size='2'><b>Thanks to:</b> Baystation 12, /tg/station, /vg/station, NTstation, CDK Station devs, FacepunchStation, GoonStation devs, Whoever made Metastation, the original SpaceStation developers and KwataX11 for the title image.<br> Also a thanks to anybody who has contributed who is not listed here :^( Ask to be added here on irc or in OOC.</font>
+			<font size='2'><b>Thanks to:</b> Baystation 12, /tg/station, /vg/station, NTstation, CDK Station devs, FacepunchStation, GoonStation devs, Metacide, the original SpaceStation developers and KwataX11 for the title image.<br> Also a thanks to anybody who has contributed who is not listed here :^( Ask to be added here on irc or in OOC.</font>
 			<font size='2' color='red'><b><br>Have a bug to report?</b> Visit our <a href="https://github.com/Zaers/-tg-station/issues?labels=Bug&state=open">Issue Tracker</a>.<br></font>
 			<font size='2'>Please ensure that the bug has not already been reported and <u><a href="https://github.com/tgstation/-tg-station/issues/724"><b>use the template provided here</b></a></u>.</font>
 		</td>
@@ -56,6 +56,77 @@
 		
 		-->
 		<div class="commit sansserif">
+		
+			<h2 class="date">1 November 2015</h2>
+			<h3 class="author">Albinobigfoot updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Restores control of the turrets in AI Upload to Turret Control.</li>
+			</ul>
+
+			<h2 class="date">29 October 1015</h2>
+			<h3 class="author">Koriath updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Meatspikes can now be constructed and deconstructed with metal and rods, as well as wrenched and unwrenched! Humans and corgis can be used on them as well.</li>
+				<li class="rscadd">Added pools and pool tiles.</li>
+				<li class="rscadd">Added a pool area north of the boxing ring.</li>
+				<li class="rscadd">You can get pool tiles from cargo</li>
+				<li class="rscadd">Pools apply chems on mobs standing in them using TOUCH reactions.</li>
+				<li class="rscadd">Added a forensics crate to cargo.</li>
+			</ul>
+			
+			<h2 class="date">27 October 2015</h2>
+			<h3 class="author">Albinobigfoot updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added a Raincoat to the syndicate uplink and a new American Psycho bundle to go with it. Credit goes to ArthurDentist of /vg/.</li>
+				<li class="bugfix">Shadowpeople, Abductors, and Slimepeople now see in the dark as intended.</li>
+			</ul>
+
+			<h2 class="date">25 October 2015</h2>
+			<h3 class="author">Asd396 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added WT550 auto rifles and ammo.</li>
+				<li class="rscadd">Added new crates to cargo, including foam force, toy and WT550.</li>
+			</ul>
+
+			<h2 class="date">24 October 2015</h2>
+			<h3 class="author">Albinobigfoot updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added chainsaws to table crafting. Chainsaws can now serve as a ghetto circular saw for surgery, and can turn logs into planks.</li>
+				<li class="rscadd">Added missing inhands sprites for the chainsaw - chainsaw now properly displays on your character. Sprites by WalterJe.</li>
+				<li class="tweak">Chainsaw damage and research values adjusted, chainsaw no longer weakens, and the chainsaw now runs on fuel.</li>
+				<li class="tweak">Chainsaw code cleaned up, added chainsaw_attack var to sound.dm to reduce snowflake code.</li>
+			</ul>
+
+			<h2 class="date">23 October 2015</h2>
+			<h3 class="author">Asd396 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">MoMMIs are now affected by the illegals module. It removes their muteness and killswitch restrictions, and shows them on the robotics console and borg law upload.</li>
+				<li class="rscadd">KEEPER AI module added to AI upload.</li>
+				<li class="tweak">KEEPER made universal to silicons: if a borg or an AI is uploaded with KEEPER it gets the same prohibitions as MoMMIs, including not being able to welderbomb or click beings.</li>
+			</ul>
+
+			<h2 class="date">22 October 2015</h2>
+			<h3 class="author">Asd396 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added circuit imprinter board to secure tech storage.</li>
+				<li class="rscadd">New HTML interface ported from /tg/.</li>
+				<li class="rscadd">New crew monitor interface with minimap.</li>
+				<li class="rscadd">New playing cards. Click deck to shuffle, click people to deal them cards, click your hand to see it with options to reveal or remove cards.</li>
+			</ul>
+			
+			<h2 class="date">13 October 2015</h2>
+			<h3 class="author">Koriath updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Brig, Cargo, Medbay, Science, Recreation and Crew Quarters now have their own SMES located in a substation.</li>
+				<li class="tweak">Changed the ORM location.</li>
+				<li class="bugfix">Fixed Toxins Mass Driver.</li>
+				<li class="bugfix">Fixed waste pipe in medbay.</li>
+				<li class="bugfix">Fixed shocked grils in the brig.</li>
+				<li class="bugfix">Fixed Field Generators starting welded but not anchored in Secure Storage.</li>
+				<li class="rscadd">Added Mr. Meeseeks box to the protolathe.</li>
+				<li class="rscadd">Added Mr. Meeseeks into the game. You can randomly become one by being a ghost with pAI enabled in your preferences.</li>
+				<li class="tweak">Players can despawn the Meeseeks with the box before he gets too anxious.</li>
+			</ul>
 			
 			<h2 class="date">26 September 2015</h2>
 			<h3 class="author">Koriath updated:</h3>
