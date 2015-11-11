@@ -163,6 +163,9 @@
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 
+//Slime evolution threshold. Controls how fast slimes can split/grow
+#define SLIME_EVOLUTION_THRESHOLD 10
+
 //singularity defines
 #define STAGE_ONE 1
 #define STAGE_TWO 3
