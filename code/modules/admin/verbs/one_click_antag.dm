@@ -353,6 +353,9 @@
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
 			Commando << missiondesc
 
+			if(config.enforce_human_authority)
+				Commando.set_species("human")
+
 			//Logging and cleanup
 			if(numagents == 1)
 				message_admins("The deathsquad has spawned with the mission: [mission].")
@@ -536,6 +539,9 @@
 				missiondesc += " Follow orders given to you by your commander. Avoid civilian casualites when possible."
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
 			ERTOperative << missiondesc
+
+			if(config.enforce_human_authority)
+				ERTOperative.set_species("human")
 
 			//Logging and cleanup
 			if(numagents == 1)
