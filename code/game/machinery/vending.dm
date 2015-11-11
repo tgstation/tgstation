@@ -42,7 +42,6 @@ var/global/num_vending_terminals = 1
 	var/vend_delay = 10	//How long does it take to vend?
 	var/shoot_chance = 2 //How often do we throw items?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
-	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
 	var/list/products	= list()	// For each, use the following pattern:
 	var/list/contraband	= list()	// list(/type/path = amount,/type/path2 = amount2)
@@ -258,29 +257,28 @@ var/global/num_vending_terminals = 1
 	for (var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
-		if(isnull(amount)) amount = 1
 
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		if (isnull(amount))
+			amount = 1
+
+		var/datum/data/vending_product/R = new()
 		R.product_path = typepath
 		R.amount = amount
 		R.original_amount = amount
 		R.price = price
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red", "blue", "green")
 
-		if(hidden)
+		if (hidden)
 			R.category=CAT_HIDDEN
 			hidden_records  += R
-		else if(req_coin)
+		else if (req_coin)
 			R.category=CAT_COIN
 			coin_records    += R
 		else
-			R.category=CAT_NORMAL
-			product_records += R
+			R.category = CAT_NORMAL
+			product_records.Add(R)
 
 		temp = new typepath(null)
-
-		if (delay_product_spawn)
-			sleep(1)
 
 		R.product_name = temp.name
 		R.subcategory = temp.vending_cat
@@ -761,30 +759,26 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/proc/add_item(var/obj/item/I)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/add_item() called tick#: [world.time]")
-	var/found = 0
-	for (var/datum/data/vending_product/D in product_records)
-		if(D.product_path == I.type)
-			D.amount++
-			found = 1
+	var/found = FALSE
 
-	if(!found)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
+	for (var/datum/data/vending_product/D in product_records)
+		if (D.product_path == I.type)
+			D.amount++
+			found = TRUE
+			break
+
+	if (!found)
+		var/datum/data/vending_product/R = new()
 		R.product_path = I.type
 		R.amount = 1
 		R.original_amount = 0
 		R.price = 0
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red", "blue", "green")
+		R.product_name = I.name
+		R.category = CAT_NORMAL
+		R.subcategory = I.vending_cat
 
-		R.category=CAT_NORMAL
-		product_records += R
-
-		if(delay_product_spawn)
-			sleep(1)
-			R.product_name = I.name
-			R.subcategory = I.vending_cat
-		else
-			R.product_name = I.name
-			R.subcategory = I.vending_cat
+		product_records.Add(R)
 
 	qdel(I)
 
