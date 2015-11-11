@@ -140,31 +140,16 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		rank_names[R.name] = R
 
 	if(config.admin_legacy_system)
-		//load text from file
 		var/list/Lines = file2list("config/admins.txt")
-
-		//process each line seperately
-		for(var/line in Lines)
-			if(!length(line))				continue
-			if(findtextEx(line,"#",1,2))	continue
-
-			//Split the line at every "="
-			var/list/List = text2list(line, "=")
-			if(!List.len)					continue
-
-			//ckey is before the first "="
-			var/ckey = ckey(List[1])
-			if(!ckey)						continue
-
-			//rank follows the first "="
-			var/rank = ""
-			if(List.len >= 2)
-				rank = ckeyEx(List[2])
-
-			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
+		for(var/i in Lines)
+			var/datum/regex/results = regex_find(i, "^(.+)\\s*=\\s*(\\w+)$")
+			if(!results.matches.len)
+				continue
+			var/adminkey = ckey(results.str(2))
+			var/rank = results.str(3)
+			var/datum/admins/D = new(rank_names[rank], adminkey)	//create the admin datum and store it for later use
 			if(!D)	continue									//will occur if an invalid rank is provided
-			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
-
+			D.associate(directory[adminkey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		establish_db_connection()
 		if(!dbcon.IsConnected())
@@ -333,3 +318,24 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
 	query_update.Execute()
+
+/proc/sync_debug_access()
+	var/f = ("cfg/debug_access.txt")
+	var/list/adminkeys = list()
+	var/list/adminlist = file2list("config/admins.txt")
+	for(var/i in adminlist)
+		var/datum/regex/results = regex_find(i, "^(\\w.+)\\s*(?==)")
+		if(results.matches.len)
+			adminkeys.Add(ckey(results.str(2)))
+	var/list/debuggerkeys = list()
+	var/list/debuggerlist = file2list(f)
+	for(var/d in debuggerlist)
+		var/datum/regex/results = regex_find(d, "^(\\w.+)")
+		if(results.matches.len)
+			debuggerkeys.Add(ckey(results.str(2)))
+	var/list/ckeys_to_add = adminkeys - debuggerkeys
+	f = file(f)
+	if(!ckeys_to_add.len)
+		return
+	for(var/c in ckeys_to_add)
+		f << c

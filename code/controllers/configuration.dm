@@ -181,6 +181,7 @@
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
 
+	var/sync_debug_access = 0 //when enabled this will add all the ckeys in config/admins.txt to cfg/debug_access.txt during roundstart if they're not there already
 
 
 /datum/configuration/New()
@@ -381,6 +382,8 @@
 					protected_config.autoadmin = 1
 					if(value)
 						protected_config.autoadmin_rank = ckeyEx(value)
+				if("sync_debug_access")
+					config.sync_debug_access = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

@@ -4,6 +4,10 @@
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
+##AUTOADMIN
+##Uncomment to automatically give that admin rank to all players
+AUTOADMIN Game Master
+
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
@@ -226,6 +230,5 @@ ANNOUNCE_ADMIN_LOGOUT
 ##A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
 #MAPROTATIONCHANCEDELTA 0.75
 
-##AUTOADMIN
-##Uncomment to automatically give that admin rank to all players
-#AUTOADMIN Game Admin
+##Uncomment to have all ckeys on config/admins.txt which aren't also on cfg/debug_access.txt added to it at roundstart
+#SYNC_DEBUG_ACCESS

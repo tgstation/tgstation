@@ -42,6 +42,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	jobban_updatelegacybans()
 	LoadBans()
 	investigate_reset()
+	if(config.sync_debug_access)
+		sync_debug_access()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		config.server_name += " #[(world.port % 1000) / 100]"
