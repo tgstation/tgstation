@@ -255,7 +255,7 @@
 /obj/item/organ/internal/gland/plasma
 	cooldown_low = 2400
 	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=5;plasma=3"
+	origin_tech = "materials=4;biotech=5;plasmatech=3"
 	uses = 1
 
 /obj/item/organ/internal/gland/plasma/activate()

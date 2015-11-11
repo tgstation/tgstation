@@ -10,7 +10,7 @@
 /datum/round_event/operative/proc/get_operative(end_if_fail = 0)
 	key_of_operative = null
 	if(!key_of_operative)
-		var/list/candidates = get_candidates(BE_OPERATIVE, 3000, "operative")
+		var/list/candidates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0
@@ -29,7 +29,7 @@
 			spawn_locs += L.loc
 	if(!spawn_locs.len)
 		return kill()
-	
+
 	var/mob/living/carbon/human/operative = new(pick(spawn_locs))
 	var/datum/preferences/A = new
 	A.copy_to(operative)
@@ -45,7 +45,7 @@
 
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in machines
 	if(nuke)
-		var/nuke_code 
+		var/nuke_code
 		if(!nuke.r_code || nuke.r_code == "ADMIN")
 			nuke_code = "[rand(10000, 99999)]"
 			nuke.r_code = nuke_code

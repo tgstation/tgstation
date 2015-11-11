@@ -282,7 +282,6 @@
 					continue
 
 	character.loc = D
-	character.lastarea = get_area(loc)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
@@ -364,7 +363,6 @@
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()

@@ -31,6 +31,7 @@
 		uneq_all()
 		stat = UNCONSCIOUS
 		update_headlamp(1)
+	diag_hud_set_borgcell()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -44,6 +45,7 @@
 
 		if(health <= -maxHealth) //die only once
 			death()
+			diag_hud_set_status()
 			return
 
 		if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
@@ -62,6 +64,8 @@
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
 			update_headlamp()
+		diag_hud_set_health()
+		diag_hud_set_status()
 
 		return 1
 

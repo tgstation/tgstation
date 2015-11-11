@@ -54,7 +54,7 @@ Contents:
 
 	//selecting a candidate player
 	if(!key)
-		var/list/candidates = get_candidates(BE_NINJA)
+		var/list/candidates = get_candidates(ROLE_NINJA)
 		if(!candidates.len)
 			return kill()
 		var/client/C = pick(candidates)

@@ -39,6 +39,19 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
+	var/mob/wearer = loc
+	if(msg && ishuman(wearer))
+		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+	..()
+	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+
+/obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
+	..()
+	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
+
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
@@ -314,16 +327,32 @@
 	icon_state = "hardsuit0-rd"
 	item_color = "rd"
 	unacidable = 1
+	var/onboard_hud_enabled = 0 //stops conflicts with another diag HUD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	var/obj/machinery/doppler_array/integrated/bomb_radar
 
-/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
-	user.scanner.Grant(user)
+/obj/item/clothing/head/helmet/space/hardsuit/rd/New()
+	..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..(user, slot)
+	user.scanner.Grant(user)
+	user.scanner.devices += 1
+	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
+		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
+	else
+		onboard_hud_enabled = 1
+		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		DHUD.add_hud_to(user)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/user)
-	user.scanner.devices -= 1
+/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
 	..(user)
+	user.scanner.devices = max(0, user.scanner.devices - 1)
+	if(onboard_hud_enabled && !(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic)))
+		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		DHUD.remove_hud_from(user)
 
 /obj/item/clothing/suit/space/hardsuit/rd
 	icon_state = "hardsuit-rd"

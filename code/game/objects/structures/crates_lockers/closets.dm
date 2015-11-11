@@ -280,7 +280,7 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
-		user << "<span class='notice'>It won't budge!</span>"
+		container_resist()
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
@@ -402,8 +402,8 @@
 		locked = 0
 		desc += " It appears to be broken."
 		update_icon()
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		if(user)
+			visible_message("<span class='warning'>The [name] has been broken by [user] with an electromagnetic card!</span>", "<span class='italics'>You hear a faint electrical spark.</span>")
 		overlays += "sparking"
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()

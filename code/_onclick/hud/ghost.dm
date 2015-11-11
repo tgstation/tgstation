@@ -1,6 +1,9 @@
 /obj/screen/ghost
 	icon = 'icons/mob/screen_ghost.dmi'
 
+/obj/screen/ghost/MouseEntered()
+	flick(icon_state + "_anim", src)
+
 /obj/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
