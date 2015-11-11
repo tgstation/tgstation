@@ -30,7 +30,7 @@
 	switch(severity)
 		if(1)
 			qdel(src)
-		if(2 to 3)
+		else
 			return
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -60,7 +60,6 @@
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
-
 	boing = 1
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
@@ -104,9 +103,7 @@
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
-
 	canshock = 1
-
 
 /obj/effect/anomaly/flux/Bump(mob/living/M)
 	mobShock(M)
@@ -165,7 +162,7 @@
 	..()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 20)
+		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 15)
 
 /////////////////////
 
