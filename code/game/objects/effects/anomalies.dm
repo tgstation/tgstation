@@ -22,9 +22,16 @@
 
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(50))
+	if(prob(70))
 		step(src,pick(alldirs))
 
+
+/obj/effect/anomaly/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2 to 3)
+			return
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	PoolOrNew(/obj/effect/particle_effect/smoke/bad, loc)
@@ -37,7 +44,7 @@
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
-		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [aSignal.code]:[format_frequency(aSignal.frequency)].</span>"
+		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>"
 
 ///////////////////////
 
@@ -60,12 +67,11 @@
 			step_towards(O,src)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
-	for(var/obj/O in orange(1,src))
+	for(var/obj/O in range(0,src))
 		if(!O.anchored)
-			var/mob/living/target = locate() in view(10,src)
-			if(!target)
+			var/mob/living/target = locate() in view(4,src)
+			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
-
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
@@ -88,10 +94,40 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
+	density = 1
+	var/canshock = 0
+	var/shockdamage = 20
 
 /obj/effect/anomaly/flux/New()
 	..()
 	aSignal.origin_tech = "powerstorage=6;programming=4;plasmatech=4"
+
+/obj/effect/anomaly/flux/anomalyEffect()
+	..()
+
+	canshock = 1
+
+
+/obj/effect/anomaly/flux/Bump(mob/living/M)
+	mobShock(M)
+
+/obj/effect/anomaly/flux/Bumped(mob/living/M)
+	mobShock(M)
+
+/obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
+	if(canshock && isliving(M))
+		canshock = 0 //Just so you don't instakill yourself if you slam into the anomaly five times in a second.
+		if(iscarbon(M))
+			if(ishuman(M))
+				M.electrocute_act(shockdamage, "[name]", safety=1)
+				return
+			M.electrocute_act(shockdamage, "[name]")
+			return
+		else
+			M.adjustFireLoss(shockdamage)
+			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack.</span>")
 
 /////////////////////
 
@@ -105,9 +141,14 @@
 	..()
 	aSignal.origin_tech = "bluespace=5;magnets=5;powerstorage=3"
 
+/obj/effect/anomaly/bluespace/anomalyEffect()
+	..()
+	for(var/mob/living/M in range(1,src))
+		do_teleport(M, locate(M.x, M.y, M.z), 4)
+
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
-		do_teleport(A, locate(A.x, A.y, A.z), 10)
+		do_teleport(A, locate(A.x, A.y, A.z), 8)
 	return
 
 /////////////////////
@@ -124,7 +165,7 @@
 	..()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 3)
+		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 20)
 
 /////////////////////
 
@@ -146,13 +187,13 @@
 	grav(rand(0,3), rand(2,3), 50, 25)
 
 	//Throwing stuff around!
-	for(var/obj/O in orange(1,src))
+	for(var/obj/O in range(2,src))
+		if(O == src)
+			return //DON'T DELETE YOURSELF GOD DAMN
 		if(!O.anchored)
-			var/mob/living/target = locate() in view(5,src)
-			if(!target)
-				return
-			O.throw_at(target, 5, 10)
-			return
+			var/mob/living/target = locate() in view(4,src)
+			if(target && !target.stat)
+				O.throw_at(target, 7, 5)
 		else
 			O.ex_act(2)
 
