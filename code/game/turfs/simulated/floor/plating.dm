@@ -197,10 +197,29 @@
 /turf/simulated/floor/plating/hole
 	name = "hole"
 	desc = "Yep, thats a hole."
+	icon = 'icons/turf/floors/hole.dmi'
 	icon_state = "hole"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
 	var/tp_x = 0 //hole drop-point
 	var/tp_y = 0
 	var/tp_z = 0
+
+/turf/simulated/floor/plating/hole/New()
+	..()
+	spawn(1)
+		update_icon()
+
+/turf/simulated/floor/plating/hole/update_icon()
+	if(!..())
+		return 0
+	if(!broken && !burnt)
+		if(smooth)
+			smooth_icon(src)
+	else
+		make_plating()
+		if(smooth)
+			smooth_icon_neighbors(src)
 
 /turf/simulated/floor/plating/hole/Entered(atom/movable/H)
 	if(!istype(H))
