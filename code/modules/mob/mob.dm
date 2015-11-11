@@ -1010,3 +1010,7 @@ var/list/slot_equipment_priority = list( \
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
 	return 1
+
+//Can the mob use Topic to interact with machines
+/mob/proc/canUseTopic()
+	return
