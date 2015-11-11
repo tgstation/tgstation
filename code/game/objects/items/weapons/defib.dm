@@ -429,8 +429,8 @@
 						playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
 						var/mob/living/carbon/human/HU = M
 						M.emote("scream")
-						if(!HU.heart_attack)
-							HU.heart_attack = 1
+						if(!HU.has_medical_effect(/datum/medical_effect/cardiac_arrest))
+							HU.add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
 							if(!HU.stat)
 								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
 									"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
@@ -460,7 +460,6 @@
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
-				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20, target = M)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
@@ -511,8 +510,6 @@
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")
-							if(tplus > tloss)
-								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
 							add_logs(user, M, "revived", defib)
 						if(req_defib)
 							defib.deductcharge(revivecost)
@@ -522,8 +519,8 @@
 							defib.cooldowncheck(user)
 						else
 							recharge(60)
-					else if(H.heart_attack)
-						H.heart_attack = 0
+					else if(H.has_medical_effect(/datum/medical_effect/cardiac_arrest))
+						H.remove_medical_effect(/datum/medical_effect/cardiac_arrest)
 						user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else

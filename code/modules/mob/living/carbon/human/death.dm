@@ -21,7 +21,8 @@
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
-	heart_attack = 0
+	for(var/datum/medical_effect/E in medical_effects)
+		remove_medical_effect(E)
 
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc

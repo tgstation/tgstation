@@ -21,12 +21,11 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing()
-	if(SSmob.times_fired%4==2 || failed_last_breath)
-		breathe() //Breathe per 4 ticks, unless suffocating
-	else
-		if(istype(loc, /obj/))
-			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src,0)
+	if(istype(loc, /obj/))
+		var/obj/location_as_object = loc
+		location_as_object.handle_internal_lifeform(src,0)
+	else if(SSmob.times_fired%4==2)
+		breathe()
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
@@ -41,12 +40,13 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit)
-		losebreath++
-
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
+		if(health < -51)
+			adjustOxyLoss(1)
+		else
+			adjustOxyLoss(15)
 		if(prob(10))
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
@@ -89,10 +89,7 @@
 		return
 
 	//CRIT
-	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
-			return
-		adjustOxyLoss(1)
+	if(health <= config.health_threshold_crit)
 		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
@@ -118,11 +115,20 @@
 				emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
-			adjustOxyLoss(min(5*ratio, 3))
+			if(O2_partialpressure < 5)
+				if(health < -1)
+					adjustOxyLoss(1)
+				else
+					adjustOxyLoss(10)
+			else if(O2_partialpressure < 10)
+				if(health < -1)
+					adjustOxyLoss(1)
+				else
+					adjustOxyLoss(5)
 			failed_last_breath = 1
 			oxygen_used = breath.oxygen*ratio/6
 		else
-			adjustOxyLoss(3)
+			losebreath++
 			failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
@@ -235,6 +241,43 @@
 	if(reagents)
 		reagents.metabolize(src)
 
+/mob/living/carbon/handle_medical_effects()
+	for(var/datum/medical_effect/E in medical_effects)
+		E.process(src)
+
+/mob/living/carbon/proc/add_medical_effect(var/datum/medical_effect/E, stage = 1)
+	if(has_medical_effect(E))
+		return
+	var/datum/medical_effect/ME = new E
+	ME.stage = stage
+	medical_effects += ME
+	return
+
+/mob/living/carbon/proc/remove_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/ME in medical_effects)
+		if(istype(ME, E))
+			medical_effects -= ME
+	return
+
+/mob/living/carbon/proc/has_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/MED in medical_effects)
+		if(istype(MED, E))
+			return 1
+
+/mob/living/carbon/handle_critical()
+	if(health <= config.health_threshold_crit)
+		add_medical_effect(/datum/medical_effect/shock)
+		if(health >= -51)
+			adjustOxyLoss(1)
+		if(health <= -100)
+			adjustOxyLoss(1)
+			if(prob(15))
+				add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
+			var/total_health = health - getBrainLoss()
+			var/kill_prob = total_health / -100
+			if(prob(kill_prob))
+				death()
+			return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)
@@ -258,13 +301,19 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(!getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
 
-		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
-			Paralyse(3)
-			stat = UNCONSCIOUS
+		if(getBrainLoss() >= 100) //
+			Weaken(1)
+			losebreath++
+			return
+
+		if(getBrainLoss() >= 120) // braindeath
+			visible_message("<span class = 'danger'>[src]'s expression becomes completely blank, a lifeless look in their eyes.</span>")
+			death()
+			return
 
 		if(sleeping)
 			stat = UNCONSCIOUS

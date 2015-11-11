@@ -72,6 +72,7 @@ Medical Doctor
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray/medical
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel_med

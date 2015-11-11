@@ -327,11 +327,11 @@
 	description = "Cause significant Radiation damage over time."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/M)
-	M.radiation += 4
+	M.radiation += 8
 	..()
 
 /datum/reagent/toxin/histamine
@@ -372,13 +372,12 @@
 	description = "Deals a moderate amount of Toxin damage over time. 10% chance to decay into 10-15 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
-	if(prob(5))
-		holder.add_reagent("histamine", pick(5,15))
-		holder.remove_reagent("formaldehyde", 1.2)
+	if(prob(10))
+		holder.add_reagent("histamine", rand(1,15))
 	else
 		..()
 
@@ -388,7 +387,7 @@
 	description = "Will deal scaling amounts of Toxin and Brute damage over time. 15% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/M)
@@ -403,18 +402,26 @@
 /datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 18 elapsed cycles."
+	description = "Causes jitteriness, dizziness, drowsiness and confused movement. +1 TOX, +1 BRAIN if total brain damage is less than 80 (10% chance otherwise). Delayed poison. Ill effects will not be felt until the 5th cycle, and completely KO the victim on the 14th cycle."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
-	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
-		M.adjustToxLoss(1*REM)
-	if(current_cycle >= 18)
-		M.sleeping += 1
+	if(current_cycle >= 5)
+		M.jitteriness++
+		M.drowsyness++
+		M.dizziness++
+		M.confused++
+		if(M.brainloss < 80)
+			M.adjustBrainLoss(1*REM)
+			M.adjustToxLoss(1*REM)
+		else if(prob(10))
+			M.adjustBrainLoss(1*REM)
+			M.adjustToxLoss(1*REM)
+		if(current_cycle >= 14)
+			M.Paralyse(2)
 	..()
 
 /datum/reagent/toxin/cyanide
@@ -424,10 +431,10 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	toxpwr = 1.25
+	toxpwr = 1.5
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
-	if(prob(5))
+	if(prob(10))
 		M.losebreath += 1
 	if(prob(8))
 		M << "You feel horrendously weak!"
@@ -482,7 +489,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
 
-/datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
+/datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/M)
 	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
@@ -493,15 +500,11 @@
 				M.losebreath += 10
 				M.adjustOxyLoss(rand(5,25))
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(!H.heart_attack)
-						H.heart_attack = 1 // rip in pepperoni
-						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
-					else
-						H.losebreath += 10
-						H.adjustOxyLoss(rand(5,25))
+				if(!M.has_medical_effect(/datum/medical_effect/cardiac_arrest))
+					M.add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
+				else
+					M.losebreath += 10
+					M.adjustOxyLoss(rand(5,25))
 	..()
 
 /datum/reagent/toxin/pancuronium
@@ -510,14 +513,17 @@
 	description = "Knocks you out after 10 seconds, 20% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
+	M.adjustStaminaLoss(3*REM)
 	if(current_cycle >= 10)
 		M.SetParalysis(1)
-	if(prob(20))
-		M.losebreath += 4
+		if(prob(10))
+			M.losebreath++
+		if(prob(7))
+			M.losebreath += 3
 	..()
 
 /datum/reagent/toxin/sodium_thiopental
@@ -542,11 +548,15 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	toxpwr = 0.5
+	toxpwr = 1
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
+	M.adjustStaminaLoss(1)
+	M.drowsyness++
+	M.jitteriness--
 	if(current_cycle >= 22)
-		M.sleeping += 1
+		if(prob(20))
+			M.Paralyse(1)
 	..()
 
 /datum/reagent/toxin/amanitin
@@ -586,8 +596,8 @@
 	description = "Does moderate toxin damage and oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.06 * REAGENTS_METABOLISM
-	toxpwr = 1.75
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	toxpwr = 2
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
 	M.losebreath += 5
@@ -606,6 +616,8 @@
 	if(current_cycle >= 11)
 		M.Weaken(3)
 	M.adjustOxyLoss(1*REM)
+	if(prob(8))
+		M.losebreath++
 	..()
 
 

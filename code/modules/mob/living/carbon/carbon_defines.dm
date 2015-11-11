@@ -28,3 +28,4 @@
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
 	var/rotate_on_lying = 1
+	var/list/medical_effects = list()

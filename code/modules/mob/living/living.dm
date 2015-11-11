@@ -255,7 +255,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = max(bruteloss + amount, 0)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getOxyLoss()
@@ -263,7 +263,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss = max(oxyloss + amount, 0)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
@@ -276,7 +276,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss = max(toxloss + amount, 0)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
@@ -289,7 +289,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss = max(fireloss + amount, 0)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getCloneLoss()
@@ -310,7 +310,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	brainloss = max(brainloss + amount, 0)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)

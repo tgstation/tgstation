@@ -2,10 +2,6 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
 /mob/living/carbon/human/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
@@ -16,13 +12,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(vessel)
 		return
 
-	vessel = new/datum/reagents(600)
+	vessel = new/datum/reagents(500)
 	vessel.my_atom = src
 
 	if(NOBLOOD in dna.species.specflags)
 		return
 
-	vessel.add_reagent("blood",560)
+	vessel.add_reagent("blood",500)
 	spawn(1)
 		fixblood()
 
@@ -53,7 +49,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
 		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
+		if(blood_volume < 500 && blood_volume)
 			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 			if(B) // Make sure there's some blood at all
 				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -69,40 +65,66 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
+				if (reagents.has_reagent("salglu_solution"))	//Good for helping with bloodloss and shock.
+					if(prob(33))
+						B.volume += 1
 
 		//Effects of bloodloss
 		switch(blood_volume)
-			if(BLOOD_VOLUME_SAFE to 10000)
+			if(500 to 401)
 				if(pale)
 					pale = 0
 					update_body()
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+			if(400 to 301)
 				if(!pale)
 					pale = 1
 					update_body()
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel [word].</span>"
-				if(oxyloss < 20)
-					oxyloss += 3
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				if(!pale)
-					pale = 1
-					update_body()
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
-				if(prob(5))
-					eye_blurry += 6
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel very [word].</span>"
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				oxyloss += 5
 				if(prob(15))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel extremely [word].</span>"
-			if(0 to BLOOD_VOLUME_SURVIVE)
-				death()
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(25))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(3)
+					else
+						Paralyse(3)
+			if(300 to 201)
+				if(!pale)
+					pale = 1
+					update_body()
+				if(prob(25))
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(40))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(4)
+					else
+						Paralyse(4)
+			if(200 to 101)
+				if(!pale)
+					pale = 1
+					update_body()
+				if(prob(50))
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(50))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(5)
+					else
+						Paralyse(5)
+			if(100 to 0)
+				if(!pale)
+					pale = 1
+					update_body()
+				if(prob(75))
+					add_medical_effect(/datum/medical_effect/shock)
+				adjustOxyLoss(5)
+				adjustBrainLoss(1)
+				if(prob(65))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(6)
+					else
+						Paralyse(6)
 
 		//Bleeding out
 		blood_max = 0

@@ -49,9 +49,9 @@ MASS SPECTROMETER
 
 			if(O.level != 1)
 				continue
-			
+
 			var/mob/living/L = locate() in O
-			
+
 			if(O.invisibility == 101)
 				O.invisibility = 0
 				if(L)
@@ -125,11 +125,16 @@ MASS SPECTROMETER
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+	if(istype(M, /mob/living/carbon/))
+		var/mob/living/carbon/C = M
+		if(C.medical_effects.len)
+			user << "<span class='userdanger'>Medical Emergency:</span>"
+			for(var/datum/medical_effect/E in C.medical_effects)
+				user << "<span class = 'danger'><b>[E.name]</b></span>"
+				user << "<span class = 'danger'>Description: [E.description]</span>"
+				user << "<span class = 'danger'>Reccomended Treatment: [E.reccomended_treatment]</span>"
+				user << "<span class = 'danger'>Stage: [E.stage]</span>"
+			user << "<span class='userdanger'>---------------</span>"
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
@@ -184,12 +189,12 @@ MASS SPECTROMETER
 			if(H.blood_max)
 				user << "<span class='danger'>Subject is bleeding!</span>"
 			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-			var/blood_percent =  round((blood_volume / 560),0.01)
+			var/blood_percent =  round((blood_volume / 500),0.01)
 			var/blood_type = H.dna.blood_type
 			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
+			if(blood_volume <= 400 && blood_volume > 300)
 				user << "<span class='danger'>LOW blood level [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
-			else if(blood_volume <= 336)
+			else if(blood_volume <= 300)
 				user << "<span class='danger'>CRITICAL blood level CRITICAL [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"

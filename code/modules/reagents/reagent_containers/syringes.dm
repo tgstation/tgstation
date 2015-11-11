@@ -240,3 +240,8 @@
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
+
+/obj/item/weapon/reagent_containers/syringe/insulin
+	name = "syringe (insulin)"
+	desc = "Contains epinephrine."
+	list_reagents = list("insulin" = 15)

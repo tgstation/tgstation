@@ -28,6 +28,10 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		handle_medical_effects()
+
+		handle_critical()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -60,6 +64,12 @@
 
 
 /mob/living/proc/handle_breathing()
+	return
+
+/mob/living/proc/handle_medical_effects()
+	return
+
+/mob/living/proc/handle_critical()
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()

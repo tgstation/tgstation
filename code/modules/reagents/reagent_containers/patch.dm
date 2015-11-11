@@ -30,3 +30,8 @@
 	name = "burn patch"
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 50)
+
+/obj/item/weapon/reagent_containers/pill/patch/lsd
+	name = "LSD patch"
+	desc = "Helps with not tripping hard enough, man."
+	list_reagents = list("mindbreaker" = 50)
