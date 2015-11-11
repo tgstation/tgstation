@@ -5,8 +5,8 @@
 	desc = "Truly the ride never ends."
 	icon_state = "skelly"
 	icon_living = "skelly"
-	icon_dead = "skelly"
-	icon_gib = "skelly"
+	icon_dead = "skelly_dead"
+	icon_gib = "skelly_dead"
 	speak_chance = 0
 	turns_per_move = 1
 	can_butcher = 0
