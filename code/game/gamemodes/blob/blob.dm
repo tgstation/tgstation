@@ -37,6 +37,8 @@ var/list/blob_nodes = list()
 
 	// stop setup if no possible traitors
 	if(!possible_blobs.len)
+		log_admin("Failed to set-up a round of blob. Couldn't find any volunteers to be blob.")
+		message_admins("Failed to set-up a round of blob. Couldn't find any volunteers to be blob.")
 		return 0
 
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
@@ -54,8 +56,12 @@ var/list/blob_nodes = list()
 		possible_blobs -= blob
 
 	if(!infected_crew.len)
+		log_admin("Failed to set-up a round of blob. Couldn't select any crew members to infect.")
+		message_admins("Failed to set-up a round of blob. Couldn't select any crew members to infect.")
 		return 0
 
+	log_admin("Starting a round of blob with [infected_crew.len] starting blobs.")
+	message_admins("Starting a round of blob with [infected_crew.len] starting blobs.")
 	return 1
 
 

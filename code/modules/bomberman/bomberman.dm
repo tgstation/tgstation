@@ -964,7 +964,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		log_game("[key_name_admin(user.client)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) ")
 
 		for(var/mob/dead/observer/O in observers)
-			O << "<spawn class='notice'><b>[user.client.key] created a \"[size]\" Bomberman arena at [center.loc.name]. <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>Click here to JUMP to it.</A></b></span>"
+			O << "<spawn class='notice'><b>[user.client.key] created a \"[size]\" Bomberman arena at [center.loc.name]. <A HREF='?src=\ref[O];jumptoarenacood=1;targetarena=\ref[src]'>Click here to JUMP to it.</A></b></span>"
 
 	else
 		qdel(src)

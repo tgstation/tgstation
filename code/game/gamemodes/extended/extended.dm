@@ -14,6 +14,8 @@
 	world << "<B>Just have fun and role-play!</B>"
 
 /datum/game_mode/extended/pre_setup()
+	log_admin("Starting a round of extended.")
+	message_admins("Starting a round of extended.")
 	return 1
 
 /datum/game_mode/extended/post_setup()

@@ -32,6 +32,8 @@
 
 	// stop setup if no possible traitors
 	if(!possible_traitors.len)
+		log_admin("Failed to set-up a round of double agents. Couldn't find any volunteers to be traitors.")
+		message_admins("Failed to set-up a round of double agents. Couldn't find any volunteers to be traitors.")
 		return 0
 
 	var/num_traitors = 1
@@ -47,6 +49,8 @@
 				possible_traitors -= player
 
 	if(possible_traitors.len < required_enemies) //fixes double agent starting with 1 traitor
+		log_admin("Failed to set-up a round of double agents. Couldn't find enough volunteers to be traitors.")
+		message_admins("Failed to set-up a round of double agents. Couldn't find enough volunteers to be traitors.")
 		return 0
 
 	for(var/j = 0, j < num_traitors, j++)
@@ -58,9 +62,16 @@
 		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)
+		log_admin("Failed to set-up a round of double agents. Couldn't find any volunteers to be traitors.")
+		message_admins("Failed to set-up a round of double agents. Couldn't find any volunteers to be traitors.")
 		return 0
 	if(traitors.len < required_enemies)
+		log_admin("Failed to set-up a round of double agents. Couldn't find enough volunteers to be traitors.")
+		message_admins("Failed to set-up a round of double agents. Couldn't find enough volunteers to be traitors.")
 		return 0
+
+	log_admin("Starting a round of double agents with [traitors.len] starting traitors.")
+	message_admins("Starting a round of double agents with [traitors.len] starting traitors.")
 	return 1
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)

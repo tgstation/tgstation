@@ -34,7 +34,11 @@
 		if(player.mind && player.mind.assigned_role == "AI" && player.client.desires_role(ROLE_MALF))
 			malf_ai+=player.mind
 	if(malf_ai.len)
+		log_admin("Starting a round of AI malfunction.")
+		message_admins("Starting a round of AI malfunction.")
 		return 1
+	log_admin("Failed to set-up a round of AI malfunction. Didn't find any malf-volunteer AI.")
+	message_admins("Failed to set-up a round of AI malfunction. Didn't find any malf-volunteer AI.")
 	return 0
 
 
