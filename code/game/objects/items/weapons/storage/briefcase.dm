@@ -85,6 +85,7 @@
 /obj/item/weapon/storage/briefcase/false_bottomed/Destroy()
 	if(stored_item)//since the stored_item isn't in the briefcase' contents we gotta remind the game to delete it here.
 		qdel(stored_item)
+		stored_item = null
 	..()
 
 /obj/item/weapon/storage/briefcase/false_bottomed/afterattack(var/atom/A, mob/user)
