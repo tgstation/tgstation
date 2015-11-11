@@ -1073,7 +1073,6 @@
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\games\cards.dm"
-#include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\html_interface\html_interface.dm"
 #include "code\modules\html_interface\html_interface_client.dm"
