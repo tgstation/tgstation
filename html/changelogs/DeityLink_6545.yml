@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Any type of capacitor or scanning module can now be used to build Gygax or Durand.
+  - bugfix: You can no longer place something in a briefcase's fake bottom if there's already something in it.
+  - tweak: Removed the "on_floor" requirement to build computer frames, stools, closets, canisters and iv_drips.
+  - tweak: Empty donut boxes, egg boxes, and the likes, can now be unfolded back into cardboard sheets.
