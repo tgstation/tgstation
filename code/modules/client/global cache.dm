@@ -46,9 +46,10 @@
 		sleep(1) // Lock up the caller until this is received.
 		t++
 
-	client.sending -= asset_name
-	client.cache |= asset_name
-	client.completed_asset_jobs -= job
+	if(client)
+		client.sending -= asset_name
+		client.cache |= asset_name
+		client.completed_asset_jobs -= job
 	
 	return 1
 
@@ -91,9 +92,10 @@
 		sleep(1) // Lock up the caller until this is received.
 		t++
 
-	client.sending -= unreceived
-	client.cache |= unreceived
-	client.completed_asset_jobs -= job
+	if(client)
+		client.sending -= unreceived
+		client.cache |= unreceived
+		client.completed_asset_jobs -= job
 
 	return 1
 
