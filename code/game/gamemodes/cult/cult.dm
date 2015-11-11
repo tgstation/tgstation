@@ -16,13 +16,9 @@
 	return 0
 
 /proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))	return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
-	if(isloyal(mind.current))
-		return 0
-	if (ticker.mode.name == "cult")		//redundent?
-		if(is_sacrifice_target(mind))	return 0
-	return 1
+	//If the mind exists, the mind's current mob is a non-loyal, non-Chaplain human, and the player isn't a sacrifice target, they can be converted to cult.
+	//Captains used to be disallowed from cult conversion entirely, but they start off loyalty implanted so it would take some tedium in order to convert them.
+	return istype(mind) && ishuman(mind.current) && mind.assigned_role != "Chaplain" && !isloyal(mind.current) && !is_sacrifice_target(mind)
 
 /proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
 	if(!message)
@@ -126,10 +122,10 @@
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
 	for(var/datum/mind/cult_mind in cult)
-		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
 		memorize_cult_objectives(cult_mind)
+		equip_cultist(cult_mind.current)
 	..()
 
 
@@ -173,7 +169,8 @@
 	if(!where)
 		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
 	else
-		mob << "<span class='danger'>You have a talisman in your [where], one that will help you start the cult on this station. Use it well, and remember - you are not the only one.</span>"
+		mob << "<span class='danger'>You have a talisman in your [where] that will assist you in starting the cult.</span>"
+		mob << "<span class='danger'>Use it well, and remember - there are other Enlightened aboard the station.</span>"
 		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
@@ -186,7 +183,6 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
-		cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)

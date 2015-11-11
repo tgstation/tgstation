@@ -315,9 +315,8 @@ var/list/teleport_other_runes = list()
 	ticker.mode.add_cultist(new_cultist.mind)
 	new_cultist.mind.special_role = "Cultist"
 	new_cultist << "<span class='purple'><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</i></b></span>"
-	new_cultist << "<span class='purple'><b><i>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
-	</i></b></span>"
+	and something evil takes root. Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring It back.</i></b></span>"
+	new_cultist.Paralyse(5)
 
 
 //Rite of Tribute: Sacrifices a crew member to Nar-Sie. Places them into a soul shard if they're in their body.
