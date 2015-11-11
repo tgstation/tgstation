@@ -404,7 +404,7 @@ var/list/potential_theft_objectives=list(
 	explanation_text = "Die a glorious death."
 
 	check_completion()
-		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(target.current))
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(owner.current))
 			return 1		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 1
@@ -417,7 +417,7 @@ var/list/potential_theft_objectives=list(
 
 	check_completion()
 		if(blocked) return 0
-		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(target.current))
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isborer(owner.current))
 			return 0		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
