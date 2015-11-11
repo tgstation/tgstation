@@ -146,3 +146,10 @@
 	icon_state = "pill5"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/weapon/reagent_containers/pill/painkiller
+	name = "painkiller pill"
+	desc = "Contains Salicyclic Acid, helps stabilize temperature and heal brute/burn damage.."
+	icon_state = "pill5"
+	list_reagents = list("sal_acid" = 50)
+	roundstart = 1

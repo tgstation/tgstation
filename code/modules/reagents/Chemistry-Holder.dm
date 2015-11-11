@@ -16,6 +16,7 @@ var/const/PATCH = 4 //patches
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/check_type = null
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -119,6 +120,9 @@ var/const/PATCH = 4 //patches
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
+		if(R.check_type)
+			if(!istype(current_reagent, R.check_type))
+				continue
 		if (current_reagent.id == "blood" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.inject_blood(my_atom, amount)

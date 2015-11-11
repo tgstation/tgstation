@@ -12,22 +12,26 @@
 			if(prob(15))
 				H.emote(pick("gasp","cry","quiver","moan"))
 			if(prob(15))
-				H.Paralyse(rand(1,3))
-				H << "You pass out!"
-				return
+				if(!H.paralysis)
+					H.Paralyse(rand(1,3))
+					H << "You pass out!"
+					return
 		if(2)
 			if(prob(15))
 				H.emote(pick("gasp","cry","quiver","moan"))
 			if(prob(15))
-				H.Paralyse(rand(3,5))
-				H << "You pass out!"
-				return
+				if(!H.paralysis)
+					H.Paralyse(rand(1,3))
+					H << "You pass out!"
+					return
 		if(3)
 			if(prob(15))
 				H.emote(pick("gasp","cry","quiver","moan"))
 			if(prob(15))
-				H.Paralyse(rand(3,5))
-				H << "You pass out!"
+				if(!H.paralysis)
+					H.Paralyse(rand(1,3))
+					H << "You pass out!"
+					return
 			if(prob(15))
 				for(var/datum/medical_effect/E in H.medical_effects)
 					if(istype(E, /datum/medical_effect/cardiac_failure))
@@ -47,11 +51,12 @@
 		if(1)
 			if(prob(15))
 				H.emote(pick("shiver","pale","sway"))
+			H.adjustOxyLoss(1)
 			return
 		if(2)
 			if(prob(15))
 				H.emote(pick("shiver","pale","sway"))
-			H.adjustOxyLoss(1)
+			H.adjustOxyLoss(2)
 			H.dizziness++
 			H.drowsyness++
 			H.stuttering++
@@ -60,7 +65,7 @@
 		if(3)
 			if(prob(15))
 				H.emote(pick("shiver","pale","sway"))
-			H.adjustOxyLoss(1)
+			H.adjustOxyLoss(3)
 			H.dizziness += 2
 			H.drowsyness += 2
 			H.stuttering += 2
@@ -77,7 +82,7 @@
 	reccomended_treatment = "Defibrilator and strong electric shocks."
 	max_stage = 1
 
-/datum/medical_effect/cardiac_failure/process(var/mob/living/carbon/human/H)
+/datum/medical_effect/cardiac_arrest/process(var/mob/living/carbon/human/H)
 	..()
 	H.Paralyse(5)
 	H.losebreath += 5

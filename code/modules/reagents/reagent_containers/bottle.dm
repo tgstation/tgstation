@@ -207,6 +207,18 @@
 	icon_state = "bottle12"
 	list_reagents = list("atropine" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/oculine
+	name = "oculine bottle"
+	desc = "A small bottle of oculine."
+	icon_state = "bottle1"
+	list_reagents = list("oculine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/sulfonal
+	name = "sulfonal bottle"
+	desc = "A small bottle of sulfonal."
+	icon_state = "bottle1"
+	list_reagents = list("sulfonal" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

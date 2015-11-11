@@ -24,7 +24,7 @@
 	if(istype(loc, /obj/))
 		var/obj/location_as_object = loc
 		location_as_object.handle_internal_lifeform(src,0)
-	else
+	else if(SSmob.times_fired%4==2)
 		breathe()
 
 //Second link in a breath chain, calls check_breath()

@@ -56,6 +56,23 @@
 	volume = 100
 	list_reagents = list("nanites" = 80, "synaptizine" = 20)
 
+/obj/item/weapon/reagent_containers/hypospray/medical
+	name = "medical hypospray"
+	desc = "A hypospray variant incapable of holding contents other than medicine. Comes pre-equipped with a medical mix to treat critical patients on the field."
+	icon_state = "hypo_medical"
+	amount_per_transfer_from_this = 10
+	volume = 30
+	list_reagents = list("salglu_solution" = 15, "epinephrine" = 7.5, "sal_acid" = 7.5)
+
+/obj/item/weapon/reagent_containers/hypospray/medical/New()
+	..()
+	reagents.check_type = /datum/reagent/medicine
+
+/obj/item/weapon/reagent_containers/hypospray/medical/emag_act(mob/user)
+	user << "You disable the reagent check. It can now accept any reagent."
+	reagents.check_type = null
+
+
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen

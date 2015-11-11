@@ -259,10 +259,6 @@
 			message = "<B>[src]</B> cries."
 			m_type = 1
 
-		if("pale")
-			message = "<B>[src]</B> pales."
-			m_type = 1
-
 		if ("help")
 			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
 

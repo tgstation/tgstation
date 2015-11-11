@@ -701,8 +701,8 @@
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
-	M.jitteriness += 3
-	M.drowsyness -= 3
+	M.jitteriness++
+	M.drowsyness--
 	M.reagents.remove_reagent("histamine",6)
 	if(prob(33))
 		M.remove_medical_effect(/datum/medical_effect/cardiac_failure)
