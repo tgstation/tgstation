@@ -259,15 +259,15 @@
 
 /mob/living/carbon/handle_critical()
 	if(health <= config.health_threshold_crit)
-		world << round(health)
 		add_medical_effect(/datum/medical_effect/shock)
 		if(health >= -51)
 			adjustOxyLoss(1)
 		if(health <= -100)
 			adjustOxyLoss(1)
+			if(prob(15))
+				add_medical_effect(/datum/medical_effect/cardiac_arrest, 1)
 			var/total_health = health - getBrainLoss()
 			var/kill_prob = total_health / -100
-			world << "KP = [kill_prob]"
 			if(prob(kill_prob))
 				death()
 			return
@@ -296,6 +296,11 @@
 
 		if(!getorgan(/obj/item/organ/internal/brain))
 			death()
+			return
+
+		if(getBrainLoss() >= 100) //
+			Weaken(1)
+			losebreath++
 			return
 
 		if(getBrainLoss() >= 120) // braindeath

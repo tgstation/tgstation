@@ -420,7 +420,7 @@
 		else if(prob(10))
 			M.adjustBrainLoss(1*REM)
 			M.adjustToxLoss(1*REM)
-		if(current_cycle >= 144)
+		if(current_cycle >= 14)
 			M.Paralyse(2)
 	..()
 

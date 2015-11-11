@@ -472,6 +472,7 @@
 						user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 						H.remove_medical_effect(/datum/medical_effect/cardiac_arrest)
+						H.adjustOxyLoss(-30)
 						H.emote("gasp")
 						if(req_defib)
 							defib.deductcharge(revivecost)
