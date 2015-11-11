@@ -140,7 +140,7 @@
 	category = "Medical"
 	build_path = /obj/item/device/antibody_scanner
 	
-	/datum/design/switchtool
+/datum/design/switchtool
 	name = "Surgeon's Switchtool"
 	desc = "A switchtool containing most of the necessary items for impromptu surgery. For the surgeon on the go."
 	id = "switchtool"
