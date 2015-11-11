@@ -57,11 +57,6 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-	if(occupant)
-		if(occupant.health >= 100)
-			on = 0
-			open_machine()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!NODE1 || !is_operational())
 		return
 
@@ -296,6 +291,7 @@
 		if(occupant.stat == 2 || occupant.health >= 100)  //Why waste energy on dead or healthy people
 			occupant.bodytemperature = T0C
 			return
+		occupant.stat = 1
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
