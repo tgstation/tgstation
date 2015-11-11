@@ -26,7 +26,7 @@
 	if(..())
 		var/mob/living/simple_animal/slime/S = owner
 		if(needs_growth == GROWTH_NEEDED)
-			if(S.amount_grown > SLIME_EVOLUTION_THRESHOLD)
+			if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 				return 1
 			return 0
 		return 1
