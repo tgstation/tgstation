@@ -504,6 +504,22 @@ var/global/list/protected_objects = list(
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	if(timestopped) return 0 //under effects of time magick
 	..()
+
+	spawn()
+		var/amplitude = 2
+		var/pixel_x_diff = rand(-amplitude, amplitude)
+		var/pixel_y_diff = rand(-amplitude, amplitude)
+		animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+		animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+		pixel_x_diff = rand(-amplitude, amplitude)
+		pixel_y_diff = rand(-amplitude, amplitude)
+		animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+		animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+		pixel_x_diff = rand(-amplitude, amplitude)
+		pixel_y_diff = rand(-amplitude, amplitude)
+		animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+		animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+
 	// Die after a specified time limit
 	if(time_to_die && world.time >= time_to_die)
 		Die()
@@ -546,6 +562,29 @@ var/global/list/protected_objects = list(
 
 		src.appearance = O.appearance
 		src.icon_living = src.icon_state
+		var/icon/redimage = icon(icon,icon_state)
+		redimage.MapColors(rgb(255,0,0), rgb(255,0,0), rgb(255,0,0))
+		var/icon/redimage_south = redimage
+		var/icon/redimage_east = redimage
+		redimage_south.Shift(SOUTH,1)
+		underlays += redimage_south
+		redimage_east.Shift(EAST,1)
+		underlays += redimage_east
+
+		spawn()
+			var/amplitude = 2
+			var/pixel_x_diff = rand(-amplitude, amplitude)
+			var/pixel_y_diff = rand(-amplitude, amplitude)
+			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+			pixel_x_diff = rand(-amplitude, amplitude)
+			pixel_y_diff = rand(-amplitude, amplitude)
+			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+			pixel_x_diff = rand(-amplitude, amplitude)
+			pixel_y_diff = rand(-amplitude, amplitude)
+			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
