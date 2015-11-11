@@ -80,7 +80,12 @@
 
 	var/busy_hunting = 0
 	var/bottom_open = 0 //is the false bottom open?
-	var/obj/item/stored_item //what's in the false bottom. If it's a gun, we can fire it
+	var/obj/item/stored_item = null //what's in the false bottom. If it's a gun, we can fire it
+
+/obj/item/weapon/storage/briefcase/false_bottomed/Destroy()
+	if(stored_item)//since the stored_item isn't in the briefcase' contents we gotta remind the game to delete it here.
+		qdel(stored_item)
+	..()
 
 /obj/item/weapon/storage/briefcase/false_bottomed/afterattack(var/atom/A, mob/user)
 	..()
@@ -102,7 +107,13 @@
 		else if(bottom_open)
 			user << "You push the false bottom down and close it with a click[stored_item ? ", with \the [stored_item] snugly inside." : "."]"
 			bottom_open = 0
-	else if(bottom_open && item.w_class <= 3.0)
+	else if(bottom_open)
+		if(stored_item)
+			user << "<span class='warning'>There's already something in the false bottom!</span>"
+			return
+		if(item.w_class > 3.0)
+			user << "<span class='warning'>\The [item] is too big to fit in the false bottom!</span>"
+			return
 		stored_item = item
 		user.drop_item(item)
 		max_w_class = 3.0 - stored_item.w_class

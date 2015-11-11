@@ -24,6 +24,8 @@
 	var/plural_type = "s" //Why does the english language have to be so complicated to work with ?
 	var/empty = 0
 
+	foldable = /obj/item/stack/sheet/cardboard
+
 	//Note : Fancy storages generally collect one specific type of objects only due to their properties
 	//As such, it would make sense that one click on a stack of the corresponding objects should shove everything in here
 
@@ -324,6 +326,8 @@
 	name = "vial storage box"
 	storage_slots = 6
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
+
+	foldable = null
 
 
 /obj/item/weapon/storage/fancy/vials/New()
