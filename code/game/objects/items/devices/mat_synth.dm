@@ -104,25 +104,41 @@
 			R << "<span class='warning'>You need to select a sheet type first!</span>"
 			return
 	else
-		if(material_type && matter)
-			var/modifier = MAT_COST_COMMON
-			if(initial(active_material.perunit) < 3750) //Synthesizing is EXPENSIVE
-				modifier = MAT_COST_MEDIUM
-			if(initial(active_material.perunit) < 2000)
+		if (material_type && matter >= 1)
+			var/modifier
+			var/unit_can_produce
+			var/tospawn
+			var/per_unit = initial(active_material.perunit)
+
+			if (per_unit < 2000)
 				modifier = MAT_COST_RARE
-			var/tospawn = input(user, "How many sheets of [initial(material_type.name)] do you want to synthesize? (0 - [matter / modifier])", "Material Synthesizer") as num
-			tospawn = Clamp(round(tospawn, 1), 0, round(matter / modifier, 1))
-			if(tospawn && material_type)
-				var/obj/item/stack/sheet/spawned_sheet = new material_type(get_turf(src))
-				spawned_sheet.amount = tospawn
-				TakeCost(tospawn, modifier, user)
-		else if(matter)
+			else if (per_unit < 3750)
+				modifier = MAT_COST_MEDIUM
+			else
+				modifier = MAT_COST_COMMON
+
+			unit_can_produce = round(matter / modifier)
+
+			if (unit_can_produce >= 1)
+				tospawn = input(user, "How many sheets of [initial(material_type.name)] do you want to synthesize? (0 - [unit_can_produce])", "Material Synthesizer") as num
+				tospawn = Clamp(round(tospawn), 0, unit_can_produce)
+
+				if (tospawn >= 1)
+					var/obj/item/stack/sheet/spawned_sheet = new material_type(get_turf(src))
+					spawned_sheet.amount = tospawn
+
+					TakeCost(tospawn, modifier, user)
+			else
+				user << "<span class='warning'>\The [src] matter is not enough to create the selected material!</span>"
+				return
+		else if (matter >= 1)
 			user << "<span class='warning'>You must select a sheet type first!</span>"
 			return
 		else
 			user << "<span class='warning'>\The [src] is empty!</span>"
 
 	return 1
+
 /obj/item/device/material_synth/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
 		return 0 // not adjacent
