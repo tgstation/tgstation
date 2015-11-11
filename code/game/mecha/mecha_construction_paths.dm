@@ -343,9 +343,9 @@
 					 	),
 					 //8
 					 list(Co_DESC="Advanced scanner module is secured",
-					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/stock_parts/capacitor,
+					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/stock_parts/capacitor/adv,
 					 		Co_AMOUNT = 1,
-					 		Co_VIS_MSG = "{USER} install{s} capacitor to {HOLDER}."),
+					 		Co_VIS_MSG = "{USER} install{s} advanced capacitor to {HOLDER}."),
 					 	Co_BACKSTEP = list(Co_KEY=/obj/item/weapon/screwdriver,
 					 		Co_VIS_MSG = "{USER} unfasten{s} the Advanced scanner module.")
 					 	),
@@ -358,9 +358,9 @@
 					 	),
 					 //10
 					 list(Co_DESC="Targeting module is secured",
-					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/stock_parts/scanning_module,
+					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		Co_AMOUNT = 1,
-					 		Co_VIS_MSG = "{USER} install{s} scanner module to {HOLDER}."),
+					 		Co_VIS_MSG = "{USER} install{s} advanced scanner module to {HOLDER}."),
 					 	Co_BACKSTEP = list(Co_KEY=/obj/item/weapon/screwdriver,
 					 		Co_VIS_MSG = "{USER} unfasten{s} the targeting module.")
 					 	),
