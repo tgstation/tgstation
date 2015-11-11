@@ -1,11 +1,35 @@
+#define SIZE_DOESNT_MATTER 	-1
+#define BABIES_ONLY			0
+#define ADULTS_ONLY			1
+
+#define NO_GROWTH_NEEDED	0
+#define GROWTH_NEEDED		1
+
 /datum/action/innate/slime
 	check_flags = AB_CHECK_ALIVE
 	background_icon_state = "bg_alien"
+	var/adult_action = SIZE_DOESNT_MATTER
+	var/needs_growth = NO_GROWTH_NEEDED
 
 /datum/action/innate/slime/CheckRemoval()
 	if(!isslime(owner))
 		return 1
+	var/mob/living/simple_animal/slime/S = owner
+	if(adult_action != SIZE_DOESNT_MATTER)
+		if(adult_action == ADULTS_ONLY && !S.is_adult)
+			return 1
+		else if(adult_action == BABIES_ONLY && S.is_adult)
+			return 1
 	return 0
+
+/datum/action/innate/slime/IsAvailable()
+	if(..())
+		var/mob/living/simple_animal/slime/S = owner
+		if(needs_growth == GROWTH_NEEDED)
+			if(S.amount_grown > SLIME_EVOLUTION_THRESHOLD)
+				return 1
+			return 0
+		return 1
 
 /mob/living/simple_animal/slime/verb/Feed()
 	set category = "Slime"
@@ -86,7 +110,7 @@
 		src << "<i>I must be conscious to do this...</i>"
 		return
 	if(!is_adult)
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			is_adult = 1
 			maxHealth = 200
 			amount_grown = 0
@@ -100,21 +124,8 @@
 /datum/action/innate/slime/evolve
 	name = "Evolve"
 	button_icon_state = "slimegrow"
-
-/datum/action/innate/slime/evolve/CheckRemoval()
-	if(!..())
-		var/mob/living/simple_animal/slime/S = owner
-		if(S.is_adult)
-			return 1
-		return 0
-	return 1
-
-/datum/action/innate/slime/evolve/IsAvailable()
-	if(..())
-		var/mob/living/simple_animal/slime/S = owner
-		if(S.amount_grown > 10)
-			return 1
-		return 0
+	adult_action = BABIES_ONLY
+	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/evolve/Activate()
 	var/mob/living/simple_animal/slime/S = owner
@@ -132,7 +143,7 @@
 		return
 
 	if(is_adult)
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(stat)
 				src << "<i>I must be conscious to do this...</i>"
 				return
@@ -172,21 +183,8 @@
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
 	button_icon_state = "slimesplit"
-
-/datum/action/innate/slime/reproduce/CheckRemoval()
-	if(!..())
-		var/mob/living/simple_animal/slime/S = owner
-		if(!S.is_adult)
-			return 1
-		return 0
-	return 1
-
-/datum/action/innate/slime/reproduce/IsAvailable()
-	if(..())
-		var/mob/living/simple_animal/slime/S = owner
-		if(S.amount_grown > 10)
-			return 1
-		return 0
+	adult_action = ADULTS_ONLY
+	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/reproduce/Activate()
 	var/mob/living/simple_animal/slime/S = owner
