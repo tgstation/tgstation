@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Staff of Animatione-created mimics now have a reddish outline and jitter violently.
+  - bugfix: Fixed Necro Staff-created skeletons staying upright when dead.
