@@ -1,0 +1,5 @@
+author: ShiggyPiggy
+changes: 
+  - rscadd: The surgeon's switchtool is now constructible (and deconstructible) in the protolathe.
+  - rscadd: The CMO now has maintenance access.
+delete-after: true
