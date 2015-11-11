@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed non-admin ghosts being unable to click the "Jump to arena" button in the chat window when a Bomberman arena was created.

@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed interactions between compressed matter implants and Posibrains/MMIs.
-  - tweak: Ryetalyn no longer affects the monkey gene. It won't turn monkeys into humans anymore.

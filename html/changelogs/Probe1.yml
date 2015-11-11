@@ -1,7 +1,0 @@
-author: Probe1
-
-delete-after: True
-
-changes: 
-  - bugfix: The empty SSU in Box/Engineering Secure Storage has been replaced with one containing an engineering hardsuit.  
-  - bugfix: Funny enough, there was always a defib, blood bag, and first aid kits on the shuttle.  However, the defib locker was acting as a container for them and there was no way to get them out.  This is fixed now!
