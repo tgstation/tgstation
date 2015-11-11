@@ -112,10 +112,6 @@ var/global/num_vending_terminals = 1
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		src.last_slogan = world.time + rand(0, slogan_delay)
 
-		if(!product_records.len)
-			src.build_inventory(products)
-			src.build_inventory(contraband, 1)
-			src.build_inventory(premium, 0, 1)
 		power_change()
 
 	coinbox = new(src)
@@ -124,6 +120,12 @@ var/global/num_vending_terminals = 1
 		initialize()
 
 	return
+
+/obj/machinery/vending/initialize()
+	product_records = new/list()
+	build_inventory(products)
+	build_inventory(contraband, 1)
+	build_inventory(premium, 0, 1)
 
 /obj/machinery/vending/RefreshParts()
 	var/manipcount = 0
@@ -253,7 +255,7 @@ var/global/num_vending_terminals = 1
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/build_inventory() called tick#: [world.time]")
 	var/obj/item/temp
 
-	for(var/typepath in productlist)
+	for (var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -275,13 +277,13 @@ var/global/num_vending_terminals = 1
 			R.category=CAT_NORMAL
 			product_records += R
 
-		temp = typepath
+		temp = new typepath(null)
 
 		if (delay_product_spawn)
 			sleep(1)
 
-		R.product_name = initial(temp.name)
-		R.subcategory = initial(temp.vending_cat)
+		R.product_name = temp.name
+		R.subcategory = temp.vending_cat
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/get_item_by_type() called tick#: [world.time]")
