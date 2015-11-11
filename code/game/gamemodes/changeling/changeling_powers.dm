@@ -570,9 +570,14 @@
 	set name = "Regenerative Stasis (20)"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fakedeath() called tick#: [world.time]")
 
+	// BYOND bug where verbs don't update if you're not on a turf, as such you'll be permanently stuck in regen statis until you get moved to a turf.
+	if(!isturf(loc))
+		src << "<span class='warning'>((Due to a BYOND bug, it is not possible to come out of regenerative statis if you are not on a turf (walls, floors...)))</span>"
+		return
+
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
-
+	
 	var/mob/living/carbon/C = src
 	if(C.suiciding)
 		C << "<span class='warning'>Why would we wish to regenerate if we have already committed suicide?"
