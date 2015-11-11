@@ -319,7 +319,7 @@
 	icon_state = "crayonred"
 	w_class = 1
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	var/paint_color = "#FF0000" //RGB
 	var/drawtype = "rune"
 	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
@@ -466,7 +466,7 @@
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon(target,paint_color,drawtype,temp,graf_rot)
 
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
