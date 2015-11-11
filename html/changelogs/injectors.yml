@@ -1,9 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - tweak: "DNA Injectors now grant temporary powers on every use. Duration dependent on activated powers and machine upgrades"
-  - rscadd: "Delayed Transfer added to DNA Scanner - It will activate on the next closing of scanner door "
-  - rscadd: "UI+UE injectors/buffer transfers added for convinience "
-  - tweak: "Injector creation timeout cut in half"
