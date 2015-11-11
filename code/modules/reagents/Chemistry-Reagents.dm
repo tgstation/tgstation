@@ -1237,9 +1237,14 @@
 				gene.deactivate(H, 0, tempflag)
 	else
 		for(var/gene_type in M.active_genes)
+			if(gene_type == /datum/dna/gene/monkey)
+				continue
 			var/datum/dna/gene/gene = dna_genes[gene_type]
 			if(gene.can_deactivate(M, 0))
 				gene.deactivate(M, 0, 0)
+
+	if(!M)//(de)monkeyification deletes the old mob
+		return
 
 	M.alpha = 255
 	//M.mutations = list()
@@ -1256,7 +1261,6 @@
 		H.update_mutations()
 
 	..()
-	return
 
 /datum/reagent/paismoke
 	name = "Smoke"
