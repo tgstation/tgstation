@@ -160,7 +160,7 @@
 "dd" = (/obj/effect/gibspawner/xeno,/turf/simulated/floor/carpet,/area/awaymission)
 "de" = (/obj/structure/bed/chair{dir = 8},/obj/effect/decal/remains/human,/turf/simulated/floor/carpet,/area/awaymission)
 "df" = (/obj/structure/bed/alien,/obj/item/clothing/suit/xenos,/turf/simulated/floor/carpet,/area/awaymission)
-"dg" = (/obj/structure/optable,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/carpet,/area/awaymission)
+"dg" = (/obj/structure/table/optable,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/carpet,/area/awaymission)
 "dh" = (/obj/structure/bed,/obj/item/weapon/bedsheet/red,/obj/effect/decal/cleanable/blood/gibs/old,/turf/simulated/floor/carpet,/area/awaymission)
 "di" = (/obj/machinery/vending/boozeomat,/turf/simulated/floor/plasteel,/area/awaymission)
 "dj" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/turf/simulated/floor/plasteel,/area/awaymission)
