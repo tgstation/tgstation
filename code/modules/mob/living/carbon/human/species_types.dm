@@ -445,14 +445,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 				P.Extinguish(H)
 	H.update_fire()
 
-//Heal from plasma
-/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "plasma")
-		H.adjustBruteLoss(-5)
-		H.adjustFireLoss(-5)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
-
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	H.equipOutfit(O)

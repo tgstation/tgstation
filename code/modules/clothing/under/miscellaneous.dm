@@ -501,9 +501,9 @@
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
 	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
-	icon_state = "sexyclown"
-	item_state = "sexyclown"
-	item_color = "sexyclown"
+	icon_state = "plasmaman"
+	item_state = "plasmaman"
+	item_color = "plasmaman"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
@@ -546,6 +546,7 @@
 			return
 		return
 	return
+
 /obj/item/device/extinguisher_refill
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
