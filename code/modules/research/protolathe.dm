@@ -13,6 +13,8 @@ it creates. All the menus and other manipulation commands are in the R&D console
 	desc = "A fabricator capable of producing prototypes from research schematics."
 	flags = OPENCONTAINER
 
+	start_end_anims = 1
+
 	build_time = PROTOLATHE_BUILD_TIME
 	build_number = 2
 

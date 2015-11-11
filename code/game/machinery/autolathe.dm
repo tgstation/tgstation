@@ -11,6 +11,8 @@
 
 	design_types = list()
 
+	start_end_anims = 1
+
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 500
