@@ -165,7 +165,7 @@
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
-		if(method == PATCH)
+		if(method == PATCH && M.stat != DEAD)
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
@@ -211,7 +211,7 @@
 	color = "#C8A5DC"
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M))
+	if(iscarbon(M) && M.stat != DEAD)
 		if(method == PATCH)
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
@@ -288,7 +288,7 @@
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
-		if(method == PATCH)
+		if(method == PATCH && M.stat != DEAD)
 			M.adjustBruteLoss(-1.5*reac_volume)
 			M.adjustFireLoss(-1.5*reac_volume)
 			if(show_message)
@@ -730,7 +730,7 @@
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		var/end_health = M.getBruteLoss() + M.getFireLoss()
-		if(end_health >= 150)
+		if(end_health >= 300)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then explodes.</span>")
 			M.gib(1)
 			return

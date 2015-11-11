@@ -181,7 +181,7 @@
 	name = "Strange Reagent"
 	id = "strange_reagent"
 	result = "strange_reagent"
-	required_reagents = list("omnizine" = 1, "holywater" = 1, "mutagen" = 1)
+	required_reagents = list("synthflesh" = 1, "blood" = 1, "mutagen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mannitol
