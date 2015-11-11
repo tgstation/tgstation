@@ -197,9 +197,9 @@
 	if(!C.vampire_affected(M))
 		M.current << "<span class='warning'>They seem to be unaffected.</span>"
 		return
-	log_admin("[ckey(src.key)] has death-touched [ckey(H.key)]. The latter will die in moments.")
-	message_admins("[ckey(src.key)] has death-touched [ckey(H.key)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[H.x];Y=[H.y];Z=[H.z]'>JMP</A>). The latter will die in moments.")
-	var/datum/disease2/disease/shutdown = new /datum/disease2/disease("Created by vamp [key_name(C)].")
+	log_admin("[ckey(src.key)] has death-touched [ckey(C.key)]. The latter will die in moments.")
+	message_admins("[ckey(src.key)] has death-touched [ckey(C.key)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[C.x];Y=[C.y];Z=[C.z]'>JMP</A>). The latter will die in moments.")
+	var/datum/disease2/disease/shutdown = new /datum/disease2/disease("Created by vamp [key_name(M)].")
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/organs/vampire/O = new /datum/disease2/effect/organs/vampire
 	holder.effect += O

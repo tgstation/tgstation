@@ -56,8 +56,8 @@
 		message_admins("Failed to set-up a round of wizard. Couldn't find any wizard spawn points.")
 		return 0
 
-	for(var/datum/mind/wizard in wizards)
-		wizard.current.loc = pick(wizardstart)
+	for(var/datum/mind/wwizard in wizards)
+		wwizard.current.loc = pick(wizardstart)
 
 	log_admin("Starting a round of wizard with [wizards.len] wizards.")
 	message_admins("Starting a round of wizard with [wizards.len] wizards.")
