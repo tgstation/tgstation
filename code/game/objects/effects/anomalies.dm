@@ -9,6 +9,7 @@
 	density = 0
 	anchored = 1
 	luminosity = 3
+	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
@@ -22,16 +23,13 @@
 
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(70))
+	if(prob(movechance))
 		step(src,pick(alldirs))
 
 
 /obj/effect/anomaly/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		else
-			return
+	if(severity == 1)
+		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	PoolOrNew(/obj/effect/particle_effect/smoke/bad, loc)
@@ -112,7 +110,7 @@
 	mobShock(M)
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
-	if(canshock && isliving(M))
+	if(canshock && istype(M))
 		canshock = 0 //Just so you don't instakill yourself if you slam into the anomaly five times in a second.
 		if(iscarbon(M))
 			if(ishuman(M))
