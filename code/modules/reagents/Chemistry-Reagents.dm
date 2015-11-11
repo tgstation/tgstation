@@ -1243,9 +1243,6 @@
 			if(gene.can_deactivate(M, 0))
 				gene.deactivate(M, 0, 0)
 
-	if(!M)//(de)monkeyification deletes the old mob
-		return
-
 	M.alpha = 255
 	//M.mutations = list()
 	//M.active_genes = list()
