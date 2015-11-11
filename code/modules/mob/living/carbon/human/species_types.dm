@@ -262,7 +262,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/action/innate/split_body
 	name = "Split Body"
 	check_flags = AB_CHECK_ALIVE
-	button_icon_state = "split"
+	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/CheckRemoval()

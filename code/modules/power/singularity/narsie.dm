@@ -30,7 +30,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		var/image/alert_overlay = image('icons/mob/mob.dmi', "harvester")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay)
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
 
 	narsie_spawn_animation()
 
@@ -39,11 +39,8 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	if(!(src in view()))
-		user << "Your soul is too far away."
-		return
-	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, user.loc)
+	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 0, loc_override = src.loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
 
 
 /obj/singularity/narsie/process()

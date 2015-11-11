@@ -13,7 +13,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
-	antag_flag = BE_REV
+	antag_flag = ROLE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 1
@@ -190,7 +190,7 @@
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
 			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
-				if(khrushchev.current.client.prefs.be_special & BE_REV)
+				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
 		if(promotable_revs)
 			var/datum/mind/stalin = pick(promotable_revs)
@@ -249,6 +249,8 @@
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
+	if(jobban_isbanned(rev_mind.current, "Revolutionary"))
+		replace_jobbaned_player(rev_mind.current, "Revolutionary")
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

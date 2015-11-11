@@ -67,7 +67,7 @@ Made by Xhuis
 /datum/game_mode/shadowling
 	name = "shadowling"
 	config_tag = "shadowling"
-	antag_flag = BE_SHADOWLING
+	antag_flag = ROLE_SHADOWLING
 	required_players = 30
 	required_enemies = 2
 	recommended_enemies = 2

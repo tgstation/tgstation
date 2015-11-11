@@ -169,7 +169,7 @@
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/optable) in src.loc) && \
+			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		user << "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>"
