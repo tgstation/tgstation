@@ -72,8 +72,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			possible_changelings -= changeling
 			changelings += changeling
 			modePlayer += changelings
+		log_admin("Starting a round of changeling with [changelings.len] changelings.")
+		message_admins("Starting a round of changeling with [changelings.len] changelings.")
 		return 1
 	else
+		log_admin("Failed to set-up a round of changeling. Couldn't find any volunteers to be changeling.")
+		message_admins("Failed to set-up a round of changeling. Couldn't find any volunteers to be changeling.")
 		return 0
 
 /datum/game_mode/changeling/post_setup()

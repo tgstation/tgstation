@@ -60,6 +60,9 @@
 	else
 		if(playerC >= required_players)
 			return 1
+
+	log_admin("Failed to start a round of [name]. Only [playerC] players ready out of [(master_mode=="secret") ? "required_players_secret" : "required_players"] needed.")
+	message_admins("Failed to start a round of [name]. Only [playerC] players ready out of [(master_mode=="secret") ? "required_players_secret" : "required_players"] needed.")
 	return 0
 
 

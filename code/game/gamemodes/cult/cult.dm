@@ -104,6 +104,13 @@
 		cultists_possible -= cultist
 		cult += cultist
 
+	if(cult.len <= 0)
+		log_admin("Failed to set-up a round of cult. Couldn't pick any players to be starting cultists.")
+		message_admins("Failed to set-up a round of cult. Couldn't pick any players to be starting cultists.")
+	else
+		log_admin("Starting a round of cult with [cult.len] starting cultists.")
+		message_admins("Starting a round of cult with [cult.len] starting cultists.")
+
 	return (cult.len > 0)
 
 /datum/game_mode/cult/proc/blood_check()

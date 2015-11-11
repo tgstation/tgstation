@@ -11,6 +11,8 @@
 	world << "<B>Build your own station with the sandbox-panel command!</B>"
 
 /datum/game_mode/sandbox/pre_setup()
+	log_admin("Starting a round of sandbox.")
+	message_admins("Starting a round of sandbox.")
 	return 1
 
 /datum/game_mode/sandbox/post_setup()
