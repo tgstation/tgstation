@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Adds immovable and indestructible reflector structures for badmin use."
