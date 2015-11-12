@@ -362,14 +362,16 @@
 										I.add_mutations.Add(HM)
 									else
 										I.remove_mutations.Add(HM)
+/*
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)
 										time_coeff = HM.time_coeff
 										continue
 									time_coeff = min(time_coeff,HM.time_coeff)
+*/
 								if(connected)
-									I.duration = I.duration * time_coeff * connected.damage_coeff
+									//I.duration = I.duration * time_coeff * connected.damage_coeff //this is for timed injectors; the code is being left in case someone wants to add timed injectors to the console again
 									I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
