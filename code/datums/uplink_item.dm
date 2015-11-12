@@ -686,7 +686,13 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
-
+	
+/datum/uplink_item/badass/raincoat
+	name = "Raincoat"
+	desc = "It's hip to be square!"
+	item = /obj/item/clothing/suit/raincoat
+	cost = 1
+	
 /datum/uplink_item/badass/random
 	name = "Random Item"
 	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."

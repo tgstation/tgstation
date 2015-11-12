@@ -174,13 +174,14 @@
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "Shadow"	//Used to be ???
 	id = "shadow"
-	darksight = 8
+//	darksight = 8 //Doesn't work as intended
 	sexes = 0
 	roundstart = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 	dangerous_existence = 1
+	var/light_message = 0 //to prevent message spamming
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -190,10 +191,21 @@
 		if(A)
 			if(A.lighting_use_dynamic)	light_amount = T.get_lumcount() * 10
 			else						light_amount =  10
-		if(light_amount > 2) //if there's enough light, start dying
+		if(light_amount > 7) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
-			H.heal_overall_damage(1,1)
+			if(!light_message)
+				light_message = 1
+				H << "<span class='warning'>The light burns you!</span>"
+		else
+			if(light_message)
+				light_message = 0
+				H << "<span class='warning'>Darkness envelops you.</span>"
+			if (light_amount < 2) //heal in the dark
+				H.heal_overall_damage(1,1)
+
+/datum/species/shadow/handle_vision(mob/living/carbon/human/H) //Nightvision does not function without these lines.
+	H.see_in_dark = 8
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
 
 /*
  SLIMEPEOPLE
@@ -204,7 +216,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	darksight = 3
+//	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
@@ -238,6 +250,11 @@
 /datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "slimejelly")
 		return 1
+
+/datum/species/slime/handle_vision(mob/living/carbon/human/H)
+	H.see_in_dark = 3
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
+
 /*
  JELLYPEOPLE
 */
@@ -315,10 +332,6 @@
 	hair_alpha = 0
 	speedmod = 1
 	armor = 0
-	brutemod = 0
-	burnmod = 0
-	coldmod = 0
-	heatmod = 0
 	punchmod = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
@@ -352,13 +365,13 @@
 	return message
 
 /datum/species/golem/meeseeks/spec_life(mob/living/carbon/human/H)
+	if(!lingseek)
+		//handle clone damage before all else
+		if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
+			max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
 
-	//handle clone damage before all else
-	if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
-		max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
-
-	if(H.getCloneLoss() < max_clone_damage)
-		H.adjustCloneLoss(1)
+		if(H.getCloneLoss() < max_clone_damage)
+			H.adjustCloneLoss(1)
 
 	if(prob(5) && !H.stat)
 		if(stage <3)
@@ -388,7 +401,7 @@
 		stage_counter += 1 //extreme pain will make them progress a level
 
 	if(lingseek && H.hallucination<50 && stage == 3) //lingseeks are WILD
-		H.hallucination = 25
+		H.hallucination += 25
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
@@ -460,18 +473,13 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
-			H.real_name = "Lingseek"
-			id = "lingseek_1"
-			H.regenerate_icons()
-			if( H.mind )
-				H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
-			lingseek = 1
-			stage = 1
-			stage_two = 20
-			stage_three = 25 //fast stage progression
-			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
-			return // get me the hell out of here.
+
+		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks
+			if( findtext( H.real_name , "Mr. Meeseeks" ) || H.job == "Lingseek") // Transformation Sting, eg.
+				make_lingseek(H)
+				return
+			hardset_dna(H, null, null, null, null, /datum/species/human ) // default to human.
+			return // avert lingseeks. get the hell out of here
 
 		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
@@ -482,16 +490,31 @@
 /datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	if(lingseek)
 		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
-		new /obj/item/device/meeseeks_box/malf(H.loc)
-		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		new /obj/item/device/meeseeks_box/malf(get_turf(H))
+		new /obj/effect/decal/cleanable/lingseek_gibs(get_turf(H))
 	for(var/mob/M in viewers(7, H.loc))
 		if(lingseek)
 			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
 		else
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-		H.drop_everything()
-		qdel(H)
+	H.drop_everything()
+	qdel(H)
 	return
+
+/datum/species/golem/meeseeks/proc/make_lingseek(var/mob/living/carbon/human/H)
+	if(lingseek)
+		return 0 //already done
+	H.real_name = "Lingseek"
+	id = "lingseek_1"
+	H.regenerate_icons()
+	if( H.mind )
+		H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
+	lingseek = 1
+	stage = 1
+	stage_two = 20
+	stage_three = 25 //fast stage progression
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
+	return 1
 
 /*
  FLIES
@@ -589,7 +612,7 @@
 /datum/species/abductor
 	name = "Abductor"
 	id = "abductor"
-	darksight = 3
+//	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
 	roundstart = 1
@@ -600,6 +623,8 @@
 	var/abductor = 0 //If they're part of the gamemode
 	var/team = 1
 	var/tele_target = null //The target for telepathic comunication between species
+	var/mind_message_pain = 0
+	var/mind_message_minds = 0 //controls the spam of mind messages
 
 /datum/species/abductor/handle_speech(message)
 	//Hacks
@@ -641,17 +666,33 @@
 			if(M.health < M.getMaxHealth())
 				pain_felt += (M.getMaxHealth() - M.health) / M.getMaxHealth() //coefficient, goes from 0% to 1 if it's in crit. >1 if it's closer to death
 	if(pain_felt)
-		H.AdjustWeakened(-pain_felt)
-		H.adjustStaminaLoss(-pain_felt)
+		H.AdjustWeakened(-pain_felt*4)
+		H.adjustStaminaLoss(-pain_felt*3) // people in crit or closer than that CAN in fact down an ayy.
 		H.Jitter(pain_felt) //comically low levels of jitter
-		if(prob(10))
+		if(!mind_message_pain)
+			mind_message_pain = 1
 			H << "<span class='alert'>You feel someone in pain!</span>"
+		else
+			mind_message_pain = 0
+			H << "<span class='alert'>You feel peace in your mind.</span>"
+	else
+		mind_message_pain = 0
 	if(!alone_test)
-		H.adjustStaminaLoss(-1)
+		H.adjustStaminaLoss(-rand(1,3)) //can knock someone out, since they recover 2 per tick.
 		if(prob(10))
 			H.Dizzy(4) //This will get annoying fast now that it can actually get triggered
-			H << "<span class='alert'>You feel no minds nearby. Your mind echoes in the distance.</span>"
+		if(!mind_message_minds)
+			mind_message_minds = 1
+			H << "<span class='alert'>You feel no minds nearby. Your thoughts echo in the distance.</span>"
+	else
+		if(mind_message_minds)
+			mind_message_minds = 0
+			H << "<span class='alert'>You hear the thoughts of another.</span>"
 	return
+
+/datum/species/abductor/handle_vision(mob/living/carbon/human/H)
+	H.see_in_dark = 3
+	H.see_invisible = SEE_INVISIBLE_MINIMUM
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 

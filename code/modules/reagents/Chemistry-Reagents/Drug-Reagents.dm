@@ -420,7 +420,7 @@
 	reagent_state = LIQUID
 	color = "#D4EBF2" // rgb: 212, 235, 242
 	addiction_threshold = 1 //stupidly addictive, but powerful
-	overdose_threshold = 0
+	overdose_threshold = 5 //yep, that's right. Abused it, and Sweeney Todd goes to town on your DNA.
 
 /datum/reagent/drug/happyhappy/on_mob_life(var/mob/living/M as mob)
 	//Heals a bunch of stuff, makes you shaky
@@ -453,8 +453,20 @@
 	..()
 
 //No overdose since if you don't have this drug in your system you get fucked up by addiction.
-/datum/reagent/drug/happyhappy/overdose_process(var/mob/living/M as mob)
-	return
+//Bullshit, you get mutated now. Patch new body mutations once dismemberment gets here.
+//copypasted from unstable, minus the good mutations, and with more chance to activate.
+/datum/reagent/drug/happyhappy/overdose_process(var/mob/living/carbon/M as mob)
+	if(!..())
+		return
+	if(holder.has_reagent("ryetalyn"))
+		holder.remove_reagent("ryetalyn", 5*REM)
+	if(!istype(M) || !M.dna)
+		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+	else if(prob(15))
+		randmuti(M)
+		domutcheck(M, null)
+		updateappearance(M)
+	..()
 
 /datum/reagent/drug/happyhappy/proc/disturbing_messages(var/mob/living/M as mob)
 	if(prob(0.3*addiction_stage)) //0.3*10 == 3, 3% chance at addiction stage 1
