@@ -21,26 +21,6 @@
 			owner.death()
 	return O
 
-/*/datum/organ/internal/remove(var/dism_type, var/newloc, var/special = 0)
-	if(exists())
-		status = dism_type					//We change the organdatum status to the type of dismemberment (ORGAN_DESTROYED, ORGAN_REMOVED or ORGAN_NOBLEED).
-		if(isorgan(organitem))
-			var/obj/item/organ/internal/OI = organitem
-			OI.Remove(special)	//Special stuff the organ needs done when removed
-		if(owner && vital && !special)
-			owner.death()
-		var/obj/item/organ/O = prepare_organitem_for_removal()	//We use the convenient preparation proc to nullify the necessary variables.
-		if(newloc)
-			O.loc = newloc					//The organitem ends up at the new location. newloc
-		else
-			O.loc = owner.loc
-		if(owner)
-			owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
-		return O							//We return the organ object in case we want some information from it.
-	else
-		return null							*/ //If dismemberment failed because the limb does not exist, we return null.
-
-
 /datum/organ/internal/brain
 	name = "brain"
 	vital = 1

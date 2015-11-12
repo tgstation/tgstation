@@ -46,16 +46,13 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-			H.organs -= L.organitem
 			var/obj/item/organ/limb/RL = null
 			switch(target_zone)
 				if("head")
 					RL = new /obj/item/organ/limb/head/robot(src)
-					H.organs += RL
 					L.switch_organitem(RL)
 				if("chest")
 					RL = new /obj/item/organ/limb/chest/robot(src)
-					H.organs += RL
 					L.switch_organitem(RL)
 					for(var/datum/organ/internal/I in target.get_internal_organs("chest"))
 						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK

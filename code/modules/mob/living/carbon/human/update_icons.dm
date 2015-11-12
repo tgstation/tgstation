@@ -126,9 +126,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
-	var/limblist = list_limbs()
-	for(var/limbname in limblist) //Update this list if we ever want to render more body parts. |- Ricotez
-		var/datum/organ/limb/limbdata = getorgan(limbname)
+	for(var/datum/organ/limb/limbdata in get_limbs()) //Update this list if we ever want to render more body parts. |- Ricotez
 		if(!limbdata.exists())
 			continue
 		var/obj/item/organ/limb/O = limbdata.organitem
@@ -204,9 +202,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	var/limblist = list_limbs()
-	for(var/limbname in limblist)
-		var/image/temp = generate_limb_icon(getorgan(limbname))
+	for(var/datum/organ/limb/limbdata in get_limbs())
+		var/image/temp = generate_limb_icon(limbdata)
 		if(temp)
 			new_limbs += temp
 	if(new_limbs.len)
@@ -228,8 +225,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/regenerate_icons()
 	..()
 	if(notransform)		return
-	update_body()
 	update_body_parts()
+	update_body()
 	update_hair()
 	update_mutations()
 	update_inv_w_uniform()
@@ -680,7 +677,7 @@ var/global/list/limb_icon_cache = list()
 //draws an icon from a limb
 /mob/living/carbon/human/proc/generate_limb_icon(var/datum/organ/limb/affecting)
 	if(!affecting.exists()) //If the limb does not exist, we render nothing right now.
-		if(affecting.status & ORGAN_DESTROYED)
+		if(affecting.status & ORGAN_DESTROYED || affecting.status & ORGAN_NOBLEED)
 			return 0	//I'll replace this with bloody stumps for destroyed limbs as soon as the sprites are ready. |- Ricotez
 		else return 0
 

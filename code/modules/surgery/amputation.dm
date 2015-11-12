@@ -47,7 +47,6 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully saws off [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully saw off [target]'s [parse_zone(target_zone)].</span>")
-			H.organs -= L.organitem
 			L.dismember(ORGAN_DESTROYED)
 			H.update_damage_overlays(0)
 			H.update_body_parts()

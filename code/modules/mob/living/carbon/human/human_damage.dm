@@ -6,18 +6,15 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	var/list/limblist = list_limbs()
-	for(var/limbname in limblist)
-		var/datum/organ/limb/O = getorgan(limbname)
-		if(O)
-			if(O.status == ORGAN_DESTROYED)
-				total_brute += O.destroyed_dam
-			else if(O.status == ORGAN_NOBLEED)
-				total_brute += O.destroyed_dam/2
-			else if(O.counts_for_damage())
-				var/obj/item/organ/limb/L = O.organitem
-				total_brute += L.brute_dam
-				total_burn += L.burn_dam
+	for(var/datum/organ/limb/O in get_limbs())
+		if(O.status == ORGAN_DESTROYED)
+			total_brute += O.destroyed_dam
+		else if(O.status == ORGAN_NOBLEED)
+			total_burn += O.destroyed_dam/CAUTERIZED_DENOMINATOR
+		else if(O.counts_for_damage())
+			var/obj/item/organ/limb/L = O.organitem
+			total_brute += L.brute_dam
+			total_burn += L.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
@@ -30,11 +27,10 @@
 //These procs fetch a cumulative total damage from all organs
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/limb in list_limbs())
-		var/datum/organ/limb/O = getorgan(limb)
-		if(O.status & ORGAN_DESTROYED)
+	for(var/datum/organ/limb/O in get_limbs())
+		if(O.status == ORGAN_DESTROYED)
 			amount += O.destroyed_dam //A destroyed limb is basically a severe brute wound, right?
-		else if(O.counts_for_damage())
+		else if(O.exists() && O.counts_for_damage())
 			var/obj/item/organ/limb/L = O.organitem
 			amount += L.brute_dam
 		//Else the organ is either ORGAN_REMOVED or something weird happened.
@@ -42,9 +38,10 @@
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/limb in list_limbs())
-		var/datum/organ/limb/O = getorgan(limb)
-		if(O.counts_for_damage()) //A limb only counts for burns if it's actually there.
+	for(var/datum/organ/limb/O in get_limbs())
+		if(O.status == ORGAN_NOBLEED)
+			amount += O.destroyed_dam/CAUTERIZED_DENOMINATOR
+		else if(O.exists() && O.counts_for_damage()) //A limb only counts for burns if it's actually there.
 			var/obj/item/organ/limb/L = O.organitem
 			amount += L.burn_dam
 	return amount
@@ -77,8 +74,7 @@
 //Returns a list of damaged organs
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
 	var/list/obj/item/organ/limb/parts = list()
-	for(var/limb in list_limbs())
-		var/datum/organ/limb/O = getorgan(limb)
+	for(var/datum/organ/limb/O in get_limbs())
 		if(O.counts_for_damage())
 			var/obj/item/organ/limb/L = O.organitem
 			if((brute && L.brute_dam) || (burn && L.burn_dam))
@@ -88,8 +84,7 @@
 //Returns a list of damageable organs
 /mob/living/carbon/human/proc/get_damageable_organs()
 	var/list/obj/item/organ/limb/parts = list()
-	for(var/limb in list_limbs())
-		var/datum/organ/limb/O = getorgan(limb)
+	for(var/datum/organ/limb/O in get_limbs())
 		if(O.counts_for_damage())
 			var/obj/item/organ/limb/L = O.organitem
 			if(L.brute_dam + L.burn_dam < L.max_damage)

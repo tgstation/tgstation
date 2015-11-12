@@ -262,8 +262,6 @@
 /mob/living/carbon/human/AIize()
 	if (notransform)
 		return
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)
 
 	return ..()
@@ -351,8 +349,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
@@ -398,8 +394,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
@@ -434,8 +428,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)	//Until ayy lmaos have an organsystem
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
@@ -465,8 +457,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)
 
 	var/mob/living/carbon/slime/new_slime
@@ -513,8 +503,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)	//this really should not be necessary
-		qdel(t)
 	qdel(organsystem)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
@@ -545,8 +533,6 @@
 	icon = null
 	invisibility = 101
 
-	for(var/t in organs)
-		qdel(t)
 	qdel(organsystem)
 
 	var/mob/new_mob = new mobpath(src.loc)

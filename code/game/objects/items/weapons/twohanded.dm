@@ -341,7 +341,7 @@
 	behead_threshold = 0
 	dismember_prob = 75 //This will probably have to be balanced in the future, but for now chop-chop.
 	behead_prob = 45
-	dismember_nobleed = 9
+	dismember_nobleed = 0
 
 /obj/item/weapon/twohanded/chainsaw/New()
 	..()

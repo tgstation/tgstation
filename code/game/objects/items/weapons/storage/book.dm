@@ -42,8 +42,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
-		for(var/datum/organ/limb/limb in H.list_limbs())
-			var/datum/organ/limb/limbdata = H.getorgan(limb)
+		for(var/datum/organ/limb/limbdata in H.get_limbs())
 			if(limbdata.exists())
 				var/obj/item/organ/limb/affecting = limbdata.organitem
 				if(affecting.organtype == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
@@ -89,7 +88,7 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/message_halt = 0
-				for(var/datum/organ/limb/limbdata in H.organs)
+				for(var/datum/organ/limb/limbdata in H.get_limbs())
 					if(limbdata.exists())
 						var/obj/item/organ/limb/affecting = limbdata.organitem
 						if(affecting.organtype == ORGAN_ORGANIC)

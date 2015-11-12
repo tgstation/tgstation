@@ -22,12 +22,6 @@ mob/living/carbon/exists(var/organname)
 	else
 		return 1
 
-/mob/proc/getlimb()
-	return
-
-/mob/living/carbon/human/getlimb(typepath)
-	return (locate(typepath) in organs)
-
 mob/proc/exists(var/organname)
 	return 1
 
@@ -66,24 +60,34 @@ mob/proc/exists(var/organname)
 		return PO
 	return 0
 
-/mob/proc/get_cyberimps()
+/mob/living/carbon/proc/list_limbs()	//In case we want limbs for non-humans
+	return null
+
+//Gets us a convenient list of limbs that matter for stuff like rendering and checking damage.
+//Please update this if you break down limbs into more limbs (arm to arm and hand or stuff like that). |- Ricotez
+/mob/living/carbon/human/list_limbs()
+	return list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+
+/mob/proc/get_limbs()
 	return 0
 
-//How many cybernetic implants in this zone?
-/mob/living/carbon/get_cyberimps(zone)
-	var/datum/organ/PO = getorgan(zone)
-	var/i = 0
-	if(PO && PO.exists())
-		if(isorgan(PO.organitem))
-			var/obj/item/organ/OI = PO.organitem
-			for(var/organname in OI.suborgans)
-				var/datum/organ/RO = OI.suborgans[organname]
-				if(RO && RO.exists() && istype(RO, /datum/organ/internal/cyberimp))
-					i++
-	return i
+/mob/living/carbon/get_limbs()
+	var/list/returnlimbs = list()
+	for(var/limbname in list_limbs())
+		var/datum/organ/limb/LI = getorgan(limbname)
+		if(LI)
+			returnlimbs += LI
+	return returnlimbs
 
 proc/isorgan(atom/A)
 	return istype(A, /obj/item/organ)
 
 proc/isinternalorgan(atom/A)
 	return istype(A, /obj/item/organ/internal)
+
+//Soon to be deprecated, only facehuggers need these
+/mob/proc/getlimb()
+	return
+
+/mob/living/carbon/human/getlimb(typepath)
+	return (locate(typepath) in organsystem.organlist)

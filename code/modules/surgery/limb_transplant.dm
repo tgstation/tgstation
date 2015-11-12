@@ -10,11 +10,11 @@
 	implements = list(/obj/item/robot_parts = 100, /obj/item/organ/limb = 100)
 	time = 32
 	var/datum/organ/limb/L = null // L because "limb"
-	var/obj/item/organ/LI = null	//This'll be the tool
+	var/obj/item/organ/limb/LI = null	//This'll be the tool
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = target.getorgan(target_zone)
-	if(isorgan(tool))
+	if(istype(tool, /obj/item/organ/limb))
 		LI = tool
 	if(L && !L.exists() && (( LI && L.name == LI.hardpoint) || L.name == tool.icon_state))	//Borg limbs just happen to have the same strings as limb hardpoints
 		user.visible_message("[user] begins to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
@@ -42,8 +42,7 @@
 			var/mob/living/carbon/human/H = target
 			user.drop_item()
 			if(LI)
-				if(LI.Insert(H))
-					H.organs += LI
+				LI.Insert(H)
 			else	//Robotic limb, time for SNOWFLAKE CODE
 				var/obj/item/organ/limb/RL = null
 				switch(target_zone)
@@ -57,9 +56,7 @@
 						RL = new /obj/item/organ/limb/l_arm/robot(src)
 					if("head")
 						RL = new /obj/item/organ/limb/head/robot(src)
-				H.organs += RL
 				if(!RL.Insert(H))
-					world << "Error inserting [RL] the [RL.type] in [RL.hardpoint]!"
 					return -1
 				qdel(tool)
 			H.update_damage_overlays(0)

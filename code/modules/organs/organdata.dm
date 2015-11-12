@@ -14,7 +14,7 @@
 	var/name = "organ"
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_REMOVED		//Status of organ. 0 is a normal, human organ, but it starts out at ORGAN_REMOVED in case you want to add empty organ hardpoints to an organ. See _DEFINES/organ.dm for possible statuses..
-	var/destroyed_dam = 0 			//Amount of (brute) damage to count in damage checks if status of this organ is set to ORGAN_DESTROYED. Only applies to limbs right now. |- Ricotez
+	var/destroyed_dam = 0 			//Amount of (brute or burn) damage to count in damage checks if status of this organ is set to ORGAN_DESTROYED. Only applies to limbs right now. |- Ricotez
 	var/can_be_damaged = 0 			//Whether this organ can take damage. Keep this 0 for anything that is not a limb, unless you want to extend the damage system to all organs. |- Ricotez
 
 	var/obj/item/organ/parent						//The organ this organ is a part of. For example, of this is the brain, its parent will be the head.

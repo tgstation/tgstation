@@ -241,15 +241,19 @@
 /mob/living/carbon/human/proc/remove_all_embedded_objects()
 	var/turf/T = get_turf(src)
 
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
-			L.embedded_objects -= I
-			I.loc = T
+	for(var/datum/organ/limb/limbdata in get_limbs())
+		if(limbdata.exists())
+			var/obj/item/organ/limb/L = limbdata.organitem
+			for(var/obj/item/I in L.embedded_objects)
+				L.embedded_objects -= I
+				I.loc = T
 
 	clear_alert("embeddedobject")
 
 /mob/living/carbon/human/proc/has_embedded_objects()
 	. = 0
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
-			return 1
+	for(var/datum/organ/limb/limbdata in get_limbs())
+		if(limbdata.exists())
+			var/obj/item/organ/limb/L = limbdata.organitem
+			for(var/obj/item/I in L.embedded_objects)
+				return 1

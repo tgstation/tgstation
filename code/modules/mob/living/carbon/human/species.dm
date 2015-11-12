@@ -690,8 +690,9 @@
 		for(var/HDO in healthdollorgans)
 			var/datum/organ/limb/O = H.getorgan(HDO)
 			var/obj/item/organ/limb/L = O.organitem
-			var/icon_name = "full"
+			var/icon_name = null
 			if(O.exists())
+				icon_name = "full"
 				var/damage = L.burn_dam + L.brute_dam
 				var/comparison = (L.max_damage/5)
 				if(H.stat == DEAD)
@@ -706,10 +707,11 @@
 					icon_name = "2"
 				else if(damage)
 					icon_name = "1"
-			else if((O.status & ORGAN_DESTROYED)) //The organ no longer exists, but the wound is still there.
+			else if(O.status & ORGAN_DESTROYED || O.status & ORGAN_NOBLEED) //The organ no longer exists, but the wound is still there.
 				icon_name = "destroyed"
-			H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[HDO][icon_name]")
 			//Else the organ does not exist but there is no damage either, so we don't render anything at all.
+			if(icon_name)
+				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[HDO][icon_name]")
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

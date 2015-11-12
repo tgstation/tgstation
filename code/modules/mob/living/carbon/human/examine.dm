@@ -233,9 +233,11 @@
 			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
 
 
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L]!</B>\n"
+	for(var/datum/organ/limb/LI in get_limbs())
+		if(LI.exists())
+			var/obj/item/organ/limb/L = LI.organitem
+			for(var/obj/item/I in L.embedded_objects)
+				msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L]!</B>\n"
 
 
 	if(fire_stacks > 0)

@@ -459,7 +459,11 @@
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
 				if(prob(embed_chance))
-					var/obj/item/organ/limb/L = pick(H.organs)
+					var/list/organlist = null
+					for(var/datum/organ/limb/LI in H.get_limbs())
+						if(LI.exists())
+							organlist += LI.organitem
+					var/obj/item/organ/limb/L = pick(organlist)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!
 					loc = H

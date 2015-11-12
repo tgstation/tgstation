@@ -30,6 +30,9 @@
 	healthdoll = 1
 	can_be_damaged = 1
 
+/datum/organ/limb/chest/remove()	//DO NOT REMOVE CORE ORGANITEMS
+	return null
+
 /datum/organ/limb/chest/switch_organitem(var/obj/item/organ/neworgan)
 	var/obj/item/oldorgan = ..(neworgan)
 	if(oldorgan)
@@ -44,6 +47,9 @@
 	organitem_type = /obj/item/organ/limb/head
 	healthdoll = 1
 	can_be_damaged = 1
+
+/datum/organ/limb/head/regenerate_organitem()	//Fucks with suborgans
+	return null
 
 /datum/organ/limb/l_arm
 	name = "l_arm"

@@ -222,18 +222,20 @@ emp_act
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0
-	for(var/obj/item/organ/limb/L in src.organs)
-		if(L.organtype == ORGAN_ROBOTIC)
-			if(!informed)
-				src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
-				informed = 1
-			switch(severity)
-				if(1)
-					L.take_damage(0,10)
-					src.Stun(10)
-				if(2)
-					L.take_damage(0,5)
-					src.Stun(5)
+	for(var/datum/organ/limb/LI in get_limbs())
+		if(LI.exists())
+			var/obj/item/organ/limb/L = LI.organitem
+			if(L.organtype == ORGAN_ROBOTIC)
+				if(!informed)
+					src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
+					informed = 1
+				switch(severity)
+					if(1)
+						L.take_damage(0,10)
+						src.Stun(10)
+					if(2)
+						L.take_damage(0,5)
+						src.Stun(5)
 	..()
 
 

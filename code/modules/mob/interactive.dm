@@ -129,7 +129,7 @@
 	src.equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_sel = new /obj/screen/zone_sel()
 	zone_sel.selecting = "chest"
-	if(prob(10)) //my x is augmented
+/*	if(prob(10)) //my x is augmented	//Disabled this shite for now
 		//arms
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
@@ -158,7 +158,7 @@
 			del(L)
 			organs += new /obj/item/organ/limb/head/robot
 		for(var/obj/item/organ/limb/LIMB in organs)
-			LIMB.owner = src
+			LIMB.owner = src*/
 	update_icons()
 	update_damage_overlays(0)
 	update_body_parts()
