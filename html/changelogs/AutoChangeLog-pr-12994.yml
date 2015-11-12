@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+changes: 
+  - rscadd: "Reagents can no longer be determined by examining a reagent container without the proper apparatus. Silicons and ghosts can always see reagents."
+  - rscadd: "Science goggles now allow reagents to be seen on examine. In addition, chemists now start wearing them. The bartender has a pair that looks and functions like sunglasses."
