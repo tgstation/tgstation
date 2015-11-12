@@ -40,29 +40,30 @@ emp_act
 	dna.species.on_hit(proj_type, src)
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
-							"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
-			// Find a turf near or on the original location to bounce to
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(src)
+	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+				// Find a turf near or on the original location to bounce to
+				if(P.starting)
+					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/turf/curloc = get_turf(src)
 
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
+					// redirect the projectile
+					P.original = locate(new_x, new_y, P.z)
+					P.starting = curloc
+					P.current = curloc
+					P.firer = src
+					P.yo = new_y - curloc.y
+					P.xo = new_x - curloc.x
 
-			return -1 // complete projectile permutation
+				return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]", P, 0, P.armour_penetration))
-		P.on_hit(src, 100, def_zone)
-		return 2
+		if(check_shields(P.damage, "the [P.name]", P, 0, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
