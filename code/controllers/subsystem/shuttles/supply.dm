@@ -219,7 +219,7 @@
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad
+		/obj/machinery/telepad,
 		/obj/machinery/clonepod
 	)
 	if(A)
