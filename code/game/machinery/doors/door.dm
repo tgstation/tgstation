@@ -158,7 +158,7 @@
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
 		if(prob(80))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 1, src)
 			s.start()
 		return
@@ -194,7 +194,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 
@@ -258,6 +258,10 @@
 
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
+
+/obj/machinery/door/proc/update_freelook_sight()
+	if(!glass && cameranet)
+		cameranet.updateVisibility(src, 0)
 
 /obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

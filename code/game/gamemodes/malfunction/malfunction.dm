@@ -4,7 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	antag_flag = BE_MALF
+	antag_flag = ROLE_MALF
 	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
@@ -29,11 +29,11 @@
 		required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
 	return ..()
 
-/datum/game_mode/malfunction/get_players_for_role(role = BE_MALF)
+/datum/game_mode/malfunction/get_players_for_role(role = ROLE_MALF)
 	var/datum/job/ai/DummyAIjob = new
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & BE_MALF)
+			if(ROLE_MALF in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
 					antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)
@@ -206,7 +206,7 @@
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 
 	var/mob/living/silicon/ai/AI = usr
-	for(var/turf/simulated/floor/bluegrid/T in orange(AI, 5))
+	for(var/turf/simulated/floor/bluegrid/T in orange(5, AI))
 		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
 
 /datum/game_mode/malfunction/proc/ai_win()
@@ -285,13 +285,13 @@
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
 		var/text = "<br><FONT size=3><B>The malfunctioning AIs were:</B></FONT>"
-		var/module_text_temp = "<br><b>Purchased modules:</b><br>" //Added at the end
 		for(var/datum/mind/malf in malf_ai)
 			text += printplayer(malf, 1)
 			if(malf.current)
+				var/module_text_temp = "<br><b>Purchased modules:</b><br>" //Added at the end
 				var/mob/living/silicon/ai/AI = malf.current
 				for(var/datum/AI_Module/mod in AI.current_modules)
 					module_text_temp += mod.module_name + "<br>"
-		text += module_text_temp
+				text += module_text_temp
 		world << text
 	return 1

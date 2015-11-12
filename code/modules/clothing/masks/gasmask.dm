@@ -4,7 +4,7 @@
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
-	w_class = 3.0
+	w_class = 3
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -88,7 +88,7 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		M << "Your Clown Mask has now morphed into [choice], all praise the Honk Mother!"
+		M << "Your Clown Mask has now morphed into [choice], all praise the Honkmother!"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown

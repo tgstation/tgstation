@@ -39,13 +39,25 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
+	var/mob/wearer = loc
+	if(msg && ishuman(wearer))
+		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+	..()
+	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+
+/obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
+	..()
+	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
+
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 2
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
@@ -139,6 +151,7 @@
 	item_color = "mining"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
 /obj/item/clothing/suit/space/hardsuit/mining
@@ -231,7 +244,6 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
 	item_color = "syndi"
-	slowdown = 1
 	w_class = 3
 	action_button_name = "Toggle Helmet"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
@@ -270,25 +282,21 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 40, bullet = 20, laser = 20, energy = 20, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
-
 
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
 	name = "gem-encrusted hardsuit"
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
-	slowdown = 1
 	w_class = 3
 	unacidable = 1
-	armor = list(melee = 40, bullet = 20, laser = 20, energy = 20, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	unacidable = 1
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 
 
@@ -303,16 +311,61 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
-
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
-	slowdown = 1
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
+
+	//Research Director hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/rd
+	name = "prototype hardsuit helmet"
+	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
+	icon_state = "hardsuit0-rd"
+	item_color = "rd"
+	unacidable = 1
+	var/onboard_hud_enabled = 0 //stops conflicts with another diag HUD
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	var/obj/machinery/doppler_array/integrated/bomb_radar
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/New()
+	..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
+	..(user, slot)
+	user.scanner.Grant(user)
+	user.scanner.devices += 1
+	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
+		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
+	else
+		onboard_hud_enabled = 1
+		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		DHUD.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
+	..(user)
+	user.scanner.devices = max(0, user.scanner.devices - 1)
+	if(onboard_hud_enabled && !(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic)))
+		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		DHUD.remove_hud_from(user)
+
+/obj/item/clothing/suit/space/hardsuit/rd
+	icon_state = "hardsuit-rd"
+	name = "prototype hardsuit"
+	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
+	item_state = "hardsuit-rd"
+	unacidable = 1
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy/wormhole_projector,
+	/obj/item/weapon/hand_tele, /obj/item/device/aicard)
+	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
+
 
 
 	//Security hardsuit

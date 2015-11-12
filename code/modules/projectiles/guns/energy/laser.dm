@@ -3,7 +3,7 @@
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	item_state = "laser"
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
@@ -25,7 +25,7 @@
 
 
 /obj/item/weapon/gun/energy/laser/captain
-	name = "\improper QSJ 01 Premium laser pistol"
+	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
@@ -54,6 +54,7 @@
 	return 1
 
 /obj/item/weapon/gun/energy/laser/cyborg
+	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
@@ -84,7 +85,7 @@
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
 	item_state = "laser"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK

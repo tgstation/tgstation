@@ -6,7 +6,7 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	action_button_name = "Equip/Unequip TED Gun"
@@ -41,9 +41,10 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = 3.0
+	w_class = 3
 	flags = NODROP
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
+	can_charge = 0
 	fire_delay = 50
 	var/obj/item/weapon/chrono_eraser/TED = null
 	var/obj/effect/chrono_field/field = null

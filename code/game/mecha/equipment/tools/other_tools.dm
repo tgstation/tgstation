@@ -37,7 +37,7 @@
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
 	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
 	var/list/theareas = list()
-	for(var/area/AR in orange(100, chassis))
+	for(var/area/AR in ultra_range(100, chassis, 1))
 		if(AR in theareas) continue
 		theareas += AR
 	if(!theareas.len)
@@ -113,9 +113,9 @@
 		if(2)
 			var/list/atoms = list()
 			if(isturf(target))
-				atoms = range(target,3)
+				atoms = range(3, target)
 			else
-				atoms = orange(target,3)
+				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
 				if(A.anchored) continue
 				spawn(0)
@@ -500,10 +500,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		for(var/mob/living/carbon/M in view(chassis))
-			if(istype(M,/mob/living/carbon/human))
-				M.irradiate(rad_per_cycle*3)
-			else
-				M.irradiate(rad_per_cycle)
+		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
 
 

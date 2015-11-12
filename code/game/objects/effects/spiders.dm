@@ -10,12 +10,12 @@
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 	return
@@ -26,7 +26,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
 
-	var/damage = W.force / 4.0
+	var/damage = W.force / 4
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -139,7 +139,7 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.parents["p1"]
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
@@ -198,7 +198,7 @@
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
 			if(player_spiders)
-				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+				var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
 
 				shuffle(candidates)
 
@@ -218,6 +218,9 @@
 
 				if(!src)
 					return
+
+				listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
+
 
 				if(consenting_candidates.len)
 					var/client/C = null

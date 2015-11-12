@@ -1,9 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 var/const/TOUCH = 1 //splashing
-var/const/INGEST = 2 //injection, ingestion
-var/const/VAPOR = 3 //smoke, foam, spray, blob attack
+var/const/INGEST = 2 //ingestion
+var/const/VAPOR = 3 //foam, spray, blob attack
 var/const/PATCH = 4 //patches
+var/const/INJECT = 5 //injection
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -213,7 +214,7 @@ var/const/PATCH = 4 //patches
 				return total_transfered
 */
 
-/datum/reagents/proc/metabolize(mob/M)
+/datum/reagents/proc/metabolize(mob/M, can_overdose = 0)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
@@ -226,45 +227,47 @@ var/const/PATCH = 4 //patches
 			M = R.holder.my_atom
 		if(M && R)
 			if(M.reagent_check(R) != 1)
-				if(R.overdose_threshold)
-					if(R.volume >= R.overdose_threshold && !R.overdosed)
-						R.overdosed = 1
-						R.overdose_start(M)
-				if(R.addiction_threshold)
-					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
-						var/datum/reagent/new_reagent = new R.type()
-						addiction_list.Add(new_reagent)
-				if(R.overdosed)
-					R.overdose_process(M)
-				if(is_type_in_list(R,addiction_list))
-					for(var/datum/reagent/addicted_reagent in addiction_list)
-						if(istype(R, addicted_reagent))
-							addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
+				if(can_overdose)
+					if(R.overdose_threshold)
+						if(R.volume >= R.overdose_threshold && !R.overdosed)
+							R.overdosed = 1
+							R.overdose_start(M)
+					if(R.addiction_threshold)
+						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
+							var/datum/reagent/new_reagent = new R.type()
+							addiction_list.Add(new_reagent)
+					if(R.overdosed)
+						R.overdose_process(M)
+					if(is_type_in_list(R,addiction_list))
+						for(var/datum/reagent/addicted_reagent in addiction_list)
+							if(istype(R, addicted_reagent))
+								addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
 				R.on_mob_life(M)
 
-	if(addiction_tick == 6)
-		addiction_tick = 1
-		for(var/A in addiction_list)
-			var/datum/reagent/R = A
-			if(M && R)
-				if(R.addiction_stage <= 0)
-					R.addiction_stage++
-				if(R.addiction_stage > 0 && R.addiction_stage <= 10)
-					R.addiction_act_stage1(M)
-					R.addiction_stage++
-				if(R.addiction_stage > 10 && R.addiction_stage <= 20)
-					R.addiction_act_stage2(M)
-					R.addiction_stage++
-				if(R.addiction_stage > 20 && R.addiction_stage <= 30)
-					R.addiction_act_stage3(M)
-					R.addiction_stage++
-				if(R.addiction_stage > 30 && R.addiction_stage <= 40)
-					R.addiction_act_stage4(M)
-					R.addiction_stage++
-				if(R.addiction_stage > 40)
-					M << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
-					addiction_list.Remove(R)
-	addiction_tick++
+	if(can_overdose)
+		if(addiction_tick == 6)
+			addiction_tick = 1
+			for(var/A in addiction_list)
+				var/datum/reagent/R = A
+				if(M && R)
+					if(R.addiction_stage <= 0)
+						R.addiction_stage++
+					if(R.addiction_stage > 0 && R.addiction_stage <= 10)
+						R.addiction_act_stage1(M)
+						R.addiction_stage++
+					if(R.addiction_stage > 10 && R.addiction_stage <= 20)
+						R.addiction_act_stage2(M)
+						R.addiction_stage++
+					if(R.addiction_stage > 20 && R.addiction_stage <= 30)
+						R.addiction_act_stage3(M)
+						R.addiction_stage++
+					if(R.addiction_stage > 30 && R.addiction_stage <= 40)
+						R.addiction_act_stage4(M)
+						R.addiction_stage++
+					if(R.addiction_stage > 40)
+						M << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
+						addiction_list.Remove(R)
+		addiction_tick++
 	update_total()
 
 /datum/reagents/process()
@@ -400,7 +403,7 @@ var/const/PATCH = 4 //patches
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

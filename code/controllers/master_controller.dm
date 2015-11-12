@@ -19,12 +19,16 @@ var/global/datum/controller/game_controller/master_controller = new()
 	if(master_controller != src)
 		if(istype(master_controller))
 			Recover()
-			master_controller.Del()
+			qdel(master_controller)
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 
 		master_controller = src
 	calculateGCD()
+
+/datum/controller/game_controller/Destroy()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 
 /*
@@ -61,6 +65,8 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	for(var/datum/subsystem/S in subsystems)
 		S.Initialize(world.timeofday, zlevel)
 		sleep(-1)
+
+	crewmonitor.generateMiniMaps()
 
 	world << "<span class='boldannounce'>Initializations complete</span>"
 

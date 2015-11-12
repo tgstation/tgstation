@@ -252,6 +252,7 @@
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
+		body += "<option value='?_src_=vars;offer_control=\ref[D]'>Offer Control to Ghosts</option>"
 		if(iscarbon(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
@@ -592,6 +593,29 @@ body
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
 
+		else if(href_list["offer_control"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["offer_control"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+			M << "Control of your mob has been offered to dead players."
+			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
+			var/mob/dead/observer/theghost = null
+
+			if(candidates.len)
+				theghost = pick(candidates)
+				M << "Your mob has been taken over by a ghost!"
+				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+				M.ghostize()
+				M.key = theghost.key
+			else
+				M << "There were no ghosts willing to take control."
+				message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
 
@@ -813,8 +837,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				hardset_dna(H, null, null, null, null, newtype)
-				H.regenerate_icons()
+				H.set_species(newtype)
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))	return
@@ -828,7 +851,7 @@ body
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna && H.dna.species.id == "human")
+			if(H.dna.species.id == "human")
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
 					H << "You suddenly feel valid."

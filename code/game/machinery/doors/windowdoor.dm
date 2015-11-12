@@ -4,8 +4,8 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	visible = 0.0
+	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	visible = 0
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -102,7 +102,7 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -167,14 +167,14 @@
 
 /obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if(prob(25))
 				qdel(src)
 			else
 				take_damage(120)
-		if(3.0)
+		if(3)
 			take_damage(60)
 
 
@@ -251,10 +251,11 @@
 	return src.attackby(user, user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(density && !emagged)
-		operating = 0
+	if(!operating && density && !emagged)
+		operating = 1
 		flick("[src.base_state]spark", src)
 		sleep(6)
+		operating = 0
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
 		emagged = 1
@@ -263,6 +264,9 @@
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
+		return
+
+	if(istype(I, /obj/item/weapon/card/emag))
 		return
 
 	add_fingerprint(user)
@@ -378,7 +382,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	health = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
 

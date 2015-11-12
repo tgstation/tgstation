@@ -180,12 +180,17 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "syndicate=6;combat=5"
+	burn_state = 0 //Burnable (but the casing isn't)
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) //Little boom can chain a big boom
 	src.detonate()
+
+/obj/item/weapon/bombcore/burn()
+	src.detonate()
+	..()
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
@@ -296,7 +301,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1.0
+	w_class = 1
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

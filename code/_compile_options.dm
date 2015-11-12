@@ -54,3 +54,8 @@
 #endif
 
 #define USE_BYGEX
+
+
+#ifndef SERVERTOOLS
+#define SERVERTOOLS 0
+#endif

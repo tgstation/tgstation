@@ -8,7 +8,7 @@
 	icon_state = "syndballoon"
 	item_state = null
 	flags = ABSTRACT | NODROP
-	w_class = 5.0
+	w_class = 5
 	force = 0
 	throwforce = 0
 	throw_range = 0
@@ -51,7 +51,7 @@
 			B.loc = get_turf(C_target)
 			B.transfer_identity(C_target)
 			C_target.internal_organs -= B
-	var/datum/effect/effect/system/spark_spread/sparks = new
+	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
 	sparks.start()
 	M.gib()

@@ -36,8 +36,8 @@
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
 			var/modifier = Clamp((1 - touch_protection), 0, 1)
-			var/amount = round(volume*modifier, 0.1)
-			if(amount >= 1)
+			var/amount = round(reac_volume*modifier, 0.1)
+			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
 	return 1
 
@@ -49,8 +49,6 @@
 
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
-	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 

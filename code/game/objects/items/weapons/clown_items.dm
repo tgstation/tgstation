@@ -15,7 +15,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -24,6 +24,11 @@
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
+
+/obj/item/weapon/soap/homemade
+	desc = "A homemade bar of soap. Smells of... well...."
+	icon_state = "soapgibs"
+	cleanspeed = 45 // a little faster to reward chemists for going to the effort
 
 /obj/item/weapon/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
@@ -36,9 +41,10 @@
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/weapon/soap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] crams the bar of soap down \his throat! It looks like \he's trying to commit suicide..</span>")
-	. = TOXLOSS
-	src.loc = user
+	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
+	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
+	PoolOrNew(/obj/effect/particle_effect/foam, loc)
+	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
@@ -60,6 +66,12 @@
 	else if(ishuman(target) && user.zone_sel && user.zone_sel.selecting == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
+	else if(istype(target, /obj/structure/window))
+		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			user << "<span class='notice'>You clean \the [target.name].</span>"
+			target.color = initial(target.color)
+			target.SetOpacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
@@ -83,7 +95,7 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")

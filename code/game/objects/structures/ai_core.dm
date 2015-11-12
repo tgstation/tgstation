@@ -113,12 +113,12 @@
 				laws.clear_zeroth_law(0)
 				for(var/templaw in M.laws)
 					laws.add_inherent_law(templaw)
-				usr << "<span class='notice'>Law module applied.</span>"
+				user << "<span class='notice'>Law module applied.</span>"
 
 			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
 				laws.clear_inherent_laws()
 				laws.clear_zeroth_law(0)
-				usr << "<span class='notice'>Laws cleared applied.</span>"
+				user << "<span class='notice'>Laws cleared applied.</span>"
 
 
 			if(istype(P, /obj/item/weapon/aiModule/supplied/freeform) || istype(P, /obj/item/weapon/aiModule/core/freeformcore))
@@ -126,7 +126,7 @@
 				if(M.laws[1] == "")
 					return
 				laws.add_inherent_law(M.laws[1])
-				usr << "<span class='notice'>Added a freeform law.</span>"
+				user << "<span class='notice'>Added a freeform law.</span>"
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
@@ -160,13 +160,10 @@
 				if(!user.drop_item())
 					return
 
-				ticker.mode.remove_cultist(M.brainmob.mind, 1)
-				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
-
+				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
 				M.loc = src
 				brain = M
-				usr << "<span class='notice'>Added a brain.</span>"
+				user << "<span class='notice'>Added a brain.</span>"
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)

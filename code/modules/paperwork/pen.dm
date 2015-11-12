@@ -18,7 +18,7 @@
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=10)
@@ -66,6 +66,7 @@
  */
 /obj/item/weapon/pen/sleepy
 	origin_tech = "materials=2;syndicate=5"
+	flags = OPENCONTAINER
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)

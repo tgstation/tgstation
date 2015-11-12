@@ -1,3 +1,7 @@
+/obj/item/clothing/glasses
+	name = "glasses"
+	materials = list(MAT_GLASS = 250)
+
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
@@ -25,12 +29,23 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills."
+	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items."
 	icon_state = "purple"
 	item_state = "glasses"
+
+/obj/item/clothing/glasses/science/equipped(mob/user, slot)
+	if(slot == slot_glasses)
+		user.scanner.devices += 1
+		user.scanner.Grant(user)
+	..(user, slot)
+
+/obj/item/clothing/glasses/science/dropped(mob/user)
+	user.scanner.devices = max(0, user.scanner.devices - 1)
+	..(user)
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
@@ -99,6 +114,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	desc = "Believe in us humans."
@@ -118,6 +134,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
 	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
@@ -243,7 +260,7 @@
 				name = "sunglasses"
 				icon_state = "sun"
 				item_state = "sunglasses"
-			if("Medical HUD")	
+			if("Medical HUD")
 				name = "Health Scanner HUD"
 				desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 				icon_state = "healthhud"
@@ -253,11 +270,11 @@
 				desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 				icon_state = "meson"
 				item_state = "meson"
-			if("Science Goggles")	
+			if("Science Goggles")
 				name = "Science Goggles"
 				desc = "A pair of snazzy goggles used to protect against chemical spills."
 				icon_state = "purple"
-				item_state = "glasses"	
+				item_state = "glasses"
 			if("Glasses")
 				name = "Prescription Glasses"
 				desc = "Made by Nerd. Co."
@@ -283,4 +300,4 @@
 				name = "gar glasses"
 				icon_state = "gar"
 				item_state = "gar"
-				
+

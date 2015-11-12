@@ -23,12 +23,13 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
+#define SPECIES_LAYER			27		// mutantrace colors... these are on a seperate layer in order to prvent
+#define MUTATIONS_LAYER			26		//mutations. Hulk, Tk headglows, etc
 #define BODY_BEHIND_LAYER		25
 #define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
 #define BODY_ADJ_LAYER			23
-#define MUTATIONS_LAYER			22		//Tk headglows etc.
-#define AUGMENTS_LAYER			21
+#define AUGMENTS_LAYER			22
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body and augments layer (e.g. laser eyes)
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
@@ -49,7 +50,7 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -162,6 +163,9 @@
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 
+//Slime evolution threshold. Controls how fast slimes can split/grow
+#define SLIME_EVOLUTION_THRESHOLD 10
+
 //singularity defines
 #define STAGE_ONE 1
 #define STAGE_TWO 3
@@ -253,8 +257,8 @@ var/list/bloody_footprints_cache = list()
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
-#define BLOODY_FOOTPRINT_BASE_ALPHA	100
-#define BLOOD_GAIN_PER_STEP			50
+#define BLOODY_FOOTPRINT_BASE_ALPHA	150
+#define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_FADEOUT_TIME			2
 
@@ -263,3 +267,24 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+//Turf wet states
+#define TURF_DRY		0
+#define TURF_WET_WATER	1
+#define TURF_WET_LUBE	2
+
+//Object/Item sharpness
+#define IS_BLUNT			0
+#define IS_SHARP			1
+#define IS_SHARP_ACCURATE	2
+
+//unmagic-strings for types of polls
+#define POLLTYPE_OPTION		"OPTION"
+#define POLLTYPE_TEXT		"TEXT"
+#define POLLTYPE_RATING		"NUMVAL"
+#define POLLTYPE_MULTI		"MULTICHOICE"
+
+//lighting area defines
+#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
+#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
+#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
+#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )

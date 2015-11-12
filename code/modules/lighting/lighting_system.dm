@@ -38,6 +38,7 @@
 /datum/light_source
 	var/atom/owner
 	var/radius = 0
+	var/cap = 0
 	var/changed = 1
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
@@ -58,6 +59,8 @@
 		remove_effect()
 		owner.light = null
 		owner = null
+	if(changed)
+		SSlighting.changed_lights -= src
 	return ..()
 
 //Check a light to see if its effect needs reprocessing. If it does, remove any old effect and create a new one
@@ -128,7 +131,7 @@
 #else
 	distance = max(abs(x - L.__x), abs(y - L.__y))
 #endif
-	return LIGHTING_CAP * (L.radius - distance) / L.radius
+	return ( L.cap ? L.cap : LIGHTING_CAP ) * (L.radius - distance) / L.radius
 //LIGHTING_CAP == strength for now
 
 
@@ -176,7 +179,8 @@
 //If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its
 //queues are complete.
 //if we have a light already it is merely updated, rather than making a new one.
-/atom/proc/SetLuminosity(new_luminosity)
+//The second arg allows you to scale the light cap for calculating falloff. (0 for default, null for no change)
+/atom/proc/SetLuminosity(new_luminosity, new_cap)
 	if(new_luminosity < 0)
 		new_luminosity = 0
 
@@ -185,10 +189,12 @@
 			return
 		light = new(src)
 	else
-		if(light.radius == new_luminosity)
+		if(light.radius == new_luminosity && (new_cap == null || light.cap == new_cap))
 			return
 	light.radius = new_luminosity
 	luminosity = new_luminosity
+	if (new_cap != null)
+		light.cap = new_cap
 	light.changed()
 
 /atom/proc/AddLuminosity(delta_luminosity)
@@ -265,9 +271,8 @@
 	lighting_object = locate() in src
 	init_lighting()
 
-	for(var/turf/space/S in orange(src,1))
+	for(var/turf/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
-
 
 /turf/proc/update_lumcount(amount)
 	lighting_lumcount += amount
@@ -280,7 +285,7 @@
 
 /turf/proc/init_lighting()
 	var/area/A = loc
-	if(!A.lighting_use_dynamic || istype(src, /turf/space))
+	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/space))
 		lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
@@ -309,25 +314,39 @@
 				newalpha = 0
 
 		if(lighting_object.alpha != newalpha)
-			var/change_time = LIGHTING_TIME
 			if(instantly)
-				change_time = 0
-			animate(lighting_object, alpha = newalpha, time = change_time)
+				lighting_object.alpha = newalpha
+			else
+				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA) //Doesn't actually make it darker or anything, just tells byond you can't see the tile
-				animate(luminosity = 0, time = 0)
+				luminosity = 0
 
 	lighting_changed = 0
 
+/turf/proc/get_lumcount()
+	var/light_amount
+	if(!src || !istype(src))
+		return
+	var/area/A = src.loc
+	if(!A || !istype(src))
+		return
+	if(IS_DYNAMIC_LIGHTING(A))
+		light_amount = src.lighting_lumcount
+	else
+		light_amount =  LIGHTING_CAP
+	return light_amount
+
 /area
-	var/lighting_use_dynamic = 1	//Turn this flag off to make the area fullbright
+	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
 
 /area/New()
 	. = ..()
-	if(!lighting_use_dynamic)
+	if(lighting_use_dynamic != DYNAMIC_LIGHTING_ENABLED)
 		luminosity = 1
 
 /area/proc/SetDynamicLighting()
-	lighting_use_dynamic = 1
+	if (lighting_use_dynamic == DYNAMIC_LIGHTING_DISABLED)
+		lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	luminosity = 0
 	for(var/turf/T in src.contents)
 		T.init_lighting()

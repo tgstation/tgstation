@@ -5,7 +5,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/weapon/circuitboard/security
 	var/obj/machinery/camera/current = null
-	var/last_pic = 1.0
+	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 

@@ -29,7 +29,7 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 
 /obj/structure/alien/resin/New(location)
@@ -84,11 +84,11 @@
 
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health -= 150
-		if(2.0)
+		if(2)
 			health -= 100
-		if(3.0)
+		if(3)
 			health -= 50
 	healthcheck()
 
@@ -218,7 +218,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
-	var/damage = I.force / 4.0
+	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
@@ -309,6 +309,7 @@
 	anchored = 1
 	var/health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	layer = MOB_LAYER
 
 
 /obj/structure/alien/egg/New()
@@ -473,9 +474,18 @@
 			T.dump_contents()
 			qdel(target)
 
+		if(istype(target, /turf/simulated/mineral))
+			var/turf/simulated/mineral/M = target
+			M.ChangeTurf(M.baseturf)
+
+		if(istype(target, /turf/simulated/floor))
+			var/turf/simulated/floor/F = target
+			F.ChangeTurf(F.baseturf)
+
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
+
 		else
 			qdel(target)
 

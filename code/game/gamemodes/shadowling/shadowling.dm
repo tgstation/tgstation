@@ -67,7 +67,7 @@ Made by Xhuis
 /datum/game_mode/shadowling
 	name = "shadowling"
 	config_tag = "shadowling"
-	antag_flag = BE_SHADOWLING
+	antag_flag = ROLE_SHADOWLING
 	required_players = 30
 	required_enemies = 2
 	recommended_enemies = 2
@@ -85,7 +85,7 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/shadowlings = max(2, round(num_players()/10))
+	var/shadowlings = max(3, round(num_players()/14))
 
 
 	while(shadowlings)
@@ -131,9 +131,8 @@ Made by Xhuis
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
-	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hatch(null))
-	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
-	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind(null))
+	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hatch(null))
+	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind(null))
 	spawn(0)
 		update_shadow_icons_added(shadow_mind)
 		if(shadow_mind.assigned_role == "Clown")
@@ -148,10 +147,10 @@ Made by Xhuis
 		thralls += new_thrall_mind
 		new_thrall_mind.special_role = "thrall"
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
-		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_shadowling_hivemind(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
-		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_shadow_walk(null))
-		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/thrall_vision(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_vision(null))
 		new_thrall_mind.current << "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
 		new_thrall_mind.current << "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>"
 		new_thrall_mind.current << "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
@@ -166,10 +165,8 @@ Made by Xhuis
 	thralls.Remove(thrall_mind)
 	thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Dethralled</span>"
 	thrall_mind.special_role = null
-	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadowling_hivemind)
-	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
-	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
-	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/thrall_vision)
+	for(var/obj/effect/proc_holder/spell/S in thrall_mind.spell_list)
+		thrall_mind.remove_spell(S)
 	if(kill && ishuman(thrall_mind.current)) //If dethrallization surgery fails, kill the mob as well as dethralling them
 		var/mob/living/carbon/human/H = thrall_mind.current
 		H.visible_message("<span class='warning'>[H] jerks violently and falls still.</span>", \
@@ -185,6 +182,30 @@ Made by Xhuis
 						  "<span class='userdanger'>A piercing white light floods your eyes. Your mind is your own again! Though you try, you cannot remember anything about the shadowlings or your time \
 						  under their command...</span>")
 	return 1
+
+/datum/game_mode/proc/remove_shadowling(datum/mind/ling_mind)
+	if(!istype(ling_mind) || !(ling_mind in shadows)) return 0
+	update_shadow_icons_removed(ling_mind)
+	shadows.Remove(ling_mind)
+	ling_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Deshadowlinged</span>"
+	ling_mind.special_role = null
+	for(var/obj/effect/proc_holder/spell/S in ling_mind.spell_list)
+		ling_mind.remove_spell(S)
+	var/mob/living/M = ling_mind.current
+	if(issilicon(M))
+		M.audible_message("<span class='notice'>[M] lets out a short blip.</span>", \
+						  "<span class='userdanger'>You have been turned into a robot! You are no longer a shadowling! Though you try, you cannot remember anything about your time as one...</span>")
+	else
+		M.visible_message("<span class='big'>[M] screams and contorts!</span>", \
+						  "<span class='userdanger'>THE LIGHT-- YOUR MIND-- <i>BURNS--</i></span>")
+		spawn(30)
+			if(!M || qdeleted(M))
+				return
+			M.visible_message("<span class='warning'>[M] suddenly bloats and explodes!</span>", \
+							  "<span class='warning'><b>AAAAAAAAA<font size=3>AAAAAAAAAAAAA</font><font size=4>AAAAAAAAAAAA----</font></span>")
+			playsound(M, 'sound/magic/Disintegrate.ogg', 100, 1)
+			M.gib()
+
 
 /datum/game_mode/shadowling/proc/check_shadow_victory()
 	var/success = 0 //Did they win?
@@ -244,8 +265,9 @@ Made by Xhuis
 		light_amount = T.get_lumcount()
 		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move) //Can survive in very small light levels. Also doesn't take damage while incorporeal, for shadow walk purposes
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
-			H << "<span class='userdanger'>The light burns you!</span>"
-			H << 'sound/weapons/sear.ogg'
+			if(H.stat != DEAD)
+				H << "<span class='userdanger'>The light burns you!</span>" //Message spam to say "GET THE FUCK OUT"
+				H << 'sound/weapons/sear.ogg'
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
@@ -287,11 +309,4 @@ Made by Xhuis
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
 
-/turf/proc/get_lumcount()
-	var/light_amount
-	if(!src || !istype(src)) return
-	var/area/A = src.loc
-	if(!A || !istype(src)) return
-	if(A.lighting_use_dynamic) light_amount = src.lighting_lumcount
-	else light_amount =  10
-	return light_amount
+

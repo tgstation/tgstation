@@ -86,7 +86,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(istype(M, /mob/living))
-		for(var/mob/MM in range(M, 1))
+		for(var/mob/MM in range(1,M))
 			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
 				if ( !(world.time % 5) )
 					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
@@ -98,7 +98,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -186,7 +186,7 @@ Sorry Giacom. Please don't be mad :(
 		death()
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
+	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
 /mob/living/ex_act(severity, target)
 	..()
@@ -385,7 +385,7 @@ Sorry Giacom. Please don't be mad :(
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -505,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
@@ -517,7 +517,7 @@ Sorry Giacom. Please don't be mad :(
 
 	var/cuff_dragged = 0
 	if (restrained())
-		for(var/mob/living/M in range(src, 1))
+		for(var/mob/living/M in range(1, src))
 			if (M.pulling == src && !M.incapacitated())
 				cuff_dragged = 1
 	if (!cuff_dragged && pulling && !throwing && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
@@ -577,10 +577,22 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
-	for(var/mob/living/simple_animal/slime/M in oview(1,src))
-		M.UpdateFeed(src)
+/mob/living/movement_delay()
+	. = ..()
+	if(isturf(loc))
+		var/turf/T = loc
+		. += T.slowdown
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += config.run_speed
+		if("walk")
+			. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
+	if(!has_gravity(M))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
@@ -605,8 +617,8 @@ Sorry Giacom. Please don't be mad :(
 			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				H.existing_dirs += newdir
 				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(check_dna_integrity(M)) //blood DNA
-					var/mob/living/carbon/DNA_helper = pulling
+				if(M.has_dna()) //blood DNA
+					var/mob/living/carbon/DNA_helper = M
 					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
@@ -674,12 +686,12 @@ Sorry Giacom. Please don't be mad :(
 	return name
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless")
+		throw_alert("weightless", /obj/screen/alert/weightless)
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
@@ -895,3 +907,14 @@ Sorry Giacom. Please don't be mad :(
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
 	return 0
+
+/mob/living/proc/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	gib()

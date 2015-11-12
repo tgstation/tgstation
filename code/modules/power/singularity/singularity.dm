@@ -34,7 +34,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
@@ -65,16 +65,16 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.","singulo")
 				qdel(src)
 				return
 			else
 				energy -= round(((energy+1)/2),1)
-		if(2.0)
+		if(2)
 			energy -= round(((energy+1)/3),1)
-		if(3.0)
+		if(3)
 			energy -= round(((energy+1)/4),1)
 	return
 
@@ -112,7 +112,7 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in orange(30, src)
+	var/count = locate(/obj/machinery/field/containment) in ultra_range(30, src, 1)
 	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
@@ -211,8 +211,6 @@
 		investigate_log("collapsed.","singulo")
 		qdel(src)
 		return 0
-	if(energy > 2999 && !consumedSupermatter)
-		energy = 2000
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -222,10 +220,11 @@
 			allowed_size = STAGE_THREE
 		if(1000 to 1999)
 			allowed_size = STAGE_FOUR
-		if(2000 to 2999)
-			allowed_size = STAGE_FIVE
-		if(3000 to INFINITY)
-			allowed_size = STAGE_SIX
+		if(2000 to INFINITY)
+			if(energy >= 3000 && consumedSupermatter)
+				allowed_size = STAGE_SIX
+			else
+				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
 	return 1
@@ -233,7 +232,8 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/atom/X in orange(grav_pull,src))
+	var/list/L = grav_pull > 8 ? ultra_range(grav_pull, src, 1) : orange(grav_pull, src)
+	for(var/atom/X in L)
 		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
 		if(dist > consume_range)
@@ -364,13 +364,13 @@
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.irradiate(rand(radiationmin,radiation))
+		M.rad_act(rand(radiationmin,radiation))
 
 
 /obj/singularity/proc/combust_mobs()
-	for(var/mob/living/carbon/C in orange(20, src))
+	for(var/mob/living/carbon/C in ultra_range(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
-						  "<span class='boldannounce'>You feel an inner fire as your skin is suddenly covered in fire!</span>")
+						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return

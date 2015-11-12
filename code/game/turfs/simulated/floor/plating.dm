@@ -108,14 +108,14 @@
 
 /turf/simulated/floor/engine/ex_act(severity,target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(prob(80))
 				ReplaceWithLattice()
 			else if(prob(50))
 				qdel(src)
 			else
 				make_plating(1)
-		if(2.0)
+		if(2)
 			if(prob(50))
 				make_plating(1)
 

@@ -8,7 +8,7 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	health = 20
@@ -70,7 +70,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = 3.0
+	w_class = 3
 
 	/obj/item/weapon/firstaid_arm_assembly/New()
 		..()
@@ -482,7 +482,7 @@
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
-						reagent_glass.reagents.reaction(patient, INGEST, fraction)
+						reagent_glass.reagents.reaction(patient, INJECT, fraction)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
@@ -520,11 +520,10 @@
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 /obj/machinery/bot/medbot/proc/declare(crit_patient)
 	if(declare_cooldown)

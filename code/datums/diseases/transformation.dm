@@ -201,9 +201,8 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna && human.dna.species.id != "slime")
-					hardset_dna(human, null, null, null, null, /datum/species/slime)
-					human.regenerate_icons()
+				if(human.dna.species.id != "slime")
+					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

@@ -2,7 +2,7 @@
 	name = "landmark"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
-	anchored = 1.0
+	anchored = 1
 	unacidable = 1
 
 /obj/effect/landmark/New()
@@ -72,7 +72,7 @@
 	name = "start"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
-	anchored = 1.0
+	anchored = 1
 
 /obj/effect/landmark/start/New()
 	..()

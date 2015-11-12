@@ -10,6 +10,7 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = 4
+	materials = list(MAT_METAL = 500)
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'

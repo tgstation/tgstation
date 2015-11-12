@@ -3,8 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A large, pulsating yellow mass."
-	health = 100
-	fire_resist = 2
+	health = 200
+	maxhealth = 200
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src

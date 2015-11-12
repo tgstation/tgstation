@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/emote(var/act)
+/mob/living/carbon/alien/larva/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -7,8 +7,6 @@
 		act = copytext(act, 1, t1)
 
 	var/muzzled = is_muzzled()
-	var/m_type = 1
-	var/message
 
 	switch(act) //Alphabetically sorted please.
 		if ("burp","burps")
@@ -26,6 +24,9 @@
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> dances around happily."
 				m_type = 1
+		if ("deathgasp","deathgasps")
+			message = "<span class='name'>[src]</span> lets out a sickly hiss of air and falls limply to the floor..."
+			m_type = 2
 		if ("drool","drools")
 			message = "<span class='name'>[src]</span> drools."
 			m_type = 1
@@ -42,6 +43,9 @@
 		if ("jump","jumps")
 			message = "<span class='name'>[src]</span> jumps!"
 			m_type = 1
+		if ("me")
+			..()
+			return
 		if ("moan","moans")
 			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
@@ -95,7 +99,7 @@
 				m_type = 2
 
 		if ("help") //"The exception"
-			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, drool, gasp, gnarl, hiss, jump, moan, nod, roll, roar, scratch, screech, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
+			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, deathgasp, drool, gasp, gnarl, hiss, jump, me, moan, nod, roll, roar, scratch, screech, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
 
 		else
 			src << "<span class='info'>Unusable emote '[act]'. Say *help for a list.</span>"

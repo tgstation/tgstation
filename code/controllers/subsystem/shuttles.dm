@@ -58,7 +58,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
-
+	initial_move()
 	..()
 
 
@@ -118,9 +118,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, emergency_reason, 1)
+		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 1, signal_origin, emergency_reason, 0)
+		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -200,6 +200,18 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(M.dock(getDock(dockId)))
 			return 2
 	return 0	//dock successful
+
+/datum/subsystem/shuttle/proc/initial_move()
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(!M.roundstart_move)
+			continue
+		for(var/obj/docking_port/stationary/S in stationary)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
+				S.width = M.width
+				S.height = M.height
+				S.dwidth = M.dwidth
+				S.dheight = M.dheight
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
 
 /datum/supply_order
 	var/ordernum

@@ -220,12 +220,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 	return
@@ -239,35 +239,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		clear_holo(master)
 	return ..()
 
-/*
-Holographic project of everything else.
 
-/mob/verb/hologram_test()
-	set name = "Hologram Debug New"
-	set category = "CURRENT DEBUG"
-
-	var/obj/effect/overlay/hologram = new(loc)//Spawn a blank effect at the location.
-	var/icon/flat_icon = icon(getFlatIcon(src,0))//Need to make sure it's a new icon so the old one is not reused.
-	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
-	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
-	var/input = input("Select what icon state to use in effect.",,"")
-	if(input)
-		var/icon/alpha_mask = new('icons/effects/effects.dmi', "[input]")
-		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
-		hologram.icon = flat_icon
-
-		world << "Your icon should appear now."
-	return
-*/
-
-/*
- * Other Stuff: Is this even used?
- */
-/obj/machinery/hologram/projector
-	name = "hologram projector"
-	desc = "It makes a hologram appear...with magnets or something..."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "hologram0"
 
 #undef RANGE_BASED
 #undef AREA_BASED

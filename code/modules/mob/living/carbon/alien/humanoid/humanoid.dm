@@ -2,6 +2,7 @@
 	name = "alien"
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -11,6 +12,7 @@
 	var/pounce_cooldown_time = 30
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
+	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -20,7 +22,7 @@
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
+	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -31,10 +33,16 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(14 + rand(1,9))
-		Paralyse(1)
-		step_away(src,user,15)
-		sleep(1)
-		step_away(src,user,15)
+		var/hitverb = "punched"
+		if(mob_size < MOB_SIZE_LARGE)
+			Paralyse(1)
+			step_away(src,user,15)
+			sleep(1)
+			step_away(src,user,15)
+			hitverb = "slammed"
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
+		"<span class='userdanger'>[user] has [hitverb] [src]!</span>")
 		return 1
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
@@ -140,3 +148,13 @@
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
+
+//For alien evolution/promotion procs. Checks for
+proc/alien_type_present(var/alienpath)
+	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+		if(!istype(A, alienpath))
+			continue
+		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return 1
+	return 0

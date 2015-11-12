@@ -193,21 +193,21 @@
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
-		if(1.0)
+		if(1)
 			return "north"
-		if(2.0)
+		if(2)
 			return "south"
-		if(4.0)
+		if(4)
 			return "east"
-		if(8.0)
+		if(8)
 			return "west"
-		if(5.0)
+		if(5)
 			return "northeast"
-		if(6.0)
+		if(6)
 			return "southeast"
-		if(9.0)
+		if(9)
 			return "northwest"
-		if(10.0)
+		if(10)
 			return "southwest"
 		else
 	return
@@ -625,6 +625,13 @@ for(var/t in test_times)
 					if(var_source.vars.Find(A))
 						. += A
 
-
+//assumes format #RRGGBB #rrggbb
+/proc/color_hex2num(A)
+	if(!A)
+		return 0
+	var/R = hex2num(copytext(A,2,4))
+	var/G = hex2num(copytext(A,4,6))
+	var/B = hex2num(copytext(A,6,0))
+	return R+G+B
 
 

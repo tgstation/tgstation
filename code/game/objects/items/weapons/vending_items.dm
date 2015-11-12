@@ -6,11 +6,11 @@
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = CONDUCT
-	force = 7.0
-	throwforce = 10.0
+	force = 7
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = 4
 
 	var/charges = list(0, 0, 0)	//how many restocking "charges" the refill has for standard/contraband/coin products
 	var/init_charges = list(0, 0, 0)

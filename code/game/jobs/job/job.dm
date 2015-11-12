@@ -39,62 +39,23 @@
 	//If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	//Job specific items
-	var/default_id				= /obj/item/weapon/card/id //this is just the looks of it
-	var/default_pda				= /obj/item/device/pda
-	var/default_pda_slot	= slot_belt
-	var/default_headset		= /obj/item/device/radio/headset
-	var/default_backpack	= /obj/item/weapon/storage/backpack
-	var/default_satchel		= /obj/item/weapon/storage/backpack/satchel_norm
-	var/default_storagebox= /obj/item/weapon/storage/box/survival
+	var/outfit = null
 
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
-
-//Or this proc
-/datum/job/proc/equip_backpack(mob/living/carbon/human/H)
-	var/obj/item/weapon/storage/backpack/BPK
-	if(H.backbag == 1) //Backpack
-		BPK = new default_backpack(H)
-	else //Satchel
-		BPK = new default_satchel(H)
-	new default_storagebox(BPK)
-	H.equip_to_slot_or_del(BPK, slot_back,1)
 
 //But don't override this
 /datum/job/proc/equip(mob/living/carbon/human/H)
 	if(!H)
 		return 0
 
-	//Equip backpack
-	equip_backpack(H)
-
 	//Equip the rest of the gear
-	if(H.dna)
-		H.dna.species.before_equip_job(src, H)
+	H.dna.species.before_equip_job(src, H)
 
-	equip_items(H)
+	if(outfit)
+		H.equipOutfit(outfit)
 
-	if(H.dna)
-		H.dna.species.after_equip_job(src, H)
-
-	//Equip ID
-	var/obj/item/weapon/card/id/C = new default_id(H)
-	C.access = get_access()
-	C.registered_name = H.real_name
-	C.assignment = H.job
-	C.update_label()
-	H.equip_to_slot_or_del(C, slot_wear_id)
-
-	//Equip PDA
-	var/obj/item/device/pda/PDA = new default_pda(H)
-	PDA.owner = H.real_name
-	PDA.ownjob = H.job
-	PDA.update_label()
-	H.equip_to_slot_or_del(PDA, default_pda_slot)
-
-	//Equip headset
-	H.equip_to_slot_or_del(new src.default_headset(H), slot_ears)
+	H.dna.species.after_equip_job(src, H)
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -169,8 +130,46 @@
 /datum/job/proc/config_check()
 	return 1
 
-/datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+/datum/outfit/job
+	name = "Standard Gear"
+
+	uniform = /obj/item/clothing/under/color/grey
+	id = /obj/item/weapon/card/id
+	ears = /obj/item/device/radio/headset
+	belt = /obj/item/device/pda
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
+	var/backpack = /obj/item/weapon/storage/backpack
+	var/satchel  = /obj/item/weapon/storage/backpack/satchel_norm
+	var/box = /obj/item/weapon/storage/box/survival
+
+	var/pda_slot = slot_belt
+
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H)
+	if(H.backbag == 1) //Backpack
+		back =  backpack
+	else //Satchel
+		back = satchel
+
+	backpack_contents[box] = 1
+
+/datum/outfit/job/post_equip(mob/living/carbon/human/H)
+	var/obj/item/weapon/card/id/C = H.wear_id
+	var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
+	C.access = J.get_access()
+	C.registered_name = H.real_name
+	C.assignment = H.job
+	C.update_label()
+	H.sec_hud_set_ID()
+
+	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
+	PDA.owner = H.real_name
+	PDA.ownjob = H.job
+	PDA.update_label()
+
+/datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
-		if(announcement_systems.len)
+		if(H && announcement_systems.len)
 			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 			announcer.announce("NEWHEAD", H.real_name, H.job, channels)

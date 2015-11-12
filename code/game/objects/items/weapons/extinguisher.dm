@@ -7,14 +7,14 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 2
 	throw_range = 7
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
-	var/last_use = 1.0
+	var/last_use = 1
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
@@ -29,8 +29,8 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
 	throwforce = 2
-	w_class = 2.0
-	force = 3.0
+	w_class = 2
+	force = 3
 	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
@@ -131,7 +131,7 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/effect/water/W = PoolOrNew( /obj/effect/effect/water, get_turf(src) )
+				var/obj/effect/particle_effect/water/W = PoolOrNew( /obj/effect/particle_effect/water, get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				if(precision)
 					the_targets -= my_target

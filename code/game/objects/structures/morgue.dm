@@ -16,7 +16,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -40,6 +40,12 @@
 
 /obj/structure/bodycontainer/alter_health()
 	return src.loc
+
+/obj/structure/bodycontainer/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	if(!open())
+		open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -206,7 +212,7 @@ var/global/list/crematoriums = new/list()
 	density = 1
 	layer = 2.9
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1.0
+	anchored = 1
 	pass_flags = LETPASSTHROW
 
 /obj/structure/tray/Destroy()

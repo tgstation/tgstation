@@ -34,45 +34,23 @@
 	return !density
 
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user, params)
-	if(!istype(W)) return
-
-	//Calculate damage
-	var/aforce = W.force
-	if(W.damtype == BRUTE || W.damtype == BURN)
-		src.health -= aforce
-
-	//Play a fitting sound
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
-
-
-	if (src.health <= 0)
-		visible_message("<span class='notice'>[src] dissipates.</span>")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
 	..()
+	if(W.damtype == BRUTE || W.damtype == BURN)
+		take_damage(W.force)
 
 /obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
 	..()
-	if(health <=0)
-		visible_message("<span class='notice'>The [src] dissipates.</span>")
-		qdel(src)
-		return
-	opacity = 1
-	spawn(20) if(src) opacity = 0
+	take_damage(Proj.damage)
 
 /obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (prob(75))
 				qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 	return
@@ -90,33 +68,24 @@
 
 
 /obj/machinery/shield/hitby(AM as mob|obj)
-
-	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
 	else
-		tforce = AM:throwforce
+		var/obj/O = AM
+		tforce = O.throwforce
+	..()
+	take_damage(tforce)
 
-	src.health -= tforce
-
-	//This seemed to be the best sound for hitting a force field.
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
-
-	//Handle the destruction of the shield
-	if (src.health <= 0)
+/obj/machinery/shield/proc/take_damage(damage)
+	playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+	opacity = 1
+	spawn(20)
+		opacity = 0
+	health -= damage
+	if(health <= 0)
 		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
-		return
-
-	//The shield becomes dense to absorb the blow.. purely asthetic.
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-
-	..()
-	return
-
-
 
 /obj/machinery/shieldgen
 		name = "anti-breach shielding projector"
@@ -182,15 +151,15 @@
 
 /obj/machinery/shieldgen/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			src.checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			src.checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			src.checkhp()
 	return
@@ -505,7 +474,6 @@
 /obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
 	storedpower -= Proj.damage
 	..()
-	return
 
 
 //////////////Containment Field START
@@ -520,7 +488,6 @@
 		luminosity = 3
 		var/needs_power = 0
 		var/active = 1
-//		var/power = 10
 		var/delay = 5
 		var/last_active
 		var/mob/U
@@ -547,7 +514,7 @@
 		if(!(gen_primary.active)||!(gen_secondary.active))
 			qdel(src)
 			return
-//
+
 		if(prob(50))
 			gen_primary.storedpower -= 10
 		else
@@ -570,21 +537,21 @@
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)
-			if(1.0) //big boom
+			if(1) //big boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 200
 
-			if(2.0) //medium boom
+			if(2) //medium boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 50
 
-			if(3.0) //lil boom
+			if(3) //lil boom
 				if(prob(50))
 					G = gen_primary
 				else

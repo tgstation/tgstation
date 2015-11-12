@@ -20,10 +20,9 @@
 			sleep(3)
 			if (i > 0)
 				if (prob(40))
-					/*var/obj/effect/decal/cleanable/oil/o =*/
 					new /obj/effect/decal/cleanable/oil/streak(src.loc)
 				else if (prob(10))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(3, 1, src)
 					s.start()
 			if (step_to(src, get_step(src, direction), 0))
@@ -36,10 +35,10 @@
 	random_icon_states = list("gibarm", "gibleg")
 
 /obj/effect/decal/cleanable/robot_debris/up
-	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibup1","gibup1") //2:7 is close enough to 1:4
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibup1","gibup1")
 
 /obj/effect/decal/cleanable/robot_debris/down
-	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibdown1","gibdown1") //2:7 is close enough to 1:4
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibdown1","gibdown1")
 
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"

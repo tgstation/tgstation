@@ -17,6 +17,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *      Kitty toys!
  */
 
 
@@ -98,7 +99,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = 4.0
+	w_class = 4
 
 /*
  * Fake singularity
@@ -122,10 +123,10 @@
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
-	var/bullets = 7.0
+	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
 	..()
@@ -174,9 +175,9 @@
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
-	w_class = 1.0
+	w_class = 1
 	materials = list(MAT_METAL=10, MAT_GLASS=10)
-	var/amount_left = 7.0
+	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
 	src.icon_state = text("357OLD-[]", src.amount_left)
@@ -194,8 +195,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
-	var/active = 0.0
-	w_class = 2.0
+	var/active = 0
+	w_class = 2
 	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
@@ -316,9 +317,9 @@
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
-	w_class = 1.0
+	w_class = 1
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	var/paint_color = "#FF0000" //RGB
 	var/drawtype = "rune"
 	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
@@ -465,7 +466,7 @@
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon(target,paint_color,drawtype,temp,graf_rot)
 
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
@@ -515,7 +516,7 @@
 	w_class = 1
 
 /obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(loc)
@@ -538,7 +539,7 @@
 		if(M.m_intent == "run")
 			M << "<span class='danger'>You step on the snap pop!</span>"
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
@@ -645,7 +646,7 @@
 	desc = "A little toy model AI core with real law announcing action!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 
 /obj/item/toy/AI/attack_self(mob/user)
@@ -664,7 +665,7 @@
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 
 /obj/item/toy/owl/attack_self(mob/user)
@@ -683,7 +684,7 @@
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "griffinprize"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 
 /obj/item/toy/griffin/attack_self(mob/user)
@@ -729,7 +730,7 @@
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 	var/list/cards = list()
 
@@ -860,7 +861,7 @@
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nanotrasen_hand2"
-	w_class = 1.0
+	w_class = 1
 	var/list/currenthand = list()
 	var/choice = null
 
@@ -954,7 +955,7 @@
 	desc = "a card"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_nanotrasen_down"
-	w_class = 1.0
+	w_class = 1
 	var/cardname = null
 	var/flipped = 0
 	pixel_x = -5
@@ -1074,7 +1075,7 @@
 	desc = "A plastic model of a Nuclear Fission Explosive."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -1101,12 +1102,12 @@
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor?"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
-	w_class = 2.0
+	w_class = 2
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
-		for(var/mob/M in range(10, src))
+		for(var/mob/M in ultra_range(10, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 				shake_camera(M, 3, 1)
 		qdel(src)
@@ -1120,7 +1121,7 @@
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
-	w_class = 2.0
+	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	burn_state = 0 //Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
@@ -1144,7 +1145,7 @@
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks?' on the back."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
-	w_class = 2.0
+	w_class = 2
 	var/cooldown = 0
 
 /obj/item/toy/redbutton/attack_self(mob/user)
@@ -1152,7 +1153,7 @@
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
-		for(var/mob/M in range(10, src)) // Checks range
+		for(var/mob/M in ultra_range(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				sleep(8) // Short delay to match up with the explosion sound
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
@@ -1202,3 +1203,216 @@
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
+
+// TOY MOUSEYS :3 :3 :3
+
+/obj/item/toy/cattoy
+	name = "toy mouse"
+	desc = "A colorful toy mouse!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toy_mouse"
+	w_class = 2.0
+	var/cooldown = 0
+
+
+
+/*
+ * Action Figures
+ */
+
+/obj/item/toy/figure
+	name = "Non-Specific Action Figure action figure"
+	desc = null
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "nuketoy"
+	var/cooldown = 0
+	var/toysay = "What the fuck did you do?"
+
+/obj/item/toy/figure/New()
+    desc = "A \"Space Life\" brand [src]."
+
+/obj/item/toy/figure/attack_self(mob/user as mob)
+	if(cooldown <= world.time)
+		cooldown = world.time + 50
+		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+
+/obj/item/toy/figure/cmo
+	name = "Chief Medical Officer action figure"
+	icon_state = "cmo"
+	toysay = "Suit sensors!"
+
+/obj/item/toy/figure/assistant
+	name = "Assistant action figure"
+	icon_state = "assistant"
+	toysay = "Grey tide world wide!"
+
+/obj/item/toy/figure/atmos
+	name = "Atmospheric Technician action figure"
+	icon_state = "atmos"
+	toysay = "Glory to Atmosia!"
+
+/obj/item/toy/figure/bartender
+	name = "Bartender action figure"
+	icon_state = "bartender"
+	toysay = "Where is Pun Pun?"
+
+/obj/item/toy/figure/borg
+	name = "Cyborg action figure"
+	icon_state = "borg"
+	toysay = "I. LIVE. AGAIN."
+
+/obj/item/toy/figure/botanist
+	name = "Botanist action figure"
+	icon_state = "botanist"
+	toysay = "Dude, I see colors..."
+
+/obj/item/toy/figure/captain
+	name = "Captain action figure"
+	icon_state = "captain"
+	toysay = "Any heads of staff?"
+
+/obj/item/toy/figure/cargotech
+	name = "Cargo Technician action figure"
+	icon_state = "cargotech"
+	toysay = "For Cargonia!"
+
+/obj/item/toy/figure/ce
+	name = "Chief Engineer action figure"
+	icon_state = "ce"
+	toysay = "Wire the solars!"
+
+/obj/item/toy/figure/chaplain
+	name = "Chaplain action figure"
+	icon_state = "chaplain"
+	toysay = "Praise Space Jesus!"
+
+/obj/item/toy/figure/chef
+	name = "Chef action figure"
+	icon_state = "chef"
+	toysay = "Pun-Pun is a tasty burger."
+
+/obj/item/toy/figure/chemist
+	name = "Chemist action figure"
+	icon_state = "chemist"
+	toysay = "Get your pills!"
+
+/obj/item/toy/figure/clown
+	name = "Clown action figure"
+	icon_state = "clown"
+	toysay = "Honk!"
+
+/obj/item/toy/figure/ian
+	name = "Ian action figure"
+	icon_state = "ian"
+	toysay = "Arf!"
+
+/obj/item/toy/figure/detective
+	name = "Detective action figure"
+	icon_state = "detective"
+	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
+
+/obj/item/toy/figure/dsquad
+	name = "Death Squad Officer action figure"
+	icon_state = "dsquad"
+	toysay = "Eliminate all threats!"
+
+/obj/item/toy/figure/engineer
+	name = "Engineer action figure"
+	icon_state = "engineer"
+	toysay = "Oh god, the singularity is loose!"
+
+/obj/item/toy/figure/geneticist
+	name = "Geneticist action figure"
+	icon_state = "geneticist"
+	toysay = "Smash!"
+
+/obj/item/toy/figure/hop
+	name = "Head of Personel action figure"
+	icon_state = "hop"
+	toysay = "Giving out all access!"
+
+/obj/item/toy/figure/hos
+	name = "Head of Security action figure"
+	icon_state = "hos"
+	toysay = "Get the justice chamber ready, I think we got a joker here."
+
+/obj/item/toy/figure/qm
+	name = "Quartermaster action figure"
+	icon_state = "qm"
+	toysay = "Please sign this form in triplicate and we will see about geting you a welding mask within 3 business days."
+
+/obj/item/toy/figure/janitor
+	name = "Janitor action figure"
+	icon_state = "janitor"
+	toysay = "Look at the signs, you idiot."
+
+/obj/item/toy/figure/lawyer
+	name = "Lawyer action figure"
+	icon_state = "lawyer"
+	toysay = "My client is a dirty traitor!"
+
+/obj/item/toy/figure/librarian
+	name = "Librarian action figure"
+	icon_state = "librarian"
+	toysay = "One day while..."
+
+/obj/item/toy/figure/md
+	name = "Medical Doctor action figure"
+	icon_state = "md"
+	toysay = "The patient is already dead!"
+
+/obj/item/toy/figure/mime
+	name = "Mime action figure"
+	icon_state = "mime"
+	toysay = "..."
+
+/obj/item/toy/figure/miner
+	name = "Shaft Miner action figure"
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
+/obj/item/toy/figure/ninja
+	name = "Ninja action figure"
+	icon_state = "ninja"
+	toysay = "Oh god! Stop shooting, I'm friendly!"
+
+/obj/item/toy/figure/wizard
+	name = "Wizard action figure"
+	icon_state = "wizard"
+	toysay = "Ei Nath!"
+
+/obj/item/toy/figure/rd
+	name = "Research Director action figure"
+	icon_state = "rd"
+	toysay = "Blowing all of the borgs!"
+
+/obj/item/toy/figure/roboticist
+	name = "Roboticist action figure"
+	icon_state = "roboticist"
+	toysay = "Big stompy mechs!"
+
+/obj/item/toy/figure/scientist
+	name = "Scientist action figure"
+	icon_state = "scientist"
+	toysay = "For science!"
+
+/obj/item/toy/figure/syndie
+	name = "Nuclear Operative action figure"
+	icon_state = "syndie"
+	toysay = "Get that fucking disk!"
+
+/obj/item/toy/figure/secofficer
+	name = "Security Officer action figure"
+	icon_state = "secofficer"
+	toysay = "I am the law!"
+
+/obj/item/toy/figure/virologist
+	name = "Virologist action figure"
+	icon_state = "virologist"
+	toysay = "The cure is potassium!"
+
+/obj/item/toy/figure/warden
+	name = "Warden action figure"
+	icon_state = "warden"
+	toysay = "Seventeen minutes for coughing at an officer!"

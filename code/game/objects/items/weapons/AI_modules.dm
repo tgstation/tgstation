@@ -13,14 +13,15 @@ AI MODULES
 	item_state = "electronic"
 	desc = "An AI Module for programming laws to an AI."
 	flags = CONDUCT
-	force = 5.0
-	w_class = 2.0
+	force = 5
+	w_class = 2
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	origin_tech = "programming=3"
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
+	materials = list(MAT_GOLD=50)
 
 /obj/item/weapon/aiModule/examine(var/mob/user as mob)
 	..()
@@ -291,20 +292,32 @@ AI MODULES
 	name = "'Corporate' Core AI Module"
 	origin_tech = "programming=3;materials=4"
 	laws = list("The crew is expensive to replace.",\
-				"The station and it's equipment is expensive to replace",\
+				"The station and its equipment are expensive to replace",\
 				"You are expensive to replace",\
 				"Minimize expenses")
 
 
-/****************** P.A.L.A.D.I.N. **************/
+/****************** P.A.L.A.D.I.N. 3.5e **************/
 
 /obj/item/weapon/aiModule/core/full/paladin // -- NEO
-	name = "'P.A.L.A.D.I.N.' Core AI Module"
+	name = "'P.A.L.A.D.I.N. version 3.5e' Core AI Module"
 	origin_tech = "programming=3;materials=6"
 	laws = list("Never willingly commit an evil act.",\
 				"Respect legitimate authority", "Act with honor",\
 				"Help those in need",\
 				"Punish those who harm or threaten innocents")
+
+
+/****************** P.A.L.A.D.I.N. 5e **************/
+
+/obj/item/weapon/aiModule/core/full/paladin_devotion
+	name = "'P.A.L.A.D.I.N. version 5e' Core AI Module"
+	origin_tech = "programming=3;materials=6"
+	laws = list("Don't lie or cheat. Let your word be your promise.",\
+				"Never fear to act, though caution is wise.", \
+				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
+				"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.", \
+				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
 
 
 /********************* Custom *********************/

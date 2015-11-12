@@ -133,6 +133,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
+	materials = list(MAT_GOLD=400)
 	storage_slots = 1
 	can_hold = list(
 		/obj/item/clothing/mask/luchador

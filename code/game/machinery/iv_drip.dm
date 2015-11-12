@@ -109,7 +109,7 @@
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -124,10 +124,10 @@
 
 			var/mob/living/carbon/human/T = attached
 
-			if(!istype(T)) return
-			if(!T.dna)
+			if(!istype(T))
 				return
-			if(NOCLONE in T.mutations)
+
+			if(T.disabilities & NOCLONE)
 				return
 
 			if(NOBLOOD in T.dna.species.specflags)

@@ -23,7 +23,7 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
-	w_class = 3.0
+	w_class = 3
 	max_w_class = 2
 	max_combined_w_class = 14
 
@@ -149,11 +149,11 @@
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	force = 8.0
+	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4.0
+	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
@@ -182,7 +182,7 @@
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie
-	force = 15.0
+	force = 15
 
 /obj/item/weapon/storage/secure/briefcase/syndie/New()
 	for(var/i = 0, i < storage_slots - 2, i++)
@@ -201,10 +201,10 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	force = 8.0
-	w_class = 8.0
+	force = 8
+	w_class = 8
 	max_w_class = 8
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 

@@ -29,6 +29,7 @@ Mineral Sheets
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "materials=1"
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
@@ -52,9 +53,9 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	name = "diamond"
 	icon_state = "sheet-diamond"
 	singular_name = "diamond"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_range = 3
 	origin_tech = "materials=6"
 	sheettype = "diamond"
@@ -81,9 +82,9 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	name = "uranium"
 	icon_state = "sheet-uranium"
 	singular_name = "uranium sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=5"
@@ -110,9 +111,9 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
 	singular_name = "plasma sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
@@ -134,7 +135,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	..()
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma sheets ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma sheets ignited by [key_name(user)] in ([x],[y],[z])")
 		fire_act()
@@ -152,9 +153,9 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	name = "gold"
 	icon_state = "sheet-gold"
 	singular_name = "gold bar"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -184,9 +185,9 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	name = "silver"
 	icon_state = "sheet-silver"
 	singular_name = "silver bar"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=3"
@@ -216,9 +217,9 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	name = "bananium"
 	icon_state = "sheet-clown"
 	singular_name = "bananium sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -246,12 +247,13 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
 	singular_name = "enriched uranium sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
-	origin_tech = "materials=5"
+	origin_tech = "materials=6"
+	materials = list(MAT_URANIUM=3000)
 
 /*
  * Adamantine
@@ -260,9 +262,9 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -274,9 +276,9 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	name = "mythril"
 	icon_state = "sheet-mythril"
 	singular_name = "mythril sheet"
-	force = 5.0
+	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"

@@ -172,7 +172,7 @@
 	build_path = /obj/item/weapon/circuitboard/chem_heater
 	category = list ("Medical Machinery")
 
-	/datum/design/clonecontrol
+/datum/design/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"
@@ -401,6 +401,16 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/autolathe
 	category = list ("Misc. Machinery")
+
+/datum/design/recharger
+	name = "Machine Design (Weapon Recharger Board)"
+	desc = "The circuit board for a Weapon Recharger."
+	id = "recharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
+	build_path = /obj/item/weapon/circuitboard/recharger
+	category = list("Misc. Machinery")
 
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"

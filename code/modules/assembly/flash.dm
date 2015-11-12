@@ -5,6 +5,7 @@
 	item_state = "flashtool"
 	throwforce = 0
 	w_class = 1
+	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 	origin_tech = "magnets=2;combat=1"
 
 	crit_fail = 0     //Is the flash burnt out?
@@ -39,14 +40,15 @@
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in viewers(3, null))
-		flash_carbon(M, null, 2, 0)
+		flash_carbon(M, null, 5, 0)
 
 
 /obj/item/device/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
-	crit_fail = 1
-	update_icon()
-	var/turf/T = get_turf(src)
-	T.visible_message("The [src.name] burns out!")
+	if(!crit_fail)
+		crit_fail = 1
+		update_icon()
+		var/turf/T = get_turf(src)
+		T.visible_message("The [src.name] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -78,7 +80,7 @@
 	return 1
 
 
-/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 5, targeted = 1)
+/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
 	add_logs(user, M, "flashed", src)
 	if(user && targeted)
 		if(M.weakeyes)

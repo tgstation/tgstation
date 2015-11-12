@@ -1,18 +1,5 @@
 var/global/list/obj/machinery/message_server/message_servers = list()
 
-/datum/data_chat_msg
-	var/sender = "Anon"
-	var/channel = "ss13"
-	var/message = "Blank"
-
-/datum/data_chat_msg/New(var/param_sen = "", var/param_chan = "", var/param_msg = "")
-	if(param_sen)
-		sender = param_sen
-	if(param_chan)
-		channel = param_chan
-	if(param_msg)
-		message = param_msg
-
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
@@ -76,12 +63,11 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
 
-	var/list/datum/data_chat_msg/chat_msgs = list()
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = 1
@@ -114,9 +100,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		return
 	update_icon()
 	return
-
-/obj/machinery/message_server/proc/send_chat_message(sender = "", channel = "", message = "")
-	chat_msgs += new/datum/data_chat_msg(sender,channel,message)
 
 /obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
 	. = new/datum/data_pda_msg(recipient,sender,message,photo)
@@ -210,7 +193,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -272,13 +255,10 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder/proc/round_end_data_gathering()
 
-	var/chat_msg_amt = 0
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for (var/obj/machinery/message_server/MS in world)
-		if (MS.chat_msgs.len > chat_msg_amt)
-			chat_msg_amt = MS.chat_msgs.len
+	for (var/obj/machinery/message_server/MS in message_servers)
 		if (MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
 		if (MS.rc_msgs.len > rc_msg_amt)
@@ -297,7 +277,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","SRV-[msg_service.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
-	feedback_add_details("radio_usage","CHA-[chat_msg_amt]")
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
 	feedback_add_details("radio_usage","RC-[rc_msg_amt]")
 

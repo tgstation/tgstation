@@ -16,6 +16,10 @@
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
+	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
+	var/list/species_allowed = list() //to restrict mutation to only certain species
+	var/health_req //minimum health required to acquire the mutation
+	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -33,7 +37,7 @@
 	return before + injection + after
 
 /datum/mutation/human/proc/set_block(mob/living/carbon/owner, on = 1)
-	if(owner && istype(owner) && owner.dna)
+	if(owner && owner.has_dna())
 		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
 
 /datum/mutation/human/proc/check_block_string(se_string)
@@ -49,23 +53,26 @@
 		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || (src in owner.dna.mutations))
+	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
+		return 1
+	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
+		return 1
+	if(health_req && owner.health < health_req)
 		return 1
 	owner.dna.mutations.Add(src)
-	gain_indication(owner)
-	owner << text_gain_indication
+	if(text_gain_indication)
+		owner << text_gain_indication
+	if(visual_indicators.len)
+		var/list/mut_overlay = list(get_visual_indicator(owner))
+		if(owner.overlays_standing[layer_used])
+			mut_overlay = owner.overlays_standing[layer_used]
+			mut_overlay |= get_visual_indicator(owner)
+		owner.remove_overlay(layer_used)
+		owner.overlays_standing[layer_used] = mut_overlay
+		owner.apply_overlay(layer_used)
 
-/datum/mutation/human/proc/gain_indication(mob/living/carbon/human/owner)
-	owner.overlays.Add(visual_indicators)
-/*
-	var/list/result_overlays = list()
-	var/list/limbs = owner_get_limbs(NON_MECHANICAL|NON_AMPUTATED)   //I dunno how its done by RR but i assume something like this, proc that returns the list of limbs based on what types of limbs to return in argument
-	for(var/obj/limb/L in limbs)
-		result_overlays[L.identificator] = visual_indicators[L.identificator]  //visual_indicators is where overlays icons are stored, they are all created on new of each mutation, i assume you will change it to linked list for easyness, but for now its just a list
-	return owner.redraw_overlays(result_overlays, MUTATION_LAYER)    //Currently mutations draw the overlays themselves but i assume if dismemberment will be overriding lots of shit like maybe clothes or something else mutations will just pass the shit to redraw proc
-*/
-/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
-	owner.overlays.Remove(visual_indicators)
+/datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
+	return
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return
@@ -80,9 +87,17 @@
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
-	if(owner && (owner.dna.mutations.Remove(src)))
-		lose_indication(owner)
-		owner << text_lose_indication
+	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
+		if(text_lose_indication && owner.stat != DEAD)
+			owner << text_lose_indication
+		if(visual_indicators.len)
+			var/list/mut_overlay = list()
+			if(owner.overlays_standing[layer_used])
+				mut_overlay = owner.overlays_standing[layer_used]
+			owner.remove_overlay(layer_used)
+			mut_overlay.Remove(get_visual_indicator(owner))
+			owner.overlays_standing[layer_used] = mut_overlay
+			owner.apply_overlay(layer_used)
 		return 0
 	return 1
 
@@ -100,6 +115,8 @@
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human") //no skeleton/lizard hulk
+	health_req = 25
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -107,16 +124,17 @@
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_m_s", "layer"=-MUTATIONS_LAYER)
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return target.attack_hulk(owner)
 
-/datum/mutation/human/hulk/gain_indication(mob/living/carbon/human/owner)
+/datum/mutation/human/hulk/get_visual_indicator(mob/living/carbon/human/owner)
 	var/g = (owner.gender == FEMALE) ? 1 : 2
-	owner.overlays += visual_indicators[g]
+	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 25)
@@ -147,6 +165,9 @@
 	..()
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="telekinesishead_s", "layer"=-MUTATIONS_LAYER)
 
+/datum/mutation/human/telekinesis/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
+
 /datum/mutation/human/telekinesis/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	target.attack_tk(owner)
 
@@ -157,10 +178,14 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
+	time_coeff = 5
 
 /datum/mutation/human/cold_resistance/New()
 	..()
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire_s", "layer"=-MUTATIONS_LAYER)
+
+/datum/mutation/human/cold_resistance/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
 
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
@@ -174,9 +199,11 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	time_coeff = 2
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	on_life(owner)
 
 /datum/mutation/human/x_ray/on_life(mob/living/carbon/human/owner)
@@ -252,6 +279,27 @@
 	if((prob(5) && owner.paralysis <= 1))
 		owner.drop_item()
 		owner.emote("cough")
+
+/datum/mutation/human/dwarfism
+
+	name = "Dwarfism"
+	quality = POSITIVE
+	get_chance = 15
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
+	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
+
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 0.8
+	owner.pass_flags |= PASSTABLE
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+
+/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 1.25
+	owner.pass_flags &= ~PASSTABLE
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
 
@@ -333,21 +381,16 @@
 
 	name = "Monkified"
 	quality = NEGATIVE
+	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-
-/datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
-	return
-
-/datum/mutation/human/race/lose_indication(mob/living/carbon/monkey/owner)
-	return
-
-/datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())
 		return
-	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+
+/datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
+	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
+		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 
 /datum/mutation/human/stealth
@@ -357,6 +400,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
 	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
+	time_coeff = 5
 
 
 /datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
@@ -381,6 +425,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
+	time_coeff = 5
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -426,6 +471,7 @@
 /datum/mutation/human/smile
 	name = "Smile"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
@@ -512,6 +558,7 @@
 /datum/mutation/human/swedish
 	name = "Swedish"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
@@ -525,6 +572,7 @@
 /datum/mutation/human/chav
 	name = "Chav"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
@@ -557,6 +605,7 @@
 /datum/mutation/human/elvis
 	name = "Elvis"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
@@ -585,15 +634,42 @@
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
 
-
 /datum/mutation/human/laser_eyes
-
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+	layer_used = FRONT_MUTATIONS_LAYER
+
+/datum/mutation/human/laser_eyes/New()
+	..()
+	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-FRONT_MUTATIONS_LAYER)
+
+/datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
+
+/mob/living/carbon/proc/update_mutations_overlay()
+	return
+
+/mob/living/carbon/human/update_mutations_overlay()
+	for(var/datum/mutation/human/CM in dna.mutations)
+		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
+			CM.force_lose(src) //shouldn't have that mutation at all
+			continue
+		if(CM.visual_indicators.len)
+			var/list/mut_overlay = list()
+			if(overlays_standing[CM.layer_used])
+				mut_overlay = overlays_standing[CM.layer_used]
+			var/image/V = CM.get_visual_indicator(src)
+			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
+				remove_overlay(CM.layer_used)
+				for(var/image/I in CM.visual_indicators)
+					mut_overlay.Remove(I)
+				mut_overlay |= V
+				overlays_standing[CM.layer_used] = mut_overlay
+				apply_overlay(CM.layer_used)

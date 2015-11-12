@@ -231,7 +231,7 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage.  Can be used as a blood substitute on an IV drip."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -240,6 +240,16 @@
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM)
 		M.adjustFireLoss(-0.5*REM)
+	..()
+
+/datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && method == INJECT)
+		var/mob/living/carbon/human/H = M
+		//The lower the blood of the patient, the better it is as a blood substitute.
+		var/efficiency = (560-H.vessel.get_reagent_amount("blood"))/700 + 0.2
+		efficiency = min(0.75,efficiency)
+		//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
+		H.vessel.add_reagent("blood", efficiency * min(5,reac_volume))
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -587,15 +597,23 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	if(M.eye_blind > 0 && current_cycle > 20)
-		if(prob(30))
+	if(current_cycle > 15)
+		if(M.disabilities & BLIND)
+			if(prob(20))
+				M.disabilities &= ~BLIND
+				M.disabilities &= NEARSIGHT
+				M.eye_blurry = 35
+
+		else if(M.disabilities & NEARSIGHT)
+			M.disabilities &= ~NEARSIGHT
+			M.eye_blurry = 10
+
+		else if(M.eye_blind || M.eye_blurry)
 			M.eye_blind = 0
-		else if(prob(80))
-			M.eye_blind = 0
-			M.eye_blurry = 1
-		if(M.eye_blurry > 0)
-			if(prob(80))
-				M.eye_blurry = 0
+			M.eye_blurry = 0
+		else if(M.eye_stat > 0)
+			M.eye_stat -= 1
+
 	..()
 	return
 
@@ -682,10 +700,10 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(NOCLONE in M.mutations))
+		if(!M.suiciding && !(M.disabilities & NOCLONE))
 			if(!M)
 				return
-			if(M.notify_ghost_cloning())
+			if(M.notify_ghost_cloning(source = M))
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
@@ -724,7 +742,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
@@ -900,5 +918,22 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.adjustFireLoss(2*REM)
+	..()
+	return
+
+datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+	name = "Restorative Nanites"
+	id = "syndicate_nanites"
+	description = "Miniature medical robots that swiftly restore bodily damage. May begin to attack their host's cells in high amounts."
+	reagent_state = SOLID
+	color = "#555555"
+
+datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-5*REM) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM)
+	M.adjustOxyLoss(-15*REM)
+	M.adjustToxLoss(-5*REM)
+	M.adjustBrainLoss(-15*REM)
+	M.adjustCloneLoss(-3*REM)
 	..()
 	return

@@ -50,6 +50,11 @@
 	var/list/existing_dirs = list()
 	blood_DNA = list()
 
+
+/obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
+	return 1
+
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
@@ -60,6 +65,10 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
+
+/obj/effect/decal/cleanable/blood/gibs/New()
+	..()
+	reagents.add_reagent("liquidgibs", 5)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -101,38 +110,49 @@
 	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
+	bloodiness = 0
 	var/list/drips = list()
 
 /obj/effect/decal/cleanable/blood/drip/New()
 	..()
 	spawn(1)
 		drips |= icon_state
-	bloodiness = rand(5,15)
+
+/obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
+	return 1
 
 
 //BLOODY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
+	name = "footprints"
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
-	desc = "Follow the bloody brick road!"
+	desc = "where might they lead?"
 	gender = PLURAL
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
+	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes) //Don't need to check for blood, as the footprints will MAKE the shoes bloody
+		var/obj/item/clothing/shoes/S = H.shoes
+		if(S && S.bloody_shoes[blood_state])
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			entered_dirs|= H.dir
+			shoe_types |= H.shoes.type
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes)
+		var/obj/item/clothing/shoes/S = H.shoes
+		if(S && S.bloody_shoes[blood_state])
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			exited_dirs|= H.dir
+			shoe_types |= H.shoes.type
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
@@ -159,3 +179,21 @@
 				overlays += I
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
+
+
+/obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
+	. = ..()
+	if(shoe_types.len)
+		. += "You recognise the footprints as belonging to:\n"
+		for(var/shoe in shoe_types)
+			var/obj/item/clothing/shoes/S = shoe
+			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+
+	user << .
+
+
+/obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+		return 1
+	return 0
+

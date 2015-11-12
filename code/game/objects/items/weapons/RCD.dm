@@ -11,17 +11,17 @@ RCD
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = CONDUCT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
 	var/working = 0
@@ -64,7 +64,7 @@ RCD
 	var/deconairlockdelay = 50
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down his throat! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
@@ -72,7 +72,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	if (!ishuman(usr) && !isrobot(usr))
+	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 
 	var/mob/living/carbon/human/H = usr
@@ -126,7 +126,7 @@ RCD
 
 /obj/item/weapon/rcd/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)))
+	if (usr.stat || usr.restrained())
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
@@ -229,8 +229,9 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
+	..()
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
-	src.spark_system = new /datum/effect/effect/system/spark_spread
+	src.spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
@@ -496,12 +497,12 @@ RCD
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:use(amount * 160)
+	return user:cell:use(amount * 72) //borgs get 1.3x the use of their RCDs
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:charge >= (amount * 160)
+	return user:cell:charge >= (amount * 72)
 
 /obj/item/weapon/rcd/borg/New()
 	..()

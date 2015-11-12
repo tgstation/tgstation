@@ -109,6 +109,24 @@
 	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
+/obj/item/weapon/gun/projectile/automatic/wt550
+	name = "security auto rifle"
+	desc = "A outdated personal defence weapon. Uses 9mm rounds and is designated the WT-550 Automatic Rifle."
+	icon_state = "wt550"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/wt550m9
+	fire_delay = 2
+	can_suppress = 0
+	burst_size = 0
+
+/obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
+	..()
+	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
+	return
+
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "\improper 'Type U3' Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
@@ -118,7 +136,7 @@
 	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW LMG"
+	name = "\improper L6 SAW"
 	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"

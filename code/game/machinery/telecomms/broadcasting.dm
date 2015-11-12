@@ -169,7 +169,7 @@
 					blackbox.messages += blackbox_msg
 
 	spawn(50)
-		PlaceInPool(virt)
+		qdel(virt)
 
 /proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)
 

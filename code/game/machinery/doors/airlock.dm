@@ -58,6 +58,13 @@ var/list/airlock_overlays = list()
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
+	var/image/old_frame_overlay //keep those in order to prevent unnecessary updating
+	var/image/old_filling_overlay
+	var/image/old_lights_overlay
+	var/image/old_panel_overlay
+	var/image/old_weld_overlay
+	var/image/old_sparks_overlay
+
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
@@ -104,7 +111,7 @@ About the new airlock wires panel:
 	qdel(wires)
 	wires = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in world)
+		for(var/obj/machinery/doorButtons/D in machines)
 			D.removeMe(src)
 	return ..()
 
@@ -207,7 +214,7 @@ About the new airlock wires panel:
 		return 0	//Already shocked someone recently?
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if(electrocute_mob(user, get_area(src), src))
@@ -256,14 +263,30 @@ About the new airlock wires panel:
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+
 		if(AIRLOCK_DENY)
-			overlays += get_airlock_overlay("lights_denied", overlays_file)
-			sleep(4)
-			update_icon(AIRLOCK_CLOSED)
-			return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+
 		if(AIRLOCK_EMAG)
-			overlays += get_airlock_overlay("sparks", overlays_file)
-			return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			sparks_overlay = get_airlock_overlay("sparks", overlays_file)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -296,13 +319,31 @@ About the new airlock wires panel:
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	overlays.Cut()
-	overlays += frame_overlay
-	overlays += filling_overlay
-	overlays += lights_overlay
-	overlays += panel_overlay
-	overlays += weld_overlay
-	overlays += sparks_overlay
+	//doesn't use overlays.Cut() for performance reasons
+	if(frame_overlay != old_frame_overlay)
+		overlays -= old_frame_overlay
+		overlays += frame_overlay
+		old_frame_overlay = frame_overlay
+	if(filling_overlay != old_filling_overlay)
+		overlays -= old_filling_overlay
+		overlays += filling_overlay
+		old_filling_overlay = filling_overlay
+	if(lights_overlay != old_lights_overlay)
+		overlays -= old_lights_overlay
+		overlays += lights_overlay
+		old_lights_overlay = lights_overlay
+	if(panel_overlay != old_panel_overlay)
+		overlays -= old_panel_overlay
+		overlays += panel_overlay
+		old_panel_overlay = panel_overlay
+	if(weld_overlay != old_weld_overlay)
+		overlays -= old_weld_overlay
+		overlays += weld_overlay
+		old_weld_overlay = weld_overlay
+	if(sparks_overlay != old_sparks_overlay)
+		overlays -= old_sparks_overlay
+		overlays += sparks_overlay
+		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"
@@ -319,12 +360,16 @@ About the new airlock wires panel:
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
+			sleep(6)
+			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
 	if(charge && !p_open && in_range(user, src))
-		user << "The maintenance panel is bulging slightly."
+		user << "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
+	if(charge && p_open)
+		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl())
@@ -802,7 +847,7 @@ About the new airlock wires panel:
 		if(p_open && charge)
 			user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(!do_after(user, 150))
+			if(!do_after(user, 150, target = src))
 				user << "<span class='warning'>You slip and [charge] detonates!</span>"
 				charge.ex_act(1)
 				user.Weaken(3)
@@ -810,9 +855,6 @@ About the new airlock wires panel:
 			user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 								 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
 			charge.loc = get_turf(user)
-			if(prob(25))
-				charge.ex_act(1)
-				return
 			charge = null
 			return
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
@@ -902,11 +944,11 @@ About the new airlock wires panel:
 		..()
 	return
 
-/obj/machinery/door/airlock/plasma/attackby(obj/C, mob/user, params)
-	if(is_hot(C) > 300)//If the temperature of the object is over 300, then ignite
+/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
+	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(C))
+		ignite(C.is_hot())
 		return
 	..()
 
@@ -920,6 +962,7 @@ About the new airlock wires panel:
 		p_open = 1
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
+		charge.loc = get_turf(src)
 		charge.ex_act(1)
 		detonated = 1
 		charge = null
@@ -927,6 +970,7 @@ About the new airlock wires panel:
 			H.Paralyse(8)
 			H.adjust_fire_stacks(1)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
+			H.apply_damage(20, BRUTE, "chest")
 		return
 	if(forced < 2)
 		if(emagged)
@@ -952,7 +996,7 @@ About the new airlock wires panel:
 
 	if(!density)
 		return 1
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 
@@ -1113,12 +1157,15 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/emag_act(mob/user)
-	if(density && hasPower() && !emagged)
+	if(!operating && density && hasPower() && !emagged)
+		operating = 1
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(qdeleted(src))
 			return
-		open()
+		operating = 0
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0

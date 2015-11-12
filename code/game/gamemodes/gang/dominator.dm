@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = 3.6
 	var/maxhealth = 200
 	var/health = 200
@@ -54,7 +54,7 @@
 		iconname += "-[gang.color]"
 		SetLuminosity(3)
 
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 
 	health -= damage
 
@@ -120,11 +120,11 @@
 		qdel(src)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			healthcheck(120)
-		if(3.0)
+		if(3)
 			healthcheck(30)
 	return
 

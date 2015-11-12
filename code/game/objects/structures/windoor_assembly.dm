@@ -27,6 +27,10 @@
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 
+/obj/structure/windoor_assembly/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	ini_dir = dir
@@ -322,6 +326,16 @@
 	ini_dir = dir
 	update_icon()
 	return
+
+/obj/structure/windoor_assembly/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		revrotate()
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()

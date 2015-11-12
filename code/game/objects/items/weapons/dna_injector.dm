@@ -5,22 +5,20 @@
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 
 	var/damage_coeff  = 1
 	var/list/fields
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
+	var/used = 0
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(check_dna_integrity(M) && !(NOCLONE in M.mutations))
-		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
-			return
+	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
@@ -38,7 +36,7 @@
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
-				updateappearance(M)
+				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
 	else
 		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
@@ -47,6 +45,9 @@
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	if(used)
+		user << "<span class='warning'>This injector is used up!</span>"
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -66,7 +67,9 @@
 	add_logs(user, target, "injected", src)
 
 	inject(target, user)	//Now we actually do the heavy lifting.
-	qdel(src)
+	used = 1
+	icon_state = "dnainjector0"
+	desc += " This one is used up."
 
 
 /obj/item/weapon/dnainjector/antihulk
@@ -138,6 +141,20 @@
 	New()
 		..()
 		add_mutations.Add(mutations_list[COUGH])
+
+/obj/item/weapon/dnainjector/antidwarf
+	name = "\improper DNA injector (Anti-Dwarfism)"
+	desc = "Helps you grow big and strong."
+	New()
+		..()
+		remove_mutations.Add(mutations_list[DWARFISM])
+
+/obj/item/weapon/dnainjector/dwarf
+	name = "\improper DNA injector (Dwarfism)"
+	desc = "Its a small world after all."
+	New()
+		..()
+		add_mutations.Add(mutations_list[DWARFISM])
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"
@@ -363,3 +380,81 @@
 	New()
 		..()
 		remove_mutations.Add(mutations_list[ELVIS])
+
+/obj/item/weapon/dnainjector/lasereyesmut
+	name = "\improper DNA injector (Laser Eyes)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[LASEREYES])
+
+/obj/item/weapon/dnainjector/antilasereyes
+	name = "\improper DNA injector (Anti-Laser Eyes)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[LASEREYES])
+
+/obj/item/weapon/dnainjector/timed
+	var/duration = 600
+
+/obj/item/weapon/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
+	if(M.has_dna() && !(M.disabilities & NOCLONE))
+		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
+			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
+			return
+		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
+		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
+		var/endtime = world.time+duration
+		for(var/datum/mutation/human/HM in remove_mutations)
+			if(HM.name == RACEMUT)
+				if(ishuman(M))
+					continue
+				M = HM.force_lose(M)
+			else
+				HM.force_lose(M)
+		for(var/datum/mutation/human/HM in add_mutations)
+			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
+				continue //Skip permanent mutations we already have.
+			if(HM.name == RACEMUT && ishuman(M))
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				log_msg += " (MONKEY)"
+				M = HM.force_give(M)
+			else
+				HM.force_give(M)
+			M.dna.temporary_mutations[HM.name] = endtime
+		if(fields)
+			if(fields["name"] && fields["UE"] && fields["blood_type"])
+				if(!M.dna.previous["name"])
+					M.dna.previous["name"] = M.real_name
+				if(!M.dna.previous["UE"])
+					M.dna.previous["UE"] = M.dna.unique_enzymes
+				if(!M.dna.previous["blood_type"])
+					M.dna.previous["blood_type"] = M.dna.blood_type
+				M.real_name = fields["name"]
+				M.dna.unique_enzymes = fields["UE"]
+				M.name = M.real_name
+				M.dna.blood_type = fields["blood_type"]
+				M.dna.temporary_mutations[UE_CHANGED] = endtime
+			if(fields["UI"])	//UI+UE
+				if(!M.dna.previous["UI"])
+					M.dna.previous["UI"] = M.dna.uni_identity
+				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
+				M.updateappearance(mutations_overlay_update=1)
+				M.dna.temporary_mutations[UI_CHANGED] = endtime
+		log_attack(log_msg)
+	else
+		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
+		return
+
+/obj/item/weapon/dnainjector/timed/hulk
+	name = "\improper DNA injector (Hulk)"
+	desc = "This will make you big and strong, but give you a bad skin condition."
+	New()
+		..()
+		add_mutations.Add(mutations_list[HULK])
+
+/obj/item/weapon/dnainjector/timed/h2m
+	name = "\improper DNA injector (Human > Monkey)"
+	desc = "Will make you a flea bag."
+	New()
+		..()
+		add_mutations.Add(mutations_list[RACEMUT])

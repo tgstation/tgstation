@@ -50,8 +50,11 @@
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
 		msg += "</span>"
 
-	if (digitalcamo)
+	if(digitalcamo)
 		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
+
+	if(!getorgan(/obj/item/organ/internal/brain))
+		msg += "<span class='deadsay'>It appears that it's brain is missing...</span>\n"
 
 	msg += "*---------*</span>"
 

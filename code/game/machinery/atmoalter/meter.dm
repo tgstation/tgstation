@@ -4,7 +4,7 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1.0
+	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id
@@ -102,8 +102,8 @@
 				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
-		return
-	..()
+	else
+		..()
 
 /obj/machinery/meter/attack_ai(mob/user)
 	return src.attack_hand(user)

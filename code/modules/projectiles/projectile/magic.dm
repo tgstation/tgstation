@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
+	flags = NOSHIELD
 	flag = "magic"
 
 /obj/item/projectile/magic/death
@@ -80,8 +81,8 @@
 		if(!stuff.anchored && stuff.loc)
 			teleammount++
 			do_teleport(stuff, stuff, 10)
-			var/datum/effect/effect/system/smoke_spread/smoke = new
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 			smoke.start()
 
 /obj/item/projectile/magic/door
@@ -140,7 +141,7 @@
 
 			var/mob/living/new_mob
 
-			var/randomize = pick("monkey","robot","slime","xeno","human","animal")
+			var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -150,7 +151,10 @@
 					switch(robot)
 						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
-						if("drone")			new_mob = new /mob/living/simple_animal/drone(M.loc)
+						if("drone")
+							new_mob = new /mob/living/simple_animal/drone(M.loc)
+							var/mob/living/simple_animal/drone/D = new_mob
+							D.update_drone_hack()
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
@@ -212,23 +216,25 @@
 							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
-				if("human")
+				if("humanoid")
 					new_mob = new /mob/living/carbon/human(M.loc)
 
 					var/datum/preferences/A = new()	//Randomize appearance for the human
-					A.copy_to(new_mob)
+					A.copy_to(new_mob, icon_updates=0)
 
 					var/mob/living/carbon/human/H = new_mob
-					ready_dna(H)
-					if(H.dna && prob(50))
+					if(prob(50))
 						var/list/all_species = list()
 						for(var/speciestype in typesof(/datum/species) - /datum/species)
 							var/datum/species/S = new speciestype()
 							if(!S.dangerous_existence)
 								all_species += speciestype
-						hardset_dna(H, null, null, null, null, pick(all_species))
+						H.set_species(pick(all_species), icon_update=0)
 						H.real_name = H.dna.species.random_name(H.gender,1)
-					H.update_icons()
+					H.update_body()
+					H.update_hair()
+					H.update_mutcolor()
+					H.dna.update_dna_identity()
 				else
 					return
 

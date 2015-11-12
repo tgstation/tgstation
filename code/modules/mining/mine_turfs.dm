@@ -28,13 +28,13 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(3.0)
+		if(3)
 			if (prob(75))
 				src.gets_drilled(null, 1)
-		if(2.0)
+		if(2)
 			if (prob(90))
 				src.gets_drilled(null, 1)
-		if(1.0)
+		if(1)
 			src.gets_drilled(null, 1)
 	return
 
@@ -85,7 +85,7 @@ var/global/list/rockTurfEdgeCache
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "mineral deposit"
+	name = "rock"
 	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
@@ -399,7 +399,7 @@ var/global/list/rockTurfEdgeCache
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in ultra_range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -533,12 +533,12 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
-		if(3.0)
+		if(3)
 			return
-		if(2.0)
+		if(2)
 			if (prob(20))
 				src.gets_dug()
-		if(1.0)
+		if(1)
 			src.gets_dug()
 	return
 
@@ -621,6 +621,9 @@ var/global/list/rockTurfEdgeCache
 		src.overlays += rockTurfEdgeCache[WEST_EDGING]
 
 /turf/simulated/mineral/updateMineralOverlays()
+	return
+
+/turf/simulated/wall/updateMineralOverlays()
 	return
 
 /turf/proc/fullUpdateMineralOverlays()

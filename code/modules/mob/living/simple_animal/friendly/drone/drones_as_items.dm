@@ -15,10 +15,18 @@
 	origin_tech = "programming=2;biotech=4"
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
+/obj/item/drone_shell/New()
+	..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, attack_not_jump = 1)
+
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
 		return
-
+	if(!ticker.mode)
+		user << "Can't become a drone before the game has started."
+		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || gc_destroyed)
 		return
@@ -30,7 +38,7 @@
 //DRONE HOLDER
 /obj/item/clothing/head/drone_holder//Only exists in someones hand.or on their head
 	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball"
+	desc = "This drone is scared and has curled up into a ball."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"
 	var/mob/living/simple_animal/drone/drone //stored drone
@@ -41,8 +49,8 @@
 
 	if(istype(loc, /mob/living))
 		var/mob/living/L = loc
-		L.show_message("<span class='notice'>[drone] is trying to escape!</span>")
-		if(!do_after(L, 50, target = L) || loc != L)
+		L << "<span class='warning'>[drone] is trying to escape!</span>"
+		if(!do_after(drone, 50, target = L))
 			return
 		L.unEquip(src)
 
@@ -50,7 +58,7 @@
 	drone.loc = get_turf(src)
 	drone.reset_view()
 	drone.dir = SOUTH //Looks better
-	drone.visible_message("<span class='notice'>[drone] uncurls!</span>")
+	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")
 	drone = null
 	qdel(src)
 

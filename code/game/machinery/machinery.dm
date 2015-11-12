@@ -130,6 +130,10 @@ Class Procs:
 		dropContents()
 	return ..()
 
+/obj/machinery/attackby(obj/item/weapon/W, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
+
 /obj/machinery/proc/locate_machinery()
 	return
 
@@ -143,15 +147,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-		pulse2.icon = 'icons/effects/effects.dmi'
-		pulse2.icon_state = "empdisable"
-		pulse2.name = "emp sparks"
-		pulse2.anchored = 1
-		pulse2.dir = pick(cardinal)
-
-		spawn(10)
-			qdel(pulse2)
+		new/obj/effect/overlay/temp/emp(src.loc)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -175,17 +171,19 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
+			if(C.buckled || C.buckled_mob)
 				continue
 			else
 				target = C
-	if(target)
+	if(target && !target.buckled && !target.buckled_mob)
 		if(target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
 		target.loc = src
 		target.stop_pulling()
+		if(target.pulledby)
+			target.pulledby.stop_pulling()
 	updateUsrDialog()
 	update_icon()
 
@@ -284,6 +282,8 @@ Class Procs:
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
+	if(..())// unbuckling etc
+		return 1
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
@@ -367,7 +367,7 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -385,9 +385,7 @@ Class Procs:
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 			var/P
 			if(W.works_from_distance)
-				user << "<span class='notice'>Following parts detected in the machine:</span>"
-				for(var/var/obj/item/C in component_parts)
-					user << "<span class='notice'>   [C.name]</span>"
+				display_parts(user)
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -406,13 +404,21 @@ Class Procs:
 							break
 			RefreshParts()
 		else
-			user << "<span class='notice'>Following parts detected in the machine:</span>"
-			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>   [C.name]</span>"
+			display_parts(user)
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1
 	return 0
+
+/obj/machinery/proc/display_parts(mob/user)
+	user << "<span class='notice'>Following parts detected in the machine:</span>"
+	for(var/obj/item/C in component_parts)
+		user << "<span class='notice'>\icon[C] [C.name]</span>"
+
+/obj/machinery/examine(mob/user)
+	..(user)
+	if(user.research_scanner && component_parts)
+		display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()

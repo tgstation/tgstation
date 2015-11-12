@@ -16,6 +16,7 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	color = pipe_color
+	volume = 35 * device_type
 	..()
 
 /obj/machinery/atmospherics/pipe/nullifyNode(I)

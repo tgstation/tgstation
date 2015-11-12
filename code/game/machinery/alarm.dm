@@ -81,9 +81,9 @@
 	// breathable air according to human/Life()
 	var/list/TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
 		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 	)
@@ -91,25 +91,25 @@
 /*
 	// breathable air according to wikipedia
 		"oxygen"         = new/datum/tlv(   9,  12, 158, 296), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0,-1.0, 0.5,   1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1, 0.5,   1), // Partial pressure, kpa
 */
 /obj/machinery/alarm/server
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), /* kpa */
-		"temperature"    = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // K
+		"oxygen"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1, -1,-1,-1), /* kpa */
+		"temperature"    = new/datum/tlv(-1, -1,-1,-1), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room
 	TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
 		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
 	)
@@ -220,7 +220,7 @@
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -295,7 +295,7 @@
 		environment_data += list(list("name" = "Toxins", "value" = environment.toxins / total * 100, "unit" = "%", "danger_level" = plasma_danger))
 
 		cur_tlv = TLV["other"]
-		var/other_moles = 0.0
+		var/other_moles = 0
 		for(var/datum/gas/G in environment.trace_gases)
 			other_moles+=G.moles
 		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
@@ -454,7 +454,7 @@
 				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
-					tlv.vars[varname] = -1.0
+					tlv.vars[varname] = -1
 				else if (env=="temperature" && newval>5000)
 					tlv.vars[varname] = 5000
 				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
@@ -654,7 +654,7 @@
 	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
 
 	cur_tlv = TLV["other"]
-	var/other_moles = 0.0
+	var/other_moles = 0
 	for(var/datum/gas/G in environment.trace_gases)
 		other_moles+=G.moles
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
@@ -843,11 +843,11 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	var/detecting = 1.0
-	var/time = 10.0
-	var/timing = 0.0
+	var/detecting = 1
+	var/time = 10
+	var/timing = 0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -926,9 +926,9 @@ FIRE ALARM
 	..()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
@@ -938,12 +938,13 @@ FIRE ALARM
 	if(panel_open)
 		switch(buildstage)
 			if(2)
-				if (istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+					return
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -953,18 +954,18 @@ FIRE ALARM
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
+					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
-						return
-
-					coil.use(5)
-
-					buildstage = 2
-					user << "<span class='notice'>You wire \the [src].</span>"
-					update_icon()
+					else
+						coil.use(5)
+						buildstage = 2
+						user << "<span class='notice'>You wire \the [src].</span>"
+						update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -979,12 +980,14 @@ FIRE ALARM
 								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
+					return
 			if(0)
 				if(istype(W, /obj/item/weapon/electronics/firealarm))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
 					update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
@@ -993,9 +996,8 @@ FIRE ALARM
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
-		return
-
-	return
+					return
+	return ..()
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
@@ -1109,7 +1111,8 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert(src)
+	if(!A.fire)
+		A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 

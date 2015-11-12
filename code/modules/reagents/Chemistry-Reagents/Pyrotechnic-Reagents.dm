@@ -39,7 +39,7 @@
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
 	color = "#FF0000"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 4
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
@@ -67,7 +67,7 @@
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			PoolOrNew(/obj/effect/hotspot, M.loc)
@@ -96,7 +96,7 @@
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
@@ -152,7 +152,7 @@
 
 /datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane

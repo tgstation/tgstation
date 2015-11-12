@@ -20,7 +20,7 @@
 
 /obj/item/radio/integrated/signal
 	var/frequency = 1457
-	var/code = 30.0
+	var/code = 30
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 

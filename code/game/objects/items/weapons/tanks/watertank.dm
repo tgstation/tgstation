@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	action_button_name = "Toggle Mister"
@@ -108,7 +108,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4.0
+	w_class = 4
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
@@ -168,7 +168,7 @@
 	icon_state = "misterjani"
 	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 
 /obj/item/weapon/watertank/janitor/make_noz()
 	return new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
@@ -293,7 +293,7 @@
 		if(!Adj|| !istype(target, /turf))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/effect/foam/metal/F = PoolOrNew(/obj/effect/effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -311,8 +311,8 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/nanofrost_container/proc/Smoke()
-	var/datum/effect/effect/system/smoke_spread/freezing/S = new
-	S.set_up(6, 0, loc, null, 1)
+	var/datum/effect_system/smoke_spread/freezing/S = new
+	S.set_up(2, src.loc, blasting=1)
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
@@ -320,50 +320,6 @@
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
-
-/obj/effect/effect/smoke/freezing
-	name = "nanofrost smoke"
-	opacity = 0
-	color = "#B2FFFF"
-
-/datum/effect/effect/system/smoke_spread/freezing
-	smoke_type = /obj/effect/effect/smoke/freezing
-	var/blast = 0
-
-/datum/effect/effect/system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
-		if(T.air)
-			var/datum/gas_mixture/G = T.air
-			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
-				G.temperature = 2
-			T.air_update_turf()
-			for(var/obj/effect/hotspot/H in T)
-				H.Kill()
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
-		for(var/obj/machinery/atmospherics/components/unary/U in T)
-			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
-				U.welded = 1
-				U.update_icon()
-				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
-		for(var/mob/living/L in T)
-			L.ExtinguishMob()
-		for(var/obj/item/Item in T)
-			Item.extinguish()
-	return
-
-/datum/effect/effect/system/smoke_spread/freezing/set_up(n = 5, c = 0, loca, direct, blasting = 0)
-	..()
-	blast = blasting
-
-/datum/effect/effect/system/smoke_spread/freezing/start()
-	if(blast)
-		for(var/turf/T in trange(2, location))
-			Chilled(T)
-	..()
-
 
 #undef EXTINGUISHER
 #undef NANOFROST

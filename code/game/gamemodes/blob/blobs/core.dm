@@ -3,8 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
-	health = 200
-	fire_resist = 2
+	health = 400
+	maxhealth = 400
 	explosion_block = 6
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
@@ -68,7 +68,7 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	health = min(initial(health), health + 1)
+	health = min(maxhealth, health+health_regen)
 	if(overmind)
 		overmind.update_health()
 	pulseLoop(0)
@@ -98,7 +98,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(BE_BLOB)
+		candidates = get_candidates(ROLE_BLOB)
 		if(candidates.len)
 			C = pick(candidates)
 	else

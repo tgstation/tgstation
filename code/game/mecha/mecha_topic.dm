@@ -83,7 +83,7 @@
 						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
 						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa<br>
 						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
-						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
+						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
 
@@ -300,11 +300,11 @@
 		if(occupant && !iscarbon(occupant))
 			occupant << "<span class='danger'> You do not have any DNA!</span>"
 			return
-		dna = src.occupant.dna.unique_enzymes
+		dna_lock = occupant.dna.unique_enzymes
 		occupant_message("You feel a prick as the needle takes your DNA sample.")
 
 	if(href_list["reset_dna"])
-		dna = null
+		dna_lock = null
 
 	if(href_list["repair_int_control_lost"])
 		occupant_message("Recalibrating coordination system...")

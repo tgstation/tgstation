@@ -15,6 +15,7 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
+	setupGenetics()
 	for(var/atom/movable/AM in world)
 		if (zlevel && AM.z != zlevel)
 			continue

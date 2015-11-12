@@ -162,11 +162,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
+/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		return 1
@@ -471,7 +471,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	item_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
@@ -491,7 +491,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	if(locate(/obj/structure/stool) in user.loc)
+	if(locate(/obj/structure/bed/stool) in user.loc)
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")

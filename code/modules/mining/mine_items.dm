@@ -62,10 +62,10 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 15
-	throwforce = 10.0
+	throwforce = 10
 	item_state = "pickaxe"
-	w_class = 4.0
-	materials = list(MAT_METAL=3750) //one sheet, but where can you make them?
+	w_class = 4
+	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
@@ -128,23 +128,24 @@
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 8.0
+	force = 8
 	var/digspeed = 20
-	throwforce = 4.0
+	throwforce = 4
 	item_state = "shovel"
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=50)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	item_state = "spade"
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
+	force = 5
+	throwforce = 7
+	w_class = 2
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -168,7 +169,7 @@
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "pill3"
 	icon = 'icons/obj/chemical.dmi'
-	w_class = 1.0
+	w_class = 1
 	var/used = FALSE
 
 /obj/item/weapon/survivalcapsule/attack_self()
@@ -177,7 +178,7 @@
 		used = TRUE
 		sleep(50)
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
-		PoolOrNew(/obj/effect/effect/smoke, src.loc)
+		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()
 		qdel(src)
 
@@ -194,9 +195,9 @@
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
 	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
-	
+
 	start_turf = get_turf(src.loc)
-	
+
 	//Fill it
 	cur_turf = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	new /obj/machinery/door/airlock/glass(cur_turf)
@@ -206,11 +207,11 @@
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	var/obj/structure/stool/bed/chair/comfy/C = new /obj/structure/stool/bed/chair/comfy(cur_turf)
+	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
 	C.dir = 1
 
 	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/structure/stool/bed/chair/comfy(cur_turf)
+	new /obj/structure/bed/chair/comfy(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
 	var/obj/machinery/sleeper/S = new /obj/machinery/sleeper(cur_turf)

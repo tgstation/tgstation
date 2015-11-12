@@ -12,14 +12,14 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
-	
+
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
 	id = "spraytan"
 	result = "spraytan"
 	required_reagents = list("orangejuice" = 1, "oil" = 1)
 	result_amount = 2
-	
+
 /datum/chemical_reaction/spraytan2
 	name = "Spray Tan"
 	id = "spraytan"
@@ -75,6 +75,46 @@
 	required_reagents = list("capsaicin" = 1, "ethanol" = 5)
 	result_amount = 5
 
+/datum/chemical_reaction/soapification
+	name = "Soapification"
+	id = "soapification"
+	result = null
+	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/soap/homemade(location)
+	return
+
+/datum/chemical_reaction/candlefication
+	name = "Candlefication"
+	id = "candlefication"
+	result = null
+	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/candle(location)
+	return
+
+/datum/chemical_reaction/meatification
+	name = "Meatification"
+	id = "meatification"
+	result = null
+	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+	return
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
@@ -159,7 +199,7 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out foam!</span>"
-	var/datum/effect/effect/system/foam_spread/s = new()
+	var/datum/effect_system/foam_spread/s = new()
 	s.set_up(created_volume, location, holder)
 	s.start()
 	holder.clear_reagents()
@@ -180,7 +220,7 @@
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
 
-	var/datum/effect/effect/system/foam_spread/metal/s = new()
+	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(created_volume, location, holder, 1)
 	s.start()
 	holder.clear_reagents()
@@ -197,7 +237,7 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
-	var/datum/effect/effect/system/foam_spread/metal/s = new()
+	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(created_volume, location, holder, 2)
 	s.start()
 	holder.clear_reagents()
@@ -254,6 +294,12 @@
 	required_reagents = list("toxin" = 1, "ethanol" = 4)
 	result_amount = 5
 
+/datum/chemical_reaction/drying_agent
+	name = "Drying agent"
+	id = "drying_agent"
+	result = "drying_agent"
+	required_reagents = list("stable_plasma" = 2, "ethanol" = 1, "sodium" = 1)
+	result_amount = 3
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
@@ -352,3 +398,17 @@
 	result = "saltpetre"
 	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
 	result_amount = 3
+
+/datum/chemical_reaction/lye
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/lye2
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("ash" = 1, "water" = 1)
+	result_amount = 2

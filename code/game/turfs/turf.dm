@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -26,22 +26,22 @@
 
 	flags = 0
 
+	var/image/obscured	//camerachunks
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
-/turf/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
 
-// Adds the adjacent turfs to the current atmos processing
-/turf/Del()
+/turf/Destroy()
+	// Adds the adjacent turfs to the current atmos processing
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -92,12 +92,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	if(ismob(M))
-		var/mob/O = M
-		if(!O.lastarea)
-			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
-
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
 		if(loopsanity == 0)
@@ -196,6 +190,10 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src_object))
+			return 0
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)
 			if(I.on_found(user))
@@ -261,8 +259,9 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying) //did we actually fall?
-			C.adjustBruteLoss(2)
+		if(C.lying != oldlying && lube) //did we actually fall?
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()
@@ -281,6 +280,9 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
+/turf/proc/visibilityChanged()
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /turf/indestructible
 	name = "wall"
@@ -308,8 +310,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"
