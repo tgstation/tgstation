@@ -1201,6 +1201,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 // damage and destruction acts
 
 /obj/machinery/power/apc/emp_act(severity)
+	flick("apc-spark", src)
 	if(cell)
 		cell.emp_act(severity)
 	if(occupant)
@@ -1208,9 +1209,12 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	lighting = 0
 	equipment = 0
 	environ = 0
-	spawn(600)
+	update()
+	spawn(600/severity)
+		lighting = 3
 		equipment = 3
 		environ = 3
+		update()
 	..()
 
 /obj/machinery/power/apc/ex_act(severity)
