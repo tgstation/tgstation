@@ -65,6 +65,7 @@
 	if(B.exists())
 		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
 		brain.transfer_identity(owner)
+	src.name = "[owner]'s head"
 
 /obj/item/organ/limb/head/Remove()
 	transfer_identity()
@@ -107,6 +108,24 @@
 
 		else
 			user << "<span class='notice'>There is no brain in this head!</span>"
+
+
+	if(istype(O,/obj/item/weapon/hemostat))
+		var/datum/organ/internal/eyes/E = suborgans["eyes"]
+		if(E && E.exists())
+			user.visible_message("[user] starts removing \the [E.organitem] with \the [O].", \
+								 "<span class='notice'>You start removing \the [E.organitem] with \the [O]...</span>")
+
+			if(do_after(user, 10))
+				var/eyes = remove_suborgan("eyes")
+				if(eyes)
+					user.put_in_hands(eyes) //Give the brain to the surgeon
+					user << "<span class='notice'>You pluck the [eyes] out of the head.</span>"
+				else
+					user << "<span class='notice'>Something else removed the eyes before you were done.</span>"
+
+		else
+			user << "<span class='notice'>The head's eyesockets are empty!</span>"
 
 	..()
 
