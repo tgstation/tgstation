@@ -8,9 +8,12 @@
 	flag = "energy"
 
 /obj/item/projectile/ion/Bump(atom/A as mob|obj|turf|area)
+	var/will_emp = 0
 	if(!bumped && ((A != firer) || reflected))
-		empulse(get_turf(A), 1, 1)
+		will_emp = 1
 	..()
+	if(will_emp)//the EMP should occur after the bump, so the projectile doesn't phase through multiple hivebots at once.
+		empulse(get_turf(A), 1, 1)
 
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
