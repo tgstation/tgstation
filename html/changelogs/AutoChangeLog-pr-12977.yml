@@ -1,0 +1,4 @@
+author: Dunc
+delete-after: True
+changes: 
+  - rscdel: "DNA injectors have been restored to their original permanent RNG state from the impermanent guaranteed state."
