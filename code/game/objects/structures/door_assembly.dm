@@ -154,39 +154,57 @@
 		created_name = t
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool) && ( (istext(glass)) || (glass == 1) || (!anchored) ))
+	if (istype(W, /obj/item/weapon/weldingtool) && ( (istext(glass)) || (glass == 1) || (!anchored) ))
 		var/obj/item/weapon/weldingtool/WT = W
+
 		if (WT.remove_fuel(0, user))
-			busy = 1
+			busy = TRUE
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-			if(istext(glass))
+
+			if (istext(glass))
 				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
-				if(do_after(user, src, 40))
-					if(!src || !WT.isOn()) return
+
+				if (do_after(user, src, 40))
+					if (!src || !WT.isOn())
+						busy = FALSE
+						return
+
 					user << "<span class='notice'>You welded the [glass] plating off!</span>"
+
 					var/M = text2path("/obj/item/stack/sheet/mineral/[glass]")
 					new M(src.loc, 2)
+
 					glass = 0
-			else if(glass == 1)
+			else if (glass == 1)
 				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
-				if(do_after(user, src, 40))
-					if(!src || !WT.isOn()) return
+
+				if (do_after(user, src, 40))
+					if (!src || !WT.isOn())
+						busy = FALSE
+						return
+
 					user << "<span class='notice'>You welded the glass panel out!</span>"
 					new /obj/item/stack/sheet/glass/rglass(src.loc)
 					glass = 0
-			else if(!anchored)
+			else if (!anchored)
 				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
-				if(do_after(user, src, 40))
-					if(!src || !WT.isOn()) return
+
+				if (do_after(user, src, 40))
+					if (!src || !WT.isOn())
+						busy = FALSE
+						return
+
 					user << "<span class='notice'>You dissasembled the airlock assembly!</span>"
+
 					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 					M.amount = 4
+
 					qdel (src)
-			busy = 0
+
+			busy = FALSE
 		else
 			user << "<span class='notice'>You need more welding fuel.</span>"
 			return
-
 	else if(istype(W, /obj/item/weapon/wrench) && state == 0)
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
