@@ -100,20 +100,20 @@
 		return !density
 
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
-	..()
-	if(ismob(O) && user == O && ishuman(user))
-		if(user.canmove)
-			climb_table(user)
+	if(!..())
+		if(ismob(O) && user == O && ishuman(user))
+			if(user.canmove)
+				climb_table(user)
+				return
+		if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+		if(isrobot(user))
+			return
+		if(!user.drop_item())
+			return
+		if (O.loc != src.loc)
+			step(O, get_dir(O, src))
 		return
-	if(isrobot(user))
-		return
-	if(!user.drop_item())
-		return
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
 
 /obj/structure/table/proc/tablepush(obj/item/I, mob/user)
 	if(get_dist(src, user) < 2)
