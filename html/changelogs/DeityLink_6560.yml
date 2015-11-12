@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: EMPs now properly temporarily turn APC switches OFF.
+  - rscadd: Admins now have a verb to drop EMPs.
+  - rscadd: Hivebots now take damage from EMPs.
+  - tweak: Ion rifles projectiles now produce small EMPs no matter what they bump into.
