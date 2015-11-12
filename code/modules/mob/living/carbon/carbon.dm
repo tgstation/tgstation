@@ -73,6 +73,13 @@
 			stomach_contents.Remove(M)
 		M.loc = loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+	if(organsystem)
+		for(var/limbname in list_limbs())
+			if(limbname != "head" && limbname != "chest")	//Since gibbing usually destroys the brain and dismembering chest is... weird
+				var/datum/organ/limb/limbdata = getorgan(limbname)
+				var/obj/item/organ/limb/O = limbdata.organitem
+				if(limbdata.dismember(ORGAN_DESTROYED))
+					O.streak()
 	. = ..()
 
 
@@ -684,3 +691,6 @@ var/const/GALOSHES_DONT_HELP = 8
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
 	add_abilities_to_panel()
+
+/mob/living/carbon/proc/list_limbs()	//In case we want organsystems for non-humans
+	return null

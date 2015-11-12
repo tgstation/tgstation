@@ -19,20 +19,16 @@
 
 //The proc for inserting organs. Inserts the organ and adds all its suborgans to the organsystem
 /obj/item/organ/proc/Insert(mob/living/carbon/M)
-	world << "Called Insert([M])"
 	if(!iscarbon(M) || owner == M)
 		return 0
 
 	var/datum/organ/OR = M.getorgan(hardpoint)
-	world << "Hardpoint is [OR]"
 	if(OR && !OR.exists())
 		world << "[OR] [OR.exists()]"
 		if(OR.set_organitem(src))
-			world << "Organitem set!"
 			if(suborgans.len)
 				for (var/i in suborgans)
 					M.add_organ(suborgans[i])
-			world << "About to return 1!"
 			return 1
 	return 0
 
@@ -97,3 +93,7 @@
 
 /obj/item/organ/proc/create_suborgan_slots()
 	return 0
+
+/obj/item/organ/proc/streak()
+	var/direction = pick(alldirs)
+	step_to(src, get_step(src, direction), 0)

@@ -55,7 +55,7 @@
 
 //Gets us a convenient list of limbs that matter for stuff like rendering and checking damage.
 //Please update this if you break down limbs into more limbs (arm to arm and hand or stuff like that). |- Ricotez
-/mob/living/carbon/human/proc/list_limbs()
+/mob/living/carbon/human/list_limbs()
 	return list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 
 /mob/living/carbon/human/prepare_data_huds()
@@ -169,6 +169,19 @@
 	var/update = 0
 	for(var/limb in list_limbs())
 		var/datum/organ/limb/limbdata = getorgan(limb)
+		var/probability = 0
+		if(limb == "head")
+			probability = b_loss/20	//Gotta make that instakill rare. Still 25% with the most severe explosion and bomb armor
+		else if(limb != "chest")
+			probability = b_loss/3		//100% with the most severe explosion, might need tweaking
+		if(probability && prob(probability))
+			var/obj/item/organ/limb/O = limbdata.dismember(ORGAN_DESTROYED)
+			if(O)
+				O.streak()
+				visible_message("<span class='danger'>[src]'s [O.name] goes flying off!</span>", "<span class='userdanger'>Your [O.name] goes flying off!</span>")
+				var/turf/location = src.loc
+				if(istype(location, /turf/simulated))
+					location.add_blood_floor(src)
 		if(limbdata.exists())
 			var/obj/item/organ/limb/temp = limbdata.organitem
 			switch(temp.name)
