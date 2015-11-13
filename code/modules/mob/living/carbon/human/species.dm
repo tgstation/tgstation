@@ -102,7 +102,7 @@
 
 /datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
-		H.remove_overlay(SPECIES_LAYER) // races lose their color
+//		H.remove_overlay(SPECIES_LAYER) // races lose their color	//I think this is obsolete
 		return "husk"
 	else if(sexes)
 		if(use_skintones)

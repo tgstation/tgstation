@@ -186,7 +186,7 @@
 		OI.owner = null			//We nullify the owner of this organ.
 		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 	organitem.loc = owner.loc					//The organitem ends up at the datum's owner's location
-	var/obj/item/oldorgan = organitem
+	var/obj/item/organ/oldorgan = organitem
 	organitem = null
 	set_organitem(neworgan)
 
@@ -201,17 +201,16 @@
 	set_owner(owner)	//So the new organitem gets its owner set
 	if(owner)
 		owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
+	oldorgan.Remove(special = 1)			//Mainly so heads get their name set
 	return oldorgan							//We return the organ so we can finish whatever we were doing with it.
 
 /datum/organ/proc/getDisplayName()
 	switch(name)
-		if("eyes")				return "eyesocket"
+		if("eyes")				return "eyes"
 		if("l_leg")				return "left leg"
 		if("r_leg")				return "right leg"
 		if("l_arm")				return "left arm"
 		if("r_arm")				return "right arm"
-		if("antidrop_implant")	return "antidrop implant"
-		if("antistun_implant")	return "antistun implant"
-		if("reviver_implant")	return "reviver implant"
-		if("nutriment_implant")	return "nutriment implant"
+		if("cyberimp_chest")	return "chest cybernetic implant"
+		if("cyberimp_brain")	return "brain cybernetic implant"
 		else			return name

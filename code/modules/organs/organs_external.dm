@@ -65,10 +65,11 @@
 	if(B.exists())
 		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
 		brain.transfer_identity(owner)
-	src.name = "[owner]'s head"
 
-/obj/item/organ/limb/head/Remove()
-	transfer_identity()
+/obj/item/organ/limb/head/Remove(special = 0)
+	if(!special)
+		transfer_identity()
+	src.name = "[owner]'s head"
 
 /**
   *

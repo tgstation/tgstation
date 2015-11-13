@@ -58,8 +58,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	I adapted the system (with permission) for the update to a datum-based organ system.
 	|- Ricotez
 */
-
-//Human Overlays Indexes/////////
+/*
+//Human Overlays Indexes///////// Seemingly defined in misc.dm so I'm commenting this out
 #define SPECIES_LAYER			27		// mutantrace colors... these are on a seperate layer in order to prvent
 #define BODY_BEHIND_LAYER		26
 #define BODY_LAYER				25		//underwear, undershirts, socks, eyes, lips(makeup)
@@ -89,6 +89,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 //////////////////////////////////
+*/
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -209,6 +210,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs
+
+	update_body()	//In case we need to remove clothing
+	update_hair()	//Ditto for hair
 
 	apply_overlay(BODYPARTS_LAYER)
 	update_damage_overlays()
@@ -783,8 +787,8 @@ var/global/list/limb_icon_cache = list()
 			out += overlays_standing[i]
 	return out
 
-//Human Overlays Indexes/////////
-#undef SPECIES_LAYER
+//Human Overlays Indexes///////// See top of file for why this is commented out
+/*#undef SPECIES_LAYER
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
@@ -806,4 +810,4 @@ var/global/list/limb_icon_cache = list()
 #undef L_HAND_LAYER
 #undef R_HAND_LAYER
 #undef FIRE_LAYER
-#undef TOTAL_LAYERS
+#undef TOTAL_LAYERS*/

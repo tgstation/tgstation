@@ -233,6 +233,13 @@
 	damage = 5
 	range = 1
 
+	can_dismember = 1
+	can_behead = 1
+	dismember_threshold = 0
+	behead_threshold = 20
+	dismember_prob = 50
+	behead_prob = 25
+
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
