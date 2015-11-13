@@ -226,20 +226,12 @@
 	if(rapid)
 		spawn(1)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 		spawn(4)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 		spawn(6)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 	else
 		Shoot(target, src.loc, src)
-		if(casingtype)
-			new casingtype
 	ranged_cooldown = ranged_cooldown_cap
 	return
 
@@ -258,6 +250,12 @@
 		newtonian_move(get_dir(target, user))
 	A.original = target
 	A.fire()
+	if(casingtype)
+		var/obj/item/ammo_casing/casing = new casingtype(get_turf(src))
+		if(casing.BB)
+			qdel(casing.BB)
+			casing.BB = null
+		casing.update_icon()
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
