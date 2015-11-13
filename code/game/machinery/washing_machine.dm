@@ -302,6 +302,9 @@
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)
+	if(..())
+		return 1
+
 	switch(wash_state)
 		if(1)
 			wash_state = 2
