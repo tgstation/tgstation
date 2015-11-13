@@ -2,6 +2,8 @@
 var/global/list/global_handofgod_traptypes = list()
 var/global/list/global_handofgod_structuretypes = list()
 
+#define CONDUIT_RANGE	15
+
 
 /datum/game_mode
 	var/list/datum/mind/red_deities = list()

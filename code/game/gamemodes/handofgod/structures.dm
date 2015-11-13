@@ -270,6 +270,14 @@
 	glass_cost = 5
 
 
+/obj/structure/divine/conduit/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
+	if(deity)
+		deity.conduits -= src
+	..()
+	if(deity)
+		deity.conduits += src
+
+
 /* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
 	name = "forge"
