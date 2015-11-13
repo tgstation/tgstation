@@ -94,7 +94,7 @@ Borg Hypospray
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
-		R.reaction(M, INGEST, fraction)
+		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"

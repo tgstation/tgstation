@@ -306,7 +306,7 @@
 /datum/outfit/plasmaman
 	name = "Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/space/hardsuit/plasmaman
+	head = /obj/item/clothing/head/helmet/plasmaman
 	uniform = /obj/item/clothing/under/plasmaman
 	belt = /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
@@ -358,6 +358,15 @@
 /datum/outfit/death_commando/officer
 	name = "Death Commando Officer"
 	head = /obj/item/clothing/head/helmet/space/beret
+
+/datum/outfit/chrono_agent
+	name = "Timeline Eradication Agent"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/space/chronos
+	back = /obj/item/weapon/chrono_eraser
+	head = /obj/item/clothing/head/helmet/space/chronos
+	mask = /obj/item/clothing/mask/breath
+	suit_store = /obj/item/weapon/tank/internals/oxygen
 
 
 

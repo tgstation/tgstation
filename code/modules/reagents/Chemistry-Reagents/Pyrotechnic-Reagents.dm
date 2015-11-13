@@ -67,7 +67,7 @@
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			PoolOrNew(/obj/effect/hotspot, M.loc)
@@ -152,7 +152,7 @@
 
 /datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane

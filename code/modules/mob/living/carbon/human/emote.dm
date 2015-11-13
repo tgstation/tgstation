@@ -72,6 +72,13 @@
 					m_type = 2
 
 		if ("custom")
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
+				return
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
+					src << "You cannot send IC messages (muted)."
+					return
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			if (!input)
 				return
@@ -188,6 +195,9 @@
 
 		if ("me")
 			if(silent)
+				return
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)

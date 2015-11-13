@@ -2,24 +2,6 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
-//some autodetection here.
-	"traitor" = /datum/game_mode/traitor,			//0
-	"operative" = /datum/game_mode/nuclear,			//1
-	"changeling" = /datum/game_mode/changeling,		//2
-	"wizard" = /datum/game_mode/wizard,				//3
-	"malf AI" = /datum/game_mode/malfunction,		//4
-	"revolutionary" = /datum/game_mode/revolution,	//5
-	"alien",										//6
-	"pAI/posibrain",								//7
-	"cultist" = /datum/game_mode/cult,				//8
-	"blob" = /datum/game_mode/blob,					//9
-	"ninja",										//10
-	"monkey" = /datum/game_mode/monkey,				//11
-	"gangster" = /datum/game_mode/gang,				//12
-	"shadowling" = /datum/game_mode/shadowling,		//13
-	"abductor" = /datum/game_mode/abduction			//14
-)
 
 
 /datum/preferences
@@ -36,7 +18,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
-	var/be_special = 0					//Special role selection
+
+	//Antag preferences
+	var/list/be_special = list()		//Special role selection
+	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
+										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
+										//autocorrected this round, not that you'd need to check that.
+
+
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -377,15 +366,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
-			dat += "<h2>Antagonist Settings</h2>"
+			dat += "<h2>Special Role Settings</h2>"
 
 			if(jobban_isbanned(user, "Syndicate"))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
-				src.be_special = 0
-			var/n = 0
+				src.be_special = list()
+
+
 			for (var/i in special_roles)
 				if(jobban_isbanned(user, i))
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
+					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
 				else
 					var/days_remaining = null
 					if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
@@ -394,10 +384,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						days_remaining = temp_mode.get_remaining_days(user.client)
 
 					if(days_remaining)
-						dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 					else
-						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
-				n++
+						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
+
 			dat += "</td></tr></table>"
 
 	dat += "<hr><center>"
@@ -665,8 +655,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!istype(user, /mob/new_player))	return
-
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
@@ -1007,11 +995,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
-				if("hear_adminhelps")
-					toggles ^= SOUND_ADMINHELP
-				if("announce_login")
-					toggles ^= ANNOUNCE_LOGIN
-
 				if("ui")
 					switch(UI_style)
 						if("Midnight")
@@ -1021,9 +1004,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						else
 							UI_style = "Midnight"
 
+				if("hear_adminhelps")
+					toggles ^= SOUND_ADMINHELP
+				if("announce_login")
+					toggles ^= ANNOUNCE_LOGIN
+
 				if("be_special")
-					var/num = text2num(href_list["num"])
-					be_special ^= (1<<num)
+					var/be_special_type = href_list["be_special_type"]
+					if(be_special_type in be_special)
+						be_special -= be_special_type
+					else
+						be_special += be_special_type
 
 				if("name")
 					be_random_name = !be_random_name

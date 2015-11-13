@@ -370,11 +370,11 @@
 	..()
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
+	. = ..()
 
-	tally = speed
+	. = speed
 
-	return tally+config.animal_delay
+	. += config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -431,6 +431,7 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
 	update_canmove()

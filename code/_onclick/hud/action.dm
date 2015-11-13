@@ -1,8 +1,3 @@
-#define AB_ITEM 1
-#define AB_SPELL 2
-#define AB_INNATE 3
-#define AB_GENERIC 4
-
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
 #define AB_CHECK_LYING 4
@@ -12,12 +7,9 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/action_type = AB_ITEM
-	var/procname = null
 	var/obj/item/target = null
 	var/check_flags = 0
 	var/processing = 0
-	var/active = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
@@ -55,31 +47,8 @@
 
 /datum/action/proc/Trigger()
 	if(!Checks())
-		return
-	switch(action_type)
-		if(AB_ITEM)
-			if(target)
-				var/obj/item/item = target
-				item.ui_action_click()
-		if(AB_SPELL)
-			if(target)
-				var/obj/effect/proc_holder/spell = target
-				spell.Click()
-		if(AB_INNATE)
-			if(!active)
-				Activate()
-			else
-				Deactivate()
-		if(AB_GENERIC)
-			if(target && procname)
-				call(target,procname)(usr)
-	return
-
-/datum/action/proc/Activate()
-	return
-
-/datum/action/proc/Deactivate()
-	return
+		return 0
+	return 1
 
 /datum/action/proc/Process()
 	return
@@ -113,6 +82,15 @@
 /datum/action/proc/UpdateName()
 	return name
 
+/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.overlays.Cut()
+	if(button_icon && button_icon_state)
+		var/image/img
+		img = image(button_icon,current_button,button_icon_state)
+		img.pixel_x = 0
+		img.pixel_y = 0
+		current_button.overlays += img
+
 /obj/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
@@ -133,19 +111,7 @@
 	icon = owner.button_icon
 	icon_state = owner.background_icon_state
 
-	overlays.Cut()
-	var/image/img
-	if(owner.action_type == AB_ITEM && owner.target)
-		var/obj/item/I = owner.target
-		var/old = I.layer
-		I.layer = FLOAT_LAYER //AAAH
-		overlays += I
-		I.layer = old
-	else if(owner.button_icon && owner.button_icon_state)
-		img = image(owner.button_icon,src,owner.button_icon_state)
-		img.pixel_x = 0
-		img.pixel_y = 0
-		overlays += img
+	owner.ApplyIcon(src)
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
@@ -159,7 +125,11 @@
 	icon_state = "bg_default"
 	var/hidden = 0
 
-/obj/screen/movable/action_button/hide_toggle/Click()
+/obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		moved = 0
+		return 1
 	usr.hud_used.action_buttons_hidden = !usr.hud_used.action_buttons_hidden
 
 	hidden = usr.hud_used.action_buttons_hidden
@@ -198,18 +168,18 @@
 /mob/proc/update_action_buttons()
 	return
 
-#define AB_WEST_OFFSET 4
-#define AB_NORTH_OFFSET 26
 #define AB_MAX_COLUMNS 10
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
+
 	var/coord_col = "+[col-1]"
 	var/coord_col_offset = 4+2*col
-	var/coord_row = "[-1 - row]"
-	var/coord_row_offset = 26
-	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
+
+	var/coord_row = "[row ? -row : "+0"]"
+
+	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-6"
 
 /datum/hud/proc/SetButtonCoords(obj/screen/button,number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
@@ -225,23 +195,40 @@
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
+/datum/action/item_action/Trigger()
+	if(!..())
+		return 0
+	if(target)
+		var/obj/item/item = target
+		item.ui_action_click()
+	return 1
+
 /datum/action/item_action/CheckRemoval(mob/living/user)
 	return !(target in user)
+
+/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.overlays.Cut()
+	if(target)
+		var/obj/item/I = target
+		var/old = I.layer
+		I.layer = FLOAT_LAYER //AAAH
+		current_button.overlays += I
+		I.layer = old
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
-/datum/action/organ_action
+/datum/action/item_action/organ_action
 	check_flags = AB_CHECK_ALIVE
 
-/datum/action/organ_action/CheckRemoval(mob/living/carbon/user)
+/datum/action/item_action/organ_action/CheckRemoval(mob/living/carbon/user)
 	if(!iscarbon(user))
 		return 1
 	if(target in user.internal_organs)
 		return 0
 	return 1
 
-/datum/action/organ_action/IsAvailable()
+/datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/internal/I = target
 	if(!I.owner)
 		return 0
@@ -249,9 +236,16 @@
 
 //Preset for spells
 /datum/action/spell_action
-	action_type = AB_SPELL
 	check_flags = 0
 	background_icon_state = "bg_spell"
+
+/datum/action/spell_action/Trigger()
+	if(!..())
+		return 0
+	if(target)
+		var/obj/effect/proc_holder/spell = target
+		spell.Click()
+		return 1
 
 /datum/action/spell_action/UpdateName()
 	var/obj/effect/proc_holder/spell/spell = target
@@ -275,34 +269,65 @@
 			return 0
 	return !(target in owner.mob_spell_list)
 
+//Preset for general and toggled actions
+/datum/action/innate
+	check_flags = 0
+	var/active = 0
+
+/datum/action/innate/Trigger()
+	if(!..())
+		return 0
+	if(!active)
+		Activate()
+	else
+		Deactivate()
+	return 1
+
+/datum/action/innate/proc/Activate()
+	return
+
+/datum/action/innate/proc/Deactivate()
+	return
+
+//Preset for action that call specific procs (consider innate)
+/datum/action/generic
+	check_flags = 0
+	var/procname
+
+/datum/action/generic/Trigger()
+	if(!..())
+		return 0
+	if(target && procname)
+		call(target,procname)(usr)
+	return 1
+
 
 //Action button controlling a mob's research examine ability.
-/datum/action/scan_mode
+/datum/action/innate/scan_mode
 	name = "Toggle Research Scanner"
 	button_icon_state = "scan_mode"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_ALIVE
-	action_type = AB_INNATE
 	var/devices = 0 //How may enabled scanners the mob has
 
-/datum/action/scan_mode/Activate()
+/datum/action/innate/scan_mode/Activate()
 	active = 1
 	owner.research_scanner = 1
 	owner << "<span class='notice'> Research analyzer is now active.</span>"
 
-/datum/action/scan_mode/Deactivate()
+/datum/action/innate/scan_mode/Deactivate()
 	active = 0
 	owner.research_scanner = 0
 	owner << "<span class='notice'> Research analyzer deactivated.</span>"
 
-/datum/action/scan_mode/Grant(mob/living/T)
-	devices += 1
+/datum/action/innate/scan_mode/Grant(mob/living/T)
 	..(T)
 
-/datum/action/scan_mode/CheckRemoval(mob/living/user)
+/datum/action/innate/scan_mode/CheckRemoval(mob/living/user)
 	if(devices)
 		return 0
 	return 1
 
-/datum/action/scan_mode/Remove(mob/living/T)
+/datum/action/innate/scan_mode/Remove(mob/living/T)
 	owner.research_scanner = 0
+	active = 0
 	..(T)

@@ -218,6 +218,14 @@
 	log_name = "CH"
 	category = "Assistance"
 	cost = 1
+
+/datum/spellbook_entry/shapeshift
+	name = "Wild Shapeshift"
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift/wild
+	log_name = "WS"
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
@@ -342,6 +350,34 @@
 	limit = 3
 	category = "Assistance"
 
+/datum/spellbook_entry/item/super_matter
+	name = "Super Matter Sword"
+	desc = "Buying this is an incredibly bad idea. The radiation will kill you within minutes. Please consider other options."
+	item_path = /obj/item/weapon/melee/supermatter_sword
+	log_name = "SX"
+	category = "Weapons"
+
+/datum/spellbook_entry/item/veil_render
+	name = "Veil Render"
+	desc = "A sword that can cut through reality itself, leading to mass destruction. Remember to run after you use it!"
+	item_path = /obj/item/weapon/veilrender
+	log_name = "VR"
+	category = "Weapons"
+
+/datum/spellbook_entry/item/mjolnir
+	name = "Mjolnir"
+	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
+	item_path = /obj/item/weapon/twohanded/mjollnir
+	log_name = "MJ"
+	category = "Weapons"
+
+/datum/spellbook_entry/item/singularity_hammer
+	name = "Singularity Hammer"
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
+	item_path = /obj/item/weapon/twohanded/singularityhammer
+	log_name = "SI"
+	category = "Weapons"
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
@@ -429,7 +465,26 @@
 		. += "You cast it [times] times.<br>"
 	return .
 
+/datum/spellbook_entry/summon/multisword
+	name = "Multiverse War"
+	category = "Rituals"
+	desc = "Triggers a multiverse war in which the crew (and you) must summon copies of yourself from alternate realities to do battle and hijack the emergency shuttle. Automatically triggers a shuttle call on purchase."
+	log_name = "MW"
+	cost = 8
 
+/datum/spellbook_entry/summon/multisword/IsAvailible()
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
+	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+
+/datum/spellbook_entry/summon/multisword/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	feedback_add_details("wizard_spell_learned",log_name)
+	only_me()
+	new /obj/item/weapon/multisword(get_turf(user)) //Because the proc skips special roles
+	SSshuttle.emergency.request()
+	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
+	user << "<span class='notice'>You have triggerd a multiverse war!</span>"
+	return 1
 
 /obj/item/weapon/spellbook
 	name = "spell book"

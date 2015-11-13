@@ -6,7 +6,7 @@
 	icon_state = "swarmer_unactivated"
 
 /obj/item/unactivated_swarmer/New()
-	notify_ghosts("An unactivated swarmer has been created in [get_area(src)]! <a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>")
+	notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
 	..()
 
 /obj/item/unactivated_swarmer/Topic(href, href_list)

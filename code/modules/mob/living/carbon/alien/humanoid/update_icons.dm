@@ -19,8 +19,6 @@
 
 	else if(lying || resting || sleeping)
 		icon_state = "alien[caste]_sleep"
-	else if(m_intent == "run")
-		icon_state = "alien[caste]_running"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
 	else

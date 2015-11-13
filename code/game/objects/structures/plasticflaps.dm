@@ -1,4 +1,3 @@
-
 /obj/structure/plasticflaps	//HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "plastic flaps"
 	desc = "Definitely can't get past those. No way."
@@ -15,6 +14,11 @@
 	var/obj/structure/bed/B = A
 	if (istype(A, /obj/structure/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
+
+	if (istype(A, /obj/structure/closet/cardboard))
+		var/obj/structure/closet/cardboard/C = A
+		if(C.move_delay)
+			return 0
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A

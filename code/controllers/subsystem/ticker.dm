@@ -7,7 +7,6 @@ var/datum/subsystem/ticker/ticker
 	can_fire = 1
 	priority = 0
 
-	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
 

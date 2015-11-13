@@ -228,12 +228,13 @@
 "et" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin,/turf/simulated/floor/carpet,/area/centcom/ferry)
 "eu" = (/turf/simulated/floor/carpet,/area/centcom/ferry)
 "ev" = (/obj/structure/table/wood,/obj/item/weapon/pen,/turf/simulated/floor/carpet,/area/centcom/ferry)
+"ew" = (/obj/structure/table/optable/abductor,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "ex" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/ferry)
 "ey" = (/obj/machinery/button/door{id = "adminshut"; name = "Administrative Shutter-Control"; pixel_y = 26},/turf/simulated/floor/carpet,/area/centcom/ferry)
 "ez" = (/obj/machinery/door/poddoor/shutters/preopen{id = "adminshut"; name = "Administrative Shutters"},/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/ferry)
 "eA" = (/obj/structure/bed/chair/comfy/black{dir = 1},/turf/simulated/floor/carpet,/area/centcom/ferry)
 "eG" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 9},/area/centcom/ferry)
-"eH" = (/turf/indestructible/fakeglass{tag = "icon-fakewindows (SOUTHEAST)"; icon_state = "fakewindows"; dir = 6},/area/centcom/ferry)
+"eH" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 6},/area/centcom/ferry)
 "eI" = (/obj/structure/showcase/fakesec,/turf/simulated/floor/carpet,/area/centcom/ferry)
 "eJ" = (/obj/machinery/door/poddoor/shutters/preopen{id = "adminshut"; name = "Administrative Shutters"},/turf/indestructible/fakeglass,/area/centcom/ferry)
 "eK" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor/carpet,/area/centcom/ferry)
@@ -250,7 +251,7 @@
 "fj" = (/obj/machinery/door/airlock/centcom{name = "Dressing Room"; opacity = 1; req_access_txt = "0"},/turf/simulated/floor/wood,/area/centcom/ferry)
 "fk" = (/obj/machinery/vending/clothing,/turf/simulated/floor/wood,/area/centcom/ferry)
 "fl" = (/turf/indestructible/riveted,/area/centcom/evac)
-"ft" = (/turf/indestructible/fakeglass{tag = "icon-fakewindows (SOUTHWEST)"; icon_state = "fakewindows"; dir = 10},/area/centcom/ferry)
+"ft" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 10},/area/centcom/ferry)
 "fu" = (/turf/simulated/floor/plasteel/darkgreen/corner,/area/centcom/ferry)
 "fv" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_y = 4},/obj/item/weapon/pen,/turf/simulated/floor/wood,/area/centcom/ferry)
 "fw" = (/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/centcom/evac)
@@ -305,7 +306,7 @@
 "gT" = (/turf/simulated/floor/plasteel/warning{dir = 4},/area/centcom/control)
 "gU" = (/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "gV" = (/obj/structure/table,/turf/simulated/floor/plasteel/black,/area/centcom/control)
-"gW" = (/turf/indestructible/fakeglass{tag = "icon-fakewindows (SOUTHWEST)"; icon_state = "fakewindows"; dir = 10},/area/centcom/evac)
+"gW" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 10},/area/centcom/evac)
 "gX" = (/obj/machinery/door/airlock/centcom{name = "Centcom Security"; opacity = 1; req_access_txt = "0"},/turf/simulated/floor/plasteel/black,/area/centcom/evac)
 "hc" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/centcom/control)
 "hd" = (/turf/simulated/floor/plasteel/green/corner,/area/centcom/control)
@@ -496,9 +497,9 @@
 "lY" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/obj/structure/mirror{pixel_x = 28},/turf/simulated/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)
 "lZ" = (/turf/simulated/floor/plasteel/redblue,/area/tdome/tdomeobserve)
 "ma" = (/obj/structure/bed/chair,/obj/effect/landmark{name = "tdomeobserve"},/turf/simulated/floor/plasteel/redblue,/area/tdome/tdomeobserve)
-"mb" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/space/transit,/area/wizard_station)
+"mb" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/space/transit,/area/wizard_station)
 "mc" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor/plasteel/airless,/area/wizard_station)
-"md" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/turf/simulated/floor/plating/airless,/area/wizard_station)
+"md" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/simulated/floor/plating/airless,/area/wizard_station)
 "me" = (/obj/machinery/door/poddoor/preopen,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/airless,/area/wizard_station)
 "mf" = (/turf/simulated/floor/plasteel/airless,/area/wizard_station)
 "mg" = (/obj/effect/forcefield,/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage7"},/area/wizard_station)
@@ -563,8 +564,8 @@
 "nD" = (/turf/simulated/floor/plasteel/cult,/turf/simulated/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/wizard_station)
 "nE" = (/obj/effect/decal/cleanable/blood/splatter,/obj/structure/rack{health = 9999},/obj/item/clothing/suit/space/hardsuit/wizard,/turf/simulated/floor/plasteel/cult/airless{icon_state = "cultdamage"},/area/wizard_station)
 "nF" = (/turf/simulated/wall/shuttle{icon_state = "swall8"; dir = 2},/area/wizard_station)
-"nJ" = (/obj/structure/closet/syndicate/personal,/turf/simulated/floor/plasteel/darkwarning{tag = "icon-warndark (NORTH)"; icon_state = "warndark"; dir = 1},/area/syndicate_mothership)
-"nK" = (/obj/structure/table,/obj/item/weapon/gun/energy/ionrifle{pin = /obj/item/device/firing_pin},/turf/simulated/floor/plasteel/darkwarning{tag = "icon-warndark (NORTH)"; icon_state = "warndark"; dir = 1},/area/syndicate_mothership)
+"nJ" = (/obj/structure/closet/syndicate/personal,/turf/simulated/floor/plasteel/darkwarning{icon_state = "warndark"; dir = 1},/area/syndicate_mothership)
+"nK" = (/obj/structure/table,/obj/item/weapon/gun/energy/ionrifle{pin = /obj/item/device/firing_pin},/turf/simulated/floor/plasteel/darkwarning{icon_state = "warndark"; dir = 1},/area/syndicate_mothership)
 "nL" = (/obj/machinery/recharger{pixel_y = 4},/obj/effect/landmark{name = "tdome2"},/turf/simulated/floor/plasteel,/area/tdome/tdome2)
 "nM" = (/obj/machinery/recharger{pixel_y = 4},/obj/effect/landmark{name = "tdome1"},/turf/simulated/floor/plasteel,/area/tdome/tdome1)
 "nN" = (/obj/structure/bookcase,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
@@ -589,7 +590,7 @@
 "oj" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plasteel/cult/airless,/area/wizard_station)
 "ok" = (/turf/indestructible/fakedoor{name = "Squad 3 Pod"},/area/wizard_station)
 "or" = (/obj/machinery/camera{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome/arena)
-"os" = (/obj/structure/bed/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
+"os" = (/obj/structure/bed/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 1},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "ot" = (/obj/structure/cult/pylon,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "ou" = (/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor/plasteel/cult/airless{icon_state = "cultdamage4"},/area/wizard_station)
 "ov" = (/obj/effect/decal/cleanable/blood/splatter,/obj/structure/rack,/obj/item/weapon/staff,/turf/simulated/floor/plasteel/cult/airless{icon_state = "cultdamage"},/area/wizard_station)
@@ -707,7 +708,6 @@
 "qQ" = (/obj/effect/landmark/abductor/scientist,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qR" = (/obj/item/weapon/retractor/alien,/obj/item/weapon/hemostat/alien,/obj/structure/table/abductor,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qS" = (/obj/effect/landmark/abductor/agent,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
-"qT" = (/obj/structure/optable/abductor,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qU" = (/turf/indestructible/abductor{icon_state = "alien13"},/area/abductor_ship)
 "qV" = (/obj/structure/table/abductor,/obj/item/weapon/storage/box/alienhandcuffs,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qW" = (/obj/effect/landmark/abductor/scientist{team = 4},/turf/simulated/floor/plating/abductor,/area/abductor_ship)
@@ -966,7 +966,7 @@ acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqvquqxqwqyacacacqvquqxqwqyacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqzqBqAqDqCqFqEacqzqBqGqIqHqFqEacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqJqLqKqKqKqNqMacqJqOqKqKqKqNqMacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
-acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqPqRqQqTqSqVqUacqPqRqWqTqXqVqUacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
+acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqPqRqQewqSqVqUacqPqRqWewqXqVqUacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqYqZqKqKqKqNraacqYqZqKqKqKqNraacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacrbrdrcrfrerhrgacrbrdrcrfrerhrgacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacrjrirlrkrmacacacrjrirlrkrmacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
@@ -974,7 +974,7 @@ acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqvquqxqwqyacacacqvquqxqwqyacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqzqBrnrproqFqEacqzqBrqrsrrqFqEacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqJrtqKqKqKqNqMacqJruqKqKqKqNqMacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
-acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqPqRrvqTrwqVqUacqPqRrxqTryqVqUacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
+acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqPqRrvewrwqVqUacqPqRrxewryqVqUacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacqYqZqKqKqKqNraacqYqZqKqKqKqNraacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacrbrdrcrfrerhrgacrbrdrcrfrerhrgacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
 acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacrjrirlrkrmacacacrjrirlrkrmacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac
