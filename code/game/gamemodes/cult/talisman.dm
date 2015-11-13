@@ -248,6 +248,7 @@ Rite of the Unheard Whisper
 						 "<span class='warning'>You speak the words of the talisman, revealing nearby runes.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.invisibility = 0
+		R.alpha = initial(R.alpha)
 	..()
 
 
