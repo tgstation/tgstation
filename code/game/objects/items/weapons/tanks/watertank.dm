@@ -25,7 +25,7 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(slot_back) != src)
+	if (usr.get_item_by_slot(slot_back) != src && usr.get_item_by_slot("drone_storage_slot") != src)
 		usr << "<span class='warning'>The watertank needs to be on your back to use!</span>"
 		return
 	if(usr.incapacitated())
@@ -75,7 +75,7 @@
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
+	if(ishuman(src.loc) || isdrone(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		switch(over_object.name)
 			if("r_hand")
