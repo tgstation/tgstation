@@ -177,7 +177,6 @@
 	..()
 
 /obj/machinery/shower/attack_hand(mob/M as mob)
-
 	if(..())
 		return
 	if(panel_open)

@@ -119,6 +119,9 @@
 		src.visible_message("<span class='warning'>\The [user] taps \the [src] with \the [O].</span>")
 
 /obj/machinery/replicator/attack_hand(mob/user as mob)
+	if(..())
+		return 1
+
 	interact(user)
 
 /obj/machinery/replicator/interact(mob/user)
