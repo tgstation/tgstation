@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Reagent containers, such as buckets or beakers, now make some noise when at least 10 units are splashed over the floor or into Hydroponics trays.
