@@ -11,8 +11,8 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	maxHealth = 100
-	health = 100
+	maxHealth = 110
+	health = 110
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -41,8 +41,8 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
@@ -50,12 +50,12 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
-	maxHealth = 150
-	health = 150
+	maxHealth = 170
+	health = 170
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(65))
+	if(prob(50))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage
 	else
