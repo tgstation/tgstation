@@ -469,6 +469,9 @@
 	if(affect_silicon)
 		return ..()
 
+/mob/living/silicon/check_ear_prot()
+	return 1
+
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0

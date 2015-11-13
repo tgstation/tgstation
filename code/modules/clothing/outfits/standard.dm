@@ -306,9 +306,9 @@
 /datum/outfit/plasmaman
 	name = "Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/space/hardsuit/plasmaman
-	suit = /obj/item/clothing/suit/space/eva/plasmaman
-	back = /obj/item/weapon/tank/internals/plasmaman/full
+	head = /obj/item/clothing/head/helmet/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman
+	belt = /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/death_commando

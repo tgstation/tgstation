@@ -46,14 +46,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	var/chat_channel = "#ss13" //name of our current NTRC channel
-	var/nick = "" //our NTRC nick
-	var/list/ntrclog = list() //NTRC message log
-	var/new_ntrc_msg = 0
-
 	var/image/photo = null //Scanned photo
-
-	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -200,15 +193,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "NONE"
 	ttone = "data"
 	fon = 0
-	mode = 5
-	noreturn = 1
 	detonate = 0
 
 /obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	..()
+	return
 
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
@@ -273,15 +264,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(active_uplink_check(user))
 		return
 
-	setup_chatrooms()
-
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
 	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
 
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
-	if (mode && !noreturn)
+	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
 	dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
@@ -307,7 +296,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a> ([new_ntrc_msg] unread)</li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -451,17 +439,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
 
-			if (5)
-				new_ntrc_msg = 0
-				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat Network V1.2</h4>"
-
-				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=NTRC Help'>Help</a><br><HR>"
-				if(chat_channel)
-					dat += ntrclog[chat_channel]
-
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -528,8 +505,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
-			if("5")//Chatroom
-				mode = 5
 
 
 //MAIN FUNCTIONS===================================
@@ -638,41 +613,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					U << browse(null, "window=pda")
 					return
-
-
-//CHATROOM FUNCTIONS====================================
-
-			if("Set Nick")
-				var/n = trim(stripped_input(U, "Please enter nickname", name, nick, 9))
-				if(n)
-					nick = n
-
-			if("Set Channel")
-				var/t = replacetext(trim(stripped_input(U, "Please enter channel", name, chat_channel, 15)), " ", "_")
-				if(t)
-					var/datum/chatroom/C = chatchannels[chat_channel]
-					var/ret = C.parse_msg(src, nick, "/join [t]")
-					if((ret in chatchannels) && (ret != chat_channel))
-						ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
-						chat_channel = ret
-
-			if("NTRC Message")
-				var/t = msg_input(U)
-				if(t)
-					var/datum/chatroom/C = chatchannels[chat_channel]
-					if(C)
-						var/ret = C.parse_msg(src, nick, t)
-						if(findtextEx(ret, "BAD_", 1, 5))
-							ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-						else if(ret in chatchannels)
-							chat_channel = ret
-
-			if("NTRC Help")
-				var/helptext = "<b>NTRC Commands:</b><br><br>"
-				helptext += "/join \[#\](channel name)<br>/register<br>/log (amount of lines)<br><br>"
-				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
-
-
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1144,17 +1084,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
-/mob/living/silicon/ai/verb/cmd_use_chatroom()
-	set category = "AI Commands"
-	set name = "PDA - Chatrooms"
-	if(usr.stat == 2)
-		return //won't work if dead
-	if(!isnull(aiPDA))
-		aiPDA.mode = 5
-		aiPDA.attack_self(src)
-	else
-		usr << "You do not have a PDA. You should make an issue report about this."
-
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
 	if(user.stat == 2)
 		return //won't work if dead
@@ -1193,25 +1122,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	emped += 1
 	spawn(200 * severity)
 		emped -= 1
-
-//ntrc handler proc
-/obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
-	var/msg = "<b>[html_encode(sender)]</b>| [html_encode(message)]<br>"
-	if(!channel)
-		for(var/C in ntrclog)
-			ntrclog[C] = msg + ntrclog[C]
-	else
-		ntrclog[channel] = msg + ntrclog[channel]
-	if (findtext(message, nick) && !silent)
-		audible_message("\icon[src] *[ttone]*", null, 3)
-	new_ntrc_msg++
-
-/obj/item/device/pda/proc/setup_chatrooms() //this can't be done on New() because the messaging server needs to be instanced first
-	if(!nick) //first time using the PDA
-		//join the default chat channel
-		nick = copytext(sanitize(owner), 1, 9)
-		var/datum/chatroom/C = chatchannels[chat_channel]
-		C.parse_msg(src, nick, "/join [chat_channel]")
 
 /proc/get_viewable_pdas()
 	. = list()
