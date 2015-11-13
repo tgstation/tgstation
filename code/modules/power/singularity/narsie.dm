@@ -134,7 +134,8 @@
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
-	grav_pull = 0
+	grav_pull = 6
+	consume_range = 3
 
 /obj/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
@@ -147,7 +148,6 @@
 //		defer_powernet_rebuild = 0
 	return
 
-
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	dir = SOUTH
@@ -157,3 +157,14 @@
 	move_self = 1
 	icon = initial(icon)
 
+
+/obj/singularity/narsie/wizard/Bump(atom/A)//you dare stand before a god?!
+	consume(A)
+	return
+
+/obj/singularity/narsie/wizard/Bumped(atom/A)
+	consume(A)
+	return
+
+/obj/singularity/narsie/wizard/consume(atom/A)
+	A.singularity_act()
