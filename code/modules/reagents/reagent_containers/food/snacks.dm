@@ -185,7 +185,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path) //If the food item isn't sliceable, we have no more business to do here, return
 		return 0
 
-	if(W.w_class <= 2 && W.is_sharp() < 0.8) //Make sure the item is valid to attempt slipping shit into it
+	if(W.w_class <= 2 && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
 			return 0
 		user << "<span class='notice'>You slip \the [W] inside [src].</span>"
