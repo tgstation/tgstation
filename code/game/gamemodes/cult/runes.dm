@@ -907,6 +907,8 @@ var/list/teleport_other_runes = list()
 	var/list/split_rune_type = text2list("[picked_rune.type]", "/")
 	var/imbue_type = split_rune_type[split_rune_type.len]
 	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
+	if(!talisman_type)
+		talisman_type = text2path("/obj/item/weapon/paper/talisman/melee/[imbue_type]") //For melee talismans
 	if(ispath(talisman_type))
 		var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
 		if(istype(picked_rune, /obj/effect/rune/teleport))
