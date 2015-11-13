@@ -359,7 +359,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
-	if(ishuman(usr) || ismonkey(usr))
+	if(ishuman(usr) || ismonkey(usr) || isdrone(usr))
 		if(usr.get_active_hand() == null)
 			usr.UnarmedAttack(src) // Let me know if this has any problems -Giacom | Actually let me know now.  -Sayu
 		/*
