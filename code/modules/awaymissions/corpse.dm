@@ -317,7 +317,7 @@
 
 /obj/effect/landmark/corpse/skeleton/alive
 	death = FALSE
-	roundstart = TRUE
+	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
@@ -330,7 +330,7 @@
 
 /obj/effect/landmark/corpse/zombie/alive
 	death = FALSE
-	roundstart = TRUE
+	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."

@@ -160,26 +160,7 @@
 	temperature = TCMB
 
 /turf/simulated/floor/plating/lava
-	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "lava"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
-
-/turf/simulated/floor/plating/lava/New()
-	..()
-	spawn(1)
-		update_icon()
-
-/turf/simulated/floor/plating/lava/update_icon()
-	if(!..())
-		return 0
-	if(!broken && !burnt)
-		if(smooth)
-			smooth_icon(src)
-	else
-		make_plating()
-		if(smooth)
-			smooth_icon_neighbors(src)
 
 /turf/simulated/floor/plating/lava/airless
 	oxygen = 0
@@ -194,6 +175,14 @@
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
+/turf/simulated/floor/plating/basalt
+	name = "basalt floor"
+	icon_state = "basalt1"
+
+/turf/simulated/floor/plating/basalt/New()
+	..()
+	icon_state = "basalt[rand(1,12)]"
+
 /turf/simulated/floor/plating/hole
 	name = "hole"
 	desc = "Yep, thats a hole."
@@ -201,6 +190,7 @@
 	icon_state = "hole"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
+	mouse_opacity = 0
 	var/tp_x = 0 //hole drop-point
 	var/tp_y = 0
 	var/tp_z = 0
