@@ -448,7 +448,7 @@
 	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/under/libertyshirt
-	name = "liberty dhirt"
+	name = "liberty shirt"
 	desc = "For any freedom loving patriot out there"
 	icon_state = "libertyshirt"
 	item_state = "libertyshirt"
