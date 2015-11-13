@@ -88,10 +88,10 @@
 	return
 
 /obj/item/weapon/paper/attack_robot(var/mob/user as mob)
-	if(istype(user,/mob/living/silicon/robot/mommi) && Adjacent(user))
-		attack_hand(user)
+	if(ismommi(user) && Adjacent(user))
+		return attack_hand(user)
 	else
-		attack_ai(user)
+		return attack_ai(user)
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
 	var/dist
