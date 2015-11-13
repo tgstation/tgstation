@@ -121,6 +121,7 @@ var/global/num_vending_terminals = 1
 	return
 
 /obj/machinery/vending/initialize()
+	..()
 	product_records = new/list()
 	build_inventory(products)
 	build_inventory(contraband, 1)
