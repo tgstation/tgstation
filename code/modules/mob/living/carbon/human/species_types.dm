@@ -463,7 +463,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
 /datum/species/plasmaman
-	name = "Plasbone"
+	name = "Plasmaman"
 	id = "plasmaman"
 	say_mod = "rattles"
 	sexes = 0
@@ -522,12 +522,3 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return 1
 
-/datum/species/plasmaman/spec_death(gibbed, mob/living/carbon/human/H)
-	if (gibbed)
-		return
-	else
-		spawn(3600)
-			if (H)
-				H.fire_stacks = 0
-				return
-			return
