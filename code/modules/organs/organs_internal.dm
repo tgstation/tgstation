@@ -13,6 +13,13 @@
 	if(organ_action_name)
 		action_button_name = null
 
+/obj/item/organ/internal/Insert(mob/living/carbon/M, special = 0)
+	if(..())
+		if(organ_action_name)
+			action_button_name = organ_action_name
+		return 1
+	return 0
+
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
 

@@ -45,6 +45,19 @@ mob/proc/exists(var/organname)
 					returnorg += RO
 	return returnorg
 
+/mob/proc/get_all_internal_organs()
+
+//Return all the datum/organ/internal in target
+/mob/living/carbon/get_all_internal_organs()
+	var/list/returnorg = list()
+
+	for(var/organname in organsystem.organlist)
+		var/datum/organ/org = getorgan(organname)
+		var/obj/item/OI = org.organitem
+		if(isinternalorgan(OI))
+			returnorg += org
+	return returnorg
+
 /mob/proc/has_organ_slot()
 	return 0
 

@@ -593,5 +593,9 @@
 
 /mob/living/carbon/handle_actions()
 	..()
-	for(var/obj/item/I in internal_organs)
-		give_action_button(I, 1)
+	if(organsystem)
+		for(var/datum/organ/org in get_internal_organs())
+			give_action_button(org.organitem)	//Recursion isn't needed in the new organsystem
+		var/datum/organ/cavity/CAV = getorgan("cavity")
+		if(CAV && CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
+			give_action_button(CAV.organitem)
