@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed vending machines not connecting to their vendor account and thus being useless.
