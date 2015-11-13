@@ -64,7 +64,7 @@ var/global/dmm_suite/preloader/_preloader = null
 		var/z_depth = length(zgrid)
 
 		//if exceeding the world max x or y, increase it
-		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0)))
+		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0)))/key_len
 		if(world.maxx<x_depth)
 			world.maxx=x_depth
 
