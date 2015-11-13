@@ -1,0 +1,5 @@
+author: as334
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has hired a brand new supply of ~~expendable labor~~ *LOYAL CREW MEMBERS* please welcome them with open arms."
+  - rscadd: "Plasmamen are now a playable race. They require plasma gas to survive and will ignite in oxygen environments."
