@@ -518,7 +518,5 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
 		return 0
-	if(rank == "Bartender")
-		return 0
 	return 1
 
