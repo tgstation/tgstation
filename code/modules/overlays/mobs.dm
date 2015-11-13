@@ -14,31 +14,31 @@
 /obj/Overlays/uniform_layer
 	layer = FLOAT_LAYER - 20
 
-/obj/Overlays/id_layer
+/obj/Overlays/shoes_layer
 	layer = FLOAT_LAYER - 19
 
-/obj/Overlays/shoes_layer
+/obj/Overlays/gloves_layer
 	layer = FLOAT_LAYER - 18
 
-/obj/Overlays/gloves_layer
+/obj/Overlays/ears_layer
 	layer = FLOAT_LAYER - 17
 
-/obj/Overlays/ears_layer
+/obj/Overlays/suit_layer
 	layer = FLOAT_LAYER - 16
 
-/obj/Overlays/suit_layer
+/obj/Overlays/glasses_layer
 	layer = FLOAT_LAYER - 15
 
-/obj/Overlays/glasses_layer
+/obj/Overlays/belt_layer
 	layer = FLOAT_LAYER - 14
 
-/obj/Overlays/belt_layer
+/obj/Overlays/suit_store_layer
 	layer = FLOAT_LAYER - 13
 
-/obj/Overlays/suit_store_layer
+/obj/Overlays/back_layer
 	layer = FLOAT_LAYER - 12
 
-/obj/Overlays/back_layer
+/obj/Overlays/id_layer
 	layer = FLOAT_LAYER - 11
 
 /obj/Overlays/hair_layer

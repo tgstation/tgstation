@@ -130,14 +130,14 @@
 
 	if(prob(seed ? seed.potency : 25))
 
-		if(!locked_atoms.len)
+		if(!locked_atoms || !locked_atoms.len)
 			var/mob/living/carbon/V = locate() in src.loc
 			if(V && V.stat != DEAD) // If mob exists and is not dead or captured.
 				lock_atom(V)
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
 
 		// FEED ME, SEYMOUR.
-		if(seed && locked_atoms.len)
+		if(seed && locked_atoms && locked_atoms.len)
 			var/mob/V = locked_atoms[1]
 			if(V.stat != DEAD) //Don't bother with a dead mob.
 
