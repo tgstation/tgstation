@@ -98,6 +98,18 @@
 	update_health_hud()
 
 
+/mob/camera/god/verb/freeturret()
+	set category = "Deity"
+	set name = "Free Turret (0)"
+	set desc = "Place a single turret, for 0 faith."
+
+	if(!ability_cost(0,1,1))
+		return
+	var/obj/structure/divine/defensepylon/DP = new(get_turf(src))
+	DP.assign_deity(src)
+	verbs -= /mob/camera/god/verb/freeturret
+
+
 
 /mob/camera/god/proc/update_followers()
 	alive_followers = 0

@@ -87,7 +87,6 @@ var/global/list/global_handofgod_structuretypes = list()
 	var/datum/mind/red_god = pick_n_take(red_god_possibilities)
 	if(red_god)
 		red_god.current.become_god("red")
-		ticker.mode.forge_deity_objectives(red_god)
 		remove_hog_follower(red_god,0)
 		add_god(red_god,"red")
 
@@ -101,9 +100,18 @@ var/global/list/global_handofgod_structuretypes = list()
 	var/datum/mind/blue_god = pick_n_take(blue_god_possibilities)
 	if(blue_god)
 		blue_god.current.become_god("blue")
-		ticker.mode.forge_deity_objectives(blue_god)
 		remove_hog_follower(blue_god,0)
 		add_god(blue_god,"blue")
+
+
+	//Forge objectives
+	//This is done here so that both gods exist
+	if(red_god)
+		ticker.mode.forge_deity_objectives(red_god)
+	if(blue_god)
+		ticker.mode.forge_deity_objectives(blue_god)
+
+
 	..()
 
 ///////////////////

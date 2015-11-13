@@ -268,7 +268,7 @@
 	if(!ability_cost(20,1,1))
 		return
 
-	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore)
+	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore/hog)
 	if(side == "red")
 		item_types["red banner"] = /obj/item/weapon/banner/red
 		item_types["red bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red
