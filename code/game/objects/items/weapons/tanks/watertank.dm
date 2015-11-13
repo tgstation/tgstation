@@ -25,7 +25,7 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(slot_back) != src && usr.get_item_by_slot("drone_storage_slot") != src)
+	if (usr.get_item_by_slot(slot_back) != src && usr.get_item_by_slot(slot_drone_storage) != src)
 		usr << "<span class='warning'>The watertank needs to be on your back to use!</span>"
 		return
 	if(usr.incapacitated())

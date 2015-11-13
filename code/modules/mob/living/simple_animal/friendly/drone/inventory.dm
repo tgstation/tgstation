@@ -64,7 +64,7 @@
 			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
 				return 0
 			return 1
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -75,7 +75,7 @@
 	switch(slot_id)
 		if(slot_head)
 			return head
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			return internal_storage
 	..()
 
@@ -99,7 +99,7 @@
 		if(slot_head)
 			head = I
 			update_inv_head()
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
