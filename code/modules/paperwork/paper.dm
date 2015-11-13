@@ -88,7 +88,7 @@
 	return
 
 /obj/item/weapon/paper/attack_robot(var/mob/user as mob)
-	if(isMoMMi(user) && Adjacent(user))
+	if(isMoMMI(user) && Adjacent(user))
 		return attack_hand(user)
 	else
 		return attack_ai(user)
