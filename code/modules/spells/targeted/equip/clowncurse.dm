@@ -39,4 +39,7 @@
 	if(istype(new_item, /obj/item/clothing/mask))
 		var/obj/item/clothing/mask/M = new_item
 		M.can_flip = 0
+	if(istype(new_item, /obj/item/clothing/shoes/clown_shoes))
+		var/obj/item/clothing/shoes/clown_shoes/M = new_item
+		M.wizard_garb = 1  // This means that wizards who are clown cursed can still cast robed spells.
 	return new_item
