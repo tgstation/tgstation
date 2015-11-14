@@ -43,7 +43,7 @@ REAGENT SCANNER
 		processing_objects.Remove(src)
 		return null
 
-	for(var/turf/T in range(ray_range, get_turf(src)))
+	for(var/turf/T in trange(ray_range, get_turf(src)))
 
 		if(!T.intact)
 			continue
