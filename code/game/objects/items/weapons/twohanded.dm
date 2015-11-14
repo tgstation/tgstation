@@ -336,6 +336,7 @@
 	if(get_fuel())
 		..(user)
 		hitsound = "chainsaw_attack"
+		sharp = 1
 		//bleedchance = 50
 		attack_verb = list("sawed", "cut", "hacked", "carved", "cleaved", "butchered", "felled", "timbered")
 		remove_fuel(1, user)
