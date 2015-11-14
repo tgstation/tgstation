@@ -658,9 +658,6 @@ var/list/slot_equipment_priority = list( \
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
 
-/mob/proc/can_use_hands()
-	return
-
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
