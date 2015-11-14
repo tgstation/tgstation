@@ -112,7 +112,7 @@
 						flick("[L.base_state]2", L)
 						for(var/mob/living/carbon/human/M in view(shock_range, L))
 							if(M == user)
-								return
+								continue
 							L.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
 							M.electrocute_act(shock_damage, "[L.name]", safety=1)
 							var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
@@ -188,7 +188,7 @@
 						bot.Emag(null)
 				for(var/mob/living/carbon/human/human in T.contents)
 					if(human == user)
-						return
+						continue
 					human << "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>"
 					new/obj/effect/overlay/temp/revenant(human.loc)
 					human.emp_act(1)
@@ -224,7 +224,7 @@
 			spawn(0)
 				for(var/mob/living/mob in T.contents)
 					if(mob == user)
-						return
+						continue
 					new/obj/effect/overlay/temp/revenant(mob.loc)
 					if(iscarbon(mob))
 						if(ishuman(mob))
@@ -243,7 +243,6 @@
 								blightfound = 1
 								if(blight.stage < 5)
 									blight.stage++
-									return
 							if(!blightfound)
 								H.AddDisease(new /datum/disease/revblight)
 								H << "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <span class='italics'>wrong</span>")].</span>"
