@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - imageadd: Added on-mob sprites for every kinds of IDs.
+  - imageadd: Added on-mob sprites for every kinds of headsets.
+  - tweak: Moved the ID layer above suits and backpacks, so it's less likely to be hidden when it shouldn't.
+  - bugfix: Fixed energy shield sprite not updating when the shield is activated.
+  - bugfix: Fixed spacevine and biomass events being borked and not properly triggering. Welcome back spacevines random events.

@@ -60,6 +60,7 @@
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
 	flags = FPRINT
 	siemens_coefficient = 1
 	force = 3.0
@@ -71,9 +72,36 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>"
-		return (BRUTELOSS)
+/obj/item/weapon/shield/energy/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>"
+	return (BRUTELOSS)
+
+/obj/item/weapon/shield/energy/IsShield()
+	if(active)
+		return 1
+	else
+		return 0
+
+/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
+	if ((M_CLUMSY in user.mutations) && prob(50))
+		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
+		user.take_organ_damage(5)
+	active = !active
+	if (active)
+		force = 10
+		w_class = 4
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		user << "<span class='notice'>[src] is now active.</span>"
+	else
+		force = 3
+		w_class = 1
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		user << "<span class='notice'>[src] can now be concealed.</span>"
+	icon_state = "eshield[active]"
+	item_state = "eshield[active]"
+	user.regenerate_icons()
+	add_fingerprint(user)
+	return
 
 
 /obj/item/weapon/cloaking_device

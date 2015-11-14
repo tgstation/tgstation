@@ -482,7 +482,6 @@ var/global/list/damage_icon_parts = list()
 	update_mutations(0)
 	update_mutantrace(0)
 	update_inv_w_uniform(0)
-	update_inv_wear_id(0)
 	update_inv_gloves(0)
 	update_inv_glasses(0)
 	update_inv_ears(0)
@@ -493,6 +492,7 @@ var/global/list/damage_icon_parts = list()
 	update_inv_belt(0)
 	update_inv_back(0)
 	update_inv_wear_suit(0)
+	update_inv_wear_id(0)
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
 	update_inv_handcuffed(0)
@@ -580,8 +580,9 @@ var/global/list/damage_icon_parts = list()
 		wear_id.screen_loc = ui_id	//TODO
 		if(w_uniform && w_uniform:displays_id)
 			var/obj/Overlays/O = obj_overlays[ID_LAYER]
-			O.icon = 'icons/mob/mob.dmi'
-			O.icon_state = "id"
+			var/obj/item/weapon/card/ID_worn = wear_id
+			O.icon = 'icons/mob/ids.dmi'
+			O.icon_state = ID_worn.icon_state
 			O.overlays.len = 0
 			if(wear_id.dynamic_overlay)
 				if(wear_id.dynamic_overlay["[ID_LAYER]"])

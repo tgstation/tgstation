@@ -207,31 +207,3 @@
 	return
 
 
-/*
- * Energy Shield
- */
-/obj/item/weapon/shield/energy/IsShield()
-	if(active)
-		return 1
-	else
-		return 0
-
-/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
-	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
-		user.take_organ_damage(5)
-	active = !active
-	if (active)
-		force = 10
-		icon_state = "eshield[active]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
-	else
-		force = 3
-		icon_state = "eshield[active]"
-		w_class = 1
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
-	add_fingerprint(user)
-	return

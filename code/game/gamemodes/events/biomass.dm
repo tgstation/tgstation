@@ -202,10 +202,11 @@
 		var/area/Hallway = locate(type)
 
 		for(var/turf/simulated/floor/Floor in Hallway.contents)
-			if(Floor.contents.len <= 0)
+			if(!is_blocked_turf(Floor))
 				Floors += Floor
 
 	if(Floors.len) // pick a floor to spawn at
 		var/turf/simulated/floor/Floor = pick(Floors)
 		new/obj/effect/biomass_controller(Floor) // spawn a controller at floor
-		message_admins("<span class='notice'>Event: Biomass spawned at [Floor.loc] ([Floor.x].[Floor.y].[Floor.z])</span>")
+		log_admin("Event: Biomass spawned at [Floor.loc] ([Floor.x],[Floor.y],[Floor.z]).")
+		message_admins("Event: Biomass spawned at [Floor.loc] [formatJumpTo(Floor)]")
