@@ -16,7 +16,7 @@
 	var/datum/organ/limb/L = null // L because "limb"
 
 /datum/surgery_step/close/cleanstump/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	L = target.getorgan(target_zone)
+	L = target.get_organ(target_zone)
 	user.visible_message("<span class='notice'>[user] begins to mend the wound in [target]'s [parse_zone(target_zone)].</span>")
 
 //ACTUAL SURGERIES
@@ -56,6 +56,6 @@
 	return 1
 
 /datum/surgery_step/close/cleanstump/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	L = target.getorgan(target_zone)
+	L = target.get_organ(target_zone)
 	L.status = ORGAN_REMOVED	//No more permadamage
 	return 1

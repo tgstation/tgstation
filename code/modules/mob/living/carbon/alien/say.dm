@@ -25,4 +25,4 @@
 	..(message, shown_name)
 
 /mob/living/carbon/hivecheck()
-	return getorgan(/obj/item/organ/internal/alien/hivenode)
+	return get_organ(/obj/item/organ/internal/alien/hivenode)

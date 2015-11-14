@@ -6,21 +6,18 @@ emp_act
 */
 
 
-/mob/living/carbon/human/getarmor(var/def_zone, var/type)
+/mob/living/carbon/human/getarmor(var/datum/organ/limb/limbdata, var/type)
 	var/armorval = 0
 	var/organnum = 0
 
-	if(def_zone)
-		if(islimb(def_zone))
-			return checkarmor(def_zone, type)
-		var/datum/organ/limb/limbdata = get_organ(ran_zone(def_zone))
-		var/obj/item/organ/limb/affecting = limbdata.organitem
+	if(limbdata)
 		if(limbdata.exists())
+			var/obj/item/organ/limb/affecting = limbdata.organitem
 			return checkarmor(affecting, type)
 			//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/organ/limb/organ in organsystem.organlist)
+	for(var/datum/organ/limb/organ in get_limbs())
 		if(organ.exists())
 			armorval += checkarmor(organ.organitem, type)
 			organnum++
@@ -125,8 +122,8 @@ emp_act
 /mob/living/carbon/human/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
-	var/datum/organ/limb/target_limb = getorgan(check_zone(user.zone_sel.selecting))
-	var/datum/organ/limb/affecting = getorgan(ran_zone(user.zone_sel.selecting))
+	var/datum/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
+	var/datum/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
 

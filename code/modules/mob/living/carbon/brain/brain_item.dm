@@ -100,10 +100,10 @@
 
 	var/B = null
 	if(M.organsystem)
-		var/datum/organ/C = M.getorgan("brain")
+		var/datum/organ/C = M.get_organ("brain")
 		B = C.organitem
 	else
-		B = M.getorgan(/obj/item/organ/internal/brain)
+		B = M.get_organ(/obj/item/organ/internal/brain)
 	if(!B)
 		user.drop_item()
 		for(var/mob/O in viewers(M, null))

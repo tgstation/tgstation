@@ -81,8 +81,8 @@
 	if(organsystem)
 		if(zone == "mouth")
 			zone = "head"
-		var/datum/organ/limb/L = getorgan(zone)
-		if(!L || !L.exists())
+		var/datum/organ/limb/L = get_organ(zone)
+		if(!L.exists())
 			return 0
 		else
 			var/datum/organ/O = I.handle_dismemberment(L)
@@ -101,3 +101,7 @@
 	if(try_dismember(P, def_zone))
 		P.nodamage = 1	//So it won't deal damage after dismemberment
 	return (..(P , def_zone))
+
+/mob/living/carbon/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+	if(!try_dismember(I, check_zone(user.zone_sel.selecting)))
+		..(I, user, def_zone) //If dismemberment fails, continue with the attack

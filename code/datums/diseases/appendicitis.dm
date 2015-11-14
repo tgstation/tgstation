@@ -23,7 +23,7 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 		if(2)
-			var/obj/item/organ/internal/appendix/A = affected_mob.getorgan(/obj/item/organ/internal/appendix)
+			var/obj/item/organ/internal/appendix/A = affected_mob.get_organ(/obj/item/organ/internal/appendix)
 			if(A)
 				A.inflamed = 1
 				A.update_icon()

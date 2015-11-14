@@ -146,7 +146,7 @@
 /datum/species/proc/handle_hair(var/mob/living/carbon/human/H)
 	H.remove_overlay(HAIR_LAYER)
 
-	var/datum/organ/head = H.getorgan("head")
+	var/datum/organ/head = H.get_organ("head")
 	if(!head.exists())
 		return //We're very well not going to render hair if this human has no head, are we?
 
@@ -175,7 +175,7 @@
 			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
-	var/datum/organ/brain = H.getorgan("brain")
+	var/datum/organ/brain = H.get_organ("brain")
 	if(!brain.exists())
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
@@ -219,10 +219,10 @@
 
 	handle_mutant_bodyparts(H)
 
-	var/datum/organ/limb/head = H.getorgan("head")
-	var/datum/organ/limb/chest = H.getorgan("chest")
-	var/datum/organ/limb/lfoot = H.getorgan("l_leg")
-	var/datum/organ/limb/rfoot = H.getorgan("r_leg")
+	var/datum/organ/limb/head = H.get_organ("head")
+	var/datum/organ/limb/chest = H.get_organ("chest")
+	var/datum/organ/limb/lfoot = H.get_organ("l_leg")
+	var/datum/organ/limb/rfoot = H.get_organ("r_leg")
 
 	// lipstick
 	if(head.exists() && H.lip_style && LIPS in specflags)
@@ -688,7 +688,7 @@
 		H.healthdoll.icon_state = "healthdoll_SHADE"
 		var/list/healthdollorgans = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 		for(var/HDO in healthdollorgans)
-			var/datum/organ/limb/O = H.getorgan(HDO)
+			var/datum/organ/limb/O = H.get_organ(HDO)
 			var/obj/item/organ/limb/L = O.organitem
 			var/icon_name = null
 			if(O.exists())
@@ -1122,13 +1122,15 @@
 
 	return
 
+	//The person who decided def_zone could either be a string or an organ item is an awful man
 /datum/species/proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
-	if(islimb(def_zone))
-		organ = def_zone
+	if(istype(def_zone, /datum/organ/limb/))
+		var/datum/organ/limb/limb = def_zone
+		organ = limb.organitem
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		var/datum/organ/O = H.get_organ(check_zone(def_zone))

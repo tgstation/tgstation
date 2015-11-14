@@ -19,7 +19,7 @@
 	. += get_penalty_for_limb("r_leg")
 
 mob/living/carbon/human/proc/get_penalty_for_limb(limb)
-	var/datum/organ/limb/E = organsystem.getorgan(limb)
+	var/datum/organ/limb/E = organsystem.get_organ(limb)
 	//Doubled values because we don't have separate arms/hands and legs/feet yet. Obviously need to be halved once that is the case.
 	if(!E || !E.exists())
 		. += 8

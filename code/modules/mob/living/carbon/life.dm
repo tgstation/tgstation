@@ -298,13 +298,13 @@
 			silent = 0
 			return 1
 		else if(organsystem)
-			var/datum/organ/B = getorgan("brain")
+			var/datum/organ/B = get_organ("brain")
 			if(!(B && B.exists()))
 				death()
 				eye_blind = max(eye_blind, 1)
 				silent = 0
 				return 1
-		else if(!getorgan(/obj/item/organ/internal/brain))
+		else if(!get_organ(/obj/item/organ/internal/brain))
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0
@@ -596,6 +596,6 @@
 	if(organsystem)
 		for(var/datum/organ/org in get_internal_organs())
 			give_action_button(org.organitem)	//Recursion isn't needed in the new organsystem
-		var/datum/organ/cavity/CAV = getorgan("cavity")
-		if(CAV && CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
+		var/datum/organ/cavity/CAV = get_organ("cavity")
+		if(CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
 			give_action_button(CAV.organitem)

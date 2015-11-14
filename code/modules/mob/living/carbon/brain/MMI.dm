@@ -105,7 +105,7 @@
 		M.cell.loc = M
 		src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 		M.mmi = src
-		
+
 		M.initialize_killswitch() // Confine roboticist-build MoMMI to their z-level/service the station.
 		return TRUE
 	for(var/t in mommi_assembly_parts)
@@ -200,7 +200,7 @@
 	brainmob.container = src
 
 	if(istype(H))
-		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.get_organ(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
 

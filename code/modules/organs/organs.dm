@@ -22,7 +22,7 @@
 	if(!iscarbon(M) || owner == M)
 		return 0
 
-	var/datum/organ/OR = M.getorgan(hardpoint)
+	var/datum/organ/OR = M.get_organ(hardpoint)
 	if(OR && !OR.exists())
 		world << "[OR] [OR.exists()]"
 		if(OR.set_organitem(src))

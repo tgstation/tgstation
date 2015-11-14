@@ -144,11 +144,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/datum/organ/H = getorgan("head")
+	var/datum/organ/H = get_organ("head")
 	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
 		return
 
-	if(H && H.exists() && isorgan(H.organitem))
+	if(H.exists() && isorgan(H.organitem))
 		var/obj/item/organ/limb/head/HE = H.organitem
 		if(HE.dna)
 			HE.dna.species.handle_hair(src)
@@ -314,8 +314,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
-	var/datum/organ/limb/LH = getorgan("l_arm")
-	var/datum/organ/limb/RH = getorgan("r_arm")
+	var/datum/organ/limb/LH = get_organ("l_arm")
+	var/datum/organ/limb/RH = get_organ("r_arm")
 	if(!(LH.exists() && RH.exists()))
 		return
 
@@ -374,8 +374,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
-	var/datum/organ/limb/LF = getorgan("l_leg")
-	var/datum/organ/limb/RF = getorgan("r_leg")
+	var/datum/organ/limb/LF = get_organ("l_leg")
+	var/datum/organ/limb/RF = get_organ("r_leg")
 	if(!(LF.exists() && RF.exists()))
 		return
 
@@ -651,7 +651,7 @@ var/global/list/limb_icon_cache = list()
 
 	for(var/limbname in organsystem.organlist)
 		. += "-[initial(limbname)]"
-		var/datum/organ/limb/limbdata = getorgan(limbname)
+		var/datum/organ/limb/limbdata = get_organ(limbname)
 		if(!limbdata.exists())
 			. += "-removed"
 		else

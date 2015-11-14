@@ -7,15 +7,7 @@
 	var/attack_verb_off = null // This is hacked in, but it's as sound as the code it replaces.
 	w_class = 2
 	var/w_class_on = 4
-
-	can_dismember = 1
-	can_behead = 1
-	dismember_threshold = 0
-	behead_threshold = 20
-	dismember_prob = 50
-	behead_prob = 25
-	dismember_nobleed = 1 //Limbs cut off by an esword are instantly cauterized.
-
+	dismember_stats = new/datum/dismember_stats/medium/nobleed
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \

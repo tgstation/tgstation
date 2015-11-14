@@ -127,7 +127,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+		if(A.get_organ(/obj/item/organ/internal/alien/plasmavessel))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
@@ -288,13 +288,13 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel) return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0

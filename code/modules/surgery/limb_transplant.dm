@@ -13,10 +13,10 @@
 	var/obj/item/organ/limb/LI = null	//This'll be the tool
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	L = target.getorgan(target_zone)
+	L = target.get_organ(target_zone)
 	if(istype(tool, /obj/item/organ/limb))
 		LI = tool
-	if(L && !L.exists() && (( LI && L.name == LI.hardpoint) || L.name == tool.icon_state))	//Borg limbs just happen to have the same strings as limb hardpoints
+	if(!L.exists() && (( LI && L.name == LI.hardpoint) || L.name == tool.icon_state))	//Borg limbs just happen to have the same strings as limb hardpoints
 		user.visible_message("[user] begins to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
@@ -30,14 +30,14 @@
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","head")
 
 /datum/surgery/limb_transplant/can_start(mob/user, mob/living/carbon/target, datum/organ/organdata)
-	if(organdata && !organdata.exists())
+	if(!organdata.exists())
 		return 1
 	else return 0
 
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(L && !L.exists())
+	if(!L.exists())
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			user.drop_item()

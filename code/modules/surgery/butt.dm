@@ -17,7 +17,7 @@
 	var/datum/organ/butt/A = null
 
 /datum/surgery_step/extract_butt/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	A = target.getorgan("butt")
+	A = target.get_organ("butt")
 	if(A && A.exists())
 		user.visible_message("<span class='notice'>[user] begins to extract [target]'s butt.</span>")
 	else

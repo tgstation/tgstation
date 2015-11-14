@@ -24,14 +24,14 @@
 	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 	/obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)*/
 
-	organsystem = new/datum/organsystem/humanoid/human
+	organsystem = new/datum/organsystem/humanoid/monkey/
 	organsystem.set_owner(src)
 
 	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
-	internal_organs += getorgan("appendix")
-	internal_organs += getorgan("heart")
-	internal_organs += getorgan("brain")
-	internal_organs += getorgan("butt")
+	internal_organs += get_organ("appendix")
+	internal_organs += get_organ("heart")
+	internal_organs += get_organ("brain")
+	internal_organs += get_organ("butt")
 
 	// for spawned humans; overwritten by other code
 	ready_dna(src)

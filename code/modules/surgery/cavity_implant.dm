@@ -17,7 +17,7 @@
 	var/datum/organ/cavity/CA = null
 
 /datum/surgery_step/handle_cavity/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	CA = target.getorgan("cavity")
+	CA = target.get_organ("cavity")
 	if(CA && CA.exists())
 		IC = CA.organitem
 	if(tool)

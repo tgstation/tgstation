@@ -27,6 +27,7 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 
+/*
 	//This whole part assumes monkeys don't have organsystems yet, and dumps robotic limbs on the floor
 	//while destroying the rest of the organsystem.
 	//Please change this once monkeys get their own organsystems. |- Ricotez
@@ -38,6 +39,7 @@
 				visible_message("<span class='notice'>The [O.name] falls to the floor.</span>", "<span class='notice'>Your [O.name] disconnects from your body and falls to the floor.</span>")
 				O.dismember(ORGAN_REMOVED)
 		qdel(organsystem) //We delete the organsystem for now. Once monkeys get their own organsystem, we will have to transfer and update the organs instead. |- Ricotez
+*/
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -65,11 +67,16 @@
 		O.name = newname
 		O.real_name = newname
 
+	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
+		O.organsystem = organsystem
+		organsystem.set_dna(dna)
+
 	//handle DNA and other attributes
 	if(dna)
 		dna.transfer_identity(O)
 		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
+			//O.dna.struc_enzymes = dna.struc_enzymes
+			hardset_dna(O, null, dna.struc_enzymes)
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -179,6 +186,9 @@
 	qdel(animation)
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+
+	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
+		O.organsystem = organsystem
 
 	if(dna)
 		dna.transfer_identity(O)

@@ -235,7 +235,7 @@
 	A.say("PLASMA FIST!")
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
-	var/datum/organ/internal/brain/B = D.getorgan("brain")
+	var/datum/organ/internal/brain/B = D.get_organ("brain")
 	if(B)
 		B.dismember(ORGAN_REMOVED)
 	D.gib()

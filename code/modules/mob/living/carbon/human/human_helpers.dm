@@ -4,16 +4,16 @@
 		return 1
 	if (handcuffed)
 		if(organsystem)
-			var/datum/organ/limb/LH = getorgan("l_arm")
-			var/datum/organ/limb/RH = getorgan("r_arm")
+			var/datum/organ/limb/LH = get_organ("l_arm")
+			var/datum/organ/limb/RH = get_organ("r_arm")
 			return LH.exists() && RH.exists() //Handcuffs only work if you have 2 hands.
 		else
 			return 1
 	return 0
 
 /mob/living/carbon/human/canBeHandcuffed()
-	var/datum/organ/limb/LH = getorgan("l_arm")
-	var/datum/organ/limb/RH = getorgan("r_arm")
+	var/datum/organ/limb/LH = get_organ("l_arm")
+	var/datum/organ/limb/RH = get_organ("r_arm")
 	return LH.exists() || RH.exists() //You can wear cuffs as long as you have at least 1 hand. (Won't do much good unless you have 2.
 
 //gets assignment from ID or ID inside PDA or PDA itself
@@ -62,7 +62,7 @@
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
-	var/datum/organ/limb/H = getorgan("head")
+	var/datum/organ/limb/H = get_organ("head")
 	if(!H.exists())
 		return if_no_face
 	var/obj/item/organ/limb/head/O = H.organitem

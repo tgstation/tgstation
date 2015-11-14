@@ -166,16 +166,6 @@
 
 ////////////////////////////////////////////
 
-
-/mob/living/carbon/human/proc/get_organ(var/zone)
-	if(!zone)	zone = "chest"
-	if(organsystem)
-		var/datum/organ/O = organsystem.getorgan("[zone]")
-		return O
-	else
-		return null
-
-
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
 	if(dna)	// if you have a species, it will run the apply_damage code there instead
 		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)

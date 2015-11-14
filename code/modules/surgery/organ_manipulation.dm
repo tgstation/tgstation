@@ -71,13 +71,13 @@
 					var/obj/item/organ/internal/OI = O.organitem
 					OI.on_find(user)
 					organs -= O
-					organs[O.name] = O
+					organs[OI.name] = O
 
 			var/organname = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
-			OR = target.getorgan(organname)
+			OR = organs[organname]
 			if(OR && OR.exists() && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
-				user.visible_message("[user] begins to extract [OR] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [OR] from [target]'s [parse_zone(target_zone)]...</span>")
+				user.visible_message("[user] begins to extract [organname] from [target]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [organname] from [target]'s [parse_zone(target_zone)]...</span>")
 			else
 				return -1
 

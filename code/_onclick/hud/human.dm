@@ -96,7 +96,7 @@
 		inv_box.icon_state = "hand_r_active"
 	//If player has no right hand, we draw a nice X on it.
 	if(mycarbon && mycarbon.organsystem)
-		var/datum/organ/limb/limbdata = mycarbon.getorgan("r_arm")
+		var/datum/organ/limb/limbdata = mycarbon.get_organ("r_arm")
 		if(!limbdata.exists())
 			inv_box.overlays += image("icons/mob/screen_gen.dmi", "x")
 	inv_box.screen_loc = ui_rhand
@@ -113,7 +113,7 @@
 		inv_box.icon_state = "hand_l_active"
 	//If player has no left hand, we draw a nice X on it.
 	if(mycarbon && mycarbon.organsystem)
-		var/datum/organ/limb/limbdata = mycarbon.getorgan("l_arm")
+		var/datum/organ/limb/limbdata = mycarbon.get_organ("l_arm")
 		if(!limbdata.exists())
 			inv_box.overlays += image("icons/mob/screen_gen.dmi", "x")
 	inv_box.screen_loc = ui_lhand
@@ -213,8 +213,8 @@
 	inv_box.icon_state = "gloves"
 	//Only if both hands are missing do we draw the X.
 	if(mycarbon && mycarbon.organsystem)
-		var/datum/organ/limb/limbdata_left = mycarbon.getorgan("l_arm")
-		var/datum/organ/limb/limbdata_right = mycarbon.getorgan("r_arm")
+		var/datum/organ/limb/limbdata_left = mycarbon.get_organ("l_arm")
+		var/datum/organ/limb/limbdata_right = mycarbon.get_organ("r_arm")
 		if(!limbdata_left.exists() && !limbdata_right.exists())
 			inv_box.overlays += image("icons/mob/screen_gen.dmi", "x")
 	inv_box.screen_loc = ui_gloves
@@ -255,8 +255,8 @@
 	inv_box.icon_state = "shoes"
 	//Only if both feet are missing do we draw the X.
 	if(mycarbon && mycarbon.organsystem)
-		var/datum/organ/limb/limbdata_left = mycarbon.getorgan("l_leg")
-		var/datum/organ/limb/limbdata_right = mycarbon.getorgan("r_leg")
+		var/datum/organ/limb/limbdata_left = mycarbon.get_organ("l_leg")
+		var/datum/organ/limb/limbdata_right = mycarbon.get_organ("r_leg")
 		if(!limbdata_left.exists() && !limbdata_right.exists())
 			inv_box.overlays += image("icons/mob/screen_gen.dmi", "x")
 	inv_box.screen_loc = ui_shoes

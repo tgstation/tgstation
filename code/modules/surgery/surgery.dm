@@ -16,7 +16,7 @@
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target, datum/organ/organdata = null)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
-	if(organdata && organdata.exists())
+	if(organdata.exists())
 		return 1
 	else return 0
 

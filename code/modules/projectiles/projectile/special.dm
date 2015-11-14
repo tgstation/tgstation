@@ -233,12 +233,7 @@
 	damage = 5
 	range = 1
 
-	can_dismember = 1
-	can_behead = 1
-	dismember_threshold = 0
-	behead_threshold = 20
-	dismember_prob = 50
-	behead_prob = 25
+	dismember_stats = new/datum/dismember_stats/low/
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
@@ -250,6 +245,7 @@
 		name = "full strength plasma blast"
 		damage *= 3
 		range += 3
+		dismember_stats = new/datum/dismember_stats/medium/
 	..()
 
 /obj/item/projectile/plasma/on_hit(var/atom/target)

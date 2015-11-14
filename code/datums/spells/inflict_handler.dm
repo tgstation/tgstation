@@ -33,11 +33,11 @@
 					C_target = target
 
 				if(C_target.organsystem)
-					var/datum/organ/internal/brain/B = C_target.getorgan("brain")
+					var/datum/organ/internal/brain/B = C_target.get_organ("brain")
 					if(B && B.exists())
 						B.dismember(ORGAN_REMOVED)
 				else if(ismonkey(target))
-					var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
+					var/obj/item/organ/internal/brain/B = C_target.get_organ(/obj/item/organ/internal/brain)
 					if(B)
 						B.loc = get_turf(C_target)
 						B.transfer_identity(C_target)

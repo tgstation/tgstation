@@ -288,8 +288,8 @@
 		return 0
 	if(handcuffed)
 		if(organsystem)
-			var/datum/organ/limb/LH = getorgan("l_arm")
-			var/datum/organ/limb/RH = getorgan("r_arm")
+			var/datum/organ/limb/LH = get_organ("l_arm")
+			var/datum/organ/limb/RH = get_organ("r_arm")
 			return (LH.exists() && RH.exists()) //Handcuffs only work if you have 2 hands. return !LH.exists() || !RH.exists()
 		return 0
 	return 1
@@ -686,7 +686,7 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+		var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
 	add_abilities_to_panel()

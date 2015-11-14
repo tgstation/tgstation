@@ -1,10 +1,17 @@
-/mob/proc/getorgan()
+/mob/proc/get_organ()
 	return
 
-/mob/living/carbon/getorgan(organ)
+/mob/living/carbon/get_organ(var/organ)
 	if(organsystem) //If the mob has an organ system, you should give the name of the organ, i.e. "brain"
-		return organsystem.getorgan(organ)
-	return (locate(organ) in internal_organs) //If the mob does not have an organ system, we fall back on the old system where you give the path, i.e. /obj/item/organ/brain
+		return organsystem.get_organ(organ)
+	else	//Really wanna deprecate this
+		return (locate(organ) in internal_organs) //If the mob does not have an organ system, we fall back on the old system where you give the path, i.e. /obj/item/organ/brain
+
+/*
+/mob/living/carbon/human/get_organ(var/organ)
+	if(!organ)	organ = "chest"
+	return ..(organ)
+*/
 
 /mob/proc/add_organ()
 	return
@@ -17,7 +24,7 @@
 
 mob/living/carbon/exists(var/organname)
 	if(organsystem)
-		var/datum/organ/O = getorgan(organname)
+		var/datum/organ/O = get_organ(organname)
 		return O.exists()
 	else
 		return 1
@@ -32,7 +39,7 @@ mob/proc/exists(var/organname)
 /mob/living/carbon/get_internal_organs(zone)
 	var/list/returnorg = list()
 
-	var/datum/organ/PO = getorgan(zone)
+	var/datum/organ/PO = get_organ(zone)
 	if(PO && PO.exists() && isorgan(PO.organitem))
 		if(istype(PO, /datum/organ/internal))	//If we've already found an internal organ we can skip the next step
 			returnorg += PO
@@ -52,7 +59,7 @@ mob/proc/exists(var/organname)
 	var/list/returnorg = list()
 
 	for(var/organname in organsystem.organlist)
-		var/datum/organ/org = getorgan(organname)
+		var/datum/organ/org = get_organ(organname)
 		var/obj/item/OI = org.organitem
 		if(isinternalorgan(OI))
 			returnorg += org
@@ -63,7 +70,7 @@ mob/proc/exists(var/organname)
 
 //Returns whether the zone has a slot for the organ
 /mob/living/carbon/has_organ_slot(zone, organname)
-	var/datum/organ/PO = getorgan(zone)
+	var/datum/organ/PO = get_organ(zone)
 	if(PO && PO.exists())
 		if(isorgan(PO.organitem))
 			var/obj/item/organ/OI = PO.organitem
@@ -87,7 +94,7 @@ mob/proc/exists(var/organname)
 /mob/living/carbon/get_limbs()
 	var/list/returnlimbs = list()
 	for(var/limbname in list_limbs())
-		var/datum/organ/limb/LI = getorgan(limbname)
+		var/datum/organ/limb/LI = get_organ(limbname)
 		if(LI)
 			returnlimbs += LI
 	return returnlimbs

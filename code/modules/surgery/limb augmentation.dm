@@ -34,11 +34,6 @@
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("chest","head")
 
-/datum/surgery/augmentation/can_start(mob/user, mob/living/carbon/target, datum/organ/organdata)
-	if(organdata && organdata.exists())
-		return 1
-	else return 0
-
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/replace_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

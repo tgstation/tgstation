@@ -16,7 +16,7 @@
 	New(var/mob/O)
 		owner = O
 
-/datum/organsystem/proc/getorgan(var/name)
+/datum/organsystem/proc/get_organ(var/name)
 	return organlist[name]
 
 /**
@@ -64,7 +64,7 @@
 		qdel(O)
 	..()
 
-/datum/organsystem/humanoid //All humanoids have the following basic structure.
+/datum/organsystem/humanoid //All humanoids have the following basic structure. They also have brains but monkey/human and alium brains are different
 
 	New(var/mob/O)
 		..(O)
@@ -77,26 +77,24 @@
 		organlist["l_leg"]	= new/datum/organ/limb/l_leg(coreitem, new/obj/item/organ/limb/l_leg())
 		organlist["r_leg"]	= new/datum/organ/limb/r_leg(coreitem, new/obj/item/organ/limb/r_leg())
 
-		var/datum/organ/limb/head/H = getorgan("head")
-		var/obj/item/organ/limb/head/head = H.organitem
-		organlist["eyes"]	= new/datum/organ/internal/eyes(head, new/obj/item/organ/internal/eyes())
-		organlist["brain"]	= new/datum/organ/internal/brain(head, new/obj/item/organ/internal/brain())
-
 		organlist["cavity"]	= new/datum/organ/cavity(coreitem, null)
 
-/datum/organsystem/humanoid/human //Only humans have appendices, hearts, implants etc.
+/datum/organsystem/humanoid/monkey	//And also human. Kinda want to make monkey organs have defects to prevent easy transplants
 
 	New(var/mob/O)
 		..(O)
+
 		organlist["heart"]					= new/datum/organ/internal/heart(coreitem, new/obj/item/organ/internal/heart())
 		organlist["cyberimp_chest"] 		= new/datum/organ/internal/cyberimp/chest(coreitem, null)
 
+		var/datum/organ/limb/head/H = get_organ("head")
+		var/obj/item/organ/limb/head/head = H.organitem
+		organlist["eyes"]	= new/datum/organ/internal/eyes(head, new/obj/item/organ/internal/eyes())
+		organlist["brain"]	= new/datum/organ/internal/brain(head, new/obj/item/organ/internal/brain())
+		organlist["cyberimp_brain"]		= new/datum/organ/internal/cyberimp/brain(head, null)
+
 		organlist["groin"]					= new/datum/organ/abstract/groin(coreitem, new/obj/item/organ/abstract/groin())
-		var/datum/organ/abstract/groin/G 	= getorgan("groin")
+		var/datum/organ/abstract/groin/G = organlist["groin"]
 		var/obj/item/organ/abstract/groin 	= G.organitem
 		organlist["butt"]					= new/datum/organ/butt(groin, new/obj/item/organ/butt())
 		organlist["appendix"]				= new/datum/organ/internal/appendix(groin, new/obj/item/organ/internal/appendix())
-
-		var/datum/organ/limb/head/H = getorgan("head")
-		var/obj/item/organ/limb/head/head = H.organitem
-		organlist["cyberimp_brain"]		= new/datum/organ/internal/cyberimp/brain(head, null)

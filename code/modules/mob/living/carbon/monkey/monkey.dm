@@ -16,6 +16,9 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	organsystem = new/datum/organsystem/humanoid/monkey/
+	organsystem.set_owner(src)
+
 	internal_organs += new /obj/item/organ/internal/appendix
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain

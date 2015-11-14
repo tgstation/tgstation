@@ -1,14 +1,14 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
 	if(istype(M))
-		var/mob/living/carbon/human/H
+		var/mob/living/carbon/C
 		var/obj/item/organ/limb/affecting
 		var/selected_zone = user.zone_sel.selecting
 		var/datum/organ/organdata
 
-		if(istype(M, /mob/living/carbon/human))
-			H = M
-			var/datum/organ/limb/limbdata = H.get_organ(check_zone(selected_zone))
-			organdata = H.get_organ(selected_zone)	//This can be eyes, mouth or groin too
+		if(istype(M, /mob/living/carbon/))
+			C = M
+			var/datum/organ/limb/limbdata = C.get_organ(check_zone(selected_zone))
+			organdata = C.get_organ(selected_zone)	//This can be eyes, mouth or groin too
 			affecting = limbdata.organitem
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
