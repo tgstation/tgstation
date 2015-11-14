@@ -43,7 +43,7 @@
 
 		score["explosions"]++ //For the scoreboard
 
-		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flash_range)
+		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
 //		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 //		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
 
