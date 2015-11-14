@@ -5015,7 +5015,7 @@
 "bSw" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall/r_wall,/area/toxins/mixing)
 "bSx" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/turf/simulated/floor/plasteel{icon_state = "warnwhite"; dir = 1},/area/toxins/mixing)
 "bSy" = (/obj/machinery/door/poddoor/shutters/preopen{id = "research"},/obj/structure/cable/pink{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/firedoor,/turf/simulated/floor/plasteel{icon_state = "whitebluefull"},/area/toxins/lab)
-"bSz" = (/obj/machinery/light{dir = 1},/obj/machinery/alarm{frequency = 1439; locked = 0; pixel_y = 23},/turf/simulated/floor/plasteel{icon_state = "dark"; nitrogen = 100; oxygen = 0; temperature = 80},/area/toxins/server)
+"bSz" = (/obj/machinery/light{dir = 1},/obj/machinery/alarm/server{pixel_y = 22},/turf/simulated/floor/plasteel{icon_state = "dark"; nitrogen = 100; oxygen = 0; temperature = 80},/area/toxins/server)
 "bSA" = (/obj/machinery/r_n_d/server/core,/turf/simulated/floor/bluegrid{nitrogen = 100; oxygen = 0; temperature = 80},/area/toxins/server)
 "bSB" = (/obj/machinery/r_n_d/server/robotics,/turf/simulated/floor/bluegrid{nitrogen = 100; oxygen = 0; temperature = 80},/area/toxins/server)
 "bSC" = (/obj/machinery/computer/aifixer,/obj/machinery/ai_status_display{pixel_y = 32},/obj/machinery/button/door{id = "Biohazard"; name = "Biohazard Shutter Control"; pixel_x = -24; req_access_txt = "47"},/obj/machinery/button{id = "research"; name = "Research and Development Shutters"; pixel_x = -37},/turf/simulated/floor/plasteel{dir = 9; icon_state = "whiteblue"},/area/crew_quarters/hor)
