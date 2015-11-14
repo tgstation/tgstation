@@ -11,6 +11,7 @@
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
+	cosmetic = 1
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
@@ -63,6 +64,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	cosmetic = 1
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -475,22 +477,28 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	dangerous_existence = 1 //So so much
 	need_nutrition = 0 //Hard to eat through a helmet
 	roundstart = 1
+	burnmod = 2
+	heatmod = 2
+	speedmod = 1
 	var/skin = 0
 
 /datum/species/plasmaman/skin
 	name = "Skinbone"
 	skin = 1
+	roundstart = 0
 
 /datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
 	var/base = ..()
-	if(base == id)
-		base = "[base][skin]"
+	if(base == id && !skin)
+		base = "[base]"
+	else
+		base = "skinbone_s"
 	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/plasmaman))
+	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)

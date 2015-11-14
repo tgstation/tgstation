@@ -306,7 +306,7 @@
 /datum/outfit/plasmaman
 	name = "Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/plasmaman
+	head = /obj/item/clothing/head/helmet/space/plasmaman
 	uniform = /obj/item/clothing/under/plasmaman
 	belt = /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
