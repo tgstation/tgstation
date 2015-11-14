@@ -25,7 +25,7 @@
 		affected_mob.adjustStaminaLoss(10)
 		new/obj/effect/overlay/temp/revenant(affected_mob.loc)
 	if(stagedamage < stage)
-		stagedamage ++
+		stagedamage++
 		affected_mob.adjustToxLoss(stage*3) //should, normally, do about 45 toxin damage.
 		new/obj/effect/overlay/temp/revenant(affected_mob.loc)
 	..() //So we don't increase a stage before applying the stage damage.
@@ -36,19 +36,11 @@
 			if(prob(5))
 				affected_mob.emote("pale")
 		if(3)
-			switch(rand(1, 100))
-				if(1 to 5)
-					affected_mob.emote("pale")
-				if(6 to 10)
-					affected_mob.emote("shiver")
+			if(prob(10))
+				affected_mob.emote(pick("pale","shiver"))
 		if(4)
-			switch(rand(1, 100))
-				if(1 to 5)
-					affected_mob.emote("pale")
-				if(6 to 10)
-					affected_mob.emote("shiver")
-				if(11 to 15)
-					affected_mob.emote("cries")
+			if(prob(15))
+				affected_mob.emote(pick("pale","shiver","cries"))
 		if(5)
 			affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
 			affected_mob.adjustStaminaLoss(45)
