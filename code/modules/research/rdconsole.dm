@@ -161,7 +161,7 @@ proc/CallMaterialName(ID)
 			return
 		D.loc = src
 		user << "<span class='notice'>You add the disk to the machine!</span>"
-	else
+	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
 		..()
 	src.updateUsrDialog()
 	return
@@ -407,8 +407,7 @@ proc/CallMaterialName(ID)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
 								new_item.reliability = R
-								new_item.materials[MAT_METAL] /= coeff
-								new_item.materials[MAT_GLASS] /= coeff
+								new_item.materials = efficient_mats.Copy()
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
