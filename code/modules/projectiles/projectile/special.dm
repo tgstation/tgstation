@@ -7,11 +7,10 @@
 	layer = 13
 	flag = "energy"
 
-
-/obj/item/projectile/ion/on_hit(var/atom/target, var/blocked = 0)
-	empulse(target, 1, 1)
-	return 1
-
+/obj/item/projectile/ion/Bump(atom/A as mob|obj|turf|area)
+	if(!bumped && ((A != firer) || reflected))
+		empulse(get_turf(A), 1, 1)
+	..()
 
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
