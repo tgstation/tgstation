@@ -357,7 +357,7 @@
 		//	if(!zone.CheckStatus())
 		//		zone.SetStatus(ZONE_ACTIVE)
 
-		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
+		var/turf/simulated/W = new N(src)
 		if(env)
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
@@ -380,7 +380,7 @@
 		//	if(!zone.CheckStatus())
 		//		zone.SetStatus(ZONE_ACTIVE)
 
-		var/turf/W = new N( locate(src.x, src.y, src.z) )
+		var/turf/W = new N(src)
 
 		if(tell_universe)
 			universe.OnTurfChange(W)
