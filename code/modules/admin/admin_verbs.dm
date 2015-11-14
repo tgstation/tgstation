@@ -180,6 +180,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb,
 	/client/proc/set_teleport_pref,
 	/client/proc/check_convertables,
+	/client/proc/check_spiral,
 	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,

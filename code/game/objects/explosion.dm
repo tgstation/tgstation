@@ -30,7 +30,7 @@
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/explosion() called tick#: [world.time]")
 	src = null	//so we don't abort once src is deleted
 
-	spawn(0)
+	spawn()
 		if(config.use_recursive_explosions)
 			var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
 			explosion_rec(epicenter, power)
@@ -107,7 +107,7 @@
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in trange(max_range, epicenter))
+		for(var/turf/T in spiral_block(epicenter,max_range,1))
 			var/dist = cheap_pythag(T.x - x0, T.y - y0)
 
 			if(explosion_newmethod)	//Realistic explosions that take obstacles into account
