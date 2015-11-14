@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - tweak: Trying to convert a cult-banned player will now force them asleep for 10 minute and give the cultist who tried to convert them an explicit message about it. This doesn't convert loyalty implanted players.
