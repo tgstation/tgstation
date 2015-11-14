@@ -1,0 +1,9 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Anomalies move more often, are resistant to explosions and will only be destroyed if they are in devastation range. You shouldn't bomb them, though."
+  - tweak: "Hyper-energetic flux anomaly will shock mobs that run into it, or if it runs into them."
+  - tweak: "Bluespace anomaly will occasionally teleport mobs away from it in a small radius."
+  - tweak: "Vortex anomalies will sometimes throw objects at nearby living mobs."
+  - tweak: "Pyroclastic anomalies will produce bigger, hotter fires, and if not disabled, it will release an additional burst of flame. In addition, the resulting slime will be rabid and thus attack much more aggressively."
+  - bugfix: "Gravitational anomalies will now properly throw objects at nearby living things."
