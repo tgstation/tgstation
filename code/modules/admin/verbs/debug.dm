@@ -1860,6 +1860,6 @@ client/proc/check_convertables()
 	var/max_range = input("Set the max range") as num
 	var/inward = alert("Which way?","Spiral Block", "Inward","Outward")
 	if(inward == "Inward")
-		spiral_block(epicenter,max_range,1)
+		spiral_block(epicenter,max_range,1,1)
 	else
-		spiral_block(epicenter,max_range,0)
+		spiral_block(epicenter,max_range,0,1)

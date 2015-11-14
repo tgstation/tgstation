@@ -1408,7 +1408,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 		result = "-[result]"
 	return result
 
-/proc/spiral_block(var/turf/epicenter,var/max_range,var/inward=0)//alternative to block. instead of being listed from bottom to top, turfs are listed spiraling inward/outward.
+/proc/spiral_block(var/turf/epicenter,var/max_range,var/inward=0,var/draw_red=0)//alternative to block. instead of being listed from bottom to top, turfs are listed spiraling inward/outward.
 	var/list/spiraled_turfs = list()
 
 	//epicenter coordinates
@@ -1440,7 +1440,8 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
 				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
 				spiraled_turfs += T
-	//			T.color = "red"
+				if(draw_red)
+					T.color = "red"
 			if(sstep && ((sstep%segment_length) == 0))
 				switch(movement_dir)//clockwise spiral
 					if(NORTH)
@@ -1466,13 +1467,15 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 					pointer_y--
 				if(WEST)
 					pointer_x--
-	//		sleep(1)
+			if(draw_red)
+				sleep(1)
 	else
 		for(var/sstep=1;sstep<=max_steps;sstep++)
 			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
 				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
 				spiraled_turfs += T
-	//			T.color = "red"
+				if(draw_red)
+					T.color = "red"
 
 			switch(movement_dir)
 				if(NORTH)
@@ -1499,10 +1502,12 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 				else
 					segment = 0
 					segment_length++
-	//		sleep(1)
+			if(draw_red)
+				sleep(1)
 
-	//sleep(30)
-	//for(var/turf/T in spiraled_turfs)
-	//	T.color = null
+	if(draw_red)
+		sleep(30)
+		for(var/turf/T in spiraled_turfs)
+			T.color = null
 
 	return spiraled_turfs
