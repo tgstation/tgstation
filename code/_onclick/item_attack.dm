@@ -74,6 +74,13 @@
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
+
+	if(!def_zone)
+		def_zone = user.zone_sel.selecting
+		if(!def_zone)
+			def_zone = ran_zone(def_zone)
+			def_zone = check_zone(def_zone)
+
 	M.attacked_by(src, user, def_zone)
 	add_fingerprint(user)
 	return 1

@@ -6,11 +6,12 @@ emp_act
 */
 
 
-/mob/living/carbon/human/getarmor(var/datum/organ/limb/limbdata, var/type)
+/mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0
 	var/organnum = 0
 
-	if(limbdata)
+	if(def_zone)
+		var/datum/organ/limb/limbdata = get_organ(check_zone(def_zone))
 		if(limbdata.exists())
 			var/obj/item/organ/limb/affecting = limbdata.organitem
 			return checkarmor(affecting, type)
@@ -24,7 +25,7 @@ emp_act
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(var/obj/item/organ/limb/def_zone, var/type)
+/mob/living/carbon/human/proc/checkarmor(var/obj/item/organ/limb/LI, var/type)
 	if(!type)	return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -32,7 +33,7 @@ emp_act
 		if(!bp)	continue
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
+			if(C.body_parts_covered & LI.body_part)
 				protection += C.armor[type]
 	return protection
 
@@ -122,16 +123,18 @@ emp_act
 /mob/living/carbon/human/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
-	var/datum/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
-	var/datum/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
-	var/hit_area = parse_zone(affecting.name)
-	var/target_area = parse_zone(target_limb.name)
+	def_zone = check_zone(def_zone)
+	var/target_area = parse_zone(def_zone)
+	var/datum/organ/limb/target_limb = get_organ(def_zone)
+	def_zone = ran_zone(def_zone)
+	var/datum/organ/limb/affecting = get_organ(def_zone)
+	var/hit_area = parse_zone(def_zone)
 
-	if(try_dismember(I, check_zone(user.zone_sel.selecting)))
+	if(try_dismember(I, def_zone))
 		return	//If dismemberment succeeds stop here
 
 	if(dna)	// allows your species to affect the attacked_by code
-		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
+		return dna.species.spec_attacked_by(I,user, def_zone, affecting, hit_area, src.a_intent, target_limb, target_area,src)
 
 	else
 		if(user != src)
@@ -148,7 +151,7 @@ emp_act
 		else
 			return 0
 
-		var/armor = run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>", I.armour_penetration)
+		var/armor = run_armor_check(def_zone, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>", I.armour_penetration)
 		armor = min(90,armor) //cap damage reduction at 90%
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -179,7 +182,7 @@ emp_act
 								H.add_blood(H)
 								H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
-			switch(hit_area)
+			switch(def_zone)
 				if("head")	//Harder to score a stun but if you do it lasts a bit longer
 					if(stat == CONSCIOUS)
 						if(prob(I.force))

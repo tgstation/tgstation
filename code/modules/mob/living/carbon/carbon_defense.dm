@@ -98,10 +98,12 @@
 		return 0 //If the mob has no organsystem, dismemberment is not possible.
 
 /mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
-	if(try_dismember(P, def_zone))
-		P.nodamage = 1	//So it won't deal damage after dismemberment
+	if(ishuman(src))
+		if(try_dismember(P, def_zone))
+			P.nodamage = 1	//So it won't deal damage after dismemberment
 	return (..(P , def_zone))
 
 /mob/living/carbon/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
-	if(!try_dismember(I, check_zone(user.zone_sel.selecting)))
-		..(I, user, def_zone) //If dismemberment fails, continue with the attack
+	if(ishuman(src))
+		if(!try_dismember(I, def_zone))
+			..(I, user, def_zone) //If dismemberment fails, continue with the attack

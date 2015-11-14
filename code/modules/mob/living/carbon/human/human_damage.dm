@@ -179,12 +179,12 @@
 			if(blocked <= 0)	return 0
 
 			var/obj/item/organ/limb/organ = null
-			if(islimb(def_zone))
-				organ = def_zone
-			else
-				if(!def_zone)	def_zone = ran_zone(def_zone)
-				organ = get_organ(check_zone(def_zone))
-			if(!organ)	return 0
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			def_zone = check_zone(def_zone)
+			organ = get_organ(def_zone)
+			if(!organ)
+				return 0
 
 			damage = (damage * blocked)
 

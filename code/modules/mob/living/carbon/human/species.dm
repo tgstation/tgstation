@@ -1006,6 +1006,7 @@
 								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
 
+//Why does this proc even need target_limb and target_area?
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/datum/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
@@ -1027,11 +1028,11 @@
 	else
 		return 0
 
-	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
+	var/armor = H.run_armor_check(def_zone, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor = min(90,armor) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	apply_damage(I.force, I.damtype, affecting, armor, H)
+	apply_damage(I.force, I.damtype, def_zone, armor, H)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -1057,7 +1058,7 @@
 						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 
-		switch(hit_area)
+		switch(def_zone)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(H.stat == CONSCIOUS && armor < 50)
 					if(prob(I.force))
@@ -1122,19 +1123,21 @@
 
 	return
 
-	//The person who decided def_zone could either be a string or an organ item is an awful man
 /datum/species/proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
+
+/*
 	if(istype(def_zone, /datum/organ/limb/))
 		var/datum/organ/limb/limb = def_zone
 		organ = limb.organitem
-	else
-		if(!def_zone)	def_zone = ran_zone(def_zone)
-		var/datum/organ/O = H.get_organ(check_zone(def_zone))
-		organ = O.organitem
+*/
+
+	if(!def_zone)	def_zone = ran_zone(def_zone)
+	var/datum/organ/O = H.get_organ(check_zone(def_zone))
+	organ = O.organitem
 	if(!organ)	return 0
 
 	damage = (damage * blocked)

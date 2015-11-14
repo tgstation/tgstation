@@ -367,7 +367,7 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter:zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/obj/item/organ/limb/def_zone = ran_zone(t)
+	var/def_zone = ran_zone(t)
 	return def_zone
 
 //damage/heal the mob ears and adjust the deaf amount
