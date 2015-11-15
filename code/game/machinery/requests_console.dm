@@ -433,13 +433,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			var/obj/item/weapon/card/id/ID = O.GetID()
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
-		if(screen == 10)
+		if (screen == 10)
 			var/obj/item/weapon/card/id/ID = O.GetID()
-			if (hackState || ID.access.Find(access_RC_announce))
-				announceAuth = 1
+
+			if (!isnull(ID) && ID.access.Find(access_RC_announce) || hackState)
+				announceAuth = TRUE
 			else
-				announceAuth = 0
+				announceAuth = FALSE
 				user << "<span class='warning'>You are not authorized to send announcements.</span>"
+
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
