@@ -341,11 +341,15 @@ proc/move_mining_shuttle()
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-		var/list/L = list()
-		for(var/obj/item/beacon/B in beacons)
+		var/list/L = new()
+
+		for (var/obj/item/beacon/B in beacons)
 			var/turf/T = get_turf(B)
-			if(T.z == STATION_Z)
-				L += B
+
+			if (T)
+				if (T.z == STATION_Z)
+					L.Add(B)
+
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
 			return
