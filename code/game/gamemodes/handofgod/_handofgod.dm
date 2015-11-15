@@ -49,16 +49,12 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs) //Remove heads and junk
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/F in 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/follower = pick_n_take(antag_candidates)
 		unassigned_followers += follower
+		follower.restricted_roles = restricted_jobs
 		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")
 
 	while(unassigned_followers.len > (required_enemies / 2))
