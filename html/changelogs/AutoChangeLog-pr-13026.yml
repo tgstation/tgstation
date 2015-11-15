@@ -1,0 +1,13 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Defile no longer directly affects mobs. Instead, it rips up floors and opens most machines and lockers."
+  - rscadd: "Blight added. Blight infects humans with a virus that does a set amount of damage over time and is relatively easily cured. Blight also badly affects nonhuman mobs and other living things."
+  - experiment: "While the cure to Blight is simple, it's not in this changelog. Use a medical analyzer to find the cure."
+  - tweak: "Tweaked costs and stuntimes of abilities;"
+  - tweak: "Defile now costs 30 essence and stuns for about a second."
+  - tweak: "Overload Lights now costs 40 essence."
+  - tweak: "Malfunction now costs 45 essence."
+  - rscadd: "Blight costs 50 essence and 200 essence to unlock."
+  - imageadd: "Transmit has a new, spookier icon."
+  - bugfix: "Revenant abilities can be given to non-revenants, and will work as normal spells instead of runtiming."
