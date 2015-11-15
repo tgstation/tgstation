@@ -346,8 +346,8 @@ proc/move_mining_shuttle()
 		for (var/obj/item/beacon/B in beacons)
 			var/turf/T = get_turf(B)
 
-			if (T)
-				if (T.z == STATION_Z)
+			if (!isnull(T))
+				if (T.z == map.zMainStation)
 					L.Add(B)
 
 		if(!L.len)
