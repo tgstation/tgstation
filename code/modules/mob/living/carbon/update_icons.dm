@@ -49,13 +49,13 @@
 		r_hand.screen_loc = ui_rhand
 		if(client && hud_used)
 			client.screen += r_hand
+
 		var/t_state = r_hand.item_state
 		if(!t_state)
 			t_state = r_hand.icon_state
 
-		var/image/I = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
-		I = center_image(I, r_hand.inhand_x_dimension, r_hand.inhand_y_dimension)
-		overlays_standing[R_HAND_LAYER] = I
+		var/image/standing = r_hand.build_worn_icon(state = t_state, default_layer = R_HAND_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		overlays_standing[R_HAND_LAYER] = standing
 
 	apply_overlay(R_HAND_LAYER)
 
@@ -68,13 +68,13 @@
 		l_hand.screen_loc = ui_lhand
 		if(client && hud_used)
 			client.screen += l_hand
+
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
 
-		var/image/I = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
-		I = center_image(I, l_hand.inhand_x_dimension, l_hand.inhand_y_dimension)
-		overlays_standing[L_HAND_LAYER] = I
+		var/image/standing = l_hand.build_worn_icon(state = t_state, default_layer = L_HAND_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		overlays_standing[L_HAND_LAYER] = standing
 
 	apply_overlay(L_HAND_LAYER)
 
@@ -105,40 +105,16 @@
 	if(istype(wear_mask, /obj/item/clothing/mask))
 
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			var/layer2use
-			if(wear_mask.alternate_worn_layer)
-				layer2use = wear_mask.alternate_worn_layer
-			if(!layer2use)
-				layer2use = FACEMASK_LAYER
 
-			var/image/standing
-			if(wear_mask.alternate_worn_icon)
-				standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-			if(!standing)
-				standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-
+			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 			overlays_standing[FACEMASK_LAYER]	= standing
-
-			if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
-				standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 		return wear_mask
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
 
-		var/layer2use
-		if(back.alternate_worn_layer)
-			layer2use = back.alternate_worn_layer
-		if(!layer2use)
-			layer2use = BACK_LAYER
-
-		var/image/standing
-		if(back.alternate_worn_icon)
-			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-layer2use)
-
+		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		overlays_standing[BACK_LAYER] = standing
 		return back
 
@@ -147,32 +123,18 @@
 	remove_overlay(HEAD_LAYER)
 	if(head)
 
-		var/layer2use
-		if(head.alternate_worn_layer)
-			layer2use = head.alternate_worn_layer
-		if(!layer2use)
-			layer2use = HEAD_LAYER
-
-		var/image/standing
-		if(head.alternate_worn_icon)
-			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-layer2use)
-		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
-		standing.alpha = head.alpha
-
+		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		overlays_standing[HEAD_LAYER] = standing
-
-		if(head.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 		return head
 
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
+	clear_alert("handcuffed")
 	if(handcuffed)
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
+		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		if(hud_used)	//hud handcuff icons
 			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
 			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
@@ -186,6 +148,12 @@
 			R.overlays = null
 			L.overlays = null
 
+
+
+//Overlays for the worn overlay so you can overlay while you overlay
+//eg: ammo counters, primed grenade flashing, etc.
+/obj/item/proc/worn_overlays(var/isinhands = FALSE)
+	. = list()
 
 
 

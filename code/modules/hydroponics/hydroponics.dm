@@ -53,6 +53,12 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
+/obj/machinery/hydroponics/Destroy()
+	if(myseed)
+		qdel(myseed)
+		myseed = null
+	return ..()
+
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
 		return
@@ -897,7 +903,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/plant/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

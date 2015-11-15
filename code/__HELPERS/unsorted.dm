@@ -290,6 +290,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					newname = pick(mime_names)
 				if("ai")
 					newname = pick(ai_names)
+				if("deity")
+					newname = pick(clown_names|ai_names|mime_names) //pick any old name
 				else
 					return
 
@@ -366,13 +368,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else		. = pick(ais)
 	return .
 
-//Returns a list of all mobs with their name
-/proc/getmobs()
-
+//Returns a list of all items of interest with their name
+/proc/getpois(mobs_only=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
-	var/list/creatures = list()
+	var/list/pois = list()
 	var/list/namecounts = list()
+	
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -388,10 +390,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-		creatures[name] = M
+		pois[name] = M
 
-	return creatures
+	if(!mobs_only)
+		for(var/atom/A in poi_list)
+			if(!A || !A.loc)
+				continue
+			var/name = A.name
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			pois[name] = A
 
+	return pois
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
@@ -683,23 +697,23 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holding = user.get_active_hand()
 	var/timefraction = round(time/numticks)
 	var/image/progbar
+	var/continue_looping = 1
 	for(var/i = 1 to numticks)
 		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
-			user.client.images |= progbar
+			assign_progress_bar(user, progbar)
 		sleep(timefraction)
 		if(!user || !target)
-			if(user && user.client)
-				user.client.images -= progbar
+			continue_looping = 0
+			
+		if (continue_looping && !uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
+			continue_looping = 0
+		
+		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
+		if(!continue_looping)
 			return 0
-		if (!uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
-			if(user && user.client)
-				user.client.images -= progbar
-			return 0
-		if(user && user.client)
-			user.client.images -= progbar
-	if(user && user.client)
-		user.client.images -= progbar
+			
+	cancel_progress_bar(user, progbar)
 	return 1
 
 /proc/make_progress_bar(current_number, goal_number, atom/target)
@@ -709,6 +723,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
 		progbar.pixel_y = 32
 		return progbar
+		
+/proc/cancel_progress_bar(mob/user, image/progbar)
+	if(user && user.client && progbar)
+		user.client.images -= progbar
+	
+/proc/assign_progress_bar(mob/user, image/progbar)
+	if(user && user.client && progbar)
+		user.client.images |= progbar
 
 /proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
@@ -722,46 +744,43 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		Tloc = target.loc
 
 	var/delayfraction = round(delay/numticks)
+	
 	var/atom/Uloc = user.loc
+	
 	var/holding = user.get_active_hand()
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
+		
 	var/image/progbar
+	
+	var/continue_looping = 1 
 	for (var/i = 1 to numticks)
 		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
-			if(progbar)
-				user.client.images |= progbar
+			assign_progress_bar(user, progbar)
+		
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-			return 0
+			continue_looping = 0
 
-		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-			return 0 // Target no longer exists or has moved
+		if(continue_looping && Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
+			continue_looping = 0
 
-		if(needhand)
+		if(continue_looping && needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
-					if(user && user.client && progbar)
-						user.client.images -= progbar
-					return 0
-			if(user.get_active_hand() != holding)
-				if(user && user.client && progbar)
-					user.client.images -= progbar
-				return 0
-			if(user && user.client && progbar)
-				user.client.images -= progbar
-		if(user && user.client && progbar)
-			user.client.images -= progbar
-	if(user && user.client && progbar)
-		user.client.images -= progbar
+					continue_looping = 0
+			if(continue_looping && user.get_active_hand() != holding)
+				continue_looping = 0
+		
+		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
+		if(!continue_looping)
+			return 0
+	
+	cancel_progress_bar(user,progbar)
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
@@ -1374,6 +1393,7 @@ B --><-- A
 		animate(src, transform = shift, 2)
 		sleep(0.6) //the effect breaks above 0.6 delay
 	animate(src, transform = initial_transform, 2)
+	orbiting = null
 
 
 /atom/movable/proc/stop_orbit()
@@ -1416,3 +1436,61 @@ B --><-- A
 	I.pixel_y = y_offset
 
 	return I
+
+//similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
+/proc/ultra_range(dist=0, center=usr, orange=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/turf/t_center = get_turf(center)
+	if(!t_center)
+		return list()
+
+	var/list/L = list()
+	var/turf/T
+	var/y
+	var/x
+	var/c_dist = 1
+
+	if(!orange)
+		L += t_center
+		L += t_center.contents
+
+	while( c_dist <= dist )
+		y = t_center.y + c_dist
+		x = t_center.x - c_dist + 1
+		for(x in x to t_center.x+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y + c_dist - 1
+		x = t_center.x + c_dist
+		for(y in t_center.y-c_dist to y)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y - c_dist
+		x = t_center.x + c_dist - 1
+		for(x in t_center.x-c_dist to x)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+
+		y = t_center.y - c_dist + 1
+		x = t_center.x - c_dist
+		for(y in y to t_center.y+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+				L += T.contents
+		c_dist++
+
+	return L

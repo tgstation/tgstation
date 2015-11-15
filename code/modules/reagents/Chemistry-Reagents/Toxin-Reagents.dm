@@ -33,7 +33,7 @@
 		return
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
+	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -377,9 +377,10 @@
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
 	if(prob(5))
-		M.reagents.add_reagent("histamine",pick(5,15))
-		M.reagents.remove_reagent("formaldehyde",1)
-	..()
+		holder.add_reagent("histamine", pick(5,15))
+		holder.remove_reagent("formaldehyde", 1.2)
+	else
+		..()
 
 /datum/reagent/toxin/venom
 	name = "Venom"
@@ -394,9 +395,10 @@
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM)
 	if(prob(15))
-		M.reagents.add_reagent("histamine",pick(5,10))
-		M.reagents.remove_reagent("venom",1)
-	..()
+		M.reagents.add_reagent("histamine", pick(5,10))
+		M.reagents.remove_reagent("venom", 1.1)
+	else
+		..()
 
 /datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
@@ -452,7 +454,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method != INGEST)
+	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("itching_powder", reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
@@ -467,7 +469,8 @@
 		M.adjustBruteLoss(0.2*REM)
 	if(prob(3))
 		M.reagents.add_reagent("histamine",rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1)
+		M.reagents.remove_reagent("itching_powder",1.2)
+		return
 	..()
 
 /datum/reagent/toxin/initropidril
@@ -622,7 +625,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.take_organ_damage(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		return
+	if(method == INJECT)
+		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, toxpwr, reac_volume)
 

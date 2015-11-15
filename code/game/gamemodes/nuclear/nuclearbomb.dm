@@ -50,6 +50,17 @@ var/bomb_set
 	anchored = 1 //stops it being moved
 	layer = 4
 
+/obj/machinery/nuclearbomb/syndicate
+
+/obj/machinery/nuclearbomb/syndicate/New()
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+	if(existing)
+		qdel(src)
+		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
+		return 0
+	tag = "syndienuke"
+	return ..()
+
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
 		if(!user.drop_item())
@@ -400,6 +411,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
+	poi_list |= src
 	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
@@ -410,6 +422,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
+		poi_list.Remove(src)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
 		var/turf/diskturf = get_turf(src)

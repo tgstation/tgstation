@@ -77,8 +77,8 @@
 	..()
 	total_positions = 5
 	spawn_positions = 5
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
-	minimal_access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
+	minimal_access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
 
 //Cargo
 
@@ -91,6 +91,9 @@
 	..()
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+
+/datum/outfit/job/mining/New()
+	box = /obj/item/weapon/storage/box/birdeng
 
 //Service
 

@@ -23,15 +23,17 @@
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(current_cycle >= boozepwr)
-		if (!M.slurring) M.slurring = 1
-		M.slurring += 4
-		M.Dizzy(5)
-	if(current_cycle >= boozepwr*2.5 && prob(33))
-		if (!M.confused) M.confused = 1
-		M.confused += 3
-	if(current_cycle >= boozepwr*10 && prob(33))
-		M.adjustToxLoss(2)
+	if(current_cycle >= boozepwr*0.5)
+		var/drunk_value = sqrt(volume*1000/boozepwr)
+		if(volume >= boozepwr*0.2)
+			if(M.slurring < drunk_value)
+				M.slurring += 4
+			M.Dizzy(drunk_value)
+		if(volume >= boozepwr*0.8)
+			if(M.confused < drunk_value)
+				M.confused += 3
+		if(volume >= boozepwr*3.8)
+			M.adjustToxLoss(1)
 	..()
 	return
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -163,7 +165,7 @@
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
 	id = "tequila"
-	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty, hombre?"
+	description = "A strong and mildly flavoured, Mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 35
 
@@ -177,9 +179,16 @@
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
 	id = "wine"
-	description = "An premium alchoholic beverage made from distilled grape juice."
+	description = "An premium alcoholic beverage made from distilled grape juice."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
+
+/datum/reagent/consumable/ethanol/grappa
+	name = "Grappa"
+	id = "grappa"
+	description = "A fine Italian brandy, for when regular wine just isn't alcoholic enough for you."
+	color = "#F8EBF1"
+	boozepwr = 35
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -493,7 +502,7 @@
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
 	id = "mead"
-	description = "A Vikings drink, though a cheap one."
+	description = "A Viking drink, though a cheap one."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 45

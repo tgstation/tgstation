@@ -6,7 +6,7 @@
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
@@ -26,7 +26,7 @@
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction)
+		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)

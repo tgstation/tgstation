@@ -67,7 +67,7 @@
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			PoolOrNew(/obj/effect/hotspot, M.loc)
@@ -96,7 +96,7 @@
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
+	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
@@ -152,7 +152,7 @@
 
 /datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST)
+		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane

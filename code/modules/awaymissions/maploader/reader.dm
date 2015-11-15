@@ -16,10 +16,15 @@ var/global/dmm_suite/preloader/_preloader = null
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, z_offset as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num)
 	if(!z_offset)//what z_level we are creating the map on
 		z_offset = world.maxz+1
 
+	if(!x_offset)
+		x_offset = 0
+
+	if(!y_offset)
+		y_offset = 0
 	var/quote = ascii2text(34)
 	var/tfile = file2text(dmm_file)//the map file we're creating
 	var/tfile_len = length(tfile)
@@ -47,8 +52,8 @@ var/global/dmm_suite/preloader/_preloader = null
 
 	//position of the currently processed square
 	var/zcrd=-1
-	var/ycrd=0
-	var/xcrd=0
+	var/ycrd=y_offset
+	var/xcrd=x_offset
 
 	for(var/zpos=findtext(tfile,"\n(1,1,",lpos,0);zpos!=0;zpos=findtext(tfile,"\n(1,1,",zpos+1,0))	//in case there's several maps to load
 
@@ -60,8 +65,9 @@ var/global/dmm_suite/preloader/_preloader = null
 
 		//if exceeding the world max x or y, increase it
 		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0)))
-		if(world.maxx<x_depth)
-			world.maxx=x_depth
+		var/x_tilecount = x_depth/key_len
+		if(world.maxx<x_tilecount)
+			world.maxx=x_tilecount
 
 		var/y_depth = z_depth / (x_depth+1)//x_depth + 1 because we're counting the '\n' characters in z_depth
 		if(world.maxy<y_depth)
@@ -78,7 +84,7 @@ var/global/dmm_suite/preloader/_preloader = null
 			for(var/mpos=1;mpos<=x_depth;mpos+=key_len)
 				xcrd++
 				var/model_key = copytext(grid_line,mpos,mpos+key_len)
-				parse_grid(grid_models[model_key],xcrd,ycrd,zcrd+z_offset)
+				parse_grid(grid_models[model_key],xcrd+x_offset,ycrd+y_offset,zcrd+z_offset)
 
 			//reached end of current map
 			if(gpos+x_depth+1>z_depth)

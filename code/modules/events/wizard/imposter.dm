@@ -10,11 +10,11 @@
 	for(var/datum/mind/M in ticker.mode.wizards)
 		if(!ishuman(M.current))	continue
 		var/mob/living/carbon/human/W = M.current
-		var/list/candidates = get_candidates(BE_WIZARD)
+		var/list/candidates = get_candidates(ROLE_WIZARD)
 		if(!candidates)	return //Sad Trombone
 		var/client/C = pick(candidates)
 
-		PoolOrNew(/obj/effect/effect/smoke, W.loc)
+		PoolOrNew(/obj/effect/particle_effect/smoke, W.loc)
 
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		W.dna.transfer_identity(I, transfer_SE=1)

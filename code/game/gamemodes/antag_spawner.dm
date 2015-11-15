@@ -53,7 +53,7 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(BE_WIZARD)
+			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
 				src.used = 1
 				var/client/C = pick(candidates)
@@ -64,7 +64,7 @@
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
-	PoolOrNew(/obj/effect/effect/smoke, T)
+	PoolOrNew(/obj/effect/particle_effect/smoke, T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
@@ -138,7 +138,7 @@
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
@@ -150,7 +150,7 @@
 	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
 		used = 0
 		return
-	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
 	var/mob/living/silicon/robot/R
@@ -174,7 +174,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(BE_ALIEN)
+	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return

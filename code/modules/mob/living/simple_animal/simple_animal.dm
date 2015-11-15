@@ -65,6 +65,8 @@
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
+	var/mob/living/simple_animal/hostile/spawner/nest
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -368,11 +370,11 @@
 	..()
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
+	. = ..()
 
-	tally = speed
+	. = speed
 
-	return tally+config.animal_delay
+	. += config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -429,6 +431,7 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
 	update_canmove()
@@ -496,3 +499,11 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
+
+
+
+/mob/living/simple_animal/Destroy()
+	if(nest)
+		nest.spawned_mobs -= src
+	nest = null
+	return ..()

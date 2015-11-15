@@ -92,12 +92,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	if(ismob(M))
-		var/mob/O = M
-		if(!O.lastarea)
-			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
-
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
 		if(loopsanity == 0)
@@ -265,8 +259,9 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying) //did we actually fall?
-			C.adjustBruteLoss(2)
+		if(C.lying != oldlying && lube) //did we actually fall?
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()

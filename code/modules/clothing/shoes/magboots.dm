@@ -53,4 +53,4 @@
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
-	origin_tech = "magnets=2,syndicate=3"
+	origin_tech = "magnets=2;syndicate=3"

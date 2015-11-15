@@ -31,6 +31,7 @@
 		uneq_all()
 		stat = UNCONSCIOUS
 		update_headlamp(1)
+	diag_hud_set_borgcell()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -44,6 +45,7 @@
 
 		if(health <= -maxHealth) //die only once
 			death()
+			diag_hud_set_status()
 			return
 
 		if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
@@ -62,6 +64,8 @@
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
 			update_headlamp()
+		diag_hud_set_health()
+		diag_hud_set_status()
 
 		return 1
 
@@ -153,15 +157,15 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge","lowcell",1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 1)
 			if(0.25 to 0.5)
-				throw_alert("charge","lowcell",2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 2)
 			if(0.01 to 0.25)
-				throw_alert("charge","lowcell",3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 3)
 			else
-				throw_alert("charge","emptycell")
+				throw_alert("charge", /obj/screen/alert/emptycell)
 	else
-		throw_alert("charge","nocell")
+		throw_alert("charge", /obj/screen/alert/nocell)
 
 /mob/living/silicon/robot/proc/update_items()
 	if (client)

@@ -5,11 +5,17 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+//Not accessible from usual debug controller verb
+/datum/protected_configuration
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
+
 /datum/configuration
 	var/server_name = null				// server name (the name of the game window)
 	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
+	var/round_end_countdown = 25		// Post round murder death kill countdown
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -37,7 +43,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
-	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -149,6 +154,9 @@
 	var/silent_ai = 0
 	var/silent_borg = 0
 
+	var/allowwebclient = 0
+	var/webclientmembersonly = 0
+
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
@@ -172,6 +180,8 @@
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -226,6 +236,8 @@
 					config.use_age_restriction_for_jobs = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
+				if("round_end_countdown")
+					config.round_end_countdown = text2num(value)
 				if("log_ooc")
 					config.log_ooc = 1
 				if("log_access")
@@ -318,8 +330,6 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
-				if("tickcomp")
-					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
@@ -355,6 +365,10 @@
 						world.log = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
+				if("allow_webclient")
+					config.allowwebclient = 1
+				if("webclient_only_byond_members")
+					config.webclientmembersonly = 1
 				if("announce_admin_logout")
 					config.announce_admin_logout = 1
 				if("announce_admin_login")
@@ -363,6 +377,10 @@
 					config.maprotation = 1
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
+				if("autoadmin")
+					protected_config.autoadmin = 1
+					if(value)
+						protected_config.autoadmin_rank = ckeyEx(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

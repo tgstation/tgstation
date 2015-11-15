@@ -200,7 +200,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 			else if (ticker.mode)
 				alert("The game mode is [ticker.mode.name]")
@@ -303,7 +303,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
@@ -553,7 +553,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")
-			usr.client.only_me()
+			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))

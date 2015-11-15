@@ -21,7 +21,7 @@
 		return
 	key_of_revenant = null
 	if(!key_of_revenant)
-		var/list/candidates = get_candidates(BE_REVENANT)
+		var/list/candidates = get_candidates(ROLE_REVENANT)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0
