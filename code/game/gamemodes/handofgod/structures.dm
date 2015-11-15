@@ -503,8 +503,7 @@
 		A.color = side
 
 /obj/machinery/porta_turret/defensepylon_internal_turret/assess_perp(mob/living/carbon/human/perp)
-=
-	if(H.handcuffed) //dishonourable to kill somebody who might be converted.
+	if(perp.handcuffed) //dishonourable to kill somebody who might be converted.
 		return 0
 	var/badtarget = 0
 	switch(side)
