@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed xenomorph sprites not updating after they drop/throw an item.
