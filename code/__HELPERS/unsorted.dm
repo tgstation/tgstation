@@ -1436,7 +1436,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 		segment_length = max_range*2+1
 		segment = 1
 
-		for(var/sstep=max_steps-1;sstep>=0;sstep--)
+		for(var/sstep in max_steps-1 to 0)
 			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
 				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
 				spiraled_turfs += T
@@ -1470,7 +1470,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 			if(draw_red)
 				sleep(1)
 	else
-		for(var/sstep=1;sstep<=max_steps;sstep++)
+		for(var/sstep in 1 to max_steps)
 			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
 				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
 				spiraled_turfs += T
