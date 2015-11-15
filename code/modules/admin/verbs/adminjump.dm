@@ -141,8 +141,8 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas
-	if(A)
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
+	if(A && istype(A))
 		admin_forcemove(M, pick(get_area_turfs(A)))
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
