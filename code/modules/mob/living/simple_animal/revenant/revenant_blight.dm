@@ -50,7 +50,7 @@
 				affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
 				affected_mob.dna.species.update_color(affected_mob,"#1d2953")
 				spawn(100)
-					if(affected_mob.dna && affected_mob.dna.species)
+					if(affected_mob && affected_mob.dna && affected_mob.dna.species)
 						affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
 						affected_mob.dna.species.handle_hair(affected_mob)
 						affected_mob.dna.species.update_color(affected_mob)

@@ -234,7 +234,7 @@
 								H.dna.species.handle_hair(H,"#1d2953")
 								H.dna.species.update_color(H,"#1d2953")
 								spawn(20)
-									if(H.dna && H.dna.species)
+									if(H && H.dna && H.dna.species)
 										H.dna.species.handle_mutant_bodyparts(H)
 										H.dna.species.handle_hair(H)
 										H.dna.species.update_color(H)
