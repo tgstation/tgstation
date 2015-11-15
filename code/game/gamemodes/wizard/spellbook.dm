@@ -351,11 +351,12 @@
 	category = "Assistance"
 
 /datum/spellbook_entry/item/super_matter
-	name = "Super Matter Sword"
+	name = "Supermatter Sword"
 	desc = "Buying this is an incredibly bad idea. The radiation will kill you within minutes. Please consider other options."
 	item_path = /obj/item/weapon/melee/supermatter_sword
 	log_name = "SX"
 	category = "Weapons"
+	cost = 6
 
 /datum/spellbook_entry/item/veil_render
 	name = "Veil Render"
@@ -363,6 +364,7 @@
 	item_path = /obj/item/weapon/veilrender
 	log_name = "VR"
 	category = "Weapons"
+	limit = 2
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
