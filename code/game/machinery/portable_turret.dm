@@ -993,7 +993,7 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
-/obj/machinery/turretid/New()
+/obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
 	if(!control_area)
 		var/area/CA = get_area(src)
@@ -1006,6 +1006,11 @@
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
+	if(built)
+		dir = ndir
+		locked = 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
@@ -1122,3 +1127,11 @@
 			icon_state = "control_stun"
 	else
 		icon_state = "control_standby"
+
+/obj/item/wallframe/turret_control
+	name = "turret control frame"
+	desc = "Used for building turret control panels"
+	icon = 'icons/obj/apc_repair.dmi'
+	icon_state = "apc_frame"
+	result_path = /obj/machinery/turretid
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
