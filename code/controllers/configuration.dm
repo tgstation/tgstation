@@ -525,11 +525,10 @@
 					if(!cleared_default_races)
 						roundstart_species = list()
 						cleared_default_races = 1
-					var/race_name = lowertext(value)
-					for(var/speciestype in typesof(/datum/species) - /datum/species)
-						var/datum/species/S = new speciestype()
-						if(S.id == race_name)
-							roundstart_species[S.name] = S.type
+					var/race_id = lowertext(value)
+					for(var/species_id in species_list)
+						if(species_id == race_id)
+							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")
