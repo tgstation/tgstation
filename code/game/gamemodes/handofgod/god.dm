@@ -19,6 +19,7 @@
 	var/followers_required = 0 //Same as above
 	var/alive_followers = 0
 	var/list/structures = list()
+	var/list/conduits = list()
 	var/prophets_sacrificed_in_name = 0
 
 
@@ -30,6 +31,28 @@
 	//Force nexuses after 2 minutes in hand of god mode
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
 		addtimer(src,"forceplacenexus",1200)
+
+
+//Rebuilds the list based on the gamemode's lists
+//As they are the most accurate each tick
+/mob/camera/god/proc/get_my_followers()
+	switch(side)
+		if("red")
+			. = ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets
+		if("blue")
+			. = ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets
+		else
+			. = list()
+
+
+/mob/camera/god/Destroy()
+	var/list/followers = get_my_followers()
+	for(var/datum/mind/F in followers)
+		if(F.current)
+			F.current << "<span class='danger'>Your god is DEAD!</span>"
+
+	return ..()
+
 
 
 /mob/camera/god/proc/forceplacenexus()
@@ -97,17 +120,31 @@
 	//verbs += /mob/camera/god/verb/movenexus //Translocators have no sprite
 	update_health_hud()
 
+	var/area/A = get_area(src)
+	if(A)
+		var/areaname = A.name
+		var/list/followers = get_my_followers()
+		for(var/datum/mind/F in followers)
+			if(F.current)
+				F.current << "<span class='boldnotice'>Your god's nexus is in \the [areaname]</span>"
+
+
+/mob/camera/god/verb/freeturret()
+	set category = "Deity"
+	set name = "Free Turret (0)"
+	set desc = "Place a single turret, for 0 faith."
+
+	if(!ability_cost(0,1,1))
+		return
+	var/obj/structure/divine/defensepylon/DP = new(get_turf(src))
+	DP.assign_deity(src)
+	verbs -= /mob/camera/god/verb/freeturret
+
 
 
 /mob/camera/god/proc/update_followers()
 	alive_followers = 0
-	var/list/all_followers
-
-	if(side == "red")
-		all_followers = ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets
-	if(side == "blue")
-		all_followers = ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets
-
+	var/list/all_followers = get_my_followers()
 	for(var/datum/mind/F in all_followers)
 		if(F.current && F.current.stat != DEAD)
 			alive_followers++
