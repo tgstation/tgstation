@@ -919,9 +919,9 @@ datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical
 	color = "#555555"
 
 datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-10*REM) //A ton of healing - this is a 50 telecrystal investment.
-	M.adjustFireLoss(-10*REM)
-	M.setOxyLoss(0)
+	M.adjustBruteLoss(-5*REM) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM)
+	M.adjustOxyLoss(-15)
 	M.adjustToxLoss(-5*REM)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM)
