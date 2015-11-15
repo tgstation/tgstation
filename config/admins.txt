@@ -94,3 +94,5 @@ astralenigma	= GameMaster
 tokiko1			= GameMaster
 supersayu		= GameMaster
 lzimann			= GameMaster
+Tokiko1			= GameMaster
+As334			= GameMaster

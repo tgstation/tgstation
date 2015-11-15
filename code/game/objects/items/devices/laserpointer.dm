@@ -114,8 +114,8 @@
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
-	//robots and AI
-	else if(issilicon(target))
+	//robots
+	else if(isrobot(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))

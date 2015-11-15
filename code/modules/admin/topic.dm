@@ -950,10 +950,6 @@
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
-			if(!config.ban_legacy_system)
-				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(M.ckey)
-				return
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
@@ -962,7 +958,7 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_JOB_PERMA, job)
+						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						feedback_inc("ban_job_unban",1)
 						feedback_add_details("ban_job_unban","- [job]")
 						jobban_unban(M, job)

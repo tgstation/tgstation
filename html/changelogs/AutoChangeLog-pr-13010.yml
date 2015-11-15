@@ -1,0 +1,10 @@
+author: RemieRichards
+delete-after: True
+changes: 
+  - rscadd: "Deities now start off with the ability to place 1 free turret"
+  - tweak: "HoG Claymores now do 30 Brute (Down from 40) but now have 15 Armour Penetration (Up from 0)"
+  - bugfix: "Killing the other god objective is fixed"
+  - tweak: "Turrets will no longer attack handcuffed people"
+  - rscadd: "Followers are now informed of their god's death"
+  - rscadd: "Followers are now informed of the location of their god's nexus when it is placed"
+  - tweak: "Gods can no longer place structures near the enemy god's nexus"
