@@ -264,6 +264,36 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			else
 				hud_used.action_intent.icon_state = "help"
 
+/mob/verb/target_zone_change(input as text)
+	set name = "target-zone"
+	set hidden = 1
+
+	if(src.zone_sel)
+		var/obj/screen/zone_sel/Target = src.zone_sel
+		var/old_selecting = Target.selecting
+		switch(input)
+			if("r_leg")
+				Target.selecting = "r_leg"
+			if("l_leg")
+				Target.selecting = "l_leg"
+			if("r_arm")
+				Target.selecting = "r_arm"
+			if("l_arm")
+				Target.selecting = "l_arm"
+			if("chest")
+				Target.selecting = "chest"
+			if("groin")
+				Target.selecting = "groin"
+			if("head")
+				Target.selecting = "head"
+			if("eyes")
+				Target.selecting = "eyes"
+			if("mouth")
+				Target.selecting = "mouth"
+
+		if(old_selecting != Target.selecting)
+			Target.update_icon()
+
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
