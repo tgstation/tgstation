@@ -318,24 +318,3 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
 	query_update.Execute()
-
-/proc/sync_debug_access()
-	var/f = ("cfg/debug_access.txt")
-	var/list/adminkeys = list()
-	var/list/adminlist = file2list("config/admins.txt")
-	for(var/i in adminlist)
-		var/datum/regex/results = regex_find(i, "^(\\w.+)\\s*(?==)")
-		if(results.matches.len)
-			adminkeys.Add(ckey(results.str(2)))
-	var/list/debuggerkeys = list()
-	var/list/debuggerlist = file2list(f)
-	for(var/d in debuggerlist)
-		var/datum/regex/results = regex_find(d, "^(\\w.+)")
-		if(results.matches.len)
-			debuggerkeys.Add(ckey(results.str(2)))
-	var/list/ckeys_to_add = adminkeys - debuggerkeys
-	f = file(f)
-	if(!ckeys_to_add.len)
-		return
-	for(var/c in ckeys_to_add)
-		f << c
