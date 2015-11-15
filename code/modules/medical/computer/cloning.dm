@@ -397,24 +397,17 @@
 	if ((M_NOCLONE in subject.mutations) || (subject.suiciding == 1))
 		scantemp = "Error: Mental interface failure." //uncloneable, this guy is done for
 		return
-	if (!subject.client)
-		if (subject.mind) //this guy ghosted from his corpse, but he can still come back!
-			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == subject.mind && ghost.client)
-					if(ghost.can_reenter_corpse)
-						ghost << 'sound/effects/adminhelp.ogg'
-						ghost << "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be resurrected/cloned!</b> \
-							(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
-						scantemp = "Error: Subject's brain is not responding to scanning stimuli, subject may be brain dead. Please try again in five seconds."
-						return
-					else
-						break
-			// We couldn't find a suitable ghost!
-			scantemp = "Error: Mental interface failure."
-			return
-		else
-			scantemp = "Error: Mental interface failure."
-			return
+	if (!subject.client && subject.mind) //this guy ghosted from his corpse, but he can still come back!
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == subject.mind && ghost.client && ghost.can_reenter_corpse)
+				ghost << 'sound/effects/adminhelp.ogg'
+				ghost << "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be cloned!</b> \
+					(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
+				scantemp = "Error: Subject's brain is not responding to scanning stimuli, subject may be brain dead. Please try again in five seconds."
+				return
+		//we couldn't find a suitable ghost.
+		scantemp = "Error: Mental interface failure."
+		return
 	if (!subject.ckey) //checking this only now, since a ghosted player won't have a ckey
 		scantemp = "Error: Mental interface failure." //ideally would never happen but a check never hurts
 		return
