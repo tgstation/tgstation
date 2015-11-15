@@ -620,10 +620,10 @@
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
 	if(M.health < 0)
-		M.adjustToxLoss(-2 * REM)
-		M.adjustBruteLoss(-2 * REM)
-		M.adjustFireLoss(-2 * REM)
-		M.adjustOxyLoss(-5 * REM)
+		M.adjustToxLoss(-2*REM)
+		M.adjustBruteLoss(-2*REM)
+		M.adjustFireLoss(-2*REM)
+		M.adjustOxyLoss(-5*REM)
 	M.losebreath = 0
 	if(prob(20))
 		M.Dizzy(5)
