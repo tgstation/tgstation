@@ -174,6 +174,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/libcomp_menu = list("")
+	var/page = 1	//current page of the external archives 
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
