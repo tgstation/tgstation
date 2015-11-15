@@ -111,6 +111,8 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
+	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -519,6 +521,15 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("roundstart_races")
+					if(!cleared_default_races)
+						roundstart_species = list()
+						cleared_default_races = 1
+					var/race_name = lowertext(value)
+					for(var/speciestype in typesof(/datum/species) - /datum/species)
+						var/datum/species/S = new speciestype()
+						if(S.id == race_name)
+							roundstart_species[S.name] = S.type
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")

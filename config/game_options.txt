@@ -252,6 +252,10 @@ SILICON_MAX_LAW_AMOUNT 12
 ## Uncomment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
 
+## Adding races to this list will allow them to be choosen while join_with_muntant_race is on
+ROUNDSTART_RACES human
+ROUNDSTART_RACES lizard
+
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
