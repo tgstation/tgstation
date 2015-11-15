@@ -64,11 +64,11 @@ var/const/AALARM_WIRE_AALARM = 16
 				A.shorted = 1
 				A.update_icon()
 
-			spawn(12000)
-				if(A.shorted == 1)
-					A.shorted = 0
-					A.update_icon()
-
+			spawn(20 MINUTES)
+				if (!isnull(A))
+					if (A.shorted == 1)
+						A.shorted = 0
+						A.update_icon()
 
 		if (AALARM_WIRE_AI_CONTROL)
 		//	world << "AI Control wire pulsed"
