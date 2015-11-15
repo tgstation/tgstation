@@ -501,6 +501,10 @@
 /obj/machinery/alarm/proc/ui_air_status()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/ui_air_status() called tick#: [world.time]")
 	var/turf/location = get_turf(src)
+
+	if (isnull(location))
+		return null
+
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
 	if(total==0)
