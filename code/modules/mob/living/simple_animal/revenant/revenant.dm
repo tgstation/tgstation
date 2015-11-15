@@ -101,11 +101,11 @@
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
-	if(unreveal_time)
+	if(revealed)
 		if(draining)
 			icon_state = "revenant_draining"
 			return
-		if(unstun_time)
+		if(notransform)
 			icon_state = "revenant_stun"
 			return
 		icon_state = "revenant_revealed"
