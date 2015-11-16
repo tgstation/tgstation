@@ -109,11 +109,21 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.mind.miming && !spam_flag)
+		spam_flag = 1
+		user << "<span class='alert'>A true mime doesn't honk.</span>"
+		spawn(cooldowntime)
+			spam_flag = 0
 	if(!spam_flag)
 		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
+	if(user.mind.miming && !spam_flag)
+		spam_flag = 1
+		user << "<span class='alert'>A true mime doesn't honk.</span>"
+		spawn(cooldowntime)
+			spam_flag = 0
 	if(!spam_flag)
 		spam_flag = 1
 		playsound(src.loc, honksound, 50, 1)
@@ -123,6 +133,8 @@
 	return
 
 /obj/item/weapon/bikehorn/Crossed(mob/living/L)
+	if(L.mind.miming)
+		return
 	if(isliving(L))
 		playsound(loc, honksound, 50, 1, -1)
 	..()
