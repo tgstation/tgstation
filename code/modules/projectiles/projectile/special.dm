@@ -31,12 +31,14 @@
 	layer = 13
 	flag = "energy"
 	var/temperature = 300
-	var/obj/item/weapon/gun/energy/temperature/T = null
 
 /obj/item/projectile/temp/OnFired()
 	..()
-	T = shot_from
-	temperature = T.temperature
+
+	var/obj/item/weapon/gun/energy/temperature/T = shot_from
+	if(istype(T))
+		src.temperature = T.temperature
+
 	switch(temperature)
 		if(501 to INFINITY)
 			name = "searing beam"	//if emagged
