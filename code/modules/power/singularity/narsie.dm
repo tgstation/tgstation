@@ -129,7 +129,7 @@
 	if(isliving(target))
 		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
 	else
-		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD IT TO ITS NEXT MEAL.</span>"
+		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>"
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
