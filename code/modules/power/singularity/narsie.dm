@@ -25,7 +25,6 @@
 /obj/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
@@ -68,7 +67,7 @@
 
 	else if(isturf(A))
 		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
+		T.ChangeTurf(/turf/simulated/floor/engine/cult)
 
 
 /obj/singularity/narsie/mezzer()

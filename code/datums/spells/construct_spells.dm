@@ -17,7 +17,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/simulated/floor/plasteel/cult)
+	summon_type = list(/turf/simulated/floor/engine/cult)
 	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall

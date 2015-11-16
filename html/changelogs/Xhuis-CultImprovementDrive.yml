@@ -1,0 +1,25 @@
+author: Xhuis
+delete-after: True
+
+changes:
+  - rscadd: "Many runes now require certain structures nearby - for instance, Call Forth The Geometer requires 4 pylons and an altar."
+  - rscadd: "A new sheet type has been added - runed metal. Created by cultists via supply talismans or other means, it is the method for creating cult structures. Non-cultists cannot use this material."
+  - rscadd: "The Corrupt rune has been added. When used, all turf in a 5x5 area, centered around the rune, will become corrupted to cultist variants."
+  - rscadd: "Engraved floors now slowly heal brute and burn damage of cultists on top of it."
+  - rscadd: "Blind and Deafen talismans have been re-added."
+  - rscadd: "The rune to summon Nar-Sie now has a unique animation when it is successfully used, and is removed upon Nar-Sie's spawn."
+  - rscadd: "The arcane tome's menu now has a 'Cancel' option."
+  - rscadd: "Cult structures can now be attacked and destroyed."
+  - rscadd: "A new cult objective has been added - Bring the Slaughter."
+  - rscadd: "New rune: Call Forth The Slaughter. When used with the proper objective, three cult-aligned slaughter demons will be created from ghosts with the goal of killing all non-cultist crew. The shuttle is automatically called."
+  - tweak: "Engraved walls and floors are no longer deconstructable without first attacking them with a bible. Attacking them with a null rod turns them back to normal."
+  - tweak: "People wielding a null rod no longer take damage from arcane tome attacks."
+  - tweak: "The runed forge can now turn some items into others. For instance, placing a bedsheet and using the forge will create a cult bedsheet. Rumor has it that defiling books of a holy nature will result in powerful arcane tomes."
+  - tweak: "The talismans Hide Runes and Reveal Runes now have three uses each."
+  - tweak: "Cultists can no longer use null rods to erase runes."
+  - tweak: "Tomes can now only be used if the user is in a valid state to do so (i.e. conscious, standing...)"
+  - tweak: "EMP runes are now a brighter shade of blue."
+  - soundadd: "Summoning Nar-Sie has a new sound, made by Cuboos."
+  - bugfix: "Cult floors now render properly and are no longer a subtype of normal floors."
+  - bugfix: "The description of the talisman used to summon a tome no longer falsely informs the user that it has two uses."
+  - bugfix: "Certain talismans now properly damage the user."

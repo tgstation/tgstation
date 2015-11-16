@@ -370,10 +370,6 @@
 /turf/simulated/floor/plasteel/vault
 	icon_state = "vault"
 
-/turf/simulated/floor/plasteel/cult
-	icon_state = "cult"
-	name = "engraved floor"
-
 /turf/simulated/floor/plasteel/goonplaque
 	icon_state = "plaque"
 	name = "Commemorative Plaque"

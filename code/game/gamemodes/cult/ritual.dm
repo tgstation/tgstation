@@ -52,6 +52,17 @@ It also contains rune words, which are soon to be removed.
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
+	var/scribe_time = 50 //How long it takes to scribe a rune
+
+/obj/item/weapon/tome/accursed
+	name = "accursed tome"
+	desc = "An arcane tome still empowered with a shadow of its former consecration."
+	scribe_time = 40 //One second faster because it's made by corrupting a bible
+
+/obj/item/weapon/tome/imbued //Admin-only tome, allows instant drawing of runes
+	name = "imbued arcane tome"
+	desc = "An arcane tome granted by the Geometer itself."
+	scribe_time = 0
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
@@ -59,7 +70,7 @@ It also contains rune words, which are soon to be removed.
 		user << "The scriptures of the Geometer. Allows the scribing of runes and access of knowledge archives."
 
 /obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
-	if(istype(M,/mob/dead/observer))
+	if(istype(M, /mob/dead/observer))
 		M.invisibility = 0
 		user.visible_message("<span class='warning'>[user] strikes the air with [src], and a spirit appears!</span>", \
 							 "<span class='danger'>You drag the ghost to your plane of reality!</span>")
@@ -77,17 +88,21 @@ It also contains rune words, which are soon to be removed.
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
-	M.take_organ_damage(0, 15) //Used to be a random between 5 and 20
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
 	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
-					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
+					  "<span class='userdanger'>[user] strikes you with the tome!</span>")
 	flick("tome_attack", src)
 	user.do_attack_animation(M)
-	add_logs(user, M, "smacked", src)
+	add_logs(user, M, "tome-smacked", src)
+	if(M.null_rod_check())
+		M.visible_message("<span class='warning'>The null rod absorbs [src]'s heat!</span>", \
+						"<span class='userdanger'>Your null rod absorbs the heat!</span>")
+	else
+		M.take_organ_damage(0, 15) //Used to be a random between 5 and 20
 
 /obj/item/weapon/tome/attack_self(mob/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>[src] seems full of unintelligible shapes, scribbles, and notes. Is this some sort of joke?</span>"
+		user << "<span class='warning'>[src] is full of unintelligible shapes, scribbles, and notes. Is this some sort of joke?</span>"
 		return
 	open_tome(user)
 
@@ -95,21 +110,26 @@ It also contains rune words, which are soon to be removed.
 	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","(More...)")
 	switch(choice)
 		if("(More...)")
-			var/choice2 = alert(user,"You open the tome...",,"(Back...)", "Information")
+			var/choice2 = alert(user,"You open the tome...",,"(Back...)", "Information", "Cancel")
 			switch(choice2)
 				if("(Back...)")
 					return open_tome(user)
 				if("Information")
-					read_tome(user)
+					if(user.canUseTopic(src))
+						read_tome(user)
+				if("Cancel")
+					return
 		if("Scribe Rune")
-			scribe_rune(user)
+			if(user.canUseTopic(src))
+				scribe_rune(user)
 		if("Commune")
-			var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
-			if(!input)
-				return
-			cultist_commune(user, 1, 0, input)
+			if(user.canUseTopic(src))
+				var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
+				if(!input)
+					return
+				cultist_commune(user, 1, 0, input)
 
-/obj/item/weapon/tome/proc/read_tome(mob/user)
+/obj/item/weapon/tome/proc/read_tome(mob/user) //Warning: block of text ahead
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
 	text += "As a member of the cult, your goals are almost or entirely impossible to complete without special aid from the Geometer's plane. The primary method of doing this are <b>runes</b>. These \
@@ -117,28 +137,7 @@ It also contains rune words, which are soon to be removed.
 	have many different names, and almost all of them are known as Rites. The only rune that is not a Rite is the Ritual of Dimensional Rending, which can only be performed with nine cultists and calls \
 	forth the avatar of the Geometer itself (so long as it consents). A small description of each rune can be found below.<br><br>Do note that sometimes runes can be drawn incorrectly. Runes such as these \
 	will be colorful and written in gibberish. They are malformed, and invoking them serves only to ignite the Geometer's wrath. Be cautious in your scribings.<br><br>A rune's name and effects can be \
-	revealed by examining the rune.<br><br><br>"/*In order to write a rune, you must know the combination of words required for the rune. These words are in the tongue of the Geometer and must be written as such. \
-	A rune will always have a specific combination, and the combination for runes may be revealed by perfomring actions such as conversion or sacrifice. Once a rune has been written, any cultists can \
-	examine it to find out its \"grammar\", or the words required to scribe it. To scribe the rune, the words must be entered in lowercase and separated by exactly one space. For instance, to draw a \
-	Rite of Enlightenment, one would enter the sentence \"certum nahlizet ego\", which means \"join blood self\". You may guess at combinations or perform actions to discover them.<br><br>A full list of \
-	the Words of Power as well as their meanings in plain English are listed below, although a more complete archive may be accessed at a research desk.<br><br>\
-	<b>The Words of Power</b><br>\
-	\"ire\" is Travel<br>\
-	\"ego\" is Self<br>\
-	\"nahlizet\" is Blood<br>\
-	\"certum\" is Join<br>\
-	\"veri\" is Hell<br>\
-	\"jatkaa\" is Other<br>\
-	\"mgar\" is Destroy<br>\
-	\"balaq\" is Technology<br>\
-	\"karazet\" is See<br>\
-	\"geeri\" is Hide<br><br>\
-	<b>A few basic runes</b><br>\
-	<i>Rite of Translocation:</i> \"ire ego\"<br>\
-	<i>Rite of Enlightenment:</i> \"certum nahlizet ego\"<br>\
-	<i>Rite of Tribute:</i> \"veri nahlizet certum\"<br>\
-	<i>Rite of Knowledge:</i> \"karazet nahlizet ego\"<br>\
-	<br><br><br>"*/
+	revealed by examining the rune.<br><br>This archive will be updated as new discoveries are made. Make sure to check back often.<br><br><br>"
 
 	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Translocation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
 	search for other Rites of Translocation with the same keyword. Assuming one is found, the user will be instantaneously transported to the location of the other rune. If more than two runes are scribed \
@@ -215,6 +214,10 @@ It also contains rune words, which are soon to be removed.
 	to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
 
+	text += "<font color='red'><b>Corrupt</b></font><br>The Rite of Corruption is used in order to transform and defile the nearby area to make it more suitable for cultists and \
+	servants of Nar-Sie. When invoked, the rune will disappear and turn all nearby walls and floors to their cult variants. Engraved floors will heal cultists standing on top of them, and \
+	cult structures can only survive on engraved floors. Any nearby metal sheets will also be turned into runed metal, which is used in construction of cult structures.<br><br>"
+
 	text += "<font color='red'><b><i>Call Forth The Geometer</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
 	simply invoke it. A brief tearing will be heard as the barrier between dimensions is torn open, and the avatar will come forth.<br><br><br>"
@@ -226,7 +229,7 @@ It also contains rune words, which are soon to be removed.
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
 	disappear.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Tome summoning</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
+	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
 
 	text += "<font color='red'><b>Talismans of Veiling, Revealing, and Disguising</b></font><br>These talismans all function identically to their rune counterparts, but with less range. In addition, \
 	the Talisman of True Sight will not reveal spirits. They will disappear after one use.<br><br>"
@@ -266,12 +269,14 @@ It also contains rune words, which are soon to be removed.
 			break
 	if(!rune_to_scribe)
 		return
+	if(!user.canUseTopic(src))
+		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(0.1, BRUTE, pick("l_arm", "r_arm"))
-	if(!do_after(user, 50, target = get_turf(user)))
+	if(!do_after(user, scribe_time, target = get_turf(user)))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='danger'>You finish drawing the arcane markings of the Geometer.</span>")
