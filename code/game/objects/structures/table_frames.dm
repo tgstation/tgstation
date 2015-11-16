@@ -113,3 +113,18 @@
 			new /obj/structure/table/wood/poker(src.loc)
 			qdel(src)
 		return
+	if(istype(I, /obj/item/stack/sheet/runed_metal))
+		var/obj/item/stack/sheet/runed_metal/RM = I
+		if(!iscultist(user))
+			user << "<span class='notice'>You are unsure what the next step may be.</span>"
+			return
+		if(RM.get_amount() < 1)
+			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [RM] to [src]...</span>"
+		if(do_after(user, 20, target = src))
+			RM.use(1)
+			new /obj/structure/table/cult(src.loc)
+			qdel(src)
+		return
+

@@ -2200,7 +2200,7 @@
 "aQp" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/wood,/area/library)
 "aQq" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/wood,/area/library)
 "aQr" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
-"aQs" = (/obj/structure/cult/tome,/obj/item/clothing/under/suit_jacket/red,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
+"aQs" = (/obj/structure/table/cult,/obj/item/clothing/under/suit_jacket/red,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
 "aQt" = (/obj/effect/landmark{name = "blobstart"},/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
 "aQu" = (/turf/simulated/floor/plasteel{icon_state = "chapel"},/area/chapel/main)
 "aQv" = (/turf/simulated/floor/plasteel{dir = 8; icon_state = "chapel"},/area/chapel/main)
