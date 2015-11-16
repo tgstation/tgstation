@@ -3,7 +3,7 @@
 	if(global_handofgod_traptypes.len && global_handofgod_structuretypes.len)
 		return
 
-	var/list/types = typesof(/obj/structure/divine) - /obj/structure/divine - /obj/structure/divine/trap
+	var/list/types = subtypesof(/obj/structure/divine) - /obj/structure/divine/trap
 	for(var/T in types)
 		var/obj/structure/divine/D = T
 		if(initial(D.constructable))

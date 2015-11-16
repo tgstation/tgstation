@@ -25,7 +25,7 @@
 	real_name = new_name
 	last_attack = world.time
 	var/list/possible_reagents = list()
-	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
+	for(var/type in (subtypesof(/datum/reagent/blob)))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)

@@ -1343,3 +1343,7 @@ B --><-- A
 		c_dist++
 
 	return L
+
+/proc/subtypesof(typepath)
+	. = typesof(typepath) - typepath
+	.
