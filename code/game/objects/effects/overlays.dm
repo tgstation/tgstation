@@ -20,6 +20,7 @@
 	spawn(10) qdel(src)
 
 /obj/effect/overlay/temp
+	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	layer = 4.1
 	mouse_opacity = 0
@@ -32,9 +33,19 @@
 	spawn(duration)
 		qdel(src)
 
+/obj/effect/overlay/temp/cult
+	name = "unholy glow"
+	icon_state = "wallglow"
+	layer = 2.01
+	randomdir = 0
+	duration = 10
+
+/obj/effect/overlay/temp/cult/floor
+	icon_state = "floorglow"
+	duration = 5
+
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "purplesparkles"
 
 /obj/effect/overlay/temp/revenant/cracks
@@ -44,7 +55,6 @@
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "empdisable"
 
 /obj/effect/overlay/temp/emp/pulse
