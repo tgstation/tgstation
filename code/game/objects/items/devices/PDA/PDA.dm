@@ -237,7 +237,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(user && ismob(user))
 		if(user.incapacitated())
 			return 0
-		if(loc == user)
+		else
 			return 1
 	return 0
 
