@@ -187,9 +187,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	
 	for(var/i in 1 to cachedbooks.len)
 		var/datum/cachedbook/C = cachedbooks[i]
-		page = round(i/250)+1
+		var/page = round(i/250)+1
 		if (libcomp_menu.len < page)
-			libcomp_menu[] = ""
+			libcomp_menu.len = page
+			libcomp_menu[page] = ""
 		libcomp_menu[page] += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];targetid=[C.id]'>\[Order\]</A></td></tr>\n"
 
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
