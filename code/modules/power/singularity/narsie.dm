@@ -124,12 +124,12 @@
 /obj/singularity/narsie/proc/acquire(mob/food)
 	if(food == target)
 		return
-	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
+	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
 	target = food
 	if(isliving(target))
-		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
+		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
 	else
-		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO FIND A MEAL</span>"
+		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD IT TO ITS NEXT MEAL.</span>"
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
