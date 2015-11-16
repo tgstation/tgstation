@@ -8,6 +8,7 @@
 		M.mind.antag_hud.leave_hud(M)
 	add_to_hud(M)
 	add_hud_to(M)
+	M.mind.antag_hud = src
 
 /datum/atom_hud/antag/proc/leave_hud(mob/M)
 	if(!istype(M))
