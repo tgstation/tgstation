@@ -1346,4 +1346,3 @@ B --><-- A
 
 /proc/subtypesof(typepath)
 	. = typesof(typepath) - typepath
-	.
