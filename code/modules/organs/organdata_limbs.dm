@@ -51,34 +51,34 @@
 /datum/organ/limb/head/regenerate_organitem()	//Fucks with suborgans
 	return null
 
-/datum/organ/limb/l_arm
+/datum/organ/limb/arm/l_arm
 	name = "l_arm"
 	body_part = ARM_LEFT
 	destroyed_dam = 40
-	organitem_type = /obj/item/organ/limb/l_arm
+	organitem_type = /obj/item/organ/limb/arm/l_arm
 	healthdoll = 1
 	can_be_damaged = 1
 
-/datum/organ/limb/l_leg
+/datum/organ/limb/leg/l_leg
 	name = "l_leg"
 	body_part = LEG_LEFT
 	destroyed_dam = 40
-	organitem_type = /obj/item/organ/limb/l_leg
+	organitem_type = /obj/item/organ/limb/leg/l_leg
 	healthdoll = 1
 	can_be_damaged = 1
 
-/datum/organ/limb/r_arm
+/datum/organ/limb/arm/r_arm
 	name = "r_arm"
 	body_part = ARM_RIGHT
 	destroyed_dam = 40
-	organitem_type = /obj/item/organ/limb/r_arm
+	organitem_type = /obj/item/organ/limb/arm/r_arm
 	healthdoll = 1
 	can_be_damaged = 1
 
-/datum/organ/limb/r_leg
+/datum/organ/limb/leg/r_leg
 	name = "r_leg"
 	body_part = LEG_RIGHT
 	destroyed_dam = 40
-	organitem_type = /obj/item/organ/limb/r_leg
+	organitem_type = /obj/item/organ/limb/leg/r_leg
 	healthdoll = 1
 	can_be_damaged = 1

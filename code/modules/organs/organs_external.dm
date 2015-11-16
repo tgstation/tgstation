@@ -13,6 +13,7 @@
 
 /obj/item/organ/limb
 	name = "limb"
+	var/originalname = "Error"	//So limbs know how to set their names when removed, according to species
 	var/body_part = null
 	var/brutestate = 0
 	var/burnstate = 0
@@ -20,6 +21,26 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/list/embedded_objects = list()
+	var/list/dependant_items = list()	//Item slots that depend on this limb
+	var/counterpart = null
+
+/obj/item/organ/limb/New()
+	..()
+	originalname = name
+
+/obj/item/organ/limb/Remove(special = 0)
+	if(dna && dna.species)
+		name = "[dna.species.id] [originalname]"
+
+	if(counterpart)
+		var/datum/organ/limb/OR = owner.get_organ(counterpart)
+		if(OR && OR.exists())
+			return	//No need to remove items if the other arm/leg is left
+
+	for(var/itemname in dependant_items)
+		var/obj/item/itemtoremove = owner.get_item_by_slot(itemname)
+		if(itemtoremove)
+			owner.unEquip(itemtoremove, 1)
 
 /obj/item/organ/limb/chest
 	name = "chest"
@@ -37,6 +58,7 @@
 	icon_state = "head"
 	max_damage = 200
 	body_part = HEAD
+	dependant_items = list(slot_ears, slot_glasses, slot_head, slot_wear_mask)
 //	var/mob/living/carbon/brain/brainmob = null //We're not using this until someone is beheaded.
 
 /obj/item/organ/limb/head/create_suborgan_slots()
@@ -64,9 +86,11 @@
 	var/datum/organ/internal/brain/B = suborgans["brain"]
 	if(B.exists())
 		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
+		brain.loc = src
 		brain.transfer_identity(owner)
 
 /obj/item/organ/limb/head/Remove(special = 0)
+	..(special)
 	if(!special)
 		transfer_identity()
 	src.name = "[owner]'s head"
@@ -130,42 +154,78 @@
 
 	..()
 
-/obj/item/organ/limb/l_arm
+/obj/item/organ/limb/arm/
+	desc = "Looks like someone has been disarmed."
+	max_damage = 75
+	dependant_items = list(slot_gloves)
+
+
+/obj/item/organ/limb/arm/Remove(special = 0)
+	owner.update_inv_gloves()
+
+	..(special)
+
+/obj/item/organ/limb/arm/l_arm
 	name = "left arm"
 	hardpoint = "l_arm"
-	desc = "Looks like someone has been disarmed."
 	icon_state = "l_arm"
-	max_damage = 75
 	body_part = ARM_LEFT
+	counterpart = "r_arm"
 
+//Unwields twohanded weapons in right hand and drops any item in left hand
+/obj/item/organ/limb/arm/l_arm/Remove(special = 0)
+	if(owner.r_hand && istype(owner.r_hand, /obj/item/weapon/twohanded))
+		world << "Found [owner.r_hand] in other hand!"
+		var/obj/item/weapon/twohanded/TWOH = owner.r_hand
+		TWOH.unwield()
+	owner.drop_l_hand()
 
-/obj/item/organ/limb/l_leg
+	owner.update_inv_l_hand()
+
+	..(special)
+
+/obj/item/organ/limb/leg/
+	desc = "Looks like someone's leg legged it."
+	max_damage = 75
+	dependant_items = list(slot_shoes)
+
+/obj/item/organ/limb/leg/Remove(special = 0)
+	owner.update_inv_shoes()
+
+	..(special)
+
+/obj/item/organ/limb/leg/l_leg
 	name = "left leg"
 	hardpoint = "l_leg"
-	desc = "Looks like someone's leg legged it."
 	icon_state = "l_leg"
-	max_damage = 75
 	body_part = LEG_LEFT
+	counterpart = "r_leg"
 
-
-/obj/item/organ/limb/r_arm
+/obj/item/organ/limb/arm/r_arm
 	name = "right arm"
 	hardpoint = "r_arm"
-	desc = "Looks like someone has been disarmed."
 	icon_state = "r_arm"
-	max_damage = 75
 	body_part = ARM_RIGHT
+	counterpart = "l_arm"
 
+//Pretty much a mirror of the other proc
+/obj/item/organ/limb/arm/r_arm/Remove(special = 0)
+	if(owner.l_hand && istype(owner.l_hand, /obj/item/weapon/twohanded))
+		world << "Found [owner.l_hand] in other hand!"
+		var/obj/item/weapon/twohanded/TWOH = owner.l_hand
+		TWOH.unwield()
+	owner.drop_r_hand()
 
-/obj/item/organ/limb/r_leg
+	owner.update_inv_r_hand()
+
+	..(special)
+
+/obj/item/organ/limb/leg/r_leg
 	name = "right leg"
 	hardpoint = "r_leg"
-	desc = "Looks like someone's leg legged it."
 	icon_state = "r_leg"
-	max_damage = 75
 	body_part = LEG_RIGHT
-
-
+	counterpart = "l_leg"
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc

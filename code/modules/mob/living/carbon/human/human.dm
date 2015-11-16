@@ -21,8 +21,8 @@
 
 	//initialise organs
 
-	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
-	/obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)*/
+	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/arm/l_arm,
+	/obj/item/organ/limb/arm/r_arm, /obj/item/organ/limb/leg/r_leg, /obj/item/organ/limb/leg/l_leg)*/
 
 	organsystem = new/datum/organsystem/humanoid/monkey/
 	organsystem.set_owner(src)
@@ -196,8 +196,8 @@
 	if(stat == DEAD)	return
 	show_message("<span class='userdanger'> The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, ran_zone(dam_zone), run_armor_check(affecting, "melee"))
+	dam_zone = ran_zone(dam_zone)
+	apply_damage(5, BRUTE, dam_zone, run_armor_check(dam_zone, "melee"))
 	return
 
 /mob/living/carbon/human/show_inv(mob/user)

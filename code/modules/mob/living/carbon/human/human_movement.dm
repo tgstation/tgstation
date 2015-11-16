@@ -10,8 +10,8 @@
 //If we're riding in a wheelchair, we need to only check our hands.
 /*
 	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
-	. += get_penalty_for_limb(/datum/organ/limb/l_arm)
-	. += get_penalty_for_limb(/datum/organ/limb/r_arm)
+	. += get_penalty_for_limb(/datum/organ/limb/arm/l_arm)
+	. += get_penalty_for_limb(/datum/organ/limb/arm/r_arm)
 	*/
 //If we're not, we need to check our legs.
 	//else

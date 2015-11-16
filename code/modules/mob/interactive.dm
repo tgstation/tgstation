@@ -132,22 +132,22 @@
 /*	if(prob(10)) //my x is augmented	//Disabled this shite for now
 		//arms
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
-			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
+			var/obj/item/organ/limb/arm/r_arm/R = locate(/obj/item/organ/limb/arm/r_arm) in organs
 			del(R)
-			organs += new /obj/item/organ/limb/r_arm/
+			organs += new /obj/item/organ/limb/arm/r_arm/
 		else
-			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
+			var/obj/item/organ/limb/arm/l_arm/L = locate(/obj/item/organ/limb/arm/l_arm) in organs
 			del(L)
-			organs += new /obj/item/organ/limb/l_arm/robot
+			organs += new /obj/item/organ/limb/arm/l_arm/robot
 		//legs
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
-			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
+			var/obj/item/organ/limb/leg/r_leg/R = locate(/obj/item/organ/limb/leg/r_leg) in organs
 			del(R)
-			organs += new /obj/item/organ/limb/r_leg/robot
+			organs += new /obj/item/organ/limb/leg/r_leg/robot
 		else
-			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
+			var/obj/item/organ/limb/leg/l_leg/L = locate(/obj/item/organ/limb/leg/l_leg) in organs
 			del(L)
-			organs += new /obj/item/organ/limb/l_leg/robot
+			organs += new /obj/item/organ/limb/leg/l_leg/robot
 		//chest and head
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs

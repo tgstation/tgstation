@@ -66,6 +66,14 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+	dismember_class = new /datum/dismember_class/medium/	//Are these highlander only? Might want to promote to high
+
+/obj/item/weapon/claymore/vorpal
+	name = "Vorpal Blade"
+	desc = "One, two! One, two! And through and through<br>The vorpal blade went snicker-snack!<br>He left it dead, and with its head<br>He went galumphing back."
+
+	dismember_class = new /datum/dismember_class/max/
+
 /obj/item/weapon/claymore/IsShield()
 	return 1
 

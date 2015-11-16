@@ -909,8 +909,9 @@
 					return 0
 
 
-				var/obj/item/organ/limb/affecting
-				var/datum/organ/limb/targetorgan = H.get_organ(ran_zone(M.zone_sel.selecting))
+				var/zone = ran_zone(M.zone_sel.selecting)
+				zone = check_zone(zone)
+				var/datum/organ/limb/targetorgan = H.get_organ(zone)
 				if(!targetorgan.exists())
 					//If target organ does not exist, the attack misses.
 					//Combined with the slight randomness of attack zones, this means that targets with less limbs are less likely to get hit.
@@ -918,9 +919,7 @@
 					playsound(H.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
 					return 0
-				else
-					affecting = targetorgan.organitem
-				var/armor_block = H.run_armor_check(affecting, "melee")
+				var/armor_block = H.run_armor_check(zone, "melee")
 
 				if(M.dna)
 					playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
@@ -931,7 +930,7 @@
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
-				H.apply_damage(damage, BRUTE, affecting, armor_block)
+				H.apply_damage(damage, BRUTE, zone, armor_block)
 				if((H.stat != DEAD) && damage >= 9)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
@@ -949,18 +948,18 @@
 
 				if(H.w_uniform)
 					H.w_uniform.add_fingerprint(M)
-				var/obj/item/organ/limb/affecting
-				var/datum/organ/limb/targetorgan = H.get_organ(ran_zone(M.zone_sel.selecting))
+
+				var/zone = ran_zone(M.zone_sel.selecting)
+				zone = check_zone(zone)
+				var/datum/organ/limb/targetorgan = H.get_organ(zone)
 				if(!targetorgan.exists())
 					//If target organ does not exist, the disarm misses.
 					//Same story as attacks. |- Ricotez
 					H.visible_message("<span class='warning'>[M] has attempted to push [H]!</span>")
 					return 0
-				else
-					affecting = targetorgan.organitem
 				var/randn = rand(1, 100)
 				if(randn <= 25)
-					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
+					H.apply_effect(2, WEAKEN, H.run_armor_check(zone, "melee"))
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
 									"<span class='userdanger'>[M] has pushed [H]!</span>")

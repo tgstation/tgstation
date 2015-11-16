@@ -314,16 +314,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
-	var/datum/organ/limb/LH = get_organ("l_arm")
-	var/datum/organ/limb/RH = get_organ("r_arm")
-	if(!(LH.exists() && RH.exists()))
-		return
-
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
+
+		var/datum/organ/limb/LH = get_organ("l_arm")
+		var/datum/organ/limb/RH = get_organ("r_arm")
+		if(!(LH.exists() && RH.exists()))
+			return
 
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
@@ -374,16 +374,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
-	var/datum/organ/limb/LF = get_organ("l_leg")
-	var/datum/organ/limb/RF = get_organ("r_leg")
-	if(!(LF.exists() && RF.exists()))
-		return
-
 	if(shoes)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
+
+		var/datum/organ/limb/LF = get_organ("l_leg")
+		var/datum/organ/limb/RF = get_organ("r_leg")
+		if(!(LF.exists() && RF.exists()))
+			return
 
 		var/image/standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
 
@@ -566,6 +566,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if (handcuffed)
 		drop_r_hand()
 		return
+
+	var/datum/organ/limb/RH = get_organ("r_arm")
+	if(!(RH && RH.exists()))
+		if(hud_used)
+			var/obj/screen/inventory/R = hud_used.adding[3]
+			world << "Drawing an X on right hand slot"
+			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
+
+
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand	//TODO
 		if(client)
@@ -585,6 +594,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if (handcuffed)
 		drop_l_hand()
 		return
+
+	var/datum/organ/limb/LH = get_organ("l_arm")
+	if(!(LH && LH.exists()))
+		if(hud_used)
+			var/obj/screen/inventory/L = hud_used.adding[4]
+			world << "Drawing an X on left hand slot"
+			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
+
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
 		if(client)

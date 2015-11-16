@@ -392,9 +392,9 @@ emp_act
 		if(check_shields(damage, "the [M.name]"))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor)
+		dam_zone = ran_zone(dam_zone)
+		var/armor = run_armor_check(dam_zone, "melee")
+		apply_damage(damage, BRUTE, dam_zone, armor)
 		updatehealth()
 /*		if(armor >= 2) //why is this here?
 		return */
@@ -408,9 +408,10 @@ emp_act
 			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			var/zone = ran_zone(L.zone_sel.selecting)
+			zone = check_zone(zone)
+			var/armor_block = run_armor_check(zone, "melee")
+			apply_damage(damage, BRUTE, zone, armor_block)
 			updatehealth()
 
 
@@ -428,9 +429,10 @@ emp_act
 
 	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	var/armor_block = run_armor_check(affecting, "melee")
-	apply_damage(damage, BRUTE, affecting, armor_block)
+	var/zone = ran_zone(dam_zone)
+	zone = check_zone(zone)
+	var/armor_block = run_armor_check(zone, "melee")
+	apply_damage(damage, BRUTE, zone, armor_block)
 
 	return
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)

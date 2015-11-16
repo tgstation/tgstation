@@ -14,5 +14,3 @@
 
 #define MAX_BRAIN_IMPLANT	2
 #define MAX_CHEST_IMPLANT	3
-
-#define CAUTERIZED_DENOMINATOR 2	//The number which damage for NOBLEED organs is divided by (compared to DESTROYED), otherwise eswords are 2OP

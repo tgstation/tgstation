@@ -91,6 +91,7 @@ mob/proc/exists(var/organname)
 /mob/proc/get_limbs()
 	return 0
 
+//Returns all limb datums
 /mob/living/carbon/get_limbs()
 	var/list/returnlimbs = list()
 	for(var/limbname in list_limbs())

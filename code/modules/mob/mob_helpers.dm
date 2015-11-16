@@ -513,3 +513,15 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 mob/proc/active_hand_exists()
 	return 1
+
+//Call with invert = 1 to check inactive hand
+/mob/living/carbon/active_hand_exists(var/invert = 0)	//Partially niggered from NT
+	if(organsystem)
+		var/datum/organ/limb/L
+		if(hand && !invert || !hand && invert)
+			L = get_organ("l_arm")
+		else
+			L = get_organ("r_arm")
+		if(!(L && L.exists()))
+			return 0
+	return 1

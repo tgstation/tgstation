@@ -85,12 +85,12 @@
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = null
 	if(ishuman(ML)) // why the hell is this not more general
-		affecting = ML:get_organ(ran_zone(dam_zone))
-	var/armor = ML.run_armor_check(affecting, "melee")
+		dam_zone = ran_zone(dam_zone)
+		dam_zone = check_zone(dam_zone)
+	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
-		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
+		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
 		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 						"<span class='userdanger'>[name] bites [ML]!</span>")
 		if(armor >= 2) return

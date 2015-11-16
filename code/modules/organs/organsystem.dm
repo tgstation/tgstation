@@ -72,10 +72,10 @@
 		core = new/datum/organ/limb/chest(null, coreitem) //The coredata has no parent, and its item is of course the coreitem.
 		organlist["chest"]	= core
 		organlist["head"]	= new/datum/organ/limb/head(coreitem, new/obj/item/organ/limb/head())
-		organlist["l_arm"]	= new/datum/organ/limb/l_arm(coreitem, new/obj/item/organ/limb/l_arm())
-		organlist["r_arm"]	= new/datum/organ/limb/r_arm(coreitem, new/obj/item/organ/limb/r_arm())
-		organlist["l_leg"]	= new/datum/organ/limb/l_leg(coreitem, new/obj/item/organ/limb/l_leg())
-		organlist["r_leg"]	= new/datum/organ/limb/r_leg(coreitem, new/obj/item/organ/limb/r_leg())
+		organlist["l_arm"]	= new/datum/organ/limb/arm/l_arm(coreitem, new/obj/item/organ/limb/arm/l_arm())
+		organlist["r_arm"]	= new/datum/organ/limb/arm/r_arm(coreitem, new/obj/item/organ/limb/arm/r_arm())
+		organlist["l_leg"]	= new/datum/organ/limb/leg/l_leg(coreitem, new/obj/item/organ/limb/leg/l_leg())
+		organlist["r_leg"]	= new/datum/organ/limb/leg/r_leg(coreitem, new/obj/item/organ/limb/leg/r_leg())
 
 		organlist["cavity"]	= new/datum/organ/cavity(coreitem, null)
 
