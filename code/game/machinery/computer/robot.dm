@@ -106,7 +106,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>)!</span>")
+					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.lockcharge)
 					R << "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>"
