@@ -21,6 +21,8 @@
 	var/active_state = "Taser" // "Taser"/"Laser/"Bullet" ,blue/red/no glow on active turret
 	var/off_state = "Off"
 
+	var/emp_vunerable = 1 // Can be empd
+
 	var/scan_range = 7
 	var/atom/base = null //for turrets inside other objects
 
@@ -394,7 +396,7 @@
 
 
 /obj/machinery/porta_turret/emp_act(severity)
-	if(on)
+	if(on && emp_vunerable)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
 		check_records = pick(0, 1)
@@ -966,6 +968,7 @@
 	base_icon_state = "syndie"
 	active_state = "Bullet"
 	faction = "syndicate"
+	emp_vunerable = 0
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return

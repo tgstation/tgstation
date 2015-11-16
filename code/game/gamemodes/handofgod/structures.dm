@@ -492,6 +492,7 @@
 	active_state = ""
 	off_state = ""
 	faction = null
+	emp_vunerable = 0
 	var/side = "neutral"
 
 /obj/machinery/porta_turret/defensepylon_internal_turret/setup()
