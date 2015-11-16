@@ -281,3 +281,6 @@
 	new /obj/item/clothing/shoes/plate/red(src)
 
 
+/obj/item/weapon/claymore/hog
+	force = 30
+	armour_penetration = 15

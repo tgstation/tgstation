@@ -499,10 +499,12 @@ BLIND     // can't see anything
 		usr.update_inv_glasses()
 	if(istype(src, /obj/item/clothing/mask))
 		usr.update_inv_wear_mask()
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.head_update(src) //updates based on the HIDE_ flags and fixes the sec hud
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
 	return 0
-

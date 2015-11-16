@@ -1,5 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Away mission loading will no longer improperly expand the width of the game world to two times the size of the away mission map."
-  - tweak: "This should also improve the speed of loading away missions, since the game doesn't have to resize the world"

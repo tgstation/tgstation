@@ -270,6 +270,14 @@
 	glass_cost = 5
 
 
+/obj/structure/divine/conduit/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
+	if(deity)
+		deity.conduits -= src
+	..()
+	if(deity)
+		deity.conduits += src
+
+
 /* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
 	name = "forge"
@@ -494,6 +502,11 @@
 /obj/machinery/gun_turret/defensepylon_internal_turret/validate_target(atom/target)
 	. = ..()
 	if(.)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.handcuffed) //dishonourable to kill somebody who might be converted.
+				return 0
+
 		var/badtarget = 0
 		switch(side)
 			if("blue")
@@ -504,8 +517,6 @@
 				badtarget = 1
 		if(badtarget)
 			return 0
-
-
 
 
 /obj/item/projectile/beam/pylon_bolt
