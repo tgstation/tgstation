@@ -283,13 +283,19 @@
 	if(!sacrificed.len)
 		var/list/possible_targets = list()
 		for(var/mob/living/carbon/human/player in player_list)
+			if(player.z == map.zCentcomm) //We can't sacrifice people that are on the centcom z-level
+				continue
 			if(player.mind && !is_convertable_to_cult(player.mind) && (player.stat != DEAD))
 				possible_targets += player.mind
+
 		if(!possible_targets.len)
 			//There are no living Unconvertables on the station. Looking for a Sacrifice Target among the ordinary crewmembers
 			for(var/mob/living/carbon/human/player in player_list)
+				if(player.z == map.zCentcomm) //We can't sacrifice people that are on the centcom z-level
+					continue
 				if(player.mind && !(player.mind in cult))
 					possible_targets += player.mind
+
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
 			possible_objectives |= "sacrifice"
