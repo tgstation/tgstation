@@ -119,7 +119,7 @@
 			user << "<span class='notice'>You are unsure what the next step may be.</span>"
 			return
 		if(RM.get_amount() < 1)
-			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			user << "<span class='warning'>You need one runed metal sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [RM] to [src]...</span>"
 		if(do_after(user, 20, target = src))
