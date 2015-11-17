@@ -233,7 +233,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				tie =  /obj/item/clothing/tie/armband/medblue
 			if("science")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
-				dep_access = list(access_research, access_robotics, access_tox, access_xenobiology)
+				dep_access = list(access_research, access_tox, access_xenobiology)
 				destination = /area/security/checkpoint/science
 				spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/science
