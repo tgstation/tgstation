@@ -11,8 +11,9 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	maxHealth = 110
-	health = 110
+	stat_attack = 1
+	maxHealth = 100
+	health = 100
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 10
