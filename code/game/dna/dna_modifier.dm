@@ -269,7 +269,7 @@
 			if(!M.client && M.mind)
 				for(var/mob/dead/observer/ghost in player_list)
 					if(ghost.mind == M.mind)
-						if(ghost.client)
+						if(ghost.client && ghost.can_reenter_corpse)
 							ghost << 'sound/effects/adminhelp.ogg'
 							ghost << "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
 								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
