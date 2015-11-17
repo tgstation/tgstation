@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed (maybe) a bug that caused small explosions animations to keep re-appearing on the same turfs when leaving the area and coming back.
-  - tweak: Explosions now affect furthest turfs first and closest ones last, which makes explosion obstacles as reliable as they were intended to be.
-  - tweak: Improved the EMP method. Allowing for station-wide EMPs that don't lag the server.
-  - rscadd: Supermatter Shard delaminations now cause a station-wide EMP. The EMP ripples slowly from the epicenter to the outskirts.

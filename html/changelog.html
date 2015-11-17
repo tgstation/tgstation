@@ -80,6 +80,27 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.11.17</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Cloning scanners will no longer bwoink ghosts if they can't rejoin their body.</li>
+				<li class="bugfix">Fixed defibs being able to revive (braindead) bodies belonging to players that ghosted out of their living body.</li>
+				<li class="bugfix">Fixes camera alarms never going away even after the alarm wire was mended.</li>
+				<li class="bugfix">Fixes AIs being able to see through deactivated cameras.</li>
+				<li class="tweak">Cameras are now even easier to upgrade: just screwdriver the maintenance panel open and jam the upgrades in. No wiring required.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed (maybe) a bug that caused small explosions animations to keep re-appearing on the same turfs when leaving the area and coming back.</li>
+				<li class="tweak">Explosions now affect furthest turfs first and closest ones last, which makes explosion obstacles as reliable as they were intended to be.</li>
+				<li class="tweak">Improved the EMP method. Allowing for station-wide EMPs that don't lag the server.</li>
+				<li class="rscadd">Supermatter Shard delaminations now cause a station-wide EMP. The EMP ripples slowly from the epicenter to the outskirts.</li>
+			</ul>
+			<h3 class="author">ShiggyPiggy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Anti-Toxin (Dylovene) is now just Dylovene.</li>
+			</ul>
+
 			<h2 class="date">2015.11.15</h2>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
@@ -2032,36 +2053,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Remove infinite range fireaxes.</li>
-			</ul>
-
-			<h2 class="date">2015.05.19</h2>
-			<h3 class="author">9600bauds updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Protolathe & Circuit Imprinter construction menus now have fancy filtering and sorting!</li>
-				<li class="rscadd">Added a "Custom" queue amount for said menus, which lets you queue a custom number of items in one go</li>
-				<li class="rscadd">Also added an option to turn off window auto-updating for the Protolathe, which caused you to be sent at the top of the list every time you built or queued something</li>
-				<li class="bugfix">Fixed Circuit Imprinter's glass counter always being 0 and not letting you eject glass from it</li>
-				<li class="bugfix">Accidentally fixed a bug where fabricators would always hold infinite materials. To compensate, maximum material amount was buffed to 150 sheets unupgraded for most fabricators, 250 for the Exosuit fabricator (+50 sheets per matter bin upgrade)</li>
-				<li class="bugfix">Fixed micro-manipulator upgrades not upgrading the Protolathe's speed</li>
-			</ul>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Communications Consoles can be emagged once again, which will fully unlock them, and allow its users to contact the Syndicate.</li>
-				<li class="bugfix">Once emagged the console has the option to "Reset Arrays" which will de-emag the console and allow its users to contact Centcomm again.</li>
-				<li class="imageadd">Emagged Communication Consoles have a slightly different sprite.</li>
-				<li class="soundadd">Added notification sounds for admins when players contact Centcomm/the Syndicate.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Xenos now take halved electrocution damage to make up for the fact that they tend to go through a lot of wiring. Crit threshold is now 8 million W with full transfer for them (1 million W for APCs due to double electrocution) up from 1 million W (125 000 W)</li>
-				<li class="tweak">Delay added to regular lighters to reduce spamming</li>
-				<li class="spellcheck">Ensure some typecasts don't accord incorrectly for cigarette-related items</li>
-				<li class="bugfix">Fix some update_brightness() instructions firing before messages, causing one to light lit lighters, notably</li>
-				<li class="bugfix">Fix the Supermatter Shard puking runtimes and having its process() broken if a mob is on the same tile as it is (possible with spawning/teleportation)</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed grabs grabbing yourself.</li>
 			</ul>
 		</div>
 		<!--
