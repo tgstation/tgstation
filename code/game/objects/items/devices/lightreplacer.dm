@@ -98,6 +98,20 @@
 			user << "<span class='warning'>You need a working light!</span>"
 			return
 
+		if(istype(W, /obj/item/weapon/storage/box/lights))
+			var/obj/item/weapon/storage/box/lights/B = W
+			if(!B.contents.len)
+				user << "<span class='warning'>The [B.name] is empty!</span>"
+			else if(uses == max_uses)
+				user << "<span class='warning'>The [src.name] is full!</span>"
+			else
+				B.close_all()
+				while(src.uses < max_uses && B.contents.len > 0)
+					B.contents.Cut(1,2)
+					AddUses(1)
+				user << "<span class='notice'>You fill the [src.name] with lights from the [B.name]. You have [uses] lights remaining.</span>"
+			return
+
 /obj/item/device/lightreplacer/emag_act()
 	if(!emagged)
 		Emag()
