@@ -100,26 +100,30 @@
 
 	if(istype(W, /obj/item/weapon/storage/box/lights))
 		var/obj/item/weapon/storage/box/lights/B = W
-		var/tmp/useable_lights = 0
-		for(var/obj/item/weapon/light/L in B.contents)
-			if(L.status == 0) // If the light is not broken or burned out
-				useable_lights = 1
-				break
-		if(!useable_lights) // This check necessitates the loop above, as I figure it to be useful to know the box has no useable lights first.
-			user << "<span class='warning'>The [B.name] contains no useable lights!</span>"
-		else if(uses == max_uses)
-			user << "<span class='warning'>The [src.name] is full!</span>"
+		var/tmp/replacement_status = 1 // 0-useable lights found, 1-no useable lights, 2-light replacer was full
+
+		if(src.uses == max_uses)
+			if(!B.contents.len) // empty box
+				replacement_status = 1
+			else // I REAALLYYY want 'no useable lights' to be the primary warning
+				replacement_status = 2
 		else
-			B.close_all()
 			for(var/obj/item/weapon/light/L in B.contents)
 				if(L.status == 0) // Don't want to allow broken or burnt out lights to be useable
+					replacement_status = 0
 					if(src.uses < max_uses)
 						qdel(L)
 						AddUses(1)
 					else
 						break
-			user << "<span class='notice'>You fill the [src.name] with lights from the [B.name]. You have [uses] lights remaining.</span>"
-		return
+
+		if(replacement_status == 1)
+			user << "<span class='warning'>The [B.name] contains no useable lights!</span>"
+			return
+		else if(replacement_status == 2)
+			user << "<span class='warning'>The [src.name] is full!</span>"
+			return
+		user << "<span class='notice'>You fill the [src.name] with lights from the [B.name]. You have [uses] lights remaining.</span>"
 
 /obj/item/device/lightreplacer/emag_act()
 	if(!emagged)
