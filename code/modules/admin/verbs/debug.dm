@@ -1851,3 +1851,15 @@ client/proc/check_convertables()
 		return
 
 	debug_variables(holder.marked_datum)
+
+/client/proc/check_spiral()
+	set name = "Check Spiral Block"
+	set category = "Debug"
+
+	var/turf/epicenter = get_turf(usr)
+	var/max_range = input("Set the max range") as num
+	var/inward = alert("Which way?","Spiral Block", "Inward","Outward")
+	if(inward == "Inward")
+		spiral_block(epicenter,max_range,1,1)
+	else
+		spiral_block(epicenter,max_range,0,1)

@@ -107,6 +107,7 @@
 
 /obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+		empulse(get_turf(src), 100, 200, 1)
 		qdel(src)
 		return
 
