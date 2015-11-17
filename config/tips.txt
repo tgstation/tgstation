@@ -20,8 +20,9 @@ You can move an item out of the way by dragging it and then clicking on an adjac
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 Your emergency oxygen tank delivers 21 kPa by default, which is more air than you need to survive! Click the tank in an open hand to adjust the pressure.
+Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your pants or your life are things to worry about.
-As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head who you can trust with keeping it safe, such as the Head of Security.
+As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
 As the Chief Medical Officer, your hypospray is like an instant injection syringe that can hold 30 units as opposed to the standard 15.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
@@ -36,12 +37,14 @@ As a Chemist, it is a good idea to carry some sort of combat or panic pill to he
 As a Geneticist, check the door to your workspace periodically to see if there's anyone to clone.
 As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you take too much damage, and are not considered a human by the AI as a hulk.
 As the Virologist, your viruses can range from healing powers so great that you can solo a blob, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As the Research Director, you can repair and even revive AIs by loading them into an intellicard, and then from there into an AI system integrity restorer computer.
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As a Scientist, you can inject yourself with the mutation toxin extracted from green slimes to become one of many races, including a slimeperson, who will never be attacked by slimes and can split!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract. It is possible to get 9 times as much out of a slime this way.
 As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research or the construction of the Phazon mech!
 As a Scientist, researchable machine parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
+As a Scientist, with high enough bluespace research, you can build machines that can teleport objects and people all around the station! Look into setting up a telescience department if you can.
 As a Roboticist, you can not only build cyborgs, but also drones, bots, and even mechs!
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery and replace their wires with a cable coil.
@@ -54,11 +57,11 @@ As a Cyborg, you are impervious to fires and heat. If you are rogue, you can rel
 As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
 As the Chief Engineer, coordinate with your engineering team to repair hull breaches as quickly as possible, so as to prevent too much air from draining.
-As the Chief Engineer, your rig suit is significantly better than everybody else's. It boasts better protection, and is completely heat and fire proof.
+As the Chief Engineer, your hardsuit is significantly better than everybody else's. It boasts better protection, and is completely heat and fire proof.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will vaporize you.
 As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: the big seemingly unconnected bulges from a half completed wiring job.
-As an Engineer, return to engineering once in a while to check on the singularity and the SMES cells. It's always a good idea to make sure the containment isn't compromised.
+As an Engineer, return to engineering once in a while to check on the singularity and the SMES cells. It's always a good idea to make sure containment isn't compromised.
 As an Engineer, you can power the station solely with the solar arrays. While uninteresting, it is a much safer alternative to the singularity engine.
 As an Engineer, you can repair windows by using a welding tool on them while on help intent.
 As an Engineer, your construction permit allows you to create a new area, but has only one use.
@@ -87,6 +90,7 @@ As the Head of Personnel, you are often just as large a target as the Captain be
 As the Mime, you can place invisible walls that last for a short time to block other people. You can use it in a pinch to delay your pursuer.
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, you have the clumsiness genetic defect, and will misfire guns if you try to fire them.
+As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
 As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and is a very powerful weapon to boot!
 As the Chaplain, your bible can heal people if you hit them with it, but it can also potentially cause brain damage. Use at your own risk!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
@@ -100,6 +104,8 @@ As the Bartender, the drinks you start with only give you the basics. If you wan
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
 As a Cargo Technician, you can hack mulebots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
+As a Cargo Technician, you can earn more cargo points by shipping back crates from maintenance, plasma sheets, rare seeds from hydroponics, and more!
+As the Quartermaster, be sure to check the manifests on crates you receive to make sure all the info is correct. If there's a mistake, stamp the manifest DENIED and send it back in a crate for a refund!
 As a Shaft Miner, the west side of the asteroid has a lot more minerals than on the east, but also contains monsters.
 As a Shaft Miner, every monster on the west side of the asteroid has a pattern you can exploit to minimize damage from the encounters.
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your rigsuit with them, greatly reducing incoming melee damage.
@@ -109,9 +115,10 @@ As a Traitor, subverting the AI to serve you can make it an extremely powerful a
 As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.
 As a Traitor, you can manufacture and recycle revolver bullets at a hacked autolathe, making the revolver an extremely powerful tool.
 As a Traitor, you may sometimes be assigned to hunt other traitors, and in turn be hunted by others.
+As a Traitor, the syndicate encryption key is very useful for coordinating plans with your fellow traitors -- or, of course, betraying them.
 As a Nuclear Operative, communication is key! Use :t or :h to speak to your fellow operatives and coordinate an attack plan.
 As a Nuclear Operative, you should look into purchasing a syndicate cyborg, as they can provide heavy fire support, full access, are immune to conventional stuns, and can easily take down the AI.
-As a Nuclear Operative, stick together! While your equipment may save you from a lucky disarm or skillful taser bolt, your fellow operative are much better at saving your life: they can drag you away from danger while stunned and provide cover fire.
+As a Nuclear Operative, stick together! While your equipment is robust, your fellow operatives are much better at saving your life: they can drag you away from danger while stunned and provide cover fire.
 As a Nuclear Operative, remember that capturing the disk and arming the Nuke is your task, don't just wander off and kill random people!
 As a Nuclear Operative, you might end up in a situation where the AI has bolted you into a room. Having some spare C4 in your pocket can save your life.
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
