@@ -7,7 +7,7 @@ changes:
   - rscadd: ""New poison: Heparin. Made from Formaldehyde, Sodium, Chlorine, and Lithium. Functions as an anticoagulant, inducing uncontrollable bleeding and small amounts of bruising.""
   - rscadd: ""New poison: Teslium. Made from Plasma, Silver, and Black Powder, heated to 400K. Modifies examine text and induces periodic shocks in the victim as well as making all shocks against them more damaging.""
   - rscadd: ""Two Chemistry books have been placed in the lab. When used, they will link to the wiki page for chemistry in the same vein as other wiki books."
-/ :cl:
+
 
 I frequently play Chemist, and I've found that a few wonder drugs tend to make others useless, and not even worth creating. This PR attempts to make underused medicines worth creating by increasing their healing effects.
 
