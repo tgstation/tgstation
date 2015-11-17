@@ -76,16 +76,17 @@
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/proc/ListTargets() called tick#: [world.time]")
-	var/list/L = list()
-	if(!search_objects)
-		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
-		L += Mobs
-		for(var/obj/mecha/M in mechas_list)
-			if(get_dist(M, src) <= vision_range && can_see(src, M, vision_range))
-				L += M
+	var/list/L = new()
+
+	if (!search_objects)
+		L.Add(ohearers(vision_range, src))
+
+		for (var/obj/mecha/M in mechas_list)
+			if (get_dist(M, src) <= vision_range && can_see(src, M, vision_range))
+				L.Add(M)
 	else
-		var/list/Objects = oview(vision_range, src)
-		L += Objects
+		L.Add(oview(vision_range, src))
+
 	return L
 
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
