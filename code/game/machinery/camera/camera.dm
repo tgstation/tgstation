@@ -110,32 +110,32 @@ var/list/camera_names=list()
 	..()
 
 /obj/machinery/camera/emp_act(severity)
-	if(!isEmpProof())
-		if(prob(100/severity))
-			var/list/previous_network = network
-			network = list()
-			cameranet.removeCamera(src)
-			stat |= EMPED
-			set_light(0)
-			triggerCameraAlarm()
+	if(isEmpProof())
+		return
+	if(prob(100/severity))
+		var/list/previous_network = network
+		network = list()
+		cameranet.removeCamera(src)
+		stat |= EMPED
+		set_light(0)
+		triggerCameraAlarm()
+		update_icon()
+		spawn(900)
+			network = previous_network
+			stat &= ~EMPED
+			cancelCameraAlarm()
 			update_icon()
-			spawn(900)
-				network = previous_network
-				stat &= ~EMPED
-				cancelCameraAlarm()
-				update_icon()
-				if(can_use())
-					cameranet.addCamera(src)
-					adv_camera.update(z, 0, src, adding=1)
-			for(var/mob/O in mob_list)
-				if (istype(O.machine, /obj/machinery/computer/security))
-					var/obj/machinery/computer/security/S = O.machine
-					if (S.current == src)
-						O.unset_machine()
-						O.reset_view(null)
-						O << "The screen bursts into static."
-			..()
-
+			if(can_use())
+				cameranet.addCamera(src)
+				adv_camera.update(z, 0, src, adding=1)
+		for(var/mob/O in mob_list)
+			if (istype(O.machine, /obj/machinery/computer/security))
+				var/obj/machinery/computer/security/S = O.machine
+				if (S.current == src)
+					O.unset_machine()
+					O.reset_view(null)
+					O << "The screen bursts into static."
+		..()
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -198,14 +198,15 @@ var/list/camera_names=list()
 		if (!panel_open)
 			user << "You can't reach into the camera's circuitry while the maintenance panel is closed."
 			return
-		if (!wires.CanDeconstruct())
+		/*if (!wires.CanDeconstruct())
 			user << "You can't reach into the camera's circuitry with the wires on the way."
-			return
+			return*/
 		user << "You attach the [W] into the camera's inner circuits."
 		assembly.upgrades += W
 		user.drop_item(W, src)
 		update_icon()
 		update_hear()
+		cameranet.updateVisibility(src, 0)
 		return
 
 	// Taking out upgrades
@@ -213,9 +214,9 @@ var/list/camera_names=list()
 		if (!panel_open)
 			user << "You can't reach into the camera's circuitry while the maintenance panel is closed."
 			return
-		if (!wires.CanDeconstruct())
+		/*if (!wires.CanDeconstruct())
 			user << "You can't reach into the camera's circuitry with the wires on the way."
-			return
+			return*/
 		if (assembly.upgrades.len)
 			var/obj/U = locate(/obj) in assembly.upgrades
 			if(U)
@@ -225,6 +226,7 @@ var/list/camera_names=list()
 				assembly.upgrades -= U
 				update_icon()
 				update_hear()
+				cameranet.updateVisibility(src, 0)
 			return
 		else //Camera deconned, no upgrades
 			user << "The camera is firmly welded to the wall." //User might be trying to deconstruct the camera with a crowbar, let them know what's wrong
@@ -277,16 +279,17 @@ var/list/camera_names=list()
 				add_hiddenprint(user)
 			else
 				visible_message("<span class='warning'> \The [src] deactivates!</span>")
-			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 			add_hiddenprint(user)
 		else
 			if(user)
 				visible_message("<span class='warning'> [user] has reactivated [src]!</span>")
 				add_hiddenprint(user)
 			else
-				visible_message("<span class='warning'> \the [src] reactivates!</span>")
-			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
+				visible_message("<span class='warning'> \The [src] reactivates!</span>")
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 			add_hiddenprint(user)
+		cameranet.updateVisibility(src, 0)
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
@@ -317,7 +320,7 @@ var/list/camera_names=list()
 		adv_camera.update(z, 0, src, adding=4) //1 is alarming, 0 is nothing wrong
 	alarm_on = 0
 	for(var/mob/living/silicon/S in mob_list)
-		S.cancelAlarm("Camera", areaMaster, list(src), src)
+		S.cancelAlarm("Camera", areaMaster, src)
 
 /obj/machinery/camera/proc/can_use()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/can_use() called tick#: [world.time]")
