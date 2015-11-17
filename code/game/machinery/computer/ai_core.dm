@@ -137,10 +137,11 @@
 					ticker.mode.remove_cultist(P:brainmob.mind, 1)
 					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
 
-				user.drop_item(P, src)
-				brain = P
-				usr << "Added [P]."
-				icon_state = "3b"
+				if (!brain)
+					if (user.drop_item(P, src))
+						brain = P
+						user << "Added [P]."
+						icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)

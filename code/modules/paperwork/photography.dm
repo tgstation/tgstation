@@ -437,11 +437,9 @@
 
 /obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/info, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/injectaialbum() called tick#: [world.time]")
-	var/numberer = 1
-	for(var/datum/picture in src.aipictures)
-		numberer++
 	var/datum/picture/P = new()
-	P.fields["name"] = "Image [numberer]"
+
+	P.fields["name"] = "\ref[P]"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
 	P.fields["info"] = info
@@ -450,7 +448,7 @@
 	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
-	usr << "<font color=blue><B>Image recorded</B></font>"	//feedback to the AI player that the picture was taken
+	usr << "<SPAN CLASS='bnotice'>Image recorded</SPAN>"	//feedback to the AI player that the picture was taken
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken

@@ -19,7 +19,7 @@
 	if(src.module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) as null|anything in list("Combat", "Engineering")
-	if(src.module)
+	if(src.module || !mod)
 		return
 	switch(mod)
 		if("Combat")

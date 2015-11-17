@@ -102,27 +102,25 @@
 		var/mob/living/L = O
 		if(!istype(L) || L.locked_to || L == user)
 			return
-		if (L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
-		L.resting = 1
-		L.loc = src.loc
-		visible_message("<span class='warning'>[L] has been laid on the operating table by [user].</span>", 3)
-		for(var/obj/OO in src)
-			OO.loc = src.loc
-		src.add_fingerprint(user)
-		icon_state = "table2-active"
-		src.victim = L
+
+		take_victim(L, user)
 		return
+
 /obj/machinery/optable/proc/check_victim()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/check_victim() called tick#: [world.time]")
-	if(locate(/mob/living/carbon/human, src.loc))
-		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.lying)
-			src.victim = M
-			icon_state = "table2-active"
-			return 1
-	src.victim = null
+	if (victim)
+		if (victim.loc == src.loc)
+			if (victim.lying)
+				if (victim.pulse)
+					icon_state = "table2-active"
+				else
+					icon_state = "table2-idle"
+
+				return 1
+
+		victim.reset_view()
+		victim = null
+
 	icon_state = "table2-idle"
 	return 0
 
@@ -131,25 +129,26 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/take_victim() called tick#: [world.time]")
+	if (victim)
+		user << "<span class='bnotice'>The table is already occupied!</span>"
+
 	C.unlock_from()
+	C.forceMove(loc)
+
+	if (C.client)
+		C.client.perspective = EYE_PERSPECTIVE
+		C.client.eye = src
+
+	if (ishuman(C))
+		victim = C
+		C.resting = 1
+
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
 		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 3)
-	if (C.client)
-		C.client.perspective = EYE_PERSPECTIVE
-		C.client.eye = src
-	C.resting = 1
-	C.loc = src.loc
-	for(var/obj/O in src)
-		O.loc = src.loc
-	src.add_fingerprint(user)
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		src.victim = H
-		icon_state = H.pulse ? "table2-active" : "table2-idle"
-	else
-		icon_state = "table2-idle"
+
+	add_fingerprint(user)
 
 /obj/machinery/optable/verb/climb_on()
 	set name = "Climb On Table"
@@ -160,11 +159,7 @@
 	if(usr.stat || !ishuman(usr) || usr.locked_to || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
-	if(src.victim)
-		usr << "<span class='notice'><B>The table is already occupied!</B></span>"
-		return
-
-	take_victim(usr,usr)
+	take_victim(usr, usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
 	if(iswrench(W))

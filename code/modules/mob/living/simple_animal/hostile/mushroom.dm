@@ -8,7 +8,10 @@
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
+
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
+	size = SIZE_SMALL
+
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"

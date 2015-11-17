@@ -18,105 +18,119 @@
 	anchored = 1
 	density = 1
 	opacity = 1
-	var/health = 50
-
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
+
+	var/health = 50
+	var/tmp/busy = 0
+	var/list/valid_types = list(/obj/item/weapon/book, \
+								/obj/item/weapon/tome, \
+								/obj/item/weapon/spellbook, \
+								/obj/item/weapon/storage/bible)
 
 /obj/structure/bookcase/cultify()
 	return
 
 /obj/structure/bookcase/initialize()
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/book))
-			I.loc = src
+		if(is_type_in_list(I, valid_types))
+			I.forceMove(src)
 	update_icon()
 
+/obj/structure/bookcase/proc/healthcheck()
+
+	if(health <= 0)
+		visible_message("<span class='warning'>\The [src] breaks apart!</span>")
+		getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
+		qdel(src)
+
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/book))
-		user.drop_item(O, src)
-		update_icon()
-	else if(istype(O, /obj/item/weapon/tome))
-		user.drop_item(O, src)
-		update_icon()
-	else if(istype(O, /obj/item/weapon/spellbook))
-		user.drop_item(O, src)
-		update_icon()
-	else if(istype(O, /obj/item/weapon/storage/bible))
-		user.drop_item(O, src)
-		update_icon()
-	else if(istype(O, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>Now disassembling [src]</span>"
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, src,50))
-			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 5)
-			density = 0
-			qdel(src)
+
+	if(busy) //So that you can't mess with it while deconstructing
 		return
-	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << (anchored ? "<span class='notice'>You unfasten the [src] from the floor.</span>" : "<span class='notice'>You secure the [src] to the floor.</span>")
+	if(is_type_in_list(O, valid_types))
+		user.drop_item(O, src)
+		update_icon()
+	else if(iscrowbar(O) && user.a_intent == I_HELP) //Only way to deconstruct, needs help intent
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
+		user.visible_message("<span class='warning'>[user] starts disassembling \the [src].</span>", \
+		"<span class='notice'>You start disassembling \the [src].</span>")
+		busy = 1
+
+		if(do_after(user, src, 50))
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 75, 1)
+			user.visible_message("<span class='warning'>[user] disassembles \the [src].</span>", \
+			"<span class='notice'>You disassemble \the [src].</span>")
+			busy = 0
+			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 5)
+			qdel(src)
+			return
+		else
+			busy = 0
+		return
+	else if(iswrench(O))
 		anchored = !anchored
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] [anchored ? "":"un"]anchors \the [src] [anchored ? "to":"from"] the floor.</span>", \
+		"<span class='notice'>You [anchored ? "":"un"]anchor the [src] [anchored ? "to":"from"] the floor.</span>")
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+		var/newname = stripped_input(user, "What category title would you like to give to this [name]?")
 		if(!newname)
 			return
 		else
 			name = ("bookcase ([sanitize(newname)])")
+	else if(O.damtype == BRUTE || O.damtype == BURN)
+		user.delayNextAttack(10) //We are attacking the bookshelf
+		health -= O.force
+		user.visible_message("<span class='warning'>\The [user] hits \the [src] with \the [O].</span>", \
+		"<span class='warning'>You hit \the [src] with \the [O].</span>")
+		healthcheck()
 	else
-		switch(O.damtype)
-			if("fire")
-				src.health -= O.force * 1
-			if("brute")
-				src.health -= O.force * 0.75
-			else
-		if (src.health <= 0)
-			visible_message("<span class=warning>The bookcase is smashed apart!</span>")
-			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
-			qdel(src)
-		..()
+		return ..() //Weapon checks for weapons without brute or burn damage type and grab check
 
 /obj/structure/bookcase/attack_hand(var/mob/user as mob)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from \the [src]?") as null|obj in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting || get_dist(user, src) > 1)
 				return
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
+			if(!user.get_active_hand())
+				user.put_in_hands(choice)
 			else
-				choice.loc = get_turf(src)
+				choice.forceMove(get_turf(src))
 			update_icon()
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
-				qdel(b)
+			for(var/obj/item/I in contents)
+				qdel(I)
 			qdel(src)
 			return
 		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else qdel(b)
+			for(var/obj/item/I in contents)
+				if(prob(50))
+					qdel(I)
 			qdel(src)
 			return
 		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
-					b.loc = (get_turf(src))
+			if(prob(50))
 				qdel(src)
 			return
-		else
 	return
+
+/obj/structure/bookcase/Destroy()
+
+	for(var/obj/item/I in contents)
+		if(is_type_in_list(I, valid_types))
+			I.forceMove(get_turf(src))
+	..()
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
-
 
 /obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"

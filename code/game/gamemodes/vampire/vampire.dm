@@ -71,8 +71,12 @@
 			if(vampire.special_role) continue
 			vampires += vampire
 			modePlayer += vampires
+		log_admin("Starting a round of vampire with [vampires.len] vampires.")
+		message_admins("Starting a round of vampire with [vampires.len] vampires.")
 		return 1
 	else
+		log_admin("Failed to set-up a round of vampire. Couldn't find any volunteers to be vampires.")
+		message_admins("Failed to set-up a round of vampire. Couldn't find any volunteers to be vampires.")
 		return 0
 
 /datum/game_mode/vampire/post_setup()

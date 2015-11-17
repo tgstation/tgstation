@@ -114,6 +114,7 @@
 
 
 /mob/living/carbon/alien/humanoid/update_inv_r_hand(var/update_icons=1)
+	overlays -= overlays_standing[X_R_HAND_LAYER]
 	if(r_hand)
 		var/t_state = r_hand.item_state
 		var/t_inhand_state = r_hand.inhand_states["right_hand"]
@@ -125,6 +126,7 @@
 	if(update_icons)	update_icons()
 
 /mob/living/carbon/alien/humanoid/update_inv_l_hand(var/update_icons=1)
+	overlays -= overlays_standing[X_L_HAND_LAYER]
 	if(l_hand)
 		var/t_state = l_hand.item_state
 		var/t_inhand_state = l_hand.inhand_states["left_hand"] //this is a file

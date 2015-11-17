@@ -550,7 +550,7 @@
 	registered_name = "CMO"
 	icon_state = "CMO"
 	desc = "It gives off the faint smell of chloral, mixed with a backdraft of shittery."
-	access = list(access_medical, access_morgue, access_genetics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce, access_keycard_auth, access_sec_doors, access_paramedic)
+	access = list(access_medical, access_morgue, access_genetics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce, access_keycard_auth, access_sec_doors, access_paramedic, access_maint_tunnels)
 
 /obj/item/weapon/card/id/rd
 	name = "Research Director ID"

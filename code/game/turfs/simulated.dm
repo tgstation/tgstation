@@ -38,17 +38,19 @@
 			// Tracking blood
 			var/list/bloodDNA = null
 			var/bloodcolor=""
+
+			// We have shoes?
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(S.track_blood && S.blood_DNA)
-					bloodDNA = S.blood_DNA
-					bloodcolor=S.blood_color
-					S.track_blood--
+					bloodDNA   = S.blood_DNA
+					bloodcolor = S.blood_color
+					S.track_blood = max(round(S.track_blood - 1, 1),0)
 			else
 				if(H.track_blood && H.feet_blood_DNA)
-					bloodDNA = H.feet_blood_DNA
-					bloodcolor=H.feet_blood_color
-					H.track_blood--
+					bloodDNA   = H.feet_blood_DNA
+					bloodcolor = H.feet_blood_color
+					H.track_blood = max(round(H.track_blood - 1, 1),0)
 
 			if (bloodDNA)
 				if(istype(M,/mob/living/carbon/human/vox))
@@ -89,6 +91,7 @@
 				if(M.CheckSlip() < 1) //No slipping
 					return ..()
 				if(M.m_intent == "run")
+					sleep(1)
 					M.stop_pulling()
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the wet floor!</span>", \
@@ -99,6 +102,7 @@
 
 			if(2) //Lube
 				M.stop_pulling()
+				sleep(1)
 				step(M, M.dir)
 				spawn(1)
 					step(M, M.dir)
@@ -118,6 +122,7 @@
 				if(!M.CheckSlip() < 1) //No slipping
 					return ..()
 				if((M.m_intent == "run") && prob(30))
+					sleep(1)
 					M.stop_pulling()
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the icy floor!</span>", \

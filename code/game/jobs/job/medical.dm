@@ -11,7 +11,7 @@
 	req_admin_notify = 1
 	access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_paramedic)
+			access_keycard_auth, access_sec_doors, access_paramedic, access_eva)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_paramedic)
@@ -52,7 +52,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/medical
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_eva)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
 
@@ -122,7 +122,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/medical
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_eva)
 	minimal_access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
 
@@ -160,7 +160,7 @@
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/medical
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research, access_eva)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
 	pdaslot=slot_belt

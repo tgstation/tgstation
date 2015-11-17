@@ -349,6 +349,9 @@
 			returnToPool(F.floor_tile)
 			F.floor_tile = null
 		F = null
+
+	var/atom/movable/overlay/transfer_animation = c_animation
+
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
@@ -357,7 +360,7 @@
 		//	if(!zone.CheckStatus())
 		//		zone.SetStatus(ZONE_ACTIVE)
 
-		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
+		var/turf/simulated/W = new N(src)
 		if(env)
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
@@ -370,6 +373,10 @@
 		if(air_master)
 			air_master.mark_for_update(src)
 
+		if(transfer_animation)
+			W.c_animation = transfer_animation
+			transfer_animation.master = W
+
 		W.levelupdate()
 
 		. = W
@@ -380,13 +387,17 @@
 		//	if(!zone.CheckStatus())
 		//		zone.SetStatus(ZONE_ACTIVE)
 
-		var/turf/W = new N( locate(src.x, src.y, src.z) )
+		var/turf/W = new N(src)
 
 		if(tell_universe)
 			universe.OnTurfChange(W)
 
 		if(air_master)
 			air_master.mark_for_update(src)
+
+		if(transfer_animation)
+			W.c_animation = c_animation
+			transfer_animation.master = W
 
 		W.levelupdate()
 

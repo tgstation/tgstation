@@ -136,10 +136,10 @@
 			return
 		if(mob.stat == 2)
 			return
-		if(mob.radiation > 50)
+	/*	if(mob.radiation > 50)
 			if(prob(1))
 				majormutate()
-		if(mob.reagents.has_reagent("spaceacillin"))
+	*/	if(mob.reagents.has_reagent("spaceacillin"))
 			return
 		if(prob(stageprob) && prob(25 + (clicks/100)) && stage != 4)
 			stage++

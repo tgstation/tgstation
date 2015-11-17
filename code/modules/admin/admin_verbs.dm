@@ -94,6 +94,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_emp,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
 	/client/proc/antag_madness,
@@ -179,6 +180,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb,
 	/client/proc/set_teleport_pref,
 	/client/proc/check_convertables,
+	/client/proc/check_spiral,
 	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
@@ -227,6 +229,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_emp,
 	/client/proc/cinematic,
 	/datum/admins/proc/toggle_aliens,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -617,16 +620,16 @@ var/list/admin_verbs_mod = list(
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/drop_bomb() called tick#: [world.time]")
 
 	var/turf/epicenter = mob.loc
-	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
+	var/list/choices = list("Small Bomb (1,2,3)", "Medium Bomb (2,3,4)", "Big Bomb (3,5,7)", "Custom Bomb")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	switch(choice)
 		if(null)
 			return 0
-		if("Small Bomb")
+		if("Small Bomb (1,2,3)")
 			explosion(epicenter, 1, 2, 3, 3)
-		if("Medium Bomb")
+		if("Medium Bomb (2,3,4)")
 			explosion(epicenter, 2, 3, 4, 4)
-		if("Big Bomb")
+		if("Big Bomb (3,5,7)")
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as num
@@ -634,8 +637,34 @@ var/list/admin_verbs_mod = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	log_admin("[key_name(usr)] creating an admin explosion at [epicenter.loc] ([epicenter.x],[epicenter.y],[epicenter.z]).")
+	message_admins("<span class='notice'>[key_name_admin(src)] creating an admin explosion at [epicenter.loc] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>).</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/drop_emp()
+	set category = "Special Verbs"
+	set name = "Drop EMP"
+	set desc = "Cause an EMP of varying strength at your location."
+
+	var/turf/epicenter = mob.loc
+	var/list/choices = list("Small EMP (1,2)", "Medium EMP (2,4)", "Big EMP (4,8)", "Custom EMP")
+	var/choice = input("What size EMP would you like to produce?") in choices
+	switch(choice)
+		if(null)
+			return 0
+		if("Small EMP (1,2)")
+			empulse(epicenter, 1, 2)
+		if("Medium EMP (2,4)")
+			empulse(epicenter, 2, 4)
+		if("Big EMP (4,8)")
+			empulse(epicenter, 4, 8)
+		if("Custom EMP")
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
+			var/light_impact_range = input("Light impact range (in tiles):") as num
+			empulse(epicenter, heavy_impact_range, light_impact_range)
+	log_admin("[key_name(usr)] creating an admin EMP at [epicenter.loc] ([epicenter.x],[epicenter.y],[epicenter.z]).")
+	message_admins("<span class='notice'>[key_name_admin(src)] creating an admin EMP at [epicenter.loc] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>).</span>")
+	feedback_add_details("admin_verb","DE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
 	set category = "Fun"

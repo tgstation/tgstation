@@ -30,7 +30,7 @@
 						else
 							entry += " - <font color='black'><b>DEAD</b></font>"
 					else if (isnewplayer(C.mob))
-						entry += " - <i>Lobby</i>"
+						entry += " - <font color='gray'><i>Lobby</i></font>"
 					else
 						entry += " - <font color='black'><b>DEAD</b></font>"
 

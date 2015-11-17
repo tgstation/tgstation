@@ -26,12 +26,11 @@
 	world << "<B>The current game mode is - Wizard!</B>"
 	world << "<B>There is a <span class='danger'>SPACE WIZARD on the station. You can't let him achieve his objective!</span>"
 
-
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
+/datum/game_mode/wizard/pre_setup()
 	var/list/datum/mind/possible_wizards = get_players_for_role(ROLE_WIZARD)
 	if(possible_wizards.len==0)
+		log_admin("Failed to set-up a round of wizard. Couldn't find any volunteers to be wizards.")
+		message_admins("Failed to set-up a round of wizard. Couldn't find any volunteers to be wizards.")
 		return 0
 	var/datum/mind/wizard
 	while(possible_wizards.len)
@@ -44,6 +43,7 @@
 			break
 	if(isnull(wizard))
 		log_admin("COULD NOT MAKE A WIZARD, Mixed mode is [mixed ? "enabled" : "disabled"]")
+		message_admins("COULD NOT MAKE A WIZARD, Mixed mode is [mixed ? "enabled" : "disabled"]")
 		return 0
 	wizards += wizard
 	modePlayer += wizard
@@ -52,14 +52,15 @@
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
 		wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
+		log_admin("Failed to set-up a round of wizard. Couldn't find any wizard spawn points.")
+		message_admins("Failed to set-up a round of wizard. Couldn't find any wizard spawn points.")
 		return 0
-	return 1
 
+	for(var/datum/mind/wwizard in wizards)
+		wwizard.current.loc = pick(wizardstart)
 
-/datum/game_mode/wizard/pre_setup()
-	for(var/datum/mind/wizard in wizards)
-		wizard.current.loc = pick(wizardstart)
-
+	log_admin("Starting a round of wizard with [wizards.len] wizards.")
+	message_admins("Starting a round of wizard with [wizards.len] wizards.")
 	return 1
 
 

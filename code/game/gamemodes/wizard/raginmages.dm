@@ -14,6 +14,11 @@
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
 	world << "<B>The <span class='danger'>Space Wizard Federation is pissed, help defeat all the space wizards!</span>"
 
+/datum/game_mode/sandbox/pre_setup()
+	log_admin("Starting a round of Ragin' Mages.")
+	message_admins("Starting a round of Ragin' Mages.")
+	return 1
+
 /datum/game_mode/wizard/raginmages/post_setup()
 	var/playercount = 0
 	..()

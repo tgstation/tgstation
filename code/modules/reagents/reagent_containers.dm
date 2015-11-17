@@ -167,11 +167,12 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 			if (tx_amount > 0 && container.log_reagents && bad_reagents && bad_reagents.len > 0)
 				log_reagents(user, src, target, tx_amount, bad_reagents)
 
-			return tx_amount
+			return (tx_amount*-1)
 
 	if(!success)
 		// Mob splashing
 		if(splashable_units != 0)
+			var/to_splash = reagents.total_volume
 			if(ismob(target))
 				if (src.is_empty() || !target.reagents)
 					return -1
@@ -184,6 +185,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 				// Splash the target
 				splash_sub(reagents, M, splashable_units, user)
+				return (to_splash*-1)
 			// Non-mob splashing
 			else
 				if(!src.is_empty())
@@ -193,7 +195,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 					// Splash the thing
 					splash_sub(reagents, target, splashable_units, user)
-
+					return (to_splash*-1)
 	return 0
 
 /obj/item/weapon/reagent_containers/proc/is_empty()

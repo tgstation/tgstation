@@ -1070,15 +1070,15 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MUTATIONS_LAYER			3
 #define DAMAGE_LAYER			4
 #define UNIFORM_LAYER			5
-#define ID_LAYER				6
-#define SHOES_LAYER				7
-#define GLOVES_LAYER			8
-#define EARS_LAYER				9
-#define SUIT_LAYER				10
-#define GLASSES_LAYER			11
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
+#define SHOES_LAYER				6
+#define GLOVES_LAYER			7
+#define EARS_LAYER				8
+#define SUIT_LAYER				9
+#define GLASSES_LAYER			10
+#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		12
+#define BACK_LAYER				13
+#define ID_LAYER				14
 #define HAIR_LAYER				15		//TODO: make part of head layer?
 #define GLASSES_OVER_HAIR_LAYER	16
 #define FACEMASK_LAYER			17

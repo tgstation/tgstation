@@ -95,6 +95,19 @@
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)
 
+/mob/living/simple_animal/hostile/alien/gib()
+	death(1)
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-a", sleeptime = 15)
+	xgibs(loc, viruses)
+	dead_mob_list -= src
+
+	qdel(src)
+
 /mob/living/simple_animal/hostile/alien/CanAttack(var/atom/the_target)
 	if(isalien(the_target))
 		return 0

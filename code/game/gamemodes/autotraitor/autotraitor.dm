@@ -38,6 +38,8 @@
 
 	// Stop setup if no possible traitors
 	if(!possible_traitors.len)
+		log_admin("Failed to set-up a round of AutoTraitor. Couldn't find any volunteers to be traitor.")
+		message_admins("Failed to set-up a round of AutoTraitor. Couldn't find any volunteers to be traitor.")
 		return 0
 
 	if(config.traitor_scaling)
@@ -45,8 +47,6 @@
 		// mixed mode scaling
 		if(mixed)
 			num_traitors = min(3, num_traitors)
-		log_game("Number of traitors: [num_traitors]")
-		message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -66,8 +66,9 @@
 		if(istype(traitor))
 			traitor.special_role = "traitor"
 
-//	if(!traitors.len)
-//		return 0
+	log_admin("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
+	message_admins("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
+
 	return 1
 
 

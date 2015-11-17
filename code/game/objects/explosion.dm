@@ -30,7 +30,7 @@
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/explosion() called tick#: [world.time]")
 	src = null	//so we don't abort once src is deleted
 
-	spawn(0)
+	spawn()
 		if(config.use_recursive_explosions)
 			var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
 			explosion_rec(epicenter, power)
@@ -43,7 +43,7 @@
 
 		score["explosions"]++ //For the scoreboard
 
-		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flash_range)
+		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
 //		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 //		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
 
@@ -65,9 +65,10 @@
 					if(dist <= round(max_range + world.view - 2, 1))
 						if(devastation_range > 0)
 							M.playsound_local(epicenter, get_sfx("explosion"), 100, 1, frequency, falloff = 5) // get_sfx() is so that everyone gets the same sound
+							shake_camera(M, 10, 2)
 						else
 							M.playsound_local(epicenter, get_sfx("explosion_small"), 100, 1, frequency, falloff = 5)
-						shake_camera(M, 10, 2)
+							shake_camera(M, 4, 1)
 
 						//You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 
@@ -76,10 +77,10 @@
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 						if(devastation_range > 0)
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+							M << "<span class='warning'>You feel something shake the structure...</span>"
+							shake_camera(M, 4, 1)
 						else
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
-						M << "<span class='warning'>You feel something shake the structure...</span>"
-						shake_camera(M, 4, 1)
 
 		var/close = trange(world.view+round(devastation_range,1), epicenter)
 		//To all distanced mobs play a different sound
@@ -106,7 +107,7 @@
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in trange(max_range, epicenter))
+		for(var/turf/T in spiral_block(epicenter,max_range,1))
 			var/dist = cheap_pythag(T.x - x0, T.y - y0)
 
 			if(explosion_newmethod)	//Realistic explosions that take obstacles into account

@@ -16,7 +16,7 @@
 	trash_items += src
 
 /obj/item/trash/bustanuts
-	name = "Busta-Nuts"
+	name = "\improper Busta-Nuts"
 	icon_state = "busta_nut"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
@@ -28,54 +28,54 @@
 	w_type=RECYK_MISC
 
 /obj/item/trash/candy
-	name = "Candy"
+	name = "candy"
 	icon_state= "candy"
 
 /obj/item/trash/cheesie
-	name = "Cheesie honkers"
+	name = "\improper Cheesie honkers"
 	icon_state = "cheesie_honkers"
 
 /obj/item/trash/chips
-	name = "Chips"
+	name = "chips"
 	icon_state = "chips"
 
 
 /obj/item/trash/popcorn
-	name = "Popcorn"
+	name = "popcorn"
 	icon_state = "popcorn"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
 
 /obj/item/trash/sosjerky
-	name = "Scaredy's Private Reserve Beef Jerky"
+	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
 
 /obj/item/trash/syndi_cakes
-	name = "Syndi cakes"
+	name = "\improper Syndi cakes"
 	icon_state = "syndi_cakes"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
 
 /obj/item/trash/discountchocolate
-	name = "Discount Dan's Chocolate Bar"
+	name = "\improper Discount Dan's Chocolate Bar"
 	icon_state = "danbar"
 
 /obj/item/trash/danitos
-	name = "Danitos"
+	name = "\improper Danitos"
 	icon_state = "danitos"
 
 /obj/item/trash/waffles
-	name = "Waffles"
+	name = "waffles"
 	icon_state = "waffles"
 
 /obj/item/trash/plate
-	name = "Plate"
+	name = "plate"
 	icon_state = "plate"
 
 /obj/item/trash/pietin
-	name = "Pie tin"
+	name = "pie tin"
 	icon_state = "pietin"
 	autoignition_temperature = 0
 	siemens_coefficient = 2 //Do not touch live wires
@@ -89,19 +89,19 @@
 		user.put_in_hands(I)
 
 /obj/item/trash/snack_bowl
-	name = "Snack bowl"
+	name = "snack bowl"
 	icon_state	= "snack_bowl"
 
 /obj/item/trash/pistachios
-	name = "Pistachios pack"
+	name = "pistachios pack"
 	icon_state = "pistachios_pack"
 
 /obj/item/trash/semki
-	name = "Semki pack"
+	name = "pemki pack"
 	icon_state = "semki_pack"
 
 /obj/item/trash/tray
-	name = "Tray"
+	name = "tray"
 	icon_state = "tray"
 
 /obj/item/trash/candle
@@ -114,7 +114,7 @@
 	icon_state = "liquidfood"
 
 /obj/item/trash/chicken_bucket
-	name = "Chicken bucket"
+	name = "chicken bucket"
 	icon_state = "kfc_bucket"
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC

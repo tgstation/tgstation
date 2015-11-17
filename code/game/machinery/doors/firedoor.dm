@@ -124,10 +124,12 @@ var/global/list/alert_overlays_global = list()
 	areas_added = list(A)
 
 	for(var/direction in cardinal)
-		A = get_area(get_step(src,direction))
-		if(istype(A) && !(A in areas_added))
-			A.all_doors.Add(src)
-			areas_added += A
+		var/turf/T = get_step(src,direction)
+		if(istype(T,/turf/simulated/floor))
+			A = get_area(get_step(src,direction))
+			if(A)
+				A.all_doors |= src
+				areas_added |= A
 
 
 /obj/machinery/door/firedoor/Destroy()

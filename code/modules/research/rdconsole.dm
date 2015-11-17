@@ -116,14 +116,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallTechName() called tick#: [world.time]")
 	var/datum/tech/check_tech
-	var/return_name = null
-	for(var/T in typesof(/datum/tech) - /datum/tech)
-		check_tech = null
-		check_tech = new T()
-		if(check_tech.id == ID)
-			return_name = check_tech.name
-			del(check_tech)
-			check_tech = null
+	var/return_name = ""
+
+	for (var/T in typesof(/datum/tech) - /datum/tech)
+		check_tech = T
+
+		if (initial(check_tech.id) == ID)
+			return_name = initial(check_tech.name)
 			break
 
 	return return_name

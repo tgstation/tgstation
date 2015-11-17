@@ -5,8 +5,8 @@
 	desc = "Truly the ride never ends."
 	icon_state = "skelly"
 	icon_living = "skelly"
-	icon_dead = "skelly"
-	icon_gib = "skelly"
+	icon_dead = "skelly_dead"
+	icon_gib = "skelly_dead"
 	speak_chance = 0
 	turns_per_move = 1
 	can_butcher = 0
@@ -37,6 +37,7 @@
 	minbodytemp = 0
 
 	environment_smash = 1
+	meat_type = null
 
 /mob/living/simple_animal/hostile/necro/zombie
 	name = "zombie"

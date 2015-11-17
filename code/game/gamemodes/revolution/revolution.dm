@@ -50,8 +50,7 @@
 	var/head_check = 0
 	for(var/mob/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
-			head_check = 1
-			break
+			head_check++
 
 	for(var/datum/mind/player in possible_headrevs)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
@@ -66,8 +65,12 @@
 		head_revolutionaries += lenin
 
 	if((head_revolutionaries.len==0)||(!head_check))
+		log_admin("Failed to set-up a round of revolution. Couldn't find any heads of staffs or any volunteers to be head revolutionaries.")
+		message_admins("Failed to set-up a round of revolution. Couldn't find any heads of staffs or any volunteers to be head revolutionaries.")
 		return 0
 
+	log_admin("Starting a round of revolution with [head_revolutionaries.len] head revolutionaries and [head_check] heads of staff.")
+	message_admins("Starting a round of revolution with [head_revolutionaries.len] head revolutionaries and [head_check] heads of staff.")
 	return 1
 
 

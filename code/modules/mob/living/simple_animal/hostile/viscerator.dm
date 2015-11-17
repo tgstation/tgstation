@@ -24,6 +24,9 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	size = SIZE_SMALL
+	meat_type = null
+
 /mob/living/simple_animal/hostile/viscerator/Life()
 	..()
 	if(stat == CONSCIOUS)

@@ -22,6 +22,9 @@
 	name = "donut box"
 	var/icon_type = "donut"
 	var/plural_type = "s" //Why does the english language have to be so complicated to work with ?
+	var/empty = 0
+
+	foldable = /obj/item/stack/sheet/cardboard
 
 	//Note : Fancy storages generally collect one specific type of objects only due to their properties
 	//As such, it would make sense that one click on a stack of the corresponding objects should shove everything in here
@@ -55,15 +58,23 @@
 	icon_type = "donut"
 	name = "donut box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut", \
+					"/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/donut")
 
 	foldable = /obj/item/stack/sheet/cardboard
 	starting_materials = list(MAT_CARDBOARD = 3750)
-	w_type=RECYK_MISC
+	w_type = RECYK_MISC
+
+/obj/item/weapon/storage/fancy/donut_box/empty
+	empty = 1
+	icon_state = "donutbox0"
 
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
-	for(var/i=1; i <= storage_slots; i++)
+	if(empty)
+		update_icon() //Make it look actually empty
+		return
+	for(var/i = 1; i <= storage_slots; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
 	return
 
@@ -81,11 +92,18 @@
 
 	foldable = /obj/item/stack/sheet/cardboard
 	starting_materials = list(MAT_CARDBOARD = 3750)
-	w_type=RECYK_MISC
+	w_type = RECYK_MISC
+
+/obj/item/weapon/storage/fancy/egg_box/empty
+	empty = 1
+	icon_state = "eggbox0"
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
-	for(var/i=1; i <= storage_slots; i++)
+	if(empty)
+		update_icon() //Make it look actually empty
+		return
+	for(var/i = 1; i <= storage_slots; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
 	return
 
@@ -107,7 +125,6 @@
 	throwforce = 2
 	flags = 0
 	slot_flags = SLOT_BELT
-	var/empty = 0
 
 /obj/item/weapon/storage/fancy/candle_box/empty
 	empty = 1
@@ -136,7 +153,6 @@
 	w_class = 2.0
 	storage_slots = 6
 	icon_type = "crayon"
-	var/empty = 0
 	can_hold = list(
 		"/obj/item/toy/crayon"
 	)
@@ -187,13 +203,13 @@
 	storage_slots = 21 //3 rows of 7 items
 	w_class = 1
 	flags = 0
-	var/empty = 0
 	var/matchtype = /obj/item/weapon/match
 	can_hold = list("/obj/item/weapon/match") // Strict type check.
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/storage/fancy/matchbox/empty
 	empty = 1
+	icon_state = "matchbox_e"
 
 /obj/item/weapon/storage/fancy/matchbox/New()
 	..()
@@ -311,6 +327,8 @@
 	storage_slots = 6
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
 
+	foldable = null
+
 
 /obj/item/weapon/storage/fancy/vials/New()
 	..()
@@ -368,8 +386,15 @@
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC
 
+/obj/item/weapon/storage/fancy/flares/empty
+	empty = 1
+	icon_state = "flarebox0"
+
 /obj/item/weapon/storage/fancy/flares/New()
 	..()
+	if(empty)
+		update_icon() //Make it look actually empty
+		return
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/device/flashlight/flare(src)
 	return

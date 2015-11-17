@@ -341,11 +341,15 @@ proc/move_mining_shuttle()
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-		var/list/L = list()
-		for(var/obj/item/beacon/B in beacons)
+		var/list/L = new()
+
+		for (var/obj/item/beacon/B in beacons)
 			var/turf/T = get_turf(B)
-			if(T.z == STATION_Z)
-				L += B
+
+			if (!isnull(T))
+				if (T.z == map.zMainStation)
+					L.Add(B)
+
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
 			return
@@ -540,6 +544,7 @@ proc/move_mining_shuttle()
 	projectiletype = /obj/item/projectile/beam
 	projectilesound = 'sound/weapons/Laser.ogg'
 	wanted_objects = list(/obj/item/weapon/ore)
+	meat_type = null
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))

@@ -124,6 +124,7 @@
 	status_flags |= DISFIGURED	//Makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
+	vessel.remove_reagent("blood",vessel.get_reagent_amount("blood"))
 	return
 
 /mob/living/carbon/human/proc/Drain()

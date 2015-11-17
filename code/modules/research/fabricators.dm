@@ -30,6 +30,8 @@
 	var/temp
 	var/list/part_sets = list()
 
+	var/start_end_anims = 0
+
 	research_flags = TAKESMATIN | HASOUTPUT | HASMAT_OVER | NANOTOUCH
 
 /obj/machinery/r_n_d/fabricator/New()
@@ -42,8 +44,8 @@
 
 /obj/machinery/r_n_d/fabricator/update_icon()
 	..()
-	if(being_built)
-		overlays += "[base_state]_ani"
+	if(being_built && (icon_state != "[base_state]_ani"))
+		icon_state = "[base_state]_ani"
 
 /obj/machinery/r_n_d/fabricator/examine(mob/user)
 	..()
@@ -273,13 +275,17 @@
 	src.being_built = new part.build_path(src)
 
 	src.busy = 1
-	src.overlays += "[base_state]_ani"
+	icon_state = "[base_state]_ani"
+	if(start_end_anims)
+		flick("[base_state]_start",src)
 	src.use_power = 2
 	src.updateUsrDialog()
 	//message_admins("We're going building with [get_construction_time_w_coeff(part)]")
 	sleep(get_construction_time_w_coeff(part))
 	src.use_power = 1
-	src.overlays -= "[base_state]_ani"
+	icon_state = base_state
+	if(start_end_anims)
+		flick("[base_state]_end",src)
 	if(being_built)
 		if(!being_built.materials)
 			being_built.materials = getFromPool(/datum/materials, being_built)

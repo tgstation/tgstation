@@ -80,6 +80,170 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.11.17</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Cloning scanners will no longer bwoink ghosts if they can't rejoin their body.</li>
+				<li class="bugfix">Fixed defibs being able to revive (braindead) bodies belonging to players that ghosted out of their living body.</li>
+				<li class="bugfix">Fixes camera alarms never going away even after the alarm wire was mended.</li>
+				<li class="bugfix">Fixes AIs being able to see through deactivated cameras.</li>
+				<li class="tweak">Cameras are now even easier to upgrade: just screwdriver the maintenance panel open and jam the upgrades in. No wiring required.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed (maybe) a bug that caused small explosions animations to keep re-appearing on the same turfs when leaving the area and coming back.</li>
+				<li class="tweak">Explosions now affect furthest turfs first and closest ones last, which makes explosion obstacles as reliable as they were intended to be.</li>
+				<li class="tweak">Improved the EMP method. Allowing for station-wide EMPs that don't lag the server.</li>
+				<li class="rscadd">Supermatter Shard delaminations now cause a station-wide EMP. The EMP ripples slowly from the epicenter to the outskirts.</li>
+			</ul>
+			<h3 class="author">ShiggyPiggy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Anti-Toxin (Dylovene) is now just Dylovene.</li>
+			</ul>
+
+			<h2 class="date">2015.11.15</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed xenomorph sprites not updating after they drop/throw an item.</li>
+			</ul>
+
+			<h2 class="date">2015.11.14</h2>
+			<h3 class="author">ArthurDentist updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Being Clown Cursed as a wizard will no longer prevent you from casting robed spells.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Added on-mob sprites for every kinds of IDs.</li>
+				<li class="imageadd">Added on-mob sprites for every kinds of headsets.</li>
+				<li class="tweak">Moved the ID layer above suits and backpacks, so it's less likely to be hidden when it shouldn't.</li>
+				<li class="bugfix">Fixed energy shield sprite not updating when the shield is activated.</li>
+				<li class="bugfix">Fixed spacevine and biomass events being borked and not properly triggering. Welcome back spacevines random events.</li>
+				<li class="tweak">Trying to convert a cult-banned player will now force them asleep for 10 minute and give the cultist who tried to convert them an explicit message about it. This doesn't convert loyalty implanted players.</li>
+			</ul>
+
+			<h2 class="date">2015.11.13</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You can no longer slip plant analyzers into sliceable food.</li>
+				<li class="bugfix">Fixed vending machines not connecting to their vendor account and thus being useless.</li>
+				<li class="rscadd">Reagent containers, such as buckets or beakers, now make some noise when at least 10 units are splashed over the floor or into Hydroponics trays.</li>
+				<li class="bugfix">Fixed non-admin ghosts being able to use some machines, such as washing machines or showers.</li>
+			</ul>
+
+			<h2 class="date">2015.11.12</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">EMPs now properly temporarily turn APC switches OFF.</li>
+				<li class="rscadd">Admins now have a verb to drop EMPs.</li>
+				<li class="rscadd">Hivebots now take damage from EMPs.</li>
+				<li class="tweak">Ion rifles projectiles now produce small EMPs no matter what they bump into.</li>
+			</ul>
+
+			<h2 class="date">2015.11.11</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed non-admin ghosts being unable to click the "Jump to arena" button in the chat window when a Bomberman arena was created.</li>
+				<li class="bugfix">You can no longer place something in a briefcase's fake bottom if there's already something in it.</li>
+				<li class="tweak">Removed the "on_floor" requirement to build computer frames, stools, closets, canisters and iv_drips.</li>
+				<li class="tweak">Empty donut boxes, egg boxes, and the likes, can now be unfolded back into cardboard sheets.</li>
+				<li class="tweak">Staff of Animatione-created mimics now have a reddish outline and jitter violently.</li>
+				<li class="bugfix">Fixed Necro Staff-created skeletons staying upright when dead.</li>
+				<li class="imageadd">Improved Autolathe/Protolathe animations.</li>
+				<li class="bugfix">Fixed interactions between compressed matter implants and Posibrains/MMIs.</li>
+				<li class="tweak">Ryetalyn no longer affects the monkey gene. It won't turn monkeys into humans anymore.</li>
+			</ul>
+			<h3 class="author">Probe1 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The empty SSU in Box/Engineering Secure Storage has been replaced with one containing an engineering hardsuit.</li>
+				<li class="bugfix">Funny enough, there was always a defib, blood bag, and first aid kits on the shuttle.  However, the defib locker was acting as a container for them and there was no way to get them out.  This is fixed now!</li>
+			</ul>
+			<h3 class="author">ShiggyPiggy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">The surgeon's switchtool is now constructible (and deconstructible) in the protolathe.</li>
+				<li class="rscadd">The CMO now has maintenance access.</li>
+			</ul>
+
+			<h2 class="date">2015.11.10</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed bug that allowed players to press a replicator's buttons when it was already processing an item.</li>
+				<li class="soundadd">Added sounds to replicators and autocloners.</li>
+				<li class="rscadd">Replicators and autocloners can now be wrenched into place.</li>
+				<li class="tweak">Reduced the number of ticks required for a mob to spawn from the autocloner by a factor of 4 (now from 60 to 360 ticks, down from 240 to 1440 ticks)</li>
+				<li class="rscadd">Replicators and autocloners can now be destroyed by damaging projectiles or by being hit with weapons of force higher than 10. Their destruction produces a small (but damaging) explosion.</li>
+			</ul>
+			<h3 class="author">PJB3005 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Made ventcrawling through layer manifolds less of a pain; you now get aligned to the third layer if you're crawling in the direction with only 1 pipe.</li>
+			</ul>
+			<h3 class="author">Probe1 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Security and Medical once again have EVA access.</li>
+				<li class="tweak">Except Paramedics.  They have a sick ass suit already.</li>
+				<li class="bugfix">Removed hivebot/tele and several invisible parent mobs from the master trainer belt list.  The hivebot/tele (beacon) was causing miners to get shrekt by their own capsules.</li>
+			</ul>
+			<h3 class="author">ShiggyPiggy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed an issue where blood drips of any color had an "It's red." description.</li>
+			</ul>
+
+			<h2 class="date">2015.11.09</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Borers can hear from inside of their hosts again.</li>
+			</ul>
+			<h3 class="author">Wizardcrying updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Disallows the destruction of a janicart's trashbag and its contents by putting on another trashbag. No atom smashing janicart for you, janitors.</li>
+			</ul>
+
+			<h2 class="date">2015.11.08</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed bloody/vomit/oily footsteps.</li>
+				<li class="bugfix">Syndicate ship teleporter HUB no longer...teleports itself away.</li>
+				<li class="bugfix">Small explosions no longer shake the screen station-wide.</li>
+				<li class="bugfix">Lube/Wet floors and portals no longer crash the server.</li>
+				<li class="bugfix">Silver slimes+plasma reactions no longer spawn blank customizable foods.</li>
+				<li class="bugfix">Test Dummies no longer retain their brute damage overlay after having been rejuvinated.</li>
+				<li class="bugfix">Simple Animal Aliens now leave xeno gibs when they get gibbed.</li>
+				<li class="tweak">Shades, Constructs, and Gibs no longer leave bloody gibs behind when they get gibbed.</li>
+				<li class="tweak">Shades and Constructs now leave some ectoplasm behind when they get gibbed.</li>
+				<li class="tweak">Shades and Constructs now leave 3 ectoplasms instead of 1 when they die.</li>
+			</ul>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">All changes listed are about Defficiency.</li>
+				<li class="bugfix">Fixed disposaled items not landing on the mass driver, effectively preventing disposing of them due to the particular way deff's disposals work.</li>
+				<li class="rscadd">Added a space cleaner bottle in chemistry and a bar of soap in surgery.</li>
+				<li class="tweak">Replaced the windows on the right side of the toxins launch room with walls, to avoid the windows breaking upon being hit by whatever the disposal outlet launches at them (usually corpses).</li>
+				<li class="tweak">Replace the old firelocks on the research outpost with the new ones.</li>
+				<li class="bugfix">Made the Nanotrasen-approved Maintenance Path Indicators unmovable.</li>
+				<li class="tweak">Added a cyborg recharging station in the bridge.</li>
+				<li class="rscadd">Added three gadget bags and ten sheets of plastic to R&D.</li>
+				<li class="rscdel">Removed all points of sale and EFTPOS scanners.</li>
+				<li class="bugfix">Added a camera in the new science entrance.</li>
+				<li class="tweak">Removed the closet and moved the body bags in cloning to genetics to make cloning less cramped.</li>
+				<li class="tweak">Added two mining vending machines and an ATM to the mining outpost, repurposed the room in cargo to a delivery/storage room from which cargo techs can take the ores the miners bring from the asteroid to deliver to the rest of the station and store drills R&D made for the miners or whatever just be the usual goys and ignore it entirely then complain about it having no point or turn it into some dank disco break room for cargo. Your imagination is the limit.</li>
+				<li class="tweak">Removed the research shuttle entirely and replaced it with break room. The mining shuttle now covers both the mining and research outposts.</li>
+				<li class="rscadd">Added two security suit storages units to the armory.</li>
+				<li class="tweak">Added a camera in space near the armory, and security airlocks now have randomized wires. Come at me greytide, I don't give a fuck.</li>
+				<li class="rscadd">Added a cute little bathroom in security near interrogation.</li>
+				<li class="bugfix">Fixed (maybe, who the fuck knows) getting thrown in unlogical directions during pod/shuttle transit.</li>
+				<li class="bugfix">Removed a metric fuckton of blind spots in the station's camera network.</li>
+			</ul>
+			<h3 class="author">Probe1 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Diona nymphs now properly drop all items on evoolution.</li>
+				<li class="bugfix">Diona nymphs can no longer evolve after death</li>
+			</ul>
+			<h3 class="author">Unid updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">It's no longer possible to get nonsensical meat from some mobs (including hivebots, constructs, bees, mining drones and slimes)</li>
+				<li class="tweak">Walking mushrooms and viscerators are now small (which means they can be picked up)</li>
+			</ul>
+
 			<h2 class="date">2015.11.06</h2>
 			<h3 class="author">N3X15 updated:</h3>
 			<ul class="changes bgimages16">
@@ -1889,159 +2053,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Remove infinite range fireaxes.</li>
-			</ul>
-
-			<h2 class="date">2015.05.19</h2>
-			<h3 class="author">9600bauds updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Protolathe & Circuit Imprinter construction menus now have fancy filtering and sorting!</li>
-				<li class="rscadd">Added a "Custom" queue amount for said menus, which lets you queue a custom number of items in one go</li>
-				<li class="rscadd">Also added an option to turn off window auto-updating for the Protolathe, which caused you to be sent at the top of the list every time you built or queued something</li>
-				<li class="bugfix">Fixed Circuit Imprinter's glass counter always being 0 and not letting you eject glass from it</li>
-				<li class="bugfix">Accidentally fixed a bug where fabricators would always hold infinite materials. To compensate, maximum material amount was buffed to 150 sheets unupgraded for most fabricators, 250 for the Exosuit fabricator (+50 sheets per matter bin upgrade)</li>
-				<li class="bugfix">Fixed micro-manipulator upgrades not upgrading the Protolathe's speed</li>
-			</ul>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Communications Consoles can be emagged once again, which will fully unlock them, and allow its users to contact the Syndicate.</li>
-				<li class="bugfix">Once emagged the console has the option to "Reset Arrays" which will de-emag the console and allow its users to contact Centcomm again.</li>
-				<li class="imageadd">Emagged Communication Consoles have a slightly different sprite.</li>
-				<li class="soundadd">Added notification sounds for admins when players contact Centcomm/the Syndicate.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Xenos now take halved electrocution damage to make up for the fact that they tend to go through a lot of wiring. Crit threshold is now 8 million W with full transfer for them (1 million W for APCs due to double electrocution) up from 1 million W (125 000 W)</li>
-				<li class="tweak">Delay added to regular lighters to reduce spamming</li>
-				<li class="spellcheck">Ensure some typecasts don't accord incorrectly for cigarette-related items</li>
-				<li class="bugfix">Fix some update_brightness() instructions firing before messages, causing one to light lit lighters, notably</li>
-				<li class="bugfix">Fix the Supermatter Shard puking runtimes and having its process() broken if a mob is on the same tile as it is (possible with spawning/teleportation)</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed grabs grabbing yourself.</li>
-			</ul>
-
-			<h2 class="date">2015.05.18</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Remove chance of turning somebody into krampus with staff of change.</li>
-				<li class="bugfix">Fixed being able to understand things over the radio when they weren't speaking any language in particular, namely mice.</li>
-				<li class="bugfix">Stun batons are properly affected by accuracy now when attacking.</li>
-			</ul>
-
-			<h2 class="date">2015.05.17</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed not being able to refill from water tanks, especially with a bucket in hydroponics.</li>
-			</ul>
-
-			<h2 class="date">2015.05.16</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Remove chapel burning vampires, instead nullifies their powers while in side and for a short time afterwards</li>
-				<li class="tweak">head cultists can be deconverted using bible or holy water like the underlings.</li>
-			</ul>
-
-			<h2 class="date">2015.05.15</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed Supermatter Cascades not shutting down the powernet.</li>
-				<li class="tweak">From now on, the access requirement on Mining/Research shuttles' consoles gets revoked once the Supermatter Cascade's Centcom Command Report is received. "So you don't have to be a nerd to survive the end of the world."</li>
-				<li class="tweak">Random Events won't proc anymore during Endgame events (no more powernet event bringing the power back online after Nar-Sie has risen for example, even if the event started before the summon).</li>
-				<li class="bugfix">Fixed some shuttle tiles still showing their "hyperspace" underlay after performing a trip.</li>
-				<li class="tweak">All silicons (AI, Borgs, MoMMIs) can now purchase free items from all vending machines.</li>
-				<li class="tweak">Service borgs and MoMMI can purchase items that cost money as well (as they were supposed to originally it seems, but couldn't, because they couldn't swipe their fucking non-existent ID on the machine)</li>
-				<li class="rscadd">Players can now dual-hand a broom to place it between their legs</li>
-				<li class="rscadd">If a Wizard does it, he will start floating, allowing him to fly above tables, wet floors and peels, and move at hyperzine speed. Also lets him move around in space.</li>
-				<li class="rscadd">Stuns will affect a flying Wizard as per usual, making him drop the broom and stop flying.</li>
-				<li class="rscadd">If the Wizard ever stops dual-handing the broom, the effect stops.</li>
-				<li class="rscadd">Broom + Horse mask = Broomstick Horse. Same properties as regular broom, but much more classy.</li>
-				<li class="tweak">the airlocks on the bridge to the west just outside the Research Outpost are now accessible to players with Research access. About damn time.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Change the AI Reset Board's description to be much less vague (it only clears non-core laws, it does NOT reset the AI to Asimov)</li>
-				<li class="experiment">Use update_brightness() and update_icon() for all items on the list to minimize shit coding and standardize light items</li>
-				<li class="experiment">You can now light cigarettes and sub-types with anything tagged as is_hot(), works with fire (fire_act)</li>
-				<li class="experiment">Blunts can now hold 50 units of reagents. Don't ask me, it's a really fat blunt</li>
-				<li class="soundadd">Lighters (regular and zippo) now have sounds</li>
-				<li class="rscadd">Added a strike-anywhere matchbox. Can only be obtained for premium on cigarettes machines currently</li>
-				<li class="rscdel">You can no longer shove an entire matchbox into a cigarette pack</li>
-				<li class="tweak">All matchboxes are now a fancy storage with all it entails and contain 21 matches</li>
-				<li class="tweak">Match duration from 5 to 10, on par with strike-anywhere matches. Matches do not go out anymore when dropped</li>
-				<li class="tweak">Cigarettes and sub-types will be put out when dipped into water and will not light if doused in water</li>
-				<li class="tweak">You no longer burn yourself with cheap lighters, instead you'll have to try multiple times to light it (20 % chance)</li>
-				<li class="tweak">All lighters now have 5 attack delay (not in seconds)</li>
-				<li class="bugfix">Fix multiple cases of cigarette-related items not updating lumcount normally</li>
-				<li class="bugfix">Voxes can no longer wear Engineering Hardsuits as intended (Hardsuit doesn't fit, use the pressure suits)</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed secondary language not saving properly.</li>
-				<li class="bugfix">Vehicles and beds or chairs will now properly take their buckled mob with them when using a teleporter.</li>
-				<li class="bugfix">Fixed being able to bypass a zlevel lock using a closet and a teleporter.</li>
-				<li class="tweak">Changed dylans shit a bit and made lighters use fuel, cheap lighters have a lower chance of igniting at lower fuels. Can refuel using a welder tank.</li>
-				<li class="tweak">Restored the QM's ensamble</li>
-				<li class="rscadd">Advanced buildmode now has the ability to copy something with middle click, then build with left click as normal. 'look alike' copying does not work on mobs.</li>
-			</ul>
-
-			<h2 class="date">2015.05.14</h2>
-			<h3 class="author">Clusterfack updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adding mousedropping yourself and sometimes others out of the following objects Adv scanners, Sleepers, Cryo, DNA scanners, Mechs</li>
-				<li class="tweak">Clicking on IVs when they are attached to a person to detach them, hopefully thats more intuitive</li>
-			</ul>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Mechas sent from Mass Drivers now break through windows, grilles, tables, and hurt people.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Removed PDA flashlight's custom color. Too close to white and blends badly in luminous areas</li>
-				<li class="experiment">Testing standardized procs designed to handle luminous items, please report any odd behaviour with RIG helmets</li>
-				<li class="rscadd">Add compatibility for disabling helmet lights after setup and adding in lit helmets at roundstart</li>
-				<li class="rscadd">Add standardized proc to disable action buttons whenever interesting (needs to be called)</li>
-				<li class="rscadd">Add examine() proc with extremely basic information (Can the helmet be lit, and is it lit or not ?)</li>
-				<li class="tweak">Helmet Light action button now only shows if there is a light to be toggled</li>
-				<li class="tweak">Action button for Syndie RIG helmet changed to "Toggle Helmet Camera"</li>
-				<li class="bugfix">Fix gold helmet's _color being incorrectly set, leading to odd behaviour if the icon is updated</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fix lit flamethrowers not igniting the thrown fuel.</li>
-			</ul>
-
-			<h2 class="date">2015.05.13</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed toxins driver blastdoor not opening, fixed igniters not firing as well</li>
-				<li class="bugfix">Finally fixed what http://github.com/d3athrow/vgstation13/commit/35069b98a71116ffcf48858d372c5ff5afd2a92b should have done and keep 0 damage projectiles from affecting lockboxes.</li>
-			</ul>
-
-			<h2 class="date">2015.05.12</h2>
-			<h3 class="author">9600bauds updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now fold paper into paper planes, origami etc. by using the "Fold paper" verb in the rightclick menu.</li>
-				<li class="rscadd">You can also get rid of paper by burning it with a lighter or similar.</li>
-			</ul>
-			<h3 class="author">Clusterfack updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">All zlevels now have their own bluespace drift when using telescience.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fix Mech Bay Recharge Ports starting unanchored, leading to all sorts of undesirable behaviour</li>
-			</ul>
-			<h3 class="author">PJB3005 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed DP vent construction. Never trust other code. Never.</li>
-			</ul>
-
-			<h2 class="date">2015.05.11</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed some parts of Box being disconnected from the main scrubber loop</li>
-				<li class="tweak">Xenobio is now its own closed loop.</li>
 			</ul>
 		</div>
 		<!--

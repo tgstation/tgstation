@@ -33,6 +33,8 @@
 	maxbodytemp = 360
 
 	holder_type = null //Can't pick BEES up!
+	flying = 1
+	meat_type = 0
 
 	var/max_hive_dist=5
 
@@ -47,6 +49,17 @@
 
 /mob/living/simple_animal/bee/Die()
 	returnToPool(src)
+
+/mob/living/simple_animal/bee/gib()
+	death(1)
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	dead_mob_list -= src
+
+	qdel(src)
 
 /mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1

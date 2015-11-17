@@ -42,7 +42,6 @@ var/global/num_vending_terminals = 1
 	var/vend_delay = 10	//How long does it take to vend?
 	var/shoot_chance = 2 //How often do we throw items?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
-	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
 	var/list/products	= list()	// For each, use the following pattern:
 	var/list/contraband	= list()	// list(/type/path = amount,/type/path2 = amount2)
@@ -112,10 +111,6 @@ var/global/num_vending_terminals = 1
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		src.last_slogan = world.time + rand(0, slogan_delay)
 
-		if(!product_records.len)
-			src.build_inventory(products)
-			src.build_inventory(contraband, 1)
-			src.build_inventory(premium, 0, 1)
 		power_change()
 
 	coinbox = new(src)
@@ -124,6 +119,13 @@ var/global/num_vending_terminals = 1
 		initialize()
 
 	return
+
+/obj/machinery/vending/initialize()
+	..()
+	product_records = new/list()
+	build_inventory(products)
+	build_inventory(contraband, 1)
+	build_inventory(premium, 0, 1)
 
 /obj/machinery/vending/RefreshParts()
 	var/manipcount = 0
@@ -251,36 +253,36 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/build_inventory() called tick#: [world.time]")
-	for(var/typepath in productlist)
+	var/obj/item/temp
+
+	for (var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
-		if(isnull(amount)) amount = 1
 
-		var/obj/item/temp = new typepath(null)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		if (isnull(amount))
+			amount = 1
+
+		var/datum/data/vending_product/R = new()
 		R.product_path = typepath
 		R.amount = amount
 		R.original_amount = amount
 		R.price = price
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red", "blue", "green")
 
-		if(hidden)
+		if (hidden)
 			R.category=CAT_HIDDEN
 			hidden_records  += R
-		else if(req_coin)
+		else if (req_coin)
 			R.category=CAT_COIN
 			coin_records    += R
 		else
-			R.category=CAT_NORMAL
-			product_records += R
+			R.category = CAT_NORMAL
+			product_records.Add(R)
 
-		if(delay_product_spawn)
-			sleep(1)
-			R.product_name = temp.name
-			R.subcategory = temp.vending_cat
-		else
-			R.product_name = temp.name
-			R.subcategory = temp.vending_cat
+		temp = new typepath(null)
+
+		R.product_name = temp.name
+		R.subcategory = temp.vending_cat
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/get_item_by_type() called tick#: [world.time]")
@@ -758,30 +760,26 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/proc/add_item(var/obj/item/I)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/add_item() called tick#: [world.time]")
-	var/found = 0
-	for (var/datum/data/vending_product/D in product_records)
-		if(D.product_path == I.type)
-			D.amount++
-			found = 1
+	var/found = FALSE
 
-	if(!found)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
+	for (var/datum/data/vending_product/D in product_records)
+		if (D.product_path == I.type)
+			D.amount++
+			found = TRUE
+			break
+
+	if (!found)
+		var/datum/data/vending_product/R = new()
 		R.product_path = I.type
 		R.amount = 1
 		R.original_amount = 0
 		R.price = 0
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red", "blue", "green")
+		R.product_name = I.name
+		R.category = CAT_NORMAL
+		R.subcategory = I.vending_cat
 
-		R.category=CAT_NORMAL
-		product_records += R
-
-		if(delay_product_spawn)
-			sleep(1)
-			R.product_name = I.name
-			R.subcategory = I.vending_cat
-		else
-			R.product_name = I.name
-			R.subcategory = I.vending_cat
+		product_records.Add(R)
 
 	qdel(I)
 
@@ -887,29 +885,41 @@ var/global/num_vending_terminals = 1
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/throw_item() called tick#: [world.time]")
-	var/obj/throw_item = null
-	var/mob/living/target = locate() in view(7,src)
-	if(!target)
+
+	var/mob/living/target = locate() in view(7, src)
+
+	if (!target)
 		return 0
 
-	var/list/throwable = product_records
+	var/obj/throw_item
+	var/list/throwable = product_records.Copy()
 	var/tries = 10 //Give up eventually
-	if(extended_inventory) throwable += hidden_records
+	var/datum/data/vending_product/R
+	var/dump_path
 
-	while(tries)
-		var/datum/data/vending_product/R = pick(throwable)
-		var/obj/item/dump_path = R.product_path
-		if(R.amount <= 0 || !dump_path)
+	if (extended_inventory)
+		throwable += hidden_records
+
+	while (tries)
+		R = pick(throwable)
+		dump_path = R.product_path
+
+		if (R.amount <= 0 || !dump_path)
 			tries--
 			continue
+
 		R.amount--
 		throw_item = new dump_path(src.loc)
-		if(!throw_item)
+
+		if (!throw_item)
 			return 0
+
 		spawn(0)
 			throw_item.throw_at(target, 16, 3)
+
 		src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 		return 1
+
 	return 0
 
 /obj/machinery/vending/update_icon()
@@ -1904,7 +1914,7 @@ var/global/num_vending_terminals = 1
 	icon_state = "suits"
 	vend_reply = "Come again!"
 	product_ads = "Skinny? Looking for some clothes? Suitlord is the machine for you!;BUY MY PRODUCT!"
-	product_slogans = "Pre-Ironed, Pre-Washed, Pre-Wor-*BZZT*;Blood of your enemys washes right out!;Who are YOU wearing?;Look dapper! Look like an idiot!;Dont carry your size? How about you shave off some pounds you fat lazy- *BZZT*"
+	product_slogans = "Pre-Ironed, Pre-Washed, Pre-Wor-*BZZT*;Blood of your enemies washes right out!;Who are YOU wearing?;Look dapper! Look like an idiot!;Don't carry your size? How about you shave off some pounds you fat lazy- *BZZT*"
 	products = list(
 		/obj/item/clothing/under/color/black = 10,
 		/obj/item/clothing/under/color/blue = 10,

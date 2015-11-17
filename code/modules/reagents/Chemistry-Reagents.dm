@@ -383,7 +383,7 @@
 			return
 
 /datum/reagent/anti_toxin
-	name = "Anti-Toxin (Dylovene)"
+	name = "Dylovene"
 	id = "anti_toxin"
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
@@ -793,6 +793,7 @@
 	description = "A compound that can be used to repair and reinforce glass."
 	reagent_state = LIQUID
 	color = "#C7FFFF" // rgb: 199, 255, 255
+	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/oxygen
 	name = "Oxygen"
@@ -1237,6 +1238,8 @@
 				gene.deactivate(H, 0, tempflag)
 	else
 		for(var/gene_type in M.active_genes)
+			if(gene_type == /datum/dna/gene/monkey)
+				continue
 			var/datum/dna/gene/gene = dna_genes[gene_type]
 			if(gene.can_deactivate(M, 0))
 				gene.deactivate(M, 0, 0)
@@ -1256,7 +1259,6 @@
 		H.update_mutations()
 
 	..()
-	return
 
 /datum/reagent/paismoke
 	name = "Smoke"

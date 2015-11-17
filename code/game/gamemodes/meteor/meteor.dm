@@ -24,6 +24,11 @@
 	world << "<B>The current game mode is - Meteor!</B>"
 	world << "<B>The space station is about to be struck by a major meteor shower. You must hold out until the escape shuttle arrives.</B>"
 
+/datum/game_mode/meteor/pre_setup()
+	log_admin("Starting a round of meteor.")
+	message_admins("Starting a round of meteor.")
+	return 1
+
 /datum/universal_state/meteor_storm
  	name = "Meteor Storm"
  	desc = "A meteor storm is currently wrecking havoc around this sector. Duck and cover."

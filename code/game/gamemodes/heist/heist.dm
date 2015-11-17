@@ -26,16 +26,14 @@
 		<B>Raiders:</B> Loot [station_name()] for anything and everything you need.
 		<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."}
 
-/datum/game_mode/heist/can_start()
-
-	if(!..())
-		return 0
-
+/datum/game_mode/heist/pre_setup()
 	var/list/candidates = get_players_for_role(ROLE_VOXRAIDER)
 	var/raider_num = 0
 
 	//Check that we have enough vox.
 	if(candidates.len < required_enemies)
+		log_admin("Failed to set-up a round of heist. Couldn't find enough volunteers to be vox raiders.(only [candidates.len] volunteers out of at least [required_enemies])")
+		message_admins("Failed to set-up a round of heist. Couldn't find enough volunteers to be vox raiders.(only [candidates.len] volunteers out of at least [required_enemies])")
 		return 0
 	else if(candidates.len < recommended_enemies)
 		raider_num = candidates.len
@@ -52,9 +50,9 @@
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
 		raider.special_role = "Vox Raider"
-	return 1
 
-/datum/game_mode/heist/pre_setup()
+	log_admin("Starting a round of heist with [raiders.len] vox raiders.")
+	message_admins("Starting a round of heist with [raiders.len] vox raiders.")
 	return 1
 
 /datum/game_mode/heist/post_setup()

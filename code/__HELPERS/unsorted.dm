@@ -962,7 +962,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 						if(istype(B, /turf/space))
 							continue moving
 
-					var/turf/X = new T.type(B)
+					var/turf/X = B.ChangeTurf(T.type)
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
@@ -1407,3 +1407,107 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	if(number<0)
 		result = "-[result]"
 	return result
+
+/proc/spiral_block(var/turf/epicenter,var/max_range,var/inward=0,var/draw_red=0)//alternative to block. instead of being listed from bottom to top, turfs are listed spiraling inward/outward.
+	var/list/spiraled_turfs = list()
+
+	//epicenter coordinates
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+	var/z0 = epicenter.z
+
+	//world limits
+	var/south_limit = 1 - y0
+	var/west_limit = 1 - x0
+	var/north_limit = world.maxy - y0
+	var/east_limit = world.maxx - x0
+
+	var/max_steps = (max_range*2 + 1) * (max_range*2 + 1)
+
+	var/pointer_x = 0
+	var/pointer_y = 0
+	var/segment = 0
+	var/movement_dir = NORTH
+	var/segment_length = 1
+
+	if(inward)
+		pointer_x = -max_range
+		pointer_y = -max_range
+		segment_length = max_range*2+1
+		segment = 1
+
+		for(var/sstep=max_steps-1;sstep>=0;sstep--)
+			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
+				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
+				spiraled_turfs += T
+				if(draw_red)
+					T.color = "red"
+			if(sstep && ((sstep%segment_length) == 0))
+				switch(movement_dir)//clockwise spiral
+					if(NORTH)
+						movement_dir = EAST
+					if(EAST)
+						movement_dir = SOUTH
+					if(SOUTH)
+						movement_dir = WEST
+					if(WEST)
+						movement_dir = NORTH
+				if(!segment)
+					segment = 1
+				else
+					segment = 0
+					segment_length--
+
+			switch(movement_dir)
+				if(NORTH)
+					pointer_y++
+				if(EAST)
+					pointer_x++
+				if(SOUTH)
+					pointer_y--
+				if(WEST)
+					pointer_x--
+			if(draw_red)
+				sleep(1)
+	else
+		for(var/sstep in 1 to max_steps)
+			if((pointer_x >= west_limit) && (pointer_x <= east_limit) && (pointer_y >= south_limit) && (pointer_y <= north_limit))//are we inside the map's boundaries
+				var/turf/T = locate(x0+pointer_x,y0+pointer_y,z0)
+				spiraled_turfs += T
+				if(draw_red)
+					T.color = "red"
+
+			switch(movement_dir)
+				if(NORTH)
+					pointer_y++
+				if(EAST)
+					pointer_x++
+				if(SOUTH)
+					pointer_y--
+				if(WEST)
+					pointer_x--
+
+			if((sstep%segment_length) == 0)
+				switch(movement_dir)//clockwise spiral
+					if(NORTH)
+						movement_dir = EAST
+					if(EAST)
+						movement_dir = SOUTH
+					if(SOUTH)
+						movement_dir = WEST
+					if(WEST)
+						movement_dir = NORTH
+				if(!segment)
+					segment = 1
+				else
+					segment = 0
+					segment_length++
+			if(draw_red)
+				sleep(1)
+
+	if(draw_red)
+		sleep(30)
+		for(var/turf/T in spiraled_turfs)
+			T.color = null
+
+	return spiraled_turfs

@@ -121,8 +121,8 @@
 		if(src.invisibility != 0)
 			M.invisibility = 0
 			user.visible_message(
-				"<span class='warning'>[user] drags ghost, [M], to our plan of reality!</span>",
-				"<span class='warning'>You drag [M] to our plan of reality!</span>"
+				"<span class='warning'>[user] drags ghost, [M], to our plane of reality!</span>",
+				"<span class='warning'>You drag [M] to our plane of reality!</span>"
 			)
 		else
 			user.visible_message (
@@ -135,8 +135,8 @@
 		if(src.invisibility == 0)
 			M.invisibility = 60
 			user.visible_message(
-				"<span class='warning'>[user] banishes the ghost from our plan of reality!</span>",
-				"<span class='warning'>You banish the ghost from our plan of reality!</span>"
+				"<span class='warning'>[user] banishes the ghost from our plane of reality!</span>",
+				"<span class='warning'>You banish the ghost from our plane of reality!</span>"
 			)
 
 /mob/dead/observer/get_multitool(var/active_only=0)
@@ -847,6 +847,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr << "Reached [arena_target]"
 
 	usr.loc = arena_target.center
+	usr << "Remember to enable darkness to be able to see the spawns. Click on a green spawn between rounds to register on it."
 
 /mob/dead/observer/Topic(href, href_list)
 	if (href_list["reentercorpse"])
@@ -903,13 +904,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				following = null
 
 	if(href_list["jumptoarenacood"])
-		var/x = text2num(href_list["X"])
-		var/y = text2num(href_list["Y"])
-		var/z = text2num(href_list["Z"])
-
-		var/client/C = usr.client
-		sleep(2)
-		C.jumptocoord(x,y,z)
+		var/datum/bomberman_arena/targetarena = locate(href_list["targetarena"])
+		usr.loc = targetarena.center
+		usr << "Remember to enable darkness to be able to see the spawns. Click on a green spawn between rounds to register on it."
 
 	..()
 

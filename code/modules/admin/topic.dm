@@ -2795,16 +2795,17 @@
 				A.update_lightsource()
 				A.busjuke.dir = EAST
 				message_admins("[key_name_admin(usr)] has spawned an Adminbus. Who gave him the keys?")
+				log_admin("[key_name_admin(usr)] has spawned an Adminbus.")
 			if("spawnselfdummy")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TD")
 				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
+				log_admin("[key_name_admin(usr)] spawned himself as a Test Dummy.")
 				var/turf/T = get_turf(usr)
 				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(T)
 				usr.client.cmd_assume_direct_control(D)
 				D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
 				D.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(D), slot_shoes)
-				D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
 				D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
 				D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
 				D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
@@ -2817,6 +2818,9 @@
 					newname = "Admin"
 				D.name = newname
 				D.real_name = newname
+				var/obj/item/weapon/card/id/admin/admin_id = new(D)
+				admin_id.registered_name = newname
+				D.equip_to_slot_or_del(admin_id, slot_wear_id)
 			//False flags and bait below. May cause mild hilarity or extreme pain. Now in one button
 			if("fakealerts")
 				feedback_inc("admin_secrets_fun_used",1)

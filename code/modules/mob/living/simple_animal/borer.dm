@@ -81,6 +81,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 			borer_avail_unlocks.Add(U)
 
 /mob/living/simple_animal/borer/Login()
+	..()
 	if(mind)
 		RemoveAllFactionIcons(mind)
 

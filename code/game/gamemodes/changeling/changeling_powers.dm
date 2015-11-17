@@ -257,6 +257,13 @@
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= T.dna
+
+	if(istype(src,/mob/living/carbon/human))
+		var/mob/living/carbon/human/thechangeling = src
+		var/avail_blood = T.vessel.get_reagent_amount("blood")
+		for(var/datum/reagent/blood/B in thechangeling.vessel.reagent_list)
+			B.volume = min(BLOOD_VOLUME_MAX, avail_blood + B.volume)
+
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
@@ -563,9 +570,14 @@
 	set name = "Regenerative Stasis (20)"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fakedeath() called tick#: [world.time]")
 
+	// BYOND bug where verbs don't update if you're not on a turf, as such you'll be permanently stuck in regen statis until you get moved to a turf.
+	if(!isturf(loc))
+		src << "<span class='warning'>((Due to a BYOND bug, it is not possible to come out of regenerative statis if you are not on a turf (walls, floors...)))</span>"
+		return
+
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
-
+	
 	var/mob/living/carbon/C = src
 	if(C.suiciding)
 		C << "<span class='warning'>Why would we wish to regenerate if we have already committed suicide?"
