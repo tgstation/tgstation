@@ -128,6 +128,7 @@
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 2
+		dismember_class = new /datum/dismember_class/low/
 	..()
 
 /obj/item/projectile/kinetic/Range()

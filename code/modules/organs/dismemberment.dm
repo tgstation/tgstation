@@ -34,7 +34,7 @@
 	dismember_prob = 75
 	behead_prob = 45
 
-//Fire axes, claymores, plasma cutters in vacuum
+//Fire axes, claymores, katanas, cultswords, plasma cutters in vacuum
 /datum/dismember_class/medium
 	can_dismember = 1
 	can_behead = 1
@@ -43,10 +43,15 @@
 	dismember_prob = 50
 	behead_prob = 15
 
-//Plasma cutters, circular saws
+//Plasma cutters, circular saws, kitchen knives, hatchets, PKAs in vacuum
 /datum/dismember_class/low
 	can_dismember = 1
 	can_behead = 0
+	dismember_threshold = 50
+	dismember_prob = 20
+
+//Extra low rate for shotgun pellets
+/datum/dismember_class/low/shotgun
 	dismember_threshold = 50
 	dismember_prob = 20
 

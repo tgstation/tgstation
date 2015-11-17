@@ -454,6 +454,19 @@
 
 
 /obj/item/throw_impact(A)
+	if(iscarbon(A) && ishuman(A))
+		var/mob/living/carbon/C = A
+		var/zone = pick(C.list_limbs())
+		if(C.try_dismember(src, zone))
+			var/volume = vol_by_throwforce_and_or_w_class(src)	//Copypasted throw sound code
+			if (throwhitsound)
+				playsound(loc, throwhitsound, volume, 1, -1)
+			else if(hitsound)
+				playsound(loc, hitsound, volume, 1, -1)
+			else
+				playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1)
+			return
+
 	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
