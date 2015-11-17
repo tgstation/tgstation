@@ -454,7 +454,7 @@
 
 
 /obj/item/throw_impact(A)
-	if(iscarbon(A) && ishuman(A))
+	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		var/zone = pick(C.list_limbs())
 		if(C.try_dismember(src, zone))

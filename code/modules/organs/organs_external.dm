@@ -3,10 +3,14 @@
 	hardpoint = "butt"
 	icon_state = "butt"
 
-// This only serves to represent the groin target zone.
+// These only serve to represent the groin and mouth target zones.
 /obj/item/organ/abstract/groin
 	name = "groin"
 	hardpoint = "groin"
+
+/obj/item/organ/abstract/mouth
+	name = "mouth"
+	hardpoint = "mouth"
 
 /obj/item/organ/abstract/Insert(mob/living/carbon/M)
 	return null

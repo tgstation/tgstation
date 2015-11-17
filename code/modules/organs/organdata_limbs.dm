@@ -1,4 +1,4 @@
-// This only serves to represent the groin target zone
+// These only serve to represent the groin and mouth target zones
 
 /datum/organ/abstract/
 
@@ -7,6 +7,11 @@
 
 /datum/organ/abstract/groin
 	name = "groin"
+	organitem_type = /obj/item/organ/abstract/groin
+
+/datum/organ/abstract/mouth
+	name = "mouth"
+	organitem_type = /obj/item/organ/abstract/mouth
 
 /datum/organ/limb/
 	name = "limb"

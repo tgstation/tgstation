@@ -12,7 +12,7 @@
 	verb_say = "hisses"
 	ventcrawler = 2
 	languages = ALIEN
-	var/nightvision = 1
+//	var/nightvision = 1
 
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
@@ -31,11 +31,7 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/brain/alien
-	internal_organs += new /obj/item/organ/internal/alien/hivenode
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
-	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+	//Organsystem created by castes
 
 	..()
 

@@ -25,4 +25,5 @@
 	..(message, shown_name)
 
 /mob/living/carbon/hivecheck()
-	return get_organ(/obj/item/organ/internal/alien/hivenode)
+	var/datum/organ/internal/alien/hivenode/HN = get_organ("hivenode")
+	return (HN && HN.exists())

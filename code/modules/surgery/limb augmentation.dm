@@ -55,6 +55,7 @@
 					for(var/datum/organ/internal/I in target.get_internal_organs("groin"))
 						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
 							I.dismember(ORGAN_REMOVED, special = 1)
+					target.organsystem.remove_organ("egg")	//Can't get impregnated anymore
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)

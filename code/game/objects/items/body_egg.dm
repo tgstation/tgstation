@@ -1,5 +1,6 @@
 /obj/item/organ/internal/body_egg
 	name = "body egg"
+	hardpoint = "egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
 	origin_tech = "biotech=5"
@@ -15,7 +16,7 @@
 		src.Insert(loc)
 	return ..()
 
-/obj/item/organ/internal/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/body_egg/on_insertion()
 	..()
 	owner.status_flags |= XENO_HOST
 	SSobj.processing |= src

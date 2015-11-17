@@ -9,8 +9,10 @@
 
 	if(..())
 		. = 1
-		for(var/obj/item/organ/internal/O in internal_organs)
-			O.on_life()
+		for(var/datum/organ/internal/OR in get_all_internal_organs())
+			if(OR && OR.exists())
+				var/obj/item/organ/internal/O = OR.organitem
+				O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -597,5 +599,5 @@
 		for(var/datum/organ/org in get_internal_organs())
 			give_action_button(org.organitem)	//Recursion isn't needed in the new organsystem
 		var/datum/organ/cavity/CAV = get_organ("cavity")
-		if(CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
+		if(CAV && CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
 			give_action_button(CAV.organitem)

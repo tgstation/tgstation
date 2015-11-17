@@ -24,8 +24,7 @@
 	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/arm/l_arm,
 	/obj/item/organ/limb/arm/r_arm, /obj/item/organ/limb/leg/r_leg, /obj/item/organ/limb/leg/l_leg)*/
 
-	organsystem = new/datum/organsystem/humanoid/monkey/
-	organsystem.set_owner(src)
+	organsystem = new/datum/organsystem/humanoid/monkey(src)
 
 	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
 	internal_organs += get_organ("appendix")

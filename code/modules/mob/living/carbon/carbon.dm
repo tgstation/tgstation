@@ -1,3 +1,12 @@
+/mob/living/carbon/New()
+	if(organsystem)
+		organsystem.set_owner(src)
+		for(var/datum/organ/internal/OR in get_all_internal_organs())
+			if(OR.exists())
+				var/obj/item/organ/internal/OI = OR.organitem
+				OI.on_insertion()
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -686,7 +695,8 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ(/obj/item/organ/internal/alien/plasmavessel)
-		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		var/datum/organ/internal/alien/plasmavessel/vessel = get_organ("plasmavessel")
+		if(vessel && vessel.exists())
+			var/obj/item/organ/internal/alien/plasmavessel/PV = vessel.organitem
+			stat(null, "Plasma Stored: [PV.storedPlasma]/[PV.max_plasma]")
 	add_abilities_to_panel()

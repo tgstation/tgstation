@@ -24,13 +24,25 @@
 
 	var/datum/organ/OR = M.get_organ(hardpoint)
 	if(OR && !OR.exists())
-		world << "[OR] [OR.exists()]"
 		if(OR.set_organitem(src))
-			if(suborgans.len)
-				for (var/i in suborgans)
-					M.add_organ(suborgans[i])
+			for (var/i in suborgans)
+				world << "[i]"
+				world << "Adding [suborgans[i]]"
+				M.add_organ(suborgans[i])
+				//Second layer of recursion. Let's hope we won't need more!
+				if(isorgan(getsuborgan(i)))
+					var/obj/item/organ/OI = getsuborgan(i)
+					world << "[OI] the [OI.type]"
+					for(var/j in OI.suborgans)
+						world << "Adding [OI.suborgans[j]]"
+						M.add_organ(OI.suborgans[j])
+			on_insertion()
 			return 1
 	return 0
+
+//Proc for doing all the extra stuff an organ needs done after succesful insertion
+/obj/item/organ/proc/on_insertion(var/special = 0)
+	return
 
 /**
   * Overwrite the DNA stored in this organ.

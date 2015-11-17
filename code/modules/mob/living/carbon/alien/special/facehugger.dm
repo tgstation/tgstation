@@ -114,8 +114,10 @@ var/const/MAX_ACTIVE_TIME = 400
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
 
-	if(M.get_organ(/obj/item/organ/internal/alien/hivenode)) return 0
-	if(M.get_organ(/obj/item/organ/internal/body_egg/alien_embryo)) return 0
+	var/datum/organ/hivenode = M.get_organ("hivenode")
+	var/datum/organ/embryo = M.get_organ("egg")
+	if(hivenode && hivenode.exists()) return 0
+	if(embryo && embryo.exists()) return 0
 
 	if(loc == M) return 0
 	if(stat != CONSCIOUS)	return 0
@@ -177,8 +179,10 @@ var/const/MAX_ACTIVE_TIME = 400
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 
-		if(!target.getlimb(/obj/item/organ/limb/chest/robot) && !target.get_organ(/obj/item/organ/internal/body_egg/alien_embryo))
-			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+
+//		if(!target.getlimb(/obj/item/organ/limb/chest/robot) && !target.get_organ(/obj/item/organ/internal/body_egg/alien_embryo))
+		new /obj/item/organ/internal/body_egg/alien_embryo(target)
+//		embryo.Insert(target)
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/corgi/C = target

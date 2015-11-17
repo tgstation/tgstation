@@ -13,26 +13,24 @@
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/carbon/brain/brainmob = null
 
-/obj/item/organ/internal/brain/Insert(mob/living/carbon/M, special = 0)
-	if(..())
-		name = "brain"
-		if(brainmob)
-			if(M.key)
-				M.ghostize()
+/obj/item/organ/internal/brain/on_insertion()
+	name = "brain"
+	if(brainmob)
+		if(owner.key)
+			owner.ghostize()
 
-			if(brainmob.mind)
-				brainmob.mind.transfer_to(M)
-			else
-				M.key = brainmob.key
+		if(brainmob.mind)
+			brainmob.mind.transfer_to(owner)
+		else
+			owner.key = brainmob.key
 
-			qdel(brainmob)
+		qdel(brainmob)
 
-			//Update the body's icon so it doesnt appear debrained anymore
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.update_hair(0)
-		return 1
-	return 0
+		//Update the body's icon so it doesnt appear debrained anymore
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_hair(0)
+	return
 
 /obj/item/organ/internal/brain/Remove(special = 0)
 	..()

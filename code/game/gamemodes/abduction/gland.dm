@@ -33,7 +33,7 @@
 		uses = initial(uses)
 	..()
 
-/obj/item/organ/internal/heart/gland/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/gland/on_insertion(special = 0)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 	//>no defines
