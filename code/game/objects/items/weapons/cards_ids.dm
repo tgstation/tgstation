@@ -180,6 +180,18 @@ update_label("John Doe", "Clowny")
 		var/datum/job/captain/J = new/datum/job/captain
 		access = J.get_access()
 		..()
+		
+/obj/item/weapon/card/id/lowpop_sec
+	name = "Acting Head of Security"
+	desc = "You're not just the last line of defense, you're the only line..."
+	icon_state = "silver"
+	item_state = "silver_id"
+	registered_name = "Acting Head of Security"
+	assignment = "Head of Security"
+	New()
+		var/datum/job/hos/J = new/datum/job/hos
+		access = J.get_access()
+		..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
