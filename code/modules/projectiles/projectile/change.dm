@@ -125,7 +125,10 @@
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
-				new_mob.setGender(M.gender)
+				if((M.gender == MALE) || (M.gender == FEMALE)) //If the transformed mob is MALE or FEMALE
+					new_mob.setGender(M.gender) //The new human will inherit its gender
+				else //If its gender is NEUTRAL or PLURAL,
+					new_mob.setGender(pick(MALE, FEMALE)) //The new human's gender will be random
 
 				var/datum/preferences/A = new()	//Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
@@ -139,7 +142,10 @@
 			if("furry")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
-				new_mob.setGender(M.gender)
+				if((M.gender == MALE) || (M.gender == FEMALE)) //If the transformed mob is MALE or FEMALE
+					new_mob.setGender(M.gender) //The new human will inherit its gender
+				else //If its gender is NEUTRAL or PLURAL,
+					new_mob.setGender(pick(MALE, FEMALE)) //The new human's gender will be random
 
 				var/datum/preferences/A = new()	//Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)

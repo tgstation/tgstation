@@ -243,35 +243,40 @@ mob/living/carbon/proc/handle_hallucinations()
 				src << get_sfx("clownstep")
 				spawn(rand(16,28))
 					src << get_sfx("clownstep")
-			if(86) //nom nom
+			if(86) //Makes a random mob near you look like a random food item
 				if(prob(15))
-					var/mob/living/L = src
-					if(prob(50))
+					var/mob/living/L = src //Mob to change appearance of (you by default)
+
+					if(prob(50)) //50% chance to apply this effect to a random mob in view
 						var/list/mob_list=list()
-						for(var/mob/living/M in view(src))
+						for(var/mob/living/M in viewers(src))
 							mob_list |= M
-						L = pick(mob_list)
+
+						if(mob_list.len)
+							L = pick(mob_list)
 
 					var/obj/item/random_food = pick(typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable))
-					if(initial(random_food.icon) && initial(random_food.name) && initial(random_food.icon_state))
+					if(initial(random_food.icon) && initial(random_food.name) && initial(random_food.icon_state)) //DON'T use food items without a name, icon or icon state
 						var/image/foodie = image(initial(random_food.icon), initial(random_food.icon_state))
+
 						foodie.loc = L
-						foodie.override = 1
+						foodie.override = 1 //Override the affected mob's appearance with the food item
 
-						var/client/C = src.client
+						var/client/C = src.client //Get client of the hallucinating mob
 
-						C.images += foodie
+						C.images += foodie //Give it the image!
 
 						if(L == src)
-							src << "<span class='notice'>You feel like a [initial(random_food.name)]. Oh wow!</span>"
+							src << "<span class='info'>You feel like a [initial(random_food.name)]. Oh wow!</span>"
 						else
-							src << "<span class='notice'>You smell [initial(random_food.name)]...</span>"
+							src << "<span class='info'>You smell [initial(random_food.name)]...</span>"
 
-						sleep(rand(50,150))
+						var/duration = rand(60 SECONDS, 120 SECONDS)
 
-						if(!C) return
+						spawn(duration)
+							if(C)
+								C.images.Remove(foodie) //Remove the image from hallucinating mob
 
-						C.screen -= foodie
 	handling_hal = 0
 
 

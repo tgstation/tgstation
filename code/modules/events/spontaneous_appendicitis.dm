@@ -5,6 +5,8 @@
 			foundAlready = 1
 		if(H.stat == 2 || foundAlready)
 			continue
+		if(H.z == map.zCentcomm) //Don't infect people on the centcomm z-level
+			continue
 
 		var/datum/disease/D = new /datum/disease/appendicitis
 		D.holder = H

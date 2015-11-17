@@ -22,9 +22,14 @@
 	possible_traitors = get_players_for_role(ROLE_TRAITOR)
 
 	for(var/datum/mind/player in possible_traitors)
+		if(player.current.z == map.zCentcomm) //Players on the centcomm z-level can't turn into traitors!
+			possible_traitors -= player
+			continue
+
 		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
+			if(player.assigned_role == job) //Players with a job that is in the restricted job list can't turn into traitors!
 				possible_traitors -= player
+				continue
 
 
 	num_players = num_players()
