@@ -147,7 +147,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new/obj/effect/overlay/temp/emp(src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/emp, src.loc)
 	..()
 
 /obj/machinery/proc/open_machine()
