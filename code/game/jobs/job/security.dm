@@ -221,8 +221,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				tie = /obj/item/clothing/tie/armband/cargo
 			if("engineering")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
-				dep_access = list(access_maint_tunnels, access_engine, access_maint_tunnels, 
-										access_construction, access_atmospherics)
+				dep_access = list(access_maint_tunnels, access_engine, access_construction, access_atmospherics)
 				destination = /area/security/checkpoint/engineering
 				spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/engine
