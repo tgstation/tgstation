@@ -14,7 +14,7 @@
 
 			if(method == TOUCH || method == VAPOR)
 				M.ContractDisease(D)
-			else //ingest or patch
+			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
 /datum/reagent/blood/on_new(list/data)
@@ -84,6 +84,12 @@
 			newVirus.holder = blood_prop
 	return
 
+/datum/reagent/liquidgibs
+	name = "Liquid gibs"
+	id = "liquidgibs"
+	color = "#FF9966"
+	description = "You don't even want to think about what's in here."
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -91,7 +97,7 @@
 	color = "#C81040" // rgb: 200, 16, 64
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(islist(data) && method == INGEST)
+	if(islist(data) && (method == INGEST || method == INJECT))
 		for(var/datum/disease/D in M.viruses)
 			if(D.GetDiseaseID() in data)
 				D.cure()
@@ -127,7 +133,7 @@
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			hotspot.Kill()
+			qdel(hotspot)
 	return
 
 /*
@@ -182,12 +188,14 @@
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-		if(iscultist(M))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
 			ticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
@@ -357,7 +365,7 @@
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 		H.set_species(mutation)
-		if(mutation == /datum/species/slime)
+		if(mutation.id == "slime")
 			H.faction |= "slime"
 		else
 			H.faction -= "slime"
@@ -454,7 +462,9 @@
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/dirt(T)
+		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
+		if(!D)
+			new /obj/effect/decal/cleanable/dirt(T)
 
 /datum/reagent/chlorine
 	name = "Chlorine"
@@ -530,8 +540,10 @@
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("radium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("radium", reac_volume)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -574,8 +586,10 @@
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("uranium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("uranium", reac_volume)
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -699,7 +713,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 /datum/reagent/xenomicrobes
@@ -709,7 +723,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -1007,6 +1021,13 @@
 	description = "Volatile."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
+
+/datum/reagent/lye
+	name = "Lye"
+	id = "lye"
+	description = "Also known as sodium hydroxide."
+	reagent_state = LIQUID
+	color = "#FFFFD6" // very very light yellow
 
 /datum/reagent/drying_agent
 	name = "Drying agent"

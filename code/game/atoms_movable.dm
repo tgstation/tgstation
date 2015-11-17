@@ -61,6 +61,9 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
+		. = 0
+
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	return 1
@@ -101,6 +104,8 @@
 			throwing = 0
 			throw_impact(A)
 			. = 1
+			if(!A || qdeleted(A))
+				return
 		A.Bumped(src)
 
 
@@ -272,3 +277,17 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+	if(!buckled_mob.Move(newloc, direct))
+		loc = buckled_mob.loc
+		last_move = buckled_mob.last_move
+		inertia_dir = last_move
+		buckled_mob.inertia_dir = last_move
+		return 0
+	return 1
+
+/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(buckled_mob == mover)
+		return 1
+	return ..()

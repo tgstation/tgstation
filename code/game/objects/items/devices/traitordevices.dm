@@ -39,7 +39,7 @@ effective or pretty fucking useless.
 
 	add_logs(user, null, "knocked down people in the area", src)
 
-	for(var/mob/living/carbon/human/M in orange(10, user))
+	for(var/mob/living/carbon/human/M in ultra_range(10, user, 1))
 		spawn()
 			if(prob(50))
 
@@ -98,7 +98,7 @@ effective or pretty fucking useless.
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				M.irradiate(intensity*10)
+				M.rad_act(intensity*10)
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 

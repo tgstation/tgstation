@@ -67,7 +67,7 @@
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
-	smoke_amt = 10
+	smoke_amt = 4
 
 	action_icon_state = "smoke"
 
@@ -101,7 +101,7 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 1
+	smoke_amt = 0
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
@@ -133,7 +133,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
-	smoke_amt = 5
+	smoke_amt = 2
 	sound1="sound/magic/Teleport_diss.ogg"
 	sound2="sound/magic/Teleport_app.ogg"
 
@@ -159,7 +159,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	charge_max = 300
+	charge_max = 400
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
@@ -297,7 +297,9 @@
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
+	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
+	var/animation = "shieldsparkles"
 
 	action_icon_state = "repulse"
 
@@ -306,7 +308,7 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	playsound(user, "sound/magic/Repulse.ogg", 50, 1, -1)
+	playMagSound()
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
@@ -315,6 +317,7 @@
 		if(AM == user || AM.anchored) continue
 
 		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		targeteffect.icon_state = animation
 		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
@@ -326,10 +329,31 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(2)
-				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
+				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
 			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
+	name = "Tail Sweep"
+	desc = "Throw back attackers with a sweep of your tail."
+	sound = 'sound/magic/Tail_swing.ogg'
+	charge_max = 150
+	clothes_req = 0
+	range = 2
+	cooldown_min = 150
+	invocation_type = "none"
+	animation = "tailsweep"
+	action_icon_state = "tailsweep"
+	action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
+		C.spin(6,1)
+	..()

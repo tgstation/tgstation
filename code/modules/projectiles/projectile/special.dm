@@ -80,7 +80,7 @@
 		return
 	A.ex_act(2)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-	for(var/mob/M in range(10, src))
+	for(var/mob/M in ultra_range(10, src))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
 	qdel(src)
@@ -130,11 +130,9 @@ obj/item/projectile/kinetic/New()
 		damage *= 4
 	..()
 
-/obj/item/projectile/kinetic/Range()
-	range--
-	if(range <= 0)
-		new /obj/item/effect/kinetic_blast(src.loc)
-		qdel(src)
+/obj/item/projectile/kinetic/on_range()
+	new /obj/item/effect/kinetic_blast(src.loc)
+	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()

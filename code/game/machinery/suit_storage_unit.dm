@@ -65,7 +65,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/captain
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/captain
 	MASK_TYPE = /obj/item/clothing/mask/gas
-	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine
@@ -95,6 +95,10 @@
 
 /obj/machinery/suit_storage_unit/cmo
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/medical
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/rd
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/rd
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate
@@ -431,6 +435,12 @@
 		src.isopen = 1
 	src.update_icon()
 	return
+
+
+/obj/machinery/suit_storage_unit/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	container_resist()
 
 
 /obj/machinery/suit_storage_unit/container_resist()

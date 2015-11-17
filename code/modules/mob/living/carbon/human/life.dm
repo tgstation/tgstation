@@ -84,7 +84,7 @@
 				if(4)
 					emote("drool")
 				if(5)
-					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY"))
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
@@ -100,8 +100,7 @@
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna.species.check_breath(breath, src))
-		..()
+	dna.species.check_breath(breath, src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
@@ -267,7 +266,7 @@
 	if(machine)
 		if(!machine.check_eye(src))		reset_view(null)
 	else
-		if(!client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)			reset_view(null)
 
 	dna.species.handle_vision(src)
 
@@ -295,16 +294,6 @@
 
 				// make it so you can only puke so fast
 				lastpuke = 0
-
-
-/mob/living/carbon/human/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
@@ -336,7 +325,8 @@
 	if(!heart_attack)
 		return
 	else
-		losebreath += 5
+		if(losebreath < 3)
+			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
 

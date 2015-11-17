@@ -14,6 +14,8 @@
 	if (notransform)
 		return
 	if(..())
+		if(buckled)
+			handle_feeding()
 		handle_nutrition()
 		handle_targets()
 		if (!ckey)
@@ -32,8 +34,8 @@
 
 	AIproc = 1
 
-	while(AIproc && stat != DEAD && (attacked || hungry || rabid || Victim))
-		if(Victim) // can't eat AND have this little process at the same time
+	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
+		if(buckled) // can't eat AND have this little process at the same time
 			break
 
 		if(!Target || client)
@@ -45,11 +47,10 @@
 			break
 
 		if(Target)
-			for(var/mob/living/simple_animal/slime/M in view(1,Target))
-				if(M.Victim == Target)
-					Target = null
-					AIproc = 0
-					break
+			if(isslime(Target.buckled_mob))
+				Target = null
+				AIproc = 0
+				break
 			if(!AIproc)
 				break
 
@@ -148,10 +149,64 @@
 	return temp_change
 
 /mob/living/simple_animal/slime/handle_regular_status_updates()
-
 	if(..())
 		if(prob(30))
 			adjustBruteLoss(-1)
+
+/mob/living/simple_animal/slime/proc/handle_feeding()
+	if(!ismob(buckled))
+		return
+	var/mob/M = buckled
+
+	if(M.stat == DEAD) // our victim died
+		if(!client)
+			if(!rabid && !attacked)
+				if(M.LAssailant && M.LAssailant != M)
+					if(prob(50))
+						if(!(M.LAssailant in Friends))
+							Friends[M.LAssailant] = 1
+						else
+							++Friends[M.LAssailant]
+		else
+			src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+
+		if(M.client && ishuman(M))
+			if(prob(85))
+				rabid = 1 //we go rabid after finishing to feed on a human with a client.
+
+		Feedstop()
+		return
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustCloneLoss(rand(2,4))
+		C.adjustToxLoss(rand(1,2))
+
+		if(prob(10) && C.client)
+			C << "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+			"You feel like you're about to die!", \
+			"You feel every part of your body screaming in agony!", \
+			"A low, rolling pain passes through your body!", \
+			"Your body feels as if it's falling apart!", \
+			"You feel extremely weak!", \
+			"A sharp, deep pain bathes every inch of your body!")]</span>"
+
+	else if(isanimal(M))
+		var/mob/living/simple_animal/SA = M
+		SA.adjustBruteLoss(is_adult ? rand(4, 7) : rand(3, 4))
+
+	else
+		src << "<span class='warning'>[pick("This subject is incompatible", \
+		"This subject does not have a life energy", "This subject is empty", \
+		"I am not satisified", "I can not feed from this subject", \
+		"I do not feel nourished", "This subject is not food")]!</span>"
+		Feedstop()
+		return
+
+	add_nutrition(rand(7,15))
+
+	//Heal yourself.
+	adjustBruteLoss(-3)
 
 /mob/living/simple_animal/slime/proc/handle_nutrition()
 
@@ -167,31 +222,33 @@
 		if(prob(75))
 			adjustBruteLoss(rand(0,5))
 
-	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
+	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		nutrition -= 20
 		amount_grown++
 
-	if(amount_grown >= 10 && !Victim && !Target && !ckey)
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult)
 			Reproduce()
 		else
 			Evolve()
 
-/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0, lastnut = 0)
+/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
-	if(nutrition >= (lastnut + 50))
-		if(prob(80))
-			lastnut = nutrition
-			powerlevel++
-			if(powerlevel > 10)
-				powerlevel = 10
-				adjustBruteLoss(-10)
+	if(nutrition >= get_grow_nutrition())
+		if(powerlevel<10)
+			if(prob(30-powerlevel*2))
+				powerlevel++
+	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
+		if(powerlevel<5)
+			if(prob(25-powerlevel*5))
+				powerlevel++
+
 
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
 	if(Tempstun)
-		if(!Victim) // not while they're eating!
+		if(!buckled) // not while they're eating!
 			canmove = 0
 	else
 		canmove = 1
@@ -212,7 +269,7 @@
 	if(!client)
 		if(!canmove) return
 
-		if(Victim) return // if it's eating someone already, continue eating!
+		if(buckled) return // if it's eating someone already, continue eating!
 
 		if(Target)
 			--target_patience
@@ -254,13 +311,8 @@
 						if(src.type in H.dna.species.ignored_by)
 							continue
 
-					if(!L.canmove) // Only one slime can latch on at a time.
-						var/notarget = 0
-						for(var/mob/living/simple_animal/slime/M in view(1,L))
-							if(M.Victim == L)
-								notarget = 1
-						if(notarget)
-							continue
+					if(isslime(L.buckled_mob)) // Only one slime can latch on at a time.
+						continue
 
 					targets += L // Possible target found!
 
@@ -361,9 +413,9 @@
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
 			else if (findtext(phrase, "stop"))
-				if (Victim) // We are asked to stop feeding
+				if (buckled) // We are asked to stop feeding
 					if (Friends[who] > 4)
-						Victim = null
+						Feedstop()
 						Target = null
 						if (Friends[who] < 7)
 							--Friends[who]
@@ -457,7 +509,7 @@
 			if (bodytemperature < T0C - 50)
 				phrases += "..."
 				phrases += "C... c..."
-			if (Victim)
+			if (buckled)
 				phrases += "Nom..."
 				phrases += "Tasty..."
 			if (powerlevel > 3) phrases += "Bzzz..."

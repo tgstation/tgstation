@@ -94,14 +94,14 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
-	if(!Targets.len)//We didnt find nothin!
-		return
 	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
 		for(var/atom/A in Targets)
 			var/target_dist = get_dist(src, target)
 			var/possible_target_distance = get_dist(src, A)
 			if(target_dist < possible_target_distance)
 				Targets -= A
+	if(!Targets.len)//We didnt find nothin!
+		return
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 

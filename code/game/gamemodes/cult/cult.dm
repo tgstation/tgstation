@@ -44,18 +44,19 @@
 				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
 			else //Emergency comms
 				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+	log_say("[user.real_name]/[user.key] : [message]")
 
 
 
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	antag_flag = BE_CULTIST
+	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 20
-	required_enemies = 6
-	recommended_enemies = 6
+	required_enemies = 4
+	recommended_enemies = 4
 	enemy_minimum_age = 14
 
 
@@ -81,10 +82,6 @@
 	else
 		cult_objectives += "eldergod"
 		cult_objectives += "sacrifice"
-
-	if(num_players() >= 30)
-		recommended_enemies = 9	// 3+3+3 - d' magic number o' magic numbars mon
-		acolytes_needed = 15
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -190,6 +187,8 @@
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
+		if(jobban_isbanned(cult_mind.current, "Cultist"))
+			replace_jobbaned_player(cult_mind.current, "Cultist")
 		return 1
 
 

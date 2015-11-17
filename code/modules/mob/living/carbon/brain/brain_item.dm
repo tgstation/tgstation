@@ -119,5 +119,5 @@
 /obj/item/organ/internal/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
-	icon_state = "brain-alien"
+	icon_state = "brain-x"
 	origin_tech = "biotech=7"

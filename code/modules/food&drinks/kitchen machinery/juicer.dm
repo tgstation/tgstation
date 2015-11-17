@@ -15,6 +15,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = "grapejuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = "grapejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = "lemonjuice",
@@ -96,7 +98,7 @@
 		beaker_contents = "\The [src]  has attached a beaker with something."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
+		beaker_contents = "\The [src]  has attached a beaker and the beaker is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
@@ -172,12 +174,15 @@
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 

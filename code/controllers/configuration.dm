@@ -5,11 +5,17 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+//Not accessible from usual debug controller verb
+/datum/protected_configuration
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
+
 /datum/configuration
 	var/server_name = null				// server name (the name of the game window)
 	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
+	var/round_end_countdown = 25		// Post round murder death kill countdown
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -37,7 +43,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
-	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -106,6 +111,8 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
+	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -149,6 +156,9 @@
 	var/silent_ai = 0
 	var/silent_borg = 0
 
+	var/allowwebclient = 0
+	var/webclientmembersonly = 0
+
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
@@ -167,6 +177,13 @@
 
 	var/announce_admin_logout = 0
 	var/announce_admin_login = 0
+
+	var/list/datum/votablemap/maplist = list()
+	var/datum/votablemap/defaultmap = null
+	var/maprotation = 1
+	var/maprotatechancedelta = 0.75
+
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -221,6 +238,8 @@
 					config.use_age_restriction_for_jobs = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
+				if("round_end_countdown")
+					config.round_end_countdown = text2num(value)
 				if("log_ooc")
 					config.log_ooc = 1
 				if("log_access")
@@ -313,8 +332,6 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
-				if("tickcomp")
-					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
@@ -350,10 +367,22 @@
 						world.log = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
+				if("allow_webclient")
+					config.allowwebclient = 1
+				if("webclient_only_byond_members")
+					config.webclientmembersonly = 1
 				if("announce_admin_logout")
 					config.announce_admin_logout = 1
 				if("announce_admin_login")
 					config.announce_admin_login = 1
+				if("maprotation")
+					config.maprotation = 1
+				if("maprotationchancedelta")
+					config.maprotatechancedelta = text2num(value)
+				if("autoadmin")
+					protected_config.autoadmin = 1
+					if(value)
+						protected_config.autoadmin_rank = ckeyEx(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -492,6 +521,14 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("roundstart_races")
+					if(!cleared_default_races)
+						roundstart_species = list()
+						cleared_default_races = 1
+					var/race_id = lowertext(value)
+					for(var/species_id in species_list)
+						if(species_id == race_id)
+							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")
@@ -528,6 +565,58 @@
 	fps = round(fps)
 	if(fps <= 0)
 		fps = initial(fps)
+
+
+/datum/configuration/proc/loadmaplist(filename)
+	var/list/Lines = file2list(filename)
+
+	var/datum/votablemap/currentmap = null
+	for(var/t in Lines)
+		if(!t)	continue
+
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/command = null
+		var/data = null
+
+		if(pos)
+			command = lowertext(copytext(t, 1, pos))
+			data = copytext(t, pos + 1)
+		else
+			command = lowertext(t)
+
+		if(!command)
+			continue
+
+		if (!currentmap && command != "map")
+			continue
+
+		switch (command)
+			if ("map")
+				currentmap = new (data)
+			if ("friendlyname")
+				currentmap.friendlyname = data
+			if ("minplayers","minplayer")
+				currentmap.minusers = text2num(data)
+			if ("maxplayers","maxplayer")
+				currentmap.maxusers = text2num(data)
+			if ("friendlyname")
+				currentmap.friendlyname = data
+			if ("weight","voteweight")
+				currentmap.voteweight = text2num(data)
+			if ("default","defaultmap")
+				config.defaultmap = currentmap
+			if ("endmap")
+				config.maplist[currentmap.name] = currentmap
+				currentmap = null
+			else
+				diary << "Unknown command in map vote config: '[command]'"
+
 
 /datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)

@@ -26,9 +26,6 @@
 
 /obj/structure/closet/New()
 	..()
-	if(type == /obj/structure/closet && ticker && ticker.current_state == GAME_STATE_PREGAME && prob(20)) //only roundstart generic closets
-		new /obj/structure/closet/cardboard(src.loc)
-		qdel(src)
 	update_icon()
 
 /obj/structure/closet/initialize()
@@ -125,7 +122,7 @@
 
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
-		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
+		if(L.buckled || L.buckled_mob || L.mob_size > max_mob_size) //buckled mobs, mobs with another mob attached, and mobs too big for the container don't get inside closets.
 			return 0
 		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
 			var/mobs_stored = 0
@@ -136,6 +133,7 @@
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
+		L.stop_pulling()
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
 	else if(AM.density || AM.anchored)
@@ -143,6 +141,8 @@
 	else if(AM.flags & NODROP)
 		return 0
 	AM.loc = src
+	if(AM.pulledby)
+		AM.pulledby.stop_pulling()
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -280,7 +280,7 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
-		user << "<span class='notice'>It won't budge!</span>"
+		container_resist()
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
@@ -402,8 +402,8 @@
 		locked = 0
 		desc += " It appears to be broken."
 		update_icon()
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		if(user)
+			visible_message("<span class='warning'>The [name] has been broken by [user] with an electromagnetic card!</span>", "<span class='italics'>You hear a faint electrical spark.</span>")
 		overlays += "sparking"
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()

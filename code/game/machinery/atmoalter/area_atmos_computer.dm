@@ -113,7 +113,7 @@
 	connectedscrubbers = new()
 
 	var/found = 0
-	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in range(range, src.loc))
+	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in ultra_range(range, src.loc))
 		if(istype(scrubber))
 			found = 1
 			connectedscrubbers += scrubber
@@ -161,7 +161,7 @@
 	var/area/A = T.loc
 	if (A.master)
 		A = A.master
-	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in world )
+	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in machines )
 		var/turf/T2 = get_turf(scrubber)
 		if(T2 && T2.loc)
 			var/area/A2 = T2.loc

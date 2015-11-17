@@ -37,7 +37,7 @@
 			src.bodytemperature += 2
 
 /mob/living/carbon/movement_delay()
-	. = 0
+	. = ..()
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -84,6 +84,8 @@
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
+	if(reagents.has_reagent("teslium"))
+		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
@@ -144,6 +146,10 @@
 		mode() // Activate held item
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+	if(on_fire)
+		M << "<span class='warning'>You can't put them out with just your bare hands!"
+		return
+
 	if(health >= 0)
 
 		if(lying)
@@ -264,13 +270,6 @@
 		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
-
-/mob/living/carbon/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
-		return 0
-	return 1
 
 /mob/living/carbon/restrained()
 	if (handcuffed)
@@ -585,3 +584,28 @@ var/const/GALOSHES_DONT_HELP = 4
 			stat(null, "Health: [health]")
 
 	add_abilities_to_panel()
+
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+	if(src.is_muzzled())
+		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		return 0
+	Stun(4)
+	if(nutrition < 100 && !blood)
+		visible_message("<span class='warning'>[src] dry heaves!</span>", \
+						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		Weaken(10)
+	else
+		visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>You throw up!</span>")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src)
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+	return 1

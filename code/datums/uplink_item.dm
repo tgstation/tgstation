@@ -1,6 +1,6 @@
 var/list/uplink_items = list()
 
-/proc/get_uplink_items()
+/proc/get_uplink_items(var/gamemode_override=null)
 	// If not already initialized..
 	if(!uplink_items.len)
 
@@ -12,10 +12,6 @@ var/list/uplink_items = list()
 
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
-				continue
-			if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
-				continue
-			if(I.excludefrom.len && ticker && (ticker.mode.type in I.excludefrom))
 				continue
 			if(I.last)
 				last += I
@@ -33,7 +29,26 @@ var/list/uplink_items = list()
 
 			uplink_items[I.category] += I
 
-	return uplink_items
+	//Filtered version
+	var/list/filtered_uplink_items = list()
+
+	for(var/category in uplink_items)
+		for(var/datum/uplink_item/I in uplink_items[category])
+			if(I.gamemodes.len)
+				if(!gamemode_override && ticker && !(ticker.mode.type in I.gamemodes))
+					continue
+				if(gamemode_override && !(gamemode_override in I.gamemodes))
+					continue
+			if(I.excludefrom.len)
+				if(!gamemode_override && ticker && (ticker.mode.type in I.excludefrom))
+					continue
+				if(gamemode_override && (gamemode_override in I.excludefrom))
+					continue
+			if(!filtered_uplink_items[I.category])
+				filtered_uplink_items[I.category] = list()
+			filtered_uplink_items[category] += I
+
+	return filtered_uplink_items
 
 // You can change the order of the list by putting datums before/after one another OR
 // you can use the last variable to make sure it appears last, well have the category appear last.
@@ -391,7 +406,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
-	desc = "An assortment of deadly chemicals packed into a compact box. Hard to utilize if there is no method of application."
+	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
@@ -426,9 +441,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate before use."
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"

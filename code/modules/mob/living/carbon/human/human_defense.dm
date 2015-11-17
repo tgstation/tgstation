@@ -27,7 +27,7 @@ emp_act
 /mob/living/carbon/human/proc/checkarmor(obj/item/organ/limb/def_zone, type)
 	if(!type)	return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)	continue
 		if(bp && istype(bp ,/obj/item/clothing))
@@ -40,29 +40,30 @@ emp_act
 	dna.species.on_hit(proj_type, src)
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
-							"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
-			// Find a turf near or on the original location to bounce to
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(src)
+	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+				// Find a turf near or on the original location to bounce to
+				if(P.starting)
+					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/turf/curloc = get_turf(src)
 
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
+					// redirect the projectile
+					P.original = locate(new_x, new_y, P.z)
+					P.starting = curloc
+					P.current = curloc
+					P.firer = src
+					P.yo = new_y - curloc.y
+					P.xo = new_x - curloc.x
 
-			return -1 // complete projectile permutation
+				return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]", P))
-		P.on_hit(src, 100, def_zone)
-		return 2
+		if(check_shields(P.damage, "the [P.name]", P, 0, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
@@ -80,18 +81,22 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
 	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
 	if(AM)
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
 	var/blocker
 	if(l_hand)
-		if(l_hand.IsShield() && prob(block_chance))
-			blocker = l_hand
+		if(l_hand.IsShield())
+			block_chance -= Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100) //So armour piercing blades can still be parried by other blades, for example
+			if(prob(block_chance))
+				blocker = l_hand
 	if(r_hand)
-		if(r_hand.IsShield() && prob(block_chance))
-			blocker = r_hand
+		if(r_hand.IsShield())
+			block_chance -= Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)
+			if(prob(block_chance))
+				blocker = r_hand
 	if(blocker)
 		visible_message("<span class='danger'>[src] blocks [attack_text] with [blocker]!</span>", \
 						"<span class='userdanger'>[src] blocks [attack_text] with [blocker]!</span>")
@@ -295,12 +300,12 @@ emp_act
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]"))
+		if(check_shields(damage, "the [M.name]", null, 0, M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, M.melee_damage_type, affecting, armor)
+		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		updatehealth()
 
 
@@ -379,7 +384,7 @@ emp_act
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
 				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
-					throw_alert("embeddedobject")
+					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/organ/limb/L = pick(organs)
 					L.embedded_objects |= I
 					I.add_blood(src)//it embedded itself in you, of course it's bloody!

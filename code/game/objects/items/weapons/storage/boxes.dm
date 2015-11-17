@@ -666,3 +666,35 @@
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+/obj/item/ammo_casing/shotgun/rubbershot
+
+/obj/item/weapon/storage/box/rubbershot
+	name = "box of rubber shots"
+	desc = "A box full of rubber shots, designed for riot shotguns."
+	icon_state = "rubbershot_box"
+
+/obj/item/weapon/storage/box/rubbershot/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+	new /obj/item/ammo_casing/shotgun/rubbershot(src)
+
+/obj/item/weapon/storage/box/lethalshot
+	name = "box of lethal shotgun shots"
+	desc = "A box full of lethal shots, designed for riot shotguns."
+	icon_state = "lethalshot_box"
+
+/obj/item/weapon/storage/box/lethalshot/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)

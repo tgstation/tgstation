@@ -220,7 +220,7 @@
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -926,9 +926,9 @@ FIRE ALARM
 	..()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
@@ -938,12 +938,13 @@ FIRE ALARM
 	if(panel_open)
 		switch(buildstage)
 			if(2)
-				if (istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+					return
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -953,18 +954,18 @@ FIRE ALARM
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
+					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
-						return
-
-					coil.use(5)
-
-					buildstage = 2
-					user << "<span class='notice'>You wire \the [src].</span>"
-					update_icon()
+					else
+						coil.use(5)
+						buildstage = 2
+						user << "<span class='notice'>You wire \the [src].</span>"
+						update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -979,12 +980,14 @@ FIRE ALARM
 								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
+					return
 			if(0)
 				if(istype(W, /obj/item/weapon/electronics/firealarm))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
 					update_icon()
+					return
 
 				else if(istype(W, /obj/item/weapon/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
@@ -993,9 +996,8 @@ FIRE ALARM
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
-		return
-
-	return
+					return
+	return ..()
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
@@ -1109,7 +1111,8 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert(src)
+	if(!A.fire)
+		A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 

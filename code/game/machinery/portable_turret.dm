@@ -53,13 +53,13 @@
 
 	var/faction = "neutral"
 
-	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
+	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 /obj/machinery/porta_turret/New()
 	..()
 	icon_state = "[lasercolor]grey_target_prism"
 	//Sets up a spark system
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -79,7 +79,7 @@
 
 	switch(E.type)
 		if(/obj/item/weapon/gun/energy/laser/bluetag)
-			eprojectile = /obj/item/projectile/lasertag/bluetag
+			eprojectile = /obj/item/projectile/beam/lasertag/bluetag
 			lasercolor = "b"
 			req_access = list(access_maint_tunnels, access_theatre)
 			check_records = 0
@@ -90,7 +90,7 @@
 			shot_delay = 30
 
 		if(/obj/item/weapon/gun/energy/laser/redtag)
-			eprojectile = /obj/item/projectile/lasertag/redtag
+			eprojectile = /obj/item/projectile/beam/lasertag/redtag
 			lasercolor = "r"
 			req_access = list(access_maint_tunnels, access_theatre)
 			check_records = 0
@@ -365,13 +365,13 @@
 		take_damage(damage_dealt)
 
 	if(lasercolor == "b" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/lasertag/redtag))
+		if(istype(Proj, /obj/item/projectile/beam/lasertag/redtag))
 			disabled = 1
 			qdel(Proj)
 			sleep(100)
 			disabled = 0
 	if(lasercolor == "r" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/lasertag/bluetag))
+		if(istype(Proj, /obj/item/projectile/beam/lasertag/bluetag))
 			disabled = 1
 			qdel(Proj)
 			sleep(100)

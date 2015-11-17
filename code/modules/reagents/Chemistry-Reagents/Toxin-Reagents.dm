@@ -19,7 +19,7 @@
 	id = "amatoxin"
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
-	toxpwr = 1
+	toxpwr = 2.5
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -33,7 +33,7 @@
 		return
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
+	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -85,15 +85,16 @@
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
 	id = "lexorin"
-	description = "Lexorin temporarily stops respiration. Causes tissue damage."
+	description = "A powerful poison used to stop respiration."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	if(M.stat != DEAD)
-		if(prob(33))
-			M.take_organ_damage(1*REM, 0)
-		M.adjustOxyLoss(3)
+		M.adjustOxyLoss(5)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.losebreath += 2
 		if(prob(20))
 			M.emote("gasp")
 	..()
@@ -200,7 +201,6 @@
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 
-
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
@@ -219,7 +219,7 @@
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
 	id = "spore"
-	description = "A toxic spore cloud which blocks vision when ingested."
+	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
 	toxpwr = 1
 
@@ -233,7 +233,7 @@
 /datum/reagent/toxin/spore_burning
 	name = "Burning Spore Toxin"
 	id = "spore_burning"
-	description = "A burning spore cloud."
+	description = "A natural toxin produced by blob spores that induces combustion in its victim."
 	color = "#9ACD32"
 	toxpwr = 0.5
 
@@ -245,7 +245,7 @@
 /datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
-	description = "A powerful sedative."
+	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
@@ -267,7 +267,7 @@
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
 	id = "beer2"
-	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -300,7 +300,7 @@
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	id = "mutetoxin"
-	description = "A toxin that temporarily paralyzes the vocal cords."
+	description = "A nonlethal poison that inhibits speech in its victim."
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 
@@ -311,7 +311,7 @@
 /datum/reagent/toxin/staminatoxin
 	name = "Tirizene"
 	id = "tirizene"
-	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
+	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	color = "#6E2828"
 	data = 13
 	toxpwr = 0
@@ -324,7 +324,7 @@
 /datum/reagent/toxin/polonium
 	name = "Polonium"
 	id = "polonium"
-	description = "Cause significant Radiation damage over time."
+	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -337,7 +337,7 @@
 /datum/reagent/toxin/histamine
 	name = "Histamine"
 	id = "histamine"
-	description = "A dose-dependent toxin, ranges from annoying to incredibly lethal."
+	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -369,7 +369,7 @@
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "Deals a moderate amount of Toxin damage over time. 10% chance to decay into 10-15 histamine."
+	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine.."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -377,14 +377,15 @@
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
 	if(prob(5))
-		M.reagents.add_reagent("histamine",pick(5,15))
-		M.reagents.remove_reagent("formaldehyde",1)
-	..()
+		holder.add_reagent("histamine", pick(5,15))
+		holder.remove_reagent("formaldehyde", 1.2)
+	else
+		..()
 
 /datum/reagent/toxin/venom
 	name = "Venom"
 	id = "venom"
-	description = "Will deal scaling amounts of Toxin and Brute damage over time. 15% chance to decay into 5-10 histamine."
+	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin damage and bruising depending and dosage. Often decays into Histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -394,14 +395,15 @@
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM)
 	if(prob(15))
-		M.reagents.add_reagent("histamine",pick(5,10))
-		M.reagents.remove_reagent("venom",1)
-	..()
+		M.reagents.add_reagent("histamine", pick(5,10))
+		M.reagents.remove_reagent("venom", 1.1)
+	else
+		..()
 
 /datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 18 elapsed cycles."
+	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -418,7 +420,7 @@
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	description = "Deals toxin damage, alongside some oxygen loss. 8% chance of stun and some extra toxin damage."
+	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -445,14 +447,14 @@
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
 	id = "itching_powder"
-	description = "Lots of annoying random effects, chances to do some brute damage from scratching. 6% chance to decay into 1-3 units of histamine."
+	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method != INGEST)
+	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("itching_powder", reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
@@ -467,13 +469,14 @@
 		M.adjustBruteLoss(0.2*REM)
 	if(prob(3))
 		M.reagents.add_reagent("histamine",rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1)
+		M.reagents.remove_reagent("itching_powder",1.2)
+		return
 	..()
 
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"
 	id = "initropidril"
-	description = "Causes some toxin damage, 5% chances to cause stunning, suffocation, or immediate heart failure."
+	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -504,7 +507,7 @@
 /datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
-	description = "Knocks you out after 10 seconds, 20% chance to cause some oxygen loss."
+	description = "An undetectable toxin that swiftly incapacitates its victim. May also cause breathing failure."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -520,7 +523,7 @@
 /datum/reagent/toxin/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
-	description = "Puts you to sleep after 10 seconds, along with some major stamina loss."
+	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -535,7 +538,7 @@
 /datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
 	id = "sulfonal"
-	description = "Deals some toxin damage, and puts you to sleep after 22 seconds."
+	description = "A stealthy poison that deals minor toxin damage and eventually puts the target to sleep."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -549,7 +552,7 @@
 /datum/reagent/toxin/amanitin
 	name = "Amanitin"
 	id = "amanitin"
-	description = "On the last second that it's in you, it hits you with a stack of toxin damage based on how long it's been in you. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
+	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	toxpwr = 0
@@ -562,7 +565,7 @@
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
-	description = "Deals some toxin damage unless they keep eating food. Will reduce nutrition values."
+	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -580,7 +583,7 @@
 /datum/reagent/toxin/coniine
 	name = "Coniine"
 	id = "coniine"
-	description = "Does moderate toxin damage and oxygen loss."
+	description = "Coniine metabolizes extremely slowly, but deals high amounts of toxin damage and stops breathing."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
@@ -593,7 +596,7 @@
 /datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"
-	description = "Does some oxygen and toxin damage, weakens you after 11 seconds."
+	description = "Causes slight toxin damage followed by chain-stunning and oxygen damage."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -603,6 +606,40 @@
 	if(current_cycle >= 11)
 		M.Weaken(3)
 	M.adjustOxyLoss(1*REM)
+	..()
+
+/datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
+	name = "Heparin"
+	id = "heparin"
+	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
+	reagent_state = LIQUID
+	color = "#C8C8C8" //RGB: 200, 200, 200
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	toxpwr = 0
+
+/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.blood_max += 2
+		H.adjustBruteLoss(1) //Brute damage increases with the amount they're bleeding
+	..()
+
+/datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+	name = "Teslium"
+	id = "teslium"
+	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly."
+	reagent_state = LIQUID
+	color = "#20324D" //RGB: 32, 50, 77
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0
+	var/shock_timer = 0
+
+/datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
+	shock_timer++
+	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+		shock_timer = 0
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, 1)
 	..()
 
 
@@ -622,7 +659,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.take_organ_damage(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		return
+	if(method == INJECT)
+		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, toxpwr, reac_volume)
 
@@ -646,4 +686,3 @@
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20
-

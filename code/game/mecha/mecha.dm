@@ -19,6 +19,7 @@
 	layer = MOB_LAYER - 0.2//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
+	flags = HEAR
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -36,7 +37,7 @@
 	var/maint_access = 0
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effect/effect/system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
@@ -70,12 +71,13 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
-	var/datum/action/mecha/mech_eject/eject_action = new
-	var/datum/action/mecha/mech_toggle_internals/internals_action = new
-	var/datum/action/mecha/mech_cycle_equip/cycle_action = new
-	var/datum/action/mecha/mech_toggle_lights/lights_action = new
-	var/datum/action/mecha/mech_view_stats/stats_action = new
+	var/datum/action/innate/mecha/mech_eject/eject_action = new
+	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
+	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
+	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
+	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
 
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 /obj/mecha/New()
 	..()
@@ -88,8 +90,16 @@
 	spark_system.attach(src)
 	add_cell()
 	SSobj.processing |= src
+	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
+
 	return
 
 /obj/mecha/Destroy()
@@ -130,6 +140,7 @@
 		if(internal_tank)
 			qdel(internal_tank)
 	SSobj.processing.Remove(src)
+	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null
@@ -285,22 +296,22 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge","lowcell",1)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge","lowcell",2)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge","lowcell",3)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge","emptycell")
+					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
 		var/integrity = health/initial(health)*100
 		switch(integrity)
 			if(30 to 45)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 1)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
 			if(15 to 35)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 2)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
 			if(-INFINITY to 15)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 3)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
 
@@ -314,15 +325,26 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-
+//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
 /obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text, , spans)
+	if(speaker == occupant)
+		if(radio.broadcasting)
+			radio.talk_into(speaker, text, , spans)
+		//flick speech bubble
+		var/list/speech_bubble_recipients = list()
+		for(var/mob/M in get_hearers_in_view(7,src))
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+		spawn(0)
+			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 	return
 
 ////////////////////////////
@@ -482,6 +504,7 @@
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -494,7 +517,7 @@
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-
+	diag_hud_set_mechstat()
 
 /////////////////////////////////////
 //////////// AI piloting ////////////
@@ -668,10 +691,9 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/simple_animal/slime/S in range(1,user))
-		if(S.Victim == user)
-			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
-			return
+	if(user.buckled_mob) //mob attached to us
+		user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you!</span>"
+		return
 
 	visible_message("[user] starts to climb into [src.name].")
 
@@ -681,7 +703,9 @@
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
-			user << "<span class='warning'>You have been buckled and cannot move.</span>"
+			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
+		else if(user.buckled_mob)
+			user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you.</span>"
 		else
 			moved_inside(user)
 	else
@@ -906,17 +930,16 @@ var/year_integer = text2num(year) // = 2013???
 	stats_action.Remove(user)
 
 
-/datum/action/mecha
+/datum/action/innate/mecha
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
-	action_type = AB_INNATE
 	var/obj/mecha/chassis
 
 
-/datum/action/mecha/mech_eject
+/datum/action/innate/mecha/mech_eject
 	name = "Eject From Mech"
 	button_icon_state = "mech_eject"
 
-/datum/action/mecha/mech_eject/Activate()
+/datum/action/innate/mecha/mech_eject/Activate()
 	if(!owner || !iscarbon(owner))
 		return
 	if(!chassis || chassis.occupant != owner)
@@ -924,11 +947,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.go_out()
 
 
-/datum/action/mecha/mech_toggle_internals
+/datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
 	button_icon_state = "mech_internals_off"
 
-/datum/action/mecha/mech_toggle_internals/Activate()
+/datum/action/innate/mecha/mech_toggle_internals/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.use_internal_tank = !chassis.use_internal_tank
@@ -937,11 +960,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 
 
-/datum/action/mecha/mech_cycle_equip
+/datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/mecha/mech_cycle_equip/Activate()
+/datum/action/innate/mecha/mech_cycle_equip/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	if(chassis.equipment.len == 0)
@@ -969,11 +992,11 @@ var/year_integer = text2num(year) // = 2013???
 			return
 
 
-/datum/action/mecha/mech_toggle_lights
+/datum/action/innate/mecha/mech_toggle_lights
 	name = "Toggle Lights"
 	button_icon_state = "mech_lights_off"
 
-/datum/action/mecha/mech_toggle_lights/Activate()
+/datum/action/innate/mecha/mech_toggle_lights/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.lights = !chassis.lights
@@ -987,11 +1010,11 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
 
 
-/datum/action/mecha/mech_view_stats
+/datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
 	button_icon_state = "mech_view_stats"
 
-/datum/action/mecha/mech_view_stats/Activate()
+/datum/action/innate/mecha/mech_view_stats/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")

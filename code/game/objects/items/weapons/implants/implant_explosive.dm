@@ -35,7 +35,8 @@
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
-		imp_in.gib()
+		if(imp_in)
+			imp_in.gib()
 		qdel(src)
 		return
 	timed_explosion()

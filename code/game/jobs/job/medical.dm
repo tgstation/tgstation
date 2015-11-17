@@ -98,6 +98,7 @@ Chemist
 /datum/outfit/job/chemist
 	name = "Chemist"
 
+	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/device/pda/chemist
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/chemist

@@ -70,9 +70,9 @@
 					H.buckled = src
 					H.dir = 2
 					buckled_mob = H
-					var/matrix/m120 = matrix(H.transform)
-					m120.Turn(180)
-					animate(H, transform = m120, time = 3)
+					var/matrix/m180 = matrix(H.transform)
+					m180.Turn(180)
+					animate(H, transform = m180, time = 3)
 					H.pixel_y = H.get_standard_pixel_y_offset(180)
 					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
@@ -109,13 +109,12 @@
 				return
 		if(!M.buckled)
 			return
-		var/mob/living/L = buckled_mob
-		var/matrix/m120 = matrix(L.transform)
-		m120.Turn(360)
-		animate(L, transform = m120, time = 3)
-		L.pixel_y = L.get_standard_pixel_y_offset(360)
+		var/matrix/m180 = matrix(M.transform)
+		m180.Turn(180)
+		animate(M, transform = m180, time = 3)
+		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob()
-		L.emote("scream")
-		L.AdjustWeakened(10)
+		M.emote("scream")
+		M.AdjustWeakened(10)

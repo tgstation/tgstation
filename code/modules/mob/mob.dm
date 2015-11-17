@@ -24,7 +24,7 @@ var/next_mob_id = 0
 	prepare_huds()
 	..()
 
-/mob/proc/prepare_huds()
+/atom/proc/prepare_huds()
 	for(var/hud in hud_possible)
 		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
 
@@ -325,17 +325,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<HR>
-	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand&&!(l_hand.flags&ABSTRACT)) 	? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand&&!(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
-	onclose(user, "mob\ref[src]")
+	return
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
@@ -549,55 +539,7 @@ var/list/slot_equipment_priority = list( \
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortNames(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -668,9 +610,6 @@ var/list/slot_equipment_priority = list( \
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
 
-/mob/proc/can_use_hands()
-	return
-
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
@@ -691,6 +630,9 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(statpanel("Status"))
+		stat(null, "Map: [MAP_NAME]")
+		if (nextmap && istype(nextmap))
+			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		var/ETA
 		switch(SSshuttle.emergency.mode)
@@ -946,10 +888,10 @@ var/list/slot_equipment_priority = list( \
 					return G
 				break
 
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg')
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound)
+		ghost.notify_cloning(message, sound, source)
 		return ghost
 
 
@@ -976,3 +918,64 @@ var/list/slot_equipment_priority = list( \
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
 	dir = angle2dir(rotation+dir2angle(dir))
+
+//You can buckle on mobs if you're next to them since most are dense
+/mob/buckle_mob(mob/living/M, force = 0)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		var/old_density = density
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = old_density
+		if(!can_step)
+			return 0
+	return ..()
+
+//Default buckling shift visual for mobs
+/mob/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		var/height = M.get_mob_buckling_height(src)
+		M.pixel_y = initial(M.pixel_y) + height
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+	else //post unbuckling
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
+
+//returns the height in pixel the mob should have when buckled to another mob.
+/mob/proc/get_mob_buckling_height(mob/seat)
+	if(isliving(seat))
+		var/mob/living/L = seat
+		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
+			return 0
+	return 9
+
+//can the mob be buckled to something by default?
+/mob/proc/can_buckle()
+	return 1
+
+//can the mob be unbuckled from something by default?
+/mob/proc/can_unbuckle()
+	return 1
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	if(stat == DEAD) //Ghosts and such can always see reagents
+		return 1
+	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
+		return 1
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.head && istype(H.head, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.head
+			if(CL.scan_reagents)
+				return 1
+		if(H.wear_mask && H.wear_mask.scan_reagents)
+			return 1
+		if(H.glasses && istype(H.glasses, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.glasses
+			if(CL.scan_reagents)
+				return 1
+	return 0

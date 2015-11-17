@@ -19,6 +19,7 @@
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
+	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -52,7 +53,7 @@
 		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner) || (src in owner.dna.mutations))
+	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
 		return 1
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
 		return 1
@@ -87,7 +88,7 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
-		if(text_lose_indication)
+		if(text_lose_indication && owner.stat != DEAD)
 			owner << text_lose_indication
 		if(visual_indicators.len)
 			var/list/mut_overlay = list()
@@ -177,6 +178,7 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
+	time_coeff = 5
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -197,6 +199,7 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	time_coeff = 2
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -276,6 +279,27 @@
 	if((prob(5) && owner.paralysis <= 1))
 		owner.drop_item()
 		owner.emote("cough")
+
+/datum/mutation/human/dwarfism
+
+	name = "Dwarfism"
+	quality = POSITIVE
+	get_chance = 15
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
+	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
+
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 0.8
+	owner.pass_flags |= PASSTABLE
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+
+/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 1.25
+	owner.pass_flags &= ~PASSTABLE
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
 
@@ -357,6 +381,7 @@
 
 	name = "Monkified"
 	quality = NEGATIVE
+	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -364,7 +389,7 @@
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
-	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
+	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 
@@ -375,6 +400,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
 	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
+	time_coeff = 5
 
 
 /datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
@@ -399,6 +425,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
+	time_coeff = 5
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -444,6 +471,7 @@
 /datum/mutation/human/smile
 	name = "Smile"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
@@ -530,6 +558,7 @@
 /datum/mutation/human/swedish
 	name = "Swedish"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
@@ -543,6 +572,7 @@
 /datum/mutation/human/chav
 	name = "Chav"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
@@ -575,6 +605,7 @@
 /datum/mutation/human/elvis
 	name = "Elvis"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 

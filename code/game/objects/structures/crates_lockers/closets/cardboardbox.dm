@@ -2,8 +2,9 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
-	health = 10 //At the end of the day it's still just a box
+	health = 10
 	mob_storage_capacity = 1
+	burn_state = 0 //Burnable
 	burntime = 20
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
@@ -11,20 +12,22 @@
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	var/move_delay = 0
-	var/egg_cooldown = 0
+	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
 		return
-	step(src, direction)
 	move_delay = 1
-	spawn(config.walk_speed)
+	if(step(src, direction))
+		spawn(config.walk_speed)
+			move_delay = 0
+	else
 		move_delay = 0
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
-	if(!egg_cooldown)
+	if(!egged)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L
@@ -35,10 +38,8 @@
 				for(var/mob/living/L in alerted)
 					if(!L.stat)
 						L.do_alert_animation(L)
+						egged = 1
 				alerted << sound('sound/machines/chime.ogg')
-				egg_cooldown = 1
-				spawn(3000)
-					egg_cooldown = 0
 	..()
 
 /mob/living/proc/do_alert_animation(atom/A)

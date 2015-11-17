@@ -84,30 +84,9 @@ var/global/mulebot_count = 0
 	wires = null
 	return ..()
 
-obj/machinery/bot/mulebot/bot_reset()
+/obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
-
-
-obj/machinery/bot/mulebot/Move(atom/newloc, direct)
-	. = ..()
-	if(buckled_mob)
-		if(!buckled_mob.Move(loc, direct))
-			loc = buckled_mob.loc //we gotta go back
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			. = 0
-
-obj/machinery/bot/mulebot/Process_Spacemove(movement_dir = 0)
-	if(buckled_mob)
-		return buckled_mob.Process_Spacemove(movement_dir)
-	return ..()
-
-obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover == buckled_mob)
-		return 1
-	return ..()
 
 // attack by item
 // emag : lock/unlock,
@@ -485,7 +464,7 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	load= AM
 	mode = BOT_IDLE
 
-/obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
+/obj/machinery/bot/mulebot/buckle_mob(mob/living/M, force = 0)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)
@@ -854,12 +833,12 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 		cell.update_icon()
 		cell = null
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 #undef SIGH
 #undef ANNOYED

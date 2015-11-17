@@ -494,7 +494,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 	var/species = "<span class='warning'>Unknown species</span>"
 	var/helptext = "<span class='warning'>Species unsuitable for experiments.</span>"
-	
+
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
@@ -522,7 +522,7 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
 							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
-	var/datum/effect/effect/system/spark_spread/S = new
+	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
 	qdel(src)
@@ -574,13 +574,14 @@ Congratulations! You are now trained for xenobiology research!"}
 
 // Operating Table / Beds / Lockers
 
-/obj/structure/optable/abductor
+/obj/structure/table/optable/abductor
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
+	deconstructable = 0
 
-/obj/structure/stool/bed/abductor
+/obj/structure/bed/abductor
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'

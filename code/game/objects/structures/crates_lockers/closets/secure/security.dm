@@ -19,9 +19,12 @@
 	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/weapon/cartridge/captain(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/weapon/storage/box/silver_ids(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
+	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 
 /obj/structure/closet/secure_closet/hop
@@ -43,6 +46,7 @@
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/tie/petcollar(src)
 
@@ -95,8 +99,6 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/ammo_box/magazine/wt550m9(src)
-	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -214,3 +216,75 @@
 	new /obj/item/clothing/suit/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
+
+/obj/structure/closet/secure_closet/armory1
+	name = "armory armor locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory1/New()
+	..()
+	new /obj/item/clothing/suit/armor/laserproof(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+
+/obj/structure/closet/secure_closet/armory2
+	name = "armory ballistics locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory2/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+
+/obj/structure/closet/secure_closet/armory3
+	name = "armory energy gun locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory3/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/weapon/gun/energy/ionrifle(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+
+/obj/structure/closet/secure_closet/tac
+	name = "armory tac locker"
+	req_access = list(access_armory)
+	icon_state = "tac"
+
+/obj/structure/closet/secure_closet/tac/New()
+	..()
+	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/clothing/head/helmet/alt(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/suit/armor/bulletproof(src)
+
+/obj/structure/closet/secure_closet/lethalshots
+	name = "shotgun lethal rounds"
+	req_access = list(access_armory)
+	icon_state = "tac"
+
+/obj/structure/closet/secure_closet/lethalshots/New()
+	..()
+	new /obj/item/weapon/storage/box/lethalshot(src)
+	new /obj/item/weapon/storage/box/lethalshot(src)
+	new /obj/item/weapon/storage/box/lethalshot(src)

@@ -7,7 +7,6 @@
 
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	volume = 70
 
 	dir = SOUTH
 	initialize_directions = NORTH

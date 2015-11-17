@@ -4437,4 +4437,460 @@ Rebooted server.
 Running TG Revision Number: 4060.
 Stopped server.
 
-*** End Log: Sun Jul 15 13:55:08 2012 ***
+*** End Log: Sun Jul 15 13:55:08 2012 ****** Begin Log: Mon Oct 05 18:58:26 2015 ***
+Mon Oct 05 19:01:11 2015
+World opened on network port 49626.
+Welcome BYOND! (5.0 Beta Version 508.1294)
+Running /tg/ revision:
+2015-10-06
+e2ed83b6a595fe0d6078fa75bfde85b3fa6c392b
+Path : /obj/machinery/mech_bay_recharge_port 
+Failures : 1 
+Path : /obj/effect/landmark/start 
+Failures : 2 
+
+Rebooted server.
+Running /tg/ revision:
+2015-10-06
+e2ed83b6a595fe0d6078fa75bfde85b3fa6c392b
+Path : /obj/effect/landmark/start 
+Failures : 2 
+
+Rebooted server.
+Running /tg/ revision:
+2015-10-06
+e2ed83b6a595fe0d6078fa75bfde85b3fa6c392b
+Tue Oct 06 02:28:25 2015
+runtime error: pick() from empty list
+proc name: New (/obj/effect/hallucination/whispers/New)
+  source file: Hallucination.dm,524
+  usr: null
+  src: the whispers (/obj/effect/hallucination/whispers)
+  call stack:
+the whispers (/obj/effect/hallucination/whispers): New(the plating (103,105,1) (/turf/simulated/floor/plating), the monkey (525) (/mob/living/carbon/monkey))
+the monkey (525) (/mob/living/carbon/monkey): hallucinate("whispers")
+the monkey (525) (/mob/living/carbon/monkey): handle hallucinations()
+the monkey (525) (/mob/living/carbon/monkey): handle status effects()
+Tue Oct 06 06:07:02 2015
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+  usr: null
+  src: the space vines (/obj/effect/spacevine)
+  call stack:
+the space vines (/obj/effect/spacevine): spread()
+the spacevine controller (/obj/effect/spacevine_controller): process(20)
+Objects (/datum/subsystem/objects): fire()
+/datum/controller/game_control... (/datum/controller/game_controller): process()
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+Tue Oct 06 07:07:36 2015
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+runtime error: Cannot execute null.Enter().
+proc name: spread (/obj/effect/spacevine/proc/spread)
+  source file: spacevine.dm,521
+Warning: further proc crash messages are being suppressed to prevent overload...

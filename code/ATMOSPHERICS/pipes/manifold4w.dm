@@ -8,8 +8,6 @@
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes"
 
-	volume = 140
-
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 
 	device_type = QUATERNARY

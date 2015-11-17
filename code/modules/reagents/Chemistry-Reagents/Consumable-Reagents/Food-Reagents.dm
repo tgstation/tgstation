@@ -332,7 +332,7 @@
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
-		hotspot.Kill()
+		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
@@ -429,8 +429,8 @@
 	id = "corn_syrup"
 	description = "Decays into sugar."
 	color = "#C8A5DC"
+	metabolization_rate = 3 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
-	M.reagents.add_reagent("sugar", 3)
-	M.reagents.remove_reagent("corn_syrup", 1)
+	holder.add_reagent("sugar", 3)
 	..()

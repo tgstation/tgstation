@@ -6,6 +6,7 @@
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	var/datum/mind/mind
+	var/list/datum/action/actions = list()
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -49,8 +50,6 @@
 	var/stuttering = null	//Carbon
 	var/slurring = 0		//Carbon
 	var/real_name = null
-	var/bhunger = 0			//Carbon
-	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/sleeping = 0		//Carbon
@@ -83,7 +82,7 @@
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/buckled = null//Living
+	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/storage/s_active = null//Carbon
@@ -92,6 +91,9 @@
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
+
+	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
+	var/datum/action/innate/scan_mode/scanner = new
 
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
@@ -133,8 +135,6 @@
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
-	var/area/lastarea = null
-
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
@@ -147,6 +147,8 @@
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
+
+	var/remote_view = 0 // Set to 1 to prevent view resets on Life
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 

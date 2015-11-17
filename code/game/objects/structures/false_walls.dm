@@ -169,8 +169,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(4)
+			radiation_pulse(get_turf(src), 0, 3, 15, 1)
 			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -218,7 +217,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/simulated/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W) > 300)
+	if(W.is_hot() > 300)
 		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
 		burnbabyburn()
@@ -262,3 +261,12 @@
 	mineral = "wood"
 	walltype = "wood"
 	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/simulated/wall/mineral/wood)
+
+/obj/structure/falsewall/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = ""
+	mineral = "metal"
+	walltype = "iron"
+	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/simulated/wall/mineral/iron)

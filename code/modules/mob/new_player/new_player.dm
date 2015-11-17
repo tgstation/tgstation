@@ -67,6 +67,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Map:", MAP_NAME)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
@@ -115,7 +116,10 @@
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
 			src << "<span class='notice'>Now teleporting.</span>"
-			observer.loc = O.loc
+			if (O)
+				observer.loc = O.loc
+			else
+				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
@@ -191,13 +195,13 @@
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
 		switch(votetype)
-			if("OPTION")
+			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				vote_on_poll(pollid, optionid)
-			if("TEXT")
+			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				log_text_poll_reply(pollid, replytext)
-			if("NUMVAL")
+			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
@@ -216,7 +220,7 @@
 								return
 
 						vote_on_numval_poll(pollid, optionid, rating)
-			if("MULTICHOICE")
+			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
@@ -278,7 +282,6 @@
 					continue
 
 	character.loc = D
-	character.lastarea = get_area(loc)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
@@ -360,7 +363,6 @@
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()

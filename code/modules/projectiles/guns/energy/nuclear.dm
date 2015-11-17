@@ -27,7 +27,7 @@
 	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
-	origin_tech = "combat=3;magnets=3;materials=4; bluespace=4"
+	origin_tech = "combat=3;magnets=3;materials=4;bluespace=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
@@ -90,11 +90,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(100-reliability))
-				M.irradiate(40)
+				M.rad_act(40)
 				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.irradiate(80)
+				M.rad_act(80)
 				crit_fail = 1
 				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
 
