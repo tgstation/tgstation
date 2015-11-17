@@ -1090,124 +1090,82 @@
 ////////////////// SortJunctionSubtypes//////////////////
 //Box
 /obj/structure/disposalpipe/sortjunction/Disposals
-	dir = 1
 	sortType = 1
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Cargo
-	dir = 1
 	sortType = 2
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/QM
-	dir = 8
 	sortType = 3
 
 /obj/structure/disposalpipe/sortjunction/Engineering
-	dir = 8
 	sortType = 4
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/CE
-	dir = 2
 	sortType = 5
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Atmos
-	dir = 1
 	sortType = 6
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Security
-	dir = 4
 	sortType = 7
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/HoS
-	dir = 4
 	sortType = 8
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Medbay
-	dir = 8
 	sortType = 9
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/CMO
-	dir = 1
 	sortType = 10
 
 /obj/structure/disposalpipe/sortjunction/Chemistry
-	dir = 8
 	sortType = 11
 
 /obj/structure/disposalpipe/sortjunction/Research
-	dir = 2
 	sortType = 12
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/RD
-	dir = 2
 	sortType = 13
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Robotics
-	dir = 2
 	sortType = 14
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/HoP
-	dir = 8
 	sortType = 15
 
 /obj/structure/disposalpipe/sortjunction/Library
-	dir = 2
 	sortType = 16
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Chapel
-	dir = 4
 	sortType = 17
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Theatre
-	dir = 4
 	sortType = 18
 
 /obj/structure/disposalpipe/sortjunction/Bar
-	dir = 4
 	sortType = 19
 
 /obj/structure/disposalpipe/sortjunction/Kitchen
-	dir = 4
 	sortType = 20
 
 /obj/structure/disposalpipe/sortjunction/Hydroponics
-	dir = 4
 	sortType = 21
 
 /obj/structure/disposalpipe/sortjunction/Janitor
-	dir = 1
 	sortType = 22
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Genetics
-	dir = 2
 	sortType = 23
 
 /obj/structure/disposalpipe/sortjunction/Telecomms
-	dir = 2
 	sortType = 24
 
 /obj/structure/disposalpipe/sortjunction/Mechanics
-	dir = 1
 	sortType = 25
-	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Telescience
-	dir = 2
 	sortType = 26
-	icon_state = "pipe-j2s"
 
 //////////////////
 //a three-way junction that sorts objects destined for the mail office mail table (tomail = 1)
