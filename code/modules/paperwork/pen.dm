@@ -45,16 +45,9 @@
 	colour = "white"
 
 /obj/item/weapon/pen/fourcolor
-	desc = "It's a fancy four-color ink pen."
+	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "pen"
-	item_state = "pen"
-
-/obj/item/weapon/pen/fourcolor/New()
-	..()
 	colour = "black"
-	desc = "It's a fancy four-color ink pen, set to [src.colour]."
 
 /obj/item/weapon/pen/fourcolor/attack_self(mob/living/carbon/user)
 	switch(colour)
@@ -66,9 +59,9 @@
 			colour = "blue"
 		else
 			colour = "black"
-	user << "<span class='notice'>[src] will now write in [src.colour].</span>"
-	//user << "<span class='notice'>[src] will now write in <span style='color=[colour]'>[colour]</span>.</span>" // If anyone feels lucky
-	desc = "It's a fancy four-color ink pen, set to [src.colour]."
+	user << "<span class='notice'>[src] will now write in [colour].</span>"
+	//user << "<span class='notice'>[src] will now write in <font style='color=[colour]'>[colour]</font>.</span>"
+	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
