@@ -185,7 +185,7 @@ obj/item/proc/get_clamped_volume()
 			if("fire")
 				if (!(M_RESIST_COLD in M.mutations))
 					if(istype(M, /mob/living/carbon/monkey))
-						var/mob/living/carbon/monkey/K
+						var/mob/living/carbon/monkey/K = M
 						power = K.defense(power,def_zone)
 					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
