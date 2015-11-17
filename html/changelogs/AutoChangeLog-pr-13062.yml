@@ -1,40 +1,9 @@
 author: Xhuis
 delete-after: True
 changes: 
-  - tweak: ""Many medicines have received rebalancing. Expect underused chemicals like Oxandralone to be much more effective in restoring damage.""
-  - tweak: ""Many toxins are now more or less efficient.""
-  - tweak: ""The descriptions of many reagents have been made more accurate.""
-  - rscadd: ""New poison: Heparin. Made from Formaldehyde, Sodium, Chlorine, and Lithium. Functions as an anticoagulant, inducing uncontrollable bleeding and small amounts of bruising.""
-  - rscadd: ""New poison: Teslium. Made from Plasma, Silver, and Black Powder, heated to 400K. Modifies examine text and induces periodic shocks in the victim as well as making all shocks against them more damaging.""
-  - rscadd: ""Two Chemistry books have been placed in the lab. When used, they will link to the wiki page for chemistry in the same vein as other wiki books."
-/ :cl:
-
-I frequently play Chemist, and I've found that a few wonder drugs tend to make others useless, and not even worth creating. This PR attempts to make underused medicines worth creating by increasing their healing effects.
-
-Medicine Changes
-
-Medicine descriptions have been made more descriptive.
-Synaptizine now has a 30% chance to cause toxin damage (down from 60%).
-Rezadone now instantly heals all clone damage.
-Rezadone's negative effects are now an overdose effect that kicks in at 30u.
-Oxandralone now heals 4 burn damage if burns are severe (up from 2).
-Morphine now makes victims drowsy at 12 cycles, with the old sleeping effect kicking in at 24 cycles.
-Miner's Salve now stuns and weakens for 4 ticks when ingested/injected rather than applied via touch (up from 2).
-Miner's Salve now gives a message when used properly hinting at its use as a painkiller.
-Pentetic Acid no longer has a small chance to cause bruising.
-Oculine now heals eye damage before 15 cycles and gives messages upon blindness and nearsightedness being removed.
-Atropine now heals all damage types by 2 each tick if the patient is in critical condition and completely halts losebreath.
-Diphenhydramine now has a 10% chance to cause drowsiness (down from 50%).
-Diphenhydramine now removes 3 units of Histamine per tick (up from 1.5).
-Epinephrine's healing effects now function when the patient is in critical condition at all.
-
-Toxin Changes
-
-Amatoxin now deals 2.5 toxin damage (up from 1).
-Lexorin is now much more effective due to its inferiority to similar chemicals that cost less to make.
-New toxin: Heparin. Made from Formaldehyde, Sodium, Chlorine, and Lithium. This functions as an aggressive anticoagulant, inducing uncontrollable bleeding that even bandages won't stop. Bleeding in this manner has a unique examine text.
-New toxin: Teslium. Made from Plasma, Silver, and Black Powder, heated to 400K. Teslium modifies human examine text ("They are emitting a gentle blue glow!") and periodically induces shocks of varying strength. The shocks themselves happen often but unpredictably, and bypass clothing protection because it's inside the bloodstream.
-
-Miscellaneous Changes
-
-Two chemistry wiki books have been added to the Chemistry Lab"
+  - tweak: "Many medicines have received rebalancing. Expect underused chemicals like Oxandralone to be much more effective in restoring damage."
+  - tweak: "Many toxins are now more or less efficient."
+  - tweak: "The descriptions of many reagents have been made more accurate."
+  - rscadd: "New poison: Heparin. Made from Formaldehyde, Sodium, Chlorine, and Lithium. Functions as an anticoagulant, inducing uncontrollable bleeding and small amounts of bruising."
+  - rscadd: "New poison: Teslium. Made from Plasma, Silver, and Black Powder, heated to 400K. Modifies examine text and induces periodic shocks in the victim as well as making all shocks against them more damaging."
+  - rscadd: "Two Chemistry books have been placed in the lab. When used, they will link to the wiki page for chemistry in the same vein as other wiki books."
