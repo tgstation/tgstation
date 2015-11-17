@@ -1,9 +1,9 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
  // New source code should be placed in .dm files: choose File/New --> Code File.
- 
-//For later integration: #include "code\game\objects\structures\vehicles\adminbus.dm" 
- 
+
+//For later integration: #include "code\game\objects\structures\vehicles\adminbus.dm"
+
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -660,6 +660,7 @@
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
 #include "code\game\objects\items\weapons\cosmetics.dm"
+#include "code\game\objects\items\weapons\courtroom.dm"
 #include "code\game\objects\items\weapons\defib.dm"
 #include "code\game\objects\items\weapons\dice.dm"
 #include "code\game\objects\items\weapons\dna_injector.dm"
