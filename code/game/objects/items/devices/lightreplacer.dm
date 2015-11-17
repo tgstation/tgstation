@@ -100,15 +100,24 @@
 
 	if(istype(W, /obj/item/weapon/storage/box/lights))
 		var/obj/item/weapon/storage/box/lights/B = W
-		if(!B.contents.len)
-			user << "<span class='warning'>The [B.name] is empty!</span>"
+		var/tmp/useable_lights = 0
+		for(var/obj/item/weapon/light/L in B.contents)
+			if(L.status == 0) // If the light is not broken or burned out
+				useable_lights = 1
+				break
+		if(!useable_lights) // This check necessitates the loop above, as I figure it to be useful to know the box has no useable lights first.
+			user << "<span class='warning'>The [B.name] contains no useable lights!</span>"
 		else if(uses == max_uses)
 			user << "<span class='warning'>The [src.name] is full!</span>"
 		else
 			B.close_all()
-			while(src.uses < max_uses && B.contents.len > 0)
-				B.contents.Cut(1,2)
-				AddUses(1)
+			for(var/obj/item/weapon/light/L in B.contents)
+				if(L.status == 0) // Don't want to allow broken or burnt out lights to be useable
+					if(src.uses < max_uses)
+						qdel(L)
+						AddUses(1)
+					else
+						break
 			user << "<span class='notice'>You fill the [src.name] with lights from the [B.name]. You have [uses] lights remaining.</span>"
 		return
 
