@@ -230,12 +230,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	pickup(user)
 	add_fingerprint(user)
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src))
+		dropped(user)
 	return
 
 
 /obj/item/attack_paw(mob/user)
-
+	var/picked_up = 0
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)
@@ -249,8 +250,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
+		picked_up = 1
 
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src) && picked_up)
+		dropped(user)
 	return
 
 

@@ -184,7 +184,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in world)
+	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break

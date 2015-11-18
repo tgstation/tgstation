@@ -475,7 +475,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	need_nutrition = 0 //Hard to eat through a helmet
-	roundstart = 1
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
@@ -524,8 +523,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	if(rank in security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
-		return 0
-	if(rank == "Bartender")
 		return 0
 	return 1
 

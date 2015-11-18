@@ -539,55 +539,7 @@ var/list/slot_equipment_priority = list( \
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortNames(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -657,9 +609,6 @@ var/list/slot_equipment_priority = list( \
 	if(!Adjacent(usr))	return
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
-
-/mob/proc/can_use_hands()
-	return
 
 /mob/proc/is_active()
 	return (0 >= usr.stat)

@@ -30,7 +30,7 @@
 	P.current = reflector_turf
 	P.yo = reflect_turf.y - reflector_turf.y
 	P.xo = reflect_turf.x - reflector_turf.x
-	P.kill_count = 50 //Keep the projectile healthy as long as its bouncing off things
+	P.range = initial(P.range) //Keep the projectile healthy as long as its bouncing off things
 	new_dir = 0
 	return - 1
 
