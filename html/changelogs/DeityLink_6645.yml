@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed wizard eye lasers being invisible.
+  - imageadd: Added id-slot on-mob sprites for all PDAs.

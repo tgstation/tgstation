@@ -291,7 +291,12 @@
 	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
+	LE.starting = T
+	LE.original = A
+	LE.target = U
+
 	spawn( 1 )
+		LE.OnFired()
 		LE.process()
 
 /mob/living/carbon/human/LaserEyes()
