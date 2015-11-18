@@ -116,14 +116,14 @@
 						break
 
 		if(!found_good_light)
-			user << "<span class='warning'>The [S.name] contains no useable lights!</span>"
+			user << "<span class='warning'>\The [S] contains no useable lights!</span>"
 			return
 
 		if(!replaced_something && src.uses == max_uses)
-			user << "<span class='warning'>The [src.name] is full!</span>"
+			user << "<span class='warning'>\The [src] is full!</span>"
 			return
 
-		user << "<span class='notice'>You fill the [src.name] with lights from the [S.name]. You have [uses] lights remaining.</span>"
+		user << "<span class='notice'>You fill \the [src] with lights from \the [S]. You have [uses] lights remaining.</span>"
 
 /obj/item/device/lightreplacer/emag_act()
 	if(!emagged)
