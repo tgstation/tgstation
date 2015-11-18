@@ -1,4 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - bugfix: "Remotely detonating a planted c4 with a signaler now works again."
