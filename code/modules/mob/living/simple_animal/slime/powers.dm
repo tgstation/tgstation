@@ -1,3 +1,36 @@
+#define SIZE_DOESNT_MATTER 	-1
+#define BABIES_ONLY			0
+#define ADULTS_ONLY			1
+
+#define NO_GROWTH_NEEDED	0
+#define GROWTH_NEEDED		1
+
+/datum/action/innate/slime
+	check_flags = AB_CHECK_ALIVE
+	background_icon_state = "bg_alien"
+	var/adult_action = SIZE_DOESNT_MATTER
+	var/needs_growth = NO_GROWTH_NEEDED
+
+/datum/action/innate/slime/CheckRemoval()
+	if(!isslime(owner))
+		return 1
+	var/mob/living/simple_animal/slime/S = owner
+	if(adult_action != SIZE_DOESNT_MATTER)
+		if(adult_action == ADULTS_ONLY && !S.is_adult)
+			return 1
+		else if(adult_action == BABIES_ONLY && S.is_adult)
+			return 1
+	return 0
+
+/datum/action/innate/slime/IsAvailable()
+	if(..())
+		var/mob/living/simple_animal/slime/S = owner
+		if(needs_growth == GROWTH_NEEDED)
+			if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+				return 1
+			return 0
+		return 1
+
 /mob/living/simple_animal/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
@@ -15,6 +48,15 @@
 	if(CanFeedon(M))
 		Feedon(M)
 		return 1
+
+/datum/action/innate/slime/feed
+	name = "Feed"
+	button_icon_state = "slimeeat"
+
+
+/datum/action/innate/slime/feed/Activate()
+	var/mob/living/simple_animal/slime/S = owner
+	S.Feed()
 
 /mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
 	if(!Adjacent(M))
@@ -68,7 +110,7 @@
 		src << "<i>I must be conscious to do this...</i>"
 		return
 	if(!is_adult)
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			is_adult = 1
 			maxHealth = 200
 			amount_grown = 0
@@ -79,6 +121,19 @@
 	else
 		src << "<i>I have already evolved...</i>"
 
+/datum/action/innate/slime/evolve
+	name = "Evolve"
+	button_icon_state = "slimegrow"
+	adult_action = BABIES_ONLY
+	needs_growth = GROWTH_NEEDED
+
+/datum/action/innate/slime/evolve/Activate()
+	var/mob/living/simple_animal/slime/S = owner
+	S.Evolve()
+	if(S.is_adult)
+		var/datum/action/innate/slime/reproduce/A = new
+		A.Grant(S)
+
 /mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes."
@@ -88,7 +143,7 @@
 		return
 
 	if(is_adult)
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(stat)
 				src << "<i>I must be conscious to do this...</i>"
 				return
@@ -124,3 +179,13 @@
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else
 		src << "<i>I am not old enough to reproduce yet...</i>"
+
+/datum/action/innate/slime/reproduce
+	name = "Reproduce"
+	button_icon_state = "slimesplit"
+	adult_action = ADULTS_ONLY
+	needs_growth = GROWTH_NEEDED
+
+/datum/action/innate/slime/reproduce/Activate()
+	var/mob/living/simple_animal/slime/S = owner
+	S.Reproduce()

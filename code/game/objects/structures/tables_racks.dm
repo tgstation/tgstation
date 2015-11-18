@@ -28,6 +28,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/mob/tableclimber
+	var/deconstructable = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
@@ -125,6 +126,14 @@
 		if(!G.confirm())
 			return 0
 		G.affecting.loc = src.loc
+		if(istype(src, /obj/structure/table/optable))
+			var/obj/structure/table/optable/OT = src
+			G.affecting.resting = 1
+			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
+			OT.patient = G.affecting
+			OT.check_patient()
+			qdel(I)
+			return 1
 		G.affecting.Weaken(2)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
@@ -195,6 +204,8 @@
 #define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(destroy_type, mob/user)
+	if(!deconstructable)
+		return
 
 	if(destroy_type == TBL_DESTROY)
 		for(var/i = 1, i <= framestackamount, i++)
@@ -356,6 +367,43 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		user << text("<span class='notice'>You kick [src].</span>")
 	return 1
+
+/*
+ * Surgery Tables
+ */
+
+/obj/structure/table/optable
+	name = "operating table"
+	desc = "Used for advanced medical procedures."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "optable"
+	buildstack = /obj/item/stack/sheet/mineral/silver
+	smooth = SMOOTH_FALSE
+	can_buckle = 1
+	buckle_lying = 1
+	buckle_requires_restraints = 1
+	var/mob/living/carbon/human/patient = null
+	var/obj/machinery/computer/operating/computer = null
+
+/obj/structure/table/optable/New()
+	..()
+	for(var/dir in cardinal)
+		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
+		if(computer)
+			computer.table = src
+			break
+
+/obj/structure/table/optable/proc/check_patient()
+	var/mob/M = locate(/mob/living/carbon/human, loc)
+	if(M)
+		if(M.resting)
+			patient = M
+			return 1
+	else
+		patient = null
+		return 0
+
+
 
 /*
  * Racks

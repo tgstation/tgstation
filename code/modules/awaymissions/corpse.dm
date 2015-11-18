@@ -257,8 +257,8 @@
 
 /obj/effect/landmark/corpse/plasmaman
 	mob_species = "plasmaman"
-	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/plasmaman
-	corpsesuit = /obj/item/clothing/suit/space/eva/plasmaman
+	corpsehelmet = /obj/item/clothing/head/helmet/plasmaman
+	corpseuniform = /obj/item/clothing/under/plasmaman
 	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
 	corpsemask = /obj/item/clothing/mask/breath
 

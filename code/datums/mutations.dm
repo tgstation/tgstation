@@ -19,6 +19,7 @@
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
+	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -177,6 +178,7 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
+	time_coeff = 5
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -197,6 +199,7 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	time_coeff = 2
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -378,6 +381,7 @@
 
 	name = "Monkified"
 	quality = NEGATIVE
+	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -396,6 +400,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
 	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
+	time_coeff = 5
 
 
 /datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
@@ -420,6 +425,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
+	time_coeff = 5
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

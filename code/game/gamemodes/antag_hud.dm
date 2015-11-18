@@ -4,9 +4,8 @@
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
-	if(M.mind.antag_hud)
-		var/datum/atom_hud/antag/oldhud = M.mind.antag_hud
-		oldhud.leave_hud(M)
+	if(M.mind.antag_hud) //note: please let this runtime if a mob has no mind, as mindless mobs shouldn't be getting antagged
+		M.mind.antag_hud.leave_hud(M)
 	add_to_hud(M)
 	add_hud_to(M)
 	M.mind.antag_hud = src
@@ -16,7 +15,8 @@
 		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
 	remove_from_hud(M)
 	remove_hud_from(M)
-	M.mind.antag_hud = null
+	if(M.mind)
+		M.mind.antag_hud = null
 
 
 //GAME_MODE PROCS
@@ -27,16 +27,23 @@
 	var/image/holder = M.hud_list[ANTAG_HUD]
 	if(holder)
 		holder.icon_state = new_icon_state
-	M.mind.antag_hud_icon_state = new_icon_state
+	if(M.mind || new_icon_state) //in mindless mobs, only null is acceptable, otherwise we're antagging a mindless mob, meaning we should runtime
+		M.mind.antag_hud_icon_state = new_icon_state
 
 
 //MIND PROCS
-//this is called by mind.transfer_to()
-/datum/mind/proc/transfer_antag_huds(mob/M)
+//these are called by mind.transfer_to()
+/datum/mind/proc/transfer_antag_huds(var/datum/atom_hud/antag/newhud)
+	leave_all_huds()
+	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
+	if(newhud)
+		newhud.join_hud(current)
+
+/datum/mind/proc/leave_all_huds()
 	for(var/datum/atom_hud/antag/hud in huds)
-		if(M in hud.hudusers)
-			hud.leave_hud(M)
-	var/image/holder = M.hud_list[ANTAG_HUD]
-	holder.icon_state = antag_hud_icon_state
-	if(antag_hud)
-		antag_hud.join_hud(M)
+		if(current in hud.hudusers)
+			hud.leave_hud(current)
+
+	for(var/datum/atom_hud/data/hud in huds)
+		if(current in hud.hudusers)
+			hud.remove_hud_from(current)

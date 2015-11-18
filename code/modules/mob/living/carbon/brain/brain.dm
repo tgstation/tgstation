@@ -38,3 +38,9 @@
 
 /mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
+
+/mob/living/carbon/brain/check_ear_prot()
+	return 1
+
+/mob/living/carbon/brain/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	return // no eyes, no flashing

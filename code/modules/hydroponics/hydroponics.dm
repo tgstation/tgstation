@@ -53,6 +53,12 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
+/obj/machinery/hydroponics/Destroy()
+	if(myseed)
+		qdel(myseed)
+		myseed = null
+	return ..()
+
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
 		return

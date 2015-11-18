@@ -1176,6 +1176,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername = "high-traction floor tiles"
 
+/datum/supply_packs/misc/plasmaman
+	name = "Plasma-man Supply Kit"
+	contains = list(/obj/item/clothing/under/plasmaman,
+					/obj/item/clothing/under/plasmaman,
+					/obj/item/weapon/tank/internals/plasmaman/belt/full,
+					/obj/item/weapon/tank/internals/plasmaman/belt/full,
+					/obj/item/clothing/head/helmet/plasmaman,
+					/obj/item/clothing/head/helmet/plasmaman)
+	cost = 20
+	containername = "plasma-man supply kit"
 
 ///////////// Costumes
 

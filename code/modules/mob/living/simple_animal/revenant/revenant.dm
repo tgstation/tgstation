@@ -14,7 +14,6 @@
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
-	alpha = 160
 	layer = 5
 	healable = 0
 	see_invisible = SEE_INVISIBLE_MINIMUM
@@ -61,7 +60,6 @@
 		unreveal_time = 0
 		revealed = 0
 		invisibility = INVISIBILITY_REVENANT
-		alpha = 160
 		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
@@ -69,6 +67,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
+	update_spooky_icon()
 	..()
 
 
@@ -79,12 +78,13 @@
 		return
 	revealed = 1
 	invisibility = 0
-	alpha = 255
 	if(!unreveal_time)
 		src << "<span class='revendanger'>You have been revealed!</span>"
+		unreveal_time = world.time + time
 	else
 		src << "<span class='revenwarning'>You have been revealed!</span>"
-	unreveal_time = world.time + time
+		unreveal_time = unreveal_time + time
+	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
@@ -94,9 +94,23 @@
 	notransform = 1
 	if(!unstun_time)
 		src << "<span class='revendanger'>You cannot move!</span>"
+		unstun_time = world.time + time
 	else
 		src << "<span class='revenwarning'>You cannot move!</span>"
-	unstun_time = world.time + time
+		unstun_time = unstun_time + time
+	update_spooky_icon()
+
+/mob/living/simple_animal/revenant/proc/update_spooky_icon()
+	if(revealed)
+		if(draining)
+			icon_state = "revenant_draining"
+			return
+		if(notransform)
+			icon_state = "revenant_stun"
+			return
+		icon_state = "revenant_revealed"
+		return
+	icon_state = "revenant_idle"
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -169,7 +183,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
+				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
 				if(do_after(src, 50, 15, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
@@ -185,12 +199,15 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					src << "<span class='revenwarning'>[target] has been drawn out of your grasp. The link has been broken.</span>"
-					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
-										   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
-				icon_state = "revenant_idle"
+					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
+					draining = 0
+					essence_drained = 0
+					if(target) //Wait, target is WHERE NOW?
+						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+					return
 			else
-				src << "<span class='revenwarning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
+				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
 				draining = 0
 				essence_drained = 0
 				return
@@ -244,6 +261,7 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 
 
 /mob/living/simple_animal/revenant/death()
