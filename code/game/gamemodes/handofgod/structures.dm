@@ -217,7 +217,7 @@
 
 /obj/structure/divine/nexus
 	name = "nexus"
-	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosion shock."
+	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosive shock."
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
