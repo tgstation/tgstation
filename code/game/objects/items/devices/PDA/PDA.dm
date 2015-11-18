@@ -790,10 +790,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			remove_id()
 		else
 			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
-	if (usr.restrained())
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
-	else
-		return
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -808,9 +804,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			remove_id()
 		else
 			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
-	else
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
-
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
@@ -832,8 +825,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			O.loc = get_turf(src)
 		else
 			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
-	else
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -882,11 +873,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
-				if(user.canUseTopic(src))//If they can still act.
-					if(!id_check(user, 2))
-						return
-					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
-					updateSelfDialog()//Update self dialog on success.
+				if(!id_check(user, 2))
+					return
+				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
