@@ -22,19 +22,11 @@ var/list/lightning_sound = list('sound/effects/lightning/chainlightning1.ogg', '
 //space sounds have no gas modification, for example. Though >space sounds
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/gas_modified = 1)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/playsound() called tick#: [world.time]")
-
-	ASSERT(!isarea(source))
-	//if(isarea(source))
-	//	error("[source] is an area and is trying to make the sound: [soundin]")
-	//	return
-
-	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
-	ASSERT(turf_source)
-	//if(!turf_source)
-	//	error("Warning : [source] trying to play sound '[soundin]', but turf could not be found.")
-	//	return
+	ASSERT(!isnull(turf_source))
+
+	var/frequency = get_rand_frequency() // Same frequency for everybody
 
 /* What's going on in this block?
 	If the proc isn't set to not be modified by air, the following steps occur:
