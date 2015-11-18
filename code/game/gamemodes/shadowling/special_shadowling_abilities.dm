@@ -33,6 +33,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself afterwards
+			H.status_flags += GODMODE //Can't die while hatching
 
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
@@ -61,6 +62,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			possibleShadowlingNames.Remove(newNameId)
 			H.real_name = newNameId
 			H.name = usr.real_name
+			if(H.status_flags & GODMODE)
+				H.status_flags -= GODMODE
 			H.SetStunned(0)
 			H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 

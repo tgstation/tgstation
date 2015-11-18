@@ -308,7 +308,7 @@
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman
 	uniform = /obj/item/clothing/under/plasmaman
-	belt = /obj/item/weapon/tank/internals/plasmaman/belt/full
+	r_hand= /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/death_commando

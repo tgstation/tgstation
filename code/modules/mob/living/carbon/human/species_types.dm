@@ -11,7 +11,7 @@
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
-	cosmetic = 1
+
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
@@ -64,7 +64,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
-	cosmetic = 1
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -502,7 +501,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
-				if((environment.oxygen /total_moles) >= 0.01)
+				if((environment.oxygen /total_moles) >= 1) //Slightly raising this because there can be trace low amounts of oxygen even when you completely vacuum a room.
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
