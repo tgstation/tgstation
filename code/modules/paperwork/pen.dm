@@ -59,7 +59,7 @@
 			colour = "blue"
 		else
 			colour = "black"
-	user << "<span class='notice'>[src] will now write in [colour].</span>"
+	user << "<span class='notice'>\The [src] will now write in [colour].</span>"
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
