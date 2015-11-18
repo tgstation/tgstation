@@ -60,7 +60,6 @@
 		else
 			colour = "black"
 	user << "<span class='notice'>[src] will now write in [colour].</span>"
-	//user << "<span class='notice'>[src] will now write in <font style='color=[colour]'>[colour]</font>.</span>"
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
