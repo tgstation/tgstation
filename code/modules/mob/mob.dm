@@ -979,3 +979,7 @@ var/list/slot_equipment_priority = list( \
 			if(CL.scan_reagents)
 				return 1
 	return 0
+
+//Can the mob use Topic to interact with machines
+/mob/proc/canUseTopic()
+	return
