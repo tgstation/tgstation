@@ -1,5 +1,3 @@
-
-Dragging yourself or someone else onto a chair or bed will buckle them to it, immobilizing them. If handcuffed, it will take time to resist out.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 You can craft items including makeshift weapons by placing components, such as metal and cable coils, on a table and then dragging the table to yourself. 
@@ -13,14 +11,15 @@ Firesuits and winter coats offer mild protection from the cold, allowing you to 
 Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel.
 If you need to drag multiple people either to safety or to space, bring a locker over and stuff them all in before hauling them off.
 You can grab someone by clicking on them with the grab intent, then upgrade the grab by clicking on the grab button in your active hand. An aggressive grab will allow you to place someone on a table by clicking on it, or throw them by toggling on throwing.
-You can break computer screens by shooting lasers at them.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
-The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, and out of locked lockers. Whenever you're stuck, try resisting!
+The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 Your emergency oxygen tank delivers 21 kPa by default, which is more air than you need to survive! Click the tank in an open hand to adjust the pressure.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
+There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
+Crates can be booby-trapped by adding wire, shocking anyone who tries to open them.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your pants or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
@@ -35,17 +34,16 @@ As a Chemist, there are dozens of chemicals that can heal, and even more that ca
 As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater.
 As a Chemist, it is a good idea to carry some sort of combat or panic pill to help you get out of a dangerous situation. A mixture of healing, speed boosting, and stun recovery chemicals can help you immensely.
 As a Geneticist, check the door to your workspace periodically to see if there's anyone to clone.
-As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you take too much damage, and are not considered a human by the AI as a hulk.
+As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you take too much damage, and are not considered a human by the AI while you are a hulk.
 As the Virologist, your viruses can range from healing powers so great that you can solo a blob, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
 As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As the Research Director, you can repair and even revive AIs by loading them into an intellicard, and then from there into an AI system integrity restorer computer.
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As a Scientist, you can inject yourself with the mutation toxin extracted from green slimes to become one of many races, including a slimeperson, who will never be attacked by slimes and can split!
-As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract. It is possible to get 9 times as much out of a slime this way.
+As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
 As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research or the construction of the Phazon mech!
 As a Scientist, researchable machine parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
 As a Scientist, with high enough bluespace research, you can build machines that can teleport objects and people all around the station! Look into setting up a telescience department if you can.
-As a Roboticist, you can not only build cyborgs, but also drones, bots, and even mechs!
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery and replace their wires with a cable coil.
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
@@ -93,6 +91,7 @@ As the Clown, you have the clumsiness genetic defect, and will misfire guns if y
 As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
 As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and is a very powerful weapon to boot!
 As the Chaplain, your bible can heal people if you hit them with it, but it can also potentially cause brain damage. Use at your own risk!
+As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
 As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen from chemistry to get special variations.
@@ -102,6 +101,9 @@ As the Chef, you can rename your custom made food with a pen.
 As the Chef, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
+As a Janitor, if someone steals your janicart, you can often find a spare in maitenance.
+As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
+As the Librarian, you are not completely defenseless. Your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
 As a Cargo Technician, you can hack mulebots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
 As a Cargo Technician, you can earn more cargo points by shipping back crates from maintenance, plasma sheets, rare seeds from hydroponics, and more!
@@ -141,9 +143,9 @@ As the Blob, you fight a war of attrition: Take out medbay and fight in chokepoi
 As the Blob, remember that you can only expand onto tiles from cardinal directions, while the crew can attack you diagonally. Fight in narrow corridors or expand and widen across the width of the hallway to force confrontations where you can hit them!
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crewmembers far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
 As a Revolutionary, you cannot convert a head of staff or someone who has a loyalty implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
-As a Revolutionary, cargo bay can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
-As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before they can make it to security.
-As a Changeling, the Steal DNA sting from changelings counts for your genome absorb objective, but does not let you change your powers.
+As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
+As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
+As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you change your powers.
 As a Changeling, you can absorb someone by grabbing them around the neck and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
 As a Shadowling, remember to communicate with your fellow shadowlings and thralls as you lack the firepower to take on much of anything by yourself until you ascend.
 As a Shadowling, the Destroy Engines spell allows you to sacrifice one thrall to significantly delay the arrival of the escape shuttle.
@@ -158,7 +160,7 @@ As a Wizard, you can turn people to stone, then animate the resulting statue wit
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.
 As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
 As a Wizard, the staff of chaos can fire any type of bolts from the magical wands. This can range from bolts of instant death to healing or reviving someone.
-As a Wizard, most spells become unusable if you are not wearing your robes, hat, and sandals.
+As a Wizard, most spells become unusable if you are not wearing your robe, hat, and sandals.
 As a Gangster, you can destroy loyalty implants with an implant breaker, letting you reconvert that person.
 As a Gangster, your influence is based on how many areas you have tagged and how many people are wearing your gang's outfit; more areas and more people wearing the outfit will give you more influence.
 As a Gangster, your gang outfits are very robust, giving moderate resistances to most direct damage at the cost of stealth.
@@ -166,6 +168,7 @@ As a Gang Boss, it is wise to promote at least one other person you think is goo
 As an Abductor, you can select where your victims will be sent on the ship control console.
 As an Abductor Agent, the combat mode vest has much higher resistance to every kind of weapon, and your helmet prevents the AI from tracking you.
 As an Abductor, the baton is set up to allow you to rapidly stun, sleep, and cuff: From stun mode, it cyles to sleep, then to cuff, allowing you to render a target helpless and unable to communicate very rapidly.
+As a Revenant, the Chaplain is your worst enemy, as he can damage you with his null rod and make large swaths of the station impassable with holy water.
 As a Swarmer, you can deconstruct more things than you think. Try deconstructing light switches, buttons, air alarms and more. Experiment!
 As a Swarmer, you can teleport fellow swarmers away if you think they are in danger.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
