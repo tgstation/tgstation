@@ -94,8 +94,9 @@
 		dat += "<hr>"
 
 		if(P)
-			if(P.buffer)
-				dat += "<br><br>MULTITOOL BUFFER: [P.buffer] ([P.buffer.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+			var/obj/machinery/telecomms/T = P.buffer
+			if(T && istype(T))
+				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
 			else
 				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
 
@@ -284,14 +285,15 @@
 	if(href_list["link"])
 
 		if(P)
-			if(P.buffer && P.buffer != src)
-				if(!(src in P.buffer.links))
-					P.buffer.links.Add(src)
+			var/obj/machinery/telecomms/T = P.buffer
+			if(T && istype(T) && T != src)
+				if(!(src in T.links))
+					T.links.Add(src)
 
-				if(!(P.buffer in src.links))
-					src.links.Add(P.buffer)
+				if(!(T in src.links))
+					src.links.Add(T)
 
-				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
+				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
 
 			else
 				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"

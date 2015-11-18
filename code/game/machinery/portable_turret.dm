@@ -312,7 +312,10 @@
 			user << "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>"
 		else
 			user << "<span class='notice'>Access denied.</span>"
-
+	else if(istype(I,/obj/item/device/multitool) && !locked)
+		var/obj/item/device/multitool/M = I
+		M.buffer = src
+		user << "<span class='notice'>You add [src] to multitool buffer.</span>"
 	else
 		//if the turret was attacked with the intention of harming it:
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -924,7 +927,10 @@
 			updateUsrDialog()
 		else
 			user << "<span class='notice'>Access denied.</span>"
-
+	else if(istype(I,/obj/item/device/multitool) && !Parent_Turret.locked)
+		var/obj/item/device/multitool/M = I
+		M.buffer = Parent_Turret
+		user << "<span class='notice'>You add [Parent_Turret] to multitool buffer.</span>"
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		Parent_Turret.health -= I.force * 0.5
@@ -992,38 +998,52 @@
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
-	var/control_area //can be area name, path or nothing.
+	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
+	var/list/obj/machinery/porta_turret/turrets = list()
 
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
-	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
-	else if(istext(control_area))
-		for(var/area/A in world)
-			if(A.name && A.name==control_area)
-				control_area = A
-				break
 	if(built)
 		dir = ndir
 		locked = 0
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
-	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
+	if(control_area && istext(control_area))
+		for(var/area/A in world)
+			if(A.name && A.name==control_area)
+				control_area = A
+				break
+	
+	if(!control_area)
+		var/area/CA = get_area(src)
+		if(CA.master && CA.master != CA)
+			control_area = CA.master
+		else
+			control_area = CA
+
+	for(var/obj/machinery/porta_turret/T in get_area_all_atoms(control_area))
+		turrets |= T
+
+/obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN) return
+
+	if (istype(I,/obj/item/device/multitool))
+		var/obj/item/device/multitool/M = I
+		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
+			turrets |= M.buffer
+			user << "You link [M.buffer] with [src]"
+			return
+
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
+	if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
 				user << "<span class='notice'>The turret control is unresponsive.</span>"
@@ -1110,9 +1130,8 @@
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if(control_area)
-		for (var/obj/machinery/porta_turret/aTurret in get_area_all_atoms(control_area))
-			aTurret.setState(enabled, lethal)
+	for (var/obj/machinery/porta_turret/aTurret in turrets)
+		aTurret.setState(enabled, lethal)
 	src.update_icon()
 
 /obj/machinery/turretid/power_change()
