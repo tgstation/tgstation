@@ -71,7 +71,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
 	if(user.stat || stat & (NOPOWER|BROKEN))
