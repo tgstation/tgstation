@@ -224,7 +224,7 @@
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
-	maxhealth = 25
+	maxhealth = 26
 	health_regen = 1
 	brute_resist = 4
 
