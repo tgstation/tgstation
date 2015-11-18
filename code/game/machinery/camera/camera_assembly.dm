@@ -128,9 +128,14 @@
 		if(is_type_in_list(W, upgrades))
 			user << "The assembly already has \a [W] inside!"
 			return
+		if (istype(W, /obj/item/stack))
+			var/obj/item/stack/sheet/mineral/plasma/s = W
+			s.use(1)
+			upgrades += new /obj/item/stack/sheet/mineral/plasma
+		else
+			if(!user.drop_item(W, src)) return
+			upgrades += W
 		user << "You attach the [W] into the assembly inner circuits."
-		upgrades += W
-		user.drop_item(W, src)
 		return
 
 	// Taking out upgrades
