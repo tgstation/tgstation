@@ -399,7 +399,7 @@
 		user.reagents.add_reagent("hell_water",20)
 	else
 		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
-		user.reagents.add_reagent("omnizine",20)
+		user.reagents.add_reagent("godblood",20)
 	update_icons()
 	spawn(time_between_uses)
 		if(src)
