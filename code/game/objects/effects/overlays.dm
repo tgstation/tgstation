@@ -27,7 +27,6 @@
 	mouse_opacity = 0
 	var/duration = 10
 	var/randomdir = 1
-	var/loopless_icon = null //Workaround so that pooled effects that normally don't repeat will repeat when taken from the pool.
 
 /obj/effect/overlay/temp/Destroy()
 	..()
@@ -36,21 +35,20 @@
 /obj/effect/overlay/temp/New()
 	if(randomdir)
 		dir = pick(cardinal)
-	if(loopless_icon)
-		flick("[loopless_icon]", src)
+	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
 
 
 /obj/effect/overlay/temp/cult
 	name = "unholy glow"
-	loopless_icon = "wallglow"
+	icon_state = "wallglow"
 	layer = 2.01
 	randomdir = 0
 	duration = 10
 
 /obj/effect/overlay/temp/cult/floor
-	loopless_icon = "floorglow"
+	icon_state = "floorglow"
 	duration = 5
 
 
@@ -60,7 +58,7 @@
 
 /obj/effect/overlay/temp/revenant/cracks
 	name = "glowing cracks"
-	loopless_icon = "purplecrack"
+	icon_state = "purplecrack"
 	duration = 6
 
 
@@ -70,7 +68,7 @@
 
 /obj/effect/overlay/temp/emp/pulse
 	name = "emp pulse"
-	loopless_icon = "emp pulse"
+	icon_state = "emp pulse"
 	duration = 8
 	randomdir = 0
 
