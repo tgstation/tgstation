@@ -383,7 +383,7 @@
 			return
 
 /datum/reagent/anti_toxin
-	name = "Dylovene"
+	name = "Anti-Toxin (Dylovene)"
 	id = "anti_toxin"
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
