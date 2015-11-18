@@ -979,3 +979,6 @@ var/list/slot_equipment_priority = list( \
 			if(CL.scan_reagents)
 				return 1
 	return 0
+
+/mob/proc/canUseTopic()
+	return
