@@ -108,6 +108,7 @@
 			if(!lubbed)
 				src.add_blood(M)//eew
 			M.apply_damage((20*size)/(1+lubbed),BRUTE,"groin")
+			lubbed = 0
 			M.emote("scream")
 			user.visible_message("<span class='danger'>[user] inserts [src.name] inside [M.name]!</span>", \
 					"<span class='userdanger'>You insert [src.name] inside [M.name]!</span>")
