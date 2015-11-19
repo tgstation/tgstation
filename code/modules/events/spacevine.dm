@@ -364,6 +364,7 @@
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/twohanded/chainsaw) qdel(src)
 		if(/obj/item/weapon/scythe)
 			for(var/obj/effect/spacevine/B in orange(src,1))
 				if(prob(80))
