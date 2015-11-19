@@ -86,6 +86,7 @@
 	else
 		hardness -= W.force/100
 		user << "You hit \the [src] with your [W.name]!"
+		user.delayNextAttack(10)
 		CheckHardness()
 	return
 
