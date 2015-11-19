@@ -784,7 +784,7 @@
 		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
 		return
 
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer/
+	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
 	swapper.cast(user, stored_swap, 1)
 
 	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
