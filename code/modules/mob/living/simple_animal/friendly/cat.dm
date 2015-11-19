@@ -19,6 +19,7 @@
 	can_breed = 1
 	species_type = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
+	holder_type = /obj/item/weapon/holder/animal/cat
 
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -115,6 +116,7 @@
 	species_type = /mob/living/simple_animal/cat/snek
 	butchering_drops = null
 	childtype = null
+	holder_type = null
 
 /mob/living/simple_animal/cat/snek/corpus
 	name = "Corpus"

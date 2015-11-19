@@ -131,3 +131,12 @@
 	name = "cow holder"
 	desc = "Pretty heavy"
 	item_state = "cow"
+
+//CATS
+
+/obj/item/weapon/holder/animal/cat
+	name = "cat holder"
+	desc = "Runtime error"
+	item_state = "cat1"
+
+	update_itemstate_on_twohand = 1

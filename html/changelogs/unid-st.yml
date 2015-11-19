@@ -3,4 +3,5 @@ author: Unid
 delete-after: True
 
 changes: 
-  - imageadd: Added sprites for holding carps and corgis with one hand
+  - imageadd: Added sprites for holding baby carps and corgi puppies
+  - imageadd: Added sprites for holding cats and kittens
