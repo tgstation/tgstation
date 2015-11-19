@@ -37,7 +37,7 @@
 			src.bodytemperature += 2
 
 /mob/living/carbon/movement_delay()
-	. = 0
+	. = ..()
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -84,6 +84,8 @@
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
+	if(reagents.has_reagent("teslium"))
+		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
@@ -268,13 +270,6 @@
 		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
-
-/mob/living/carbon/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/bed/chair)) // buckling does not restrict hands
-		return 0
-	return 1
 
 /mob/living/carbon/restrained()
 	if (handcuffed)

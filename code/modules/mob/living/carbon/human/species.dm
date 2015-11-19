@@ -33,6 +33,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/need_nutrition = 1  //Does it need to eat food on a regular basis?
 	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
@@ -613,7 +614,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD)
+	if (H.nutrition > 0 && H.stat != DEAD && !H.dna.species.need_nutrition)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -821,7 +822,7 @@
 ////////////////
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
-	var/mspeed = 0
+	. = 0
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 
@@ -843,39 +844,37 @@
 				if(P.allow_thrust(0.01, H))
 					hasjetpack = 1
 
-			mspeed = -1 - hasjetpack
+			. = -1 - hasjetpack
 
 		if(grav || !hasjetpack)
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
-				mspeed += (health_deficiency / 25)
+				. += (health_deficiency / 25)
 
 			var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
 			if(hungry >= 70)
-				mspeed += hungry / 50
+				. += hungry / 50
 
 			if(H.wear_suit)
-				mspeed += H.wear_suit.slowdown
+				. += H.wear_suit.slowdown
 			if(H.shoes)
-				mspeed += H.shoes.slowdown
+				. += H.shoes.slowdown
 			if(H.back)
-				mspeed += H.back.slowdown
+				. += H.back.slowdown
 
 			if((H.disabilities & FAT))
-				mspeed += 1.5
+				. += 1.5
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-				mspeed += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			mspeed += speedmod
+			. += speedmod
 
 		if(grav)
 			if(H.status_flags & GOTTAGOFAST)
-				mspeed -= 1
+				. -= 1
 
 			if(H.status_flags & GOTTAGOREALLYFAST)
-				mspeed -= 2
-
-	return mspeed
+				. -= 2
 
 //////////////////
 // ATTACK PROCS //

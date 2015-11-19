@@ -411,6 +411,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
+	poi_list |= src
 	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
@@ -421,6 +422,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
+		poi_list.Remove(src)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
 		var/turf/diskturf = get_turf(src)

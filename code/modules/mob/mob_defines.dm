@@ -6,6 +6,7 @@
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	var/datum/mind/mind
+	var/list/datum/action/actions = list()
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -134,8 +135,6 @@
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
-	var/area/lastarea = null
-
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
@@ -148,6 +147,8 @@
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
+
+	var/remote_view = 0 // Set to 1 to prevent view resets on Life
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 

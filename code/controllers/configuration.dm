@@ -43,7 +43,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
-	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -112,6 +111,8 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
+	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -331,8 +332,6 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
-				if("tickcomp")
-					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
@@ -522,6 +521,14 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("roundstart_races")
+					if(!cleared_default_races)
+						roundstart_species = list()
+						cleared_default_races = 1
+					var/race_id = lowertext(value)
+					for(var/species_id in species_list)
+						if(species_id == race_id)
+							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")

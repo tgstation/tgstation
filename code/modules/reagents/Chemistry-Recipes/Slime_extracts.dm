@@ -273,6 +273,21 @@
 				M.bodytemperature -= 240
 				M << "<span class='notice'>You feel a chill!</span>"
 
+
+/datum/chemical_reaction/slimefireproof
+	name = "Slime Fireproof"
+	id = "m_fireproof"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/darkblue
+	required_other = 1
+
+/datum/chemical_reaction/slimefireproof/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/fireproof/P = new /obj/item/slimepotion/fireproof
+	P.loc = get_turf(holder.my_atom)
+
 //Orange
 /datum/chemical_reaction/slimecasp
 	name = "Slime Capsaicin Oil"
@@ -567,6 +582,22 @@
 /datum/chemical_reaction/slimepsteroid2/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/enhancer/P = new /obj/item/slimepotion/enhancer
+	P.loc = get_turf(holder.my_atom)
+
+
+
+/datum/chemical_reaction/slime_territory
+	name = "Slime Territory"
+	id = "s_territory"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/cerulean
+	required_other = 1
+
+/datum/chemical_reaction/slime_territory/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/areaeditor/blueprints/slime/P = new /obj/item/areaeditor/blueprints/slime
 	P.loc = get_turf(holder.my_atom)
 
 //Sepia

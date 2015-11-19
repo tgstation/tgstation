@@ -7,44 +7,47 @@
 
 /* DATA HUD DATUMS */
 
-/atom/proc/add_to_all_data_huds()
-	for(var/datum/atom_hud/data/hud in huds) hud.add_to_hud(src)
+/atom/proc/add_to_all_human_data_huds()
+	for(var/datum/atom_hud/data/human/hud in huds) hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
 	for(var/datum/atom_hud/data/hud in huds) hud.remove_from_hud(src)
 
 /datum/atom_hud/data
 
-/datum/atom_hud/data/medical
+/datum/atom_hud/data/human/medical
 	hud_icons = list(HEALTH_HUD, STATUS_HUD)
 
-/datum/atom_hud/data/medical/basic
+/datum/atom_hud/data/human/medical/basic
 
-/datum/atom_hud/data/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
+/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H)) return 0
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U)) return 0
 	if(U.sensor_mode <= 2) return 0
 	return 1
 
-/datum/atom_hud/data/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
+/datum/atom_hud/data/human/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
 	if(check_sensors(H))
 		..()
 
-/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
+/datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
 	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
 
-/datum/atom_hud/data/medical/advanced
+/datum/atom_hud/data/human/medical/advanced
 
-/datum/atom_hud/data/security
+/datum/atom_hud/data/human/security
 
-/datum/atom_hud/data/security/basic
+/datum/atom_hud/data/human/security/basic
 	hud_icons = list(ID_HUD)
 
-/datum/atom_hud/data/security/advanced
+/datum/atom_hud/data/human/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
-/* MED/SEC HUD HOOKS */
+/datum/atom_hud/data/diagnostic
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+
+/* MED/SEC/DIAG HUD HOOKS */
 
 /*
  * THESE HOOKS SHOULD BE CALLED BY THE MOB SHOWING THE HUD
@@ -90,7 +93,7 @@
 
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
-	var/datum/atom_hud/data/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
+	var/datum/atom_hud/data/human/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
 	var/turf/T = get_turf(src)
@@ -132,6 +135,7 @@
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
+
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
@@ -172,3 +176,76 @@
 					holder.icon_state = "huddischarged"
 					return
 	holder.icon_state = null
+
+/***********************************************
+ Diagnostic HUDs!
+************************************************/
+
+//For Diag health and cell bars!
+/proc/RoundDiagBar(value)
+	switch(value * 100)
+		if(95 to INFINITY)
+			return "max"
+		if(80 to 100)
+			return "good"
+		if(60 to 80)
+			return "high"
+		if(40 to 60)
+			return "med"
+		if(20 to 40)
+			return "low"
+		if(1 to 20)
+			return "crit"
+		else
+			return "dead"
+	return "dead"
+
+//Sillycone hooks
+/mob/living/silicon/proc/diag_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	if(stat == DEAD)
+		holder.icon_state = "huddiagdead"
+	else
+		holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/silicon/proc/diag_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	switch(stat)
+		if(CONSCIOUS)
+			holder.icon_state = "hudstat"
+		if(UNCONSCIOUS)
+			holder.icon_state = "hudoffline"
+		else
+			holder.icon_state = "huddead2"
+
+//Borgie battery tracking!
+/mob/living/silicon/robot/proc/diag_hud_set_borgcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	if (cell)
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
+/*~~~~~~~~~~~~~~~~~~~~
+	BIG STOMPY MECHS
+~~~~~~~~~~~~~~~~~~~~~*/
+/obj/mecha/proc/diag_hud_set_mechhealth()
+	var/image/holder = hud_list[DIAG_MECH_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
+
+
+/obj/mecha/proc/diag_hud_set_mechcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	if (cell)
+		var/chargelvl = cell.charge/cell.maxcharge
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
+
+/obj/mecha/proc/diag_hud_set_mechstat()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	holder.icon_state = null
+	if(internal_damage)
+		holder.icon_state = "hudwarn"

@@ -326,7 +326,7 @@
 	..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
-	if(istype(AM))
+	if(istype(AM) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

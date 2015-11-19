@@ -65,8 +65,17 @@ h1.alert, h2.alert		{color: #000000;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
+.cultsmall				{color: #960000;}
 .cult					{color: #960000; font-weight: bold; font-size: 3;}
+.narsie					{color: #960000; font-weight: bold; font-size: 15;}
 .purple					{color: #5e2d79;}
+
+.revennotice			{color: #1d2953;}
+.revenboldnotice		{color: #1d2953;	font-weight: bold;}
+.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
+.revenminor				{color: #823abb}
+.revenwarning			{color: #760fbb;	font-style: italic;}
+.revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}

@@ -48,7 +48,7 @@
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
 	//...and display them.
-	add_to_all_data_huds()
+	add_to_all_human_data_huds()
 
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
@@ -842,3 +842,15 @@
 			if(M.client)
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated() || lying )
+		return
+	if(!Adjacent(M))
+		if((be_close == 0) && (dna.check_mutation(TK)))
+			if(tkMaxRangeCheck(src, M))
+				return 1
+		return
+	if(!isturf(M.loc) && M.loc != src)
+		return
+	return 1

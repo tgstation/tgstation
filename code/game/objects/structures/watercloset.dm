@@ -370,8 +370,10 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 
-/obj/structure/sink/attack_hand(mob/user)
-	if(isrobot(user) || isAI(user))
+/obj/structure/sink/attack_hand(mob/living/user)
+	if(!user || !istype(user))
+		return
+	if(!iscarbon(user))
 		return
 	if(!Adjacent(user))
 		return
@@ -379,17 +381,32 @@
 	if(busy)
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
-
-	user << "<span class='notice'>You start washing your hands...</span>"
-
+	var/selected_area = parse_zone(user.zone_sel.selecting)
+	var/washing_face = 0
+	if(selected_area in list("head", "mouth", "eyes"))
+		washing_face = 1
+	user.visible_message("<span class='notice'>[user] start washing their [washing_face ? "face" : "hands"]...</span>", \
+						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = 1
-	sleep(40)
+
+	if(!do_after(user, 40, target = src))
+		busy = 0
+		return
+
 	busy = 0
 
-	if(!Adjacent(user)) return		//Person has moved away from the sink
-
-	user.clean_blood()
-	user.visible_message("[user] washes their hands in [src].", "<span class='notice'>You wash your hands in [src].</span>")
+	user.visible_message("<span class='notice'>[user] washes their [washing_face ? "face" : "hands"] using [src].</span>", \
+						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
+	if(washing_face)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.lip_style = null //Washes off lipstick
+			H.lip_color = initial(H.lip_color)
+			H.regenerate_icons()
+		user.drowsyness -= rand(2,3) //Washing your face wakes you up if you're falling asleep
+		user.drowsyness = Clamp(user.drowsyness, 0, INFINITY)
+	else
+		user.clean_blood()
 
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)
@@ -399,26 +416,24 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user << "<span class='notice'>You fill [RG] from [src].</span>"
-		return
+		if(RG.flags & OPENCONTAINER)
+			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+			user << "<span class='notice'>You fill [RG] from [src].</span>"
+			return
 
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
 			if(B.bcell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
-				user.Stun(10)
-				user.stuttering = 10
-				user.Weaken(10)
-				if(isrobot(user))
-					var/mob/living/silicon/robot/R = user
-					R.cell.charge -= 20
-				else
-					B.deductcharge(B.hitcost)
-				user.visible_message( \
-					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
-					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
+				var/stunforce = B.stunforce
+				user.Stun(stunforce)
+				user.Weaken(stunforce)
+				user.stuttering = stunforce
+				B.deductcharge(B.hitcost)
+				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
+									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
+				playsound(src, "sparks", 50, 1)
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
@@ -426,26 +441,21 @@
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-	var/turf/location = user.loc
-	if(!isturf(location)) return
-
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item)) return
+	if(!I || !istype(I))
+		return
+	if(I.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+		return
 
-	usr << "<span class='notice'>You start washing [I]...</span>"
-
+	user << "<span class='notice'>You start washing [I]...</span>"
 	busy = 1
-	sleep(40)
+	if(!do_after(user, 40, target = src))
+		busy = 0
+		return
 	busy = 0
-
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while washing
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
-
 	O.clean_blood()
-	user.visible_message( \
-		"[user] washes [I] using [src].", \
-		"<span class='notice'>You wash [I] using [src].</span>")
+	user.visible_message("<span class='notice'>[user] washes [I] using [src].</span>", \
+						"<span class='notice'>You wash [I] using [src].</span>")
 
 
 /obj/structure/sink/kitchen

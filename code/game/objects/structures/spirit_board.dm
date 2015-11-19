@@ -55,13 +55,8 @@
 	//lighting check
 	var/light_amount = 0
 	var/turf/T = get_turf(src)
-	var/area/A = T.loc
+	light_amount = T.get_lumcount()
 
-	if(A)
-		if(A.lighting_use_dynamic)
-			light_amount = T.lighting_lumcount
-		else
-			light_amount =  10
 
 	if(light_amount > 2)
 		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"

@@ -67,17 +67,16 @@
 	..()
 	return QDEL_HINT_PUTINPOOL
 
-/obj/item/projectile/lasertag
+/obj/item/projectile/beam/lasertag
 	name = "laser tag beam"
 	icon_state = "omnilaser"
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
 	flag = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
-/obj/item/projectile/lasertag/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
@@ -86,10 +85,10 @@
 				M.adjustStaminaLoss(34)
 
 
-/obj/item/projectile/lasertag/redtag
+/obj/item/projectile/beam/lasertag/redtag
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 
-/obj/item/projectile/lasertag/bluetag
+/obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)

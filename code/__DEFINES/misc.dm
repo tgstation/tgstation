@@ -163,6 +163,9 @@
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 
+//Slime evolution threshold. Controls how fast slimes can split/grow
+#define SLIME_EVOLUTION_THRESHOLD 10
+
 //singularity defines
 #define STAGE_ONE 1
 #define STAGE_TWO 3
@@ -279,3 +282,9 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_TEXT		"TEXT"
 #define POLLTYPE_RATING		"NUMVAL"
 #define POLLTYPE_MULTI		"MULTICHOICE"
+
+//lighting area defines
+#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
+#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
+#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
+#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )

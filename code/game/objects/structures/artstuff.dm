@@ -110,7 +110,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	//Drawing one pixel with a crayon
 	if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
-		DrawPixelOn(C.colour, pixX, pixY)
+		DrawPixelOn(C.paint_color, pixX, pixY)
 		return
 
 	..()
