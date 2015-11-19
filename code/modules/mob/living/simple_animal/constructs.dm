@@ -87,13 +87,13 @@
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
 	environment_smash = 2
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/weapons/punch4.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
-						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
+						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</B>"
 
 /mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -131,7 +131,7 @@
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
-	desc = "A wicked bladed shell contraption piloted by a bound spirit"
+	desc = "A wicked bladed shell contraption piloted by a bound spirit."
 	icon_state = "floating"
 	icon_living = "floating"
 	maxHealth = 75
@@ -152,7 +152,7 @@
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
+	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -164,7 +164,6 @@
 	attacktext = "rams"
 	speed = 0
 	environment_smash = 2
-	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
@@ -185,14 +184,16 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 1
+	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "prods"
+	attacktext = "jabs"
 	speed = 0
-	environment_smash = 1
+	environment_smash = 3
 	see_in_dark = 7
-	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
+	attack_sound = 'sound/weapons/punch2.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 

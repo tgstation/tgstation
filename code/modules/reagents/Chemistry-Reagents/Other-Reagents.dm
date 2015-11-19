@@ -213,7 +213,6 @@
 	description = "Something that shouldn't exist on this plane of existance."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(3)
 	if(iscultist(M))
 		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
@@ -221,6 +220,7 @@
 		M.AdjustStunned(-2)
 		M.AdjustWeakened(-2)
 	else
+		M.adjustBrainLoss(3)
 		M.adjustToxLoss(2)
 		M.adjustFireLoss(2)
 		M.adjustOxyLoss(2)
