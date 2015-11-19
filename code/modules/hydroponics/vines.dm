@@ -23,7 +23,7 @@
 	var/datum/seed/seed
 
 /obj/effect/plantsegment/New()
-	return
+	..()
 
 /obj/effect/plantsegment/Destroy()
 	if(reagents)
@@ -131,7 +131,11 @@
 	if(prob(seed ? seed.potency : 25))
 
 		if(!locked_atoms || !locked_atoms.len)
-			var/mob/living/carbon/V = locate() in src.loc
+			var/mob/living/carbon/V //= locate() in src.loc
+			for(var/mob/living/carbon/C in src.loc)
+				if(C.stat != DEAD)
+					V = C
+					break
 			if(V && V.stat != DEAD) // If mob exists and is not dead or captured.
 				lock_atom(V)
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
@@ -142,7 +146,9 @@
 			if(V.stat != DEAD) //Don't bother with a dead mob.
 
 				var/mob/living/M = V
-				if(!istype(M)) return
+				if(!istype(M))
+					locked_atoms.Remove(M)
+					return
 				var/mob/living/carbon/human/H = V
 
 				// Drink some blood/cause some brute.
@@ -316,6 +322,7 @@
 	limited_growth = 1
 
 /obj/effect/plant_controller/New()
+	..()
 	if(!istype(src.loc,/turf/simulated/floor))
 		qdel(src)
 
