@@ -19,7 +19,7 @@
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
-	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 10), ("gold" = 15), ("silver" = 15), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
+	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 12), ("gold" = 16), ("silver" = 16), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()
