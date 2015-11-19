@@ -88,7 +88,7 @@
 		var/mob/M = A
 		add_logs(firer, M, "shot", object="[src]")
 	if(life <= 0)
-		del(src)
+		returnToPool(src)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
@@ -215,7 +215,7 @@
 		if(!targloc || targloc == curloc)
 			break
 		playsound(chassis, fire_sound, 80, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
+		var/obj/item/projectile/A = getFromPool(projectile,curloc)//new projectile(curloc)
 		src.projectiles--
 		A.original = target
 		A.current = curloc
