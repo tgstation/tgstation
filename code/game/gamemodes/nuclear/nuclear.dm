@@ -42,9 +42,9 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind
-			if(human.dna && human.dna.species.id == "plasmaman")
+		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
+			var/mob/living/carbon/human/human = synd_mind.current
+			if(human.dna && human.dna.species.dangerous_existence)
 				human.set_species(/datum/species/human)
 
 	return 1
