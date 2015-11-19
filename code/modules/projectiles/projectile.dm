@@ -7,6 +7,7 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
+	pressure_resistance = INFINITY
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/suppressed = 0	//Attack message

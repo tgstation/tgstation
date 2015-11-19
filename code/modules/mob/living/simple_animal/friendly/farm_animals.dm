@@ -177,6 +177,10 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
+/mob/living/simple_animal/chick/holo/Life()
+	..()
+	amount_grown = 0
+
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
 

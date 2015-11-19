@@ -124,6 +124,10 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult/floor, src)
+	..()
+
 /turf/simulated/floor/engine/cult/narsie_act()
 	return
 
