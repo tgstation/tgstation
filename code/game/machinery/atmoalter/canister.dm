@@ -171,7 +171,7 @@
 		playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
 		src.density = 0
 		update_icon()
-		investigation_log(I_ATMOS, "was destoyed by heat/gunfire.")
+		investigation_log(I_ATMOS, "was destoyed by excessive damage.")
 
 		if (src.holding)
 			src.holding.loc = src.loc
@@ -294,6 +294,16 @@
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
 	return src.ui_interact(user)
+
+/obj/machinery/portable_atmospherics/canister/attack_alien(var/mob/living/carbon/alien/user as mob)
+	src.add_hiddenprint(user)
+	health -= rand(15, 30)
+	user.visible_message("<span class='danger'>\The [user] slashes away at \the [src]!</span>", \
+						 "<span class='danger'>You slash away at \the [src]!</span>")
+	user.delayNextAttack(10) //Hold on there amigo
+	investigation_log(I_ATMOS, "<span style='danger'>was slashed at by alien [key_name(user)]</span>")
+	playsound(get_turf(src), 'sound/weapons/slice.ogg', 25, 1, -1)
+	healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if (src.destroyed || gcDestroyed || !get_turf(src))
