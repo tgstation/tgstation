@@ -1,8 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Constructs have action buttons for their spells."
-  - imageadd: "The Juggernaut forcewall now has a new, more cult-appropriate sprite."
-  - imageadd: "Cult floors and walls now have a glow effect when being created."
-  - bugfix: "Nar-Sie and Artificers will properly produce cult flooring.
-typofix: Nar-Sie is a she."
