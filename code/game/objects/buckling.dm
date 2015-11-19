@@ -16,7 +16,7 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M))
+	if(can_buckle && istype(M) && !buckled_mob)
 		if(user_buckle_mob(M, user))
 			return 1
 
