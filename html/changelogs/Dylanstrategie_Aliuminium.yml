@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Xenomorphs can now slash atmospheric canisters open
