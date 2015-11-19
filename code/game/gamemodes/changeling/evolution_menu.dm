@@ -210,7 +210,7 @@ var/list/sting_paths
 					<font size='5'><b>Changeling Evolution Menu</b></font><br>
 					Hover over a power to see more information<br>
 					Current ability choices remaining: [changeling.geneticpoints]<br>
-					By rendering a lifeform to a husk, we gain enough power to alter and adapt our evolutions.<br>
+					Absorption of a human will grant us two additional evolution points and the ability to re-adapt our evolutions.<br>
 					(<a href='?src=\ref[src];readapt=1'>Readapt</a>)<br>
 					<p>
 				</td>
@@ -342,10 +342,10 @@ var/list/sting_paths
 		user << "<span class='danger'>We can't remove our evolutions in this form!</span>"
 		return
 	if(canrespec)
-		user << "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>"
+		user << "<span class='notice'>We have removed our evolutions from this form and are now ready to readapt.</span>"
 		user.remove_changeling_powers(1)
 		canrespec = 0
-		user.make_changeling()
+		geneticpoints = total_genetic_points
 		return 1
 	else
 		user << "<span class='danger'>You lack the power to readapt your evolutions!</span>"

@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/lesserform
-	name = "Lesser form"
+	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
+	helptext = "This will cause us to unequip any items we cannot wear."
 	chemical_cost = 5
 	dna_cost = 1
 	genetic_damage = 3
