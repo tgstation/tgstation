@@ -39,4 +39,6 @@
 				M.cell.charge += rand() * 100
 				if(world.time >= next_message)
 					M << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
+		if(world.time >= next_message)
+			next_message = world.time + 100
 		return 1
