@@ -201,9 +201,14 @@ var/list/camera_names=list()
 		/*if (!wires.CanDeconstruct())
 			user << "You can't reach into the camera's circuitry with the wires on the way."
 			return*/
+		if (istype(W, /obj/item/stack))
+			var/obj/item/stack/sheet/mineral/plasma/s = W
+			s.use(1)
+			assembly.upgrades += new /obj/item/stack/sheet/mineral/plasma
+		else
+			if(!user.drop_item(W, src)) return
+			assembly.upgrades += W
 		user << "You attach the [W] into the camera's inner circuits."
-		assembly.upgrades += W
-		user.drop_item(W, src)
 		update_icon()
 		update_hear()
 		cameranet.updateVisibility(src, 0)
