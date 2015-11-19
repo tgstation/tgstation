@@ -10,7 +10,7 @@
 	var/all_the_same = 0
 	var/all_species = list()
 
-	for(var/speciestype in typesof(/datum/species) - /datum/species)
+	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		if(!S.dangerous_existence)
 			all_species += speciestype

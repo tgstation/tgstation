@@ -69,7 +69,7 @@
 /obj/machinery/computer/holodeck/initialize()
 	program_cache = list()
 	emag_programs = list()
-	for(var/typekey in typesof(program_type) - program_type)
+	for(var/typekey in subtypesof(program_type))
 		var/area/holodeck/A = locate(typekey)
 		if(!A || A == offline_program) continue
 		if(A.contents.len == 0) continue // not loaded

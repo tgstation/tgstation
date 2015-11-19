@@ -419,7 +419,7 @@ var/list/TYPES_SHORTCUTS = list(
 var/global/list/g_fancy_list_of_types = null
 /proc/get_fancy_list_of_types()
 	if (isnull(g_fancy_list_of_types)) //init
-		var/list/temp = sortList(typesof(/atom) - typesof(/area) - /atom - /atom/movable)
+		var/list/temp = sortList(subtypesof(/atom) - typesof(/area) - /atom/movable)
 		g_fancy_list_of_types = new(temp.len)
 		for(var/type in temp)
 			var/typename = "[type]"
@@ -627,7 +627,7 @@ var/global/list/g_fancy_list_of_types = null
 
 
 	var/list/outfits = list("Naked","Custom","As Job...")
-	var/list/paths = typesof(/datum/outfit) - /datum/outfit - typesof(/datum/outfit/job)
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
