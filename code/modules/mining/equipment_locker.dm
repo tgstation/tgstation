@@ -281,17 +281,18 @@
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
+		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
 		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   600),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 700),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 600),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
-		new /datum/data/mining_equipment("Resonator v2",        /obj/item/weapon/resonator/upgraded,                              3000),
+		new /datum/data/mining_equipment("Resonator v2",        /obj/item/weapon/resonator/upgraded,                              2500),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  3500),
 		new /datum/data/mining_equipment("Accelerator v2",		/obj/item/weapon/gun/energy/kinetic_accelerator/upgraded,		  4000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
@@ -888,3 +889,22 @@
 	volume = 40
 	throw_range = 7
 	w_class = 3 //same as syndie harness
+
+/*********************Hivelord stabilizer****************/
+
+/obj/item/weapon/hivelordstabilizer
+	name = "hivelord stabilizer"
+	icon_state = "hivestabilizer"
+	item_state = "hivestabilizer"
+	desc = "Inject a hivelord core with this stabilizer to preserve its healing powers indefinitely."
+	w_class = 1
+	origin_tech = "biotech=1"
+
+/obj/item/weapon/hivelordstabilizer/attack(obj/item/organ/internal/M, mob/user)
+	var/obj/item/organ/internal/hivelord_core/C = M
+	if(!istype(C, /obj/item/organ/internal/hivelord_core))
+		user << "<span class='warning'>The stabilizer only works on hivelord cores.</span>"
+		return ..()
+	C.preserved = 1
+	user << "<span class='notice'>You inject the hivelord core with the stabilizer. It will no longer go inert.</span>"
+	qdel(src)
