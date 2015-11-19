@@ -223,6 +223,8 @@
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	var cry_cooldown = 5
+	var cry_wait = 0
 	damage_transfer = 0.5
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
@@ -244,12 +246,14 @@
 /mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
 	..()
 	if(istype(target, /mob/living))
-		src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
+		if(src.cry_wait == 0)
+			src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
+			src.cry_wait = (src.cry_cooldown + 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
+		src.cry_wait--
 
 //Healer
 
