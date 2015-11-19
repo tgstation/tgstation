@@ -162,4 +162,5 @@
 	on = 0
 
 	AddAir()
-		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		air_contents.oxygen = 0.2 * internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		air_contents.nitrogen = 0.8 * internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
