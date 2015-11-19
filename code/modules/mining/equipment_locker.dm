@@ -71,7 +71,7 @@
 			if(locate(/obj/item/weapon/ore) in T)
 				for (i = 0; i < ore_pickup_rate; i++)
 					var/obj/item/weapon/ore/O = locate() in T
-					if(O)
+					if(O && O.refined_type)
 						process_sheet(O)
 					else
 						break
