@@ -360,40 +360,43 @@
 	if(!targets || !targets.len)
 		return 0
 	var/atom/movable/the_item = targets[1]
-	if(!the_item || !the_item.Adjacent(usr))
+	if(!the_item || !the_item.Adjacent(user))
 		return
 	if(ishuman(the_item))
 		//My gender
-		var/m_his="his"
-		if(user.gender==FEMALE)
-			m_his="her"
-		// Their gender
-		var/t_his="his"
-		if(the_item.gender==FEMALE)
-			t_his="her"
+		var/m_his = "its"
+		if(user.gender == MALE)
+			m_his = "his"
+		if(user.gender == FEMALE)
+			m_his = "her"
 		var/mob/living/carbon/human/H = the_item
 		var/datum/organ/external/limb = H.get_organ(usr.zone_sel.selecting)
 		if(!istype(limb))
-			user << "<span class='warning'> You can't eat this part of them!</span>"
+			user << "<span class='warning'>You can't eat this part of them!</span>"
 			return 0
-		if(istype(limb,/datum/organ/external/head))
-			// Bullshit, but prevents being unable to clone someone.
-			user << "<span class='warning'> You try to put \the [limb] in your mouth, but [t_his] ears tickle your throat!</span>"
+		if(istype(limb, /datum/organ/external/head))
+			//Bullshit, but prevents being unable to clone someone.
+			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but \his ears tickle your throat!</span>"
 			return 0
-		if(istype(limb,/datum/organ/external/chest))
-			// Bullshit, but prevents being able to instagib someone.
-			user << "<span class='warning'> You try to put their [limb] in your mouth, but it's too big to fit!</span>"
+		if(istype(limb, /datum/organ/external/chest))
+			//Bullshit, but you cannot break it anyways
+			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it's too big to fit!</span>"
 			return 0
-		usr.visible_message("<span class='danger'>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</span>")
-		if(!do_mob(user,the_item,EAT_MOB_DELAY))
-			user << "<span class='warning'>You were interrupted before you could eat [the_item]!</span>"
+		if(istype(limb, /datum/organ/external/groin))
+			//Bullshit, but you cannot break it anyways
+			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it feels far too inappropriate!</span>"
+			return 0
+		user.visible_message("<span class='danger'>[user] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</span>")
+		if(!do_mob(user, the_item,EAT_MOB_DELAY))
+			user << "<span class='warning'>You were interrupted before you could eat [the_item]'s [limb.display_name]!</span>"
 		else
-			user.visible_message("<span class='warning'>[user] eats \the [limb].</span>")
+			user.visible_message("<span class='danger'>[user] eats [the_item]'s [limb.display_name].</span>", \
+			"<span class='danger'>You eat [the_item]'s [limb.display_name].</span>")
 			limb.droplimb("override" = 1, "spawn_limb" = 0)
 			doHeal(user)
 	else
-		usr.visible_message("<span class='warning'> [usr] eats \the [the_item].")
-		playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
+		user.visible_message("<span class='warning'>[usr] eats \the [the_item].")
+		playsound(get_turf(user), 'sound/items/eatfood.ogg', 50, 0)
 		qdel(the_item)
 		doHeal(usr)
 	return

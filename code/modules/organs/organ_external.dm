@@ -580,11 +580,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/droplimb() called tick#: [world.time]")
 	if(destspawn)
 		return
+	if(body_part == (UPPER_TORSO || LOWER_TORSO)) //We can't lose either, those cannot be amputated and will cause extremely serious problems
+		return
 	if(override)
 		status |= ORGAN_DESTROYED
 	if(status & ORGAN_DESTROYED)
-		if(body_part == UPPER_TORSO)
-			return
 
 		src.status &= ~ORGAN_BROKEN
 		src.status &= ~ORGAN_BLEEDING
