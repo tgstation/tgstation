@@ -142,6 +142,15 @@
 	unique_rename = 1
 	origin_tech = "combat=2;powerstorage=1"
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/upgraded
+	name = "upgraded proto-kinetic accelerator"
+	desc = "An upgraded, superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_u"
+	item_state = "kineticgun_u"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/upgraded)
+	overheat_time = 12
+	origin_tech = "combat=3;powerstorage=2"
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
 	spawn(overheat_time)
