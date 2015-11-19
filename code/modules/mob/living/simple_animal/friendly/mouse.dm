@@ -28,6 +28,7 @@
 	treadmill_speed = 0.2 //You can still do it, but you're not going to generate much power.
 
 	size = SIZE_TINY
+	holder_type = /obj/item/weapon/holder/animal/mouse
 
 /mob/living/simple_animal/mouse/Life()
 	if(timestopped) return 0 //under effects of time magick

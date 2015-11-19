@@ -7,6 +7,8 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/mob_holders.dmi', "right_hand" = 'icons/mob/in-hand/right/mob_holders.dmi')
 
 	var/mob/stored_mob
+	var/update_itemstate_on_twohand = 0 //If there are different item states for holding this with one and two hands, this must be 1
+	var/const/itemstate_twohand_suffix = "_2hand" //The item state
 
 /obj/item/weapon/holder/New(loc, mob/M)
 	..()
@@ -38,11 +40,21 @@
 		return returnToPool(src)
 
 /obj/item/weapon/holder/relaymove(mob/M, direction)
-	returnToPool(src)
+	returnToPool(src) //This calls Destroy(), and frees the mob
 
 /obj/item/weapon/holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
+
+/obj/item/weapon/holder/update_wield(mob/user)
+	..()
+
+	if(update_itemstate_on_twohand)
+		item_state = "[initial(item_state)][wielded ? itemstate_twohand_suffix : ""]"
+
+		if(user)
+			user.update_inv_l_hand()
+			user.update_inv_r_hand()
 
 //
 
@@ -103,8 +115,19 @@
 	desc = "Icon states yay!"
 	item_state = "corgi"
 
+	update_itemstate_on_twohand = 1
+
 //CARP
 
 /obj/item/weapon/holder/animal/carp
 	name = "carp holder"
 	item_state = "carp"
+
+	update_itemstate_on_twohand = 1
+
+//COWS
+
+/obj/item/weapon/holder/animal/cow
+	name = "cow holder"
+	desc = "Pretty heavy"
+	item_state = "cow"

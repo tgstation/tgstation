@@ -104,7 +104,10 @@
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 50
+
 	size = SIZE_BIG
+	holder_type = /obj/item/weapon/holder/animal/cow
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/cow/New()
