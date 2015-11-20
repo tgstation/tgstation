@@ -382,7 +382,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
 				dat += "<ul>"
-
 				var/count = 0
 
 				if (!toff)
@@ -400,6 +399,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "</ul>"
 				if (count == 0)
 					dat += "None detected.<br>"
+				else if(cartridge && cartridge.spam_enabled)
+					dat += "<a href='byond://?src=\ref[src];choice=MessageAll'>Send To All</a>"
 
 			if(21)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
@@ -586,6 +587,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				src.create_message(U, P)
 
+			if("MessageAll")
+				src.send_to_all(U)
+
 			if("Send Honk")//Honk virus
 				if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
@@ -716,14 +720,36 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
+/obj/item/device/pda/proc/send_to_all(mob/living/U = usr)
+	var/message = msg_input(U)
 
-	var/t = msg_input(U)
+	if(last_text && world.time < last_text + 5)
+		return
+
+	var/datum/data_pda_msg/msg_ref = null
+	for(var/obj/item/device/pda/P in get_viewable_pdas())
+		if(P == src)
+			continue
+		var/temp_ref = create_message(U,P,message,skip_spam = 1)
+		if(temp_ref)
+			msg_ref = temp_ref
+
+	var/photo_ref = msg_ref.photo ? "<a href='byond://?src=\ref[msg_ref];photo=1'>(Photo)</a>" : ""
+	for(var/mob/M in player_list)
+		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+			M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>ALL</span>: <span class='message'>[message][photo_ref]</span></span>")
+
+	log_pda("[usr] (PDA: [src.name]) sent \"[message]\" to Everyone")
+
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, message = null , skip_spam = 0)
+	var/t = message
+	if(!t)
+		t = msg_input(U)
 
 	if (!t)
 		return
 
-	if (last_text && world.time < last_text + 5)
+	if (!skip_spam && last_text && world.time < last_text + 5)
 		return
 
 	if (!istype(P) || P.toff || qdeleted(P))
@@ -764,7 +790,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t][photo_ref]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t][photo_ref]<br>"
 		for(var/mob/M in player_list)
-			if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+			if(!skip_spam && isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t][photo_ref]</span></span>")
 
 		if (!P.silent)
@@ -781,12 +807,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(L)
 			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\"[photo_ref] (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
-		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+		if(!skip_spam)
+			log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 		photo = null
 		P.overlays.Cut()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
+		return msg_ref
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
+		return null
 
 /obj/item/device/pda/AltClick()
 	..()

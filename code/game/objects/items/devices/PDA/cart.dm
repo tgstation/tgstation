@@ -24,6 +24,7 @@
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/mode = null
 	var/menu
@@ -89,6 +90,7 @@
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -215,6 +217,7 @@
 	access_quartermaster = 1
 	access_janitor = 1
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
