@@ -31,7 +31,7 @@
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		if(S.roundstart)
-			roundstart_species[S.name] = S.type
+			roundstart_species[S.id] = S.type
 		species_list[S.id] = S.type
 
 	//Surgeries
