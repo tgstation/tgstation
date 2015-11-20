@@ -1,0 +1,4 @@
+author: kingofkosmos
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to upgrade your grab by clicking the grabbed mob repeatedly."
