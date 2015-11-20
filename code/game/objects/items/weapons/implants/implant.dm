@@ -8,9 +8,9 @@
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
 	var/mob/living/imp_in = null
-	item_color = "b"
 	var/allow_multiple = 0
 	var/uses = -1
+	var/item_color = "b"
 
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)

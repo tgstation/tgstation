@@ -354,7 +354,6 @@
 	desc = "a golem's skin"
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	flags = ABSTRACT | NODROP
 	has_sensor = 0
 
@@ -400,7 +399,6 @@
 /obj/item/clothing/head/space/golem
 	icon_state = "golem"
 	item_state = "dermal"
-	item_color = "dermal"
 	name = "golem's head"
 	desc = "a golem's head"
 	unacidable = 1

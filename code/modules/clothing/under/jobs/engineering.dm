@@ -4,7 +4,6 @@
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	item_state = "gy_suit"
-	item_color = "chief"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 	burn_state = -1 //Won't burn in fires
 
@@ -13,7 +12,6 @@
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	item_state = "atmos_suit"
-	item_color = "atmos"
 	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/rank/engineer
@@ -21,7 +19,6 @@
 	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	item_state = "engi_suit"
-	item_color = "engine"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/roboticist
@@ -29,4 +26,3 @@
 	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
 	item_state = "robotics"
-	item_color = "robotics"

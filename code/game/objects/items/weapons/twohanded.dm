@@ -209,7 +209,7 @@
 	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	item_color = "green"
+	var/item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
 

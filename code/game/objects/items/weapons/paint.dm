@@ -7,11 +7,11 @@
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
-	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3
 	burn_state = 0 //Burnable
 	burntime = 5
+	var/item_color = "FFFFFF"
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red

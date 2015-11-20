@@ -176,11 +176,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
 			return
 
-
-		var/t_color = w_uniform.item_color
-		if(!t_color)		t_color = w_uniform.icon_state
-
 		var/image/standing
+		var/t_color = "[U.icon_state][U.adjusted ? "_d" : ""]"
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"

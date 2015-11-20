@@ -22,6 +22,7 @@
 	hitsound = "swing_hit"
 	flags = NOSHIELD
 	var/active = 0
+	var/item_color = null
 
 /obj/item/weapon/holo/esword/green
 	New()
