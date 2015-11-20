@@ -53,14 +53,7 @@
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
-	src << "Your randomly chosen reagent is: <b>[blob_reagent_datum.name]</b>!"
-	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
-	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
-	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
-	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
-	src << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate."
-	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
-	src << "<b>Shortcuts:</b> Click = Expand Blob / Middle Mouse Click = Rally Spores / Ctrl Click = Create Shield"
+	blob_help()
 	update_health()
 
 /mob/camera/blob/proc/update_health()
@@ -150,6 +143,16 @@
 		var/mob/camera/blob/B = usr
 		B.transport_core()
 
+/obj/screen/blob/StorageBlob
+	icon_state = "ui_factory"
+	name = "Produce Storage Blob (20)"
+	desc = "Produces a storage blob for 20 points."
+
+/obj/screen/blob/StorageBlob/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.create_storage()
+
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
 	name = "Produce Resource Blob (40)"
@@ -180,6 +183,16 @@
 		var/mob/camera/blob/B = usr
 		B.create_factory()
 
+/obj/screen/blob/ReadaptChemical
+	icon_state = "ui_chemswap"
+	name = "Readapt Chemical (40)"
+	desc = "Randomly rerolls your chemical for 40 points."
+
+/obj/screen/blob/ReadaptChemical/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.chemical_reroll()
+
 /obj/screen/blob/RelocateCore
 	icon_state = "ui_swap"
 	name = "Relocate Core (80)"
@@ -199,6 +212,7 @@
 	blobpwrdisplay.name = "blob power"
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
+	blobpwrdisplay.mouse_opacity = 0
 	blobpwrdisplay.layer = 20
 	adding += blobpwrdisplay
 
@@ -206,6 +220,7 @@
 	blobhealthdisplay.name = "blob health"
 	blobhealthdisplay.icon_state = "block"
 	blobhealthdisplay.screen_loc = ui_internal
+	blobhealthdisplay.mouse_opacity = 0
 	blobhealthdisplay.layer = 20
 	adding += blobhealthdisplay
 
@@ -215,6 +230,10 @@
 
 	using = new /obj/screen/blob/JumpToCore()
 	using.screen_loc = ui_zonesel
+	adding += using
+
+	using = new /obj/screen/blob/StorageBlob()
+	using.screen_loc = ui_belt
 	adding += using
 
 	using = new /obj/screen/blob/ResourceBlob()
@@ -229,8 +248,12 @@
 	using.screen_loc = ui_rhand
 	adding += using
 
-	using = new /obj/screen/blob/RelocateCore()
+	using = new /obj/screen/blob/ReadaptChemical()
 	using.screen_loc = ui_storage1
+	adding += using
+
+	using = new /obj/screen/blob/RelocateCore()
+	using.screen_loc = ui_storage2
 	adding += using
 
 	mymob.client.screen = list()

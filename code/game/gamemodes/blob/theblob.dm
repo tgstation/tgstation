@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
+	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2

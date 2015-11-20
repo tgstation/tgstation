@@ -6,6 +6,7 @@
 	health = 150
 	maxhealth = 150
 	explosion_block = 3
+	point_return = 2
 
 
 /obj/effect/blob/shield/update_icon()

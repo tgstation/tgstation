@@ -5,6 +5,7 @@
 	desc = "A huge, smooth mass supported by tendrils."
 	health = 60
 	maxhealth = 60
+	point_return = -1
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)
