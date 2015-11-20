@@ -538,17 +538,31 @@ var/global/list/synth_flesh_disguises = list()
 	SA_sleep_min = 0
 	dangerous_existence = 1
 	need_nutrition = 0 //beep boop robots do not need sustinance
-	armor = 25
-	punchmod = 10
 	meat = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
-	var/disguise_fail_health = 50 //When their health gets to this level their synthflesh partially falls off
+	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 
 
+/datum/species/synth/military
+	name = "Military Synth"
+	id = "military_synth"
+	armor = 25
+	punchmod = 10
+	disguise_fail_health = 50
+
+
 /datum/species/synth/admin_set_species(mob/living/carbon/human/H, old_species)
 	assume_disguise(old_species,H)
+
+
+/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "synthflesh")
+		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
+		handle_disguise(H) //and update flesh disguise
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
 
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
