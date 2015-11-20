@@ -189,7 +189,8 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(get_organ(/obj/item/organ/internal/brain))//Only perform these checks if there is no brain
+		var/datum/organ/internal/brain/B = get_organ("brain")
+		if(B && B.exists())//Only perform these checks if there is a brain
 			if(suiciding)
 				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
@@ -270,7 +271,8 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(get_organ(/obj/item/organ/internal/brain))
+		var/datum/organ/internal/brain/B = get_organ("brain")
+		if(B && B.exists())
 			if(istype(src,/mob/living/carbon/human/interactive))
 				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)
@@ -284,8 +286,11 @@
 
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/eyes/cyberimp/hud/CIH = H.get_organ(/obj/item/organ/internal/eyes/cyberimp/hud)
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
+		var/datum/organ/internal/eyes/EY= H.get_organ("eyes")
+		var/obj/item/organ/internal/eyes/cyberimp/hud/CIH = null
+		if(EY && EY.exists())
+			CIH = EY.organitem
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || (CIH && istype(CIH, /obj/item/organ/internal/eyes/cyberimp/hud)))
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
@@ -295,8 +300,9 @@
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/eyes/cyberimp/hud/medical))
 					var/implant_detect
-					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+					for(var/datum/organ/internal/cyberimp/CI in get_all_internal_organs())
+						if(CI.exists())
+							implant_detect += "[name] is modified with a [CI.organitem.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect

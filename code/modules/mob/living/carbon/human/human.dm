@@ -26,18 +26,10 @@
 
 	organsystem = new/datum/organsystem/humanoid/monkey(src)
 
-	//Same story, I want to deprecate this but it's pretty important so for now, let's keep it updated. |- Ricotez
-	internal_organs += get_organ("appendix")
-	internal_organs += get_organ("heart")
-	internal_organs += get_organ("brain")
-	internal_organs += get_organ("butt")
-
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
 	randomize_human(src)
 
-/*	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)*/
 	make_blood()
 
 	set_skin_tone(skin_tone)	//So DNA gets it set properly

@@ -200,9 +200,11 @@
 	brainmob.container = src
 
 	if(istype(H))
-		var/obj/item/organ/internal/brain/newbrain = H.get_organ(/obj/item/organ/internal/brain)
-		newbrain.loc = src
-		brain = newbrain
+		var/datum/organ/internal/brain/B = H.get_organ("brain")
+		if(B && B.exists())
+			var/obj/item/organ/internal/brain/newbrain = B.organitem
+			newbrain.loc = src
+			brain = newbrain
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()

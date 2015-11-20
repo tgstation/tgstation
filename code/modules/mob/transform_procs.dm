@@ -5,16 +5,10 @@
 
 	//first implants & organs
 	var/list/implants = list()
-	var/list/int_organs = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
-
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
-			int_organs += I
-			I.Remove(src, 1)
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -26,20 +20,6 @@
 				W.loc = loc
 				W.dropped(src)
 				W.layer = initial(W.layer)
-
-/*
-	//This whole part assumes monkeys don't have organsystems yet, and dumps robotic limbs on the floor
-	//while destroying the rest of the organsystem.
-	//Please change this once monkeys get their own organsystems. |- Ricotez
-	if(organsystem)
-		var/list/checklist = new/list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg" ) //Organs we have to check for being robotic limbs.
-		for(var/organname in checklist)
-			var/datum/organ/O = organsystem.organlist[organname]
-			if(O.status & ORGAN_ROBOTIC) //We dump robotic limbs on the floor.
-				visible_message("<span class='notice'>The [O.name] falls to the floor.</span>", "<span class='notice'>Your [O.name] disconnects from your body and falls to the floor.</span>")
-				O.dismember(ORGAN_REMOVED)
-		qdel(organsystem) //We delete the organsystem for now. Once monkeys get their own organsystem, we will have to transfer and update the organs instead. |- Ricotez
-*/
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -69,7 +49,7 @@
 
 	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
 		O.organsystem = organsystem
-		organsystem.set_dna(dna)
+		O.organsystem.set_dna(dna)
 
 	//handle DNA and other attributes
 	if(dna)
@@ -104,14 +84,6 @@
 		I.loc = O
 		I.implanted = O
 
-	//re-add organs to new mob
-	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
-			qdel(I)
-
-		for(var/obj/item/organ/internal/I in int_organs)
-			I.Insert(O, 1)
-
 	//transfer mind and delete old mob
 	transfer_borer(O)
 	if(mind)
@@ -141,16 +113,10 @@
 
 	//first implants & organs
 	var/list/implants = list()
-	var/list/int_organs = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
-
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
-			int_organs += I
-			I.Remove(src, 1)
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -180,15 +146,12 @@
 	animation.master = src
 	flick("monkey2h", animation)
 	sleep(22)
-	var/mob/living/carbon/human/O = new( loc )	//This also creates a new organsystem. If monkeys get their own organsystem we will have to transfer and update the organs instead. |- Ricotez
+	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
 	qdel(animation)
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-
-	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
-		O.organsystem = organsystem
 
 	if(dna)
 		dna.transfer_identity(O)
@@ -216,6 +179,10 @@
 
 	O.loc = loc
 
+	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
+		O.organsystem = organsystem
+		O.organsystem.set_dna(dna)
+
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
@@ -238,13 +205,6 @@
 		I.loc = O
 		I.implanted = O
 	O.sec_hud_set_implants()
-
-	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
-			qdel(I)
-
-		for(var/obj/item/organ/internal/I in int_organs)
-			I.Insert(O, 1)
 
 	transfer_borer(O)
 

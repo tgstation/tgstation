@@ -13,7 +13,8 @@
 			var/obj/item/organ/internal/organ = input("Select organ type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
-			organ.Insert(C)
+			if(!organ.Insert(C))
+				src << "[C] has no room for [organ] in his [organ.hardpoint]!"
 
 		if("add implant")
 			for(var/path in typesof(/obj/item/weapon/implant) - /obj/item/weapon/implant)
@@ -26,7 +27,7 @@
 			organ.implant(C)
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/obj/item/organ/internal/I in C.internal_organs)
+			for(var/datum/organ/I in C.organsystem.organlist)
 				organs["[I.name] ([I.type])"] = I
 
 			for(var/obj/item/weapon/implant/I in C)
@@ -35,12 +36,12 @@
 			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			if(!organ) return
-			var/obj/item/organ/internal/O
+			var/datum/organ/internal/O
 			var/obj/item/weapon/implant/I
 
-			if(isinternalorgan(organ))
+			if(istype(organ, /datum/organ/))
 				O = organ
-				O.Remove(C)
+				O.dismember(ORGAN_REMOVED)
 			else
 				I = organ
 				I.removed(C)

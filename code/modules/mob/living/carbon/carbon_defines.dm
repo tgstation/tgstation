@@ -3,7 +3,7 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	has_limbs = 1
 	var/list/stomach_contents	= list()
-	var/list/internal_organs	= list()	//List of /obj/item/organ/internal in the mob. They don't go in the contents for some reason I don't want to know.
+//	var/list/internal_organs	= list()	//Get fucked
 
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 

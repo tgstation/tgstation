@@ -43,8 +43,7 @@
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
 //As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
-//Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
-// var/list/organs (/mob/living/carbon/human) is the LIMBS of a Mob.
+//Other important variables are var/list/surgeries (/mob/living) and var/organsystem (/mob/living/carbon)
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 // /code/modules/surgery/multiple_location_example.dm contains steps to setup a multiple location operation.
 

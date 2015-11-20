@@ -71,9 +71,9 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.get_organ(/obj/item/organ/internal/brain))
+		var/datum/organ/internal/brain/B = !M.get_organ("brain")
+		if(!(B && B.exists()))
 			continue
-
 		if (M.ckey == find_key)
 			selected = M
 			break

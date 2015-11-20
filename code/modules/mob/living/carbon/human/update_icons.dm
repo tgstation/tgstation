@@ -713,9 +713,6 @@ var/global/list/limb_icon_cache = list()
 	var/race = LI.get_race() //simplified physical appearence of mob
 	var/should_draw_greyscale = FALSE
 
-	if(race == "adamantine") //temporary.
-		race = "golem"
-
 	if(affecting.body_part == HEAD || affecting.body_part == CHEST)
 		should_draw_gender = TRUE
 

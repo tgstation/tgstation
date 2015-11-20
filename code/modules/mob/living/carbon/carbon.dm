@@ -22,8 +22,7 @@
 	med_hud_set_status()
 
 /mob/living/carbon/Destroy()
-	for(var/atom/movable/guts in internal_organs)
-		qdel(guts)
+	qdel(organsystem)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
@@ -631,8 +630,9 @@ var/const/GALOSHES_DONT_HELP = 8
 
 
 /mob/living/carbon/emp_act(severity)
-	for(var/obj/item/organ/internal/O in internal_organs)
-		O.emp_act(severity)
+	for(var/datum/organ/internal/O in get_all_internal_organs())
+		if(O.exists())
+			O.organitem.emp_act(severity)
 	..()
 
 /mob/living/carbon/check_eye_prot()

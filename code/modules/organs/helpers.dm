@@ -4,8 +4,6 @@
 /mob/living/carbon/get_organ(var/organ)
 	if(organsystem) //If the mob has an organ system, you should give the name of the organ, i.e. "brain"
 		return organsystem.get_organ(organ)
-	else	//Really wanna deprecate this
-		return (locate(organ) in internal_organs) //If the mob does not have an organ system, we fall back on the old system where you give the path, i.e. /obj/item/organ/brain
 
 /*
 /mob/living/carbon/human/get_organ(var/organ)

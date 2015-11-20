@@ -217,8 +217,9 @@ MASS SPECTROMETER
 				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
 
 		var/implant_detect
-		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
-			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+		for(var/datum/organ/internal/cyberimp/CI in H.get_all_internal_organs())
+			if(CI && CI.exists())
+				implant_detect += "[H.name] is modified with a [CI.organitem.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
 			user.show_message("<span class='notice'>[implant_detect]</span>")

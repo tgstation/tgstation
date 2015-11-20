@@ -1,4 +1,3 @@
-//Let's just let this be until all carbons have organsystems
 /datum/surgery/core_removal
 	name = "core removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/incise, /datum/surgery_step/extract_core)

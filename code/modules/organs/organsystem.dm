@@ -4,9 +4,6 @@
 //By the way, remember that these are just the datums, the "reservations" of organ spaces.
 //You'll still need to fill them up with actual physical organs in the mob constructor.
 
-//Also, please remember that this system is OPTIONAL. If you don't give a mob an organsystem, it will use the old system with list/organs and list/internal_organs.
-
-
 /datum/organsystem
 	var/list/organlist = new/list()
 	var/mob/owner = null

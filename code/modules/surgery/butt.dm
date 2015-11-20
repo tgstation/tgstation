@@ -27,7 +27,6 @@
 	if(A && A.exists())
 		user.visible_message("<span class='notice'>[user] successfully removes [target]'s butt!</span>")
 		A.dismember(ORGAN_REMOVED)
-		target.internal_organs -= A
 //		A = new /obj/item/clothing/head/butt(get_turf(target))	//No more asshats until I can figure out how to make this work
 		A.name = "[target.name]'s butt"
 

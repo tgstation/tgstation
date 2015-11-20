@@ -306,11 +306,6 @@
 				eye_blind = max(eye_blind, 1)
 				silent = 0
 				return 1
-		else if(!get_organ(/obj/item/organ/internal/brain))
-			death()
-			eye_blind = max(eye_blind, 1)
-			silent = 0
-			return 1
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
@@ -596,7 +591,7 @@
 /mob/living/carbon/handle_actions()
 	..()
 	if(organsystem)
-		for(var/datum/organ/org in get_internal_organs())
+		for(var/datum/organ/org in get_all_internal_organs())
 			give_action_button(org.organitem)	//Recursion isn't needed in the new organsystem
 		var/datum/organ/cavity/CAV = get_organ("cavity")
 		if(CAV && CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants

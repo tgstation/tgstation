@@ -167,9 +167,12 @@
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-		for(var/obj/item/organ/internal/heart/gland/G in H.internal_organs)
-			G.Start()
-			point_reward++
+		var/datum/organ/internal/heart/heart = H.get_organ("heart")
+		if(heart && heart.exists())
+			if(istype(heart.organitem, /obj/item/organ/internal/heart/gland))
+				var/obj/item/organ/internal/heart/gland/G = heart.organitem
+				G.Start()
+				point_reward++
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
