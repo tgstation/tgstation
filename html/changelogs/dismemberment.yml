@@ -1,0 +1,40 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read. If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscadd (general adding of nice things)
+#   rscdel (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: Asd396
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - rscadd: "Fukken DISMEMBERMENT! Credits for the organsystem that was adapted to our codebase go to Ricotez."
+  - rscadd: "Melee and ranged weapons can dismember and behead. Dismemberment leaves behind a stump that won't heal without surgery and bleeds very bad. Some weapons such as eswords cauterize the wound as it's made, preventing bleeding."
+  - rscadd: "You can also amputate limbs surgically, including stumps left behind dismemberment. You can also transplant limbs to patients; this is also how cybernetic limb augmentation is now done. Chests and heads may be augmented without removal."
+  - tweak:  "You can now only have one chest and one brain cybernetic implant. Eye cybernetics replace your organic eye."
+  - wip: 	"Aliens and monkeys also have new organsystems, but they don't have locational damage or dismemberment yet."
