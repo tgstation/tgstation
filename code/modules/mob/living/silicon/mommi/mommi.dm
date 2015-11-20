@@ -470,7 +470,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /*
 /mob/living/silicon/robot/mommi/proc/ActivateKeeper()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/ActivateKeeper() called tick#: [world.time]")
 	set category = "Robot Commands"
 	set name = "Activate KEEPER"
 	set desc = "Performs a full purge of your laws and disconnects you from AIs and cyborg consoles.  However, you lose the ability to speak and must remain neutral, only being permitted to perform station upkeep.  You can still be emagged in this state."

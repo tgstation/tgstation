@@ -3,7 +3,6 @@
 /*
  * Old, deprecated method to handle body temperature
 /mob/living/carbon/human/proc/adjust_body_temperature(current, loc_temp, boost)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/adjust_body_temperature() called tick#: [world.time]")
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//Get difference
 	var/increments// = difference/10 //Find how many increments apart they are
@@ -22,7 +21,6 @@
 */
 
 /mob/living/carbon/human/proc/handle_body_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/stabilize_temperature_from_calories() called tick#: [world.time]")
 	var/body_temperature_difference = 310.15 - bodytemperature
 	if(abs(body_temperature_difference) < 0.5)
 		return //fuck this precision

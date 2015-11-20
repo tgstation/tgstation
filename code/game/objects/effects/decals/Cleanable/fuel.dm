@@ -31,7 +31,6 @@
 		returnToPool(src)
 
 /obj/effect/decal/cleanable/liquid_fuel/proc/Spread()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/liquid_fuel/proc/Spread() called tick#: [world.time]")
 	//Allows liquid fuels to sometimes flow into other tiles.
 	if(amount < 0.5) return
 

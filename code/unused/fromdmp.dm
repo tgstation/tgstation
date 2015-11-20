@@ -6,11 +6,9 @@
  */
 
 mob/verb/Convert(filename as file)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Convert()  called tick#: [world.time]")
 	dmp2swapmap(filename)
 
 proc/d2sm_prepmap(filename)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/d2sm_prepmap() called tick#: [world.time]")
 	var/txt = file2text(filename)
 	if(!txt) return
 	var/i,j
@@ -26,7 +24,6 @@ proc/d2sm_prepmap(filename)
 	return txt
 
 proc/dmp2swapmap(filename)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/dmp2swapmap() called tick#: [world.time]")
 	//var/txt = file2text(filename)
 	//if(!txt) return
 	var/txt = d2sm_prepmap(filename)
@@ -191,7 +188,6 @@ proc/dmp2swapmap(filename)
 				F << codes[pick(codes)] */
 
 proc/d2sm_ParseCommaList(txt)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/d2sm_ParseCommaList() called tick#: [world.time]")
 	var/list/L=new
 	var/i,ch
 	for(i=1,i<=length(txt),++i)
@@ -210,7 +206,6 @@ proc/d2sm_ParseCommaList(txt)
 	return L
 
 proc/d2sm_MatchBrace(txt, i, which)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/d2sm_MatchBrace() called tick#: [world.time]")
 	if(which==40) ++which
 	else which+=2
 	var/j,ch
@@ -222,7 +217,6 @@ proc/d2sm_MatchBrace(txt, i, which)
 			if(!j) return 0
 
 proc/d2sm_ConvertType(tt,tabs="")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/d2sm_ConvertType() called tick#: [world.time]")
 	var/i=findText(tt,"{")
 	if(!i) return "[tabs]type = [tt]\n"
 	.="[tabs]type = [copytext(tt,1,i)]\n"
@@ -232,7 +226,6 @@ proc/d2sm_ConvertType(tt,tabs="")
 		.="[.][tabs][pair]\n"
 
 proc/d2sm_Contents(list/conts,n,tabs="")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/d2sm_Contents() called tick#: [world.time]")
 	.="[tabs]contents = list("
 	var/i
 	for(i=0,i<n,++i)

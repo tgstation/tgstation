@@ -13,7 +13,6 @@
 		controller()
 
 /obj/effect/bhole/proc/controller()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/bhole/proc/controller() called tick#: [world.time]")
 	while(src)
 
 		if(!isturf(loc))
@@ -57,7 +56,6 @@
 			src.anchored = 1
 
 /obj/effect/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/bhole/proc/grav() called tick#: [world.time]")
 	if(!isturf(loc))	//blackhole cannot be contained inside anything. Weird stuff might happen
 		del(src)
 		return
@@ -69,7 +67,6 @@
 	return
 
 /obj/effect/bhole/proc/affect_coord(var/x, var/y, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/bhole/proc/affect_coord() called tick#: [world.time]")
 	//Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return

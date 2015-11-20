@@ -224,7 +224,6 @@
 
 /obj/machinery/computer/robotics/proc/start_sequence()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/robotics/proc/start_sequence() called tick#: [world.time]")
 
 	do
 		if(src.stop)

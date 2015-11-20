@@ -38,5 +38,4 @@
 					qdel(to_remove)
 
 /spell/targeted/equip_item/proc/summon_item(var/newtype)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/equip_item/proc/summon_item() called tick#: [world.time]")
 	return new newtype

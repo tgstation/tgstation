@@ -26,7 +26,6 @@
 			brainmob.client.screen.len = null //clear the hud
 
 /obj/item/organ/brain/proc/transfer_identity(var/mob/living/carbon/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/brain/proc/transfer_identity() called tick#: [world.time]")
 	name = "[H]'s brain"
 	brainmob = new(src)
 	brainmob.name = H.real_name

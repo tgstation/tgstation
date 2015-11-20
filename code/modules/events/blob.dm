@@ -13,7 +13,6 @@
 #define ROLE_TYPE_FACE 0
 #define ROLE_TYPE_HEEL 1
 /proc/get_minds_in_role(var/roletype)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_minds_in_role() called tick#: [world.time]")
 	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
 	var/protagonist_list[] = ticker.mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
@@ -64,7 +63,6 @@
 	//	Blob.process()
 
 /datum/event/blob/proc/burst_blobs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/blob/proc/burst_blobs() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/blob in infected_crew)
 			blob.current.show_message("<span class='alert'>You feel tired and bloated.</span>")
@@ -102,7 +100,6 @@
 		biohazard_alert()
 
 /datum/event/blob/proc/greetblob(user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/blob/proc/greetblob() called tick#: [world.time]")
 	user << {"<B><span class='warning'>You are infected by the Blob!</B>
 <b>Your body is ready to give spawn to a new blob core which will eat this station.</b>
 <b>Find a good location to spawn the core and then take control and overwhelm the station!</b>

@@ -15,7 +15,6 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(var/t as text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitizeSQL() called tick#: [world.time]")
 	//var/sanitized_text = replacetext(t, "'", "\\'")
 	//sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 
@@ -27,7 +26,6 @@
 
 /*
 /mob/verb/SanitizeTest(var/t as text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/mob/verb/SanitizeTest()  called tick#: [world.time]")
 	src << "IN: [t]"
 	src << "OUT: [sanitizeSQL(t)]"
 */
@@ -37,7 +35,6 @@
 
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/strip_html_simple() called tick#: [world.time]")
 	var/list/strip_chars = list("<",">")
 	t = copytext(t,1,limit)
 	for(var/char in strip_chars)
@@ -48,7 +45,6 @@
 	return t
 
 /proc/strip_html_properly(input = "")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/strip_html_properly() called tick#: [world.time]")
 	// these store the position of < and > respectively
 	var/opentag = 0
 	var/closetag = 0
@@ -65,7 +61,6 @@
 	return input
 
 /proc/rfindtext(Haystack, Needle, Start = 1, End = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/rfindtext() called tick#: [world.time]")
 	var/i = findtext(Haystack, Needle, Start, End)
 
 	while (i)
@@ -74,7 +69,6 @@
 
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_simple() called tick#: [world.time]")
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -84,23 +78,19 @@
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize() called tick#: [world.time]")
 	return html_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
 /proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/strip_html() called tick#: [world.time]")
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
 //Runs byond's sanitization proc along-side strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/adminscrub() called tick#: [world.time]")
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
 /proc/reverse_text(txt)
-  //writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reverse_text() called tick#: [world.time]")
   var/i = length(txt)+1
   . = ""
   while(--i)
@@ -110,7 +100,6 @@
  * returns null if there is any bad text in the string
  */
 /proc/reject_bad_text(const/text, var/max_length = 512)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reject_bad_text() called tick#: [world.time]")
 	var/text_length = length(text)
 
 	if(text_length > max_length)
@@ -136,13 +125,11 @@
 
 // Used to get a sanitized input.
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/stripped_input() called tick#: [world.time]")
 	var/name = input(user, message, title, default)
 	return strip_html_simple(name, max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reject_bad_name() called tick#: [world.time]")
 	if(!t_in || length(t_in) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
@@ -209,7 +196,6 @@
 //if tag is not in whitelist (var/list/paper_tag_whitelist in global.dm)
 //relpaces < with &lt;
 proc/checkhtml(var/t)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/checkhtml() called tick#: [world.time]")
 	t = sanitize_simple(t, list("&#"="."))
 	var/p = findtext(t,"<",1)
 	while (p)	//going through all the tags
@@ -231,7 +217,6 @@ proc/checkhtml(var/t)
 //Checks the beginning of a string for a specified sub-string
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hasprefix(text, prefix)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_hasprefix() called tick#: [world.time]")
 	var/start = 1
 	var/end = length(prefix) + 1
 	return findtext(text, prefix, start, end)
@@ -239,7 +224,6 @@ proc/checkhtml(var/t)
 //Checks the beginning of a string for a specified sub-string. This proc is case sensitive
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hasprefix_case(text, prefix)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_hasprefix_case() called tick#: [world.time]")
 	var/start = 1
 	var/end = length(prefix) + 1
 	return findtextEx(text, prefix, start, end)
@@ -247,7 +231,6 @@ proc/checkhtml(var/t)
 //Checks the end of a string for a specified substring.
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hassuffix(text, suffix)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_hassuffix() called tick#: [world.time]")
 	var/start = length(text) - length(suffix)
 	if(start)
 		return findtext(text, suffix, start, null)
@@ -256,7 +239,6 @@ proc/checkhtml(var/t)
 //Checks the end of a string for a specified substring. This proc is case sensitive
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hassuffix_case(text, suffix)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_hassuffix_case() called tick#: [world.time]")
 	var/start = length(text) - length(suffix)
 	if(start)
 		return findtextEx(text, suffix, start, null)
@@ -265,37 +247,31 @@ proc/checkhtml(var/t)
  * Text modification
  */
 /proc/replacetext(text, find, replacement)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/replacetext() called tick#: [world.time]")
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/replacetextEx() called tick#: [world.time]")
 	return list2text(text2listEx(text, find), replacement)
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/add_zero() called tick#: [world.time]")
 	while (length(t) < u)
 		t = "0[t]"
 	return t
 
 //Adds 'u' number of spaces ahead of the text 't'
 /proc/add_lspace(t, u)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/add_lspace() called tick#: [world.time]")
 	while(length(t) < u)
 		t = " [t]"
 	return t
 
 //Adds 'u' number of spaces behind the text 't'
 /proc/add_tspace(t, u)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/add_tspace() called tick#: [world.time]")
 	while(length(t) < u)
 		t = "[t] "
 	return t
 
 //Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/trim_left() called tick#: [world.time]")
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
 			return copytext(text, i)
@@ -303,7 +279,6 @@ proc/checkhtml(var/t)
 
 //Returns a string with reserved characters and spaces after the last letter removed
 /proc/trim_right(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/trim_right() called tick#: [world.time]")
 	for (var/i = length(text), i > 0, i--)
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
@@ -312,17 +287,14 @@ proc/checkhtml(var/t)
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/trim() called tick#: [world.time]")
 	return trim_left(trim_right(text))
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(var/t as text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/capitalize() called tick#: [world.time]")
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 //Centers text by adding spaces to either side of the string.
 /proc/dd_centertext(message, length)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_centertext() called tick#: [world.time]")
 	var/new_message = message
 	var/size = length(message)
 	var/delta = length - size
@@ -340,14 +312,12 @@ proc/checkhtml(var/t)
 
 //Limits the length of the text. Note: MAX_MESSAGE_LEN and MAX_NAME_LEN are widely used for this purpose
 /proc/dd_limittext(message, length)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dd_limittext() called tick#: [world.time]")
 	var/size = length(message)
 	if(size <= length)
 		return message
 	return copytext(message, 1, length + 1)
 
 /proc/stringmerge(var/text,var/compare,replace = "*")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/stringmerge() called tick#: [world.time]")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
 //This is used for fingerprints
@@ -369,7 +339,6 @@ proc/checkhtml(var/t)
 	return newtext
 
 /proc/stringpercent(var/text,character = "*")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/stringpercent() called tick#: [world.time]")
 //This proc returns the number of chars of the string that is the character
 //This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
@@ -387,7 +356,6 @@ proc/checkhtml(var/t)
  * @param sep seperator to use
  */
 /proc/format_num(var/number, var/sep=",")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/format_num() called tick#: [world.time]")
 	var/c="" // Current char
 	var/list/parts = text2list("[number]",".")
 	var/origtext = "[parts[1]]"
@@ -403,7 +371,6 @@ proc/checkhtml(var/t)
 
 var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW")
 /proc/format_watts(var/number)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/format_watts() called tick#: [world.time]")
 	if(number<0) return "-[format_watts(number)]"
 	if(number==0) return "0 W"
 

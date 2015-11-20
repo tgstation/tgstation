@@ -33,7 +33,6 @@ var/global/list/html_machines = new/list() //for checking when we should update 
 		update.Cut()
 
 /datum/controller/process/html/proc/queue(ref, procname, ...)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/html/proc/queue() called tick#: [world.time]")
 	var/datum/procqueue_item/item = new/datum/procqueue_item
 	item.ref = ref
 	item.procname = procname

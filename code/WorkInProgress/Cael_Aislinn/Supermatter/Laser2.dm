@@ -37,7 +37,6 @@
 			del first*/
 
 /obj/machinery/computer/laser/proc/setpower(var/powera)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/laser/proc/setpower() called tick#: [world.time]")
 	/*src.power = powera
 	if(first)
 		first.setpower(src.power)*/
@@ -59,7 +58,6 @@
 	sd_SetLuminosity(1, 1, 4)
 
 /obj/beam/e_beam/proc/updatebeam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/beam/e_beam/proc/updatebeam() called tick#: [world.time]")
 	if(!next)
 		if(get_step(src.loc,src.dir))
 			var/obj/beam/e_beam/e = new /obj/beam/e_beam(src.loc)
@@ -88,7 +86,6 @@
 		next.updatebeam()
 
 /atom/proc/laser_act(var/obj/beam/e_beam/b)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/laser_act() called tick#: [world.time]")
 	return
 
 /mob/living/carbon/laser_act(var/obj/beam/e_beam/b)
@@ -106,7 +103,6 @@
 
 
 /obj/beam/e_beam/proc/setpower(var/powera)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/beam/e_beam/proc/setpower() called tick#: [world.time]")
 	src.power = powera
 	if(src.next)
 		src.next.setpower(powera)
@@ -131,7 +127,6 @@
 	return
 
 /obj/beam/e_beam/proc/hit()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/beam/e_beam/proc/hit() called tick#: [world.time]")
 	del src
 	return
 	*/

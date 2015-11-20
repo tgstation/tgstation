@@ -40,12 +40,10 @@
 /obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
 	return
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/proc/pipeline_expansion() called tick#: [world.time]")
 	return null
 
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/proc/check_pressure() called tick#: [world.time]")
 	//Return 1 if parent should continue checking other pipes
 	//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
 	return 1
@@ -230,7 +228,6 @@
 	user << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
 
 /obj/machinery/atmospherics/pipe/simple/proc/groan()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/simple/proc/groan() called tick#: [world.time]")
 	src.visible_message("<span class='warning'>\The [src] groans from the pressure!</span>");
 
 	// Need SFX for groaning metal.
@@ -238,7 +235,6 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/simple/proc/burst() called tick#: [world.time]")
 	src.visible_message("<span class='danger'>\The [src] bursts!</span>");
 
 	var/turf/T=get_turf(src)
@@ -288,7 +284,6 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/simple/proc/normalize_dir() called tick#: [world.time]")
 	if(dir==3)
 		dir = 1
 	else if(dir==12)

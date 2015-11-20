@@ -2,7 +2,6 @@ var/global/vox_tick = 1
 
 /mob/living/carbon/human/proc/equip_vox_raider()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_vox_raider() called tick#: [world.time]")
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.

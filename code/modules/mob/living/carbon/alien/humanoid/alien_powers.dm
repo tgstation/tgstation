@@ -7,7 +7,6 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/powerc() called tick#: [world.time]")
 	if(stat)
 		src << "<span class='alien'>You must be conscious to do this.</span>"
 		return 0
@@ -23,7 +22,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Plant Weeds (50)"
 	set desc = "Plants some alien weeds"
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/plant()  called tick#: [world.time]")
 
 	if(powerc(50,1))
 		adjustToxLoss(-50)
@@ -33,7 +31,6 @@ Doesn't work on other aliens/AI.*/
 
 /*
 /mob/living/carbon/alien/humanoid/verb/ActivateHuggers()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/ActivateHuggers()  called tick#: [world.time]")
 	set name = "Activate facehuggers (5)"
 	set desc = "Makes all nearby facehuggers activate"
 	set category = "Alien"
@@ -49,7 +46,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Whisper (10)"
 	set desc = "Whisper to someone"
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/whisp()  called tick#: [world.time]")
 
 	if(powerc(10))
 		adjustToxLoss(-10)
@@ -65,7 +61,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Transfer Plasma"
 	set desc = "Transfer Plasma to another alien"
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/transfer_plasma()  called tick#: [world.time]")
 
 	if(isalien(M))
 		var/amount = input("Amount:", "Transfer Plasma to [M]") as num
@@ -86,7 +81,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Corrossive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/humanoid/proc/corrosive_acid() called tick#: [world.time]")
 
 	if(powerc(200))
 		if(O in oview(1))
@@ -122,7 +116,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/humanoid/proc/neurotoxin() called tick#: [world.time]")
 
 	if(powerc(50))
 		if(isalien(target))
@@ -163,7 +156,6 @@ Doesn't work on other aliens/AI.*/
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/humanoid/proc/resin() called tick#: [world.time]")
 
 	if(powerc(75))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
@@ -186,7 +178,6 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Empties the contents of your stomach"
 	set category = "Alien"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/regurgitate()  called tick#: [world.time]")
 	if(powerc())
 		if(stomach_contents.len)
 			for(var/mob/M in src)

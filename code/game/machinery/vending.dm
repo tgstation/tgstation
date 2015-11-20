@@ -252,7 +252,6 @@ var/global/num_vending_terminals = 1
 			if(prob(25)) malfunction()
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/build_inventory() called tick#: [world.time]")
 	var/obj/item/temp
 
 	for (var/typepath in productlist)
@@ -285,7 +284,6 @@ var/global/num_vending_terminals = 1
 		R.subcategory = temp.vending_cat
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/get_item_by_type() called tick#: [world.time]")
 	var/list/datum_products = list()
 	datum_products |= hidden_records
 	datum_products |= coin_records
@@ -305,7 +303,6 @@ var/global/num_vending_terminals = 1
 	return -1
 
 /obj/machinery/vending/proc/can_accept_voucher(var/obj/item/voucher/voucher, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/can_accept_voucher() called tick#: [world.time]")
 	if(istype(voucher, /obj/item/voucher/free_item))
 		var/obj/item/voucher/free_item/free_vouch = voucher
 		for(var/vend_item in free_vouch.freebies)
@@ -316,7 +313,6 @@ var/global/num_vending_terminals = 1
 
 //this should ideally be called last as a parent method, since it can delete the voucher
 /obj/machinery/vending/proc/voucher_act(var/obj/item/voucher/voucher, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/voucher_act() called tick#: [world.time]")
 	if(istype(voucher, /obj/item/voucher/free_item))
 		var/obj/item/voucher/free_item/free_vouch = voucher
 		for(var/i = 1; i <= free_vouch.vend_amount; i++)
@@ -487,7 +483,6 @@ var/global/num_vending_terminals = 1
 	return attack_hand(user)
 
 /obj/machinery/vending/proc/GetProductLine(var/datum/data/vending_product/P)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/GetProductLine() called tick#: [world.time]")
 	var/dat = {"<FONT color = '[P.display_color]'><B>[P.product_name]</B>:
 		<b>[P.amount]</b> </font>"}
 	if(P.price)
@@ -502,7 +497,6 @@ var/global/num_vending_terminals = 1
 	return dat
 
 /obj/machinery/vending/proc/GetProductIndex(var/datum/data/vending_product/P)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/GetProductIndex() called tick#: [world.time]")
 	var/list/plist
 	switch(P.category)
 		if(CAT_NORMAL)
@@ -516,7 +510,6 @@ var/global/num_vending_terminals = 1
 	return plist.Find(P)
 
 /obj/machinery/vending/proc/GetProductByID(var/pid, var/category)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/GetProductByID() called tick#: [world.time]")
 	switch(category)
 		if(CAT_NORMAL)
 			return product_records[pid]
@@ -670,7 +663,6 @@ var/global/num_vending_terminals = 1
 
 // returns the wire panel text
 /obj/machinery/vending/proc/wires()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/wires() called tick#: [world.time]")
 	return wires.GetInteractWindow()
 
 /obj/machinery/vending/Topic(href, href_list)
@@ -759,7 +751,6 @@ var/global/num_vending_terminals = 1
 	return
 
 /obj/machinery/vending/proc/add_item(var/obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/add_item() called tick#: [world.time]")
 	var/found = FALSE
 
 	for (var/datum/data/vending_product/D in product_records)
@@ -784,7 +775,6 @@ var/global/num_vending_terminals = 1
 	qdel(I)
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/vend() called tick#: [world.time]")
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
 		user << "<span class='warning'>Access denied.</span>" //Unless emagged of course
 		flick(src.icon_deny,src)
@@ -848,7 +838,6 @@ var/global/num_vending_terminals = 1
 	return
 
 /obj/machinery/vending/proc/speak(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/speak() called tick#: [world.time]")
 	if(stat & NOPOWER)
 		return
 
@@ -873,7 +862,6 @@ var/global/num_vending_terminals = 1
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/malfunction() called tick#: [world.time]")
 	var/lost_inventory = rand(1,12)
 	while(lost_inventory>0)
 		throw_item()
@@ -884,7 +872,6 @@ var/global/num_vending_terminals = 1
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/throw_item() called tick#: [world.time]")
 
 	var/mob/living/target = locate() in view(7, src)
 

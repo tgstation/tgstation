@@ -5,13 +5,11 @@
 	return
 
 /obj/machinery/atmoalter/siphs/proc/releaseall()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmoalter/siphs/proc/releaseall() called tick#: [world.time]")
 	src.t_status = 1
 	src.t_per = max_valve
 	return
 
 /obj/machinery/atmoalter/siphs/proc/reset(valve, auto)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmoalter/siphs/proc/reset() called tick#: [world.time]")
 	if(c_status!=0)
 		return
 
@@ -30,7 +28,6 @@
 	return
 
 /obj/machinery/atmoalter/siphs/proc/release(amount, flag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmoalter/siphs/proc/release() called tick#: [world.time]")
 	/*
 	var/T = src.loc
 	if (!( istype(T, /turf) ))
@@ -46,7 +43,6 @@
 	*/ //TODO: FIX
 
 /obj/machinery/atmoalter/siphs/proc/siphon(amount, flag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmoalter/siphs/proc/siphon() called tick#: [world.time]")
 	/*
 	var/T = src.loc
 	if (!( istype(T, /turf) ))
@@ -63,7 +59,6 @@
 
 /obj/machinery/atmoalter/siphs/proc/setstate()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmoalter/siphs/proc/setstate() called tick#: [world.time]")
 
 	if(stat & NOPOWER)
 		icon_state = "siphon:0"
@@ -281,7 +276,6 @@
 //true if the siphon is portable (therfore no power needed)
 
 /obj/machinery/proc/portable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/portable() called tick#: [world.time]")
 	return istype(src, /obj/machinery/atmoalter/siphs/fullairsiphon/port) || istype(src, /obj/machinery/atmoalter/siphs/scrubbers/port)
 
 /obj/machinery/atmoalter/siphs/power_change()

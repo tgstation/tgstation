@@ -24,7 +24,6 @@
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent //Graciously stolen from spider code
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/sculpture/proc/GrabMob() called tick#: [world.time]")
 	if(target && target != src && ishuman(target) && !observed)
 		G = getFromPool(/obj/item/weapon/grab,src,target)
 		target.Stun(1)

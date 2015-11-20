@@ -139,7 +139,6 @@
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/proc/add_board_keys()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/reversible/mecha/proc/add_board_keys() called tick#: [world.time]")
 	var/list/board_step = get_forward_step(steps.len - MAINBOARD)
 	board_step[Co_KEY] = mainboard
 

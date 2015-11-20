@@ -299,7 +299,6 @@
 	qdel(src)
 
 /obj/structure/bed/chair/vehicle/clowncart/proc/draw_graffiti(var/pos)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/clowncart/proc/draw_graffiti() called tick#: [world.time]")
 	var/graffiti_amount = 0//built-in safety measures allow only 3 drawings on the floor at same time
 	for(var/obj/effect/decal/cleanable/crayon/C in pos)
 		graffiti_amount++
@@ -337,7 +336,6 @@
 				printing_pos = 0
 
 /obj/structure/bed/chair/vehicle/clowncart/proc/feed(obj/item/W, mob/living/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/clowncart/proc/feed() called tick#: [world.time]")
 	var/datum/reagents/R=W.reagents
 	if(!R) return
 	if(R.has_reagent("banana"))

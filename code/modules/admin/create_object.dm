@@ -1,7 +1,6 @@
 /var/create_object_html = null
 
 /datum/admins/proc/create_object(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/create_object() called tick#: [world.time]")
 	if (!create_object_html)
 		var/objectjs = null
 		objectjs = list2text(typesof(/obj), ";")
@@ -13,7 +12,6 @@
 
 /datum/admins/proc/quick_create_object(var/mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/quick_create_object() called tick#: [world.time]")
 
 	var/quick_create_object_html = null
 	var/pathtext = null

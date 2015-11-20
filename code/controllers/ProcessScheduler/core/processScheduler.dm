@@ -62,12 +62,10 @@ var/global/datum/controller/processScheduler/processScheduler
  * this treatment.
  */
 /datum/controller/processScheduler/proc/deferSetupFor(var/processPath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/deferSetupFor() called tick#: [world.time]")
 	if (!(processPath in deferredSetupList))
 		deferredSetupList += processPath
 
 /datum/controller/processScheduler/proc/setup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/setup() called tick#: [world.time]")
 	// There can be only one
 	if(processScheduler && (processScheduler != src))
 		del(processScheduler)
@@ -84,13 +82,11 @@ var/global/datum/controller/processScheduler/processScheduler
 		addProcess(new process(src))
 
 /datum/controller/processScheduler/proc/start()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/start() called tick#: [world.time]")
 	isRunning = 1
 	spawn(0)
 		process()
 
 /datum/controller/processScheduler/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/process() called tick#: [world.time]")
 	updateCurrentTickData()
 	
 	for(var/i=world.tick_lag,i<world.tick_lag*50,i+=world.tick_lag)
@@ -104,11 +100,9 @@ var/global/datum/controller/processScheduler/processScheduler
 		sleep(scheduler_sleep_interval)
 
 /datum/controller/processScheduler/proc/stop()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/stop() called tick#: [world.time]")
 	isRunning = 0
 
 /datum/controller/processScheduler/proc/checkRunningProcesses()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/checkRunningProcesses() called tick#: [world.time]")
 	for(var/datum/controller/process/p in running)
 		p.update()
 
@@ -129,7 +123,6 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/queueProcesses() called tick#: [world.time]")
 	for(var/datum/controller/process/p in processes)
 		// Don't double-queue, don't queue running processes
 		if (p.disabled || p.running || p.queued || !p.idle)
@@ -144,12 +137,10 @@ var/global/datum/controller/processScheduler/processScheduler
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/runQueuedProcesses() called tick#: [world.time]")
 	for(var/datum/controller/process/p in queued)
 		runProcess(p)
 
 /datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/addProcess() called tick#: [world.time]")
 	processes.Add(process)
 	process.idle()
 	idle.Add(process)
@@ -175,7 +166,6 @@ var/global/datum/controller/processScheduler/processScheduler
 	nameToProcessMap[process.name] = process
 
 /datum/controller/processScheduler/proc/replaceProcess(var/datum/controller/process/oldProcess, var/datum/controller/process/newProcess)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/replaceProcess() called tick#: [world.time]")
 	processes.Remove(oldProcess)
 	processes.Add(newProcess)
 
@@ -208,22 +198,18 @@ var/global/datum/controller/processScheduler/processScheduler
 
 
 /datum/controller/processScheduler/proc/runProcess(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/runProcess() called tick#: [world.time]")
 	spawn(0)
 		process.process()
 
 /datum/controller/processScheduler/proc/processStarted(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/processStarted() called tick#: [world.time]")
 	setRunningProcessState(process)
 	recordStart(process)
 
 /datum/controller/processScheduler/proc/processFinished(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/processFinished() called tick#: [world.time]")
 	setIdleProcessState(process)
 	recordEnd(process)
 
 /datum/controller/processScheduler/proc/setIdleProcessState(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/setIdleProcessState() called tick#: [world.time]")
 	if (process in running)
 		running -= process
 	if (process in queued)
@@ -232,7 +218,6 @@ var/global/datum/controller/processScheduler/processScheduler
 		idle += process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/setQueuedProcessState() called tick#: [world.time]")
 	if (process in running)
 		running -= process
 	if (process in idle)
@@ -244,7 +229,6 @@ var/global/datum/controller/processScheduler/processScheduler
 	process.queued()
 
 /datum/controller/processScheduler/proc/setRunningProcessState(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/setRunningProcessState() called tick#: [world.time]")
 	if (process in queued)
 		queued -= process
 	if (process in idle)
@@ -253,14 +237,12 @@ var/global/datum/controller/processScheduler/processScheduler
 		running += process
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/recordStart() called tick#: [world.time]")
 	if (isnull(time))
 		time = TimeOfHour
 
 	last_start[process] = time
 
 /datum/controller/processScheduler/proc/recordEnd(var/datum/controller/process/process, var/time = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/recordEnd() called tick#: [world.time]")
 	if (isnull(time))
 		time = TimeOfHour
 
@@ -280,7 +262,6 @@ var/global/datum/controller/processScheduler/processScheduler
  * Records a run time for a process
  */
 /datum/controller/processScheduler/proc/recordRunTime(var/datum/controller/process/process, time)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/recordRunTime() called tick#: [world.time]")
 	last_run_time[process] = time
 	if(time > highest_run_time[process])
 		highest_run_time[process] = time
@@ -296,7 +277,6 @@ var/global/datum/controller/processScheduler/processScheduler
  * returns the average run time (over the last 20) of the process
  */
 /datum/controller/processScheduler/proc/averageRunTime(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/averageRunTime() called tick#: [world.time]")
 	var/lastTwenty = last_twenty_run_times[process]
 
 	var/t = 0
@@ -310,7 +290,6 @@ var/global/datum/controller/processScheduler/processScheduler
 	return c
 
 /datum/controller/processScheduler/proc/getStatusData()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/getStatusData() called tick#: [world.time]")
 	var/list/data = new
 
 	for (var/datum/controller/process/p in processes)
@@ -320,20 +299,16 @@ var/global/datum/controller/processScheduler/processScheduler
 	return data
 
 /datum/controller/processScheduler/proc/getProcessCount()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/getProcessCount() called tick#: [world.time]")
 	return processes.len
 
 /datum/controller/processScheduler/proc/hasProcess(var/processName as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/hasProcess() called tick#: [world.time]")
 	if (nameToProcessMap[processName])
 		return 1
 
 /datum/controller/processScheduler/proc/killProcess(var/processName as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/killProcess() called tick#: [world.time]")
 	restartProcess(processName)
 
 /datum/controller/processScheduler/proc/restartProcess(var/processName as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/restartProcess() called tick#: [world.time]")
 	if (hasProcess(processName))
 		var/datum/controller/process/oldInstance = nameToProcessMap[processName]
 		var/datum/controller/process/newInstance = new oldInstance.type(src)
@@ -342,27 +317,22 @@ var/global/datum/controller/processScheduler/processScheduler
 		oldInstance.kill()
 
 /datum/controller/processScheduler/proc/enableProcess(var/processName as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/enableProcess() called tick#: [world.time]")
 	if (hasProcess(processName))
 		var/datum/controller/process/process = nameToProcessMap[processName]
 		process.enable()
 
 /datum/controller/processScheduler/proc/disableProcess(var/processName as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/disableProcess() called tick#: [world.time]")
 	if (hasProcess(processName))
 		var/datum/controller/process/process = nameToProcessMap[processName]
 		process.disable()
 
 /datum/controller/processScheduler/proc/getProcess(var/name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/getProcess() called tick#: [world.time]")
 	return nameToProcessMap[name]
 
 /datum/controller/processScheduler/proc/getProcessLastRunTime(var/datum/controller/process/process)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/getProcessLastRunTime() called tick#: [world.time]")
 	return last_run_time[process]
 
 /datum/controller/processScheduler/proc/getIsRunning()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/processScheduler/proc/getIsRunning() called tick#: [world.time]")
 	return isRunning
 
 /datum/controller/processScheduler/proc/getCurrentTickElapsedTime()

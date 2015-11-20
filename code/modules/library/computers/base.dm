@@ -12,7 +12,6 @@
 	icon_state = "computer"
 
 /obj/machinery/computer/library/proc/interact_check(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/proc/interact_check() called tick#: [world.time]")
 	if(stat & (BROKEN | NOPOWER))
 		return TRUE
 
@@ -26,7 +25,6 @@
 	return FALSE
 
 /obj/machinery/computer/library/proc/get_page(var/page_num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/proc/get_page() called tick#: [world.time]")
 	var/searchquery = ""
 	if(query)
 		var/where = 0
@@ -69,7 +67,6 @@
 	return results
 
 /obj/machinery/computer/library/proc/get_num_results()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/proc/get_num_results() called tick#: [world.time]")
 	var/sql = "SELECT COUNT(*) FROM library"
 	//if(query)
 		//sql += query.toSQL()
@@ -81,7 +78,6 @@
 	return 0
 
 /obj/machinery/computer/library/proc/get_pagelist()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/proc/get_pagelist() called tick#: [world.time]")
 	var/pagelist = "<div class='pages'>"
 	var/start = max(0,page_num-3)
 	var/end = min(num_pages, page_num+3)
@@ -96,7 +92,6 @@
 	return pagelist
 
 /obj/machinery/computer/library/proc/getBookByID(var/id as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/proc/getBookByID() called tick#: [world.time]")
 	return library_catalog.getBookByID(id)
 
 /obj/machinery/computer/library/cultify()

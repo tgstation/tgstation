@@ -100,14 +100,12 @@
 //OXYLOSS = 8
 //Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/suicide_act() called tick#: [world.time]")
 	return
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/verb/move_to_top()  called tick#: [world.time]")
 
 	if(!istype(src.loc, /turf) || usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
 		return
@@ -223,42 +221,34 @@
 	return
 
 /obj/item/proc/talk_into(var/datum/speech/speech, var/channel=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/talk_into() called tick#: [world.time]")
 	return
 
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/moved() called tick#: [world.time]")
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/dropped() called tick#: [world.time]")
 	layer = initial(layer) //nothing bad can come from this right?
 	if(wielded)
 		unwield(user)
 
 ///called when an item is stripped off by another person, called AFTER it is on the ground
 /obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/stripped() called tick#: [world.time]")
 	return unequipped(wearer)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/pickup() called tick#: [world.time]")
 	return
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/on_exit_storage() called tick#: [world.time]")
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/on_enter_storage() called tick#: [world.time]")
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/on_found() called tick#: [world.time]")
 	return
 
 // called after an item is placed in an equipment slot
@@ -267,7 +257,6 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/equipped() called tick#: [world.time]")
 	return
 
 // called after an item is unequipped or stripped
@@ -278,7 +267,6 @@
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/mob_can_equip() called tick#: [world.time]")
 	if(!slot) return 0
 	if(!M) return 0
 
@@ -648,13 +636,11 @@
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/ui_action_click() called tick#: [world.time]")
 	if(src in usr)
 		attack_self(usr)
 
 //Used in twohanding
 /obj/item/proc/wield(mob/user, var/inactive = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/wield() called tick#: [world.time]")
 	if(!ishuman(user))
 		user.show_message("You can't wield \the [src] as it's too heavy.")
 		return
@@ -677,7 +663,6 @@
 		return
 
 /obj/item/proc/unwield(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/unwield() called tick#: [world.time]")
 	if(flags & MUSTTWOHAND && src in user)
 		user.drop_from_inventory(src)
 	if(istype(wielded))
@@ -689,15 +674,12 @@
 	update_wield(user)
 
 /obj/item/proc/update_wield(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/update_wield() called tick#: [world.time]")
 
 /obj/item/proc/IsShield()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/IsShield() called tick#: [world.time]")
 	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/eyestab() called tick#: [world.time]")
 
 	var/mob/living/carbon/human/H = M
 	if(istype(H))
@@ -814,7 +796,6 @@
 
 var/global/list/image/blood_overlays = list()
 /obj/item/proc/generate_blood_overlay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/generate_blood_overlay() called tick#: [world.time]")
 	if(blood_overlays[type])
 		return
 
@@ -826,14 +807,12 @@ var/global/list/image/blood_overlays = list()
 
 
 /obj/item/proc/showoff(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/showoff() called tick#: [world.time]")
 	for (var/mob/M in view(user))
 		M.show_message("[user] holds up [src]. <a HREF='?src=\ref[M];lookitem=\ref[src]'>Take a closer look.</a>",1)
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/verb/showoff()  called tick#: [world.time]")
 
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
@@ -841,11 +820,9 @@ var/global/list/image/blood_overlays = list()
 
 // /vg/ Affects wearers.
 /obj/item/proc/OnMobLife(var/mob/holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/OnMobLife() called tick#: [world.time]")
 	return
 
 /obj/item/proc/OnMobDeath(var/mob/holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/OnMobDeath() called tick#: [world.time]")
 	return
 
 //handling the pulling of the item for singularity

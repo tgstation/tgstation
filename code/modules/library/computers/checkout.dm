@@ -465,7 +465,6 @@
  */
 
 /obj/machinery/computer/library/checkout/proc/make_external_book(var/datum/cachedbook/newbook)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/checkout/proc/make_external_book() called tick#: [world.time]")
 	if(!newbook || !newbook.id)
 		return
 	var/obj/item/weapon/book/B = new newbook.path(src.loc)

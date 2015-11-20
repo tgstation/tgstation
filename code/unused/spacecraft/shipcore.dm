@@ -14,7 +14,6 @@
 
 
 	proc/group_self()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/group_self() called tick#: [world.time]")
 		builders = list()
 		turfs = list()
 		components = list()
@@ -77,12 +76,10 @@
 		//world << "Ship initialization complete. [src.turfs.len] tiles added."
 
 	proc/receive_turf(var/turf/T)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/receive_turf() called tick#: [world.time]")
 		turfs.Add(T)
 
 
 	proc/MoveShip(var/turf/Center) // Center - The new position of the ship's core
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/MoveShip() called tick#: [world.time]")
 		src.anchored = 0
 		var/turf/lowerleft = locate(Center.x - (src.width/2), Center.y - (src.height/2), Center.z)
 		var/turf/upperright = locate(Center.x + (src.width/2), Center.y + (src.height/2), Center.z)
@@ -130,7 +127,6 @@
 		src.group_self()
 
 	proc/draw_power(var/n as num)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/draw_power() called tick#: [world.time]")
 		for(var/obj/machinery/ship_component/engine/E in components)
 			if(E.draw_power(n))
 				return 1
@@ -312,7 +308,6 @@ obj/machinery/ship_component/control_panel
 	var/distance = 0
 
 	proc/scan()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/scan() called tick#: [world.time]")
 		if(distance < 0)
 			cleanup_self()
 		var/i
@@ -325,7 +320,6 @@ obj/machinery/ship_component/control_panel
 			sleep(0)
 		cleanup_self()
 	proc/cleanup_self()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/cleanup_self() called tick#: [world.time]")
 		core.builders.Remove(src)
 		del(src)
 

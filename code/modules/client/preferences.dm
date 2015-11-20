@@ -156,7 +156,6 @@ var/const/MAX_SAVE_SLOTS = 8
 
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/setup_character_options() called tick#: [world.time]")
 
 	dat += {"<center><h2>Occupation Choices</h2>
 	<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>
@@ -204,7 +203,6 @@ var/const/MAX_SAVE_SLOTS = 8
 
 /datum/preferences/proc/setup_UI(var/dat, var/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/setup_UI() called tick#: [world.time]")
 
 	dat += {"<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>
 	<b>Custom UI</b>(recommended for White UI): <span style='border:1px solid #161616; background-color: #[UI_style_color];'>&nbsp;&nbsp;&nbsp;</span><br>Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a><br>
@@ -214,7 +212,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return dat
 
 /datum/preferences/proc/setup_special(var/dat, var/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/setup_special() called tick#: [world.time]")
 	dat += {"<table><tr><td width='340px' height='300px' valign='top'>
 	<h2>General Settings</h2>
 	<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
@@ -254,7 +251,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return dat
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer", "AI"), widthPerColumn = 295, height = 620)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetChoices() called tick#: [world.time]")
 	if(!job_master)
 		return
 
@@ -399,7 +395,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/ShowChoices() called tick#: [world.time]")
 	if(!user || !user.client)	return
 	update_preview_icon()
 	var/preview_front = fcopy_rsc(preview_icon_front)
@@ -449,13 +444,11 @@ var/const/MAX_SAVE_SLOTS = 8
 	popup.open(0)
 
 /datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/ShowDisabilityState() called tick#: [world.time]")
 	if(flag==DISABILITY_FLAG_FAT && species!="Human")
 		return "<li><i>[species] cannot be fat.</i></li>"
 	return "<li><b>[label]:</b> <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "Yes" : "No"]</a></li>"
 
 /datum/preferences/proc/SetDisabilities(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetDisabilities() called tick#: [world.time]")
 	var/HTML = "<body>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -483,7 +476,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return
 
 /datum/preferences/proc/SetRecords(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetRecords() called tick#: [world.time]")
 	var/HTML = "<body>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -524,13 +516,11 @@ var/const/MAX_SAVE_SLOTS = 8
 
 
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/GetPlayerAltTitle() called tick#: [world.time]")
 	return player_alt_titles.Find(job.title) > 0 \
 		? player_alt_titles[job.title] \
 		: job.title
 
 /datum/preferences/proc/SetPlayerAltTitle(datum/job/job, new_title)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetPlayerAltTitle() called tick#: [world.time]")
 	// remove existing entry
 	if(player_alt_titles.Find(job.title))
 		player_alt_titles -= job.title
@@ -539,7 +529,6 @@ var/const/MAX_SAVE_SLOTS = 8
 		player_alt_titles[job.title] = new_title
 
 /datum/preferences/proc/SetJob(mob/user, role)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetJob() called tick#: [world.time]")
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
 		user << browse(null, "window=mob_occupation")
@@ -566,7 +555,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	SetChoices(user)
 	return 1
 /datum/preferences/proc/ResetJobs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/ResetJobs() called tick#: [world.time]")
 	job_civilian_high = 0
 	job_civilian_med = 0
 	job_civilian_low = 0
@@ -580,7 +568,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	job_engsec_low = 0
 
 /datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/GetJobDepartment() called tick#: [world.time]")
 	if(!job || !level)	return 0
 	switch(job.department_flag)
 		if(CIVILIAN)
@@ -610,7 +597,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return 0
 
 /datum/preferences/proc/SetJobDepartment(var/datum/job/job, var/level)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetJobDepartment() called tick#: [world.time]")
 	if(!job || !level)	return 0
 	switch(level)
 		if(1)//Only one of these should ever be active at once so clear them all here
@@ -662,7 +648,6 @@ var/const/MAX_SAVE_SLOTS = 8
 
 
 /datum/preferences/proc/SetRoles(var/mob/user, var/list/href_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetRoles() called tick#: [world.time]")
 	// We just grab the role from the POST(?) data.
 	for(var/role_id in special_roles)
 		if(!(role_id in href_list))
@@ -678,7 +663,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return 1
 
 /datum/preferences/proc/ToggleRole(var/mob/user, var/list/href_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/ToggleRole() called tick#: [world.time]")
 	var/role_id = href_list["role_id"]
 	//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
 	if(!(role_id in special_roles))
@@ -694,7 +678,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	return 1
 
 /datum/preferences/proc/SetRole(var/mob/user, var/list/href_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetRole() called tick#: [world.time]")
 	var/role_id = href_list["role_id"]
 	//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
 	if(!(role_id in special_roles))
@@ -728,7 +711,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 	return 1
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/process_link() called tick#: [world.time]")
 	if(!user)
 		return
 
@@ -1281,7 +1263,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/copy_to() called tick#: [world.time]")
 	if(be_random_name)
 		real_name = random_name(gender,species)
 
@@ -1382,7 +1363,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 /datum/preferences/proc/open_load_dialog(mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/open_load_dialog() called tick#: [world.time]")
 
 	var/database/query/q = new
 	var/list/name_list[MAX_SAVE_SLOTS]
@@ -1420,11 +1400,9 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	user << browse(dat, "window=saves;size=300x390")
 
 /datum/preferences/proc/close_load_dialog(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/close_load_dialog() called tick#: [world.time]")
 	user << browse(null, "window=saves")
 
 /datum/preferences/proc/configure_special_roles(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/configure_special_roles() called tick#: [world.time]")
 	var/html={"<form method="get">
 	<input type="hidden" name="src" value="\ref[src]" />
 	<input type="hidden" name="preference" value="set_roles" />

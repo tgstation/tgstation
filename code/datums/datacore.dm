@@ -1,10 +1,8 @@
 /hook/startup/proc/createDatacore()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/startup/proc/createDatacore() called tick#: [world.time]")
 	data_core = new /obj/effect/datacore()
 	return 1
 
 /obj/effect/datacore/proc/manifest(var/nosleep = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/datacore/proc/manifest() called tick#: [world.time]")
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -13,7 +11,6 @@
 		return
 
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/datacore/proc/manifest_modify() called tick#: [world.time]")
 	if(PDA_Manifest.len)
 		PDA_Manifest.len = 0
 
@@ -35,7 +32,6 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/datacore/proc/manifest_inject() called tick#: [world.time]")
 	if(PDA_Manifest.len)
 		PDA_Manifest.len = 0
 
@@ -125,7 +121,6 @@
 
 
 proc/get_id_photo(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/get_id_photo() called tick#: [world.time]")
 	var/icon/preview_icon = null
 
 	var/g = "m"

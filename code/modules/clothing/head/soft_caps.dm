@@ -10,7 +10,6 @@
 	body_parts_covered = HEAD|EYES
 
 	proc/flip(var/mob/user as mob)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/flip() called tick#: [world.time]")
 		if(user.canmove && !user.stat && !user.restrained())
 			src.flipped = !src.flipped
 			if(src.flipped)
@@ -28,7 +27,6 @@
 		set category = "Object"
 		set name = "Flip cap"
 		set src in usr
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/flip_cap()  called tick#: [world.time]")
 		flip(usr)
 
 	dropped()

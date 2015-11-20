@@ -71,7 +71,6 @@ var/list/obj/machinery/flasher/flashers = list()
 		return
 
 /obj/machinery/flasher/proc/flash()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/flasher/proc/flash() called tick#: [world.time]")
 	if (!(powered()))
 		return
 

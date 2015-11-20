@@ -141,7 +141,6 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/generateFilling(var/obj/item/weapon/reagent_containers/food/snacks/S, params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/generateFilling() called tick#: [world.time]")
 	var/image/I
 	if(src.fullyCustom)
 		var/icon/C = getFlatIcon(S, S.dir, 0)
@@ -168,7 +167,6 @@
 	return I
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/updateName()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/updateName() called tick#: [world.time]")
 	var/i = 1
 	var/new_name
 	for(var/obj/item/S in src.ingredients)
@@ -204,7 +202,6 @@
 		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/drawTopping()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/drawTopping() called tick#: [world.time]")
 	var/image/I = src.topping
 	I.pixel_y = (src.ingredients.len+1)*2
 	src.overlays += I
@@ -399,7 +396,6 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/proc/updateName() //copypaste of food's updateName()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/proc/updateName() called tick#: [world.time]")
 	var/i = 1
 	var/new_name
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src.ingredients)
@@ -413,7 +409,6 @@
 	return new_name
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/proc/generateFilling(var/obj/item/weapon/reagent_containers/food/snacks/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/proc/generateFilling() called tick#: [world.time]")
 	src.overlays.len = 0
 	var/image/I = filling
 	if(S.filling_color != "#FFFFFF")

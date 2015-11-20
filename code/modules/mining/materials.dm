@@ -11,7 +11,6 @@
 */
 
 proc/initialize_materials()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/initialize_materials() called tick#: [world.time]")
 	for(var/matdata in typesof(/datum/material) - /datum/material)
 		var/datum/material/mat = new matdata
 		material_list += list(mat.id = mat)
@@ -52,7 +51,6 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 	storage = initial_materials.Copy()
 
 /datum/materials/proc/addAmount(var/mat_id,var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/addAmount() called tick#: [world.time]")
 	if(!(mat_id in storage))
 		warning("addAmount(): Unknown material [mat_id]!")
 		return
@@ -62,11 +60,9 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 
 
 /datum/materials/proc/removeFrom(var/datum/materials/mats)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/removeFrom() called tick#: [world.time]")
 	src.addFrom(mats,zero_after=1)
 
 /datum/materials/proc/addFrom(var/datum/materials/mats, var/zero_after=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/addFrom() called tick#: [world.time]")
 	if(mats == null)
 		return
 	for(var/mat_id in storage)
@@ -76,7 +72,6 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 				mats.storage[mat_id] = 0
 
 /datum/materials/proc/getVolume()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/getVolume() called tick#: [world.time]")
 	var/volume=0
 	for(var/mat_id in storage)
 		volume += storage[mat_id]
@@ -84,7 +79,6 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 
 //Gives total value, doing mat value * stored mat
 /datum/materials/proc/getValue()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/getValue() called tick#: [world.time]")
 	var/value=0
 	for(var/mat_id in storage)
 		var/datum/material/mat = getMaterial(mat_id)
@@ -92,14 +86,12 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 	return value
 
 /datum/materials/proc/removeAmount(var/mat_id,var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/removeAmount() called tick#: [world.time]")
 	if(!(mat_id in storage))
 		warning("removeAmount(): Unknown material [mat_id]!")
 		return
 	addAmount(mat_id,-amount)
 
 /datum/materials/proc/getAmount(var/mat_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/getAmount() called tick#: [world.time]")
 	if(!(mat_id in storage))
 		warning("getAmount(): Unknown material [mat_id]!")
 		return 0
@@ -107,7 +99,6 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 	return storage[mat_id]
 
 /datum/materials/proc/getMaterial(var/mat_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/materials/proc/getMaterial() called tick#: [world.time]")
 	if(!(mat_id in material_list))
 		warning("getMaterial(): Unknown material [mat_id]!")
 		return 0
@@ -116,7 +107,6 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 
 //HOOKS//
 /atom/proc/onMaterialChange(matID, amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/onMaterialChange() called tick#: [world.time]")
 	return
 
 

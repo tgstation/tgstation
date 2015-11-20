@@ -36,7 +36,6 @@
 	set category = "Object"
 	set name = "Adjust welding mask"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/head/welding/verb/toggle()  called tick#: [world.time]")
 	if(!usr) return //PANIC
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)

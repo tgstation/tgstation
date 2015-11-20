@@ -416,7 +416,6 @@
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_clock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -427,7 +426,6 @@
 	set category = "Object"
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_anticlock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return

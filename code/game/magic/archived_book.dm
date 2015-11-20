@@ -8,12 +8,10 @@
 var/global/datum/book_manager/book_mgr = new()
 
 datum/book_manager/proc/path(id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/book_manager/proc/path() called tick#: [world.time]")
 	if(isnum(id)) // kill any path exploits
 		return "[BOOK_PATH][id].sav"
 
 datum/book_manager/proc/getall()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/book_manager/proc/getall() called tick#: [world.time]")
 	var/list/paths = flist(BOOK_PATH)
 	var/list/books = new()
 
@@ -24,7 +22,6 @@ datum/book_manager/proc/getall()
 	return books
 
 datum/book_manager/proc/freeid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/book_manager/proc/freeid() called tick#: [world.time]")
 	var/list/paths = flist(BOOK_PATH)
 	var/id = paths.len + 101
 
@@ -36,7 +33,6 @@ datum/book_manager/proc/freeid()
 	return id
 
 /client/proc/delbook()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/delbook() called tick#: [world.time]")
 	set name = "Delete Book"
 	set desc = "Permamently deletes a book from the database."
 	set category = "Admin"
@@ -64,7 +60,6 @@ datum/book_manager/proc/freeid()
 
 // delete a book
 datum/book_manager/proc/remove(var/id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/book_manager/proc/remove() called tick#: [world.time]")
 	fdel(path(id))
 
 datum/archived_book
@@ -113,7 +108,6 @@ datum/archived_book/New(var/path)
 
 
 datum/archived_book/proc/save()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/archived_book/proc/save() called tick#: [world.time]")
 	var/savefile/F = new(book_mgr.path(id))
 
 	F["version"] << BOOK_VERSION_MAX

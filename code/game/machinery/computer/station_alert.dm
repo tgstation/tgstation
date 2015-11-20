@@ -97,7 +97,6 @@
 
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/station_alert/proc/triggerAlarm() called tick#: [world.time]")
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
@@ -121,7 +120,6 @@
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(var/class, area/A as area, obj/origin)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/station_alert/proc/cancelAlarm() called tick#: [world.time]")
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]

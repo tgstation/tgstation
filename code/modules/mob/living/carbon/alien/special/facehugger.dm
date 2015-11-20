@@ -115,7 +115,6 @@ var/const/MAX_ACTIVE_TIME = 400
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/facehugger/proc/Attach() called tick#: [world.time]")
 	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
 	if(attached)
@@ -175,7 +174,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/facehugger/proc/Impregnate() called tick#: [world.time]")
 	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
 		return
 
@@ -197,7 +195,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/facehugger/proc/GoActive() called tick#: [world.time]")
 	if(stat == DEAD || stat == CONSCIOUS)
 		return
 
@@ -206,7 +203,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/facehugger/proc/GoIdle() called tick#: [world.time]")
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
@@ -220,7 +216,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Die()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/facehugger/proc/Die() called tick#: [world.time]")
 	if(stat == DEAD)
 		return
 
@@ -235,7 +230,6 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /proc/CanHug(var/mob/M)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/CanHug() called tick#: [world.time]")
 
 	if(iscorgi(M))
 		return 1

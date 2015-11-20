@@ -43,7 +43,6 @@
 			inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/process_sheet() called tick#: [world.time]")
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
@@ -76,7 +75,6 @@
 					B.materials.removeAmount(mat_id, B.materials.storage[mat_id])
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/SmeltMineral() called tick#: [world.time]")
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = getFromPool(mat.sheettype, (src))
@@ -118,7 +116,6 @@
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/get_ore_values() called tick#: [world.time]")
 	var/dat = "<table border='0' width='300'>"
 	for(var/mat_id in materials.storage)
 		var/datum/material/mat = materials.getMaterial(mat_id)
@@ -134,7 +131,6 @@
 			if(href_list["choice"] == "eject")
 				inserted_id.loc = loc
 				inserted_id.verb_pickup()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\inserted_id.verb_pickup()  called tick#: [world.time]")
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)

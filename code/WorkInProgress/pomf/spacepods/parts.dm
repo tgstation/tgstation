@@ -20,7 +20,6 @@
 	var/link_angle = 0
 
 /obj/item/pod_parts/pod_frame/proc/find_square()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pod_parts/pod_frame/proc/find_square() called tick#: [world.time]")
 	/*
 	each part, in essence, stores the relative position of another part
 	you can find where this part should be by looking at the current direction of the current part and applying the link_angle
@@ -86,7 +85,6 @@
 	set name = "Rotate Frame"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/pod_parts/pod_frame/verb/rotate()  called tick#: [world.time]")
 	if(anchored)
 		usr << "\The [src] is securely bolted!"
 		return 0

@@ -66,7 +66,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/proc/adjustBruteLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/adjustBruteLossByPart() called tick#: [world.time]")
 	if(species && species.brute_mod)
 		amount = amount*species.brute_mod
 
@@ -82,7 +81,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/proc/adjustFireLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/adjustFireLossByPart() called tick#: [world.time]")
 	if(species && species.burn_mod)
 		amount = amount*species.burn_mod
 
@@ -147,7 +145,6 @@
 
 //Returns a list of damaged organs
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_damaged_organs() called tick#: [world.time]")
 	var/list/datum/organ/external/parts = list()
 	for(var/datum/organ/external/O in organs)
 		if((brute && O.brute_dam) || (burn && O.burn_dam))
@@ -156,7 +153,6 @@
 
 //Returns a list of damageable organs
 /mob/living/carbon/human/proc/get_damageable_organs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_damageable_organs() called tick#: [world.time]")
 	var/list/datum/organ/external/parts = list()
 	for(var/datum/organ/external/O in organs)
 		if(O.brute_dam + O.burn_dam < O.max_damage)
@@ -242,7 +238,6 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/restore_blood() called tick#: [world.time]")
 	if(!species.flags & NO_BLOOD)
 		var/blood_volume = vessel.get_reagent_amount("blood")
 		vessel.add_reagent("blood",560.0-blood_volume)
@@ -256,7 +251,6 @@ This function restores all organs.
 		current_organ.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/HealDamage() called tick#: [world.time]")
 	var/datum/organ/external/E = get_organ(zone)
 	if(istype(E, /datum/organ/external))
 		if (E.heal_damage(brute, burn))
@@ -268,7 +262,6 @@ This function restores all organs.
 
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_organ() called tick#: [world.time]")
 	if(!zone)	zone = "chest"
 	if (zone in list( "eyes", "mouth" ))
 		zone = "head"

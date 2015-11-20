@@ -244,7 +244,6 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/uranium/proc/radiate() called tick#: [world.time]")
 	for(var/mob/living/L in range (3,src))
 		L.apply_effect(15,IRRADIATE,0)
 	return
@@ -262,7 +261,6 @@
 	PlasmaBurn(temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/plasma/proc/PlasmaBurn() called tick#: [world.time]")
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 //		if(target_tile.parent && target_tile.parent.group_processing) // THESE PROBABLY DO SOMETHING IMPORTANT BUT I DON'T KNOW HOW TO FIX IT - Erthilo
 //			target_tile.parent.suspend_group_processing()
@@ -361,35 +359,29 @@ About the new airlock wires panel:
 	..(user)
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/isElectrified() called tick#: [world.time]")
 	if(src.secondsElectrified != 0)
 		return 1
 	return 0
 
 /obj/machinery/door/airlock/proc/isWireCut(var/wireIndex)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/isWireCut() called tick#: [world.time]")
 	// You can find the wires in the datum folder.
 	if(!wires)
 		return 1
 	return wires.IsIndexCut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/canAIControl() called tick#: [world.time]")
 	return ((src.aiControlDisabled!=1) && (!src.isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/canAIHack()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/canAIHack() called tick#: [world.time]")
 	return ((src.aiControlDisabled==1) && (!hackProof) && (!src.isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/arePowerSystemsOn()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/arePowerSystemsOn() called tick#: [world.time]")
 	return (src.secondsMainPowerLost==0 || src.secondsBackupPowerLost==0)
 
 /obj/machinery/door/airlock/requiresID()
 	return !(src.isWireCut(AIRLOCK_WIRE_IDSCAN) || aiDisabledIdScanner)
 
 /obj/machinery/door/airlock/proc/isAllPowerCut()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/isAllPowerCut() called tick#: [world.time]")
 	var/retval=0
 	if(src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1) || src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
 		if(src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1) || src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2))
@@ -397,12 +389,10 @@ About the new airlock wires panel:
 	return retval
 
 /obj/machinery/door/airlock/proc/regainMainPower()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/regainMainPower() called tick#: [world.time]")
 	if(src.secondsMainPowerLost > 0)
 		src.secondsMainPowerLost = 0
 
 /obj/machinery/door/airlock/proc/loseMainPower()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/loseMainPower() called tick#: [world.time]")
 	if(src.secondsMainPowerLost <= 0)
 		src.secondsMainPowerLost = 60
 		if(src.secondsBackupPowerLost < 10)
@@ -429,12 +419,10 @@ About the new airlock wires panel:
 			src.updateDialog()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/loseBackupPower() called tick#: [world.time]")
 	if(src.secondsBackupPowerLost < 60)
 		src.secondsBackupPowerLost = 60
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/regainBackupPower() called tick#: [world.time]")
 	if(src.secondsBackupPowerLost > 0)
 		src.secondsBackupPowerLost = 0
 
@@ -615,7 +603,6 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/hack() called tick#: [world.time]")
 	if(src.aiHacking==0)
 		src.aiHacking=1
 		spawn(20)
@@ -1128,7 +1115,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/proc/revert(mob/user as mob, var/direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/revert() called tick#: [world.time]")
 	var/obj/structure/door_assembly/DA = new assembly_type(loc)
 	DA.anchored = 1
 	DA.fingerprints += src.fingerprints
@@ -1260,7 +1246,6 @@ About the new airlock wires panel:
 					break
 
 /obj/machinery/door/airlock/proc/prison_open()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/prison_open() called tick#: [world.time]")
 	locked = 0
 	open()
 	locked = 1

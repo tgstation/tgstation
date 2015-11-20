@@ -1,7 +1,6 @@
 /client/proc/atmosscan()
 	set category = "Mapping"
 	set name = "Check Plumbing"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/atmosscan() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -30,7 +29,6 @@
 /client/proc/powerdebug()
 	set category = "Mapping"
 	set name = "Check Power"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/powerdebug() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return

@@ -81,7 +81,6 @@ var/global/list/image/fluidtrack_cache=list()
 	)
 
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/tracks/proc/AddTracks() called tick#: [world.time]")
 	var/updated=0
 	// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
 	var/realgoing=goingdir<<4

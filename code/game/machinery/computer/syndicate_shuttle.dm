@@ -20,7 +20,6 @@
 	icon_state = "syndishuttle"
 
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination as area)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/syndicate_station/proc/syndicate_move_to() called tick#: [world.time]")
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)

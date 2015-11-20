@@ -5,7 +5,6 @@
 /proc/togglebuildmode(mob/M as mob in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/togglebuildmode() called tick#: [world.time]")
 
 	if(M.client)
 		if(M.client.buildmode)
@@ -364,7 +363,6 @@ obj/effect/bmode/buildholder/New()
 
 
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/build_click() called tick#: [world.time]")
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H in buildmodeholders)
 		if(H.cl == user.client)
@@ -622,7 +620,6 @@ obj/effect/bmode/buildholder/New()
 					log_admin("[key_name(usr)] is throwing a [holder.throw_atom] at [object] - [formatJumpTo(RT)]")
 
 /proc/easyTypeSelector()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/easyTypeSelector() called tick#: [world.time]")
 	var/chosen = null
 
 	var/list/matches = new()

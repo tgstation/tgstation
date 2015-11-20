@@ -38,7 +38,6 @@
 	set name = "Toggle defence mode"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/combat/durand/verb/defence_mode()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	defence = !defence

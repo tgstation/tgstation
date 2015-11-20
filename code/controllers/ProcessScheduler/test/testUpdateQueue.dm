@@ -182,10 +182,8 @@ datum/uqTestDatum
 		..()
 		src.testNum = testNum
 	proc/update()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update() called tick#: [world.time]")
 		updateQueueTestCount[testNum]++
 	proc/lag(cycles)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/lag() called tick#: [world.time]")
 		set background = 1
 		for(var/i=0,i<cycles,)
 			i++

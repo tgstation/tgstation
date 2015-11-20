@@ -18,7 +18,6 @@
 	make(S)
 
 /obj/machinery/power/solar/panel/proc/make(var/obj/machinery/power/solar_assembly/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/proc/make() called tick#: [world.time]")
 	if(!S)
 		solar_assembly = new /obj/machinery/power/solar_assembly()
 		solar_assembly.glass_type = /obj/item/stack/sheet/glass/rglass
@@ -63,7 +62,6 @@
 	healthcheck()
 
 /obj/machinery/power/solar/panel/proc/healthcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/proc/healthcheck() called tick#: [world.time]")
 	if(health <= 0)
 		if(!(stat & BROKEN))
 			broken()
@@ -89,7 +87,6 @@
 	return
 
 /obj/machinery/power/solar/panel/proc/update_solar_exposure()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/proc/update_solar_exposure() called tick#: [world.time]")
 	if(!sun)
 		return
 
@@ -129,7 +126,6 @@
 			control.gen += sgen
 
 /obj/machinery/power/solar/panel/proc/broken()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/proc/broken() called tick#: [world.time]")
 	stat |= BROKEN
 	update_icon()
 
@@ -157,7 +153,6 @@
 				health-- //Let shrapnel have its effect
 
 /obj/machinery/power/solar/panel/proc/kill() //To make sure you eliminate the assembly as well
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/proc/kill() called tick#: [world.time]")
 	if(solar_assembly)
 		var/obj/machinery/power/solar_assembly/assembly = solar_assembly
 		solar_assembly = null

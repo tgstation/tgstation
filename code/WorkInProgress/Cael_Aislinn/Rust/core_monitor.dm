@@ -68,7 +68,6 @@
 
 //Returns 1 if the linked core is accesible.
 /obj/machinery/computer/rust_core_monitor/proc/check_core_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rust_core_monitor/proc/check_core_status() called tick#: [world.time]")
 	if(!istype(linked_core))
 		return
 

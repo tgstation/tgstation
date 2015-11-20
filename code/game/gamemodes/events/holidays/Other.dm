@@ -1,5 +1,4 @@
 /proc/GameOver()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/GameOver() called tick#: [world.time]")
 	if(!hadevent)
 		hadevent = 1
 		message_admins("The apocalypse has begun! (this holiday event can be disabled by toggling events off within 60 seconds)")

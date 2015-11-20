@@ -242,7 +242,6 @@
 
 /*
 /obj/machinery/shield_gen/proc/check_powered()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shield_gen/proc/check_powered() called tick#: [world.time]")
 	check_powered = 1
 	if(!anchored)
 		powered = 0
@@ -274,7 +273,6 @@
 			*/
 
 /obj/machinery/shield_gen/proc/toggle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shield_gen/proc/toggle() called tick#: [world.time]")
 	active = !active
 	power_change()
 	if(active)
@@ -299,7 +297,6 @@
 
 //grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shield_gen/proc/get_shielded_turfs() called tick#: [world.time]")
 	var/list/out = list()
 	for(var/turf/T in range(field_radius, src))
 		if(get_dist(src,T) == field_radius)

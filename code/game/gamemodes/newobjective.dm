@@ -10,7 +10,6 @@
 
 
 /proc/GenerateTheft(var/job,var/datum/mind/traitor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/GenerateTheft() called tick#: [world.time]")
 	var/list/datum/objective/objectives = list()
 
 	for(var/o in typesof(/datum/objective/steal))
@@ -21,7 +20,6 @@
 	return objectives
 
 /proc/GenerateAssassinate(var/job,var/datum/mind/traitor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/GenerateAssassinate() called tick#: [world.time]")
 	var/list/datum/objective/assassinate/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
@@ -33,7 +31,6 @@
 	return missions
 
 /proc/GenerateFrame(var/job,var/datum/mind/traitor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/GenerateFrame() called tick#: [world.time]")
 	var/list/datum/objective/frame/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
@@ -45,7 +42,6 @@
 	return missions
 
 /proc/GenerateProtection(var/job,var/datum/mind/traitor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/GenerateProtection() called tick#: [world.time]")
 	var/list/datum/objective/frame/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
@@ -58,7 +54,6 @@
 
 
 /proc/SelectObjectives(var/job,var/datum/mind/traitor,var/hijack = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/SelectObjectives() called tick#: [world.time]")
 	var/list/chosenobjectives = list()
 	var/list/theftobjectives = GenerateTheft(job,traitor)		//separated all the objective types so they can be picked independantly of each other.
 	var/list/killobjectives = GenerateAssassinate(job,traitor)
@@ -252,16 +247,12 @@ datum
 			points = get_points(job)
 
 		proc/check_completion()
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		proc/check_completion() called tick#: [world.time]")
 			return 1
 		proc/get_points(var/job)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		proc/get_points() called tick#: [world.time]")
 			return INFINITY
 		proc/get_weight(var/job)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		proc/get_weight() called tick#: [world.time]")
 			return INFINITY
 		proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		proc/find_target_by_role() called tick#: [world.time]")
 			for(var/datum/mind/possible_target in ticker.minds)
 				if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 					target = possible_target
@@ -410,7 +401,6 @@ datum
 
 
 			proc/find_target()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/find_target() called tick#: [world.time]")
 				var/list/possible_targets = list()
 
 				for(var/datum/mind/possible_target in ticker.minds)
@@ -1254,7 +1244,6 @@ datum
 				job = joba
 				explanation_text = "Remove and recover the head of [target.current.real_name], the [target.assigned_role]."
 			proc/find_target()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/find_target() called tick#: [world.time]")
 				..()
 				if(target && target.current)
 					explanation_text = "[target.current.real_name], the [target.role_alt_title ? target.role_alt_title : target.assigned_role], has defied us for the last time.  Make an example of him, and bring us his severed head."
@@ -1287,7 +1276,6 @@ datum
 		absorb
 			var/target_amount
 			proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/gen_amount_goal() called tick#: [world.time]")
 				target_amount = rand (lowbound,highbound)
 				if (ticker)
 					var/n_p = 1 //autowin
@@ -1313,7 +1301,6 @@ datum
 		meme_attune
 			var/target_amount
 			proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/gen_amount_goal() called tick#: [world.time]")
 				target_amount = rand (lowbound,highbound)
 
 				explanation_text = "Attune [target_amount] humanoid brains."
@@ -1332,7 +1319,6 @@ datum
 				explanation_text = "Remove and recover the brain of [target.current.real_name], the [target.assigned_role]."
 
 			proc/find_target()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/find_target() called tick#: [world.time]")
 				..()
 				if(target && target.current)
 					explanation_text = "Steal the brain of [target.current.real_name]."
@@ -1364,7 +1350,6 @@ datum
 
 		mutiny
 			proc/find_target()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/find_target() called tick#: [world.time]")
 				..()
 				if(target && target.current)
 					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : target.assigned_role]."
@@ -1397,7 +1382,6 @@ datum
 		capture
 			var/target_amount
 			proc/gen_amount_goal()
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/gen_amount_goal() called tick#: [world.time]")
 				target_amount = rand(5,10)
 				explanation_text = "Accumulate [target_amount] capture points."
 				return target_amount

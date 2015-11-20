@@ -23,7 +23,6 @@
 	req_access = list(access_tcomsat)
 
 /obj/machinery/computer/telecomms/traffic/proc/stop_editing()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telecomms/traffic/proc/stop_editing() called tick#: [world.time]")
 	if(editingcode)
 		if(editingcode.client)
 			winshow(editingcode, "Telecomms IDE", 0) // hide the window!
@@ -154,7 +153,6 @@
 	return
 
 /obj/machinery/computer/telecomms/traffic/proc/create_log(var/entry, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telecomms/traffic/proc/create_log() called tick#: [world.time]")
 	var/id = null
 	if(issilicon(user))
 		id = "System Administrator"
@@ -167,7 +165,6 @@
 	access_log += "\[[get_timestamp()]\] [id] [entry]"
 
 /obj/machinery/computer/telecomms/traffic/proc/print_logs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telecomms/traffic/proc/print_logs() called tick#: [world.time]")
 	. = "<center><h2>Traffic Control Telecomms System Log</h2></center><HR>"
 	for(var/entry in access_log)
 		. += entry + "<BR>"
@@ -298,7 +295,6 @@
 	src.updateUsrDialog()
 	return 1
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telecomms/traffic/proc/canAccess() called tick#: [world.time]")
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0

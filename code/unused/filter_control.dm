@@ -113,7 +113,6 @@
 		return
 
 /obj/machinery/filter_control/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/filter_control/proc/updateicon() called tick#: [world.time]")
 	overlays.len = 0
 	if(stat & NOPOWER)
 		icon_state = "filter_control-nopower"

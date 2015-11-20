@@ -35,7 +35,6 @@
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_codes() called tick#: [world.time]")
 		if(!codes_txt)
 			return
 
@@ -61,7 +60,6 @@
 
 	// update the icon_state
 	proc/updateicon()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 		var/state="navbeacon[panel_open]"
 
 		if(invisibility)
@@ -87,7 +85,6 @@
 
 	proc/post_signal()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/post_signal() called tick#: [world.time]")
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 

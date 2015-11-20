@@ -340,13 +340,11 @@
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/get_fuel() called tick#: [world.time]")
 	return reagents.get_reagent_amount("fuel")
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/proc/remove_fuel(var/amount = 1, var/mob/M = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/remove_fuel() called tick#: [world.time]")
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
@@ -362,7 +360,6 @@
 
 //Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/isOn() called tick#: [world.time]")
 	return src.welding
 
 
@@ -380,7 +377,6 @@
 //Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
 //so that the welding tool updates accordingly
 /obj/item/weapon/weldingtool/proc/setWelding(var/temp_welding)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/setWelding() called tick#: [world.time]")
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
@@ -403,7 +399,6 @@
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weapon/weldingtool/proc/check_fuel()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/check_fuel() called tick#: [world.time]")
 	if((get_fuel() <= 0) && welding)
 		toggle(1)
 		return 0
@@ -412,7 +407,6 @@
 
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(var/message = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/toggle() called tick#: [world.time]")
 	if(!status)	return
 	src.welding = !( src.welding )
 	if (src.welding)
@@ -439,7 +433,6 @@
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
 //Note: This should probably be moved to mob
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/proc/eyecheck() called tick#: [world.time]")
 	if(!iscarbon(user))	return 1
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
@@ -521,7 +514,6 @@
 	start_fueled = 0
 
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/experimental/proc/fuel_gen() called tick#: [world.time]")
 	var/gen_amount = ((world.time-last_gen)/25)          //Too bad it's not actually implemented
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
@@ -686,7 +678,6 @@
 		return ..()
 
 /obj/item/weapon/solder/proc/remove_fuel(var/amount, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/solder/proc/remove_fuel() called tick#: [world.time]")
 	if(reagents.get_reagent_amount("sacid") >= amount)
 		reagents.remove_reagent("sacid", amount)
 		update_icon()

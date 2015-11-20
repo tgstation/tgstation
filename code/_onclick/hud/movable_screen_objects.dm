@@ -49,7 +49,6 @@
 /client/proc/test_movable_UI()
 	set category = "Debug"
 	set name = "Spawn Movable UI Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/test_movable_UI() called tick#: [world.time]")
 
 	var/obj/screen/movable/M = new()
 	M.name = "Movable UI Object"
@@ -69,7 +68,6 @@
 /client/proc/test_snap_UI()
 	set category = "Debug"
 	set name = "Spawn Snap UI Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/test_snap_UI() called tick#: [world.time]")
 
 	var/obj/screen/movable/snap/S = new()
 	S.name = "Snap UI Object"

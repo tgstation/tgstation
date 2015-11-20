@@ -145,7 +145,6 @@ By design, d1 is the smallest direction and d2 is the highest
 //Provides sanity for cases in which there may not be a powernet
 //Not necessary for checking powernet during process() of power_machines as it is guaranteed to have a powernet at that time
 /obj/structure/cable/proc/get_powernet()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/get_powernet() called tick#: [world.time]")
 	check_rebuild()
 	return powernet
 
@@ -221,7 +220,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/shock() called tick#: [world.time]")
 	if((get_powernet()) && (powernet.avail > 1000))
 		if(!prob(prb))
 			return 0
@@ -251,7 +249,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	return
 
 /obj/structure/cable/proc/cableColor(var/colorC = "red")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/cableColor() called tick#: [world.time]")
 	light_color = colorC
 	switch(colorC)
 		if("pink")
@@ -266,31 +263,26 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////////////
 
 /obj/structure/cable/proc/add_avail(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/add_avail() called tick#: [world.time]")
 	if(get_powernet())
 		powernet.newavail += amount
 
 /obj/structure/cable/proc/add_load(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/add_load() called tick#: [world.time]")
 	if(get_powernet())
 		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/surplus() called tick#: [world.time]")
 	if(get_powernet())
 		return powernet.avail-powernet.load
 	else
 		return 0
 
 /obj/structure/cable/proc/avail()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/avail() called tick#: [world.time]")
 	if(get_powernet())
 		return powernet.avail
 	else
 		return 0
 
 /obj/structure/cable/proc/check_rebuild()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/check_rebuild() called tick#: [world.time]")
 	if(!build_status)
 		return
 	rebuild_from()
@@ -302,7 +294,6 @@ By design, d1 is the smallest direction and d2 is the highest
 // handles merging diagonally matching cables
 // for info : direction ^ 3 is flipping horizontally, direction ^ 12 is flipping vertically
 /obj/structure/cable/proc/mergeDiagonalsNetworks(var/direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/mergeDiagonalsNetworks() called tick#: [world.time]")
 	// search for and merge diagonally matching cables from the first direction component (north / south)
 	var/turf/T = get_step(src, direction & 3) // go north / south
 
@@ -339,7 +330,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/mergeConnectedNetworks() called tick#: [world.time]")
 	var/fdir = (!direction) ? 0 : turn(direction, 180) // flip the direction, to match with the source position on its turf
 
 	if(!(d1 == direction || d2 == direction)) // if the cable is not pointed in this direction, do nothing
@@ -363,7 +353,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/mergeConnectedNetworksOnTurf() called tick#: [world.time]")
 	var/list/to_connect = list()
 	var/list/connections = list()
 
@@ -418,7 +407,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // if powernetless_only = 1, will only get connections without powernet
 /obj/structure/cable/proc/get_connections(powernetless_only = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/get_connections() called tick#: [world.time]")
 	. = list() // this will be a list of all connected power objects without a powernet
 	var/turf/T
 
@@ -457,7 +445,6 @@ By design, d1 is the smallest direction and d2 is the highest
 // should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
 // needed as this can, unlike other placements, disconnect cables
 /obj/structure/cable/proc/denode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/denode() called tick#: [world.time]")
 	var/turf/T1 = loc
 
 	if(!T1)

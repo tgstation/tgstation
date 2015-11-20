@@ -155,7 +155,6 @@
 	set name = "Toggle Mode"
 	set category = "Object"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/iv_drip/verb/toggle_mode()  called tick#: [world.time]")
 
 	if(!istype(usr, /mob/living))
 		usr << "<span class='warning'>You can't do that.</span>"

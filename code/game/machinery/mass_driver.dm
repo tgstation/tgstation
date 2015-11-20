@@ -50,7 +50,6 @@ var/list/mass_drivers = list()
 	</ul>"}
 
 /obj/machinery/mass_driver/proc/drive(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mass_driver/proc/drive() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))
 		return
 	use_power(500*power)
@@ -220,7 +219,6 @@ var/list/mass_drivers = list()
 	set category = "Object"
 	set name = "Rotate Frame"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/mass_driver_frame/verb/rotate()  called tick#: [world.time]")
 
 	if ( usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
 		return

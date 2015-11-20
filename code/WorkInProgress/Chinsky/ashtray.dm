@@ -62,7 +62,6 @@
 	return ..()
 
 /obj/item/ashtray/proc/die()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/ashtray/proc/die() called tick#: [world.time]")
 	src.visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
 	for (var/obj/item/clothing/mask/cigarette/O in contents)
 		contents -= O

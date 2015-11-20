@@ -14,14 +14,12 @@
 	var/id_tag = "???"
 
 /obj/machinery/media/proc/hookMediaOutput(var/obj/machinery/media/transmitter/T, exclusive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/proc/hookMediaOutput() called tick#: [world.time]")
 	if(exclusive)
 		exclusive_hook=T
 	hooked.Add(T)
 	return 1
 
 /obj/machinery/media/proc/unhookMediaOutput(var/obj/machinery/media/transmitter/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/proc/unhookMediaOutput() called tick#: [world.time]")
 	if(exclusive_hook==T)
 		exclusive_hook=null
 	hooked.Remove(T)
@@ -30,7 +28,6 @@
 // Notify everyone in the area of new music.
 // YOU MUST SET MEDIA_URL AND MEDIA_START_TIME YOURSELF!
 /obj/machinery/media/proc/update_music()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/proc/update_music() called tick#: [world.time]")
 	// Broadcasting shit
 	for(var/obj/machinery/media/transmitter/T in hooked)
 		testing("[src] Writing media to [T].")
@@ -52,7 +49,6 @@
 			M.update_music()
 
 /obj/machinery/media/proc/update_media_source()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/proc/update_media_source() called tick#: [world.time]")
 	var/area/A = get_area_master(src)
 	if(!A) return
 	// Check if there's a media source already.
@@ -69,7 +65,6 @@
 	master_area=A
 
 /obj/machinery/media/proc/disconnect_media_source()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/proc/disconnect_media_source() called tick#: [world.time]")
 	var/area/A = get_area_master(src)
 
 	// Sanity

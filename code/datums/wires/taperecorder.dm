@@ -21,13 +21,11 @@ var/const/WIRE_RECORD = 2
 
 
 /datum/wires/taperecorder/proc/play()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/taperecorder/proc/play() called tick#: [world.time]")
 	var/obj/item/device/taperecorder/T = holder
 	T.stop()
 	T.play()
 
 /datum/wires/taperecorder/proc/record()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/taperecorder/proc/record() called tick#: [world.time]")
 	var/obj/item/device/taperecorder/T = holder
 	if(T.recording)
 		T.stop()
@@ -36,9 +34,7 @@ var/const/WIRE_RECORD = 2
 
 //helpers
 /datum/wires/taperecorder/proc/get_play()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/taperecorder/proc/get_play() called tick#: [world.time]")
 	return !(wires_status & WIRE_PLAY)
 
 /datum/wires/taperecorder/proc/get_record()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/taperecorder/proc/get_record() called tick#: [world.time]")
 	return !(wires_status & WIRE_RECORD)

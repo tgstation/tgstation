@@ -28,7 +28,6 @@
 		usr << "<span class='notice'>You deactivate \the [src]</span>"
 
 /obj/item/weapon/pinpointer/proc/point_at(atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pinpointer/proc/point_at() called tick#: [world.time]")
 	if(!active)
 		return
 	if(!target)
@@ -57,7 +56,6 @@
 		.()
 
 /obj/item/weapon/pinpointer/proc/workdisk()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pinpointer/proc/workdisk() called tick#: [world.time]")
 	if(!the_disk)
 		the_disk = locate()
 	point_at(the_disk)
@@ -98,7 +96,6 @@
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()  called tick#: [world.time]")
 	active = 0
 	icon_state = "pinoff"
 	target=null
@@ -221,7 +218,6 @@
 
 
 /obj/item/weapon/pinpointer/nukeop/proc/worklocation()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pinpointer/nukeop/proc/worklocation() called tick#: [world.time]")
 	if(!active)
 		return
 	if(!mode)
@@ -275,7 +271,6 @@
 	set name = "Select pinpointer target"
 	set src in view(1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/pinpointer/pdapinpointer/verb/select_pda()  called tick#: [world.time]")
 	if(used)
 		usr << "Target has already been set!"
 		return

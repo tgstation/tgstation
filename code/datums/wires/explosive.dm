@@ -4,7 +4,6 @@
 var/const/WIRE_EXPLODE = 1
 
 /datum/wires/explosive/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/explosive/proc/explode() called tick#: [world.time]")
 	return
 
 /datum/wires/explosive/UpdatePulsed(var/index)

@@ -51,13 +51,11 @@
 */
 
 /obj/machinery/computer/cloning/proc/updatemodules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/updatemodules() called tick#: [world.time]")
 	src.scanner = findscanner()
 	if (!isnull(src.pod1))
 		src.pod1.connected = src // Some variable the pod needs
 
 /obj/machinery/computer/cloning/proc/findscanner()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/findscanner() called tick#: [world.time]")
 	var/obj/machinery/dna_scannernew/scannerf = null
 
 	// Loop through every direction
@@ -74,7 +72,6 @@
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/findcloner() called tick#: [world.time]")
 	var/obj/machinery/cloning/clonepod/pod_found = null
 	for (pod_found in orange(src, CLONEPODRANGE))
 		if(pod_found.connected)
@@ -387,7 +384,6 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/scan_mob() called tick#: [world.time]")
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna) || (istype(subject, /mob/living/carbon/human/manifested)))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
@@ -453,7 +449,6 @@
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/find_record() called tick#: [world.time]")
 	var/selected_record = null
 	for(var/datum/dna2/record/R in src.records)
 		if (R.ckey == find_key)

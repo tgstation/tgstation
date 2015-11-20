@@ -32,7 +32,6 @@
 	return secured
 
 /obj/item/device/assembly/timer/proc/timer_end()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/timer/proc/timer_end() called tick#: [world.time]")
 	if(!secured)	return 0
 	pulse(0)
 	if(!holder)

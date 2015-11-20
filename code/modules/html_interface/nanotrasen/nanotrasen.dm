@@ -164,7 +164,6 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	src.setEyeColor("red", hclient)
 
 /datum/html_interface/nanotrasen/proc/setEyeColor(color, datum/html_interface_client/hclient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface/nanotrasen/proc/setEyeColor() called tick#: [world.time]")
 	hclient = getClient(hclient)
 
 	if (istype(hclient))

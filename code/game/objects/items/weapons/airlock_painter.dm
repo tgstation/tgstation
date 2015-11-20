@@ -20,7 +20,6 @@
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/proc/use(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/airlock_painter/proc/use() called tick#: [world.time]")
 	if(can_use(user))
 		ink.charges--
 		playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1)
@@ -32,7 +31,6 @@
 //Call this if you don't want the painter to be used right after this check, for example
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/airlock_painter/proc/can_use() called tick#: [world.time]")
 	if(!ink)
 		user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
 		return 0

@@ -1,7 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 proc/Intoxicated(phrase)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/Intoxicated() called tick#: [world.time]")
 	phrase = html_decode(phrase)
 	var/leng=length(phrase)
 	var/counter=length(phrase)
@@ -25,7 +24,6 @@ proc/Intoxicated(phrase)
 	return newphrase
 
 proc/NewStutter(phrase,stunned)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/NewStutter() called tick#: [world.time]")
 	phrase = html_decode(phrase)
 
 	var/list/split_phrase = text2list(phrase," ") //Split it up into words.
@@ -62,11 +60,9 @@ proc/NewStutter(phrase,stunned)
 	return sanitize(list2text(split_phrase," "))
 
 proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
-	//writepanic("[__FILE__].[__LINE__] \\/proc/Stagger() called tick#: [world.time]")
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
 proc/Ellipsis(original_msg, chance = 50)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/Ellipsis() called tick#: [world.time]")
 	if(chance <= 0) return "..."
 	if(chance >= 100) return original_msg
 

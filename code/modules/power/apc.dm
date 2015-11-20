@@ -130,7 +130,6 @@
 		initialize()
 
 /obj/machinery/power/apc/proc/init()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/init() called tick#: [world.time]")
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
@@ -265,7 +264,6 @@
 
 /obj/machinery/power/apc/proc/check_updates()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/check_updates() called tick#: [world.time]")
 
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
@@ -341,7 +339,6 @@
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/queue_icon_update() called tick#: [world.time]")
 
 	if(!updating_icon)
 		updating_icon = 1
@@ -351,7 +348,6 @@
 			updating_icon = 0
 
 /obj/machinery/power/apc/spook()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/spookify() called tick#: [world.time]")
 	if(spooky) return // Fuck you we're already spooky
 	if(!..()) return //If blessed, return
 
@@ -659,7 +655,6 @@
 	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/get_malf_status() called tick#: [world.time]")
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
 			if (src.occupant == user)
@@ -737,11 +732,9 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/apc/proc/report()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/report() called tick#: [world.time]")
 	return "[areaMaster.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/update() called tick#: [world.time]")
 	if(operating && !shorted)
 		areaMaster.power_light = (lighting > 1)
 		areaMaster.power_equip = (equipment > 1)
@@ -758,12 +751,10 @@
 	areaMaster.power_change()
 
 /obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/isWireCut() called tick#: [world.time]")
 	return wires.IsIndexCut(wireIndex)
 
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/can_use() called tick#: [world.time]")
 	if (user.stat && !isobserver(user))
 		user << "<span class='warning'>You must be conscious to use this [src]!</span>"
 		return 0
@@ -909,7 +900,6 @@
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/toggle_breaker() called tick#: [world.time]")
 	operating = !operating
 
 	if(malfai)
@@ -921,7 +911,6 @@
 	update_icon()
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/malfoccupy() called tick#: [world.time]")
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
@@ -953,7 +942,6 @@
 
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/malfvacate() called tick#: [world.time]")
 	if(!src.occupant)
 		return
 	if(src.occupant.parent && src.occupant.parent.stat != 2)
@@ -979,7 +967,6 @@
 
 
 /obj/machinery/power/apc/proc/ion_act()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/ion_act() called tick#: [world.time]")
 	//intended to be exactly the same as an AI malf attack
 	if(!src.malfhack && STATION_Z == z)
 		if(prob(3))
@@ -1181,7 +1168,6 @@
 // on 0=off, 1=on, 2=autooff
 
 obj/machinery/power/apc/proc/autoset(var/val, var/on)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/autoset() called tick#: [world.time]")
 	if(on==0)
 		if(val==2)			// if on, return off
 			return 0
@@ -1245,7 +1231,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 			cell.blob_act()
 
 /obj/machinery/power/apc/proc/set_broken()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/set_broken() called tick#: [world.time]")
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (STATION_Z == z)
@@ -1260,7 +1245,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 // overload all the lights in this APC area
 
 /obj/machinery/power/apc/proc/overload_lighting()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/overload_lighting() called tick#: [world.time]")
 	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)
@@ -1299,7 +1283,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	..()
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/setsubsystem() called tick#: [world.time]")
 	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val
 	else if(val == 3)

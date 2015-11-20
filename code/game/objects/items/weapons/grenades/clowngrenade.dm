@@ -43,7 +43,6 @@
 	return
 /*
 /obj/item/weapon/grenade/clown_grenade/proc/banana(turf/T as turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grenade/clown_grenade/proc/banana() called tick#: [world.time]")
 	if(!T || !istype(T))
 		return
 	if(locate(/obj/structure/grille) in T)

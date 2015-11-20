@@ -137,7 +137,6 @@
 	return
 
 /obj/machinery/portable_atmospherics/canister/proc/check_updates(tank_pressure = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/check_updates() called tick#: [world.time]")
 	if((overlay_status & OVERLAY_HOLDING) != holding)
 		return 1
 	if((overlay_status & OVERLAY_CONNECTED) != connected_port)
@@ -159,7 +158,6 @@
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/healthcheck() called tick#: [world.time]")
 	if(destroyed)
 		return 1
 
@@ -226,14 +224,12 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/return_temperature() called tick#: [world.time]")
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
 		return GM.temperature
 	return 0
 
 /obj/machinery/portable_atmospherics/canister/proc/return_pressure()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/return_pressure() called tick#: [world.time]")
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
 		return GM.return_pressure()
@@ -470,7 +466,6 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/weld() called tick#: [world.time]")
 
 	if(busy)
 		return 0

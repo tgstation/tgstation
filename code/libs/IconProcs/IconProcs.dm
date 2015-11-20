@@ -13,16 +13,13 @@
 icon
 	// Multiply all alpha values by this float
 	proc/ChangeOpacity(opacity = 1.0)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ChangeOpacity() called tick#: [world.time]")
 		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
 
 	// Convert to grayscale
 	proc/GrayScale()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GrayScale() called tick#: [world.time]")
 		MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
 	proc/ColorTone(tone)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ColorTone() called tick#: [world.time]")
 		GrayScale()
 
 		var/list/TONE = ReadRGB(tone)
@@ -41,7 +38,6 @@ icon
 
 	// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
 	proc/MinColors(icon)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/MinColors() called tick#: [world.time]")
 		var/icon/I = new(src)
 		I.Opaque()
 		I.Blend(icon, ICON_SUBTRACT)
@@ -49,7 +45,6 @@ icon
 
 	// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
 	proc/MaxColors(icon)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/MaxColors() called tick#: [world.time]")
 		var/icon/I
 		if(isicon(icon))
 			I = new(icon)
@@ -66,24 +61,20 @@ icon
 
 	// make this icon fully opaque--transparent pixels become black
 	proc/Opaque(background = "#000000")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Opaque() called tick#: [world.time]")
 		SwapColor(null, background)
 		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
 	// Change a grayscale icon into a white icon where the original color becomes the alpha
 	// I.e., black -> transparent, gray -> translucent white, white -> solid white
 	proc/BecomeAlphaMask()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/BecomeAlphaMask() called tick#: [world.time]")
 		SwapColor(null, "#000000ff")	// don't let transparent become gray
 		MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
 
 	proc/UseAlphaMask(mask)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UseAlphaMask() called tick#: [world.time]")
 		Opaque()
 		AddAlphaMask(mask)
 
 	proc/AddAlphaMask(mask)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddAlphaMask() called tick#: [world.time]")
 		var/icon/M = new(mask)
 		M.Blend("#ffffff", ICON_SUBTRACT)
 		// apply mask
@@ -112,7 +103,6 @@ icon
  */
 
 proc/ReadRGB(rgb)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ReadRGB() called tick#: [world.time]")
 	if(!rgb) return
 
 	// interpret the HSV or HSVA value
@@ -163,7 +153,6 @@ proc/ReadRGB(rgb)
 	if(usealpha) . += alpha
 
 proc/ReadHSV(hsv)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ReadHSV() called tick#: [world.time]")
 	if(!hsv) return
 
 	// interpret the HSV or HSVA value
@@ -203,7 +192,6 @@ proc/ReadHSV(hsv)
 	if(usealpha) . += alpha
 
 proc/HSVtoRGB(hsv)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/HSVtoRGB() called tick#: [world.time]")
 	if(!hsv) return "#000000"
 	var/list/HSV = ReadHSV(hsv)
 	if(!HSV) return "#000000"
@@ -232,7 +220,6 @@ proc/HSVtoRGB(hsv)
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
 proc/RGBtoHSV(rgb)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/RGBtoHSV() called tick#: [world.time]")
 	if(!rgb) return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
 	if(!RGB) return "#0000000"
@@ -264,7 +251,6 @@ proc/RGBtoHSV(rgb)
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
 proc/hsv(hue, sat, val, alpha)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/hsv() called tick#: [world.time]")
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
 	if((hue & 0xFF) == 0xFF)
@@ -298,7 +284,6 @@ proc/hsv(hue, sat, val, alpha)
 	amount<0 or amount>1 are allowed
  */
 proc/BlendHSV(hsv1, hsv2, amount)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/BlendHSV() called tick#: [world.time]")
 	var/list/HSV1 = ReadHSV(hsv1)
 	var/list/HSV2 = ReadHSV(hsv2)
 
@@ -353,7 +338,6 @@ proc/BlendHSV(hsv1, hsv2, amount)
 	amount<0 or amount>1 are allowed
  */
 proc/BlendRGB(rgb1, rgb2, amount)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/BlendRGB() called tick#: [world.time]")
 	var/list/RGB1 = ReadRGB(rgb1)
 	var/list/RGB2 = ReadRGB(rgb2)
 
@@ -370,11 +354,9 @@ proc/BlendRGB(rgb1, rgb2, amount)
 	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
 
 proc/BlendRGBasHSV(rgb1, rgb2, amount)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/BlendRGBasHSV() called tick#: [world.time]")
 	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
 
 proc/HueToAngle(hue)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/HueToAngle() called tick#: [world.time]")
 	// normalize hsv in case anything is screwy
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
@@ -383,7 +365,6 @@ proc/HueToAngle(hue)
 	return hue / (1530/360)
 
 proc/AngleToHue(angle)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/AngleToHue() called tick#: [world.time]")
 	// normalize hsv in case anything is screwy
 	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
@@ -394,7 +375,6 @@ proc/AngleToHue(angle)
 
 // positive angle rotates forward through red->green->blue
 proc/RotateHue(hsv, angle)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/RotateHue() called tick#: [world.time]")
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
@@ -417,14 +397,12 @@ proc/RotateHue(hsv, angle)
 
 // Convert an rgb color to grayscale
 proc/GrayScale(rgb)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/GrayScale() called tick#: [world.time]")
 	var/list/RGB = ReadRGB(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale color to black->tone->white range
 proc/ColorTone(rgb, tone)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ColorTone() called tick#: [world.time]")
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 

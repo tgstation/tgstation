@@ -107,14 +107,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_lathe					= null
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/Maximize() called tick#: [world.time]")
 	files.known_tech = tech_list.Copy()
 	for(var/datum/tech/KT in files.known_tech)
 		if(KT.level < KT.max_level)
 			KT.level=KT.max_level
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallTechName() called tick#: [world.time]")
 	var/datum/tech/check_tech
 	var/return_name = ""
 
@@ -128,7 +126,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallMaterialName() called tick#: [world.time]")
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
 		var/datum/material/mat = materials.getMaterial(ID)
@@ -142,7 +139,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/SyncRDevices() called tick#: [world.time]")
 	if(!isarea(areaMaster) || areaMaster.type == /area)
 		say("Unable to process synchronization")
 		return
@@ -173,7 +169,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/griefProtection() called tick#: [world.time]")
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
@@ -607,7 +602,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 /obj/machinery/computer/rdconsole/proc/protolathe_header()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/protolathe_header() called tick#: [world.time]")
 	var/list/options=list()
 	if(screen!=3.1)
 		options += "<A href='?src=\ref[src];menu=3.1'>Design Selection</A>"
@@ -621,7 +615,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	<div class="header">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader() called tick#: [world.time]")
 	var/list/options=list()
 	if(screen!=4.1)
 		options += "<A href='?src=\ref[src];menu=4.1'>Design Selection</A>"

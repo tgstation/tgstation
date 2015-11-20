@@ -2,7 +2,6 @@
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Robot Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/mommi/verb/ventcrawl()  called tick#: [world.time]")
 	var/pipe = start_ventcrawl()
 	if(pipe)
 		handle_ventcrawl(pipe)
@@ -12,7 +11,6 @@
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Robot Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/mommi/verb/hide()  called tick#: [world.time]")
 
 	if(stat != CONSCIOUS)
 		return
@@ -38,7 +36,6 @@
 	set name = "Toggle Parking Brake"
 	set desc = "Lock yourself in place"
 	set category = "Robot Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/mommi/verb/park()  called tick#: [world.time]")
 	var/mob/living/silicon/robot/mommi/R = src
 	R.anchored=!R.anchored
 	R.canmove=!R.anchored

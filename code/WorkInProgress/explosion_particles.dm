@@ -22,13 +22,11 @@
 	var/total_particles = 0
 
 /datum/effect/system/expl_particles/proc/set_up(n = 10, loca)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/effect/system/expl_particles/proc/set_up() called tick#: [world.time]")
 	number = n
 	if(istype(loca, /turf/)) location = loca
 	else location = get_turf(loca)
 
 /datum/effect/system/expl_particles/proc/start()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/effect/system/expl_particles/proc/start() called tick#: [world.time]")
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		spawn(0)
@@ -58,12 +56,10 @@
 	var/turf/location
 
 /datum/effect/system/explosion/proc/set_up(loca)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/effect/system/explosion/proc/set_up() called tick#: [world.time]")
 	if(istype(loca, /turf/)) location = loca
 	else location = get_turf(loca)
 
 /datum/effect/system/explosion/proc/start()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/effect/system/explosion/proc/start() called tick#: [world.time]")
 	new/obj/effect/explosion( location )
 	var/datum/effect/system/expl_particles/P = new/datum/effect/system/expl_particles()
 	P.set_up(10,location)

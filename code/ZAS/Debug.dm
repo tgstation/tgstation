@@ -11,12 +11,10 @@ var/image/mark = image('icons/Testing/Zone.dmi', icon_state = "mark")
 
 /turf/var/tmp/dbg_img
 /turf/proc/dbg(image/img, d = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/dbg() called tick#: [world.time]")
 	if(d > 0) img.dir = d
 	overlays -= dbg_img
 	overlays += img
 	dbg_img = img
 
 proc/soft_assert(thing,fail)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/soft_assert() called tick#: [world.time]")
 	if(!thing) message_admins(fail)

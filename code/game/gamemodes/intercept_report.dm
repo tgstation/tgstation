@@ -56,7 +56,6 @@
 
 
 /datum/intercept_text/proc/build(var/mode_type, datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build() called tick#: [world.time]")
 	switch(mode_type)
 		if("revolution")
 			src.text = ""
@@ -93,7 +92,6 @@
 
 /*
 /datum/intercept_text/proc/pick_mob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/pick_mob() called tick#: [world.time]")
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
 		if (!man.mind) continue
@@ -105,7 +103,6 @@
 
 
 /datum/intercept_text/proc/pick_fingerprints()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/pick_fingerprints() called tick#: [world.time]")
 	var/mob/living/carbon/human/dude = src.pick_mob()
 	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
 	if(dude)
@@ -115,7 +112,6 @@
 */
 
 /datum/intercept_text/proc/get_suspect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/get_suspect() called tick#: [world.time]")
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.client.prefs.nanotrasen_relation == "Opposed")
 		dudes += man
@@ -124,7 +120,6 @@
 	return pick(dudes)
 
 /datum/intercept_text/proc/build_traitor(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_traitor() called tick#: [world.time]")
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 
@@ -157,7 +152,6 @@
 			However, these could also belong to a current Cent. Com employee, so do not act on this without reason."}
 		// END AUTOFIX
 /datum/intercept_text/proc/build_cult(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_cult() called tick#: [world.time]")
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 
@@ -176,7 +170,6 @@
 		<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."}
 	// END AUTOFIX
 /datum/intercept_text/proc/build_rev(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_rev() called tick#: [world.time]")
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 
@@ -195,7 +188,6 @@
 		<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."}
 	// END AUTOFIX
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_wizard() called tick#: [world.time]")
 	var/SWF_desc = pick(SWF_names)
 
 
@@ -208,7 +200,6 @@
 	// END AUTOFIX
 /datum/intercept_text/proc/build_nuke(datum/mind/correct_person)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_nuke() called tick#: [world.time]")
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\gamemodes\intercept_report.dm:193: src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disc "
@@ -218,7 +209,6 @@
 		the most trusted crew-members."}
 	// END AUTOFIX
 /datum/intercept_text/proc/build_malf(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_malf() called tick#: [world.time]")
 	var/a_name = pick(src.anomalies)
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -228,7 +218,6 @@
 		for signs of unusual behaviour, but keep this information discreet at all times due to this possibly dangerous scenario."}
 	// END AUTOFIX
 /datum/intercept_text/proc/build_changeling(datum/mind/correct_person)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/intercept_text/proc/build_changeling() called tick#: [world.time]")
 	var/cname = pick(src.changeling_names)
 	var/orgname1 = pick(src.org_names_1)
 	var/orgname2 = pick(src.org_names_2)

@@ -53,7 +53,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
 
 /datum/disease/proc/stage_act()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/stage_act() called tick#: [world.time]")
 	age++
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
@@ -79,7 +78,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return
 
 /datum/disease/proc/has_cure()//check if affected_mob has required reagents.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/has_cure() called tick#: [world.time]")
 	if(!cure_id) return 0
 	var/result = 1
 	if(cure_list == list(cure_id))
@@ -104,14 +102,12 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return result
 
 /datum/disease/proc/spread_by_touch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/spread_by_touch() called tick#: [world.time]")
 	switch(spread_type)
 		if(CONTACT_FEET, CONTACT_HANDS, CONTACT_GENERAL)
 			return 1
 	return 0
 
 /datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/spread() called tick#: [world.time]")
 	//world << "Disease [src] proc spread was called from holder [source]"
 
 	// If we're overriding how we spread, say so here
@@ -152,7 +148,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/process() called tick#: [world.time]")
 	if(!holder)
 		active_diseases -= src
 		return
@@ -182,7 +177,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return
 
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/cure() called tick#: [world.time]")
 	if(affected_mob)
 		if(resistance && !(type in affected_mob.resistances))
 			var/saved_type = "[type]"
@@ -206,13 +200,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	initial_spread = spread
 
 /datum/disease/proc/IsSame(var/datum/disease/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/IsSame() called tick#: [world.time]")
 	if(istype(src, D.type))
 		return 1
 	return 0
 
 /datum/disease/proc/Copy(var/process = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/proc/Copy() called tick#: [world.time]")
 	return new type(process, src)
 
 /*

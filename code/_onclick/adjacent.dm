@@ -11,7 +11,6 @@
 	to check that the mob is not inside of something
 */
 /atom/proc/Adjacent(var/atom/neighbor) // basic inheritance, unused
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/Adjacent() called tick#: [world.time]")
 	return 0
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
@@ -111,7 +110,6 @@
 	The border_only flag allows you to not objects (for source and destination squares)
 */
 /turf/proc/ClickCross(var/target_dir, var/border_only, var/atom/target_atom = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/ClickCross() called tick#: [world.time]")
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 

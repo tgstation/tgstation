@@ -1,7 +1,6 @@
 /proc/possess(obj/O as obj in world)
 	set name = "Possess Obj"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/possess() called tick#: [world.time]")
 
 	if(istype(O,/obj/machinery/singularity))
 		if(config.forbid_singulo_possession)
@@ -31,7 +30,6 @@
 	set name = "Release Obj"
 	set category = "Object"
 	//usr.loc = get_turf(usr)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/release() called tick#: [world.time]")
 
 	if(usr.control_object && usr.name_archive) //if you have a name archived and if you are actually relassing an object
 		usr.real_name = usr.name_archive
@@ -50,7 +48,6 @@
 	set desc = "Give this guy possess/release verbs"
 	set category = "Debug"
 	set name = "Give Possessing Verbs"
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/proc/givetestverbs()  called tick#: [world.time]")
 	M.verbs += /proc/possess
 	M.verbs += /proc/release
 	feedback_add_details("admin_verb","GPV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

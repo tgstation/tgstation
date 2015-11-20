@@ -67,7 +67,6 @@
 	set category = "Object"
 	set src in usr
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/paper/verb/rename()  called tick#: [world.time]")
 	if((M_CLUMSY in usr.mutations) && prob(50))
 		usr << "<span class='warning'>You cut yourself on [src].</span>"
 		return
@@ -108,7 +107,6 @@
 	return
 
 /obj/item/weapon/paper/proc/addtofield(var/id, var/text, var/links = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/addtofield() called tick#: [world.time]")
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
@@ -152,7 +150,6 @@
 		updateinfolinks()
 
 /obj/item/weapon/paper/proc/updateinfolinks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/updateinfolinks() called tick#: [world.time]")
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
@@ -166,7 +163,6 @@
 	info_links +="<A href='?src=\ref[src];help=end'>help</A> "
 
 /obj/item/weapon/paper/proc/clearpaper()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/clearpaper() called tick#: [world.time]")
 	info = null
 	stamps = null
 	stamped = list()
@@ -176,7 +172,6 @@
 
 
 /obj/item/weapon/paper/proc/parsepencode(var/mob/user,var/obj/item/i, var/t)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/parsepencode() called tick#: [world.time]")
 	if(istype(i,/obj/item/weapon/pen))
 		//t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 		var/obj/item/weapon/pen/P=i
@@ -190,7 +185,6 @@
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/openhelp() called tick#: [world.time]")
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
@@ -330,7 +324,6 @@
 	return ..()
 
 /obj/item/proc/ashify_item(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/ashify_item() called tick#: [world.time]")
 	var/prot = 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -373,7 +366,6 @@ var/global/list/paper_folding_results = list ( \
 	set category = "Object"
 	set name = "Fold paper"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/paper/verb/fold()  called tick#: [world.time]")
 
 	if (!canfold(usr)) return
 	. = paper_folding_results[(input("What do you want to make the paper into?", "Paper Folding") as null|anything in paper_folding_results)]
@@ -395,7 +387,6 @@ var/global/list/paper_folding_results = list ( \
 	return
 
 /obj/item/weapon/paper/proc/canfold(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/proc/canfold() called tick#: [world.time]")
 	if(!user)
 		return 0
 	if(user.stat || user.restrained())

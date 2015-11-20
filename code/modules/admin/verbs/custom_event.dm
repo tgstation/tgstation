@@ -2,7 +2,6 @@
 /client/proc/cmd_admin_change_custom_event()
 	set category = "Fun"
 	set name = "Change Custom Event"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_change_custom_event() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -30,7 +29,6 @@
 	set category = "OOC"
 	set name = "Custom Event Info"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/cmd_view_custom_event()  called tick#: [world.time]")
 	if(!custom_event_msg || custom_event_msg == "")
 		src << "There currently is no known custom event taking place."
 		src << "Keep in mind: it is possible that an admin has not properly set this."

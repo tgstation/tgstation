@@ -2,7 +2,6 @@ client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice"
 	set category = "Admin"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/one_click_antag() called tick#: [world.time]")
 	if(holder)
 		holder.one_click_antag()
 	return
@@ -10,7 +9,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/one_click_antag()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/one_click_antag() called tick#: [world.time]")
 
 	var/dat = {"<B>One-click Antagonist</B><br>
 		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
@@ -31,7 +29,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeMalfAImode()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeMalfAImode() called tick#: [world.time]")
 
 	var/list/mob/living/silicon/AIs = list()
 	var/mob/living/silicon/malfAI = null
@@ -53,7 +50,6 @@ client/proc/one_click_antag()
 
 
 /datum/admins/proc/makeTraitors()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeTraitors() called tick#: [world.time]")
 	var/datum/game_mode/traitor/temp = new
 
 	if(config.protect_roles_from_antagonist)
@@ -92,7 +88,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeChanglings()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeChanglings() called tick#: [world.time]")
 
 	var/datum/game_mode/changeling/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -124,7 +119,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeRevs()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeRevs() called tick#: [world.time]")
 
 	var/datum/game_mode/revolution/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -155,7 +149,6 @@ client/proc/one_click_antag()
 	return 0
 
 /datum/admins/proc/makeWizard()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeWizard() called tick#: [world.time]")
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 
@@ -181,7 +174,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeCult()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeCult() called tick#: [world.time]")
 
 	var/datum/game_mode/cult/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -215,7 +207,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeNukeTeam()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeNukeTeam() called tick#: [world.time]")
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -304,11 +295,9 @@ client/proc/one_click_antag()
 
 
 /datum/admins/proc/makeAliens()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeAliens() called tick#: [world.time]")
 	alien_infestation(3)
 	return 1
 /datum/admins/proc/makeDeathsquad()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeDeathsquad() called tick#: [world.time]")
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 	var/input = "Purify the station."
@@ -367,7 +356,6 @@ client/proc/one_click_antag()
 
 
 /proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/makeBody() called tick#: [world.time]")
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.
@@ -386,7 +374,6 @@ client/proc/one_click_antag()
 	return new_character
 
 /datum/admins/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/create_syndicate_death_commando() called tick#: [world.time]")
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
@@ -416,7 +403,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeVoxRaiders()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/makeVoxRaiders() called tick#: [world.time]")
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -464,7 +450,6 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/create_vox_raider(obj/spawn_location, leader_chosen = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/create_vox_raider() called tick#: [world.time]")
 
 	var/mob/living/carbon/human/new_vox = new(spawn_location.loc)
 

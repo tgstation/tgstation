@@ -1,5 +1,4 @@
 /proc/Christmas_Game_Start()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Christmas_Game_Start() called tick#: [world.time]")
 	for(var/obj/structure/flora/tree/pine/xmas in world)
 		if(xmas.z != 1)	continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
@@ -9,7 +8,6 @@
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 /proc/ChristmasEvent()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ChristmasEvent() called tick#: [world.time]")
 	for(var/obj/structure/flora/tree/pine/xmas in world)
 		var/mob/living/simple_animal/hostile/tree/evil_tree = new /mob/living/simple_animal/hostile/tree(xmas.loc)
 		evil_tree.icon_state = xmas.icon_state

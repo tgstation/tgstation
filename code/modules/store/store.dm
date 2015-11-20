@@ -29,7 +29,6 @@ var/global/datum/store/centcomm_store=new
 		items += new itempath()
 
 /datum/store/proc/charge(var/mob/user,var/amount,var/datum/storeitem/item,var/obj/machinery/computer/merch/merchcomp)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/store/proc/charge() called tick#: [world.time]")
 	if(!user)
 		//testing("No initial_account")
 		return 0
@@ -95,7 +94,6 @@ var/global/datum/store/centcomm_store=new
 	return 1
 
 /datum/store/proc/reconnect_database()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/store/proc/reconnect_database() called tick#: [world.time]")
 	for(var/obj/machinery/account_database/DB in account_DBs)
 		//Checks for a database on its Z-level, else it checks for a database at the main Station.
 		if(DB.z == STATION_Z)
@@ -104,7 +102,6 @@ var/global/datum/store/centcomm_store=new
 				break
 
 /datum/store/proc/PlaceOrder(var/mob/living/usr, var/itemID, var/obj/machinery/computer/merch/merchcomp)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/store/proc/PlaceOrder() called tick#: [world.time]")
 	// Get our item, first.
 
 	var/datum/storeitem/item = new itemID()

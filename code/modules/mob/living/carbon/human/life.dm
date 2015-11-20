@@ -93,7 +93,6 @@ var/global/list/organ_damage_overlays = list(
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/DeferredSpeciesSetup() called tick#: [world.time]")
 	var/mut_update=0
 	if(species.default_mutations.len>0)
 		for(var/mutation in species.default_mutations)

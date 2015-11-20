@@ -31,16 +31,13 @@ var/list/modules = list(			// global associative list
 	installed = needed
 
 /datum/moduletypes/proc/addmod(var/type, var/modtextlist)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/moduletypes/proc/addmod() called tick#: [world.time]")
 	modules += type	// index by type text
 	modules[type] = modtextlist
 
 /datum/moduletypes/proc/inmodlist(var/type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/moduletypes/proc/inmodlist() called tick#: [world.time]")
 	return ("[type]" in modules)
 
 /datum/moduletypes/proc/getbitmask(var/type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/moduletypes/proc/getbitmask() called tick#: [world.time]")
 	var/count = modcount["[type]"]
 	if(count)
 		return 2**count-1

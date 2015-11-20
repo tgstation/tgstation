@@ -35,7 +35,6 @@
 	var/path = /obj/item/weapon/book // Type path of the book to generate
 
 /datum/cachedbook/proc/LoadFromRow(var/list/row)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cachedbook/proc/LoadFromRow() called tick#: [world.time]")
 	id = row["id"]
 	author = row["author"]
 	title = row["title"]
@@ -52,7 +51,6 @@
 	var/title
 
 /datum/library_query/proc/toSQL()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/library_query/proc/toSQL() called tick#: [world.time]")
 	var/list/where = list()
 	if(author || title || category)
 		if(author)
@@ -69,7 +67,6 @@
 	var/list/cached_books = list()
 
 /datum/library_catalog/proc/initialize()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/library_catalog/proc/initialize() called tick#: [world.time]")
 	var/newid=1
 	for(var/typepath in typesof(/obj/item/weapon/book/manual)-/obj/item/weapon/book/manual)
 		var/obj/item/weapon/book/B = new typepath(null)
@@ -85,7 +82,6 @@
 
 
 /datum/library_catalog/proc/rmBookByID(var/mob/user, var/id as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/library_catalog/proc/rmBookByID() called tick#: [world.time]")
 	if("[id]" in cached_books)
 		var/datum/cachedbook/CB = cached_books["[id]"]
 		if(CB.programmatic)
@@ -99,7 +95,6 @@
 	query.Execute()
 
 /datum/library_catalog/proc/getBookByID(var/id as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/library_catalog/proc/getBookByID() called tick#: [world.time]")
 	if("[id]" in cached_books)
 		return cached_books["[id]"]
 

@@ -49,7 +49,6 @@
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(var/month, var/day)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/isDay() called tick#: [world.time]")
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day

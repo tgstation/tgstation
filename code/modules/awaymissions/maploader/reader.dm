@@ -113,7 +113,6 @@ var/global/dmm_suite/preloader/_preloader = null
  *
  */
 /dmm_suite/proc/parse_grid(var/model as text,var/xcrd as num,var/ycrd as num,var/zcrd as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/parse_grid() called tick#: [world.time]")
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -207,7 +206,6 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(var/path,var/list/attributes, var/x, var/y, var/z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/instance_atom() called tick#: [world.time]")
 	if(!path)
 		return
 	var/atom/instance
@@ -223,7 +221,6 @@ var/global/dmm_suite/preloader/_preloader = null
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(var/what as text,var/trim_quotes=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/trim_text() called tick#: [world.time]")
 	while(length(what) && (findtext(what," ",1,2)))
 		what=copytext(what,2,0)
 	while(length(what) && (findtext(what," ",length(what),0)))
@@ -238,7 +235,6 @@ var/global/dmm_suite/preloader/_preloader = null
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
 /dmm_suite/proc/find_next_delimiter_position(var/text as text,var/initial_position as num, var/delimiter=",",var/opening_escape=quote,var/closing_escape=quote)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/find_next_delimiter_position() called tick#: [world.time]")
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -255,7 +251,6 @@ var/global/dmm_suite/preloader/_preloader = null
 //return the filled list
 /dmm_suite/proc/text2list(var/text as text,var/delimiter=",")
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/text2list() called tick#: [world.time]")
 
 	var/list/to_return = list()
 
@@ -306,7 +301,6 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //simulates the DM multiple turfs on one tile underlaying
 /dmm_suite/proc/add_underlying_turf(var/turf/placed,var/turf/underturf, var/list/turfs_underlays)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/proc/add_underlying_turf() called tick#: [world.time]")
 	if(underturf.density)
 		placed.density = 1
 	if(underturf.opacity)
@@ -338,7 +332,6 @@ var/global/dmm_suite/preloader/_preloader = null
 	target_path = path
 
 /dmm_suite/preloader/proc/load(atom/what)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/dmm_suite/preloader/proc/load() called tick#: [world.time]")
 	for(var/attribute in attributes)
 		what.vars[attribute] = attributes[attribute]
 	Del()

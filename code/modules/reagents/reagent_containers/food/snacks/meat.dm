@@ -48,7 +48,6 @@
 	New()
 		..()
 		eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 6

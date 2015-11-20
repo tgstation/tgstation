@@ -74,18 +74,15 @@
 	return 1
 
 /mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/SetSpecialVoice() called tick#: [world.time]")
 	if(new_voice)
 		special_voice = new_voice
 	return
 
 /mob/living/carbon/human/proc/UnsetSpecialVoice()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/UnsetSpecialVoice() called tick#: [world.time]")
 	special_voice = ""
 	return
 
 /mob/living/carbon/human/proc/GetSpecialVoice()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/GetSpecialVoice() called tick#: [world.time]")
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
@@ -132,7 +129,6 @@
 	return null
 
 /mob/living/carbon/human/proc/forcesay(list/append)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/forcesay() called tick#: [world.time]")
 	if(stat == CONSCIOUS)
 		if(client)
 			var/virgin = 1	//has the text been modified yet?

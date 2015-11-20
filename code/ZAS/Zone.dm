@@ -55,7 +55,6 @@ Class Procs:
 	air.volume = CELL_VOLUME
 
 /zone/proc/add(turf/simulated/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/add() called tick#: [world.time]")
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(T))
@@ -69,7 +68,6 @@ Class Procs:
 	T.set_graphic(air.graphics)
 
 /zone/proc/remove(turf/simulated/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/remove() called tick#: [world.time]")
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(T))
@@ -85,7 +83,6 @@ Class Procs:
 		c_invalidate()
 
 /zone/proc/c_merge(zone/into)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/c_merge() called tick#: [world.time]")
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(into))
@@ -100,7 +97,6 @@ Class Procs:
 		#endif
 
 /zone/proc/c_invalidate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/c_invalidate() called tick#: [world.time]")
 	invalid = 1
 	air_master.remove_zone(src)
 	#ifdef ZASDBG
@@ -109,7 +105,6 @@ Class Procs:
 	#endif
 
 /zone/proc/rebuild()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/rebuild() called tick#: [world.time]")
 	if(invalid) return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
@@ -118,7 +113,6 @@ Class Procs:
 		air_master.mark_for_update(T)
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/add_tile_air() called tick#: [world.time]")
 	//air.volume += CELL_VOLUME
 	air.group_multiplier = 1
 	air.multiply(contents.len)
@@ -127,14 +121,12 @@ Class Procs:
 	air.group_multiplier = contents.len+1
 
 /zone/proc/tick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/tick() called tick#: [world.time]")
 	air.archive()
 	if(air.check_tile_graphic())
 		for(var/turf/simulated/T in contents)
 			T.set_graphic(air.graphics)
 
 /zone/proc/dbg_data(mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/dbg_data() called tick#: [world.time]")
 	M << name
 	M << "O2: [air.oxygen] N2: [air.nitrogen] CO2: [air.carbon_dioxide] P: [air.toxins]"
 	M << "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)"

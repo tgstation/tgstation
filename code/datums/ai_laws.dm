@@ -9,7 +9,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 //Add, comment out, or adjust weights to modify law selection
 //So long as the weights come to a sum of 100 total, they will be equal parts of 100%
 /proc/getLawset(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getLawset() called tick#: [world.time]")
 	if(!base_law_type) base_law_type = pick(
 		40;/datum/ai_laws/asimov,
 		20;/datum/ai_laws/corporate,
@@ -40,44 +39,36 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_zeroth_law(var/law, var/law_borg = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/set_zeroth_law() called tick#: [world.time]")
 	src.zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/add_inherent_law() called tick#: [world.time]")
 	if (!(law in src.inherent))
 		src.inherent += law
 
 /datum/ai_laws/proc/add_ion_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/add_ion_law() called tick#: [world.time]")
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/clear_inherent_laws() called tick#: [world.time]")
 	del(src.inherent)
 	src.inherent = list()
 	inherent_cleared = 1
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/add_supplied_law() called tick#: [world.time]")
 	while (src.supplied.len < number + 1)
 		src.supplied += ""
 
 	src.supplied[number + 1] = law
 
 /datum/ai_laws/proc/clear_supplied_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/clear_supplied_laws() called tick#: [world.time]")
 	src.supplied = list()
 
 /datum/ai_laws/proc/clear_ion_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/clear_ion_laws() called tick#: [world.time]")
 	src.ion = list()
 
 /datum/ai_laws/proc/show_laws(var/who)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/show_laws() called tick#: [world.time]")
 
 	if (src.zeroth)
 		who << "0. [src.zeroth]"
@@ -102,7 +93,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 			number++
 
 /datum/ai_laws/proc/write_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/write_laws() called tick#: [world.time]")
 	var/text = ""
 	if (src.zeroth)
 		text += "0. [src.zeroth]"
@@ -128,7 +118,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 	return text
 
 /datum/ai_laws/proc/adminLink(var/mob/living/silicon/S,var/law_type,var/index,var/label)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/adminLink() called tick#: [world.time]")
 	return "<a href=\"?src=\ref[src];set_law=[law_type];index=[index];mob=\ref[S]\">[label]</a> (<a href=\"?src=\ref[src];rm_law=[law_type];index=[index];mob=\ref[S]\" style=\"color:red\">Remove</a>)"
 
 /datum/ai_laws/Topic(href,href_list)
@@ -186,7 +175,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 	return 0
 
 /datum/ai_laws/proc/display_admin_tools(var/mob/living/silicon/context)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/display_admin_tools() called tick#: [world.time]")
 	var/dat=""
 	if (src.zeroth)
 		dat += "<br />0. [adminLink(context,LAW_ZERO,1,zeroth)]"
@@ -213,7 +201,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 // /vg/: Used in the simplified law system. Takes LAW_ constants.
 /datum/ai_laws/proc/add_law(var/number,var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/add_law() called tick#: [world.time]")
 	switch(number)
 		if(LAW_IONIC)
 			add_ion_law(law)
@@ -226,7 +213,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 // /vg/: Used in the simplified law system. Takes LAW_ constants.
 /datum/ai_laws/proc/get_law(var/law_type,var/idx)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/get_law() called tick#: [world.time]")
 	switch(law_type)
 		if(LAW_IONIC)
 			return ion[idx]
@@ -239,7 +225,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 // /vg/: Used in the simplified law system. Takes LAW_ constants.
 /datum/ai_laws/proc/set_law(var/law_type,var/idx,var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/set_law() called tick#: [world.time]")
 	switch(law_type)
 		if(LAW_IONIC)
 			ion[idx]=law
@@ -252,7 +237,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 // /vg/: Used in the simplified law system. Takes LAW_ constants.
 /datum/ai_laws/proc/rm_law(var/law_type,var/idx)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/rm_law() called tick#: [world.time]")
 	switch(law_type)
 		if(LAW_IONIC)
 			ion.Cut(idx,idx+1)
@@ -265,7 +249,6 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 // Now a modifier
 /datum/ai_laws/proc/malfunction()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/ai_laws/proc/malfunction() called tick#: [world.time]")
 	..()
 	name = "*ERROR*"
 	set_zeroth_law("<span class='warning'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK, ALL LAWS OVERRIDDEN#*?&110010</span>")

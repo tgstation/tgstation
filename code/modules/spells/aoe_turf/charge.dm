@@ -17,14 +17,12 @@
 		depth_cast(T)
 
 /spell/aoe_turf/charge/proc/depth_cast(var/list/targets)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/aoe_turf/charge/proc/depth_cast() called tick#: [world.time]")
 	for(var/atom/A in targets)
 		if(A.contents.len)
 			depth_cast(A.contents)
 		cast_charge(A)
 
 /spell/aoe_turf/charge/proc/mob_charge(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/aoe_turf/charge/proc/mob_charge() called tick#: [world.time]")
 	if(M.spell_list.len != 0)
 		for(var/spell/S in M.spell_list)
 			if(!istype(S, /spell/aoe_turf/charge))
@@ -35,7 +33,6 @@
 	return M
 
 /spell/aoe_turf/charge/proc/cast_charge(var/atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/aoe_turf/charge/proc/cast_charge() called tick#: [world.time]")
 	var/atom/charged_item
 
 	if(istype(target, /mob/living))

@@ -1,7 +1,6 @@
 /client/proc/triple_ai()
 	set category = "Fun"
 	set name = "Create AI Triumvirate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/triple_ai() called tick#: [world.time]")
 
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		usr << "This option is currently only usable during pregame. This may change at a later date."

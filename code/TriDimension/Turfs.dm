@@ -76,7 +76,6 @@ atom/movable/Move() //Hackish
 		return //nothing
 
 	proc/set_up() //Update the overlays to make the openspace turf show what's down a level
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_up() called tick#: [world.time]")
 		if(!overlay_references)
 			overlay_references = list()
 		if(!floorbelow) return
@@ -87,13 +86,11 @@ atom/movable/Move() //Hackish
 			overlay_references[o] = o_img
 
 	proc/AddImage(var/atom/movable/o)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddImage() called tick#: [world.time]")
 		var/o_img = image(o, dir=o.dir, layer = TURF_LAYER+0.05*o.layer)
 		overlays += o_img
 		overlay_references[o] = o_img
 
 	proc/RemoveImage(var/atom/movable/o)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RemoveImage() called tick#: [world.time]")
 		var/o_img = overlay_references[o]
 		overlays -= o_img
 		overlay_references -= o

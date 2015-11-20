@@ -1,6 +1,5 @@
 /datum/hud/proc/human_hud(var/ui_style='icons/mob/screen1_White.dmi', var/ui_color = "#ffffff", var/ui_alpha = 255)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/human_hud() called tick#: [world.time]")
 
 	src.adding = list()
 	src.other = list()
@@ -463,7 +462,6 @@
 	set category = "OOC"
 	set name = "Toggle hotkey buttons"
 	set desc = "This disables or enables the user interface buttons which can be used with hotkeys."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/toggle_hotkey_verbs()  called tick#: [world.time]")
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons

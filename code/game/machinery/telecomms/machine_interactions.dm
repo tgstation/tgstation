@@ -103,7 +103,6 @@
 	update_multitool_menu(user)
 
 /obj/machinery/telecomms/proc/formatInput(var/label,var/varname, var/input)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/formatInput() called tick#: [world.time]")
 	var/value = vars[varname]
 	if(!value || value=="")
 		value="-----"
@@ -184,7 +183,6 @@
 
 /obj/machinery/telecomms/relay/proc/toggle_level()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/toggle_level() called tick#: [world.time]")
 
 	var/turf/position = get_turf(src)
 
@@ -201,7 +199,6 @@
 // Example of how to use below.
 
 /obj/machinery/telecomms/proc/Options_Menu()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/Options_Menu() called tick#: [world.time]")
 	return ""
 
 /*
@@ -213,7 +210,6 @@
 // The topic for Additional Options. Use this for checking href links for your specific option.
 // Example of how to use below.
 /obj/machinery/telecomms/proc/Options_Topic(href, href_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/Options_Topic() called tick#: [world.time]")
 	return
 
 /*
@@ -379,7 +375,6 @@
 		return 0
 
 /obj/machinery/telecomms/proc/canAccess(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/canAccess() called tick#: [world.time]")
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0

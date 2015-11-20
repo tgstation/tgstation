@@ -203,7 +203,6 @@
 	return 0
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/proc/alertMode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/retaliate/cluwne/proc/alertMode() called tick#: [world.time]")
 	hostile = 1
 	for(var/mob/Z in viewers(src, null))
 		if(istype(Z, /mob/living/simple_animal/hostile/retaliate/cluwne))
@@ -289,7 +288,6 @@
 	walk(src, 0)
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/proc/handle_disabilities()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/retaliate/cluwne/proc/handle_disabilities() called tick#: [world.time]")
 	if ((prob(5) && paralysis < 10))
 		src << "<span class='warning'>You have a seizure!</span>"
 		Paralyse(10)

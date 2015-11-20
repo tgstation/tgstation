@@ -66,7 +66,6 @@
 	diceroll(user, 1)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user as mob, thrown)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dice/proc/diceroll() called tick#: [world.time]")
 	result = rand(minsides, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)

@@ -26,7 +26,6 @@
 	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/retaliate/proc/Retaliate() called tick#: [world.time]")
 	if(stat) //can't attack if we're dead - no point in targeting
 		return
 

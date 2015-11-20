@@ -4,7 +4,6 @@
 	set desc = "Shows a high scale rendering of the current map in your browser."
 	set hidden = 1
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/MapRender()  called tick#: [world.time]")
 	if(!config.renders_url || config.renders_url == "")
 		src << "<span class='danger'>The Map Renders url has not been set in the server configuration.</span>"
 		return
@@ -28,7 +27,6 @@
 	set name = "wiki"
 	set desc = "Visit the wiki."
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/wiki()  called tick#: [world.time]")
 	if( config.wikiurl )
 		if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
 			return
@@ -41,7 +39,6 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/forum()  called tick#: [world.time]")
 	if( config.forumurl )
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
@@ -55,14 +52,12 @@
 	set name = "Rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/rules()  called tick#: [world.time]")
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/hotkeys_help()  called tick#: [world.time]")
 
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
@@ -130,13 +125,11 @@ Admin:
 /client/verb/_swinset(var/x as text)
 	set name = ".swinset"
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/_swinset()  called tick#: [world.time]")
 	winset(src, null, x)
 
 /client/verb/roundendinfo()
 	set name = "RoundEndInformation"
 	set desc = "Open the Round End Information window."
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/roundendinfo()  called tick#: [world.time]")
 
 	src << browse(round_end_info, "window=roundstats;size=1000x600")

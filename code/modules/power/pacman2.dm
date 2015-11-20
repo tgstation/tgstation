@@ -71,7 +71,6 @@
 				src.updateUsrDialog()
 
 /obj/machinery/power/port_gen/pacman2/proc/overheat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/pacman2/proc/overheat() called tick#: [world.time]")
 	explosion(get_turf(src), 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman2/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -132,7 +131,6 @@
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman2/proc/interact(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/pacman2/proc/interact() called tick#: [world.time]")
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
 			user.machine = null

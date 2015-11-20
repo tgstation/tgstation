@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_regular_hud_updates() called tick#: [world.time]")
 	if(!client)
 		return 0
 

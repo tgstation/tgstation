@@ -16,7 +16,6 @@
 	battery_effect = new()
 
 /obj/item/weapon/anobattery/proc/UpdateSprite()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/anobattery/proc/UpdateSprite() called tick#: [world.time]")
 	var/p = (stored_charge/capacity)*100
 	p = min(p, 100)
 	icon_state = "anobattery[round(p,25)]"
@@ -132,7 +131,6 @@
 			shutdown()
 
 /obj/item/weapon/anodevice/proc/shutdown_emission()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/anodevice/proc/shutdown_emission() called tick#: [world.time]")
 	if(activated)
 		activated = 0
 		timing = 0
@@ -196,7 +194,6 @@
 	updateDialog()
 
 /obj/item/weapon/anodevice/proc/UpdateSprite()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/anodevice/proc/UpdateSprite() called tick#: [world.time]")
 	if(!inserted_battery)
 		icon_state = "anodev"
 		return

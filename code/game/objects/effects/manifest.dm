@@ -11,7 +11,6 @@
 	return
 
 /obj/effect/manifest/proc/manifest()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/manifest/proc/manifest() called tick#: [world.time]")
 	var/dat = "<B>Crew Manifest</B>:<BR>"
 	for(var/mob/living/carbon/human/M in mob_list)
 		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())

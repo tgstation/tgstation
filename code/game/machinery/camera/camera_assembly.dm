@@ -162,7 +162,6 @@
 
 /obj/item/weapon/camera_assembly/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/camera_assembly/proc/weld() called tick#: [world.time]")
 
 	if(busy)
 		return 0

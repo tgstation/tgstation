@@ -18,7 +18,6 @@
 	levelupdate()
 
 /turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/AddTracks() called tick#: [world.time]")
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = getFromPool(typepath, src)
@@ -150,7 +149,6 @@
 
 // Only adds blood on the floor -- Skie
 /turf/simulated/proc/add_blood_floor(mob/living/carbon/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/add_blood_floor() called tick#: [world.time]")
 	if(istype(M, /mob/living/carbon/monkey))
 		blood_splatter(src,M,1)
 	else if( istype(M, /mob/living/carbon/alien ))

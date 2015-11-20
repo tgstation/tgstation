@@ -27,15 +27,12 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 3
 
 // Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(var/datum/disease/advance/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/proc/Start() called tick#: [world.time]")
 	return
 
 // Called when the advance disease is going to be deleted or when the advance disease stops processing.
 /datum/symptom/proc/End(var/datum/disease/advance/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/proc/End() called tick#: [world.time]")
 	return
 
 /datum/symptom/proc/Activate(var/datum/disease/advance/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/proc/Activate() called tick#: [world.time]")
 	return
 

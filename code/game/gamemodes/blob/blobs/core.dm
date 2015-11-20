@@ -69,7 +69,6 @@
 
 /obj/effect/blob/core/proc/create_overmind(var/client/new_overmind)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/core/proc/create_overmind() called tick#: [world.time]")
 
 	if(overmind_get_delay > world.time)
 		return

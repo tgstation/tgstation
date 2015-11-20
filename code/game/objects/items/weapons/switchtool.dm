@@ -67,17 +67,14 @@
 		return ..()
 
 /obj/item/weapon/switchtool/proc/get_module_type(var/module)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/get_module_type() called tick#: [world.time]")
 	return copytext(module, 1, findtext(module, ":"))
 
 /obj/item/weapon/switchtool/proc/get_module_name(var/module)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/get_module_name() called tick#: [world.time]")
 	return copytext(module, findtext(module, ":") + 1)
 
 //makes the string list of modules ie "a screwdriver, a knife, and a clown horn"
 //does not end with a full stop, but does contain commas
 /obj/item/weapon/switchtool/proc/get_formatted_modules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/get_formatted_modules() called tick#: [world.time]")
 	var/counter = 0
 	var/module_string = ""
 	for(var/module in stored_modules)
@@ -89,7 +86,6 @@
 	return module_string
 
 /obj/item/weapon/switchtool/proc/add_module(var/obj/item/used_item, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/add_module() called tick#: [world.time]")
 	if(!used_item || !user)
 		return
 
@@ -106,7 +102,6 @@
 				return 1
 
 /obj/item/weapon/switchtool/proc/remove_module(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/remove_module() called tick#: [world.time]")
 	deployed.loc = get_turf(user)
 	for(var/module in stored_modules)
 		if(stored_modules[module] == deployed)
@@ -118,14 +113,12 @@
 	return 1
 
 /obj/item/weapon/switchtool/proc/undeploy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/undeploy() called tick#: [world.time]")
 	playsound(get_turf(src), "sound/weapons/switchblade.ogg", 10, 1)
 	deployed = null
 	overlays.len = 0
 	w_class = initial(w_class)
 
 /obj/item/weapon/switchtool/proc/deploy(var/module)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/deploy() called tick#: [world.time]")
 	if(!(module in stored_modules))
 		return
 
@@ -138,7 +131,6 @@
 	w_class = max(w_class, deployed.w_class)
 
 /obj/item/weapon/switchtool/proc/choose_deploy(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/switchtool/proc/choose_deploy() called tick#: [world.time]")
 	var/list/potential_modules = list()
 	for(var/module in stored_modules)
 		if(stored_modules[module])

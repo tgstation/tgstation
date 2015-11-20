@@ -47,7 +47,6 @@
 	update_icon()
 
 /obj/item/toy/cards/proc/generate_cards()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/toy/cards/proc/generate_cards() called tick#: [world.time]")
 	for(var/i = 2; i <= 10; i++)
 		cards += new/obj/item/toy/singlecard(src, src, "[i] of Hearts")
 		cards += new/obj/item/toy/singlecard(src, src, "[i] of Spades")
@@ -267,7 +266,6 @@
 			cardUser << "<span class = 'notice'>You need to have the card in your hand to check it.</span>"
 
 /obj/item/toy/singlecard/proc/Flip()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/toy/singlecard/proc/Flip() called tick#: [world.time]")
 	flipped = !flipped
 	update_icon()
 

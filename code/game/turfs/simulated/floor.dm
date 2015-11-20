@@ -211,11 +211,9 @@ turf/simulated/floor/proc/update_icon()
 	..()
 
 /turf/simulated/floor/proc/gets_drilled()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/gets_drilled() called tick#: [world.time]")
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/break_tile_to_plating() called tick#: [world.time]")
 	if(!is_plating())
 		make_plating()
 	break_tile()
@@ -266,7 +264,6 @@ turf/simulated/floor/proc/update_icon()
 	return 0
 
 /turf/simulated/floor/proc/break_tile()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/break_tile() called tick#: [world.time]")
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(broken) return
 	if(is_plasteel_floor())
@@ -298,7 +295,6 @@ turf/simulated/floor/proc/update_icon()
 		src.icon_state = "[material]_broken"
 
 /turf/simulated/floor/proc/burn_tile()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/burn_tile() called tick#: [world.time]")
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/unsimulated/floor/asteroid)) return//Asteroid tiles don't burn
 	if(is_plasteel_floor())
@@ -325,7 +321,6 @@ turf/simulated/floor/proc/update_icon()
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_plating() called tick#: [world.time]")
 	if(istype(src,/turf/simulated/floor/engine)) return
 
 	if(is_grass_floor())
@@ -359,7 +354,6 @@ turf/simulated/floor/proc/update_icon()
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_plasteel_floor() called tick#: [world.time]")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -389,7 +383,6 @@ turf/simulated/floor/proc/update_icon()
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_light_floor() called tick#: [world.time]")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -410,7 +403,6 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_grass_floor() called tick#: [world.time]")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -430,7 +422,6 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_wood_floor() called tick#: [world.time]")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -450,7 +441,6 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/floor/proc/make_carpet_floor() called tick#: [world.time]")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -617,7 +607,6 @@ turf/simulated/floor/proc/update_icon()
 						update_icon()
 
 /turf/simulated/proc/wet(delay = 800)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/wet() called tick#: [world.time]")
 	if(wet >= 1) return
 	wet = 1
 	if(wet_overlay)
@@ -628,7 +617,6 @@ turf/simulated/floor/proc/update_icon()
 	spawn() dry(delay)
 
 /turf/simulated/proc/dry(delay = 800)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/dry() called tick#: [world.time]")
 	if(drying || wet >= 2)
 		return
 	drying = 1

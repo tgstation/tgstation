@@ -119,7 +119,6 @@
 	return 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate() called tick#: [world.time]")
 	var/datum/gas_mixture/internal = return_air()
 	var/internal_transfer_moles = 0.25 * internal.total_moles()
 	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)

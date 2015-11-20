@@ -70,7 +70,6 @@
 
 	proc/breathe()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/breathe() called tick#: [world.time]")
 
 		if(reagents.has_reagent("lexorin"))
 			return
@@ -132,7 +131,6 @@
 
 
 	proc/get_breath_from_internal(volume_needed)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_breath_from_internal() called tick#: [world.time]")
 		if(internal)
 			if (!contents.Find(internal))
 				internal = null
@@ -148,7 +146,6 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_breath() called tick#: [world.time]")
 		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
@@ -189,7 +186,6 @@
 
 
 	proc/handle_chemicals_in_body()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_chemicals_in_body() called tick#: [world.time]")
 		if(reagents) reagents.metabolize(src)
 
 		if(M_FAT in mutations)
@@ -227,7 +223,6 @@
 		return //TODO: DEFERRED
 
 	proc/handle_regular_status_updates()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_status_updates() called tick#: [world.time]")
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -305,7 +300,6 @@
 
 	proc/handle_regular_hud_updates()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_hud_updates() called tick#: [world.time]")
 
 		if (stat == 2 || (M_XRAY in mutations))
 			sight |= SEE_TURFS
@@ -375,12 +369,10 @@
 		return 1
 
 	proc/handle_random_events()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_random_events() called tick#: [world.time]")
 		return
 
 
 	proc/handle_stomach()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_stomach() called tick#: [world.time]")
 		spawn(0)
 			for(var/mob/living/M in stomach_contents)
 				if(M.loc != src)

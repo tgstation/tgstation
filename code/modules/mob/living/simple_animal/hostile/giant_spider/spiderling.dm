@@ -136,7 +136,6 @@
 		ventcrawl(target)
 
 /mob/living/simple_animal/hostile/giant_spider/spiderling/proc/ventcrawl(var/obj/machinery/atmospherics/unary/vent_pump/v)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/giant_spider/spiderling/proc/ventcrawl() called tick#: [world.time]")
 	//ventcrawl!
 	if(!v.welded)
 		entry_vent = v

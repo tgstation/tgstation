@@ -27,7 +27,6 @@
 	edges = list()
 
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/process() called tick#: [world.time]")
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
 		//Check to see if pressure is within acceptable limits
 		var/pressure = air.return_pressure()
@@ -43,7 +42,6 @@
 	//air.react() //Should be handled by pipe_network now
 
 /datum/pipeline/proc/temporarily_store_air()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/temporarily_store_air() called tick#: [world.time]")
 	//Update individual gas_mixtures by volume ratio
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
@@ -66,7 +64,6 @@
 		member.air_temporary.update_values()
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/build_pipeline() called tick#: [world.time]")
 	var/list/possible_expansions = list(base)
 	members = list(base)
 	edges = list()
@@ -113,7 +110,6 @@
 
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/network_expand() called tick#: [world.time]")
 
 	if(new_network.line_members.Find(src))
 		return 0
@@ -130,7 +126,6 @@
 	return 1
 
 /datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/return_network() called tick#: [world.time]")
 	if(!network)
 		network = getFromPool(/datum/pipe_network)
 		network.build_network(src, null)
@@ -141,7 +136,6 @@
 	return network
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/mingle_with_turf() called tick#: [world.time]")
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 	air_sample.volume = mingle_volume
 
@@ -176,7 +170,6 @@
 		network.update = 1
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/temperature_interact() called tick#: [world.time]")
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 

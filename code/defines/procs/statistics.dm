@@ -17,7 +17,6 @@ proc/sql_poll_players()
 
 
 proc/sql_poll_admins()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_poll_admins() called tick#: [world.time]")
 	if(!sqllogging)
 		return
 	var/admincount = admins.len
@@ -32,18 +31,15 @@ proc/sql_poll_admins()
 			log_game("SQL ERROR during admin polling. Error : \[[err]\]\n")
 
 proc/sql_report_round_start()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_report_round_start() called tick#: [world.time]")
 	// TODO
 	if(!sqllogging)
 		return
 proc/sql_report_round_end()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_report_round_end() called tick#: [world.time]")
 	// TODO
 	if(!sqllogging)
 		return
 
 proc/sql_report_death(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_report_death() called tick#: [world.time]")
 	if(!sqllogging)
 		return
 	if(!H)
@@ -79,7 +75,6 @@ proc/sql_report_death(var/mob/living/carbon/human/H)
 
 
 proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_report_cyborg_death() called tick#: [world.time]")
 	if(!sqllogging)
 		return
 	if(!H)
@@ -115,7 +110,6 @@ proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
 
 
 proc/statistic_cycle()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/statistic_cycle() called tick#: [world.time]")
 	if(!sqllogging)
 		return
 	while(1)
@@ -126,7 +120,6 @@ proc/statistic_cycle()
 
 //This proc is used for feedback. It is executed at round end.
 proc/sql_commit_feedback()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_commit_feedback() called tick#: [world.time]")
 	if(!blackbox)
 		log_game("Round ended without a blackbox recorder. No feedback was sent to the database.")
 		return

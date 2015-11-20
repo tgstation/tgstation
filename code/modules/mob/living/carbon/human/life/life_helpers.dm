@@ -27,7 +27,6 @@
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_heat_protection_flags() called tick#: [world.time]")
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 	if(head)
@@ -52,7 +51,6 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_heat_protection() called tick#: [world.time]")
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
 	var/thermal_protection = 0.0
@@ -88,7 +86,6 @@
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
 /mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_cold_protection_flags() called tick#: [world.time]")
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 
@@ -115,7 +112,6 @@
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_cold_protection() called tick#: [world.time]")
 
 	if(M_RESIST_COLD in mutations)
 		return 1 //Fully protected from the cold.
@@ -155,7 +151,6 @@
 
 /*
 /mob/living/carbon/human/proc/add_fire_protection(var/temp)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/add_fire_protection() called tick#: [world.time]")
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -185,7 +180,6 @@
 	return fire_prot
 
 /mob/living/carbon/human/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_temperature_damage() called tick#: [world.time]")
 	if(nodamage)
 		return
 	//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
@@ -214,7 +208,6 @@
 */
 
 /mob/living/carbon/human/proc/get_covered_bodyparts()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_covered_bodyparts() called tick#: [world.time]")
 	var/covered = 0
 
 	if(head)
@@ -234,7 +227,6 @@
 
 
 /mob/living/carbon/human/proc/randorgan()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/randorgan() called tick#: [world.time]")
 	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
 	//var/randorgan = pick("head","chest","groin")
 	return randorgan

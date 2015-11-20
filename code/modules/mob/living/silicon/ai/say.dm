@@ -114,7 +114,6 @@ var/const/VOX_DELAY = 600
 	set name = "Announcement Help"
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/announcement_help()  called tick#: [world.time]")
 
 
 	var/dat = list("Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
@@ -140,7 +139,6 @@ var/const/VOX_DELAY = 600
 	set name = "Announcement"
 	set desc = "Send an announcement to the crew"
 	set category = "AI Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/announcement()  called tick#: [world.time]")
 	// If we're in an APC, and APC is ded, ABORT
 	if(parent && istype(parent) && parent.stat)
 		return
@@ -243,7 +241,6 @@ var/list/vox_units=list(
 	return num2words(number, zero='sound/vox_fem/zero.ogg', minus='sound/vox_fem/minus.ogg', hundred='sound/vox_fem/hundred.ogg', digits=vox_digits, tens=vox_tens, units=vox_units)
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/play_vox_word() called tick#: [world.time]")
 	word = lowertext(word)
 	if(vox_sounds[word])
 		return play_vox_sound(vox_sounds[word],z_level,only_listener)
@@ -251,7 +248,6 @@ var/list/vox_units=list(
 
 
 /proc/play_vox_sound(var/sound_file, var/z_level, var/mob/only_listener)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/play_vox_sound() called tick#: [world.time]")
 	var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
 	voice.status = SOUND_STREAM
 

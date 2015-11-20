@@ -3,7 +3,6 @@
 	var/list/turretTargets = list()
 
 /area/turret_protected/proc/subjectDied(target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/turret_protected/proc/subjectDied() called tick#: [world.time]")
 	if( isliving(target) )
 		if( !issilicon(target) )
 			var/mob/living/L = target
@@ -92,7 +91,6 @@
 	var/obj/machinery/turret/host = null
 
 /obj/machinery/turret/proc/isPopping()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/isPopping() called tick#: [world.time]")
 	return (popping!=0)
 
 /obj/machinery/turret/power_change()
@@ -114,21 +112,18 @@
 				stat |= NOPOWER
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/setState() called tick#: [world.time]")
 	src.enabled = enabled
 	src.lasers = lethal
 	src.power_change()
 
 
 /obj/machinery/turret/proc/get_protected_area()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/get_protected_area() called tick#: [world.time]")
 	var/area/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		return TP
 	return
 
 /obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/check_target() called tick#: [world.time]")
 	if( T && T in protected_area.turretTargets )
 		var/area/area_T = get_area(T)
 		if( !area_T || (area_T.type != protected_area.type) )
@@ -160,7 +155,6 @@
 	return 0
 
 /obj/machinery/turret/proc/get_new_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/get_new_target() called tick#: [world.time]")
 	var/list/new_targets = new
 	var/new_target
 	for(var/mob/living/carbon/M in protected_area.turretTargets)
@@ -224,7 +218,6 @@
 
 
 /obj/machinery/turret/proc/target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/target() called tick#: [world.time]")
 	while(src && enabled && !stat && check_target(cur_target))
 		src.dir = get_dir(src, cur_target)
 		shootAt(cur_target)
@@ -232,7 +225,6 @@
 	return
 
 /obj/machinery/turret/proc/shootAt(var/atom/movable/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/shootAt() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	var/fire_sound = 'sound/weapons/Laser.ogg'
@@ -275,11 +267,9 @@
 
 
 /obj/machinery/turret/proc/isDown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/isDown() called tick#: [world.time]")
 	return (invisibility!=0)
 
 /obj/machinery/turret/proc/popUp()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/popUp() called tick#: [world.time]")
 	if ((!isPopping()) || src.popping==-1)
 		invisibility = 0
 		popping = 1
@@ -291,7 +281,6 @@
 			if (popping==1) popping = 0
 
 /obj/machinery/turret/proc/popDown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/popDown() called tick#: [world.time]")
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
 		playsound(get_turf(src), 'sound/effects/turret/open.wav', 60, 1)
@@ -336,7 +325,6 @@
 		src.die()
 
 /obj/machinery/turret/proc/die()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/die() called tick#: [world.time]")
 	src.health = 0
 	src.density = 0
 	src.stat |= BROKEN
@@ -495,7 +483,6 @@
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turretid/proc/updateTurrets() called tick#: [world.time]")
 	if(control_area)
 		//ASSERT(istype(control_area))
 		for(var/obj/machinery/turret/aTurret in control_area.contents)
@@ -503,7 +490,6 @@
 	src.update_icons()
 
 /obj/machinery/turretid/proc/update_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turretid/proc/update_icons() called tick#: [world.time]")
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "motion1"
@@ -548,13 +534,11 @@
 		return
 
 	proc/update_health()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_health() called tick#: [world.time]")
 		if(src.health<=0)
 			del src
 		return
 
 	proc/take_damage(damage)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/take_damage() called tick#: [world.time]")
 		src.health -= damage
 		if(src.health<=0)
 			del src
@@ -612,7 +596,6 @@
 
 
 	proc/validate_target(atom/target)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/validate_target() called tick#: [world.time]")
 		if(get_dist(target, src)>scan_range)
 			return 0
 		if(istype(target, /mob))
@@ -638,7 +621,6 @@
 		return
 
 	proc/get_target()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_target() called tick#: [world.time]")
 		var/list/pos_targets = list()
 		var/target = null
 		if(scan_for["human"])
@@ -667,7 +649,6 @@
 
 
 	proc/fire(atom/target)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/fire() called tick#: [world.time]")
 		if(!target)
 			cur_target = null
 			return

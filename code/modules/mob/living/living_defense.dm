@@ -11,7 +11,6 @@
 	2 - fullblock
 */
 /mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/run_armor_check() called tick#: [world.time]")
 	var/armor = getarmor(def_zone, attack_flag)
 	var/absorb = 0
 	if(prob(armor))
@@ -34,7 +33,6 @@
 
 
 /mob/living/proc/getarmor(var/def_zone, var/type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getarmor() called tick#: [world.time]")
 	return 0
 
 
@@ -139,7 +137,6 @@
 
 
 /mob/living/proc/near_wall(var/direction,var/distance=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/near_wall() called tick#: [world.time]")
 	var/turf/T = get_step(get_turf(src),direction)
 	var/turf/last_turf = src.loc
 	var/i = 1
@@ -156,14 +153,12 @@
 // End BS12 momentum-transfer code.
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/IgniteMob() called tick#: [world.time]")
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		set_light(src.light_range + 3)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/ExtinguishMob() called tick#: [world.time]")
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
@@ -171,15 +166,12 @@
 		update_fire()
 
 /mob/living/proc/update_fire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/update_fire() called tick#: [world.time]")
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjust_fire_stacks() called tick#: [world.time]")
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_fire() called tick#: [world.time]")
 	if((flags & INVULNERABLE) && on_fire)
 		extinguish()
 	if(fire_stacks < 0)

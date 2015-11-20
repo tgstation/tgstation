@@ -44,7 +44,6 @@ If the spell_projectile is seeking, it will update its target every process and 
 	return
 
 /spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr, var/atom/movable/spell_holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/projectile/proc/choose_prox_targets() called tick#: [world.time]")
 	var/list/targets = list()
 	for(var/mob/living/M in range(spell_holder, cast_prox_range))
 		if(M == user && !(spell_flags & INCLUDEUSER))
@@ -53,5 +52,4 @@ If the spell_projectile is seeking, it will update its target every process and 
 	return targets
 
 /spell/targeted/projectile/proc/prox_cast(var/list/targets, var/atom/movable/spell_holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/projectile/proc/prox_cast() called tick#: [world.time]")
 	return targets

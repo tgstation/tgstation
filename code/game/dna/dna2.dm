@@ -61,7 +61,6 @@ var/global/list/facial_hair_styles_male_list	= list()
 var/global/list/facial_hair_styles_female_list	= list()
 
 /proc/buildHairLists()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/buildHairLists() called tick#: [world.time]")
 	var/list/paths
 	var/datum/sprite_accessory/hair/H
 	paths = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -130,7 +129,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 // Make a copy of this strand.
 // USE THIS WHEN COPYING STUFF OR YOU'LL GET CORRUPTION!
 /datum/dna/proc/Clone()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/Clone() called tick#: [world.time]")
 	var/datum/dna/new_dna = new()
 	new_dna.unique_enzymes=unique_enzymes
 	new_dna.b_type=b_type
@@ -146,7 +144,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 	return new_dna
 
 /datum/dna/proc/GiveRandomSE(var/notflags = 0, var/flags = 0, var/genetype = -1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GiveRandomSE() called tick#: [world.time]")
 	SetSEState(pick(query_genes(notflags,flags,genetype)), 1)
 
 ///////////////////////////////////////
@@ -155,7 +152,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Create random UI.
 /datum/dna/proc/ResetUI(var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/ResetUI() called tick#: [world.time]")
 	for(var/i=1,i<=DNA_UI_LENGTH,i++)
 		switch(i)
 			if(DNA_UI_SKIN_TONE)
@@ -166,7 +162,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 		UpdateUI()
 
 /datum/dna/proc/ResetUIFrom(var/mob/living/carbon/human/character)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/ResetUIFrom() called tick#: [world.time]")
 	// INITIALIZE!
 	ResetUI(1)
 	// Hair
@@ -203,7 +198,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Set a DNA UI block's raw value.
 /datum/dna/proc/SetUIValue(var/block,var/value,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetUIValue() called tick#: [world.time]")
 	if (block<=0) return
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
@@ -214,14 +208,12 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Get a DNA UI block's raw value.
 /datum/dna/proc/GetUIValue(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetUIValue() called tick#: [world.time]")
 	if (block<=0) return 0
 	return UI[block]
 
 // Set a DNA UI block's value, given a value and a max possible value.
 // Used in hair and facial styles (value being the index and maxvalue being the len of the hairstyle list)
 /datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetUIValueRange() called tick#: [world.time]")
 	if (block<=0) return
 	ASSERT(maxvalue<=4095)
 	var/range = (4095 / maxvalue)
@@ -230,7 +222,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Getter version of above.
 /datum/dna/proc/GetUIValueRange(var/block,var/maxvalue)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetUIValueRange() called tick#: [world.time]")
 	if (block<=0) return 0
 	var/value = GetUIValue(block)
 	return round(1 +(value / 4096)*maxvalue)
@@ -238,14 +229,12 @@ var/global/list/facial_hair_styles_female_list	= list()
 // Is the UI gene "on" or "off"?
 // For UI, this is simply a check of if the value is > 2050.
 /datum/dna/proc/GetUIState(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetUIState() called tick#: [world.time]")
 	if (block<=0) return
 	return UI[block] > 2050
 
 
 // Set UI gene "on" (1) or "off" (0)
 /datum/dna/proc/SetUIState(var/block,var/on,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetUIState() called tick#: [world.time]")
 	if (block<=0) return
 	var/val
 	if(on)
@@ -256,27 +245,23 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Get a hex-encoded UI block.
 /datum/dna/proc/GetUIBlock(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetUIBlock() called tick#: [world.time]")
 	return EncodeDNABlock(GetUIValue(block))
 
 // Do not use this unless you absolutely have to.
 // Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetUIBlock(var/block,var/value,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetUIBlock() called tick#: [world.time]")
 	if (block<=0) return
 	return SetUIValue(block,hex2num(value),defer)
 
 // Get a sub-block from a block.
 /datum/dna/proc/GetUISubBlock(var/block,var/subBlock)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetUISubBlock() called tick#: [world.time]")
 	return copytext(GetUIBlock(block),subBlock,subBlock+1)
 
 // Do not use this unless you absolutely have to.
 // Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetUISubBlock(var/block,var/subBlock, var/newSubBlock, var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetUISubBlock() called tick#: [world.time]")
 	if (block<=0) return
 	var/oldBlock=GetUIBlock(block)
 	var/newBlock=""
@@ -293,7 +278,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // "Zeroes out" all of the blocks.
 /datum/dna/proc/ResetSE()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/ResetSE() called tick#: [world.time]")
 	for(var/i = 1, i <= DNA_SE_LENGTH, i++)
 		SetSEValue(i,rand(1,1024),1)
 	UpdateSE()
@@ -301,7 +285,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetSEValue() called tick#: [world.time]")
 
 	if (block<=0) return
 	ASSERT(value>=0)
@@ -314,14 +297,12 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetSEValue() called tick#: [world.time]")
 	if (block<=0) return 0
 	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
 // Might be used for species?
 /datum/dna/proc/SetSEValueRange(var/block,var/value,var/maxvalue)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetSEValueRange() called tick#: [world.time]")
 	if (block<=0) return
 	ASSERT(maxvalue<=4095)
 	var/range = round(4095 / maxvalue)
@@ -330,14 +311,12 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Getter version of above.
 /datum/dna/proc/GetSEValueRange(var/block,var/maxvalue)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetSEValueRange() called tick#: [world.time]")
 	if (block<=0) return 0
 	var/value = GetSEValue(block)
 	return round(1 +(value / 4096)*maxvalue)
 
 // Is the block "on" (1) or "off" (0)? (Un-assigned genes are always off.)
 /datum/dna/proc/GetSEState(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetSEState() called tick#: [world.time]")
 	if (block<=0) return 0
 	var/list/BOUNDS=GetDNABounds(block)
 	var/value=GetSEValue(block)
@@ -345,7 +324,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Set a block "on" or "off".
 /datum/dna/proc/SetSEState(var/block,var/on,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetSEState() called tick#: [world.time]")
 	if (block<=0) return
 	var/list/BOUNDS=GetDNABounds(block)
 	var/val
@@ -357,28 +335,24 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 // Get hex-encoded SE block.
 /datum/dna/proc/GetSEBlock(var/block)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetSEBlock() called tick#: [world.time]")
 	return EncodeDNABlock(GetSEValue(block))
 
 // Do not use this unless you absolutely have to.
 // Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetSEBlock() called tick#: [world.time]")
 	if (block<=0) return
 	var/nval=hex2num(value)
 	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
 	return SetSEValue(block,nval,defer)
 
 /datum/dna/proc/GetSESubBlock(var/block,var/subBlock)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/GetSESubBlock() called tick#: [world.time]")
 	return copytext(GetSEBlock(block),subBlock,subBlock+1)
 
 // Do not use this unless you absolutely have to.
 // Set a sub-block from a hex character.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetSESubBlock(var/block,var/subBlock, var/newSubBlock, var/defer=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/SetSESubBlock() called tick#: [world.time]")
 	if (block<=0) return
 	var/oldBlock=GetSEBlock(block)
 	var/newBlock=""
@@ -392,14 +366,12 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 
 /proc/EncodeDNABlock(var/value)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/EncodeDNABlock() called tick#: [world.time]")
 	if(!isnum(value))
 		WARNING("Expected a number, got [value]")
 		return 0
 	return add_zero2(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/UpdateUI() called tick#: [world.time]")
 	src.uni_identity=""
 	for(var/block in UI)
 		uni_identity += EncodeDNABlock(block)
@@ -407,7 +379,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/UpdateSE() called tick#: [world.time]")
 	//var/oldse=struc_enzymes
 	struc_enzymes=""
 	for(var/block in SE)
@@ -419,7 +390,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 // BACK-COMPAT!
 //  Just checks our character has all the crap it needs.
 /datum/dna/proc/check_integrity(var/mob/living/carbon/human/character)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/check_integrity() called tick#: [world.time]")
 	if(character)
 		if(UI.len != DNA_UI_LENGTH)
 			ResetUIFrom(character)
@@ -438,7 +408,6 @@ var/global/list/facial_hair_styles_female_list	= list()
 // BACK-COMPAT!
 //  Initial DNA setup.  I'm kind of wondering why the hell this doesn't just call the above.
 /datum/dna/proc/ready_dna(mob/living/carbon/human/character)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/ready_dna() called tick#: [world.time]")
 	ResetUIFrom(character)
 
 	ResetSE()

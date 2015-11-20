@@ -85,7 +85,6 @@
 	traitorcheckloop()
 
 /datum/game_mode/traitor/autotraitor/proc/traitorcheckloop()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/traitor/autotraitor/proc/traitorcheckloop() called tick#: [world.time]")
 	spawn(9000)
 		if(emergency_shuttle.departed)
 			return

@@ -34,7 +34,6 @@
 			//src.interface.updateContent()
 
 /datum/processSchedulerView/proc/getProcessTable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getProcessTable() called tick#: [world.time]")
 	var/text = "<table><thead><tr><td>Name</td><td colspan=2>Avg(s)</td><td colspan=2>Last(s)</td><td colspan=2>Highest(s)</td><td colspan=2>Tickcount</td><td colspan=2>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
 	// and the context of each
 	for (var/list/data in processScheduler.getStatusData())

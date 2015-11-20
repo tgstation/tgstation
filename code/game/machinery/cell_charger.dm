@@ -45,7 +45,6 @@
 
 
 /obj/machinery/cell_charger/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cell_charger/proc/updateicon() called tick#: [world.time]")
 	icon_state = "ccharger[charging ? 1 : 0]"
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )

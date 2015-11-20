@@ -4,20 +4,17 @@ var/appearanceban_runonce	//Updates legacy bans with new info
 var/appearance_keylist[0]	//to store the keys
 
 /proc/appearance_fullban(mob/M, reason)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_fullban() called tick#: [world.time]")
 	if (!M || !M.key) return
 	appearance_keylist.Add(text("[M.ckey] ## [reason]"))
 	appearance_savebanfile()
 
 /proc/appearance_client_fullban(ckey)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_client_fullban() called tick#: [world.time]")
 	if (!ckey) return
 	appearance_keylist.Add(text("[ckey]"))
 	appearance_savebanfile()
 
 //returns a reason if M is banned, returns 0 otherwise
 /proc/appearance_isbanned(mob/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_isbanned() called tick#: [world.time]")
 	if(M)
 		for(var/s in appearance_keylist)
 			if( findtext(s,M.ckey) == 1 )
@@ -32,21 +29,18 @@ var/appearance_keylist[0]	//to store the keys
 /*
 DEBUG
 /mob/verb/list_all_appearances()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/list_all_appearances()  called tick#: [world.time]")
 	set name = "list all appearances"
 
 	for(var/s in appearance_keylist)
 		world << s
 
 /mob/verb/reload_appearances()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/reload_appearances()  called tick#: [world.time]")
 	set name = "reload appearances"
 
 	appearance_loadbanfile()
 */
 
 /proc/appearance_loadbanfile()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_loadbanfile() called tick#: [world.time]")
 	if(config.ban_legacy_system)
 		var/savefile/S=new("data/appearance_full.ban")
 		S["keys[0]"] >> appearance_keylist
@@ -75,18 +69,15 @@ DEBUG
 			appearance_keylist.Add("[ckey]")
 
 /proc/appearance_savebanfile()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_savebanfile() called tick#: [world.time]")
 	var/savefile/S=new("data/appearance_full.ban")
 	S["keys[0]"] << appearance_keylist
 
 /proc/appearance_unban(mob/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_unban() called tick#: [world.time]")
 	appearance_remove("[M.ckey]")
 	appearance_savebanfile()
 
 
 /proc/appearance_updatelegacybans()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_updatelegacybans() called tick#: [world.time]")
 	if(!appearanceban_runonce)
 		log_admin("Updating appearancefile!")
 		// Updates bans.. Or fixes them. Either way.
@@ -96,7 +87,6 @@ DEBUG
 
 
 /proc/appearance_remove(X)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appearance_remove() called tick#: [world.time]")
 	for (var/i = 1; i <= length(appearance_keylist); i++)
 		if( findtext(appearance_keylist[i], "[X]") )
 			appearance_keylist.Remove(appearance_keylist[i])
@@ -106,7 +96,6 @@ DEBUG
 
 /*
 proc/DB_ban_isappearancebanned(var/playerckey)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/DB_ban_isappearancebanned() called tick#: [world.time]")
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return

@@ -56,7 +56,6 @@
 	..()
 
 /obj/machinery/communication/proc/get_active_stones()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/communication/proc/get_active_stones() called tick#: [world.time]")
 	if((stat & NOPOWER) && !anchored) return list()
 	var/list/obj/item/commstone/thestones = allstones
 	for(var/obj/item/commstone/check in thestones)

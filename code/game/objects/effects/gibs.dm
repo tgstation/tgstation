@@ -1,17 +1,13 @@
 /proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gibs() called tick#: [world.time]")
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
 /proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/hgibs() called tick#: [world.time]")
 	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
 
 /proc/xgibs(atom/location, var/list/viruses)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/xgibs() called tick#: [world.time]")
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
 
 /proc/robogibs(atom/location, var/list/viruses)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/robogibs() called tick#: [world.time]")
 	new /obj/effect/gibspawner/robot(get_turf(location),viruses)
 
 /obj/effect/gibspawner
@@ -33,7 +29,6 @@
 		Gib(loc,viruses,MobDNA)
 
 /obj/effect/gibspawner/proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/obj/effect/gibspawner/proc/Gib() called tick#: [world.time]")
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		world << "<span class='warning'>Gib list length mismatch!</span>"
 		return

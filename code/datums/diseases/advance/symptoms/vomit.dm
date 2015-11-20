@@ -42,7 +42,6 @@ Bonus
 
 /datum/symptom/vomit/proc/Vomit(var/mob/living/M)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/vomit/proc/Vomit() called tick#: [world.time]")
 
 	M.visible_message("<B>[M]</B> vomits on the floor!")
 

@@ -131,7 +131,6 @@
 	return 1
 
 /obj/machinery/door/window/proc/take_damage(var/damage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/window/proc/take_damage() called tick#: [world.time]")
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		getFromPool(shard, loc)
@@ -249,7 +248,6 @@
 	return hackOpen(used_emag, user)
 
 /obj/machinery/door/window/proc/hackOpen(obj/item/I, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/window/proc/hackOpen() called tick#: [world.time]")
 	src.operating = -1
 
 	if (src.electronics)
@@ -265,7 +263,6 @@
  * w.r.t. the tile it is on.
  */
 /obj/machinery/door/window/proc/is_left_opening()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/window/proc/is_left_opening() called tick#: [world.time]")
 	return src.base_state == "left" || src.base_state == "leftsecure"
 
 /**
@@ -274,14 +271,12 @@
  * @return The new /obj/structure/windoor_assembly created.
  */
 /obj/machinery/door/window/proc/make_assembly(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/window/proc/make_assembly() called tick#: [world.time]")
 	// Windoor assembly
 	var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 	set_assembly(user, WA)
 	return WA
 
 /obj/machinery/door/window/proc/set_assembly(mob/user as mob, var/obj/structure/windoor_assembly/WA)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/window/proc/set_assembly() called tick#: [world.time]")
 	WA.name = "Near finished Windoor Assembly"
 	WA.dir = src.dir
 	WA.anchored = 1

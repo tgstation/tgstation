@@ -141,7 +141,6 @@ obj/machinery/gibber/New()
 
 // OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 /obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gibber/proc/handleGrab() called tick#: [world.time]")
 	if(!anchored)
 		user << "<span class='warning'>[src] must be anchored first!</span>"
 		return
@@ -206,7 +205,6 @@ obj/machinery/gibber/New()
 	set category = "Object"
 	set name = "Empty Gibber"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/gibber/verb/eject()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -215,7 +213,6 @@ obj/machinery/gibber/New()
 	return
 
 /obj/machinery/gibber/proc/go_out()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gibber/proc/go_out() called tick#: [world.time]")
 	if (!src.occupant)
 		return
 	for(var/obj/O in src)
@@ -230,7 +227,6 @@ obj/machinery/gibber/New()
 
 
 /obj/machinery/gibber/proc/startgibbing(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gibber/proc/startgibbing() called tick#: [world.time]")
 	if(src.operating)
 		return
 	if(!src.occupant)
@@ -294,7 +290,6 @@ obj/machinery/gibber/New()
 		update_icon()
 
 /obj/machinery/gibber/proc/startautogibbing(mob/living/victim as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gibber/proc/startautogibbing() called tick#: [world.time]")
 	if(src.operating)
 		return
 	if(!victim)

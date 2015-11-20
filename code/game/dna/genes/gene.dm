@@ -31,12 +31,10 @@
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
 /datum/dna/gene/proc/can_activate(var/mob/M, var/flags)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/can_activate() called tick#: [world.time]")
 	return 0
 
 // Called when the gene activates.  Do your magic here.
 /datum/dna/gene/proc/activate(var/mob/M, var/connected, var/flags)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/activate() called tick#: [world.time]")
 	return
 
 /**
@@ -45,14 +43,12 @@
 */
 
 /datum/dna/gene/proc/can_deactivate(var/mob/M, var/flags)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/can_deactivate() called tick#: [world.time]")
 	if(flags & GENE_NATURAL)
 		//testing("[name]([type]) has natural flag.")
 		return 0
 	return 1
 
 /datum/dna/gene/proc/deactivate(var/mob/M, var/connected, var/flags)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/deactivate() called tick#: [world.time]")
 	M.active_genes.Remove(src.type)
 	return 1
 
@@ -62,21 +58,18 @@
 * Called in each life() tick.
 */
 /datum/dna/gene/proc/OnMobLife(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/OnMobLife() called tick#: [world.time]")
 	return
 
 /**
 * Called when the mob dies
 */
 /datum/dna/gene/proc/OnMobDeath(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/OnMobDeath() called tick#: [world.time]")
 	return
 
 /**
 * Called when the mob says shit
 */
 /datum/dna/gene/proc/OnSay(var/mob/M, var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/OnSay() called tick#: [world.time]")
 	return message
 
 /**
@@ -87,7 +80,6 @@
 * @params fat Fat? (0 or 1)
 */
 /datum/dna/gene/proc/OnDrawUnderlays(var/mob/M, var/g, var/fat)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/OnDrawUnderlays() called tick#: [world.time]")
 	return 0
 
 

@@ -32,7 +32,6 @@
 	return
 
 /obj/machinery/media/receiver/boombox/proc/update_on()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/receiver/boombox/proc/update_on() called tick#: [world.time]")
 	if(on)
 		visible_message("\The [src] hisses to life!")
 		playing=1

@@ -109,11 +109,9 @@
 		return cartridge.darts
 
 /obj/item/weapon/gun/dartgun/proc/has_selected_beaker_reagents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/dartgun/proc/has_selected_beaker_reagents() called tick#: [world.time]")
 	return 0
 
 /obj/item/weapon/gun/dartgun/proc/remove_cartridge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/dartgun/proc/remove_cartridge() called tick#: [world.time]")
 	if(cartridge)
 		usr << "<span class='notice'>You pop the cartridge out of [src].</span>"
 		var/obj/item/weapon/dart_cartridge/C = cartridge
@@ -123,7 +121,6 @@
 		src.update_icon()
 
 /obj/item/weapon/gun/dartgun/proc/get_mixed_syringe()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/dartgun/proc/get_mixed_syringe() called tick#: [world.time]")
 	if (!cartridge)
 		return 0
 	if(!cartridge.darts)
@@ -139,7 +136,6 @@
 	return dart
 
 /obj/item/weapon/gun/dartgun/proc/fire_dart(atom/target, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/dartgun/proc/fire_dart() called tick#: [world.time]")
 	if (locate (/obj/structure/table, src.loc))
 		return
 	else
@@ -267,7 +263,6 @@
 	onclose(user, "dartgun", src)
 
 /obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(var/obj/item/B)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/dartgun/proc/check_beaker_mixing() called tick#: [world.time]")
 	if(!mixing || !beakers)
 		return 0
 	for(var/obj/item/M in mixing)

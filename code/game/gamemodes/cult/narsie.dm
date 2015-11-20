@@ -163,7 +163,6 @@ var/global/list/narsie_list = list()
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/proc/narsiefloor() called tick#: [world.time]")
 	if(!(istype(T, /turf/simulated/wall/cult)||istype(T, /turf/space)))
 		if(T.icon_state != "cult-narsie")
 			T.desc = "something that goes beyond your understanding went this way"
@@ -171,7 +170,6 @@ var/global/list/narsie_list = list()
 			T.luminosity = 1
 
 /obj/machinery/singularity/narsie/proc/narsiewall(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/proc/narsiewall() called tick#: [world.time]")
 	T.desc = "An opening has been made on that wall, but who can say if what you seek truly lies on the other side?"
 	T.icon = 'icons/turf/walls.dmi'
 	T.icon_state = "cult-narsie"
@@ -313,7 +311,6 @@ var/global/list/narsie_list = list()
 	return
 
 /obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/proc/pickcultist() called tick#: [world.time]")
 	var/list/cultists = list()
 	for(var/datum/mind/cult_nh_mind in ticker.mode.cult)
 		if(!cult_nh_mind.current)
@@ -352,7 +349,6 @@ var/global/list/narsie_list = list()
 		//no living humans, follow a ghost instead.
 
 /obj/machinery/singularity/narsie/proc/acquire(const/mob/food)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/proc/acquire() called tick#: [world.time]")
 	var/capname = uppertext(name)
 
 	target << "<span class='notice'><b>[capname] HAS LOST INTEREST IN YOU.</b></span>"
@@ -391,7 +387,6 @@ var/global/list/narsie_list = list()
 /*
 ////////////////Glow//////////////////
 /obj/machinery/singularity/narsie/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/proc/updateicon() called tick#: [world.time]")
 	overlays = 0
 	var/overlay_layer = LIGHTING_LAYER+1
 	overlays += image(icon,"glow-[icon_state]",overlay_layer)
@@ -507,7 +502,6 @@ var/global/mr_clean_targets = list(
  * Mr. Clean just follows the dirt and grime.
  */
 /obj/machinery/singularity/narsie/large/clean/proc/pickuptrash()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/narsie/large/clean/proc/pickuptrash() called tick#: [world.time]")
 	var/list/targets = list()
 	for(var/obj/effect/E in world)
 		if(is_type_in_list(E, mr_clean_targets) && E.z == src.z)

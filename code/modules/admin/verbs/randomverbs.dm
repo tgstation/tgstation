@@ -1,7 +1,6 @@
 /client/proc/cmd_admin_drop_everything(mob/M as mob in mob_list)
 	set category = null
 	set name = "Drop Everything"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_drop_everything() called tick#: [world.time]")
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
@@ -19,7 +18,6 @@
 /client/proc/cmd_admin_prison(mob/M as mob in mob_list)
 	set category = "Admin"
 	set name = "Prison"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_prison() called tick#: [world.time]")
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
@@ -47,7 +45,6 @@
 /client/proc/cmd_admin_subtle_message(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_subtle_message() called tick#: [world.time]")
 
 	if(!ismob(M))	return
 	if (!holder)
@@ -70,7 +67,6 @@
 /client/proc/cmd_admin_world_narrate() // Allows administrators to fluff events a little easier -- TLE
 	set category = "Special Verbs"
 	set name = "Global Narrate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_world_narrate() called tick#: [world.time]")
 
 	if (!holder)
 		src << "Only administrators may use this command."
@@ -88,7 +84,6 @@
 /client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_direct_narrate() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -113,7 +108,6 @@
 /client/proc/cmd_admin_local_narrate()	// View targetted narration
 	set category = "Special Verbs"
 	set name = "Local Narrate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_local_narrate() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -135,7 +129,6 @@
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_godmode() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -149,7 +142,6 @@
 
 
 proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/cmd_admin_mute() called tick#: [world.time]")
 	if(automute)
 		if(!config.automute_on)	return
 	else
@@ -202,7 +194,6 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
 	set name = "Add Random AI Law"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_add_random_ai_law() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -223,7 +214,6 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 
 //I use this proc for respawn character too. /N
 /proc/create_xeno(ckey)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_xeno() called tick#: [world.time]")
 	if(!ckey)
 		var/list/candidates = list()
 		for(var/mob/M in get_active_candidates(ROLE_ALIEN))
@@ -257,7 +247,6 @@ Ccomp's first proc.
 */
 
 /client/proc/get_ghosts(var/notify = 0,var/what = 2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/get_ghosts() called tick#: [world.time]")
 	// what = 1, return ghosts ass list.
 	// what = 2, return mob list
 
@@ -286,7 +275,6 @@ Ccomp's first proc.
 	set category = "Special Verbs"
 	set name = "Allow player to respawn"
 	set desc = "Let's the player bypass the 30 minute wait to respawn or allow them to re-enter their corpse."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/allow_character_respawn() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -302,7 +290,6 @@ Ccomp's first proc.
 		var/response = alert(src, "Are you sure you wish to allow this individual to play?","Ghost has used AntagHUD","Yes","No")
 		if(response == "No") return
 	G.timeofdeath=-19999						/* time of death is checked in /mob/verb/abandon_mob() which is the Respawn verb.
-									   //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/abandon_mob()  called tick#: [world.time]")
 									   timeofdeath is used for bodies on autopsy but since we're messing with a ghost I'm pretty sure
 									   there won't be an autopsy.
 									*/
@@ -318,7 +305,6 @@ Ccomp's first proc.
 	set category = "Server"
 	set name = "Toggle antagHUD usage"
 	set desc = "Toggles antagHUD usage for observers"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/toggle_antagHUD_use() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -353,7 +339,6 @@ Ccomp's first proc.
 	set category = "Server"
 	set name = "Toggle antagHUD Restrictions"
 	set desc = "Restricts players that have used antagHUD from being able to join this round."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/toggle_antagHUD_restrictions() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -389,7 +374,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Respawn Character"
 	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/respawn_character() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -556,7 +540,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"
 	set name = "Add Custom AI law"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_add_freeform_ai_law() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -586,7 +569,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_rejuvenate() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -609,7 +591,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
 	set name = "Create Command Report"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_create_centcom_report() called tick#: [world.time]")
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -643,7 +624,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Admin"
 	set name = "Delete"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_delete() called tick#: [world.time]")
 
 	if (!holder)
 		src << "Only administrators may use this command."
@@ -674,7 +654,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
 	set name = "Explosion"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_explosion() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG|R_FUN))	return
 
@@ -725,7 +704,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Gib"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_gib() called tick#: [world.time]")
 
 	if(!check_rights(R_ADMIN|R_FUN))	return
 
@@ -747,7 +725,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
 	set category = "Fun"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_gib_self() called tick#: [world.time]")
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
@@ -761,7 +738,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_manual_ban() called tick#: [world.time]")
 	set name = "Manual Ban"
 	set category = "Special Verbs"
 	if(!authenticated || !holder)
@@ -818,7 +794,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 */
 
 /client/proc/update_world()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/update_world() called tick#: [world.time]")
 	// If I see anyone granting powers to specific keys like the code that was here,
 	// I will both remove their SVN access and permanently ban them from my servers.
 	return
@@ -826,7 +801,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_check_contents(mob/living/L as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Check Mob Contents"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_check_contents() called tick#: [world.time]")
 
 	for (var/content in get_contents_in_object(L))
 		if (content)
@@ -836,7 +810,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /* This proc is DEFERRED. Does not do anything.
 /client/proc/cmd_admin_remove_plasma()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_remove_plasma() called tick#: [world.time]")
 	set category = "Debug"
 	set name = "Stabilize Atmos."
 	if(!holder)
@@ -870,7 +843,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/toggle_view_range() called tick#: [world.time]")
 
 	if(view == world.view)
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
@@ -885,7 +857,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/admin_call_shuttle()
 	set category = "Admin"
 	set name = "Call Shuttle"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_call_shuttle() called tick#: [world.time]")
 
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
@@ -913,7 +884,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/admin_cancel_shuttle()
 	set category = "Admin"
 	set name = "Cancel Shuttle"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_cancel_shuttle() called tick#: [world.time]")
 
 	if(!check_rights(R_ADMIN))	return
 
@@ -932,7 +902,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/admin_deny_shuttle()
 	set category = "Admin"
 	set name = "Toggle Deny Shuttle"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_deny_shuttle() called tick#: [world.time]")
 
 	if (!ticker)
 		return
@@ -947,7 +916,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_attack_log(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Attack Log"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_attack_log() called tick#: [world.time]")
 
 	usr << text("<span class='danger'>Attack Log for []</span>", mob)
 	for(var/t in M.attack_log)
@@ -959,7 +927,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Fun"
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/everyone_random() called tick#: [world.time]")
 
 	if(!check_rights(R_FUN))	return
 
@@ -994,7 +961,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/toggle_random_events() called tick#: [world.time]")
 
 	if(!check_rights(R_SERVER))	return
 

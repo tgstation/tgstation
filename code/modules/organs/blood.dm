@@ -13,7 +13,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/make_blood() called tick#: [world.time]")
 	if(vessel)
 		return
 
@@ -29,7 +28,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Resets blood data
 /mob/living/carbon/human/proc/fixblood()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/fixblood() called tick#: [world.time]")
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_colour"= species.blood_color,"blood_type"=dna.b_type,	\
@@ -39,7 +37,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_blood() called tick#: [world.time]")
 
 	if(species && species.flags & NO_BLOOD)
 		return
@@ -156,7 +153,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(var/amt as num)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/drip() called tick#: [world.time]")
 
 	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
 		return
@@ -173,7 +169,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Gets blood from mob to the container, preserving all data in it.
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/take_blood() called tick#: [world.time]")
 	var/datum/reagent/B = (container ? get_blood(container.reagents) : null)
 	if(!B) B = new /datum/reagent/blood
 	B.holder = (container? container.reagents : null)
@@ -220,7 +215,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Transfers blood from container ot vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/inject_blood() called tick#: [world.time]")
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 	if (!injected)
 		return
@@ -259,7 +253,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Gets human's own blood.
 /mob/living/carbon/proc/get_blood(datum/reagents/container)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/get_blood() called tick#: [world.time]")
 	var/datum/reagent/blood/res = locate() in container.reagent_list //Grab some blood
 	if(res) // Make sure there's some blood at all
 		if(res.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -269,7 +262,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	return res
 
 proc/blood_incompatible(donor,receiver)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/blood_incompatible() called tick#: [world.time]")
 	if(!donor || !receiver) return 0
 	var
 		donor_antigen = copytext(donor,1,lentext(donor))
@@ -288,7 +280,6 @@ proc/blood_incompatible(donor,receiver)
 	return 0
 
 proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/blood_splatter() called tick#: [world.time]")
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)

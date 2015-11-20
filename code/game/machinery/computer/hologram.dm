@@ -27,7 +27,6 @@
 	return
 
 /obj/machinery/computer/hologram_comp/proc/render()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/hologram_comp/proc/render() called tick#: [world.time]")
 	var/icon/I = new /icon('icons/mob/human.dmi', "body_m_s")
 
 	if (src.lumens >= 0)
@@ -46,7 +45,6 @@
 	src.projector.hologram.icon = I
 
 /obj/machinery/computer/hologram_comp/proc/show_console(var/mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/hologram_comp/proc/show_console() called tick#: [world.time]")
 	var/dat
 	user.set_machine(src)
 	if (src.temp)

@@ -40,7 +40,6 @@ var/list/ul_IconCache = list()
 
 
 proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ul_UnblankLocal() called tick#: [world.time]")
 	for(var/atom/Light in ReApply)
 		if(ul_IsLuminous(Light))
 			Light.ul_Illuminate()
@@ -55,7 +54,6 @@ atom/var/ul_Extinguished = UL_I_ONZERO
 
 atom/proc/ul_SetLuminosity(var/Red = 0, var/Green = Red, var/Blue = Red)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_SetLuminosity() called tick#: [world.time]")
 
 	if(ul_Extinguished == UL_I_CHANGING) //Changing state, just supress any changes, to prevent glitches.
 		return
@@ -85,7 +83,6 @@ atom/proc/ul_SetLuminosity(var/Red = 0, var/Green = Red, var/Blue = Red)
 	return
 
 atom/proc/ul_Illuminate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_Illuminate() called tick#: [world.time]")
 	if (ul_Extinguished == UL_I_LIT)
 		return
 
@@ -134,7 +131,6 @@ atom/proc/ul_Illuminate()
 
 atom/proc/ul_Extinguish()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_Extinguish() called tick#: [world.time]")
 
 	if (ul_Extinguished != UL_I_LIT)
 		return
@@ -200,7 +196,6 @@ atom/proc/ul_Extinguish()
   to avoid the cost of the square root function.
 */
 atom/proc/ul_FalloffAmount(var/atom/ref)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_FalloffAmount() called tick#: [world.time]")
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/delta_x = (ref.x - src.x)
 		var/delta_y = (ref.y - src.y)
@@ -225,7 +220,6 @@ atom/proc/ul_FalloffAmount(var/atom/ref)
 	return 0
 
 atom/proc/ul_SetOpacity(var/NewOpacity)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_SetOpacity() called tick#: [world.time]")
 	if(opacity != NewOpacity)
 
 		var/list/Blanked = ul_BlankLocal()
@@ -237,7 +231,6 @@ atom/proc/ul_SetOpacity(var/NewOpacity)
 	return
 
 atom/proc/ul_BlankLocal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_BlankLocal() called tick#: [world.time]")
 	var/list/Blanked = list( )
 	var/TurfAdjust = isturf(src) ? 1 : 0
 
@@ -249,7 +242,6 @@ atom/proc/ul_BlankLocal()
 	return Blanked
 
 atom/proc/ul_LightLevelChanged()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_LightLevelChanged() called tick#: [world.time]")
 	//Designed for client projects to use.  Called on items when the turf they are in has its light level changed
 	return
 
@@ -278,23 +270,19 @@ turf/var/list/MaxGreen
 turf/var/list/MaxBlue
 
 turf/proc/ul_GetRed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/ul_GetRed() called tick#: [world.time]")
 	if(MaxRed)
 		return ul_Clamp(max(MaxRed))
 	return 0
 turf/proc/ul_GetGreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/ul_GetGreen() called tick#: [world.time]")
 	if(MaxGreen)
 		return ul_Clamp(max(MaxGreen))
 	return 0
 turf/proc/ul_GetBlue()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/ul_GetBlue() called tick#: [world.time]")
 	if(MaxBlue)
 		return ul_Clamp(max(MaxBlue))
 	return 0
 
 turf/proc/ul_UpdateLight()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/ul_UpdateLight() called tick#: [world.time]")
 	var/area/CurrentArea = loc
 
 	if(!isarea(CurrentArea) || !CurrentArea.ul_Lighting)
@@ -324,7 +312,6 @@ turf/proc/ul_UpdateLight()
 
 turf/proc/ul_Recalculate()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/ul_Recalculate() called tick#: [world.time]")
 
 	ul_SuppressLightLevelChanges++
 
@@ -346,7 +333,6 @@ area/var/list/LightLevels
 
 area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blue = LightLevelBlue)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\darea/proc/ul_Light() called tick#: [world.time]")
 
 	if(!src || !src.ul_Lighting)
 		return
@@ -379,7 +365,6 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 
 area/proc/ul_Prep()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\darea/proc/ul_Prep() called tick#: [world.time]")
 
 	if(!tag)
 		tag = "[type]"

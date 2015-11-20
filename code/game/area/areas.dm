@@ -48,14 +48,12 @@
  * NOTE: Due to a new lighting engine this is now deprecated, but we're keeping this because I can't be bothered to relace everything that references this.
  */
 /proc/area_contents(const/area/A)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/area_contents() called tick#: [world.time]")
 	if (!isarea(A))
 		return
 
 	return A.contents
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/poweralert() called tick#: [world.time]")
 	if (suspend_alert) return
 	if (state != poweralm)
 		poweralm = state
@@ -82,7 +80,6 @@
 	return
 
 /area/proc/send_poweralert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/send_poweralert() called tick#: [world.time]")
 	if(!poweralm)
 		a.triggerAlarm("Power", src, null, src)
 
@@ -91,7 +88,6 @@
 /////////////////////////////////////////
 
 /area/proc/updateDangerLevel()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/updateDangerLevel() called tick#: [world.time]")
 	var/danger_level = 0
 
 	// Determine what the highest DL reported by air alarms is
@@ -142,7 +138,6 @@
 	return 0
 
 /area/proc/sendDangerLevel(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/sendDangerLevel() called tick#: [world.time]")
 	var/danger_level = 0
 
 	// Determine what the highest DL reported by air alarms is
@@ -160,14 +155,12 @@
 
 
 /area/proc/UpdateFirelocks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/UpdateFirelocks() called tick#: [world.time]")
 	if(door_alerts != 0)
 		CloseFirelocks()
 	else
 		OpenFirelocks()
 
 /area/proc/CloseFirelocks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/CloseFirelocks() called tick#: [world.time]")
 	if(doors_down) return
 	doors_down=1
 	for(var/obj/machinery/door/firedoor/D in all_doors)
@@ -179,7 +172,6 @@
 					D.close()
 
 /area/proc/OpenFirelocks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/OpenFirelocks() called tick#: [world.time]")
 	if(!doors_down) return
 	doors_down=0
 	for(var/obj/machinery/door/firedoor/D in all_doors)
@@ -195,7 +187,6 @@
 //////////////////////////////////////////////
 
 /area/proc/firealert()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/firealert() called tick#: [world.time]")
 	if(name == "Space") //no fire alarms in space
 		return
 	if( !fire )
@@ -215,12 +206,10 @@
 				a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/send_firealert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/send_firealert() called tick#: [world.time]")
 	if(fire)
 		a.triggerAlarm("Fire", src, null, src)
 
 /area/proc/firereset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/firereset() called tick#: [world.time]")
 	if (fire)
 		fire = 0
 		mouse_opacity = 0
@@ -236,7 +225,6 @@
 		UpdateFirelocks()
 
 /area/proc/radiation_alert()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/radiation_alert() called tick#: [world.time]")
 	if(name == "Space")
 		return
 	if(!radalert)
@@ -245,7 +233,6 @@
 	return
 
 /area/proc/reset_radiation_alert()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/reset_radiation_alert() called tick#: [world.time]")
 	if(name == "Space")
 		return
 	if(radalert)
@@ -254,7 +241,6 @@
 	return
 
 /area/proc/readyalert()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/readyalert() called tick#: [world.time]")
 	if(name == "Space")
 		return
 	if(!eject)
@@ -263,14 +249,12 @@
 	return
 
 /area/proc/readyreset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/readyreset() called tick#: [world.time]")
 	if(eject)
 		eject = 0
 		updateicon()
 	return
 
 /area/proc/partyalert()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/partyalert() called tick#: [world.time]")
 	if(name == "Space") //no parties in space!!!
 		return
 	if (!( party ))
@@ -280,7 +264,6 @@
 	return
 
 /area/proc/partyreset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/partyreset() called tick#: [world.time]")
 	if (party)
 		party = 0
 		mouse_opacity = 0
@@ -288,7 +271,6 @@
 	return
 
 /area/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/updateicon() called tick#: [world.time]")
 	if ((fire || eject || party || radalert) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
 		// Highest priority at the top.
 		if(radalert && !fire)
@@ -316,7 +298,6 @@
 
 /area/proc/powered(var/chan)		// return true if the area has power to given channel
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/powered() called tick#: [world.time]")
 
 	if(!requires_power)
 		return 1
@@ -336,14 +317,12 @@
  * Called when power status changes.
  */
 /area/proc/power_change()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/power_change() called tick#: [world.time]")
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
 	if (fire || eject || party)
 		updateicon()
 
 /area/proc/usage(const/chan)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/usage() called tick#: [world.time]")
 	switch (chan)
 		if (LIGHT)
 			return used_light
@@ -362,7 +341,6 @@
 	return 0
 
 /area/proc/addStaticPower(value, powerchannel)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/addStaticPower() called tick#: [world.time]")
 	switch(powerchannel)
 		if(STATIC_EQUIP)
 			static_equip += value
@@ -372,13 +350,11 @@
 			static_environ += value
 
 /area/proc/clear_usage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/clear_usage() called tick#: [world.time]")
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
 
 /area/proc/use_power(const/amount, const/chan)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/use_power() called tick#: [world.time]")
 	switch (chan)
 		if(EQUIP)
 			used_equip += amount
@@ -441,7 +417,6 @@
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/gravitychange() called tick#: [world.time]")
 
 	A.has_gravity = gravitystate
 
@@ -458,11 +433,9 @@
 			H << "<span class='warning'>Gravity!</span>"
 
 /area/proc/set_apc(var/obj/machinery/power/apc/apctoset)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/set_apc() called tick#: [world.time]")
 	areaapc = apctoset
 
 /area/proc/remove_apc(var/obj/machinery/power/apc/apctoremove)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/remove_apc() called tick#: [world.time]")
 	if(areaapc == apctoremove)
 		areaapc = null
 
@@ -522,7 +495,6 @@ var/list/moved_landmarks = list(latejoin, wizardstart) //Landmarks that are move
 var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f9","swall_f10") //icon_states for which to prepare an underlay
 
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/move_contents_to() called tick#: [world.time]")
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.

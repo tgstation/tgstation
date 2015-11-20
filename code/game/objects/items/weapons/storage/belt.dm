@@ -10,7 +10,6 @@
 
 
 /obj/item/weapon/storage/belt/proc/can_use()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/belt/proc/can_use() called tick#: [world.time]")
 	if(!ismob(loc)) return 0
 	var/mob/M = loc
 	if(src in M.get_equipped_items())

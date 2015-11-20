@@ -19,7 +19,6 @@
 	return
 
 /obj/map/nest/proc/ticker()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/map/nest/proc/ticker() called tick#: [world.time]")
 	while(src)
 		for(var/mob/M in get_area(src))
 			if(istype(M,src.mobType)) src.pop++

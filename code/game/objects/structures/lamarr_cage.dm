@@ -40,7 +40,6 @@
 		qdel(src)
 
 /obj/structure/lamarr/proc/healthcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/lamarr/proc/healthcheck() called tick#: [world.time]")
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
@@ -82,7 +81,6 @@
 		return
 
 /obj/structure/lamarr/proc/Break()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/lamarr/proc/Break() called tick#: [world.time]")
 	if(occupied)
 		new /obj/item/clothing/mask/facehugger/lamarr(src.loc)
 		occupied = 0

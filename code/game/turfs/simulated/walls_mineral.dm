@@ -63,7 +63,6 @@
 	explosion_block = 2
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/mineral/uranium/proc/radiate() called tick#: [world.time]")
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
@@ -102,7 +101,6 @@
 	..()
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/mineral/plasma/proc/PlasmaBurn() called tick#: [world.time]")
 	var/pdiff=performWallPressureCheck(src.loc)
 	if(pdiff>0)
 		message_admins("Plasma wall with pdiff [pdiff] at [formatJumpTo(loc)] just caught fire!")
@@ -144,7 +142,6 @@
 
 /*
 /turf/simulated/wall/mineral/proc/shock()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/mineral/proc/shock() called tick#: [world.time]")
 	if (electrocute_mob(user, C, src))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
@@ -154,7 +151,6 @@
 		return 0
 
 /turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/mineral/proc/attackby() called tick#: [world.time]")
 	if((mineral == "gold") || (mineral == "silver"))
 		if(shocked)
 			shock()

@@ -89,7 +89,6 @@
 		return
 
 /obj/structure/closet/crate/flatpack/proc/Finalize()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/crate/flatpack/proc/Finalize() called tick#: [world.time]")
 	machine.loc = get_turf(src)
 	machine.RefreshParts()
 	for(var/atom/movable/AM in src)
@@ -141,7 +140,6 @@
 	return
 
 /obj/structure/closet/crate/flatpack/proc/add_stack(obj/structure/closet/crate/flatpack/flatpack)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/crate/flatpack/proc/add_stack() called tick#: [world.time]")
 	if(!flatpack)
 		return
 
@@ -162,7 +160,6 @@
 			add_stack(newpack)
 
 /obj/structure/closet/crate/flatpack/proc/remove_stack(obj/structure/closet/crate/flatpack/flatpack)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/crate/flatpack/proc/remove_stack() called tick#: [world.time]")
 	if(isnull(flatpack))
 		return
 	if(!("\ref[flatpack]" in stacked))
@@ -217,7 +214,6 @@
 	..()
 
 /datum/construction/flatpack_unpack/proc/GenerateInstructions()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/flatpack_unpack/proc/GenerateInstructions() called tick#: [world.time]")
 	var/instructions = ""
 	var/misprinted = 0
 	for(var/list_step = steps.len; list_step > 0; list_step--)

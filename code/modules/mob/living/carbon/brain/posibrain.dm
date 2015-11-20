@@ -27,7 +27,6 @@
 		search_for_candidates()
 
 /obj/item/device/mmi/posibrain/proc/search_for_candidates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/search_for_candidates() called tick#: [world.time]")
 	icon_state = "posibrain-searching"
 	ghost_volunteers.len = 0
 	src.searching = 1
@@ -40,7 +39,6 @@
 		reset_search()
 
 /obj/item/device/mmi/posibrain/proc/request_player()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/request_player() called tick#: [world.time]")
 	for(var/mob/dead/observer/O in get_active_candidates(ROLE_POSIBRAIN))
 		if(O.client)
 			if(check_observer(O))
@@ -48,7 +46,6 @@
 				ghost_volunteers += O
 
 /obj/item/device/mmi/posibrain/proc/check_observer(var/mob/dead/observer/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/check_observer() called tick#: [world.time]")
 	if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 		return 0
 	if(jobban_isbanned(O, ROLE_POSIBRAIN)) // Was pAI
@@ -58,7 +55,6 @@
 	return 0
 
 /obj/item/device/mmi/posibrain/proc/question(var/client/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/question() called tick#: [world.time]")
 	spawn(0)
 		if(!C)	return
 		var/response = alert(C, "Someone is requesting a personality for \a [src]. Would you like to play as one?", "[src] request", "Yes", "No", "Never for this round")
@@ -68,7 +64,6 @@
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(var/mob/candidate)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/transfer_personality() called tick#: [world.time]")
 
 	src.searching = 0
 	//src.brainmob.mind = candidate.mind Causes issues with traitor overlays and traitor specific chat.
@@ -89,7 +84,6 @@
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/reset_search() called tick#: [world.time]")
 
 	if(src.brainmob && src.brainmob.key) return
 
@@ -107,7 +101,6 @@
 		volunteer(O)
 
 /obj/item/device/mmi/posibrain/proc/volunteer(var/mob/dead/observer/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/posibrain/proc/volunteer() called tick#: [world.time]")
 	if(!searching)
 		O << "Not looking for a ghost, yet."
 		return

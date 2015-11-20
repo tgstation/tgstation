@@ -2,7 +2,6 @@
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Jump() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -32,7 +31,6 @@
 /client/proc/jumptoturf(var/turf/T in world)
 	set name = "Jump to Turf"
 	set category = "Admin"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/jumptoturf() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -48,7 +46,6 @@
 /client/proc/jumptomob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/jumptomob() called tick#: [world.time]")
 
 	if(!src.holder)
 		src << "Only administrators may use this command."
@@ -71,7 +68,6 @@
 /client/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
 	set name = "Jump to Coordinate"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/jumptocoord() called tick#: [world.time]")
 
 	if (!holder)
 		src << "Only administrators may use this command."
@@ -92,7 +88,6 @@
 /client/proc/jumptokey()
 	set category = "Admin"
 	set name = "Jump to Key"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/jumptokey() called tick#: [world.time]")
 
 	if(!src.holder)
 		src << "Only administrators may use this command."
@@ -119,7 +114,6 @@
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Getmob() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -135,7 +129,6 @@
 	set category = "Admin"
 	set name = "Get Key"
 	set desc = "Key to teleport"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Getkey() called tick#: [world.time]")
 
 	if(!src.holder)
 		src << "Only administrators may use this command."
@@ -163,7 +156,6 @@
 /client/proc/sendmob(var/mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Send Mob"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/sendmob() called tick#: [world.time]")
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return

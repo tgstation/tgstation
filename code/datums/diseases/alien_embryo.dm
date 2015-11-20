@@ -105,11 +105,9 @@
 
 /*----------------------------------------
 Proc: RefreshInfectionImage()
-	//writepanic("[__FILE__].[__LINE__] \\/proc: RefreshInfectionImage() called tick#: [world.time]")
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
 ----------------------------------------*/
 /datum/disease/alien_embryo/proc/RefreshInfectionImage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/alien_embryo/proc/RefreshInfectionImage() called tick#: [world.time]")
 	spawn(0)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -129,11 +127,9 @@ Des: Removes all infection images from aliens and places an infection image on a
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)
-	//writepanic("[__FILE__].[__LINE__] \\/proc: AddInfectionImages() called tick#: [world.time]")
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
 /datum/disease/alien_embryo/proc/AddInfectionImages(var/mob/living/carbon/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/alien_embryo/proc/AddInfectionImages() called tick#: [world.time]")
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -144,12 +140,10 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
-	//writepanic("[__FILE__].[__LINE__] \\/proc: RemoveInfectionImage() called tick#: [world.time]")
 Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
 ----------------------------------------*/
 
 /datum/disease/alien_embryo/proc/RemoveInfectionImages(var/mob/living/carbon/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/alien_embryo/proc/RemoveInfectionImages() called tick#: [world.time]")
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)

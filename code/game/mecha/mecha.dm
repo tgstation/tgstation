@@ -91,15 +91,12 @@
 	add_cabin()
 	if(!add_airtank()) //we check this here in case mecha does not have an internal tank available by default - WIP
 		removeVerb(/obj/mecha/verb/connect_to_port)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\removeVerb()  called tick#: [world.time]")
 		removeVerb(/obj/mecha/verb/toggle_internal_tank)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\emoveVerb()  called tick#: [world.time]")
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\removeVerb()  called tick#: [world.time]")
 	log_message("[src.name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
@@ -116,24 +113,16 @@
 ////////////////////////
 
 /obj/mecha/proc/removeVerb(verb_path)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/proc/removeVerb()  called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/removeVerb() called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/obj/mecha/proc/removeVerb()  called tick#: [world.time]")
 	verbs -= verb_path
 
 /obj/mecha/proc/addVerb(verb_path)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/proc/addVerb()  called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/addVerb() called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/obj/mecha/proc/addVerb()  called tick#: [world.time]")
 	verbs += verb_path
 
 /obj/mecha/proc/add_airtank()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/add_airtank() called tick#: [world.time]")
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
 /obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/add_cell() called tick#: [world.time]")
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -143,7 +132,6 @@
 	cell.maxcharge = 15000
 
 /obj/mecha/proc/add_cabin()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/add_cabin() called tick#: [world.time]")
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
@@ -152,7 +140,6 @@
 	return cabin_air
 
 /obj/mecha/proc/add_radio()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/add_radio() called tick#: [world.time]")
 	radio = new(src)
 	radio.name = "[src] radio"
 	radio.icon = icon
@@ -160,21 +147,18 @@
 	radio.subspace_transmission = 1
 
 /obj/mecha/proc/add_iterators()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/add_iterators() called tick#: [world.time]")
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
 	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
 /obj/mecha/proc/do_after(delay as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/do_after() called tick#: [world.time]")
 	sleep(delay)
 	if(src)
 		return 1
 	return 0
 
 /obj/mecha/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/enter_after() called tick#: [world.time]")
 	var/delayfraction = delay/numticks
 
 	var/turf/T = user.loc
@@ -189,7 +173,6 @@
 
 
 /obj/mecha/proc/check_for_support()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/check_for_support() called tick#: [world.time]")
 	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
 	else
@@ -215,7 +198,6 @@
 			user << "\icon[ME] [ME]"
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/drop_item() called tick#: [world.time]")
 	return
 
 /obj/mecha/Hear(var/datum/speech/speech, var/rendered_message="")
@@ -250,7 +232,6 @@
 */
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/click_action() called tick#: [world.time]")
 	if(!src.occupant || src.occupant != user ) return
 	if(user.stat) return
 	if(state)
@@ -276,11 +257,9 @@
 
 
 /obj/mecha/proc/melee_action(atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/melee_action() called tick#: [world.time]")
 	return
 
 /obj/mecha/proc/range_action(atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/range_action() called tick#: [world.time]")
 	return
 
 
@@ -310,11 +289,9 @@
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/domove() called tick#: [world.time]")
 	return call((proc_res["dyndomove"]||src), "dyndomove")(direction)
 
 /obj/mecha/proc/dyndomove(direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dyndomove() called tick#: [world.time]")
 	if(!can_move)
 		return 0
 	if(src.pr_inertial_movement.active())
@@ -341,13 +318,11 @@
 	return 0
 
 /obj/mecha/proc/mechturn(direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/mechturn() called tick#: [world.time]")
 	dir = direction
 	playsound(src,'sound/mecha/mechturn.ogg',40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/mechstep() called tick#: [world.time]")
 	var/result = step(src,direction)
 	if(result)
 	 playsound(src, get_sfx("mechstep"),40,1)
@@ -355,7 +330,6 @@
 
 
 /obj/mecha/proc/mechsteprand()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/mechsteprand() called tick#: [world.time]")
 	var/result = step_rand(src)
 	if(result)
 	 playsound(src, get_sfx("mechstep"),40,1)
@@ -440,7 +414,6 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/check_for_internal_damage() called tick#: [world.time]")
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
@@ -458,12 +431,10 @@
 	return
 
 /obj/mecha/proc/hasInternalDamage(int_dam_flag=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/hasInternalDamage() called tick#: [world.time]")
 	return int_dam_flag ? internal_damage&int_dam_flag : internal_damage
 
 
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/setInternalDamage() called tick#: [world.time]")
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
@@ -471,7 +442,6 @@
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/clearInternalDamage() called tick#: [world.time]")
 	internal_damage &= ~int_dam_flag
 	switch(int_dam_flag)
 		if(MECHA_INT_TEMP_CONTROL)
@@ -489,7 +459,6 @@
 ////////////////////////////////////////
 
 /obj/mecha/proc/take_damage(amount, type="brute")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/take_damage() called tick#: [world.time]")
 	if(amount)
 		var/damage = absorbDamage(amount,type)
 		health -= damage
@@ -498,16 +467,13 @@
 	return
 
 /obj/mecha/proc/absorbDamage(damage,damage_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/absorbDamage() called tick#: [world.time]")
 	return call((proc_res["dynabsorbdamage"]||src), "dynabsorbdamage")(damage,damage_type)
 
 /obj/mecha/proc/dynabsorbdamage(damage,damage_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dynabsorbdamage() called tick#: [world.time]")
 	return damage*(listgetindex(damage_absorption,damage_type) || 1)
 
 
 /obj/mecha/proc/update_health()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/update_health() called tick#: [world.time]")
 	if(src.health > 0)
 		src.spark_system.start()
 	else
@@ -572,7 +538,6 @@
 	return
 
 /obj/mecha/proc/dynhitby(atom/movable/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dynhitby() called tick#: [world.time]")
 	if(istype(A, /obj/item/mecha_parts/mecha_tracking) && !tracking && prob(25))
 		A.forceMove(src)
 		tracking = A
@@ -600,7 +565,6 @@
 	return
 
 /obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dynbulletdamage() called tick#: [world.time]")
 	if(prob(src.deflect_chance))
 		src.occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
 		src.visible_message("The [src.name] armor deflects the projectile")
@@ -618,7 +582,6 @@
 	return
 
 /obj/mecha/proc/destroy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/destroy() called tick#: [world.time]")
 	spawn()
 		go_out()
 		var/turf/T = get_turf(src)
@@ -728,7 +691,6 @@
 	return
 
 /obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dynattackby() called tick#: [world.time]")
 	user.delayNextAttack(8)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
@@ -918,7 +880,6 @@
 /////////////////////////////////////
 
 /obj/mecha/proc/get_turf_air()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_turf_air() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	if(T)
 		. = T.return_air()
@@ -939,7 +900,6 @@
 	return get_turf_air()
 
 /obj/mecha/proc/return_pressure()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/return_pressure() called tick#: [world.time]")
 	. = 0
 	if(use_internal_tank)
 		. =  cabin_air.return_pressure()
@@ -951,7 +911,6 @@
 
 //skytodo: //No idea what you want me to do here, mate.
 /obj/mecha/proc/return_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/return_temperature() called tick#: [world.time]")
 	. = 0
 	if(use_internal_tank)
 		. = cabin_air.return_temperature()
@@ -962,7 +921,6 @@
 	return
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/connect() called tick#: [world.time]")
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -984,7 +942,6 @@
 	return 1
 
 /obj/mecha/proc/disconnect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/disconnect() called tick#: [world.time]")
 	if(!connected_port)
 		return 0
 
@@ -1008,7 +965,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/connect_to_port()  called tick#: [world.time]")
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
@@ -1031,7 +987,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/disconnect_from_port()  called tick#: [world.time]")
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
@@ -1047,7 +1002,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/toggle_lights()  called tick#: [world.time]")
 	if(usr!=occupant)	return
 	lights = !lights
 	if(lights)	set_light(luminosity + lights_power)
@@ -1062,7 +1016,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/toggle_internal_tank()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	use_internal_tank = !use_internal_tank
@@ -1079,7 +1032,6 @@
 	set category = "Object"
 	set name = "Enter Exosuit"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/move_inside()  called tick#: [world.time]")
 
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
@@ -1123,7 +1075,6 @@
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/moved_inside() called tick#: [world.time]")
 	if(!isnull(src.loc) && H && H.client && H in range(1))
 		H.reset_view(src)
 		/*
@@ -1159,7 +1110,6 @@
 		return 0
 
 /obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/mmi_move_inside() called tick#: [world.time]")
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "Consciousness matrix not detected."
 		return 0
@@ -1187,7 +1137,6 @@
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/mmi_moved_inside() called tick#: [world.time]")
 	if(!isnull(src.loc) && mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			user << "Consciousness matrix not detected."
@@ -1224,7 +1173,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/view_stats()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
@@ -1233,7 +1181,6 @@
 
 /*
 /obj/mecha/verb/force_eject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/force_eject()  called tick#: [world.time]")
 	set category = "Object"
 	set name = "Force Eject"
 	set src in view(5)
@@ -1246,7 +1193,6 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/eject()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	src.go_out()
@@ -1270,14 +1216,12 @@
 	add_fingerprint(usr)
 
 /obj/mecha/proc/empty_bad_contents() //stuff that shouldn't be there, possibly caused by the driver dropping it while inside the mech
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/empty_bad_contents() called tick#: [world.time]")
 	for(var/obj/O in src)
 		if(!is_type_in_list(O,mech_parts))
 			O.loc = src.loc
 	return
 
 /obj/mecha/proc/go_out(var/exit = loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/go_out() called tick#: [world.time]")
 	if(!src.occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
@@ -1345,7 +1289,6 @@
 	return
 
 /obj/mecha/proc/shock_n_boot(var/exit = loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/shock_n_boot() called tick#: [world.time]")
 	spark_system.start()
 	if (occupant)
 		occupant << "<span class='danger'>You feel a sharp shock!</span>"
@@ -1354,7 +1297,6 @@
 		emergency_eject()
 
 /obj/mecha/proc/emergency_eject(var/exit = loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/emergency_eject() called tick#: [world.time]")
 	if (occupant)
 		occupant << sound('sound/machines/warning.ogg',wait=0)
 		log_message("Emergency ejection.",1)
@@ -1368,7 +1310,6 @@
 /////////////////////////
 
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/operation_allowed() called tick#: [world.time]")
 	for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 		if(src.check_access(ID,src.operation_req_access))
 			return 1
@@ -1376,7 +1317,6 @@
 
 
 /obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/internals_access_allowed() called tick#: [world.time]")
 	for(var/atom/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 		if(src.check_access(ID,src.internals_req_access))
 			return 1
@@ -1409,7 +1349,6 @@
 ////////////////////////////////////
 
 /obj/mecha/proc/get_stats_html()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_stats_html() called tick#: [world.time]")
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
@@ -1456,7 +1395,6 @@
 
 
 /obj/mecha/proc/report_internal_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/report_internal_damage() called tick#: [world.time]")
 	var/output = null
 	var/list/dam_reports = list(
 										"[MECHA_INT_FIRE]" = "<font color='red'><b>INTERNAL FIRE</b></font>",
@@ -1476,7 +1414,6 @@
 
 
 /obj/mecha/proc/get_stats_part()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_stats_part() called tick#: [world.time]")
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
 	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
@@ -1497,7 +1434,6 @@
 	return output
 
 /obj/mecha/proc/get_commands()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_commands() called tick#: [world.time]")
 	var/output = {"<div class='wr'>
 						<div class='header'>Electronics</div>
 						<div class='links'>
@@ -1538,7 +1474,6 @@
 	return output
 
 /obj/mecha/proc/get_equipment_menu() //outputs mecha html equipment menu
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_equipment_menu() called tick#: [world.time]")
 	var/output
 	if(equipment.len)
 		output += {"<div class='wr'>
@@ -1555,7 +1490,6 @@
 	return output
 
 /obj/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_equipment_list() called tick#: [world.time]")
 	if(!equipment.len)
 		return
 	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
@@ -1566,7 +1500,6 @@
 
 
 /obj/mecha/proc/get_log_html()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_log_html() called tick#: [world.time]")
 	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
 		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] [game_year]</div>
@@ -1577,7 +1510,6 @@
 
 
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/output_access_dialog() called tick#: [world.time]")
 	if(!id_card || !user) return
 	var/output = {"<html>
 						<head><style>
@@ -1607,7 +1539,6 @@
 	return
 
 /obj/mecha/proc/output_maintenance_dialog(obj/item/weapon/card/id/id_card,mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/output_maintenance_dialog() called tick#: [world.time]")
 	if(!id_card || !user) return
 	var/output = {"<html>
 						<head>
@@ -1632,20 +1563,17 @@
 ////////////////////////////////
 
 /obj/mecha/proc/occupant_message(message as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/occupant_message() called tick#: [world.time]")
 	if(message)
 		if(src.occupant && src.occupant.client)
 			src.occupant << "\icon[src] [message]"
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/log_message() called tick#: [world.time]")
 	log.len++
 	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/log_append_to_last() called tick#: [world.time]")
 	var/list/last_entry = src.log[src.log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
@@ -1877,38 +1805,31 @@
 ///////////////////////
 
 /obj/mecha/proc/has_charge(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/has_charge() called tick#: [world.time]")
 	return (get_charge()>=amount)
 
 /obj/mecha/proc/get_charge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/get_charge() called tick#: [world.time]")
 	return call((proc_res["dyngetcharge"]||src), "dyngetcharge")()
 
 /obj/mecha/proc/dyngetcharge()//returns null if no powercell, else returns cell.charge
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dyngetcharge() called tick#: [world.time]")
 	if(!src.cell) return
 	return max(0, src.cell.charge)
 
 /obj/mecha/proc/use_power(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/use_power() called tick#: [world.time]")
 	return call((proc_res["dynusepower"]||src), "dynusepower")(amount)
 
 /obj/mecha/proc/dynusepower(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/dynusepower() called tick#: [world.time]")
 	if(get_charge())
 		cell.use(amount)
 		return 1
 	return 0
 
 /obj/mecha/proc/give_power(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/give_power() called tick#: [world.time]")
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
 	return 0
 
 /obj/mecha/proc/reset_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/reset_icon() called tick#: [world.time]")
 	if (initial_icon)
 		icon_state = initial_icon
 	else
@@ -2014,7 +1935,6 @@
 //debug
 /*
 /obj/mecha/verb/test_int_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/verb/test_int_damage()  called tick#: [world.time]")
 	set name = "Test internal damage"
 	set category = "Exosuit Interface"
 	set src in view(0)

@@ -1,5 +1,4 @@
 /proc/wormhole_event()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/wormhole_event() called tick#: [world.time]")
 	spawn()
 		var/list/pick_turfs = list()
 		for(var/turf/simulated/floor/T in turfs)
@@ -55,7 +54,6 @@
 
 //maybe this proc can even be used as an admin tool for teleporting players without ruining immulsions?
 /proc/create_wormhole(var/turf/enter as turf, var/turf/exit as turf)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_wormhole() called tick#: [world.time]")
 	var/obj/effect/portal/P = new /obj/effect/portal( enter )
 	P.target = exit
 	P.icon = 'icons/obj/objects.dmi'

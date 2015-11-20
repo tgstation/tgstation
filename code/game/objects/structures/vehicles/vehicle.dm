@@ -42,11 +42,9 @@
 	var/mob/occupant
 
 /obj/structure/bed/chair/vehicle/proc/getMovementDelay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/getMovementDelay() called tick#: [world.time]")
 	return movement_delay
 
 /obj/structure/bed/chair/vehicle/proc/delayNextMove(var/delay, var/additive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/delayNextMove() called tick#: [world.time]")
 	move_delayer.delayNext(delay,additive)
 
 /obj/structure/bed/chair/vehicle/New()
@@ -90,7 +88,6 @@
 			user << "You don't need a key."
 
 /obj/structure/bed/chair/vehicle/proc/check_key(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/check_key() called tick#: [world.time]")
 	if(!keytype)
 		return 1
 	if(mykey)
@@ -149,7 +146,6 @@
 	return 0
 
 /obj/structure/bed/chair/vehicle/proc/Process_Spacemove(var/check_drift = 0, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove() called tick#: [world.time]")
 
 	if(can_spacemove && occupant)
 		return 1
@@ -223,7 +219,6 @@
 	return 1
 
 /obj/structure/bed/chair/vehicle/proc/can_buckle(mob/M, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/can_buckle() called tick#: [world.time]")
 	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.locked_to || destroyed || occupant)
 		return 0
 	return 1
@@ -252,7 +247,6 @@
 	update_mob()
 
 /obj/structure/bed/chair/vehicle/proc/update_mob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/update_mob() called tick#: [world.time]")
 	if(!occupant)
 		return
 
@@ -313,7 +307,6 @@
 		HealthCheck()
 
 /obj/structure/bed/chair/vehicle/proc/HealthCheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/HealthCheck() called tick#: [world.time]")
 	if(health > max_health) health = max_health
 	if(health <= 0 && !destroyed)
 		die()
@@ -329,7 +322,6 @@
 	HealthCheck()
 
 /obj/structure/bed/chair/vehicle/proc/die() //called when health <= 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/die() called tick#: [world.time]")
 	destroyed = 1
 	density = 0
 	visible_message("<span class='warning'>\The [nick] explodes!</span>")

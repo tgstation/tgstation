@@ -104,7 +104,6 @@
 		send_intercept()
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/heist/proc/is_raider_crew_alive() called tick#: [world.time]")
 	var/raider_crew_count = raiders.len
 
 	for(var/datum/mind/raider in raiders)
@@ -119,7 +118,6 @@
 	return TRUE
 
 /datum/game_mode/heist/proc/is_raider_crew_safe()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/heist/proc/is_raider_crew_safe() called tick#: [world.time]")
 	if(!is_raider_crew_alive())
 		return FALSE
 
@@ -134,7 +132,6 @@
 /datum/game_mode/heist/proc/forge_vox_objectives()
 
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/heist/proc/forge_vox_objectives() called tick#: [world.time]")
 
 
 	//Commented out for testing.
@@ -177,7 +174,6 @@
 		O.find_target()
 
 /datum/game_mode/heist/proc/greet_vox(const/datum/mind/raider)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/heist/proc/greet_vox() called tick#: [world.time]")
 	raider.current << {"<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b>
 The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.
 Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.

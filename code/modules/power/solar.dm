@@ -40,7 +40,6 @@ var/list/solars_list = list()
 
 //Give back the glass type we were supplied with
 /obj/machinery/power/solar_assembly/proc/give_glass() //And the lord said unto him, 'Give that fucker glass'
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar_assembly/proc/give_glass() called tick#: [world.time]")
 	if(glass_type)
 		var/obj/item/stack/sheet/S = new glass_type(get_turf(src))
 		S.amount = 2

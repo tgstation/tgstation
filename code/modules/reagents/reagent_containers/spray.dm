@@ -71,7 +71,6 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/spray/proc/make_puff() called tick#: [world.time]")
 	// Create the chemical puff
 	var/transfer_amount = amount_per_transfer_from_this
 	if (!can_transfer_an_APTFT() && !is_empty()) //If it doesn't contain enough reagents to fulfill its amount_per_transfer_from_this, but also isn't empty, it'll spray whatever it has left.
@@ -97,7 +96,6 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/reagent_containers/spray/verb/empty()  called tick#: [world.time]")
 
 	if(isturf(usr.loc))
 		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"

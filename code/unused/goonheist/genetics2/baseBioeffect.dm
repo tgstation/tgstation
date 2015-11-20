@@ -59,23 +59,18 @@ var/const/effectTypePower = 3
 		return ..()
 
 	proc/OnAdd()     //Called when the effect is added.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnAdd() called tick#: [world.time]")
 		return
 
 	proc/OnRemove()  //Called when the effect is removed.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnRemove() called tick#: [world.time]")
 		return
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnMobDraw() called tick#: [world.time]")
 		return
 
 	proc/OnLife()    //Called when the life proc of the mob is called.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnLife() called tick#: [world.time]")
 		return
 
 	proc/GetCopy()   //Gets a copy of this effect. Used to build local effect pool from global instance list. Please don't use this for anything else as it might not work as you think it should.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetCopy() called tick#: [world.time]")
 		var/datum/bioEffect/E = new src.type()
 		E.dnaBlocks.blockList = src.dnaBlocks.blockList //Since we assume that the effect being copied is the one in the global pool we copy a REFERENCE to its correct sequence into the new instance.
 		return E
@@ -90,7 +85,6 @@ var/const/effectTypePower = 3
 		return ..()
 
 	proc/sequenceCorrect()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sequenceCorrect() called tick#: [world.time]")
 		if(blockList.len != blockListCurr.len) return 0 //Things went completely and entirely wrong and everything is broken HALP. Some dickwad probably messed with the global sequence.
 		for(var/i=0, i < blockList.len, i++)
 			var/datum/basepair/correct = blockList[i+1]
@@ -100,7 +94,6 @@ var/const/effectTypePower = 3
 		return 1
 
 	proc/pairCorrect(var/pair_index)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/pairCorrect() called tick#: [world.time]")
 		if(blockList.len != blockListCurr.len || !pair_index)
 			return 0
 		var/datum/basepair/correct = blockList[pair_index]
@@ -110,7 +103,6 @@ var/const/effectTypePower = 3
 		return 1
 
 	proc/ModBlocks() //Gets the normal sequence for this mutation and then "corrupts" it locally.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ModBlocks() called tick#: [world.time]")
 		for(var/datum/basepair/bp in blockList)
 			var/datum/basepair/bpNew = new()
 			bpNew.bpp1 = bp.bpp1
@@ -159,7 +151,6 @@ var/const/effectTypePower = 3
 		return sequenceCorrect()
 
 	proc/GenerateBlocks() //Generate DNA blocks. This sequence will be used globally.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GenerateBlocks() called tick#: [world.time]")
 		for(var/i=0, i < owner.blockCount, i++)
 			for(var/a=0, a < 4, a++) //4 pairs per block.
 				var/S = pick("G", "T", "C" , "A")

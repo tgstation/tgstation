@@ -481,7 +481,6 @@
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M as mob, hudtype)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/hasHUD() called tick#: [world.time]")
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		switch(hudtype)

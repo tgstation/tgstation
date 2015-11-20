@@ -195,7 +195,6 @@
 	return
 
 /obj/item/weapon/winter_gift/cloth/proc/cloth_bundle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/winter_gift/cloth/proc/cloth_bundle() called tick#: [world.time]")
 	var/bundle = pick(
 		3;"batman",
 		10;"russian fur",
@@ -265,7 +264,6 @@
 
 //black gifts have 2% chance to spawn by default.
 /obj/item/weapon/winter_gift/proc/pick_a_gift(var/turf/T,var/special_chance = 2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/winter_gift/proc/pick_a_gift() called tick#: [world.time]")
 	var/gift_type = pick(
 		50;/obj/item/weapon/winter_gift/regular,
 		25;/obj/item/weapon/winter_gift/food,

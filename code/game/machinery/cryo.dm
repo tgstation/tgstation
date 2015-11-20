@@ -286,7 +286,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 /obj/machinery/atmospherics/unary/cryo_cell/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		beaker.loc = get_step(loc, SOUTH)
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
@@ -370,7 +369,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	icon_state = "cell-off"
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant() called tick#: [world.time]")
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
@@ -401,7 +399,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents() called tick#: [world.time]")
 	if(air_contents.total_moles() < 1)
 		return
 	var/air_heat_capacity = air_contents.heat_capacity()
@@ -411,7 +408,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas() called tick#: [world.time]")
 	if(air_contents.total_moles() < 1)
 		return
 //	var/datum/gas_mixture/expel_gas = new
@@ -423,7 +419,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	//loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/go_out(var/exit = src.loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out() called tick#: [world.time]")
 	if(!(occupant))
 		return 0
 	//for(var/obj/O in src)
@@ -440,7 +435,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	update_icon()
 	return 1
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob() called tick#: [world.time]")
 	if (!istype(M))
 		usr << "<span class='danger'>The cryo cell cannot handle such a lifeform!</span>"
 		return
@@ -473,7 +467,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	set name = "Eject occupant"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()  called tick#: [world.time]")
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2 || (usr.status_flags & FAKEDEATH))//and he's not dead....
 			return
@@ -493,7 +486,6 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cryo_cell/verb/move_inside()  called tick#: [world.time]")
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.locked_to || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
@@ -508,13 +500,10 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 
 /datum/data/function/proc/reset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/data/function/proc/reset() called tick#: [world.time]")
 	return
 
 /datum/data/function/proc/r_input(href, href_list, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/data/function/proc/r_input() called tick#: [world.time]")
 	return
 
 /datum/data/function/proc/display()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/data/function/proc/display() called tick#: [world.time]")
 	return

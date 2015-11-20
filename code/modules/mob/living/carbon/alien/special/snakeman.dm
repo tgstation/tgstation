@@ -7,7 +7,6 @@
 		return 4
 
 /mob/living/carbon/alien/humanoid/special/snakeman/verb/lay_egg(mob/living/carbon/human/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/special/snakeman/verb/lay_egg()  called tick#: [world.time]")
 	set name = "Impregnate"
 	set desc = "Lays an egg on a corpse, allowing the egg to feed."
 	set category = "Snakeman"

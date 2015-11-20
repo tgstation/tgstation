@@ -39,7 +39,6 @@
 	var/always_talk=0 // ALWAYS catch signals. Useful for covert listening devices.
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/set_frequency() called tick#: [world.time]")
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
@@ -109,14 +108,12 @@
 	return
 
 /obj/item/device/radio/proc/text_wires()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/text_wires() called tick#: [world.time]")
 	if (b_stat)
 		return wires.GetInteractWindow()
 	return
 
 
 /obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/text_sec_channel() called tick#: [world.time]")
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
 			<B>[chan_name]</B>: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
@@ -196,11 +193,9 @@
 	add_fingerprint(usr)
 
 /obj/item/device/radio/proc/isWireCut(var/index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/isWireCut() called tick#: [world.time]")
 	return wires.IsIndexCut(index)
 /*
 /obj/item/device/radio/proc/autosay(var/message, var/from, var/channel) //BS12 EDIT
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/autosay() called tick#: [world.time]")
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -476,7 +471,6 @@
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/accept_rad() called tick#: [world.time]")
 
 	if ((R.frequency == frequency && message))
 		return 1
@@ -489,7 +483,6 @@
 
 
 /obj/item/device/radio/proc/receive_range(freq, level)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/receive_range() called tick#: [world.time]")
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
@@ -524,7 +517,6 @@
 
 /obj/item/device/radio/proc/send_hear(freq, level)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/proc/send_hear() called tick#: [world.time]")
 
 	var/range = receive_range(freq, level)
 	if(range > -1)

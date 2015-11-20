@@ -108,7 +108,6 @@ var/list/genescanner_addresses = list()
 			user << "<span class='info'>The scanner is not currently locked.</span>"
 
 	verb/move_inside()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/move_inside()  called tick#: [world.time]")
 		set name = "Enter"
 		set src in oview(1)
 
@@ -172,7 +171,6 @@ var/list/genescanner_addresses = list()
 		return
 
 	verb/eject()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/eject()  called tick#: [world.time]")
 		set name = "Eject Occupant"
 		set src in oview(1)
 
@@ -187,7 +185,6 @@ var/list/genescanner_addresses = list()
 		return
 
 	verb/lock()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/lock()  called tick#: [world.time]")
 		set name = "Scanner Lock"
 		set src in oview(1)
 
@@ -210,7 +207,6 @@ var/list/genescanner_addresses = list()
 				src.occupant << "<span class='warning'>You hear the scanner's lock click into place.</span>"
 
 	proc/go_out()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/go_out() called tick#: [world.time]")
 		if (!src.occupant)
 			return
 
@@ -230,7 +226,6 @@ var/list/genescanner_addresses = list()
 		return
 
 	proc/dna_scanner_new_file(var/datum/computer/file/genetics_scan/source_file)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/dna_scanner_new_file() called tick#: [world.time]")
 		if (!source_file)
 			return
 		var/datum/computer/file/genetics_scan/new_file = new /datum/computer/file/genetics_scan(genResearch.dna_samples)

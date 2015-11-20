@@ -84,17 +84,13 @@ var/const/BORG_WIRE_LAWCHECK    = 16 // Not used on MoMMIs
 	return 0
 
 /datum/wires/robot/proc/IsCameraCut()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/robot/proc/IsCameraCut() called tick#: [world.time]")
 	return wires_status & BORG_WIRE_CAMERA
 
 /datum/wires/robot/proc/LockedCut()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/robot/proc/LockedCut() called tick#: [world.time]")
 	return wires_status & BORG_WIRE_LOCKED_DOWN
 
 /datum/wires/robot/proc/CanLawCheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/robot/proc/CanLawCheck() called tick#: [world.time]")
 	return wires_status & BORG_WIRE_LAWCHECK
 
 /datum/wires/robot/proc/AIHasControl()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/robot/proc/AIHasControl() called tick#: [world.time]")
 	return wires_status & BORG_WIRE_AI_CONTROL

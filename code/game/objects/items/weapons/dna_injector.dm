@@ -34,14 +34,12 @@
 	return attack_hand(user)
 
 /obj/item/weapon/dnainjector/proc/GetRealBlock(var/selblock)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/GetRealBlock() called tick#: [world.time]")
 	if(selblock==0)
 		return block
 	else
 		return selblock
 
 /obj/item/weapon/dnainjector/proc/GetState(var/selblock=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/GetState() called tick#: [world.time]")
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.GetSEState(real_block)
@@ -49,7 +47,6 @@
 		return buf.dna.GetUIState(real_block)
 
 /obj/item/weapon/dnainjector/proc/SetState(var/on, var/selblock=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/SetState() called tick#: [world.time]")
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.SetSEState(real_block,on)
@@ -57,7 +54,6 @@
 		return buf.dna.SetUIState(real_block,on)
 
 /obj/item/weapon/dnainjector/proc/GetValue(var/selblock=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/GetValue() called tick#: [world.time]")
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.GetSEValue(real_block)
@@ -65,7 +61,6 @@
 		return buf.dna.GetUIValue(real_block)
 
 /obj/item/weapon/dnainjector/proc/SetValue(var/val,var/selblock=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/SetValue() called tick#: [world.time]")
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.SetSEValue(real_block,val)
@@ -73,7 +68,6 @@
 		return buf.dna.SetUIValue(real_block,val)
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/dnainjector/proc/inject() called tick#: [world.time]")
 	if(istype(M,/mob/living/carbon/human/manifested))
 		M << "<span class='warning'> Apparently it didn't work.</span>"
 		if(M != user)

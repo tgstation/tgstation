@@ -37,7 +37,6 @@
 	return 1
 
 datum/game_mode/proc/auto_declare_completion_blob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/game_mode/proc/auto_declare_completion_blob() called tick#: [world.time]")
 	if(istype(ticker.mode,/datum/game_mode/blob) )
 		var/text = ""
 		var/datum/game_mode/blob/blob_mode = src
@@ -53,7 +52,6 @@ datum/game_mode/proc/auto_declare_completion_blob()
 		return text
 
 /datum/game_mode/blob/proc/check_quarantine()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/blob/proc/check_quarantine() called tick#: [world.time]")
 	var/numDead = 0
 	var/numAlive = 0
 	var/numSpace = 0

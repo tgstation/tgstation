@@ -102,7 +102,6 @@
 	return
 
 /datum/computer/file/computer_program/arcade/proc/arcade_action()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/computer_program/arcade/proc/arcade_action() called tick#: [world.time]")
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"

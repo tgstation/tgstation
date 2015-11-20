@@ -63,7 +63,6 @@
 ****************************************************/
 
 /datum/organ/external/proc/emp_act(severity)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/emp_act() called tick#: [world.time]")
 	if(!is_robotic()) //Meatbags do not care about EMP
 		return
 	var/probability = 30
@@ -77,7 +76,6 @@
 		take_damage(damage, 0, 1, used_weapon = "EMP")
 
 /datum/organ/external/proc/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/take_damage() called tick#: [world.time]")
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
@@ -167,7 +165,6 @@
 	return result
 
 /datum/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/heal_damage() called tick#: [world.time]")
 	if(is_robotic() && !robo_repair) //This item can't fix robotic limbs
 		return
 
@@ -198,7 +195,6 @@
 
 //This function completely restores a damaged organ to perfect condition
 /datum/organ/external/proc/rejuvenate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/rejuvenate() called tick#: [world.time]")
 	damage_state = "00"
 	//Robotic organs stay robotic.  Fix because right click rejuvinate makes IPC's organs organic.
 	//N3X: Use bitmask to exclude shit we don't want.
@@ -220,7 +216,6 @@
 	owner.updatehealth()
 
 /datum/organ/external/proc/createwound(var/type = CUT, var/damage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/createwound() called tick#: [world.time]")
 	if(!damage || damage < 0) //We weren't passed a damage value, or it's negative for some reason
 		return
 
@@ -284,7 +279,6 @@
 //Determines if we even need to process this organ.
 
 /datum/organ/external/proc/need_process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/need_process() called tick#: [world.time]")
 	if(status && !is_organic()) //If it's non-organic, that's fine it will have a status.
 		return 1
 	if(brute_dam || burn_dam)
@@ -347,7 +341,6 @@ INFECTION_LEVEL_THREE	above this germ level the player will take additional toxi
 Note that amputating the affected organ does in fact remove the infection from the player's body.
 */
 /datum/organ/external/proc/update_germs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/update_germs() called tick#: [world.time]")
 	if(!is_existing() || !is_organic()) //Needs to be organic and existing
 		germ_level = 0
 		return
@@ -363,7 +356,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		handle_germ_effects()
 
 /datum/organ/external/proc/handle_germ_sync()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/handle_germ_sync() called tick#: [world.time]")
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 	for(var/datum/wound/W in wounds)
 		//Open wounds can become infected
@@ -378,7 +370,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 				break //Limit increase to a maximum of one per second
 
 /datum/organ/external/proc/handle_germ_effects()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/handle_germ_effects() called tick#: [world.time]")
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
 	if(germ_level > 0 && germ_level < INFECTION_LEVEL_ONE && prob(60))	//This could be an else clause, but it looks cleaner this way
@@ -441,7 +432,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 //Updating wounds. Handles wound natural healing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/update_wounds() called tick#: [world.time]")
 
 	if(!is_organic()) //Non-organic limbs don't heal or get worse
 		return
@@ -501,7 +491,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Updates brute_damn and burn_damn from wound damages. Updates BLEEDING status.
 /datum/organ/external/proc/update_damages()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/update_damages() called tick#: [world.time]")
 	number_wounds = 0
 	brute_dam = 0
 	burn_dam = 0
@@ -527,7 +516,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)
 /datum/organ/external/proc/update_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/update_icon() called tick#: [world.time]")
 	var/n_is = damage_state_text()
 	if(n_is != damage_state)
 		damage_state = n_is
@@ -538,7 +526,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 //New damage icon system
 //Returns just the brute/burn damage code
 /datum/organ/external/proc/damage_state_text()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/damage_state_text() called tick#: [world.time]")
 	if(!is_existing())
 		return "--"
 
@@ -570,14 +557,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Recursive setting of all child organs to amputated
 /datum/organ/external/proc/setAmputatedTree()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/setAmputatedTree() called tick#: [world.time]")
 	for(var/datum/organ/external/O in children)
 		O.amputated = amputated
 		O.setAmputatedTree()
 
 //Handles dismemberment
 /datum/organ/external/proc/droplimb(var/override = 0, var/no_explode = 0, var/spawn_limb = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/droplimb() called tick#: [world.time]")
 	if(destspawn)
 		return
 	if(override)
@@ -639,7 +624,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			owner.death()
 
 /datum/organ/external/proc/generate_dropped_organ(var/obj/item/current_organ)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/generate_dropped_organ() called tick#: [world.time]")
 	return current_organ
 
 /****************************************************
@@ -647,7 +631,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /datum/organ/external/proc/release_restraints()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/release_restraints() called tick#: [world.time]")
 	if(owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
@@ -662,7 +645,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.drop_from_inventory(owner.legcuffed)
 
 /datum/organ/external/proc/bandage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/bandage() called tick#: [world.time]")
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
@@ -673,7 +655,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return rval
 
 /datum/organ/external/proc/disinfect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/disinfect() called tick#: [world.time]")
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
 		if(W.internal)
@@ -684,7 +665,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return rval
 
 /datum/organ/external/proc/clamp()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/clamp() called tick#: [world.time]")
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
@@ -695,7 +675,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return rval
 
 /datum/organ/external/proc/salve()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/salve() called tick#: [world.time]")
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
 		rval |= !W.salved
@@ -703,7 +682,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return rval
 
 /datum/organ/external/proc/fracture()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/fracture() called tick#: [world.time]")
 	if(status & ORGAN_BROKEN)
 		return
 	owner.visible_message("<span class='danger'>You hear a loud cracking sound coming from \the [owner].</span>", \
@@ -724,7 +702,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return
 
 /datum/organ/external/proc/robotize()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/robotize() called tick#: [world.time]")
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
 	src.status &= ~ORGAN_SPLINTED
@@ -739,7 +716,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			T.robotize()
 
 /datum/organ/external/proc/peggify()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/peggify() called tick#: [world.time]")
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
 	src.status &= ~ORGAN_CUT_AWAY
@@ -776,21 +752,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 	src.destspawn = 0
 
 /datum/organ/external/proc/mutate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/mutate() called tick#: [world.time]")
 	src.status |= ORGAN_MUTATED
 	owner.update_body()
 
 /datum/organ/external/proc/unmutate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/unmutate() called tick#: [world.time]")
 	src.status &= ~ORGAN_MUTATED
 	owner.update_body()
 
 /datum/organ/external/proc/get_damage()	//returns total damage
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/get_damage() called tick#: [world.time]")
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
 
 /datum/organ/external/proc/has_infected_wound()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/has_infected_wound() called tick#: [world.time]")
 	for(var/datum/wound/W in wounds)
 		if(W.germ_level > INFECTION_LEVEL_ONE)
 			return 1
@@ -831,26 +803,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Can we use the limb at all in any manner
 /datum/organ/external/proc/is_usable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/is_usable() called tick#: [world.time]")
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD|ORGAN_CUT_AWAY))
 
 //Is the limb broken and not splinted
 /datum/organ/external/proc/is_broken()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/is_broken() called tick#: [world.time]")
 	return ((status & ORGAN_BROKEN) && !(status & ORGAN_SPLINTED))
 
 //Is the limb robotic and malfunctioning
 /datum/organ/external/proc/is_malfunctioning()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/is_malfunctioning() called tick#: [world.time]")
 	return ((status & ORGAN_ROBOT) && prob(brute_dam + burn_dam))
 
 //Can we use advanced tools (no pegs or hook-hands)
 /datum/organ/external/proc/can_use_advanced_tools()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/can_use_advanced_tools() called tick#: [world.time]")
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD|ORGAN_PEG|ORGAN_CUT_AWAY))
 
 /datum/organ/external/proc/process_grasp(var/obj/item/c_hand, var/hand_name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/process_grasp() called tick#: [world.time]")
 	if(!c_hand)
 		return
 
@@ -871,7 +838,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			c_hand.loc = get_turf(c_hand)
 
 /datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/embed() called tick#: [world.time]")
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	implants += W
@@ -1126,7 +1092,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			disfigure((used_weapon != WPN_LOW_BODY_TEMP) ? "burn" : "frostbite")
 
 /datum/organ/external/head/proc/disfigure(var/type = "brute")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/head/proc/disfigure() called tick#: [world.time]")
 	if(disfigured)
 		return
 
@@ -1322,7 +1287,6 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	brainmob.death()
 
 obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/organ/head/proc/transfer_identity() called tick#: [world.time]")
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name

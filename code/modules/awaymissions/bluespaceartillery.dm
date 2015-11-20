@@ -54,7 +54,6 @@
 			reload = 0
 
 /*mob/proc/openfire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/openfire() called tick#: [world.time]")
 	var/A
 	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]

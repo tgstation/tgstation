@@ -67,7 +67,6 @@ Version 1 changes (from version 0):
 #define SD_ALERT_NOVALIDATE		8
 
 proc/sd_Alert(client/who, message, title, buttons = list("Ok"),	default, duration = 0, unfocus = 1, size = "300x200", 	table = "width=100% height=100%", style, tag, select, flags = SD_ALERT_SCROLL)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\proc/sd_Alert() called tick#: [world.time]")
 
 	if(ismob(who))
 		var/mob/M = who
@@ -106,7 +105,6 @@ sd_alert
 		response = params["clk"]
 
 	proc/Display(message,title,list/buttons,default,unfocus,size,table,style,select,flags)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Display() called tick#: [world.time]")
 		if(unfocus) spawn() target << browse(null,null)
 		if(istext(buttons)) buttons = list(buttons)
 		if(!default) default = buttons[1]
@@ -151,7 +149,6 @@ sd_alert
 		target << browse(html,"window=\ref[src];size=[size];can_close=0")
 
 	proc/Response()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Response() called tick#: [world.time]")
 		var/validated
 		while(!validated)
 			while(target && !response)	// wait for a response

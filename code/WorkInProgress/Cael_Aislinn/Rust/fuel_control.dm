@@ -195,7 +195,6 @@
 	updateDialog()
 
 /obj/machinery/computer/rust_fuel_control/proc/check_injector_status(var/obj/machinery/power/rust_fuel_injector/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rust_fuel_control/proc/check_injector_status() called tick#: [world.time]")
 	if(!I)
 		return 0
 

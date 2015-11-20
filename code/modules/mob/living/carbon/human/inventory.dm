@@ -1,7 +1,6 @@
 /mob/living/carbon/human/verb/quick_equip()
 	set name = "quick-equip"
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/quick_equip()  called tick#: [world.time]")
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -21,7 +20,6 @@
 	. = get_head_slots() | get_body_slots()
 
 /mob/living/carbon/human/proc/get_body_slots()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_body_slots() called tick#: [world.time]")
 	return list(
 //ordered body items by which would appear on top
 		l_hand,
@@ -40,7 +38,6 @@
 		w_uniform)
 
 /mob/living/carbon/human/proc/get_head_slots()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_head_slots() called tick#: [world.time]")
 	return list(
 //also head ordered
 		head,
@@ -66,7 +63,6 @@
 	return filter
 
 /mob/living/carbon/human/proc/check_obscured_slots()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_obscured_slots() called tick#: [world.time]")
 	var/list/obscured = list()
 
 	if(wear_suit)
@@ -94,15 +90,12 @@
 //The arg for get_clothing items is the list of equipment - this filters stuff like hands, pockets, suit_storage, etc
 //get_head_slots and get_body_slots do exactly what you think they do
 /mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_hidden_head_flags() called tick#: [world.time]")
 	return check_hidden_flags(get_clothing_items(get_head_slots()), hidden_flags)
 
 /mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_hidden_body_flags() called tick#: [world.time]")
 	return check_hidden_flags(get_clothing_items(get_body_slots()), hidden_flags)
 
 /mob/living/carbon/human/proc/check_hidden_flags(var/list/items, var/hidden_flags = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_hidden_flags() called tick#: [world.time]")
 	if(!items || !istype(items))
 		items = get_clothing_items() //no argument returns all clothing
 	for(var/obj/item/equipped in items)
@@ -112,7 +105,6 @@
 			return 1
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_in_one_of_slots() called tick#: [world.time]")
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))
 			return slot
@@ -124,11 +116,9 @@
 	return null
 
 /mob/living/carbon/human/proc/is_on_ears(var/typepath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/is_on_ears() called tick#: [world.time]")
 	return istype(ears,typepath)
 
 /mob/living/carbon/human/proc/is_in_hands(var/typepath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/is_in_hands() called tick#: [world.time]")
 	if(istype(l_hand,typepath))
 		return l_hand
 	if(istype(r_hand,typepath))
@@ -183,13 +173,11 @@
 	return null
 
 /mob/living/carbon/human/proc/has_organ(name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/has_organ() called tick#: [world.time]")
 	var/datum/organ/external/O = organs_by_name[name]
 
 	return (O && !(O.status & ORGAN_DESTROYED) )
 
 /mob/living/carbon/human/proc/has_organ_for_slot(slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/has_organ_for_slot() called tick#: [world.time]")
 	switch(slot)
 		if(slot_back)
 			return has_organ("chest")
@@ -463,7 +451,6 @@
 	return
 
 /obj/effect/equip_e/proc/done()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/equip_e/proc/done() called tick#: [world.time]")
 	return
 
 /obj/effect/equip_e/New()

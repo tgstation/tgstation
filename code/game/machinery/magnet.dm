@@ -49,7 +49,6 @@
 
 	// update the icon_state
 	proc/updateicon()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 		var/state="floor_magnet"
 		var/onstate=""
 		if(!on)
@@ -74,7 +73,6 @@
 
 	proc/Cmd(var/command, var/modifier)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Cmd() called tick#: [world.time]")
 
 		if(command)
 			switch(command)
@@ -174,7 +172,6 @@
 
 
 	proc/magnetic_process() // proc that actually does the pulling
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/magnetic_process() called tick#: [world.time]")
 		if(pulling) return
 		while(on)
 
@@ -346,7 +343,6 @@
 		updateUsrDialog()
 
 	proc/MagnetMove()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/MagnetMove() called tick#: [world.time]")
 		if(looping) return
 
 		while(moving && rpath.len >= 1)
@@ -393,7 +389,6 @@
 
 
 	proc/filter_path()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/filter_path() called tick#: [world.time]")
 		// Generates the rpath variable using the path string, think of this as "string2list"
 		// Doesn't use params2list() because of the akward way it stacks entities
 		rpath = list() //  clear rpath

@@ -12,7 +12,6 @@
 
 // For straight pipes
 /proc/rotate_pipe_straight(var/newdir)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/rotate_pipe_straight() called tick#: [world.time]")
 	switch(newdir)
 		if(SOUTH) // 2->1
 			return NORTH

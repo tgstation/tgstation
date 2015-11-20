@@ -10,7 +10,6 @@
 
 	proc/scan_atom(atom/A as mob|obj|turf|area)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/scan_atom() called tick#: [world.time]")
 
 		if( !A || (!src.holder) || (!src.master))
 			return 1

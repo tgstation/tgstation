@@ -23,7 +23,6 @@
 		time_failed = world.time
 		if(prob(2))
 			// /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_pda_message() called tick#: [world.time]")
 			var/obj/item/device/pda/P
 			var/list/viables = list()
 			for(var/obj/item/device/pda/check_pda in sortNames(PDAs))

@@ -122,7 +122,6 @@
 	set category = "Object"
 	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/juicer/verb/detach()  called tick#: [world.time]")
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	if (!beaker)
@@ -133,13 +132,11 @@
 	update_icon()
 
 /obj/machinery/juicer/proc/get_juice_id(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/juicer/proc/get_juice_id() called tick#: [world.time]")
 	for (var/i in allowed_items)
 		if (istype(O, i))
 			return allowed_items[i]
 
 /obj/machinery/juicer/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/juicer/proc/get_juice_amount() called tick#: [world.time]")
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -148,7 +145,6 @@
 		return round(5*sqrt(O.potency))
 
 /obj/machinery/juicer/proc/juice()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/juicer/proc/juice() called tick#: [world.time]")
 	power_change() //it is a portable machine
 	if(stat & (NOPOWER|BROKEN))
 		return

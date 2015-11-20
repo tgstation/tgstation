@@ -26,7 +26,6 @@
 	qdel(src)
 
 /obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/bluespace_crystal/proc/blink_mob() called tick#: [world.time]")
 	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom)

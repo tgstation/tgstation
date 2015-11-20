@@ -42,21 +42,18 @@
 	handle_layer()
 
 /obj/structure/bed/chair/proc/handle_layer()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/handle_layer() called tick#: [world.time]")
 	if(dir == NORTH)
 		src.layer = FLY_LAYER
 	else
 		src.layer = OBJ_LAYER
 
 /obj/structure/bed/chair/proc/spin()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/spin() called tick#: [world.time]")
 	change_dir(turn(dir, 90))
 
 /obj/structure/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/stool/bed/chair/verb/rotate()  called tick#: [world.time]")
 
 	if(!usr || !isturf(usr.loc))
 		return

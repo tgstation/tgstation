@@ -1,5 +1,4 @@
 /turf/proc/turf_animation(var/anim_icon,var/anim_state,var/anim_x=0, var/anim_y=0, var/anim_layer=MOB_LAYER+1, var/anim_sound=null, var/anim_color=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/turf_animation() called tick#: [world.time]")
 	if(!c_animation)//spamming turf animations can have unintended effects, such as the overlays never disapearing. hence this check.
 		if(anim_sound)
 			playsound(src, anim_sound, 50, 1)
@@ -30,7 +29,6 @@
 proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num, name as text)
 //This proc throws up either an icon or an animation for a specified amount of time.
 //The variables should be apparent enough.
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/anim() called tick#: [world.time]")
 	if(!location && target)
 		location = get_turf(target)
 	if(location && !target)
@@ -54,7 +52,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 /*
 //called when the tile is cultified
 /turf/proc/cultification()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/cultification() called tick#: [world.time]")
 	if(!c_animation)
 		c_animation = new /atom/movable/overlay(src)
 		c_animation.name = "cultification"
@@ -77,7 +74,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 //called by various cult runes
 /turf/proc/invocanimation(var/animation_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/invocanimation() called tick#: [world.time]")
 	if(!c_animation)
 		c_animation = new /atom/movable/overlay(src)
 		c_animation.name = "invocanimation"
@@ -95,7 +91,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 //called whenever a null rod is blocking a spell or rune
 /turf/proc/nullding()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/nullding() called tick#: [world.time]")
 	playsound(src, 'sound/piano/Ab7.ogg', 50, 1)
 	if(!c_animation)
 		c_animation = new /atom/movable/overlay(src)
@@ -114,7 +109,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 
 /turf/proc/beamin(var/color)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/beamin() called tick#: [world.time]")
 	if(color == "admin")
 		playsound(src, 'sound/misc/adminspawn.ogg', 50, 1)
 		color = ""
@@ -138,7 +132,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 
 /turf/proc/rejuv()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/rejuv() called tick#: [world.time]")
 	playsound(src, 'sound/effects/rejuvinate.ogg', 50, 1)
 	if(!c_animation)
 		c_animation = new /atom/movable/overlay(src)
@@ -156,7 +149,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 
 /turf/proc/busteleport(var/tpsound=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/busteleport() called tick#: [world.time]")
 	if(tpsound)
 		playsound(src, 'sound/effects/busteleport.ogg', 50, 1)
 	if(!c_animation)

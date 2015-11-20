@@ -88,7 +88,6 @@
 	else return ..()
 
 /obj/item/weapon/deck/proc/dealTo(mob/living/target, mob/living/source)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/deck/proc/dealTo() called tick#: [world.time]")
 	if (!src.cards.len)
 		source.show_message("There are no cards in the deck.")
 		return
@@ -144,7 +143,6 @@
 	else return ..()
 
 /obj/item/weapon/hand/verb/discard(datum/playingcard/card in cards)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/hand/verb/discard()  called tick#: [world.time]")
 	set category = "Object"
 	set name     = "Discard"
 	set desc     = "Place a card from your hand in front of you."
@@ -169,7 +167,6 @@
 	src.update_icon()
 
 /obj/item/weapon/hand/verb/toggle_conceal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/hand/verb/toggle_conceal()  called tick#: [world.time]")
 	set category  = "Object"
 	set name      = "Toggle conceal"
 	set desc      = "Toggle concealment of your hand"
@@ -195,7 +192,6 @@
 			usr.show_message("The [card.name].")
 
 /obj/item/weapon/hand/proc/update_conceal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/hand/proc/update_conceal() called tick#: [world.time]")
 	if (src.concealed) src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
 	else               src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
 
@@ -253,5 +249,4 @@
 
 // Hook for html_interface module to prevent updates to clients who don't have this in their inventory.
 /obj/item/weapon/hand/proc/hiIsValidClient(datum/html_interface_client/hclient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/hand/proc/hiIsValidClient() called tick#: [world.time]")
 	return (hclient.client.mob && hclient.client.mob.stat == 0 && (src in hclient.client.mob.contents))

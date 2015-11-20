@@ -108,7 +108,6 @@ var/list/portal_cache = list()
 	overlays += portal_cache["icon[initial(T.icon)]_iconstate[T.icon_state]"]
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/portal/proc/teleport() called tick#: [world.time]")
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
 	if (M.anchored&&istype(M, /obj/mecha))

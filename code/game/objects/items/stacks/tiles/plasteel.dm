@@ -45,7 +45,6 @@
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/tile/plasteel/proc/build() called tick#: [world.time]")
 
 	if(istype(S,/turf/space) || istype(S,/turf/unsimulated))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)

@@ -80,7 +80,6 @@
 //use_nano controls if the design is printed using nanopaper or regular paper
 //nanopaper designs are better, see blueprint.dm for the code details
 /obj/machinery/r_n_d/blueprinter/proc/PrintDesign(var/datum/design/mechanic_design/design, var/use_nano = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/blueprinter/proc/PrintDesign() called tick#: [world.time]")
 	if(!istype(design)) //sanity checks yay
 		return
 	if((use_nano && nano_loaded == 0) || (!use_nano && paper_loaded == 0)) //material checks

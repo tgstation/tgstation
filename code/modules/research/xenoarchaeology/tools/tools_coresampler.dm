@@ -44,7 +44,6 @@
 		return ..()
 
 /obj/item/device/core_sampler/proc/sample_item(var/item_to_sample, var/mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/core_sampler/proc/sample_item() called tick#: [world.time]")
 	var/datum/geosample/geo_data
 	if(istype(item_to_sample, /turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/T = item_to_sample

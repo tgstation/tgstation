@@ -48,13 +48,11 @@
 	set category = "Object"
 	set name = "Unfold"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/p_folded/verb/unfold()  called tick#: [world.time]")
 	if (!canunfold(src, usr)) return
 	processunfolding(src, usr) //this is a verb so we have to use usr
 	return
 
 /obj/item/weapon/p_folded/proc/processunfolding(var/obj/item/weapon/p_folded/P, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/p_folded/proc/processunfolding() called tick#: [world.time]")
 	user.drop_item(P, src) //drop the item first to free our hand, but don't delete it yet because it contains the unfolding result.
 	if(P.unfolded)
 		user.put_in_hands(P.unfolded)
@@ -66,7 +64,6 @@
 	return 1
 
 /obj/item/weapon/p_folded/proc/canunfold(var/obj/item/weapon/p_folded/P, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/p_folded/proc/canunfold() called tick#: [world.time]")
 	if(!user)
 		return 0
 	if(user.stat || user.restrained())

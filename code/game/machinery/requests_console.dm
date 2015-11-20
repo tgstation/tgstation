@@ -73,7 +73,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return ..()
 
 /obj/machinery/requests_console/proc/set_department(var/name, var/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/requests_console/proc/set_department() called tick#: [world.time]")
 	department = name
 	departmentType = D
 	name = "[department] Requests Console"

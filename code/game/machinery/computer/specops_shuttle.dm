@@ -24,7 +24,6 @@ var/specops_shuttle_timeleft = 0
 	light_color = LIGHT_COLOR_CYAN
 
 /proc/specops_return()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_return() called tick#: [world.time]")
 	var/obj/item/device/radio/intercom/announcer = announcement_intercom
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
@@ -102,7 +101,6 @@ var/specops_shuttle_timeleft = 0
 	returnToPool(speech)
 
 /proc/specops_process()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_process() called tick#: [world.time]")
 	var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
 	var/obj/item/device/radio/intercom/announcer = announcement_intercom
 
@@ -242,7 +240,6 @@ var/specops_shuttle_timeleft = 0
 	del(announcer)
 
 /proc/specops_can_move()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_can_move() called tick#: [world.time]")
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
 		return 0
 	for(var/obj/machinery/computer/specops_shuttle/S in machines)
@@ -365,7 +362,6 @@ var/specops_shuttle_timeleft = 0
 	var/allowedtocall = 0
 
 /proc/specops_process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/specops_process() called tick#: [world.time]")
 	var/area/centcom/control/cent_com = locate()//To find announcer. This area should exist for this proc to work.
 	var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
 	var/obj/item/device/radio/intercom/announcer = announcement_intercom
@@ -502,7 +498,6 @@ var/specops_shuttle_timeleft = 0
 		M << "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>"
 
 /proc/specops_can_move()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/specops_can_move() called tick#: [world.time]")
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
 	else return 1
 

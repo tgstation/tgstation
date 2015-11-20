@@ -76,35 +76,28 @@ Class Procs:
 		edge.add_connection(src)
 
 /connection/proc/mark_direct()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/mark_direct() called tick#: [world.time]")
 	state |= CONNECTION_DIRECT
 	//world << "Marked direct."
 
 /connection/proc/mark_indirect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/mark_indirect() called tick#: [world.time]")
 	state &= ~CONNECTION_DIRECT
 	//world << "Marked indirect."
 
 /connection/proc/mark_space()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/mark_space() called tick#: [world.time]")
 	state |= CONNECTION_SPACE
 
 /connection/proc/direct()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/direct() called tick#: [world.time]")
 	return (state & CONNECTION_DIRECT)
 
 /connection/proc/valid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/valid() called tick#: [world.time]")
 	return !(state & CONNECTION_INVALID)
 
 /connection/proc/erase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/erase() called tick#: [world.time]")
 	edge.remove_connection(src)
 	state |= CONNECTION_INVALID
 	//world << "Connection Erased: [state]"
 
 /connection/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection/proc/update() called tick#: [world.time]")
 	//world << "Updated, \..."
 	if(!istype(A,/turf/simulated))
 		//world << "Invalid A."

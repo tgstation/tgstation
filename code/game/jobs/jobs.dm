@@ -120,11 +120,9 @@ var/list/nonhuman_positions = list(
 
 
 /proc/guest_jobbans(var/job)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/guest_jobbans() called tick#: [world.time]")
 	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))
 
 /proc/get_job_datums()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_job_datums() called tick#: [world.time]")
 	var/list/occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 
@@ -136,7 +134,6 @@ var/list/nonhuman_positions = list(
 	return occupations
 
 /proc/get_alternate_titles(var/job)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_alternate_titles() called tick#: [world.time]")
 	var/list/jobs = get_job_datums()
 	var/list/titles = list()
 

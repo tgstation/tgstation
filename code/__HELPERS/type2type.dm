@@ -96,7 +96,6 @@
 
 //slower then list2text, but correctly processes associative lists.
 proc/tg_list2text(list/list, glue = ",")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/tg_list2text() called tick#: [world.time]")
 	if(!istype(list) || !list.len)
 		return
 	for(var/i=1 to list.len)
@@ -122,7 +121,6 @@ proc/tg_list2text(list/list, glue = ",")
 // HTTP GET URL query builder thing.
 // list("a"="b","c"="d") -> ?a=b&c=d
 /proc/buildurlquery(list/list,sep="&")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/buildurlquery() called tick#: [world.time]")
 	if(!istype(list) || !list.len)
 		return
 	var/output
@@ -137,7 +135,6 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
 /proc/text2list(text, delimiter = "\n")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/text2list() called tick#: [world.time]")
 	var/delim_len = length(delimiter)
 	if(delim_len < 1) return list(text)
 	. = list()
@@ -151,7 +148,6 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Case Sensitive!
 /proc/text2listEx(text, delimiter="\n")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/text2listEx() called tick#: [world.time]")
 	var/delim_len = length(delimiter)
 	if(delim_len < 1) return list(text)
 	. = list()
@@ -165,14 +161,12 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/file2list() called tick#: [world.time]")
 	return text2list(return_file_text(filename),seperator)
 
 
 //Turns a direction into text
 
 /proc/dir2text(direction)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dir2text() called tick#: [world.time]")
 	switch(direction)
 		if(1.0)
 			return "north"
@@ -195,7 +189,6 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Turns text into proper directions
 /proc/text2dir(direction)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/text2dir() called tick#: [world.time]")
 	switch(uppertext(direction))
 		if("NORTH")
 			return 1
@@ -218,7 +211,6 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(var/degree)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/angle2dir() called tick#: [world.time]")
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
 	if(degree < 90)		return NORTHEAST
@@ -232,7 +224,6 @@ proc/tg_list2text(list/list, glue = ",")
 //returns the north-zero clockwise angle in degrees, given a direction
 
 /proc/dir2angle(var/D)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dir2angle() called tick#: [world.time]")
 	switch(D)
 		if(NORTH)		return 0
 		if(SOUTH)		return 180
@@ -246,12 +237,10 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Returns the angle in english
 /proc/angle2text(var/degree)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/angle2text() called tick#: [world.time]")
 	return dir2text(angle2dir(degree))
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/blendMode2iconMode() called tick#: [world.time]")
 	switch(blend_mode)
 		if(BLEND_MULTIPLY) return ICON_MULTIPLY
 		if(BLEND_ADD)      return ICON_ADD
@@ -260,7 +249,6 @@ proc/tg_list2text(list/list, glue = ",")
 
 //Converts a rights bitfield into a string
 /proc/rights2text(rights,seperator="")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/rights2text() called tick#: [world.time]")
 	if(rights & R_BUILDMODE)	. += "[seperator]+BUILDMODE"
 	if(rights & R_ADMIN)		. += "[seperator]+ADMIN"
 	if(rights & R_BAN)			. += "[seperator]+BAN"
@@ -279,14 +267,12 @@ proc/tg_list2text(list/list, glue = ",")
 	return .
 
 /proc/ui_style2icon(ui_style)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ui_style2icon() called tick#: [world.time]")
 	switch(ui_style)
 		if("old")		return 'icons/mob/screen1_old.dmi'
 		if("Orange")	return 'icons/mob/screen1_Orange.dmi'
 		else			return 'icons/mob/screen1_Midnight.dmi'
 
 /proc/num2septext(var/theNum, var/sigFig = 7,var/sep=",") // default sigFig (1,000,000)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/num2septext() called tick#: [world.time]")
 	var/finalNum = num2text(theNum, sigFig)
 
 	// Start from the end, or from the decimal point

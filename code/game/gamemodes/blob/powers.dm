@@ -1,7 +1,6 @@
 // Point controlling procs
 
 /mob/camera/blob/proc/can_buy(var/cost = 15)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/can_buy() called tick#: [world.time]")
 	if(blob_points < cost)
 		src << "<span class='warning'>You cannot afford this.</span>"
 		return 0
@@ -14,7 +13,6 @@
 	set category = "Blob"
 	set name = "Jump to Core"
 	set desc = "Transport back to your core."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/transport_core()  called tick#: [world.time]")
 
 	if(blob_core)
 		src.loc = blob_core.loc
@@ -23,7 +21,6 @@
 	set category = "Blob"
 	set name = "Jump to Node"
 	set desc = "Transport back to a selected node."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/jump_to_node()  called tick#: [world.time]")
 
 	if(blob_nodes.len)
 		var/list/nodes = list()
@@ -38,14 +35,12 @@
 	set category = "Blob"
 	set name = "Create Shield Blob (10)"
 	set desc = "Create a shield blob."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/create_shield_power()  called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
 
 /mob/camera/blob/proc/create_shield(var/turf/T)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/create_shield() called tick#: [world.time]")
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
@@ -70,7 +65,6 @@
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate points for you."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/create_resource()  called tick#: [world.time]")
 
 
 	var/turf/T = get_turf(src)
@@ -107,7 +101,6 @@
 	set category = "Blob"
 	set name = "Create Core Blob (100)"
 	set desc = "Create another Core Blob to aid in the station takeover"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/create_core() called tick#: [world.time]")
 
 
 	var/turf/T = get_turf(src)
@@ -141,7 +134,6 @@
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
 	set desc = "Create a Node."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/create_node()  called tick#: [world.time]")
 
 
 	var/turf/T = get_turf(src)
@@ -175,7 +167,6 @@
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a Spore producing blob."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/create_factory()  called tick#: [world.time]")
 
 
 	var/turf/T = get_turf(src)
@@ -207,7 +198,6 @@
 	set category = "Blob"
 	set name = "Remove Blob"
 	set desc = "Removes a blob."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/revert()  called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -230,13 +220,11 @@
 	set category = "Blob"
 	set name = "Expand/Attack Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/expand_blob_power()  called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
 /mob/camera/blob/proc/expand_blob(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/expand_blob() called tick#: [world.time]")
 	if(!T)
 		return
 
@@ -260,14 +248,12 @@
 	set category = "Blob"
 	set name = "Rally Spores (5)"
 	set desc = "Rally the spores to move to your location."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/rally_spores_power()  called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
 /mob/camera/blob/proc/rally_spores(var/turf/T)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/rally_spores() called tick#: [world.time]")
 
 	if(!can_buy(5))
 		return
@@ -288,7 +274,6 @@
 	set category = "Blob"
 	set name = "Psionic Message (15)"
 	set desc = "Give a psionic message to all creatures on and around the station."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/camera/blob/verb/telepathy()  called tick#: [world.time]")
 
 	world << "<span class='warning'>Your vision becomes cloudy, and your mind becomes clear.</span>"
 	spawn(5)

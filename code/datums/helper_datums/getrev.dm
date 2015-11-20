@@ -14,7 +14,6 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 	var/revhref
 
 	proc/abort()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/abort() called tick#: [world.time]")
 		spawn()
 			del src
 
@@ -69,7 +68,6 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 		return abort()
 
 	proc/getRevisionText()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/getRevisionText() called tick#: [world.time]")
 		var/output
 		if(revhref)
 			output = {"<a href="[revhref][revision]">[revision]</a>"}
@@ -78,7 +76,6 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 		return output
 
 	proc/showInfo()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/showInfo() called tick#: [world.time]")
 		return {"<html>
 					<head>
 					</head>
@@ -89,7 +86,6 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 					<html>"}
 
 /proc/return_revision()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/return_revision() called tick#: [world.time]")
 	var/output =  "Sorry, the revision info is unavailable."
 	output = file2text(".git/refs/heads/Bleeding-Edge")
 	if(!output || output == "")
@@ -99,7 +95,6 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 /client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/showrevinfo()  called tick#: [world.time]")
 	var/output =  "Sorry, the revision info is unavailable."
 	output = file2text(".git/refs/heads/Bleeding-Edge")
 	if(!output || output == "")

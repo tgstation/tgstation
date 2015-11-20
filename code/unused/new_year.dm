@@ -92,7 +92,6 @@
 	return
 
 /obj/item/weapon/firbang/proc/prime()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/firbang/proc/prime() called tick#: [world.time]")
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)

@@ -29,7 +29,6 @@
 
 //Proc for effects that trigger on eating that aren't directly tied to the reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume() called tick#: [world.time]")
 	if(!user)
 		return
 	if(!reagents.total_volume) //Are we done eating (determined by the amount of reagents left, here 0)
@@ -62,7 +61,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, eat_override = 0)	//M is target of attack action, user is the one initiating it
 	if(!eatverb)
 		eatverb = pick("bite", "chew", "nibble", "gnaw", "gobble", "chomp")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 	if(!reagents.total_volume)	//Are we done eating (determined by the amount of reagents left, here 0)
 		//This is mostly caused either by "persistent" food items or spamming
 		user << "<span class='notice'>There's nothing left of \the [src]!</span>"
@@ -301,7 +299,6 @@
 	New()
 		..()
 		eatverb = pick("crunch", "devour", "nibble", "gnaw", "gobble", "chomp")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("tricordrazine", 8)
 		bitesize = 3
@@ -371,7 +368,6 @@
 			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/proc/Unwrap(mob/user)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/proc/Unwrap() called tick#: [world.time]")
 		icon_state = "chocolatebarunwrapped"
 		desc = "It won't make you all sticky."
 		user << "<span class='notice'>You remove the foil.</span>"
@@ -649,7 +645,6 @@
 	New()
 		..()
 		eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
@@ -665,7 +660,6 @@
 
 	var/warm = 0
 	proc/cooltime() //Not working, derp?
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/cooltime() called tick#: [world.time]")
 		if(warm)
 			spawn(4200)	//ew
 				warm = 0
@@ -1110,7 +1104,6 @@
 	New()
 		..()
 		eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		unpopped = rand(1,10)
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
@@ -1594,7 +1587,6 @@
 		Unwrap(user)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/On_Consume(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/on_consume() called tick#: [world.time]")
 
 	M << "<span class = 'warning'>Something inside of you suddently expands!</span>"
 
@@ -1631,7 +1623,6 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/Expand() called tick#: [world.time]")
 
 	for(var/mob/M in viewers(src,7))
 		M << "<span class='warning'>\The [src] expands!</span>"
@@ -1639,7 +1630,6 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/unwrap() called tick#: [world.time]")
 
 	icon_state = "monkeycube"
 	desc = "Just add water!"
@@ -1818,7 +1808,6 @@
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		reagents.add_reagent("nutriment", 10)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
@@ -2124,7 +2113,6 @@
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
 		name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
@@ -3730,7 +3718,6 @@
 			generatecontents()
 
 /obj/item/weapon/reagent_containers/food/snacks/sweetsundaeramen/proc/generatecontents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/sweetsundaeramen/proc/generatecontents() called tick#: [world.time]")
 	switch(pick(1,2,3,4,5,6,7,8,9,10))
 		if(1)
 			desc += " It has peppermint flavoring! But just a few drops."
@@ -3785,7 +3772,6 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/chocofrog/proc/jump()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/chocofrog/proc/jump() called tick#: [world.time]")
 	if(!istype(src.loc,/turf)) return
 	jump_cd=1
 	spawn(50)

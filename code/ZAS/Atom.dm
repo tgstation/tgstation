@@ -1,5 +1,4 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/CanPass() called tick#: [world.time]")
 	//Purpose: Determines if the object (or airflow) can pass this atom.
 	//Called by: Movement, airflow.
 	//Inputs: The moving atom (optional), target turf, "height" and air group
@@ -34,7 +33,6 @@
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
 // BLOCKED - Blocked, zone boundaries will not cross even if opened.
 atom/proc/c_airblock(turf/other)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/c_airblock() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif

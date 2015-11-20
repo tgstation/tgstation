@@ -1,6 +1,5 @@
 /datum/hud/proc/robot_hud()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/robot_hud() called tick#: [world.time]")
 
 	src.adding = list()
 	src.other = list()
@@ -190,7 +189,6 @@
 	return
 
 /datum/hud/proc/toggle_show_robot_modules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/toggle_show_robot_modules() called tick#: [world.time]")
 	if(!isrobot(mymob)) return
 
 	var/mob/living/silicon/robot/r = mymob
@@ -199,7 +197,6 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/update_robot_modules_display() called tick#: [world.time]")
 	if(!isrobot(mymob) || !mymob.client) return
 
 	var/mob/living/silicon/robot/r = mymob

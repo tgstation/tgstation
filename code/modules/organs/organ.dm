@@ -11,15 +11,12 @@
 	var/germ_level = 0 //INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
 /datum/organ/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 	return 0
 
 /datum/organ/proc/receive_chem(chemical as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/receive_chem() called tick#: [world.time]")
 	return 0
 
 /datum/organ/proc/Copy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Copy() called tick#: [world.time]")
 	var/datum/organ/I = new type
 	I.vital = vital
 	I.name = name
@@ -31,12 +28,10 @@
 	return I
 
 /datum/organ/proc/get_icon(var/icon/race_icon, var/icon/deform_icon)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/proc/get_icon() called tick#: [world.time]")
 	return icon('icons/mob/human.dmi', "blank")
 
 //Germs
 /datum/organ/proc/handle_antibiotics()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/proc/handle_antibiotics() called tick#: [world.time]")
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
 	if(!germ_level || antibiotics < 5)
@@ -51,7 +46,6 @@
 
 //Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_trace_chems() called tick#: [world.time]")
 	//New are added for reagents to random organs.
 	for(var/datum/reagent/A in reagents.reagent_list)
 		var/datum/organ/O = pick(organs)
@@ -59,7 +53,6 @@
 
 //Adds autopsy data for used_weapon.
 /datum/organ/proc/add_autopsy_data(var/used_weapon, var/damage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/proc/add_autopsy_data() called tick#: [world.time]")
 	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()
@@ -75,7 +68,6 @@
 /mob/living/carbon/human/var/list/internal_organs_by_name = list() //So internal organs have less ickiness too
 
 /mob/living/carbon/human/proc/can_use_hand(var/this_hand = hand)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/can_use_active_hand() called tick#: [world.time]")
 	if(hasorgans(src))
 		var/datum/organ/external/temp = src.organs_by_name[(this_hand ? "l_hand" : "r_hand")]
 		if(temp && !temp.is_usable())
@@ -87,7 +79,6 @@
 //Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_organs()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_organs() called tick#: [world.time]")
 
 	number_wounds = 0
 	var/stand_broken = 0 //We cannot stand because one of our legs or foot is completely broken and unsplinted, or missing

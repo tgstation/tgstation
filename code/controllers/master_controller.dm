@@ -70,7 +70,6 @@ datum/controller/game_controller/New()
 		garbageCollector = global.garbageCollector
 */
 datum/controller/game_controller/proc/setup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/setup() called tick#: [world.time]")
 	world.tick_lag = config.Ticklag
 
 	// notify the other process that we started up
@@ -149,7 +148,6 @@ datum/controller/game_controller/proc/buildcamlist()
 	adv_camera.initialized = 1
 
 datum/controller/game_controller/proc/cachedamageicons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/cachedamageicons() called tick#: [world.time]")
 	var/mob/living/carbon/human/H = new(locate(1,1,2))
 	var/datum/species/list/slist = list(new /datum/species/human, new /datum/species/vox, new /datum/species/diona)
 	var/icon/DI
@@ -171,7 +169,6 @@ datum/controller/game_controller/proc/cachedamageicons()
 	del(H)
 
 /datum/controller/game_controller/proc/setup_objects()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/setup_objects() called tick#: [world.time]")
 	var/watch = start_watch()
 	var/overwatch = start_watch() // Overall.
 
@@ -226,7 +223,6 @@ datum/controller/game_controller/proc/cachedamageicons()
 
 
 /datum/controller/game_controller/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/process() called tick#: [world.time]")
 	processing = 1
 
 	spawn (0)
@@ -349,7 +345,6 @@ datum/controller/game_controller/proc/cachedamageicons()
 				sleep(10)
 
 datum/controller/game_controller/proc/processMobs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/processMobs() called tick#: [world.time]")
 	var/i = 1
 	expensive_mobs.len = 0
 	while(i<=mob_list.len)
@@ -366,7 +361,6 @@ datum/controller/game_controller/proc/processMobs()
 			mob_list.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/processDiseases()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processDiseases() called tick#: [world.time]")
 	for (var/datum/disease/Disease in active_diseases)
 		if(Disease)
 			last_thing_processed = Disease.type
@@ -376,7 +370,6 @@ datum/controller/game_controller/proc/processMobs()
 		active_diseases -= Disease
 
 /datum/controller/game_controller/proc/processMachines()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processMachines() called tick#: [world.time]")
 	#ifdef PROFILE_MACHINES
 	machine_profiling.len = 0
 	#endif
@@ -408,7 +401,6 @@ datum/controller/game_controller/proc/processMobs()
 
 
 /datum/controller/game_controller/proc/processObjects()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processObjects() called tick#: [world.time]")
 	for (var/obj/Object in processing_objects)
 		if (Object && Object.loc)
 			last_thing_processed = Object.type
@@ -427,7 +419,6 @@ datum/controller/game_controller/proc/processMobs()
 		processing_objects -= SM
 
 /datum/controller/game_controller/proc/processPipenets()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processPipenets() called tick#: [world.time]")
 	last_thing_processed = /datum/pipe_network
 
 	for (var/datum/pipe_network/Pipe_Network in pipe_networks)
@@ -438,7 +429,6 @@ datum/controller/game_controller/proc/processMobs()
 		pipe_networks -= Pipe_Network
 
 /datum/controller/game_controller/proc/processPowernets()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processPowernets() called tick#: [world.time]")
 	last_thing_processed = /datum/powernet
 
 	for (var/datum/powernet/Powernet in powernets)
@@ -449,7 +439,6 @@ datum/controller/game_controller/proc/processMobs()
 		powernets -= Powernet
 
 /datum/controller/game_controller/proc/processNano()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processNano() called tick#: [world.time]")
 	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
 		if (Nanoui)
 			Nanoui.process()
@@ -458,7 +447,6 @@ datum/controller/game_controller/proc/processMobs()
 		nanomanager.processing_uis -= Nanoui
 
 /datum/controller/game_controller/proc/processEvents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/game_controller/proc/processEvents() called tick#: [world.time]")
 	last_thing_processed = /datum/event
 
 	for (var/datum/event/Event in events)

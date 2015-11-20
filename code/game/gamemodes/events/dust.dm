@@ -8,7 +8,6 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 */
 
 /proc/dust_swarm(var/strength = "weak")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dust_swarm() called tick#: [world.time]")
 	var/numbers = 1
 	switch(strength)
 		if("weak")

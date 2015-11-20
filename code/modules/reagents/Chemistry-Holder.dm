@@ -650,7 +650,6 @@ datum
  * Helper proc to retrieve the 'bad' reagents in the holder. Used for logging.
  */
 /datum/reagents/proc/get_bad_reagent_names()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagents/proc/get_bad_reagent_names() called tick#: [world.time]")
 	if (!istype(reagents_to_log) || reagents_to_log.len == 0)
 		return null
 
@@ -662,11 +661,9 @@ datum
 	return bad_reagents
 
 /datum/reagents/proc/is_empty()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagents/proc/is_empty() called tick#: [world.time]")
 	return total_volume <= 0
 
 /datum/reagents/proc/is_full()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagents/proc/is_full() called tick#: [world.time]")
 	return total_volume >= maximum_volume
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -676,6 +673,5 @@ datum
  * max_vol is maximum volume of holder
  */
 /atom/proc/create_reagents(const/max_vol)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/create_reagents() called tick#: [world.time]")
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

@@ -57,19 +57,15 @@ display round(lastgen) and plasmatank amount
 	var/power_output = 1
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/proc/HasFuel() called tick#: [world.time]")
 	return 1
 
 /obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/proc/UseFuel() called tick#: [world.time]")
 	return
 
 /obj/machinery/power/port_gen/proc/DropFuel()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/proc/DropFuel() called tick#: [world.time]")
 	return
 
 /obj/machinery/power/port_gen/proc/handleInactive()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/proc/handleInactive() called tick#: [world.time]")
 	return
 
 /obj/machinery/power/port_gen/process()
@@ -205,7 +201,6 @@ display round(lastgen) and plasmatank amount
 		src.updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/port_gen/pacman/proc/overheat() called tick#: [world.time]")
 	explosion(src.loc, 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman/emag(mob/user)

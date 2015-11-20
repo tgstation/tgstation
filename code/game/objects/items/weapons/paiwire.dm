@@ -1,5 +1,4 @@
 /obj/item/weapon/pai_cable/proc/plugin(obj/machinery/M as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pai_cable/proc/plugin() called tick#: [world.time]")
 	if(istype(M, /obj/machinery/door) || istype(M, /obj/machinery/camera))
 		user.visible_message("[user] inserts [src] into a data port on [M].", "You insert [src] into a data port on [M].", "You hear the satisfying click of a wire jack fastening into place.")
 		if(user && user.get_active_hand() == src)

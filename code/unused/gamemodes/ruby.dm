@@ -90,15 +90,12 @@
 
 
 /datum/game_mode/ruby/proc/spawn_macguffin()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/ruby/proc/spawn_macguffin() called tick#: [world.time]")
 
 /datum/game_mode/ruby/proc/get_possible_abominations()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/game_mode/ruby/proc/get_possible_abominations() called tick#: [world.time]")
 
 
 /mob/proc/make_abomination()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/make_abomination() called tick#: [world.time]")
 	src.see_in_dark = 20
 	src.verbs += /client/proc/planar_shift
 	src.verbs += /client/proc/vile_ressurection
@@ -113,7 +110,6 @@
 
 
 /client/proc/planar_shift()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/planar_shift() called tick#: [world.time]")
 	set name = "Planar Shift"
 	set category = "Abomination"
 	// This is a pretty shitty way to do this. Should use the spell_holder method from Wizard mode
@@ -135,7 +131,6 @@
 	*/
 
 /client/proc/vile_ressurection()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vile_ressurection() called tick#: [world.time]")
 	set name = "Vile Ressurection"
 	set category = "Abomination"
 	if(src.mob.stat != 2 || !src.mob)
@@ -147,7 +142,6 @@
 		// nope
 
 /client/proc/defile_corpse(var/mob/living/carbon/human/H in view())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/defile_corpse() called tick#: [world.time]")
 	set name = "Defile Corpse"
 	set category = "Abomination"
 	if(istype(H, /mob/living/carbon/human))
@@ -159,7 +153,6 @@
 	// play sound
 
 /client/proc/summon_weapon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/summon_weapon() called tick#: [world.time]")
 	set name = "Summon Weapon"
 	set category = "Abomination"
 
@@ -176,7 +169,6 @@
 		return
 
 /client/proc/sacrifice_self()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/sacrifice_self() called tick#: [world.time]")
 	set name = "Sacrifice Self"
 	set category = "Abomination"
 	set desc = "Everything must come to an end. After you have freed them, you must free yourself."
@@ -190,7 +182,6 @@
 	ticker.mode:abominationwins = 1
 
 /client/proc/hunt()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/hunt() called tick#: [world.time]")
 	set name = "Hunt"
 	set category = "Abomination"
 	set desc = ""
@@ -256,7 +247,6 @@
 
 
 /client/proc/howl()	// This is just a way for the Abomination to make the game more atmospheric periodically.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/howl() called tick#: [world.time]")
 	set name = "Howl"
 	set category = "Abomination"
 	set desc = ""
@@ -279,7 +269,6 @@
 	var/mob/owner
 
 	proc/check_owner()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_owner() called tick#: [world.time]")
 		if(!owner)
 			sleep(300)
 			if(!owner)
@@ -288,7 +277,6 @@
 			spawn(1800) check_owner()
 
 	proc/search_for_new_owner()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/search_for_new_owner() called tick#: [world.time]")
 		var/list/possible_owners = list()
 		for(var/mob/living/carbon/human/H in mob_list)
 			possible_owners.Add(H)

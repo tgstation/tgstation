@@ -82,7 +82,6 @@
 	return
 
 /obj/item/device/deskbell/proc/ring()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/deskbell/proc/ring() called tick#: [world.time]")
 	if(world.time - last_ring_time >= ring_delay)
 		last_ring_time = world.time
 		flick("[icon_state]-push", src)
@@ -361,7 +360,6 @@ var/global/deskbell_freq_brig = call(/obj/item/device/deskbell/signaler/proc/get
 var/global/deskbell_freq_rnd = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
 
 /obj/item/device/deskbell/signaler/proc/get_new_bellfreq()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/deskbell/signaler/proc/get_new_bellfreq() called tick#: [world.time]")
 	var/i = rand(MINIMUM_FREQUENCY,MAXIMUM_FREQUENCY)
 	if ((i % 2) == 0) //Ensure the last digit is an odd number
 		i += 1

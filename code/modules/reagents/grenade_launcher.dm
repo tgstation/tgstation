@@ -51,7 +51,6 @@
 		usr << "<span class='warning'>The [src.name] is empty.</span>"
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/grenadelauncher/proc/fire_grenade() called tick#: [world.time]")
 	for(var/mob/O in viewers(world.view, user))
 		O.show_message(text("<span class='warning'>[] fired a grenade!</span>", user), 1)
 	user << "<span class='warning'>You fire the grenade launcher!</span>"

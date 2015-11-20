@@ -30,7 +30,6 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	)
 
 /obj/machinery/mirror/proc/get_deflections(var/in_dir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mirror/proc/get_deflections() called tick#: [world.time]")
 	if(dir in list(EAST, WEST))
 		//testing("[src]: Detected orientation: \\, in_dir=[in_dir], dir=[dir]")
 		switch(in_dir) // \\ orientation
@@ -60,7 +59,6 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	set name = "Rotate (Clockwise)"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/mirror/verb/rotate_cw()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
@@ -74,7 +72,6 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	set name = "Rotate (Counter-Clockwise)"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/mirror/verb/rotate_ccw()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
@@ -111,12 +108,10 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 
 // When beam power changes
 /obj/machinery/mirror/proc/on_power_change(var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mirror/proc/on_power_change() called tick#: [world.time]")
 	//Don't care about args, just update beam.
 	update_beams()
 
 /obj/machinery/mirror/proc/kill_all_beams()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mirror/proc/kill_all_beams() called tick#: [world.time]")
 	for(var/i=1;i<=4;i++)
 		if(i > emitted_beams.len) break
 		var/obj/effect/beam/beam = emitted_beams[i]
@@ -126,7 +121,6 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	emitted_beams.len = 4
 
 /obj/machinery/mirror/proc/update_beams()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mirror/proc/update_beams() called tick#: [world.time]")
 	overlays.len = 0
 
 	var/list/beam_dirs[4] // dir = list(

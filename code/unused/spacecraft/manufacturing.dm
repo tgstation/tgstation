@@ -46,7 +46,6 @@
 	var/state = 0 // 0 - Idle, 1 - Spraying, 2 - Done, 3 - Overheated
 
 obj/machinery/nanosprayer/proc/update_temp()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/nanosprayer/proc/update_temp() called tick#: [world.time]")
 	// 1 second : 1 degree
 	if(src.state == 0)
 		var/diff = (world.time - usr_lastupdate) * 10
@@ -83,7 +82,6 @@ obj/machinery/nanosprayer/process()
 
 
 obj/machinery/nanosprayer/proc/cooldown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/nanosprayer/proc/cooldown() called tick#: [world.time]")
 	while(state != 1)
 		sleep(200)
 		temp -= rand(5,20)
@@ -92,11 +90,9 @@ obj/machinery/nanosprayer/proc/cooldown()
 			return
 
 obj/machinery/nanosprayer/proc/overheat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/nanosprayer/proc/overheat() called tick#: [world.time]")
 	return
 
 obj/machinery/nanosprayer/proc/complete()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/nanosprayer/proc/complete() called tick#: [world.time]")
 	src.totalpoints = 0
 	src.points = 0
 	spawn() cooldown()

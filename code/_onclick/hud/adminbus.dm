@@ -1,5 +1,4 @@
 /datum/hud/proc/adminbus_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/adminbus_hud() called tick#: [world.time]")
 	mymob.gui_icons.adminbus_bg = getFromPool(/obj/screen)
 	mymob.gui_icons.adminbus_bg.icon = 'icons/adminbus/fullscreen.dmi'
 	mymob.gui_icons.adminbus_bg.icon_state = "HUD"
@@ -261,7 +260,6 @@
 
 
 /datum/hud/proc/remove_adminbus_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/remove_adminbus_hud() called tick#: [world.time]")
 	for(var/i=1;i<=16;i++)
 		mymob.client.screen -= mymob.gui_icons.rearviews[i]
 

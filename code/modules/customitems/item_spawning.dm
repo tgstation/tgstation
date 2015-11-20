@@ -1,6 +1,5 @@
 
 /proc/EquipCustomItems(mob/living/carbon/human/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/EquipCustomItems() called tick#: [world.time]")
 	testing("\[CustomItem\] Checking for custom items for [M.ckey] ([M.real_name])...")
 	if(!establish_db_connection())
 		return
@@ -83,7 +82,6 @@
 
 // This is hacky, but since it's difficult as fuck to make a proper parser in BYOND without killing the server, here it is. - N3X
 /proc/HackProperties(var/mob/living/carbon/human/M,var/obj/item/I,var/script)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Hackproperties() called tick#: [world.time]")
 	/*
 	A=string:b lol {REALNAME} {ROLE} {ROLE_ALT};
 	B=icon:icons/dmi/lol.dmi:STATE;
@@ -124,7 +122,6 @@
 //yes, it has to be an item, you can't pick up nonitems
 /* Old as fuck, not SQL-based, hardcoded keys.
 /proc/EquipCustomItems(mob/living/carbon/human/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/EquipCustomItems() called tick#: [world.time]")
 	// load lines
 	var/file = file2text("config/custom_items.txt")
 	var/lines = text2list(file, "\n")

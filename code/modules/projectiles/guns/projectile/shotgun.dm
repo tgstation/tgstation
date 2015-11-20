@@ -44,7 +44,6 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/shotgun/pump/proc/pump(mob/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/shotgun/pump/proc/pump() called tick#: [world.time]")
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pumped = 0
 	if(current_shell)//We have a shell in the chamber

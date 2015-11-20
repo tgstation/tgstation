@@ -106,7 +106,6 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/shockAttack(mob/living/carbon/human/target,mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/melee/defibrillator/proc/shockAttack() called tick#: [world.time]")
 	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 	target.visible_message("<span class='danger'>[target] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
@@ -129,7 +128,6 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/attemptDefib(mob/living/carbon/human/target,mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/melee/defibrillator/proc/attemptDefib() called tick#: [world.time]")
 	user.visible_message("<span class='notice'>[user] starts setting up the paddles on [target]'s chest</span>", \
 	"<span class='notice'>You start setting up the paddles on [target]'s chest</span>")
 	if(do_after(user,target,30))

@@ -53,7 +53,6 @@
 	canremove = 1
 
 /obj/item/clothing/mask/happy/proc/RaiseShade(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/happy/proc/RaiseShade() called tick#: [world.time]")
 	for(var/mob/living/carbon/human/M in view(4, H))
 		if(!M) return
 		if(M.stat != 2) continue

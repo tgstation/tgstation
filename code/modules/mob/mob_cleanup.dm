@@ -4,7 +4,6 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 */
 
 /mob/proc/has_disease(var/datum/disease/virus)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/has_disease() called tick#: [world.time]")
 	for(var/datum/disease/D in viruses)
 		if(D.IsSame(virus))
 			//error("[D.name]/[D.type] is the same as [virus.name]/[virus.type]")
@@ -13,7 +12,6 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1, var/spread_type = -5)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/contract_disease() called tick#: [world.time]")
 	//world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2)
 		//world << "He's dead jim."

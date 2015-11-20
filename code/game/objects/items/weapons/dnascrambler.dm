@@ -34,7 +34,6 @@
 				user << "<span class='warning'>You failed to inject [M.name].</span>"
 
 	proc/injected(var/mob/living/carbon/target, var/mob/living/carbon/user)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/injected() called tick#: [world.time]")
 		target.generate_name()
 		target.real_name = target.name
 

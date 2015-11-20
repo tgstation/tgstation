@@ -196,7 +196,6 @@ for (var/client/C)
 
 /obj/machinery/rail_car/proc/load(var/atom/movable/C)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/rail_car/proc/load() called tick#: [world.time]")
 
 	if(get_dist(C, src) > 1)
 		return
@@ -222,7 +221,6 @@ for (var/client/C)
 	//send_status()
 
 /obj/machinery/rail_car/proc/unload(var/dirn = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/rail_car/proc/unload() called tick#: [world.time]")
 	if(!load)
 		return
 

@@ -102,7 +102,6 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 
 
 /obj/item/seeds/replicapod/proc/harvest_failure(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/replicapod/proc/harvest_failure() called tick#: [world.time]")
 	parent.visible_message("The pod has formed badly, and all you can do is salvage some of the seeds.")
 	var/seed_count = 1
 	if(prob(yield * parent.yieldmod * 20))
@@ -113,7 +112,6 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	parent.update_tray()
 
 /obj/item/seeds/replicapod/proc/request_player()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/replicapod/proc/request_player() called tick#: [world.time]")
 	for(var/mob/dead/observer/observer in dead_mob_list)
 		if(jobban_isbanned(observer, "Dionaea"))
 			continue
@@ -141,7 +139,6 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 
 /obj/item/seeds/replicapod/proc/transfer_personality(var/client/player, var/ghost = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/replicapod/proc/transfer_personality() called tick#: [world.time]")
 
 	if(!player) return 0
 	if(ghost) hasbeendiona[player.key] = world.time

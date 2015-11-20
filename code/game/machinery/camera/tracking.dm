@@ -1,6 +1,5 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/get_camera_list() called tick#: [world.time]")
 
 	track.cameras.len = 0
 
@@ -25,7 +24,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_camera_list() called tick#: [world.time]")
 	if (!camera)
 		return 0
 
@@ -44,7 +42,6 @@
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/trackable_mobs() called tick#: [world.time]")
 
 	track.names.len = 0
 	track.namecounts.len = 0
@@ -104,7 +101,6 @@
 /mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/ai_camera_track()  called tick#: [world.time]")
 
 	if(!target_name)
 		return
@@ -114,7 +110,6 @@
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/living/target as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/open_nearest_door() called tick#: [world.time]")
 	if(!istype(target)) return
 	spawn(0)
 		if(istype(target, /mob/living/carbon/human))
@@ -156,7 +151,6 @@
 			src << "<span class='warning'>You've failed to open an airlock for [target]</span>"
 		return
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_actual_track() called tick#: [world.time]")
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
@@ -199,7 +193,6 @@
 			sleep(10)
 
 /proc/near_camera(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/near_camera() called tick#: [world.time]")
 	if (!isturf(M.loc))
 		return 0
 	if(isrobot(M))
@@ -222,7 +215,6 @@
 	ai_camera_list()
 
 /proc/camera_sort(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/camera_sort() called tick#: [world.time]")
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 

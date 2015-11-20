@@ -230,7 +230,6 @@
 
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/derez() called tick#: [world.time]")
 
 	holographic_items.Remove(obj)
 
@@ -250,7 +249,6 @@
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/checkInteg() called tick#: [world.time]")
 
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
@@ -259,7 +257,6 @@
 
 /obj/machinery/computer/HolodeckControl/proc/togglePower(var/toggleOn = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/togglePower() called tick#: [world.time]")
 
 	if(toggleOn)
 		var/area/targetsource = locate(/area/holodeck/source_emptycourt)
@@ -287,7 +284,6 @@
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/loadProgram() called tick#: [world.time]")
 
 	if(world.time < (last_change + 25))
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
@@ -330,7 +326,6 @@
 				new /mob/living/simple_animal/hostile/carp/holocarp(L.loc)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/emergencyShutdown() called tick#: [world.time]")
 	//Get rid of any items
 	for(var/item in holographic_items)
 		derez(item)
@@ -603,7 +598,6 @@
 
 /obj/machinery/readybutton/proc/begin_event()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/readybutton/proc/begin_event() called tick#: [world.time]")
 
 	eventstarted = 1
 

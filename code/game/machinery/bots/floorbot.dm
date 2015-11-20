@@ -121,7 +121,6 @@ var/global/list/floorbot_targets=list()
 
 
 /obj/machinery/bot/floorbot/proc/speak(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/speak() called tick#: [world.time]")
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
@@ -178,7 +177,6 @@ var/global/list/floorbot_targets=list()
 			src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/proc/is_obj_valid_target(var/atom/T,var/list/floorbottargets)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/is_obj_valid_target() called tick#: [world.time]")
 	if(T in floorbottargets)
 		return 0
 	if(T == src.oldtarget)
@@ -190,7 +188,6 @@ var/global/list/floorbot_targets=list()
 	return 1
 
 /obj/machinery/bot/floorbot/proc/hunt_for_tiles(var/list/shit_in_view, var/list/floorbottargets)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/hunt_for_tiles() called tick#: [world.time]")
 	for(var/obj/item/stack/tile/plasteel/T in shit_in_view)
 		if(!(T in floorbot_targets) && src.is_obj_valid_target(T,floorbottargets))
 			src.oldtarget = T
@@ -200,7 +197,6 @@ var/global/list/floorbot_targets=list()
 			return
 
 /obj/machinery/bot/floorbot/proc/hunt_for_metal(var/list/shit_in_view, var/list/floorbottargets)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/hunt_for_metal() called tick#: [world.time]")
 	for(var/obj/item/stack/sheet/metal/M in shit_in_view)
 		if(!(M in floorbot_targets) && src.is_obj_valid_target(M) && M.amount == 1)
 			src.oldtarget = M
@@ -210,7 +206,6 @@ var/global/list/floorbot_targets=list()
 			return
 
 /obj/machinery/bot/floorbot/proc/have_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/have_target() called tick#: [world.time]")
 	return (src.target != null)
 
 /obj/machinery/bot/floorbot/process()
@@ -261,7 +256,6 @@ var/global/list/floorbot_targets=list()
 					patrol_step()
 
 /obj/machinery/bot/floorbot/proc/fix_shit()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/fix_shit() called tick#: [world.time]")
 	if(!src.have_target())
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
@@ -333,7 +327,6 @@ var/global/list/floorbot_targets=list()
 	return 1
 
 /obj/machinery/bot/floorbot/proc/checkforwork()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/checkforwork() called tick#: [world.time]")
 	if(src.have_target())
 		return 0
 	var/list/floorbottargets = list()
@@ -410,7 +403,6 @@ var/global/list/floorbot_targets=list()
 	return 0
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/repair() called tick#: [world.time]")
 	if(istype(target, /turf/space/))
 		if(target.loc.name == "Space")
 			return
@@ -459,7 +451,6 @@ var/global/list/floorbot_targets=list()
 					src.target = null
 
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/eattile() called tick#: [world.time]")
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
 	visible_message("<span class='warning'>[src] begins to collect tiles.</span>")
@@ -482,7 +473,6 @@ var/global/list/floorbot_targets=list()
 		src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/maketile() called tick#: [world.time]")
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
 	if(M.amount < 1)
@@ -506,7 +496,6 @@ var/global/list/floorbot_targets=list()
 		src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/updateicon() called tick#: [world.time]")
 	if(src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else
@@ -514,7 +503,6 @@ var/global/list/floorbot_targets=list()
 
 
 /obj/machinery/bot/floorbot/proc/calc_path(var/turf/avoid = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/calc_path() called tick#: [world.time]")
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	src.path = reverseRange(src.path)
 
@@ -522,7 +510,6 @@ var/global/list/floorbot_targets=list()
 
 /obj/machinery/bot/floorbot/proc/patrol_step()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/patrol_step() called tick#: [world.time]")
 
 	if(loc == patrol_target)		// reached target
 		at_patrol_target()
@@ -572,7 +559,6 @@ var/global/list/floorbot_targets=list()
 
 // finds a new patrol target
 /obj/machinery/bot/floorbot/proc/find_patrol_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/find_patrol_target() called tick#: [world.time]")
 //	send_status()
 	if(awaiting_beacon)			// awaiting beacon response
 		awaiting_beacon++
@@ -590,7 +576,6 @@ var/global/list/floorbot_targets=list()
 // finds the nearest beacon to self
 // signals all beacons matching the patrol code
 /obj/machinery/bot/floorbot/proc/find_nearest_beacon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/find_nearest_beacon() called tick#: [world.time]")
 	nearest_beacon = null
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
@@ -607,7 +592,6 @@ var/global/list/floorbot_targets=list()
 
 
 /obj/machinery/bot/floorbot/proc/at_patrol_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/at_patrol_target() called tick#: [world.time]")
 	find_patrol_target()
 	return
 
@@ -657,13 +641,11 @@ var/global/list/floorbot_targets=list()
 
 // send a radio signal with a single data key/value pair
 /obj/machinery/bot/floorbot/proc/post_signal(var/freq, var/key, var/value)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/post_signal() called tick#: [world.time]")
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/floorbot/proc/post_signal_multiple(var/freq, var/list/keyval)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/post_signal_multiple() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -685,7 +667,6 @@ var/global/list/floorbot_targets=list()
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
 /obj/machinery/bot/floorbot/proc/set_destination(var/new_dest)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/floorbot/proc/set_destination() called tick#: [world.time]")
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1

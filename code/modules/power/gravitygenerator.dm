@@ -42,13 +42,11 @@
 
 
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/gravity_control_computer/proc/updatemodules() called tick#: [world.time]")
 	src.gravity_generator = findgenerator()
 
 
 
 /obj/machinery/gravity_generator/proc/locatelocalareas()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gravity_generator/proc/locatelocalareas() called tick#: [world.time]")
 	for(var/area/A in range(src,effectiverange))
 		if(A.name == "Space")
 			continue // No (de)gravitizing space.
@@ -56,7 +54,6 @@
 			localareas += A
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/gravity_control_computer/proc/findgenerator() called tick#: [world.time]")
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		//world << "SEARCHING IN [dir]"

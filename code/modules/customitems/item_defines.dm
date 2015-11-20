@@ -594,7 +594,6 @@ hi
 
 //Suit roll-down toggle.
 /obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()  called tick#: [world.time]")
 	set name = "Toggle Jumpsuit Zipper"
 	set category = "Object"
 	set src in usr

@@ -51,7 +51,6 @@
 		set name = "Change Color"
 		set category = "Object"
 		set src in usr
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/change()  called tick#: [world.time]")
 
 		if(icon_state == "psyche")
 			usr << "<span class='warning'>Your suit is malfunctioning</span>"

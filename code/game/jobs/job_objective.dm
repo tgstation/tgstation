@@ -3,7 +3,6 @@
 #define FINDJOBTASK_DEFAULT_NEW 1 // Make a new task of this type if one can't be found.
 
 /datum/mind/proc/findJobTask(var/typepath,var/options=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/findJobTask() called tick#: [world.time]")
 	var/datum/job_objective/task = locate(typepath) in src.job_objectives
 	if(!istype(task,typepath))
 		if(options & FINDJOBTASK_DEFAULT_NEW)
@@ -27,25 +26,20 @@
 /datum/job_objective/Del()
 
 /datum/job_objective/proc/get_description()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job_objective/proc/get_description() called tick#: [world.time]")
 	return "Placeholder objective."
 
 /datum/job_objective/proc/unit_completed(var/count=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job_objective/proc/unit_completed() called tick#: [world.time]")
 	units_completed += count
 
 /datum/job_objective/proc/is_completed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job_objective/proc/is_completed() called tick#: [world.time]")
 	if(!completed)
 		completed = check_for_completion()
 	return completed
 
 /datum/job_objective/proc/check_for_completion()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job_objective/proc/check_for_completion() called tick#: [world.time]")
 	return per_unit && units_completed > 0
 
 /datum/game_mode/proc/declare_job_completion()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/declare_job_completion() called tick#: [world.time]")
 	var/text = "<FONT size = 2><B>Job Completion:</B></FONT>"
 	var/numEmployees=0
 	for(var/datum/mind/employee in ticker.minds)

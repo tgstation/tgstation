@@ -1,6 +1,5 @@
 /client/proc/kaboom()
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/kaboom() called tick#: [world.time]")
 
 	var/power = input(src, "power?", "power?") as num
 	var/turf/T = get_turf(src.mob)
@@ -18,7 +17,6 @@
 		max_power = 0
 
 	proc/save_power_if_larger(power)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/save_power_if_larger() called tick#: [world.time]")
 		if(power > max_power)
 			max_power = power
 			return 1
@@ -28,7 +26,6 @@ var/list/datum/explosion_turf/explosion_turfs = list()
 var/explosion_in_progress = 0
 
 proc/get_explosion_turf(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/get_explosion_turf() called tick#: [world.time]")
 	for( var/datum/explosion_turf/ET in explosion_turfs )
 		if( T == ET.turf )
 			return ET
@@ -39,7 +36,6 @@ proc/get_explosion_turf(var/turf/T)
 
 proc/explosion_rec(turf/epicenter, power)
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/explosion_rec() called tick#: [world.time]")
 
 	var/loopbreak = 0
 	while(explosion_in_progress)
@@ -125,7 +121,6 @@ proc/explosion_rec(turf/epicenter, power)
 //Code-wise, a safe value for power is something up to ~25 or ~30.. This does quite a bit of damage to the station.
 //direction is the direction that the spread took to come to this tile. So it is pointing in the main blast direction - meaning where this tile should spread most of it's force.
 /turf/proc/explosion_spread(power, direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/explosion_spread() called tick#: [world.time]")
 	if(power <= 0)
 		return
 

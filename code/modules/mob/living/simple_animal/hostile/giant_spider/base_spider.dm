@@ -74,7 +74,6 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 
 // Checks pressure here vs. around us.
 /mob/living/simple_animal/hostile/giant_spider/proc/performPressureCheck(var/turf/loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/giant_spider/proc/performPressureCheck() called tick#: [world.time]")
 	var/turf/simulated/lT=loc
 	if(!istype(lT) || !lT.zone)
 		return 0
@@ -105,7 +104,6 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	return ..(the_target)
 
 /mob/living/simple_animal/hostile/giant_spider/proc/CanOpenDoor(var/obj/machinery/door/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/giant_spider/proc/CanOpenDoor() called tick#: [world.time]")
 	if(istype(D,/obj/machinery/door/poddoor) || istype(D, /obj/machinery/door/airlock/multi_tile/glass))
 		return 0
 

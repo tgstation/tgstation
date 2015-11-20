@@ -1,6 +1,5 @@
 // Process the MoMMI's visual HuD
 /datum/hud/proc/mommi_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/mommi_hud() called tick#: [world.time]")
 	// Typecast the mymob to a MoMMI type
 	var/mob/living/silicon/robot/mommi/M=mymob
 	src.adding = list()

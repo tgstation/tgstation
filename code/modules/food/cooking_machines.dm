@@ -20,7 +20,6 @@ var/global/ingredientLimit = 10
 /client/proc/configFood()
 	set name = "Configure Food"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/configFood() called tick#: [world.time]")
 
 	. = (alert("Deep Fried Everything?",,"Yes","No")=="Yes")
 	if(.)	deepFriedEverything = 1
@@ -100,7 +99,6 @@ var/global/ingredientLimit = 10
 		create_reagents(cks_max_volume) // maximum volume is set by the machine var
 
 /obj/machinery/cooking/proc/getFoodChoices()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/getFoodChoices() called tick#: [world.time]")
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook))
 
 /obj/machinery/cooking/is_open_container()
@@ -150,7 +148,6 @@ var/global/ingredientLimit = 10
 	set name = "Remove ingredients"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/cooking/verb/flush_reagents()  called tick#: [world.time]")
 
 	if(cooks_in_reagents)
 		if(do_after(usr, src, src.reagents.total_volume / 10))
@@ -162,7 +159,6 @@ var/global/ingredientLimit = 10
 
 //Returns "valid" or the reason for denial.
 /obj/machinery/cooking/proc/validateIngredient(var/obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/validateIngredient() called tick#: [world.time]")
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
 	else if(!recursive_ingredients && !recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable)) . = "It would be a straining topological exercise."
@@ -176,7 +172,6 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/proc/takeIngredient(var/obj/item/I,mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/takeIngredient() called tick#: [world.time]")
 	. = src.validateIngredient(I)
 	if(. == "transto")
 		return
@@ -193,7 +188,6 @@ var/global/ingredientLimit = 10
 	return 0
 
 /obj/machinery/cooking/proc/transfer_reagents_to_food(var/obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/transfer_reagents_to_food() called tick#: [world.time]")
 	var/obj/item/target_food
 	if(I)
 		target_food = I
@@ -209,7 +203,6 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/proc/cook_after(var/delay, var/numticks = 5) //adaptation of do_after()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/cook_after() called tick#: [world.time]")
 	var/delayfraction = round(delay/numticks)
 	for (var/i = 1 to numticks)
 		sleep(delayfraction)
@@ -218,7 +211,6 @@ var/global/ingredientLimit = 10
 	return 1
 
 /obj/machinery/cooking/proc/cook(var/foodType)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/cook() called tick#: [world.time]")
 	src.active = 1
 	src.icon_state = src.icon_state_on
 	if (cook_after(src.cookTime, 25))
@@ -229,7 +221,6 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/makeFood() called tick#: [world.time]")
 	if(istype(src.ingredient, /obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.ingredient
 		if(H.stored_mob)
@@ -365,7 +356,6 @@ var/global/ingredientLimit = 10
 	reagents.add_reagent("cornoil", 300)
 
 /obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/deepfryer/proc/empty_icon() called tick#: [world.time]")
 	reagents.update_total() //make the values refresh
 	if(ingredient)
 		icon_state = "fryer_on"

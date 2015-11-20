@@ -21,7 +21,6 @@
 
 	// update iconstate and dpdir due to dir and type
 	proc/update()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update() called tick#: [world.time]")
 		var/flip = turn(dir, 180)
 		var/left = turn(dir, 90)
 		var/right = turn(dir, -90)
@@ -79,7 +78,6 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/hide()  called tick#: [world.time]")
 		invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
 		update()
 
@@ -89,7 +87,6 @@
 		set name = "Rotate Pipe"
 		set category = "Object"
 		set src in view(1)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/rotate()  called tick#: [world.time]")
 
 		if(usr.stat || (usr.status_flags & FAKEDEATH))
 			return
@@ -105,7 +102,6 @@
 		set name = "Flip Pipe"
 		set category = "Object"
 		set src in view(1)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/flip()  called tick#: [world.time]")
 		if(usr.stat || (usr.status_flags & FAKEDEATH))
 			return
 
@@ -132,7 +128,6 @@
 
 	// returns the type path of disposalpipe corresponding to this item dtype
 	proc/dpipetype()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/dpipetype() called tick#: [world.time]")
 		switch(ptype)
 			if(0,1)
 				return /obj/structure/disposalpipe/segment

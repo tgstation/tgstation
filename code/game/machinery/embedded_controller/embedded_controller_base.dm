@@ -118,7 +118,6 @@
 		return ..()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/embedded_controller/proc/post_signal() called tick#: [world.time]")
 	return 0
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
@@ -211,7 +210,6 @@
 		del(signal)
 
 /obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/embedded_controller/radio/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency)

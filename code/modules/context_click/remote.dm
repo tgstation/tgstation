@@ -17,7 +17,6 @@ Remotes have procs for when attack_self() is called to handle which button is pr
 
 //Sets the value of a button
 /datum/context_click/remote_control/proc/add_button(var/obj/item/device/remote_button/button, button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/add_button() called tick#: [world.time]")
 	if(!button || !istype(button) || !(button_id in buttons) || (buttons[button_id])) //we can't attach to that slot, or that slot is full
 		return 0
 
@@ -30,13 +29,11 @@ Remotes have procs for when attack_self() is called to handle which button is pr
 
 //Placeholder for filtering specific buttons on specific remote datums
 /datum/context_click/remote_control/proc/can_attach_button(var/obj/item/device/remote_button/button, button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/can_attach_button() called tick#: [world.time]")
 	return 1
 
 //Removes a button - returns the button removed
 //Override lets you take out even unremovables
 /datum/context_click/remote_control/proc/remove_button(var/button_id, var/override = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/remove_button() called tick#: [world.time]")
 	if(!(button_id in buttons))
 		return 0
 
@@ -53,20 +50,17 @@ Remotes have procs for when attack_self() is called to handle which button is pr
 
 //Actually gives the button
 /datum/context_click/remote_control/proc/get_button_by_id(button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/get_button_by_id() called tick#: [world.time]")
 	if(button_id && (button_id in buttons))
 		return buttons[button_id]
 
 //Gives the pixel_x and pixel_y for a button by ud
 //Returns a list of the format list("pixel_x" = a number, "pixel_y" = a number)
 /datum/context_click/remote_control/proc/get_pixel_displacement(button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/get_pixel_displacement() called tick#: [world.time]")
 	return list("pixel_x" = 0, "pixel_y" = 0)
 
 //Returns the icon standard for the button in this id
 //Think of this as the shape identifier - the button has to be a certain shape for every slot
 /datum/context_click/remote_control/proc/get_icon_type(button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/get_icon_type() called tick#: [world.time]")
 	return
 
 ///////////////
@@ -101,7 +95,6 @@ Remotes have procs for when attack_self() is called to handle which button is pr
 //Attempts to push a button
 
 /datum/context_click/remote_control/proc/press_button(button_id, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/remote_control/proc/press_button() called tick#: [world.time]")
 	if(button_id in pressed)
 		return 0
 

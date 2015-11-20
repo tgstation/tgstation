@@ -33,7 +33,6 @@
 		generate_schema()
 
 /datum/circuits/proc/generate_schema()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/generate_schema() called tick#: [world.time]")
 	for(var/C in possible_boards)
 		var/newbit = newhash(CHOOSE_FUSES)
 		while(!check_config(newbit))
@@ -42,14 +41,12 @@
 	return
 
 /datum/circuits/proc/check_config(var/proposed)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/check_config() called tick#: [world.time]")
 	for(var/bitflag in assigned_boards)
 		if(text2num(proposed) == text2num(bitflag))
 			return 0
 	return 1
 
 /datum/circuits/proc/newhash(var/choose) //Returns a bitflag
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/newhash() called tick#: [world.time]")
 	var/list/fuse_point_list = list(ALPHA,BETA,GAMMA,DELTA,ETA,THETA,IOTA)
 	var/build = 0
 	var/choice = null
@@ -62,19 +59,16 @@
 //The greek being passed here is one of those previously mentioned defined variables. Each one is its own binary (e.g.: BETA = 2, GAMMA = 4)
 
 /datum/circuits/proc/checkfuse(var/greek)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/checkfuse() called tick#: [world.time]")
 	return localbit & greek  //true if any bits in `localbit` and `greek` overlap, ie any are set in both
                              //this is because it returns the "intersection" (of the 2 sets), ie 1101 & 1010 returns 1000
 
 /datum/circuits/proc/togglefuse(var/greek)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/togglefuse() called tick#: [world.time]")
 	localbit ^= greek //The ^= uses XOR and it basically toggles the given bits
                   //eg 1111 ^ 1000 = 0111
                   //eg 0000 ^ 1000 = 1000
 	return
 
 /datum/circuits/proc/Interact(var/mob/living/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/Interact() called tick#: [world.time]")
 	if(!istype(user))
 		return 0
 	var/html = null
@@ -88,7 +82,6 @@
 	popup.open()
 
 /datum/circuits/proc/GetInteractWindow()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/circuits/proc/GetInteractWindow() called tick#: [world.time]")
 	var/html = "<div class='block'>"
 	html += "<h3>Protoboard</h3>"
 	html += "<table[table_options]>"

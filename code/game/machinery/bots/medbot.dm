@@ -338,7 +338,6 @@
 	return
 
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/medbot/proc/assess_patient() called tick#: [world.time]")
 	//Time to see if they need medical help!
 	if(C.stat == 2)
 		return 0 //welp too late for them!
@@ -382,7 +381,6 @@
 	return 0
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/medbot/proc/medicate_patient() called tick#: [world.time]")
 	if(!src.on)
 		return
 
@@ -465,7 +463,6 @@
 
 
 /obj/machinery/bot/medbot/proc/speak(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/medbot/proc/speak() called tick#: [world.time]")
 	if((!src.on) || (!message))
 		return
 	visible_message("[src] beeps, \"[message]\"",\
@@ -527,7 +524,6 @@
 //Pretty ugh
 /*
 /turf/proc/AdjacentTurfsAllowMedAccess()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/AdjacentTurfsAllowMedAccess() called tick#: [world.time]")
 	var/L[] = new()
 	for(var/turf/t in oview(src,1))
 		if(!t.density)
@@ -538,7 +534,6 @@
 
 //It isn't blocked if we can open it, man.
 /proc/TurfBlockedNonWindowNonDoor(turf/loc, var/list/access)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/TurfBlockedNonWindowNonDoor() called tick#: [world.time]")
 	for(var/obj/O in loc)
 		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
 			return 1

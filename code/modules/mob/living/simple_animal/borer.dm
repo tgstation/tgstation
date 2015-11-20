@@ -228,7 +228,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Borer Speak"
 	set desc = "Communicate with your bretheren"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/borer_speak() called tick#: [world.time]")
 	if(!message)
 		return
 
@@ -253,7 +252,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/bond_brain() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -282,7 +280,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 			do_bonding(rptext=1)
 
 /mob/living/simple_animal/borer/proc/do_bonding(var/rptext=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/do_bonding() called tick#: [world.time]")
 	if(!host || host.stat==DEAD || !src || controlling || research.unlocking)
 		return
 
@@ -307,7 +304,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Kill Host"
 	set desc = "Give the host massive brain damage, killing them nearly instantly."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/kill_host() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -348,7 +344,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Retard Host"
 	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/damage_brain() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -402,7 +397,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/secrete_chemicals() called tick#: [world.time]")
 
 	if(!host)
 		src << "<span class='warning'>You are not inside a host body.</span>"
@@ -472,7 +466,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/abandon_host() called tick#: [world.time]")
 
 	var/in_head= istype(loc, /obj/item/weapon/organ/head)
 	if(!host && !in_head)
@@ -509,7 +502,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 // Try to reset everything, also while handling invalid host/host_brain states.
 /mob/living/simple_animal/borer/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/detach() called tick#: [world.time]")
 	if(host)
 		if(istype(host,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = host
@@ -562,7 +554,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Infest"
 	set desc = "Infest a suitable humanoid host."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/infest() called tick#: [world.time]")
 
 	if(host)
 		src << "You are already within a host."
@@ -624,7 +615,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		return
 
 /mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/perform_infestation() called tick#: [world.time]")
 	if(!M || !istype(M))
 		error("[src]: Unable to perform_infestation on [M]!")
 		return 0
@@ -682,7 +672,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/hide() called tick#: [world.time]")
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -736,7 +725,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 //Procs for grabbing players.
 /mob/living/simple_animal/borer/proc/request_player()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/request_player() called tick#: [world.time]")
 	var/list/candidates=list()
 	//testing("Polling for borers.")
 	for(var/mob/dead/observer/G in get_active_candidates(ROLE_BORER, poll="HEY KID, YOU WANNA BE A BORER?"))
@@ -768,7 +756,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/transfer_personality() called tick#: [world.time]")
 
 	if(!candidate)
 		return
@@ -795,7 +782,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		//	obj_count++
 
 /mob/living/simple_animal/borer/proc/forge_objectives()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = mind
 	mind.objectives += survive_objective

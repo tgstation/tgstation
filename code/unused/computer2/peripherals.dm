@@ -143,7 +143,6 @@
 		return
 
 	proc/vend_prize()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/vend_prize() called tick#: [world.time]")
 		var/obj/item/prize
 		var/prizeselect = rand(1,4)
 		var/turf/prize_location = null

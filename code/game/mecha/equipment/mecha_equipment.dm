@@ -18,7 +18,6 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1, delay_mult=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown() called tick#: [world.time]")
 	sleep(equip_cooldown * delay_mult)
 	set_ready_state(1)
 	if(target && chassis)
@@ -31,7 +30,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page() called tick#: [world.time]")
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
@@ -39,14 +37,12 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/update_equip_info() called tick#: [world.time]")
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		return 1
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/destroy() called tick#: [world.time]")
 	if(chassis)
 		chassis.equipment -= src
 		listclearnulls(chassis.equipment)
@@ -64,27 +60,22 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/critfail() called tick#: [world.time]")
 	if(chassis)
 		log_message("Critical failure",1)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/get_equip_info() called tick#: [world.time]")
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]"
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/is_ranged() called tick#: [world.time]")
 	return range&RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/is_melee() called tick#: [world.time]")
 	return range&MELEE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/action_checks() called tick#: [world.time]")
 	if(!target)
 		return 0
 	if(!chassis)
@@ -98,18 +89,15 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/action() called tick#: [world.time]")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/can_attach() called tick#: [world.time]")
 	if(istype(M))
 		if(M.equipment.len<M.max_equip)
 			return 1
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/attach() called tick#: [world.time]")
 	M.equipment += src
 	chassis = M
 	src.loc = M
@@ -120,7 +108,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/detach() called tick#: [world.time]")
 	if(!moveto)
 		moveto = get_turf(chassis)
 	src.loc = moveto
@@ -142,20 +129,17 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/set_ready_state() called tick#: [world.time]")
 	equip_ready = state
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/occupant_message() called tick#: [world.time]")
 	if(chassis)
 		chassis.occupant_message("\icon[src] [message]")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/log_message(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/proc/log_message() called tick#: [world.time]")
 	if(chassis)
 		chassis.log_message("<i>[src]:</i> [message]")
 	return

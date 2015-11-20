@@ -29,7 +29,6 @@
 	set_frequency(frequency)
 
 /obj/machinery/computer/smelting/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/smelting/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -230,7 +229,6 @@
 
 //Just a little helper proc
 /obj/machinery/computer/smelting/proc/send_signal(list/data)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/smelting/proc/send_signal() called tick#: [world.time]")
 	if(!frequency)
 		return
 
@@ -253,7 +251,6 @@
 	updateUsrDialog()
 
 /obj/machinery/computer/smelting/proc/request_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/smelting/proc/request_status() called tick#: [world.time]")
 	smelter_data = null
 	send_signal(list("sigtype" = "status"))
 
@@ -360,7 +357,6 @@
 	set_frequency(frequency)
 
 /obj/machinery/mineral/processing_unit/proc/broadcast_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/processing_unit/proc/broadcast_status() called tick#: [world.time]")
 	var/list/data[5]
 
 	data["recipes"] = recipes
@@ -378,7 +374,6 @@
 	send_signal(data)
 
 /obj/machinery/mineral/processing_unit/proc/send_signal(list/data)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/processing_unit/proc/send_signal() called tick#: [world.time]")
 	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
@@ -388,7 +383,6 @@
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/mineral/processing_unit/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/processing_unit/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -396,7 +390,6 @@
 
 //seperate proc so the recycling machine can override it.
 /obj/machinery/mineral/processing_unit/proc/grab_ores()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/processing_unit/proc/grab_ores() called tick#: [world.time]")
 	var/turf/in_T = get_step(src, in_dir)
 	var/turf/out_T = get_step(src, out_dir)
 

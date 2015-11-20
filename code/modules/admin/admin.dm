@@ -5,7 +5,6 @@ var/global/floorIsLava = 0
 
 ////////////////////////////////
 /proc/message_admins(var/msg)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/message_admins() called tick#: [world.time]")
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
@@ -13,7 +12,6 @@ var/global/floorIsLava = 0
 			C << msg
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/msg_admin_attack() called tick#: [world.time]")
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
 	for(var/client/C in admins)
@@ -33,7 +31,6 @@ var/global/floorIsLava = 0
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/show_player_panel() called tick#: [world.time]")
 
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
@@ -244,7 +241,6 @@ var/global/floorIsLava = 0
 /datum/admins/proc/PlayerNotes()
 	set category = "Admin"
 	set name = "Player Notes"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/PlayerNotes() called tick#: [world.time]")
 
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
@@ -256,7 +252,6 @@ var/global/floorIsLava = 0
 /datum/admins/proc/checkCID()
 	set category = "Admin"
 	set name = "Lookup bans on Computer ID"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/checkCID() called tick#: [world.time]")
 
 	if(!usr)
 		return
@@ -275,7 +270,6 @@ var/global/floorIsLava = 0
 /datum/admins/proc/checkCKEY()
 	set category = "Admin"
 	set name = "Lookup bans on CKEY"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/checkCKEY() called tick#: [world.time]")
 
 	if(!usr)
 		return
@@ -291,7 +285,6 @@ var/global/floorIsLava = 0
 	return
 
 /datum/admins/proc/PlayerNotesPage(page)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/PlayerNotesPage() called tick#: [world.time]")
 	var/dat = "<B>Player notes</B><HR>"
 	var/savefile/S=new("data/player_notes.sav")
 	var/list/note_keys
@@ -332,7 +325,6 @@ var/global/floorIsLava = 0
 
 
 /datum/admins/proc/player_has_info(var/key as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/player_has_info() called tick#: [world.time]")
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -340,7 +332,6 @@ var/global/floorIsLava = 0
 	else return 1
 
 /proc/exportnotes(var/key as text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/exportnotes() called tick#: [world.time]")
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -367,7 +358,6 @@ var/global/floorIsLava = 0
 /datum/admins/proc/show_player_info(var/key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/show_player_info() called tick#: [world.time]")
 
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
@@ -417,7 +407,6 @@ var/global/floorIsLava = 0
 	set category = "Fun"
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/access_news_network() called tick#: [world.time]")
 
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
@@ -661,7 +650,6 @@ var/global/floorIsLava = 0
 
 
 /datum/admins/proc/Jobbans()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/Jobbans() called tick#: [world.time]")
 	if(!check_rights(R_BAN))	return
 
 	var/dat = "<B>Job Bans!</B><HR><table>"
@@ -674,7 +662,6 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=ban;size=400x400")
 
 /datum/admins/proc/Game()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/Game() called tick#: [world.time]")
 	if(!check_rights(0))	return
 
 	var/dat = {"
@@ -708,7 +695,6 @@ var/global/floorIsLava = 0
 	return
 
 /datum/admins/proc/Secrets()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/Secrets() called tick#: [world.time]")
 	if(!check_rights(0))	return
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
@@ -890,7 +876,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/restart() called tick#: [world.time]")
 
 	if (!usr.client.holder)
 		return
@@ -922,7 +907,6 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/announce() called tick#: [world.time]")
 
 	if(!check_rights(0))	return
 
@@ -938,7 +922,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleooc() called tick#: [world.time]")
 
 	ooc_allowed = !( ooc_allowed )
 	if (ooc_allowed)
@@ -954,7 +937,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleoocdead() called tick#: [world.time]")
 	dooc_allowed = !( dooc_allowed )
 
 	log_admin("[key_name(usr)] toggled OOC.")
@@ -965,7 +947,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle traitor scaling"
 	set name="Toggle Traitor Scaling"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggletraitorscaling() called tick#: [world.time]")
 
 	traitor_scaling = !traitor_scaling
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
@@ -976,7 +957,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/startnow() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Unable to start the game as it is not set up.")
@@ -995,7 +975,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleenter() called tick#: [world.time]")
 
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
@@ -1011,7 +990,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="People can't be AI"
 	set name="Toggle AI"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleAI() called tick#: [world.time]")
 
 	config.allow_ai = !( config.allow_ai )
 	if (!( config.allow_ai ))
@@ -1026,7 +1004,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleaban() called tick#: [world.time]")
 
 	abandon_allowed = !( abandon_allowed )
 	if (abandon_allowed)
@@ -1042,7 +1019,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle alien mobs"
 	set name="Toggle Aliens"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggle_aliens() called tick#: [world.time]")
 
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(usr)] toggled Aliens to [aliens_allowed].")
@@ -1055,7 +1031,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Delay the game start/end"
 	set name="Delay"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/delay() called tick#: [world.time]")
 
 	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
@@ -1087,7 +1062,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle admin jumping"
 	set name="Toggle Jump"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/adjump() called tick#: [world.time]")
 
 	config.allow_admin_jump = !(config.allow_admin_jump)
 	message_admins("<span class='notice'>Toggled admin jumping to [config.allow_admin_jump].</span>")
@@ -1097,7 +1071,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle admin spawning"
 	set name="Toggle Spawn"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/adspawn() called tick#: [world.time]")
 
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
 	message_admins("<span class='notice'>Toggled admin item spawning to [config.allow_admin_spawning].</span>")
@@ -1107,7 +1080,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle admin revives"
 	set name="Toggle Revive"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/adrev() called tick#: [world.time]")
 
 	config.allow_admin_rev = !(config.allow_admin_rev)
 	message_admins("<span class='notice'>Toggled reviving to [config.allow_admin_rev].</span>")
@@ -1117,7 +1089,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/immreboot() called tick#: [world.time]")
 
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
@@ -1143,7 +1114,6 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/unprison() called tick#: [world.time]")
 
 	if (M.z == 2)
 		if (config.allow_admin_jump)
@@ -1159,7 +1129,6 @@ var/global/floorIsLava = 0
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M as mob) // returns 1 for specail characters and 2 for heroes of gamemode
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_special_character() called tick#: [world.time]")
 	if(!ticker || !ticker.mode)
 		return 0
 	if (!istype(M))
@@ -1207,7 +1176,6 @@ var/global/floorIsLava = 0
 
 /*
 /datum/admins/proc/get_sab_desc(var/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/get_sab_desc() called tick#: [world.time]")
 	switch(target)
 		if(1)
 			return "Destroy at least 70% of the plasma canisters on the station"
@@ -1228,7 +1196,6 @@ var/global/floorIsLava = 0
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/spawn_atom() called tick#: [world.time]")
 
 	if(!check_rights(R_SPAWN))	return
 
@@ -1262,7 +1229,6 @@ var/global/floorIsLava = 0
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/show_traitor_panel() called tick#: [world.time]")
 
 	if(!istype(M))
 		usr << "This can only be used on instances of type /mob"
@@ -1279,7 +1245,6 @@ var/global/floorIsLava = 0
 	set category = "Debug"
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggletintedweldhelmets() called tick#: [world.time]")
 
 	tinted_weldhelh = !( tinted_weldhelh )
 	if (tinted_weldhelh)
@@ -1294,7 +1259,6 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/toggleguests() called tick#: [world.time]")
 
 	guests_allowed = !( guests_allowed )
 	if (!( guests_allowed ))
@@ -1308,14 +1272,12 @@ var/global/floorIsLava = 0
 /client/proc/unjobban_panel()
 	set name = "Unjobban Panel"
 	set category = "Admin"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/unjobban_panel() called tick#: [world.time]")
 	if (src.holder)
 		src.holder.unjobbanpanel()
 	feedback_add_details("admin_verb","UJBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /datum/admins/proc/output_ai_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/output_ai_laws() called tick#: [world.time]")
 	var/ai_number = 0
 	for(var/mob/living/silicon/S in mob_list)
 		ai_number++
@@ -1345,7 +1307,6 @@ var/global/floorIsLava = 0
 	set category = "Admin"
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/update_mob_sprite() called tick#: [world.time]")
 
 	if (!holder)
 		src << "Only administrators may use this command."
@@ -1368,7 +1329,6 @@ var/global/floorIsLava = 0
 var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 proc/move_admin_shuttle()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/move_admin_shuttle() called tick#: [world.time]")
 	var/area/fromArea
 	var/area/toArea
 	if (admin_shuttle_location == 1)
@@ -1389,7 +1349,6 @@ proc/move_admin_shuttle()
 var/alien_ship_location = 1 // 0 = base , 1 = mine
 
 proc/move_alien_ship()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/move_alien_ship() called tick#: [world.time]")
 	var/area/fromArea
 	var/area/toArea
 	if (alien_ship_location == 1)
@@ -1406,7 +1365,6 @@ proc/move_alien_ship()
 	return
 
 proc/formatJumpTo(location, where = "")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/formatJumpTo() called tick#: [world.time]")
 	var/turf/loc
 
 	if (isturf(location))
@@ -1420,7 +1378,6 @@ proc/formatJumpTo(location, where = "")
 	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc ? loc.x : "mystery"];Y=[loc ? loc.y : "mystery"];Z=[loc ? loc.z : "mystery"]'>[where]</a>"
 
 proc/formatLocation(location)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/formatLocation() called tick#: [world.time]")
 	var/turf/loc
 
 	if (isturf(location))
@@ -1433,7 +1390,6 @@ proc/formatLocation(location)
 	return answer
 
 proc/formatPlayerPanel(var/mob/U,var/text="PP")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/formatPlayerPanel() called tick#: [world.time]")
 	return "<A HREF='?_src_=holder;adminplayeropts=\ref[U]'>[text]</A>"
 
 //Credit to MrStonedOne from TG for this QoL improvement
@@ -1441,7 +1397,6 @@ proc/formatPlayerPanel(var/mob/U,var/text="PP")
 //returns 0 if we don't plan to trap the event
 /datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/cmd_ghost_drag() called tick#: [world.time]")
 
 	//if we couldn't do it manually, we can't do it here - the 0 means no message is displayed for failure
 	if (!check_rights(R_VAREDIT, 0))

@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_regular_status_updates() called tick#: [world.time]")
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0

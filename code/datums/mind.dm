@@ -75,7 +75,6 @@
 	src.key = key
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/transfer_to() called tick#: [world.time]")
 	if(!istype(new_character))
 		error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
 
@@ -102,11 +101,9 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 
 /datum/mind/proc/store_memory(new_text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/store_memory() called tick#: [world.time]")
 	memory += "[new_text]<BR>"
 
 /datum/mind/proc/show_memory(mob/recipient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/show_memory() called tick#: [world.time]")
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
 	output += memory
 
@@ -121,7 +118,6 @@
 	recipient << browse(output,"window=memory")
 
 /datum/mind/proc/edit_memory()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/edit_memory() called tick#: [world.time]")
 	if(!ticker || !ticker.mode)
 		alert("Not before round-start!", "Alert")
 		return
@@ -946,7 +942,6 @@
 
 					A.malf_picker.remove_verbs(A)
 
-					//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\A.malf_picker.remove_verbs()  called tick#: [world.time]")
 
 					A.laws = new base_law_type
 					del(A.malf_picker)
@@ -1079,7 +1074,6 @@
 	edit_memory()
 /*
 proc/clear_memory(var/silent = 1)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/clear_memory() called tick#: [world.time]")
 	var/datum/game_mode/current_mode = ticker.mode
 
 	// remove traitor uplinks
@@ -1114,7 +1108,6 @@ proc/clear_memory(var/silent = 1)
 */
 
 /datum/mind/proc/find_syndicate_uplink()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/find_syndicate_uplink() called tick#: [world.time]")
 	var/uplink = null
 
 	for (var/obj/item/I in get_contents_in_object(current, /obj/item))
@@ -1125,14 +1118,12 @@ proc/clear_memory(var/silent = 1)
 	return uplink
 
 /datum/mind/proc/take_uplink()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/take_uplink() called tick#: [world.time]")
 	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 	if(H)
 		qdel(H)
 
 
 /datum/mind/proc/make_AI_Malf()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_AI_Malf() called tick#: [world.time]")
 	if(!isAI(current))
 		return
 	if(!(src in ticker.mode.malf_ai))
@@ -1149,7 +1140,6 @@ proc/clear_memory(var/silent = 1)
 		A.icon_state = "ai-malf"
 
 /datum/mind/proc/make_Nuke()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_Nuke() called tick#: [world.time]")
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1179,7 +1169,6 @@ proc/clear_memory(var/silent = 1)
 		ticker.mode.equip_syndicate(current)
 
 /datum/mind/proc/make_Changling()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_Changling() called tick#: [world.time]")
 	if(!(src in ticker.mode.changelings))
 		ticker.mode.changelings += src
 		ticker.mode.grant_changeling_powers(current)
@@ -1188,7 +1177,6 @@ proc/clear_memory(var/silent = 1)
 		ticker.mode.greet_changeling(src)
 
 /datum/mind/proc/make_Wizard()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_Wizard() called tick#: [world.time]")
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
@@ -1211,7 +1199,6 @@ proc/clear_memory(var/silent = 1)
 
 
 /datum/mind/proc/make_Cultist()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_Cultist() called tick#: [world.time]")
 	if(!(src in ticker.mode.cult))
 		ticker.mode.cult += src
 		ticker.mode.update_cult_icons_added(src)
@@ -1250,7 +1237,6 @@ proc/clear_memory(var/silent = 1)
 		H << "Spawning an amulet from your Master failed."
 
 /datum/mind/proc/make_Rev()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_Rev() called tick#: [world.time]")
 	if (ticker.mode.head_revolutionaries.len>0)
 		// copy targets
 		var/datum/mind/valid_head = locate() in ticker.mode.head_revolutionaries
@@ -1281,7 +1267,6 @@ proc/clear_memory(var/silent = 1)
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/is_brigged() called tick#: [world.time]")
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
@@ -1309,7 +1294,6 @@ proc/clear_memory(var/silent = 1)
 	return (duration <= world.time - brigged_since)
 
 /datum/mind/proc/make_traitor()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/make_traitor() called tick#: [world.time]")
 	if (!(src in ticker.mode.traitors))
 		ticker.mode.traitors += src
 
@@ -1332,7 +1316,6 @@ proc/clear_memory(var/silent = 1)
 
 //Initialisation procs
 /mob/proc/mind_initialize() // vgedit: /mob instead of /mob/living
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/mind_initialize() called tick#: [world.time]")
 	if(mind)
 		mind.key = key
 	else

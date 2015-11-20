@@ -145,7 +145,6 @@
 	set category = "Object"
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained() || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -156,7 +155,6 @@
 	set category = "Object"
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained() || anchored || (usr.status_flags & FAKEDEATH))
 		return

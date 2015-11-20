@@ -48,33 +48,25 @@ var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 		return "green"
 
 /datum/wires/mulebot/proc/Motor1()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/Motor1() called tick#: [world.time]")
 	return !(wires_status & WIRE_MOTOR1)
 
 /datum/wires/mulebot/proc/Motor2()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/Motor2() called tick#: [world.time]")
 	return !(wires_status & WIRE_MOTOR2)
 
 /datum/wires/mulebot/proc/HasPower()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/HasPower() called tick#: [world.time]")
 	return !(wires_status & WIRE_POWER1) && !(wires_status & WIRE_POWER2)
 
 /datum/wires/mulebot/proc/LoadCheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/LoadCheck() called tick#: [world.time]")
 	return !(wires_status & WIRE_LOADCHECK)
 
 /datum/wires/mulebot/proc/MobAvoid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/MobAvoid() called tick#: [world.time]")
 	return !(wires_status & WIRE_AVOIDANCE)
 
 /datum/wires/mulebot/proc/RemoteTX()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/RemoteTX() called tick#: [world.time]")
 	return !(wires_status & WIRE_REMOTE_TX)
 
 /datum/wires/mulebot/proc/RemoteRX()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/RemoteRX() called tick#: [world.time]")
 	return !(wires_status & WIRE_REMOTE_RX)
 
 /datum/wires/mulebot/proc/BeaconRX()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/BeaconRX() called tick#: [world.time]")
 	return !(wires_status & WIRE_BEACON_RX)

@@ -101,7 +101,6 @@
 
 
 /obj/machinery/computer/curer/proc/createcure(var/obj/item/weapon/reagent_containers/container)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/curer/proc/createcure() called tick#: [world.time]")
 	var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list

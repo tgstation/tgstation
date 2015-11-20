@@ -22,21 +22,13 @@ Powernet procs :
 /datum/powernet/Destroy()
 /datum/powernet/resetVariables()
 /datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/remove_cable() called tick#: [world.time]")
 /datum/powernet/proc/add_cable(var/obj/structure/cable/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/add_cable() called tick#: [world.time]")
 /datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/remove_machine() called tick#: [world.time]")
 /datum/powernet/proc/add_machine(var/obj/machinery/power/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/add_machine() called tick#: [world.time]")
 /datum/powernet/proc/reset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/reset() called tick#: [world.time]")
 /datum/powernet/proc/get_electrocute_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/get_electrocute_damage() called tick#: [world.time]")
 /datum/powernet/proc/set_to_build()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/powernet/proc/set_to_build() called tick#: [world.time]")
 /obj/structure/cable/proc/rebuild_from()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/rebuild_from() called tick#: [world.time]")
 */
 
 /datum/powernet/New()
@@ -65,13 +57,11 @@ Powernet procs :
 	components = list()
 
 /datum/powernet/proc/is_empty()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/is_empty() called tick#: [world.time]")
 	return !cables.len && !nodes.len && !components.len
 
 // helper proc for removing cables from the current powernet
 // warning : this proc doesn't check if the cable exists, but don't worry a runtime should tell you if it doesn't
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/remove_cable() called tick#: [world.time]")
 	cables -= C
 	C.powernet = null
 	if(is_empty())
@@ -80,7 +70,6 @@ Powernet procs :
 // helper proc for removing a power machine from the current powernet
 // warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/remove_machine() called tick#: [world.time]")
 	nodes -= M
 	M.powernet = null
 	if(is_empty())
@@ -89,7 +78,6 @@ Powernet procs :
 // helper proc for removing a power machine from the current powernet
 // warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
 /datum/powernet/proc/remove_component(var/datum/power_connection/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/remove_component() called tick#: [world.time]")
 	components -= C
 	C.powernet = null
 	if(is_empty())
@@ -97,7 +85,6 @@ Powernet procs :
 
 // add a cable to the current powernet
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_cable() called tick#: [world.time]")
 	if(C.powernet)						// if C already has a powernet...
 		if(C.powernet == src)
 			return
@@ -109,7 +96,6 @@ Powernet procs :
 
 // add a power machine to the current powernet
 /datum/powernet/proc/add_machine(var/obj/machinery/power/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_machine() called tick#: [world.time]")
 	if(M.powernet)							// if M already has a powernet...
 		if(M.powernet == src)
 			return
@@ -120,7 +106,6 @@ Powernet procs :
 	nodes += M
 
 /datum/powernet/proc/add_component(var/datum/power_connection/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_component() called tick#: [world.time]")
 	if(C.powernet)							// if M already has a powernet...
 		if(C.powernet == src)
 			return
@@ -134,7 +119,6 @@ Powernet procs :
 // called every ticks by the powernet controller
 // all powernets will have been rebuilt by the time this is called
 /datum/powernet/proc/reset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/reset() called tick#: [world.time]")
 	// see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
 
@@ -158,14 +142,12 @@ Powernet procs :
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/get_electrocute_damage() called tick#: [world.time]")
 	// cube root of power times 1,5 to 2 in increments of 10^-1
 	// for instance, gives an average of 38 damage for 10k W, 81 damage for 100k W and 175 for 1M W
 	// best you're getting with BYOND's mathematical funcs. Not even a fucking exponential or neperian logarithm
 	return round(avail ** (1 / 3) * (rand(100, 125) / 100))
 
 /datum/powernet/proc/set_to_build()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/set_to_build() called tick#: [world.time]")
 	for(var/obj/structure/cable/C in cables)
 		C.build_status = 1
 		C.oldload = load
@@ -182,7 +164,6 @@ var/global/powernets_broke = 0
 
 //This will rebuild a powernet properly during the new tick cycle
 /obj/structure/cable/proc/rebuild_from()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/rebuild_from() called tick#: [world.time]")
 	if(!powernet)
 		var/datum/powernet/NewPN = getFromPool(/datum/powernet)
 		NewPN.add_cable(src)
@@ -210,7 +191,6 @@ var/global/powernets_broke = 0
 // excluding source, that match the direction d
 // if unmarked==1, only return those with no powernet
 /proc/power_list(var/turf/T, var/source, var/d, var/unmarked=0, var/cable_only = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/power_list() called tick#: [world.time]")
 	. = list()
 	//var/fdir = (!d) ? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 
@@ -244,7 +224,6 @@ var/global/powernets_broke = 0
 
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
 /proc/makepowernets()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/makepowernets() called tick#: [world.time]")
 	for(var/datum/powernet/PN in powernets)
 		PN.set_to_build()
 		powernets = list()
@@ -254,7 +233,6 @@ var/global/powernets_broke = 0
 
 // remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/propagate_network() called tick#: [world.time]")
 	//world.log << "propagating new network"
 	var/list/worklist = list()
 	var/list/found_machines = list()
@@ -295,7 +273,6 @@ var/global/powernets_broke = 0
 
 // merge two powernets, the bigger (in cable length term) absorbing the other
 /proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/merge_powernets() called tick#: [world.time]")
 	if(!net1 || !net2)									// if one of the powernet doesn't exist, return
 		return
 
@@ -328,7 +305,6 @@ var/global/powernets_broke = 0
 // source is an object caused electrocuting (airlock, grille, etc)
 // no animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1.0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/electrocute_mob() called tick#: [world.time]")
 	if(istype(M.loc, /obj/mecha))											// feckin mechs are dumb
 		return 0
 

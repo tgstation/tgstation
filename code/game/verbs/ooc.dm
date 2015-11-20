@@ -1,7 +1,6 @@
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/ooc()  called tick#: [world.time]")
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='warning'>Speech is currently admin-disabled.</span>"
@@ -85,7 +84,6 @@
 	set name = "Set Player OOC Colour"
 	set desc = "Set to yellow for eye burning goodness."
 	set category = "Fun"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/set_ooc() called tick#: [world.time]")
 
 	config.default_ooc_color = newColor
 
@@ -94,7 +92,6 @@
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/looc()  called tick#: [world.time]")
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='warning'>Speech is currently admin-disabled.</span>"

@@ -85,7 +85,6 @@ var/global/list/lightfloor_colors = list(
 	return ..()
 
 /obj/item/stack/tile/light/proc/get_turf_image()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/tile/light/proc/get_turf_image() called tick#: [world.time]")
 
 	var/image/I = image('icons/turf/floors.dmi',icon_state = "light_overlay")
 	I.color = rgb(color_r,color_g,color_b)

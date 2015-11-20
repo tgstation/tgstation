@@ -49,7 +49,6 @@
 	healthcheck()
 
 /obj/effect/spider/proc/healthcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/spider/proc/healthcheck() called tick#: [world.time]")
 	if(health <= 0)
 		qdel(src)
 
@@ -128,7 +127,6 @@
 		..()
 
 /obj/effect/spider/spiderling/proc/die()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/spider/spiderling/proc/die() called tick#: [world.time]")
 	visible_message("<span class='alert'>[src] dies!</span>")
 	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
 	del(src)

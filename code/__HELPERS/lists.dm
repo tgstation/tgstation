@@ -11,7 +11,6 @@
 
 //Returns a list in plain english as a string
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/english_list() called tick#: [world.time]")
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -33,7 +32,6 @@
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/listgetindex() called tick#: [world.time]")
 	if(istype(L))
 		if(isnum(index))
 			if(IsInRange(index,1,L.len))
@@ -43,27 +41,23 @@
 	return
 
 /proc/islist(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/islist() called tick#: [world.time]")
 	if(istype(L))
 		return 1
 	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/safepick() called tick#: [world.time]")
 	if(istype(L) && L.len)
 		return pick(L)
 
 //Checks if the list is empty
 /proc/isemptylist(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isemptylist() called tick#: [world.time]")
 	if(!L.len)
 		return 1
 	return 0
 
 //Checks for specific types in a list
 /proc/is_type_in_list(var/atom/A, var/list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_type_in_list() called tick#: [world.time]")
 	for(var/type in L)
 		if(istype(A, type))
 			return 1
@@ -71,14 +65,12 @@
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/clearlist() called tick#: [world.time]")
 	if(istype(list))
 		list.len = 0
 	return
 
 //Removes any null entries from the list
 /proc/listclearnulls(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/listclearnulls() called tick#: [world.time]")
 	if(istype(L))
 		var/i=1
 		for(var/thing in L)
@@ -93,7 +85,6 @@
  * If either of arguments is not a list, returns null
  */
 /proc/difflist(var/list/first, var/list/second, var/skiprep=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/difflist() called tick#: [world.time]")
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -111,7 +102,6 @@
  * If either of arguments is not a list, returns null
  */
 /proc/uniquemergelist(var/list/first, var/list/second, var/skiprep=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/uniquemergelist() called tick#: [world.time]")
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -123,7 +113,6 @@
 
 //Pretends to pick an element based on its weight but really just seems to pick a random element.
 /proc/pickweight(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/pickweight() called tick#: [world.time]")
 	var/total = 0
 	var/item
 	for (item in L)
@@ -141,7 +130,6 @@
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/pick_n_take() called tick#: [world.time]")
 	if(L.len)
 		var/picked = rand(1,L.len)
 		. = L[picked]
@@ -149,13 +137,11 @@
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/pop() called tick#: [world.time]")
 	if(L.len)
 		. = L[L.len]
 		L.len--
 
 /proc/sorted_insert(list/L, thing, comparator)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sorted_insert() called tick#: [world.time]")
 	var/pos = L.len
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
 		pos--
@@ -163,7 +149,6 @@
 
 // Returns the next item in a list
 /proc/next_list_item(var/item, var/list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/next_list_item() called tick#: [world.time]")
 	var/i
 	i = L.Find(item)
 	if(i == L.len)
@@ -174,7 +159,6 @@
 
 // Returns the previous item in a list
 /proc/previous_list_item(var/item, var/list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/previous_list_item() called tick#: [world.time]")
 	var/i
 	i = L.Find(item)
 	if(i == 1)
@@ -192,7 +176,6 @@
 /*
 //Reverses the order of items in the list
 /proc/reverselist(var/list/input)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reverselist() called tick#: [world.time]")
 	var/list/output = list()
 	for(var/i = input.len; i >= 1; i--)
 		output += input[i]
@@ -201,7 +184,6 @@
 
 //Randomize: Return the list in a random order
 /proc/shuffle(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/shuffle() called tick#: [world.time]")
 	if(!L)
 		return
 	L = L.Copy()
@@ -213,7 +195,6 @@
 
 //Return a list with no duplicate entries
 /proc/uniquelist(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/uniquelist() called tick#: [world.time]")
 	var/list/K = list()
 	for(var/item in L)
 		if(!(item in K))
@@ -222,29 +203,24 @@
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortKey() called tick#: [world.time]")
 	return sortTim(L, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
 
 //Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortRecord() called tick#: [world.time]")
 	cmp_field = field
 	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
 //any value in a list
 /proc/sortList(var/list/L, cmp=/proc/cmp_text_asc)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortList() called tick#: [world.time]")
 	return sortTim(L.Copy(), cmp)
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sortNames(var/list/L, order=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortNames() called tick#: [world.time]")
 	return sortTim(L, order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/bitfield2list() called tick#: [world.time]")
 	var/list/r = list()
 	if(istype(wordlist,/list))
 		var/max = min(wordlist.len,16)
@@ -262,7 +238,6 @@
 
 // Returns the key based on the index
 /proc/get_key_by_index(var/list/L, var/index)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_key_by_index() called tick#: [world.time]")
 	var/i = 1
 	for(var/key in L)
 		if(index == i)
@@ -271,7 +246,6 @@
 	return null
 
 /proc/count_by_type(var/list/L, type)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/count_by_type() called tick#: [world.time]")
 	var/i = 0
 	for(var/T in L)
 		if(istype(T, type))
@@ -279,7 +253,6 @@
 	return i
 
 /proc/find_record(field, value, list/L)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/find_record() called tick#: [world.time]")
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
 			return R
@@ -292,7 +265,6 @@
 //fromIndex and toIndex must be in the range [1,L.len+1]
 //This will preserve associations ~Carnie
 /proc/moveElement(list/L, fromIndex, toIndex)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/moveElement() called tick#: [world.time]")
 	if(fromIndex == toIndex || fromIndex+1 == toIndex)	//no need to move
 		return
 	if(fromIndex > toIndex)
@@ -307,7 +279,6 @@
 //Same as moveElement but for ranges of elements
 //This will preserve associations ~Carnie
 /proc/moveRange(list/L, fromIndex, toIndex, len=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/moveRange() called tick#: [world.time]")
 	var/distance = abs(toIndex - fromIndex)
 	if(len >= distance)	//there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
 		if(fromIndex <= toIndex)
@@ -331,7 +302,6 @@
 //Move any elements being overwritten by the move to the now-empty elements, preserving order
 //Note: if the two ranges overlap, only the destination order will be preserved fully, since some elements will be within both ranges ~Carnie
 /proc/swapRange(list/L, fromIndex, toIndex, len=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/swapRange() called tick#: [world.time]")
 	var/distance = abs(toIndex - fromIndex)
 	if(len > distance)	//there is an overlap, therefore swapping each element will require more swaps than inserting new elements
 		if(fromIndex < toIndex)
@@ -354,7 +324,6 @@
 
 //replaces reverseList ~Carnie
 /proc/reverseRange(list/L, start=1, end=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reverseRange() called tick#: [world.time]")
 	if(L.len)
 		start = start % L.len
 		end = end % (L.len+1)

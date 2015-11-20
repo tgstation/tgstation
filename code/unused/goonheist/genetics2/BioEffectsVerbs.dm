@@ -23,7 +23,6 @@
 		return
 
 /proc/bioproc_cryokinesis_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_cryokinesis_cd() called tick#: [world.time]")
 	set name = "Cryokinesis (c)"
 	set desc = "Drops the bodytemperature of another person. Currently on cooldown, ironically enough."
 	set category = "Mutant Abilities"
@@ -31,7 +30,6 @@
 	usr << "<span class='warning'>Your cryokinetic ability is recharging.</span>"
 
 /proc/bioproc_cryokinesis(var/mob/living/carbon/C in view())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_cryokinesis() called tick#: [world.time]")
 	set name = "Cryokinesis"
 	set desc = "Drops the bodytemperature of another person."
 	set category = "Mutant Abilities"
@@ -101,7 +99,6 @@
 		return
 
 /proc/bioproc_mattereater_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_mattereater_cd() called tick#: [world.time]")
 	set name = "Eat (c)"
 	set desc = "Eat just about anything! Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -109,7 +106,6 @@
 	usr << "<span class='warning'>Your Matter Eating ability is recharging.</span>"
 
 /proc/bioproc_mattereater()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_mattereater() called tick#: [world.time]")
 	set name = "Eat"
 	set desc = "Eat just about anything!"
 	set category = "Mutant Abilities"
@@ -185,7 +181,6 @@
 		return
 
 /proc/bioproc_jumpy_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_jumpy_cd() called tick#: [world.time]")
 	set name = "Jump (c)"
 	set desc = "Leap great distances! Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -193,7 +188,6 @@
 	usr << "<span class='warning'>Your Jumping ability is recharging.</span>"
 
 /proc/bioproc_jumpy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_jumpy() called tick#: [world.time]")
 	set name = "Jump"
 	set desc = "Leap great distances!"
 	set category = "Mutant Abilities"
@@ -276,7 +270,6 @@
 		return
 
 /proc/bioproc_polymorphism_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_polymorphism_cd() called tick#: [world.time]")
 	set name = "Polymorph (c)"
 	set desc = "Mimic the appearance of others! Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -284,7 +277,6 @@
 	usr << "<span class='warning'>Your Polymorphing ability is recharging.</span>"
 
 /proc/bioproc_polymorphism(var/mob/M in view())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_polymorphism() called tick#: [world.time]")
 	set name = "Polymorph"
 	set desc = "Mimic the appearance of others!"
 	set category = "Mutant Abilities"
@@ -342,7 +334,6 @@
 		return
 
 /proc/bioproc_telepathy(var/mob/living/carbon/M in range(7,usr))
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_telepathy() called tick#: [world.time]")
 	set name = "Telepathy"
 	set desc = "Project your thoughts into the minds of other organics!"
 	set category = "Mutant Abilities"
@@ -401,7 +392,6 @@
 		return
 
 /proc/bioproc_empath(var/mob/living/carbon/M in range(7,usr))
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_empath() called tick#: [world.time]")
 	set name = "Read Mind"
 	set desc = "Read the minds of others for information."
 	set category = "Mutant Abilities"
@@ -504,7 +494,6 @@
 		return
 
 /proc/bioproc_immolate_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_immolate_cd() called tick#: [world.time]")
 	set name = "Immolate (c)"
 	set desc = "Wreath yourself in burning flames. Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -512,7 +501,6 @@
 	usr << "<span class='warning'>Your Immolation ability is recharging.</span>"
 
 /proc/bioproc_immolate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_immolate() called tick#: [world.time]")
 	set name = "Immolate"
 	set desc = "Wreath yourself in burning flames."
 	set category = "Mutant Abilities"
@@ -560,7 +548,6 @@
 		return
 
 /proc/bioproc_melt()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_melt() called tick#: [world.time]")
 	set name = "Dissolve"
 	set desc = "Transform yourself into a liquified state."
 	set category = "Mutant Abilities"
@@ -614,7 +601,6 @@
 		return
 
 /proc/bioproc_superfart_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_superfart_cd() called tick#: [world.time]")
 	set name = "Super Fart (c)"
 	set desc = "Unleash a gigantic fart! Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -622,7 +608,6 @@
 	usr << "<span class='warning'>Your Super Fart ability is recharging.</span>"
 
 /proc/bioproc_superfart()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_superfart() called tick#: [world.time]")
 	set name = "Super Fart"
 	set desc = "Unleash a gigantic fart!"
 	set category = "Mutant Abilities"
@@ -695,7 +680,6 @@
 		return
 
 /proc/bioproc_eyebeams_cd()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_eyebeams_cd() called tick#: [world.time]")
 	set name = "Eye Beams (c)"
 	set desc = "Shoot lasers from your eyes. Currently on cooldown."
 	set category = "Mutant Abilities"
@@ -703,7 +687,6 @@
 	usr << "<span class='warning'>Your Eye Beams ability is recharging.</span>"
 
 /proc/bioproc_eyebeams()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bioproc_eyebeams() called tick#: [world.time]")
 	set name = "Eye Beams"
 	set desc = "Shoot lasers from your eyes."
 	set category = "Mutant Abilities"

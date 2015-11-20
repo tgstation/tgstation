@@ -60,7 +60,6 @@
 	src.dir = dir
 
 /obj/effect/accelerated_particle/proc/startMove(move = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/accelerated_particle/proc/startMove() called tick#: [world.time]")
 	if(movement_range > 20)
 		movement_range = 20
 	if(move)
@@ -100,7 +99,6 @@
 	return
 
 /obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/accelerated_particle/proc/toxmob() called tick#: [world.time]")
 	var/radiation = (energy*2)
 /*			if(istype(M,/mob/living/carbon/human))
 		if(M:wear_suit) //TODO: check for radiation protection
@@ -115,7 +113,6 @@
 
 
 /obj/effect/accelerated_particle/proc/move(var/lag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/accelerated_particle/proc/move() called tick#: [world.time]")
 	if(!loc) return 0
 	if(target)
 		if(movetotarget)

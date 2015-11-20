@@ -12,7 +12,6 @@
 	var/datum/gas_mixture/air_contents = null
 
 /obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/latexballon/proc/blow() called tick#: [world.time]")
 	if (icon_state == "latexballon_bursted")
 		return
 	src.air_contents = tank.remove_air_volume(3)
@@ -20,7 +19,6 @@
 	item_state = "latexballon"
 
 /obj/item/latexballon/proc/burst()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/latexballon/proc/burst() called tick#: [world.time]")
 	if (!air_contents)
 		return
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)

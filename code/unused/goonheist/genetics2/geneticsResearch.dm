@@ -20,7 +20,6 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/lastTick = 0
 
 	proc/setup()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/setup() called tick#: [world.time]")
 		researchTree = (typesof(/datum/geneticsResearchEntry) - /datum/geneticsResearchEntry) - /datum/geneticsResearchEntry/mutation
 
 		for(var/entry in researchTree)
@@ -38,14 +37,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/isResearched(var/type)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/isResearched() called tick#: [world.time]")
 		if(researchTree.Find(type))
 			var/datum/geneticsResearchEntry/E = researchTree[type]
 			if(E.isResearched == 1) return 1
 		return 0
 
 	proc/progress()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/progress() called tick#: [world.time]")
 		//var/tickDiff = 0
 		//if(!lastTick) lastTick = world.time
 		//tickDiff = (world.time - lastTick)
@@ -63,7 +60,6 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/addResearch(var/datum/D)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/addResearch() called tick#: [world.time]")
 		if(istype(D, /datum/bioEffect))
 			var/datum/geneticsResearchEntry/mutation/M = new()
 
@@ -140,7 +136,6 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/htmlIcon = null
 
 	proc/onFinish()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/onFinish() called tick#: [world.time]")
 		for (var/obj/machinery/computer/genetics/C in genetics_computers)
 			if (C.tracked_research == src)
 				C.tracked_research = null
@@ -148,15 +143,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/onBegin()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/onBegin() called tick#: [world.time]")
 		return
 
 	proc/onTick()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/onTick() called tick#: [world.time]")
 		return
 
 	proc/meetsRequirements()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/meetsRequirements() called tick#: [world.time]")
 		if(src.isResearched == 1 || src.isResearched == -1)
 			return 0
 

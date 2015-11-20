@@ -78,7 +78,6 @@
 	..()
 
 /atom/proc/move_camera_by_click()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/move_camera_by_click() called tick#: [world.time]")
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
@@ -104,7 +103,6 @@
 
 /client/proc/AIMove(n, direct, var/mob/living/silicon/ai/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/AIMove() called tick#: [world.time]")
 
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50
@@ -132,7 +130,6 @@
 
 /mob/living/silicon/ai/proc/view_core()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/view_core() called tick#: [world.time]")
 
 	current = null
 	cameraFollow = null
@@ -160,7 +157,6 @@
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/toggle_acceleration()  called tick#: [world.time]")
 
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."

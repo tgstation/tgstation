@@ -467,7 +467,6 @@ log transactions
 
 //create the most effective combination of notes to make up the requested amount
 /obj/machinery/atm/proc/withdraw_arbitrary_sum(var/mob/user,var/arbitrary_sum)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atm/proc/withdraw_arbitrary_sum() called tick#: [world.time]")
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_id,/obj/item/weapon/storage/wallet))
@@ -478,7 +477,6 @@ log transactions
 
 //stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri
 /obj/machinery/atm/proc/scan_user(mob/living/carbon/human/human_user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atm/proc/scan_user() called tick#: [world.time]")
 	if(!authenticated_account && linked_db)
 		if(human_user.wear_id)
 			var/obj/item/weapon/card/id/I

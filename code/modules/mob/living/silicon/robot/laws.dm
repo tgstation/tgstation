@@ -2,11 +2,9 @@
 	set category = "Robot Commands"
 	set name = "Show Laws"
 	show_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/cmd_show_laws()  called tick#: [world.time]")
 
 //vg edit
 /mob/living/silicon/robot/proc/statelaws() // -- TLE
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/statelaws() called tick#: [world.time]")
 //	set category = "AI Commands"
 //	set name = "State Laws"
 	src.say(";Current Active Laws:")
@@ -53,7 +51,6 @@
 /mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 	set category = "Robot Commands"
 	set name = "State Laws"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/checklaws()  called tick#: [world.time]")
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
@@ -134,7 +131,6 @@
 		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
 
 /mob/living/silicon/robot/proc/lawsync()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/lawsync() called tick#: [world.time]")
 	laws_sanity_check()
 	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null
 	var/temp
@@ -166,41 +162,33 @@
 	return
 
 /mob/living/silicon/robot/proc/laws_sanity_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/laws_sanity_check() called tick#: [world.time]")
 	if (!laws)
 		laws = new base_law_type
 
 /mob/living/silicon/robot/proc/set_zeroth_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/set_zeroth_law() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
 
 /mob/living/silicon/robot/proc/add_inherent_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/add_inherent_law() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.add_inherent_law(law)
 
 /mob/living/silicon/robot/proc/clear_inherent_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/clear_inherent_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
 /mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/add_supplied_law() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
 
 /mob/living/silicon/robot/proc/clear_supplied_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/clear_supplied_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
 /mob/living/silicon/robot/proc/add_ion_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/add_ion_law() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.add_ion_law(law)
 
 /mob/living/silicon/robot/proc/clear_ion_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/clear_ion_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.clear_ion_laws()

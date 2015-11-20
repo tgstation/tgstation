@@ -27,7 +27,6 @@
 		light("<span class='notice'>[user] lights [src] with [W].</span>")
 
 /obj/item/candle/proc/light(var/flavor_text = "<span class='notice'>[usr] lights [src].</span>")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/candle/proc/light() called tick#: [world.time]")
 	if(!src.lit)
 		src.lit = 1
 		visible_message(flavor_text)

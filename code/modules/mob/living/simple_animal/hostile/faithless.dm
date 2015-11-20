@@ -83,7 +83,6 @@
 			stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/faithless/cult/proc/horde()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/faithless/cult/proc/horde() called tick#: [world.time]")
 	var/turf/T = get_step_to(src, shuttletarget)
 	for(var/atom/A in T)
 		if(istype(A,/obj/machinery/door/airlock))

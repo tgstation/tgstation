@@ -1,6 +1,5 @@
 //general stuff
 /proc/sanitize_integer(number, min=0, max=1, default=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_integer() called tick#: [world.time]")
 	if(isnum(number))
 		number = round(number)
 		if(min <= number && number <= max)
@@ -8,13 +7,11 @@
 	return default
 
 /proc/sanitize_text(text, default="")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_text() called tick#: [world.time]")
 	if(istext(text))
 		return text
 	return default
 
 /proc/sanitize_inlist(value, list/List, default)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_inlist() called tick#: [world.time]")
 	if(value in List)	return value
 	if(default)			return default
 	if(List && List.len)return List[1]
@@ -23,7 +20,6 @@
 
 //more specialised stuff
 /proc/sanitize_gender(gender,neuter=0,plural=0, default="male")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_gender() called tick#: [world.time]")
 	switch(gender)
 		if(MALE, FEMALE)return gender
 		if(NEUTER)
@@ -35,7 +31,6 @@
 	return default
 
 /proc/sanitize_hexcolor(color, default="#000000")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_hexcolor() called tick#: [world.time]")
 	if(!istext(color)) return default
 	var/len = length(color)
 	if(len != 7 && len !=4) return default

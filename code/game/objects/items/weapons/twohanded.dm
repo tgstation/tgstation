@@ -45,7 +45,6 @@
 	return wielding.unwield(user)
 
 /obj/item/offhand/proc/attach_to(var/obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/offhand/proc/attach_to() called tick#: [world.time]")
 	I.wielded = src
 	wielding = I
 	name = wielding.name + " offhand"

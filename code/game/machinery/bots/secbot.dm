@@ -415,7 +415,6 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/patrol_step()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/patrol_step() called tick#: [world.time]")
 
 	if(loc == patrol_target)		// reached target
 		at_patrol_target()
@@ -465,7 +464,6 @@ Auto Patrol: []"},
 
 // finds a new patrol target
 /obj/machinery/bot/secbot/proc/find_patrol_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/find_patrol_target() called tick#: [world.time]")
 	send_status()
 	if(awaiting_beacon)			// awaiting beacon response
 		awaiting_beacon++
@@ -483,7 +481,6 @@ Auto Patrol: []"},
 // finds the nearest beacon to self
 // signals all beacons matching the patrol code
 /obj/machinery/bot/secbot/proc/find_nearest_beacon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/find_nearest_beacon() called tick#: [world.time]")
 	nearest_beacon = null
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
@@ -500,7 +497,6 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/secbot/proc/at_patrol_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/at_patrol_target() called tick#: [world.time]")
 	find_patrol_target()
 	return
 
@@ -509,7 +505,6 @@ Auto Patrol: []"},
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
 /obj/machinery/bot/secbot/proc/set_destination(var/new_dest)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/set_destination() called tick#: [world.time]")
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -594,13 +589,11 @@ Auto Patrol: []"},
 
 // send a radio signal with a single data key/value pair
 /obj/machinery/bot/secbot/proc/post_signal(var/freq, var/key, var/value)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/post_signal() called tick#: [world.time]")
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/secbot/proc/post_signal_multiple(var/freq, var/list/keyval)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/post_signal_multiple() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -622,7 +615,6 @@ Auto Patrol: []"},
 
 // signals bot status etc. to controller
 /obj/machinery/bot/secbot/proc/send_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/send_status() called tick#: [world.time]")
 	var/list/kv = list(
 	"type" = "secbot",
 	"name" = name,
@@ -636,7 +628,6 @@ Auto Patrol: []"},
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/calc_path() called tick#: [world.time]")
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
 	if(!src.path)
 		src.path = list()
@@ -645,7 +636,6 @@ Auto Patrol: []"},
 // look for a criminal in view of the bot
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/look_for_perp() called tick#: [world.time]")
 	src.anchored = 0
 	for (var/mob/living/M in view(7,src)) //Let's find us a criminal
 		if(istype(M, /mob/living/carbon))
@@ -697,7 +687,6 @@ Auto Patrol: []"},
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
 /obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/assess_perp() called tick#: [world.time]")
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
@@ -768,7 +757,6 @@ Auto Patrol: []"},
 */
 
 /obj/machinery/bot/secbot/proc/speak(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/speak() called tick#: [world.time]")
 	visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",\
 		drugged_message="<span class='game say'><span class='name'>[src]</span> beeps, \"[pick("Wait! Let's be friends!","Wait for me!","You're so cool!","Who's your favourite pony?","I-It's not like I like you or anything...","Wanna see a magic trick?","Let's go have fun, assistant-kun~")]\"")
 	return
@@ -874,7 +862,6 @@ Auto Patrol: []"},
 	..()
 
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/check_for_weapons() called tick#: [world.time]")
 	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
 		if(!(slot_item.type in safe_weapons))
 			return 1

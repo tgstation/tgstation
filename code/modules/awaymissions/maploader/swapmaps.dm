@@ -309,7 +309,6 @@ swapmap
 		x1,y1,z1 position for it, and *don't* count it as a loaded map.
 	 */
 	proc/AllocateSwapMap()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AllocateSwapMap() called tick#: [world.time]")
 		InitializeSwapMaps()
 		world.maxx=max(x2,world.maxx)	// stretch x/y if necessary
 		world.maxy=max(y2,world.maxy)
@@ -332,7 +331,6 @@ swapmap
 			swapmaps_byname[id]=src
 
 	proc/ConsiderRegion(X1,Y1,X2,Y2,Z1,Z2)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ConsiderRegion() called tick#: [world.time]")
 		while(1)
 			var/nextz=0
 			var/swapmap/M
@@ -365,7 +363,6 @@ swapmap
 				Y1=1;Y2=world.maxy
 
 	proc/CutXYZ()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CutXYZ() called tick#: [world.time]")
 		var/mx=swapmaps_compiled_maxx
 		var/my=swapmaps_compiled_maxy
 		var/mz=swapmaps_compiled_maxz
@@ -379,12 +376,10 @@ swapmap
 
 	// save and delete
 	proc/Unload()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Unload() called tick#: [world.time]")
 		Save()
 		del(src)
 
 	proc/Save()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Save() called tick#: [world.time]")
 		if(id==src) return 0
 		var/savefile/S=mode?(new):new("map_[id].sav")
 		S << src
@@ -396,34 +391,28 @@ swapmap
 
 	// this will not delete existing savefiles for this map
 	proc/SetID(newid)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetID() called tick#: [world.time]")
 		swapmaps_byname-=id
 		id=newid
 		swapmaps_byname[id]=src
 
 	proc/AllTurfs(z)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AllTurfs() called tick#: [world.time]")
 		if(isnum(z) && (z<z1 || z>z2)) return null
 		return block(LoCorner(z),HiCorner(z))
 
 	// this could be safely called for an obj or mob as well, but
 	// probably not an area
 	proc/Contains(turf/T)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Contains() called tick#: [world.time]")
 		return (T && T.x>=x1 && T.x<=x2\
 		          && T.y>=y1 && T.y<=y2\
 		          && T.z>=z1 && T.z<=z2)
 
 	proc/InUse()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/InUse() called tick#: [world.time]")
 		for(var/turf/T in AllTurfs())
 			for(var/mob/M in T) if(M.key) return 1
 
 	proc/LoCorner(z=z1)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/LoCorner() called tick#: [world.time]")
 		return locate(x1,y1,z)
 	proc/HiCorner(z=z2)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HiCorner() called tick#: [world.time]")
 		return locate(x2,y2,z)
 
 	/*
@@ -434,7 +423,6 @@ swapmap
 		/obj/fence{icon_state="iron"}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/BuildFilledRectangle() called tick#: [world.time]")
 		if(!Contains(T1) || !Contains(T2)) return
 		var/turf/T=T1
 		// pick new corners in a block()-friendly form
@@ -443,7 +431,6 @@ swapmap
 		for(T in block(T1,T2)) new item(T)
 
 	proc/BuildRectangle(turf/T1,turf/T2,item)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/BuildRectangle() called tick#: [world.time]")
 		if(!Contains(T1) || !Contains(T2)) return
 		var/turf/T=T1
 		// pick new corners in a block()-friendly form
@@ -462,7 +449,6 @@ swapmap
 		type. Actually the list doesn't have to be just turfs.
 	 */
 	proc/BuildInTurfs(list/turfs,item)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/BuildInTurfs() called tick#: [world.time]")
 		for(var/T in turfs) new item(T)
 
 atom
@@ -523,7 +509,6 @@ var/swapmaps_loaded
 var/swapmaps_byname
 
 proc/InitializeSwapMaps()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/InitializeSwapMaps() called tick#: [world.time]")
 	if(swapmaps_initialized) return
 	swapmaps_initialized=1
 	swapmaps_compiled_maxx=world.maxx
@@ -538,18 +523,15 @@ proc/InitializeSwapMaps()
 			swapmaps_iconcache[swapmaps_iconcache[V]]=V
 
 proc/SwapMaps_AddIconToCache(name,icon)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_AddIconToCache() called tick#: [world.time]")
 	if(!swapmaps_iconcache) swapmaps_iconcache=list()
 	swapmaps_iconcache[name]=icon
 	swapmaps_iconcache[icon]=name
 
 proc/SwapMaps_Find(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_Find() called tick#: [world.time]")
 	InitializeSwapMaps()
 	return swapmaps_byname[id]
 
 proc/SwapMaps_Load(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_Load() called tick#: [world.time]")
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M)
@@ -571,20 +553,17 @@ proc/SwapMaps_Load(id)
 	return M
 
 proc/SwapMaps_Save(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_Save() called tick#: [world.time]")
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(M) M.Save()
 	return M
 
 proc/SwapMaps_Save_All()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_Save_All() called tick#: [world.time]")
 	InitializeSwapMaps()
 	for(var/swapmap/M in swapmaps_loaded)
 		if(M) M.Save()
 
 proc/SwapMaps_Unload(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_Unload() called tick#: [world.time]")
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M) return	// return silently from an error
@@ -592,12 +571,10 @@ proc/SwapMaps_Unload(id)
 	return 1
 
 proc/SwapMaps_DeleteFile(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_DeleteFile() called tick#: [world.time]")
 	fdel("map_[id].sav")
 	fdel("map_[id].txt")
 
 proc/SwapMaps_CreateFromTemplate(template_id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_CreateFromTemplate() called tick#: [world.time]")
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -625,7 +602,6 @@ proc/SwapMaps_CreateFromTemplate(template_id)
 	return M
 
 proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_LoadChunk() called tick#: [world.time]")
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -653,7 +629,6 @@ proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	return 1
 
 proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_SaveChunk() called tick#: [world.time]")
 	if(!corner1 || !corner2)
 		world.log << "SwapMaps error in SwapMaps_SaveChunk():"
 		if(!corner1) world.log << "  corner1 turf is null"
@@ -675,7 +650,6 @@ proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	return 1
 
 proc/SwapMaps_GetSize(id)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SwapMaps_GetSize() called tick#: [world.time]")
 	var/savefile/S
 	var/text=0
 	if(swapmaps_mode==SWAPMAPS_TEXT && fexists("map_[id].txt"))

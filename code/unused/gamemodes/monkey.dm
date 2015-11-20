@@ -64,7 +64,6 @@
 	..()
 
 /datum/game_mode/monkey/proc/is_important_monkey(var/mob/living/carbon/monkey/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/monkey/proc/is_important_monkey() called tick#: [world.time]")
 	var/turf/T = get_turf(M)
 	var/area/A = get_area(M)
 	if(M.stat!=2)
@@ -120,7 +119,6 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_monkey()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_monkey() called tick#: [world.time]")
 	for(var/mob/living/carbon/monkey/monkey_player in mob_list)
 		for(var/datum/disease/D in monkey_player.viruses)
 			if (istype(D, /datum/disease/jungle_fever) && monkey_player.ckey)

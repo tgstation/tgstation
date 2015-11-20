@@ -1,7 +1,6 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/attack_self() called tick#: [world.time]")
 	if(flags & TWOHANDABLE)
 		if(!(flags & MUSTTWOHAND))
 			if(wielded)
@@ -11,7 +10,6 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attackby() called tick#: [world.time]")
 	return
 
 /atom/movable/attackby(obj/item/W, mob/user)
@@ -27,25 +25,21 @@
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/afterattack() called tick#: [world.time]")
 	return
 
 // Overrides the weapon attack so it can attack any atoms like when we want to have an effect on an object independent of attackby
 // It is a powerfull proc but it should be used wisely, if there is other alternatives instead use those
 // If it returns 1 it exits click code. Always . = 1 at start of the function if you delete src.
 /obj/item/proc/preattack(atom/target, mob/user, proximity_flag, click_parameters)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/preattack() called tick#: [world.time]")
 	return
 
 obj/item/proc/get_clamped_volume()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/get_clamped_volume() called tick#: [world.time]")
 	if(src.force && src.w_class)
 		return Clamp((src.force + src.w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 	else if(!src.force && src.w_class)
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/attack() called tick#: [world.time]")
 	. = 1
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0

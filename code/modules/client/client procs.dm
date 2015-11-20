@@ -73,7 +73,6 @@
 	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/handle_spam_prevention() called tick#: [world.time]")
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -164,7 +163,6 @@
 
 	if(holder)
 		add_admin_verbs()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\add_admin_verbs()  called tick#: [world.time]")
 		admin_memo_show()
 
 	log_client_to_db()
@@ -201,7 +199,6 @@
 	return ..()
 
 /client/proc/log_client_to_db()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/log_client_to_db() called tick#: [world.time]")
 	if(IsGuestKey(key))
 		return
 
@@ -308,7 +305,6 @@
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration=3000)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/is_afk() called tick#: [world.time]")
 	if(inactivity > duration)	return inactivity
 	return 0
 
@@ -317,13 +313,11 @@
 	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
 	set category = "Preferences"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/resend_resources()  called tick#: [world.time]")
 	usr << "<span class='notice'>Re-sending NanoUI resources.  This may result in lag.</span>"
 	nanomanager.send_resources(src)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/send_resources() called tick#: [world.time]")
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
 
 	getFiles(
@@ -341,7 +335,6 @@
 
 
 /client/proc/send_html_resources()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/send_html_resources() called tick#: [world.time]")
 	if(crewmonitor && minimapinit)
 		crewmonitor.sendResources(src)
 	if(adv_camera && minimapinit)
@@ -351,7 +344,6 @@
 	vote.interface.sendAssets(src)
 
 /proc/get_role_desire_str(var/rolepref)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_role_desire_str() called tick#: [world.time]")
 	switch(rolepref & ROLEPREF_VALMASK)
 		if(ROLEPREF_NEVER)
 			return "Never"
@@ -364,7 +356,6 @@
 	return "???"
 
 /client/proc/desires_role(var/role_id, var/display_to_user=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/desires_role() called tick#: [world.time]")
 	var/role_desired = prefs.roles[role_id]
 	if(display_to_user && !(role_desired & ROLEPREF_PERSIST))
 		if(!(role_desired & ROLEPREF_POLLED))

@@ -22,7 +22,6 @@
 
 // For new turfs
 /turf/proc/copy_air_from(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/copy_air_from() called tick#: [world.time]")
 	oxygen = T.oxygen
 	carbon_dioxide = T.carbon_dioxide
 	nitrogen = T.nitrogen
@@ -53,7 +52,6 @@
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/update_visuals() called tick#: [world.time]")
 	overlays = 0
 
 	if(decals.len)
@@ -189,7 +187,6 @@
 		return ..()
 
 /turf/simulated/proc/update_air_properties()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/update_air_properties() called tick#: [world.time]")
 	if(iscatwalk(src))
 		return ..()
 	var/air_directions_archived = air_check_directions
@@ -331,7 +328,6 @@
 	return 1
 
 /turf/proc/HasDoor(turf/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/HasDoor() called tick#: [world.time]")
 	//Checks for the presence of doors, used for zone spreading and connection.
 	//A positive numerical argument checks only for closed doors.
 	//Another turf as an argument checks for windoors between here and there.
@@ -347,7 +343,6 @@
 			return 1
 
 /turf/proc/ZCanPass(turf/simulated/T, var/include_space = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/ZCanPass() called tick#: [world.time]")
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
 	if(!istype(T))
 		return 0
@@ -373,7 +368,6 @@
 		return 1
 
 /turf/proc/ZAirPass(turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/ZAirPass() called tick#: [world.time]")
 	//Fairly standard pass checks for turfs, objects and directional windows.
 	if(!istype(T))
 		return 0
@@ -397,7 +391,6 @@
 
 /*UNUSED
 /turf/proc/check_connections()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/check_connections() called tick#: [world.time]")
 	//Checks for new connections that can be made.
 	for(var/d in cardinal)
 		var/turf/simulated/T = get_step(src,d)
@@ -407,7 +400,6 @@
 			ZConnect(src,T)
 
 /turf/proc/check_for_space()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/check_for_space() called tick#: [world.time]")
 	//Checks for space around the turf.
 	for(var/d in cardinal)
 		var/turf/T = get_step(src,d)

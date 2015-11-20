@@ -78,7 +78,6 @@
 	return 1
 
 /obj/machinery/recharge_station/proc/process_upgrade()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/process_upgrade() called tick#: [world.time]")
 	if(!upgrading)
 		return
 	if(!occupant || !isrobot(occupant)) // Something happened so stop the upgrade.
@@ -177,7 +176,6 @@
 
 
 /obj/machinery/recharge_station/proc/build_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/build_icon() called tick#: [world.time]")
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "borgcharger"
 	else
@@ -187,7 +185,6 @@
 			icon_state = "borgcharger0"
 
 /obj/machinery/recharge_station/proc/process_occupant()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/process_occupant() called tick#: [world.time]")
 	if(src.occupant)
 		if (istype(occupant, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = occupant
@@ -213,7 +210,6 @@
 				return
 
 /obj/machinery/recharge_station/proc/process_capacitors()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/process_capacitors() called tick#: [world.time]")
 	if (capacitor_stored >= capacitor_max)
 		if (idle_power_usage != initial(idle_power_usage)) //probably better to not re-assign the variable each process()?
 			idle_power_usage = initial(idle_power_usage)
@@ -223,7 +219,6 @@
 	return 1
 
 /obj/machinery/recharge_station/proc/go_out()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/go_out() called tick#: [world.time]")
 	if(!( src.occupant ))
 		return
 	if(upgrading)
@@ -245,7 +240,6 @@
 	return
 
 /obj/machinery/recharge_station/proc/restock_modules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/restock_modules() called tick#: [world.time]")
 	if(src.occupant)
 		if(istype(occupant, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = occupant
@@ -337,7 +331,6 @@
 /obj/machinery/recharge_station/verb/move_eject()
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/recharge_station/verb/move_eject()  called tick#: [world.time]")
 	if (usr.stat != 0)
 		return
 	src.go_out()
@@ -347,13 +340,11 @@
 /obj/machinery/recharge_station/verb/move_inside()
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/recharge_station/verb/move_inside()  called tick#: [world.time]")
 
 	mob_enter(usr)
 	return
 
 /obj/machinery/recharge_station/proc/mob_enter(mob/living/silicon/robot/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/recharge_station/proc/mob_enter() called tick#: [world.time]")
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if (R.stat == 2)

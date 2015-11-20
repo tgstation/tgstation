@@ -69,7 +69,6 @@
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/delete_key_pressed()  called tick#: [world.time]")
 
 	if(!usr.pulling)
 		usr << "<span class='notice'> You are not pulling anything.</span>"
@@ -78,7 +77,6 @@
 
 /client/verb/swap_hand()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/swap_hand()  called tick#: [world.time]")
 	if(istype(mob, /mob/living/carbon))
 		mob:swap_hand()
 	if(istype(mob,/mob/living/silicon/robot/mommi))
@@ -156,7 +154,6 @@
 
 /client/verb/attack_self()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/attack_self()  called tick#: [world.time]")
 	if(mob)
 		mob.mode()
 	return
@@ -164,7 +161,6 @@
 
 /client/verb/toggle_throw_mode()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/toggle_throw_mode()  called tick#: [world.time]")
 	if(!istype(mob, /mob/living/carbon))
 		return
 	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
@@ -175,7 +171,6 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/drop_item()  called tick#: [world.time]")
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
@@ -191,7 +186,6 @@
 	return
 
 /client/proc/Move_object(direct)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Move_object() called tick#: [world.time]")
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
@@ -360,7 +354,6 @@
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Process_Grab() called tick#: [world.time]")
 	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
 		var/list/grabbing = list()
 		if(istype(mob.l_hand, /obj/item/weapon/grab))
@@ -390,7 +383,6 @@
 ///Called by client/Move()
 ///Allows mobs to run though walls
 /client/proc/Process_Incorpmove(direct)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Process_Incorpmove() called tick#: [world.time]")
 	var/turf/mobloc = get_turf(mob)
 
 	switch(mob.incorporeal_move)
@@ -466,7 +458,6 @@
 ///For moving in space
 ///Return 1 for movement 0 for none
 /mob/proc/Process_Spacemove(var/check_drift = 0,var/ignore_slip = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Process_Spacemove() called tick#: [world.time]")
 	//First check to see if we can do things
 	if(restrained())
 		return 0
@@ -521,7 +512,6 @@
 
 
 /mob/proc/Process_Spaceslipping(var/prob_slip = 5)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Process_Spaceslipping() called tick#: [world.time]")
 	//Setup slipage
 	//If knocked out we might just hit it and stop.  This makes it possible to get dead bodies and such.
 	if(stat)
@@ -532,7 +522,6 @@
 
 
 /mob/proc/Move_Pulled(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Move_Pulled() called tick#: [world.time]")
 	if(!canmove || restrained() || !pulling)
 		return
 	if(pulling.anchored)

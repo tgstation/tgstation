@@ -4,7 +4,6 @@ var/list/datum/craftlathe_item/CRAFT_ITEMS = list()
 var/CRAFT_ITEMS_SETUP = 1        //this should probably be a pre-game thing, but i'll do it so the first lathe2 that's created will set-up the recipes.
 
 proc/check_craftlathe_recipe(var/list/param_recipe)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/check_craftlathe_recipe() called tick#: [world.time]")
 	if(param_recipe.len != 9)
 		return
 	var/i
@@ -158,7 +157,6 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 	return
 
 /obj/machinery/autolathe2/proc/rmv_item(obj/item/W as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/autolathe2/proc/rmv_item() called tick#: [world.time]")
 	if(istype(W,/obj/item/stack))
 		var/obj/item/stack/S = W
 		S.amount--
@@ -168,7 +166,6 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 		del(W)
 
 /obj/machinery/autolathe2/proc/build_recipes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/autolathe2/proc/build_recipes() called tick#: [world.time]")
 	//Parameters: ID, Name, Amount, Amount_added_per_attackby, Recipe, Object type
 	CRAFT_ITEMS += new/datum/craftlathe_item("METAL","Metal",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/metal)
 	CRAFT_ITEMS += new/datum/craftlathe_item("R METAL","Reinforced Metal",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/r_metal)

@@ -93,7 +93,6 @@
 	return
 
 /obj/machinery/space_heater/air_conditioner/proc/chill()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/space_heater/air_conditioner/proc/chill() called tick#: [world.time]")
 	var/turf/simulated/L = loc
 	if(istype(L))
 		var/datum/gas_mixture/env = L.return_air()

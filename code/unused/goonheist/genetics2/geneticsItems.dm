@@ -34,7 +34,6 @@
 			src.name = "expended " + src.name
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/injected() called tick#: [world.time]")
 		if(!istype(user,/mob/living/carbon/) || !istype(target,/mob/living/carbon/))
 			return 1
 		if(!istype(target.bioHolder,/datum/bioHolder/))

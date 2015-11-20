@@ -14,7 +14,6 @@
 /// SEE code/modules/migrations/SS13_Prefs/
 
 /datum/preferences/proc/savefile_update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/savefile_update() called tick#: [world.time]")
 	// Preseed roles.
 	for(var/role_id in special_roles)
 		roles[role_id]=0
@@ -37,14 +36,12 @@
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_path() called tick#: [world.time]")
 	if(!ckey)	return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 	savefile_version = SAVEFILE_VERSION_MAX
 
 
 /datum/preferences/proc/SetChangelog(ckey,hash)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/SetChangelog() called tick#: [world.time]")
 	lastchangelog=hash
 	var/database/query/q = new
 	q.Add("UPDATE client SET lastchangelog=? WHERE ckey=?",lastchangelog,ckey)
@@ -54,7 +51,6 @@
 		return 0
 
 /datum/preferences/proc/load_preferences_sqlite(var/ckey)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_preferences_sqlite() called tick#: [world.time]")
 	var/list/preference_list_client = new
 	var/database/query/check = new
 	var/database/query/q = new
@@ -111,7 +107,6 @@
 
 
 /datum/preferences/proc/load_preferences()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_preferences() called tick#: [world.time]")
 	if(!path)				return 0
 	if(!fexists(path))		return 0
 	var/savefile/S = new /savefile(path)
@@ -157,7 +152,6 @@
 
 
 /datum/preferences/proc/save_preferences_sqlite(var/user, var/ckey)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_preferences_sqlite() called tick#: [world.time]")
 	/* FUCK YOU
 	if(!(world.timeofday >= (lastPolled + POLLED_LIMIT)))
 		user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
@@ -191,7 +185,6 @@
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_preferences() called tick#: [world.time]")
 	if(!path)				return 0
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
@@ -216,7 +209,6 @@
 
 //saving volume changes
 /datum/preferences/proc/save_volume()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_volume() called tick#: [world.time]")
 	if(!path)				return 0
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
@@ -226,7 +218,6 @@
 	return 1
 
 /datum/preferences/proc/load_save_sqlite(var/ckey, var/user, var/slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_save_sqlite() called tick#: [world.time]")
 	var/list/preference_list = new
 	var/database/query/q     = new
 	var/database/query/check = new
@@ -477,7 +468,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 
 /datum/preferences/proc/load_save(dir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_save() called tick#: [world.time]")
 	var/savefile/S = new /savefile(path)
 	if(!S) return 0
 	S.cd = dir
@@ -582,7 +572,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 
 /datum/preferences/proc/random_character_sqlite(var/user, var/ckey)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/random_character_sqlite() called tick#: [world.time]")
 	var/database/query/q = new
 	var/list/slot_list = new
 	q.Add("SELECT player_slot FROM players WHERE player_ckey=?", ckey)
@@ -598,7 +587,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	return 1
 
 /datum/preferences/proc/random_character()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/random_character() called tick#: [world.time]")
 	if(!path)				return 0
 	if(!fexists(path))		return 0
 	var/savefile/S = new /savefile(path)
@@ -619,7 +607,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/load_character() called tick#: [world.time]")
 	if(!path)				return 0
 	if(!fexists(path))		return 0
 	var/savefile/S = new /savefile(path)
@@ -636,7 +623,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 /datum/preferences/proc/save_character_sqlite(var/ckey, var/user, var/slot)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_character_sqlite() called tick#: [world.time]")
 
 	if(slot > MAX_SAVE_SLOTS)
 		user << "You are limited to 8 character slots."
@@ -771,7 +757,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 /datum/preferences/proc/save_character()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_character() called tick#: [world.time]")
 
 	if(!path)				return 0
 	var/savefile/S = new /savefile(path)

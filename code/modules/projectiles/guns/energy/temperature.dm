@@ -108,7 +108,6 @@
 	return
 
 /obj/item/weapon/gun/energy/temperature/proc/update_dat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/energy/temperature/proc/update_dat() called tick#: [world.time]")
 	dat = ""
 	dat += "Current output temperature: "
 	if(temperature > 500)
@@ -134,7 +133,6 @@
 	dat += "<FONT color=[powercostcolor]><B>[powercost]</B></FONT>"
 
 /obj/item/weapon/gun/energy/temperature/proc/update_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/energy/temperature/proc/update_temperature() called tick#: [world.time]")
 	switch(temperature)
 		if(501 to INFINITY)
 			item_state = "tempgun_8"
@@ -157,7 +155,6 @@
 	icon_state = item_state
 
 /obj/item/weapon/gun/energy/temperature/proc/update_charge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/energy/temperature/proc/update_charge() called tick#: [world.time]")
 	var/charge = power_supply.charge
 	switch(charge)
 		if(900 to INFINITY)		overlays += "900"
@@ -172,7 +169,6 @@
 		if(-INFINITY to 100)	overlays += "0"
 
 /obj/item/weapon/gun/energy/temperature/proc/update_user()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/energy/temperature/proc/update_user() called tick#: [world.time]")
 	if (istype(loc,/mob/living/carbon))
 		var/mob/living/carbon/M = loc
 		M.update_inv_back()

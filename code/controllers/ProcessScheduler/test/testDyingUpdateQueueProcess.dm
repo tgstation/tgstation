@@ -8,7 +8,6 @@
  * in mob.Life once in a blue moon, the mob update loop will not hang.
  */
 /datum/slowTestDatum/proc/wackyUpdateProcessName()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/slowTestDatum/proc/wackyUpdateProcessName() called tick#: [world.time]")
 	sleep(rand(0,20)) // Randomly REALLY slow :|
 	
 /datum/controller/process/testDyingUpdateQueueProcess

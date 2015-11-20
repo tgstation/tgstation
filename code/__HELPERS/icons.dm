@@ -9,7 +9,6 @@ proc
 		return alpha_mask//And now return the mask.
 
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/AddCamoOverlay() called tick#: [world.time]")
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
 	//Now we need to culculate overlays+underlays and add them together to form an image for a mask.
 	//var/icon/alpha_mask = getFlatIcon(src)//Accurate but SLOW. Not designed for running each tick. Could have other uses I guess.
@@ -26,7 +25,6 @@ proc
 		overlays += I//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getHologramIcon() called tick#: [world.time]")
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
@@ -35,7 +33,6 @@ proc
 	return flat_icon
 
 /proc/getStaticIcon(icon/A, safety=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getStaticIcon() called tick#: [world.time]")
 	var/icon/flat_icon = safety ? A : new(A)
 	flat_icon.Blend(rgb(255, 255, 255))
 	flat_icon.BecomeAlphaMask()
@@ -44,7 +41,6 @@ proc
 	return static_icon
 
 /proc/getBlankIcon(icon/A, safety=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getBlankIcon() called tick#: [world.time]")
 	var/icon/flat_icon = safety ? A : new(A)
 	flat_icon.Blend(rgb(255, 255, 255))
 	flat_icon.BecomeAlphaMask()
@@ -53,7 +49,6 @@ proc
 	return blank_icon
 
 /proc/getLetterImage(atom/A, letter = "", uppercase = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getLetterImage() called tick#: [world.time]")
 	if(!A)
 		return
 
@@ -76,7 +71,6 @@ proc
 
 //For photo camera.
 /proc/build_composite_icon(atom/A)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/build_composite_icon() called tick#: [world.time]")
 	var/icon/composite = icon(A.icon, A.icon_state, A.dir, 1)
 	for(var/O in A.overlays)
 		var/image/I = O
@@ -86,7 +80,6 @@ proc
 	return composite
 
 proc/adjust_brightness(var/color, var/value)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/adjust_brightness() called tick#: [world.time]")
 	if (!color) return "#FFFFFF"
 	if (!value) return color
 
@@ -97,7 +90,6 @@ proc/adjust_brightness(var/color, var/value)
 	return rgb(RGB[1],RGB[2],RGB[3])
 
 /proc/ListColors(var/icon/I, var/ignoreGreyscale = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ListColors() called tick#: [world.time]")
 	var/list/colors = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
@@ -109,7 +101,6 @@ proc/adjust_brightness(var/color, var/value)
 	return colors
 
 /proc/AverageColor(var/icon/I, var/accurate = 0, var/ignoreGreyscale = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/AverageColor() called tick#: [world.time]")
 //Accurate: Use more accurate color averaging, usually has better results and prevents muddied or overly dark colors. Mad thanks to wwjnc.
 //ignoreGreyscale: Excempts greyscale colors from the color list, useful for filtering outlines or plate overlays.
 	var/list/colors = ListColors(I, ignoreGreyscale)
@@ -138,7 +129,6 @@ proc/adjust_brightness(var/color, var/value)
 	return final_average
 
 /proc/empty_Y_space(var/icon/I) //Returns the amount of lines containing only transparent pixels in an icon, starting from the bottom
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/empty_Y_space() called tick#: [world.time]")
 	for(var/y_pixel = 1 to I.Height())
 		for(var/x_pixel = 1 to I.Width())
 			if (I.GetPixel(x_pixel, y_pixel))

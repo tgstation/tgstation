@@ -18,7 +18,6 @@ proc/random_hair_style(gender, species = "Human")
 	return h_style
 
 /proc/GetOppositeDir(var/dir)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/GetOppositeDir() called tick#: [world.time]")
 	switch(dir)
 		if(NORTH)     return SOUTH
 		if(SOUTH)     return NORTH
@@ -31,7 +30,6 @@ proc/random_hair_style(gender, species = "Human")
 	return 0
 
 proc/random_facial_hair_style(gender, species = "Human")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/random_facial_hair_style() called tick#: [world.time]")
 	var/f_style = "Shaved"
 
 	var/list/valid_facialhairstyles = list()
@@ -52,7 +50,6 @@ proc/random_facial_hair_style(gender, species = "Human")
 		return f_style
 
 proc/random_name(gender, speciesName = "Human")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/random_name() called tick#: [world.time]")
 	var/datum/species/S = all_species[speciesName]
 	if(S)
 		return S.makeName(gender)
@@ -63,7 +60,6 @@ proc/random_name(gender, speciesName = "Human")
 
 
 proc/random_skin_tone()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/random_skin_tone() called tick#: [world.time]")
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
 		if("afroamerican")	. = -115
@@ -74,7 +70,6 @@ proc/random_skin_tone()
 	return min(max( .+rand(-25, 25), -185),34)
 
 proc/skintone2racedescription(tone)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/skintone2racedescription() called tick#: [world.time]")
 	switch (tone)
 		if(30 to INFINITY)		return "albino"
 		if(20 to 30)			return "pale"
@@ -87,7 +82,6 @@ proc/skintone2racedescription(tone)
 		else					return "unknown"
 
 proc/age2agedescription(age)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/age2agedescription() called tick#: [world.time]")
 	switch(age)
 		if(0 to 1)			return "infant"
 		if(1 to 3)			return "toddler"
@@ -101,7 +95,6 @@ proc/age2agedescription(age)
 		else				return "unknown"
 
 proc/RoundHealth(health)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/RoundHealth() called tick#: [world.time]")
 	switch(health)
 		if(100 to INFINITY)
 			return "health100"
@@ -134,7 +127,6 @@ Proc for attack log creation, because really why not
 */
 
 proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/add_logs() called tick#: [world.time]")
 	if(user && ismob(user))
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
 	if(target && ismob(target))
@@ -147,7 +139,6 @@ proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var
 		log_attack("<font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
 
 proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var/addition=null)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/add_ghostlogs() called tick#: [world.time]")
 	var/target_text = "NON-EXISTENT TARGET"
 	var/subject_text = "NON-EXISTENT SUBJECT"
 	if(target)
@@ -175,5 +166,4 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 			log_ghost("[subject_text] [what_done] [target_text] [addition]")
 
 /mob/proc/isVentCrawling()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/isVentCrawling() called tick#: [world.time]")
 	return (istype(loc, /obj/machinery/atmospherics)) // Crude but no other situation would put them inside of this

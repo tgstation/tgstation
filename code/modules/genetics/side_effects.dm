@@ -6,12 +6,10 @@
 	var/duration = 0 // delay between start() and finish()
 
 	proc/start(mob/living/carbon/human/H)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/start() called tick#: [world.time]")
 		// start the side effect, this should give some cue as to what's happening,
 		// such as gasping. These cues need to be unique among side-effects.
 
 	proc/finish(mob/living/carbon/human/H)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/finish() called tick#: [world.time]")
 		// Finish the side-effect. This should first check whether the cure has been
 		// applied, and if not, cause bad things to happen.
 
@@ -77,7 +75,6 @@
 			H.confused += 100
 
 proc/trigger_side_effect(mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/trigger_side_effect() called tick#: [world.time]")
 	spawn
 		if(!istype(H)) return
 		var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)

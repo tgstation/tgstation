@@ -35,7 +35,6 @@ var/global/list/taxi_computers = list()
 	icon_state = "syndishuttle"
 
 /obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(var/obj/structure/docking_port/destination/destination, var/wait_time)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to() called tick#: [world.time]")
 	/*if(shuttle.moving)
 		return
 	if(!shuttle.can_move())
@@ -66,7 +65,6 @@ var/global/list/taxi_computers = list()
 
 
 /obj/machinery/computer/taxi_shuttle/proc/broadcast(var/message = "")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/broadcast() called tick#: [world.time]")
 	if(message)
 		src.visible_message("\icon [src]" + message)
 	else
@@ -144,7 +142,6 @@ var/global/list/taxi_computers = list()
 	return
 
 /obj/machinery/computer/taxi_shuttle/proc/callTo(var/place = "", var/wait_time)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/callTo() called tick#: [world.time]")
 	switch(place)
 		if("med_sili")
 			if (taxi_move_to(shuttle.dock_medical_silicon, wait_time))

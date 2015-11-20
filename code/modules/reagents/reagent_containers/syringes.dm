@@ -119,7 +119,6 @@
 		overlays += filling
 
 /obj/item/weapon/reagent_containers/syringe/proc/handle_draw(var/atom/target, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/syringe/proc/handle_draw() called tick#: [world.time]")
 	if (!target)
 		return
 
@@ -189,7 +188,6 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/proc/handle_inject(var/atom/target, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/syringe/proc/handle_inject() called tick#: [world.time]")
 	if (src.is_empty())
 		user << "<span class='warning'>\The [src] is empty.</span>"
 		return
@@ -243,7 +241,6 @@
 
 // Injecting people with a space suit/hardsuit is harder
 /obj/item/weapon/reagent_containers/syringe/proc/get_injection_time(var/mob/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/syringe/proc/get_injection_time() called tick#: [world.time]")
 	if (istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
 		return (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space)) ? 60 : 30
@@ -251,7 +248,6 @@
 		return 30
 
 /obj/item/weapon/reagent_containers/syringe/proc/get_injection_action(var/mob/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/syringe/proc/get_injection_action() called tick#: [world.time]")
 	if (istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
 		return (H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space)) ? INJECTION_SUIT_PORT : INJECTION_BODY
@@ -259,7 +255,6 @@
 		return INJECTION_BODY
 
 /obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/syringe/proc/syringestab() called tick#: [world.time]")
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/target_zone = check_zone(user.zone_sel.selecting, target)

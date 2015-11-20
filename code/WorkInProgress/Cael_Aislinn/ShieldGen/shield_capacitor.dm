@@ -176,7 +176,6 @@
 	set name = "Rotate capacitor clockwise"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/shield_capacitor/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor!"

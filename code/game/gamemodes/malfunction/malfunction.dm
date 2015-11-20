@@ -88,7 +88,6 @@ Rebooting world in 5 seconds."}
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_malf() called tick#: [world.time]")
 	malf.current << {"<span class='warning'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span><br>
 <B>The crew does not know about your malfunction, you might wish to keep it secret for now.</B><br>
 <B>You must overwrite the programming of the station's APCs to assume full control.</B><br>
@@ -100,7 +99,6 @@ Once done, you will be able to interface with all systems, notably the onboard n
 
 
 /datum/game_mode/malfunction/proc/hack_intercept()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/malfunction/proc/hack_intercept() called tick#: [world.time]")
 	intercept_hacked = 1
 
 
@@ -123,7 +121,6 @@ Once done, you will be able to interface with all systems, notably the onboard n
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/malfunction/proc/capture_the_station() called tick#: [world.time]")
 	world << {"<FONT size = 3><B>The AI has won!</B></FONT><br>
 <B>It has fully taken control of [station_name()]'s systems.</B>"}
 
@@ -139,7 +136,6 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 
 
 /datum/game_mode/proc/is_malf_ai_dead()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/is_malf_ai_dead() called tick#: [world.time]")
 	var/all_dead = 1
 	for(var/datum/mind/AI_mind in malf_ai)
 		if (istype(AI_mind.current,/mob/living/silicon/ai) && AI_mind.current.stat!=2)
@@ -171,7 +167,6 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	set category = "Malfunction"
 	set name = "System Override"
 	set desc = "Start the victory timer"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/malfunction/proc/takeover() called tick#: [world.time]")
 
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
 		usr << "<span class='warning'>You cannot begin a takeover in this round type!</span>"
@@ -201,7 +196,6 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	set category = "Malfunction"
 	set name = "Explode"
 	set desc = "Station goes boom"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/malfunction/proc/ai_win() called tick#: [world.time]")
 
 	if(!ticker.mode:station_captured)
 		usr << "<span class='warning'>You are unable to access the self-destruct system as you don't control the station yet.</span>"
@@ -279,7 +273,6 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_malfunction() called tick#: [world.time]")
 	var/text = ""
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
 		text += "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"

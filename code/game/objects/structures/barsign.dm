@@ -58,7 +58,6 @@
 	pick_sign()
 
 /obj/structure/sign/double/barsign/proc/pick_sign()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/sign/double/barsign/proc/pick_sign() called tick#: [world.time]")
 	var/picked_name = input("Available Signage", "Bar Sign", "Cancel") as null|anything in barsigns
 	if(!picked_name)
 		return

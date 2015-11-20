@@ -60,7 +60,6 @@
 	return
 
 /obj/machinery/mech_bay_recharge_floor/proc/init_devices()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_floor/proc/init_devices() called tick#: [world.time]")
 	recharge_console = locate() in range(1,src)
 	recharge_port = locate(/obj/machinery/mech_bay_recharge_port, get_step(src, WEST))
 	if(recharge_console)
@@ -106,7 +105,6 @@
 	set_voltage(45+lasercount*10)
 
 /obj/machinery/mech_bay_recharge_port/proc/start_charge(var/obj/mecha/recharging_mecha)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_port/proc/start_charge() called tick#: [world.time]")
 	if(stat&(NOPOWER|BROKEN))
 		recharging_mecha.occupant_message("<span class='rose'>Power port not responding. Terminating.</span>")
 		return 0
@@ -119,14 +117,12 @@
 			return 0
 
 /obj/machinery/mech_bay_recharge_port/proc/stop_charge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_port/proc/stop_charge() called tick#: [world.time]")
 	if(recharge_console && !recharge_console.stat)
 		recharge_console.icon_state = initial(recharge_console.icon_state)
 	pr_recharger.stop()
 	return
 
 /obj/machinery/mech_bay_recharge_port/proc/active()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_port/proc/active() called tick#: [world.time]")
 	if(pr_recharger.active())
 		return 1
 	else
@@ -142,7 +138,6 @@
 	return
 
 /obj/machinery/mech_bay_recharge_port/proc/set_voltage(new_voltage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_port/proc/set_voltage() called tick#: [world.time]")
 	if(new_voltage && isnum(new_voltage))
 		pr_recharger.max_charge = new_voltage
 		return 1
@@ -189,7 +184,6 @@
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/mech_bay_power_console/proc/mecha_in(var/obj/mecha/mecha)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/mech_bay_power_console/proc/mecha_in() called tick#: [world.time]")
 	if(stat&(NOPOWER|BROKEN))
 		mecha.occupant_message("<span class='rose'>Control console not responding. Terminating...</span>")
 		return
@@ -201,7 +195,6 @@
 	return
 
 /obj/machinery/computer/mech_bay_power_console/proc/mecha_out()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/mech_bay_power_console/proc/mecha_out() called tick#: [world.time]")
 	if(recharge_port)
 		recharge_port.stop_charge()
 	return

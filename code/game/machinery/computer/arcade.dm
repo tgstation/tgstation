@@ -195,7 +195,6 @@
 	return
 
 /obj/machinery/computer/arcade/proc/arcade_action()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/arcade/proc/arcade_action() called tick#: [world.time]")
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1

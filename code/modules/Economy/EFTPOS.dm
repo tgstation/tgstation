@@ -26,7 +26,6 @@
 	linked_account = station_account
 
 /obj/item/device/eftpos/proc/print_reference()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/eftpos/proc/print_reference() called tick#: [world.time]")
 	var/obj/item/weapon/paper/R = new(src.loc)
 	R.name = "Reference: [eftpos_name]"
 
@@ -50,7 +49,6 @@
 	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/device/eftpos/proc/reconnect_database()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/eftpos/proc/reconnect_database() called tick#: [world.time]")
 	var/turf/location = get_turf(src)
 	if(!location)
 		return
@@ -193,7 +191,6 @@
 	src.attack_self(usr)
 
 /obj/item/device/eftpos/proc/scan_card(var/obj/item/weapon/card/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/eftpos/proc/scan_card() called tick#: [world.time]")
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")

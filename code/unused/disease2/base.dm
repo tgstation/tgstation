@@ -6,7 +6,6 @@
 
 
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/infect_virus2() called tick#: [world.time]")
 	if(prob(disease.infectionchance))
 		if(M.virus2)
 			return
@@ -52,7 +51,6 @@
 	var/list/datum/disease2/effect/resistances = list()
 
 	proc/resistsdisease(var/datum/disease2/disease/virus2)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/resistsdisease() called tick#: [world.time]")
 		var/list/res2 = list()
 		for(var/datum/disease2/effect/e in resistances)
 			res2 += e.type
@@ -72,7 +70,6 @@
 
 
 /proc/infect_mob_random(var/mob/living/carbon/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/infect_mob_random() called tick#: [world.time]")
 	if(!M.virus2)
 		M.virus2 = new /datum/disease2/disease
 		M.virus2.makerandom()
@@ -88,7 +85,6 @@
 	var/uniqueID = 0
 	var/list/datum/disease2/effectholder/effects = list()
 	proc/makerandom()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/makerandom() called tick#: [world.time]")
 		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 		holder.stage = 1
 		holder.getrandomeffect()
@@ -109,12 +105,10 @@
 		infectionchance = rand(1,10)
 		spreadtype = "Airborne"
 	proc/minormutate()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/minormutate() called tick#: [world.time]")
 		var/datum/disease2/effectholder/holder = pick(effects)
 		holder.minormutate()
 		infectionchance = min(10,infectionchance + rand(0,1))
 	proc/issame(var/datum/disease2/disease/disease)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/issame() called tick#: [world.time]")
 		var/list/types = list()
 		var/list/types2 = list()
 		for(var/datum/disease2/effectholder/d in effects)
@@ -130,7 +124,6 @@
 		return equal
 
 	proc/activate(var/mob/living/carbon/mob)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/activate() called tick#: [world.time]")
 		if(dead)
 			mob.virus2 = null
 			return
@@ -148,18 +141,15 @@
 			e.runeffect(mob,stage)
 
 	proc/cure_added(var/datum/disease2/resistance/res)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/cure_added() called tick#: [world.time]")
 		if(res.resistsdisease(src))
 			dead = 1
 
 	proc/majormutate()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/majormutate() called tick#: [world.time]")
 		var/datum/disease2/effectholder/holder = pick(effects)
 		holder.majormutate()
 
 
 	proc/getcopy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/getcopy() called tick#: [world.time]")
 //		world << "getting copy"
 		var/datum/disease2/disease/disease = new /datum/disease2/disease
 		disease.infectionchance = infectionchance
@@ -184,7 +174,6 @@
 	var/stage = 4
 	var/maxm = 1
 	proc/activate(var/mob/living/carbon/mob,var/multiplier)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/activate() called tick#: [world.time]")
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
@@ -315,14 +304,12 @@
 	var/stage = 0
 
 	proc/runeffect(var/mob/living/carbon/human/mob,var/stage)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/runeffect() called tick#: [world.time]")
 		if(happensonce > -1 && effect.stage <= stage && prob(chance))
 			effect.activate(mob)
 			if(happensonce == 1)
 				happensonce = -1
 
 	proc/getrandomeffect()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/getrandomeffect() called tick#: [world.time]")
 		var/list/datum/disease2/effect/list = list()
 		for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
 		//	world << "Making [e]"
@@ -333,16 +320,13 @@
 		chance = rand(1,6)
 
 	proc/minormutate()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/minormutate() called tick#: [world.time]")
 		switch(pick(1,2,3,4,5))
 			if(1)
 				chance = rand(0,100)
 			if(2)
 				multiplier = rand(1,effect.maxm)
 	proc/majormutate()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/majormutate() called tick#: [world.time]")
 		getrandomeffect()
 
 /proc/dprob(var/p)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/dprob() called tick#: [world.time]")
 	return(prob(sqrt(p)) && prob(sqrt(p)))

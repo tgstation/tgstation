@@ -158,7 +158,6 @@ var/bomb_set
 	set category = "Object"
 	set name = "Make Deployable"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/nuclearbomb/verb/make_deployable()  called tick#: [world.time]")
 
 	if (!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH)) return
 	if (!usr.dexterity_check())
@@ -270,7 +269,6 @@ var/bomb_set
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/nuclearbomb/proc/explode() called tick#: [world.time]")
 	if (src.safety)
 		src.timing = 0
 		return

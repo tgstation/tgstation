@@ -10,7 +10,6 @@
 /client/verb/nanoclose(var/uiref as text)
 	set hidden = 1	// hide this verb from the user's panel
 	set name = "nanoclose"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/nanoclose()  called tick#: [world.time]")
 
 	var/datum/nanoui/ui = locate(uiref)
 
@@ -42,10 +41,8 @@
   * @return nothing
   */
 ///atom/movable/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\///atom/movable/proc/ui_interact() called tick#: [world.time]")
 	//return
 /datum/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/proc/ui_interact() called tick#: [world.time]")
 	return
 
 // Used by the Nano UI Manager (/datum/nanomanager) to track UIs opened by this mob

@@ -1,7 +1,6 @@
 /obj/item/weapon/gun/verb/toggle_firerate()
 	set name = "Toggle Firerate"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/gun/verb/toggle_firerate()  called tick#: [world.time]")
 	firerate = !firerate
 	if (firerate == 0)
 		loc << "You will now continue firing when your target moves."
@@ -11,7 +10,6 @@
 /obj/item/weapon/gun/verb/lower_aim()
 	set name = "Lower Aim"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/gun/verb/lower_aim()  called tick#: [world.time]")
 	if(target)
 		stop_aim()
 		usr.visible_message("<span class='notice'>\The [usr] lowers \the [src]...</span>")
@@ -36,7 +34,6 @@
 
 //Removes lock fro mall targets
 /obj/item/weapon/gun/proc/stop_aim()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/stop_aim() called tick#: [world.time]")
 	if(target)
 		for(var/mob/living/M in target)
 			if(M)
@@ -45,7 +42,6 @@
 
 //Compute how to fire.....
 /obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params, struggle = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/PreFire() called tick#: [world.time]")
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
 	.
@@ -61,7 +57,6 @@
 
 //Aiming at the target mob.
 /obj/item/weapon/gun/proc/Aim(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/Aim() called tick#: [world.time]")
 	if(!target || !(M in target))
 		lock_time = world.time
 		if(target && !automatic) //If they're targeting someone and they have a non automatic weapon.
@@ -76,7 +71,6 @@
 
 //HE MOVED, SHOOT HIM!
 /obj/item/weapon/gun/proc/TargetActed(var/mob/living/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/TargetActed() called tick#: [world.time]")
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
@@ -107,7 +101,6 @@
 #define SIGN(X) ((X<0)?-1:1)
 
 proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/GunTrace() called tick#: [world.time]")
 	//bluh << "Tracin' [X1],[Y1] to [X2],[Y2] on floor [Z]."
 	var/turf/T
 	var/mob/living/M
@@ -153,7 +146,6 @@ mob/var
 	target_locked = null
 
 mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/proc/Targeted() called tick#: [world.time]")
 	if(!I.target)
 		I.target = list(src)
 	else if(I.automatic && I.target.len < 5) //Automatic weapon, they can hold down a room.
@@ -220,7 +212,6 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 			sleep(1)
 
 mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/proc/NotTargeted() called tick#: [world.time]")
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
 			M << 'sound/weapons/TargetOff.ogg'
@@ -245,7 +236,6 @@ client/var
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 client/proc/add_gun_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/add_gun_icons() called tick#: [world.time]")
 	if (!usr.item_use_icon)
 		usr.item_use_icon = getFromPool(/obj/screen/gun/item)
 		usr.item_use_icon.icon_state = "no_item[target_can_click]"
@@ -267,7 +257,6 @@ client/proc/add_gun_icons()
 		screen += usr.gun_run_icon
 
 client/proc/remove_gun_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/remove_gun_icons() called tick#: [world.time]")
 	if(!usr)
 		return
 	if(usr.gun_move_icon)
@@ -285,7 +274,6 @@ client/proc/remove_gun_icons()
 
 client/verb/ToggleGunMode()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/ToggleGunMode()  called tick#: [world.time]")
 	gun_mode = !gun_mode
 	if(gun_mode)
 		usr << "You will now take people captive."
@@ -301,7 +289,6 @@ client/verb/ToggleGunMode()
 
 client/verb/AllowTargetMove()
 	set hidden=1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/AllowTargetMove()  called tick#: [world.time]")
 
 	//Changing client's permissions
 	target_can_move = !target_can_move
@@ -333,7 +320,6 @@ client/verb/AllowTargetMove()
 					M << "<span class='danger'>Your character will now be shot if they move.</span>"
 
 mob/living/proc/set_m_intent(var/intent)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/proc/set_m_intent() called tick#: [world.time]")
 	if (intent != "walk" && intent != "run")
 		return 0
 	m_intent = intent
@@ -343,7 +329,6 @@ mob/living/proc/set_m_intent(var/intent)
 
 client/verb/AllowTargetRun()
 	set hidden=1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/AllowTargetRun()  called tick#: [world.time]")
 
 	//Changing client's permissions
 	target_can_run = !target_can_run
@@ -369,7 +354,6 @@ client/verb/AllowTargetRun()
 
 client/verb/AllowTargetClick()
 	set hidden=1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/AllowTargetClick()  called tick#: [world.time]")
 
 	//Changing client's permissions
 	target_can_click = !target_can_click

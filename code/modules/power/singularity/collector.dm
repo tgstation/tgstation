@@ -111,7 +111,6 @@ var/global/list/rad_collectors = list()
 	return ..()
 
 /obj/machinery/power/rad_collector/proc/eject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rad_collector/proc/eject() called tick#: [world.time]")
 	locked = 0
 	last_power = 0
 
@@ -128,14 +127,12 @@ var/global/list/rad_collectors = list()
 		update_icons()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rad_collector/proc/receive_pulse() called tick#: [world.time]")
 	if (P && active)
 		var/power_produced = P.air_contents.toxins * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rad_collector/proc/update_icons() called tick#: [world.time]")
 	overlays.len = 0
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
@@ -145,7 +142,6 @@ var/global/list/rad_collectors = list()
 		overlays += image('icons/obj/singularity.dmi', "on")
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rad_collector/proc/toggle_power() called tick#: [world.time]")
 	active = !active
 
 	if(active)

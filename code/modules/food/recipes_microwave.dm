@@ -351,7 +351,6 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
 
 /datum/recipe/donkpocket/proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/recipe/donkpocket/proc/warm_up() called tick#: [world.time]")
 	being_cooked.warm = 1
 	being_cooked.reagents.add_reagent("tricordrazine", 5)
 	being_cooked.bitesize = 6

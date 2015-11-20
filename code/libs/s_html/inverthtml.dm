@@ -5,7 +5,6 @@
 // form "#XXXXXX".  Nothing else will work!
 
 proc/invertHTML(HTMLstring)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/invertHTML() called tick#: [world.time]")
 	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
 		return
@@ -34,7 +33,6 @@ proc/invertHTML(HTMLstring)
 /*
 //Testing code/sample implementation
 mob/verb/test_invertHTML()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/test_invertHTML()  called tick#: [world.time]")
 	usr << "#CC9933"
 	usr << invertHTML("#CC9933")
 */

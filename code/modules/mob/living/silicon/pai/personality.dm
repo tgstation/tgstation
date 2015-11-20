@@ -8,11 +8,9 @@
 */
 
 /datum/paiCandidate/proc/savefile_path(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paiCandidate/proc/savefile_path() called tick#: [world.time]")
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pai.sav"
 
 /datum/paiCandidate/proc/savefile_save(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paiCandidate/proc/savefile_save() called tick#: [world.time]")
 	if(IsGuestKey(user.key))
 		return 0
 
@@ -34,7 +32,6 @@
 // returns 0 if savefile did not exist
 
 /datum/paiCandidate/proc/savefile_load(mob/user, var/silent = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paiCandidate/proc/savefile_load() called tick#: [world.time]")
 	if (IsGuestKey(user.key))
 		return 0
 

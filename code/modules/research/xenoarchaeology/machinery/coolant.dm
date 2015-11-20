@@ -37,7 +37,6 @@ datum/chemical_reaction/coolant
 	explode()
 
 /obj/structure/reagent_dispensers/coolanttank/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/reagent_dispensers/coolanttank/proc/explode() called tick#: [world.time]")
 	var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)

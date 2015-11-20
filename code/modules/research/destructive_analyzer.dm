@@ -41,7 +41,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List() called tick#: [world.time]")
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])

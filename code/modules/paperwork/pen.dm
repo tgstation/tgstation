@@ -13,12 +13,10 @@
 
 // This WAS a macro, but BYOND a shit.
 /proc/REG_BBTAG(x)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/REG_BBTAG() called tick#: [world.time]")
 	return "\\\[[x]\\\]"
 
 // [x]blah[/x]
 /proc/REG_BETWEEN_BBTAG(x)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/REG_BETWEEN_BBTAG() called tick#: [world.time]")
 	return "[REG_BBTAG(x)]([REG_NOTBB])[REG_BBTAG("/[x]")]"
 
 /datum/speech_filter_action/bbcode/Run(var/text, var/mob/user, var/atom/movable/P)
@@ -78,7 +76,6 @@ var/paperwork_library
 
 	set category = "Debug"
 	set name = "Modify Paperwork Mode"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/handle_paperwork() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG)) return
 
@@ -89,7 +86,6 @@ var/paperwork_library
 		paperwork = 0
 
 /proc/paperwork_setup()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/paperwork_setup() called tick#: [world.time]")
 	if(config.paperwork_library)
 		if(world.system_type == MS_WINDOWS)
 			paperwork_library = "markdown_byond.dll"
@@ -107,7 +103,6 @@ var/paperwork_library
 	return 0
 
 /proc/paperwork_stop()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/paperwork_stop() called tick#: [world.time]")
 	if(!fexists(paperwork_library))
 		world.log << "Paperwork file may be missing or something terrible has happened, don't panic and notify a coder/host about this issue."
 		return
@@ -118,13 +113,11 @@ var/paperwork_library
 		return
 
 /datum/writing_style/proc/parse_markdown(command_args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/writing_style/proc/parse_markdown() called tick#: [world.time]")
 //	if(!fexists("byond_markdown.dll")){fcopy(stdshellout_dllFile,"[stdshellout_dllFile]")}
 	return call(paperwork_library,"render_html")(command_args)
 
 
 /datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user, var/obj/item/weapon/paper/paper)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/writing_style/proc/Format() called tick#: [world.time]")
 	if(paperwork)
 		t = parse_markdown(t)
 	else
@@ -222,7 +215,6 @@ var/paperwork_library
 
 // checks if its used on nano paper, if it is, use the nano paper formatting
 /obj/item/weapon/pen/proc/Format(var/mob/user, var/text, var/obj/item/weapon/paper/P)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pen/proc/Format() called tick#: [world.time]")
 	if(istype(P,/obj/item/weapon/paper/nano))
 		return nano_style.Format(text,src,user,P)
 	else

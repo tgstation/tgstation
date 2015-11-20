@@ -29,28 +29,23 @@
 	..()
 
 /obj/machinery/bot/proc/turn_on()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/turn_on() called tick#: [world.time]")
 	if(stat)	return 0
 	on = 1
 	set_light(initial(luminosity))
 	return 1
 
 /obj/machinery/bot/proc/turn_off()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/turn_off() called tick#: [world.time]")
 	on = 0
 	set_light(0)
 
 /obj/machinery/bot/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/explode() called tick#: [world.time]")
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/healthcheck() called tick#: [world.time]")
 	if (src.health <= 0)
 		src.explode()
 
 /obj/machinery/bot/proc/Emag(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/Emag() called tick#: [world.time]")
 	if(locked)
 		locked = 0
 		emagged = 1
@@ -93,7 +88,6 @@
 	healthcheck()
 
 /obj/machinery/bot/proc/declare() //Signals a medical or security HUD user to a relevant bot's activity.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/declare() called tick#: [world.time]")
 	var/hud_user_list = list() //Determines which userlist to use.
 	switch(bot_type) //Made into a switch so more HUDs can be added easily.
 		if(SEC_BOT) //Securitrons and ED-209

@@ -55,7 +55,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 	return PROJREACT_MOBS
 
 /mob/proc/remove_screen_objs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
 	if(flash)
 		returnToPool(flash)
 		if(client) client.screen -= flash
@@ -185,7 +184,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 			hud_used.item_action_list -= actionitem
 
 /mob/proc/cultify()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/cultify() called tick#: [world.time]")
 	return
 
 /mob/New()
@@ -201,36 +199,30 @@ var/global/obj/screen/fuckstat/FUCK = new
 	on_uattack = new("owner"=src)
 
 /mob/proc/is_muzzled()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/is_muzzled() called tick#: [world.time]")
 	return 0
 
 /mob/proc/store_position()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/store_position() called tick#: [world.time]")
 	origin_x = x
 	origin_y = y
 	origin_z = z
 
 /mob/proc/send_back()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/send_back() called tick#: [world.time]")
 	x = origin_x
 	y = origin_y
 	z = origin_z
 
 /mob/proc/generate_name()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/generate_name() called tick#: [world.time]")
 	return name
 
 /**
  * Player panel controls for this mob.
  */
 /mob/proc/player_panel_controls(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/player_panel_controls() called tick#: [world.time]")
 	return ""
 
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Cell() called tick#: [world.time]")
 
 	if(!loc) return 0
 
@@ -259,7 +251,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1=visible or 2=hearable), alternative message, alt message type (1=if blind or 2=if deaf)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_message() called tick#: [world.time]")
 
 	//Because the person who made this is a fucking idiot, let's clarify. 1 is sight-related messages (aka emotes in general), 2 is hearing-related (aka HEY DUMBFUCK I'M TALKING TO YOU)
 
@@ -344,7 +335,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 /atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/visible_message() called tick#: [world.time]")
 	for(var/mob/M in viewers(src))
 		var/hallucination = M.hallucinating()
 		var/msg = message
@@ -359,26 +349,22 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 
 /mob/proc/findname(msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/findname() called tick#: [world.time]")
 	for(var/mob/M in mob_list)
 		if (M.real_name == text("[]", msg))
 			return M
 	return 0
 
 /mob/proc/movement_delay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/movement_delay() called tick#: [world.time]")
 	return 0
 
 /mob/proc/Life()
 	if(timestopped) return 0 //under effects of time magick
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Life() called tick#: [world.time]")
 	if(spell_masters && spell_masters.len)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			spell_master.update_spells(0, src)
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see_narsie() called tick#: [world.time]")
 	if(N.chained)
 		if(narsimage)
 			del(narsimage)
@@ -453,7 +439,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 			del(narglow)
 
 /mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see_rift() called tick#: [world.time]")
 	var/turf/T_mob = get_turf(src)
 	if((R.z == T_mob.z) && (get_dist(R,T_mob) <= (R.consume_range+10)) && !(R in view(T_mob)))
 		if(!riftimage)
@@ -472,7 +457,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 			del(riftimage)
 
 /mob/proc/get_item_by_slot(slot_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_item_by_slot() called tick#: [world.time]")
 	switch(slot_id)
 		if(slot_l_hand)
 			return l_hand
@@ -482,13 +466,11 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 
 /mob/proc/restrained()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/restrained() called tick#: [world.time]")
 	if(timestopped) return 1 //under effects of time magick
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/attack_ui() called tick#: [world.time]")
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
 		equip_to_slot_if_possible(W, slot)
@@ -496,7 +478,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 		src:update_hair()
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, act_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_any_hand_if_possible() called tick#: [world.time]")
 	if(equip_to_slot_if_possible(W, slot_l_hand, act_on_fail, disable_warning, redraw_mob))
 		update_inv_l_hand()
 		return 1
@@ -510,7 +491,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, act_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/equip_to_slot_if_possible() called tick#: [world.time]")
 	if(!istype(W)) return 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -573,23 +553,19 @@ var/global/obj/screen/fuckstat/FUCK = new
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
 /mob/proc/equip_to_slot(obj/item/W as obj, slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/equip_to_slot() called tick#: [world.time]")
 	return
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/equip_to_slot_or_del() called tick#: [world.time]")
 	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DELETE, 1, 0)
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_drop(obj/item/W as obj, slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/equip_to_slot_or_drop() called tick#: [world.time]")
 	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DROP, 1, 0)
 
 // Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
 // Used in job equipping so shit doesn't pile up at the start loc.
 /mob/living/carbon/human/proc/equip_or_collect(var/obj/item/W, var/slot)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_or_collect() called tick#: [world.time]")
 	if(!equip_to_slot_or_drop(W, slot))
 		// Do I have a backpack?
 		var/obj/item/weapon/storage/B = back
@@ -626,7 +602,6 @@ var/list/slot_equipment_priority = list( \
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/equip_to_appropriate_slot() called tick#: [world.time]")
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
@@ -636,7 +611,6 @@ var/list/slot_equipment_priority = list( \
 	return 0
 
 /mob/proc/check_for_open_slot(obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/check_for_open_slot() called tick#: [world.time]")
 	if(!istype(W)) return 0
 	var/openslot = 0
 	for(var/slot in slot_equipment_priority)
@@ -646,7 +620,6 @@ var/list/slot_equipment_priority = list( \
 	return openslot
 
 /obj/item/proc/mob_check_equip(M as mob, slot, disable_warning = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/mob_check_equip() called tick#: [world.time]")
 	if(!M) return 0
 	if(!slot) return 0
 	if(ishuman(M))
@@ -834,7 +807,6 @@ var/list/slot_equipment_priority = list( \
 		return 0 //Unsupported slot
 		//END HUMAN
 /mob/proc/reset_view(atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/reset_view() called tick#: [world.time]")
 	if (client)
 		if (istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
@@ -850,7 +822,6 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_inv() called tick#: [world.time]")
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
@@ -869,7 +840,6 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/ret_grab() called tick#: [world.time]")
 	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
 		if (!( L ))
 			return null
@@ -909,7 +879,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Point To"
 	set category = "Object"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/pointed()  called tick#: [world.time]")
 	if(!src || usr.stat || (usr.status_flags & FAKEDEATH) || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
 
@@ -931,7 +900,6 @@ var/list/slot_equipment_priority = list( \
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(var/atom/movable/AM)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/start_pulling() called tick#: [world.time]")
 	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 
@@ -967,7 +935,6 @@ var/list/slot_equipment_priority = list( \
 
 	set name = "Stop Pulling"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/stop_pulling()  called tick#: [world.time]")
 
 	if(pulling)
 		pulling.pulledby = null
@@ -979,7 +946,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Activate Held Object"
 	set category = "IC"
 	set src = usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/mode()  called tick#: [world.time]")
 
 
 	if(istype(loc,/obj/mecha)) return
@@ -1001,7 +967,6 @@ var/list/slot_equipment_priority = list( \
 /*
 /mob/verb/dump_source()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/dump_source()  called tick#: [world.time]")
 
 	var/master = "<PRE>"
 	for(var/t in typesof(/area))
@@ -1014,7 +979,6 @@ var/list/slot_equipment_priority = list( \
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/memory()  called tick#: [world.time]")
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -1023,7 +987,6 @@ var/list/slot_equipment_priority = list( \
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/add_memory()  called tick#: [world.time]")
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
@@ -1034,7 +997,6 @@ var/list/slot_equipment_priority = list( \
 		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
 /mob/proc/store_memory(msg as message, popup, sane = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/store_memory() called tick#: [world.time]")
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if (sane)
@@ -1052,7 +1014,6 @@ var/list/slot_equipment_priority = list( \
 /mob/verb/examination(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/examination()  called tick#: [world.time]")
 
 //	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
 	if(is_blind(src))
@@ -1066,14 +1027,12 @@ var/list/slot_equipment_priority = list( \
 /mob/living/verb/verb_pickup(obj/I in view(1))
 	set name = "Pick up"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/verb_pickup()  called tick#: [world.time]")
 
 	face_atom(I)
 	I.verb_pickup(src)
 
 /mob/proc/update_flavor_text()
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_flavor_text() called tick#: [world.time]")
 
 	if(usr != src)
 		usr << "No."
@@ -1086,13 +1045,11 @@ var/list/slot_equipment_priority = list( \
 		flavor_text = msg
 
 /mob/proc/warn_flavor_changed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/warn_flavor_changed() called tick#: [world.time]")
 	if(flavor_text) // Don't spam people that don't use it!
 		src << "<h2 class='alert'>OOC Warning:</h2>"
 		src << "<span class='alert'>Your flavor text is likely out of date! <a href='?src=\ref[src];flavor_text=change'>Change</a></span>"
 
 /mob/proc/print_flavor_text()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/print_flavor_text() called tick#: [world.time]")
 	if(flavor_text)
 		var/msg = replacetext(flavor_text, "\n", "<br />")
 
@@ -1103,7 +1060,6 @@ var/list/slot_equipment_priority = list( \
 
 /*
 /mob/verb/help()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/help()  called tick#: [world.time]")
 	set name = "Help"
 	src << browse('html/help.html', "window=help")
 	return
@@ -1113,7 +1069,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Respawn"
 	set category = "OOC"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/abandon_mob()  called tick#: [world.time]")
 	if (!( abandon_allowed ))
 		usr << "<span class='notice'> Respawn is disabled.</span>"
 		return
@@ -1171,7 +1126,6 @@ var/list/slot_equipment_priority = list( \
 /client/verb/issue_report()
 	set name = "Github Report"
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/issue_report()  called tick#: [world.time]")
 	var/dat = {"	<title>/vg/station Github Ingame Reporting</title>
 					Revision: [return_revision()]
 					<iframe src='http://ss13.pomf.se/issues/?ckey=[ckey(key)]&address=[world.internet_address]:[world.port]' style='border:none' width='480' height='480' scroll=no></iframe>"}
@@ -1180,7 +1134,6 @@ var/list/slot_equipment_priority = list( \
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/changes()  called tick#: [world.time]")
 	getFiles(
 		'html/postcardsmall.jpg',
 		'html/somerights20.png',
@@ -1211,7 +1164,6 @@ var/list/slot_equipment_priority = list( \
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/observe()  called tick#: [world.time]")
 	var/is_admin = 0
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
@@ -1295,7 +1247,6 @@ var/list/slot_equipment_priority = list( \
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	set category = "OOC" //Why the fuck?
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/cancel_camera()  called tick#: [world.time]")
 	unset_machine()
 	reset_view(null)
 	if(istype(src, /mob/living))
@@ -1320,7 +1271,6 @@ var/list/slot_equipment_priority = list( \
 			update_flavor_text()
 
 /mob/proc/pull_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/pull_damage() called tick#: [world.time]")
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.health - H.halloss <= config.health_threshold_softcrit)
@@ -1342,22 +1292,18 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/can_use_hands()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/can_use_hands() called tick#: [world.time]")
 	return
 
 /mob/proc/is_active()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/is_active() called tick#: [world.time]")
 	return (0 >= usr.stat)
 
 /mob/proc/see(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see() called tick#: [world.time]")
 	if(!is_active())
 		return 0
 	src << message
 	return 1
 
 /mob/proc/show_viewers(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_viewers() called tick#: [world.time]")
 	for(var/mob/M in viewers())
 		M.see(message)
 
@@ -1466,7 +1412,6 @@ var/list/slot_equipment_priority = list( \
 
 // facing verbs
 /mob/proc/canface()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/canface() called tick#: [world.time]")
 	if(!canmove)						return 0
 	if(client.moving)					return 0
 	if(client.move_delayer.blocked())	return 0
@@ -1478,7 +1423,6 @@ var/list/slot_equipment_priority = list( \
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_canmove() called tick#: [world.time]")
 	if(locked_to)
 		canmove = 0
 		lying = locked_to.locked_should_lie
@@ -1523,7 +1467,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/eastface()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/eastface()  called tick#: [world.time]")
 	if(!canface())	return 0
 	dir = EAST
 	Facing()
@@ -1533,7 +1476,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/westface()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/westface()  called tick#: [world.time]")
 	if(!canface())	return 0
 	dir = WEST
 	Facing()
@@ -1543,7 +1485,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/northface()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/northface()  called tick#: [world.time]")
 	if(!canface())	return 0
 	dir = NORTH
 	Facing()
@@ -1553,7 +1494,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/southface()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/southface()  called tick#: [world.time]")
 	if(!canface())	return 0
 	dir = SOUTH
 	Facing()
@@ -1562,7 +1502,6 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/Facing()
-    //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Facing() called tick#: [world.time]")
     var/datum/listener
     for(. in src.callOnFace)
         listener = locate(.)
@@ -1571,112 +1510,92 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/IsAdvancedToolUser() called tick#: [world.time]")
 	return 0
 
 
 /mob/proc/Stun(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Stun() called tick#: [world.time]")
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/SetStunned() called tick#: [world.time]")
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
 	return
 
 /mob/proc/AdjustStunned(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AdjustStunned() called tick#: [world.time]")
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
 	return
 
 /mob/proc/Weaken(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Weaken() called tick#: [world.time]")
 	if(status_flags & CANWEAKEN)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/SetWeakened(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/SetWeakened() called tick#: [world.time]")
 	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/AdjustWeakened(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AdjustWeakened() called tick#: [world.time]")
 	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/Jitter(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Jitter() called tick#: [world.time]")
 	jitteriness = max(jitteriness,amount,0)
 
 /mob/proc/Dizzy(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Dizzy() called tick#: [world.time]")
 	dizziness = max(dizziness,amount,0)
 
 
 /mob/proc/Paralyse(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Paralyse() called tick#: [world.time]")
 	if(status_flags & CANPARALYSE)
 		paralysis = max(max(paralysis,amount),0)
 	return
 
 /mob/proc/SetParalysis(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/SetParalysis() called tick#: [world.time]")
 	if(status_flags & CANPARALYSE)
 		paralysis = max(amount,0)
 	return
 
 /mob/proc/AdjustParalysis(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AdjustParalysis() called tick#: [world.time]")
 	if(status_flags & CANPARALYSE)
 		paralysis = max(paralysis + amount,0)
 	return
 
 /mob/proc/Sleeping(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Sleeping() called tick#: [world.time]")
 	sleeping = max(max(sleeping,amount),0)
 	return
 
 /mob/proc/SetSleeping(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/SetSleeping() called tick#: [world.time]")
 	sleeping = max(amount,0)
 	return
 
 /mob/proc/AdjustSleeping(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AdjustSleeping() called tick#: [world.time]")
 	sleeping = max(sleeping + amount,0)
 	return
 
 /mob/proc/Resting(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Resting() called tick#: [world.time]")
 	resting = max(max(resting,amount),0)
 	return
 
 /mob/proc/SetResting(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/SetResting() called tick#: [world.time]")
 	resting = max(amount,0)
 	return
 
 /mob/proc/AdjustResting(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AdjustResting() called tick#: [world.time]")
 	resting = max(resting + amount,0)
 	return
 
 /mob/proc/get_species()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_species() called tick#: [world.time]")
 	return ""
 
 /mob/proc/flash_weak_pain()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/flash_weak_pain() called tick#: [world.time]")
 	flick("weak_pain",pain)
 
 /mob/proc/yank_out_object()
@@ -1684,7 +1603,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/yank_out_object() called tick#: [world.time]")
 
 	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
 		return
@@ -1747,24 +1665,19 @@ var/list/slot_equipment_priority = list( \
 
 // Mobs tell access what access levels it has.
 /mob/proc/GetAccess()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/GetAccess() called tick#: [world.time]")
 	return list()
 
 // Skip over all the complex list checks.
 /mob/proc/hasFullAccess()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/hasFullAccess() called tick#: [world.time]")
 	return 0
 
 mob/proc/assess_threat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/assess_threat() called tick#: [world.time]")
 	return 0
 
 mob/proc/walking()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/walking() called tick#: [world.time]")
 	return !(lying || flying || locked_to)
 
 /mob/proc/dexterity_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
 	return 0
 
 /mob/proc/isTeleViewing(var/client_eye)
@@ -1775,7 +1688,6 @@ mob/proc/walking()
 	return 0
 
 /mob/proc/html_mob_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/html_mob_check() called tick#: [world.time]")
 	return 0
 
 /mob/shuttle_act()
@@ -1798,7 +1710,6 @@ mob/proc/walking()
 	return 0
 
 /mob/proc/hallucinating() //Return 1 if hallucinating! This doesn't affect the scary stuff from mindbreaker toxin, but it does affect other stuff (like special messages for interacting with objects)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/hallucinating() called tick#: [world.time]")
 	if(isliving(src))
 		var/mob/living/M = src
 		if(M.hallucination >= MOB_MINDBREAKER_HALLUCINATING)
@@ -1808,7 +1719,6 @@ mob/proc/walking()
 	return 0
 
 /mob/proc/get_subtle_message(var/msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_subtle_message() called tick#: [world.time]")
 	var/pre_msg = "You hear a voice in your head..."
 	if(mind && mind.assigned_role == "Chaplain")
 		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "

@@ -72,7 +72,6 @@ You must kill it all while minimizing the damage to the station."}
 
 
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/blob/proc/greet_blob() called tick#: [world.time]")
 	blob.current << {"<B><span class='warning'>You are infected by the Blob!</B>
 <b>Your body is ready to give spawn to a new blob core which will eat this station.</b>
 <b>Find a good location to spawn the core and then take control and overwhelm the station! Make sure you are ON the station when you burst!</b>
@@ -81,12 +80,10 @@ You must kill it all while minimizing the damage to the station."}
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/blob/proc/show_message() called tick#: [world.time]")
 	for(var/datum/mind/blob in infected_crew)
 		blob.current << message
 
 /datum/game_mode/blob/proc/burst_blobs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/blob/proc/burst_blobs() called tick#: [world.time]")
 	for(var/datum/mind/blob in infected_crew)
 
 		var/client/blob_client = null
@@ -161,7 +158,6 @@ You must kill it all while minimizing the damage to the station."}
 
 /datum/game_mode/blob/proc/stage(var/stage)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/blob/proc/stage() called tick#: [world.time]")
 
 	switch(stage)
 		if (0)

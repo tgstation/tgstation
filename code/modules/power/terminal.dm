@@ -44,7 +44,6 @@
 	..()
 
 /obj/machinery/power/proc/make_terminal(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/make_terminal() called tick#: [world.time]")
 	if(!can_attach_terminal(user))
 		user << "<span class='warning'>You can't wire \the [src] like that!</span>"
 		return 0
@@ -71,11 +70,9 @@
 	return 0
 
 /obj/machinery/power/proc/finalise_terminal(newloc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/finalise_terminal() called tick#: [world.time]")
 	terminal = new /obj/machinery/power/terminal(newloc)
 	terminal.dir = get_dir(newloc, src)
 	terminal.master = src
 
 /obj/machinery/power/proc/can_attach_terminal(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/can_attach_terminal() called tick#: [world.time]")
 	return user.loc != src.loc && (get_dir(user, src) in cardinal) && !terminal

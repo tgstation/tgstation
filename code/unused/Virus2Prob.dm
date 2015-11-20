@@ -1,7 +1,6 @@
 var/list/prob_G_list = list()
 
 /proc/probG(var/define,var/everyother)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/probG() called tick#: [world.time]")
 	if(prob_G_list["[define]"])
 		prob_G_list["[define]"] += 1
 		if(prob_G_list["[define]"] == everyother)

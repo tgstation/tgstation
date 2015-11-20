@@ -231,7 +231,6 @@ About the Tools:
 		This can also be done by calling a convenience proc:
 		atom/proc/create_reagents(var/max_volume)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		atom/proc/create_reagents() called tick#: [world.time]")
 
 	Other important stuff:
 
@@ -241,7 +240,6 @@ About the Tools:
 			'pouring' our reagents into something else.
 
 		atom/proc/is_open_container()
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		atom/proc/is_open_container() called tick#: [world.time]")
 			Checks atom/var/flags & OPENCONTAINER.
 			If this returns 1 , you can use syringes, beakers etc
 			to manipulate the contents of this object.

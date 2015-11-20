@@ -38,7 +38,6 @@
 			T.y = y
 
 /datum/minesweeper_game/proc/game_start(var/datum/mine_tile/first_T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/minesweeper_game/proc/game_start() called tick#: [world.time]")
 	first_T.selected = 1
 	timer = world.time
 	while(mine_count < initial_mines)
@@ -50,7 +49,6 @@
 	dig_tile(first_T)
 
 /datum/minesweeper_game/proc/dig_tile(var/datum/mine_tile/T,var/force=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/minesweeper_game/proc/dig_tile() called tick#: [world.time]")
 	if(T.dug)	return
 	if(!T.selected && !force)
 		for(var/datum/mine_tile/other_T in tiles)
@@ -88,7 +86,6 @@
 				dig_tile(near_T,1)
 
 /datum/minesweeper_game/proc/set_difficulty(var/choice)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/minesweeper_game/proc/set_difficulty() called tick#: [world.time]")
 	switch(choice)
 		if("beginner")
 			rows = 8
@@ -116,7 +113,6 @@
 	reset_game()
 
 /datum/minesweeper_game/proc/reset_game()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/minesweeper_game/proc/reset_game() called tick#: [world.time]")
 	gameover = 0
 	face = "normal"
 	end_timer = 0

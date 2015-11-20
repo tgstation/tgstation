@@ -7,7 +7,6 @@ var/eventTimeUpper = 12000	//20 minutes
 var/scheduledEvent = null
 
 /proc/checkEvent()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/checkEvent() called tick#: [world.time]")
 	if(!scheduledEvent)
 		//The more players, the merrier
 		var/playercount_modifier = 1
@@ -56,7 +55,6 @@ var/scheduledEvent = null
 /client/proc/forceEvent(var/type in allEvents)
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/client/proc/forceEvent() called tick#: [world.time]")
 
 	if(!holder)
 		return

@@ -1,6 +1,5 @@
 //Carn: Spacevines random event.
 /proc/spacevine_infestation()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/spacevine_infestation() called tick#: [world.time]")
 
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas

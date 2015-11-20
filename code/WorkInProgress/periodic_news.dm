@@ -117,12 +117,10 @@
 var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk,  /datum/news_announcement/food_riots)
 
 proc/process_newscaster()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/process_newscaster() called tick#: [world.time]")
 	check_for_newscaster_updates(ticker.mode.newscaster_announcements)
 
 var/global/tmp/announced_news_types = list()
 proc/check_for_newscaster_updates(type)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/check_for_newscaster_updates() called tick#: [world.time]")
 	for(var/subtype in typesof(type)-type)
 		var/datum/news_announcement/news = new subtype()
 		if(news.round_time * 10 <= world.time && !(subtype in announced_news_types))
@@ -131,7 +129,6 @@ proc/check_for_newscaster_updates(type)
 
 proc/announce_newscaster_news(datum/news_announcement/news)
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/announce_newscaster_news() called tick#: [world.time]")
 
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = news.author

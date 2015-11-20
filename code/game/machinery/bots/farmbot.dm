@@ -92,7 +92,6 @@
 
 
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/get_total_ferts() called tick#: [world.time]")
 	var total_fert = 0
 	for (var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents)
 		total_fert++
@@ -258,7 +257,6 @@
 	return
 
 /obj/machinery/bot/farmbot/proc/use_farmbot_item()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/use_farmbot_item() called tick#: [world.time]")
 	if ( !target )
 		mode = 0
 		return 0
@@ -298,7 +296,6 @@
 
 
 /obj/machinery/bot/farmbot/proc/find_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/find_target() called tick#: [world.time]")
 	if ( emagged ) //Find a human and help them!
 		for ( var/mob/living/carbon/human/human in view(7,src) )
 			if (human.stat == 2)
@@ -328,7 +325,6 @@
 		return 0
 
 /obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/portable_atmospherics/hydroponics/tray)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/GetNeededMode() called tick#: [world.time]")
 	if ( !tray.seed || tray.dead )
 		return 0
 
@@ -344,7 +340,6 @@
 	return 0
 
 /obj/machinery/bot/farmbot/proc/move_to_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/move_to_target() called tick#: [world.time]")
 	//Mostly copied from medibot code.
 
 	if(src.frustration > 8)
@@ -390,7 +385,6 @@
 
 
 /obj/machinery/bot/farmbot/proc/fertilize(var/obj/item/weapon/reagent_containers/glass/fertilizer/fert)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/fertilize() called tick#: [world.time]")
 	if ( !fert )
 		target = null
 		mode = 0
@@ -424,7 +418,6 @@
 		return 1
 
 /obj/machinery/bot/farmbot/proc/weed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/weed() called tick#: [world.time]")
 	icon_state = "farmbot_hoe"
 	spawn(FARMBOT_ANIMATION_TIME)
 		icon_state = "farmbot[src.on]"
@@ -439,7 +432,6 @@
 
 		else // yayyy take that weeds~
 			var/attackVerb = pick("slashed", "sliced", "cut", "clawed")
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\var/attackVerb = pick()  called tick#: [world.time]")
 			var /mob/living/carbon/human/human = target
 
 			src.visible_message("<span class='danger'>[src] [attackVerb] [human]!</span>")
@@ -459,7 +451,6 @@
 		//tray.updateicon()
 
 /obj/machinery/bot/farmbot/proc/water()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/water() called tick#: [world.time]")
 	if ( !tank || tank.reagents.total_volume < 1 )
 		mode = 0
 		target = null
@@ -504,7 +495,6 @@
 			mode = 0
 
 /obj/machinery/bot/farmbot/proc/refill()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/farmbot/proc/refill() called tick#: [world.time]")
 	if ( !tank || !tank.reagents.total_volume > 600 || !istype(target,/obj/structure/sink) )
 		mode = 0
 		target = null

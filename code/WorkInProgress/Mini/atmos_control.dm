@@ -139,7 +139,6 @@ var/global/list/atmos_controllers = list()
 
 
 /obj/machinery/computer/atmoscontrol/proc/is_in_filter(var/typepath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/atmoscontrol/proc/is_in_filter() called tick#: [world.time]")
 	if(!filter) return 1 // YEP.  TOTALLY.
 	return typepath in filter
 

@@ -31,7 +31,6 @@ var/global/list/obj/item/beacon/beacons = list()
 	set category = "Object"
 	set src in usr
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/beacon/verb/alter_signal()  called tick#: [world.time]")
 	if ((usr.canmove && !( usr.restrained() )))
 		src.code = t
 	if (!( src.code ))

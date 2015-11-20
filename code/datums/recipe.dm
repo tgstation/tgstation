@@ -48,7 +48,6 @@
 //First step, let's check the reagents in our recipe machine (generally a microwave)
 //Since it's reagents, it's about time for Chemistry-Holder insanity
 /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents) //1 = Precisely what we need, 0 = Not enough, -1 = More than needed
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/recipe/proc/check_reagents() called tick#: [world.time]")
 	//Now, here comes the arcane magic. Before we even do anything, we estimate we have just what we need. Why ? Who knows
 	. = 1
 	//Scan the reagents in our recipe machine thingie one by one for shit we need in our recipe (water, hotsauce, salt, etc...)
@@ -71,7 +70,6 @@
 //We just had fun with reagents, now let's check for items, literally any item, that is in our recipe. Apples, wrenches, dildos
 //You would imagine that this would take a few lines of simple code, but you don't grasp oldcoder logic
 /datum/recipe/proc/check_items(var/obj/container as obj) //1 = Precisely what we need, 0 = Not enough, -1 = More than needed
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/recipe/proc/check_items() called tick#: [world.time]")
 	if(!items) //If there's no items in our recipe
 		if(locate(/obj/) in container) //And there are items in our recipe machine currently
 			return -1 //That's too much, abort
@@ -97,7 +95,6 @@
 //Food-related recipe production
 //Note : Due to changes to no longer wipe nutriments from cooked items, this is the same as make. So from now on this is THE "turn recipe into new thing" proc
 /datum/recipe/proc/make_food(var/obj/container as obj) //Find our recipe machine and let's begin
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/recipe/proc/make_food() called tick#: [world.time]")
 	var/obj/result_obj = new result(container) //Spawn the result of our little cuisine in the recipe machine in advance to transfer reagents
 	for(var/obj/O in (container.contents - result_obj)) //Find all objects (for instance, raw food or beakers) in our machine, excluding the result we just created
 		if(O.reagents) //Little sanity, can't hurt
@@ -113,7 +110,6 @@
 //Find what to do with all this shit in the microwave dynamically, without blowing up the station
 //We consider all recipes in the game, obj (typecast as obj and estimated as obj because fuck you) and wherever or not its ingredients are exact based on what we learned from the last two procs
 /proc/select_recipe(var/list/datum/recipe/avaiable_recipes, var/obj/obj as obj, var/exact = 1 as num)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/select_recipe() called tick#: [world.time]")
 	if(!exact) //Is the recipe not exact (1)
 		exact = -1 //Change it to -1 for simplicity, too much or not enough is the same problem now
 	var/list/datum/recipe/possible_recipes = new //Create a list, hopefully not ending the universe in the process

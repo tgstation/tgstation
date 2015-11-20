@@ -15,5 +15,4 @@
 
 // recieve a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/MouseDrop_T() called tick#: [world.time]")
 	return

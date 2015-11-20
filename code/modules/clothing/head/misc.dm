@@ -215,7 +215,6 @@
 	set name = "Tip Fedora"
 	set category = "Object"
 	set desc = "Show that CIS SCUM who's boss."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/head/fedora/verb/tip_fedora()  called tick#: [world.time]")
 
 	usr.visible_message("[usr] tips his fedora.", "You tip your fedora.")
 

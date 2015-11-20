@@ -100,7 +100,6 @@
 
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/infra/proc/trigger_beam() called tick#: [world.time]")
 	if((!secured)||(!on)||(cooldown > 0))	return 0
 	pulse(0)
 	if(!holder)
@@ -157,7 +156,6 @@
 	set name = "Rotate Infrared Laser"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/assembly/infra/verb/rotate()  called tick#: [world.time]")
 
 	dir = turn(dir, 90)
 	return
@@ -180,7 +178,6 @@
 	var/obj/item/device/assembly/infra/assembly
 
 /obj/effect/beam/infrared/proc/hit()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/infrared/proc/hit() called tick#: [world.time]")
 	if(assembly)
 		assembly.trigger_beam()
 
@@ -190,7 +187,6 @@
 		hit()
 
 /obj/effect/beam/infrared/proc/set_visible(v)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/infrared/proc/set_visible() called tick#: [world.time]")
 	visible = v
 	if(next)
 		var/obj/effect/beam/infrared/B=next

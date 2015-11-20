@@ -124,7 +124,6 @@
 	attack_self(usr)
 
 /obj/item/weapon/circuitboard/airlock/proc/toggle_access(var/acc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/circuitboard/airlock/proc/toggle_access() called tick#: [world.time]")
 	if (acc == "all")
 		conf_access = null
 	else

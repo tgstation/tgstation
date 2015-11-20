@@ -1,7 +1,6 @@
 // Ported from /tg/
 
 /datum/hud/proc/ai_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/ai_hud() called tick#: [world.time]")
 	adding = list()
 	other = list()
 

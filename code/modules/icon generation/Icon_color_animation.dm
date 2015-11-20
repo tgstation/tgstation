@@ -39,7 +39,6 @@
 //----------------------------------------
 
 /proc/MapColors_interpolate_list(icon/I, ratio, list/colors)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/MapColors_interpolate_list() called tick#: [world.time]")
 	var/list/c[10]
 
 	//Provide default values for any missing colors (without altering the original list
@@ -84,7 +83,6 @@
 //----------------------------------------
 
 /proc/generate_color_animation(icon/icon, list/colors, list/frames)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/generate_color_animation() called tick#: [world.time]")
 	var/icon/out = icon('icons/effects/uristrunes.dmi', "")
 	var/frame_num = 1
 

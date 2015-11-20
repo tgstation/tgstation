@@ -94,7 +94,6 @@
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_disabilities() called tick#: [world.time]")
 
 	if (disabilities & EPILEPSY)
 		if ((prob(1) && paralysis < 10))
@@ -117,7 +116,6 @@
 			stuttering = max(10, stuttering)
 
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_mutations_and_radiation() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 
@@ -185,7 +183,6 @@
 
 // separate proc so we can jump out of it when we've succeeded in spreading disease.
 /mob/living/carbon/monkey/proc/findAirborneVirii()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/findAirborneVirii() called tick#: [world.time]")
 	if(blood_virus_spreading_disabled)
 		return 0
 	for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
@@ -204,7 +201,6 @@
 	return 0
 
 /mob/living/carbon/monkey/proc/handle_virus_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_virus_updates() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
@@ -231,7 +227,6 @@
 	return
 
 /mob/living/carbon/monkey/proc/breathe()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/breathe() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 
@@ -291,7 +286,6 @@
 
 
 /mob/living/carbon/monkey/proc/get_breath_from_internal(volume_needed)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/get_breath_from_internal() called tick#: [world.time]")
 	if(internal)
 		if (!contents.Find(internal))
 			internal = null
@@ -307,7 +301,6 @@
 	return null
 
 /mob/living/carbon/monkey/proc/handle_breath(datum/gas_mixture/breath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_breath() called tick#: [world.time]")
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return
 
@@ -413,7 +406,6 @@
 	return 1
 
 /mob/living/carbon/monkey/proc/handle_environment(datum/gas_mixture/environment)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_environment() called tick#: [world.time]")
 	if(!environment || (flags & INVULNERABLE))
 		return
 	var/spaceproof = 0
@@ -459,7 +451,6 @@
 	return
 
 /mob/living/carbon/monkey/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_temperature_damage() called tick#: [world.time]")
 	if(status_flags & GODMODE) return
 	var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 	//adjustFireLoss(2.5*discomfort)
@@ -472,7 +463,6 @@
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_chemicals_in_body() called tick#: [world.time]")
 
 	if(alien) //Diona nymphs are the only alien monkey currently.
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -512,7 +502,6 @@
 	return //TODO: DEFERRED
 
 /mob/living/carbon/monkey/proc/handle_regular_status_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_regular_status_updates() called tick#: [world.time]")
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -603,7 +592,6 @@
 
 /mob/living/carbon/monkey/proc/handle_regular_hud_updates()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_regular_hud_updates() called tick#: [world.time]")
 
 	if(!canWearHats && m_hatbg)
 		if(m_hatbg.icon_state != "blank")
@@ -713,7 +701,6 @@
 	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_random_events() called tick#: [world.time]")
 	if (prob(1) && prob(2))
 		spawn(0)
 			emote("scratch")
@@ -721,7 +708,6 @@
 
 
 /mob/living/carbon/monkey/proc/handle_changeling()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/handle_changeling() called tick#: [world.time]")
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
 

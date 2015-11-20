@@ -99,7 +99,6 @@
 			src.update_name_label()
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/glass/proc/update_name_label() called tick#: [world.time]")
 	if(src.label_text == "")
 		src.name = src.base_name
 	else

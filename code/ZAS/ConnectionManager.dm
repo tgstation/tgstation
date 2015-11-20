@@ -43,7 +43,6 @@ Class Procs:
 #endif
 
 /connection_manager/proc/get(d)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_manager/proc/get() called tick#: [world.time]")
 	switch(d)
 		if(NORTH)
 			if(check(N)) return N
@@ -68,7 +67,6 @@ Class Procs:
 		#endif
 
 /connection_manager/proc/place(connection/c, d)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_manager/proc/place() called tick#: [world.time]")
 	switch(d)
 		if(NORTH) N = c
 		if(SOUTH) S = c
@@ -81,7 +79,6 @@ Class Procs:
 		#endif
 
 /connection_manager/proc/update_all()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_manager/proc/update_all() called tick#: [world.time]")
 	if(check(N)) N.update()
 	if(check(S)) S.update()
 	if(check(E)) E.update()
@@ -92,7 +89,6 @@ Class Procs:
 	#endif
 
 /connection_manager/proc/erase_all()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_manager/proc/erase_all() called tick#: [world.time]")
 	if(check(N)) N.erase()
 	if(check(S)) S.erase()
 	if(check(E)) E.erase()
@@ -103,5 +99,4 @@ Class Procs:
 	#endif
 
 /connection_manager/proc/check(connection/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_manager/proc/check() called tick#: [world.time]")
 	return c && c.valid()

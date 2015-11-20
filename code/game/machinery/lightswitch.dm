@@ -23,7 +23,6 @@
 	updateicon()
 
 /obj/machinery/light_switch/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light_switch/proc/updateicon() called tick#: [world.time]")
 	if ((stat & NOPOWER) || buildstage != 2)
 		icon_state = "light-p"
 	else

@@ -12,14 +12,12 @@
 	virus=D
 
 /datum/disease2/effectholder/proc/runeffect(var/mob/living/carbon/human/mob,var/stage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease2/effectholder/proc/runeffect() called tick#: [world.time]")
 	if(happensonce > -1 && effect.stage <= stage && prob(chance))
 		effect.activate(mob)
 		if(happensonce == 1)
 			happensonce = -1
 
 /datum/disease2/effectholder/proc/getrandomeffect(var/badness = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease2/effectholder/proc/getrandomeffect() called tick#: [world.time]")
 	if(effect)
 		virus.log += "<br />[timestamp()] Effect [effect.name] [chance]% is now "
 	else
@@ -36,7 +34,6 @@
 	virus.log += "[effect.name] [chance]%:"
 
 /datum/disease2/effectholder/proc/minormutate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease2/effectholder/proc/minormutate() called tick#: [world.time]")
 	switch(pick(1,2,3,4,5))
 		if(1)
 			chance = rand(0,effect.chance_maxm)
@@ -44,7 +41,6 @@
 			multiplier = rand(1,effect.maxm)
 
 /datum/disease2/effectholder/proc/majormutate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease2/effectholder/proc/majormutate() called tick#: [world.time]")
 	getrandomeffect(2)
 
 ////////////////////////////////////////////////////////////////
@@ -58,9 +54,7 @@
 	var/maxm = 1
 	var/badness = 1
 	proc/activate(var/mob/living/carbon/mob,var/multiplier)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/activate() called tick#: [world.time]")
 	proc/deactivate(var/mob/living/carbon/mob)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/deactivate() called tick#: [world.time]")
 
 ////////////////////////SPECIAL/////////////////////////////////
 /*/datum/disease2/effect/alien

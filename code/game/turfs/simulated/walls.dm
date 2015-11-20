@@ -126,7 +126,6 @@
 	return ..()
 
 /turf/simulated/wall/proc/attack_rotting(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/proc/attack_rotting() called tick#: [world.time]")
 	if(istype(src, /turf/simulated/wall/r_wall)) //I wish I didn't have to do typechecks
 		user << "<span class='notice'>This [src] feels rather unstable.</span>"
 		return
@@ -250,7 +249,6 @@
 //Wall-rot effect, a nasty fungus that destroys walls.
 //Side effect : Also rots the code of any .dm it's referenced in, until now
 /turf/simulated/wall/proc/rot()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/proc/rot() called tick#: [world.time]")
 	if(rotting) //The fuck are you doing ?
 		return
 	else
@@ -269,7 +267,6 @@
 			O.mouse_opacity = 0
 
 /turf/simulated/wall/proc/thermitemelt(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/proc/thermitemelt() called tick#: [world.time]")
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)

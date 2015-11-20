@@ -540,21 +540,18 @@ var/global/list/protected_objects = list(
 	return . - creator
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner(var/mob/owner)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner() called tick#: [world.time]")
 	if(owner != creator)
 		LoseTarget()
 		creator = owner
 		faction = "\ref[owner]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(var/obj/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject() called tick#: [world.time]")
 	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 		return 1
 	return 0
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(var/obj/O, var/mob/living/creator, var/destroy_original = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject() called tick#: [world.time]")
 
 	if(destroy_original || CheckObject(O))
 

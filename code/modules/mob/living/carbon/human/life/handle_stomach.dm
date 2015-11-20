@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_stomach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_stomach() called tick#: [world.time]")
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)

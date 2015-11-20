@@ -40,11 +40,9 @@
 	return TRUE
 
 /datum/migration/sqlite/hasTable(var/tableName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasTable() called tick#: [world.time]")
 	return hasResult("SELECT name FROM sqlite_master WHERE type='[tableName]'")
 
 /datum/migration/sqlite/hasColumn(var/tableName, var/columnName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasColumn() called tick#: [world.time]")
 	for(var/list/row in query("PRAGMA table_info([tableName])")) // Can't be turned into a SELECT.
 		if(row["name"]==columnName)
 			return TRUE

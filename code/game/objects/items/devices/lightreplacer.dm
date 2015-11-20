@@ -122,7 +122,6 @@
 
 /obj/item/device/lightreplacer/proc/Use(var/mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/Use() called tick#: [world.time]")
 
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
@@ -130,11 +129,9 @@
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/AddUses() called tick#: [world.time]")
 	uses = min(max(uses + amount, 0), max_uses)
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/Charge() called tick#: [world.time]")
 	charge += 1
 	if(charge > 7)
 		AddUses(1)
@@ -142,7 +139,6 @@
 
 /obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/ReplaceLight() called tick#: [world.time]")
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
@@ -188,7 +184,6 @@
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/Emag() called tick#: [world.time]")
 	emagged = !emagged
 	playsound(get_turf(src), "sparks", 100, 1)
 	if(emagged)
@@ -200,7 +195,6 @@
 //Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/lightreplacer/proc/CanUse() called tick#: [world.time]")
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)

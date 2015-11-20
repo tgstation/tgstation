@@ -28,7 +28,6 @@
 	createCorpse()
 
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/landmark/corpse/proc/createCorpse() called tick#: [world.time]")
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (loc)
 	M.dna.mutantrace = mutantrace
 	M.real_name = src.name

@@ -2,13 +2,11 @@
 	set category = "IC"
 	set name = "Give"
 	set src in oview(1) //Cannot handle giving shit to mobs on your own tile, but it's a small, small loss
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/verb/give()  called tick#: [world.time]")
 
 	give_item(usr)
 
 /mob/living/carbon/proc/give_item(mob/living/carbon/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/give_item() called tick#: [world.time]")
 
 	if(src.stat == 2 || user.stat == 2 || src.client == null)
 		return

@@ -20,7 +20,6 @@ var/global/list/pda_app_menus = list(
 	var/icon = null	//name of the icon that appears in front of the app name on the PDA, example: "pda_game.png"
 
 /datum/pda_app/proc/onInstall(var/obj/item/device/pda/device)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/proc/onInstall() called tick#: [world.time]")
 	if(istype(device))
 		pda_device = device
 		pda_device.applications += src
@@ -68,7 +67,6 @@ var/global/list/pda_app_menus = list(
 	reconnect_database()
 
 /datum/pda_app/balance_check/proc/reconnect_database()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/balance_check/proc/reconnect_database() called tick#: [world.time]")
 	for(var/obj/machinery/account_database/DB in account_DBs)
 		//Checks for a database on its Z-level, else it checks for a database at the main Station.
 		if((DB.z == pda_device.loc.z) || (DB.z == STATION_Z))
@@ -119,7 +117,6 @@ var/global/list/pda_app_menus = list(
 	snake_game = new()
 
 /datum/pda_app/snake/proc/game_tick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/snake/proc/game_tick() called tick#: [world.time]")
 	snake_game.game_tick(user.dir)
 
 	game_update(user)
@@ -137,7 +134,6 @@ var/global/list/pda_app_menus = list(
 
 
 /datum/pda_app/snake/proc/game_update(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/snake/proc/game_update() called tick#: [world.time]")
 	if(istype(user,/mob/living/carbon))
 		var/mob/living/carbon/C = user
 		if(C.machine && istype(C.machine,/obj/item/device/pda))
@@ -159,7 +155,6 @@ var/global/list/pda_app_menus = list(
 		pause(user)
 
 /datum/pda_app/snake/proc/game_over(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/snake/proc/game_over() called tick#: [world.time]")
 	playsound(get_turf(pda_device), 'sound/misc/pda_snake_over.ogg', volume * 5, 0)
 	for(var/i=1;i <= 4;i++)
 		for(var/datum/snake/body/B in snake_game.snakeparts)
@@ -183,7 +178,6 @@ var/global/list/pda_app_menus = list(
 	game_update(user)
 
 /datum/pda_app/snake/proc/pause(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/snake/proc/pause() called tick#: [world.time]")
 	if(ingame)
 		if(!paused)
 			paused = 1
@@ -192,7 +186,6 @@ var/global/list/pda_app_menus = list(
 			game_tick(user)
 
 /datum/pda_app/snake/proc/save_score()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/snake/proc/save_score() called tick#: [world.time]")
 	var/list/templist = highscores[snake_game.level]
 	templist[labyrinth+1] = max(templist[labyrinth+1], snake_game.snakescore)
 
@@ -220,14 +213,12 @@ var/global/list/pda_app_menus = list(
 	minesweeper_game = new()
 
 /datum/pda_app/minesweeper/proc/game_tick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/minesweeper/proc/game_tick() called tick#: [world.time]")
 	sleep(1)	//to give the game the time to process all tiles if many are dug at once.
 	if(minesweeper_game.gameover && (minesweeper_game.face == "win"))
 		save_score()
 	game_update(user)
 
 /datum/pda_app/minesweeper/proc/game_update(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/minesweeper/proc/game_update() called tick#: [world.time]")
 	if(istype(user,/mob/living/carbon))
 		var/mob/living/carbon/C = user
 		if(C.machine && istype(C.machine,/obj/item/device/pda))
@@ -242,7 +233,6 @@ var/global/list/pda_app_menus = list(
 				user << browse(null, "window=pda")
 
 /datum/pda_app/minesweeper/proc/save_score()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/minesweeper/proc/save_score() called tick#: [world.time]")
 	if(minesweeper_game.current_difficulty == "custom")	return
 	if(minesweeper_game.end_timer < minesweeper_station_highscores[minesweeper_game.current_difficulty])
 		minesweeper_station_highscores[minesweeper_game.current_difficulty] = minesweeper_game.end_timer
@@ -300,7 +290,6 @@ var/global/list/pda_app_menus = list(
 	reconnect_database()
 
 /datum/pda_app/spesspets/proc/reconnect_database()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/reconnect_database() called tick#: [world.time]")
 	for(var/obj/machinery/account_database/DB in account_DBs)
 		if((DB.z == pda_device.loc.z) || (DB.z == STATION_Z))
 			if((DB.stat == 0) && DB.activated )
@@ -308,7 +297,6 @@ var/global/list/pda_app_menus = list(
 				break
 
 /datum/pda_app/spesspets/proc/game_tick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/game_tick() called tick#: [world.time]")
 	if (game_state == 1)
 		hatching++
 		if(hatching > 1200)
@@ -370,7 +358,6 @@ var/global/list/pda_app_menus = list(
 
 
 /datum/pda_app/spesspets/proc/game_update(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/game_update() called tick#: [world.time]")
 	if(istype(user,/mob/living/carbon))
 		var/mob/living/carbon/C = user
 		if(C.machine && istype(C.machine,/obj/item/device/pda))

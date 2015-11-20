@@ -130,7 +130,6 @@
 
 /mob/living/simple_animal/spiderbot/proc/transfer_personality(var/obj/item/device/mmi/M as obj)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/spiderbot/proc/transfer_personality() called tick#: [world.time]")
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
@@ -138,7 +137,6 @@
 		src.name = "Spider-bot ([M.brainmob.name])"
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/spiderbot/proc/explode() called tick#: [world.time]")
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[src] makes an odd warbling noise, fizzles, and explodes.</span>")
@@ -147,7 +145,6 @@
 	Die()
 
 /mob/living/simple_animal/spiderbot/proc/update_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/spiderbot/proc/update_icon() called tick#: [world.time]")
 	if(mmi)
 		if(istype(mmi,/obj/item/device/mmi))
 			icon_state = "spiderbot-chassis-mmi"
@@ -161,7 +158,6 @@
 		icon_living = "spiderbot-chassis"
 
 /mob/living/simple_animal/spiderbot/proc/eject_brain()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/spiderbot/proc/eject_brain() called tick#: [world.time]")
 	if(mmi)
 		var/turf/T = get_turf(loc)
 		if(T)
@@ -203,7 +199,6 @@
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Spiderbot"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/spiderbot/verb/ventcrawl()  called tick#: [world.time]")
 	var/pipe = start_ventcrawl()
 	if(pipe)
 		handle_ventcrawl(pipe)
@@ -213,7 +208,6 @@
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Spiderbot"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/spiderbot/verb/hide()  called tick#: [world.time]")
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -228,7 +222,6 @@
 	set name = "Drop held item"
 	set category = "Spiderbot"
 	set desc = "Drop the item you're holding."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/spiderbot/verb/drop_held_item()  called tick#: [world.time]")
 
 	if(stat)
 		return
@@ -257,7 +250,6 @@
 	set name = "Pick up item"
 	set category = "Spiderbot"
 	set desc = "Allows you to take a nearby small item."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/spiderbot/verb/get_item()  called tick#: [world.time]")
 
 	if(stat)
 		return -1

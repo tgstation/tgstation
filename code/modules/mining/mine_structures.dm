@@ -71,7 +71,6 @@
 
 //Direct rip from lights with a few adjustments, not much to worry about since it's not machinery
 /obj/structure/hanging_lantern/proc/flicker(var/amount = rand(10, 20))
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/hanging_lantern/proc/flicker() called tick#: [world.time]")
 	if(flickering)
 		return
 	//Store our light's vars in here

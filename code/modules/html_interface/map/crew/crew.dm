@@ -212,7 +212,6 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 			src.updateFor(null, hi, z) // updates for everyone
 
 /mob/living/carbon/human/proc/monitor_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/monitor_check() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0

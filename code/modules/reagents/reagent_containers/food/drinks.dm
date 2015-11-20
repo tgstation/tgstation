@@ -241,7 +241,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //Drink the liquid within
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/proc/imbibe() called tick#: [world.time]")
 
 	user << "<span  class='notice'>You swallow a gulp of \the [src].[lit ? " It's hot!" : ""]</span>"
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
@@ -1027,7 +1026,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/smash(mob/living/M as mob, mob/living/user as mob)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/proc/smash() called tick#: [world.time]")
 
 	if(molotov == 1) //for molotovs
 		if(lit)
@@ -1133,7 +1131,6 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/light(mob/user,obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/proc/light() called tick#: [world.time]")
 	var/flavor_text = "<span  class='rose'>[user] lights \the [name] with \the [I].</span>"
 	if(!lit && molotov == 1)
 		lit = 1
@@ -1150,7 +1147,6 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness() called tick#: [world.time]")
 	if(lit)
 		set_light(src.brightness_lit)
 	else

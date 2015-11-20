@@ -45,7 +45,6 @@
 
 
 /mob/living/carbon/proc/update_minimap()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/update_minimap() called tick#: [world.time]")
 	var/obj/item/device/pda/pda_device = machine
 	if(machine && istype(pda_device))
 		var/turf/user_loc = get_turf(src)
@@ -98,7 +97,6 @@
 	. = ..()
 
 /mob/living/carbon/proc/share_contact_diseases(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/share_contact_diseases() called tick#: [world.time]")
 	for(var/datum/disease/D in viruses)
 		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
@@ -161,7 +159,6 @@
 	return damage
 
 /mob/living/carbon/proc/swap_hand()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/swap_hand() called tick#: [world.time]")
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -178,7 +175,6 @@
 
 /mob/living/carbon/proc/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/activate_hand() called tick#: [world.time]")
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
@@ -192,7 +188,6 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/help_shake_act() called tick#: [world.time]")
 	if (src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
@@ -273,18 +268,15 @@
 
 
 /mob/living/carbon/proc/eyecheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/eyecheck() called tick#: [world.time]")
 	return 0
 
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
 // Stop! ... Hammertime! ~Carn
 
 /mob/living/carbon/proc/getDNA()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/getDNA() called tick#: [world.time]")
 	return dna
 
 /mob/living/carbon/proc/setDNA(var/datum/dna/newDNA)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/setDNA() called tick#: [world.time]")
 	dna = newDNA
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
@@ -308,25 +300,21 @@
 //Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/toggle_throw_mode() called tick#: [world.time]")
 	if (src.in_throw_mode)
 		throw_mode_off()
 	else
 		throw_mode_on()
 
 /mob/living/carbon/proc/throw_mode_off()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/throw_mode_off() called tick#: [world.time]")
 	src.in_throw_mode = 0
 	src.throw_icon.icon_state = "act_throw_off"
 
 /mob/living/carbon/proc/throw_mode_on()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/throw_mode_on() called tick#: [world.time]")
 	if(gcDestroyed) return
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(var/atom/target,var/atom/movable/what=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/throw_item() called tick#: [world.time]")
 	return
 
 /mob/living/carbon/throw_item(var/atom/target,var/atom/movable/what=null)
@@ -511,7 +499,6 @@
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(var/method)	//method 0 is for hands, 1 is for machines, more accurate
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/get_pulse() called tick#: [world.time]")
 	var/temp = 0								//see setup.dm:694
 	switch(src.pulse)
 		if(PULSE_NONE)
@@ -535,7 +522,6 @@
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/verb/mob_sleep()  called tick#: [world.time]")
 
 	if(usr.sleeping)
 		usr << "<span class='warning'>You are already sleeping</span>"
@@ -548,12 +534,10 @@
 	set category = "Alien"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/release_control() called tick#: [world.time]")
 
 	do_release_control(0)
 
 /mob/living/carbon/proc/do_release_control(var/rptext=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/do_release_control() called tick#: [world.time]")
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
 	if(!B)
@@ -579,7 +563,6 @@
 	set category = "Alien"
 	set name = "Torment host"
 	set desc = "Punish your host with agony."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/punish_host() called tick#: [world.time]")
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
@@ -593,7 +576,6 @@
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/has_brain_worms() called tick#: [world.time]")
 
 	for(var/I in contents)
 		if(istype(I,/mob/living/simple_animal/borer))
@@ -606,7 +588,6 @@
 
 
 /mob/living/carbon/proc/isInCrit()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/isInCrit() called tick#: [world.time]")
 	// Health is in deep shit and we're not already dead
 	return (health < config.health_threshold_crit) && stat != 2
 

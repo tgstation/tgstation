@@ -44,7 +44,6 @@
 	return
 
 /obj/item/weapon/ctf_flag/proc/check_if_equipped()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/ctf_flag/proc/check_if_equipped() called tick#: [world.time]")
 	var/equipped = 0
 	for(var/mob/M in living_mob_list)
 		if(M &&!M.stat)

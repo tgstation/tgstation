@@ -1,5 +1,4 @@
 mob/proc/flash_pain()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/flash_pain() called tick#: [world.time]")
 	flick("pain",pain)
 
 mob/var/list/pain_stored = list()
@@ -9,7 +8,6 @@ mob/var/next_pain_time = 0
 // partname is the name of a body part
 // amount is a num from 1 to 100
 mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/proc/pain() called tick#: [world.time]")
 	if(stat >= 2) return
 	if(reagents.has_reagent("paracetamol"))
 		return
@@ -53,7 +51,6 @@ mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
 mob/living/carbon/human/proc/custom_pain(var/message, var/flash_strength)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/human/proc/custom_pain() called tick#: [world.time]")
 	if(stat >= 1) return
 
 	if(species && species.flags & NO_PAIN) return
@@ -75,7 +72,6 @@ mob/living/carbon/human/proc/custom_pain(var/message, var/flash_strength)
 	next_pain_time = world.time + 100
 
 mob/living/carbon/human/proc/handle_pain()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/human/proc/handle_pain() called tick#: [world.time]")
 	// not when sleeping
 
 	if(species && species.flags & NO_PAIN) return

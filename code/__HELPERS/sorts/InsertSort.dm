@@ -1,6 +1,5 @@
 //simple insertion sort - generally faster than merge for runs of 7 or smaller
 /proc/sortInsert(list/L, cmp=/proc/cmp_numeric_asc, associative, fromIndex=1, toIndex=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortInsert() called tick#: [world.time]")
 	if(L && L.len >= 2)
 		fromIndex = fromIndex % L.len
 		toIndex = toIndex % (L.len+1)

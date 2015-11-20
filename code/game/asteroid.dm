@@ -4,7 +4,6 @@ var/global/max_secret_rooms = 3
 
 /* Le broken.
 proc/admin_spawn_room_at_pos()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/admin_spawn_room_at_pos() called tick#: [world.time]")
 	var/wall
 	var/floor
 	var/x = input("X position","X pos",usr.x)
@@ -31,7 +30,6 @@ proc/admin_spawn_room_at_pos()
 */
 
 proc/check_complex_placement(var/turf/T,var/size_x,var/size_y,var/ignore_walls=0)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/check_complex_placement() called tick#: [world.time]")
 	var/list/surroundings = list()
 
 	surroundings |= range(7, locate(T.x,T.y,T.z))
@@ -59,7 +57,6 @@ proc/check_complex_placement(var/turf/T,var/size_x,var/size_y,var/ignore_walls=0
 	return 1
 
 proc/make_mining_asteroid_secret()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/make_mining_asteroid_secret() called tick#: [world.time]")
 	var/turf/T = null
 	var/sanity = 0
 	var/list/turfs = null

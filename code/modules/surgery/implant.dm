@@ -11,7 +11,6 @@
 		return (affected.open == (affected.encased ? 3 : 2) || (!affected.encased ? (target.species.flags & NO_SKIN) : 0)) && !(affected.status & ORGAN_BLEEDING)
 
 /datum/surgery_step/cavity/proc/get_max_wclass(datum/organ/external/affected)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/cavity/proc/get_max_wclass() called tick#: [world.time]")
 	switch (affected.name)
 		if ("head")
 			return 1
@@ -22,7 +21,6 @@
 	return 0
 
 /datum/surgery_step/cavity/proc/get_cavity(datum/organ/external/affected)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/cavity/proc/get_cavity() called tick#: [world.time]")
 	switch (affected.name)
 		if ("head")
 			return "cranial"

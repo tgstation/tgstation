@@ -26,7 +26,6 @@
 	handle_beams()
 
 /mob/living/silicon/robot/proc/clamp_values()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/clamp_values() called tick#: [world.time]")
 
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
@@ -39,7 +38,6 @@
 
 /mob/living/silicon/robot/proc/use_power()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/use_power() called tick#: [world.time]")
 
 	if (is_component_functioning("power cell") && cell)
 		if(src.cell.charge <= 0)
@@ -68,7 +66,6 @@
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/handle_regular_status_updates() called tick#: [world.time]")
 
 	if(src.camera && !scrambledcodes)
 		if(src.stat == 2 || wires.IsCameraCut())
@@ -148,7 +145,6 @@
 	return 1
 
 /mob/living/silicon/robot/proc/handle_sensor_modes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/handle_sensor_modes() called tick#: [world.time]")
 	src.sight &= ~SEE_MOBS
 	src.sight &= ~SEE_TURFS
 	src.sight &= ~SEE_OBJS
@@ -178,7 +174,6 @@
 
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/handle_regular_hud_updates() called tick#: [world.time]")
 	handle_sensor_modes()
 	/*if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
@@ -316,7 +311,6 @@
 	return 1
 
 /mob/living/silicon/robot/proc/update_items()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/update_items() called tick#: [world.time]")
 	if (src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
@@ -331,7 +325,6 @@
 	updateicon()
 
 /mob/living/silicon/robot/proc/process_killswitch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/process_killswitch() called tick#: [world.time]")
 	if(killswitch)
 		killswitch_time --
 		if(killswitch_time <= 0)
@@ -342,7 +335,6 @@
 				gib()
 
 /mob/living/silicon/robot/proc/process_locks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/process_locks() called tick#: [world.time]")
 	if(weapon_lock)
 		uneq_all()
 		weaponlock_time --

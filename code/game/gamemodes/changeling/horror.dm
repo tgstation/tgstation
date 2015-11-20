@@ -44,7 +44,6 @@
 	set category = "Changeling"
 	set name = "Force Airlock"
 	set desc = "We will attempt to force open an airlock in front of us."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/changeling_force_airlock() called tick#: [world.time]")
 
 	var/mob/living/carbon/human/H = src //This proc gets added to a mob's verbs list, as such this is correct.
 	if(!istype(H))

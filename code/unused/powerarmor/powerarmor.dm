@@ -35,7 +35,6 @@
 		verbs += /obj/item/clothing/suit/powered/proc/poweron
 
 	proc/poweron()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/poweron() called tick#: [world.time]")
 		set category = "Object"
 		set name = "Activate armor systems"
 
@@ -107,14 +106,12 @@
 
 
 	proc/poweroff()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/poweroff() called tick#: [world.time]")
 		set category = "Object"
 		set name = "Deactivate armor systems"
 		powerdown() //BYOND doesn't seem to like it if you try using a proc with vars in it as a verb, hence this. --NEO
 
 	proc/powerdown(sudden = 0)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/powerdown() called tick#: [world.time]")
 
 		var/delay = sudden?0:20
 
@@ -207,7 +204,6 @@
 	var/obj/item/clothing/suit/powered/parent
 
 	proc/atmotoggle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/atmotoggle() called tick#: [world.time]")
 		set category = "Object"
 		set name = "Toggle helmet seals"
 

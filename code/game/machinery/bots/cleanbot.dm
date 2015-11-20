@@ -253,7 +253,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.oldloc = src.loc
 
 /obj/machinery/bot/cleanbot/proc/patrol_move()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/cleanbot/proc/patrol_move() called tick#: [world.time]")
 	if (src.patrol_path.len <= 0)
 		return
 
@@ -289,7 +288,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		next_dest = signal.data["next_patrol"]
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/cleanbot/proc/get_targets() called tick#: [world.time]")
 	src.target_types = new/list()
 
 	target_types += /obj/effect/decal/cleanable/blood/oil
@@ -305,7 +303,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		target_types += /obj/effect/decal/cleanable/dirt
 
 /obj/machinery/bot/cleanbot/proc/clean(var/turf/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/cleanbot/proc/clean() called tick#: [world.time]")
 	anchored = 1
 	icon_state = "cleanbot-c"
 	visible_message("<span class='warning'>[src] begins to clean up the [target]</span>")

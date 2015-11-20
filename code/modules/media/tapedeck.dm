@@ -77,7 +77,6 @@
 			overlays += "[state_base]-running"
 
 /obj/machinery/media/tapedeck/proc/check_reload()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/tapedeck/proc/check_reload() called tick#: [world.time]")
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/tapedeck/attack_hand(var/mob/user)
@@ -108,7 +107,6 @@
 	popup.open()
 
 /obj/machinery/media/jukebox/proc/ScreenMain(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenMain() called tick#: [world.time]")
 	var/t = "<h1>[src] Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
@@ -165,7 +163,6 @@
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenSettings() called tick#: [world.time]")
 	var/dat={"<h1>Settings</h1>
 		<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />
@@ -349,7 +346,6 @@
 	..()
 
 /obj/machinery/media/jukebox/proc/stop_playing()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/stop_playing() called tick#: [world.time]")
 	//current_song=0
 	playing=0
 	update_music()

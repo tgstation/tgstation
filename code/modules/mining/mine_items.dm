@@ -47,7 +47,6 @@ var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 proc/move_mining_shuttle()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/move_mining_shuttle() called tick#: [world.time]")
 	if(mining_shuttle_moving)	return
 	mining_shuttle_moving = 1
 	spawn(mining_shuttle_tickstomove*10)
@@ -420,7 +419,6 @@ proc/move_mining_shuttle()
 	var/cooldown = 0
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/resonator/proc/CreateResonance() called tick#: [world.time]")
 	if(cooldown <= 0)
 		playsound(get_turf(src),'sound/effects/stealthoff.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
@@ -591,7 +589,6 @@ proc/move_mining_shuttle()
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior() called tick#: [world.time]")
 	stop_automated_movement_when_pulled = 1
 	idle_vision_range = 9
 	search_objects = 2
@@ -602,7 +599,6 @@ proc/move_mining_shuttle()
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior() called tick#: [world.time]")
 	stop_automated_movement_when_pulled = 0
 	idle_vision_range = 5
 	search_objects = 0
@@ -619,7 +615,6 @@ proc/move_mining_shuttle()
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/CollectOre() called tick#: [world.time]")
 	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
@@ -630,7 +625,6 @@ proc/move_mining_shuttle()
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/DropOre() called tick#: [world.time]")
 	if(!contents.len)
 		return
 	for(var/obj/item/weapon/ore/O in contents)
@@ -737,7 +731,6 @@ proc/move_mining_shuttle()
 
 /obj/item/device/mobcapsule/proc/insert(var/atom/movable/AM, mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/insert() called tick#: [world.time]")
 
 	if(contained_mob)
 		return -1
@@ -762,7 +755,6 @@ proc/move_mining_shuttle()
 	capsuleowner = user
 
 /obj/item/device/mobcapsule/proc/dump_contents(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/dump_contents() called tick#: [world.time]")
 	/*
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
@@ -792,7 +784,6 @@ proc/move_mining_shuttle()
 	update_icon()
 
 /obj/item/device/mobcapsule/proc/take_contents(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/take_contents() called tick#: [world.time]")
 	for(var/mob/living/simple_animal/AM in src.loc)
 		if(istype(AM))
 			var/mob/living/simple_animal/M = AM

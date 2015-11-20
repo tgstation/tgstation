@@ -41,7 +41,6 @@
 	return null
 
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/proc/connect() called tick#: [world.time]")
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -65,7 +64,6 @@
 	return 1
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/proc/disconnect() called tick#: [world.time]")
 	if(!connected_port)
 		return 0
 

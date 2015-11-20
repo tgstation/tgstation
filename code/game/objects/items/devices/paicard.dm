@@ -117,18 +117,15 @@
 //		WIRE_TRANSMIT = 4
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/setPersonality() called tick#: [world.time]")
 	src.pai = personality
 	src.overlays += "pai-happy"
 
 /obj/item/device/paicard/proc/removePersonality()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/removePersonality() called tick#: [world.time]")
 	src.pai = null
 	src.overlays.len = 0
 	src.overlays += "pai-off"
 
 /obj/item/device/paicard/proc/setEmotion(var/emotion)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/setEmotion() called tick#: [world.time]")
 	if(pai)
 		var/face = "pai-happy"
 		src.overlays.len = 0
@@ -156,7 +153,6 @@
 		pai.overlays.len += "[face]"//we also update the mob's overlay so it appears properly on the scoreboard.
 
 /obj/item/device/paicard/proc/alertUpdate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/alertUpdate() called tick#: [world.time]")
 	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)

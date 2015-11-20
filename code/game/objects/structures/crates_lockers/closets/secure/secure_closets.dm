@@ -44,7 +44,6 @@
 	..()
 
 /obj/structure/closet/secure_closet/proc/togglelock(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/secure_closet/proc/togglelock() called tick#: [world.time]")
 	if(src.allowed(user))
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
@@ -138,7 +137,6 @@
 	set src in oview(1) // One square distance
 	set category = "Object"
 	set name = "Toggle Lock"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/secure_closet/verb/verb_togglelock()  called tick#: [world.time]")
 
 	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH)) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return

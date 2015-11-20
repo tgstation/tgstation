@@ -52,7 +52,6 @@
 	buckle_mob(M, user)
 
 /obj/structure/bed/proc/manual_unbuckle(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/manual_unbuckle() called tick#: [world.time]")
 	if(!locked_atoms.len)
 		return
 
@@ -73,7 +72,6 @@
 	add_fingerprint(user)
 
 /obj/structure/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/buckle_mob() called tick#: [world.time]")
 	if(!ismob(M) || !Adjacent(user) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.locked_to || istype(user, /mob/living/silicon/pai) )
 		return
 

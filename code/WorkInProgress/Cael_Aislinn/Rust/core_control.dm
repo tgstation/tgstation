@@ -158,7 +158,6 @@
 
 //Returns 1 if the machine can be interacted with via this console.
 /obj/machinery/computer/rust_core_control/proc/check_core_status(var/obj/machinery/power/rust_core/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rust_core_control/proc/check_core_status() called tick#: [world.time]")
 	if(isnull(C))
 		return
 

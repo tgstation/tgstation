@@ -58,35 +58,30 @@ var/global/list/genders=list(
 	_complex=complex
 
 /datum/gender/proc/getHim()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHim() called tick#: [world.time]")
 	if(_complex)
 		warning("getHim() unsupported for gender [name]}")
 		return ""
 	return objective
 
 /datum/gender/proc/getHis()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHis() called tick#: [world.time]")
 	if(_complex)
 		warning("getHis() unsupported for gender [name]}")
 		return ""
 	return possessive
 
 /datum/gender/proc/getHimself()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHimself() called tick#: [world.time]")
 	if(_complex)
 		warning("getHimself() unsupported for gender [name]}")
 		return ""
 	return reflexive
 
 /datum/gender/proc/getHers()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHers() called tick#: [world.time]")
 	if(_complex)
 		warning("getHers() unsupported for gender [name]}")
 		return ""
 	return possessivePronoun
 
 /datum/gender/proc/getHe()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/getHe() called tick#: [world.time]")
 	if(_complex)
 		warning("getHe() unsupported for gender [name]}")
 		return ""
@@ -108,7 +103,6 @@ var/global/list/genders=list(
 * SO HERE'S WHAT YOU GET:
 */
 /datum/gender/proc/replace(var/s)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/gender/proc/replace() called tick#: [world.time]")
 	// I
 	if(findtext(s,"$sub"))
 		s=replacetextEx(s,"$sub",subject)
@@ -180,7 +174,6 @@ var/global/list/genders=list(
 	return s
 
 /proc/gender_replace(var/gender,var/text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gender_replace() called tick#: [world.time]")
 	var/datum/gender/G = genders[gender]
 	if(!G)
 		warning("Invalid gender \"[gender]\" given to gender_replace().")

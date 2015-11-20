@@ -164,7 +164,6 @@
 	return
 
 /obj/item/weapon/grenade/chem_grenade/proc/primed(var/primed = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grenade/chem_grenade/proc/primed() called tick#: [world.time]")
 	if(active)
 		icon_state = initial(icon_state) + (primed?"_primed":"_active")
 

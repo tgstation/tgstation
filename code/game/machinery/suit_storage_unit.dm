@@ -271,7 +271,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggleUV() called tick#: [world.time]")
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panel_open)
@@ -298,7 +297,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/togglesafeties() called tick#: [world.time]")
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panel_open) //Needed check due to bugs
@@ -320,7 +318,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_helmet() called tick#: [world.time]")
 	if(!src.HELMET)
 		return //Do I even need this sanity check? Nyoro~n
 	else
@@ -330,7 +327,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_suit() called tick#: [world.time]")
 	if(!src.SUIT)
 		return
 	else
@@ -340,7 +336,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_mask() called tick#: [world.time]")
 	if(!src.MASK)
 		return
 	else
@@ -350,7 +345,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_boots(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_boots() called tick#: [world.time]")
 	if(!src.BOOTS)
 		return
 	else
@@ -360,7 +354,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dump_everything() called tick#: [world.time]")
 	src.islocked = 0 //locks go free
 	if(src.SUIT)
 		src.SUIT.loc = src.loc
@@ -380,7 +373,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggle_open() called tick#: [world.time]")
 	if(src.islocked || src.isUV)
 		user << "<font color='red'>Unable to open unit.</font>"
 		return
@@ -392,7 +384,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggle_lock() called tick#: [world.time]")
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
@@ -403,7 +394,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/start_UV() called tick#: [world.time]")
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
@@ -465,7 +455,6 @@
 	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/eject_occupant() called tick#: [world.time]")
 	if (src.islocked)
 		return
 
@@ -494,7 +483,6 @@
 	set name = "Eject Suit Storage Unit"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/suit_storage_unit/verb/get_out()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -509,7 +497,6 @@
 	set name = "Hide in Suit Storage Unit"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/suit_storage_unit/verb/move_inside()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return

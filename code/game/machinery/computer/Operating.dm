@@ -19,11 +19,9 @@
 	return
 
 /obj/machinery/computer/operating/proc/updatemodules()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/operating/proc/updatemodules() called tick#: [world.time]")
 	src.optable = findoptable()
 
 /obj/machinery/computer/operating/proc/findoptable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/operating/proc/findoptable() called tick#: [world.time]")
 	var/obj/machinery/optable/optablef = null
 
 	// Loop through every direction

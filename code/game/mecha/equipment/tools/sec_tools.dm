@@ -44,7 +44,6 @@
 //is there an open cell for a mob?
 //returns the cell that's got a space
 /obj/item/mecha_parts/mecha_equipment/tool/jail/proc/CellFree()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/CellFree() called tick#: [world.time]")
 	for(var/cell in cells)
 		var/list/celldetails = cells[cell]
 		if(!celldetails["mob"])
@@ -53,7 +52,6 @@
 
 //are all our cells empty?
 /obj/item/mecha_parts/mecha_equipment/tool/jail/proc/AllFree()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/AllFree() called tick#: [world.time]")
 	var/allfree = 1
 	for(var/cell in cells)
 		var/list/celldetails = cells[cell]
@@ -111,7 +109,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail/proc/go_out(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/go_out() called tick#: [world.time]")
 	var/mob/living/ejected = L["mob"]
 	if(!ejected)
 		return

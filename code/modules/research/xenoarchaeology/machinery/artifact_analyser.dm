@@ -20,7 +20,6 @@
 	reconnect_scanner()
 
 /obj/machinery/artifact_analyser/proc/reconnect_scanner()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/artifact_analyser/proc/reconnect_scanner() called tick#: [world.time]")
 	//connect to a nearby scanner pad
 	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
@@ -131,7 +130,6 @@
 
 //hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(var/obj/scanned_obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/artifact_analyser/proc/get_scan_info() called tick#: [world.time]")
 	switch(scanned_obj.type)
 		if(/obj/machinery/auto_cloner)
 			return "Automated cloning pod - appears to rely on organic nanomachines with a self perpetuating \

@@ -109,7 +109,6 @@ var/global/list/moneytypes = list(
 		overlays += stack
 
 /obj/item/weapon/spacecash/proc/collect_from(var/obj/item/weapon/spacecash/cash)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spacecash/proc/collect_from() called tick#: [world.time]")
 	if(cash.worth == src.worth)
 		var/taking = min(10-src.amount,cash.amount)
 		cash.amount -= taking
@@ -149,7 +148,6 @@ var/global/list/moneytypes = list(
 		new typepath(src)
 
 /proc/dispense_cash(var/amount, var/loc)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dispense_cash() called tick#: [world.time]")
 	for(var/cashtype in moneytypes)
 		var/slice = moneytypes[cashtype]
 		var/dispense_count = Floor(amount/slice)
@@ -161,7 +159,6 @@ var/global/list/moneytypes = list(
 				dispense_count -= dispense_this_time
 
 /proc/count_cash(var/list/cash)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/count_cash() called tick#: [world.time]")
 	. = 0
 	for(var/obj/item/weapon/spacecash/C in cash)
 		. += C.amount * C.worth

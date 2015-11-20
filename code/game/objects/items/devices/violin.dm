@@ -14,7 +14,6 @@
 	var/repeat = 0
 
 /obj/item/device/violin/proc/playnote(var/note as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/violin/proc/playnote() called tick#: [world.time]")
 	//world << "Note: [note]"
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
@@ -194,7 +193,6 @@
 	hearers(15, get_turf(src)) << sound(soundfile)
 
 /obj/item/device/violin/proc/playsong()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/violin/proc/playsong() called tick#: [world.time]")
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]

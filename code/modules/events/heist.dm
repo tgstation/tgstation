@@ -101,7 +101,6 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 
 /datum/event/heist/proc/is_raider_crew_safe()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/is_raider_crew_safe() called tick#: [world.time]")
 
 	if(raiders.len == 0)
 		return 0
@@ -113,7 +112,6 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	return 1
 
 /datum/event/heist/proc/is_raider_crew_alive()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/is_raider_crew_alive() called tick#: [world.time]")
 	if(raiders.len == 0)
 		return 0
 	for(var/datum/mind/raider in raiders)
@@ -126,7 +124,6 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 /datum/event/heist/proc/forge_vox_objectives()
 
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/forge_vox_objectives() called tick#: [world.time]")
 
 
 	//Commented out for testing.
@@ -170,7 +167,6 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	return raid_objectives
 
 /datum/event/heist/proc/greet_vox(var/datum/mind/raider)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/greet_vox() called tick#: [world.time]")
 	raider.current << {"<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b>
 The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the [station_name()] for plunder, trade or both.
 Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.
@@ -183,7 +179,6 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 
 /datum/event/heist/proc/declare_completion()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/declare_completion() called tick#: [world.time]")
 
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
@@ -251,7 +246,6 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 	..()
 
 /datum/event/heist/proc/check_finished()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/check_finished() called tick#: [world.time]")
 	if (!(is_raider_crew_alive()) || (vox_shuttle && vox_shuttle.returned_home) )
 		return 1
 	return ..()

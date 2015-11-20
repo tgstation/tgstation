@@ -93,7 +93,6 @@
 
 /obj/item/weapon/plastique/proc/explode(var/location)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/plastique/proc/explode() called tick#: [world.time]")
 
 	if(!target)
 		target = get_atom_on_turf(src)

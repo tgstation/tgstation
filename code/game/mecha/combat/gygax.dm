@@ -57,7 +57,6 @@
 	set name = "Toggle leg actuators overload"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/mecha/combat/gygax/verb/overload()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	if(overload)

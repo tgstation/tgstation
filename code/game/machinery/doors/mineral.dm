@@ -50,7 +50,6 @@
 	return TryToSwitchState(user)
 
 /obj/machinery/door/mineral/proc/TryToSwitchState(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/proc/TryToSwitchState() called tick#: [world.time]")
 	if(operating) return
 
 	if(!user.restrained() && (user.size > SIZE_TINY))
@@ -59,7 +58,6 @@
 	return
 
 /obj/machinery/door/mineral/proc/SwitchState()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/proc/SwitchState() called tick#: [world.time]")
 	if(!density)
 		return close()
 	else
@@ -91,13 +89,11 @@
 	return
 
 /obj/machinery/door/mineral/proc/CheckHardness()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/proc/CheckHardness() called tick#: [world.time]")
 	if(hardness <= 0)
 		Dismantle(1)
 	return
 
 /obj/machinery/door/mineral/proc/Dismantle(devastated = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/proc/Dismantle() called tick#: [world.time]")
 	var/obj/item/stack/ore
 	if(src.prefix == "metal")
 		ore = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
@@ -167,7 +163,6 @@
 		TemperatureAct(exposed_temperature)
 
 /obj/machinery/door/mineral/transparent/plasma/proc/TemperatureAct(temperature)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/transparent/plasma/proc/TemperatureAct() called tick#: [world.time]")
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 
 		var/datum/gas_mixture/napalm = new //Napalm? Whelp. There should be a better way for this.

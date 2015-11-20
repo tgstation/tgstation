@@ -166,7 +166,6 @@
 			M.selected.action(src)
 
 /turf/unsimulated/mineral/proc/MineralSpread()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/MineralSpread() called tick#: [world.time]")
 	if(mineral && mineral.spread)
 		for(var/trydir in cardinal)
 			if(prob(mineral.spread_chance))
@@ -177,7 +176,6 @@
 					target_turf.MineralSpread()
 
 /turf/unsimulated/mineral/proc/UpdateMineral()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/UpdateMineral() called tick#: [world.time]")
 	icon_state = "rock"
 	if(!mineral)
 		name = "\improper Rock"
@@ -186,7 +184,6 @@
 	icon_state = "rock_[mineral.name]"
 
 /turf/unsimulated/mineral/proc/updateMineralOverlays()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/updateMineralOverlays() called tick#: [world.time]")
 	// TODO: Figure out what this is supposed to do.
 	return
 
@@ -369,7 +366,6 @@
 		return attack_hand(user)
 
 /turf/unsimulated/mineral/proc/DropMineral()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/DropMineral() called tick#: [world.time]")
 	if(!mineral)
 		return
 
@@ -382,7 +378,6 @@
 	return O
 
 /turf/unsimulated/mineral/proc/GetDrilled(var/artifact_fail = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/GetDrilled() called tick#: [world.time]")
 	if (mineral && mineral.result_amount)
 		for (var/i = 1 to mineral.result_amount - mined_ore)
 			DropMineral()
@@ -410,12 +405,10 @@
 	N.fullUpdateMineralOverlays()
 
 /turf/unsimulated/mineral/proc/DropAbandonedCrate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/DropAbandonedCrate() called tick#: [world.time]")
 	var/crate_type = pick(valid_abandoned_crate_types)
 	new crate_type(src)
 
 /turf/unsimulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/excavate_find() called tick#: [world.time]")
 	//with skill and luck, players can cleanly extract finds
 	//otherwise, they come out inside a chunk of rock
 	var/obj/item/weapon/X
@@ -447,7 +440,6 @@
 	finds.Remove(F)
 
 /turf/unsimulated/mineral/proc/artifact_debris(var/severity = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/proc/artifact_debris() called tick#: [world.time]")
 	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
 		switch(rand(1,7))
 			if(1)
@@ -550,7 +542,6 @@
 	return
 
 /turf/unsimulated/floor/asteroid/proc/gets_dug()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/proc/gets_dug() called tick#: [world.time]")
 	if(dug)
 		return
 	new/obj/item/weapon/ore/glass(src)
@@ -564,7 +555,6 @@
 	return
 
 /turf/unsimulated/floor/asteroid/proc/updateMineralOverlays()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/proc/updateMineralOverlays() called tick#: [world.time]")
 	src.overlays.len = 0
 
 	if(istype(get_step(src, NORTH), /turf/unsimulated/mineral))
@@ -577,7 +567,6 @@
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 
 /turf/unsimulated/floor/asteroid/proc/fullUpdateMineralOverlays()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/proc/fullUpdateMineralOverlays() called tick#: [world.time]")
 	var/turf/unsimulated/floor/asteroid/A
 	if(istype(get_step(src, WEST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, WEST)
@@ -881,7 +870,6 @@
 	..()
 
 /turf/unsimulated/mineral/gibtonite/proc/explosive_reaction()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/gibtonite/proc/explosive_reaction() called tick#: [world.time]")
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
 		name = "Gibtonite deposit"
@@ -895,7 +883,6 @@
 		countdown()
 
 /turf/unsimulated/mineral/gibtonite/proc/countdown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/gibtonite/proc/countdown() called tick#: [world.time]")
 	spawn(0)
 		while(stage == 1 && det_time > 0 && mineral.result_amount >= 1)
 			det_time--
@@ -908,7 +895,6 @@
 			return
 
 /turf/unsimulated/mineral/gibtonite/proc/defuse()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/mineral/gibtonite/proc/defuse() called tick#: [world.time]")
 	if(stage == 1)
 		icon_state = "rock_Gibtonite" //inactive does not exist. The other icon is active.
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
@@ -976,7 +962,6 @@
 
 /turf/unsimulated/floor/asteroid/cave/proc/make_tunnel(var/dir)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/cave/proc/make_tunnel() called tick#: [world.time]")
 
 	var/turf/unsimulated/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -1013,7 +998,6 @@
 			next_angle = -next_angle
 			dir = angle2dir(dir2angle(dir) + next_angle)
 /turf/unsimulated/floor/asteroid/cave/proc/SpawnFloor(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/cave/proc/SpawnFloor() called tick#: [world.time]")
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
 			sanity = 0
@@ -1026,7 +1010,6 @@
 	new /turf/unsimulated/floor/asteroid(T)
 
 /turf/unsimulated/floor/asteroid/cave/proc/SpawnMonster(var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/floor/asteroid/cave/proc/SpawnMonster() called tick#: [world.time]")
 	if(prob(2))
 		if(istype(loc, /area/mine/explored))
 			return

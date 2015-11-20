@@ -10,7 +10,6 @@ Creature-level abilities.
 
 /client/proc/test_ability()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/test_ability() called tick#: [world.time]")
 
 	set category = "Ability"
 	set name = "Test ability"

@@ -3,7 +3,6 @@
 	set name = "Hide"
 	set desc = "Allows you to hide beneath tables or items laid on the ground. Toggle."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/larva/verb/hide()  called tick#: [world.time]")
 
 	if(stat != CONSCIOUS)
 		return
@@ -19,7 +18,6 @@
 	set name = "Evolve"
 	set desc = "Evolve into a fully grown Alien."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/larva/verb/evolve()  called tick#: [world.time]")
 
 	if(stat != CONSCIOUS)
 		return

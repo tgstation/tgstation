@@ -183,21 +183,18 @@
 	updateDialog()
 
 /obj/machinery/power/rust_fuel_injector/proc/BeginInjecting()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_fuel_injector/proc/BeginInjecting() called tick#: [world.time]")
 	if(!injecting && cur_assembly)
 		icon_state = "injector1"
 		injecting = 1
 		use_power = 1
 
 /obj/machinery/power/rust_fuel_injector/proc/StopInjecting()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_fuel_injector/proc/StopInjecting() called tick#: [world.time]")
 	if(injecting)
 		injecting = 0
 		icon_state = "injector0"
 		use_power = 0
 
 /obj/machinery/power/rust_fuel_injector/proc/Inject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_fuel_injector/proc/Inject() called tick#: [world.time]")
 	if(!injecting)
 		return
 	if(cur_assembly)
@@ -228,7 +225,6 @@
 		StopInjecting()
 
 /obj/machinery/power/rust_fuel_injector/proc/attempt_fuel_swap()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_fuel_injector/proc/attempt_fuel_swap() called tick#: [world.time]")
 	var/rev_dir = reverse_direction(dir)
 	var/turf/mid = get_step(src, rev_dir)
 	var/success = 0
@@ -259,7 +255,6 @@
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/rust_fuel_injector/verb/rotate_clock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -270,7 +265,6 @@
 	set category = "Object"
 	set name = "Rotate Generator (Counter-clockwise)"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/rust_fuel_injector/verb/rotate_anticlock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return

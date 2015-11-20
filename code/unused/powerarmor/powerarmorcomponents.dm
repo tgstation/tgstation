@@ -5,7 +5,6 @@
 	var/slowdown = 0 //how much the component slows down the wearer
 
 	proc/toggle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/toggle() called tick#: [world.time]")
 		return
 		//The child objects will use this proc
 
@@ -19,7 +18,6 @@
 		return
 
 	proc/checkpower()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/checkpower() called tick#: [world.time]")
 		return 1
 
 	plasma
@@ -198,7 +196,6 @@
 		desc = "Keeps the bad stuff out, but lets you remove your helmet without having to turn the whole suit off."
 
 		proc/helmtoggle(sudden = 0, manual = 0)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \		proc/helmtoggle() called tick#: [world.time]")
 			var/mob/living/carbon/human/user = usr
 			var/obj/item/clothing/head/powered/helm
 			if(user.head && istype(user.head,/obj/item/clothing/head/powered))

@@ -38,18 +38,15 @@
 
 
 /obj/item/device/remote_button/proc/on_remote_attach(var/obj/item/new_holder, var/datum/context_click/remote_control/new_controller, button_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/remote_button/proc/on_remote_attach() called tick#: [world.time]")
 	controller = new_controller
 	holder = new_holder
 	loc = new_holder
 	update_icon(button_id)
 
 /obj/item/device/remote_button/proc/on_remote_remove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/remote_button/proc/on_remote_remove() called tick#: [world.time]")
 	update_icon()
 	controller = null
 	holder = null
 
 /obj/item/device/remote_button/proc/on_press(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/remote_button/proc/on_press() called tick#: [world.time]")
 	return

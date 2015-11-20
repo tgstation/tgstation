@@ -68,30 +68,24 @@ Class Procs:
 	CRASH("Cannot make connection edge without specifications.")
 
 /connection_edge/proc/add_connection(connection/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/add_connection() called tick#: [world.time]")
 	coefficient++
 	//world << "Connection added: [type] Coefficient: [coefficient]"
 
 /connection_edge/proc/remove_connection(connection/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/remove_connection() called tick#: [world.time]")
 	//world << "Connection removed: [type] Coefficient: [coefficient-1]"
 	coefficient--
 	if(coefficient <= 0)
 		erase()
 
 /connection_edge/proc/contains_zone(zone/Z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/contains_zone() called tick#: [world.time]")
 
 /connection_edge/proc/erase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/erase() called tick#: [world.time]")
 	air_master.remove_edge(src)
 	//world << "[type] Erased."
 
 /connection_edge/proc/tick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/tick() called tick#: [world.time]")
 
 /connection_edge/proc/flow(list/movable, differential, repelled, flipped = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/proc/flow() called tick#: [world.time]")
 	//Flipped tells us if we are going from A to B or from B to A.
 	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push))
 		return
@@ -207,7 +201,6 @@ Class Procs:
 
 //Helper proc to get connections for a zone.
 /connection_edge/zone/proc/get_connected_zone(zone/from)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/connection_edge/zone/proc/get_connected_zone() called tick#: [world.time]")
 	if(A == from) return B
 	else return A
 
@@ -257,7 +250,6 @@ Class Procs:
 var/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareRatio() called tick#: [world.time]")
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
@@ -337,7 +329,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	else return 0
 
 proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareSpace() called tick#: [world.time]")
 	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
 	if(!unsimulated_tiles)
 		return 0
@@ -447,7 +438,6 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 
 proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareHeat() called tick#: [world.time]")
 	//This implements a simplistic version of the Stefan-Boltzmann law.
 	var/energy_delta = ((A.temperature - B.temperature) ** 4) * 5.6704e-8 * connecting_tiles * 2.5
 	var/maximum_energy_delta = max(0, min(A.temperature * A.heat_capacity() * A.group_multiplier, B.temperature * B.heat_capacity() * B.group_multiplier))

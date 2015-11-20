@@ -1,5 +1,4 @@
 /proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS, var/good=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getAssignedBlock() called tick#: [world.time]")
 	if(blocksLeft.len==0)
 		warning("[name]: No more blocks left to assign!")
 		return 0
@@ -16,7 +15,6 @@
 
 /proc/setupgenetics()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/setupgenetics() called tick#: [world.time]")
 
 	if (prob(50))
 		BLOCKADD = rand(-300,300)
@@ -141,7 +139,6 @@
 
 // Run AFTER genetics setup and AFTER species setup.
 /proc/setup_species()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/setup_species() called tick#: [world.time]")
 	// SPECIES GENETICS FUN
 	for(var/name in all_species)
 		// I hate BYOND.  Can't just call while it's in the list.
@@ -161,7 +158,6 @@
 
 /proc/setupfactions()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/setupfactions() called tick#: [world.time]")
 
 	// Populate the factions list:
 	for(var/x in typesof(/datum/faction))

@@ -4,7 +4,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	var/contaminated = 0
 
 /obj/item/proc/can_contaminate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/can_contaminate() called tick#: [world.time]")
 	// clothing and backpacks can be contaminated.
 	if(flags & PLASMAGUARD)
 		return 0
@@ -14,7 +13,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		return 1
 
 /obj/item/proc/contaminate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/contaminate() called tick#: [world.time]")
 	// do a contamination overlay?
 	// temporary measure to keep contamination less deadly than it was.
 	if(!contaminated)
@@ -22,12 +20,10 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		overlays.Add(contamination_overlay)
 
 /obj/item/proc/decontaminate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/decontaminate() called tick#: [world.time]")
 	contaminated = 0
 	overlays.Remove(contamination_overlay)
 
 /mob/proc/contaminate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/contaminate() called tick#: [world.time]")
 
 /mob/living/carbon/human/contaminate()
 	//See if anything can be contaminated.
@@ -43,7 +39,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 //		back.contaminate()
 
 /mob/proc/pl_effects()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/pl_effects() called tick#: [world.time]")
 
 /mob/living/carbon/human/pl_effects()
 	//Handles all the bad things plasma can do.
@@ -82,7 +77,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 
 /mob/living/carbon/human/proc/burn_eyes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/burn_eyes() called tick#: [world.time]")
 	//The proc that handles eye burning.
 	if(!species.has_organ["eyes"])
 		return
@@ -96,7 +90,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 			eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/pl_head_protected() called tick#: [world.time]")
 	//Checks if the head is adequately sealed.
 	if(head)
 		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
@@ -107,7 +100,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	return 0
 
 /mob/living/carbon/human/proc/pl_suit_protected()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/pl_suit_protected() called tick#: [world.time]")
 	//Checks if the suit is adequately sealed.
 	if(wear_suit)
 		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
@@ -117,7 +109,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	return 0
 
 /mob/living/carbon/human/proc/suit_contamination()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/suit_contamination() called tick#: [world.time]")
 	//Runs over the things that can be contaminated and does so.
 	if(w_uniform) w_uniform.contaminate()
 	if(shoes) shoes.contaminate()

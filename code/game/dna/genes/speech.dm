@@ -8,35 +8,28 @@
 
 // Simple replacements. (ass -> butt) => s/ass/butt/
 /datum/speech_filter/proc/addReplacement(var/orig,var/replacement, var/case_sensitive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/addReplacement() called tick#: [world.time]")
 	orig        = replacetext(orig,       "/","\\/")
 	replacement = replacetext(replacement,"/","\\/")
 	return addExpression("/[orig]/[replacement]/[case_sensitive?"":"i"]g",ACT_REPLACE)
 
 /datum/speech_filter/proc/addPickReplacement(var/orig,var/list/replacements, var/case_sensitive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/addPickReplacement() called tick#: [world.time]")
 	orig        = replacetext(orig,"/","\\/")
 	return addExpression("/[orig]/[case_sensitive?"":"i"]g",ACT_PICK_REPLACE,replacements)
 
 /datum/speech_filter/proc/addWordReplacement(var/orig,var/replacement, var/case_sensitive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/addWordReplacement() called tick#: [world.time]")
 	return addReplacement("\\b[orig]\\b",replacement, case_sensitive)
 
 /datum/speech_filter/proc/addCallback(var/orig,var/callback,var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/addCallback() called tick#: [world.time]")
 	return addExpression(orig,callback,args)
 
 /datum/speech_filter/proc/addExpression(var/orig,var/action,var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/addExpression() called tick#: [world.time]")
 	expressions[orig]=new action(orig,args)
 	return orig
 
 /datum/speech_filter/proc/rmExpression(var/key)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/rmExpression() called tick#: [world.time]")
 	expressions[key]=null
 
 /datum/speech_filter/proc/FilterSpeech(var/msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter/proc/FilterSpeech() called tick#: [world.time]")
 	if(expressions.len)
 		for(var/key in expressions)
 			var/datum/speech_filter_action/SFA = expressions[key]
@@ -60,7 +53,6 @@
 		return
 
 /datum/speech_filter_action/proc/Run(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/speech_filter_action/proc/Run() called tick#: [world.time]")
 	return "[type] has not overrode run()."
 
 /////////////////////////////

@@ -77,7 +77,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out() called tick#: [world.time]")
 	if(!occupant)
 		return
 	occupant.forceMove(get_turf(src))
@@ -124,7 +123,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_stats()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_stats() called tick#: [world.time]")
 	if(!occupant)
 		return
 	return {"<html>
@@ -154,7 +152,6 @@
 				</html>"}
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_dam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_dam() called tick#: [world.time]")
 	var/t1
 	switch(occupant.stat)
 		if(0)
@@ -174,7 +171,6 @@
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_reagents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_reagents() called tick#: [world.time]")
 	if(occupant.reagents)
 		for(var/datum/reagent/R in occupant.reagents.reagent_list)
 			if(R.volume > 0)
@@ -182,7 +178,6 @@
 	return . || "None"
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_available_reagents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_available_reagents() called tick#: [world.time]")
 	var/output
 	var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun) in chassis
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
@@ -193,7 +188,6 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(var/datum/reagent/R,var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent() called tick#: [world.time]")
 	if(!R || !occupant || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
@@ -314,7 +308,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(var/obj/item/stack/cable_coil/CC)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable() called tick#: [world.time]")
 	if(istype(CC) && CC.amount)
 		var/cur_amount = cable? cable.amount : 0
 		var/to_load = max(max_cable - cur_amount,0)
@@ -331,7 +324,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/use_cable(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/use_cable() called tick#: [world.time]")
 	if(!cable || cable.amount<1)
 		set_ready_state(1)
 		occupant_message("Cable depleted, [src] deactivated.")
@@ -345,11 +337,9 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/reset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/reset() called tick#: [world.time]")
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor() called tick#: [world.time]")
 	if(istype(new_turf, /turf/simulated/floor))
 		var/turf/simulated/floor/T = new_turf
 		if(!T.is_plating())
@@ -359,7 +349,6 @@
 	return !new_turf.intact
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable(var/turf/new_turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable() called tick#: [world.time]")
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
 		return reset()
 	var/fdirn = turn(chassis.dir,180)
@@ -538,7 +527,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page() called tick#: [world.time]")
 	var/output = {"<html>
 						<head>
 						<title>Reagent Synthesizer</title>
@@ -567,7 +555,6 @@
 	return output
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_form()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_form() called tick#: [world.time]")
 	var/r_list = get_reagents_list()
 	var/inputs
 	if(r_list)
@@ -587,7 +574,6 @@
 	return output
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_list()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_list() called tick#: [world.time]")
 	var/output
 	for(var/i=1 to known_reagents.len)
 		var/reagent_id = known_reagents[i]
@@ -595,7 +581,6 @@
 	return output
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_current_reagents()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_current_reagents() called tick#: [world.time]")
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
@@ -605,7 +590,6 @@
 	return output || "None"
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/load_syringe() called tick#: [world.time]")
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
 			occupant_message("The syringe is too far away.")
@@ -628,7 +612,6 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/analyze_reagents(atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/analyze_reagents() called tick#: [world.time]")
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
@@ -644,7 +627,6 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/add_known_reagent(r_id,r_name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/add_known_reagent() called tick#: [world.time]")
 	set_ready_state(0)
 	do_after_cooldown()
 	if(!(r_id in known_reagents))

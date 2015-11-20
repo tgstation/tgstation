@@ -88,7 +88,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/proc/QueueUpdateDamageIcon(var/forced = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/QueueUpdateDamageIcon() called tick#: [world.time]")
 	if(forced)
 		UpdateDamageIcon(1)
 		update_overlays = 0
@@ -104,14 +103,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_transform()
 
 /mob/living/carbon/human/proc/update_overlays_standing()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_overlays_standing() called tick#: [world.time]")
 	if(species && species.override_icon)
 		species_override_icon()
 	else
 		generate_overlays_icon()
 
 /mob/living/carbon/human/proc/species_override_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/species_override_icon() called tick#: [world.time]")
 	//overlays.len = 0
 	icon = species.override_icon
 	icon_state = "[lowertext(species.name)]_[gender][ (species.flags & CAN_BE_FAT ? (mutations & M_FAT) ? "_fat" : "" : "") ]"
@@ -120,13 +117,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/proc/generate_overlays_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/generate_overlays_icon() called tick#: [world.time]")
 	icon = stand_icon
 
 var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/proc/get_damage_icon_part(damage_state, body_part,species_blood = "")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_damage_icon_part() called tick#: [world.time]")
 	var/icon/I = damage_icon_parts["[damage_state]/[body_part]/[species_blood]"]
 	if(!I)
 		var/icon/DI = icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
@@ -180,7 +175,6 @@ var/global/list/damage_icon_parts = list()
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_body() called tick#: [world.time]")
 
 	var/husk_color_mod = rgb(96,88,80)
 	var/hulk_color_mod = rgb(48,224,40)
@@ -286,7 +280,6 @@ var/global/list/damage_icon_parts = list()
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair(var/update_icons=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_hair() called tick#: [world.time]")
 	//Reset our hair
 
 	overlays -= obj_overlays[HAIR_LAYER]
@@ -408,7 +401,6 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/proc/update_mutantrace(var/update_icons=1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_mutantrace() called tick#: [world.time]")
 
 	var/fat
 	if( M_FAT in mutations )
@@ -1043,7 +1035,6 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_tail_showing() called tick#: [world.time]")
 	//overlays_standing[TAIL_LAYER] = null
 	overlays -= obj_overlays[TAIL_LAYER]
 	if(species.tail && species.flags & HAS_TAIL)
@@ -1065,7 +1056,6 @@ var/global/list/damage_icon_parts = list()
 
 // Used mostly for creating head items
 /mob/living/carbon/human/proc/generate_head_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/generate_head_icon() called tick#: [world.time]")
 //gender no longer matters for the mouth, although there should probably be seperate base head icons.
 //	var/g = "m"
 //	if (gender == FEMALE)	g = "f"
@@ -1101,7 +1091,6 @@ var/global/list/damage_icon_parts = list()
 
 //lower cost way of updating the necessary human icons on equip and unequip
 /mob/living/carbon/human/proc/update_hidden_item_icons(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/update_hidden_item_icons() called tick#: [world.time]")
 	if(!W)
 		return
 

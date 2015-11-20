@@ -26,7 +26,6 @@
 */
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/borg/upgrade/proc/action() called tick#: [world.time]")
 	if(R.stat == DEAD)
 		usr << "<span class='warning'>The [src] will not function on a deceased robot.</span>"
 		return 1

@@ -38,7 +38,6 @@ datum/shuttle_controller
 	// otherwise if outgoing, switch to incoming
 
 datum/shuttle_controller/proc/incall(coeff = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/incall() called tick#: [world.time]")
 	if(shutdown) return
 	if((!universe.OnShuttleCall(null) || deny_shuttle) && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 		return
@@ -57,20 +56,17 @@ datum/shuttle_controller/proc/incall(coeff = 1)
 				A.readyalert()
 
 datum/shuttle_controller/proc/shuttlealert(var/X)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/shuttlealert() called tick#: [world.time]")
 	if(shutdown) return
 	alert = X
 
 
 datum/shuttle_controller/proc/force_shutdown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/force_shutdown() called tick#: [world.time]")
 	online=0
 	shutdown=1
 
 
 
 datum/shuttle_controller/proc/recall()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/recall() called tick#: [world.time]")
 	if(shutdown) return
 	if(!can_recall)	return
 	if(direction == 1)
@@ -96,7 +92,6 @@ datum/shuttle_controller/proc/recall()
 // note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 datum/shuttle_controller/proc/timeleft()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/timeleft() called tick#: [world.time]")
 
 	if(online)
 		var/timeleft = round((endtime - world.timeofday)/10 ,1)
@@ -109,14 +104,12 @@ datum/shuttle_controller/proc/timeleft()
 
 // sets the time left to a given delay (in seconds)
 datum/shuttle_controller/proc/settimeleft(var/delay)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/settimeleft() called tick#: [world.time]")
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
 
 // sets the shuttle direction
 // 1 = towards SS13, -1 = back to centcom
 datum/shuttle_controller/proc/setdirection(var/dirn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/setdirection() called tick#: [world.time]")
 	if(direction == dirn)
 		return
 	direction = dirn
@@ -126,10 +119,8 @@ datum/shuttle_controller/proc/setdirection(var/dirn)
 	return
 
 datum/shuttle_controller/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/process() called tick#: [world.time]")
 
 datum/shuttle_controller/proc/move_pod(var/start_type,var/end_type,var/direction,var/open_doors)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/shuttle_controller/proc/move_pod() called tick#: [world.time]")
 	var/area/start_location=locate(start_type)
 	var/area/end_location=locate(end_type)
 
@@ -338,7 +329,6 @@ datum/shuttle_controller/emergency_shuttle/process()
 	speed = rand(2, 5)
 
 /obj/effect/bgstar/proc/startmove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/bgstar/proc/startmove() called tick#: [world.time]")
 	while (src)
 		sleep(speed)
 		step(src, direction)
@@ -358,7 +348,6 @@ datum/shuttle_controller/emergency_shuttle/process()
 		spawndir = WEST
 
 	proc/startspawn()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/startspawn() called tick#: [world.time]")
 		spawning = 1
 		while(spawning)
 			sleep(rand(2, 30))

@@ -1,7 +1,6 @@
 var/list/uplink_items = list()
 
 /proc/get_uplink_items(var/job = null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_uplink_items() called tick#: [world.time]")
 	// If not already initialized..
 	if(!uplink_items.len)
 
@@ -48,14 +47,12 @@ var/list/uplink_items = list()
 	var/list/job = null
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/uplink_item/proc/spawn_item() called tick#: [world.time]")
 	U.uses -= max(cost, 0)
 	feedback_add_details("traitor_uplink_items_bought", name)
 	return new item(loc,user)
 
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/hidden/U, var/mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/uplink_item/proc/buy() called tick#: [world.time]")
 
 	..()
 	if(!istype(U))

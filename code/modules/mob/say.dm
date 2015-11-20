@@ -1,7 +1,6 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/say_verb()  called tick#: [world.time]")
 
 	if(say_disabled)
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
@@ -11,18 +10,15 @@
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/whisper()  called tick#: [world.time]")
 	return
 /*
 /mob/proc/whisper(var/message, var/unheard=" whispers something", var/heard="whispers,", var/apply_filters=1, var/allow_lastwords=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/whisper() called tick#: [world.time]")
 	return
 */
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/me_verb()  called tick#: [world.time]")
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
@@ -38,7 +34,6 @@
 		usr.emote("me",usr.emote_type,message)
 
 /mob/proc/say_dead(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/say_dead() called tick#: [world.time]")
 	var/name = src.real_name
 	var/alt_name = ""
 
@@ -73,13 +68,11 @@
 
 /mob/proc/emote(var/act, var/type, var/message, var/auto)
 	if(timestopped) return //under effects of time magick
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/emote() called tick#: [world.time]")
 	if(act == "me")
 		return custom_emote(type, message)
 
 
 /mob/proc/get_ear()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_ear() called tick#: [world.time]")
 	// returns an atom representing a location on the map from which this
 	// mob can hear things
 
@@ -88,25 +81,20 @@
 	return get_turf(src)
 
 /mob/proc/lingcheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/lingcheck() called tick#: [world.time]")
 	return 0
 
 /mob/proc/construct_chat_check(var/setting)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/construct_chat_check() called tick#: [world.time]")
 	return 0
 
 /mob/proc/hivecheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/hivecheck() called tick#: [world.time]")
 	return 0
 
 /mob/proc/binarycheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/binarycheck() called tick#: [world.time]")
 	return 0
 
 //parses the language code (e.g. :j) from text, such as that supplied to say.
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
 /mob/proc/parse_language(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/parse_language() called tick#: [world.time]")
 	if(length(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1 ,3))
 		if(language_prefix in language_keys)

@@ -52,7 +52,6 @@
 	busy = 0
 
 /obj/structure/powerswitch/proc/set_state(var/state)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/powerswitch/proc/set_state() called tick#: [world.time]")
 	on = state
 	if(on)
 		icon_state = icon_state_on

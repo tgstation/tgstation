@@ -20,7 +20,6 @@ var/list/SPS_list = list()
 
 
 /obj/item/device/gps/proc/handle_list()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/gps/proc/handle_list() called tick#: [world.time]")
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 
@@ -152,7 +151,6 @@ var/global/secure_GPS_count = 0
 		S.announce(wearer, src, "been stripped of [wearer.gender == FEMALE ? "her" : "his"] SPS")
 
 /obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/gps/secure/proc/announce() called tick#: [world.time]")
 	if(istype(src.loc, /mob/living))
 		var/mob/living/L = src.loc
 		L.show_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>",MESSAGE_HEAR)

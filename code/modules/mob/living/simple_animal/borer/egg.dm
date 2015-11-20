@@ -21,7 +21,6 @@
 		Grow()
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/Grow()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow() called tick#: [world.time]")
 	grown = 1
 	icon_state = "borer egg-grown"
 	processing_objects.Add(src)
@@ -40,7 +39,6 @@
 		recruiter.recruited.Add(src, "recruiter_recruited")
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/Hatch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch() called tick#: [world.time]")
 	if(hatching)
 		return
 	processing_objects.Remove(src)

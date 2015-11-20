@@ -7,7 +7,6 @@
 //config.alert_desc_blue_downto
 
 /proc/set_security_level(var/level)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/set_security_level() called tick#: [world.time]")
 	switch(level)
 		if("green")
 			level = SEC_LEVEL_GREEN
@@ -72,7 +71,6 @@
 		return
 
 /proc/get_security_level()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_security_level() called tick#: [world.time]")
 	switch(security_level)
 		if(SEC_LEVEL_GREEN)
 			return "green"
@@ -84,7 +82,6 @@
 			return "delta"
 
 /proc/num2seclevel(var/num)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/num2seclevel() called tick#: [world.time]")
 	switch(num)
 		if(SEC_LEVEL_GREEN)
 			return "green"
@@ -96,7 +93,6 @@
 			return "delta"
 
 /proc/seclevel2num(var/seclevel)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/seclevel2num() called tick#: [world.time]")
 	switch( lowertext(seclevel) )
 		if("green")
 			return SEC_LEVEL_GREEN
@@ -110,15 +106,11 @@
 
 /*DEBUG
 /mob/verb/set_thing0()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/set_thing0()  called tick#: [world.time]")
 	set_security_level(0)
 /mob/verb/set_thing1()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/set_thing1()  called tick#: [world.time]")
 	set_security_level(1)
 /mob/verb/set_thing2()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/set_thing2()  called tick#: [world.time]")
 	set_security_level(2)
 /mob/verb/set_thing3()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/set_thing3()  called tick#: [world.time]")
 	set_security_level(3)
 */

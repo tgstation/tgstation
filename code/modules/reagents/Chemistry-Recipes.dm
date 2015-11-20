@@ -18,7 +18,6 @@ datum
 
 		// /vg/: Send admin alerts with standardized code.
 		proc/send_admin_alert(var/datum/reagents/holder, var/reaction_name=src.name)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/send_admin_alert() called tick#: [world.time]")
 			var/message_prefix = "\A [reaction_name] reaction has occured"
 			var/message="[message_prefix]"
 			var/atom/A = holder.my_atom
@@ -39,7 +38,6 @@ datum
 			message_admins(message, 0, 1)
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/on_reaction() called tick#: [world.time]")
 			return
 
 		//I recommend you set the result amount to the total volume of all components.

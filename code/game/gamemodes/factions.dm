@@ -24,7 +24,6 @@
 	var/uplink_contents			// the contents of the uplink
 
 	proc/assign_objectives(var/datum/mind/traitor)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/assign_objectives() called tick#: [world.time]")
 		..()
 
 
