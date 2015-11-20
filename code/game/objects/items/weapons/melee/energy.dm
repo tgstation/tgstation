@@ -6,6 +6,7 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
 	var/w_class_on = 4
+	var/item_color = null
 	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)

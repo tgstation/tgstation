@@ -4,43 +4,36 @@
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
-	item_color = "bluetie"
 	slot_flags = 0
 	w_class = 2
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
 
 /obj/item/clothing/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
 
 /obj/item/clothing/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
 
 /obj/item/clothing/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
 
 /obj/item/clothing/tie/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
-	item_color = "waistcoat"
 
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
 
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
@@ -83,7 +76,6 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	item_color = "bronze"
 	materials = list(MAT_METAL=1000)
 	burn_state = -1 //Won't burn in fires
 
@@ -125,7 +117,6 @@
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	item_color = "silver"
 	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
@@ -140,7 +131,6 @@
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	item_color = "gold"
 	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
@@ -159,7 +149,6 @@
 	name = "red armband"
 	desc = "An fancy red armband!"
 	icon_state = "redband"
-	item_color = "redband"
 
 /obj/item/clothing/tie/armband/deputy
 	name = "security deputy armband"
@@ -169,37 +158,31 @@
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
 	icon_state = "cargoband"
-	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
 	icon_state = "engieband"
-	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
 	icon_state = "rndband"
-	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
 	icon_state = "hydroband"
-	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "medband"
-	item_color = "medband"
 
 /obj/item/clothing/tie/armband/medblue
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
-	item_color = "medblueband"
 
 ///////////
 //SCARVES//
@@ -212,57 +195,46 @@
 /obj/item/clothing/tie/scarf/red
 	name = "red scarf"
 	icon_state = "redscarf"
-	item_color = "redscarf"
 
 /obj/item/clothing/tie/scarf/green
 	name = "green scarf"
 	icon_state = "greenscarf"
-	item_color = "greenscarf"
 
 /obj/item/clothing/tie/scarf/darkblue
 	name = "dark blue scarf"
 	icon_state = "darkbluescarf"
-	item_color = "darkbluescarf"
 
 /obj/item/clothing/tie/scarf/purple
 	name = "purple scarf"
 	icon_state = "purplescarf"
-	item_color = "purplescarf"
 
 /obj/item/clothing/tie/scarf/yellow
 	name = "yellow scarf"
 	icon_state = "yellowscarf"
-	item_color = "yellowscarf"
 
 /obj/item/clothing/tie/scarf/orange
 	name = "orange scarf"
 	icon_state = "orangescarf"
-	item_color = "orangescarf"
 
 /obj/item/clothing/tie/scarf/lightblue
 	name = "light blue scarf"
 	icon_state = "lightbluescarf"
-	item_color = "lightbluescarf"
 
 /obj/item/clothing/tie/scarf/white
 	name = "white scarf"
 	icon_state = "whitescarf"
-	item_color = "whitescarf"
 
 /obj/item/clothing/tie/scarf/black
 	name = "black scarf"
 	icon_state = "blackscarf"
-	item_color = "blackscarf"
 
 /obj/item/clothing/tie/scarf/zebra
 	name = "zebra scarf"
 	icon_state = "zebrascarf"
-	item_color = "zebrascarf"
 
 /obj/item/clothing/tie/scarf/christmas
 	name = "christmas scarf"
 	icon_state = "christmasscarf"
-	item_color = "christmasscarf"
 
 //The three following scarves don't have the scarf subtype
 //This is because Ian can equip anything from that subtype
@@ -270,23 +242,19 @@
 /obj/item/clothing/tie/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	item_color = "stripedredscarf"
 
 /obj/item/clothing/tie/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	item_color = "stripedgreenscarf"
 
 /obj/item/clothing/tie/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	item_color = "stripedbluescarf"
 
 /obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
 	name = "pet collar"
 	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
 	icon_state = "petcollar"
-	item_color = "petcollar"
 	var/tagname = null
 
 /obj/item/clothing/tie/petcollar/attack_self(mob/user)

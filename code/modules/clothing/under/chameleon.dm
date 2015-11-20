@@ -3,7 +3,6 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
-	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	action_button_name = "Change"
 	origin_tech = "syndicate=3"
@@ -42,7 +41,6 @@
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
-	item_color = "psyche"
 	malfunctioning = 1
 	if(ismob(loc))
 		var/mob/M = loc
@@ -52,7 +50,6 @@
 		name = "Black Jumpsuit"
 		icon_state = "black"
 		item_state = "bl_suit"
-		item_color = "black"
 		malfunctioning = 0
 		if(ismob(loc))
 			var/mob/M = loc
@@ -82,8 +79,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
-	suit_color = A.suit_color
 	usr.update_inv_w_uniform()	//so our overlays update.
 
 

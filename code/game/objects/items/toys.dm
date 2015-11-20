@@ -237,7 +237,6 @@
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
-				newSaber.item_color = "rainbow"
 			user.unEquip(W)
 			user.unEquip(src)
 			qdel(W)
@@ -245,7 +244,6 @@
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
-			item_color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
 
 			if(active)
