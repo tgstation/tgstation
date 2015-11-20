@@ -80,7 +80,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
-	/*var/list/team_objectives = typesof(/datum/objective/changeling_team_objective) - /datum/objective/changeling_team_objective
+	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 	var/list/possible_team_objectives = list()
 	for(var/T in team_objectives)
 		var/datum/objective/changeling_team_objective/CTO = T
@@ -89,7 +89,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			possible_team_objectives += T
 
 	if(possible_team_objectives.len && prob(20*changelings.len))
-		changeling_team_objective_type = pick(possible_team_objectives)*/ //Changeling team objectives removed for the time being
+		changeling_team_objective_type = pick(possible_team_objectives)
 
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
@@ -134,6 +134,13 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		steal_objective.owner = changeling
 		steal_objective.find_target()
 		changeling.objectives += steal_objective
+
+	var/list/active_ais = active_ais()
+	if(active_ais.len && prob(100/joined_player_list.len))
+		var/datum/objective/destroy/destroy_objective = new
+		destroy_objective.owner = changeling
+		destroy_objective.find_target()
+		changeling.objectives += destroy_objective
 	else
 		if(prob(70))
 			var/datum/objective/assassinate/kill_objective = new
@@ -191,6 +198,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
 		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
+	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)
@@ -271,7 +279,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/changelingprofile/first_prof = null
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
-	var/dna_max = INFINITY //How many extra DNA strands the changeling can store for transformation.
+	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -281,8 +289,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/isabsorbing = 0
-	var/geneticpoints = 5 //Currency used for purchasing powers - gained from absorption
-	var/total_genetic_points = 5 //Used in respeccing to reset points to the proper amount
+	var/geneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
