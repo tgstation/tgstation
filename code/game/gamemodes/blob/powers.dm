@@ -91,10 +91,10 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		src << "You must be on a blob!"
+		src << "<span class='warning'>You must be on a blob!</span>"
 		return
 	if(!istype(B, /obj/effect/blob/factory))
-		src << "Unable to use this blob, find a factory blob."
+		src << "<span class='warning'>Unable to use this blob, find a factory blob.</span>"
 		return
 	if(!can_buy(20))
 		return
@@ -112,7 +112,7 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
 	if(!B)
-		src << "You must be on a blob node!"
+		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
 	if(!can_buy(80))
 		return
@@ -127,16 +127,16 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		src << "You must be on a blob!"
+		src << "<span class='warning'>You must be on a blob!</span>"
 		return
 	if(istype(B, /obj/effect/blob/core))
-		src << "Unable to remove this blob."
+		src << "<span class='warning'>Unable to remove this blob.</span>"
 		return
 	qdel(B)
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand/Attack Blob (4)"
+	set name = "Expand/Attack Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
@@ -146,13 +146,13 @@
 		return
 	var/obj/effect/blob/B = locate() in T
 	if(B)
-		src << "There is a blob here!"
+		src << "<span class='warning'>There is a blob here!</span>"
 		return
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
-		src << "There is no blob adjacent to you."
+		src << "<span class='warning'>There is no blob adjacent to you.</span>"
 		return
-	if(!can_buy(4))
+	if(!can_buy(5))
 		return
 	last_attack = world.time
 	OB.expand(T, 0, blob_reagent_datum.color)

@@ -1,7 +1,20 @@
 // Blob Overmind Controls
 
 
-/mob/camera/blob/CtrlClickOn(atom/A) // Expand blob
+/mob/camera/blob/ClickOn(var/atom/A, var/params) // Expand blob
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"])
+		MiddleClickOn(A)
+		return
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
+	if(modifiers["alt"])
+		AltClickOn(A)
+		return
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return
 	var/turf/T = get_turf(A)
 	if(T)
 		expand_blob(T)
@@ -11,7 +24,7 @@
 	if(T)
 		rally_spores(T)
 
-/mob/camera/blob/AltClickOn(atom/A) // Create a shield
+/mob/camera/blob/CtrlClickOn(atom/A) // Create a shield
 	var/turf/T = get_turf(A)
 	if(T)
 		create_shield(T)
