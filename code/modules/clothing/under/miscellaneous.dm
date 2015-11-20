@@ -575,7 +575,7 @@
 	_color = "clownpiece"
 
 /obj/item/clothing/under/cia
-	name = "CIA's outfit"
+	name = "casual IAA outfit"
 	desc = "Just looking at this makes you feel in charge."
 	icon_state = "cia"
 	item_state = "cia"
