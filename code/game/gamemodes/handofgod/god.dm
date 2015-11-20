@@ -21,6 +21,7 @@
 	var/list/structures = list()
 	var/list/conduits = list()
 	var/prophets_sacrificed_in_name = 0
+	var/image/ghostimage = null //For observer with darkness off visiblity
 
 
 /mob/camera/god/New()
@@ -31,6 +32,10 @@
 	//Force nexuses after 2 minutes in hand of god mode
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
 		addtimer(src,"forceplacenexus",1200)
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
 
 
 //Rebuilds the list based on the gamemode's lists
@@ -50,7 +55,8 @@
 	for(var/datum/mind/F in followers)
 		if(F.current)
 			F.current << "<span class='danger'>Your god is DEAD!</span>"
-
+	ghost_darkness_images -= ghostimage
+	updateallghostimages()
 	return ..()
 
 

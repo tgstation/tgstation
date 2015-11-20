@@ -49,7 +49,7 @@
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
-
+	var/image/ghostimage = null //Visible to ghost with darkness off
 
 /mob/living/simple_animal/revenant/Life()
 	ear_damage = 0
@@ -235,6 +235,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
+	
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
+	
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -268,6 +273,8 @@
 	if(!revealed) //Revenants cannot die if they aren't revealed
 		return 0
 	..(1)
+	ghost_darkness_images -= ghostimage
+	updateallghostimages()
 	src << "<span class='revendanger'>NO! No... it's too late, you can feel your essence breaking apart...</span>"
 	notransform = 1
 	revealed = 1
