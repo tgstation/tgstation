@@ -130,8 +130,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		var/datum/organ/plasmavessel = A.get_organ("plasmavessel")
-		if(plasmavessel && plasmavessel.exists())
+		if(A.exists("plasmavessel"))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)

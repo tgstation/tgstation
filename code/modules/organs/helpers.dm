@@ -23,7 +23,7 @@
 mob/living/carbon/exists(var/organname)
 	if(organsystem)
 		var/datum/organ/O = get_organ(organname)
-		return O.exists()
+		return (O && O.exists())
 	else
 		return 1
 
@@ -45,7 +45,7 @@ mob/proc/exists(var/organname)
 				return returnorg
 			var/obj/item/organ/OI = PO.organitem
 			for(var/organname in OI.suborgans)
-				if(!(organname == "eyes" || organname == "mouth"))	//They're their own damage zones
+				if(!organname == "eyes")
 					var/datum/organ/RO = OI.suborgans[organname]
 					if(RO.exists() && istype(RO, /datum/organ/internal))	//Only internal organs, not limbs etc.
 						returnorg += RO

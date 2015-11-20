@@ -166,8 +166,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
 			for(var/obj/item/organ/O in required_organs)
-				var/datum/organ/OR = H.get_organ(O.hardpoint)
-				if(!(OR && OR.exists()))
+				if(!(H.exists(O.hardpoint)))
 					return
 
 	SSdisease.processing += src

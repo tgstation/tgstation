@@ -114,10 +114,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
 
-	var/datum/organ/hivenode = M.get_organ("hivenode")
-	var/datum/organ/embryo = M.get_organ("egg")
-	if(hivenode && hivenode.exists()) return 0
-	if(embryo && embryo.exists()) return 0
+	if(M.exists("hivenode")) return 0
+	if(M.exists("egg")) return 0
 
 	if(loc == M) return 0
 	if(stat != CONSCIOUS)	return 0
@@ -237,8 +235,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 	if(M.stat == DEAD)
 		return 0
-	var/datum/organ/internal/alien/hivenode/HI = M.get_organ("hivenode")
-	if(!(HI && HI.exists()))
+	if(!M.exists("hivenode"))
 		return 0
 
 	if(iscorgi(M) || ismonkey(M))

@@ -60,7 +60,7 @@
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
 	else if(!exists("head"))
-		msg += "<span class='warning'>[t_His] head is missing!</span>"
+		msg += "<span class='warning'>[t_His] head is missing!</span>\n"
 
 	//suit/armor
 	if(wear_suit)
@@ -90,7 +90,7 @@
 		else
 			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
 	else if(!exists("l_arm"))
-		msg += "<span class='warning'>[t_His] left arm is missing!</span>"
+		msg += "<span class='warning'>[t_His] left arm is missing!</span>\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -99,7 +99,7 @@
 		else
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
 	else if(!exists("r_arm"))
-		msg += "<span class='warning'>[t_His] right arm is missing!</span>"
+		msg += "<span class='warning'>[t_His] right arm is missing!</span>\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
@@ -134,10 +134,10 @@
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
 
 	if(!exists("l_leg"))
-		msg += "<span class='warning'>[t_His] left leg is missing!</span>"
+		msg += "<span class='warning'>[t_His] left leg is missing!</span>\n"
 
 	if(!exists("r_leg"))
-		msg += "<span class='warning'>[t_His] right leg is missing!</span>"
+		msg += "<span class='warning'>[t_His] right leg is missing!</span>\n"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))
@@ -189,8 +189,7 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		var/datum/organ/internal/brain/B = get_organ("brain")
-		if(B && B.exists())//Only perform these checks if there is a brain
+		if(exists("brain"))//Only perform these checks if there is a brain
 			if(suiciding)
 				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
@@ -271,8 +270,7 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		var/datum/organ/internal/brain/B = get_organ("brain")
-		if(B && B.exists())
+		if(exists("brain"))
 			if(istype(src,/mob/living/carbon/human/interactive))
 				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)

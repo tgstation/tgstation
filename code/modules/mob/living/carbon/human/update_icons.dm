@@ -320,9 +320,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
 
-		var/datum/organ/limb/LH = get_organ("l_arm")
-		var/datum/organ/limb/RH = get_organ("r_arm")
-		if(!(LH.exists() && RH.exists()))
+		if(!(exists("l_arm") && exists("r_arm")))
 			return
 
 		var/t_state = gloves.item_state
@@ -380,9 +378,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		var/datum/organ/limb/LF = get_organ("l_leg")
-		var/datum/organ/limb/RF = get_organ("r_leg")
-		if(!(LF.exists() && RF.exists()))
+		if(!(exists("l_leg") && exists("r_leg")))
 			return
 
 		var/image/standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
@@ -567,11 +563,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_r_hand()
 		return
 
-	var/datum/organ/limb/RH = get_organ("r_arm")
-	if(!(RH && RH.exists()))
+	if(!exists("r_arm"))
 		if(hud_used)
 			var/obj/screen/inventory/R = hud_used.adding[3]
-			world << "Drawing an X on right hand slot"
 			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
 
 
@@ -595,11 +589,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_l_hand()
 		return
 
-	var/datum/organ/limb/LH = get_organ("l_arm")
-	if(!(LH && LH.exists()))
+	if(!exists("l_arm"))
 		if(hud_used)
 			var/obj/screen/inventory/L = hud_used.adding[4]
-			world << "Drawing an X on left hand slot"
 			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
 
 	if(l_hand)

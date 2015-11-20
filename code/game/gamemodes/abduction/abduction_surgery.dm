@@ -24,7 +24,7 @@
 /datum/surgery_step/extract_organ/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/organname in organ_types)
 		IC = target.get_organ(organname)
-		if(IC && IC.exists())
+		if(target.exists(organname))
 			break
 	user.visible_message("<span class='notice'>[user] starts to remove [target]'s organs.</span>")
 

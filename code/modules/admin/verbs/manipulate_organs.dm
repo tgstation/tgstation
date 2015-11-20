@@ -6,7 +6,7 @@
 	var/list/organs = list()
 	switch(operation)
 		if("add organ")
-			for(var/path in typesof(/obj/item/organ/internal) - /obj/item/organ/internal)
+			for(var/path in typesof(/obj/item/organ) - /obj/item/organ)
 				var/dat = replacetext("[path]", "/obj/item/organ/internal/", ":")
 				organs[dat] = path
 
@@ -27,8 +27,11 @@
 			organ.implant(C)
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/datum/organ/I in C.organsystem.organlist)
-				organs["[I.name] ([I.type])"] = I
+			if(C.organsystem)
+				for(var/organname in C.organsystem.organlist)
+					var/datum/organ/ORG = C.get_organ(organname)
+					if(ORG && ORG.exists())
+						organs["[ORG.organitem] ([ORG.organitem.type])"] = ORG
 
 			for(var/obj/item/weapon/implant/I in C)
 				organs["[I.name] ([I.type])"] = I
@@ -45,8 +48,7 @@
 			else
 				I = organ
 				I.removed(C)
-
-			organ.loc = get_turf(C)
+				I.loc = get_turf(C)
 
 			if(operation == "remove organ/implant")
 				qdel(organ)

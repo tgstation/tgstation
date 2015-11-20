@@ -296,9 +296,7 @@
 		return 0
 	if(handcuffed)
 		if(organsystem)
-			var/datum/organ/limb/LH = get_organ("l_arm")
-			var/datum/organ/limb/RH = get_organ("r_arm")
-			return (LH.exists() && RH.exists()) //Handcuffs only work if you have 2 hands. return !LH.exists() || !RH.exists()
+			return (exists("l_arm") && exists("r_arm")) //Handcuffs only work if you have 2 hands.
 		return 0
 	return 1
 

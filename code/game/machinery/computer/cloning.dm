@@ -352,8 +352,7 @@
 	if (!check_dna_integrity(subject) || !istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
-	var/datum/organ/internal/brain/B = subject.get_organ("brain")
-	if (!(B && B.exists()))
+	if (!subject.exists("brain"))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
 	if (subject.suiciding == 1)

@@ -219,31 +219,26 @@
 
 	handle_mutant_bodyparts(H)
 
-	var/datum/organ/limb/head = H.get_organ("head")
-	var/datum/organ/limb/chest = H.get_organ("chest")
-	var/datum/organ/limb/lfoot = H.get_organ("l_leg")
-	var/datum/organ/limb/rfoot = H.get_organ("r_leg")
-
 	// lipstick
-	if(head.exists() && H.lip_style && LIPS in specflags)
+	if(H.exists("head") && H.lip_style && LIPS in specflags)
 		var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
 		lips.color = H.lip_color
 		standing	+= lips
 
 	// eyes
-	if(head.exists() && EYECOLOR in specflags)
+	if(H.exists("head") && EYECOLOR in specflags)
 		var/datum/organ/internal/eyes/EY = H.get_organ("eyes")
 		if(EY && EY.exists())
 			var/obj/item/organ/internal/eyes/OI = EY.organitem
 			standing	+= OI.get_img()
 
 	//Underwear, Undershirts & Socks
-	if(chest.exists() && H.underwear)
+	if(H.exists("chest") && H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
 			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
-	if(chest.exists() && H.undershirt)
+	if(H.exists("chest") && H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
 			if(H.dna && H.dna.species.sexes && H.gender == FEMALE)
@@ -251,7 +246,7 @@
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
-	if(lfoot.exists() && rfoot.exists() && H.socks)
+	if(H.exists("l_leg") && H.exists("r_leg") && H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
@@ -633,9 +628,8 @@
 				if(H.client)
 					H.client.screen += global_hud.darkMask
 
-		var/datum/organ/internal/eyes/EY = H.get_organ("eyes")
 		if(H.blind)
-			if(H.eye_blind || !(EY && EY.exists()))
+			if(H.eye_blind || !H.exists("eyes"))
 				H.throw_alert("blind")
 				H.blind.layer = 18
 			else

@@ -407,8 +407,7 @@
 		ghost << "<span class='ghostalert'>Your feel a fire burning in your body. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 		ghost << 'sound/effects/genetics.ogg'
 		revivalnotification = 1
-	var/datum/organ/internal/brain/B = get_organ("brain")
-	if(!get_ghost() && B && B.exists())
+	if(!get_ghost() && exists("brain"))
 		revivalnotification = 0
 		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
 		bodytemperature = temperature

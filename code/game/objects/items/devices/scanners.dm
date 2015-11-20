@@ -218,7 +218,7 @@ MASS SPECTROMETER
 
 		var/implant_detect
 		for(var/datum/organ/internal/cyberimp/CI in H.get_all_internal_organs())
-			if(CI && CI.exists())
+			if(CI.exists())
 				implant_detect += "[H.name] is modified with a [CI.organitem.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")

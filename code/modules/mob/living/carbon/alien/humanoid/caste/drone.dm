@@ -26,8 +26,7 @@
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	var/no_queen = 1
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		var/datum/organ/internal/brain/B = Q.get_organ("brain")
-		if(!Q.key || !(B && B.exists()))
+		if(!Q.key || !Q.exists("brain"))
 			continue
 		no_queen = 0
 	if(no_queen)

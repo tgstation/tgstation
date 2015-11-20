@@ -70,9 +70,7 @@
 		//Dead people only thanks!
 		if ((M.stat != 2) || (!M.client))
 			continue
-		//They need a brain!
-		var/datum/organ/internal/brain/B = !M.get_organ("brain")
-		if(!(B && B.exists()))
+		if(!M.exists("brain"))//They need a brain!
 			continue
 		if (M.ckey == find_key)
 			selected = M
