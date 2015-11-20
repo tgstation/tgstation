@@ -1,0 +1,4 @@
+author: Incoming5643
+delete-after: True
+changes: 
+  - bugfix: "Setting your species to something other than human (if available) once again saves properly. Note that if you join a round where your species setting is no longer valid it will be reset to human."
