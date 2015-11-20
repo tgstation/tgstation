@@ -81,20 +81,6 @@
 	icon_state = "u_laser"
 	damage = 60
 
-//	var/life = 20
-
-/*
-/obj/item/projectile/beam/pulse/heavy/Bump(atom/A) //this is just awful
-	A.bullet_act(src, def_zone)
-	src.life -= 10
-	if(ismob(A))
-		var/mob/M = A
-		add_logs(firer, M, "shot", object="[src]")
-	if(life <= 0)
-		returnToPool(src)
-	return
-*/
-
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
 	icon_state = "mecha_taser"
