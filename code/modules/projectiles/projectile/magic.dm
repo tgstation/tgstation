@@ -272,6 +272,7 @@
 		var/mob/living/simple_animal/hostile/statue/S = change
 		if(!S.active)
 			S.active = 1
+			S.AIStatus = initial(S.AIStatus)
 			S.desc = initial(S.desc)
 			S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 

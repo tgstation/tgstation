@@ -75,6 +75,7 @@
 
 	if(not_active)
 		src.active = 0
+		AIStatus = AI_OFF
 
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(!active)
@@ -126,7 +127,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/statue/face_atom()
-	if(!can_be_seen(get_turf(loc)))
+	if(!can_be_seen(get_turf(loc)) && active)
 		..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)

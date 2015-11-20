@@ -94,22 +94,15 @@
 		var/mob/living/carbon/human/H = L
 		name = "statue of [H.name]"
 		H.bleedsuppress = 1
-		S.overlays.Cut()
-		var/list/overlays_to_gray = list()
-		overlays_to_gray = H.overlays_standing.Copy()
-		for(var/icon/I in overlays_to_gray)
-			I = I.GrayScale()
-		S.overlays = overlays_to_gray
-	/*	//if(H.gender == "female")
-		//	S.icon_state = "human_female"
+		if(H.gender == "female")
+			S.icon_state = "human_female"
 	else if(ismonkey(L))
 		name = "statue of a monkey"
-		//S.icon_state = "monkey"
+		S.icon_state = "monkey"
 	else if(iscorgi(L))
 		name = "statue of a corgi"
-		//S.icon_state = "corgi"
-		//desc = "If it takes forever, I will wait for you..."
-	*/
+		S.icon_state = "corgi"
+		desc = "If it takes forever, I will wait for you..."
 	qdel(src)
 	..()
 
