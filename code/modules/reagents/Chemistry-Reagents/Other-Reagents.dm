@@ -403,6 +403,16 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
+/datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+
+/datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+	return
+
 /datum/reagent/copper
 	name = "Copper"
 	id = "copper"
@@ -416,6 +426,16 @@
 	description = "A colorless, odorless, tasteless gas."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
+
+/datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+
+/datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+	return
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
