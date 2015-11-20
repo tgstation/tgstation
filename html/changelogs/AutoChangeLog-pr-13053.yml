@@ -1,0 +1,4 @@
+author: AnturK
+delete-after: True
+changes: 
+  - tweak: "Staff of Doors now creates random types of doors."
