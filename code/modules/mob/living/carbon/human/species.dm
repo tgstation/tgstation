@@ -232,9 +232,10 @@
 
 	// eyes
 	if(head.exists() && EYECOLOR in specflags)
-		var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
-		img_eyes_s.color = "#" + H.eye_color
-		standing	+= img_eyes_s
+		var/datum/organ/internal/eyes/EY = H.get_organ("eyes")
+		if(EY && EY.exists())
+			var/obj/item/organ/internal/eyes/OI = EY.organitem
+			standing	+= OI.get_img()
 
 	//Underwear, Undershirts & Socks
 	if(chest.exists() && H.underwear)
@@ -632,8 +633,9 @@
 				if(H.client)
 					H.client.screen += global_hud.darkMask
 
+		var/datum/organ/internal/eyes/EY = H.get_organ("eyes")
 		if(H.blind)
-			if(H.eye_blind)
+			if(H.eye_blind || !(EY && EY.exists()))
 				H.throw_alert("blind")
 				H.blind.layer = 18
 			else

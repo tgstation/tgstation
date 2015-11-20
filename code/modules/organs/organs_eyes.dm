@@ -1,24 +1,48 @@
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	desc = "Looks like you've caught someone's eye"
 	hardpoint = "eyes"
+	icon_state = "eye"
 	var/sight_flags = 0
 	var/eye_color = "fff"
-	var/old_eye_color = "fff"
+//	var/old_eye_color = "fff"
 	var/flash_protect = 0
+
+/obj/item/organ/internal/eyes/set_dna(var/datum/dna/D)
+	..(D)
+	eye_color = dna.get_eye_color()
+
+/obj/item/organ/internal/eyes/on_insertion(special = 0)
+	owner.regenerate_icons()
+
+/obj/item/organ/internal/eyes/Remove(special = 0)
+	owner.regenerate_icons()
+
+/obj/item/organ/internal/eyes/proc/get_img()
+	var/state = "eyes"
+	if(dna && dna.species)
+		state = dna.species.eyes
+	var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[state]_s", "layer" = -BODY_LAYER)
+	img_eyes_s.color = "#" + eye_color
+	return img_eyes_s
 
 /obj/item/organ/internal/eyes/alien
 	name = "alien eyes"
+	eye_color = "83F52C"
 	var/obj/effect/proc_holder/alien/nightvisiontoggle/power = null
 	organtype = ORGAN_ALIEN
+
 
 /obj/item/organ/internal/eyes/alien/New()
 	power = new/obj/effect/proc_holder/alien/nightvisiontoggle(src)
 	..()
 
 /obj/item/organ/internal/eyes/alien/on_insertion(special = 0)
+	..()
 	owner.AddAbility(power)
 
 /obj/item/organ/internal/eyes/alien/Remove(special = 0)
+	..()
 	owner.RemoveAbility(power)
 
 /obj/item/organ/internal/eyes/cyberimp
@@ -47,22 +71,14 @@
 	owner.sight |= sight_flags
 
 /obj/item/organ/internal/eyes/cyberimp/on_insertion(special = 0)
-	if(istype(owner, /mob/living/carbon/human) && eye_color)
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
-		HMN.eye_color = eye_color
-		HMN.regenerate_icons()
+	..()
 	if(aug_message && !special)
 		owner << "<span class='notice'>[aug_message]</span>"
 	owner.sight |= sight_flags
 	return 1
 
-/obj/item/organ/internal/eyes/cyberimp/Remove(var/mob/living/carbon/M, var/special = 0)
-	M.sight ^= sight_flags
-	if(istype(M,/mob/living/carbon/human) && eye_color)
-		var/mob/living/carbon/human/HMN = owner
-		HMN.eye_color = old_eye_color
-		HMN.regenerate_icons()
+/obj/item/organ/internal/eyes/cyberimp/Remove(var/special = 0)
+	owner.sight ^= sight_flags
 	..()
 
 /obj/item/organ/internal/eyes/cyberimp/emp_act(severity)
@@ -109,17 +125,18 @@
 	var/HUD_type = 0
 
 /obj/item/organ/internal/eyes/cyberimp/hud/on_insertion()
+	..()
 	if(HUD_type && owner)
 		var/datum/atom_hud/H = huds[HUD_type]
 		H.add_hud_to(owner)
 		owner.permanent_huds |= H
 	return
 
-/obj/item/organ/internal/eyes/cyberimp/hud/Remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/internal/eyes/cyberimp/hud/Remove(var/special = 0)
 	if(HUD_type)
 		var/datum/atom_hud/H = huds[HUD_type]
-		M.permanent_huds ^= H
-		H.remove_hud_from(M)
+		owner.permanent_huds ^= H
+		H.remove_hud_from(owner)
 	..()
 
 /obj/item/organ/internal/eyes/cyberimp/hud/medical

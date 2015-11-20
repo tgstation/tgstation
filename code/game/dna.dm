@@ -210,6 +210,9 @@
 		spans |= M.get_spans()
 	return spans
 
+/datum/dna/proc/get_eye_color()	//Let's just hope this doesn't need sanity checks
+	return sanitize_hexcolor(getblock(uni_identity, DNA_EYE_COLOR_BLOCK))
+
 
 /////////////////////////// DNA DATUM
 
@@ -311,6 +314,8 @@
 		H.update_body()
 		H.update_hair()
 	return 1
+
+
 
 /proc/domutcheck(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
