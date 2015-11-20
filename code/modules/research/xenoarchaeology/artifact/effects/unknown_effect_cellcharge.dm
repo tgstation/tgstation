@@ -9,6 +9,8 @@
 		if(R.cell)
 			R.cell.charge += rand() * 100
 			R << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
+		if(world.time >= next_message)
+			next_message = world.time + 50
 		return 1
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
@@ -24,7 +26,7 @@
 				if(world.time >= next_message)
 					M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
 		if(world.time >= next_message)
-			next_message = world.time + 100
+			next_message = world.time + 300
 		return 1
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
@@ -40,5 +42,5 @@
 				if(world.time >= next_message)
 					M << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
 		if(world.time >= next_message)
-			next_message = world.time + 100
+			next_message = world.time + 300
 		return 1

@@ -11,6 +11,8 @@
 		if(R.cell)
 			R.cell.charge = max(R.cell.charge - rand() * 100, 0)
 			R << "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>"
+		if(world.time >= next_message)
+			next_message = world.time + 50
 		return 1
 
 /datum/artifact_effect/celldrain/DoEffectAura()
@@ -26,7 +28,7 @@
 				if(world.time >= next_message)
 					M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"
 		if(world.time >= next_message)
-			next_message = world.time + 100
+			next_message = world.time + 300
 		return 1
 
 /datum/artifact_effect/celldrain/DoEffectPulse()
@@ -42,5 +44,5 @@
 				if(world.time >= next_message)
 					M << "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>"
 		if(world.time >= next_message)
-			next_message = world.time + 100
+			next_message = world.time + 300
 		return 1
