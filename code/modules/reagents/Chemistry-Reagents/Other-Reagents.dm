@@ -240,6 +240,12 @@
 	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
+/datum/reagent/medicine/omnizine/godblood
+	name = "Godblood"
+	id = "godblood"
+	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
+	overdose_threshold = 150
+
 /datum/reagent/lube
 	name = "Space Lube"
 	id = "lube"
