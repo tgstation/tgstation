@@ -290,7 +290,7 @@ var/global/list/multiverse = list()
 	M.faction = list("[usr.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!S.dangerous_existence)
 				all_species += speciestype
