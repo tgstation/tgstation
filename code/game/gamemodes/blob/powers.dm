@@ -79,9 +79,9 @@
 
 /mob/camera/blob/verb/create_storage()
 	set category = "Blob"
-	set name = "Create Storage Blob (40)"
+	set name = "Create Storage Blob (20)"
 	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
-	var/obj/effect/blob/storage/R = createSpecial(40, /obj/effect/blob/storage, 3)
+	var/obj/effect/blob/storage/R = createSpecial(20, /obj/effect/blob/storage, 3)
 	R.update_max_blob_points(50)
 
 /mob/camera/blob/verb/create_blobbernaut()
@@ -136,7 +136,7 @@
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand/Attack Blob (5)"
+	set name = "Expand/Attack Blob (4)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
@@ -152,7 +152,7 @@
 	if(!OB)
 		src << "There is no blob adjacent to you."
 		return
-	if(!can_buy(5))
+	if(!can_buy(4))
 		return
 	last_attack = world.time
 	OB.expand(T, 0, blob_reagent_datum.color)
@@ -166,14 +166,12 @@
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
-	set name = "Rally Spores (5)"
+	set name = "Rally Spores"
 	set desc = "Rally the spores to move to your location."
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
 /mob/camera/blob/proc/rally_spores(turf/T)
-	if(!can_buy(5))
-		return
 	src << "You rally your spores."
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
@@ -217,9 +215,9 @@
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
-	set name = "Reactive Chemical Adaptation (50)"
+	set name = "Reactive Chemical Adaptation (40)"
 	set desc = "Replaces your chemical with a different one"
-	if(!can_buy(50))
+	if(!can_buy(40))
 		return
 	var/list/excluded = list(/datum/reagent/blob, blob_reagent_datum.type)
 	var/datum/reagent/blob/B = pick((typesof(/datum/reagent/blob) - excluded))
