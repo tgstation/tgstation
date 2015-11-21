@@ -188,7 +188,7 @@
 	if(src.occupant)
 		if (istype(occupant, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = occupant
-			if((R.stat == DEAD) || (!R.client))//no more borgs suiciding in recharge stations to ruin them.
+			if((R.stat) || (!R.client))//no more borgs suiciding in recharge stations to ruin them.
 				go_out()
 				return
 			restock_modules()
