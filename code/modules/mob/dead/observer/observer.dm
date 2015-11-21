@@ -418,3 +418,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
 		if(DATA_HUD_MEDICAL_ADVANCED)
 			data_hud_seen = 0
+
+/mob/dead/observer/canUseTopic()
+	if(check_rights(R_ADMIN, 0))
+		return

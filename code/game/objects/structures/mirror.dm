@@ -131,7 +131,7 @@
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
 				choosable_races += S.id
@@ -142,7 +142,7 @@
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
-	for(var/speciestype in typesof(/datum/species) - /datum/species)
+	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		choosable_races += S.id
 	..()

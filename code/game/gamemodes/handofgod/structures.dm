@@ -3,7 +3,7 @@
 	if(global_handofgod_traptypes.len && global_handofgod_structuretypes.len)
 		return
 
-	var/list/types = typesof(/obj/structure/divine) - /obj/structure/divine - /obj/structure/divine/trap
+	var/list/types = subtypesof(/obj/structure/divine) - /obj/structure/divine/trap
 	for(var/T in types)
 		var/obj/structure/divine/D = T
 		if(initial(D.constructable))
@@ -217,7 +217,7 @@
 
 /obj/structure/divine/nexus
 	name = "nexus"
-	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosion shock."
+	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosive shock."
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
@@ -399,7 +399,7 @@
 		user.reagents.add_reagent("hell_water",20)
 	else
 		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
-		user.reagents.add_reagent("doctorsdelight",20)
+		user.reagents.add_reagent("godblood",20)
 	update_icons()
 	spawn(time_between_uses)
 		if(src)

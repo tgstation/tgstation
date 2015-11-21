@@ -221,8 +221,7 @@
 	set desc = "Replaces your chemical with a different one"
 	if(!can_buy(50))
 		return
-	var/list/excluded = list(/datum/reagent/blob, blob_reagent_datum.type)
-	var/datum/reagent/blob/B = pick((typesof(/datum/reagent/blob) - excluded))
+	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new B
 	for(var/obj/effect/blob/BL in blobs)
 		BL.adjustcolors(blob_reagent_datum.color)

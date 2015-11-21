@@ -23,11 +23,11 @@
 		affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
 		affected_mob.confused += 10
 		affected_mob.adjustStaminaLoss(10)
-		new/obj/effect/overlay/temp/revenant(affected_mob.loc)
+		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 	if(stagedamage < stage)
 		stagedamage++
 		affected_mob.adjustToxLoss(stage*3) //should, normally, do about 45 toxin damage.
-		new/obj/effect/overlay/temp/revenant(affected_mob.loc)
+		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 	..() //So we don't increase a stage before applying the stage damage.
 	switch(stage)
 		if(2)
@@ -44,7 +44,7 @@
 		if(5)
 			affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
 			affected_mob.adjustStaminaLoss(45)
-			new/obj/effect/overlay/temp/revenant(affected_mob.loc)
+			PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 			if(affected_mob.dna && affected_mob.dna.species)
 				affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 				affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
