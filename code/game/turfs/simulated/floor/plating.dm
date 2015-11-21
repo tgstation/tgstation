@@ -180,7 +180,7 @@
 	baseturf = /turf/simulated/floor/plating/lava //lava all the way down
 	slowdown = 2
 	var/processing = 0
-        luminosity = 1
+	luminosity = 1
 
 /turf/simulated/floor/plating/lava/airless
 	oxygen = 0
