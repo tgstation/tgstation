@@ -123,6 +123,16 @@
 /obj/screen/blob
 	icon = 'icons/mob/blob.dmi'
 
+/obj/screen/blob/BlobHelp
+	icon_state = "ui_help"
+	name = "Blob Help"
+	desc = "Help on playing blob!"
+
+/obj/screen/blob/BlobHelp/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.blob_help()
+
 /obj/screen/blob/JumpToNode
 	icon_state = "ui_tonode"
 	name = "Jump to Node"
@@ -223,6 +233,10 @@
 	blobhealthdisplay.mouse_opacity = 0
 	blobhealthdisplay.layer = 20
 	adding += blobhealthdisplay
+
+	using = new /obj/screen/blob/BlobHelp()
+	using.screen_loc = "NORTH:-6,WEST:6"
+	adding += using
 
 	using = new /obj/screen/blob/JumpToNode()
 	using.screen_loc = ui_inventory
