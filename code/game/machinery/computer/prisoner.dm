@@ -28,12 +28,11 @@
 		if(..())
 			return
 		user.set_machine(src)
-		var/dat
-		dat += "<B>Prisoner Implant Manager System</B><BR>"
+		var/dat = list()
 		if(screen == 0)
-			dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
+			dat += "<A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 		else if(screen == 1)
-			dat += "<HR>Chemical Implants<BR>"
+			dat += "Chemical Implants<BR>"
 			var/turf/Tr = null
 			for(var/obj/item/weapon/implant/chem/C in world)
 				Tr = get_turf(C)
@@ -55,6 +54,7 @@
 				if(!T.implanted) continue
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
+				if(!M) continue //Changeling monkeys break the console, bad monkeys.
 				if(M.z == 1 && !istype(M.loc, /turf/space))
 					var/turf/mob_loc = get_turf(M)
 					loc_display = mob_loc.loc
@@ -68,11 +68,11 @@
 					********************************<BR>"}
 				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
-
-		user << browse(dat, "window=computer;size=400x500")
-		onclose(user, "computer")
-		return
-
+		dat = list2text(dat)
+		var/datum/browser/popup = new(user, "prisoner_implants", "Prisoner Implant Manager System", 400, 500, src)
+		popup.set_content(dat)
+		popup.open()
+		onclose(user, "prisoner_implants")
 
 	process()
 		if(!..())
