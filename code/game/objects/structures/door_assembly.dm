@@ -460,7 +460,7 @@
 								"You start to disassemble the airlock assembly...")
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40/W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
@@ -492,7 +492,7 @@
 								 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
 								 "<span class='italics'>You hear wrenching.</span>")
 
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40/W.toolspeed, target = src))
 				if( src.anchored )
 					return
 				user << "<span class='notice'>You secure the airlock assembly.</span>"
@@ -506,7 +506,7 @@
 		user.visible_message("[user] unsecures the airlock assembly from the floor.", \
 							 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
 							 "<span class='italics'>You hear wrenching.</span>")
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if( !src.anchored )
 				return
 			user << "<span class='notice'>You unsecure the airlock assembly.</span>"
@@ -532,7 +532,7 @@
 		user.visible_message("[user] cuts the wires from the airlock assembly.", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
 
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if( src.state != 1 )
 				return
 			user << "<span class='notice'>You cut the wires from the airlock assembly.</span>"
@@ -562,7 +562,7 @@
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if( src.state != 2 )
 				return
 			user << "<span class='notice'>You remove the airlock electronics.</span>"
@@ -625,7 +625,7 @@
 		user.visible_message("[user] finishes the airlock.", \
 							 "<span class='notice'>You start finishing the airlock...</span>")
 
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if(src.loc && state == 2)
 				user << "<span class='notice'>You finish the airlock.</span>"
 				var/obj/machinery/door/airlock/door
