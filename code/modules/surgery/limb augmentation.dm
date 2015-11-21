@@ -46,6 +46,11 @@
 				if("head")
 					RL = new /obj/item/organ/limb/head/robot(src)
 					L.switch_organitem(RL)
+					var/datum/organ/internal/eyes/EY = target.get_organ("eyes")
+					if(EY && EY.exists())
+						var/obj/item/organ/internal/eyes/org = EY.organitem
+						if(org.status == ORGAN_ORGANIC)
+							EY.switch_organitem(new /obj/item/organ/internal/eyes/cyberimp)
 				if("chest")
 					RL = new /obj/item/organ/limb/chest/robot(src)
 					L.switch_organitem(RL)

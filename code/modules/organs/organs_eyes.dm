@@ -17,6 +17,7 @@
 
 /obj/item/organ/internal/eyes/Remove(special = 0)
 	owner.regenerate_icons()
+	owner.handle_vision()
 
 /obj/item/organ/internal/eyes/proc/get_img()
 	var/state = "eyes"
@@ -47,8 +48,9 @@
 
 /obj/item/organ/internal/eyes/cyberimp
 	name = "cybernetic eyes"
-	desc = "artificial photoreceptors with specialized functionality"
+	desc = "Artificial photoreceptors"
 	icon_state = "eye_implant"
+	eye_color = "BF0006"
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay = "eye_implant_overlay"
 	slot = "eye_sight"

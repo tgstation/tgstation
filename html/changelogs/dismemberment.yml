@@ -36,5 +36,5 @@ changes:
   - rscadd: "Fukken DISMEMBERMENT! Credits for the organsystem that was adapted to our codebase go to Ricotez."
   - rscadd: "Melee and ranged weapons can dismember and behead. Dismemberment leaves behind a stump that won't heal without surgery and bleeds very bad. Some weapons such as eswords cauterize the wound as it's made, preventing bleeding."
   - rscadd: "You can also amputate limbs surgically, including stumps left behind dismemberment. You can also transplant limbs to patients; this is also how cybernetic limb augmentation is now done. Chests and heads may be augmented without removal."
-  - tweak:  "You can now only have one chest and one brain cybernetic implant. Eye cybernetics replace your organic eye."
+  - tweak:  "You can now only have one chest and one brain cybernetic implant. Cybernetic implants are installed with organ manipulation. Eye cybernetics replace your organic eye."
   - wip: 	"Aliens and monkeys also have new organsystems, but they don't have locational damage or dismemberment yet."

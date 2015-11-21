@@ -36,7 +36,7 @@
 			for(var/obj/item/weapon/implant/I in C)
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
+			var/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			if(!organ) return
 			var/datum/organ/internal/O
@@ -44,7 +44,7 @@
 
 			if(istype(organ, /datum/organ/))
 				O = organ
-				O.dismember(ORGAN_REMOVED)
+				organ = O.dismember(ORGAN_REMOVED)
 			else
 				I = organ
 				I.removed(C)
@@ -57,3 +57,4 @@
 				case.imp = I
 				I.loc = case
 				case.update_icon()
+	C.update_body_parts()

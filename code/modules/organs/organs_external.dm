@@ -70,7 +70,6 @@
 /obj/item/organ/limb/head/create_suborgan_slots()
 	new/datum/organ/internal/brain(src, null)
 	new/datum/organ/internal/cyberimp/brain(src, null)
-	new/datum/organ/internal/cyberimp/chest(src, null)
 
 /obj/item/organ/limb/head/examine(mob/user)
 	..()

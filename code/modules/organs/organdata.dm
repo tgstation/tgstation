@@ -183,7 +183,6 @@
 /datum/organ/proc/switch_organitem(var/obj/item/organ/neworgan)
 	if(isorgan(organitem))
 		var/obj/item/organ/OI = organitem
-		OI.owner = null			//We nullify the owner of this organ.
 		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 	organitem.loc = owner.loc					//The organitem ends up at the datum's owner's location
 	var/obj/item/organ/oldorgan = organitem
@@ -202,6 +201,7 @@
 	if(owner)
 		owner.update_body_parts()			//Obviously we need to update the icon of the owner, else they will look like they still have the organ.
 	oldorgan.Remove(special = 1)			//Mainly so heads get their name set
+	oldorgan.owner = null
 	return oldorgan							//We return the organ so we can finish whatever we were doing with it.
 
 /datum/organ/proc/getDisplayName()

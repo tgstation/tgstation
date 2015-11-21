@@ -111,6 +111,17 @@
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
 
+/datum/design/cyberimp_eyes
+	name = "Cybernetic eyes"
+	desc = "These cybernetic eyes function as organic eyes do."
+	id = "ci-eyes"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
+	build_type = MECHFAB
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200)
+	construction_time = 75
+	build_path = /obj/item/organ/internal/eyes/cyberimp
+	category = list("Misc")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."

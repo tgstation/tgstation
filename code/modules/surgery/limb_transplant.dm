@@ -56,6 +56,7 @@
 						RL = new /obj/item/organ/limb/arm/l_arm/robot(src)
 					if("head")
 						RL = new /obj/item/organ/limb/head/robot(src)
+						RL.create_suborgan_slots()
 				if(!RL.Insert(H))
 					return -1
 				qdel(tool)
