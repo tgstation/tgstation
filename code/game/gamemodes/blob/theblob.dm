@@ -23,7 +23,7 @@
 		if((blobs.len >= blobmode.blobnukeposs) && prob(3) && !blobmode.nuclear)
 			blobmode.stage(2)
 			blobmode.nuclear = 1
-	src.dir = pick(1, 2, 4, 8)
+	src.dir = pick(cardinal)
 	src.update_icon()
 	..(loc)
 	for(var/atom/A in loc)
@@ -110,12 +110,11 @@
 	//Looking for another blob to pulse
 	var/list/dirs = cardinal.Copy()
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-	for(var/i = 1 to 4)
+	for(var/i in 1 to 4)
 		if(!dirs.len)	break
-		var/dirn = pick(dirs)
-		dirs.Remove(dirn)
+		var/dirn = pick_n_take(dirs)
 		var/turf/T = get_step(src, dirn)
-		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+		var/obj/effect/blob/B = locate() in T
 		if(!B)
 			expand(T)//No blob here so try and expand
 			return
@@ -136,16 +135,15 @@
 	if(istype(T, /turf/space) && prob(75))
 		return
 	if(!T)
-		var/list/dirs = cardinal
-		for(var/i = 1 to 4)
-			var/dirn = pick(dirs)
-			dirs.Remove(dirn)
+		var/list/dirs = cardinal.Copy()
+		for(var/i in 1 to 4)
+			var/dirn = pick_n_take(dirs)
 			T = get_step(src, dirn)
 			if(!(locate(/obj/effect/blob) in T))	break
 			else	T = null
 
 	if(!T)	return 0
-	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	var/obj/effect/blob/normal/B = new(src.loc, min(src.health, 30))
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
