@@ -1,0 +1,11 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Blobs now have a hud, with jump to node, create storage blob, create resource blob, create node blob, create factory blob, readapt chemical, relocate core, and jump to core buttons."
+  - tweak: "Manual blob expansion is now triggered by clicking anything next to a blob tile, instead of by ctrl-click."
+  - tweak: "Rally Spores no longer has a cost. Reminder: You can middle-click anything you can see to rally spores to it."
+  - tweak: "Creating a Shield Blob with hotkeys is now ctrl-click instead of alt-click."
+  - rscadd: "Removing a blob now refunds some points based on the blob type, usually around 40% of initial cost. Hotkey for removal is alt-click."
+  - rscadd: "Blobs now have the *Blob Help* verb which will pull up useful information, including what your reagent does."
+  - tweak: "Storage Blobs now cost 20, from 40. Storage Blobs also cannot be removed by blob removal."
+  - tweak: "Readapt Chemical now costs 40, from 50."
