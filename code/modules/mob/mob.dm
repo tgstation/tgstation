@@ -1741,5 +1741,8 @@ mob/proc/walking()
 			lowest_alpha = min(lowest_alpha,alphas[alpha_modification])
 		alpha = lowest_alpha
 
+/mob/proc/teleport_to(var/atom/A)
+	forceMove(get_turf(A))
+
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING

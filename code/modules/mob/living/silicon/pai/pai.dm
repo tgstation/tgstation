@@ -246,3 +246,6 @@
 
 /atom/proc/attack_pai(mob/user as mob)
 	return
+
+/mob/living/silicon/pai/teleport_to(var/atom/A)
+	card.forceMove(get_turf(A))

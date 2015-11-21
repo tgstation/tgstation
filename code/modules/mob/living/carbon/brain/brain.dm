@@ -62,3 +62,5 @@
 		return 1
 	return ..()
 
+/mob/living/carbon/brain/teleport_to(var/atom/A)
+	container.forceMove(get_turf(A))
