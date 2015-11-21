@@ -158,14 +158,14 @@
 /datum/biogen_recipe/paper/giftwrap
 	cost=300
 	id="giftwrap"
-	name="Wrapping Paper"
-	result=/obj/item/weapon/wrapping_paper
+	name="Gift Wrap"
+	result=/obj/item/stack/package_wrap/gift
 
 /datum/biogen_recipe/paper/packagewrap
 	cost=350
 	id="packagewrap"
-	name="Package Wrapper"
-	result=/obj/item/weapon/packageWrap
+	name="Package Wrap"
+	result=/obj/item/stack/package_wrap
 
 /datum/biogen_recipe/paper/paperbin
 	cost=550 //100 from the cardboard, 30*15=450 from the paper

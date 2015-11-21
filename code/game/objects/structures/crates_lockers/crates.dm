@@ -480,7 +480,7 @@
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
 		return ..()
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/stack/package_wrap))
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)

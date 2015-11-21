@@ -1,7 +1,8 @@
 /* Gifts and wrapping paper
  * Contains:
  *		Gifts
- *		Wrapping Paper
+ *      Winter Gifts
+ *      Strange Presents
  */
 
 ////WRAPPED GIFTS////
@@ -17,19 +18,23 @@
 	w_class = 3.0
 	autoignition_temperature=AUTOIGNITION_PAPER
 
-/obj/item/weapon/gift/small
-	icon_state = "gift-small"
-	item_state = "gift-small"
-	w_class = 2.0
-
-/obj/item/weapon/gift/large
-	icon_state = "gift-large"
-	item_state = "gift-large"
-	w_class = 4.0
-
-/obj/item/weapon/gift/New(turf/loc, var/W)
+/obj/item/weapon/gift/New(turf/loc, var/obj/item/target, var/W)
 	..()
 	w_class = W
+	gift = target
+	update_icon()
+
+/obj/item/weapon/gift/update_icon()
+	switch(w_class)
+		if(1,2)
+			icon_state = "gift-small"
+			item_state = "gift-small"
+		if(3)
+			icon_state = "gift"
+			item_state = "gift"
+		if(4)
+			icon_state = "gift-large"
+			item_state = "gift-large"
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item(src)
@@ -44,7 +49,7 @@
 
 /obj/item/weapon/gift/ashify()//so the content of player-made gifts can be recovered.
 	if(gift)
-		gift.loc = get_turf(src)
+		gift.forceMove(get_turf(src))
 	..()
 
 ////WINTER GIFTS////
@@ -272,9 +277,9 @@
 		)
 	new gift_type(T)
 
-////STRANGE PRESENTS(wrapped people)////
+////STRANGE PRESENTS////
 
-/obj/effect/spresent
+/obj/structure/strange_present
 	name = "strange present"
 	desc = "It's a ... present?"
 	icon = 'icons/obj/items.dmi'
@@ -283,12 +288,12 @@
 	anchored = 0
 	w_type=NOT_RECYCLABLE
 
-/obj/effect/spresent/relaymove(mob/user as mob)
+/obj/structure/strange_present/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 	user << "<span class='notice'>You can't move.</span>"
 
-/obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/strange_present/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		user << "<span class='notice'>You cut open the present.</span>"
 
@@ -303,151 +308,3 @@
 	else
 		user << "<span class='notice'>You need wirecutters for that.</span>"
 		return	..()
-
-
-
-/*
- * Wrapping Paper
- */
-/obj/item/weapon/wrapping_paper
-	name = "wrapping paper"
-	desc = "You can use this to wrap items in."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "wrap_paper"
-	var/amount = 20.0
-
-
-//old way to wrap an item.
-/*
-/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isMoMMI(user))
-		user << "<span class='warning'>You need two hands for this.</span>"
-		return
-	..()
-	if (!( locate(/obj/structure/table, src.loc) ))
-		user << "<span class='notice'>You MUST put the paper on a table!</span>"
-	if (W.w_class < 4)
-		if (istype(user.get_inactive_hand(), /obj/item/weapon/wirecutters))
-			var/obj/item/weapon/wirecutters/C = user.get_inactive_hand()
-			if(W==C)
-				return
-			var/a_used = 2 ** (src.w_class - 1)
-			if (src.amount < a_used)
-				user << "<span class='notice'>You need more paper!</span>"
-				return
-			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
-					return
-
-				src.amount -= a_used
-				user.drop_item(null, )
-				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift(get_turf(src), round(W.w_class))
-				G.icon_state = text("gift[]", G.size)
-				G.gift = W
-				W.loc = G
-				G.add_fingerprint(user)
-				W.add_fingerprint(user)
-				src.add_fingerprint(user)
-			if (src.amount <= 0)
-				new /obj/item/weapon/c_tube( src.loc )
-				del(src)
-				return
-		else
-			user << "<span class='notice'>You need wirecutters in your other hand!</span>"
-	else
-		user << "<span class='notice'>The object is FAR too large!</span>"
-	return
-*/
-
-/obj/item/weapon/wrapping_paper/examine(mob/user)
-	..()
-	user << "There is about [amount] square units of paper left!"
-
-/obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
-	if (!istype(target, /mob/living/carbon/human)) return
-	var/mob/living/carbon/human/H = target
-
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
-		if (src.amount > 2)
-			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
-			src.amount -= 2
-
-			if (H.client)
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = present
-
-			H.loc = present
-			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-			if(!iscarbon(user))
-				H.LAssailant = null
-			else
-				H.LAssailant = user
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-
-		else
-			user << "<span class='notice'>You need more paper.</span>"
-	else
-		user << "They are moving around too much. A straightjacket would help."
-
-	if (src.amount <= 0)
-		new /obj/item/weapon/c_tube( src.loc )
-		qdel(src)
-	return
-
-/obj/item/weapon/wrapping_paper/afterattack(var/obj/target as obj, mob/user as mob)
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
-		return
-
-	var/list/forbidden = list(
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/item/smallDelivery,
-		/obj/structure/bigDelivery,
-		/obj/item/weapon/gift,
-		/obj/item/weapon/winter_gift,
-		/obj/item/weapon/evidencebag,
-		)
-
-	if(is_type_in_list(target,forbidden))
-		return
-	if(target.anchored)
-		return
-	if(target in user)
-		return
-
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
-
-	if (istype(target, /obj/item))
-		var/obj/item/O = target
-		var/i = round(O.w_class)
-		var/obj/item/weapon/gift/G = null
-
-		switch(i)
-			if(0 to 2)
-				G = new /obj/item/weapon/gift/small(get_turf(O.loc),i)
-			if(3)
-				G = new /obj/item/weapon/gift(get_turf(O.loc),i)
-			else
-				G = new /obj/item/weapon/gift/large(get_turf(O.loc),i)
-
-		if(!istype(O.loc, /turf))
-			if(user.client)
-				user.client.screen -= O
-
-		G.gift = O
-		O.loc = G
-		G.add_fingerprint(usr)
-		O.add_fingerprint(usr)
-		src.add_fingerprint(usr)
-		src.amount -= 1
-	else
-		user << "<span class='notice'>You can't wrap that up!</span>"
-
-	if (src.amount <= 0)
-		new /obj/item/weapon/c_tube(src.loc)
-		del(src)
-		return
-	return
-
