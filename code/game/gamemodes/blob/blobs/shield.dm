@@ -21,6 +21,9 @@
 /obj/effect/blob/shield/CanAtmosPass(turf/T)
 	return 0
 
+/obj/effect/blob/shield/BlockSuperconductivity()
+	return 1
+
 /obj/effect/blob/shield/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0

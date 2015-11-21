@@ -45,9 +45,7 @@
 	if(!can_buy(price))
 		return
 	B.color = blob_reagent_datum.color
-	var/obj/effect/blob/N = B.change_to(blobType)
-	N.overmind = src
-	N.adjustcolors(blob_reagent_datum.color)
+	var/obj/effect/blob/N = B.change_to(blobType, src)
 	return N
 
 /mob/camera/blob/verb/create_shield_power()
@@ -81,7 +79,7 @@
 	set category = "Blob"
 	set name = "Create Storage Blob (20)"
 	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
-	var/obj/effect/blob/storage/R = createSpecial(20, /obj/effect/blob/storage, 3)
+	createSpecial(20, /obj/effect/blob/storage, 3)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
