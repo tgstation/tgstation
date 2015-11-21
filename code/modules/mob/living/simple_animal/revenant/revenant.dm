@@ -101,16 +101,7 @@
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
-	if(revealed)
-		if(draining)
-			icon_state = "revenant_draining"
-			return
-		if(notransform)
-			icon_state = "revenant_stun"
-			return
-		icon_state = "revenant_revealed"
-		return
-	icon_state = "revenant_idle"
+	icon_state = revealed ? "revenant_[notransform ? "[draining ? "draining" : "stun"]" : "revealed"]" : "revenant_idle"
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -235,11 +226,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
-	
+
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -414,7 +405,7 @@
 		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(inert || !src)
+	if(gc_destroyed || !src || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")

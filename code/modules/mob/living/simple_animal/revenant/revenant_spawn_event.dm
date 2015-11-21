@@ -18,6 +18,7 @@
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		message_admins("Random event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
+		occurrences--
 		return
 	key_of_revenant = null
 	if(!key_of_revenant)
