@@ -333,11 +333,9 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 	//this is a copy proc to continue a fire after its been started.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
-	//if(toxins < (MOLES_PLASMA_VISIBLE-0.1) && !fuel) // God damnit pomf
-	//	return 0
 
 	if(oxygen && (toxins || fuel))
-		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= MOLES_PLASMA_VISIBLE)
 			return 1
 		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
@@ -378,10 +376,9 @@ datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 	*/
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
-	//if(toxins < (MOLES_PLASMA_VISIBLE-0.1) && !fuel) // God damnit pomf
-	//	return 0
+
 	if(oxygen && (toxins || fuel))
-		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= MOLES_PLASMA_VISIBLE)
 			return 1
 		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
