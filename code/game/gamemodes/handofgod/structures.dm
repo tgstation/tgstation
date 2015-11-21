@@ -3,7 +3,7 @@
 	if(global_handofgod_traptypes.len && global_handofgod_structuretypes.len)
 		return
 
-	var/list/types = typesof(/obj/structure/divine) - /obj/structure/divine - /obj/structure/divine/trap
+	var/list/types = subtypesof(/obj/structure/divine) - /obj/structure/divine/trap
 	for(var/T in types)
 		var/obj/structure/divine/D = T
 		if(initial(D.constructable))
@@ -217,7 +217,7 @@
 
 /obj/structure/divine/nexus
 	name = "nexus"
-	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosion shock."
+	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosive shock."
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
@@ -268,6 +268,14 @@
 	maxhealth = 150
 	metal_cost = 20
 	glass_cost = 5
+
+
+/obj/structure/divine/conduit/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
+	if(deity)
+		deity.conduits -= src
+	..()
+	if(deity)
+		deity.conduits += src
 
 
 /* //No good sprites, and not enough items to make it viable yet
@@ -391,7 +399,7 @@
 		user.reagents.add_reagent("hell_water",20)
 	else
 		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
-		user.reagents.add_reagent("doctorsdelight",20)
+		user.reagents.add_reagent("godblood",20)
 	update_icons()
 	spawn(time_between_uses)
 		if(src)
@@ -494,6 +502,11 @@
 /obj/machinery/gun_turret/defensepylon_internal_turret/validate_target(atom/target)
 	. = ..()
 	if(.)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.handcuffed) //dishonourable to kill somebody who might be converted.
+				return 0
+
 		var/badtarget = 0
 		switch(side)
 			if("blue")
@@ -504,8 +517,6 @@
 				badtarget = 1
 		if(badtarget)
 			return 0
-
-
 
 
 /obj/item/projectile/beam/pylon_bolt

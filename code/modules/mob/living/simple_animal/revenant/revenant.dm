@@ -49,7 +49,7 @@
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
-
+	var/image/ghostimage = null //Visible to ghost with darkness off
 
 /mob/living/simple_animal/revenant/Life()
 	ear_damage = 0
@@ -101,11 +101,11 @@
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
-	if(unreveal_time)
+	if(revealed)
 		if(draining)
 			icon_state = "revenant_draining"
 			return
-		if(unstun_time)
+		if(notransform)
 			icon_state = "revenant_stun"
 			return
 		icon_state = "revenant_revealed"
@@ -183,7 +183,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
+				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
 				if(do_after(src, 50, 15, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
@@ -235,6 +235,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
+	
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
+	
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -261,12 +266,15 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed) //Revenants cannot die if they aren't revealed
 		return 0
 	..(1)
+	ghost_darkness_images -= ghostimage
+	updateallghostimages()
 	src << "<span class='revendanger'>NO! No... it's too late, you can feel your essence breaking apart...</span>"
 	notransform = 1
 	revealed = 1

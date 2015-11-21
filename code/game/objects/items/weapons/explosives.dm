@@ -67,20 +67,20 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/c4/afterattack(atom/movable/target, mob/user, flag)
+/obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(target) || istype(target, /obj/item/weapon/storage/))
+	if (ismob(AM) || istype(AM, /obj/item/weapon/storage/))
 		return
-	if(loc == target)
+	if(loc == AM)
 		return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
 			return
-		src.target = target
+		src.target = AM
 		loc = null
 
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
@@ -89,16 +89,21 @@
 		target.overlays += image_overlay
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
 		spawn(timer*10)
-			if(target && !target.gc_destroyed)
-				explode(get_turf(target))
-			else
-				qdel(src)
+			explode()
 
-/obj/item/weapon/c4/proc/explode(turf/location)
-	location.ex_act(2, target)
-	explosion(location,0,0,3)
+/obj/item/weapon/c4/proc/explode()
+	if(qdeleted(src))
+		return
+	var/turf/location
 	if(target)
-		target.overlays -= image_overlay
+		if(!qdeleted(target))
+			location = get_turf(target)
+			target.overlays -= image_overlay
+	else
+		location = get_turf(src)
+	if(location)
+		location.ex_act(2, target)
+		explosion(location,0,0,3)
 	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)

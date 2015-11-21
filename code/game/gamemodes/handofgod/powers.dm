@@ -1,5 +1,5 @@
 
-/mob/camera/god/proc/ability_cost(cost = 0,structures = 0, requires_conduit = 0)
+/mob/camera/god/proc/ability_cost(cost = 0,structures = 0, requires_conduit = 0, can_place_near_enemy_nexus = 0)
 	if(faith < cost)
 		src << "<span class='danger'>You lack the faith!</span>"
 		return 0
@@ -25,19 +25,33 @@
 	if(requires_conduit)
 		//Organised this way as there can be multiple conduits, so it's more likely to be a conduit check.
 		var/valid = 0
-		for(var/obj/structure/divine/conduit/C in range(src,15))
-			if(C.side == side)
+
+		for(var/obj/structure/divine/conduit/C in conduits)
+			if(get_dist(src, C) <= CONDUIT_RANGE)
 				valid++
 				break
 
 		if(!valid)
-			for(var/obj/structure/divine/nexus/N in range(src,15))
-				if(N.side == side)
-					valid++
-					break
+			if(get_dist(src, god_nexus) <= CONDUIT_RANGE)
+				valid++
+
 		if(!valid)
 			src << "<span class='danger'>You must be near your Nexus or a Conduit to do this!</span>"
 			return 0
+
+	if(!can_place_near_enemy_nexus)
+		var/datum/mind/enemy
+		switch(side)
+			if("red")
+				enemy = ticker.mode.blue_deities[1]
+			if("blue")
+				enemy = ticker.mode.red_deities[1]
+
+		if(enemy && is_handofgod_god(enemy.current))
+			var/mob/camera/god/enemy_god = enemy.current
+			if(enemy_god.god_nexus && (get_dist(src,enemy_god.god_nexus) <= CONDUIT_RANGE*2))
+				src << "<span class='danger'>You are too close to the other god's stronghold!</span>"
+				return 0
 
 	return 1
 
@@ -268,7 +282,7 @@
 	if(!ability_cost(20,1,1))
 		return
 
-	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore)
+	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore/hog)
 	if(side == "red")
 		item_types["red banner"] = /obj/item/weapon/banner/red
 		item_types["red bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red

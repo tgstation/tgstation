@@ -7,6 +7,10 @@
 	builtin_sheet = null
 	canSmoothWith = null
 
+/turf/simulated/wall/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult, src)
+	..()
+
 /turf/simulated/wall/cult/break_wall()
 	new /obj/effect/decal/cleanable/blood(src)
 	return (new /obj/structure/cultgirder(src))

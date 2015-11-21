@@ -75,7 +75,7 @@
 	for(var/obj/item/organ/internal/I in src)
 		I.Insert(M, 1)
 
-	if(origin)
+	if(origin && origin.current && (origin.current.stat == DEAD))
 		origin.transfer_to(M)
 		if(!origin.changeling)
 			M.make_changeling()
