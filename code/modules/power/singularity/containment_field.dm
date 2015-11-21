@@ -82,7 +82,7 @@
 	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
-	if(hasShocked < world.time)
+	if(hasShocked > world.time)
 		return 0
 	if(isliving(user))
 		hasShocked = 1
