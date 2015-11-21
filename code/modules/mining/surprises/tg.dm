@@ -138,10 +138,10 @@
 	)
 	fluffitems = list(
 		/obj/structure/table/reinforced=2,
-		/obj/item/weapon/stock_parts/scanning_module/phasic=3,
-		/obj/item/weapon/stock_parts/matter_bin/super=3,
-		/obj/item/weapon/stock_parts/manipulator/pico=3,
-		/obj/item/weapon/stock_parts/capacitor/super=3,
+		/obj/item/weapon/stock_parts/scanning_module/adv/phasic=3,
+		/obj/item/weapon/stock_parts/matter_bin/adv/super=3,
+		/obj/item/weapon/stock_parts/manipulator/nano/pico=3,
+		/obj/item/weapon/stock_parts/capacitor/adv/super=3,
 		/obj/item/device/pda/clear=1
 	)
 
