@@ -82,7 +82,6 @@
 	set name = "Create Storage Blob (20)"
 	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
 	var/obj/effect/blob/storage/R = createSpecial(20, /obj/effect/blob/storage, 3)
-	R.update_max_blob_points(50)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
