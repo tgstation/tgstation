@@ -222,11 +222,11 @@
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/telehub,
-		/obj/item/weapon/stock_parts/scanning_module/phasic,
-		/obj/item/weapon/stock_parts/scanning_module/phasic,
-		/obj/item/weapon/stock_parts/capacitor/super,
-		/obj/item/weapon/stock_parts/capacitor/super,
-		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+		/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+		/obj/item/weapon/stock_parts/capacitor/adv/super,
+		/obj/item/weapon/stock_parts/capacitor/adv/super,
+		/obj/item/weapon/stock_parts/capacitor/adv/super,
 		/obj/item/weapon/stock_parts/subspace/ansible,
 		/obj/item/weapon/stock_parts/subspace/ansible,
 		/obj/item/weapon/stock_parts/subspace/filter,
@@ -413,10 +413,10 @@ obj/machinery/teleport/station/New()
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/telestation,
-		/obj/item/weapon/stock_parts/scanning_module/phasic,
-		/obj/item/weapon/stock_parts/scanning_module/phasic,
-		/obj/item/weapon/stock_parts/capacitor/super,
-		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+		/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+		/obj/item/weapon/stock_parts/capacitor/adv/super,
+		/obj/item/weapon/stock_parts/capacitor/adv/super,
 		/obj/item/weapon/stock_parts/subspace/ansible,
 		/obj/item/weapon/stock_parts/subspace/ansible,
 		/obj/item/weapon/stock_parts/subspace/analyzer,

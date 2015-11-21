@@ -1,0 +1,6 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - bugfix: Tier 3 parts actually contain plastic now
+ - bugfix: Tier 3 parts will work in anything that demands tier 2 parts (such as mechs and tcoms parts)
+ - tweak: Operating tables now take 4 seconds to build

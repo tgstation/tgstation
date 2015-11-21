@@ -109,7 +109,7 @@
 	reliability_base = 71
 	materials = list(MAT_PLASTIC = 300)
 	category = "Stock Parts"
-	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	build_path = /obj/item/weapon/stock_parts/capacitor/adv/super
 
 /datum/design/phasic_sensor
 	//name = "Phasic Sensor Module"
@@ -121,7 +121,7 @@
 	materials = list(MAT_PLASTIC = 300)
 	reliability_base = 72
 	category = "Stock Parts"
-	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	build_path = /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -132,7 +132,7 @@
 	materials = list(MAT_PLASTIC = 300)
 	reliability_base = 73
 	category = "Stock Parts"
-	build_path = /obj/item/weapon/stock_parts/manipulator/pico
+	build_path = /obj/item/weapon/stock_parts/manipulator/nano/pico
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
@@ -143,7 +143,7 @@
 	materials = list(MAT_PLASTIC = 300)
 	reliability_base = 70
 	category = "Stock Parts"
-	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
+	build_path = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -154,7 +154,7 @@
 	materials = list(MAT_PLASTIC = 300)
 	reliability_base = 75
 	category = "Stock Parts"
-	build_path = /obj/item/weapon/stock_parts/matter_bin/super
+	build_path = /obj/item/weapon/stock_parts/matter_bin/adv/super
 
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"

@@ -109,7 +109,7 @@
 
 //Rating 3
 
-/obj/item/weapon/stock_parts/capacitor/super
+/obj/item/weapon/stock_parts/capacitor/adv/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor2_super"
@@ -117,37 +117,37 @@
 	rating = 3
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 
-/obj/item/weapon/stock_parts/scanning_module/phasic
+/obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
 	origin_tech = "magnets=5"
 	rating = 3
-	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
+	starting_materials = list(MAT_PLASTIC = 300)
 
-/obj/item/weapon/stock_parts/manipulator/pico
+/obj/item/weapon/stock_parts/manipulator/nano/pico
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
 	origin_tech = "materials=5;programming=2"
 	rating = 3
-	starting_materials = list(MAT_IRON = 30)
+	starting_materials = list(MAT_PLASTIC = 300)
 
-/obj/item/weapon/stock_parts/micro_laser/ultra
+/obj/item/weapon/stock_parts/micro_laser/high/ultra
 	name = "ultra-high-power micro-laser"
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
-	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 20)
+	starting_materials = list(MAT_PLASTIC = 300)
 
-/obj/item/weapon/stock_parts/matter_bin/super
+/obj/item/weapon/stock_parts/matter_bin/adv/super
 	name = "super matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "super_matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
-	starting_materials = list(MAT_IRON = 80)
+	starting_materials = list(MAT_PLASTIC = 300)
 
 // Subspace stock parts
 

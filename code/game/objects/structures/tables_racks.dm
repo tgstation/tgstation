@@ -540,13 +540,15 @@
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/stock_parts/scanning_module))
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		var/obj/machinery/optable/OPT = new /obj/machinery/optable(src.loc)
-		var/obj/item/weapon/stock_parts/scanning_module/SM = W
-		OPT.rating = SM.rating
-		user.drop_item(W)
-		qdel(W)
-		qdel(src)
-		return
+		if(do_after(user, src, 40))
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			var/obj/machinery/optable/OPT = new /obj/machinery/optable(src.loc)
+			var/obj/item/weapon/stock_parts/scanning_module/SM = W
+			OPT.rating = SM.rating
+			user.drop_item(W)
+			qdel(W)
+			qdel(src)
+			return
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!(WT.welding)/* || (params_list.len && text2num(params_list["icon-y"]) > 8)*/) //8 above the bottom of the icon
