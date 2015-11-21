@@ -72,7 +72,6 @@
 	set name = "Change Mask Form"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/mask/gas/voice/verb/change()  called tick#: [world.time]")
 
 	var/obj/item/clothing/mask/A
 	A = input("Select Form to change it to", "BOOYEA", A) as null|anything in clothing_choices

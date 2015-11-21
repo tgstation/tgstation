@@ -160,7 +160,6 @@
 		return 1
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddBlueprint(var/obj/item/research_blueprint/blueprint, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddBlueprint() called tick#: [world.time]")
 	if(!istype(blueprint) || !user) //sanity, yeah
 		return
 
@@ -173,7 +172,6 @@
 	return 1 //let's add the new design, since we haven't found it
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign(var/datum/design/mechanic_design/design)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign() called tick#: [world.time]")
 	if(istype(design))
 		if(!design.materials.len)
 			return 0

@@ -74,7 +74,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return
 
 /obj/machinery/message_server/proc/GenerateKey()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/GenerateKey() called tick#: [world.time]")
 	//Feel free to move to Helpers.
 	var/newKey
 	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
@@ -92,11 +91,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return
 
 /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_pda_message() called tick#: [world.time]")
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 
 /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_rc_message() called tick#: [world.time]")
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user as mob)
@@ -130,7 +127,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	value = param_value
 
 /datum/feedback_variable/proc/inc(var/num = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/inc() called tick#: [world.time]")
 	if(isnum(value))
 		value += num
 	else
@@ -141,7 +137,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 			value = num
 
 /datum/feedback_variable/proc/dec(var/num = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/dec() called tick#: [world.time]")
 	if(isnum(value))
 		value -= num
 	else
@@ -152,25 +147,20 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 			value = -num
 
 /datum/feedback_variable/proc/set_value(var/num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/set_value() called tick#: [world.time]")
 	if(isnum(num))
 		value = num
 
 /datum/feedback_variable/proc/get_value()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/get_value() called tick#: [world.time]")
 	return value
 
 /datum/feedback_variable/proc/get_variable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/get_variable() called tick#: [world.time]")
 	return variable
 
 /datum/feedback_variable/proc/set_details(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/set_details() called tick#: [world.time]")
 	if(istext(text))
 		details = text
 
 /datum/feedback_variable/proc/add_details(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/add_details() called tick#: [world.time]")
 	if(istext(text))
 		if(!details)
 			details = text
@@ -178,11 +168,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 			details += " [text]"
 
 /datum/feedback_variable/proc/get_details()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/get_details() called tick#: [world.time]")
 	return details
 
 /datum/feedback_variable/proc/get_parsed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feedback_variable/proc/get_parsed() called tick#: [world.time]")
 	return list(variable,value,details)
 
 var/obj/machinery/blackbox_recorder/blackbox
@@ -245,7 +233,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 	..()
 
 /obj/machinery/blackbox_recorder/proc/find_feedback_datum(var/variable)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/find_feedback_datum() called tick#: [world.time]")
 	for(var/datum/feedback_variable/FV in feedback)
 		if(FV.get_variable() == variable)
 			return FV
@@ -254,12 +241,10 @@ var/obj/machinery/blackbox_recorder/blackbox
 	return FV
 
 /obj/machinery/blackbox_recorder/proc/get_round_feedback()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/get_round_feedback() called tick#: [world.time]")
 	return feedback
 
 /obj/machinery/blackbox_recorder/proc/round_end_data_gathering()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/round_end_data_gathering() called tick#: [world.time]")
 
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
@@ -293,7 +278,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 //This proc is only to be called at round end.
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/save_all_data_to_sql() called tick#: [world.time]")
 	if(!feedback) return
 
 	//#warning Blackbox recording disabled.  Please remove warning once this has been determined to be the problem.
@@ -342,14 +326,12 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 // Sanitize inputs to avoid SQL injection attacks
 proc/sql_sanitize_text(var/text)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sql_sanitize_text() called tick#: [world.time]")
 	text = replacetext(text, "'", "''")
 	text = replacetext(text, ";", "")
 	text = replacetext(text, "&", "")
 	return text
 
 proc/feedback_set(var/variable,var/value)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/feedback_set() called tick#: [world.time]")
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -361,7 +343,6 @@ proc/feedback_set(var/variable,var/value)
 	FV.set_value(value)
 
 proc/feedback_inc(var/variable,var/value)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/feedback_inc() called tick#: [world.time]")
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -373,7 +354,6 @@ proc/feedback_inc(var/variable,var/value)
 	FV.inc(value)
 
 proc/feedback_dec(var/variable,var/value)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/feedback_dec() called tick#: [world.time]")
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -385,7 +365,6 @@ proc/feedback_dec(var/variable,var/value)
 	FV.dec(value)
 
 proc/feedback_set_details(var/variable,var/details)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/feedback_set_details() called tick#: [world.time]")
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -398,7 +377,6 @@ proc/feedback_set_details(var/variable,var/details)
 	FV.set_details(details)
 
 proc/feedback_add_details(var/variable,var/details)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/feedback_add_details() called tick#: [world.time]")
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)

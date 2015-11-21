@@ -1,5 +1,4 @@
 /obj/machinery/door/proc/checkForMultipleDoors()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/checkForMultipleDoors() called tick#: [world.time]")
 	if(!src.loc)
 		return 0
 	for(var/obj/machinery/door/D in src.loc)
@@ -8,7 +7,6 @@
 	return 1
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/wall/proc/checkForMultipleDoors() called tick#: [world.time]")
 	if(!src.loc)
 		return 0
 	for(var/obj/machinery/door/D in locate(src.x,src.y,src.z))

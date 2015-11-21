@@ -2,7 +2,6 @@
 var/list/word_to_uristrune_table = null
 
 /proc/word_to_uristrune_bit(word)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/word_to_uristrune_bit() called tick#: [world.time]")
 	if(word_to_uristrune_table == null)
 		word_to_uristrune_table = list()
 
@@ -22,7 +21,6 @@ var/list/word_to_uristrune_table = null
 
 
 /proc/get_uristrune_cult(word1, word2, word3)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_uristrune_cult() called tick#: [world.time]")
 	var/animated
 
 	if((word1 == cultwords["travel"] && word2 == cultwords["self"])						\
@@ -60,7 +58,6 @@ var/list/word_to_uristrune_table = null
 	return get_uristrune(bits, animated)
 
 /proc/get_uristrune_name(word1, word2, word3)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_uristrune_name() called tick#: [world.time]")
 	if((word1 == cultwords["travel"] && word2 == cultwords["self"]))
 		return "Travel Self"
 	else if((word1 == cultwords["join"] && word2 == cultwords["blood"] && word3 == cultwords["self"]))
@@ -115,7 +112,6 @@ var/list/word_to_uristrune_table = null
 var/list/uristrune_cache = list()
 
 /proc/get_uristrune(symbol_bits, animated = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_uristrune() called tick#: [world.time]")
 	var/lookup = "[symbol_bits]-[animated]"
 
 	if(lookup in uristrune_cache)

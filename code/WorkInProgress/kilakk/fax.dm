@@ -203,7 +203,6 @@ var/list/alldepartments = list("Central Command")
 
 /proc/Centcomm_fax(var/obj/item/weapon/paper/sent, var/sentname, var/mob/Sender)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Centcomm_fax() called tick#: [world.time]")
 
 	var/msg = "<span class='notice'><b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a></span>"
 	admins << msg
@@ -212,7 +211,6 @@ var/list/alldepartments = list("Central Command")
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt)
 
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SendFax() called tick#: [world.time]")
 
 
 	for(var/obj/machinery/faxmachine/F in allfaxes)

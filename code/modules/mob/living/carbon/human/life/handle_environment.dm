@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_environment() called tick#: [world.time]")
 	if(!environment || (flags & INVULNERABLE))
 		return
 	var/loc_temp = T0C

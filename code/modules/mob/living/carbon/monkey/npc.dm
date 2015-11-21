@@ -9,7 +9,6 @@ mob/living/carbon/monkey/var
 	fleeing_duration = 0
 
 mob/living/carbon/monkey/proc/npc_act()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/monkey/proc/npc_act() called tick#: [world.time]")
 	if(!client && !stat)
 		if(npc_fleeing && canmove)
 			var/prevloc = loc
@@ -91,7 +90,6 @@ mob/living/carbon/monkey/react_to_attack(mob/M)
 
 
 /*/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/slash = 0, var/used_weapon = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//mob/living/proc/apply_damage() called tick#: [world.time]")
 	if(!client && !stat)
 		if(damage > 10)
 			if(prob(40) || health == 100)

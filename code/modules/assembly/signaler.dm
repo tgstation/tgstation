@@ -117,7 +117,6 @@
 		attack_self(usr)
 
 /obj/item/device/assembly/signaler/proc/signal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/signaler/proc/signal() called tick#: [world.time]")
 	if(!radio_connection) return
 
 	var/datum/signal/signal = getFromPool(/datum/signal)
@@ -165,7 +164,6 @@
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/signaler/proc/set_frequency() called tick#: [world.time]")
 	if(!radio_controller)
 		spawn(20)
 			if(!radio_controller)
@@ -202,7 +200,6 @@
 	set src in usr
 	set name = "Threaten to push the button!"
 	set desc = "BOOOOM!"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/assembly/signaler/verb/deadman_it()  called tick#: [world.time]")
 
 	if(usr)
 		var/mob/user = usr

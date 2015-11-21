@@ -1,5 +1,4 @@
 mob/living/carbon/proc/dream()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/proc/dream() called tick#: [world.time]")
 	dreaming = 1
 	var/list/dreams = list(
 		"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
@@ -33,7 +32,6 @@ mob/living/carbon/proc/dream()
 		return 1
 
 mob/living/carbon/proc/handle_dreams()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/proc/handle_dreams() called tick#: [world.time]")
 	if(prob(5) && !dreaming) dream()
 
 mob/living/carbon/var/dreaming = 0

@@ -47,7 +47,6 @@
 	return
 
 /obj/effect/landmark/zcontroller/proc/add(var/list/L, var/I, var/transfer)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/landmark/zcontroller/proc/add() called tick#: [world.time]")
 	while (L.len)
 		var/turf/T = pick(L)
 
@@ -114,7 +113,6 @@ atom/movable/Move() //Hackish
 			controller.add(temp,3,1)
 
 /obj/effect/landmark/zcontroller/proc/calc(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/landmark/zcontroller/proc/calc() called tick#: [world.time]")
 	var/list/slowholder = list()
 	var/list/normalholder = list()
 	var/list/fastholder = list()

@@ -1,6 +1,5 @@
 /var/create_mob_html = null
 /datum/admins/proc/create_mob(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/create_mob() called tick#: [world.time]")
 	if (!create_mob_html)
 		var/mobjs = null
 		mobjs = list2text(typesof(/mob), ";")

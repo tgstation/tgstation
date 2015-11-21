@@ -14,7 +14,6 @@ datum/directive/ipc_virus
 	var/list/ids_to_terminate = list()
 
 	proc/get_ipcs()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_ipcs() called tick#: [world.time]")
 		var/list/machines[0]
 		for(var/mob/M in player_list)
 			if (M.is_ready() && M.get_species() == "Machine")
@@ -22,7 +21,6 @@ datum/directive/ipc_virus
 		return machines
 
 	proc/get_roboticists()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_roboticists() called tick#: [world.time]")
 		var/list/roboticists[0]
 		for(var/mob/M in player_list)
 			if (M.is_ready() && roboticist_roles.Find(M.mind.assigned_role))
@@ -65,7 +63,6 @@ datum/directive/ipc_virus/get_remaining_orders()
 	return text
 
 /hook/debrain/proc/debrain_directive(var/obj/item/organ/brain/B)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/debrain/proc/debrain_directive() called tick#: [world.time]")
 	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
 	if (!D) return 1
 
@@ -75,7 +72,6 @@ datum/directive/ipc_virus/get_remaining_orders()
 	return 1
 
 /hook/borgify/proc/borgify_directive(mob/living/silicon/robot/cyborg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/borgify/proc/borgify_directive() called tick#: [world.time]")
 	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
 	if (!D) return 1
 
@@ -91,7 +87,6 @@ datum/directive/ipc_virus/get_remaining_orders()
 	return 1
 
 /hook/terminate_employee/proc/ipc_termination(obj/item/weapon/card/id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/terminate_employee/proc/ipc_termination() called tick#: [world.time]")
 	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
 	if (!D) return 1
 

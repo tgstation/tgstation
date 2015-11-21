@@ -69,7 +69,6 @@
 	ui_interact(user)
 
 /obj/machinery/botany/proc/finished_task()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/botany/proc/finished_task() called tick#: [world.time]")
 	active = 0
 	if(failed_task)
 		failed_task = 0

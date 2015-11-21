@@ -46,7 +46,6 @@
 			effectrange = rand(20, 200)
 
 /datum/artifact_effect/proc/ToggleActivate(var/reveal_toggle = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/ToggleActivate() called tick#: [world.time]")
 	//so that other stuff happens first
 	spawn(0)
 		if(activated)
@@ -68,16 +67,11 @@
 			toplevelholder.visible_message("<span class='warning'>\icon[toplevelholder] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/DoEffectTouch() called tick#: [world.time]")
 /datum/artifact_effect/proc/DoEffectAura(var/atom/holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/DoEffectAura() called tick#: [world.time]")
 /datum/artifact_effect/proc/DoEffectPulse(var/atom/holder)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/DoEffectPulse() called tick#: [world.time]")
 /datum/artifact_effect/proc/UpdateMove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/UpdateMove() called tick#: [world.time]")
 
 /datum/artifact_effect/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/process() called tick#: [world.time]")
 	if(chargelevel < chargelevelmax)
 		chargelevel++
 
@@ -90,7 +84,6 @@
 
 //returns 0..1, with 1 being no protection and 0 being fully protected
 proc/GetAnomalySusceptibility(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/GetAnomalySusceptibility() called tick#: [world.time]")
 	if(!H || !istype(H))
 		return 1
 

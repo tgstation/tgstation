@@ -58,7 +58,6 @@
 	RefreshParts()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj, var/mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/smartfridge/proc/accept_check() called tick#: [world.time]")
 	for(var/ac_type in accepted_types)
 		if(istype(O, ac_type))
 			return 1

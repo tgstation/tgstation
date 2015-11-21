@@ -68,7 +68,6 @@
 	..()
 
 /proc/delete_profile(var/type, code = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/delete_profile() called tick#: [world.time]")
 	if(!ticker || ticker.current_state < 3) return
 	if(code == 0)
 		if (!("[type]" in del_profiling))
@@ -247,7 +246,6 @@
 	locked_to.unlock_atom(src)
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/recycle() called tick#: [world.time]")
 	if(materials)
 		for(var/matid in materials.storage)
 			var/datum/material/material = materials.getMaterial(matid)
@@ -274,7 +272,6 @@
 	return
 
 /atom/movable/proc/forceMove(atom/destination,var/no_tp=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/forceMove() called tick#: [world.time]")
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -298,7 +295,6 @@
 	return 0
 
 /atom/movable/proc/forceEnter(atom/destination)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/forceEnter() called tick#: [world.time]")
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -315,7 +311,6 @@
 	return 0
 
 /atom/movable/proc/hit_check(var/speed, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/hit_check() called tick#: [world.time]")
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
@@ -330,7 +325,6 @@
 					src.throwing = 0
 
 /atom/movable/proc/throw_at(atom/target, range, speed, override = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/throw_at() called tick#: [world.time]")
 	if(!target || !src)	return 0
 	if(override)
 		sound_override = 1
@@ -483,23 +477,19 @@
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/canSingulothPull() called tick#: [world.time]")
 	return singuloCanEat()
 
 /atom/movable/proc/say_understands(var/mob/other)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/say_understands() called tick#: [world.time]")
 	return 1
 
 ////////////
 /// HEAR ///
 ////////////
 /atom/movable/proc/addHear()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/addHear() called tick#: [world.time]")
 	flags |= HEAR
 	getFromPool(/mob/virtualhearer, src)
 
 /atom/movable/proc/removeHear()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/removeHear() called tick#: [world.time]")
 	flags &= ~HEAR
 	for(var/mob/virtualhearer/VH in virtualhearers)
 		if(VH.attached == src)

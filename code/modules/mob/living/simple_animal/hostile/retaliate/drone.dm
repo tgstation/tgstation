@@ -155,7 +155,6 @@
 			if(!disabled && exploding)
 				explosion(get_turf(src), 0, 1, 4, 7)
 				//proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/explosion() called tick#: [world.time]")
 	return ..()
 
 //ion rifle!

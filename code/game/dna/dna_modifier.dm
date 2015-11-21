@@ -19,7 +19,6 @@
 	var/list/languages = list()
 
 /datum/dna2/record/proc/GetData()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna2/record/proc/GetData() called tick#: [world.time]")
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
 	if(dna)
 		ser["ue"] = (types & DNA2_BUF_UE) == DNA2_BUF_UE
@@ -89,7 +88,6 @@
 	set src in oview(1)
 	set category = "Object"
 	set name = "Eject DNA Scanner"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/dna_scannernew/verb/eject()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || istype(usr, /mob/living/simple_animal) || (usr.status_flags & FAKEDEATH))
 		return
@@ -112,7 +110,6 @@
 	. = ..()
 
 /obj/machinery/dna_scannernew/proc/eject_occupant(var/exit = loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/dna_scannernew/proc/eject_occupant() called tick#: [world.time]")
 	src.go_out(exit)
 	for(var/obj/O in src)
 		if(!istype(O,/obj/item/weapon/circuitboard/clonescanner) && \
@@ -128,7 +125,6 @@
 	set src in oview(1)
 	set category = "Object"
 	set name = "Enter DNA Scanner"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/dna_scannernew/verb/move_inside()  called tick#: [world.time]")
 
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
@@ -255,7 +251,6 @@
 	return ..()
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/dna_scannernew/proc/put_in() called tick#: [world.time]")
 	M.loc = src
 	M.reset_view()
 	src.occupant = M
@@ -280,7 +275,6 @@
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out(var/exit = src.loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/dna_scannernew/proc/go_out() called tick#: [world.time]")
 	if ((!(occupant) || locked))
 		return 0
 	occupant.forceMove(exit)
@@ -409,21 +403,18 @@
 	return
 
 /obj/machinery/computer/scan_consolenew/proc/findScanner()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/scan_consolenew/proc/findScanner() called tick#: [world.time]")
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		var/foundmachine = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 		if(foundmachine)
 			return foundmachine
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/list/buffer)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks() called tick#: [world.time]")
 	var/list/arr = list()
 	for(var/i = 1, i <= buffer.len, i++)
 		arr += "[i]:[EncodeDNABlock(buffer[i])]"
 	return arr
 
 /obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/datum/dna2/record/buffer)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock() called tick#: [world.time]")
 	var/pos = findtext(blk,":")
 	if(!pos) return 0
 	var/id = text2num(copytext(blk,1,pos))

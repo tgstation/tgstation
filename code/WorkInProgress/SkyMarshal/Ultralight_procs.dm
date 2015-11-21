@@ -8,7 +8,6 @@ var/list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4
 							7, 7)
 
 atom/proc/ul_FalloffAmount(var/atom/ref)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/ul_FalloffAmount() called tick#: [world.time]")
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/delta_x = (ref.x - src.x)
 		var/delta_y = (ref.y - src.y)

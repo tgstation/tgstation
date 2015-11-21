@@ -32,7 +32,6 @@ world/New()
 
 // add a new news datums
 proc/make_report(body, author, okey, cid)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/make_report() called tick#: [world.time]")
 	var/savefile/Reports = new("data/reports.sav")
 	var/list/reports
 	var/lastID
@@ -59,7 +58,6 @@ proc/make_report(body, author, okey, cid)
 
 // load the reports from disk
 proc/load_reports()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/load_reports() called tick#: [world.time]")
 	var/savefile/Reports = new("data/reports.sav")
 	var/list/reports
 
@@ -71,7 +69,6 @@ proc/load_reports()
 
 // check if there are any unhandled reports
 client/proc/unhandled_reports()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/unhandled_reports() called tick#: [world.time]")
 	if(!src.holder) return 0
 	var/list/reports = load_reports()
 
@@ -84,7 +81,6 @@ client/proc/unhandled_reports()
 
 // checks if the player has an unhandled report against him
 client/proc/is_reported()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/is_reported() called tick#: [world.time]")
 	var/list/reports = load_reports()
 
 	for(var/datum/admin_report/N in reports) if(!N.done)
@@ -95,7 +91,6 @@ client/proc/is_reported()
 
 // display only the reports that haven't been handled
 client/proc/display_admin_reports()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/display_admin_reports() called tick#: [world.time]")
 	set category = "Admin"
 	set name = "Display Admin Reports"
 	if(!src.holder) return
@@ -124,7 +119,6 @@ client/proc/display_admin_reports()
 
 
 client/proc/Report(mob/M as mob in mob_list)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/Report() called tick#: [world.time]")
 	set category = "Admin"
 	if(!src.holder)
 		return
@@ -143,7 +137,6 @@ client/proc/Report(mob/M as mob in mob_list)
 		display_admin_reports()
 
 client/proc/mark_report_done(ID as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/mark_report_done() called tick#: [world.time]")
 	if(!src.holder || src.holder.level < 0)
 		return
 
@@ -164,7 +157,6 @@ client/proc/mark_report_done(ID as num)
 
 
 client/proc/edit_report(ID as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/edit_report() called tick#: [world.time]")
 	if(!src.holder || src.holder.level < 0)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return

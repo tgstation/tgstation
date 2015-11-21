@@ -40,7 +40,6 @@
 	return 1
 
 /datum/game_mode/epidemic/proc/cruiser_seconds()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/epidemic/proc/cruiser_seconds() called tick#: [world.time]")
 	return (cruiser_arrival - world.time) / 10
 
 ////////////////////// INTERCEPT ////////////////////////
@@ -78,7 +77,6 @@
 		M << "<span class='danger'></span>" + extra_law
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/epidemic/proc/announce_to_kill_crew() called tick#: [world.time]")
 	var/intercepttext = {"<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>
 		<FONT size = 2;color='red'><B>PATHOGEN [virus_name] IS STILL PRESENT ON [station_name()]. IN COMPLIANCE WITH NANOTRASEN LAWS FOR INTERSTELLAR SAFETY, EMERGENCY SAFETY MEASURES HAVE BEEN AUTHORIZED. ALL INFECTED CREW MEMBERS ON [station_name()] ARE TO BE NEUTRALIZED AND DISPOSED OF IN A MANNER THAT WILL DESTROY ALL TRACES OF THE PATHOGEN. FAILURE TO COMPLY WILL RESULT IN IMMEDIATE DESTRUCTION OF [station_name].</B></FONT><BR>
 		<B>CRUISER WILL ARRIVE IN [round(cruiser_seconds()/60)] MINUTES</B><BR>"}
@@ -193,7 +191,6 @@
 ///Handle crew failure(station explodes)///
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/epidemic/proc/crew_lose() called tick#: [world.time]")
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in mob_list)
 		if(M.client)

@@ -104,7 +104,6 @@
 // see code\\modules\\\paperwork\\\paper.dm line 62
 
 /obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user as mob,obj/paper as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pen/robopen/proc/RenamePaper() called tick#: [world.time]")
 	if ( !user || !paper )
 		return
 	var/n_name = input(user, "What would you like to label the paper?", "Paper Labelling", null)  as text
@@ -130,7 +129,6 @@
 	set category = "Object"
 	set src in range(0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/borg/combat/shield/verb/set_shield_level()  called tick#: [world.time]")
 	var/N = input("How much damage should the shield absorb?") in list("5","10","25","50","75","100")
 	if (N)
 		shield_level = text2num(N)/100

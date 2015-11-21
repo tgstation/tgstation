@@ -277,7 +277,6 @@
 	return
 
 /obj/item/weapon/circuitboard/proc/solder_improve(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/circuitboard/proc/solder_improve() called tick#: [world.time]")
 	user << "<span class='warning'>You fiddle with a few random fuses but can't find a routing that doesn't short the board.</span>"
 	return
 

@@ -198,7 +198,6 @@
 	browserdatum.open()
 
 /obj/machinery/computer/telescience/proc/sparks()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telescience/proc/sparks() called tick#: [world.time]")
 	if(telepad)
 		var/L = get_turf(E)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -208,7 +207,6 @@
 		return
 
 /obj/machinery/computer/telescience/proc/telefail()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telescience/proc/telefail() called tick#: [world.time]")
 	if(prob(95))
 		sparks()
 		for(var/mob/O in hearers(src, null))
@@ -296,7 +294,6 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 										/obj/item/device/onetankbomb,
 										/obj/machinery/portable_atmospherics/canister)
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telescience/proc/doteleport() called tick#: [world.time]")
 	var/trueX = x_co + x_off - x_player_off + WORLD_X_OFFSET[z_co]
 	var/trueY = y_co + y_off - y_player_off + WORLD_Y_OFFSET[z_co]
 	trueX = Clamp(trueX, 1, world.maxx)
@@ -337,7 +334,6 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 	return
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/telescience/proc/teleport() called tick#: [world.time]")
 	if(x_co == null || y_co == null || z_co == null)
 		user << "<span class='caution'>Error: coordinates not set.</span>"
 		telefail()

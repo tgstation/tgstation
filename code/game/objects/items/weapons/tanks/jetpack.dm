@@ -16,7 +16,6 @@
 /obj/item/weapon/tank/jetpack/verb/toggle_rockets()
 	set name = "Toggle Jetpack Stabilization"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/tank/jetpack/verb/toggle_rockets()  called tick#: [world.time]")
 	src.stabilization_on = !( src.stabilization_on )
 	usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
 	return
@@ -25,7 +24,6 @@
 /obj/item/weapon/tank/jetpack/verb/toggle()
 	set name = "Toggle Jetpack"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/tank/jetpack/verb/toggle()  called tick#: [world.time]")
 	on = !on
 	if(on)
 		icon_state = "[icon_state]-on"
@@ -39,7 +37,6 @@
 
 
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/jetpack/proc/allow_thrust() called tick#: [world.time]")
 	if(!(src.on))
 		return 0
 	if((num < 0.005 || src.air_contents.total_moles() < num))

@@ -4,7 +4,6 @@
 
 // Pads 0s to t until length == u
 /proc/add_zero2(t, u)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/add_zero2() called tick#: [world.time]")
 	var/temp1
 	while (length(t) < u)
 		t = "0[t]"
@@ -16,7 +15,6 @@
 // DNA Gene activation boundaries, see dna2.dm.
 // Returns a list object with 4 numbers.
 /proc/GetDNABounds(var/block)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/GetDNABounds() called tick#: [world.time]")
 	var/list/BOUNDS=dna_activity_bounds[block]
 	if(!istype(BOUNDS))
 		return DNA_DEFAULT_BOUNDS
@@ -24,7 +22,6 @@
 
 // Give Random Bad Mutation to M
 /proc/randmutb(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/randmutb() called tick#: [world.time]")
 	if(!M) return
 	M.dna.check_integrity()
 	var/block = pick(bad_blocks)
@@ -32,7 +29,6 @@
 
 // Give Random Good Mutation to M
 /proc/randmutg(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/randmutg() called tick#: [world.time]")
 	if(!M) return
 	M.dna.check_integrity()
 	var/block = pick(good_blocks)
@@ -40,14 +36,12 @@
 
 // Random Appearance Mutation
 /proc/randmuti(var/mob/living/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/randmuti() called tick#: [world.time]")
 	if(!M) return
 	M.dna.check_integrity()
 	M.dna.SetUIValue(rand(1,DNA_UI_LENGTH),rand(1,4095))
 
 // Scramble UI or SE.
 /proc/scramble(var/UI, var/mob/M, var/prob)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/scramble() called tick#: [world.time]")
 	if(!M)	return
 	M.dna.check_integrity()
 	if(UI)
@@ -67,7 +61,6 @@
 
 // I haven't yet figured out what the fuck this is supposed to do.
 /proc/miniscramble(input,rs,rd)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/miniscramble() called tick#: [world.time]")
 	var/output
 	output = null
 	if (input == "C" || input == "D" || input == "E" || input == "F")
@@ -87,7 +80,6 @@
 // rs: RAD STRENGTH
 // rd: DURATION
 /proc/miniscrambletarget(input,rs,rd)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/miniscrambletarget() called tick#: [world.time]")
 	var/output = null
 	switch(input)
 		if("0")
@@ -133,7 +125,6 @@
 
 // Simpler. Don't specify UI in order for the mob to use its own.
 /mob/proc/UpdateAppearance(var/list/UI=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/UpdateAppearance() called tick#: [world.time]")
 	if(istype(src, /mob/living/carbon/human))
 		if(UI!=null)
 			src.dna.UI=UI
@@ -178,12 +169,10 @@
 
 // Used below, simple injection modifier.
 /proc/probinj(var/pr, var/inj)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/probinj() called tick#: [world.time]")
 	return prob(pr+inj*pr)
 
 
 /proc/query_genes(var/notflags = 0, var/flags = 0, var/genetype = -1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/query_genes() called tick#: [world.time]")
 	. = list()
 	for(var/gene_type in dna_genes)
 		var/datum/dna/gene/gene = dna_genes[gene_type]

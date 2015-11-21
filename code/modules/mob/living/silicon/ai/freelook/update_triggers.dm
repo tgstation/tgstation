@@ -8,7 +8,6 @@
 	var/image/obscured
 
 /turf/proc/visibilityChanged()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/visibilityChanged() called tick#: [world.time]")
 	if(ticker)
 		cameranet.updateVisibility(src)
 
@@ -51,7 +50,6 @@
 
 // Simply updates the visibility of the area when it opens/closes/destroyed.
 /obj/machinery/door/proc/update_freelok_sight()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/update_freelok_sight() called tick#: [world.time]")
 	// Glass door glass = 1
 	// don't check then?
 	if(!glass && cameranet)

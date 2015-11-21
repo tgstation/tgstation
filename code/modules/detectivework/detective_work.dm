@@ -3,7 +3,6 @@
 atom/var/list/suit_fibers
 
 atom/proc/add_fibers(mob/living/carbon/human/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/add_fibers() called tick#: [world.time]")
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
@@ -516,7 +515,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 
 
 /obj/machinery/computer/forensic_scanning/proc/add_data_scanner(var/obj/item/device/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data_scanner() called tick#: [world.time]")
 	if(istype(W, /obj/item/device/detective_scanner))
 		var/obj/item/device/detective_scanner/D = W
 		if(D.stored)
@@ -533,7 +531,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/proc/add_data(var/atom/scanned_atom)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data() called tick#: [world.time]")
 	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
 	scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
@@ -543,7 +540,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 *****DO NOT DIRECTLY CALL ME*****
 ********************************/
 /obj/machinery/computer/forensic_scanning/proc/add_data_master(var/atom_reference, var/list/atom_fingerprints, var/list/atom_suit_fibers, var/list/atom_blood_DNA, var/atom_name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data_master() called tick#: [world.time]")
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
 
@@ -644,7 +640,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 ********************************/
 
 /obj/machinery/computer/forensic_scanning/proc/update_fingerprints(var/ref_print, var/new_print)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_fingerprints() called tick#: [world.time]")
 	var/list/master = files[ref_print]
 	if(master)
 		master[1] = stringmerge(master[1],new_print)
@@ -653,7 +648,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/proc/process_card()	//Same as above, but for fingerprint cards
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_card() called tick#: [world.time]")
 	if(card.fingerprints && !(card.amount > 1) && islist(card.fingerprints) && files && files.len)
 		usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
 		var/found = 0
@@ -676,13 +670,11 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/proc/delete_record(var/atom_ref)	//Deletes an entry in the misc database at the given location
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/delete_record() called tick#: [world.time]")
 	if(misc && misc.len)
 		misc.Remove(atom_ref)
 	return
 
 /obj/machinery/computer/forensic_scanning/proc/delete_dossier(var/print)	//Deletes a Dossier at a given location.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/delete_dossier() called tick#: [world.time]")
 	if(files && files.len)
 		files.Remove(print)
 	return

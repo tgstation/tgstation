@@ -13,7 +13,6 @@
 	set name = "Toggle Magboots"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/shoes/magboots/verb/toggle()  called tick#: [world.time]")
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(src.magpulse)

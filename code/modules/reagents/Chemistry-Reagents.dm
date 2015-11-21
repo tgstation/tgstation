@@ -27,7 +27,6 @@
 	var/alpha = 255
 
 /datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
- //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/reaction_mob() called tick#: [world.time]")
  //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))	return 0
 	var/datum/reagent/self = src
@@ -61,19 +60,16 @@
 	return 1
 
 /datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/reaction_obj() called tick#: [world.time]")
 	src = null						//if it can hold reagents. nope!
 	//if(O.reagents)
 	//	O.reagents.add_reagent(id,volume/3)
 	return
 
 /datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/reaction_turf() called tick#: [world.time]")
 	src = null
 	return
 
 /datum/reagent/proc/on_mob_life(var/mob/living/M as mob, var/alien)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_mob_life() called tick#: [world.time]")
 	if(!istype(M, /mob/living))
 		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 	if( (overdose > 0) && (volume >= overdose))//Overdosing, wooo
@@ -83,21 +79,17 @@
 	return
 
 /datum/reagent/proc/on_move(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_move() called tick#: [world.time]")
 	return
 
 // Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(var/data)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_new() called tick#: [world.time]")
 	return
 
 // Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(var/data)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_merge() called tick#: [world.time]")
 	return
 
 /datum/reagent/proc/on_update(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_update() called tick#: [world.time]")
 	return
 
 /datum/reagent/proc/on_removal(var/data)
@@ -2746,7 +2738,6 @@
 	return
 
 /datum/reagent/creatine/proc/dehulk(var/mob/living/carbon/human/H, damage = 200, override_remove = 0, gib = 1, )
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/creatine/proc/dehulk() called tick#: [world.time]")
 	if(has_been_hulk && !has_ripped_and_torn)
 		H << "<span class='warning'>You feel like your muscles are ripping apart!</span>"
 		has_ripped_and_torn=1

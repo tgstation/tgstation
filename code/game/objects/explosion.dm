@@ -1,7 +1,6 @@
 //TODO: Flash range does nothing currently
 
 /proc/trange(var/Dist = 0, var/turf/Center = null)//alternative to range (ONLY processes turfs and thus less intensive)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/trange() called tick#: [world.time]")
 	if (isnull(Center))
 		return
 
@@ -27,7 +26,6 @@
  * @param verbose            Explosion listeners will treat as an important explosion worth reporting on radio
  */
 /proc/explosion(turf/epicenter, const/devastation_range, const/heavy_impact_range, const/light_impact_range, const/flash_range, adminlog = 1, ignored = 0, verbose = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/explosion() called tick#: [world.time]")
 	src = null	//so we don't abort once src is deleted
 
 	spawn()
@@ -155,6 +153,5 @@
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/secondaryexplosion() called tick#: [world.time]")
 	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)

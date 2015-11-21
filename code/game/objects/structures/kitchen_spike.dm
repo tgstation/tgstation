@@ -36,7 +36,6 @@
 		return handleGrab(W,user)
 
 /obj/structure/kitchenspike/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/kitchenspike/proc/handleGrab() called tick#: [world.time]")
 	if(!istype(G))
 		return
 

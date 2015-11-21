@@ -238,7 +238,6 @@ obj/structure/windoor_assembly/Destroy()
 
 //I'm actually surprised this works, but boy am I pleased that it does
 /obj/structure/windoor_assembly/proc/Create()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/windoor_assembly/proc/Create() called tick#: [world.time]")
 	if(secure && plasma)
 		return new /obj/machinery/door/window/plasma/secure(src.loc)
 	else if(secure && !plasma)
@@ -253,7 +252,6 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Rotate Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/windoor_assembly/verb/revrotate()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
@@ -275,7 +273,6 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/windoor_assembly/verb/flip()  called tick#: [world.time]")
 
 	if(src.facing == "l")
 		usr << "The windoor will now slide to the right."
@@ -288,7 +285,6 @@ obj/structure/windoor_assembly/Destroy()
 	return
 
 /obj/structure/windoor_assembly/proc/update_nearby_tiles()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/windoor_assembly/proc/update_nearby_tiles() called tick#: [world.time]")
 	if (isnull(air_master))
 		return 0
 

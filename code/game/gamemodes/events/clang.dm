@@ -42,7 +42,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			src.loc = clong.loc
 
 /proc/immovablerod()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/immovablerod() called tick#: [world.time]")
 	var/startx = 0
 	var/starty = 0
 	var/endy = 0

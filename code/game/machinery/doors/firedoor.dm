@@ -4,15 +4,12 @@
 var/global/list/alert_overlays_global = list()
 
 /proc/convert_k2c(var/temp)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert_k2c() called tick#: [world.time]")
 	return ((temp - T0C)) // * 1.8) + 32
 
 /proc/convert_c2k(var/temp)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert_c2k() called tick#: [world.time]")
 	return ((temp + T0C)) // * 1.8) + 32
 
 /proc/getCardinalAirInfo(var/atom/source, var/turf/loc, var/list/stats=list("temperature"))
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getCardinalAirInfo() called tick#: [world.time]")
 	var/list/temps = new/list(4)
 	for(var/dir in cardinal)
 		var/direction
@@ -329,7 +326,6 @@ var/global/list/alert_overlays_global = list()
 		spawn(50)
 			close()
 /obj/machinery/door/firedoor/proc/force_open(mob/user, var/obj/C) //used in mecha/equipment/tools/tools.dm
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/firedoor/proc/force_open() called tick#: [world.time]")
 	var/area/A = get_area_master(src)
 	ASSERT(istype(A)) // This worries me.
 	var/alarmed = A.doors_down || A.fire
@@ -440,7 +436,6 @@ var/global/list/alert_overlays_global = list()
 			update_icon()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/firedoor/proc/latetoggle() called tick#: [world.time]")
 	if(operating || stat & NOPOWER || !nextstate)
 		return
 

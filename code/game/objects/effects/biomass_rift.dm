@@ -64,7 +64,6 @@
 		Spread()
 
 /obj/effect/biomass/proc/Spread(var/direction = dir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/biomass/proc/Spread() called tick#: [world.time]")
 	set background = 1
 	var/possibleDirsInt = 0
 
@@ -106,7 +105,6 @@
 //		NewSpread()
 
 /obj/effect/biomass/proc/NewSpread(maxDistance = 15)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/biomass/proc/NewSpread() called tick#: [world.time]")
 	set background = 1
 	for(var/turf/T in orange(1,src))
 		if(!IsValidBiomassLoc(T,src))
@@ -116,7 +114,6 @@
 		starting.maxDistance = maxDistance
 
 /proc/IsValidBiomassLoc(turf/location,obj/effect/biomass/source = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/IsValidBiomassLoc() called tick#: [world.time]")
 	set background = 1
 	for(var/obj/effect/biomass/biomass in location)
 		if(biomass != source)

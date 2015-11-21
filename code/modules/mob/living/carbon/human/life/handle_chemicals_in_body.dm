@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_chemicals_in_body() called tick#: [world.time]")
 	var/jittery_time = jitteriness
 
 	if(reagents)

@@ -13,7 +13,6 @@
 	flags = FPRINT | PROXMOVE
 
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/process_activation() called tick#: [world.time]")
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
@@ -144,14 +143,12 @@
 		overlays += "device"
 
 /obj/item/device/transfer_valve/proc/merge_gases()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/merge_gases() called tick#: [world.time]")
 	tank_two.air_contents.volume += tank_one.air_contents.volume
 	var/datum/gas_mixture/temp
 	temp = tank_one.air_contents.remove_ratio(1)
 	tank_two.air_contents.merge(temp)
 
 /obj/item/device/transfer_valve/proc/split_gases()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/split_gases() called tick#: [world.time]")
 	if (!valve_open || !tank_one || !tank_two)
 		return
 	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
@@ -166,7 +163,6 @@
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/toggle_valve() called tick#: [world.time]")
 	if(valve_open==0 && (tank_one && tank_two))
 		valve_open = 1
 		var/turf/bombturf = get_turf(src)
@@ -207,7 +203,6 @@
  * We destroy any item we're inside of
  */
 /obj/item/device/transfer_valve/proc/child_ruptured(var/obj/item/weapon/tank/tank, var/range)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/child_ruptured() called tick#: [world.time]")
 	// Old behavior.
 	if(tank_one == tank)
 		tank_one=null
@@ -228,5 +223,4 @@
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/transfer_valve/proc/c_state() called tick#: [world.time]")
 	return

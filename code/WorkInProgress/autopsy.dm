@@ -30,7 +30,6 @@
 	var/time_inflicted = 0
 
 	proc/copy()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/copy() called tick#: [world.time]")
 		var/datum/autopsy_data/W = new()
 		W.weapon = weapon
 		W.pretend_weapon = pretend_weapon
@@ -40,7 +39,6 @@
 		return W
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/autopsy_scanner/proc/add_data() called tick#: [world.time]")
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
 
 	for(var/V in O.autopsy_data)
@@ -82,7 +80,6 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/autopsy_scanner/verb/print_data()  called tick#: [world.time]")
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)) || (usr.status_flags & FAKEDEATH))
 		usr << "No."
 		return

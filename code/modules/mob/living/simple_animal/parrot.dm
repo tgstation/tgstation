@@ -587,7 +587,6 @@
 	..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/isStuck() called tick#: [world.time]")
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
 	if(parrot_lastmove)
 		if(parrot_lastmove == src.loc)
@@ -603,7 +602,6 @@
 	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/search_for_item() called tick#: [world.time]")
 	for(var/atom/movable/AM in view(src))
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
@@ -621,7 +619,6 @@
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/search_for_perch() called tick#: [world.time]")
 	for(var/obj/O in view(src))
 		for(var/path in desired_perches)
 			if(istype(O, path))
@@ -630,7 +627,6 @@
 
 //This proc was made to save on doing two 'in view' loops seperatly
 /mob/living/simple_animal/parrot/proc/search_for_perch_and_item()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/search_for_perch_and_item() called tick#: [world.time]")
 	for(var/atom/movable/AM in view(src))
 		for(var/perch_path in desired_perches)
 			if(istype(AM, perch_path))
@@ -659,7 +655,6 @@
 	set name = "Steal from ground"
 	set category = "Parrot"
 	set desc = "Grabs a nearby item."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/steal_from_ground() called tick#: [world.time]")
 
 	if(stat)
 		return -1
@@ -688,7 +683,6 @@
 	set name = "Steal from mob"
 	set category = "Parrot"
 	set desc = "Steals an item right out of a person's hand!"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/steal_from_mob() called tick#: [world.time]")
 
 	if(stat)
 		return -1
@@ -720,7 +714,6 @@
 	set name = "Drop held item"
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/parrot/verb/drop_held_item_player()  called tick#: [world.time]")
 
 	if(stat)
 		return
@@ -733,7 +726,6 @@
 	set name = "Drop held item"
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/drop_held_item() called tick#: [world.time]")
 
 	if(stat)
 		return -1
@@ -774,7 +766,6 @@
 	set name = "Sit"
 	set category = "Parrot"
 	set desc = "Sit on a nice comfy perch."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/perch_player() called tick#: [world.time]")
 
 	if(stat || !client)
 		return
@@ -793,7 +784,6 @@
 	set name = "Toggle mode"
 	set category = "Parrot"
 	set desc = "Time to bear those claws!"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/parrot/proc/toggle_mode() called tick#: [world.time]")
 
 	if(stat || !client)
 		return

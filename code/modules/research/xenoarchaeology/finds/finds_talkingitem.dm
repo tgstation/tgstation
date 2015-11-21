@@ -18,7 +18,6 @@
 		SaySomething()
 
 /obj/item/weapon/proc/catchMessage(var/msg, var/mob/source)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/proc/catchMessage() called tick#: [world.time]")
 	if(speaking_to_players)
 		var/list/seperate = list()
 		if(findtext(msg,"(("))
@@ -51,7 +50,6 @@
 			O.show_message("<span class='notice'>[src] hums for bit then stops...</span>", 1)
 
 /*/obj/item/weapon/talkingcrystal/proc/debug()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//obj/item/weapon/talkingcrystal/proc/debug() called tick#: [world.time]")
 	//set src in view()
 	for(var/v in heard_words)
 		world << "[uppertext(v)]"
@@ -61,7 +59,6 @@
 
 /obj/item/weapon/proc/SaySomething(var/word = null)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/proc/SaySomething() called tick#: [world.time]")
 
 	var/msg
 	var/limit = rand(max(5,heard_words.len/2))+3

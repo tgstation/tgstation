@@ -3,7 +3,6 @@
  * 	#RRGGBB(AA) on success, null on failure
  */
 /proc/mix_color_from_reagents(const/list/reagent_list)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/mix_color_from_reagents() called tick#: [world.time]")
 	if(!istype(reagent_list))
 		return
 

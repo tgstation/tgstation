@@ -4,13 +4,11 @@
 
 
 /datum/pda_app/spesspets/proc/button_hatch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_hatch() called tick#: [world.time]")
 	game_state = 2
 	level = 1
 	last_spoken = "[petname] is born!"
 
 /datum/pda_app/spesspets/proc/next_egg()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/next_egg() called tick#: [world.time]")
 	switch(race)
 		if("Corgegg")
 			race = "Borgegg"
@@ -27,7 +25,6 @@
 	last_spoken = race
 
 /datum/pda_app/spesspets/proc/previous_egg()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/previous_egg() called tick#: [world.time]")
 	switch(race)
 		if("Corgegg")
 			race = "Syndegg"
@@ -44,7 +41,6 @@
 	last_spoken = race
 
 /datum/pda_app/spesspets/proc/button_talk()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_talk() called tick#: [world.time]")
 	var/talk_line = ""
 	switch(race)
 		if("Corgegg")
@@ -101,7 +97,6 @@
 
 
 /datum/pda_app/spesspets/proc/button_walk()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_walk() called tick#: [world.time]")
 	if(!walk_target || ((world.time - last_walk_start) > 36000))
 		last_walk_start = world.time
 		var/list/valid_area_types = list()
@@ -160,7 +155,6 @@
 
 
 /datum/pda_app/spesspets/proc/button_feed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_feed() called tick#: [world.time]")
 	if(ishungry)
 		ishungry = 0
 		var/food = "meat"
@@ -180,21 +174,18 @@
 
 
 /datum/pda_app/spesspets/proc/button_clean()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_clean() called tick#: [world.time]")
 	if(isdirty)
 		isdirty = 0
 		last_spoken = "You clean up [petname]!"
 
 
 /datum/pda_app/spesspets/proc/button_heal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_heal() called tick#: [world.time]")
 	if(ishurt)
 		ishurt = 0
 		last_spoken = "You bandage up [petname]!"
 
 
 /datum/pda_app/spesspets/proc/button_fight()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_fight() called tick#: [world.time]")
 	isfighting = 1
 	var/chance_to_win = 50
 	if((level >= 11) && (level <= 15))
@@ -254,7 +245,6 @@
 
 
 /datum/pda_app/spesspets/proc/button_visit()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_visit() called tick#: [world.time]")
 	isvisiting = 1
 	var/chance_to_get_along = 50
 	if((level >= 6) && (level <= 10))
@@ -295,7 +285,6 @@
 
 
 /datum/pda_app/spesspets/proc/button_work()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_work() called tick#: [world.time]")
 	if(ishungry)
 		last_spoken = "[petname] cannot go to work without having lunch first!"
 		return
@@ -310,7 +299,6 @@
 
 
 /datum/pda_app/spesspets/proc/button_cash()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_cash() called tick#: [world.time]")
 	if(!pda_device.id)
 		last_spoken = "<i>Insert an ID card linked to collect the nanocoins at the current rates.</i>"
 	else
@@ -342,10 +330,8 @@
 			last_spoken = {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
 
 /datum/pda_app/spesspets/proc/button_rates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pda_app/spesspets/proc/button_rates() called tick#: [world.time]")
 	last_spoken = "<i>At the current rates you will get [nanocoins_rates] dollars per nanocoins.</i>"
 
 
 proc/nano2dollar(var/nanocoins)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/nano2dollar() called tick#: [world.time]")
 	return round(nanocoins * nanocoins_rates)

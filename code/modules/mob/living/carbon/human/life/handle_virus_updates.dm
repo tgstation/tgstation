@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_virus_updates() called tick#: [world.time]")
 	if(status_flags & GODMODE)
 		return 0 //Godmode
 	if(bodytemperature > 406) //Holy mother of hardcoding

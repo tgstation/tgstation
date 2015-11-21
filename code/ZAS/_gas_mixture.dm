@@ -25,7 +25,6 @@ What are the archived variables for?
 // END VGSHIT
 
 /hook/startup/proc/createGasOverlays()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/startup/proc/createGasOverlays() called tick#: [world.time]")
 	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
@@ -94,7 +93,6 @@ What are the archived variables for?
 //Call it with negative numbers to remove gases.
 
 /datum/gas_mixture/proc/adjust(o2 = 0, co2 = 0, n2 = 0, tx = 0, list/datum/gas/traces = list())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/adjust() called tick#: [world.time]")
 	//Purpose: Adjusting the gases within a airmix
 	//Called by: Nothing, yet!
 	//Inputs: The values of the gases to adjust
@@ -117,7 +115,6 @@ What are the archived variables for?
 
 //Takes a gas string, and the amount of moles to adjust by.  Calls update_values() if update isn't 0.
 /datum/gas_mixture/proc/adjust_gas(gasid, moles, update = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/adjust_gas() called tick#: [world.time]")
 	if(moles == 0)
 		return
 	switch(gasid)
@@ -148,24 +145,20 @@ What are the archived variables for?
 
 /*
 /datum/gas_mixture/proc/create_reagents(var/max_vol)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/create_reagents() called tick#: [world.time]")
 	aerosols = new /datum/reagents(max_vol)
 	aerosols.my_atom = src
 */
 
 //tg seems to like using these a lot
 /datum/gas_mixture/proc/return_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/return_temperature() called tick#: [world.time]")
 	return temperature
 
 
 /datum/gas_mixture/proc/return_volume()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/return_volume() called tick#: [world.time]")
 	return max(0, volume)
 
 
 /datum/gas_mixture/proc/thermal_energy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/thermal_energy() called tick#: [world.time]")
 	return temperature*heat_capacity()
 
 ///////////////////////////////
@@ -173,7 +166,6 @@ What are the archived variables for?
 ///////////////////////////////
 
 /datum/gas_mixture/proc/heat_capacity()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/heat_capacity() called tick#: [world.time]")
 	//Purpose: Returning the heat capacity of the gas mix
 	//Called by: UNKNOWN
 	//Inputs: None
@@ -188,7 +180,6 @@ What are the archived variables for?
 	return max(MINIMUM_HEAT_CAPACITY,heat_capacity)
 
 /datum/gas_mixture/proc/heat_capacity_archived()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/heat_capacity_archived() called tick#: [world.time]")
 	//Purpose: Returning the archived heat capacity of the gas mix
 	//Called by: UNKNOWN
 	//Inputs: None
@@ -203,7 +194,6 @@ What are the archived variables for?
 	return max(MINIMUM_HEAT_CAPACITY,heat_capacity_archived)
 
 /datum/gas_mixture/proc/total_moles()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/total_moles() called tick#: [world.time]")
 	return total_moles
 	/*var/moles = oxygen + carbon_dioxide + nitrogen + toxins
 
@@ -213,7 +203,6 @@ What are the archived variables for?
 	return moles*/
 
 /datum/gas_mixture/proc/return_pressure()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/return_pressure() called tick#: [world.time]")
 	//Purpose: Calculating Current Pressure
 	//Called by:
 	//Inputs: None
@@ -221,7 +210,6 @@ What are the archived variables for?
 	return pressure
 
 //		proc/return_temperature()
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//		proc/return_temperature() called tick#: [world.time]")
 			//Purpose:
 			//Inputs:
 			//Outputs:
@@ -229,7 +217,6 @@ What are the archived variables for?
 //			return temperature
 
 //		proc/return_volume()
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//		proc/return_volume() called tick#: [world.time]")
 			//Purpose:
 			//Inputs:
 			//Outputs:
@@ -237,7 +224,6 @@ What are the archived variables for?
 //			return max(0, volume)
 
 //		proc/thermal_energy()
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//		proc/thermal_energy() called tick#: [world.time]")
 			//Purpose:
 			//Inputs:
 			//Outputs:
@@ -245,7 +231,6 @@ What are the archived variables for?
 //			return temperature*heat_capacity()
 
 /datum/gas_mixture/proc/update_values()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/update_values() called tick#: [world.time]")
 	//Purpose: Calculating and storing values which were normally called CONSTANTLY
 	//Called by: Anything that changes values within a gas mix.
 	//Inputs: None
@@ -274,7 +259,6 @@ What are the archived variables for?
 ////////////////////////////////////////////
 
 /datum/gas_mixture/proc/check_tile_graphic()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_tile_graphic() called tick#: [world.time]")
 	//Purpose: Calculating the graphic for a tile
 	//Called by: Turfs updating
 	//Inputs: None
@@ -305,7 +289,6 @@ What are the archived variables for?
 	return graphics != graphics_archived
 
 /datum/gas_mixture/proc/react(atom/dump_location)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/react() called tick#: [world.time]")
 	//Purpose: Calculating if it is possible for a fire to occur in the airmix
 	//Called by: Air mixes updating?
 	//Inputs: None
@@ -316,7 +299,6 @@ What are the archived variables for?
 	return zburn(null) // ? (was: return reacting)
 
 /datum/gas_mixture/proc/fire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/fire() called tick#: [world.time]")
 	//Purpose: Calculating any fire reactions.
 	//Called by: react() (See above)
 	//Inputs: None
@@ -383,7 +365,6 @@ What are the archived variables for?
 
 
 /datum/gas_mixture/proc/archive()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/archive() called tick#: [world.time]")
 	//Purpose: Archives the current gas values
 	//Called by: UNKNOWN
 	//Inputs: None
@@ -405,7 +386,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_then_merge(datum/gas_mixture/giver)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_then_merge() called tick#: [world.time]")
 	//Purpose: Similar to merge(...) but first checks to see if the amount of air assumed is small enough
 	//	that group processing is still accurate for source (aborts if not)
 	//Called by: airgroups/machinery expelling air, ?
@@ -431,7 +411,6 @@ What are the archived variables for?
 	return merge(giver)
 
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/merge() called tick#: [world.time]")
 	//Purpose: Merges all air from giver into self. Deletes giver.
 	//Called by: Machinery expelling air, check_then_merge, ?
 	//Inputs: The gas to merge.
@@ -476,7 +455,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/remove(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/remove() called tick#: [world.time]")
 	//Purpose: Removes a certain number of moles from the air.
 	//Called by: ?
 	//Inputs: How many moles to remove.
@@ -523,7 +501,6 @@ What are the archived variables for?
 	return removed
 
 /datum/gas_mixture/proc/remove_ratio(ratio)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/remove_ratio() called tick#: [world.time]")
 	//Purpose: Removes a certain ratio of the air.
 	//Called by: ?
 	//Inputs: Percentage to remove.
@@ -561,7 +538,6 @@ What are the archived variables for?
 	return removed
 
 /datum/gas_mixture/proc/check_then_remove(amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_then_remove() called tick#: [world.time]")
 	//Purpose: Similar to remove(...) but first checks to see if the amount of air removed is small enough
 	//	that group processing is still accurate for source (aborts if not)
 	//Called by: ?
@@ -576,7 +552,6 @@ What are the archived variables for?
 	return remove(amount)
 
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/copy_from() called tick#: [world.time]")
 	//Purpose: Duplicates the sample air mixture.
 	//Called by: airgroups splitting, ?
 	//Inputs: Gas to copy
@@ -601,7 +576,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_gas_mixture(datum/gas_mixture/sharer)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_gas_mixture() called tick#: [world.time]")
 	//Purpose: Telling if one or both airgroups needs to disable group processing.
 	//Called by: Airgroups sharing air, checking if group processing needs disabled.
 	//Inputs: Gas to compare from other airgroup
@@ -662,7 +636,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_turf(turf/model)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_turf() called tick#: [world.time]")
 	//Purpose: Used to compare the gases in an unsimulated turf with the gas in a simulated one.
 	//Called by: Sharing air (mimicing) with adjacent unsimulated turfs
 	//Inputs: Unsimulated turf
@@ -691,7 +664,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/share() called tick#: [world.time]")
 	//Purpose: Used to transfer gas from a more pressurised tile to a less presurised tile
 	//    (Two directional, if the other tile is more pressurised, air travels to current tile)
 	//Called by: Sharing air with adjacent simulated turfs
@@ -843,7 +815,6 @@ What are the archived variables for?
 		return 0
 
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/mimic() called tick#: [world.time]")
 	//Purpose: Used transfer gas from a more pressurised tile to a less presurised unsimulated tile.
 	//Called by: "sharing" from unsimulated to simulated turfs.
 	//Inputs: Unsimulated turf, Multiplier for gas transfer (optional)
@@ -927,7 +898,6 @@ What are the archived variables for?
 		return 0
 
 /datum/gas_mixture/proc/check_both_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_both_then_temperature_share() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
 	var/self_heat_capacity = heat_capacity_archived()
@@ -960,7 +930,6 @@ What are the archived variables for?
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_me_then_temperature_share() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
 	var/self_heat_capacity = heat_capacity_archived()
@@ -989,7 +958,6 @@ What are the archived variables for?
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_me_then_temperature_turf_share() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - sharer.temperature)
 
 	var/self_temperature_delta = 0
@@ -1018,7 +986,6 @@ What are the archived variables for?
 	//Logic integrated from: temperature_turf_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_mimic(turf/model, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/check_me_then_temperature_mimic() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - model.temperature)
 	var/self_temperature_delta = 0
 
@@ -1041,7 +1008,6 @@ What are the archived variables for?
 	//Logic integrated from: temperature_mimic(model, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/temperature_share() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity_archived()
@@ -1058,7 +1024,6 @@ What are the archived variables for?
 			sharer.temperature += heat/(sharer_heat_capacity*sharer.group_multiplier)
 
 /datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/temperature_mimic() called tick#: [world.time]")
 	var/delta_temperature = (temperature - model.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()//_archived()
@@ -1076,7 +1041,6 @@ What are the archived variables for?
 				temperature -= heat/(self_heat_capacity*group_multiplier)
 
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/temperature_turf_share() called tick#: [world.time]")
 	var/delta_temperature = (temperature_archived - sharer.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
@@ -1089,7 +1053,6 @@ What are the archived variables for?
 			sharer.temperature += heat/sharer.heat_capacity
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/compare() called tick#: [world.time]")
 	//Purpose: Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Called by: Airgroups trying to rebuild
 	//Inputs: Gas mix to compare
@@ -1142,7 +1105,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/add(datum/gas_mixture/right_side)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/add() called tick#: [world.time]")
 	if(!right_side)
 		return 0
 	oxygen += right_side.oxygen
@@ -1162,7 +1124,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/subtract(datum/gas_mixture/right_side)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/subtract() called tick#: [world.time]")
 	//Purpose: Subtracts right_side from air_mixture. Used to help turfs mingle
 	//Called by: Pipelines ending in a break (or something)
 	//Inputs: Gas mix to remove
@@ -1183,7 +1144,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/multiply(factor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/multiply() called tick#: [world.time]")
 	oxygen *= factor
 	carbon_dioxide *= factor
 	nitrogen *= factor
@@ -1197,7 +1157,6 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/divide(factor)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/gas_mixture/proc/divide() called tick#: [world.time]")
 	oxygen /= factor
 	carbon_dioxide /= factor
 	nitrogen /= factor

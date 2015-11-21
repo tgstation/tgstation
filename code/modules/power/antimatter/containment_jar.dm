@@ -16,7 +16,6 @@
 	var/exploded = 0
 
 /obj/item/weapon/am_containment/proc/boom()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/am_containment/proc/boom() called tick#: [world.time]")
 	var/percent = 0
 	if(fuel)
 		percent = (fuel / fuel_max) * 100
@@ -39,7 +38,6 @@
 	return
 
 /obj/item/weapon/am_containment/proc/usefuel(var/wanted)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/am_containment/proc/usefuel() called tick#: [world.time]")
 	if(fuel < wanted)
 		wanted = fuel
 	fuel -= wanted

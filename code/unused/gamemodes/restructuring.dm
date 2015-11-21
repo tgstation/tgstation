@@ -18,7 +18,6 @@
 	..()
 
 /datum/game_mode/restructuring/proc/pick_target(who)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/restructuring/proc/pick_target() called tick#: [world.time]")
 	var/mob/target
 	var/mob/target_desc
 
@@ -56,7 +55,6 @@
 		return 0
 
 /datum/game_mode/restructuring/proc/get_mob_list()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/restructuring/proc/get_mob_list() called tick#: [world.time]")
 	var/list/mobs = list()
 	for(var/mob/M in world)
 		if (M.stat<2 && M.client && istype(M, /mob/living/carbon/human))
@@ -64,13 +62,11 @@
 	return mobs
 
 /datum/game_mode/restructuring/proc/the_winner()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/restructuring/proc/the_winner() called tick#: [world.time]")
 	for(var/mob/M in world)
 		if (M.stat<2 && M.client && istype(M, /mob/living/carbon/human))
 			return M.name
 
 /datum/game_mode/restructuring/proc/get_target_desc(mob/target) //return a useful string describing the target
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/restructuring/proc/get_target_desc() called tick#: [world.time]")
 	var/targetrank = null
 	for(var/datum/data/record/R in data_core.general)
 		if (R.fields["name"] == target.real_name)

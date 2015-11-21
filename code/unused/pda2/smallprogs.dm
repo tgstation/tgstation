@@ -91,7 +91,6 @@
 		return
 
 	proc/post_status(var/command, var/data1, var/data2)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/post_status() called tick#: [world.time]")
 		if(!src.master)
 			return
 

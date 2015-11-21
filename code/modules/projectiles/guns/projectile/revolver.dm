@@ -25,7 +25,6 @@
 		set name = "Name Gun"
 		set category = "Object"
 		set desc = "Click to rename your gun. If you're the detective."
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/rename_gun()  called tick#: [world.time]")
 
 		var/mob/M = usr
 		if(!M.mind)	return 0
@@ -106,7 +105,6 @@
 
 /obj/item/weapon/gun/projectile/russian/proc/Spin()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/russian/proc/Spin() called tick#: [world.time]")
 
 	for(var/obj/item/ammo_casing/AC in loaded)
 		del(AC)

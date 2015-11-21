@@ -47,11 +47,9 @@
 		icon_state += "_active"
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/request_device_refresh(var/device)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/request_device_refresh() called tick#: [world.time]")
 	send_signal(list("tag"=device, "status"))
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal(var/list/data, filter = RADIO_ATMOSIA)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal() called tick#: [world.time]")
 	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
@@ -60,7 +58,6 @@
 	radio_connection.post_signal(src, signal, filter = filter)
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/selectValidChildFor(var/datum/automation/parent, var/mob/user, var/list/valid_returntypes)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/selectValidChildFor() called tick#: [world.time]")
 	var/list/choices=list()
 	for(var/childtype in automation_types)
 		var/datum/automation/A = new childtype(src)
@@ -227,7 +224,6 @@
 		return 1
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/MakeCompare(var/datum/automation/a, var/datum/automation/b, var/comparetype)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/MakeCompare() called tick#: [world.time]")
 	var/datum/automation/compare/compare=new(src)
 	compare.comparator = comparetype
 	compare.children[1] = a
@@ -235,27 +231,23 @@
 	return compare
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/MakeNumber(var/value)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/MakeNumber() called tick#: [world.time]")
 	var/datum/automation/static_value/val = new(src)
 	val.value=value
 	return val
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/MakeGetSensorData(var/sns_tag,var/field)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/MakeGetSensorData() called tick#: [world.time]")
 	var/datum/automation/get_sensor_data/sensor=new(src)
 	sensor.sensor=sns_tag
 	sensor.field=field
 	return sensor
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/DumpCode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/DumpCode() called tick#: [world.time]")
 	var/list/json[0]
 	for(var/datum/automation/A in automations)
 		json += list(A.Export())
 	return list2json(json)
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/ReadCode(var/jsonStr)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/ReadCode() called tick#: [world.time]")
 	automations.len = 0
 	var/list/json=json2list(jsonStr)
 	if(json && json.len > 0)
@@ -365,7 +357,6 @@
 		buildOutletVent()
 
 /obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildO2()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildO2() called tick#: [world.time]")
 	///////////////////////////////////////////////////////////////
 	// Oxygen Injection
 	///////////////////////////////////////////////////////////////
@@ -391,7 +382,6 @@
 	automations += i
 
 /obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildN2()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildN2() called tick#: [world.time]")
 	///////////////////////////////////////////////////////////////
 	// Nitrogen Injection
 	///////////////////////////////////////////////////////////////
@@ -434,7 +424,6 @@
 	automations += if_on
 
 /obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildOutletVent()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/air_mixing/proc/buildOutletVent() called tick#: [world.time]")
 	///////////////////////////////////////////////////////////////
 	// Outlet Management
 	///////////////////////////////////////////////////////////////

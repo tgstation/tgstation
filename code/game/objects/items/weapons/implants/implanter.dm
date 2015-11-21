@@ -10,7 +10,6 @@
 
 /obj/item/weapon/implanter/proc/update()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/implanter/proc/update() called tick#: [world.time]")
 
 
 /obj/item/weapon/implanter/update()

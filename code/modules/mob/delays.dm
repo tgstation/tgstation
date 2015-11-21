@@ -15,24 +15,20 @@
 	max_delay=max
 
 /datum/delay_controller/proc/setDelay(var/delay)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/delay_controller/proc/setDelay() called tick#: [world.time]")
 	next_allowed = world.time + Clamp(delay,min_delay,max_delay)
 
 /datum/delay_controller/proc/addDelay(var/delay)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/delay_controller/proc/addDelay() called tick#: [world.time]")
 	var/current_delay = max(0,next_allowed - world.time)
 	setDelay(current_delay+delay)
 
 // Proxy for delayNext*(), to reduce duplicated code.
 /datum/delay_controller/proc/delayNext(var/delay, var/additive)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/delay_controller/proc/delayNext() called tick#: [world.time]")
 	if(additive)
 		addDelay(delay)
 	else
 		setDelay(delay)
 
 /datum/delay_controller/proc/blocked()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/delay_controller/proc/blocked() called tick#: [world.time]")
 	return next_allowed > world.time
 
 // Constructor args are currently all the same, but placed here for ease of tuning.
@@ -46,20 +42,16 @@
 
 // Convenience procs.
 /mob/proc/delayNextMove(var/delay, var/additive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/delayNextMove() called tick#: [world.time]")
 	if(client)
 		client.move_delayer.delayNext(delay,additive)
 
 /mob/proc/delayNextAttack(var/delay, var/additive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/delayNextAttack() called tick#: [world.time]")
 	attack_delayer.delayNext(delay,additive)
 
 /mob/proc/delayNextSpecial(var/delay, var/additive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/delayNextSpecial() called tick#: [world.time]")
 	special_delayer.delayNext(delay,additive)
 
 /mob/proc/delayNext(var/types, var/delay, var/additive=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/delayNext() called tick#: [world.time]")
 	if(types & DELAY_MOVE) delayNextMove(delay,additive)
 	if(types & DELAY_ATTACK) delayNextAttack(delay,additive)
 	if(types & DELAY_SPECIAL) delayNextSpecial(delay,additive)

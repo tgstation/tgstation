@@ -67,7 +67,6 @@ Data storage vars:
 		return
 
 	proc/main()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/main() called tick#: [world.time]")
 		state = 1
 		while(src && control_switch)
 			last_exec = world.timeofday
@@ -82,7 +81,6 @@ Data storage vars:
 		return 0
 
 	proc/start(list/arguments=null)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/start() called tick#: [world.time]")
 		if(active())
 			return
 		if(arguments)
@@ -96,7 +94,6 @@ Data storage vars:
 		return 1
 
 	proc/stop()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/stop() called tick#: [world.time]")
 		if(!active())
 			return
 		control_switch = 0
@@ -105,7 +102,6 @@ Data storage vars:
 		return 1
 
 	proc/state_check()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/state_check() called tick#: [world.time]")
 		var/lag = 0
 		while(state)
 			sleep(1)
@@ -114,22 +110,18 @@ Data storage vars:
 		return 1
 
 	proc/process()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 		return
 
 	proc/active()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/active() called tick#: [world.time]")
 		return control_switch
 
 	proc/has_null_args()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/has_null_args() called tick#: [world.time]")
 		if(null in arg_list)
 			return 1
 		return 0
 
 
 	proc/set_delay(new_delay)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_delay() called tick#: [world.time]")
 		if(isnum(new_delay))
 			delay = max(1, round(new_delay))
 			return 1
@@ -137,15 +129,12 @@ Data storage vars:
 			return 0
 
 	proc/get_last_exec_time()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_last_exec_time() called tick#: [world.time]")
 		return (last_exec||0)
 
 	proc/get_last_exec_time_as_text()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_last_exec_time_as_text() called tick#: [world.time]")
 		return (time2text(last_exec)||"Wasn't executed yet")
 
 	proc/set_process_args(list/arguments)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_process_args() called tick#: [world.time]")
 		if(arguments && istype(arguments, /list) && arguments.len)
 			arg_list = arguments
 			return 1
@@ -154,12 +143,10 @@ Data storage vars:
 			return 0
 
 	proc/toggle_null_checks()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/toggle_null_checks() called tick#: [world.time]")
 		check_for_null = !check_for_null
 		return check_for_null
 
 	proc/toggle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/toggle() called tick#: [world.time]")
 		if(!stop())
 			start()
 		return active()

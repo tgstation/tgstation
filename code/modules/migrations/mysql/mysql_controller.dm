@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	execute(tableSQL)
 
 /datum/migration_controller/mysql/query(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/query() called tick#: [world.time]")
 	var/DBQuery/query = execute(sql)
 
 	var/list/rows=list()
@@ -36,7 +35,6 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	return rows
 
 /datum/migration_controller/mysql/hasResult(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/hasResult() called tick#: [world.time]")
 	var/DBQuery/query = execute(sql)
 
 	if (query.NextRow())
@@ -44,11 +42,9 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	return FALSE
 
 /datum/migration_controller/mysql/execute(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/execute() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	query.Execute()
 	return query
 
 /datum/migration_controller/mysql/hasTable(var/tableName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/hasTable() called tick#: [world.time]")
 	return hasResult("SHOW TABLES LIKE '[tableName]")

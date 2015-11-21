@@ -25,7 +25,6 @@
 
 			remove_special_verbs()
 
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\remove_special_verbs()  called tick#: [world.time]")
 
 			rebuild_appearance()
 
@@ -61,13 +60,9 @@
 		return
 
 /mob/living/carbon/alien/humanoid/special/proc/xcom_attack()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/humanoid/special/proc/xcom_attack() called tick#: [world.time]")
 	return
 
 /mob/living/carbon/alien/humanoid/special/proc/remove_special_verbs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/special/proc/remove_special_verbs()  called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/humanoid/special/proc/remove_special_verbs() called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/mob/living/carbon/alien/humanoid/special/proc/remove_special_verbs()  called tick#: [world.time]")
 	verbs -= /mob/living/carbon/alien/humanoid/verb/plant
 	verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers
 	verbs -= /mob/living/carbon/alien/humanoid/verb/whisp

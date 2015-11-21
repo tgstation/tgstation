@@ -60,7 +60,6 @@ var/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","min
 var/jungle_plants_init = 0
 
 /proc/init_jungle_plants()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/init_jungle_plants() called tick#: [world.time]")
 	jungle_plants_init = 1
 	fruit_icon_states = shuffle(fruit_icon_states)
 	reagent_effects = shuffle(reagent_effects)

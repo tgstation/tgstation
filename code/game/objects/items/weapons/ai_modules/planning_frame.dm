@@ -77,7 +77,6 @@
 
 /obj/item/weapon/planning_frame/verb/dry_run()
 	set name = "Dry Run"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/planning_frame/verb/dry_run()  called tick#: [world.time]")
 	usr << "You read through the list of modules to emulate, in their run order:"
 	for(var/i=1;i<=modules.len;i++)
 		var/obj/item/weapon/aiModule/module = modules[i]
@@ -91,41 +90,33 @@
 		usr << " [i-1]. [module.name] - [notes]"
 
 /obj/item/weapon/planning_frame/proc/laws_sanity_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/laws_sanity_check() called tick#: [world.time]")
 	if (!src.laws)
 		src.laws = new base_law_type
 
 /obj/item/weapon/planning_frame/proc/set_zeroth_law(var/law, var/law_borg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/set_zeroth_law() called tick#: [world.time]")
 	laws_sanity_check()
 	laws.set_zeroth_law(law, law_borg)
 
 /obj/item/weapon/planning_frame/proc/add_inherent_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/add_inherent_law() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.add_inherent_law(law)
 
 /obj/item/weapon/planning_frame/proc/clear_inherent_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/clear_inherent_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.clear_inherent_laws()
 
 /obj/item/weapon/planning_frame/proc/add_ion_law(var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/add_ion_law() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.add_ion_law(law)
 
 /obj/item/weapon/planning_frame/proc/clear_ion_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/clear_ion_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.clear_ion_laws()
 
 /obj/item/weapon/planning_frame/proc/add_supplied_law(var/number, var/law)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/add_supplied_law() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.add_supplied_law(number, law)
 
 /obj/item/weapon/planning_frame/proc/clear_supplied_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/planning_frame/proc/clear_supplied_laws() called tick#: [world.time]")
 	laws_sanity_check()
 	src.laws.clear_supplied_laws()

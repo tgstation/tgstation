@@ -1,7 +1,6 @@
 /client/proc/air_report()
 	set category = "Debug"
 	set name = "Show Air Report"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/air_report() called tick#: [world.time]")
 
 	/*(!master_controller || !air_master)
 		alert(usr,"Master_controller or air_master not found.","Air Report")
@@ -45,7 +44,6 @@
 /client/proc/air_status(turf/target as turf)
 	set category = "Debug"
 	set name = "Display Air Status"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/air_status() called tick#: [world.time]")
 
 	/*(!isturf(target))
 		return
@@ -64,7 +62,6 @@
 	*/
 
 /client/proc/_fix_delayers(var/dtype)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/_fix_delayers() called tick#: [world.time]")
 	var/largest_delay = 0
 	var/mob/most_delayed_mob = null
 	var/delay=0
@@ -96,14 +93,12 @@
 	message_admins("world.time = [world.time]", 1)
 	feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/fix_next_move() called tick#: [world.time]")
 
 #undef GATHER_DELAYER_LOCKUPS
 
 /client/proc/radio_report()
 	set category = "Debug"
 	set name = "Radio report"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/radio_report() called tick#: [world.time]")
 
 	var/filters = list(
 		"1" = "RADIO_TO_AIRALARM",
@@ -141,7 +136,6 @@
 /client/proc/reload_admins()
 	set name = "Reload Admins"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/reload_admins() called tick#: [world.time]")
 
 	if(!check_rights(R_SERVER))	return
 
@@ -153,7 +147,6 @@
 /client/proc/jump_to_dead_group()
 	set name = "Jump to dead group"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/jump_to_dead_group() called tick#: [world.time]")
 
 		/*
 	if(!holder)
@@ -177,7 +170,6 @@
 	set name = "Kill Local Airgroup"
 	set desc = "Use this to allow manual manupliation of atmospherics."
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/kill_airgroup() called tick#: [world.time]")
 
 	/*
 	if(!holder)
@@ -202,7 +194,6 @@
 	set name = "Print Jobban Log"
 	set desc = "This spams all the active jobban entries for the current round to standard output."
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/print_jobban_old() called tick#: [world.time]")
 
 	usr << "<b>Jobbans active in this round.</b>"
 	for(var/t in jobban_keylist)
@@ -212,7 +203,6 @@
 	set name = "Search Jobban Log"
 	set desc = "This searches all the active jobban entries for the current round and outputs the results to standard output."
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/print_jobban_old_filter() called tick#: [world.time]")
 
 	var/filter = input("Contains what?","Filter") as text|null
 	if(!filter)
@@ -227,7 +217,6 @@
 /client/proc/dump_chemreactions()
 	set category = "Debug"
 	set name = "Dump Chemical Reactions"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/dump_chemreactions() called tick#: [world.time]")
 
 	var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
 

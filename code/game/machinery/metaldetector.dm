@@ -25,7 +25,6 @@
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/detector/proc/assess_perp() called tick#: [world.time]")
 	var/threatcount = 0
 	if(!(istype(perp, /mob/living/carbon)) || isalien(perp) || isbrain(perp))
 		return -1
@@ -212,7 +211,6 @@
 
 
 /obj/machinery/detector/proc/flash()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/detector/proc/flash() called tick#: [world.time]")
 	if (!(powered()))
 		return
 

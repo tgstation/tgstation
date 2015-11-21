@@ -18,7 +18,6 @@
 	..()
 
 /obj/effect/biomass/proc/unreferenceMaster()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/obj/effect/biomass/proc/unreferenceMaster() called tick#: [world.time]")
 	if(master)
 		master.growth_queue -= src
 		master.vines -= src
@@ -65,7 +64,6 @@
 	..()
 
 /obj/effect/biomass/proc/grow()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/obj/effect/biomass/proc/grow() called tick#: [world.time]")
 	if(energy <= 0)
 		icon_state = "stage2"
 		energy = 1
@@ -75,7 +73,6 @@
 		energy = 2
 
 /obj/effect/biomass/proc/spread()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/obj/effect/biomass/proc/spread() called tick#: [world.time]")
 	var/location = get_step_rand(src)
 
 	if(istype(location, /turf/simulated/floor))
@@ -133,7 +130,6 @@
 	..()
 
 /obj/effect/biomass_controller/proc/spawn_biomass_piece(var/turf/location)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/obj/effect/biomass_controller/proc/spawn_biomass_piece() called tick#: [world.time]")
 	var/obj/effect/biomass/Biomass = new(location)
 	Biomass.master = src
 	vines += Biomass
@@ -193,7 +189,6 @@
 
 /proc/biomass_infestation()
 	set waitfor = 0
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/biomass_infestation() called tick#: [world.time]")
 
 	// list of all the empty floor turfs in the hallway areas
 	var/list/turf/simulated/floor/Floors = new

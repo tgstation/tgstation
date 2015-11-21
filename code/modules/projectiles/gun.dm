@@ -39,7 +39,6 @@
 	var/last_fired = 0
 
 /obj/item/weapon/gun/proc/ready_to_fire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ready_to_fire() called tick#: [world.time]")
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
 		return 1
@@ -47,11 +46,9 @@
 		return 0
 
 /obj/item/weapon/gun/proc/process_chambered()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_chambered() called tick#: [world.time]")
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/special_check() called tick#: [world.time]")
 	return 1
 
 /obj/item/weapon/gun/emp_act(severity)
@@ -70,11 +67,9 @@
 		Fire(A,user,params, "struggle" = struggle) //Otherwise, fire normally.
 
 /obj/item/weapon/gun/proc/isHandgun()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/isHandgun() called tick#: [world.time]")
 	return 1
 
 /obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)//TODO: go over this
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/Fire() called tick#: [world.time]")
 	//Exclude lasertag guns from the M_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user, /mob/living))
@@ -209,15 +204,12 @@
 		user.update_inv_r_hand()
 
 /obj/item/weapon/gun/proc/can_fire()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/can_fire() called tick#: [world.time]")
 	return process_chambered()
 
 /obj/item/weapon/gun/proc/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/can_hit() called tick#: [world.time]")
 	return in_chamber.check_fire(target,user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/proc/click_empty() called tick#: [world.time]")
 	if (user)
 		user.visible_message("*click click*", "<span class='danger'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)

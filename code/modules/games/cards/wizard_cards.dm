@@ -79,7 +79,6 @@ var/global/list/wizard_cards_normal = list(
 	return card_use.action(null, user, params)
 
 /obj/item/toy/singlecard/wizard/proc/special_effect(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/toy/singlecard/wizard/proc/special_effect() called tick#: [world.time]")
 	if(!ability_cd)
 		ability_cd = 1
 		spawn(50)

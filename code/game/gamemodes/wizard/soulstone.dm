@@ -107,7 +107,6 @@
 
 
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/transfer_soul() called tick#: [world.time]")
 	var/deleteafter = 0
 	switch(choice)
 		if("VICTIM")

@@ -1,6 +1,5 @@
 
 /mob/new_player/proc/handle_privacy_poll()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/handle_privacy_poll() called tick#: [world.time]")
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
@@ -16,7 +15,6 @@
 		privacy_poll()
 
 /mob/new_player/proc/privacy_poll()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/privacy_poll() called tick#: [world.time]")
 	var/output = "<div align='center'><B>Player poll</B>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -46,7 +44,6 @@
 	var/optiontext
 
 /mob/new_player/proc/handle_player_polling()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/handle_player_polling() called tick#: [world.time]")
 	establish_db_connection()
 	if(dbcon.IsConnected())
 		var/isadmin = 0
@@ -83,7 +80,6 @@
 
 
 /mob/new_player/proc/poll_player(var/pollid = -1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/poll_player() called tick#: [world.time]")
 	if(pollid == -1) return
 	establish_db_connection()
 	if(dbcon.IsConnected())
@@ -379,7 +375,6 @@
 		return
 
 /mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1, var/multichoice = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/vote_on_poll() called tick#: [world.time]")
 	if(pollid == -1 || optionid == -1)
 		return
 
@@ -450,7 +445,6 @@
 
 
 /mob/new_player/proc/log_text_poll_reply(var/pollid = -1, var/replytext = "")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/log_text_poll_reply() called tick#: [world.time]")
 	if(pollid == -1 || replytext == "")
 		return
 
@@ -509,7 +503,6 @@
 
 
 /mob/new_player/proc/vote_on_numval_poll(var/pollid = -1, var/optionid = -1, var/rating = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/vote_on_numval_poll() called tick#: [world.time]")
 	if(pollid == -1 || optionid == -1)
 		return
 

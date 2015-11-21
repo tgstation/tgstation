@@ -107,7 +107,6 @@
 		return
 
 /obj/machinery/optable/proc/check_victim()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/check_victim() called tick#: [world.time]")
 	if (victim)
 		if (victim.loc == src.loc)
 			if (victim.lying)
@@ -128,7 +127,6 @@
 	check_victim()
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/take_victim() called tick#: [world.time]")
 	if (victim)
 		user << "<span class='bnotice'>The table is already occupied!</span>"
 
@@ -154,7 +152,6 @@
 	set name = "Climb On Table"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/optable/verb/climb_on()  called tick#: [world.time]")
 
 	if(usr.stat || !ishuman(usr) || usr.locked_to || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return

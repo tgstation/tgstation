@@ -38,7 +38,6 @@
 	for(var/obj/machinery/message_server/MS in message_servers)
 		if(!MS.active) continue
 		// /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_rc_message() called tick#: [world.time]")
 		MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
 		pass = 1
 
@@ -95,7 +94,6 @@
 		for(var/obj/machinery/message_server/MS in message_servers)
 			if(!MS.active) continue
 			// /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_rc_message() called tick#: [world.time]")
 			MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
 			pass = 1
 

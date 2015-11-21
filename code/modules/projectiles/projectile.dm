@@ -94,7 +94,6 @@ var/list/impact_master = list()
 	var/linear_movement = 1
 
 /obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/on_hit() called tick#: [world.time]")
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(atarget))	return 0
 	// FUCK mice. - N3X
@@ -112,7 +111,6 @@ var/list/impact_master = list()
 	return 1
 
 /obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/check_fire() called tick#: [world.time]")
 	if(!istype(target) || !istype(user))
 		return 0
 	var/obj/item/projectile/test/in_chamber = getFromPool(/obj/item/projectile/test, get_step_to(user, target)) //Making the test....
@@ -333,11 +331,9 @@ var/list/impact_master = list()
 		return 1
 
 /obj/item/projectile/proc/OnDeath()	//if assigned, allows for code when the projectile disappears
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/OnDeath() called tick#: [world.time]")
 	return 1
 
 /obj/item/projectile/proc/OnFired()	//if assigned, allows for code when the projectile gets fired
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/OnFired() called tick#: [world.time]")
 	target = get_turf(original)
 	dist_x = abs(target.x - starting.x)
 	dist_y = abs(target.y - starting.y)
@@ -375,7 +371,6 @@ var/list/impact_master = list()
 	return 1
 
 /obj/item/projectile/proc/process_step()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/process_step() called tick#: [world.time]")
 	var/sleeptime = 1
 	if(src.loc)
 		if(dist_x > dist_y)
@@ -471,7 +466,6 @@ var/list/impact_master = list()
 	return
 
 /obj/item/projectile/proc/dumbfire(var/dir) // for spacepods, go snowflake go
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/dumbfire() called tick#: [world.time]")
 	if(!dir)
 		//del(src)
 		OnDeath()

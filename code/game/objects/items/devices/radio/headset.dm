@@ -313,7 +313,6 @@
 
 
 /obj/item/device/radio/headset/proc/recalculateChannels()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/headset/proc/recalculateChannels() called tick#: [world.time]")
 	src.channels = list()
 	src.translate_binary = 0
 	src.translate_hive = 0

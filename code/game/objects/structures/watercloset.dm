@@ -261,7 +261,6 @@
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shower/proc/wash() called tick#: [world.time]")
 	if(!on)
 		return
 
@@ -353,7 +352,6 @@
 	watersource.reagents.reaction(get_turf(src), TOUCH)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shower/proc/check_heat() called tick#: [world.time]")
 	if(!on || watertemp == "cool")
 		return
 

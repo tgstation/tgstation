@@ -1,7 +1,6 @@
 //this file left in for legacy support
 /*
 /proc/start_events()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/start_events() called tick#: [world.time]")
 	//changed to a while(1) loop since they are more efficient.
 	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
 	//and also to stop spawn copying variables from the game ticker
@@ -23,7 +22,6 @@
 			sleep(1200)
 
 /proc/event()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/event() called tick#: [world.time]")
 	event = 1
 
 	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
@@ -106,7 +104,6 @@
 */
 
 /proc/appendicitis()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/appendicitis() called tick#: [world.time]")
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
@@ -121,7 +118,6 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/viral_outbreak() called tick#: [world.time]")
 //	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 //	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
@@ -185,7 +181,6 @@
 		biohazard_alert()
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/alien_infestation() called tick#: [world.time]")
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
@@ -215,7 +210,6 @@
 			if(M.client) M << sound('sound/AI/aliens.ogg')
 
 /proc/high_radiation_event()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/high_radiation_event() called tick#: [world.time]")
 
 /* // Haha, this is way too laggy. I'll keep the prison break though.
 	for(var/obj/machinery/light/L in world)
@@ -259,7 +253,6 @@
 /proc/prison_break() // -- Callagan
 
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/prison_break() called tick#: [world.time]")
 
 
 	var/list/area/theareas = list()
@@ -298,7 +291,6 @@
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 
 /proc/carp_migration() // -- Darem
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/carp_migration() called tick#: [world.time]")
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
 			new /mob/living/simple_animal/hostile/carp(C.loc)
@@ -309,7 +301,6 @@
 			if(M.client) M << sound('sound/AI/commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/lightsout() called tick#: [world.time]")
 	if(isEvent)
 		command_alert("An Electrical storm has been detected in your area, please repair potential electronic overloads.","Electrical Storm Alert")
 

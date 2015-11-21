@@ -224,7 +224,6 @@
 	var/shock_charges = 4
 
 /obj/item/weapon/cartridge/proc/unlock()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cartridge/proc/unlock() called tick#: [world.time]")
 	if (!istype(loc, /obj/item/device/pda))
 		return
 
@@ -233,7 +232,6 @@
 	return
 
 /obj/item/weapon/cartridge/proc/print_to_host(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cartridge/proc/print_to_host() called tick#: [world.time]")
 	if (!istype(loc, /obj/item/device/pda))
 		return
 
@@ -249,7 +247,6 @@
 
 /obj/item/weapon/cartridge/proc/post_status(var/command, var/data1, var/data2)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cartridge/proc/post_status() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 
@@ -278,7 +275,6 @@
 	frequency.post_signal(src, status_signal)
 
 /obj/item/weapon/cartridge/proc/generate_menu()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cartridge/proc/generate_menu() called tick#: [world.time]")
 	switch(mode)
 		if(40) //signaller
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"

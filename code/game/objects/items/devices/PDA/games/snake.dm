@@ -44,7 +44,6 @@
 	var/list/labyrinthwalls = list()
 
 /datum/snake_game/proc/game_start()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/game_start() called tick#: [world.time]")
 	gameover = 0
 	head = new()
 	snakeparts = list()
@@ -88,7 +87,6 @@
 			next_egg.y = 6
 
 /datum/snake_game/proc/game_tick(var/dir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/game_tick() called tick#: [world.time]")
 	var/datum/snake/body/newbody = new()
 	snakeparts += newbody
 	newbody.x = head.x
@@ -219,7 +217,6 @@
 	y = yy
 
 /datum/snake_game/proc/eat_egg(var/next_x,var/next_y)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/eat_egg() called tick#: [world.time]")
 	head.life++
 	for(var/datum/snake/body/B in snakeparts)
 		B.life++
@@ -255,7 +252,6 @@
 		spawn_bonus()
 
 /datum/snake_game/proc/spawn_bonus()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/spawn_bonus() called tick#: [world.time]")
 	next_bonus.bonustype = rand(1,6)
 	var/list/available_spots = list()
 	for(var/x=1;x<=19;x++)	//bonus items are two spot wide.
@@ -290,7 +286,6 @@
 	next_bonus.life = 20
 
 /datum/snake_game/proc/eat_bonus()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/eat_bonus() called tick#: [world.time]")
 	snakescore += (next_bonus.life * 2 * level)
 	next_bonus.life = 0
 	eggs_eaten = 0
@@ -298,7 +293,6 @@
 ////////////////LABYRINTHS//////////////////
 
 /datum/snake_game/proc/set_labyrinth(var/lab_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/snake_game/proc/set_labyrinth() called tick#: [world.time]")
 	labyrinthwalls = list()
 	labyrinth = lab_type
 	switch(lab_type)

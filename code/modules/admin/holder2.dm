@@ -25,21 +25,17 @@ var/list/admin_datums = list()
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/associate() called tick#: [world.time]")
 	if(istype(C))
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\owner.add_admin_verbs()  called tick#: [world.time]")
 		admins |= C
 		owner.verbs -= /client/proc/readmin
 
 /datum/admins/proc/disassociate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/disassociate() called tick#: [world.time]")
 	if(owner)
 		admins -= owner
 		owner.remove_admin_verbs()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\owner.remove_admin_verbs()  called tick#: [world.time]")
 		owner.holder = null
 		owner = null
 
@@ -50,7 +46,6 @@ if it doesn't return 1 and show_msg=1 it will prints a message explaining why th
 generally it would be used like so:
 
 proc/admin_proc()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/admin_proc() called tick#: [world.time]")
 	if(!check_rights(R_ADMIN)) return
 	world << "you have enough rights!"
 
@@ -58,7 +53,6 @@ NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc wh
 you will have to do something like if(client.rights & R_ADMIN) yourself.
 */
 /proc/check_rights(rights_required, show_msg=1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/check_rights() called tick#: [world.time]")
 	if(usr && usr.client)
 		if(rights_required)
 			if(usr.client.holder)
@@ -77,7 +71,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 // Making this a bit less of a roaring asspain. - N3X
 /mob/proc/check_rights(rights_required)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/check_rights() called tick#: [world.time]")
 	if(src && src.client)
 		if(rights_required)
 			if(src.client.holder)
@@ -90,7 +83,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/check_if_greater_rights_than() called tick#: [world.time]")
 	if(usr && usr.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
@@ -104,7 +96,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 
 /client/proc/deadmin()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/deadmin() called tick#: [world.time]")
 	admin_datums -= ckey
 	if(holder)
 		holder.disassociate()
@@ -112,7 +103,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 	return 1
 
 /datum/admins/proc/checkSessionKey(var/recurse=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/checkSessionKey() called tick#: [world.time]")
 	if(recurse==5)
 		return "\[BROKEN\]";
 	recurse++

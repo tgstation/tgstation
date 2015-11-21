@@ -29,7 +29,6 @@ var/global/current_centcomm_order_id=124901
 	id = current_centcomm_order_id++
 
 /datum/centcomm_order/proc/CheckShuttleObject(var/obj/O, var/in_crate)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/centcomm_order/proc/CheckShuttleObject() called tick#: [world.time]")
 	if(must_be_in_crate && !in_crate)
 		return 0
 	if(!O)
@@ -45,18 +44,15 @@ var/global/current_centcomm_order_id=124901
 		return 1
 
 /datum/centcomm_order/proc/CheckFulfilled(var/obj/O, var/in_crate)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/centcomm_order/proc/CheckFulfilled() called tick#: [world.time]")
 	for(var/typepath in requested)
 		if(!(typepath in fulfilled) || fulfilled[typepath] < requested[typepath])
 			return 0
 	return 1
 
 /datum/centcomm_order/proc/Pay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/centcomm_order/proc/Pay() called tick#: [world.time]")
 	acct.charge(-worth,null,"Payment for order #[id]",dest_name = name)
 
 /datum/centcomm_order/proc/OnPostUnload()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/centcomm_order/proc/OnPostUnload() called tick#: [world.time]")
 	return
 
 // These run *last*.

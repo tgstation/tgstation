@@ -30,7 +30,6 @@
 	interact(user)
 
 /obj/item/weapon/seedbag/verb/toggle_mode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/seedbag/verb/toggle_mode()  called tick#: [world.time]")
 	set name = "Switch Bagging Method"
 	set category = "Object"
 

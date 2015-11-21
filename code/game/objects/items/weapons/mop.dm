@@ -17,7 +17,6 @@
 	create_reagents(50)
 
 /obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/mop/proc/clean() called tick#: [world.time]")
 	reagents.reaction(A,1,10) //Mops magically make chems ten times more efficient than usual, aka equivalent of 50 units of whatever you're using
 	A.clean_blood()
 	for(var/obj/effect/O in A)

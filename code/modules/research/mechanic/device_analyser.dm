@@ -74,7 +74,6 @@
 	max_designs = 20
 
 /obj/item/device/device_analyser/proc/CanCreateDesign(var/obj/O, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/device_analyser/proc/CanCreateDesign() called tick#: [world.time]")
 	if(!istype(O))
 		return 0
 

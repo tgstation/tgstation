@@ -46,11 +46,9 @@
 	var/pdaslot=slot_belt
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job/proc/equip() called tick#: [world.time]")
 	return 1
 
 /datum/job/proc/get_access()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job/proc/get_access() called tick#: [world.time]")
 	if(!config)	//Needed for robots.
 		return src.minimal_access.Copy()
 
@@ -61,14 +59,12 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job/proc/player_old_enough() called tick#: [world.time]")
 	if(available_in_days(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
 
 /datum/job/proc/available_in_days(client/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/job/proc/available_in_days() called tick#: [world.time]")
 	if(!C)
 		return 0
 	if(!config.use_age_restriction_for_jobs)

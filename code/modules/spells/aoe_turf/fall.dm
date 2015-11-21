@@ -58,7 +58,6 @@
 			. += "[x],[y]"
 
 /spell/aoe_turf/fall/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/perform() called tick#: [world.time]")
 	if(!holder)
 		holder = user //just in case
 	if(!cast_check(skipcharge, user))
@@ -187,7 +186,6 @@
 /mob/var/image/fallimage
 
 /mob/proc/see_fall(var/turf/T, range = 8)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see_rift() called tick#: [world.time]")
 	var/turf/T_mob = get_turf(src)
 	if((!T || isnull(T)) && fallimage)
 		animate(fallimage, transform = fallimage.transform / 50, time = 2)

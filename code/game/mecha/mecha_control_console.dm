@@ -101,7 +101,6 @@
 	var/lockdown = 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info() called tick#: [world.time]")
 	if(!in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc
@@ -128,13 +127,11 @@
 	return
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_tracking/proc/in_mecha() called tick#: [world.time]")
 	if(istype(src.loc, /obj/mecha))
 		return src.loc
 	return 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_tracking/proc/shock() called tick#: [world.time]")
 	var/obj/mecha/M = in_mecha()
 	if(M)
 		M.log_message("Exosuit tracking beacon self-destruct activated.",1)
@@ -151,7 +148,6 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/lockdown()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_tracking/proc/lockdown() called tick#: [world.time]")
 	var/obj/mecha/M = in_mecha()
 	if(M)
 		if(M.state) //It's already in lockdown!
@@ -163,7 +159,6 @@
 		M.state = 1
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log() called tick#: [world.time]")
 	if(!src.in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc

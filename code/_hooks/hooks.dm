@@ -17,11 +17,9 @@
 	var/list/handlers = list()
 
 	proc/Called(var/list/args) // When the hook is called
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/proc/Called() called tick#: [world.time]")
 		return 0
 
 	proc/Setup() // Called when the setup things is ran for the hook, objs contain all objects with that is hooking
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/hook/proc/Setup() called tick#: [world.time]")
 
 /hook_handler
 	// Your hook handler should do this:
@@ -31,7 +29,6 @@
 var/global/list/hooks = list()
 
 /proc/SetupHooks()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SetupHooks() called tick#: [world.time]")
 	for (var/hook_path in typesof(/hook))
 		var/hook/hook = new hook_path
 		hooks[hook.name] = hook
@@ -47,7 +44,6 @@ var/global/list/hooks = list()
 		hook.Setup()
 
 /proc/CallHook(var/name as text, var/list/args)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/CallHook() called tick#: [world.time]")
 	var/hook/hook = hooks[name]
 	if (!hook)
 		//world.log << "WARNING: Hook with name " + name + " does not exist"

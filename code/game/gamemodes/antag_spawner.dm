@@ -5,11 +5,9 @@
 	var/used = 0
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/antag_spawner/proc/spawn_antag() called tick#: [world.time]")
 	return
 
 /obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/antag_spawner/proc/equip_antag() called tick#: [world.time]")
 	return
 
 /obj/item/weapon/antag_spawner/contract

@@ -32,7 +32,6 @@
 	update_icon()
 
 /obj/machinery/mommi_spawner/proc/canSpawn()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mommi_spawner/proc/canSpawn() called tick#: [world.time]")
 	return !(stat & NOPOWER) && !building && metal >= metalPerMoMMI
 
 /obj/machinery/mommi_spawner/process()
@@ -138,7 +137,6 @@
 			return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mommi_spawner/proc/makeMoMMI() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 
 	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi/soviet(T)

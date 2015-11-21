@@ -1,7 +1,6 @@
 datum/preferences
 	//The mob should have a gender you want before running this proc. Will run fine without H
 	proc/randomize_appearance_for(var/mob/living/carbon/human/H)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/randomize_appearance_for() called tick#: [world.time]")
 		if(H)
 			if(H.gender == MALE)
 				gender = MALE
@@ -21,7 +20,6 @@ datum/preferences
 
 
 	proc/randomize_hair_color(var/target = "hair")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/randomize_hair_color() called tick#: [world.time]")
 		if(prob (75) && target == "facial") // Chance to inherit hair color
 			r_facial = r_hair
 			g_facial = g_hair
@@ -82,7 +80,6 @@ datum/preferences
 				b_facial = blue
 
 	proc/randomize_eyes_color()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/randomize_eyes_color() called tick#: [world.time]")
 		var/red
 		var/green
 		var/blue
@@ -131,7 +128,6 @@ datum/preferences
 		b_eyes = blue
 
 	proc/blend_backpack(var/icon/clothes_s,var/backbag,var/satchel,var/backpack="backpack")
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/blend_backpack() called tick#: [world.time]")
 		switch(backbag)
 			if(2)
 				clothes_s.Blend(new /icon('icons/mob/back.dmi', backpack), ICON_OVERLAY)
@@ -143,7 +139,6 @@ datum/preferences
 
 
 	proc/update_preview_icon(var/for_observer=0)		//seriously. This is horrendous.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_preview_icon() called tick#: [world.time]")
 		preview_icon_front = null
 		preview_icon_side = null
 		preview_icon = null

@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_mutations_and_radiation() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 	if(getFireLoss())

@@ -49,7 +49,6 @@
 
 
 /obj/effect/datacore/proc/get_manifest(monochrome, OOC)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/datacore/proc/get_manifest() called tick#: [world.time]")
 	var/list/heads = new()
 	var/list/sec = new()
 	var/list/eng = new()
@@ -171,13 +170,11 @@ We can't just insert in HTML into the nanoUI so we need the raw data to play wit
 Instead of creating this list over and over when someone leaves their PDA open to the page
 we'll only update it when it changes.  The PDA_Manifest global list is zeroed out upon any change
 using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \using /obj/effect/datacore/proc/manifest_inject() called tick#: [world.time]")
 */
 
 var/global/list/PDA_Manifest = list()
 
 /obj/effect/datacore/proc/get_manifest_json()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/datacore/proc/get_manifest_json() called tick#: [world.time]")
 	if(PDA_Manifest.len)
 		return PDA_Manifest
 	var/heads[0]

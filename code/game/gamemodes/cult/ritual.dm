@@ -10,14 +10,12 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	set category = "Special Verbs"
 	set name = "Check Rune Words"
 	set desc = "Check the rune-word meaning"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/check_words() called tick#: [world.time]")
 	if(!cultwords["travel"])
 		runerandom()
 	for (var/word in engwords)
 		usr << "[cultwords[word]] is [word]"
 
 /proc/runerandom() //randomizes word meaning
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/runerandom() called tick#: [world.time]")
 	var/list/runewords= rnwords///"orkan" and "allaq" removed.
 	for (var/word in engwords)
 		cultwords[word] = pick(runewords)
@@ -187,7 +185,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 
 /obj/effect/rune/proc/fizzle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/fizzle() called tick#: [world.time]")
 	if(istype(src,/obj/effect/rune))
 		usr.say(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
 	else
@@ -197,7 +194,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	return
 
 /obj/effect/rune/proc/check_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/check_icon() called tick#: [world.time]")
 	icon = get_uristrune_cult(word1, word2, word3)
 
 /obj/item/weapon/tome
@@ -344,7 +340,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 /*
 /obj/item/weapon/tome/proc/edit_notes()     FUCK IT. Cant get it to work properly. - K0000
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tome/proc/edit_notes() called tick#: [world.time]")
 	world << "its been called! [usr]"
 	notedat = {"
 	<br><b>Word translation notes</b> <br>
@@ -429,7 +424,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 				[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 				"}
 //						call(/obj/item/weapon/tome/proc/edit_notes)()
-					//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//						call(/obj/item/weapon/tome/proc/edit_notes)() called tick#: [world.time]")
 					user << browse("[notedat]", "window=notes")
 					return
 		if(usr.get_active_hand() != src)

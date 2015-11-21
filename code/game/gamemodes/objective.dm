@@ -22,11 +22,9 @@ var/list/potential_theft_objectives=list(
 			explanation_text = text
 
 	proc/check_completion()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_completion() called tick#: [world.time]")
 		return completed
 
 	proc/find_target()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/find_target() called tick#: [world.time]")
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
 			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.z != map.zCentcomm) && (possible_target.current.stat != DEAD) && !(possible_target.assigned_role in bad_targets))
@@ -36,7 +34,6 @@ var/list/potential_theft_objectives=list(
 
 
 	proc/find_target_by_role(role, role_type = 0)//Option sets either to check assigned role or special role. Default to assigned.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/find_target_by_role() called tick#: [world.time]")
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.current.z != map.zCentcomm) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) && !(possible_target.assigned_role in bad_targets))
 				target = possible_target
@@ -552,11 +549,9 @@ var/list/potential_theft_objectives=list(
 		explanation_text = "Free Objective."
 
 	proc/format_explanation()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/format_explanation() called tick#: [world.time]")
 		return "Steal [steal_target.name]."
 
 	proc/select_target()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/select_target() called tick#: [world.time]")
 		var/list/possible_items_all = potential_theft_objectives[target_category]+"custom"
 		var/new_target = input("Select target:", "Objective target", null) as null|anything in possible_items_all
 		if (!new_target) return
@@ -583,7 +578,6 @@ var/list/potential_theft_objectives=list(
 
 /datum/objective/capture
 	proc/gen_amount_goal()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand(5,10)
 		explanation_text = "Accumulate [target_amount] capture points."
 		return target_amount
@@ -622,7 +616,6 @@ var/list/potential_theft_objectives=list(
 
 /datum/objective/blood
 	proc/gen_amount_goal(low = 150, high = 400)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand(low,high)
 		target_amount = round(round(target_amount/5)*5)
 		explanation_text = "Accumulate atleast [target_amount] units of blood in total."
@@ -636,7 +629,6 @@ var/list/potential_theft_objectives=list(
 			return 0
 /datum/objective/absorb
 	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gen_amount_goal() called tick#: [world.time]")
 		target_amount = rand (lowbound,highbound)
 		if (ticker)
 			var/n_p = 1 //autowin
@@ -698,10 +690,8 @@ var/list/potential_theft_objectives=list(
 		sacrifice //stolen from traitor target objective
 
 			proc/find_target() //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \			proc/find_target() called tick#: [world.time]")
 				var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
 
-				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\dar/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)() called tick#: [world.time]")
 
 				if(possible_targets.len > 0)
 					sacrifice_target = pick(possible_targets)

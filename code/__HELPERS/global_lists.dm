@@ -42,7 +42,6 @@ var/global/list/sec_hud_users = list() //list of all entities using a security H
 //////////////////////////
 
 /proc/make_datum_references_lists()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/make_datum_references_lists() called tick#: [world.time]")
 	var/list/paths
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = typesof(/datum/surgery_step)-/datum/surgery_step
@@ -55,7 +54,6 @@ var/global/list/sec_hud_users = list() //list of all entities using a security H
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/client/verb/debug_chemical_list()  called tick#: [world.time]")
 
 	for (var/reaction in chemical_reactions_list)
 		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"

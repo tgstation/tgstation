@@ -28,7 +28,6 @@
 	chargeoverlay = image("icon" = 'icons/mob/mob.dmi', "icon_state" = "sithlord")
 
 /spell/lightning/quicken_spell()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/quicken_spell() called tick#: [world.time]")
 	if(!can_improve(Sp_SPEED))
 		return 0
 
@@ -113,7 +112,6 @@
 
 // Listener for /atom/movable/on_moved
 /spell/lightning/proc/charged_click(var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/target_moved() called tick#: [world.time]")
 	var/event/E = args["event"]
 	if(!chargedkey)
 		E.handlers.Remove("\ref[src]:charged_click")

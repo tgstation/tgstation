@@ -11,7 +11,6 @@ var/const/tk_maxrange = 15
 	By default, emulate the user's unarmed attack
 */
 /atom/proc/attack_tk(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_tk() called tick#: [world.time]")
 	if(user.stat) return
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
@@ -24,7 +23,6 @@ var/const/tk_maxrange = 15
 	There are not a lot of defaults at this time, add more where appropriate.
 */
 /atom/proc/attack_self_tk(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_self_tk() called tick#: [world.time]")
 	return
 
 /obj/attack_tk(mob/user)
@@ -158,7 +156,6 @@ var/const/tk_maxrange = 15
 
 
 	proc/focus_object(var/obj/target, var/mob/living/user)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/focus_object() called tick#: [world.time]")
 		if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
 		if(target.anchored || !isturf(target.loc))
 			del src
@@ -170,7 +167,6 @@ var/const/tk_maxrange = 15
 
 
 	proc/apply_focus_overlay()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/apply_focus_overlay() called tick#: [world.time]")
 		if(!focus)	return
 		var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
 		O.name = "sparkles"
@@ -194,7 +190,6 @@ var/const/tk_maxrange = 15
 
 /*Not quite done likely needs to use something thats not get_step_to
 	proc/check_path()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_path() called tick#: [world.time]")
 		var/turf/ref = get_turf(src.loc)
 		var/turf/target = get_turf(focus.loc)
 		if(!ref || !target)	return 0

@@ -27,7 +27,6 @@
 	user << "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
 
 /obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/space/plasmaman/proc/Extinguish() called tick#: [world.time]")
 	var/mob/living/carbon/human/H=user
 	if(extinguishes_left)
 		if(next_extinguish > world.time)

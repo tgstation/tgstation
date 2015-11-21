@@ -5,7 +5,6 @@
 
 // The following procs are used to grab players for mobs produced by a seed (mostly for dionaea).
 /datum/seed/proc/handle_living_product(var/mob/living/host)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/handle_living_product() called tick#: [world.time]")
 	if(!host || !istype(host)) return
 
 	if(!product_requires_player)
@@ -30,7 +29,6 @@
 //poll="Someone is harvesting [display_name]. Would you like to play as one?"
 
 /datum/seed/proc/request_player(var/mob/living/host)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/request_player() called tick#: [world.time]")
 	if(!host)
 		return
 
@@ -67,7 +65,6 @@
 		transfer_personality(O.client, host)
 
 /datum/seed/proc/transfer_personality(var/client/player,var/mob/living/host)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/transfer_personality() called tick#: [world.time]")
 
 	//Something is wrong, abort.
 	if(!player || !host) return

@@ -41,5 +41,4 @@
 	chickchicky()
 
 /obj/item/device/maracas/proc/chickchicky()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/maracas/proc/chickchicky() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/misc/maracas.ogg', 50, 1)

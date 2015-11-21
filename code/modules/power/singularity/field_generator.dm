@@ -144,14 +144,12 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 
 /obj/machinery/field_generator/proc/turn_off()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/turn_off() called tick#: [world.time]")
 	active = 0
 	spawn(1)
 		src.cleanup()
 	update_icon()
 
 /obj/machinery/field_generator/proc/turn_on()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/turn_on() called tick#: [world.time]")
 	active = 1
 	warming_up = 1
 	spawn(1)
@@ -165,7 +163,6 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 
 /obj/machinery/field_generator/proc/calc_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/calc_power() called tick#: [world.time]")
 	if(Varpower)
 		return 1
 
@@ -190,7 +187,6 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
 /obj/machinery/field_generator/proc/draw_power(var/draw = 0, var/failsafe = 0, var/obj/machinery/field_generator/G = null, var/obj/machinery/field_generator/last = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/draw_power() called tick#: [world.time]")
 	if(Varpower)
 		return 1
 	if((G && G == src) || (failsafe >= 8))//Loopin, set fail
@@ -221,7 +217,6 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 
 /obj/machinery/field_generator/proc/start_fields()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/start_fields() called tick#: [world.time]")
 	if(!src.state == 2 || !anchored)
 		turn_off()
 		return
@@ -237,7 +232,6 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/setup_field() called tick#: [world.time]")
 	var/turf/T = src.loc
 	var/obj/machinery/field_generator/G
 	var/steps = 0
@@ -294,7 +288,6 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 
 /obj/machinery/field_generator/proc/cleanup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/field_generator/proc/cleanup() called tick#: [world.time]")
 	clean_up = 1
 	for (var/obj/effect/beam/B in beams)
 		if(!B)

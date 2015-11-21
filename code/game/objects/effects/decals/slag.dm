@@ -11,7 +11,6 @@
 	starting_materials = list()
 
 /obj/effect/decal/slag/proc/slaggify(var/obj/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/slag/proc/slaggify() called tick#: [world.time]")
 	// This is basically a crude recycler doohicky
 	if (O.recycle(materials))
 		if(melt_temperature==0)

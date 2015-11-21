@@ -134,7 +134,6 @@
 
 
 /obj/machinery/computer/curer/proc/createcure(var/datum/disease2/disease/virus2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/curer/proc/createcure() called tick#: [world.time]")
 	var/obj/item/weapon/cureimplanter/implanter = new /obj/item/weapon/cureimplanter(src.loc)
 	implanter.resistance = new /datum/disease2/resistance(dish.virus2)
 	if(probG("Virus curing",3))
@@ -144,7 +143,6 @@
 	state("The [src.name] Buzzes")
 
 /obj/machinery/computer/curer/proc/createvirus(var/datum/disease2/disease/virus2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/curer/proc/createvirus() called tick#: [world.time]")
 	var/obj/item/weapon/cureimplanter/implanter = new /obj/item/weapon/cureimplanter(src.loc)
 	implanter.name = "Viral implanter (MAJOR BIOHAZARD)"
 	implanter.virus2 = dish.virus2.getcopy()
@@ -153,6 +151,5 @@
 
 
 /obj/machinery/computer/curer/proc/state(var/msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/curer/proc/state() called tick#: [world.time]")
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\icon[src] <span class='notice'>[msg]</span>", 2)

@@ -15,13 +15,11 @@ var/global/media_receivers=list()
 	connect_frequency()
 
 /obj/machinery/media/receiver/proc/receive_broadcast(var/url="", var/start_time=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/receiver/proc/receive_broadcast() called tick#: [world.time]")
 	media_url = url
 	media_start_time = start_time
 	update_music()
 
 /obj/machinery/media/receiver/proc/connect_frequency()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/receiver/proc/connect_frequency() called tick#: [world.time]")
 	// This is basically media_receivers["[media_frequency]"] += src
 	var/list/receivers=list()
 	var/freq = num2text(media_frequency)
@@ -38,7 +36,6 @@ var/global/media_receivers=list()
 			receive_broadcast(B.media_url,B.media_start_time)
 
 /obj/machinery/media/receiver/proc/disconnect_frequency()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/receiver/proc/disconnect_frequency() called tick#: [world.time]")
 	var/list/receivers=list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_receivers)

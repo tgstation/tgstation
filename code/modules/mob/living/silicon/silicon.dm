@@ -28,25 +28,20 @@
 	return get_all_accesses()
 
 /mob/living/silicon/proc/cancelAlarm()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/cancelAlarm() called tick#: [world.time]")
 	return
 
 /mob/living/silicon/proc/triggerAlarm()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/triggerAlarm() called tick#: [world.time]")
 	return
 
 /mob/living/silicon/proc/show_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_laws() called tick#: [world.time]")
 	return
 
 /mob/living/silicon/proc/write_laws()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/write_laws() called tick#: [world.time]")
 	if(laws)
 		var/text = src.laws.write_laws()
 		return text
 
 /mob/living/silicon/proc/queueAlarm(var/message, var/type, var/incoming = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/queueAlarm() called tick#: [world.time]")
 	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
 	if(incoming)
 		alarms_to_show += message
@@ -145,7 +140,6 @@
 	..()
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/damage_mob() called tick#: [world.time]")
 	return
 
 /mob/living/silicon/IsAdvancedToolUser()
@@ -179,7 +173,6 @@
 	return 1*/
 
 /proc/islinked(var/mob/living/silicon/robot/bot, var/mob/living/silicon/ai/ai)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/islinked() called tick#: [world.time]")
 	if(!istype(bot) || !istype(ai))
 		return 0
 	if (bot.connected_ai == ai)
@@ -187,12 +180,10 @@
 	return 0
 
 /mob/living/silicon/proc/system_integrity()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/system_integrity() called tick#: [world.time]")
 	return round((health / maxHealth) * 100)
 
 // this function shows the health of a silicon in the Status panel
 /mob/living/silicon/proc/show_system_integrity()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_system_integrity() called tick#: [world.time]")
 	if(stat == CONSCIOUS)
 		stat(null, text("System integrity: [system_integrity()]%"))
 	else
@@ -200,18 +191,15 @@
 
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_malf_ai() called tick#: [world.time]")
 	return 0
 
 // this function displays the station time in the status panel
 /mob/living/silicon/proc/show_station_time()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_station_time() called tick#: [world.time]")
 	stat(null, "Station Time: [worldtime2text()]")
 
 
 // this function displays the shuttles ETA in the status panel if the shuttle has been called
 /mob/living/silicon/proc/show_emergency_shuttle_eta()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_emergency_shuttle_eta() called tick#: [world.time]")
 	if(emergency_shuttle.online && emergency_shuttle.location < 2)
 		var/timeleft = emergency_shuttle.timeleft()
 		if (timeleft)
@@ -229,7 +217,6 @@
 
 // this function displays the stations manifest in a separate window
 /mob/living/silicon/proc/show_station_manifest()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/proc/show_station_manifest() called tick#: [world.time]")
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
 	if(data_core)

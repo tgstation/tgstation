@@ -132,14 +132,12 @@
 	return
 
 /obj/structure/closet/statue/verb_toggleopen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/statue/verb_toggleopen()  called tick#: [world.time]")
 	return
 
 /obj/structure/closet/statue/update_icon()
 	return
 
 /obj/structure/closet/statue/proc/shatter(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/statue/proc/shatter() called tick#: [world.time]")
 	if (user)
 		user.dust()
 	dump_contents()

@@ -51,7 +51,6 @@
 
 ////////
 /mob/living/carbon/monkey/proc/update_inv_uniform(var/update_icons=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/update_inv_uniform() called tick#: [world.time]")
 	if(uniform)
 		var/t_state = uniform.item_state
 		if(!t_state)	t_state = uniform.icon_state
@@ -61,7 +60,6 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/monkey/proc/update_inv_hat(var/update_icons=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/update_inv_hat() called tick#: [world.time]")
 	if(hat)
 		var/t_state = hat.icon_state
 		overlays_standing[M_HAT_LAYER]	= image("icon" = 'icons/mob/monkey_head.dmi', "icon_state" = t_state)

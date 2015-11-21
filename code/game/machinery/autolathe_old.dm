@@ -121,7 +121,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 		SetLuminosity(0)
 
 /obj/machinery/autolathe/proc/wires_win(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/autolathe/proc/wires_win() called tick#: [world.time]")
 	var/dat as text
 	dat += "Autolathe Wires:<BR>"
 	for(var/wire in src.wires)
@@ -133,7 +132,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	onclose(user, "autolathe_hack")
 
 /obj/machinery/autolathe/proc/regular_win(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/autolathe/proc/regular_win() called tick#: [world.time]")
 	var/dat as text
 	dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
 	var/list/objs = list()

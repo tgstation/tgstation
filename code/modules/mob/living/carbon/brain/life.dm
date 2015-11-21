@@ -36,7 +36,6 @@
 
 /mob/living/carbon/brain/
 	proc/handle_mutations_and_radiation()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_mutations_and_radiation() called tick#: [world.time]")
 		if(flags & INVULNERABLE)
 			return
 
@@ -73,7 +72,6 @@
 
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_environment() called tick#: [world.time]")
 		if(!environment || (flags & INVULNERABLE))
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
@@ -94,7 +92,6 @@
 		return //TODO: DEFERRED
 
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_temperature_damage() called tick#: [world.time]")
 		if(status_flags & GODMODE) return
 
 		if(exposed_temperature > bodytemperature)
@@ -112,7 +109,6 @@
 
 	proc/handle_chemicals_in_body()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_chemicals_in_body() called tick#: [world.time]")
 
 		if(reagents) reagents.metabolize(src)
 
@@ -129,7 +125,6 @@
 
 
 	proc/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_status_updates() called tick#: [world.time]")
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -215,7 +210,6 @@
 
 	proc/handle_regular_hud_updates()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_hud_updates() called tick#: [world.time]")
 
 		if (stat == 2 || (M_XRAY in src.mutations))
 			sight |= SEE_TURFS

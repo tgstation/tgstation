@@ -22,14 +22,12 @@
 
 	//returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/tool_quality() called tick#: [world.time]")
 	for (var/T in allowed_tools)
 		if (istype(tool,T))
 			return allowed_tools[T]
 	return 0
 
 /datum/surgery_step/proc/check_anesthesia(var/mob/living/carbon/human/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/check_anesthesia() called tick#: [world.time]")
 	if( (target.sleeping>0 || target.stat))
 		return 1
 	if(prob(25)) // Pain is tolerable?  Pomf wanted this. - N3X
@@ -38,7 +36,6 @@
 
 	// Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/is_valid_mutantrace() called tick#: [world.time]")
 	if(!hasorgans(target))
 		return 0
 
@@ -56,12 +53,10 @@
 
 	// checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/can_use() called tick#: [world.time]")
 	return 0
 
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/begin_step() called tick#: [world.time]")
 	var/datum/organ/external/affected = target.get_organ(target_zone)
 	if(!affected)
 		return 0
@@ -81,18 +76,15 @@
 
 	// does stuff to end the step, which is normally print a message + do whatever this step changes
 /datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/end_step() called tick#: [world.time]")
 	if(istype(tool,/obj/item/weapon/scalpel/laser) || istype(tool,/obj/item/weapon/retractor/manager))
 		tool.icon_state = "[initial(tool.icon_state)]_off"
 	return
 
 	// stuff that happens when the step fails
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/proc/fail_step() called tick#: [world.time]")
 	return null
 
 proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/spread_germs_to_organ() called tick#: [world.time]")
 	if(!istype(user) || !istype(E)) return
 
 	var/germ_level = user.germ_level
@@ -102,7 +94,6 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/do_surgery() called tick#: [world.time]")
 	if(!istype(M,/mob/living/carbon/human))
 		return 0
 	if (user.a_intent == I_HURT)	//check for Hippocratic Oath
@@ -142,7 +133,6 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	return 0
 
 proc/sort_surgeries()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/sort_surgeries() called tick#: [world.time]")
 	var/gap = surgery_steps.len
 	var/swapped = 1
 	while (gap > 1 || swapped)

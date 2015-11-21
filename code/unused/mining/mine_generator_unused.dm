@@ -43,7 +43,6 @@
 
 
 /obj/effect/mine_generator/proc/gererateTargetLoc()  //this proc determines where the next square-room will end.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine_generator/proc/gererateTargetLoc() called tick#: [world.time]")
 	switch(mineDirection)
 		if(1)
 			randXParam = 0
@@ -122,7 +121,6 @@
 
 /obj/effect/mine_generator/proc/fillWithAsteroids()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine_generator/proc/fillWithAsteroids() called tick#: [world.time]")
 
 	if(last_loc)
 		start_loc = last_loc

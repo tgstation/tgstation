@@ -27,7 +27,6 @@
 					lostTarget(target)
 
 /obj/machinery/camera/proc/newTarget(var/mob/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/newTarget() called tick#: [world.time]")
 	if (istype(target, /mob/living/silicon/ai)) return 0
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
@@ -36,14 +35,12 @@
 	return 1
 
 /obj/machinery/camera/proc/lostTarget(var/mob/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/lostTarget() called tick#: [world.time]")
 	if (target in motionTargets)
 		motionTargets -= target
 	if (motionTargets.len == 0)
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/cancelAlarm() called tick#: [world.time]")
 	if (detectTime == -1)
 		for (var/mob/living/silicon/aiPlayer in player_list)
 			if (status) aiPlayer.cancelAlarm("Motion", areaMaster)
@@ -51,7 +48,6 @@
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/triggerAlarm() called tick#: [world.time]")
 	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		if (status) aiPlayer.triggerAlarm("Motion", areaMaster, src)

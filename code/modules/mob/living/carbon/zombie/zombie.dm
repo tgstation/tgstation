@@ -75,20 +75,17 @@
 
 
 	proc/set_attack()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_attack() called tick#: [world.time]")
 		state = 1
 		if(path_idle.len) path_idle = new/list()
 		trg_idle = null
 
 	proc/set_idle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_idle() called tick#: [world.time]")
 		state = 2
 		if (path_target.len) path_target = new/list()
 		target = null
 		frustration = 0
 
 	proc/set_null()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_null() called tick#: [world.time]")
 		state = 0
 		if (path_target.len) path_target = new/list()
 		if (path_idle.len) path_idle = new/list()
@@ -100,7 +97,6 @@
 		if(timestopped)
 			sleep(1)
 			continue
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 		//set background = 1
 		var/quick_move = 1
 		var/slow_move = 0
@@ -280,7 +276,6 @@
 
 
 	proc/idle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/idle() called tick#: [world.time]")
 		//set background = 1
 		var/quick_move = 0
 
@@ -302,19 +297,16 @@
 				idle()
 
 	proc/path_idle(var/atom/trg)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/path_idle() called tick#: [world.time]")
 		path_idle = AStar(src.loc, get_turf(trg), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, null, null)
 		path_idle = reverselist(path_idle)
 
 	proc/path_attack(var/atom/trg)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/path_attack() called tick#: [world.time]")
 		target = trg
 		path_target = AStar(src.loc, target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, null, null)
 		path_target = reverselist(path_target)
 
 
 	proc/healthcheck()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/healthcheck() called tick#: [world.time]")
 		return
 
 
@@ -378,7 +370,6 @@
 
 
 /mob/living/carbon/human/proc/Zombify()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/Zombify() called tick#: [world.time]")
 	if (src.monkeyizing)
 		return
 	update_icons() // update_clothing()
@@ -538,7 +529,6 @@ datum/reagent/zed
 */
 
 /client/proc/zombie_event()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/zombie_event() called tick#: [world.time]")
 	set category = "Special Verbs"
 	set name = "Spawn Zombies"
 

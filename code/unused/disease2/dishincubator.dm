@@ -172,6 +172,5 @@
 				toxins += 1
 
 	proc/state(var/msg)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/state() called tick#: [world.time]")
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\icon[src] <span class='notice'>[msg]</span>", 2)

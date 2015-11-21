@@ -103,7 +103,6 @@
 			src.speed = src.maximum_speed
 
 /obj/machinery/vehicle/verb/eject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/vehicle/verb/eject()  called tick#: [world.time]")
 	set src = usr.loc
 
 	if (usr.stat)
@@ -118,7 +117,6 @@
 	return
 
 /obj/machinery/vehicle/verb/board()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/vehicle/verb/board()  called tick#: [world.time]")
 	set src in oview(1)
 
 	if (usr.stat)
@@ -136,7 +134,6 @@
 	M.loc = src
 
 /obj/machinery/vehicle/verb/unload(var/atom/movable/A in src)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/vehicle/verb/unload()  called tick#: [world.time]")
 	set src in oview(1)
 
 	if (usr.stat)
@@ -155,7 +152,6 @@
 				M.client.eye = M
 
 /obj/machinery/vehicle/verb/load()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/vehicle/verb/load()  called tick#: [world.time]")
 	set src in oview(1)
 
 	if (usr.stat)
@@ -202,7 +198,6 @@
 		return
 
 	proc/inspace()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/inspace() called tick#: [world.time]")
 		if(istype(src.loc, /turf/space))
 			return 1
 		return 0
@@ -220,13 +215,11 @@
 		return
 
 	proc/return_pressure()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/return_pressure() called tick#: [world.time]")
 		if(src.internal_tank)
 			return src.internal_tank.return_pressure()
 		return 0
 
 	proc/return_temperature()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/return_temperature() called tick#: [world.time]")
 		if(src.internal_tank)
 			return src.internal_tank.return_temperature()
 		return 0
@@ -242,7 +235,6 @@
 		return
 
 	proc/take_damage(value)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/take_damage() called tick#: [world.time]")
 		if(isnum(value))
 			src.health -= value
 			if(src.health>0)
@@ -256,11 +248,9 @@
 		return
 
 	proc/get_desired_speed()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_desired_speed() called tick#: [world.time]")
 		return (pr_inertial_movement.max_delay-pr_inertial_movement.desired_delay)/(pr_inertial_movement.max_delay-pr_inertial_movement.min_delay)*100
 
 	proc/get_current_speed()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_current_speed() called tick#: [world.time]")
 		return (pr_inertial_movement.max_delay-pr_inertial_movement.cur_delay)/(pr_inertial_movement.max_delay-pr_inertial_movement.min_delay)*100
 
 /obj/machinery/vehicle/space_ship/relaymove(mob/user as mob, direction)
@@ -319,7 +309,6 @@
 		return
 
 	proc/set_desired_delay(var/num as num)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_desired_delay() called tick#: [world.time]")
 		src.desired_delay = num
 		return
 

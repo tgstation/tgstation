@@ -20,12 +20,9 @@
 	src.owner = R
 
 /datum/robot_component/proc/install()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/robot_component/proc/install() called tick#: [world.time]")
 /datum/robot_component/proc/uninstall()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/robot_component/proc/uninstall() called tick#: [world.time]")
 
 /datum/robot_component/proc/destroy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/robot_component/proc/destroy() called tick#: [world.time]")
 	if(wrapped)
 		del wrapped
 
@@ -37,7 +34,6 @@
 	uninstall()
 
 /datum/robot_component/proc/take_damage(brute, electronics, sharp)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/robot_component/proc/take_damage() called tick#: [world.time]")
 	if(installed != 1) return
 
 	brute_damage += brute
@@ -46,7 +42,6 @@
 	if(brute_damage + electronics_damage >= max_damage) destroy()
 
 /datum/robot_component/proc/heal_damage(brute, electronics)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/robot_component/proc/heal_damage() called tick#: [world.time]")
 	if(installed != 1)
 		// If it's not installed, can't repair it.
 		return 0
@@ -55,12 +50,10 @@
 	electronics_damage = max(0, electronics_damage - electronics)
 
 /datum/robot_component/proc/is_powered()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/robot_component/proc/is_powered() called tick#: [world.time]")
 	return (installed == 1) && (brute_damage + electronics_damage < max_damage) && (!energy_consumption || powered)
 
 
 /datum/robot_component/proc/consume_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/robot_component/proc/consume_power() called tick#: [world.time]")
 	if(toggled == 0)
 		powered = 0
 		return
@@ -116,7 +109,6 @@
 	max_damage = 30
 
 /mob/living/silicon/robot/proc/initialize_components()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/initialize_components() called tick#: [world.time]")
 	// This only initializes the components, it doesn't set them to installed.
 
 	components["actuator"] = new/datum/robot_component/actuator(src)
@@ -128,7 +120,6 @@
 	components["armour"] = new/datum/robot_component/armour(src)
 
 /mob/living/silicon/robot/proc/is_component_functioning(module_name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/is_component_functioning() called tick#: [world.time]")
 	var/datum/robot_component/C = components[module_name]
 	return C && C.installed == 1 && C.toggled && C.is_powered()
 

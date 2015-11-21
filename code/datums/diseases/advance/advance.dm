@@ -124,13 +124,11 @@ var/list/advance_cures = 	list(
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(var/datum/disease/advance/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/Mix() called tick#: [world.time]")
 	if(!(src.IsSame(D)))
 		for(var/datum/symptom/S in shuffle(D.symptoms))
 			AddSymptom(new S.type)
 
 /datum/disease/advance/proc/HasSymptom(var/datum/symptom/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/HasSymptom() called tick#: [world.time]")
 	for(var/datum/symptom/symp in symptoms)
 		if(symp.id == S.id)
 			return 1
@@ -139,7 +137,6 @@ var/list/advance_cures = 	list(
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(var/type_level_limit = RANDOM_STARTING_LEVEL, var/amount_get = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/GenerateSymptoms() called tick#: [world.time]")
 
 	var/list/generated = list() // Symptoms we generated.
 
@@ -170,7 +167,6 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(var/new_name = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/Refresh() called tick#: [world.time]")
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
@@ -187,7 +183,6 @@ var/list/advance_cures = 	list(
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/GenerateProperties() called tick#: [world.time]")
 
 	if(!symptoms || !symptoms.len)
 		CRASH("We did not have any symptoms before generating properties.")
@@ -208,7 +203,6 @@ var/list/advance_cures = 	list(
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties(var/list/properties = list())
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/AssignProperties() called tick#: [world.time]")
 
 	if(properties && properties.len)
 
@@ -226,7 +220,6 @@ var/list/advance_cures = 	list(
 
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(var/spread_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/SetSpread() called tick#: [world.time]")
 	switch(spread_id)
 
 		if(NON_CONTAGIOUS)
@@ -245,7 +238,6 @@ var/list/advance_cures = 	list(
 
 /datum/disease/advance/proc/SetSeverity(var/level_sev)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/SetSeverity() called tick#: [world.time]")
 
 	switch(level_sev)
 
@@ -267,7 +259,6 @@ var/list/advance_cures = 	list(
 
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/GenerateCure() called tick#: [world.time]")
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
@@ -282,7 +273,6 @@ var/list/advance_cures = 	list(
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(var/level = 2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/Evolve() called tick#: [world.time]")
 	var/s = safepick(GenerateSymptoms(level, 1))
 	if(s)
 		AddSymptom(s)
@@ -291,7 +281,6 @@ var/list/advance_cures = 	list(
 
 // Randomly remove a symptom.
 /datum/disease/advance/proc/Devolve()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/Devolve() called tick#: [world.time]")
 	if(symptoms.len > 1)
 		var/s = safepick(symptoms)
 		if(s)
@@ -301,14 +290,12 @@ var/list/advance_cures = 	list(
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(var/name = "Unknown")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/AssignName() called tick#: [world.time]")
 	src.name = name
 	return
 
 // Return a unique ID of the disease.
 /datum/disease/advance/proc/GetDiseaseID()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/GetDiseaseID() called tick#: [world.time]")
 
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
@@ -323,7 +310,6 @@ var/list/advance_cures = 	list(
 // we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(var/datum/symptom/S)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/AddSymptom() called tick#: [world.time]")
 
 	if(HasSymptom(S))
 		return
@@ -337,7 +323,6 @@ var/list/advance_cures = 	list(
 
 // Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(var/datum/symptom/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/advance/proc/RemoveSymptom() called tick#: [world.time]")
 	symptoms -= S
 	return
 
@@ -350,7 +335,6 @@ var/list/advance_cures = 	list(
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Advance_Mix() called tick#: [world.time]")
 
 	//world << "Mixing!!!!"
 
@@ -383,7 +367,6 @@ var/list/advance_cures = 	list(
 	return to_return
 
 /proc/SetViruses(var/datum/reagent/R, var/list/data)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SetViruses() called tick#: [world.time]")
 	if(data)
 		var/list/preserve = list()
 		if(istype(data) && data["viruses"])
@@ -396,7 +379,6 @@ var/list/advance_cures = 	list(
 			R.data["viruses"] = preserve
 
 /proc/AdminCreateVirus(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/AdminCreateVirus() called tick#: [world.time]")
 	var/i = 5
 
 	var/datum/disease/advance/D = new(0, null)
@@ -440,7 +422,6 @@ var/list/advance_cures = 	list(
 /*
 /mob/verb/test()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/mob/verb/test()  called tick#: [world.time]")
 
 	for(var/datum/disease/D in active_diseases)
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"

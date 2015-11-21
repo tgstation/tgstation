@@ -38,7 +38,6 @@
 			user << "<span class='warning'>It is already emagged!</span>"
 
 /obj/item/device/taperecorder/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/taperecorder/proc/explode() called tick#: [world.time]")
 	var/turf/T = get_turf(loc)
 	if(ismob(loc))
 		var/mob/M = loc
@@ -52,7 +51,6 @@
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/taperecorder/verb/record()  called tick#: [world.time]")
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
@@ -80,7 +78,6 @@
 /obj/item/device/taperecorder/verb/stop()
 	set name = "Stop"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/taperecorder/verb/stop()  called tick#: [world.time]")
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
@@ -104,7 +101,6 @@
 /obj/item/device/taperecorder/verb/clear_memory()
 	set name = "Clear Memory"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/taperecorder/verb/clear_memory()  called tick#: [world.time]")
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
@@ -126,7 +122,6 @@
 	set name = "Playback Memory"
 	set category = "Object"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/taperecorder/verb/playback_memory()  called tick#: [world.time]")
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
@@ -177,7 +172,6 @@
 /obj/item/device/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/taperecorder/verb/print_transcript()  called tick#: [world.time]")
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
@@ -246,5 +240,4 @@
 			return
 
 /obj/item/device/taperecorder/proc/recorder_message(var/msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/taperecorder/proc/recorder_message() called tick#: [world.time]")
 	visible_message("<font color=Maroon><B>Tape Recorder</B>: [msg]</font>")

@@ -579,7 +579,6 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 
 //Return 1 if the atom is to be filtered of the line.
 /obj/machinery/sorting_machine/proc/sort(var/atom/movable/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sorting_machine/proc/sort() called tick#: [world.time]")
 	return prob(50) //Henk because the base sorting machine shouldn't ever exist anyways.
 
 //RECYCLING SORTING MACHINE.

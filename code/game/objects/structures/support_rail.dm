@@ -30,7 +30,6 @@
 	return
 
 /obj/structure/support_rail/proc/letgo()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/support_rail/proc/letgo() called tick#: [world.time]")
 	supported_mob.update_canmove()
 	supported_mob.anchored = 0
 	supported_mob.visible_message(

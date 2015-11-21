@@ -14,7 +14,6 @@ var/global/Holiday = null
 
 // sets up the Holiday global variable. Shouldbe called on game configuration or something.
 /proc/Get_Holiday()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Get_Holiday() called tick#: [world.time]")
 	if(!Holiday)  //  Holiday stuff was not enabled in the config!
 		return
 
@@ -165,7 +164,6 @@ var/global/Holiday = null
 	set name = ".Set Holiday"
 	set category = "Fun"
 	set desc = "Force-set the Holiday variable to make the game think it's a certain day."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Set_Holiday() called tick#: [world.time]")
 	if(!check_rights(R_SERVER))
 		return
 
@@ -183,7 +181,6 @@ var/global/Holiday = null
 
 // Run at the  start of a round
 /proc/Holiday_Game_Start()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Holiday_Game_Start() called tick#: [world.time]")
 	if(Holiday)
 		world << "<font color='blue'>and...</font>"
 		if(Holiday == "Autism Awareness Day")
@@ -199,7 +196,6 @@ var/global/Holiday = null
 
 // Nested in the random events loop. Will be triggered every 2 minutes
 /proc/Holiday_Random_Event()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Holiday_Random_Event() called tick#: [world.time]")
 	switch(Holiday) // special holidays
 		if("",null)	// no Holiday today! Back to work!
 			return

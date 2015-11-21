@@ -118,7 +118,6 @@
 	set name = "Remove label"
 	set src in view(1)
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/remove_label() called tick#: [world.time]")
 	var/atom/A = src
 	A.name = replacetext(A.name, A.labeled, "")
 	A.labeled = null
@@ -128,7 +127,6 @@
 	A.verbs -= /atom/proc/remove_label
 
 /atom/proc/harm_label_update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/harm_label_update() called tick#: [world.time]")
 	return //To be assigned (or not, in most cases) on a per-item basis.
 
 /obj/item/device/label_roll

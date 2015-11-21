@@ -233,7 +233,6 @@
 			user << "<span class='warning'>Remove [auth_card] first.</span>"
 
 /obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suspension_gen/proc/attempt_unlock() called tick#: [world.time]")
 	if(!open)
 		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
 			//put sparks here
@@ -247,7 +246,6 @@
 
 //checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suspension_gen/proc/activate() called tick#: [world.time]")
 	//depending on the field type, we might pickup certain items
 	var/turf/T = get_turf(get_step(src,dir))
 	var/success = 0
@@ -310,7 +308,6 @@
 			suspension_field.icon_state = "shield2"
 
 /obj/machinery/suspension_gen/proc/deactivate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suspension_gen/proc/deactivate() called tick#: [world.time]")
 	//drop anything we picked up
 	var/turf/T = get_turf(suspension_field)
 
@@ -331,7 +328,6 @@
 	set src in view(1)
 	set name = "Rotate suspension gen (clockwise)"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/suspension_gen/verb/toggle()  called tick#: [world.time]")
 
 	if(anchored)
 		usr << "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>"

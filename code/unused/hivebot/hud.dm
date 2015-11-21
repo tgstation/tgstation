@@ -1,7 +1,6 @@
 
 /obj/hud/proc/hivebot_hud()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/hud/proc/hivebot_hud() called tick#: [world.time]")
 
 	src.adding = list(  )
 	src.other = list(  )

@@ -152,13 +152,11 @@
 	return
 
 /obj/structure/snow/cosmic/proc/update_env_air()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow/cosmic/proc/update_env_air() called tick#: [world.time]")
 	var/turf/simulated/TS = get_turf(src)
 	if(!istype(TS))	return
 	env = TS.return_air()
 
 /obj/structure/snow/cosmic/proc/spread()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow/cosmic/proc/spread() called tick#: [world.time]")
 	while(src && !src.gcDestroyed)
 		if(snow_tiles >= COSMICFREEZE_END)	return
 		update_env_air()
@@ -178,7 +176,6 @@
 	return
 
 /obj/structure/snow/cosmic/proc/snowMelt()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow/cosmic/proc/snowMelt() called tick#: [world.time]")
 	var/turf/simulated/TS = get_turf(src)
 	if(!istype(TS))    return
 	TS.wet(300)
@@ -192,7 +189,6 @@
 //maybe push the delay to something like 50 (or find a way to cut
 //out some of these checks)
 /obj/structure/snow/cosmic/proc/canSpreadTo(turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow/cosmic/proc/canSpreadTo() called tick#: [world.time]")
 	if(is_type_in_list(T,block_spread_turf)) return 0
 	if(T.density) return 0
 
@@ -221,7 +217,6 @@
 	return 1
 
 /obj/structure/snow/cosmic/proc/chill()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow/cosmic/proc/chill() called tick#: [world.time]")
 	while(src && !src.gcDestroyed)
 		if(snow_tiles >= COSMICFREEZE_END)	return
 		if(env.temperature > COSMICSNOW_MINIMALTEMP)//the snow will slowly lower the temperature until -40?C.
@@ -260,7 +255,6 @@
 	return ..()
 
 /obj/item/stack/sheet/snow/proc/remove_snowball()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/sheet/snow/proc/remove_snowball() called tick#: [world.time]")
 	if(src && (src.loc == spawn_loc) && istype(src.loc,/turf))
 		qdel(src)
 
@@ -415,7 +409,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 		growing()
 
 /obj/structure/snow_flora/sappling/proc/growing()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow_flora/sappling/proc/growing() called tick#: [world.time]")
 	/* Performance.
 	while(src && !src.gcDestroyed)
 
@@ -497,7 +490,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 		idle()
 
 /obj/structure/snow_flora/tree/proc/idle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/snow_flora/tree/proc/idle() called tick#: [world.time]")
 	/* Performance
 	while(src && !src.gcDestroyed)
 

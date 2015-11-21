@@ -70,7 +70,6 @@
 	..()
 
 /mob/living/simple_animal/hostile/slime/proc/calm()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")
 	var/calmed_type = /mob/living/carbon/slime
 	if(colour != "grey")
 		var/path_end = replacetext(colour, " ", "")

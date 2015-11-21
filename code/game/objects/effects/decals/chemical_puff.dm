@@ -18,7 +18,6 @@
 
 // Reacts with the current turf and its contents
 /obj/effect/decal/chemical_puff/proc/react(var/iteration_delay = 2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/chemical_puff/proc/react() called tick#: [world.time]")
 	var/turf/cur_turf = get_turf(src)
 	reagents.reaction(cur_turf)
 

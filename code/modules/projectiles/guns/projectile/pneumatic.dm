@@ -29,7 +29,6 @@
 	set name = "Set valve pressure"
 	set category = "Object"
 	set src in range(0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/pneumatic/verb/set_pressure()  called tick#: [world.time]")
 	var/N = input("Percentage of tank used per shot:","[src]") as null|anything in possible_pressure_amounts
 	if (N)
 		pressure_setting = N
@@ -41,7 +40,6 @@
 	set name = "Eject tank"
 	set category = "Object"
 	set src in range(0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/pneumatic/verb/eject_tank()  called tick#: [world.time]")
 
 	if(tank)
 		usr << "You twist the valve and pop the tank out of [src]."
@@ -103,7 +101,6 @@
 
 /obj/item/weapon/storage/pneumatic/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/pneumatic/proc/Fire() called tick#: [world.time]")
 
 	if (!tank)
 		user << "There is no gas tank in [src]!"

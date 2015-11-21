@@ -7,7 +7,6 @@ client/proc/antag_madness(var/mob/M in mob_list)
 	set desc = "Turns the target player into a random fully geared antag."
 	set category = "Fun"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/antag_madness() called tick#: [world.time]")
 
 	if(!holder)
 		return
@@ -73,7 +72,6 @@ client/proc/antag_madness(var/mob/M in mob_list)
 	feedback_add_details("admin_verb","AM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus() called tick#: [world.time]")
 	if(!M.mind)
 		return
 
@@ -113,7 +111,6 @@ client/proc/antag_madness(var/mob/M in mob_list)
 	M << "<span class='danger'>You get the feeling that you're not the only one who remembered his true origin. Will they be your allies or your foes? That is for you to decide.</span>"
 
 /proc/create_madness(var/mob/living/carbon/human/M, var/choice)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_madness() called tick#: [world.time]")
 	if (M.mind.assigned_role == "Clown")
 		M << "The adminbus has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 		M.mutations.Remove(M_CLUMSY)

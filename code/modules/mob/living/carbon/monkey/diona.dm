@@ -42,7 +42,6 @@
 	set category = "Diona"
 	set name = "Fertilize plant"
 	set desc = "Turn your food into nutrients for plants."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/diona/verb/fertilize_plant()  called tick#: [world.time]")
 
 	var/list/trays = list()
 	for(var/obj/machinery/portable_atmospherics/hydroponics/tray in range(1))
@@ -63,7 +62,6 @@
 	set category = "Diona"
 	set name = "Eat Weeds"
 	set desc = "Clean the weeds out of soil or a hydroponics tray."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/diona/verb/eat_weeds()  called tick#: [world.time]")
 
 	var/list/trays = list()
 	for(var/obj/machinery/portable_atmospherics/hydroponics/tray in range(1))
@@ -84,7 +82,6 @@
 	set category = "Diona"
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/diona/verb/evolve()  called tick#: [world.time]")
 
 	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
 		src << alert("You are currently not whitelisted to play an adult Diona.")
@@ -134,7 +131,6 @@
 	set category = "Diona"
 	set name = "Take Blood Sample"
 	set desc = "Take a blood sample from a suitable donor to help understand those around you and evolve."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/diona/verb/steal_blood()  called tick#: [world.time]")
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
@@ -156,7 +152,6 @@
 
 /mob/living/carbon/monkey/diona/proc/update_progression()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/diona/proc/update_progression() called tick#: [world.time]")
 
 	if(!donors.len)
 		return

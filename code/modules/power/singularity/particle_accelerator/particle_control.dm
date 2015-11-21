@@ -122,13 +122,11 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/strength_change()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/strength_change() called tick#: [world.time]")
 	for(var/obj/structure/particle_accelerator/part in connected_parts)
 		part.strength = strength
 		part.update_icon()
 
 /obj/machinery/particle_accelerator/control_box/proc/add_strength(var/s)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/add_strength() called tick#: [world.time]")
 	if(assembled)
 		strength++
 		if(strength > strength_upper_limit)
@@ -140,7 +138,6 @@
 		strength_change()
 
 /obj/machinery/particle_accelerator/control_box/proc/remove_strength(var/s)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/remove_strength() called tick#: [world.time]")
 	if(assembled)
 		strength--
 		if(strength < 0)
@@ -180,7 +177,6 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/part_scan()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/part_scan() called tick#: [world.time]")
 	for(var/obj/structure/particle_accelerator/fuel_chamber/F in orange(1,src))
 		src.dir = F.dir
 	connected_parts = list()
@@ -218,7 +214,6 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(var/turf/T, var/type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/check_part() called tick#: [world.time]")
 	if(!(T)||!(type))
 		return 0
 	var/obj/structure/particle_accelerator/PA = locate(/obj/structure/particle_accelerator) in T
@@ -231,7 +226,6 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/control_box/proc/toggle_power() called tick#: [world.time]")
 	src.active = !src.active
 	investigation_log(I_SINGULO,"turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? usr.key : "outside forces"]")
 	if (active)

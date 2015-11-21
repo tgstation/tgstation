@@ -20,7 +20,6 @@
 	src.icon = I
 
 /obj/item/weapon/reagent_containers/food/snacks/snackbar/proc/update_name()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/snackbar/proc/update_name() called tick#: [world.time]")
 	var/newname = ""
 	var/i = 0
 	for(var/datum/reagent/r in reagents.reagent_list)

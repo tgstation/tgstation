@@ -257,7 +257,6 @@
 		)
 
 /spell/targeted/eat/proc/doHeal(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/eat/proc/doHeal() called tick#: [world.time]")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
 		for(var/name in H.organs_by_name)

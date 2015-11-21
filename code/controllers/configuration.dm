@@ -190,7 +190,6 @@
 	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/configuration/proc/load() called tick#: [world.time]")
 	var/list/Lines = file2list(filename)
 
 	for(var/t in Lines)
@@ -592,7 +591,6 @@
 					diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/loadsql(filename)  // -- TLE
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/configuration/proc/loadsql() called tick#: [world.time]")
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue
@@ -639,7 +637,6 @@
 				diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/loadforumsql(filename)  // -- TLE
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/configuration/proc/loadforumsql() called tick#: [world.time]")
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue
@@ -682,7 +679,6 @@
 				diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/pick_mode(mode_name)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/configuration/proc/pick_mode() called tick#: [world.time]")
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
@@ -693,7 +689,6 @@
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/configuration/proc/get_runnable_modes() called tick#: [world.time]")
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()

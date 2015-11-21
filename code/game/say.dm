@@ -32,7 +32,6 @@ var/list/freqtoname = list(
 )
 
 /atom/movable/proc/say(message, var/datum/language/speaking, var/atom/movable/radio=src) //so we can force nonmobs to speak a certain language
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/say() called tick#: [world.time]")
 	if(!can_speak())
 		return
 	if(message == "" || !message)
@@ -46,11 +45,9 @@ var/list/freqtoname = list(
 	return
 
 /atom/movable/proc/can_speak()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/can_speak() called tick#: [world.time]")
 	return 1
 
 /atom/movable/proc/send_speech(var/datum/speech/speech, var/range=7)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/send_speech() called tick#: [world.time]")
 	say_testing(src, "/atom/movable/proc/send_speech() start, msg = [speech.message]; message_range = [range]; language = [speech.language ? speech.language.name : "None"];")
 	if(isnull(range))
 		range = 7
@@ -139,7 +136,6 @@ var/list/freqtoname = list(
 	return ""
 
 /atom/movable/proc/say_quote(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/say_quote() called tick#: [world.time]")
 	if(!text)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
@@ -208,14 +204,12 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 
 
 /proc/get_radio_span(freq)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_radio_span() called tick#: [world.time]")
 	var/returntext = freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"
 
 /proc/get_radio_name(freq)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_radio_name() called tick#: [world.time]")
 	var/returntext = radiochannelsreverse["[freq]"]
 	if(returntext)
 		return returntext
@@ -223,11 +217,9 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 
 /* NO YOU FOOL
 /proc/attach_spans(input, list/spans)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/attach_spans() called tick#: [world.time]")
 	return "[message_spans(spans)][input]</span>"
 
 /proc/message_spans(list/spans)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/message_spans() called tick#: [world.time]")
 	var/output = "<SPAN CLASS='"
 
 	for(var/span in spans)
@@ -242,23 +234,19 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
  * The "voice" of the thing that's speaking.  Shows up as name.
  */
 /atom/movable/proc/GetVoice()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetVoice() called tick#: [world.time]")
 	return name
 
 /atom/movable/proc/IsVocal()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/IsVocal() called tick#: [world.time]")
 	return 1
 
 /**
  * The "voice" of the thing that's speaking.  Shows up as name.
  */
 /atom/movable/proc/get_alt_name()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/get_alt_name() called tick#: [world.time]")
 	return
 
 //these exist mostly to deal with the AIs hrefs and job stuff.
 /atom/movable/proc/GetJob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetJob() called tick#: [world.time]")
 	return
 
 /**
@@ -306,7 +294,6 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 	..("job", "faketrack", "source", "radio")
 
 proc/handle_render(var/mob,var/message,var/speaker)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/handle_render() called tick#: [world.time]")
 	if(istype(mob, /mob/new_player)) return //One extra layer of sanity
 	if(istype(mob,/mob/dead/observer))
 		var/reference = "<a href='?src=\ref[mob];follow=\ref[speaker]'>(Follow)</a> "
@@ -318,7 +305,6 @@ proc/handle_render(var/mob,var/message,var/speaker)
 var/global/resethearers = 0
 
 /proc/sethearing()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sethearing() called tick#: [world.time]")
 	var/atom/A
 	for(var/mob/virtualhearer/VH in virtualhearers)
 		if(isnull(VH.attached))
@@ -330,7 +316,6 @@ var/global/resethearers = 0
 
 // Returns a list of hearers in range of R from source. Used in saycode.
 /proc/get_hearers_in_view(var/R, var/atom/source)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_hearers_in_view() called tick#: [world.time]")
 	if(world.time>resethearers) sethearing()
 
 	var/turf/T = get_turf(source)
@@ -346,7 +331,6 @@ var/global/resethearers = 0
  * Returns a list of mobs who can hear any of the radios given in @radios.
  */
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_mobs_in_radio_ranges() called tick#: [world.time]")
 	if(world.time>resethearers) sethearing()
 
 	. = new/list()
@@ -361,7 +345,6 @@ var/global/resethearers = 0
 
 /* Unused
 /proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_movables_in_radio_ranges() called tick#: [world.time]")
 	. = new/list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/i = 1; i <= radios.len; i++)
@@ -374,7 +357,6 @@ var/global/resethearers = 0
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
 /proc/recursive_hear_check(atom/O)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/recursive_hear_check() called tick#: [world.time]")
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
 	var/found_atoms = list()
@@ -401,7 +383,6 @@ Even further legacy saycode
 
 /proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/recursive_mob_check() called tick#: [world.time]")
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()

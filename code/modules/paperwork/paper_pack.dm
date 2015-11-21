@@ -38,7 +38,6 @@
 		usepaper(1)
 
 /obj/item/weapon/paper_pack/proc/usepaper(var/sheetcount = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper_pack/proc/usepaper() called tick#: [world.time]")
 	var/usedpaper = 0 //tracks the actual paper removed
 	if(sheetcount && sheetcount <= amount)
 		usedpaper = sheetcount
@@ -72,7 +71,6 @@
 	set name = "Untie Paper Pack"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/paper_pack/verb/ribbontie()  called tick#: [world.time]")
 
 	if(amount <= 5) //lag protection and general nonsense avoidance. Could be reduced, but for now just lets you empty it (why you would do this, I don't know)
 		for(var/i = 1; i <= amount; i++)

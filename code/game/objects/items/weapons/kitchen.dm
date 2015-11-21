@@ -97,7 +97,6 @@
 		user.show_message("It has a forkful of [loaded_food_name] on it.")
 
 /obj/item/weapon/kitchen/utensil/fork/proc/load_food(obj/item/weapon/reagent_containers/food/snacks/snack, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/kitchen/utensil/fork/proc/load_food() called tick#: [world.time]")
 	if(!snack || !user || !istype(snack) || !istype(user))
 		return
 
@@ -454,7 +453,6 @@
 ===============~~~~~================================~~~~~====================
 */
 /obj/item/weapon/tray/proc/calc_carry()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tray/proc/calc_carry() called tick#: [world.time]")
 	// calculate the weight of the items on the tray
 	var/val = 0 // value to return
 

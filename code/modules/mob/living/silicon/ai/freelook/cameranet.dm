@@ -15,7 +15,6 @@ var/datum/cameranet/cameranet = new()
 
 // Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/chunkGenerated() called tick#: [world.time]")
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 	var/key = "[x],[y],[z]"
@@ -24,7 +23,6 @@ var/datum/cameranet/cameranet = new()
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/cameranet/proc/getCameraChunk(x, y, z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/getCameraChunk() called tick#: [world.time]")
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 	var/key = "[x],[y],[z]"
@@ -36,7 +34,6 @@ var/datum/cameranet/cameranet = new()
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
 /datum/cameranet/proc/visibility(mob/camera/aiEye/ai)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/visibility() called tick#: [world.time]")
 	// 0xf = 15
 	var/x1 = max(0, ai.x - 16) & ~(CHUNK_SIZE - 1)
 	var/y1 = max(0, ai.y - 16) & ~(CHUNK_SIZE - 1)
@@ -64,14 +61,12 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/updateVisibility(atom/A, var/opacity_check = 1)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/updateVisibility() called tick#: [world.time]")
 
 	if(!ticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
 
 /datum/cameranet/proc/updateChunk(x, y, z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/updateChunk() called tick#: [world.time]")
 	// 0xf = 15
 	if(!chunkGenerated(x, y, z))
 		return
@@ -81,21 +76,18 @@ var/datum/cameranet/cameranet = new()
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/removeCamera() called tick#: [world.time]")
 	if(c.can_use())
 		majorChunkChange(c, 0)
 
 // Add a camera to a chunk.
 
 /datum/cameranet/proc/addCamera(obj/machinery/camera/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/addCamera() called tick#: [world.time]")
 	if(c.can_use())
 		majorChunkChange(c, 1)
 
 // Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
 
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/updatePortableCamera() called tick#: [world.time]")
 	if(c.can_use())
 		majorChunkChange(c, 1)
 	//else
@@ -108,7 +100,6 @@ var/datum/cameranet/cameranet = new()
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
 /datum/cameranet/proc/majorChunkChange(atom/c, var/choice)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/majorChunkChange() called tick#: [world.time]")
 	// 0xf = 15
 	if(!c)
 		return
@@ -138,7 +129,6 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/checkCameraVis(mob/living/target as mob)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/checkCameraVis() called tick#: [world.time]")
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
@@ -146,7 +136,6 @@ var/datum/cameranet/cameranet = new()
 
 
 /datum/cameranet/proc/checkTurfVis(var/turf/position)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/cameranet/proc/checkTurfVis() called tick#: [world.time]")
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)
@@ -159,7 +148,6 @@ var/datum/cameranet/cameranet = new()
 // Debug verb for VVing the chunk that the turf is in.
 /*
 /turf/verb/view_chunk()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/turf/verb/view_chunk()  called tick#: [world.time]")
 	set src in world
 
 	if(cameranet.chunkGenerated(x, y, z))

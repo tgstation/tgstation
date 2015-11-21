@@ -5,7 +5,6 @@ var/minZ = 2
 // (such as mining base => admin station)
 // Note that this assumes the ship's top is at z=1 and bottom at z=4
 /obj/item/weapon/tank/jetpack/proc/move_z(cardinal, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/jetpack/proc/move_z() called tick#: [world.time]")
 	if (user.z > 1)
 		user << "<span class='warning'>There is nothing of interest in that direction.</span>"
 		return

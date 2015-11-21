@@ -65,13 +65,11 @@
 
 
 /datum/SDQL_parser/proc/parse_error(error_message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/SDQL_parser/proc/parse_error() called tick#: [world.time]")
 	error = 1
 	usr << "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>"
 	return query.len + 1
 
 /datum/SDQL_parser/proc/parse()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/SDQL_parser/proc/parse() called tick#: [world.time]")
 	tree = list()
 	query(1, tree)
 
@@ -81,7 +79,6 @@
 		return tree
 
 /datum/SDQL_parser/proc/token(i)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/SDQL_parser/proc/token() called tick#: [world.time]")
 	if(i <= query.len)
 		return query[i]
 
@@ -89,7 +86,6 @@
 		return null
 
 /datum/SDQL_parser/proc/tokens(i, num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/SDQL_parser/proc/tokens() called tick#: [world.time]")
 	if(i + num <= query.len)
 		return query.Copy(i, i + num)
 
@@ -97,7 +93,6 @@
 		return null
 
 /datum/SDQL_parser/proc/tokenl(i)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/SDQL_parser/proc/tokenl() called tick#: [world.time]")
 	return lowertext(token(i))
 
 //query:	select_query | delete_query | update_query

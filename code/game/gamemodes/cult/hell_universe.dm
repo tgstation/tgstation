@@ -70,7 +70,6 @@ In short:
 
 
 /datum/universal_state/hell/proc/AreaSet()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/AreaSet() called tick#: [world.time]")
 	for(var/area/A in areas)
 		if(!istype(A,/area) || A.name=="Space")
 			continue
@@ -116,7 +115,6 @@ In short:
 		tcheck(80,1)
 
 /datum/universal_state/hell/proc/MiscSet()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/MiscSet() called tick#: [world.time]")
 	for(var/turf/simulated/floor/T in turfs)
 		if(!T.holy && prob(1))
 			new /obj/effect/gateway/active/cult(T)
@@ -128,7 +126,6 @@ In short:
 		tcheck(80,1)
 
 /datum/universal_state/hell/proc/APCSet()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/APCSet() called tick#: [world.time]")
 	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
 			APC.chargemode = 0
@@ -139,7 +136,6 @@ In short:
 		tcheck(85,1)
 
 /datum/universal_state/hell/proc/KillMobs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/KillMobs() called tick#: [world.time]")
 	for(var/mob/living/simple_animal/M in mob_list)
 		if(M && !M.client)
 			M.stat = DEAD

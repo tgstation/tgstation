@@ -42,7 +42,6 @@
 	var/output
 	var/time = 40
 	proc/process(loc, what)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 		if (src.output && loc)
 			new src.output(loc)
 		if (what)
@@ -168,7 +167,6 @@
 			output = null
 
 /obj/machinery/processor/proc/select_recipe(var/X)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/processor/proc/select_recipe() called tick#: [world.time]")
 	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))

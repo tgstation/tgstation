@@ -18,7 +18,6 @@
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flash/proc/clown_check() called tick#: [world.time]")
 	if(user && (M_CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>\The [src] slips out of your hand.</span>"
 		user.drop_item()
@@ -26,7 +25,6 @@
 	return 1
 
 /obj/item/device/flash/proc/flash_recharge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flash/proc/flash_recharge() called tick#: [world.time]")
 	//capacitor recharges over time
 	for(var/i=0, i<3, i++)
 		if(last_used+600 > world.time)

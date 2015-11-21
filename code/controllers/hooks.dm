@@ -10,7 +10,6 @@
  * To add some code to be called by the hook, define a proc under the type, as so:
  * @code
 	/hook/foo/proc/bar()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \	/hook/foo/proc/bar() called tick#: [world.time]")
 		if(1)
 			return 1 //Sucessful
 		else
@@ -25,7 +24,6 @@
  * @returns		1 if all hooked code runs successfully, 0 otherwise.
  */
 /proc/callHook(hook)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/callHook() called tick#: [world.time]")
 	var/hook_path = text2path("/hook/[hook]")
 	if(!hook_path)
 		error("Invalid hook '/hook/[hook]' called.")

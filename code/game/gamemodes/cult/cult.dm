@@ -6,11 +6,9 @@
 
 
 /proc/iscultist(mob/living/M as mob)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/iscultist() called tick#: [world.time]")
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_convertable_to_cult() called tick#: [world.time]")
 	if(!istype(mind))	return 0
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role == "Chaplain"))	return 0
 	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
@@ -114,21 +112,18 @@
 	return (cult.len > 0)
 
 /datum/game_mode/cult/proc/blood_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/blood_check() called tick#: [world.time]")
 	max_spilled_blood = (max(bloody_floors.len,max_spilled_blood))
 	if((objectives[current_objective] == "bloodspill") && (bloody_floors.len >= spilltarget) && !spilled_blood)
 		spilled_blood = 1
 		additional_phase()
 
 /datum/game_mode/cult/proc/check_numbers()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/check_numbers() called tick#: [world.time]")
 	if((objectives[current_objective] == "convert") && (cult.len >= convert_target) && !mass_convert)
 		mass_convert = 1
 		additional_phase()
 
 /datum/game_mode/cult/proc/first_phase()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/first_phase() called tick#: [world.time]")
 
 	var/new_objective = pick_objective()
 
@@ -161,7 +156,6 @@
 		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
 
 /datum/game_mode/cult/proc/bypass_phase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/bypass_phase() called tick#: [world.time]")
 	switch(objectives[current_objective])
 		if("convert")
 			mass_convert = 1
@@ -172,7 +166,6 @@
 	additional_phase()
 
 /datum/game_mode/cult/proc/additional_phase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/additional_phase() called tick#: [world.time]")
 	current_objective++
 
 	message_admins("Picking a new Cult objective.")
@@ -224,7 +217,6 @@
 		blood_check()//in case there are already enough blood covered tiles when the objective is given.
 
 /datum/game_mode/cult/proc/second_phase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/second_phase() called tick#: [world.time]")
 	narsie_condition_cleared = 1
 
 	objectives += "eldergod"
@@ -237,7 +229,6 @@
 		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
 
 /datum/game_mode/cult/proc/third_phase()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/third_phase() called tick#: [world.time]")
 	current_objective++
 
 	sleep(10)
@@ -274,7 +265,6 @@
 	..()
 
 /datum/game_mode/cult/proc/pick_objective()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/pick_objective() called tick#: [world.time]")
 	var/list/possible_objectives = list()
 
 	if(!spilled_blood && (bloody_floors.len < spilltarget))
@@ -335,7 +325,6 @@
 		return pick(possible_objectives)
 
 /datum/game_mode/cult/proc/pick_bonus_objective()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/pick_bonus_objective() called tick#: [world.time]")
 	var/list/possible_objectives = list()
 
 	var/living_crew = 0
@@ -358,7 +347,6 @@
 
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/memoize_cult_objectives() called tick#: [world.time]")
 	cult_mind.current << "The convert rune is Join Blood Self"
 	cult_mind.memory += "The convert rune is Join Blood Self<BR>"
 	var/explanation
@@ -376,7 +364,6 @@
 
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_cultist() called tick#: [world.time]")
 	if(!istype(mob))
 		return
 
@@ -412,7 +399,6 @@
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/grant_runeword() called tick#: [world.time]")
 	if(!cultwords["travel"])
 		runerandom()
 	if (!word)
@@ -423,7 +409,6 @@
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/add_cultist() called tick#: [world.time]")
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
@@ -442,7 +427,6 @@
 
 
 /datum/game_mode/proc/remove_cultist(var/datum/mind/cult_mind, var/show_message = 1, var/log=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_cultist() called tick#: [world.time]")
 	if(cult_mind in cult)
 		update_cult_icons_removed(cult_mind)
 		cult -= cult_mind
@@ -458,7 +442,6 @@
 			log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
 
 /datum/game_mode/proc/update_all_cult_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_cult_icons() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
@@ -480,7 +463,6 @@
 
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_cult_icons_added() called tick#: [world.time]")
 	if(!cult_mind)
 		return 0
 	spawn(0)
@@ -502,7 +484,6 @@
 
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_cult_icons_removed() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
@@ -519,7 +500,6 @@
 
 
 /datum/game_mode/cult/proc/get_unconvertables()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/get_unconvertables() called tick#: [world.time]")
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player.mind && (!is_convertable_to_cult(player.mind) || jobban_isbanned(player, "cultist")))
@@ -527,7 +507,6 @@
 	return ucs
 
 /datum/game_mode/cult/proc/bonus_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/bonus_check() called tick#: [world.time]")
 	if(universe.name == "Hell Rising")
 		switch(objectives[current_objective])
 			if("harvest")
@@ -654,7 +633,6 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_cult()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_cult() called tick#: [world.time]")
 	var/text = ""
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")

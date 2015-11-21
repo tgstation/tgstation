@@ -1,7 +1,6 @@
 // WIRES
 
 /obj/item/weapon/wire/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/wire/proc/update() called tick#: [world.time]")
 	if (src.amount > 1)
 		src.icon_state = "spool_wire"
 		src.desc = text("This is just spool of regular insulated wire. It consists of about [] unit\s of wire.", src.amount)

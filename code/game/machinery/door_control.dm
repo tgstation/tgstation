@@ -178,7 +178,6 @@
 	return
 
 /obj/machinery/driver_button/proc/launch_sequence()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/driver_button/proc/launch_sequence() called tick#: [world.time]")
 	active = 1
 	icon_state = "launcheract"
 

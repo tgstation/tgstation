@@ -84,7 +84,6 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/produce_power() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0) return 0//Something is wrong
@@ -211,7 +210,6 @@
 
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(var/obj/machinery/am_shielding/AMS, var/AMS_linking = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/add_shielding() called tick#: [world.time]")
 	if(!istype(AMS)) return 0
 	if(!anchored) return 0
 	if(!AMS_linking && !AMS.link_control(src)) return 0
@@ -221,7 +219,6 @@
 
 
 /obj/machinery/power/am_control_unit/proc/remove_shielding(var/obj/machinery/am_shielding/AMS)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/remove_shielding() called tick#: [world.time]")
 	if(!istype(AMS)) return 0
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
@@ -230,14 +227,12 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/check_stability() called tick#: [world.time]")
 	if(stability <= 0)
 		qdel(src)
 	return
 
 
 /obj/machinery/power/am_control_unit/proc/toggle_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/toggle_power() called tick#: [world.time]")
 	active = !active
 	if(active)
 		use_power = 2
@@ -252,7 +247,6 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_shield_icons()//Forces icon_update for all shields
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/check_shield_icons() called tick#: [world.time]")
 	if(shield_icon_delay) return
 	shield_icon_delay = 1
 	if(update_shield_icons == 2)//2 means to clear everything and rebuild
@@ -271,7 +265,6 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_control_unit/proc/check_core_stability() called tick#: [world.time]")
 	//if(stored_core_stability_delay || linked_cores.len <= 0)	return
 	if(linked_cores.len <=0) return
 	//stored_core_stability_delay = 1

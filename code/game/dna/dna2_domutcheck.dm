@@ -6,7 +6,6 @@
 #define MUTCHK_FORCED        1
 
 /proc/domutcheck(var/mob/living/M, var/connected=null, var/flags=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/domutcheck() called tick#: [world.time]")
 	if(!M)
 		//testing("[gene.name] has No mob")
 		return
@@ -61,7 +60,6 @@
 
 // Use this to force a mut check on a single gene!
 /proc/genemutcheck(var/mob/living/M, var/block, var/connected=null, var/flags=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/genemutcheck() called tick#: [world.time]")
 	if(!M)
 		return
 	if(block < 0)
@@ -72,7 +70,6 @@
 
 
 /proc/domutation(var/datum/dna/gene/gene, var/mob/living/M, var/connected=null, var/flags=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/domutation() called tick#: [world.time]")
 	//testing("domutation on [gene.name] with [M] and [flags]")
 	if(!gene || !istype(gene))
 		return 0
@@ -117,7 +114,6 @@
 
 /datum/dna/proc/chicken2vox(var/mob/living/simple_animal/chicken/C, var/datum/dna/D)//sadly doesn't let you turn normal chicken into voxes since they don't have any DNA
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/proc/chicken2vox() called tick#: [world.time]")
 
 	var/mob/living/carbon/human/vox/V = new(C.loc)
 

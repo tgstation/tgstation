@@ -29,6 +29,5 @@
 /client/proc/smissmas()
 	set category = "Fun"
 	set name = "Execute Smissmas"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/smissmas() called tick#: [world.time]")
 	if(!holder)	return
 	SetUniversalState(/datum/universal_state/christmas)

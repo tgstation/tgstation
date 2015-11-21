@@ -27,7 +27,6 @@
 	..()
 
 /obj/structure/grille/proc/healthcheck(var/hitsound = 0) //Note : Doubles as the destruction proc()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/grille/proc/healthcheck() called tick#: [world.time]")
 	if(hitsound)
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	if(health <= (0.25*initial(health)) && !broken) //Modular, 1/4th of original health. Do make sure the grille isn't broken !
@@ -63,7 +62,6 @@
 
 /obj/structure/grille/attack_hand(mob/user as mob)
 	var/humanverb = pick(list("kick", "slam", "elbow")) //Only verbs with a third person "s", thank you
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\var/humanverb = pick()  called tick#: [world.time]")
 	user.delayNextAttack(8)
 	user.visible_message("<span class='warning'>[user] [humanverb]s \the [src].</span>", \
 	"<span class='warning'>You [humanverb] \the [src].</span>", \
@@ -79,7 +77,6 @@
 	if(istype(user, /mob/living/carbon/alien/larva))
 		return
 	var/alienverb = pick(list("slam", "rip", "claw")) //See above
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\var/alienverb = pick()  called tick#: [world.time]")
 	user.delayNextAttack(8)
 	user.visible_message("<span class='warning'>[user] [alienverb]s \the [src].</span>", \
 						 "<span class='warning'>You [alienverb] \the [src].</span>", \
@@ -205,7 +202,6 @@
 //Returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user as mob, prb)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/grille/proc/shock() called tick#: [world.time]")
 	if(!anchored || broken)	//De-anchored and destroyed grilles are never connected to the powernet !
 		return 0
 	if(!prob(prb)) //If the probability roll failed, don't go further

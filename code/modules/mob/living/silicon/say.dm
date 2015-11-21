@@ -16,7 +16,6 @@
 
 /mob/living/proc/robot_talk(var/message)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/robot_talk() called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	log_say("[key_name(src)] (@[T.x],[T.y],[T.z] Binary: [message]")

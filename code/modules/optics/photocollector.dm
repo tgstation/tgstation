@@ -63,7 +63,6 @@ var/list/obj/machinery/power/photocollector/photocollector_list = list()
 		return 1
 
 /obj/machinery/power/photocollector/proc/update_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/photocollector/proc/update_icons() called tick#: [world.time]")
 	overlays.len = 0
 	if(stat & (NOPOWER|BROKEN))
 		return

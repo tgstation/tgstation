@@ -209,7 +209,6 @@
 	icon_state = "sleeper_[occupant ? "1" : "0"][orient == "LEFT" ? null : "-r"]"
 
 /obj/machinery/sleeper/proc/generate_console(turf/T as turf)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sleeper/proc/generate_console() called tick#: [world.time]")
 	if(connected)
 		connected.orient = src.orient
 		connected.update_icon()
@@ -448,7 +447,6 @@
 
 
 /obj/machinery/sleeper/proc/go_out(var/exit = src.loc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sleeper/proc/go_out() called tick#: [world.time]")
 	if(!occupant)
 		return 0
 	for(var/obj/O in src)
@@ -461,7 +459,6 @@
 
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sleeper/proc/inject_chemical() called tick#: [world.time]")
 	if(!src.occupant)
 		user << "<span class='warning'>There's no occupant in the sleeper!</span>"
 		return
@@ -476,7 +473,6 @@
 	return
 
 /obj/machinery/sleeper/proc/check(mob/living/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sleeper/proc/check() called tick#: [world.time]")
 	if(src.occupant)
 		user << text("<span class='notice'><B>Occupant ([]) Statistics:</B></span>", src.occupant)
 		var/t1
@@ -505,7 +501,6 @@
 	set name = "Eject Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/sleeper/verb/eject()  called tick#: [world.time]")
 	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
@@ -518,7 +513,6 @@
 	set name = "Enter Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/sleeper/verb/move_inside()  called tick#: [world.time]")
 	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)) || (usr.status_flags & FAKEDEATH))
 		return
 

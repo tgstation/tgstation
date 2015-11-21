@@ -2,12 +2,10 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/edit_admin_permissions() called tick#: [world.time]")
 	if(!check_rights(R_PERMISSIONS))	return
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/edit_admin_permissions() called tick#: [world.time]")
 	if(!check_rights(R_PERMISSIONS))	return
 
 	var/output = {"<!DOCTYPE html>
@@ -56,7 +54,6 @@
 	usr << browse(output,"window=editrights;size=600x500")
 
 /datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/log_admin_rank_modification() called tick#: [world.time]")
 	if(config.admin_legacy_system)	return
 
 	if(!usr.client)
@@ -107,7 +104,6 @@
 			usr << "<span class='notice'>Admin rank changed.</span>"
 
 /datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/log_admin_permission_modification() called tick#: [world.time]")
 	if(config.admin_legacy_system)	return
 
 	if(!usr.client)

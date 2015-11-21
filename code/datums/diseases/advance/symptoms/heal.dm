@@ -35,7 +35,6 @@ Bonus
 
 /datum/symptom/heal/proc/Heal(var/mob/living/M)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/heal/proc/Heal() called tick#: [world.time]")
 
 	var/get_damage = rand(1, 2)
 	M.adjustToxLoss(-get_damage)

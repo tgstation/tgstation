@@ -35,7 +35,6 @@ Bonus
 
 /datum/symptom/damage_converter/proc/Convert(var/mob/living/M)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/symptom/damage_converter/proc/Convert() called tick#: [world.time]")
 
 	if(M.getFireLoss() < M.getMaxHealth() || M.getBruteLoss() < M.getMaxHealth())
 		var/get_damage = rand(1, 2)

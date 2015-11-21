@@ -65,7 +65,6 @@
 
 var/setup_economy = 0
 /proc/setup_economy()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/setup_economy() called tick#: [world.time]")
 	if(setup_economy)
 		return
 	var/datum/feed_channel/newChannel = new /datum/feed_channel

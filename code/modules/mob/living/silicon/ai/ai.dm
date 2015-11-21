@@ -2,7 +2,6 @@ var/list/ai_list = list()
 
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/AutoUpdateAI() called tick#: [world.time]")
 	var/is_in_use = 0
 	if (subject!=null)
 		for(var/A in ai_list)
@@ -139,7 +138,6 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/verb/rename_photo() //This is horrible but will do for now
 	set category = "AI Commands"
 	set name = "Modify Photo Files"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/rename_photo()  called tick#: [world.time]")
 	if(stat || aiRestorePowerRoutine)
 		return
 
@@ -175,7 +173,6 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/pick_icon()  called tick#: [world.time]")
 	if(stat || aiRestorePowerRoutine)
 		return
 	/* Jesus christ, more of this shit?
@@ -254,7 +251,6 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_alerts()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_alerts() called tick#: [world.time]")
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\ai\ai.dm:195: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -293,11 +289,9 @@ var/list/ai_list = list()
 
 // this verb lets the ai see the stations manifest
 /mob/living/silicon/ai/proc/ai_roster()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_roster() called tick#: [world.time]")
 	show_station_manifest()
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_call_shuttle() called tick#: [world.time]")
 	if(src.stat == 2)
 		src << "You can't call the shuttle because you are dead!"
 		return
@@ -323,7 +317,6 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_cancel_call() called tick#: [world.time]")
 
 	if(src.stat == 2)
 		src << "You can't send the shuttle back because you are dead!"
@@ -538,7 +531,6 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/switchCamera() called tick#: [world.time]")
 
 	src.cameraFollow = null
 
@@ -614,7 +606,6 @@ var/list/ai_list = list()
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//Adds in /mob/living/silicon/ai/proc/ai_network_change() called tick#: [world.time]")
 //Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
@@ -622,7 +613,6 @@ var/list/ai_list = list()
 	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_network_change() called tick#: [world.time]")
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't change your camera network because you are dead!"
@@ -661,14 +651,12 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
 	set name = "Choose Module"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/choose_modules() called tick#: [world.time]")
 
 	malf_picker.use(src)
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
 	set name = "AI Status"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_statuschange() called tick#: [world.time]")
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr <<"You cannot change your emotional status because you are dead!"
@@ -695,7 +683,6 @@ var/list/ai_list = list()
 	set name = "Change Hologram"
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_hologram_change() called tick#: [world.time]")
 
 	var/input
 	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
@@ -760,7 +747,6 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
 	set name = "Return to Main Core"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/corereturn() called tick#: [world.time]")
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
@@ -773,7 +759,6 @@ var/list/ai_list = list()
 	set name = "Toggle Camera Light"
 	set desc = "Toggle internal infrared camera light"
 	set category = "AI Commands"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/toggle_camera_light()  called tick#: [world.time]")
 	if(stat != CONSCIOUS)
 		return
 
@@ -796,7 +781,6 @@ var/list/ai_list = list()
 //AI_CAMERA_LUMINOSITY
 
 /mob/living/silicon/ai/proc/light_cameras()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/light_cameras() called tick#: [world.time]")
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()

@@ -71,5 +71,4 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 	return
 
 /spell/aoe_turf/conjure/proc/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/aoe_turf/conjure/proc/conjure_animation() called tick#: [world.time]")
 	del(animation)

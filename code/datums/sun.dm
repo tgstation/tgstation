@@ -28,7 +28,6 @@ var/global/datum/sun/sun
  * Calculate the sun's position given the time of day.
  */
 /datum/sun/proc/calc_position()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/sun/proc/calc_position() called tick#: [world.time]")
 	var/time = world.time
 	angle = ((rotationRate * time / 100) % 360 + 360) % 360
 
@@ -73,7 +72,6 @@ var/global/datum/sun/sun
 //For a solar panel, trace towards sun to see if we're in shadow.
 
 /datum/sun/proc/occlusion(const/obj/machinery/power/solar/panel/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/sun/proc/occlusion() called tick#: [world.time]")
 	var/ax = S.x //Start at the solar panel.
 	var/ay = S.y
 	var/i

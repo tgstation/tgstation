@@ -241,7 +241,6 @@
 	GibtoniteReaction(triggered_by_explosive = 1)
 
 /obj/item/weapon/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gibtonite/proc/GibtoniteReaction() called tick#: [world.time]")
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1

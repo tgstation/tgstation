@@ -338,7 +338,6 @@
 	update_state()
 
 /obj/structure/door_assembly/proc/update_state()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/door_assembly/proc/update_state() called tick#: [world.time]")
 	icon_state = "door_as_[glass == 1 ? "g" : ""][istext(glass) ? glass : base_icon_state][state]"
 	name = ""
 	switch (state)

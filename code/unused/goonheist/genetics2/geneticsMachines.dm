@@ -185,7 +185,6 @@ var/list/genetics_computers = list()
 	return
 
 /obj/machinery/computer/genetics/proc/checkOccupant()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/checkOccupant() called tick#: [world.time]")
 	if(!scanner)
 		info_html = "<p>No linked scanner detected. Cannot complete operation.</p>"
 		src.updateUsrDialog()
@@ -201,7 +200,6 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/bioEffect_sanity_check(var/datum/bioEffect/E)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/bioEffect_sanity_check() called tick#: [world.time]")
 	if(!istype(E,/datum/bioEffect/))
 		info_html = "<p>Unable to scan gene. The gene may be corrupt.</p>"
 		src.updateUsrDialog()
@@ -209,7 +207,6 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/sample_sanity_check(var/datum/computer/file/genetics_scan/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/sample_sanity_check() called tick#: [world.time]")
 	if (!istype(S,/datum/computer/file/genetics_scan/))
 		info_html = "<p>Unable to scan DNA Sample. The sample may be corrupt.</p>"
 		src.updateUsrDialog()
@@ -217,7 +214,6 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/research_sanity_check(var/datum/geneticsResearchEntry/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/research_sanity_check() called tick#: [world.time]")
 	if (!istype(R,/datum/geneticsResearchEntry/))
 		info_html = "<p>Invalid research article.</p>"
 		src.updateUsrDialog()
@@ -785,7 +781,6 @@ var/list/genetics_computers = list()
 	return
 
 /obj/machinery/computer/genetics/proc/equipment_available(var/equipment = "analyser",var/datum/bioEffect/E)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/equipment_available() called tick#: [world.time]")
 	switch(equipment)
 		if("analyser")
 			if(genResearch.isResearched(/datum/geneticsResearchEntry/checker) && world.time >= src.equipment[2])
@@ -814,7 +809,6 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/equipment_cooldown(var/equipment = "analyser")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/equipment_cooldown() called tick#: [world.time]")
 	var/base_cooldown = 1
 	var/equipment_num = 1
 	switch(equipment)
@@ -844,7 +838,6 @@ var/list/genetics_computers = list()
 	src.equipment[equipment_num] = world.time + base_cooldown
 
 /obj/machinery/computer/genetics/proc/ui_build_mutation_research(var/datum/bioEffect/E,var/datum/computer/file/genetics_scan/sample = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_mutation_research() called tick#: [world.time]")
 	if(!E)
 		return null
 
@@ -878,7 +871,6 @@ var/list/genetics_computers = list()
 	return build
 
 /obj/machinery/computer/genetics/proc/ui_build_sequence(var/datum/bioEffect/E, var/screen = "pool")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_sequence() called tick#: [world.time]")
 	if (!E)
 		return list("ERROR","ERROR","ERROR")
 
@@ -919,7 +911,6 @@ var/list/genetics_computers = list()
 	return build
 
 /obj/machinery/computer/genetics/proc/ui_build_clickable_genes(var/screen = "pool",var/datum/computer/file/genetics_scan/sample)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_clickable_genes() called tick#: [world.time]")
 	if(screen == "sample_pool")
 		if(!sample)
 			return

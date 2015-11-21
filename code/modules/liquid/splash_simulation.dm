@@ -8,7 +8,6 @@ datum/puddle
 	var/list/obj/effect/liquid/liquid_objects = list()
 
 datum/puddle/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/puddle/proc/process() called tick#: [world.time]")
 	//world << "DEBUG: Puddle process!"
 	for(var/obj/effect/liquid/L in liquid_objects)
 		L.spread()
@@ -31,7 +30,6 @@ datum/puddle/Del()
 
 client/proc/splash()
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/splash() called tick#: [world.time]")
 
 	var/volume = input("Volume?","Volume?", 0 ) as num
 	if(!isnum(volume)) return
@@ -41,7 +39,6 @@ client/proc/splash()
 	trigger_splash(T, volume)
 
 proc/trigger_splash(turf/epicenter as turf, volume as num)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/trigger_splash() called tick#: [world.time]")
 	if(!epicenter)
 		return
 	if(volume <= 0)
@@ -76,7 +73,6 @@ obj/effect/liquid/New()
 
 obj/effect/liquid/proc/spread()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/liquid/proc/spread() called tick#: [world.time]")
 
 	//world << "DEBUG: liquid spread!"
 	var/surrounding_volume = 0
@@ -128,7 +124,6 @@ obj/effect/liquid/proc/spread()
 			L.new_volume = L.new_volume + volume_per_tile //Add it to the volume to the other tile
 
 obj/effect/liquid/proc/apply_calculated_effect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/liquid/proc/apply_calculated_effect() called tick#: [world.time]")
 	volume += new_volume
 
 	if(volume < LIQUID_TRANSFER_THRESHOLD)
@@ -144,7 +139,6 @@ obj/effect/liquid/Destroy()
 	..()
 
 obj/effect/liquid/proc/update_icon2()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/liquid/proc/update_icon2() called tick#: [world.time]")
 	//icon_state = num2text( max(1,min(7,(floor(volume),10)/10)) )
 
 	switch(volume)
@@ -166,10 +160,8 @@ obj/effect/liquid/proc/update_icon2()
 			icon_state = "7"
 
 turf/proc/can_accept_liquid(from_direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/can_accept_liquid() called tick#: [world.time]")
 	return 0
 turf/proc/can_leave_liquid(from_direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/can_leave_liquid() called tick#: [world.time]")
 	return 0
 
 turf/space/can_accept_liquid(from_direction)
@@ -205,7 +197,6 @@ turf/simulated/wall/can_leave_liquid(from_direction)
 	return 0
 
 obj/proc/liquid_pass()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/liquid_pass() called tick#: [world.time]")
 	return 1
 
 obj/machinery/door/liquid_pass()

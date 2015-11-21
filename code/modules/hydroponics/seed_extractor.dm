@@ -201,7 +201,6 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	return
 
 obj/machinery/seed_extractor/proc/moveToStorage(var/obj/item/seeds/O as obj)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/seed_extractor/proc/moveToStorage() called tick#: [world.time]")
 	if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
@@ -217,7 +216,6 @@ obj/machinery/seed_extractor/proc/moveToStorage(var/obj/item/seeds/O as obj)
 	return
 
 obj/machinery/seed_extractor/proc/hasSpaceCheck(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/seed_extractor/proc/hasSpaceCheck() called tick#: [world.time]")
 	if(contents.len >= MAX_N_OF_ITEMS)
 		user << "<span class='notice'>\The [src] is full.</span>"
 		return 0

@@ -52,7 +52,6 @@
 
 //this should only need to be called once
 /datum/geosample/proc/UpdateTurf(var/turf/unsimulated/mineral/container)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/geosample/proc/UpdateTurf() called tick#: [world.time]")
 	if(!container || !istype(container))
 		return
 
@@ -121,7 +120,6 @@
 
 //have this separate from UpdateTurf() so that we dont have a billion turfs being updated (redundantly) every time an artifact spawns
 /datum/geosample/proc/UpdateNearbyArtifactInfo(var/turf/unsimulated/mineral/container)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/geosample/proc/UpdateNearbyArtifactInfo() called tick#: [world.time]")
 	if(!container || !istype(container))
 		return
 

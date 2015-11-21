@@ -1,7 +1,6 @@
 /client/var/timed_alert/timed_alert
 
 /client/proc/timed_alert(time = 300,target,message,title,button1,button2,button3)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/timed_alert() called tick#: [world.time]")
 	if(timed_alert) return ""
 
 	timed_alert = new(target,message,title,button1,button2,button3)
@@ -9,7 +8,6 @@
 	del(timed_alert)
 
 /mob/proc/timed_alert(time,message,title,button1,button2,button3)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/timed_alert() called tick#: [world.time]")
 	var/selected_button = ""
 
 	if(client)

@@ -21,27 +21,21 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	parent=aa
 
 /datum/automation/proc/GetText()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/GetText() called tick#: [world.time]")
 	return "[type] doesn't override GetText()!"
 
 /datum/automation/proc/OnReset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/OnReset() called tick#: [world.time]")
 	return
 
 /datum/automation/proc/OnRemove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/OnRemove() called tick#: [world.time]")
 	return
 
 /datum/automation/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/process() called tick#: [world.time]")
 	return
 
 /datum/automation/proc/Evaluate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/Evaluate() called tick#: [world.time]")
 	return 0
 
 /datum/automation/proc/Export()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/Export() called tick#: [world.time]")
 	var/list/R = list("type"=type)
 
 	if(initial(label)!=label)
@@ -59,7 +53,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return R
 
 /datum/automation/proc/unpackChild(var/list/cData)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/unpackChild() called tick#: [world.time]")
 	if(isnull(cData) || !("type" in cData))
 		return null
 	var/Atype=text2path(cData["type"])
@@ -70,7 +63,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return A
 
 /datum/automation/proc/unpackChildren(var/list/childList)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/unpackChildren() called tick#: [world.time]")
 	. = list()
 	if(childList.len>0)
 		for(var/list/cData in childList)
@@ -85,7 +77,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			. += A
 
 /datum/automation/proc/packChildren(var/list/childList)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/packChildren() called tick#: [world.time]")
 	. = list()
 	if(childList.len>0)
 		for(var/datum/automation/A in childList)
@@ -95,7 +86,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			. += list(A.Export())
 
 /datum/automation/proc/Import(var/list/json)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/Import() called tick#: [world.time]")
 	if("label" in json)
 		label = json["label"]
 
@@ -106,7 +96,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		children = unpackChildren(json["children"])
 
 /datum/automation/proc/fmtString(var/str)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/fmtString() called tick#: [world.time]")
 	if(str==null || str == "")
 		return "-----"
 	return str
@@ -170,7 +159,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return 0 // 1 if handled
 
 /datum/automation/proc/selectValidChildFor(var/mob/user, var/list/returntypes=valid_child_returntypes)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/automation/proc/selectValidChildFor() called tick#: [world.time]")
 	return parent.selectValidChildFor(src, user, returntypes)
 
 ///////////////////////////////////////////

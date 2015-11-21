@@ -21,7 +21,6 @@ var/list/lightning_sound = list('sound/effects/lightning/chainlightning1.ogg', '
 //gas_modified controls if a sound is affected by how much gas there is in the atmosphere of the source
 //space sounds have no gas modification, for example. Though >space sounds
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/gas_modified = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/playsound() called tick#: [world.time]")
 	var/turf/turf_source = get_turf(source)
 
 	ASSERT(!isnull(turf_source))
@@ -75,7 +74,6 @@ var/const/SURROUND_CAP = 7
 
 #define MIN_SOUND_PRESSURE	2 //2 kPa of pressure required to at least hear sound
 /mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, gas_modified)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/playsound_local() called tick#: [world.time]")
 	if(!src.client)
 		return
 
@@ -127,17 +125,14 @@ var/const/SURROUND_CAP = 7
 	src << S
 
 /client/proc/playtitlemusic()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/playtitlemusic() called tick#: [world.time]")
 	if(!ticker || !ticker.login_music)	return
 	if(prefs.toggles & SOUND_LOBBY)
 		if(istype(src))src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 /proc/get_rand_frequency()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_rand_frequency() called tick#: [world.time]")
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
 /proc/get_sfx(soundin)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_sfx() called tick#: [world.time]")
 	if(istext(soundin))
 		switch(soundin)
 			if ("shatter") soundin = pick(shatter_sound)

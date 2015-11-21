@@ -125,7 +125,6 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 	return
 
 /obj/machinery/keycard_auth/proc/reset()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/keycard_auth/proc/reset() called tick#: [world.time]")
 	active = 0
 	event = ""
 	screen = 1
@@ -136,7 +135,6 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 	event_confirmed_by = null
 
 /obj/machinery/keycard_auth/proc/broadcast_request()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/keycard_auth/proc/broadcast_request() called tick#: [world.time]")
 	icon_state = "auth_on"
 	for(var/obj/machinery/keycard_auth/KA in authenticators)
 		if(KA == src) continue
@@ -153,7 +151,6 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 	reset()
 
 /obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/keycard_auth/proc/receive_request() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))
 		return
 	event_source = source
@@ -169,7 +166,6 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 	busy = 0
 
 /obj/machinery/keycard_auth/proc/trigger_event()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/keycard_auth/proc/trigger_event() called tick#: [world.time]")
 	switch(event)
 		if("Red alert")
 			set_security_level(SEC_LEVEL_RED)
@@ -187,13 +183,11 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 var/global/maint_all_access = 0
 
 /proc/make_maint_all_access()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/make_maint_all_access() called tick#: [world.time]")
 	maint_all_access = 1
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
 
 /proc/revoke_maint_all_access()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/revoke_maint_all_access() called tick#: [world.time]")
 	maint_all_access = 0
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"

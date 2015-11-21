@@ -47,7 +47,6 @@ datum/reagent/antibodies
 
 // iterate over the list of antigens and see what matches
 /proc/antigens2string(var/antigens)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/antigens2string() called tick#: [world.time]")
 	var/code = ""
 	for(var/V in ANTIGENS) if(text2num(V) & antigens) code += ANTIGENS[V]
 	return code

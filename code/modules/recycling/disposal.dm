@@ -172,7 +172,6 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/disposal/proc/go_out() called tick#: [world.time]")
 
 	if (user.client)
 		user.client.eye = user.client.mob
@@ -273,7 +272,6 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/disposal/proc/eject() called tick#: [world.time]")
 	for(var/atom/movable/AM in src)
 		AM.loc = src.loc
 		AM.pipe_eject(0)
@@ -363,7 +361,6 @@
 // perform a flush
 /obj/machinery/disposal/proc/flush()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/disposal/proc/flush() called tick#: [world.time]")
 
 	flushing = 1
 	flick("[icon_state]-flush", src)
@@ -410,7 +407,6 @@
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(var/obj/structure/disposalholder/H)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/disposal/proc/expel() called tick#: [world.time]")
 
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
@@ -525,7 +521,6 @@
 
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/init() called tick#: [world.time]")
 		gas = D.air_contents// transfer gas resv. into holder object
 
 		//Check for any living mobs trigger hasmob.
@@ -560,7 +555,6 @@
 	// start the movement process
 	// argument is the disposal unit the holder started in
 	proc/start(var/obj/machinery/disposal/D)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/start() called tick#: [world.time]")
 		if(!D.trunk)
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
@@ -573,7 +567,6 @@
 
 	// movement process, persists while holder is moving through pipes
 	proc/move()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/move() called tick#: [world.time]")
 		var/obj/structure/disposalpipe/last
 		while(active)
 			/* vg edit
@@ -608,13 +601,11 @@
 
 	// find the turf which should contain the next pipe
 	proc/nextloc()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/nextloc() called tick#: [world.time]")
 		return get_step(loc,dir)
 
 	// find a matching pipe on a turf
 	proc/findpipe(var/turf/T)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/findpipe() called tick#: [world.time]")
 
 		if(!T)
 			return null
@@ -629,7 +620,6 @@
 	// merge two holder objects
 	// used when a a holder meets a stuck holder
 	proc/merge(var/obj/structure/disposalholder/other)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/merge() called tick#: [world.time]")
 		for(var/atom/movable/AM in other)
 			AM.forceMove(src)		// move everything in other holder to this one
 			if(ismob(AM))
@@ -654,7 +644,6 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/vent_gas() called tick#: [world.time]")
 		location.assume_air(gas)  // vent all gas to turf
 		return
 
@@ -708,14 +697,12 @@
 	// returns the direction of the next pipe object, given the entrance dir
 	// by default, returns the bitmask of remaining directions
 	proc/nextdir(var/fromdir)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/nextdir() called tick#: [world.time]")
 		return dpdir & (~turn(fromdir, 180))
 
 	// transfer the holder through this pipe segment
 	// overriden for special behaviour
 	//
 	proc/transfer(var/obj/structure/disposalholder/H)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/transfer() called tick#: [world.time]")
 		var/nextdir = nextdir(H.dir)
 		H.dir = nextdir
 		var/turf/T = H.nextloc()
@@ -737,7 +724,6 @@
 
 	// update the icon_state to reflect hidden status
 	proc/update()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update() called tick#: [world.time]")
 		var/turf/T = src.loc
 		hide(T.intact && !istype(T,/turf/space))	// space never hides pipes
 
@@ -752,7 +738,6 @@
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
 	proc/updateicon()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 		if(invisibility)
 			icon_state = "[base_icon_state]f"
 		else
@@ -766,7 +751,6 @@
 
 	proc/expel(var/obj/structure/disposalholder/H, var/turf/T, var/direction)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/expel() called tick#: [world.time]")
 
 		var/turf/target
 		if(!T || isnull(T))
@@ -820,7 +804,6 @@
 	// then delete the pipe
 	// remains : set to leave broken pipe pieces in place
 	proc/broken(var/remains = 0)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/broken() called tick#: [world.time]")
 		if(remains)
 			for(var/D in cardinal)
 				if(D & dpdir)
@@ -870,7 +853,6 @@
 
 	// test health for brokenness
 	proc/healthcheck()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/healthcheck() called tick#: [world.time]")
 		if(health < -2)
 			broken(0)
 		else if(health<1)
@@ -908,7 +890,6 @@
 	// called when pipe is cut with welder
 	proc/welded()
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/welded() called tick#: [world.time]")
 
 		var/obj/structure/disposalconstruct/C = new (src.loc)
 		switch(base_icon_state)
@@ -1008,13 +989,11 @@
 	var/sortdir = 0
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedesc()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/disposalpipe/sortjunction/proc/updatedesc() called tick#: [world.time]")
 	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	if(sort_tag)
 		desc += "\nIt's tagged with [sort_tag]."
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/disposalpipe/sortjunction/proc/updatedir() called tick#: [world.time]")
 	posdir = dir
 	negdir = turn(posdir, 180)
 
@@ -1222,7 +1201,6 @@
 	update()
 
 /obj/structure/disposalpipe/wrapsortjunction/update_dir()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/disposalpipe/wrapsortjunction/proc/update_dir() called tick#: [world.time]")
 	posdir = dir
 	negdir = turn(posdir, 180)
 
@@ -1288,7 +1266,6 @@
 	update()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/disposalpipe/trunk/proc/getlinked() called tick#: [world.time]")
 	disposal = locate() in loc
 
 	if(disposal)
@@ -1462,7 +1439,6 @@
 	// called when the holder exits the outlet
 	proc/expel(var/obj/structure/disposalholder/H)
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/expel() called tick#: [world.time]")
 
 		flick("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
@@ -1522,7 +1498,6 @@
 // by default does nothing, override for special behaviour
 
 /atom/movable/proc/pipe_eject(var/direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/pipe_eject() called tick#: [world.time]")
 	return
 
 // check if mob has client, if so restore client view on eject

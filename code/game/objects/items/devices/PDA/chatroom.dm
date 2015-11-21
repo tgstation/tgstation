@@ -12,6 +12,5 @@ var/list/chatrooms = list()
 	var/operator = "" // name of the operator
 
 /datum/chatroom/proc/attempt_connect(var/obj/item/device/pda/device, var/obj/password)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/chatroom/proc/attempt_connect() called tick#: [world.time]")
 	if(!device)
 		return

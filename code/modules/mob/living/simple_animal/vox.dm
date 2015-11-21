@@ -59,7 +59,6 @@
 	set name = "Fire quill"
 	set desc = "Fires a viciously pointed quill at a high speed."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/vox/armalis/verb/fire_quill()  called tick#: [world.time]")
 
 	if(quills<=0)
 		return
@@ -82,7 +81,6 @@
 	set category = "Alien"
 	set name = "Commune with creature"
 	set desc = "Send a telepathic message to an unlucky recipient."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/vox/armalis/verb/message_mob()  called tick#: [world.time]")
 
 	var/list/targets = list()
 	var/target = null
@@ -113,7 +111,6 @@
 	set category = "Alien"
 	set name = "Shriek"
 	set desc = "Give voice to a psychic shriek."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/vox/armalis/verb/shriek()  called tick#: [world.time]")
 
 /mob/living/simple_animal/vox/armalis/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/vox/armalis_armour))

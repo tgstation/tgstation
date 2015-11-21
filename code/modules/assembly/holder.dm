@@ -16,19 +16,15 @@
 	var/obj/special_assembly = null
 
 /obj/item/device/assembly_holder/proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly_holder/proc/attach() called tick#: [world.time]")
 	return
 
 /obj/item/device/assembly_holder/proc/attach_special(var/obj/O, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly_holder/proc/attach_special() called tick#: [world.time]")
 	return
 
 /obj/item/device/assembly_holder/proc/process_activation(var/obj/item/device/D)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly_holder/proc/process_activation() called tick#: [world.time]")
 	return
 
 /obj/item/device/assembly_holder/proc/detached()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly_holder/proc/detached() called tick#: [world.time]")
 	return
 
 
@@ -270,7 +266,6 @@
 	set name = "Set Timer"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/assembly_holder/timer_igniter/verb/configure()  called tick#: [world.time]")
 
 	if ( !(usr.stat || usr.restrained())  || (usr.status_flags & FAKEDEATH))
 		var/obj/item/device/assembly_holder/holder

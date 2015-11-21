@@ -28,12 +28,10 @@
 					D.Add(sector.name)
 
 /datum/genetree/proc/IsActive(var/sname)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/genetree/proc/IsActive() called tick#: [world.time]")
 	var/datum/genetic_sector/sector = sectors[sname]
 	return sector.active
 
 /datum/genetree/proc/CanActivateSector(var/sname)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/genetree/proc/CanActivateSector() called tick#: [world.time]")
 	var/datum/genetic_sector/sector = sectors[sname]
 	for(var/dep in sector.prerequisites)
 		if(!IsActive(sector.id))
@@ -42,7 +40,6 @@
 
 // Does NOT check for biomass
 /datum/genetree/proc/ActivateSector(var/sname)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/genetree/proc/ActivateSector() called tick#: [world.time]")
 	var/datum/genetic_sector/sector = sectors[sname]
 	sector.active = 1
 	sector.OnActivate()
@@ -51,7 +48,6 @@
 		subsector.locked=0
 
 /datum/genetree/proc/CheckSectors()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/genetree/proc/CheckSectors() called tick#: [world.time]")
 	var/sectors_changed=0
 	for(var/sname in sectors)
 		var/datum/genetic_sector/sector = sectors[sname]

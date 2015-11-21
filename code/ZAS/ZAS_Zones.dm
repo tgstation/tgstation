@@ -67,7 +67,6 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 
 	//Handles deletion via garbage collection.
 /zone/proc/SoftDelete()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/SoftDelete() called tick#: [world.time]")
 	zones.Remove(src)
 	air = null
 
@@ -91,7 +90,6 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 
 //ZONE MANAGEMENT FUNCTIONS
 /zone/proc/AddTurf(turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/AddTurf() called tick#: [world.time]")
 	//Adds the turf to contents, increases the size of the zone, and sets the zone var.
 	if(istype(T, /turf/simulated) && !iscatwalk(T))
 		if(T in contents)
@@ -111,7 +109,6 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 		contents -= T
 
 /zone/proc/RemoveTurf(turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/RemoveTurf() called tick#: [world.time]")
 	//Same, but in reverse.
 	if(istype(T, /turf/simulated))
 		if(!(T in contents))
@@ -133,7 +130,6 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 #define QUANTIZE(variable)		(round(variable,0.0001))
 
 /zone/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/process() called tick#: [world.time]")
 	. = 1
 
 	progress = "problem with: SoftDelete()"
@@ -289,7 +285,6 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 var/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareRatio() called tick#: [world.time]")
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
@@ -359,7 +354,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	else return 0
 
 proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareSpace() called tick#: [world.time]")
 	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
 	if(!unsimulated_tiles || !unsimulated_tiles.len)
 		return 0
@@ -439,7 +433,6 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 
 proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ShareHeat() called tick#: [world.time]")
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
@@ -469,7 +462,6 @@ proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 ///////////////////
 
 zone/proc/Rebuild()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/Rebuild() called tick#: [world.time]")
 	//Choose a random turf and regenerate the zone from it.
 	var
 		turf/simulated/sample = locate() in contents
@@ -548,7 +540,6 @@ zone/proc/Rebuild()
 //UNUSED
 /*
 zone/proc/connected_zones()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/connected_zones() called tick#: [world.time]")
 	//A legacy proc for getting connected zones.
 	. = list()
 	for(var/connection/C in connections)

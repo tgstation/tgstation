@@ -219,7 +219,6 @@
 
 
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/is_loyalty_implanted() called tick#: [world.time]")
 	for(var/L in M.contents)
 		if(istype(L, /obj/item/weapon/implant/loyalty))
 			for(var/datum/organ/external/O in M.organs)
@@ -432,7 +431,6 @@
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_assignment() called tick#: [world.time]")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
@@ -450,7 +448,6 @@
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(var/if_no_id = "Unknown")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_authentification_name() called tick#: [world.time]")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
@@ -465,7 +462,6 @@
 	return
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_visible_name() called tick#: [world.time]")
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
@@ -479,7 +475,6 @@
 	return face_name
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_face_name() called tick#: [world.time]")
 	var/datum/organ/external/head/head = get_organ("head")
 	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (M_HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
@@ -488,7 +483,6 @@
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_id_name() called tick#: [world.time]")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
 	if(istype(pda))		. = pda.owner
@@ -510,7 +504,6 @@
 	return ..(shock_damage, source, siemens_coeff, def_zone)
 
 /mob/living/carbon/human/proc/num2slotname(slot_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/num2slotname() called tick#: [world.time]")
 	switch (slot_id)
 		if (slot_back)
 			return "back"
@@ -940,7 +933,6 @@
 
 
 /mob/living/carbon/human/proc/check_dna()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_dna() called tick#: [world.time]")
 	dna.check_integrity(src)
 	return
 
@@ -955,7 +947,6 @@
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/play_xylophone() called tick#: [world.time]")
 	if(!src.xylophone)
 		visible_message("<span class='warning'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='notice'>You hear a spooky xylophone melody.</span>")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
@@ -966,7 +957,6 @@
 	return
 
 /mob/living/carbon/human/proc/vomit(hairball = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/vomit() called tick#: [world.time]")
 	if(!lastpuke)
 		lastpuke = 1
 		src << "<spawn class='warning'>You feel nauseous...</span>"
@@ -995,7 +985,6 @@
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
 	set category = "Mutant Abilities"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/morph() called tick#: [world.time]")
 
 	if(stat!=CONSCIOUS)
 		reset_view(0)
@@ -1072,7 +1061,6 @@
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
 /mob/living/carbon/human/proc/can_mind_interact(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/can_mind_interact() called tick#: [world.time]")
 	//world << "Starting can interact on [M]"
 	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
 	//world << "[M] is a human"
@@ -1098,13 +1086,11 @@
 	return 1
 
 /mob/living/carbon/human/proc/get_visible_gender()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_visible_gender() called tick#: [world.time]")
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
 		return NEUTER
 	return gender
 
 /mob/living/carbon/human/proc/increase_germ_level(n)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/increase_germ_level() called tick#: [world.time]")
 	if(gloves)
 		gloves.germ_level += n
 	else
@@ -1152,12 +1138,10 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/is_lung_ruptured() called tick#: [world.time]")
 	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 	return L && L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/rupture_lung() called tick#: [world.time]")
 	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 
 	if(L && !L.is_bruised())
@@ -1166,7 +1150,6 @@
 
 /*
 /mob/living/carbon/human/verb/simulate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/simulate()  called tick#: [world.time]")
 	set name = "sim"
 	//set background = 1
 	var/damage = input("Wound damage","Wound damage") as num
@@ -1295,7 +1278,6 @@
 
 /mob/living/carbon/human/proc/get_visible_implants(var/class = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_visible_implants() called tick#: [world.time]")
 
 	var/list/visible_implants = list()
 	for(var/datum/organ/external/organ in src.organs)
@@ -1312,7 +1294,6 @@
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_embedded_objects() called tick#: [world.time]")
 
 	for(var/datum/organ/external/organ in src.organs)
 		if(organ.status & ORGAN_SPLINTED) //Splints prevent movement.
@@ -1340,7 +1321,6 @@
 	set name = "Check pulse"
 	set desc = "Approximately count somebody's pulse. Requires you to stand still at least 6 seconds."
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/check_pulse()  called tick#: [world.time]")
 	var/self = 0
 
 	if(usr.stat == 1 || usr.restrained() || !isliving(usr) || (usr.status_flags & FAKEDEATH)) return
@@ -1369,7 +1349,6 @@
 
 /mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/set_species() called tick#: [world.time]")
 
 	if(new_species_name)
 		if(src.species && src.species.name && (src.species.name == new_species_name)) return
@@ -1407,7 +1386,6 @@
 	set category = "IC"
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/bloody_doodle() called tick#: [world.time]")
 
 	if (src.stat)
 		return

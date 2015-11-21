@@ -13,7 +13,6 @@
 // [config.vgws_base_url]/index.php/route?get_var=value
 // s is automatically added when admin=1.
 /datum/admins/proc/getVGPanel(var/route,var/list/query=list(),var/admin=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/getVGPanel() called tick#: [world.time]")
 	checkSessionKey()
 	var/url="[config.vgws_base_url]/index.php/[route]"
 	if(admin)

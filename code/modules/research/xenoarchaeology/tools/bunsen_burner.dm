@@ -39,7 +39,6 @@
 		user << "<span class='warning'>There is nothing on the [src].</span>"
 
 /obj/machinery/bunsen_burner/proc/try_heating()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bunsen_burner/proc/try_heating() called tick#: [world.time]")
 	src.visible_message("<span class='notice'>\icon[src] [src] hisses.</span>")
 	if(held_container && heating)
 		heated = 1
@@ -52,7 +51,6 @@
 	set src in view(1)
 	set name = "Toggle bunsen burner"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/bunsen_burner/verb/toggle()  called tick#: [world.time]")
 
 	heating = !heating
 	icon_state = "bunsen[heating]"

@@ -168,7 +168,6 @@ var/list/mechtoys = list(
 
 	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
 /datum/controller/supply_shuttle/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 	for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 		var/datum/supply_packs/P = new typepath()
 		supply_packs[P.name] = P
@@ -216,7 +215,6 @@ var/list/mechtoys = list(
 
 	//Check whether the shuttle is allowed to move
 /datum/controller/supply_shuttle/proc/can_move()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/can_move() called tick#: [world.time]")
 	if(moving) return 0
 
 	if(forbidden_atoms_check(cargo_shuttle.linked_area))
@@ -226,7 +224,6 @@ var/list/mechtoys = list(
 
 /datum/controller/supply_shuttle/proc/SellObjToOrders(var/atom/A,var/in_crate)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SellObjToOrders() called tick#: [world.time]")
 
 	// Per-unit orders run last so they don't steal shit.
 	var/list/deferred_order_checks=list()
@@ -244,7 +241,6 @@ var/list/mechtoys = list(
 	//Sellin
 
 /datum/controller/supply_shuttle/proc/sell()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sell() called tick#: [world.time]")
 
 	var/area/shuttle = cargo_shuttle.linked_area
 	if(!shuttle)	return
@@ -296,7 +292,6 @@ var/list/mechtoys = list(
 
 	//Buyin
 /datum/controller/supply_shuttle/proc/buy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/buy() called tick#: [world.time]")
 	if(!shoppinglist.len) return
 
 	var/area/shuttle = cargo_shuttle.linked_area
@@ -374,7 +369,6 @@ var/list/mechtoys = list(
 	return
 
 /datum/controller/supply_shuttle/proc/forbidden_atoms_check(atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/supply_shuttle/proc/forbidden_atoms_check() called tick#: [world.time]")
 	var/contents = get_contents_in_object(A)
 
 	if (locate(/mob/living) in contents)
@@ -831,7 +825,6 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/supplycomp/proc/post_signal() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

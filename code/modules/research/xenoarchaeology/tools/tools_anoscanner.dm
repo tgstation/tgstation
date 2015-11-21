@@ -28,7 +28,6 @@
 			scan()
 
 /obj/item/device/ano_scanner/proc/scan()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/ano_scanner/proc/scan() called tick#: [world.time]")
 	last_scan_time = world.time
 	nearest_artifact_distance = -1
 

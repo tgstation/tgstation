@@ -1,7 +1,6 @@
 
 /datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/DB_ban_record() called tick#: [world.time]")
 
 	if(!check_rights(R_BAN))	return
 
@@ -109,7 +108,6 @@
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_unban() called tick#: [world.time]")
 
 	if(!check_rights(R_BAN))	return
 
@@ -178,7 +176,6 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
 datum/admins/proc/DB_ban_edit(var/banid = null, var/param = null)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_edit() called tick#: [world.time]")
 
 	if(!check_rights(R_BAN))	return
 
@@ -240,7 +237,6 @@ datum/admins/proc/DB_ban_edit(var/banid = null, var/param = null)
 
 datum/admins/proc/DB_ban_unban_by_id(var/id)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_unban_by_id() called tick#: [world.time]")
 
 	if(!check_rights(R_BAN))	return
 
@@ -291,7 +287,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	set category = "Admin"
 	set name = "Banning Panel"
 	set desc = "Edit admin permissions"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/DB_ban_panel() called tick#: [world.time]")
 
 	if(!holder)
 		return
@@ -299,7 +294,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	holder.DB_ban_panel()
 
 /datum/admins/proc/DB_ban_panel(var/playerckey = null, var/adminckey = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/DB_ban_panel() called tick#: [world.time]")
 	if(!usr.client)
 		return
 

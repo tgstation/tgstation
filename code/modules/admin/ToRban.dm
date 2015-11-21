@@ -5,7 +5,6 @@
 #define TOR_UPDATE_INTERVAL 216000	//~6 hours
 
 /proc/ToRban_isbanned(var/ip_address)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ToRban_isbanned() called tick#: [world.time]")
 	var/savefile/F = new(TORFILE)
 	if(F)
 		if( ip_address in F.dir )
@@ -13,7 +12,6 @@
 	return 0
 
 /proc/ToRban_autoupdate()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ToRban_autoupdate() called tick#: [world.time]")
 	var/savefile/F = new(TORFILE)
 	if(F)
 		var/last_update
@@ -23,7 +21,6 @@
 	return
 
 /proc/ToRban_update()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ToRban_update() called tick#: [world.time]")
 	spawn(0)
 		diary << "Downloading updated ToR data..."
 		var/http[] = world.Export("http://exitlist.torproject.org/exit-addresses")
@@ -48,7 +45,6 @@
 /client/proc/ToRban(task in list("update","toggle","show","remove","remove all","find"))
 	set name = "ToRban"
 	set category = "Server"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/ToRban() called tick#: [world.time]")
 	if(!holder)	return
 	switch(task)
 		if("update")

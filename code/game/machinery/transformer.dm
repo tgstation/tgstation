@@ -54,7 +54,6 @@
 			AM.loc = src.loc
 
 /obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/transformer/proc/do_transform() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown_state)

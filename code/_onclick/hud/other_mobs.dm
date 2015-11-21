@@ -1,10 +1,8 @@
 
 /datum/hud/proc/unplayer_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/unplayer_hud() called tick#: [world.time]")
 	return
 
 /datum/hud/proc/ghost_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/ghost_hud() called tick#: [world.time]")
 	mymob.visible = getFromPool(/obj/screen)
 	mymob.visible.icon = 'icons/mob/screen1_ghost.dmi'
 	mymob.visible.icon_state = "visible0"
@@ -23,7 +21,6 @@
 	mymob.client.screen += list(mymob.visible, mymob.flash)
 
 /datum/hud/proc/corgi_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/corgi_hud() called tick#: [world.time]")
 	mymob.fire = getFromPool(/obj/screen)
 	mymob.fire.icon = 'icons/mob/screen1_corgi.dmi'
 	mymob.fire.icon_state = "fire0"
@@ -66,7 +63,6 @@
 	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.oxygen, mymob.toxin, mymob.flash)
 
 /datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/brain_hud() called tick#: [world.time]")
 	mymob.blind = getFromPool(/obj/screen)
 	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
@@ -76,7 +72,6 @@
 
 /datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/blob_hud() called tick#: [world.time]")
 
 	blobpwrdisplay = getFromPool(/obj/screen)
 	blobpwrdisplay.name = "blob power"
@@ -96,7 +91,6 @@
 
 /datum/hud/proc/shade_hud()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/shade_hud() called tick#: [world.time]")
 
 	mymob.healths = getFromPool(/obj/screen)
 	mymob.healths.icon = 'icons/mob/screen1_shade.dmi'
@@ -133,7 +127,6 @@
 	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged, mymob.flash)
 
 /datum/hud/proc/construct_hud()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/construct_hud() called tick#: [world.time]")
 	var/constructtype
 
 	if(istype(mymob,/mob/living/simple_animal/construct/armoured) || istype(mymob,/mob/living/simple_animal/construct/behemoth))
@@ -188,7 +181,6 @@
 
 /datum/hud/proc/vampire_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/vampire_hud() called tick#: [world.time]")
 
 	vampire_blood_display = getFromPool(/obj/screen)
 	vampire_blood_display.name = "Vampire Blood"

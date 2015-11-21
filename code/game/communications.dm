@@ -39,7 +39,6 @@
         range - radius of regular byond's square circle on that z-level. null means everywhere, on all z-levels.
 
   obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
-    //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \  obj/proc/receive_signal() called tick#: [world.time]")
     Handler from received signals. By default does nothing. Define your own for your object.
     Avoid of sending signals directly from this proc, use spawn(-1). Do not use sleep() here please.
       parameters:
@@ -63,7 +62,6 @@
 */
 var/list/all_radios = list()
 /proc/add_radio(var/obj/item/radio, freq)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/add_radio() called tick#: [world.time]")
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -74,7 +72,6 @@ var/list/all_radios = list()
 	return freq
 
 /proc/remove_radio(var/obj/item/radio, freq)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/remove_radio() called tick#: [world.time]")
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -83,7 +80,6 @@ var/list/all_radios = list()
 	all_radios["[freq]"] -= radio
 
 /proc/remove_radio_all(var/obj/item/radio)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/remove_radio_all() called tick#: [world.time]")
 	for(var/freq in all_radios)
 		all_radios["[freq]"] -= radio
 /*
@@ -199,7 +195,6 @@ var/global/datum/controller/radio/radio_controller
 	var/list/datum/radio_frequency/frequencies = new
 
 /datum/controller/radio/proc/add_object(const/obj/device, const/_frequency, var/filter = null as text|null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/radio/proc/add_object() called tick#: [world.time]")
 	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
 	if(isnull(frequency))
@@ -211,7 +206,6 @@ var/global/datum/controller/radio/radio_controller
 	return frequency
 
 /datum/controller/radio/proc/remove_object(const/obj/device, const/_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/radio/proc/remove_object() called tick#: [world.time]")
 	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
 	if(frequency)
@@ -223,7 +217,6 @@ var/global/datum/controller/radio/radio_controller
 	return 1
 
 /datum/controller/radio/proc/return_frequency(const/_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/radio/proc/return_frequency() called tick#: [world.time]")
 	return frequencies[num2text(_frequency)]
 
 /datum/radio_frequency
@@ -290,7 +283,6 @@ var/global/datum/controller/radio/radio_controller
 	returnToPool(signal)
 
 /datum/radio_frequency/proc/add_listener(const/obj/device, var/filter)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/radio_frequency/proc/add_listener() called tick#: [world.time]")
 	if(!filter) // FIXME
 		filter = "_default"
 
@@ -303,7 +295,6 @@ var/global/datum/controller/radio/radio_controller
 	devices_at_filter.Add(device)
 
 /datum/radio_frequency/proc/remove_listener(const/obj/device, const/filter)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/radio_frequency/proc/remove_listener() called tick#: [world.time]")
 	var/list/devices_at_filter = devices[filter]
 
 	// 1. check if it's an object
@@ -324,7 +315,6 @@ var/list/pointers = list()
 /client/proc/print_pointers()
 	set name = "Debug Signals"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/print_pointers() called tick#: [world.time]")
 
 	if(!holder)
 		return
@@ -337,7 +327,6 @@ var/list/pointers = list()
 			src << S.debug_print()
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/receive_signal() called tick#: [world.time]")
 	return
 
 #define SIGNAL_WIRE     0
@@ -371,7 +360,6 @@ var/list/pointers = list()
 	data = list()
 
 /datum/signal/proc/copy_from(datum/signal/model)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/signal/proc/copy_from() called tick#: [world.time]")
 	source = model.source
 	transmission_method = model.transmission_method
 	data = model.data
@@ -379,7 +367,6 @@ var/list/pointers = list()
 	frequency = model.frequency
 
 /datum/signal/proc/debug_print()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/signal/proc/debug_print() called tick#: [world.time]")
 	if (source)
 		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
 	else
@@ -392,7 +379,6 @@ var/list/pointers = list()
 				. += "data\[\"[i]\"\] list has: [t]"
 
 /datum/signal/proc/sanitize_data()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/signal/proc/sanitize_data() called tick#: [world.time]")
 	for(var/d in data)
 		var/val = data[d]
 		if(istext(val))

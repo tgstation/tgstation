@@ -120,7 +120,6 @@ var/global/list/status_displays = list() //This list contains both normal status
 	// set what is displayed
 
 /obj/machinery/status_display/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/update() called tick#: [world.time]")
 	if(friendc && mode!=4) //Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
@@ -187,7 +186,6 @@ var/global/list/status_displays = list() //This list contains both normal status
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/set_message() called tick#: [world.time]")
 	if(m1)
 		index1 = (length(m1) > CHARS_PER_LINE)
 		message1 = m1
@@ -203,26 +201,22 @@ var/global/list/status_displays = list() //This list contains both normal status
 		index2 = 0
 
 /obj/machinery/status_display/proc/set_picture(state)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/set_picture() called tick#: [world.time]")
 	picture_state = state
 	remove_display()
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/update_display() called tick#: [world.time]")
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
 
 /obj/machinery/status_display/proc/get_shuttle_timer()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/get_shuttle_timer() called tick#: [world.time]")
 	var/timeleft = emergency_shuttle.timeleft()
 	if(timeleft)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	return ""
 
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/get_supply_shuttle_timer() called tick#: [world.time]")
 	if(supply_shuttle.moving)
 		var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
 		if(timeleft < 0)
@@ -231,7 +225,6 @@ var/global/list/status_displays = list() //This list contains both normal status
 	return ""
 
 /obj/machinery/status_display/proc/remove_display()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/status_display/proc/remove_display() called tick#: [world.time]")
 	if(overlays.len)
 		overlays.len = 0
 	if(maptext)
@@ -393,7 +386,6 @@ var/global/list/status_display_images = list(
 	..(severity)
 
 /obj/machinery/ai_status_display/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_status_display/proc/update() called tick#: [world.time]")
 	switch(mode)
 		if(MODE_BLANK)
 			overlays = list()
@@ -408,7 +400,6 @@ var/global/list/status_display_images = list(
 			set_picture("ai_bsod")
 
 /obj/machinery/ai_status_display/proc/set_picture(var/state)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_status_display/proc/set_picture() called tick#: [world.time]")
 	picture_state = state
 	if(overlays.len)
 		overlays.len = 0

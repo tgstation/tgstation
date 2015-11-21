@@ -37,7 +37,6 @@
 	return
 /*
 	verb/set_perspective()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/set_perspective()  called tick#: [world.time]")
 		set name = "Set client perspective."
 		set category = "Exosuit Interface"
 		set src = usr.loc
@@ -49,7 +48,6 @@
 		return
 
 	verb/toggle_eye()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/toggle_eye()  called tick#: [world.time]")
 		set name = "Toggle eye."
 		set category = "Exosuit Interface"
 		set src = usr.loc

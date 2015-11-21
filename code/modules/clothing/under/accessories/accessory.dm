@@ -24,7 +24,6 @@
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[_color? "[_color]" : "[icon_state]"]")
 
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/proc/on_attached() called tick#: [world.time]")
 	if(!istype(S))
 		return
 	has_suit = S
@@ -37,7 +36,6 @@
 	has_suit.overlays += inv_overlay
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/proc/on_removed() called tick#: [world.time]")
 	if(!has_suit)
 		return
 	has_suit.overlays -= inv_overlay
@@ -47,7 +45,6 @@
 	src.add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_accessory_interact(mob/user, delayed = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/proc/on_accessory_interact() called tick#: [world.time]")
 	if(!has_suit)
 		return
 	if(delayed)

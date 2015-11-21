@@ -24,11 +24,9 @@ var/const/ALLOW_CENTCOMM = FALSE
 //Override this to show the user the interface
 /datum/interactive_map/proc/show(mob/mob, z)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/interactive_map/proc/show() called tick#: [world.time]")
 
 
 /datum/interactive_map/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/interactive_map/proc/updateFor() called tick#: [world.time]")
 	// This check will succeed if updateFor is called after showing to the player, but will fail
 	// on regular updates. Since we only really need this once we don't care if it fails.
 	hi.callJavaScript("clearAll", new/list(), hclient_or_mob)
@@ -37,10 +35,8 @@ var/const/ALLOW_CENTCOMM = FALSE
 
 // Override this to update an interface
 /datum/interactive_map/proc/update(z, ignore_unused = FALSE)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/interactive_map/proc/update() called tick#: [world.time]")
 
 /datum/interactive_map/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/interactive_map/proc/hiIsValidClient() called tick#: [world.time]")
 	return (hclient.client.mob && hclient.client.mob.stat == CONSCIOUS)
 
 /datum/interactive_map/Topic(href, href_list[], datum/html_interface_client/hclient, datum/html_interface/currui)
@@ -58,7 +54,6 @@ var/const/ALLOW_CENTCOMM = FALSE
 
 // Override this to queue an interface to be updated
 /datum/interactive_map/proc/queueUpdate(z)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/interactive_map/proc/queueUpdate() called tick#: [world.time]")
 
 /proc/generateMiniMaps()
 	//spawn // NO
@@ -76,7 +71,6 @@ var/const/ALLOW_CENTCOMM = FALSE
 
 
 /datum/interactive_map/proc/sendResources(client/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/interactive_map/proc/sendResources() called tick#: [world.time]")
 	C << browse_rsc('map_shared.js')
 	C << browse_rsc('map_shared.css')
 	for (var/z = 1 to world.maxz)
@@ -84,7 +78,6 @@ var/const/ALLOW_CENTCOMM = FALSE
 		C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
 
 /proc/getMinimapFile(z)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getMinimapFile() called tick#: [world.time]")
 	return "data/minimaps/map_[z]"
 
 // Activate this to debug tile mismatches in the minimap.
@@ -94,7 +87,6 @@ var/const/ALLOW_CENTCOMM = FALSE
 // #define MINIMAP_DEBUG
 
 /proc/generateMiniMap(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/generateMiniMap() called tick#: [world.time]")
 	var/result_path = "[getMinimapFile(z)].png"
 	var/hash_path = "[getMinimapFile(z)].md5"
 	var/list/tiles = block(locate(x1, y1, z), locate(x2, y2, z))

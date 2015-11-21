@@ -88,7 +88,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		detach()
 
 /obj/machinery/chem_dispenser/proc/recharge()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/recharge() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER)) return
 	var/oldenergy = energy
 	energy = min(energy + rechargerate, max_energy)
@@ -233,7 +232,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/detach() called tick#: [world.time]")
 	targetMoveKey=null
 
 	if(beaker)
@@ -745,7 +743,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/chem_master/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_master/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		beaker.loc = src.loc
 		beaker.pixel_x = 0 //We fucked with the beaker for overlays, so reset that
@@ -855,7 +852,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(var/num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_master/proc/isgoodnumber() called tick#: [world.time]")
 	if(isnum(num))
 		if(num > 200)
 			num = 200
@@ -1060,7 +1056,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/computer/pandemic/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pandemic/proc/detach() called tick#: [world.time]")
 	beaker.loc = src.loc
 	if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
 		var/mob/living/silicon/robot/R = beaker:holder:loc
@@ -1480,7 +1475,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/detach() called tick#: [world.time]")
 
 	if (usr.stat != 0)
 		return
@@ -1498,7 +1492,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/eject() called tick#: [world.time]")
 
 	if (usr.stat != 0)
 		return
@@ -1511,32 +1504,27 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	holdingitems = list()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(var/obj/item/weapon/reagent_containers/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/is_allowed() called tick#: [world.time]")
 	for (var/i in blend_items)
 		if(istype(O, i))
 			return 1
 	return 0
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/weapon/grown/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_by_id() called tick#: [world.time]")
 	for (var/i in blend_items)
 		if (istype(O, i))
 			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id() called tick#: [world.time]")
 	for(var/i in blend_items)
 		if(istype(O, i))
 			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id() called tick#: [world.time]")
 	for(var/i in juice_items)
 		if(istype(O, i))
 			return juice_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/grown/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_grownweapon_amount() called tick#: [world.time]")
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1545,7 +1533,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return round(O.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_juice_amount() called tick#: [world.time]")
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1554,12 +1541,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return round(5*sqrt(O.potency))
 
 /obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/remove_object() called tick#: [world.time]")
 	holdingitems -= O
 	del(O)
 
 /obj/machinery/reagentgrinder/proc/juice()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/juice() called tick#: [world.time]")
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -1593,7 +1578,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/grind()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/grind() called tick#: [world.time]")
 
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
@@ -1822,7 +1806,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/item/weapon/electrolyzer/proc/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/electrolyzer/proc/insert_beaker() called tick#: [world.time]")
 	W.loc = src
 	beakers += W
 	user.drop_item(W, src)
@@ -1904,7 +1887,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/centrifuge/verb/flush()  called tick#: [world.time]")
 	add_fingerprint(usr)
 	usr << "<span class='notice'>\The [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
@@ -1922,7 +1904,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 
 /obj/structure/centrifuge/proc/detach()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/centrifuge/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		beaker.loc = src.loc
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))

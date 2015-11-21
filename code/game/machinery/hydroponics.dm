@@ -178,7 +178,6 @@ obj/machinery/hydroponics/process()
 
 
 obj/machinery/hydroponics/proc/updateicon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/updateicon() called tick#: [world.time]")
 	//Refreshes the icon and sets the luminosity
 	overlays.len = 0
 	if(planted)
@@ -221,7 +220,6 @@ obj/machinery/hydroponics/proc/updateicon()
 
 
 obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/weedinvasion() called tick#: [world.time]")
 	dead = 0
 	if(myseed) // In case there's nothing in the tray beforehand
 		del(myseed)
@@ -257,7 +255,6 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 
 obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/mutate() called tick#: [world.time]")
 
 	myseed.lifespan += rand(-2,2)
 	if(myseed.lifespan < 10)
@@ -298,7 +295,6 @@ obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
 
 obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed.
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/hardmutate() called tick#: [world.time]")
 
 	myseed.lifespan += rand(-4,4)
 	if(myseed.lifespan < 10)
@@ -339,7 +335,6 @@ obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed
 
 obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/mutatespecie() called tick#: [world.time]")
 
 	if ( istype(myseed, /obj/item/seeds/nettleseed ))
 		del(myseed)
@@ -450,7 +445,6 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/mutateweed() called tick#: [world.time]")
 	if ( weedlevel > 5 )
 		del(myseed)
 		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
@@ -474,7 +468,6 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 
 
 obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/plantdies() called tick#: [world.time]")
 	health = 0
 	dead = 1
 	harvest = 0
@@ -485,7 +478,6 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 
 
 obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm, this is commented out
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/mutatepest() called tick#: [world.time]")
 	if ( pestlevel > 5 )
  	visible_message("The pests seem to behave oddly...")
 //		spawn(10)
@@ -876,7 +868,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		usr << text ("") // Empty line for readability.
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/proc/harvest() called tick#: [world.time]")
 	var/produce = text2path(productname)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
@@ -980,7 +971,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	parent.update_tray()
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/update_tray() called tick#: [world.time]")
 	harvest = 0
 	lastproduce = age
 	if((yieldmod * myseed.yield) <= 0 || istype(myseed,/obj/item/seeds/dionanode))

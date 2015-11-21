@@ -15,7 +15,6 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/reagent_containers/verb/set_APTFT()  called tick#: [world.time]")
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
@@ -59,7 +58,6 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
  * Transfer reagents between reagent_containers/reagent_dispensers.
  */
 /proc/transfer_sub(var/atom/source, var/atom/target, var/amount, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/transfer_sub() called tick#: [world.time]")
 	// Typecheck shenanigans
 	var/source_empty
 	var/target_full
@@ -107,7 +105,6 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
  * Helper proc to handle reagent splashes. A negative `amount` will splash all the reagents.
  */
 /proc/splash_sub(var/datum/reagents/reagents, var/atom/target, var/amount, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/splash_sub() called tick#: [world.time]")
 	if (amount == 0 || reagents.is_empty())
 		user << "<span class='warning'>There's nothing to splash with!</span>"
 		return -1
@@ -138,7 +135,6 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
  * @return If we have transferred reagents, the amount transferred; otherwise, -1 if the transfer has failed, 0 if was a splash.
  */
 /obj/item/weapon/reagent_containers/proc/transfer(var/atom/target, var/mob/user, var/can_send = TRUE, var/can_receive = TRUE, var/splashable_units = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/transfer() called tick#: [world.time]")
 	if (!istype(target) || !is_open_container())
 		return -1
 
@@ -199,19 +195,15 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	return 0
 
 /obj/item/weapon/reagent_containers/proc/is_empty()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/is_empty() called tick#: [world.time]")
 	return reagents.total_volume <= 0
 
 /obj/item/weapon/reagent_containers/proc/is_full()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/is_full() called tick#: [world.time]")
 	return reagents.total_volume >= reagents.maximum_volume
 
 /obj/item/weapon/reagent_containers/proc/can_transfer_an_APTFT()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/can_transfer_an_APTFT() called tick#: [world.time]")
 	return reagents.total_volume >= amount_per_transfer_from_this
 
 /obj/item/weapon/reagent_containers/proc/get_reagent_names()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/get_reagent_names() called tick#: [world.time]")
 	var/list/reagent_names = list()
 	for (var/datum/reagent/R in reagents.reagent_list)
 		reagent_names += R.name
@@ -226,7 +218,6 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	return reagent_ids
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/reagentlist() called tick#: [world.time]")
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind

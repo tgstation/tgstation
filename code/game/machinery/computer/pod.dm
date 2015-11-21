@@ -27,7 +27,6 @@
 	return
 
 /obj/machinery/computer/pod/proc/driver_sync()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pod/proc/driver_sync() called tick#: [world.time]")
 	timings = list()
 	times = list()
 	synced = list()
@@ -57,7 +56,6 @@
 	return
 
 /obj/machinery/computer/pod/proc/solo_sync(var/ident_tag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pod/proc/solo_sync() called tick#: [world.time]")
 	for(var/obj/machinery/mass_driver/M in mass_drivers)
 		if(M.z != src.z)	continue
 		if((M.id_tag == ident_tag) && !(ident_tag in synced))
@@ -84,7 +82,6 @@
 
 
 /obj/machinery/computer/pod/proc/launch_sequence(var/ident_tag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pod/proc/launch_sequence() called tick#: [world.time]")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	var/anydriver = 0

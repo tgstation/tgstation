@@ -5,12 +5,10 @@
 #define NOTESFILE "data/player_notes.sav"	//where the player notes are saved
 
 datum/admins/proc/notes_show(var/ckey)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/notes_show() called tick#: [world.time]")
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
 
 
 datum/admins/proc/notes_gethtml(var/ckey)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/notes_gethtml() called tick#: [world.time]")
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
@@ -34,7 +32,6 @@ datum/admins/proc/notes_gethtml(var/ckey)
 //originally had seperate entries such as var/by to record who left the note and when
 //but the current bansystem is a heap of dung.
 /proc/notes_add(var/ckey, var/note)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/notes_add() called tick#: [world.time]")
 	if(!ckey)
 		ckey = ckey(input(usr,"Who would you like to add notes for?","Enter a ckey",null) as text|null)
 		if(!ckey)	return
@@ -52,7 +49,6 @@ datum/admins/proc/notes_gethtml(var/ckey)
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
 /proc/notes_remove(var/ckey, var/start_index, var/end_index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/notes_remove() called tick#: [world.time]")
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return
 
@@ -90,7 +86,6 @@ datum/admins/proc/notes_gethtml(var/ckey)
 //Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
 
 /proc/notes_add(var/key, var/note, var/mob/usr)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/notes_add() called tick#: [world.time]")
 	if (!key || !note)
 		return
 
@@ -144,7 +139,6 @@ datum/admins/proc/notes_gethtml(var/ckey)
 
 
 /proc/notes_del(var/key, var/index)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/notes_del() called tick#: [world.time]")
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos

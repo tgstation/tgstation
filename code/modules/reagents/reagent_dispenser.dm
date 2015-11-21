@@ -36,7 +36,6 @@
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/reagent_dispensers/verb/set_APTFT()  called tick#: [world.time]")
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
@@ -72,7 +71,6 @@
 		verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 
 /obj/structure/reagent_dispensers/proc/is_empty()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/reagent_dispensers/proc/is_empty() called tick#: [world.time]")
 	return reagents.total_volume <= 0
 
 //Dispensers
@@ -187,7 +185,6 @@
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/proc/explode()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/reagent_dispensers/fueltank/proc/explode() called tick#: [world.time]")
 	if (reagents.total_volume > 500)
 		explosion(src.loc,1,2,4)
 	else if (reagents.total_volume > 100)

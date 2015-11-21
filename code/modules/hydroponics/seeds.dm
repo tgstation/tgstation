@@ -18,14 +18,12 @@
 
 //Grabs the appropriate seed datum from the global list.
 /obj/item/seeds/proc/update_seed()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/proc/update_seed() called tick#: [world.time]")
 	if(!seed && seed_type && !isnull(seed_types) && seed_types[seed_type])
 		seed = seed_types[seed_type]
 	update_appearance()
 
 //Updates strings and icon appropriately based on seed datum.
 /obj/item/seeds/proc/update_appearance()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/seeds/proc/update_appearance() called tick#: [world.time]")
 	if(!seed) return
 	icon_state = seed.packet_icon
 	src.name = "packet of [seed.seed_name] [seed.seed_noun]"

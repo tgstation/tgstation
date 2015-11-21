@@ -7,7 +7,6 @@
 
 // called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/solar/panel/tracker/proc/set_angle(angle)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/panel/tracker/proc/set_angle() called tick#: [world.time]")
 	sun_angle = angle
 
 	//Set icon dir to show sun illumination

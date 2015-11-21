@@ -5,7 +5,6 @@
 
 // Note: Returns -1 if not enough ore!
 /datum/smelting_recipe/proc/checkIngredients(var/obj/machinery/mineral/processing_unit/P)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/smelting_recipe/proc/checkIngredients() called tick#: [world.time]")
 	for(var/ore_id in P.ore.storage)
 		var/min_ore_required = ingredients[ore_id]
 

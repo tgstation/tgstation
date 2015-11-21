@@ -4,7 +4,6 @@ var/const/commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_strike_team = 0
 
 /client/proc/strike_team()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/strike_team() called tick#: [world.time]")
 	if(!ticker)
 		usr << "<font color='red'>The game hasn't started yet!</font>"
 		return
@@ -99,7 +98,6 @@ var/global/sent_strike_team = 0
 	return 1
 
 /client/proc/create_death_commando(obj/spawn_location, leader_selected = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/create_death_commando() called tick#: [world.time]")
 	var/mob/living/carbon/human/new_commando = new(spawn_location.loc)
 	var/commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
@@ -127,7 +125,6 @@ var/global/sent_strike_team = 0
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_death_commando() called tick#: [world.time]")
 
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), slot_ears)
 

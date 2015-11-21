@@ -108,7 +108,6 @@
 
 // called by solar tracker when sun position changes (somehow, that's not supposed to be in process)
 /obj/machinery/power/solar/control/proc/tracker_update(angle)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/tracker_update() called tick#: [world.time]")
 	if(track != 2 || stat & (NOPOWER | BROKEN))
 		return
 
@@ -211,7 +210,6 @@ Manual Tracking Direction:"}
 	updateUsrDialog()
 
 /obj/machinery/power/solar/control/proc/set_panels(var/cdir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/set_panels() called tick#: [world.time]")
 	for(var/obj/machinery/power/solar/panel/P in getPowernetNodes())
 		if(get_dist(P, src) < SOLAR_MAX_DIST)
 			if(!P.control)
@@ -224,7 +222,6 @@ Manual Tracking Direction:"}
 	update_icon()
 
 /obj/machinery/power/solar/control/proc/broken()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/broken() called tick#: [world.time]")
 	stat |= BROKEN
 	update_icon()
 

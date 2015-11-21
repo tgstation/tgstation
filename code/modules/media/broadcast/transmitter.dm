@@ -13,13 +13,11 @@ var/global/media_transmitters=list()
 	connect_frequency()
 
 /obj/machinery/media/transmitter/proc/broadcast(var/url="", var/start_time=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/proc/broadcast() called tick#: [world.time]")
 	media_url = url
 	media_start_time = start_time
 	update_music()
 
 /obj/machinery/media/transmitter/proc/connect_frequency()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/proc/connect_frequency() called tick#: [world.time]")
 	var/list/transmitters=list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_transmitters)
@@ -38,7 +36,6 @@ var/global/media_transmitters=list()
 				//testing("[src]: Sending music to [R]")
 
 /obj/machinery/media/transmitter/proc/disconnect_frequency()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/proc/disconnect_frequency() called tick#: [world.time]")
 	var/list/transmitters=list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_transmitters)

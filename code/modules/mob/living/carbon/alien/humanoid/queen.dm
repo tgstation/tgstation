@@ -66,7 +66,6 @@
 	set name = "Lay Egg (75)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/queen/verb/lay_egg()  called tick#: [world.time]")
 
 	if(locate(/obj/effect/alien/egg) in get_turf(src))
 		src << "<span class='warning'>There's already an egg here.</span>"

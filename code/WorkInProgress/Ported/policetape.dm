@@ -173,7 +173,6 @@
 	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/tape/proc/breaktape() called tick#: [world.time]")
 	if(user.a_intent == I_HELP && (!W || !W.is_sharp()) && !src.allowed(user))
 		user << "<span class='notice'>You can't break [src] [W ? "with \the [W] " : ""]unless you use force.</span>"
 		return

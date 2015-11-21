@@ -1,6 +1,5 @@
 //like orange but only checks north/south/east/west for one step
 proc/cardinalrange(var/center)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/cardinalrange() called tick#: [world.time]")
 	var/list/things = list()
 	for(var/direction in cardinal)
 		var/turf/T = get_step(center, direction)
@@ -39,7 +38,6 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/controllerscan() called tick#: [world.time]")
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
 		qdel(src)
@@ -166,7 +164,6 @@ proc/cardinalrange(var/center)
 
 //Call this to link a detected shilding unit to the controller
 /obj/machinery/am_shielding/proc/link_control(var/obj/machinery/power/am_control_unit/AMC)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/link_control() called tick#: [world.time]")
 	if(!istype(AMC))	return 0
 	if(control_unit && control_unit != AMC) return 0//Already have one
 	control_unit = AMC
@@ -176,7 +173,6 @@ proc/cardinalrange(var/center)
 
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/core_check() called tick#: [world.time]")
 	for(var/direction in alldirs)
 		var/found_am_device=0
 		for(var/obj/machinery/machine in get_step(loc, direction))
@@ -191,7 +187,6 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/proc/setup_core()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/setup_core() called tick#: [world.time]")
 	processing = 1
 	power_machines.Add(src)
 	if(!control_unit)	return
@@ -200,7 +195,6 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/proc/shutdown_core()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/shutdown_core() called tick#: [world.time]")
 	processing = 0
 	if(!control_unit)	return
 	control_unit.linked_cores.Remove(src)
@@ -208,14 +202,12 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/proc/check_stability(var/injecting_fuel = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/check_stability() called tick#: [world.time]")
 	if(stability > 0) return
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	qdel(src)
 
 /obj/machinery/am_shielding/proc/recalc_efficiency(var/new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/am_shielding/proc/recalc_efficiency() called tick#: [world.time]")
 	if(!control_unit || !processing) return
 	if(stability < 50)
 		new_efficiency /= 2

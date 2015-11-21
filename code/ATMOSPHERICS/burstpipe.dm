@@ -28,7 +28,6 @@
 
 // Tell nodes to fix their networks.
 /obj/machinery/atmospherics/unary/vent/burstpipe/proc/do_connect()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/unary/vent/burstpipe/proc/do_connect() called tick#: [world.time]")
 	//var/flip = turn(dir, 180)
 	initialize_directions = dir
 	var/turf/T = loc

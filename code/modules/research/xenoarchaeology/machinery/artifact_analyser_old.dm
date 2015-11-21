@@ -99,7 +99,6 @@
 			break
 
 /obj/machinery/artifact_analyser/proc/AA_FailedAnalysis(var/failtype)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/artifact_analyser/proc/AA_FailedAnalysis() called tick#: [world.time]")
 	switch(failtype)
 		if(1)
 			src.aorigin = "Failed to Identify"
@@ -115,7 +114,6 @@
 			if (prob(20)) src.aeffect2 = pick(src.allranges)
 
 /obj/machinery/artifact_analyser/proc/AA_Analyse()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/artifact_analyser/proc/AA_Analyse() called tick#: [world.time]")
 	if(!cur_artifact)
 		return
 	src.accuO = 5 + rand(0,10) + origin_bonuses[cur_artifact.origin] + cur_artifact.activated * 50

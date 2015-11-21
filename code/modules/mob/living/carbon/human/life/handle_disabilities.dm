@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_disabilities() called tick#: [world.time]")
 	if(disabilities & EPILEPSY)
 		if((prob(1)) && (paralysis < 1))
 			visible_message("<span class='danger'>\The [src] starts having a seizure!</span>", \

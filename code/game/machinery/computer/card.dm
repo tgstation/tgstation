@@ -46,19 +46,15 @@
 	light_color = LIGHT_COLOR_BLUE
 
 	proc/is_centcom()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/is_centcom() called tick#: [world.time]")
 		return istype(src, /obj/machinery/computer/card/centcom)
 
 	proc/is_authenticated()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/is_authenticated() called tick#: [world.time]")
 		return scan ? check_access(scan) : 0
 
 	proc/get_target_rank()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_target_rank() called tick#: [world.time]")
 		return modify && modify.assignment ? modify.assignment : "Unassigned"
 
 	proc/format_jobs(list/jobs)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/format_jobs() called tick#: [world.time]")
 		var/list/formatted = list()
 		for(var/job in jobs)
 			formatted.Add(list(list(
@@ -69,7 +65,6 @@
 		return formatted
 
 	proc/format_card_skins(list/card_skins)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/format_card_skins() called tick#: [world.time]")
 		var/list/formatted = list()
 		for(var/skin in card_skins)
 			formatted.Add(list(list(
@@ -82,7 +77,6 @@
 	set category = "Object"
 	set name = "Eject ID Card"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/computer/card/verb/eject_id()  called tick#: [world.time]")
 
 	if(!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH))	return
 

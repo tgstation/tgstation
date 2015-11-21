@@ -7,7 +7,6 @@
 /var/chosen_dir = 1
 
 /proc/meteor_wave(var/number = meteors_in_wave, var/max_size = 0, var/list/types = null) //Call above constants to change
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/meteor_wave() called tick#: [world.time]")
 	if(!ticker || meteor_wave_active)
 		return
 	meteor_wave_active = 1
@@ -62,7 +61,6 @@
 
 /proc/spawn_meteor(var/chosen_dir, var/meteorpath = null)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/spawn_meteor() called tick#: [world.time]")
 
 	var/startx
 	var/starty

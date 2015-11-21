@@ -38,7 +38,6 @@
 	return
 
 /datum/construction/proc/next_step(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/next_step() called tick#: [world.time]")
 	steps.len--
 	if(!steps.len)
 		spawn_result(user)
@@ -47,11 +46,9 @@
 	return
 
 /datum/construction/proc/action(atom/used_atom,mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/action() called tick#: [world.time]")
 	return
 
 /datum/construction/proc/check_step(atom/used_atom,mob/user as mob) //check last step only
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/check_step() called tick#: [world.time]")
 	var/valid_step = is_right_key(user,used_atom)
 	if(valid_step)
 		assembling = 1
@@ -63,7 +60,6 @@
 	return 0
 
 /datum/construction/proc/is_right_key(mob/user as mob, atom/used_atom) // returns current step num if used_atom is of the right type.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/is_right_key() called tick#: [world.time]")
 	if(assembling) return 0
 	var/list/L = steps[steps.len]
 	if((istype(L[Co_KEY], /list) && is_type_in_list(used_atom, L[Co_KEY])) || istype(used_atom, L[Co_KEY]))
@@ -75,7 +71,6 @@
 	return 0
 
 /datum/construction/proc/custom_action(step, used_atom, user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/custom_action() called tick#: [world.time]")
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 
@@ -93,7 +88,6 @@
 
 
 /datum/construction/proc/fixText(text,user,self=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/fixText() called tick#: [world.time]")
 	if(self)
 		text = replacetext(text, "{s}", "")
 		text = replacetext(text, "{USER}", "You")
@@ -104,17 +98,14 @@
 	return text
 
 /datum/construction/proc/construct_message(step, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/construct_message() called tick#: [world.time]")
 	if(Co_VIS_MSG in step)
 		user.visible_message(fixText(step[Co_VIS_MSG],user), fixText(step[Co_VIS_MSG],user,1))
 
 /datum/construction/proc/start_construct_message(step, mob/user, atom/movable/used_atom)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/start_construct_message() called tick#: [world.time]")
 	if(Co_START_MSG in step)
 		user.visible_message(fixText(step[Co_START_MSG],user), fixText(step[Co_START_MSG],user,1))
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user as mob) //check all steps, remove matching one.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/check_all_steps() called tick#: [world.time]")
 	for(var/i=1;i<=steps.len;i++)
 		var/list/L = steps[i];
 		if((islist(L[Co_KEY]) && is_type_in_list(used_atom, L[Co_KEY])) ||istype(used_atom, L[Co_KEY]))
@@ -128,7 +119,6 @@
 
 
 /datum/construction/proc/spawn_result(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/spawn_result() called tick#: [world.time]")
 	if(result)
 		testing("[user] finished a [result]!")
 
@@ -138,13 +128,11 @@
 	return
 
 /datum/construction/proc/set_desc(index as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/set_desc() called tick#: [world.time]")
 	var/list/step = steps[index]
 	holder.desc = step[Co_DESC]
 	return
 
 /datum/construction/proc/try_consume(mob/user as mob, atom/movable/used_atom, given_step)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/try_consume() called tick#: [world.time]")
 	if(used_atom.construction_delay_mult && !used_atom.construction_delay_mult[Co_CON_SPEED])
 		user << "<span class='warning'>This tool only works for deconstruction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
 		return 0
@@ -202,7 +190,6 @@
 	return 1
 
 /datum/construction/proc/add_max_amounts()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/proc/add_max_amounts() called tick#: [world.time]")
 	for(var/list/this_step in steps)
 		if((Co_AMOUNT in this_step))
 			this_step.Add(list(Co_MAX_AMOUNT = this_step[Co_AMOUNT])) //puts in something we can refer to when we reset the step
@@ -216,7 +203,6 @@
 	return
 
 /datum/construction/reversible/proc/update_index(diff as num, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/reversible/proc/update_index() called tick#: [world.time]")
 	index+=diff
 	if(index==0)
 		spawn_result(user)
@@ -292,16 +278,13 @@
 		while("{UN|" in text)
 			var/start_bracket = findtext(text, "{")
 			var/this_verb = copytext(text, start_bracket, findtext(text, "}", start_bracket + 1))
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\var/this_verb = copytext()  called tick#: [world.time]")
 			world << this_verb
 			var/marker = findtext(this_verb, "|")
 			var/final_verb = ""
 			if(diff == FORWARD)
 				final_verb = copytext(this_verb, marker + 1, findtext(this_verb, "|", marker + 1))
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\final_verb = copytext()  called tick#: [world.time]")
 			else
 				final_verb = copytext(this_verb, findtext(this_verb, "|", marker + 1), findtext(text, "}", start_bracket + 1))
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\final_verb = copytext()  called tick#: [world.time]")
 			world << final_verb
 			replacetext(text, this_verb, final_verb)
 		*/
@@ -415,7 +398,6 @@
 	return 1
 
 /datum/construction/reversible/proc/get_forward_step(index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/reversible/proc/get_forward_step() called tick#: [world.time]")
 	if(index < 0 || index > steps.len)
 		return
 	var/list/S = steps[index]
@@ -423,7 +405,6 @@
 		return S[Co_NEXTSTEP]
 
 /datum/construction/reversible/proc/get_backward_step(index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/construction/reversible/proc/get_backward_step() called tick#: [world.time]")
 	if(index < 0 || index > steps.len)
 		return
 	var/list/S = steps[index]

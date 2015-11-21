@@ -36,7 +36,6 @@
 	attackpylon(user, W.force)
 
 /obj/structure/cult/pylon/proc/attackpylon(mob/user as mob, var/damage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cult/pylon/proc/attackpylon() called tick#: [world.time]")
 	if(!isbroken)
 		if(prob(1+ damage * 5))
 			user << "You hit the pylon, and its crystal breaks apart!"
@@ -62,7 +61,6 @@
 
 
 /obj/structure/cult/pylon/proc/repair(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cult/pylon/proc/repair() called tick#: [world.time]")
 	if(isbroken)
 		user << "You repair the pylon."
 		isbroken = 0

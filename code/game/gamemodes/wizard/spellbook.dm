@@ -353,7 +353,6 @@
 
 //Single Use Spellbooks//
 /obj/item/weapon/spellbook/proc/add_spell(var/spell/spell_to_add,var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/proc/add_spell() called tick#: [world.time]")
 	if(user.mind)
 		if(!user.mind.wizard_spells)
 			user.mind.wizard_spells = list()
@@ -392,11 +391,9 @@
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/oneuse/proc/recoil() called tick#: [world.time]")
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
 /obj/item/weapon/spellbook/oneuse/proc/onlearned(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/oneuse/proc/onlearned() called tick#: [world.time]")
 	used = 1
 	user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 

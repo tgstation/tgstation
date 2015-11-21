@@ -61,7 +61,6 @@
 	set src in usr
 	set name = "Empty bee net"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/bee_net/verb/empty_bees()  called tick#: [world.time]")
 	var/mob/living/carbon/M
 	if(iscarbon(usr))
 		M = usr

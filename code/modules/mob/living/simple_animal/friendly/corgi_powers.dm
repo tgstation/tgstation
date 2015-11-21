@@ -2,7 +2,6 @@
 	set name = "Chase your tail"
 	set desc = "d'awwww."
 	set category = "Corgi"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/corgi/verb/chasetail()  called tick#: [world.time]")
 	src << text("[pick("You dance around","You chase your tail")].")
 	for(var/mob/O in oviewers(src, null))
 		if ((O.client && !( O.blinded )))

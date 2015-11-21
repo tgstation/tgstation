@@ -13,7 +13,6 @@
 
 
 /obj/item/projectile/change/proc/wabbajack(var/mob/living/M) //WHY: as mob in living_mob_list
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/change/proc/wabbajack() called tick#: [world.time]")
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)
 			return

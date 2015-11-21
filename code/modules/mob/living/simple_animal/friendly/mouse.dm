@@ -67,7 +67,6 @@
 
 
 /mob/living/simple_animal/mouse/proc/splat()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/mouse/proc/splat() called tick#: [world.time]")
 	src.health = 0
 	src.stat = DEAD
 	src.icon_dead = "mouse_[_color]_splat"
@@ -80,7 +79,6 @@
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/mouse/verb/ventcrawl()  called tick#: [world.time]")
 	var/pipe = start_ventcrawl()
 	if(pipe)
 		handle_ventcrawl(pipe)
@@ -90,7 +88,6 @@
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/mouse/verb/hide()  called tick#: [world.time]")
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2

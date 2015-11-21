@@ -44,7 +44,6 @@
 	return 1
 
 /obj/structure/bed/chair/vehicle/wheelchair/proc/check_hands(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/wheelchair/proc/check_hands() called tick#: [world.time]")
 	//Returns a number from 0 to 4 depending on usability of user's hands
 	//Human with no hands gets 0
 	//Human with one hand holding something gets 1

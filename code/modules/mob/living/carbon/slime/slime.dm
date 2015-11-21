@@ -627,7 +627,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		health = maxHealth - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 /mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/slime/proc/get_obstacle_ok() called tick#: [world.time]")
 	var/direct = get_dir(src, A)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
 	var/ok = 0
@@ -1078,7 +1077,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 	proc/announce_to_ghosts()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_to_ghosts() called tick#: [world.time]")
 		for(var/mob/dead/observer/O in player_list)
 			if(O.client)
 				var/area/A = get_area(src)
@@ -1095,7 +1093,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		volunteer(O)
 
 	proc/check_observer(var/mob/dead/observer/O)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_observer() called tick#: [world.time]")
 		if(!O)
 			return 0
 		if(!O.client)
@@ -1105,7 +1102,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return 1
 
 	proc/volunteer(var/mob/dead/observer/O)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/volunteer() called tick#: [world.time]")
 		if(O in ghosts)
 			ghosts.Remove(O)
 			O << "<span class='warning'>You are no longer signed up to be a golem.</span>"
@@ -1121,7 +1117,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	return 0
 
 /mob/living/carbon/slime/proc/rabid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/slime/proc/rabid() called tick#: [world.time]")
 	if(stat)
 		return
 	if(client)
@@ -1177,7 +1172,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			Life()
 
 	proc/Life()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Life() called tick#: [world.time]")
 		while(src)
 			if(timestopped)
 				while(timestopped)
@@ -1208,14 +1202,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		Grow()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow() called tick#: [world.time]")
 	grown = 1
 	icon_state = "slime egg-grown"
 	processing_objects.Add(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch() called tick#: [world.time]")
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
 	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")

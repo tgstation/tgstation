@@ -387,7 +387,6 @@
 	style = new style_type
 
 /obj/item/toy/crayon/proc/Format(var/mob/user,var/text,var/obj/item/weapon/paper/P)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/toy/crayon/proc/Format() called tick#: [world.time]")
 	return style.Format(text,src,user,P)
 
 /obj/item/toy/crayon/suicide_act(mob/user)

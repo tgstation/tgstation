@@ -265,7 +265,6 @@ var/savefile/panicfile
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/KickInactiveClients() called tick#: [world.time]")
 	spawn(-1)
 		//set background = 1
 		while(1)
@@ -280,7 +279,6 @@ var/savefile/panicfile
 
 
 /world/proc/load_mode()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_mode() called tick#: [world.time]")
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
@@ -288,17 +286,14 @@ var/savefile/panicfile
 			diary << "Saved mode is '[master_mode]'"
 
 /world/proc/save_mode(var/the_mode)
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/save_mode() called tick#: [world.time]")
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
 
 /world/proc/load_motd()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_motd() called tick#: [world.time]")
 	join_motd = file2text("config/motd.txt")
 
 /world/proc/load_configuration()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_configuration() called tick#: [world.time]")
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
@@ -308,7 +303,6 @@ var/savefile/panicfile
 	abandon_allowed = config.respawn
 
 /world/proc/load_mods()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_mods() called tick#: [world.time]")
 	if(config.admin_legacy_system)
 		var/text = file2text("config/moderators.txt")
 		if (!text)
@@ -328,7 +322,6 @@ var/savefile/panicfile
 				D.associate(directory[ckey])
 
 /world/proc/update_status()
-	//writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/update_status() called tick#: [world.time]")
 	var/s = ""
 
 	if (config && config.server_name)
@@ -395,7 +388,6 @@ var/failed_old_db_connections = 0
 
 proc/setup_database_connection()
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/setup_database_connection() called tick#: [world.time]")
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
@@ -421,7 +413,6 @@ proc/setup_database_connection()
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
 proc/establish_db_connection()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/establish_db_connection() called tick#: [world.time]")
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
@@ -442,7 +433,6 @@ proc/establish_db_connection()
 //These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
 proc/setup_old_database_connection()
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/setup_old_database_connection() called tick#: [world.time]")
 
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
@@ -468,7 +458,6 @@ proc/setup_old_database_connection()
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
 proc/establish_old_db_connection()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/establish_old_db_connection() called tick#: [world.time]")
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 

@@ -8,7 +8,6 @@ var/global/list/outbreak_level_words=list(
 	/* 7 */ 'sound/vox_fem/seven.ogg',
 )
 /proc/biohazard_alert(var/level=0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/biohazard_alert() called tick#: [world.time]")
 	if(!level)
 		level = rand(4,7)
 	command_alert("Confirmed outbreak of level [level] biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
@@ -23,6 +22,5 @@ var/global/list/outbreak_level_words=list(
 /*
 #warning TELL N3X15 TO COMMENT THIS SHIT OUT
 /mob/verb/test_biohazard()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/test_biohazard()  called tick#: [world.time]")
 	biohazard_alert()
 */

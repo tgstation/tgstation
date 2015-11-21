@@ -17,11 +17,9 @@
 	var/list/added_languages
 
 /obj/item/weapon/robot_module/proc/recharge_consumable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/recharge_consumable() called tick#: [world.time]")
 	return
 
 /obj/item/weapon/robot_module/proc/on_emag()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/on_emag() called tick#: [world.time]")
 	modules += emag
 	rebuild()
 	..()
@@ -55,11 +53,9 @@
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/respawn_consumable() called tick#: [world.time]")
 	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/rebuild() called tick#: [world.time]")
 	var/list/temp_list = modules
 	modules = list()
 	for(var/obj/O in temp_list)
@@ -404,13 +400,11 @@
 	return
 
 /obj/item/weapon/robot_module/proc/add_languages(var/mob/living/silicon/robot/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/add_languages() called tick#: [world.time]")
 	for(var/language in languages)
 		if(R.add_language(language, languages[language]))
 			added_languages |= language
 
 /obj/item/weapon/robot_module/proc/remove_languages(var/mob/living/silicon/robot/R)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/robot_module/proc/remove_languages() called tick#: [world.time]")
 	for(var/language in added_languages)
 		R.remove_language(language)
 	added_languages.len = 0

@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/breathe()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/breathe() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 	if(reagents.has_reagent("lexorin"))
@@ -119,7 +118,6 @@
 					src.spread_disease_to(M)
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_breath_from_internal() called tick#: [world.time]")
 	if(internal)
 		if(!contents.Find(internal))
 			internal = null
@@ -132,7 +130,6 @@
 	return null
 
 /mob/living/carbon/human/proc/handle_breath(var/datum/gas_mixture/breath)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_breath() called tick#: [world.time]")
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return 0
 

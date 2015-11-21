@@ -71,7 +71,6 @@ Message ends."}
 
 
 	proc/count()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/count() called tick#: [world.time]")
 		for(var/turf/T in turfs)
 			if(T.z != 1)
 				continue
@@ -110,7 +109,6 @@ Message ends."}
 
 
 	proc/score(var/datum/station_state/result)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/score() called tick#: [world.time]")
 		if(!result)	return 0
 		var/output = 0
 		output += (result.floor / max(floor,1))

@@ -31,7 +31,6 @@
 	set name = "Toggle Chameleon Projector Scanning"
 	set category = "Object"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/chameleon/verb/toggle_scaning()  called tick#: [world.time]")
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 
@@ -53,7 +52,6 @@
 			saved_overlays = target.overlays
 
 /obj/item/device/chameleon/proc/toggle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/chameleon/proc/toggle() called tick#: [world.time]")
 	if(!can_use || !saved_item)
 		return
 	if(active_dummy)
@@ -89,7 +87,6 @@
 			can_use = 1
 
 /obj/item/device/chameleon/proc/disrupt(var/delete_dummy = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/chameleon/proc/disrupt() called tick#: [world.time]")
 	if(active_dummy)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
@@ -104,7 +101,6 @@
 			can_use = 1
 
 /obj/item/device/chameleon/proc/eject_all()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/chameleon/proc/eject_all() called tick#: [world.time]")
 	for(var/atom/movable/A in active_dummy)
 		A.loc = active_dummy.loc
 		if(ismob(A))
@@ -121,7 +117,6 @@
 	var/obj/item/device/chameleon/master = null
 
 /obj/effect/dummy/chameleon/proc/activate(var/obj/O, var/mob/M, new_icon, new_iconstate, new_overlays, var/obj/item/device/chameleon/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/dummy/chameleon/proc/activate() called tick#: [world.time]")
 	name = O.name
 	desc = O.desc
 	icon = new_icon

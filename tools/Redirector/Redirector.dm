@@ -62,7 +62,6 @@ mob/Login()
 
 proc/extract(var/data, var/type = PLAYERS)
 
-	//writepanic("[__FILE__].[__LINE__] \\/proc/extract() called tick#: [world.time]")
 
 	var/nextpos = 0
 

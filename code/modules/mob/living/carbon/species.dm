@@ -10,7 +10,6 @@ var/global/list/all_species = list()
 var/global/list/whitelisted_species = list("Human")
 
 /proc/buildSpeciesLists()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/buildSpeciesLists() called tick#: [world.time]")
 	var/datum/language/L
 	var/datum/species/S
 	for(. in (typesof(/datum/language)-/datum/language))
@@ -126,7 +125,6 @@ var/global/list/whitelisted_species = list("Human")
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
 	if(H.dna)
 		if(length(speech.message) >= 2)
 			for(var/gene_type in H.active_genes)
@@ -139,7 +137,6 @@ var/global/list/whitelisted_species = list("Human")
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/create_organs() called tick#: [world.time]")
 
 	//This is a basic humanoid limb setup.
 	H.organs = list()
@@ -174,11 +171,9 @@ var/global/list/whitelisted_species = list("Human")
 			I.mechanize()
 
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_post_spawn() called tick#: [world.time]")
 	return
 
 /datum/species/proc/handle_breath(var/datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_breath() called tick#: [world.time]")
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
@@ -331,12 +326,10 @@ var/global/list/whitelisted_species = list("Human")
 
 // Used for species-specific names (Vox, etc)
 /datum/species/proc/makeName(var/gender,var/mob/living/carbon/C=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/makeName() called tick#: [world.time]")
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
 /datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_death() called tick#: [world.time]")
 	/*
 	if(flags & IS_SYNTHETIC)
 		//H.Jitter(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
@@ -349,7 +342,6 @@ var/global/list/whitelisted_species = list("Human")
 	return
 
 /datum/species/proc/equip(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/equip() called tick#: [world.time]")
 
 /datum/species/human
 	name = "Human"

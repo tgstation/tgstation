@@ -72,7 +72,6 @@
 
 
 /obj/structure/mirror/proc/shatter()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/mirror/proc/shatter() called tick#: [world.time]")
 	if(shattered)	return
 	shattered = 1
 	icon_state = "mirror_broke"

@@ -137,7 +137,6 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 		apply_spell_damage(target)
 
 /spell/targeted/proc/apply_spell_damage(mob/living/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/proc/apply_spell_damage() called tick#: [world.time]")
 	target.adjustBruteLoss(amt_dam_brute)
 	target.adjustFireLoss(amt_dam_fire)
 	target.adjustToxLoss(amt_dam_tox)

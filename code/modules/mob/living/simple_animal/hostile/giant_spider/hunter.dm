@@ -24,7 +24,6 @@
 	minimum_distance = 1
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/proc/GiveUp(var/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/giant_spider/hunter/proc/GiveUp() called tick#: [world.time]")
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
 			if(target == C && get_dist(src,target) > 1)

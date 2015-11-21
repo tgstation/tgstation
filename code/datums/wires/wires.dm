@@ -53,7 +53,6 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		holder = null
 
 /datum/wires/proc/GenerateWires()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/GenerateWires() called tick#: [world.time]")
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
 	//Generate our indexes
@@ -72,7 +71,6 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		//wires = shuffle(wires)
 
 /datum/wires/proc/Interact(var/mob/living/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/Interact() called tick#: [world.time]")
 	if(!istype(user))
 		return 0
 	var/html = null
@@ -88,11 +86,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	popup.open()
 
 /datum/wires/proc/GetWireName(var/i)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/GetWireName() called tick#: [world.time]")
 	return wire_names["[i]"]
 
 /datum/wires/proc/GetInteractWindow()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/GetInteractWindow() called tick#: [world.time]")
 	var/html = "<div class='block'>"
 	html += "<h3>Exposed Wires</h3>"
 	html += "<table[table_options]>"
@@ -166,16 +162,13 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 // Called when wires cut/mended.
 /datum/wires/proc/UpdateCut(var/index, var/mended)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/UpdateCut() called tick#: [world.time]")
 	return
 
 // Called when wire pulsed. Add code here.
 /datum/wires/proc/UpdatePulsed(var/index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/UpdatePulsed() called tick#: [world.time]")
 	return
 
 /datum/wires/proc/CanUse(var/mob/living/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/CanUse() called tick#: [world.time]")
 	return 1
 
 // Example of use:
@@ -205,17 +198,14 @@ var/const/POWER = 8
 //
 
 /datum/wires/proc/PulseColour(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/PulseColour() called tick#: [world.time]")
 	PulseIndex(GetIndex(colour))
 
 /datum/wires/proc/PulseIndex(var/index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/PulseIndex() called tick#: [world.time]")
 	if(IsIndexCut(index))
 		return
 	UpdatePulsed(index)
 
 /datum/wires/proc/GetIndex(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/GetIndex() called tick#: [world.time]")
 	if(wires[colour])
 		var/index = wires[colour]
 		return index
@@ -227,12 +217,10 @@ var/const/POWER = 8
 //
 
 /datum/wires/proc/IsColourCut(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/IsColourCut() called tick#: [world.time]")
 	var/index = GetIndex(colour)
 	return IsIndexCut(index)
 
 /datum/wires/proc/IsIndexCut(var/index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/IsIndexCut() called tick#: [world.time]")
 	return (index & wires_status)
 
 //
@@ -240,19 +228,16 @@ var/const/POWER = 8
 //
 
 /datum/wires/proc/IsAttached(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/IsAttached() called tick#: [world.time]")
 	if(signallers[colour])
 		return 1
 	return 0
 
 /datum/wires/proc/GetAttached(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/GetAttached() called tick#: [world.time]")
 	if(signallers[colour])
 		return signallers[colour]
 	return null
 
 /datum/wires/proc/Attach(var/colour, var/obj/item/device/assembly/signaler/S)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/Attach() called tick#: [world.time]")
 	if(colour && S)
 		if(!IsAttached(colour))
 			signallers[colour] = S
@@ -261,7 +246,6 @@ var/const/POWER = 8
 			return S
 
 /datum/wires/proc/Detach(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/Detach() called tick#: [world.time]")
 	if(colour)
 		var/obj/item/device/assembly/signaler/S = GetAttached(colour)
 		if(S)
@@ -273,7 +257,6 @@ var/const/POWER = 8
 
 /datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/Pulse() called tick#: [world.time]")
 
 	for(var/colour in signallers)
 		if(S == signallers[colour])
@@ -286,12 +269,10 @@ var/const/POWER = 8
 //
 
 /datum/wires/proc/CutWireColour(var/colour)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/CutWireColour() called tick#: [world.time]")
 	var/index = GetIndex(colour)
 	CutWireIndex(index)
 
 /datum/wires/proc/CutWireIndex(var/index)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/CutWireIndex() called tick#: [world.time]")
 	if(IsIndexCut(index))
 		wires_status &= ~index
 		UpdateCut(index, 1)
@@ -300,17 +281,14 @@ var/const/POWER = 8
 		UpdateCut(index, 0)
 
 /datum/wires/proc/RandomCut()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/RandomCut() called tick#: [world.time]")
 	var/r = rand(1, wires.len)
 	CutWireIndex(r)
 
 /datum/wires/proc/CutAll()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/CutAll() called tick#: [world.time]")
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
 		CutWireIndex(i)
 
 /datum/wires/proc/IsAllCut()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/proc/IsAllCut() called tick#: [world.time]")
 	if(wires_status == (1 << wire_count) - 1)
 		return 1
 	return 0

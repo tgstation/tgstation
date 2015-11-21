@@ -27,7 +27,6 @@
 		return
 
 	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/dynattackby() called tick#: [world.time]")
 		if(!action_checks(user) || !active)
 			return
 		user.electrocute_act(shock_damage, src)

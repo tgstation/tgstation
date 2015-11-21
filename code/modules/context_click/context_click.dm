@@ -14,12 +14,10 @@ IDs can then be used to cause certain behaviour using the action() proc
 
 //Gives the id clicked in this particular handler
 /datum/context_click/proc/return_clicked_id(var/x_pos, var/y_pos)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/proc/return_clicked_id() called tick#: [world.time]")
 	return
 
 //Helper for using params
 /datum/context_click/proc/return_clicked_id_by_params(params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/proc/return_clicked_id_by_params() called tick#: [world.time]")
 	if(!params)
 		return
 
@@ -33,5 +31,4 @@ IDs can then be used to cause certain behaviour using the action() proc
 //This is what you call when you want to hook into the handler
 //Combine params with return_clicked_id_by_params
 /datum/context_click/proc/action(obj/item/used_item, mob/user, params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/context_click/proc/action() called tick#: [world.time]")
 	return

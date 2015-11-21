@@ -33,7 +33,6 @@
 	detonator.bomb = src
 
 /obj/item/weapon/syndie/c4explosive/proc/detonate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/syndie/c4explosive/proc/detonate() called tick#: [world.time]")
 	icon_state = "c-4[size]_1"
 	spawn(50)
 		explosion(get_turf(src), power, power*2, power*3, power*4, power*4)

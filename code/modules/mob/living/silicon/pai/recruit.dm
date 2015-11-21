@@ -95,7 +95,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			recruitWindow(usr)
 
 	proc/recruitWindow(var/mob/M as mob)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/recruitWindow() called tick#: [world.time]")
 		var/datum/paiCandidate/candidate
 		for(var/datum/paiCandidate/c in pai_candidates)
 			if(!istype(c) || !istype(M))
@@ -147,7 +146,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/findPAI() called tick#: [world.time]")
 		requestRecruits()
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
@@ -200,7 +198,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		user << browse(dat, "window=findPai")
 
 	proc/requestRecruits()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/requestRecruits() called tick#: [world.time]")
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_PAI)) // We handle polling ourselves.
 			if(O.client)
 				if(check_recruit(O))
@@ -208,7 +205,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					//question(O.client)
 
 	proc/check_recruit(var/mob/dead/observer/O)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_recruit() called tick#: [world.time]")
 		if(jobban_isbanned(O, "pAI"))
 			return 0
 		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
@@ -218,7 +214,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		return 0
 
 	proc/question(var/client/C)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/question() called tick#: [world.time]")
 		spawn(0)
 			if(!C)	return
 			asked.Add(C.key)

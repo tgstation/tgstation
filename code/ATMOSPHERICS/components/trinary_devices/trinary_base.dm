@@ -32,7 +32,6 @@ obj/machinery/atmospherics/trinary/New()
 	air3.volume = starting_volume
 
 /obj/machinery/atmospherics/trinary/proc/initialize_directions()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/trinary/proc/initialize_directions() called tick#: [world.time]")
 	switch(dir)
 		if(NORTH)
 			initialize_directions = SOUTH|NORTH|EAST

@@ -2,7 +2,6 @@
 /client/proc/cmd_admin_pm_context(mob/M as mob in mob_list)
 	set category = null
 	set name = "Admin PM Mob"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_pm_context() called tick#: [world.time]")
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
@@ -14,7 +13,6 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_pm_panel() called tick#: [world.time]")
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
 		return
@@ -38,7 +36,6 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(var/client/C, var/msg)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_pm() called tick#: [world.time]")
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
 		return

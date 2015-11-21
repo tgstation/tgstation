@@ -49,7 +49,6 @@
 	equipment_system = new(src)
 
 /obj/spacepod/proc/update_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/update_icons() called tick#: [world.time]")
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
@@ -69,7 +68,6 @@
 		deal_damage(P.damage)
 
 /obj/spacepod/proc/deal_damage(var/damage)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/deal_damage() called tick#: [world.time]")
 	var/oldhealth = health
 	health = max(0, health - damage)
 	var/percentage = (health / initial(health)) * 100
@@ -225,7 +223,6 @@
 	set category = "Spacepod"
 	set src = usr.loc
 	set popup_menu = 0
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/spacepod/verb/toggle_internal_tank()  called tick#: [world.time]")
 	if(usr!=src.occupant)
 		return
 	src.use_internal_tank = !src.use_internal_tank
@@ -233,7 +230,6 @@
 	return
 
 /obj/spacepod/proc/add_cabin()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/add_cabin() called tick#: [world.time]")
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
@@ -242,12 +238,10 @@
 	return cabin_air
 
 /obj/spacepod/proc/add_airtank()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/add_airtank() called tick#: [world.time]")
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
 /obj/spacepod/proc/get_turf_air()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/get_turf_air() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	if(T)
 		. = T.return_air()
@@ -268,7 +262,6 @@
 	return get_turf_air()
 
 /obj/spacepod/proc/return_pressure()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/return_pressure() called tick#: [world.time]")
 	. = 0
 	if(use_internal_tank)
 		. =  cabin_air.return_pressure()
@@ -279,7 +272,6 @@
 	return
 
 /obj/spacepod/proc/return_temperature()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/return_temperature() called tick#: [world.time]")
 	. = 0
 	if(use_internal_tank)
 		. = cabin_air.return_temperature()
@@ -290,7 +282,6 @@
 	return
 
 /obj/spacepod/proc/moved_inside(var/mob/living/carbon/human/H as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/moved_inside() called tick#: [world.time]")
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
 		/*
@@ -317,7 +308,6 @@
 	set category = "Object"
 	set name = "Enter Pod"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/spacepod/verb/move_inside()  called tick#: [world.time]")
 
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
@@ -352,7 +342,6 @@
 	set name = "Exit pod"
 	set category = "Spacepod"
 	set src = usr.loc
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/spacepod/verb/exit_pod()  called tick#: [world.time]")
 
 	if(usr != src.occupant)
 		return
@@ -363,7 +352,6 @@
 	return
 
 /obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/enter_after() called tick#: [world.time]")
 	var/delayfraction = delay/numticks
 
 	var/turf/T = user.loc
@@ -423,7 +411,6 @@
 	if(dir && (oldloc != NewLoc))
 		src.loc.Entered(src, oldloc)
 /obj/spacepod/proc/Process_Spacemove(var/check_drift = 0, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/spacepod/proc/Process_Spacemove() called tick#: [world.time]")
 	var/dense_object = 0
 	if(!user)
 		for(var/direction in list(NORTH, NORTHEAST, EAST))

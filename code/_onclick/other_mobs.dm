@@ -22,20 +22,17 @@
 	return
 
 /atom/proc/attack_hand(mob/user as mob, params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_hand() called tick#: [world.time]")
 	return
 
 //called when we try to click but have no hand
 //good for general purposes
 /atom/proc/attack_stump(mob/user as mob, params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_stump() called tick#: [world.time]")
 	if(!requires_dexterity(user))
 		attack_hand(user) //if the object doesn't need dexterity, we can use our stump
 	else
 		user << "Your [user.hand ? "left hand" : "right hand"] is not fine enough for this action."
 
 /atom/proc/requires_dexterity(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/requires_dexterity() called tick#: [world.time]")
 	return 0
 
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A)
@@ -74,7 +71,6 @@
 	return
 
 /atom/proc/attack_animal(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_animal() called tick#: [world.time]")
 	return
 /mob/living/RestrainedClickOn(var/atom/A)
 	return
@@ -89,7 +85,6 @@
 	return
 
 /atom/proc/attack_paw(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_paw() called tick#: [world.time]")
 	return
 
 /*
@@ -131,7 +126,6 @@
 	return
 
 /atom/proc/attack_alien(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_alien() called tick#: [world.time]")
 	attack_paw(user)
 	return
 /mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
@@ -145,7 +139,6 @@
 	return
 
 /atom/proc/attack_larva(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_larva() called tick#: [world.time]")
 	return
 
 
@@ -157,7 +150,6 @@
 	A.attack_slime(src)
 	return
 /atom/proc/attack_slime(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_slime() called tick#: [world.time]")
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
 	return

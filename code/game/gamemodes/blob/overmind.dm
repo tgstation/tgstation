@@ -43,12 +43,10 @@
 	update_health()
 
 /mob/camera/blob/proc/update_health()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/update_health() called tick#: [world.time]")
 	if(blob_core)
 		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#e36600'>[blob_core.health]</font></div>"
 
 /mob/camera/blob/proc/add_points(var/points)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/add_points() called tick#: [world.time]")
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
 	//sanity for manual spawned blob cameras
@@ -72,7 +70,6 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/camera/blob/proc/blob_talk() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Blob Hivemind: [message]")
 

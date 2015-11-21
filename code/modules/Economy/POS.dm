@@ -156,7 +156,6 @@ var/const/POS_HEADER = {"<html>
 		linked_account = station_account
 
 /obj/machinery/pos/proc/AddToOrder(var/name, var/units)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/AddToOrder() called tick#: [world.time]")
 	if(!(name in products))
 		return 0
 	var/line_item/LI = products[name]
@@ -167,15 +166,12 @@ var/const/POS_HEADER = {"<html>
 	line_items.Add(LIC)
 
 /obj/machinery/pos/proc/RemoveFromOrder(var/order_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/RemoveFromOrder() called tick#: [world.time]")
 	line_items.Cut(order_id,order_id+1)
 
 /obj/machinery/pos/proc/NewOrder()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/NewOrder() called tick#: [world.time]")
 	line_items.len = 0
 
 /obj/machinery/pos/proc/PrintReceipt(var/order_id)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/PrintReceipt() called tick#: [world.time]")
 	var/receipt = {"[RECEIPT_HEADER]<div>POINT OF SALE #[id]<br />
 			Paying to: [linked_account.owner_name]<br />
 			Cashier: [logged_in]<br />"}
@@ -221,11 +217,9 @@ var/const/POS_HEADER = {"<html>
 
 
 /obj/machinery/pos/proc/LoginScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/LoginScreen() called tick#: [world.time]")
 	return "<center><b>Please swipe ID to log in.</b></center>"
 
 /obj/machinery/pos/proc/OrderScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/OrderScreen() called tick#: [world.time]")
 	var/receipt = {"<fieldset>
 		<legend>POS Info</legend>
 			POINT OF SALE #[id]<br />
@@ -290,7 +284,6 @@ var/const/POS_HEADER = {"<html>
 	return receipt
 
 /obj/machinery/pos/proc/ProductsScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/ProductsScreen() called tick#: [world.time]")
 	var/dat={"<fieldset><legend>Product List</legend>
 		<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />
@@ -320,7 +313,6 @@ var/const/POS_HEADER = {"<html>
 	return dat
 
 /obj/machinery/pos/proc/ExportScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/ExportScreen() called tick#: [world.time]")
 	var/dat={"<fieldset><legend>Export Products as CSV</legend>
 		<textarea>"}
 	for(var/i in products)
@@ -332,7 +324,6 @@ var/const/POS_HEADER = {"<html>
 	return dat
 
 /obj/machinery/pos/proc/ImportScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/ImportScreen() called tick#: [world.time]")
 	var/dat={"<fieldset>
 		<legend>Import Products as CSV</legend>
 		<form action="?src=\ref[src]" method="get">
@@ -347,11 +338,9 @@ var/const/POS_HEADER = {"<html>
 	return dat
 
 /obj/machinery/pos/proc/FinalizeScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/FinalizeScreen() called tick#: [world.time]")
 	return "<center><b>Waiting for Credit</b><br /><a href=\"?src=\ref[src];act=Reset\">Cancel</a></center>"
 
 /obj/machinery/pos/proc/SettingsScreen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/pos/proc/SettingsScreen() called tick#: [world.time]")
 	var/dat={"<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />
 		<fieldset>

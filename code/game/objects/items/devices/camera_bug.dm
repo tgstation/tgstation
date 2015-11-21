@@ -53,7 +53,6 @@
   catastrophic is whether it should explode on removal or not
 */
 /obj/item/device/camera_bug/proc/removed(mob/user = null, message = "[user] pries \the [src] away from \the [loc]", catastrophic = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera_bug/proc/removed() called tick#: [world.time]")
 	active = 0
 	camera_bugs  -= src
 	loc = get_turf(src)

@@ -77,7 +77,6 @@
 	A.attack_ai(src)
 
 /atom/proc/attack_ai(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_ai() called tick#: [world.time]")
 	return
 
 /*
@@ -98,7 +97,6 @@
 */
 
 /atom/proc/AIShiftClick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AIShiftClick() called tick#: [world.time]")
 	return
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
@@ -110,7 +108,6 @@
 
 
 /atom/proc/AICtrlClick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AICtrlClick() called tick#: [world.time]")
 	return
 
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
@@ -124,7 +121,6 @@
 
 
 /atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AIAltClick() called tick#: [world.time]")
 	AltClick(user)
 	return
 

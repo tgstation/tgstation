@@ -9,7 +9,6 @@
 //----------------------------------------
 
 /proc/create_border_image(icon/input, border_color = "#000000", fill_color = "#000000", border_alpha = 255, fill_alpha = 255)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/create_border_image() called tick#: [world.time]")
 	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 	I.Blend(input, ICON_OVERLAY)
 
@@ -82,7 +81,6 @@
 
 /proc/animate_rune_full(icon/input, rr1, rg1, rb1, ra1, rr2, rg2, rb2, ra2, br1, bg1, bb1, ba1, br2, bg2, bb2, ba2, ar1, ag1, ab1, aa1, ar2, ag2, ab2, aa2, or1, og1, ob1, oa1, or2, og2, ob2, oa2, frames)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/animate_rune_full() called tick#: [world.time]")
 
 	var/list/colors[10]
 	colors[ 1] = list(rr1, rg1, rb1, ra1) //Rune color 1
@@ -119,7 +117,6 @@
 
 
 /proc/animate_rune(icon/input, rune_color = "#00000000", border_color = "#c8000000", rune_color2 = "#00000000", border_color2 = "#d8380000", alpha = 255, alpha2 = 255, frames = rune_animation)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/animate_rune() called tick#: [world.time]")
 	var/rr1 = hex2num(copytext(rune_color, 2, 4))
 	var/rg1 = hex2num(copytext(rune_color, 4, 6))
 	var/rb1 = hex2num(copytext(rune_color, 6, 8))
@@ -141,7 +138,6 @@
 
 
 /proc/inanimate_rune(icon/input, rune_color = "#00000000", border_color = "#c8000000")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/inanimate_rune() called tick#: [world.time]")
 	var/icon/base = create_border_image(input, "#00ff0000", "#ff000000")
 
 	base.MapColors(rune_color, border_color, "#00000000", "#000000ff", "#00000000")
@@ -176,7 +172,6 @@ var/list/rune_animation = list(
 /var/list/rune_cache = list()
 
 /proc/get_rune(rune_bits, animated = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/get_rune() called tick#: [world.time]")
 	var/lookup = "[rune_bits]-[animated]"
 
 	if(lookup in rune_cache)
@@ -209,12 +204,10 @@ var/list/rune_animation = list(
 
 
 /mob/verb/create_rune()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/create_rune()  called tick#: [world.time]")
 	var/obj/o = new(locate(x, y, z))
 	o.icon = get_rune(rand(1, 1023), 1)
 
 /mob/verb/runes_15x15()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/runes_15x15()  called tick#: [world.time]")
 	for(var/turf/t in range(7))
 		var/obj/o = new /obj(t)
 		o.icon = get_rune(rand(1, 1023), 1)
@@ -222,7 +215,6 @@ var/list/rune_animation = list(
 
 /*
 /mob/verb/create_rune_custom(rune as num, color1 as color, border1 as color, color2 as color, border2 as color, alpha1 as num, alpha2 as num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/create_rune_custom()  called tick#: [world.time]")
 	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 
 	for(var/i = 0, i < 10, i++)
@@ -233,7 +225,6 @@ var/list/rune_animation = list(
 	o.icon = animate_rune(I, color1, border1, color2, border2, alpha1, alpha2)
 
 /mob/verb/spam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/spam()  called tick#: [world.time]")
 	for(var/turf/t in range(4))
 		var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 

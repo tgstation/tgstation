@@ -150,7 +150,6 @@
 	return 1
 
 /datum/game_mode/revolution/proc/is_convertible(mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/proc/is_convertible() called tick#: [world.time]")
 	for(var/obj/item/weapon/implant/loyalty/L in M)//Checking that there is a loyalty implant in the contents
 		if(L.imp_in == M)//Checking that it's actually implanted
 			return 0
@@ -158,7 +157,6 @@
 	return 1
 
 /mob/living/carbon/human/proc/RevConvert(mob/M as mob in oview(src))
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/RevConvert() called tick#: [world.time]")
 	set name = "Rev-Convert"
 	set category = "IC"
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
@@ -232,7 +230,6 @@
 	return ..()
 
 /datum/game_mode/revolution/rp_revolution/proc/command_report(message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/rp_revolution/proc/command_report() called tick#: [world.time]")
 	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )

@@ -5,7 +5,6 @@
 	set name = "Set Default Language"
 	set category = "IC"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/set_default_language()  called tick#: [world.time]")
 	if(language)
 		src << "<span class='notice'>You will now speak [language] if you do not specify a language when speaking.</span>"
 	else
@@ -20,7 +19,6 @@
 	set name = "Check Default Language"
 	set category = "IC"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/check_default_language()  called tick#: [world.time]")
 	if(default_language)
 		src << "<span class='notice'>You are currently speaking [default_language] by default.</span>"
 	else

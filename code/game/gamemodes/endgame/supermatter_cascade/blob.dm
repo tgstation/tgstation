@@ -113,7 +113,6 @@
 
 
 /turf/unsimulated/wall/supermatter/proc/Consume(var/mob/living/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/unsimulated/wall/supermatter/proc/Consume() called tick#: [world.time]")
 	if(istype(user,/mob/dead/observer))
 		return
 

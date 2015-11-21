@@ -22,7 +22,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/uplink/proc/generate_menu() called tick#: [world.time]")
 	if(!job)
 		job = user.mind.assigned_role
 	var/dat = "<B>[src.welcome]</B><BR>"
@@ -151,12 +150,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 // Toggles the uplink on and off. Normally this will bypass the item's normal functions and go to the uplink menu, if activated.
 /obj/item/device/uplink/hidden/proc/toggle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/uplink/hidden/proc/toggle() called tick#: [world.time]")
 	active = !active
 
 // Directly trigger the uplink. Turn on if it isn't already.
 /obj/item/device/uplink/hidden/proc/trigger(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/uplink/hidden/proc/trigger() called tick#: [world.time]")
 	if(!active)
 		toggle()
 	interact(user)
@@ -165,7 +162,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
 /obj/item/device/uplink/hidden/proc/check_trigger(mob/user as mob, var/value, var/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/uplink/hidden/proc/check_trigger() called tick#: [world.time]")
 	if(value == target)
 		trigger(user)
 		return 1
@@ -176,7 +172,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // If it is, it will display the uplink menu and return 1, else it'll return false.
 // If it returns true, I recommend closing the item's normal menu with "user << browse(null, "window=name")"
 /obj/item/proc/active_uplink_check(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/active_uplink_check() called tick#: [world.time]")
 	// Activates the uplink if it's active
 	if(src.hidden_uplink)
 		if(src.hidden_uplink.active)

@@ -109,7 +109,6 @@
 
 // this function shows the information about being silenced as a pAI in the Status panel
 /mob/living/silicon/pai/proc/show_silenced()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/show_silenced() called tick#: [world.time]")
 	if(src.silence_time)
 		var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 		stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -219,7 +218,6 @@
 	return //Pais do not do this
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/switchCamera() called tick#: [world.time]")
 	usr:cameraFollow = null
 	if (!C)
 		src.unset_machine()

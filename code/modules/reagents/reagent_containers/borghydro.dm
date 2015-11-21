@@ -60,7 +60,6 @@
 // Purely for testing purposes I swear~
 /*
 /obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()  called tick#: [world.time]")
 	set src in world
 	add_reagent("cyanide")
 */

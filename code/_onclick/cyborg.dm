@@ -162,14 +162,12 @@
 	A.attack_robot(src)
 
 /atom/proc/attack_robot(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_robot() called tick#: [world.time]")
 	attack_ai(user)
 	return
 
 
 // /vg/: Alt-click.
 /atom/proc/RobotAltClick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/RobotAltClick() called tick#: [world.time]")
 	return
 
 // /vg/: Alt-click to open shit

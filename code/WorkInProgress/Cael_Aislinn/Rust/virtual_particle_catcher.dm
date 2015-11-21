@@ -16,20 +16,17 @@
 	parent = null
 
 /obj/effect/rust_particle_catcher/proc/SetSize(var/newsize)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_particle_catcher/proc/SetSize() called tick#: [world.time]")
 	name = "collector [newsize]"
 	mysize = newsize
 	UpdateSize()
 
 /obj/effect/rust_particle_catcher/proc/AddParticles(var/name, var/quantity = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_particle_catcher/proc/AddParticles() called tick#: [world.time]")
 	if(parent && parent.size >= mysize)
 		parent.AddParticles(name, quantity)
 		return 1
 	return 0
 
 /obj/effect/rust_particle_catcher/proc/UpdateSize()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_particle_catcher/proc/UpdateSize() called tick#: [world.time]")
 	if(parent.size >= mysize)
 		density = 1
 		//invisibility = 0

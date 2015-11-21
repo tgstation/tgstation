@@ -3,7 +3,6 @@
 #define ARTIFACT_SPAWN_CHANCE 20
 
 proc/SetupXenoarch()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SetupXenoarch() called tick#: [world.time]")
 	for(var/turf/unsimulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
 		if(!prob(XENOARCH_SPAWN_CHANCE))
 			continue

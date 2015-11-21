@@ -446,7 +446,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/ai/proc/set_name_and_job() called tick#: [world.time]")
 	owner = newname
 	ownjob = newjob
 	name = newname + " (" + ownjob + ")"
@@ -458,7 +457,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/cmd_send_pdamesg() called tick#: [world.time]")
 	if(usr.stat == 2)
 		usr << "You can't send PDA messages because you are dead!"
 		return
@@ -496,7 +494,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_send_pdamesg()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't send PDA messages because you are dead!"
 		return
@@ -513,7 +510,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -525,7 +521,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -537,7 +532,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_show_message_log()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -545,7 +539,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/cmd_show_message_log() called tick#: [world.time]")
 	if(usr.stat == 2)
 		usr << "You can't do that because you are dead!"
 		return
@@ -585,7 +578,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	didyouknow = pick(facts)
 
 /obj/item/device/pda/proc/can_use(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/can_use() called tick#: [world.time]")
 	if(user && ismob(user))
 		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
 			return 0
@@ -1996,7 +1988,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/proc/remove_id()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/remove_id() called tick#: [world.time]")
 	if (id)
 		if (ismob(loc))
 			var/mob/M = loc
@@ -2008,7 +1999,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/create_message() called tick#: [world.time]")
 
 	var/t = input(U, "Please enter message", name, null) as text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
@@ -2098,7 +2088,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove id"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/verb/verb_remove_id()  called tick#: [world.time]")
 
 	if(issilicon(usr))
 		return
@@ -2116,7 +2105,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove pen"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/verb/verb_remove_pen()  called tick#: [world.time]")
 
 	if(issilicon(usr))
 		return
@@ -2137,7 +2125,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/id_check() called tick#: [world.time]")
 	if(choice == 1)
 		if (id)
 			remove_id()
@@ -2293,7 +2280,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return dev_analys.preattack(A, user, 1)
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/explode() called tick#: [world.time]")
 	if(!src.detonate) return
 	var/turf/T = get_turf(src.loc)
 
@@ -2343,7 +2329,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		M.Weaken(5)
 
 /obj/item/device/pda/proc/available_pdas()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/available_pdas() called tick#: [world.time]")
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
@@ -2402,7 +2387,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		A.emp_act(severity)
 
 /proc/get_viewable_pdas()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_viewable_pdas() called tick#: [world.time]")
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
 	for(var/obj/item/device/pda/P in PDAs)

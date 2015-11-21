@@ -3,7 +3,6 @@
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/updateshock() called tick#: [world.time]")
 	src.traumatic_shock = 			\
 	1	* src.getOxyLoss() + 		\
 	0.7	* src.getToxLoss() + 		\
@@ -49,5 +48,4 @@
 
 
 /mob/living/carbon/proc/handle_shock()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/handle_shock() called tick#: [world.time]")
 	updateshock()

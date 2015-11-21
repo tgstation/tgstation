@@ -44,7 +44,6 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/nagant/proc/pump(mob/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/nagant/pump/proc/pump() called tick#: [world.time]")
 	playsound(M, 'sound/weapons/nagantreload.ogg', 100, 1)
 	pumped = 0
 	if(current_shell)//We have a shell in the chamber
@@ -108,7 +107,6 @@
 	return 1
 
 /obj/item/weapon/gun/projectile/nagant/obrez/proc/flame_turf(turflist)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/flamethrower/proc/flame_turf() called tick#: [world.time]")
 	var/turf/T = turflist[2]
 	var/turf/previousturf
 

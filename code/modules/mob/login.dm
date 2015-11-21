@@ -1,6 +1,5 @@
 //handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 /mob/proc/update_Login_details()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_Login_details() called tick#: [world.time]")
 	//Multikey checks and logging
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id

@@ -3,12 +3,10 @@
 var/list/whitelist = list()
 
 /proc/load_whitelist()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/load_whitelist() called tick#: [world.time]")
 	whitelist = file2list(WHITELISTFILE)
 	if(!whitelist.len)	whitelist = null
 
 /proc/check_whitelist(mob/M /*, var/rank*/)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/check_whitelist() called tick#: [world.time]")
 	if(!whitelist)
 		return 0
 	return ("[M.ckey]" in whitelist)
@@ -17,7 +15,6 @@ var/list/whitelist = list()
 var/global/list/alien_whitelist = list()
 
 /proc/load_alienwhitelist()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/load_alienwhitelist() called tick#: [world.time]")
 	alien_whitelist=list()
 	alien_whitelist["all"]=list()
 	var/text = file2text("config/alienwhitelist.txt")
@@ -44,7 +41,6 @@ var/global/list/alien_whitelist = list()
 
 //todo: admin aliens
 /proc/is_alien_whitelisted(mob/M, var/species)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_alien_whitelisted() called tick#: [world.time]")
 	if(!config.usealienwhitelist)
 		return 1
 
@@ -75,7 +71,6 @@ var/global/list/alien_whitelist = list()
 	return 0
 
 /proc/has_whitelist_entries(var/species)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/has_whitelist_entries() called tick#: [world.time]")
 	if(!config.usealienwhitelist)
 		return 1
 	species=lowertext(species)

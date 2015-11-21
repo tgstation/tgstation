@@ -114,7 +114,6 @@
 //used for loading from or to boxes. Has the fumble check
 //this doesn't load any bullets by itself, but is a check for the slow loading used by boxes
 /obj/item/ammo_storage/proc/slowLoad(var/obj/item/ammo_storage/bullets_from, var/obj/item/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/ammo_storage/proc/slowLoad() called tick#: [world.time]")
 	if(!bullets_from || !istype(bullets_from)) //fuck you for calling this with the wrong arguments
 		return 0
 	if(!target || !istype(target))
@@ -147,7 +146,6 @@
 //used to load bullets from ammo storage into other ammo storage or guns
 //bullets_from is the origin, target is the gun or targetted box
 /obj/item/ammo_storage/proc/LoadInto(var/obj/item/ammo_storage/bullets_from, var/obj/item/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/ammo_storage/proc/LoadInto() called tick#: [world.time]")
 	if(!bullets_from || !istype(bullets_from))
 		return 0
 	if(!target || !istype(target))
@@ -184,7 +182,6 @@
 	return bullets_loaded
 
 /obj/item/ammo_storage/proc/get_round(var/keep = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/ammo_storage/proc/get_round() called tick#: [world.time]")
 	if(!ammo_count())
 		return null
 	else
@@ -196,5 +193,4 @@
 			update_icon()
 		return b
 /obj/item/ammo_storage/proc/ammo_count()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/ammo_storage/proc/ammo_count() called tick#: [world.time]")
 	return stored_ammo.len

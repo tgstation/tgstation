@@ -1,5 +1,4 @@
 /proc/command_alert(var/text, var/title = "")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/command_alert() called tick#: [world.time]")
 	var/command
 	command += "<h1 class='alert'>[command_name()] Update</h1>"
 	if (title && length(title) > 0)

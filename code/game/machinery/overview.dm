@@ -4,7 +4,6 @@
 	set name = ".map"
 	set category = "Object"
 	set src in view(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/computer/security/verb/station_map()  called tick#: [world.time]")
 	usr.set_machine(src)
 	if(!mapping)	return
 
@@ -14,7 +13,6 @@
 
 /obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/security/proc/drawmap() called tick#: [world.time]")
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
@@ -328,7 +326,6 @@
 
 
 /obj/machinery/computer/security/proc/close(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/security/proc/close() called tick#: [world.time]")
 	spawn(20)
 		var/using = null
 		if(user.mapobjs)
@@ -345,20 +342,16 @@
 		return
 
 proc/getr(col)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/getr() called tick#: [world.time]")
 	return hex2num( copytext(col, 2,4))
 
 proc/getg(col)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/getg() called tick#: [world.time]")
 	return hex2num( copytext(col, 4,6))
 
 proc/getb(col)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/getb() called tick#: [world.time]")
 	return hex2num( copytext(col, 6))
 
 
 /mob/proc/clearmap()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/clearmap() called tick#: [world.time]")
 	src.client.screen -= src.mapobjs
 	for(var/obj/screen/O in mapobjs)
 		returnToPool(O)

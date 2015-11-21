@@ -33,7 +33,6 @@
 	return
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/melee/baton/proc/deductcharge() called tick#: [world.time]")
 	if(bcell)
 		if(bcell.use(chrgdeductamt))
 			if(bcell.charge < hitcost)

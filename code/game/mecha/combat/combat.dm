@@ -110,7 +110,6 @@
 
 /*
 /obj/mecha/combat/proc/mega_shake(target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/combat/proc/mega_shake() called tick#: [world.time]")
 	if(!istype(target, /obj) && !istype(target, /mob)) return
 	if(istype(target, /mob))
 		var/mob/M = target
@@ -145,7 +144,6 @@
 	return
 
 /obj/mecha/combat/proc/sam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/combat/proc/sam() called tick#: [world.time]")
 	if(am)
 		var/window = {"<html>
 							<head>

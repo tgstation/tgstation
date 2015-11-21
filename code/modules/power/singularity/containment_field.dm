@@ -71,7 +71,6 @@
 		hasShocked = 0
 
 /obj/machinery/containment_field/proc/set_master(var/master1,var/master2)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/containment_field/proc/set_master() called tick#: [world.time]")
 	if(!master1 || !master2)
 		return 0
 	FG1 = master1

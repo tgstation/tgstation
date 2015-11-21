@@ -4,7 +4,6 @@
 //Note that this proc does NOT do MMI related stuff!
 /mob/proc/change_mob_type(var/new_type = null, var/turf/location = null, var/new_name = null as text, var/delete_old_mob = 0 as num)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/change_mob_type() called tick#: [world.time]")
 
 	if(istype(src,/mob/new_player))
 		usr << "<span class='warning'>cannot convert players who have not entered yet.</span>"

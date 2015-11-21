@@ -34,7 +34,6 @@
 				reagents.add_reagent(rid,max(1,rtotal))
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grown/proc/changePotency() called tick#: [world.time]")
 	potency = newValue
 
 /obj/item/weapon/grown/log

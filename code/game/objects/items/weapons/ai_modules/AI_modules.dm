@@ -49,11 +49,9 @@ Refactored AI modules by N3X15
 
 // Make a copy of this module.
 /obj/item/weapon/aiModule/proc/copy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/aiModule/proc/copy() called tick#: [world.time]")
 	return new src.type(loc)
 
 /obj/item/weapon/aiModule/proc/fmtSubject(var/atom/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/aiModule/proc/fmtSubject() called tick#: [world.time]")
 	if(ismob(target))
 		var/mob/M=target
 		return "[M.name]([M.key])"
@@ -64,12 +62,10 @@ Refactored AI modules by N3X15
 // 1 for successful validation.
 // Run prior to law upload, and when doing a dry run in the planning frame.
 /obj/item/weapon/aiModule/proc/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/aiModule/proc/validate() called tick#: [world.time]")
 	return 1
 
 // Apply laws to ai_laws datum.
 /obj/item/weapon/aiModule/proc/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/aiModule/proc/upload() called tick#: [world.time]")
 	var/senderName="Unknown"
 	if(sender)
 		senderName=sender.name
@@ -91,7 +87,6 @@ Refactored AI modules by N3X15
 
 // Constructs the law and desc from variables.
 /obj/item/weapon/aiModule/proc/updateLaw()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/aiModule/proc/updateLaw() called tick#: [world.time]")
 	law = "BUG: [type] doesn't override updateLaw()!"
 	desc = "\A [name]: '[law]'"
 

@@ -107,13 +107,11 @@ var/prison_shuttle_timeleft = 0
 
 
 	proc/prison_can_move()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/prison_can_move() called tick#: [world.time]")
 		if(prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return 0
 		else return 1
 
 
 	proc/prison_break()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/prison_break() called tick#: [world.time]")
 		switch(prison_break)
 			if (0)
 				if(!prison_shuttle_at_station || prison_shuttle_moving_to_prison) return
@@ -131,7 +129,6 @@ var/prison_shuttle_timeleft = 0
 
 
 	proc/post_signal(var/command)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/post_signal() called tick#: [world.time]")
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(1311)
 		if(!frequency) return
 		var/datum/signal/status_signal = getFromPool(/datum/signal)
@@ -143,7 +140,6 @@ var/prison_shuttle_timeleft = 0
 
 
 	proc/prison_process()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/prison_process() called tick#: [world.time]")
 		while(prison_shuttle_time - world.timeofday > 0)
 			var/ticksleft = prison_shuttle_time - world.timeofday
 

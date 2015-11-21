@@ -3,7 +3,6 @@ var/savefile/Banlist
 
 
 /proc/CheckBan(var/ckey, var/id, var/address)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/CheckBan() called tick#: [world.time]")
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!
@@ -56,13 +55,11 @@ var/savefile/Banlist
 	return 0
 
 /proc/UpdateTime() //No idea why i made this a proc.
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/UpdateTime() called tick#: [world.time]")
 	CMinutes = (world.realtime / 10) / 60
 	return 1
 
 /proc/LoadBans()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/LoadBans() called tick#: [world.time]")
 
 	Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
@@ -80,7 +77,6 @@ var/savefile/Banlist
 	return 1
 
 /proc/ClearTempbans()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ClearTempbans() called tick#: [world.time]")
 	UpdateTime()
 
 	Banlist.cd = "/base"
@@ -100,7 +96,6 @@ var/savefile/Banlist
 
 /proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes, address)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/AddBan() called tick#: [world.time]")
 
 	var/bantimestamp
 
@@ -126,7 +121,6 @@ var/savefile/Banlist
 	return 1
 
 /proc/RemoveBan(foldername)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/RemoveBan() called tick#: [world.time]")
 	var/key
 	var/id
 
@@ -156,7 +150,6 @@ var/savefile/Banlist
 	return 1
 
 /proc/GetExp(minutes as num)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/GetExp() called tick#: [world.time]")
 	UpdateTime()
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
@@ -172,7 +165,6 @@ var/savefile/Banlist
 		return timeleftstring
 
 /datum/admins/proc/unbanpanel()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/unbanpanel() called tick#: [world.time]")
 	var/count = 0
 	var/dat
 	//var/dat = "<HR><B>Unban Player:</B> <span class='warning'>(U) = Unban , (E) = Edit Ban<span class='good'>(Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span></span>"
@@ -206,7 +198,6 @@ var/savefile/Banlist
 
 /proc/CreateBans()
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/CreateBans() called tick#: [world.time]")
 
 	UpdateTime()
 
@@ -236,7 +227,6 @@ var/savefile/Banlist
 	Banlist.cd = "/base"
 
 /proc/ClearAllBans()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ClearAllBans() called tick#: [world.time]")
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		RemoveBan(A)

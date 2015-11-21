@@ -49,16 +49,13 @@ var/global/list/investigations=list(
 	handle = file(src.filename)
 
 /datum/log_controller/proc/write(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/log_controller/proc/write() called tick#: [world.time]")
 	handle << url_decode(message)
 
 /datum/log_controller/proc/read(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/log_controller/proc/read() called tick#: [world.time]")
 	user << browse(handle,"window=investigate[subject];size=800x300")
 
 // Calls our own formatting functions, but then appends to the global log.
 /atom/proc/investigation_log(var/subject, var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/investigation_log() called tick#: [world.time]")
 	var/datum/log_controller/I = investigations[subject]
 	if(!I)
 		warning("SOME ASSHAT USED INVALID INVESTIGATION ID [subject]")
@@ -69,14 +66,12 @@ var/global/list/investigations=list(
 
 // Permits special snowflake formatting.
 /atom/proc/format_investigation_text(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/format_investigation_text() called tick#: [world.time]")
 	return "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br />"
 
 //ADMINVERBS
 /client/proc/investigate_show(var/subject in AVAILABLE_INVESTIGATIONS)
 	set name = "Investigate"
 	set category = "Admin"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/investigate_show() called tick#: [world.time]")
 
 	if(!holder)
 		src << "<span class='warning'>You're not an admin, go away.</span>"

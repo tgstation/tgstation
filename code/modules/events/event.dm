@@ -11,21 +11,18 @@
 //setting the startWhen and or announceWhen variables.
 //Only called once.
 /datum/event/proc/setup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/setup() called tick#: [world.time]")
 	return
 
 //Called when the tick is equal to the startWhen variable.
 //Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/event/proc/start()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/start() called tick#: [world.time]")
 	return
 
 //Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
 /datum/event/proc/announce()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/announce() called tick#: [world.time]")
 	return
 
 //Called on or after the tick counter is equal to startWhen.
@@ -33,7 +30,6 @@
 //time stamped events.
 //Called more than once.
 /datum/event/proc/tick()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/tick() called tick#: [world.time]")
 	return
 
 //Called on or after the tick is equal or more than endWhen
@@ -43,7 +39,6 @@
 //For example: if(activeFor == myOwnVariable + 30) doStuff()
 //Only called once.
 /datum/event/proc/end()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/end() called tick#: [world.time]")
 	return
 
 
@@ -52,7 +47,6 @@
 //This proc will handle the calls to the appropiate procs.
 /datum/event/proc/process()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/process() called tick#: [world.time]")
 
 	if(activeFor > startWhen && activeFor < endWhen)
 		tick()
@@ -77,7 +71,6 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/event/proc/kill()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/proc/kill() called tick#: [world.time]")
 	events.Remove(src)
 
 

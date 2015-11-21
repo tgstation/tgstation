@@ -79,7 +79,6 @@
 	update()
 
 /obj/item/clothing/accessory/storage/knifeharness/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/storage/knifeharness/proc/update() called tick#: [world.time]")
 	var/count = 0
 	for(var/obj/item/I in hold)
 		if(istype(I,/obj/item/weapon/hatchet/unathiknife))

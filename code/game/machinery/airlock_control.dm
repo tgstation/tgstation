@@ -58,7 +58,6 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 
 
 obj/machinery/door/airlock/proc/send_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/send_status() called tick#: [world.time]")
 	if(radio_connection)
 		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
@@ -100,7 +99,6 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 	return
 
 obj/machinery/door/airlock/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
@@ -183,7 +181,6 @@ obj/machinery/airlock_sensor/process()
 	update_icon()
 
 obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/airlock_sensor/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
@@ -336,7 +333,6 @@ obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
 			qdel(src)
 
 obj/machinery/access_button/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/access_button/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)

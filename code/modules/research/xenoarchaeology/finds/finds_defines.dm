@@ -51,7 +51,6 @@
 #define DIGSITE_WAR 6
 
 /proc/get_responsive_reagent(var/find_type)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_responsive_reagent() called tick#: [world.time]")
 	switch(find_type)
 		if(ARCHAEO_BOWL)
 			return "mercury"
@@ -127,12 +126,10 @@
 
 //see /turf/unsimulated/mineral/New() in code/modules/mining/mine_turfs.dm
 /proc/get_random_digsite_type()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_random_digsite_type() called tick#: [world.time]")
 	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 
 /proc/get_random_find_type(var/digsite)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_random_find_type() called tick#: [world.time]")
 
 	var/find_type = 0
 	switch(digsite)

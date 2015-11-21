@@ -238,7 +238,6 @@ Class Procs:
 		del(src)
 
 /obj/machinery/proc/auto_use_power()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/auto_use_power() called tick#: [world.time]")
 	if(!powered(power_channel))
 		return 0
 
@@ -251,7 +250,6 @@ Class Procs:
 	return 1
 
 /obj/machinery/proc/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/multitool_topic() called tick#: [world.time]")
 	if("set_id" in href_list)
 		if(!("id_tag" in vars))
 			warning("set_id: [type] has no id_tag var.")
@@ -277,7 +275,6 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/handle_multitool_topic(var/href, var/list/href_list, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/handle_multitool_topic() called tick#: [world.time]")
 	var/obj/item/device/multitool/P = get_multitool(usr)
 	if(P && istype(P))
 		var/update_mt_menu=0
@@ -451,22 +448,18 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/RefreshParts() called tick#: [world.time]")
 	return
 
 /obj/machinery/proc/assign_uid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/assign_uid() called tick#: [world.time]")
 	uid = gl_uid
 	gl_uid++
 
 /obj/machinery/proc/dropFrame()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/dropFrame() called tick#: [world.time]")
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 	M.set_build_state(2)
 	M.state = 1
 
 /obj/machinery/proc/crowbarDestroy(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/crowbarDestroy() called tick#: [world.time]")
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
 							"You begin to pry out the circuitboard from \the [src]...")
 	if(do_after(user, src, 40))
@@ -489,7 +482,6 @@ Class Procs:
 	return -1
 
 /obj/machinery/proc/togglePanelOpen(var/obj/toggleitem, var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/togglePanelOpen() called tick#: [world.time]")
 	panel_open = !panel_open
 	if(!icon_state_open)
 		icon_state_open = icon_state
@@ -504,7 +496,6 @@ Class Procs:
 	return 1
 
 /obj/machinery/proc/wrenchAnchor(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/wrenchAnchor() called tick#: [world.time]")
 	if(state == 2 && src.machine_flags & WELD_FIXED)
 		user <<"\The [src] has to be unwelded from the floor first."
 		return -1 //state set to 2, can't do it
@@ -534,7 +525,6 @@ Class Procs:
 	return -1
 
 /obj/machinery/proc/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/weldToFloor() called tick#: [world.time]")
 	if(!anchored)
 		state = 0 //since this might be wrong, we go sanity
 		user << "You need to secure \the [src] before it can be welded."
@@ -568,7 +558,6 @@ Class Procs:
  * @param user /mob The mob that used the emag.
  */
 /obj/machinery/proc/emag(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/emag() called tick#: [world.time]")
 	// Disable emaggability. Note that some machines such as the Communications Computer might be emaggable multiple times.
 	machine_flags &= ~EMAGGABLE
 	new/obj/effect/effect/sparks(get_turf(src))
@@ -582,7 +571,6 @@ Class Procs:
  * @return number Cost to emag.
  */
 /obj/machinery/proc/getEmagCost(var/mob/user, var/obj/item/weapon/card/emag/emag)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/getEmagCost() called tick#: [world.time]")
 	return emag_cost
 
 /obj/machinery/attackby(var/obj/O, var/mob/user)
@@ -636,7 +624,6 @@ Class Procs:
 	return 1
 
 /obj/machinery/proc/shock(mob/user, prb, var/siemenspassed = -1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/shock() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
 	if(!prob(prb))
@@ -653,7 +640,6 @@ Class Procs:
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
 /obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/hiIsValidClient() called tick#: [world.time]")
 	if (hclient.client.mob && (hclient.client.mob.stat == 0 || isobserver(hclient.client.mob)))
 		if(isAI(hclient.client.mob))
 			return 1
@@ -663,11 +649,9 @@ Class Procs:
 
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/hiOnHide() called tick#: [world.time]")
 	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
 
 /obj/machinery/proc/alert_noise(var/notice_state = "ping")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/alert_noise() called tick#: [world.time]")
 	switch(notice_state)
 		if("ping")
 			src.visible_message("<span class='notice'>\icon[src] \The [src] pings.</span>")
@@ -680,7 +664,6 @@ Class Procs:
 			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
 
 /obj/machinery/proc/check_rebuild()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/check_rebuild() called tick#: [world.time]")
 	return
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/bag/gadgets/part_replacer/W)

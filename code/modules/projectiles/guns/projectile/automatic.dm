@@ -22,7 +22,6 @@
 /obj/item/weapon/gun/projectile/automatic/verb/ToggleFire()
 	set name = "Toggle Burstfire"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/gun/projectile/automatic/verb/ToggleFire()  called tick#: [world.time]")
 	burstfire = !burstfire
 	if(!burstfire)//fixing a bug where burst fire being toggled on then off would leave the gun unable to shoot at its normal speed.
 		fire_delay = initial(fire_delay)

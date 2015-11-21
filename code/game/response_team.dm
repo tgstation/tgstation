@@ -11,7 +11,6 @@ var/can_call_ert
 	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
 	set desc = "Send an emergency response team to the station"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/response_team() called tick#: [world.time]")
 
 	if(!holder)
 		usr << "<span class='warning'>Only administrators may use this command.</span>"
@@ -43,7 +42,6 @@ var/can_call_ert
 client/verb/JoinResponseTeam()
 	set category = "IC"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/JoinResponseTeam()  called tick#: [world.time]")
 	if(istype(usr,/mob/dead/observer) || istype(usr,/mob/new_player))
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
@@ -83,7 +81,6 @@ client/verb/JoinResponseTeam()
 
 // returns a number of dead players in %
 proc/percentage_dead()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/percentage_dead() called tick#: [world.time]")
 	var/total = 0
 	var/deadcount = 0
 	for(var/mob/living/carbon/human/H in mob_list)
@@ -96,7 +93,6 @@ proc/percentage_dead()
 
 // counts the number of antagonists in %
 proc/percentage_antagonists()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/percentage_antagonists() called tick#: [world.time]")
 	var/total = 0
 	var/antagonists = 0
 	for(var/mob/living/carbon/human/H in mob_list)
@@ -110,7 +106,6 @@ proc/percentage_antagonists()
 // Increments the ERT chance automatically, so that the later it is in the round,
 // the more likely an ERT is to be able to be called.
 proc/increment_ert_chance()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/increment_ert_chance() called tick#: [world.time]")
 	while(send_emergency_team == 0) // There is no ERT at the time.
 		if(get_security_level() == "green")
 			ert_base_chance += 1
@@ -124,7 +119,6 @@ proc/increment_ert_chance()
 
 
 proc/trigger_armed_response_team(var/force = 0)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/trigger_armed_response_team() called tick#: [world.time]")
 	if(!can_call_ert && !force)
 		return
 	if(send_emergency_team)
@@ -165,7 +159,6 @@ proc/trigger_armed_response_team(var/force = 0)
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/create_response_team() called tick#: [world.time]")
 
 	//usr << "<span class='warning'>ERT has been temporarily disabled. Talk to a coder.</span>"
 	//return
@@ -285,7 +278,6 @@ proc/trigger_armed_response_team(var/force = 0)
 
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_strike_team() called tick#: [world.time]")
 
 	//Special radio setup
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_ears)
@@ -334,7 +326,6 @@ proc/trigger_armed_response_team(var/force = 0)
 
 //debug verb (That is horribly coded, LEAVE THIS OFF UNLESS PRIVATELY TESTING. Seriously.
 /*client/verb/ResponseTeam()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/ResponseTeam()  called tick#: [world.time]")
 	set category = "Admin"
 	if(!send_emergency_team)
 		send_emergency_team = 1*/

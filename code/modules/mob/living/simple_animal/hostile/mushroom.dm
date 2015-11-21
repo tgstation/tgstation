@@ -93,7 +93,6 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap() called tick#: [world.time]")
 	overlays.len = 0
 	if(health == 0)
 		overlays += cap_dead
@@ -101,7 +100,6 @@
 		overlays += cap_living
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mushroom/proc/Recover() called tick#: [world.time]")
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
 	health = 5
 	faint_ticker = 0
@@ -112,7 +110,6 @@
 		recovery_cooldown = 0
 
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(var/level_gain)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mushroom/proc/LevelUp() called tick#: [world.time]")
 	if(powerlevel <= 9)
 		powerlevel += level_gain
 		if(prob(25))
@@ -123,7 +120,6 @@
 	health = maxHealth //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mushroom/proc/Bruise() called tick#: [world.time]")
 	if(!bruised && !stat)
 		src.visible_message("<span class='notice'>The [src.name] was bruised!</span>")
 		bruised = 1

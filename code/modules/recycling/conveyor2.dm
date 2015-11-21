@@ -59,7 +59,6 @@
 	update()
 
 /obj/machinery/conveyor/proc/set_frequency(var/new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_CONVEYORS)
@@ -103,7 +102,6 @@
 	updateConfig(!building)
 
 /obj/machinery/conveyor/proc/updateConfig(var/startup=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/updateConfig() called tick#: [world.time]")
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -139,7 +137,6 @@
 		initialize()
 
 /obj/machinery/conveyor/proc/setmove()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/setmove() called tick#: [world.time]")
 	if(operating == 1)
 		movedir = forwards
 	else
@@ -147,7 +144,6 @@
 	update()
 
 /obj/machinery/conveyor/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/update() called tick#: [world.time]")
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
 		operating = 0
@@ -245,7 +241,6 @@
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/broken() called tick#: [world.time]")
 	stat |= BROKEN
 	update()
 
@@ -264,7 +259,6 @@
 
 /obj/machinery/conveyor/proc/set_operable(stepdir, match_id, op)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor/proc/set_operable() called tick#: [world.time]")
 
 	if(id_tag != match_id)
 		return
@@ -277,7 +271,6 @@
 
 /*
 /obj/machinery/conveyor/verb/destroy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/conveyor/verb/destroy()  called tick#: [world.time]")
 	set src in view()
 	src.broken()
 */
@@ -335,13 +328,11 @@
 		updateConfig()
 
 /obj/machinery/conveyor_switch/proc/updateConfig()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor_switch/proc/updateConfig() called tick#: [world.time]")
 	//initialize()
 
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor_switch/proc/update() called tick#: [world.time]")
 	if(position<0)
 		icon_state = "switch-rev"
 	else if(position>0)
@@ -355,7 +346,6 @@
 	update()
 
 /obj/machinery/conveyor_switch/proc/set_frequency(var/new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor_switch/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_CONVEYORS)
@@ -382,7 +372,6 @@
 	update()
 
 /obj/machinery/conveyor_switch/proc/send_command(var/command)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor_switch/proc/send_command() called tick#: [world.time]")
 	if(radio_connection)
 		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.source=src

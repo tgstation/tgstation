@@ -4,7 +4,6 @@
 
 /mob/proc/vampire_power(required_blood=0, max_stat=0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/vampire_power() called tick#: [world.time]")
 
 	if(!src.mind)		return 0
 	if(!ishuman(src))
@@ -43,7 +42,6 @@
 	return 1
 
 /mob/proc/vampire_affected(datum/mind/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/vampire_affected() called tick#: [world.time]")
 	//Other vampires aren't affected
 	if(mind && mind.vampire) return 0
 	//Vampires who have reached their full potential can affect nearly everything
@@ -55,7 +53,6 @@
 	return 1
 
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/vampire_can_reach() called tick#: [world.time]")
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
 	if(Adjacent(M))//if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, active_range)) //If a path exists, good!
@@ -63,7 +60,6 @@
 	return 0
 
 /mob/proc/vampire_active(required_blood=0, max_stat=0, active_range=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/vampire_active() called tick#: [world.time]")
 	var/pass = vampire_power(required_blood, max_stat)
 	if(!pass)								return
 	var/datum/vampire/vampire = mind.vampire
@@ -83,7 +79,6 @@
 	set category = "Vampire"
 	set name = "Rejuvenate "
 	set desc= "Flush your system with spare blood to remove any incapacitating effects."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_rejuvinate() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 1))
@@ -108,7 +103,6 @@
 	set category = "Vampire"
 	set name = "Return To Life"
 	set desc= "Instantly return to un-life."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_returntolife() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M)	return
 	if(M.current.on_fire || M.vampire.smitecounter)
@@ -128,7 +122,6 @@
 	set category = "Vampire"
 	set name = "Cheat Death"
 	set desc= "Instantly return to un-life."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_undeath() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M)	return
 
@@ -153,7 +146,6 @@
 	set category = "Vampire"
 	set name = "Hypnotise"
 	set desc= "A piercing stare that incapacitates your victim for a good length of time."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_hypnotise() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
@@ -183,7 +175,6 @@
 	set category = "Vampire"
 	set name = "Diseased Touch (50)"
 	set desc = "Touches your victim with infected blood giving them the Shutdown Syndrome which quickly shutsdown their major organs resulting in a quick painful death."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_disease() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
@@ -223,7 +214,6 @@
 	set category = "Vampire"
 	set name = "Glare"
 	set desc= "A scary glare that incapacitates people for a short while around you."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_glare() called tick#: [world.time]")
 
 	var/datum/mind/M = usr.mind
 	if(!M) return
@@ -267,7 +257,6 @@
 	set category = "Vampire"
 	set name = "Shapeshift"
 	set desc = "Changes your name and appearance and has a cooldown of 3 minutes."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_shapeshift() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 0))
@@ -283,7 +272,6 @@
 	set category = "Vampire"
 	set name = "Chiroptean Screech (10)"
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_screech() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(10, 0))
@@ -312,7 +300,6 @@
 	set category = "Vampire"
 	set name = "Enthrall"
 	set desc = "You use a large portion of your power to sway those loyal to none to be loyal to you only."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_enthrall() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	var/mob/living/carbon/C = M.current.vampire_active(300, 0, 1)
@@ -340,7 +327,6 @@
 	set category = "Vampire"
 	set name = "Cloak of Darkness (toggle)"
 	set desc = "Toggles whether you are currently cloaking yourself in darkness."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_cloak() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 0))
@@ -348,7 +334,6 @@
 		M.current << "<span class='notice'>You will now be [M.vampire.iscloaking ? "hidden" : "seen"] in darkness.</span>"
 
 /mob/proc/handle_vampire_cloak()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_vampire_cloak() called tick#: [world.time]")
 	if(!mind || !mind.vampire || !ishuman(src))
 		alphas["vampire_cloak"] = 255
 		color = "#FFFFFF"
@@ -373,7 +358,6 @@
 			alphas["vampire_cloak"] = round((255 * 0.80))
 
 /mob/proc/can_enthrall(mob/living/carbon/C)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/can_enthrall() called tick#: [world.time]")
 	var/enthrall_safe = 0
 	if(!VAMP_CHARISMA in mind.vampire.powers) //Charisma allows implanted targets to be enthralled.
 		for(var/obj/item/weapon/implant/loyalty/L in C)
@@ -401,7 +385,6 @@
 	return 1
 
 /mob/proc/handle_enthrall(mob/living/carbon/human/H as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_enthrall() called tick#: [world.time]")
 	if(!istype(H))
 		src << "<b><span class='warning'>SOMETHING WENT WRONG, YELL AT POMF OR NEXIS</b>"
 		return 0
@@ -429,7 +412,6 @@
 	set category = "Vampire"
 	set name = "Summon Bats (75)"
 	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_bats() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(75, 0))
@@ -478,7 +460,6 @@
 	set category = "Vampire"
 	set name = "Shadowstep"
 	set desc = "Vanish into the shadows."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_shadowstep() called tick#: [world.time]")
 
 	var/datum/mind/M = usr.mind
 	if(!M) return
@@ -525,7 +506,6 @@
 	set category = "Vampire"
 	set name = "Shadowy Menace (toggle)"
 	set desc = "Terrify anyone who looks at you in the dark."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_shadowmenace() called tick#: [world.time]")
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
@@ -534,7 +514,6 @@
 		M.current << "<span class='notice'>You will [M.vampire.ismenacing ? "now" : "no longer"] terrify those who see you the in dark.</span>"
 
 /mob/proc/handle_vampire_menace()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_vampire_menace() called tick#: [world.time]")
 	if(!mind || !mind.vampire || !ishuman(src))
 		mind.vampire.ismenacing = 0
 		return
@@ -561,7 +540,6 @@
 	set category = "Vampire"
 	set name = "Spawn Cape"
 	set desc = "Acquire a fabulous, yet fearsome cape."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/vampire_spawncape() called tick#: [world.time]")
 
 	var/datum/mind/M = usr.mind
 	if(!M) return
@@ -574,7 +552,6 @@
 		M.current.verbs += /client/proc/vampire_spawncape
 
 /mob/proc/remove_vampire_blood(amount = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_vampire_blood() called tick#: [world.time]")
 	var/bloodold
 	if(!mind || !mind.vampire)
 		return

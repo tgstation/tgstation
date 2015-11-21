@@ -173,7 +173,6 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre() called tick#: [world.time]")
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
@@ -184,7 +183,6 @@
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow() called tick#: [world.time]")
 	if(!alerted)
 		alerted = 1
 		spawn(chase_time)
@@ -193,7 +191,6 @@
 			del(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward() called tick#: [world.time]")
 	if(!ore_eaten || ore_types_eaten.len == 0)
 		return
 	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
@@ -417,7 +414,6 @@
 	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/goliath_tentacle/proc/Trip() called tick#: [world.time]")
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")

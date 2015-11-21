@@ -4,7 +4,6 @@ var/inactive_keys = "None<br>"
 /client/proc/check_customitem_activity()
 	set category = "Admin"
 	set name = "Check activity of players with custom items"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/check_customitem_activity() called tick#: [world.time]")
 
 	var/dat = "<b>Inactive players with custom items</b><br>"
 
@@ -37,7 +36,6 @@ var/inactive_keys = "None<br>"
 	usr << browse(dat, "window=inactive_customitems;size=600x480")
 
 /proc/populate_inactive_customitems_list(var/client/C)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/populate_inactive_customitems_list() called tick#: [world.time]")
 	//set background = 1
 
 	if(checked_for_inactives)

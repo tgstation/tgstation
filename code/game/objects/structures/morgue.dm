@@ -21,7 +21,6 @@
 	anchored = 1.0
 
 /obj/structure/morgue/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/morgue/proc/update() called tick#: [world.time]")
 	if (connected)
 		icon_state = "morgue0"
 	else
@@ -211,7 +210,6 @@
 	var/locked = 0
 
 /obj/structure/crematorium/proc/update()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/crematorium/proc/update() called tick#: [world.time]")
 	if (cremating)
 		icon_state = "crema_active"
 		return
@@ -321,7 +319,6 @@
 	return
 
 /obj/structure/crematorium/proc/cremate(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/crematorium/proc/cremate() called tick#: [world.time]")
 //	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return

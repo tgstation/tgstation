@@ -103,7 +103,6 @@
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meter/proc/status() called tick#: [world.time]")
 	var/t = ""
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()

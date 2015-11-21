@@ -82,14 +82,12 @@
 	return ..()
 
 /obj/machinery/power/battery_port/proc/connect_battery(obj/machinery/power/battery/portable/portable)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery_port/proc/connect_battery() called tick#: [world.time]")
 	if(portable)
 		connected = portable
 		portable.connected_to = src
 		connected.update_icon()
 
 /obj/machinery/power/battery_port/proc/disconnect_battery()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery_port/proc/disconnect_battery() called tick#: [world.time]")
 	if(connected)
 		connected.connected_to = null
 		connected.update_icon()

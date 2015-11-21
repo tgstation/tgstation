@@ -69,7 +69,6 @@
 
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/target_moved() called tick#: [world.time]")
 	if(master)
 		beam_testing("Child got target_moved!  Feeding to master.")
 		master.target_moved(args)
@@ -95,7 +94,6 @@
 
 // Listener for /atom/on_destroyed
 /obj/effect/beam/proc/target_destroyed(var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/target_destroyed() called tick#: [world.time]")
 	if(master)
 		beam_testing("Child got target_destroyed!  Feeding to master.")
 		master.target_destroyed(args)
@@ -131,7 +129,6 @@
 
 
 /obj/effect/beam/proc/get_master()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/get_master() called tick#: [world.time]")
 //	var/master_ref = "\ref[master]"
 	beam_testing("\ref[src] [master ? "get_master is returning [master_ref]" : "get_master is returning ourselves."]")
 	if(master)
@@ -139,15 +136,12 @@
 	return src
 
 /obj/effect/beam/proc/get_damage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/get_damage() called tick#: [world.time]")
 	return damage
 
 /obj/effect/beam/proc/get_machine_underlay(var/mdir)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/get_machine_underlay() called tick#: [world.time]")
 	return image(icon=icon, icon_state="[icon_state] underlay", dir=mdir)
 
 /obj/effect/beam/proc/connect_to(var/atom/movable/AM)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/connect_to() called tick#: [world.time]")
 	if(!AM)
 		return
 	var/obj/effect/beam/BM=get_master()
@@ -174,7 +168,6 @@
 		Crossed(B)
 
 /obj/effect/beam/proc/killKids()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/killKids() called tick#: [world.time]")
 	for(var/obj/effect/beam/child in children)
 		if(child)
 			//BEAM_DEL(child)
@@ -184,7 +177,6 @@
 	children.len = 0
 
 /obj/effect/beam/proc/disconnect(var/re_emit=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/disconnect() called tick#: [world.time]")
 	var/obj/effect/beam/_master=get_master()
 	if(_master.target)
 		_master.target.on_moved.Remove(_master.targetMoveKey)
@@ -220,14 +212,12 @@
 	OB.connect_to(AM)
 
 /obj/effect/beam/proc/HasSource(var/atom/source)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/HasSource() called tick#: [world.time]")
 	return source in sources
 
 /**
  * Create and emit the beam in the desired direction.
  */
 /obj/effect/beam/proc/emit(var/spawn_by, var/_range=-1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/emit() called tick#: [world.time]")
 	if(istype(spawn_by,/list))
 		sources=spawn_by
 	else
@@ -297,7 +287,6 @@
 		next.emit(sources,_range)
 
 /obj/effect/beam/proc/spawn_child()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/spawn_child() called tick#: [world.time]")
 	if(steps >= BEAM_MAX_STEPS)
 		return null // NOPE
 	var/obj/effect/beam/B = new type(src.loc)

@@ -113,7 +113,6 @@
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\attack_verb = list()  called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 

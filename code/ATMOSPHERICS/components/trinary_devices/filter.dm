@@ -25,7 +25,6 @@ Filter types:
 	var/datum/radio_frequency/radio_connection
 
 obj/machinery/atmospherics/trinary/filter/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/trinary/filter/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

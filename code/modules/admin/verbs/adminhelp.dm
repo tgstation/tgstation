@@ -7,7 +7,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/adminhelp()  called tick#: [world.time]")
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='warning'>Speech is currently admin-disabled.</span>"
 		return

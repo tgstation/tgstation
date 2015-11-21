@@ -20,7 +20,6 @@
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/constructable_frame/proc/update_desc()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/constructable_frame/proc/update_desc() called tick#: [world.time]")
 	var/D
 	if(req_components)
 		D = "Requires "
@@ -212,7 +211,6 @@
 									user << "<span class='warning'>You cannot add that component to the machine!</span>"
 
 /obj/machinery/constructable_frame/machine_frame/proc/set_build_state(var/state)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/constructable_frame/machine_frame/proc/set_build_state() called tick#: [world.time]")
 	build_state = state
 	switch(state)
 		if(1)

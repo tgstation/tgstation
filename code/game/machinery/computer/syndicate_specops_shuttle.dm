@@ -22,7 +22,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 	light_color = LIGHT_COLOR_RED
 
 /proc/syndicate_elite_process()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/syndicate_elite_process() called tick#: [world.time]")
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
 	var/area/syndicate_mothership/elite_squad/elite_squad = locate()//Where is the specops area located?
 	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
@@ -142,7 +141,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 	sleep(40)
 //	proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//	proc/explosion() called tick#: [world.time]")
 
 */
 	var/area/start_location = locate(/area/shuttle/syndicate_elite/mothership)
@@ -173,7 +171,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 		M << "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>"
 
 /proc/syndicate_elite_can_move()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/syndicate_elite_can_move() called tick#: [world.time]")
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
 	else return 1
 

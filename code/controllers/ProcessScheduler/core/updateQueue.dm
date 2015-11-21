@@ -39,7 +39,6 @@
 					   copy.
  */
 /datum/updateQueue/proc/init(list/objects = list(), procName = "update", list/arguments = list(), workerTimeout = 2, inplace = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/init() called tick#: [world.time]")
 	uq_dbg("Update queue initialization started.")
 	
 	if (!inplace)
@@ -60,7 +59,6 @@
 	uq_dbg("Update queue initialization finished. procName = '[procName]'")
 		
 /datum/updateQueue/proc/initList(list/toCopy)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/initList() called tick#: [world.time]")
 	/**
 	 * We will copy the list in reverse order, as our doWork proc 
 	 * will access them by popping an element off the end of the list.
@@ -76,7 +74,6 @@
 		objects[objects.len] = toCopy[i--]
 		
 /datum/updateQueue/proc/Run()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/Run() called tick#: [world.time]")
 	uq_dbg("Starting run...")
 
 	startWorker()
@@ -87,7 +84,6 @@
 	uq_dbg("UpdateQueue completed run.")
 		
 /datum/updateQueue/proc/checkWorker()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/checkWorker() called tick#: [world.time]")
 	if(istype(currentWorker))
 		// If world.timeofday has rolled over, then we need to adjust.
 		if(world.timeofday < currentWorker.lastStart)
@@ -103,7 +99,6 @@
 		startWorker()
 		
 /datum/updateQueue/proc/startWorker()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/startWorker() called tick#: [world.time]")
 	// only run the worker if we have objects to work on
 	if(objects.len)
 		uq_dbg("Starting worker process.")
@@ -119,7 +114,6 @@
 		currentWorker = null
 		
 /datum/updateQueue/proc/killWorker()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/updateQueue/proc/killWorker() called tick#: [world.time]")
 	// Kill the worker
 	currentWorker.kill()
 	currentWorker = null

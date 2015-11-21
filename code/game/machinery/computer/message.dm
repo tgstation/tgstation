@@ -273,7 +273,6 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/BruteForce() called tick#: [world.time]")
 	if(isnull(linkedServer))
 		user << "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>"
 	else
@@ -284,12 +283,10 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/UnmagConsole() called tick#: [world.time]")
 	src.icon_state = normal_icon
 	src.emagged = 0
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/ResetMessage() called tick#: [world.time]")
 	customsender 	= "System Administrator"
 	customrecepient = null
 	custommessage 	= "This is a test, please ignore."

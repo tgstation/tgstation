@@ -164,7 +164,6 @@
 
 
 /proc/SDQL_testout(list/query_tree, indent = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_testout() called tick#: [world.time]")
 	var/spaces = ""
 	for(var/s = 0, s < indent, s++)
 		spaces += "    "
@@ -191,7 +190,6 @@
 
 
 /proc/SDQL_from_objs(list/tree)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_from_objs() called tick#: [world.time]")
 	if("world" in tree)
 		return list(world)
 
@@ -210,7 +208,6 @@
 
 
 /proc/SDQL_get_all(type, location)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_get_all() called tick#: [world.time]")
 	var/list/out = list()
 
 	if(type == "*")
@@ -255,7 +252,6 @@
 
 
 /proc/SDQL_expression(datum/object, list/expression, start = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_expression() called tick#: [world.time]")
 	var/result = 0
 	var/val
 
@@ -370,7 +366,6 @@
 
 /proc/SDQL2_tokenize(query_text)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL2_tokenize() called tick#: [world.time]")
 
 	var/list/whitespace = list(" ", "\n", "\t")
 	var/list/single = list("(", ")", ",", "+", "-", ".", "\[", "]")

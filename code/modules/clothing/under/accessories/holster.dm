@@ -7,7 +7,6 @@
 	accessory_exclusion = HOLSTER
 
 /obj/item/clothing/accessory/holster/proc/can_holster(obj/item/weapon/gun/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/holster/proc/can_holster() called tick#: [world.time]")
 	if(!W || !istype(W))
 		return
 	return W.isHandgun()
@@ -25,7 +24,6 @@
 	_color = "holster_low"
 
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/holster/proc/holster() called tick#: [world.time]")
 	if (!istype(I, /obj/item/weapon/gun))
 		user << "<span class='warning'>Only guns can be holstered!</span>"
 		return
@@ -47,7 +45,6 @@
 	return 1
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/accessory/holster/proc/unholster() called tick#: [world.time]")
 	if(!holstered)
 		return
 
@@ -68,7 +65,6 @@
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/accessory/holster/verb/holster_verb()  called tick#: [world.time]")
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
 

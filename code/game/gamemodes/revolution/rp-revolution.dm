@@ -144,7 +144,6 @@
 
 
 /datum/game_mode/rp_revolution/proc/reveal_rev_heads()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/rp_revolution/proc/reveal_rev_heads() called tick#: [world.time]")
 	. = ""
 	for(var/i = 1, i <= head_revolutionaries.len,i++)
 		var/datum/mind/revmind = head_revolutionaries[i]
@@ -154,7 +153,6 @@
 			. += "and [revmind.current.real_name]"
 
 ///datum/game_mode/rp_revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\///datum/game_mode/rp_revolution/proc/equip_revolutionary() called tick#: [world.time]")
 //	if(!istype(rev_mob))
 //		return
 
@@ -179,7 +177,6 @@
 		return 0
 
 /datum/game_mode/rp_revolution/proc/get_possible_revolutionaries()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/rp_revolution/proc/get_possible_revolutionaries() called tick#: [world.time]")
 	var/list/candidates = list()
 
 	for(var/mob/living/carbon/human/player in mob_list)
@@ -202,7 +199,6 @@
 		return candidates
 
 /datum/game_mode/rp_revolution/proc/get_unconvertables()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/rp_revolution/proc/get_unconvertables() called tick#: [world.time]")
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.mind)
@@ -213,7 +209,6 @@
 	return ucs
 
 /datum/game_mode/rp_revolution/proc/check_rev_victory()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/rp_revolution/proc/check_rev_victory() called tick#: [world.time]")
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/objective/objective in rev_mind.objectives)
 			if(!(objective.check_completion()))
@@ -222,7 +217,6 @@
 		return 1
 
 /datum/game_mode/rp_revolution/proc/check_heads_victory()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/rp_revolution/proc/check_heads_victory() called tick#: [world.time]")
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(rev_mind.current.stat != 2)
 			var/turf/revloc = rev_mind.current.loc

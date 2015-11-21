@@ -196,7 +196,6 @@
 	return 1
 
 /obj/item/weapon/tank/proc/remove_air_volume(volume_to_return)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/proc/remove_air_volume() called tick#: [world.time]")
 	if(!air_contents)
 		return null
 
@@ -216,7 +215,6 @@
 
 
 /obj/item/weapon/tank/proc/check_status()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/proc/check_status() called tick#: [world.time]")
 	//Handle exploding, leaking, and rupturing of the tank
 	if(timestopped) return
 

@@ -35,7 +35,6 @@
 
 	//set the angle from icon_state and dir
 	proc/set_angle()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_angle() called tick#: [world.time]")
 		switch(dir)
 			if(1)
 				angle = 0
@@ -60,7 +59,6 @@
 
 	// set the dir and icon_state from the angle
 	proc/set_dir()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_dir() called tick#: [world.time]")
 		if(angle%2 == 1)
 			icon_state = "mirrorB"
 		else

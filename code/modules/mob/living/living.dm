@@ -174,7 +174,6 @@
 
 /mob/living/verb/succumb()
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/succumb()  called tick#: [world.time]")
 	if ((src.health < 0 && src.health > -95.0))
 		src.attack_log += "[src] has succumbed to death with [health] points of health!"
 		src.apply_damage(maxHealth + 5 + src.health, OXY) // This will ensure people die when using the command, but don't go into overkill. 15 oxy points over the limit for safety since brute and burn regenerates
@@ -183,7 +182,6 @@
 
 
 /mob/living/proc/updatehealth()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/updatehealth() called tick#: [world.time]")
 	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
@@ -194,13 +192,11 @@
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(var/pressure)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/calculate_affecting_pressure() called tick#: [world.time]")
 	return 0
 
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/burn_skin() called tick#: [world.time]")
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(M_NO_SHOCK in src.mutations) //shockproof
@@ -227,7 +223,6 @@
 		return 0
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustBodyTemp() called tick#: [world.time]")
 	var/temperature = actual
 	var/difference = abs(actual-desired)	//get difference
 	var/increments = difference/10 //find how many increments apart they are
@@ -253,99 +248,78 @@
 // I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
 
 /mob/living/proc/getBruteLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getBruteLoss() called tick#: [world.time]")
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustBruteLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getOxyLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getOxyLoss() called tick#: [world.time]")
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustOxyLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setOxyLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setOxyLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	oxyloss = amount
 
 /mob/living/proc/getToxLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getToxLoss() called tick#: [world.time]")
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustToxLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setToxLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setToxLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	toxloss = amount
 
 /mob/living/proc/getFireLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getFireLoss() called tick#: [world.time]")
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustFireLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getCloneLoss() called tick#: [world.time]")
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustCloneLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setCloneLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setCloneLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	cloneloss = amount
 
 /mob/living/proc/getBrainLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getBrainLoss() called tick#: [world.time]")
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustBrainLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setBrainLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setBrainLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	brainloss = amount
 
 /mob/living/proc/getHalLoss()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getHalLoss() called tick#: [world.time]")
 	return halloss
 
 /mob/living/proc/adjustHalLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/adjustHalLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	halloss = min(max(halloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setHalLoss(var/amount)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setHalLoss() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	halloss = amount
 
 /mob/living/proc/getMaxHealth()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/getMaxHealth() called tick#: [world.time]")
 	return maxHealth
 
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/setMaxHealth() called tick#: [world.time]")
 	maxHealth = newMaxHealth
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
@@ -353,7 +327,6 @@
 
 /mob/proc/get_contents()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_contents() called tick#: [world.time]")
 
 
 //Recursive function to find everything a mob is holding.
@@ -399,11 +372,9 @@
 		return L
 
 /mob/living/proc/can_inject()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_inject() called tick#: [world.time]")
 	return 1
 
 /mob/living/proc/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
-	  //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/electrocute_act() called tick#: [world.time]")
 	  return 0 // only carbon liveforms have this proc
 				// now with silicons
 
@@ -423,7 +394,6 @@
 	..()
 
 /mob/living/proc/get_organ_target()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_organ_target() called tick#: [world.time]")
 	var/t = src.zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
@@ -433,14 +403,12 @@
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(var/brute, var/burn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/heal_organ_damage() called tick#: [world.time]")
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_organ_damage(var/brute, var/burn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/take_organ_damage() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(flags & INVULNERABLE)	return 0
 	adjustBruteLoss(brute)
@@ -449,14 +417,12 @@
 
 // heal MANY external organs, in random order
 /mob/living/proc/heal_overall_damage(var/brute, var/burn)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/heal_overall_damage() called tick#: [world.time]")
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage MANY external organs, in random order
 /mob/living/proc/take_overall_damage(var/brute, var/burn, var/used_weapon = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/take_overall_damage() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(flags & INVULNERABLE)	return 0
 	adjustBruteLoss(brute)
@@ -464,7 +430,6 @@
 	src.updatehealth()
 
 /mob/living/proc/restore_all_organs()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/restore_all_organs() called tick#: [world.time]")
 	return
 
 /*
@@ -476,7 +441,6 @@ Thanks.
 */
 
 /mob/living/proc/revive(animation = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/revive() called tick#: [world.time]")
 	rejuvenate(animation)
 	/*
 	locked_to = initial(src.locked_to)
@@ -496,7 +460,6 @@ Thanks.
 
 /mob/living/proc/rejuvenate(animation = 0)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/rejuvenate() called tick#: [world.time]")
 
 	var/turf/T = get_turf(src)
 	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
@@ -600,7 +563,6 @@ Thanks.
 	return
 
 /mob/living/proc/UpdateDamageIcon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/UpdateDamageIcon() called tick#: [world.time]")
 	return
 
 
@@ -608,7 +570,6 @@ Thanks.
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
 	set src in view()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/Examine_OOC() called tick#: [world.time]")
 
 	if(config.allow_Metadata)
 		if(client)
@@ -745,7 +706,6 @@ Thanks.
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/resist()  called tick#: [world.time]")
 
 	if(!isliving(usr) || usr.special_delayer.blocked())
 		return
@@ -1025,16 +985,13 @@ Thanks.
 	set name = "Rest"
 	set category = "IC"
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/lay_down()  called tick#: [world.time]")
 	resting = !resting
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>"
 
 /mob/living/proc/has_brain()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/has_brain() called tick#: [world.time]")
 	return 1
 
 /mob/living/proc/has_eyes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/has_eyes() called tick#: [world.time]")
 	return 1
 
 /mob/living/singularity_act()
@@ -1056,7 +1013,6 @@ Thanks.
 	return
 
 /mob/living/proc/InCritical()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/InCritical() called tick#: [world.time]")
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
 //mob verbs are a lot faster than object verbs
@@ -1064,7 +1020,6 @@ Thanks.
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
 	set name = "Pull"
 	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/verb/pulled()  called tick#: [world.time]")
 	if(AM.Adjacent(src))
 		src.start_pulling(AM)
 	return
@@ -1082,7 +1037,6 @@ Thanks.
 
 
 /mob/living/proc/generate_static_overlay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/generate_static_overlay() called tick#: [world.time]")
 	if(!istype(static_overlays,/list))
 		static_overlays = list()
 	static_overlays.Add(list("static", "blank", "letter"))
@@ -1106,7 +1060,6 @@ default behaviour is:
  - if si, the proc returns
 */
 /mob/living/proc/can_move_mob(var/mob/living/swapped, swapping = 0, passive = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_move_mob() called tick#: [world.time]")
 	if(!swapped)
 		return 1
 	if(!passive)

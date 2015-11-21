@@ -55,7 +55,6 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(var/chance = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/wizarditis/proc/spawn_wizard_clothes() called tick#: [world.time]")
 	if(istype(affected_mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))
@@ -92,7 +91,6 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/teleport()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/disease/wizarditis/proc/teleport() called tick#: [world.time]")
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
 		if(theareas.Find(AR) || AR.name == "Space") continue

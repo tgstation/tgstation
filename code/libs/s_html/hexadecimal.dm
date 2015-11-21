@@ -13,7 +13,6 @@ encompasses a larger field.
 **************************************/
 
 proc/hex2num(hex)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/hex2num() called tick#: [world.time]")
 	//Converts a hexadecimal string (eg. "9F") into a numeral (eg. 159).
 
 	if(!istext(hex))
@@ -50,7 +49,6 @@ proc/hex2num(hex)
 
 
 proc/num2hex(num, placeholder=2)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/num2hex() called tick#: [world.time]")
 	//Converts a numeral (eg. 255) into a hexadecimal string (eg. "FF")
 	//The 'placeholder' argument inserts zeroes in front of the string
 	// until the string is that length -- eg. 15 in hexadecimal is "F",

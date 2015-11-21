@@ -11,7 +11,6 @@
 * around us, then checks the difference.
 */
 /proc/getOPressureDifferential(var/turf/loc)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getOPressureDifferential() called tick#: [world.time]")
 	var/minp=16777216;
 	var/maxp=0;
 	for(var/dir in cardinal)
@@ -29,7 +28,6 @@
 
 // Checks pressure here vs. around us.
 /proc/performFalseWallPressureCheck(var/turf/loc)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/performFalseWallPressureCheck() called tick#: [world.time]")
 	var/turf/simulated/lT=loc
 	if(!istype(lT) || !lT.zone)
 		return 0
@@ -46,7 +44,6 @@
 	return 0
 
 /proc/performWallPressureCheck(var/turf/loc)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/performWallPressureCheck() called tick#: [world.time]")
 	var/pdiff = getOPressureDifferential(loc)
 	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 		return pdiff
@@ -55,7 +52,6 @@
 /client/proc/pdiff()
 	set name = "Get PDiff"
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/pdiff() called tick#: [world.time]")
 
 	if(!mob || !holder)
 		return
@@ -313,7 +309,6 @@
 	..()
 
 /obj/structure/falsewall/uranium/proc/radiate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/falsewall/uranium/proc/radiate() called tick#: [world.time]")
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1

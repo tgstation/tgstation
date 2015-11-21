@@ -70,7 +70,6 @@ var/const/CAMERA_WIRE_NOTHING2 = 32
 	return
 
 /datum/wires/camera/proc/CanDeconstruct()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/camera/proc/CanDeconstruct() called tick#: [world.time]")
 	if(IsIndexCut(CAMERA_WIRE_POWER) && IsIndexCut(CAMERA_WIRE_FOCUS) && IsIndexCut(CAMERA_WIRE_LIGHT) && IsIndexCut(CAMERA_WIRE_NOTHING1) && IsIndexCut(CAMERA_WIRE_NOTHING2))
 		return 1
 	else

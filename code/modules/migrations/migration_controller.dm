@@ -46,14 +46,12 @@
 		UpdateAll()
 
 /datum/migration_controller/proc/getCurrentVersion(var/pkgID)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/getCurrentVersion() called tick#: [world.time]")
 	if(pkgID in db_states)
 		return db_states[pkgID]
 	else
 		return 0
 
 /datum/migration_controller/proc/VersionCheck()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/VersionCheck() called tick#: [world.time]")
 	for(var/pkgID in packages)
 		var/currentVersion = getCurrentVersion(pkgID)
 		var/latestVersionAvail = 0
@@ -65,7 +63,6 @@
 			world.log << "\[Migrations] *** [pkgID] is behind [latestVersionAvail-currentVersion] versions!"
 
 /datum/migration_controller/proc/UpdateAll()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/UpdateAll() called tick#: [world.time]")
 	for(var/pkgID in packages)
 		var/latestVersionAvail = 0
 		for(var/datum/migration/M in packages[pkgID])
@@ -76,7 +73,6 @@
 	VersionCheck()
 
 /datum/migration_controller/proc/UpdatePackage(var/pkgID, var/to_version=-1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/UpdatePackage() called tick#: [world.time]")
 	var/list/package = packages[pkgID]
 	var/from_version = getCurrentVersion(pkgID)
 	if(to_version==-1)
@@ -100,7 +96,6 @@
 	return TRUE
 
 /datum/migration_controller/proc/query(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/query() called tick#: [world.time]")
 	var/DBQuery/query = execute(sql)
 
 	var/list/rows=list()

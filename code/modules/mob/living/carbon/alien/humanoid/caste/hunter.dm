@@ -57,7 +57,6 @@
 //This ought to be fixed, maybe not now though
 /*
 /mob/living/carbon/alien/humanoid/hunter/verb/invis()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/hunter/verb/invis()  called tick#: [world.time]")
 	set name = "Invisibility (50)"
 	set desc = "Makes you invisible for 15 seconds"
 	set category = "Alien"

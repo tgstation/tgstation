@@ -7,7 +7,6 @@ var/list/forbidden_varedit_object_types = list(
 
 /*
 /client/proc/cmd_modify_object_variables(obj/O as obj|mob|turf|area in world)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_modify_object_variables() called tick#: [world.time]")
 	set category = "Debug"
 	set name = "Edit Variables"
 	set desc="(target) Edit a target item's variables"
@@ -18,7 +17,6 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"
 	set name = "Edit Ticker Variables"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_modify_ticker_variables() called tick#: [world.time]")
 
 	if (ticker == null)
 		src << "Game hasn't started yet."
@@ -28,7 +26,6 @@ var/list/forbidden_varedit_object_types = list(
 
 /client/proc/mod_list_add_ass() //haha
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/mod_list_add_ass() called tick#: [world.time]")
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -79,7 +76,6 @@ var/list/forbidden_varedit_object_types = list(
 
 /client/proc/mod_list_add(var/list/L)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/mod_list_add() called tick#: [world.time]")
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -133,7 +129,6 @@ var/list/forbidden_varedit_object_types = list(
 			L += var_value
 
 /client/proc/mod_list(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/mod_list() called tick#: [world.time]")
 	if(!check_rights(R_VAREDIT))	return
 
 	if(!istype(L,/list))
@@ -326,7 +321,6 @@ var/list/forbidden_varedit_object_types = list(
 
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/modify_variables() called tick#: [world.time]")
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")

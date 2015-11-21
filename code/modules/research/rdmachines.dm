@@ -101,7 +101,6 @@ var/global/list/rnd_machines = list()
 
 //Called when the hack wire is toggled in some way
 /obj/machinery/r_n_d/proc/update_hacked()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/proc/update_hacked() called tick#: [world.time]")
 	return
 
 /obj/machinery/r_n_d/togglePanelOpen(var/item/toggleitem, mob/user)
@@ -228,7 +227,6 @@ var/global/list/rnd_machines = list()
 	return 0
 
 /obj/machinery/r_n_d/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/proc/TotalMaterials() called tick#: [world.time]")
 	if(materials)
 		return materials.getVolume()
 	return 0

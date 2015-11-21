@@ -1,6 +1,5 @@
 
 /proc/power_failure(var/announce = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/power_failure() called tick#: [world.time]")
 	suspend_alert = 1
 	if(announce)
 		command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
@@ -50,7 +49,6 @@
 
 /proc/power_restore(var/announce = 1)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/power_restore() called tick#: [world.time]")
 
 	if(announce)
 		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
@@ -76,7 +74,6 @@
 	suspend_alert = 0
 
 /proc/power_restore_quick(var/announce = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/power_restore_quick() called tick#: [world.time]")
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
 		for(var/mob/M in player_list)

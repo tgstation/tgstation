@@ -59,13 +59,11 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	cmp = compare
 
 /PriorityQueue/proc/IsEmpty()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/IsEmpty() called tick#: [world.time]")
 	return !L.len
 
 //add an element in the list,
 //immediatly ordering it to its position using Insertion sort
 /PriorityQueue/proc/Enqueue(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/Enqueue() called tick#: [world.time]")
 	var/i
 	L.Add(A)
 	i = L.len -1
@@ -75,7 +73,6 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 //removes and returns the first element in the queue
 /PriorityQueue/proc/Dequeue()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/Dequeue() called tick#: [world.time]")
 	if(!L.len)
 		return 0
 	. = L[1]
@@ -84,30 +81,25 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 //removes an element
 /PriorityQueue/proc/Remove(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/Remove() called tick#: [world.time]")
 	return L.Remove(A)
 
 //returns a copy of the elements list
 /PriorityQueue/proc/List()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/List() called tick#: [world.time]")
 	var/list/ret = L.Copy()
 	return ret
 
 //return the position of an element or 0 if not found
 /PriorityQueue/proc/Seek(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/Seek() called tick#: [world.time]")
 	return L.Find(A)
 
 //return the element at the i_th position
 /PriorityQueue/proc/Get(var/i)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/Get() called tick#: [world.time]")
 	if(i > L.len || i < 1)
 		return 0
 	return L[i]
 
 //replace the passed element at it's right position using the cmp proc
 /PriorityQueue/proc/ReSort(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PriorityQueue/proc/ReSort() called tick#: [world.time]")
 	var/i = Seek(A)
 	if(i == 0)
 		return
@@ -141,7 +133,6 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	nt = pnt
 
 /PathNode/proc/calc_f()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/PathNode/proc/calc_f() called tick#: [world.time]")
 	f = g + h
 
 //////////////////////
@@ -150,12 +141,10 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 //the weighting function, used in the A* algorithm
 proc/PathWeightCompare(PathNode/a, PathNode/b)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/PathWeightCompare() called tick#: [world.time]")
 	return a.f - b.f
 
 //search if there's a PathNode that points to turf T in the Priority Queue
 proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/SeekTurf() called tick#: [world.time]")
 	var/i = 1
 	var/PathNode/PN
 	while(i < Queue.L.len + 1)
@@ -168,7 +157,6 @@ proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
 //the actual algorithm
 proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
 	ASSERT(!istype(end,/area)) //Because yeah some things might be doing this and we want to know what
-	//writepanic("[__FILE__].[__LINE__] \\/proc/AStar() called tick#: [world.time]")
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
@@ -263,7 +251,6 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/LinkBlockedWithAccess() called tick#: [world.time]")
 
 	if(A == null || B == null) return 1
 	var/adir = get_dir(A,B)
@@ -294,7 +281,6 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 // Returns true if direction is blocked from loc
 // Checks doors against access with given ID
 /proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/DirBlockedWithAccess() called tick#: [world.time]")
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
 		if(D.dir == SOUTHWEST)	return 1 //full-tile window
@@ -308,7 +294,6 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if door is open
 /proc/LinkBlocked(turf/A, turf/B)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/LinkBlocked() called tick#: [world.time]")
 	if(A == null || B == null)
 		return 1
 	var/adir = get_dir(A,B)
@@ -336,7 +321,6 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 // Returns true if direction is blocked from loc
 // Checks if doors are open
 /proc/DirBlocked(turf/loc,var/dir)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/DirBlocked() called tick#: [world.time]")
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
 		if(D.dir == SOUTHWEST)	return 1 //full-tile window

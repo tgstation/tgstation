@@ -54,7 +54,6 @@
 		return ..()
 
 /mob/living/simple_animal/crab/proc/GetMad()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/crab/proc/GetMad() called tick#: [world.time]")
 	name = "MEGAMADCRAB"
 	real_name = "MEGAMADCRAB"
 	desc = "OH NO YOU DUN IT NOW."

@@ -1,7 +1,6 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_equipment()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_equipment() called tick#: [world.time]")
 	if(head)
 		if(istype(head, /obj/item/weapon/reagent_containers/glass/bucket))
 			var/obj/item/weapon/reagent_containers/glass/bucket/B = head

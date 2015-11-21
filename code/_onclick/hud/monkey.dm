@@ -1,6 +1,5 @@
 /datum/hud/proc/monkey_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/monkey_hud() called tick#: [world.time]")
 
 	src.adding = list()
 	src.other = list()

@@ -26,12 +26,10 @@
 	src.client = client
 
 /datum/html_interface_client/proc/putExtraVar(key, value)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface_client/proc/putExtraVar() called tick#: [world.time]")
 	if (!src.extra_vars) src.extra_vars = new/list()
 	src.extra_vars[key] = value
 
 /datum/html_interface_client/proc/removeExtraVar(key)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface_client/proc/removeExtraVar() called tick#: [world.time]")
 	if (src.extra_vars)
 		. = src.extra_vars[key]
 
@@ -42,5 +40,4 @@
 	return .
 
 /datum/html_interface_client/proc/getExtraVar(key)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface_client/proc/getExtraVar() called tick#: [world.time]")
 	if (src.extra_vars) return src.extra_vars[key]

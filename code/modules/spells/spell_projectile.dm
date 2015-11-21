@@ -33,7 +33,6 @@
 	return
 
 /obj/item/projectile/spell_projectile/proc/prox_cast(var/list/targets)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/spell_projectile/proc/prox_cast() called tick#: [world.time]")
 	if(loc)
 		carried.prox_cast(targets, src)
 		qdel(src)

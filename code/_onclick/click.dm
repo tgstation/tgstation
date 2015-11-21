@@ -34,7 +34,6 @@
 #define MAX_ITEM_DEPTH	3 //how far we can recurse before we can't get an item
 
 /mob/proc/ClickOn( var/atom/A, var/params )
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/ClickOn() called tick#: [world.time]")
 	if(!click_delayer) click_delayer = new
 	if(timestopped) return 0 //under effects of time magick
 
@@ -133,7 +132,6 @@
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(var/atom/A, var/params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/DblClickOn() called tick#: [world.time]")
 	//ClickOn(A,params)
 	return
 
@@ -149,7 +147,6 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag, var/params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/UnarmedAttack() called tick#: [world.time]")
 	if(ismob(A))
 		delayNextAttack(10)
 	return
@@ -163,7 +160,6 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/RangedAttack() called tick#: [world.time]")
 	if(!mutations || !mutations.len) return
 	if((M_LASER in mutations) && a_intent == I_HURT)
 		LaserEyes(A) // moved into a proc below
@@ -188,7 +184,6 @@
 	Not currently used by anything but could easily be.
 */
 /mob/proc/RestrainedClickOn(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/RestrainedClickOn() called tick#: [world.time]")
 	return
 
 /*
@@ -196,7 +191,6 @@
 	Only used for swapping hands
 */
 /mob/proc/MiddleClickOn(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/MiddleClickOn() called tick#: [world.time]")
 	return
 /mob/living/carbon/MiddleClickOn(var/atom/A)
 	swap_hand()
@@ -204,7 +198,6 @@
 // In case of use break glass
 /*
 /atom/proc/MiddleClick(var/mob/M as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/MiddleClick() called tick#: [world.time]")
 	return
 */
 
@@ -214,11 +207,9 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/ShiftClickOn() called tick#: [world.time]")
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/ShiftClick() called tick#: [world.time]")
 	if(user.client && user.client.eye == user)
 		user.examination(src)
 	return
@@ -228,11 +219,9 @@
 	For most objects, pull
 */
 /mob/proc/CtrlClickOn(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/CtrlClickOn() called tick#: [world.time]")
 	A.CtrlClick(src)
 	return
 /atom/proc/CtrlClick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/CtrlClick() called tick#: [world.time]")
 	user.stop_pulling()
 	return
 
@@ -246,12 +235,10 @@
 	Unused except for AI
 */
 /mob/proc/AltClickOn(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AltClickOn() called tick#: [world.time]")
 	A.AltClick(src)
 	return
 
 /atom/proc/AltClick(var/mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AltClick() called tick#: [world.time]")
 	if(!(isrobot(user)) && ishuman(src) && user.Adjacent(src))
 		src:give_item(user)
 		return
@@ -271,7 +258,6 @@
 	face_atom: turns the mob towards what you clicked on
 */
 /mob/proc/LaserEyes(atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/LaserEyes() called tick#: [world.time]")
 	return
 
 /mob/living/LaserEyes(atom/A)
@@ -309,7 +295,6 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/face_atom() called tick#: [world.time]")
 	if(stat != CONSCIOUS || locked_to || !A || !x || !y || !A.x || !A.y )
 		return
 

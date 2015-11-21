@@ -40,7 +40,6 @@
 	..()
 
 /obj/effect/decal/cleanable/proc/dry()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/proc/dry() called tick#: [world.time]")
 	name = "dried [src.name]"
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)

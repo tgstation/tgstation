@@ -12,7 +12,6 @@
 	return head_state
 
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/is_in_modules() called tick#: [world.time]")
 	if(istype(W, src.module.emag.type))
 		return src.module.emag
 	// Exact matching for stacks (so we can load machines)
@@ -164,7 +163,6 @@
 
 // Unequips an object from the MoMMI's head
 /mob/living/silicon/robot/mommi/proc/unequip_head()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_head() called tick#: [world.time]")
 	// If there is a hat on the MoMMI's head
 	if(head_state)
 		// Select the MoMMI's claw
@@ -184,7 +182,6 @@
 		update_inv_head()
 
 /mob/living/silicon/robot/mommi/proc/unequip_tool()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/mommi/proc/unequip_tool() called tick#: [world.time]")
 	if(tool_state)
 		var/obj/item/TS=tool_state
 		if(!is_in_modules(TS))
@@ -335,7 +332,6 @@
 /mob/living/silicon/robot/mommi/verb/quick_equip()
 	set name = "quick-equip"
 	set hidden = 1
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/mommi/verb/quick_equip()  called tick#: [world.time]")
 
 	// Only allow equipping if the tool slot is activated
 	if(!module_selected(INV_SLOT_TOOL))

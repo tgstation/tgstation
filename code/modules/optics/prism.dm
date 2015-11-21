@@ -31,7 +31,6 @@ var/list/obj/machinery/prism/prism_list = list()
 	..()
 
 /obj/machinery/prism/proc/check_rotation()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/prism/proc/check_rotation() called tick#: [world.time]")
 	for(var/obj/effect/beam/emitter/B in beams)
 		world << "[src] \ref[src] found [get_dir(src, B)] its dir is [dir]"
 		if(get_dir(src, B) != dir)
@@ -40,7 +39,6 @@ var/list/obj/machinery/prism/prism_list = list()
 	set name = "Rotate (Clockwise)"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/prism/verb/rotate_cw()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
@@ -55,7 +53,6 @@ var/list/obj/machinery/prism/prism_list = list()
 	set name = "Rotate (Counter-Clockwise)"
 	set category = "Object"
 	set src in oview(1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/prism/verb/rotate_ccw()  called tick#: [world.time]")
 
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
@@ -92,12 +89,10 @@ var/list/obj/machinery/prism/prism_list = list()
 
 // When beam power changes
 /obj/machinery/prism/proc/on_power_change(var/list/args)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/prism/proc/on_power_change() called tick#: [world.time]")
 	//Don't care about args, just update beam.
 	update_beams()
 
 /obj/machinery/prism/proc/update_beams(var/obj/effect/beam/emitter/touching_beam)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/prism/proc/update_beams() called tick#: [world.time]")
 	overlays.len = 0
 	//testing("Beam count: [beams.len]")
 	if(get_dir(src, touching_beam) == dir) return 0 //Make no change for beams touching us on our emission side.

@@ -74,9 +74,7 @@
 	add_cell()
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\removeVerb()  called tick#: [world.time]")
 	removeVerb(/atom/movable/verb/pull)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\emoveVerb()  called tick#: [world.time]")
 	log_message("[src.name]'s functions initialised. Work protocols active - Entering IDLE mode.")
 	loc.Entered(src)
 	return
@@ -86,24 +84,16 @@
 
 
 /obj/vehicle/proc/removeVerb(verb_path)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/vehicle/proc/removeVerb()  called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/removeVerb() called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/obj/vehicle/proc/removeVerb()  called tick#: [world.time]")
 	verbs -= verb_path
 
 /obj/vehicle/proc/addVerb(verb_path)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/vehicle/proc/addVerb()  called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/addVerb() called tick#: [world.time]")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/obj/vehicle/proc/addVerb()  called tick#: [world.time]")
 	verbs += verb_path
 
 /*/obj/vehicle/proc/add_airtank() //In airtight.dm -Agouri
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//obj/vehicle/proc/add_airtank() called tick#: [world.time]")
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank*/
 
 /obj/vehicle/proc/add_cell(var/obj/item/weapon/cell/C=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/add_cell() called tick#: [world.time]")
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -113,7 +103,6 @@
 	cell.maxcharge = 15000
 
 /*/obj/vehicle/proc/add_cabin()   //In airtight.dm -Agouri
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//obj/vehicle/proc/add_cabin() called tick#: [world.time]")
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
@@ -122,7 +111,6 @@
 	return cabin_air*/
 
 /obj/vehicle/proc/add_radio()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/add_radio() called tick#: [world.time]")
 	radio = new(src)
 	radio.name = "[src] radio"
 	radio.icon = icon
@@ -130,14 +118,12 @@
 	radio.subspace_transmission = 1
 
 /obj/vehicle/proc/add_iterators()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/add_iterators() called tick#: [world.time]")
 	pr_inertial_movement = new /datum/global_iterator/vehicle_intertial_movement(null,0)
 	//pr_internal_damage = new /datum/global_iterator/vehicle_internal_damage(list(src),0)
 	//pr_int_temp_processor = new /datum/global_iterator/vehicle_preserve_temp(list(src)) //In airtight.dm's add_airtight_iterators -Agouri
 	//pr_give_air = new /datum/global_iterator/vehicle_tank_give_air(list(src)            //Same here -Agouri
 
 /obj/vehicle/proc/check_for_support()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/check_for_support() called tick#: [world.time]")
 	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
 	else
@@ -147,7 +133,6 @@
 
 
 /obj/vehicle/proc/log_message(message as text,red=null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/vehicle/proc/log_message() called tick#: [world.time]")
 	log.len++
 	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len

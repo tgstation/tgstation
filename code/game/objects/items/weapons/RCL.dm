@@ -81,7 +81,6 @@
 			item_state = "rcl-0"
 
 /obj/item/weapon/rcl/proc/is_empty(mob/user)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rcl/proc/is_empty() called tick#: [world.time]")
 	update_icon()
 	if(!loaded.amount)
 		user << "<span class='notice'>The last of the cables unreel from \the [src].</span>"

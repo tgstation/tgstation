@@ -32,7 +32,6 @@ var/global/datum/controller/failsafe/failsafe
 	failsafe.process()
 
 /datum/controller/failsafe/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/failsafe/proc/process() called tick#: [world.time]")
 	processing = 1
 
 	spawn(0)

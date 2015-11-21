@@ -98,7 +98,6 @@
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/allowed() called tick#: [world.time]")
 	set_up_access()
 	if(!M || !istype(M))
 		return 0 // I guess?  This seems to happen when AIs use something.
@@ -108,15 +107,12 @@
 	return can_access(ACL,req_access,req_one_access)
 
 /obj/item/proc/GetAccess()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/GetAccess() called tick#: [world.time]")
 	return list()
 
 /obj/item/proc/GetID()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/GetID() called tick#: [world.time]")
 	return null
 
 /obj/proc/set_up_access()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/set_up_access() called tick#: [world.time]")
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)
 		src.req_access = list()
@@ -137,7 +133,6 @@
 					req_one_access += n
 
 /obj/proc/check_access(obj/item/I)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/check_access() called tick#: [world.time]")
 	set_up_access()
 	var/list/ACL = list()
 	if(I)
@@ -146,7 +141,6 @@
 
 
 /obj/proc/check_access_list(var/list/L)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/check_access_list() called tick#: [world.time]")
 	set_up_access()
 	if(!src.req_access  && !src.req_one_access)	return 1
 	if(!istype(src.req_access, /list))	return 1
@@ -166,7 +160,6 @@
 // /vg/ - Generic Access Checks.
 // Allows more flexible access checks.
 /proc/can_access(var/list/L, var/list/req_access=null,var/list/req_one_access=null)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_access() called tick#: [world.time]")
 	// No perms set?  He's in.
 	if(!req_access  && !req_one_access)
 		return 1
@@ -195,7 +188,6 @@
 	return 1
 
 /proc/get_centcom_access(job)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_centcom_access() called tick#: [world.time]")
 	switch(job)
 		if("VIP Guest")
 			return list(access_cent_general, access_cent_living)
@@ -213,7 +205,6 @@
 			return (get_all_accesses() | get_all_centcom_access())//Mr.Centcom gets station all access as well
 
 /proc/get_all_accesses()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_all_accesses() called tick#: [world.time]")
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
@@ -227,19 +218,15 @@
 	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_mechanic, access_taxi)
 
 /proc/get_absolutely_all_accesses()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_absolutely_all_accesses() called tick#: [world.time]")
 	return ((get_all_accesses() | get_all_centcom_access() | get_all_syndicate_access()) + access_salvage_captain)
 
 /proc/get_all_centcom_access()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_all_centcom_access() called tick#: [world.time]")
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
 
 /proc/get_all_syndicate_access()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_all_syndicate_access() called tick#: [world.time]")
 	return list(access_syndicate)
 
 /proc/get_ert_access()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_ert_access() called tick#: [world.time]")
 	return list(
 		access_security, access_sec_doors, access_brig, access_armory,		//sec
 		access_medical, access_genetics, access_surgery, access_paramedic,	//med
@@ -251,7 +238,6 @@
 		)
 
 /proc/get_region_accesses(var/code)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_region_accesses() called tick#: [world.time]")
 	switch(code)
 		if(0)
 			return get_all_accesses()
@@ -271,7 +257,6 @@
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm, access_taxi)
 
 /proc/get_region_accesses_name(var/code)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_region_accesses_name() called tick#: [world.time]")
 	switch(code)
 		if(0)
 			return "All"
@@ -292,7 +277,6 @@
 
 
 /proc/get_access_desc(A)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_access_desc() called tick#: [world.time]")
 	switch(A)
 		if(access_cargo)
 			return "Cargo Bay"
@@ -434,7 +418,6 @@
 
 
 /proc/get_centcom_access_desc(A)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_centcom_access_desc() called tick#: [world.time]")
 	switch(A)
 		if(access_cent_general)
 			return "Centcom Common Areas"
@@ -460,7 +443,6 @@
 // Cache - N3X
 var/global/list/all_jobs
 /proc/get_all_jobs()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_all_jobs() called tick#: [world.time]")
 	// Have cache?  Use cache.
 	if(all_jobs)
 		return all_jobs
@@ -474,12 +456,10 @@ var/global/list/all_jobs
 	return all_jobs
 
 /proc/get_all_centcom_jobs()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_all_centcom_jobs() called tick#: [world.time]")
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
 
 
 proc/FindNameFromID(var/mob/living/carbon/human/H)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/FindNameFromID() called tick#: [world.time]")
 	ASSERT(istype(H))
 	var/obj/item/weapon/card/id/C = H.get_active_hand()
 	if( istype(C) || istype(C, /obj/item/device/pda) )
@@ -509,5 +489,4 @@ proc/FindNameFromID(var/mob/living/carbon/human/H)
 			return ID.registered_name
 
 proc/get_all_job_icons() //For all existing HUD icons
-	//writepanic("[__FILE__].[__LINE__] \\/proc/get_all_job_icons() called tick#: [world.time]")
 	return get_all_jobs() + list("Prisoner")

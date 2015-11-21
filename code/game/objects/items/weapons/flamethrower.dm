@@ -167,7 +167,6 @@
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/flamethrower/proc/flame_turf() called tick#: [world.time]")
 	if(!lit || operating)	return
 	operating = 1
 	for(var/turf/T in turflist)
@@ -189,7 +188,6 @@
 
 
 /obj/item/weapon/flamethrower/proc/ignite_turf(turf/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/flamethrower/proc/ignite_turf() called tick#: [world.time]")
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.02*(throw_amount/100))

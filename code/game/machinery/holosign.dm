@@ -19,7 +19,6 @@ var/list/obj/machinery/holosign/holosigns = list()
 	holosigns += src
 
 /obj/machinery/holosign/proc/toggle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/holosign/proc/toggle() called tick#: [world.time]")
 	if (stat & (BROKEN|NOPOWER))
 		return
 	lit = !lit

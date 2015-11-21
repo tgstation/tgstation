@@ -1,6 +1,5 @@
 //Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
 proc/get_infection_chance(var/mob/living/carbon/M, var/vector = "Airborne")
-	//writepanic("[__FILE__].[__LINE__] \\/proc/get_infection_chance() called tick#: [world.time]")
 	var/score = 0
 	if (!istype(M))
 		return 0
@@ -42,7 +41,6 @@ proc/get_infection_chance(var/mob/living/carbon/M, var/vector = "Airborne")
 
 //Checks if table-passing table can reach target (5 tile radius)
 proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/airborne_can_reach() called tick#: [world.time]")
 	var/obj/dummy = new(source)
 	dummy.flags = FPRINT
 	dummy.pass_flags = PASSTABLE
@@ -56,7 +54,6 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothing.  Returns 1 if successful.
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0, var/notes="")
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/infect_virus2() called tick#: [world.time]")
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return 0
@@ -86,7 +83,6 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(var/mob/living/carbon/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/infect_mob_random_lesser() called tick#: [world.time]")
 	var/datum/disease2/disease/D = new /datum/disease2/disease("infect_mob_random_lesser")
 	D.makerandom()
 	D.infectionchance = 1
@@ -94,18 +90,15 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 
 //Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(var/mob/living/carbon/M)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/infect_mob_random_greater() called tick#: [world.time]")
 	var/datum/disease2/disease/D = new /datum/disease2/disease("infect_mob_random_greater")
 	D.makerandom(1)
 	M.virus2["[D.uniqueID]"] = D
 
 //Fancy prob() function.
 /proc/dprob(var/p)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dprob() called tick#: [world.time]")
 	return(prob(sqrt(p)) && prob(sqrt(p)))
 
 /mob/living/carbon/proc/spread_disease_to(var/mob/living/carbon/victim, var/vector = "Airborne")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/spread_disease_to() called tick#: [world.time]")
 	if (src == victim)
 		return "retardation"
 

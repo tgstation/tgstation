@@ -76,7 +76,6 @@
 	return
 
 /obj/item/weapon/melee/energy/sword/proc/toggleActive(mob/user, var/togglestate = "") //you can use togglestate to manually set the sword on or off
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/melee/energy/sword/proc/toggleActive() called tick#: [world.time]")
 	switch(togglestate)
 		if("on")
 			active = 1

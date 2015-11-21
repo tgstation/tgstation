@@ -36,7 +36,6 @@ Here it is: Buttbot.
 
 
 /obj/machinery/bot/buttbot/proc/speak(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/buttbot/proc/speak() called tick#: [world.time]")
 	if((!src.on) || (!message))
 		return
 	for(var/mob/O in hearers(src, null))

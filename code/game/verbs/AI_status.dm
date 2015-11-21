@@ -1,5 +1,4 @@
 /mob/living/silicon/ai/proc/ai_statuschange()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/ai_statuschange() called tick#: [world.time]")
 	set category = "AI Commands"
 	set name = "AI status"
 

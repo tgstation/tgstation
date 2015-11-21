@@ -94,7 +94,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_changeling_objectives() called tick#: [world.time]")
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
 	//If they have two objectives as well as absorb, they must survive rather than escape
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
@@ -130,7 +129,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_changeling() called tick#: [world.time]")
 	if (you_are)
 		changeling.current << "<span class='danger'>You are a changeling!</span>"
 	changeling.current << "<span class='danger'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span>"
@@ -170,12 +168,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return 0*/
 
 /datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/grant_changeling_powers() called tick#: [world.time]")
 	if(!istype(changeling_mob))	return
 	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_changeling() called tick#: [world.time]")
 	var/text = ""
 	if(changelings.len)
 		var/icon/logoa = icon('icons/mob/mob.dmi', "change-logoa")
@@ -275,12 +271,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/changeling/proc/regenerate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/changeling/proc/regenerate() called tick#: [world.time]")
 	chem_charges = Clamp(chem_charges + chem_recharge_rate, 0, chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
 /datum/changeling/proc/GetDNA(var/dna_owner)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/changeling/proc/GetDNA() called tick#: [world.time]")
 	var/datum/dna/chosen_dna
 	for(var/datum/dna/DNA in absorbed_dna)
 		if(dna_owner == DNA.real_name)

@@ -3,13 +3,11 @@
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_active_hand() called tick#: [world.time]")
 	if(hand)	return l_hand
 	else		return r_hand
 
 // Get the organ of the active hand
 /mob/proc/get_active_hand_organ()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_active_hand_organ() called tick#: [world.time]")
 	if(!istype(src, /mob/living/carbon)) return
 	if (hasorgans(src))
 		var/datum/organ/external/temp = src:organs_by_name["r_hand"]
@@ -19,18 +17,15 @@
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_inactive_hand() called tick#: [world.time]")
 	if(hand)	return r_hand
 	else		return l_hand
 
 // Because there's several different places it's stored.
 /mob/proc/get_multitool(var/if_active=0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_multitool() called tick#: [world.time]")
 	return null
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_l_hand() called tick#: [world.time]")
 	if(!put_in_hand_check(W, hand))
 		return 0
 
@@ -50,7 +45,6 @@
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_r_hand() called tick#: [world.time]")
 	if(!put_in_hand_check(W, hand))
 		return 0
 
@@ -69,7 +63,6 @@
 	return 0
 
 /mob/proc/put_in_hand_check(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_hand_check() called tick#: [world.time]")
 	if(lying) //&& !(W.flags & ABSTRACT))
 		return 0
 
@@ -85,13 +78,11 @@
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_active_hand() called tick#: [world.time]")
 	if(hand)	return put_in_l_hand(W)
 	else		return put_in_r_hand(W)
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_inactive_hand() called tick#: [world.time]")
 	if(hand)	return put_in_r_hand(W)
 	else		return put_in_l_hand(W)
 
@@ -99,7 +90,6 @@
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/put_in_hands() called tick#: [world.time]")
 	if(!W)		return 0
 	if(put_in_active_hand(W))
 		update_inv_l_hand()
@@ -118,14 +108,12 @@
 
 
 /mob/proc/drop_item_v()		//this is dumb.
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/drop_item_v() called tick#: [world.time]")
 	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
 	return 0
 
 
 /mob/proc/drop_from_inventory(var/obj/item/W)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/drop_from_inventory() called tick#: [world.time]")
 	if(W)
 		if(client)	client.screen -= W
 		u_equip(W,1)
@@ -150,7 +138,6 @@
 
 //Drops the item in our hand - you can specify an item and a location to drop to
 /mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/drop_item() called tick#: [world.time]")
 
 	if(!candrop) //can't drop items while etheral
 		return 0
@@ -178,13 +165,11 @@
 	return 0
 
 /mob/proc/drop_hands(var/atom/Target) //drops both items
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/drop_hands() called tick#: [world.time]")
 	drop_item(get_active_hand(), Target)
 	drop_item(get_inactive_hand(), Target)
 
 //TODO: phase out this proc
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/before_take_item() called tick#: [world.time]")
 	W.loc = null
 	W.layer = initial(W.layer)
 	u_equip(W,0)
@@ -193,7 +178,6 @@
 
 
 /mob/proc/u_equip(var/obj/item/W as obj, dropped = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/u_equip() called tick#: [world.time]")
 	if(!W) return 0
 	var/success = 0
 	if (W == r_hand)
@@ -228,7 +212,6 @@
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_from_mob() called tick#: [world.time]")
 	src.u_equip(O,1)
 	if (src.client)
 		src.client.screen -= O
@@ -238,25 +221,21 @@
 	return 1
 
 /mob/proc/get_all_slots()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_all_slots() called tick#: [world.time]")
 	return list(wear_mask, back, l_hand, r_hand)
 
 //everything on the mob that it isn't holding
 /mob/proc/get_equipped_items()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_equipped_items() called tick#: [world.time]")
 	var/list/equipped = get_all_slots()
 	equipped -= list(get_active_hand(), get_inactive_hand())
 	return equipped
 
 //everything on the mob that is not in its pockets, hands and belt.
 /mob/proc/get_clothing_items()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_clothing_items() called tick#: [world.time]")
 	var/list/equipped = get_all_slots()
 	equipped -= list(get_active_hand(), get_inactive_hand())
 	return equipped
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, act_on_fail = EQUIP_FAILACTION_DELETE) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/equip_if_possible() called tick#: [world.time]")
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -348,7 +327,6 @@
 	return equipped
 
 /mob/proc/get_id_card()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_id_card() called tick#: [world.time]")
 	for(var/obj/item/I in src.get_all_slots())
 		. = I.GetID()
 		if(.)

@@ -28,7 +28,6 @@
 	set name = "Evolve (500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/drone/verb/evolve()  called tick#: [world.time]")
 
 	if(powerc(500))
 		// Queen check

@@ -1,7 +1,6 @@
 
 /proc/communications_blackout(var/silent = 1)
 
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/communications_blackout() called tick#: [world.time]")
 
 	if(!silent)
 		command_alert("Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT")

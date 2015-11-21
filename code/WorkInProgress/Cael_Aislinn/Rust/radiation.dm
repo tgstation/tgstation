@@ -21,7 +21,6 @@
 /*
 /obj/machinery/rust
 	proc/RadiateParticle(var/energy, var/ionizing, var/dir = 0)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RadiateParticle() called tick#: [world.time]")
 		if(!dir)
 			RadiateParticleRand(energy, ionizing)
 		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle/particle, get_turf(src))
@@ -36,7 +35,6 @@
 		return particle
 
 	proc/RadiateParticleRand(var/energy, var/ionizing)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RadiateParticleRand() called tick#: [world.time]")
 		var/turf/target
 		var/particle_range = 3 * round(energy) + rand(3,20)
 		if(energy > 1)

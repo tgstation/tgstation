@@ -16,12 +16,10 @@
 	MC=mc
 
 /datum/migration/proc/up()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/up() called tick#: [world.time]")
 	// Make your changes here.
 	return TRUE
 
 /datum/migration/proc/down()
-    //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/down() called tick#: [world.time]")
     // Undo your changes here (for rollbacks)
     return TRUE
 

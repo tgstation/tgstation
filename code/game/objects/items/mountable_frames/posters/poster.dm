@@ -101,7 +101,6 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			return
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/sign/poster/proc/roll_and_drop() called tick#: [world.time]")
 	if(newloc)
 		new /obj/item/mounted/poster(newloc, serial_number)
 	else

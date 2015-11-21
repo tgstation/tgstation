@@ -164,9 +164,7 @@
 			//end biting
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\color='red'>[M.species.attack_verb]ed [src.name] ()  called tick#: [world.time]")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\[M.species.attack_verb]ed by [M.name] ()  called tick#: [world.time]")
 			if(!iscarbon(M))
 				LAssailant = null
 			else
@@ -174,7 +172,6 @@
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
-			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\[M.species.attack_verb]ed [src.name] ()  called tick#: [world.time]")
 
 			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT // edited again by Iamgoofball to fix species attacks
 			if(!damage)
@@ -312,5 +309,4 @@
 	return
 
 /mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/afterattack() called tick#: [world.time]")
 	return

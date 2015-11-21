@@ -62,7 +62,6 @@
 
 
 /mob/living/simple_animal/slime/proc/rabid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/slime/proc/rabid() called tick#: [world.time]")
 	if(stat)
 		return
 	if(client)
@@ -75,7 +74,6 @@
 	del (src)
 
 /mob/living/simple_animal/adultslime/proc/rabid()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/adultslime/proc/rabid() called tick#: [world.time]")
 	if(stat)
 		return
 	if(client)

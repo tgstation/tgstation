@@ -15,7 +15,6 @@
 
 /obj/item/radio/integrated/proc/post_signal(var/freq, var/key, var/value, var/key2, var/value2, var/key3, var/value3, s_filter)
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/radio/integrated/proc/post_signal() called tick#: [world.time]")
 
 	//world << "Post: [freq]: [key]=[value], [key2]=[value2]"
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
@@ -34,7 +33,6 @@
 	frequency.post_signal(src, signal, filter = s_filter)
 
 /obj/item/radio/integrated/proc/print_to_host(var/text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/radio/integrated/proc/print_to_host() called tick#: [world.time]")
 	if (isnull(src.hostpda))
 		return
 	src.hostpda.cart = text
@@ -46,7 +44,6 @@
 	return
 
 /obj/item/radio/integrated/proc/generate_menu()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/radio/integrated/proc/generate_menu() called tick#: [world.time]")
 
 /obj/item/radio/integrated/beepsky
 	var/list/botlist = null		// list of bots
@@ -248,14 +245,12 @@
 	set_frequency(frequency)
 
 /obj/item/radio/integrated/signal/proc/set_frequency(new_frequency)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/radio/integrated/signal/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency)
 
 /obj/item/radio/integrated/signal/proc/send_signal(message="ACTIVATE")
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/radio/integrated/signal/proc/send_signal() called tick#: [world.time]")
 
 	if(last_transmission && world.time < (last_transmission + 5))
 		return

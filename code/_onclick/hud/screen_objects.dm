@@ -49,7 +49,6 @@
 	..()
 
 /obj/screen/proc/pool_on_reset() //This proc should be redefined to 0 for ANY obj/screen that is shared between more than 1 mob, ie storage screens
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/proc/pool_on_reset() called tick#: [world.time]")
 	. = 1
 
 
@@ -116,7 +115,6 @@
 
 //This is the proc used to update all the action buttons. It just returns for all mob types except humans.
 /mob/proc/update_action_buttons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_action_buttons() called tick#: [world.time]")
 	return
 
 
@@ -801,7 +799,6 @@
 	return 1
 
 client/proc/reset_screen()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/reset_screen() called tick#: [world.time]")
 	for(var/obj/screen/objects in src.screen)
 		if(objects.pool_on_reset())
 			returnToPool(objects)

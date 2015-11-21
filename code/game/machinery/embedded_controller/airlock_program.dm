@@ -40,7 +40,6 @@
 
 
 /datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/receive_signal() called tick#: [world.time]")
 	var/receive_tag = signal.data["tag"]
 	if(!receive_tag) return
 
@@ -94,7 +93,6 @@
 
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/receive_user_command() called tick#: [world.time]")
 	var/shutdown_pump = 0
 	switch(command)
 		if("cycle_ext")
@@ -147,7 +145,6 @@
 
 
 /datum/computer/file/embedded_program/proc/process()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/process() called tick#: [world.time]")
 	if(!state && target_state)
 		switch(target_state)
 			if(TARGET_INOPEN)
@@ -214,7 +211,6 @@
 
 
 /datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/post_signal() called tick#: [world.time]")
 	if(master)
 		master.post_signal(signal, comm_line)
 	else
@@ -222,7 +218,6 @@
 
 
 /datum/computer/file/embedded_program/proc/signalDoor(var/tag, var/command)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/signalDoor() called tick#: [world.time]")
 	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.data["tag"] = tag
 	signal.data["command"] = command
@@ -230,7 +225,6 @@
 
 
 /datum/computer/file/embedded_program/proc/signalPump(var/tag, var/power, var/direction, var/pressure)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/signalPump() called tick#: [world.time]")
 	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.data = list(
 		"tag" = tag,
@@ -243,7 +237,6 @@
 
 
 /datum/computer/file/embedded_program/proc/cycleDoors(var/target)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/cycleDoors() called tick#: [world.time]")
 	switch(target)
 		if(TARGET_OUTOPEN)
 			toggleDoor(memory["interior_status"], tag_interior_door, memory["secure"], "close")
@@ -274,7 +267,6 @@ already open, passing an open command to this proc will not
 send an additional command to open the door again.
 ----------------------------------------------------------*/
 /datum/computer/file/embedded_program/proc/toggleDoor(var/list/doorStatus, var/doorTag, var/secure, var/command)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/toggleDoor() called tick#: [world.time]")
 	var/doorCommand = null
 
 	if(command == "toggle")

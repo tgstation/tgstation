@@ -55,7 +55,6 @@
 
 
 /datum/game_mode/anti_revolution/proc/add_head_objectives(datum/mind/head)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/anti_revolution/proc/add_head_objectives() called tick#: [world.time]")
 	for(var/datum/mind/target in execute_targets)
 		var/datum/objective/anti_revolution/execute/obj = new
 		obj.owner = head
@@ -98,7 +97,6 @@
 
 
 /datum/game_mode/proc/greet_head(var/datum/mind/head_mind, var/you_are=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_head() called tick#: [world.time]")
 	var/obj_count = 1
 	if (you_are)
 		head_mind.current << "<span class='notice'>It looks like this shift CentComm has some special orders for you.. check your objectives.</span>"
@@ -134,7 +132,6 @@
 //Checks for crew victory//
 //////////////////////////
 /datum/game_mode/anti_revolution/proc/check_crew_victory()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/anti_revolution/proc/check_crew_victory() called tick#: [world.time]")
 	for(var/datum/mind/head_mind in heads)
 		var/turf/T = get_turf(head_mind.current)
 		if((head_mind) && (head_mind.current) && (head_mind.current.stat != 2) && T && (T.z == 1) && !head_mind.is_brigged(600))
@@ -146,7 +143,6 @@
 //Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/anti_revolution/proc/check_head_victory()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/anti_revolution/proc/check_head_victory() called tick#: [world.time]")
 	for(var/datum/mind/head_mind in heads)
 		for(var/datum/objective/objective in head_mind.objectives)
 			if(!(objective.check_completion()))
@@ -210,7 +206,6 @@
 		greet_head(character.mind)
 
 /mob/proc/ResignFromHeadPosition()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/ResignFromHeadPosition() called tick#: [world.time]")
 	set category = "IC"
 	set name = "Resign From Head Position"
 

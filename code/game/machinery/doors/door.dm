@@ -108,7 +108,6 @@ var/list/all_doors = list()
 				door_animate("deny")
 
 /obj/machinery/door/proc/bump_open(mob/user as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/bump_open() called tick#: [world.time]")
 	// TODO: analyze this
 	if(user.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //Fakkit
 		return
@@ -195,7 +194,6 @@ var/list/all_doors = list()
 		qdel(src)
 
 /obj/machinery/door/proc/door_animate(var/animation as text)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/door_animate() called tick#: [world.time]")
 	switch (animation)
 		if ("opening")
 			flick("[prefix]door_opening", src)
@@ -216,7 +214,6 @@ var/list/all_doors = list()
 
 /*
 /obj/machinery/door/proc/open()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/open() called tick#: [world.time]")
 	if (!density || operating || jammed)
 		return
 
@@ -250,7 +247,6 @@ var/list/all_doors = list()
 */
 
 /obj/machinery/door/proc/open()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/open() called tick#: [world.time]")
 	if(!density)		return 1
 	if(operating > 0)	return
 	if(!ticker)			return 0
@@ -273,14 +269,12 @@ var/list/all_doors = list()
 	return 1
 
 /obj/machinery/door/proc/autoclose()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/autoclose() called tick#: [world.time]")
 	var/obj/machinery/door/airlock/A = src
 	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose && !A.jammed)
 		close()
 	return
 
 /obj/machinery/door/proc/close()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/close() called tick#: [world.time]")
 	if (density || operating || jammed)
 		return
 	operating = 1
@@ -350,7 +344,6 @@ var/list/all_doors = list()
 	return !density
 
 /obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/CanAStarPass() called tick#: [world.time]")
 	return !density || check_access(ID)
 
 
@@ -380,11 +373,9 @@ var/list/all_doors = list()
 	return
 
 /obj/machinery/door/proc/requiresID()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/requiresID() called tick#: [world.time]")
 	return 1
 
 /obj/machinery/door/proc/update_nearby_tiles()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/update_nearby_tiles() called tick#: [world.time]")
 	if(!air_master)
 		return 0
 
@@ -396,7 +387,6 @@ var/list/all_doors = list()
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/update_heat_protection() called tick#: [world.time]")
 	if(istype(source))
 		if(src.density && (src.opacity || src.heat_proof))
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT

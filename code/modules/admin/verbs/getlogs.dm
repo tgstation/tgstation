@@ -22,7 +22,6 @@
 	set name = ".giveruntimelog"
 	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
 	set category = null
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/giveruntimelog() called tick#: [world.time]")
 
 	if(!src.holder)
 		src << "<font color='red'>Only Admins may use this command.</font>"
@@ -44,7 +43,6 @@
 	set name = ".getruntimelog"
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
 	set category = null
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/getruntimelog() called tick#: [world.time]")
 
 	var/path = browse_files("data/logs/runtime/")
 	if(!path)
@@ -74,7 +72,6 @@
 	set name = ".getserverlog"
 	set desc = "Fetch logfiles from data/logs"
 	set category = null
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/getserverlog() called tick#: [world.time]")
 
 	var/path = browse_files("data/logs/")
 	if(!path)
@@ -105,7 +102,6 @@
 	set category = "Admin"
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/view_txt_log() called tick#: [world.time]")
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
 	if( fexists(path) )
@@ -130,7 +126,6 @@
 	set category = "Admin"
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/view_atk_log() called tick#: [world.time]")
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
 	if( fexists(path) )

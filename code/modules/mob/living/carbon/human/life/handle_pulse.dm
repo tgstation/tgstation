@@ -2,7 +2,6 @@
 
 /mob/living/carbon/human/proc/handle_pulse()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_pulse() called tick#: [world.time]")
 
 	if(life_tick % 5)
 		return pulse //Update pulse every 5 life ticks (~1 tick/sec, depending on server load)

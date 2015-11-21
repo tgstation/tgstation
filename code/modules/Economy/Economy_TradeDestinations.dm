@@ -14,7 +14,6 @@ var/list/weighted_mundaneevent_locations = list()
 	var/list/viable_mundane_events = list()
 
 /datum/trade_destination/proc/get_custom_eventstring(var/event_type)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/trade_destination/proc/get_custom_eventstring() called tick#: [world.time]")
 	return null
 
 //distance is measured in AU and co-relates to travel time

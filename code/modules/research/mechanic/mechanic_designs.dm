@@ -60,7 +60,6 @@
 
 //Takes the materials of a design, and adds them to this one
 /datum/design/mechanic_design/proc/copyCost(var/datum/design/D, filter_mats = 0, filter_chems = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/design/mechanic_design/proc/copyCost() called tick#: [world.time]")
 	for(var/matID in D.materials)
 		if(copytext(matID, 1, 2) == "$")
 			if(filter_mats)
@@ -76,7 +75,6 @@
 
 //Saved for use maybe some other time - used to generate random additional costs
 /datum/design/mechanic_design/proc/Gen_Tech_Mats(var/modifier = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/design/mechanic_design/proc/Gen_Tech_Mats() called tick#: [world.time]")
 	if(modifier < 0) //fuck off
 		return
 	var/techtotal = src.TechTotal() / 2
@@ -94,7 +92,6 @@
 		materials[matID] -= (materials[matID] % 20) //clean up the numbers
 
 proc/ConvertReqString2List(var/list/source_list) //shamelessly ripped from the code for research machines. Shoot me - Comic
-	//writepanic("[__FILE__].[__LINE__] \\/proc/ConvertReqString2List() called tick#: [world.time]")
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])

@@ -66,7 +66,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/update_all_synd_icons()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_synd_icons() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/synd_mind in syndicates)
 			if(synd_mind.current)
@@ -87,7 +86,6 @@
 							synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_synd_icons_added() called tick#: [world.time]")
 	if(!synd_mind)
 		return 0
 	spawn(0)
@@ -110,7 +108,6 @@
 		update_all_synd_icons()
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_synd_icons_removed() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/synd in syndicates)
 			if(synd.current)
@@ -187,7 +184,6 @@
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/prepare_syndicate_leader() called tick#: [world.time]")
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
@@ -212,14 +208,12 @@
 
 
 /datum/game_mode/proc/forge_syndicate_objectives(var/datum/mind/syndicate)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_syndicate_objectives() called tick#: [world.time]")
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
 	syndicate.objectives += syndobj
 
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_syndicate() called tick#: [world.time]")
 	if (you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
@@ -231,12 +225,10 @@
 
 
 /datum/game_mode/proc/random_radio_frequency()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/random_radio_frequency() called tick#: [world.time]")
 	return 1337 // WHY??? -- Doohl
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_syndicate() called tick#: [world.time]")
 	var/radio_freq = SYND_FREQ
 	var/tank_slot = slot_r_hand
 
@@ -304,7 +296,6 @@
 
 
 /datum/game_mode/proc/is_operatives_are_dead()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/is_operatives_are_dead() called tick#: [world.time]")
 	for(var/datum/mind/operative_mind in syndicates)
 		if (!istype(operative_mind.current,/mob/living/carbon/human))
 			if(operative_mind.current)
@@ -379,7 +370,6 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_nuclear() called tick#: [world.time]")
 	var/text = ""
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/icon/logo = icon('icons/mob/mob.dmi', "nuke-logo")
@@ -423,7 +413,6 @@
 
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/nukelastname() called tick#: [world.time]")
 	var/randomname = pick(last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
@@ -438,7 +427,6 @@
 	return newname
 
 /proc/NukeNameAssign(var/lastname,var/list/syndicates)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/NukeNameAssign() called tick#: [world.time]")
 	for(var/datum/mind/synd_mind in syndicates)
 		switch(synd_mind.current.gender)
 			if(MALE)

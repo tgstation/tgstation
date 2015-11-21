@@ -3,7 +3,6 @@
 	movementJammed = 1 //no drifting here
 
 /proc/createRandomZlevel(override = 0)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/createRandomZlevel() called tick#: [world.time]")
 	if(awaydestinations.len && !override)	//crude, but it saves another var!
 		return
 

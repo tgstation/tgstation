@@ -16,7 +16,6 @@
 	// Don't do anything, we want to pack the announcement with the actual event
 
 /datum/event/radiation_storm/proc/is_safe_zone(var/area/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/radiation_storm/proc/is_safe_zone() called tick#: [world.time]")
 	for(var/szt in safe_zones)
 		if(istype(A, szt))
 			return 1

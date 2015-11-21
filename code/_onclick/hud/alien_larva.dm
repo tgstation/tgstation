@@ -1,6 +1,5 @@
 /datum/hud/proc/larva_hud()
 
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/larva_hud() called tick#: [world.time]")
 
 	src.adding = list()
 	src.other = list()

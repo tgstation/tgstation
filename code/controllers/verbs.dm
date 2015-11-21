@@ -5,7 +5,6 @@
 	set category = "Debug"
 	set name = "Restart Controller"
 	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/restart_controller() called tick#: [world.time]")
 
 	if(!holder)	return
 	usr = null
@@ -40,7 +39,6 @@
 	set category = "Debug"
 	set name = "debug controller"
 	set desc = "debug the various periodic loop controllers for the game (be careful!)."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/debug_controller() called tick#: [world.time]")
 
 	if (!holder)
 		return

@@ -8,7 +8,6 @@
 		db=mc.db
 
 /datum/migration/mysql/query(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/query() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -20,7 +19,6 @@
 	return rows
 
 /datum/migration/mysql/hasResult(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasResult() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -31,7 +29,6 @@
 	return FALSE
 
 /datum/migration/mysql/execute(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/execute() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -39,9 +36,7 @@
 	return TRUE
 
 /datum/migration/mysql/hasTable(var/tableName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasTable() called tick#: [world.time]")
 	return hasResult("SHOW TABLES LIKE '[tableName]'")
 
 /datum/migration/mysql/hasColumn(var/tableName, var/columnName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasColumn() called tick#: [world.time]")
 	return hasResult("SHOW COLUMNS FROM [tableName] LIKE '[columnName]'")

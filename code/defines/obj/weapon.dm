@@ -267,7 +267,6 @@
 			return
 
 /obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/legcuffs/bolas/proc/throw_failed() called tick#: [world.time]")
 	//log_admin("Logged as [thrown_from]")
 	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
 		qdel(src) //destroy it, to stop infinite bolases
@@ -568,7 +567,6 @@
 					qdel(src)
 
 /obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/caution/proximity_sign/proc/dead_legs() called tick#: [world.time]")
 	var/datum/organ/external/l = H.organs_by_name["l_leg"]
 	var/datum/organ/external/r = H.organs_by_name["r_leg"]
 	if(l && !(l.status & ORGAN_DESTROYED))
@@ -641,7 +639,6 @@
 	item_state = "broom[wielded ? 1 : 0]"
 	force = wielded ? 5 : 3
 	attack_verb = wielded ? list("rammed into", "charged at") : list("bludgeoned", "whacked", "cleaned")
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\attack_verb = wielded ? list()  called tick#: [world.time]")
 	if(user)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()

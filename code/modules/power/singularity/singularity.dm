@@ -106,7 +106,6 @@
 	return
 
 /obj/machinery/singularity/proc/admin_investigate_setup()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/admin_investigate_setup() called tick#: [world.time]")
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 
@@ -116,7 +115,6 @@
 	investigation_log(I_SINGULO,"was created. [count ? "" : "<font color='red'>No containment fields were active.</font>"]")
 
 /obj/machinery/singularity/proc/dissipate()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/dissipate() called tick#: [world.time]")
 	if(!dissipate)
 		return
 
@@ -127,7 +125,6 @@
 		dissipate_track++
 
 /obj/machinery/singularity/proc/expand(var/force_size = 0, var/growing = 1)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/expand() called tick#: [world.time]")
 	if(current_size == 11) //If this is happening, this is an error
 		message_admins("expand() was called on a super singulo. This should not happen.")
 		return
@@ -252,7 +249,6 @@
 		return 0
 
 /obj/machinery/singularity/proc/check_energy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/check_energy() called tick#: [world.time]")
 	if(energy <= 0)
 		investigation_log(I_SINGULO, "collapsed.")
 		qdel(src)
@@ -315,7 +311,6 @@
  * Jump out whenever we've made a decision.
  */
 /obj/machinery/singularity/proc/canPull(const/atom/movable/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/canPull() called tick#: [world.time]")
 	if(A && !A.anchored)
 		if(A.canSingulothPull(src))
 			return 1
@@ -323,7 +318,6 @@
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/consume() called tick#: [world.time]")
 	var/gain = A.singularity_act(current_size,src)
 	src.energy += gain
 	/*if(istype(A, /obj/))
@@ -351,7 +345,6 @@
  * In general, it's last movement has a 3/4th chance of being the next
  */
 /obj/machinery/singularity/proc/move(var/force_move = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/move() called tick#: [world.time]")
 	if(!move_self)
 		return 0
 
@@ -384,7 +377,6 @@
 	return 0
 
 /obj/machinery/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/check_turfs_in() called tick#: [world.time]")
 	if(!direction)
 		return 0
 	var/steps = 0
@@ -439,7 +431,6 @@
 	return 1
 
 /obj/machinery/singularity/proc/can_move(const/turf/T)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/can_move() called tick#: [world.time]")
 	if(!isturf(T))
 		return 0
 
@@ -458,7 +449,6 @@
 	return 1
 
 /obj/machinery/singularity/proc/event()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/event() called tick#: [world.time]")
 	var/numb = pick(1, 2, 3, 4, 5, 6)
 
 	switch(numb)
@@ -476,7 +466,6 @@
 
 
 /obj/machinery/singularity/proc/toxmob()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/toxmob() called tick#: [world.time]")
 	var/toxrange = 10
 	var/toxdamage = 4
 	var/radiation = 15
@@ -495,7 +484,6 @@
 
 
 /obj/machinery/singularity/proc/mezzer()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/mezzer() called tick#: [world.time]")
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
 			continue
@@ -514,14 +502,12 @@
 				M.apply_effect(3, STUN)
 
 /obj/machinery/singularity/proc/emp_area()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/emp_area() called tick#: [world.time]")
 	if(current_size != 11)
 		empulse(src, 8, 10)
 	else
 		empulse(src, 12, 16)
 
 /obj/machinery/singularity/proc/smwave()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/smwave() called tick#: [world.time]")
 	for(var/mob/living/M in view(10, src.loc))
 		if(prob(67))
 			M.apply_effect(rand(energy), IRRADIATE)
@@ -534,13 +520,11 @@
 	return
 
 /obj/machinery/singularity/proc/pulse()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/pulse() called tick#: [world.time]")
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) //Better than using orange() every process.
 			R.receive_pulse(energy)
 
 /obj/machinery/singularity/proc/on_capture()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/on_capture() called tick#: [world.time]")
 	chained = 1
 	overlays = 0
 	move_self = 0
@@ -557,7 +541,6 @@
 			overlays += image('icons/effects/288x288.dmi',"chain_s9")
 
 /obj/machinery/singularity/proc/on_release()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/on_release() called tick#: [world.time]")
 	chained = 0
 	overlays = 0
 	move_self = 1

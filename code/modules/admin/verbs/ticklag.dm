@@ -2,7 +2,6 @@
 	set category = "Debug"
 	set name = "Set Ticklag"
 	set desc = "Sets a new tick lag. Recommend you don't mess with this too much! The standard value has been .55 for some time"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/ticklag() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG))	return
 
