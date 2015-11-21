@@ -66,6 +66,7 @@
 
 /obj/machinery/field
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/spark_cooldown = 0
 
 /obj/machinery/field/CanPass(mob/mover, turf/target, height=0)
 	if(isliving(mover)) // Don't let mobs through
@@ -113,8 +114,10 @@
 	return
 
 /obj/machinery/field/proc/bump_field(atom/movable/AM as mob|obj)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, AM.loc)
-	s.start()
+	if(spark_cooldown < world.time)
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, AM.loc)
+		s.start()
+		spark_cooldown = world.time + 30
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
