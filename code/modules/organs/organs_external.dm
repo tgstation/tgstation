@@ -180,7 +180,6 @@
 //Unwields twohanded weapons in right hand and drops any item in left hand
 /obj/item/organ/limb/arm/l_arm/Remove(special = 0)
 	if(owner.r_hand && istype(owner.r_hand, /obj/item/weapon/twohanded))
-		world << "Found [owner.r_hand] in other hand!"
 		var/obj/item/weapon/twohanded/TWOH = owner.r_hand
 		TWOH.unwield()
 	owner.drop_l_hand()
@@ -216,7 +215,6 @@
 //Pretty much a mirror of the other proc
 /obj/item/organ/limb/arm/r_arm/Remove(special = 0)
 	if(owner.l_hand && istype(owner.l_hand, /obj/item/weapon/twohanded))
-		world << "Found [owner.l_hand] in other hand!"
 		var/obj/item/weapon/twohanded/TWOH = owner.l_hand
 		TWOH.unwield()
 	owner.drop_r_hand()

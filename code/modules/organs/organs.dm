@@ -26,15 +26,11 @@
 	if(OR && !OR.exists())
 		if(OR.set_organitem(src))
 			for (var/i in suborgans)
-				world << "[i]"
-				world << "Adding [suborgans[i]]"
 				M.add_organ(suborgans[i])
 				//Second layer of recursion. Let's hope we won't need more!
 				if(isorgan(getsuborgan(i)))
 					var/obj/item/organ/OI = getsuborgan(i)
-					world << "[OI] the [OI.type]"
 					for(var/j in OI.suborgans)
-						world << "Adding [OI.suborgans[j]]"
 						M.add_organ(OI.suborgans[j])
 			on_insertion()
 			return 1
