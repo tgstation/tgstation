@@ -576,15 +576,9 @@ var/list/admin_verbs_hideable = list(
 	var/datum/admins/D = admin_datums[ckey]
 	var/rank = null
 	if(config.admin_legacy_system)
-		//load text from file
-		var/list/Lines = file2list("config/admins.txt")
-		for(var/line in Lines)
-			var/list/splitline = text2list(line, " = ")
-			if(lowertext(splitline[1]) == ckey)
-				if(splitline.len >= 2)
-					rank = ckeyEx(splitline[2])
-				break
-			continue
+		var/list/admintext = return_file_text("config/admins.txt")
+		var/datum/regex/results = regex_find(admintext, "([ckey])\\s*=\\s*(\\w+)$")
+		rank = results.str(3)
 	else
 		if(!dbcon.IsConnected())
 			message_admins("Warning, mysql database is not connected.")
