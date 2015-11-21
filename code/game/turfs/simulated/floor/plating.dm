@@ -195,28 +195,12 @@
 	var/tp_y = 0
 	var/tp_z = 0
 
-/turf/simulated/floor/plating/hole/New()
-	..()
-	spawn(1)
-		update_icon()
-
-/turf/simulated/floor/plating/hole/update_icon()
-	if(!..())
-		return 0
-	if(!broken && !burnt)
-		if(smooth)
-			smooth_icon(src)
-	else
-		make_plating()
-		if(smooth)
-			smooth_icon_neighbors(src)
-
 /turf/simulated/floor/plating/hole/Entered(atom/movable/H)
 	if(!istype(H))
 		return
 	if(istype(H, /obj))
 		var/obj/O = H
-		O.visible_message("[H] falls down \the [src]!")
+		O.visible_message("[O] falls down \the [src]!")
 		O.x = tp_x
 		O.y = tp_y
 		O.z = tp_z
@@ -229,3 +213,4 @@
 		M.z = tp_z
 		M.Weaken(6)
 		M.emote("scream")
+		M.adjustBruteLoss(20)
