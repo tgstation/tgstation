@@ -3,11 +3,14 @@
 	desc = "Wrapping paper designed to help goods safely navigate the mail system."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
+	singular_name = "paper sheet"
 	w_class = 2
 	amount = 24
+	max_amount = 24
+	//If it's null, it can't wrap that type.
 	var/smallpath = /obj/item/smallDelivery //We use this for items
-	var/bigpath = /obj/structure/bigDelivery //We use this for structures, e.g.: crates
-	var/manpath = null //We use this for people
+	var/bigpath = /obj/structure/bigDelivery //We use this for structures (crates, closets, recharge packs, etc.)
+	var/manpath = null //We use this for people.
 	var/human_wrap_speed = 100 //Handcuffs are 30
 
 	var/list/cannot_wrap = list(
@@ -28,9 +31,12 @@
 		/obj/structure/stackopacks
 		)
 
-/obj/item/stack/package_wrap/afterattack(var/obj/target as obj, mob/user as mob)
-	if(!istype(target))
+/obj/item/stack/package_wrap/afterattack(var/attacked, mob/user as mob)
+	if(ishuman(attacked))
+		try_wrap_human(attacked,user)
 		return
+	if(!istype(attacked,/obj)) return
+	var/obj/target = attacked
 	if(is_type_in_list(target, cannot_wrap))
 		return
 	if(target.anchored)
@@ -65,36 +71,30 @@
 			use(3)
 		else
 			user << "<span class='warning'>You need more paper!</span>"
-	else if(istype(target, /mob/living/carbon/human) && manpath)
-		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat || human_wrap_speed < 100) //Syndicate wrapping paper doesn't need them to be jacketed.
-			user << "<span class='warning'>[target] is moving around too much! Straight-jacket [target] first.</span>"
-			return
-		if(amount >= 2)
-			target.visible_message("<span class='danger'>[user] is trying to wrap up [target]!</span>")
-			if(do_after(user,target,human_wrap_speed))
-				var/obj/present = new manpath(get_turf(H))
-				if (H.client)
-					H.client.perspective = EYE_PERSPECTIVE
-					H.client.eye = present
-				H.loc = present
-				H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-				if(!iscarbon(user))
-					H.LAssailant = null
-				else
-					H.LAssailant = user
-				log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-				use(2)
-		else
-			user << "<span class='warning'>You need more paper!</span>"
 	else
-		user << "<span class='warning'>[target] won't go through the mail!</span>"
+		user << "<span class='warning'>[src] isn't useful for wrapping [target].</span>"
 	return
 
-/obj/item/stack/package_wrap/Destroy()
-	..()
-	new /obj/item/weapon/c_tube(get_turf(loc))
+/obj/item/stack/package_wrap/proc/try_wrap_human(var/mob/living/carbon/human/H, mob/user as mob)
+	if(!manpath) return
+	if(amount >= 2)
+		H.visible_message("<span class='danger'>[user] is trying to wrap up [H]!</span>")
+		if(do_after(user,H,human_wrap_speed))
+			var/obj/present = new manpath(get_turf(H))
+			if (H.client)
+				H.client.perspective = EYE_PERSPECTIVE
+				H.client.eye = present
+			H.loc = present
+			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
+			if(!iscarbon(user))
+				H.LAssailant = null
+			else
+				H.LAssailant = user
+			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
+			use(2)
+	else
+		user << "<span class='warning'>You need more paper!</span>"
 
 /obj/item/stack/package_wrap/gift //For more details, see gift_wrappaper.dm
 	name = "gift wrap"

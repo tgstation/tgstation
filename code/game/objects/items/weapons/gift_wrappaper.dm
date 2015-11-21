@@ -306,5 +306,9 @@
 		qdel(src)
 
 	else
-		user << "<span class='notice'>You need wirecutters for that.</span>"
+		user << "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>"
 		return	..()
+
+/obj/structure/strange_present/attack_hand(mob/user as mob)
+	user << "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>"
+	return
