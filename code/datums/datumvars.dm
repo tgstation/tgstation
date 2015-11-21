@@ -717,11 +717,11 @@ body
 			return
 
 		var/turf/T = get_turf(usr)
-		if(!T)
-			usr << "You cannot teleport something into nullspace. Well I mean technically you can but that's not what that option is for."
-			return
-
-		A.forceMove(T)
+		if(istype(A,/mob))
+			var/mob/M = A
+			M.teleport_to(T)
+		else
+			A.forceMove(T)
 		switch(teleport_here_pref)
 			if("Flashy")
 				if(flashy_level > 0)
@@ -738,21 +738,16 @@ body
 	else if(href_list["teleport_to"])
 		if(!check_rights(0))	return
 
-		var/atom/movable/user = usr
+		var/mob/user = usr
 		if(!istype(user))
-			user << "Only movable atoms can use this option. Wait a second, how can you even not be a movable atom anyway?"
+			return
 
 		var/atom/A = locate(href_list["teleport_to"])
 		if(!istype(A))
 			user << "This can only be done to instances of atoms."
 			return
 
-		var/turf/T = get_turf(A)
-		if(!T)
-			user << "You cannot teleport into nullspace. Well I mean technically you can but that's not what that option is for."
-			return
-
-		user.forceMove(T)
+		user.teleport_to(A)
 
 	else if(href_list["delete"])
 		if(!check_rights(0))	return
