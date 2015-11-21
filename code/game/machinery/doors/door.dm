@@ -375,16 +375,23 @@ var/list/all_doors = list()
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles()
+/obj/machinery/door/proc/update_nearby_tiles(var/turf/T)
 	if(!air_master)
 		return 0
 
-	for(var/turf in locs)
-		update_heat_protection(turf)
-		air_master.mark_for_update(turf)
+	if(!T)
+		T = get_turf(src)
+	update_heat_protection(T)
+	air_master.mark_for_update(T)
 
 	update_freelok_sight()
 	return 1
+
+/obj/machinery/door/forceMove(var/atom/A)
+	var/turf/T = loc
+	..()
+	update_nearby_tiles(T)
+	update_nearby_tiles()
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
 	if(istype(source))

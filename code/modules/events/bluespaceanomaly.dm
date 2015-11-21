@@ -67,7 +67,7 @@
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
 				if(istype(A, /obj/item/beacon)) continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored && istype(A, /obj/machinery)) continue
+				if(A.anchored && (istype(A, /obj/machinery) || istype(A,/obj/structure))) continue
 				if(istype(A, /obj/structure/disposalpipe )) continue
 				if(istype(A, /obj/structure/cable )) continue
 				if(istype(A, /atom/movable/lighting_overlay)) continue
