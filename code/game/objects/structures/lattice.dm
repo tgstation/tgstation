@@ -24,7 +24,6 @@
 	stored = new/obj/item/stack/rods(src)
 
 /obj/structure/lattice/blob_act()
-	qdel(src)
 	return
 
 /obj/structure/lattice/ex_act(severity, target)
