@@ -21,7 +21,7 @@
 /datum/game_mode/meteor/process()
 	if(nometeors) return
 
-	spawn() spawn_meteors(6, meteors_normal)
+	spawn() spawn_meteors(1, meteors_normal)
 
 
 /datum/game_mode/meteor/declare_completion()
