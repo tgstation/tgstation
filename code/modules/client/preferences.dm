@@ -1194,6 +1194,9 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				if("name")
 					be_random_name = !be_random_name
 
+				if("all")
+					be_random_body = !be_random_body
+
 				if("special_popup")
 					special_popup = !special_popup
 
