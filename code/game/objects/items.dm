@@ -291,11 +291,11 @@
 
 		switch(slot)
 			if(slot_l_hand)
-				if(H.l_hand)
+				if(H.l_hand || H.handcuffed)
 					return 0
 				return 1
 			if(slot_r_hand)
-				if(H.r_hand)
+				if(H.r_hand || H.handcuffed)
 					return 0
 				return 1
 			if(slot_wear_mask)
