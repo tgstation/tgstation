@@ -88,8 +88,8 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
-			changeling.geneticpoints += target.mind.changeling.geneticpoints
-			changeling.total_genetic_points += target.mind.changeling.geneticpoints
+			changeling.geneticpoints += target.mind.changeling.total_genetic_points
+			changeling.total_genetic_points += target.mind.changeling.total_genetic_points
 			target_is_changeling = TRUE
 
 			target.mind.changeling.stored_profiles.len = 1
@@ -168,8 +168,6 @@
 	user.mind.transfer_to(target)
 	if(ghost && ghost.mind)
 		ghost.mind.transfer_to(user)
-	else
-		user.key = ghost.key
 
 	user << "<span class='userdanger'>You feel an awful vertigo and are swept into another body!</span>"
 	user.Paralyse(2)

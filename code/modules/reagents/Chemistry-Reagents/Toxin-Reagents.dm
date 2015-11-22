@@ -666,6 +666,7 @@
 	if(prob(5) && !M.stat)
 		M << "<span class='userdanger'>[pick(fluff_messages)]</span>" //Spooky messages to remind them that they're dying
 	..()
+	toxpwr += 0.1 //Wasting toxin slowly becomes more powerful
 
 //ACID
 

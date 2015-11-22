@@ -20,7 +20,7 @@ var/list/sting_paths
 
 /obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
 	var/dat
-	dat +="<html><head><title>Changling Evolution Menu</title></head>"
+	dat +="<html><head><title>Changeling Evolution Menu</title></head>"
 
 	//javascript, the part that does most of the work~
 	dat += {"
