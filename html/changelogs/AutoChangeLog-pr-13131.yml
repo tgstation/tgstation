@@ -1,0 +1,6 @@
+author: octareenroon91
+delete-after: True
+changes: 
+  - rscadd: "Spilling oxygen or nitrogen will obtain a release of the corresponding atmospheric gas in the effected tile."
+  - rscadd: "Carbon Dioxide has been added as a reagent.  Recipe: 2:1 carbon:oxygen, heated to 777K."
+  - rscadd: "Spilling CO2 will produce CO2 gas."
