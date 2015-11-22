@@ -126,7 +126,7 @@
 	if(.)
 		return
 	if(isturf(A))
-		A.AltClick(src)
+		A.RobotAltClick(src)
 		return
 	A.RobotAltClick(src)
 	return
