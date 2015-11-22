@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Added superglue. It can be applied to any item to make it unable to be dropped. Undroppable items can't be put in machines, thrown or dropped. They can still be eaten or disassembled, however.
+  - rscadd: Added superglue. It can be applied to any item to make it unable to be dropped. Undroppable items can't be put in machines, thrown or dropped. However, they can still be eaten, disassembled or (in case of stacks) separated.
   - rscadd: Clown and mime traitors may purchase a bottle of superglue (one time use) for 3 telecrystals.
