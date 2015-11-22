@@ -145,7 +145,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	origin_tech = "materials=3"
 	perunit = 2000
 	melt_temperature = MELTPOINT_PLASTIC
-	sheettype = "plastic"
+//	sheettype = "plastic"
 	recyck_mat = MAT_PLASTIC
 
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
