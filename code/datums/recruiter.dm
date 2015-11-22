@@ -1,5 +1,6 @@
 // Recruitment controller.
 /datum/recruiter
+	var/atom/subject
 	var/list/currently_querying // Used to avoid asking the same ghost repeatedly.
 	var/searching = 0			// Are we currently looking for a ghost?
 
@@ -22,11 +23,14 @@
 	// Args: player = /mob/dead/observer or null
 	var/event/recruited = new()
 
+/datum/recruiter/New(var/atom/_subject)
+	subject=_subject
+
 /datum/recruiter/proc/recruiting_player(var/mob/dead/observer/O)
-	INVOKE_EVENT(player_volunteering, list("player"=O, "controls"="<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>"))
+	INVOKE_EVENT(player_volunteering, list("player"=O, "controls"="<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>"))
 
 /datum/recruiter/proc/nonrecruiting_player(var/mob/dead/observer/O)
-	INVOKE_EVENT(player_not_volunteering, list("player"=O, "controls"="<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>"))
+	INVOKE_EVENT(player_not_volunteering, list("player"=O, "controls"="<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>"))
 
 /datum/recruiter/proc/request_player()
 	currently_querying = list()
@@ -41,13 +45,13 @@
 
 		currently_querying |= O
 		recruiting_player(O)
-		//O << "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>"
+		//O << "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>"
 
 	for(var/mob/dead/observer/O in dead_mob_list - active_candidates)
 		if(!check_observer(O))
 			continue
 		nonrecruiting_player(O)
-		//O << "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>"
+		//O << "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>"
 
 	spawn(recruitment_timeout)
 		if(!currently_querying || currently_querying.len==0)

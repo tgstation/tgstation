@@ -878,7 +878,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				//if(!client)
 				//	A << "<span class='warning'>Target doesn't have a client.</span>"
 				//	return
-				loc = T
+				forceMove(T)
 			following = null
 
 	if(href_list["jumptoarenacood"])

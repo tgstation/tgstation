@@ -26,7 +26,7 @@
 	processing_objects.Add(src)
 
 	if(!recruiter)
-		recruiter = new()
+		recruiter = new(src)
 		recruiter.display_name = "borer"
 		recruiter.role = ROLE_BORER
 		recruiter.jobban_roles = list("pAI")
