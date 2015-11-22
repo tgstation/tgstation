@@ -8,16 +8,15 @@
 	amount = 24
 	max_amount = 24
 	//If it's null, it can't wrap that type.
-	var/smallpath = /obj/item/smallDelivery //We use this for items
-	var/bigpath = /obj/structure/bigDelivery //We use this for structures (crates, closets, recharge packs, etc.)
+	var/smallpath = /obj/item/delivery //We use this for items
+	var/bigpath = /obj/item/delivery/large //We use this for structures (crates, closets, recharge packs, etc.)
 	var/manpath = null //We use this for people.
 	var/human_wrap_speed = 100 //Handcuffs are 30
 
 	var/list/cannot_wrap = list(
 		/obj/structure/table,
 		/obj/structure/rack,
-		/obj/item/smallDelivery,
-		/obj/structure/bigDelivery,
+		/obj/item/delivery,
 		/obj/item/weapon/gift,
 		/obj/item/weapon/winter_gift,
 		/obj/item/weapon/evidencebag,
@@ -31,22 +30,18 @@
 		/obj/structure/stackopacks
 		)
 
-/obj/item/stack/package_wrap/afterattack(var/attacked, mob/user as mob)
-	if(ishuman(attacked))
-		try_wrap_human(attacked,user)
-		return
+/obj/item/stack/package_wrap/afterattack(var/attacked, mob/user as mob, var/proximity_flag)
+	if(ishuman(attacked)) return try_wrap_human(attacked,user)
 	if(!istype(attacked,/obj)) return
 	var/obj/target = attacked
-	if(is_type_in_list(target, cannot_wrap))
-		return
-	if(target.anchored)
-		return
-	if(target in user)
-		return
+	if(is_type_in_list(target, cannot_wrap)) return
+	if(target.anchored) return
+	if(target in user) return
+	if(!proximity_flag) return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
-	target.add_fingerprint(usr)
-	src.add_fingerprint(usr)
+	user.attack_log += "\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>"
+	target.add_fingerprint(user)
+	src.add_fingerprint(user)
 
 	if(istype(target, /obj/item) && smallpath)
 		if (amount >= 1)
@@ -67,16 +62,16 @@
 		if(amount >= 3)
 			var/obj/item/P = new bigpath(get_turf(target.loc),target)
 			target.forceMove(P)
-			P.add_fingerprint(usr)
+			P.add_fingerprint(user)
 			use(3)
 		else
 			user << "<span class='warning'>You need more paper!</span>"
 	else
 		user << "<span class='warning'>[src] isn't useful for wrapping [target].</span>"
-	return
+	return 1
 
 /obj/item/stack/package_wrap/proc/try_wrap_human(var/mob/living/carbon/human/H, mob/user as mob)
-	if(!manpath) return
+	if(!manpath) return 0
 	if(amount >= 2)
 		H.visible_message("<span class='danger'>[user] is trying to wrap up [H]!</span>")
 		if(do_after(user,H,human_wrap_speed))
@@ -84,7 +79,7 @@
 			if (H.client)
 				H.client.perspective = EYE_PERSPECTIVE
 				H.client.eye = present
-			H.loc = present
+			H.forceMove(present)
 			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 			if(!iscarbon(user))
@@ -93,8 +88,10 @@
 				H.LAssailant = user
 			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 			use(2)
+			return 1
 	else
 		user << "<span class='warning'>You need more paper!</span>"
+		return 0
 
 /obj/item/stack/package_wrap/gift //For more details, see gift_wrappaper.dm
 	name = "gift wrap"
@@ -104,61 +101,7 @@
 	bigpath = null
 	manpath = /obj/structure/strange_present
 
-/obj/structure/bigDelivery
-	desc = "A big wrapped package."
-	name = "large parcel"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "deliverycloset"
-	var/obj/wrapped = null
-	density = 1
-	var/sortTag
-	flags = FPRINT
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-/obj/structure/bigDelivery/New(turf/loc, var/obj/structure/target)
-	..(loc)
-	wrapped = target
-	if(istype(wrapped,/obj/structure/closet/crate)) icon_state = "deliverycrate"
-	else if(istype(wrapped,/obj/structure/vendomatpack)) icon_state = "deliverypack"
-	else if(istype(wrapped,/obj/structure/stackopacks)) icon_state = "deliverystack"
-
-/obj/structure/bigDelivery/attack_robot(mob/user)
-	if(!Adjacent(user))
-		return
-	attack_hand(user)
-
-/obj/structure/bigDelivery/attack_hand(mob/user as mob)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.forceMove(get_turf(src.loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
-	qdel(src)
-
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = W
-
-		if(src.sortTag != O.currTag)
-			var/tag = uppertext(O.destinations[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
-			sortTag = tag
-			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
-			overlays = 0
-			overlays += "deliverytag"
-			src.desc = "A big wrapped package. It has a label reading [tag]"
-
-	else if(istype(W, /obj/item/weapon/pen))
-		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
-		if (!Adjacent(user) || user.stat) return
-		if(!str || !length(str))
-			usr << "<span class='warning'>Invalid text.</span>"
-			return
-		for(var/mob/M in viewers())
-			M << "<span class='notice'>[user] labels [src] as [str].</span>"
-		src.name = "[src.name] ([str])" //needs updating
-
-/obj/item/smallDelivery
+/obj/item/delivery
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
@@ -167,22 +110,20 @@
 	var/obj/item/wrapped
 	flags = FPRINT
 
-/obj/item/smallDelivery/New(turf/loc, var/obj/item/target = null, var/size = 2)
-	..(loc)
+/obj/item/delivery/New(turf/loc, var/obj/item/target = null, var/size = 2)
+	..()
 	wrapped = target
 	icon_state = "deliverycrate[size]"
 
-/obj/item/smallDelivery/attack_self(mob/user as mob)
+/obj/item/delivery/attack_self(mob/user as mob)
 	if(wrapped)
-		wrapped.forceMove(user.loc)
 		if(ishuman(user))
 			user.put_in_hands(wrapped)
 		else
 			wrapped.forceMove(get_turf(src))
 	qdel(src)
-	return
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/delivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -196,12 +137,39 @@
 			src.desc = "A small wrapped package. It has a label reading [tag]"
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
-			usr << "<span class='warning'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text.</span>"
 			return
 		for(var/mob/M in viewers())
 			M << "<span class='notice'>[user] labels [src] as [str].</span>"
 		src.name = "[src.name] ([str])" //also needs updating
-	return
+
+/obj/item/delivery/large
+	desc = "A big wrapped package."
+	name = "large parcel"
+	icon_state = "deliverycloset"
+	density = 1
+	flags = FPRINT
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
+/obj/item/delivery/large/New(turf/loc, var/obj/structure/target)
+	..()
+	wrapped = target
+	if(istype(wrapped,/obj/structure/closet/crate)) icon_state = "deliverycrate"
+	else if(istype(wrapped,/obj/structure/vendomatpack)) icon_state = "deliverypack"
+	else if(istype(wrapped,/obj/structure/stackopacks)) icon_state = "deliverystack"
+
+/obj/item/delivery/large/attack_hand(mob/user as mob)
+	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+		wrapped.forceMove(get_turf(src.loc))
+		if(istype(wrapped, /obj/structure/closet))
+			var/obj/structure/closet/O = wrapped
+			O.welded = 0
+	qdel(src)
+
+/obj/item/delivery/large/attack_robot(mob/user)
+	if(!Adjacent(user))
+		return
+	attack_hand(user)

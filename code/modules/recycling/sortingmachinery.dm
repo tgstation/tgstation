@@ -175,11 +175,11 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	var/deliveryCheck = 0
 	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 												// travels through the pipes.
-	for(var/obj/structure/bigDelivery/O in src)
+	for(var/obj/item/delivery/large/O in src)
 		deliveryCheck = 1
 		if(O.sortTag == 0)
 			O.sortTag = "DISPOSALS"
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/delivery/O in src)
 		deliveryCheck = 1
 		if (O.sortTag == 0)
 			O.sortTag = "DISPOSALS"
@@ -504,12 +504,12 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	popup.open()
 
 /obj/machinery/sorting_machine/destination/sort(atom/movable/A)
-	if(istype(A, /obj/structure/bigDelivery))
-		var/obj/structure/bigDelivery/B = A
+	if(istype(A, /obj/item/delivery/large))
+		var/obj/item/delivery/large/B = A
 		return B.sortTag in sorting
 
-	if(istype(A, /obj/item/smallDelivery))
-		var/obj/item/smallDelivery/B = A
+	if(istype(A, /obj/item/delivery))
+		var/obj/item/delivery/B = A
 		return B.sortTag in sorting
 
 	return unwrapped

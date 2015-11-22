@@ -345,7 +345,7 @@
 			if(istype(G.gift, /obj/item/weapon/storage))
 				L += get_contents(G.gift)
 
-		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
+		for(var/obj/item/delivery/D in Storage.return_inv()) //Check for package wrapped items
 			L += D.wrapped
 			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
 				L += get_contents(D.wrapped)
@@ -365,7 +365,7 @@
 			if(istype(G.gift, /obj/item/weapon/storage))
 				L += get_contents(G.gift)
 
-		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
+		for(var/obj/item/delivery/D in src.contents) //Check for package wrapped items
 			L += D.wrapped
 			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
 				L += get_contents(D.wrapped)
@@ -875,16 +875,16 @@ Thanks.
 					SC.welded = 0
 					L.visible_message("<span class='danger'>[L] successfully breaks out of [SC]!</span>",
 									  "<span class='notice'>You successful break out!</span>")
-					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-						var/obj/structure/bigDelivery/BD = SC.loc
+					if(istype(SC.loc, /obj/item/delivery/large)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+						var/obj/item/delivery/large/BD = SC.loc
 						BD.attack_hand(usr)
 					SC.open()
 				else
 					C.welded = 0
 					L.visible_message("<span class='danger'>[L] successful breaks out of [C]!</span>",
 									  "<span class='notice'>You successfully break out!</span>")
-					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
-						var/obj/structure/bigDelivery/BD = C.loc
+					if(istype(C.loc, /obj/item/delivery/large)) //nullspace ect.. read the comment above
+						var/obj/item/delivery/large/BD = C.loc
 						BD.attack_hand(usr)
 					C.open()
 

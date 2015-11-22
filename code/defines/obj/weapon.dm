@@ -329,7 +329,7 @@
 
 /obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item))
-		if(istype(O, /obj/item/weapon/gift) || istype(O,/obj/item/smallDelivery))
+		if(istype(O, /obj/item/weapon/gift) || istype(O,/obj/item/delivery))
 			return
 		var/obj/item/I = O
 		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
