@@ -53,7 +53,7 @@
 
 	if (src.health <= 0)
 		visible_message("<span class='notice'>The [src] dissapates</span>")
-		del(src)
+		qdel(src)
 		return
 
 	opacity = 1
@@ -61,19 +61,18 @@
 
 	if(src.health <= 0)
 		visible_message("<span class='notice'>The [src] dissapates</span>")
-		del(src)
+		qdel(src)
 		return
 
 	opacity = 1
 	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <=0)
 		visible_message("<span class='notice'>The [src] dissapates</span>")
-		del(src)
+		qdel(src)
 		return
 	opacity = 1
 	spawn(20) if(src) opacity = 0
@@ -89,18 +88,17 @@
 		if(3.0)
 			if (prob(25))
 				qdel(src)
-	return
 
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
 		if(1)
-			del(src)
+			qdel(src)
 		if(2)
 			if(prob(50))
-				del(src)
+				qdel(src)
 
 /obj/machinery/shield/blob_act()
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/shield/hitby(AM as mob|obj)
@@ -122,15 +120,14 @@
 	//Handle the destruction of the shield
 	if (src.health <= 0)
 		visible_message("<span class='notice'>The [src] dissapates</span>")
-		del(src)
+		qdel(src)
 		return
 
 	//The shield becomes dense to absorb the blow.. purely asthetic.
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-	..()
-	return
+	return ..()
 
 
 
@@ -179,22 +176,19 @@
 	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		del(shield_tile)
+		qdel(shield_tile)
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
 		if(deployed_shields.len && prob(5))
-			del(pick(deployed_shields))
-
-	return
+			qdel(pick(deployed_shields))
 
 /obj/machinery/shieldgen/proc/checkhp()
 	if(health <= 30)
 		src.malfunction = 1
 	if(health <= 0)
-		del(src)
+		qdel(src)
 	update_icon()
-	return
 
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
@@ -209,7 +203,6 @@
 		if(3.0)
 			src.health -= 10
 			src.checkhp()
-	return
 
 /obj/machinery/shieldgen/emp_act(severity)
 	switch(severity)
@@ -226,7 +219,6 @@
 /obj/machinery/shieldgen/attack_ghost(mob/user)
 	if(isAdminGhost(user))
 		src.attack_hand(user)
-	return
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
@@ -249,14 +241,12 @@
 			src.shields_up()
 		else
 			user << "The [src] must first be secured to the floor."
-	return
 
 /obj/machinery/shieldgen/emag(mob/user)
 	if(!emagged)
 		malfunction = 1
 		update_icon()
 		return 1
-	return
 
 /obj/machinery/shieldgen/wrenchAnchor(mob/user)
 	if(locked)
@@ -300,7 +290,6 @@
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"
 	else
 		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
-	return
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
@@ -335,6 +324,8 @@
 		return 0
 	var/turf/T = src.loc
 
+	if(!T)
+		return
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/datum/powernet/PN
 	if(C)	PN = C.powernet		// find the powernet of the connected cable
@@ -474,7 +465,6 @@
 	if(..())
 		power()
 		return 1
-	return
 
 
 /obj/machinery/shieldwallgen/attack_ghost(mob/user)
@@ -497,22 +487,16 @@
 		visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
-	var/obj/machinery/shieldwall/F
-	var/obj/machinery/shieldwallgen/G
 	var/turf/T = src.loc
-	var/turf/T2 = src.loc
 
-	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
-		T = get_step(T2, NSEW)
-		T2 = T
-		if(locate(/obj/machinery/shieldwall) in T)
-			F = (locate(/obj/machinery/shieldwall) in T)
-			del(F)
+	for(var/dist = 0 to 8) // checks out to 8 tiles away for fields
+		T = get_step(T, NSEW)
+		for(var/obj/machinery/shieldwall/F in T)
+			qdel(F)
 
-		if(locate(/obj/machinery/shieldwallgen) in T)
-			G = (locate(/obj/machinery/shieldwallgen) in T)
+		for(var/obj/machinery/shieldwallgen/G in T)
 			if(!G.active)
-				break
+				return
 
 /obj/machinery/shieldwallgen/Destroy()
 	src.cleanup(1)
@@ -524,8 +508,6 @@
 /obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
 	storedpower -= Proj.damage
 	..()
-	return
-
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
@@ -560,18 +542,17 @@
 /obj/machinery/shieldwall/process()
 	if(needs_power)
 		if(isnull(gen_primary)||isnull(gen_secondary))
-			del(src)
+			qdel(src)
 			return
 
 		if(!(gen_primary.active)||!(gen_secondary.active))
-			del(src)
+			qdel(src)
 			return
-//
+
 		if(prob(50))
 			gen_primary.storedpower -= 10
 		else
 			gen_secondary.storedpower -=10
-
 
 /obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
 	if(needs_power)
@@ -582,7 +563,6 @@
 			G = gen_secondary
 		G.storedpower -= Proj.damage
 	..()
-	return
 
 
 /obj/machinery/shieldwall/ex_act(severity)
@@ -609,8 +589,6 @@
 				else
 					G = gen_secondary
 				G.storedpower -= 20
-	return
-
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
