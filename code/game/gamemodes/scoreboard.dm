@@ -157,12 +157,17 @@
 	*/
 
 	//Check station's power levels
-	for(var/obj/machinery/power/apc/A in power_machines)
-		if(A.z != map.zMainStation)
-			continue
-		for(var/obj/item/weapon/cell/C in A.contents)
-			if(C.percent() < 30)
-				score["powerloss"]++ //Enough to auto-cut equipment, so alarm
+	var/skip_power_loss = 0
+	for(var/datum/event/grid_check/check in events)
+		if(check.activeFor > check.startWhen && check.activeFor < check.endWhen)
+			skip_power_loss = 1
+	if(!skip_power_loss)
+		for(var/obj/machinery/power/apc/A in power_machines)
+			if(A.z != map.zMainStation)
+				continue
+			for(var/obj/item/weapon/cell/C in A.contents)
+				if(C.percent() < 30)
+					score["powerloss"]++ //Enough to auto-cut equipment, so alarm
 
 	var/roundlength = world.time/10 //Get a value in seconds
 	score["time"] = round(roundlength) //One point for every five seconds. One minute is 12 points, one hour 720 points
