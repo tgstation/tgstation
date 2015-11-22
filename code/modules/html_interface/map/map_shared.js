@@ -282,6 +282,8 @@ function setzoom(val){
 function changezlevels()
 {
 	var newZ = parseInt(Math.min(Math.max(prompt("View which Z-Level?", z), 1), 6));
+	if(newZ == z)
+		return
 	window.location.href = "byond://?src=" + hSrc + "&action=changez&value=" + newZ;
 }
 
