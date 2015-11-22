@@ -10,6 +10,10 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
+	var/icon_idle = "revenant_idle"
+	var/icon_reveal = "revenant_revealed"
+	var/icon_stun = "revenant_stun"
+	var/icon_drain = "revenant_draining"
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -101,7 +105,16 @@
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
-	icon_state = revealed ? "revenant_[notransform ? "[draining ? "draining" : "stun"]" : "revealed"]" : "revenant_idle"
+	if(revealed)
+		if(notransform)
+			if(draining)
+				icon_state = icon_drain
+			else
+				icon_state = icon_stun
+		else
+			icon_state = icon_reveal
+	else
+		icon_state = icon_idle
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -111,6 +124,9 @@
 
 /mob/living/simple_animal/revenant/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/simple_animal/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/simple_animal/revenant/adjustBruteLoss(amount)
 	if(!revealed)
