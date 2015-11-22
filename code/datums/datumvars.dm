@@ -854,14 +854,12 @@ body
 			if(H.dna.species.id == "human")
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
-					H << "You suddenly feel valid."
 					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 					H.dna.features["tail_human"] = "Cat"
 					H.dna.features["ears"] = "Cat"
 				else
 					usr << "Removed [H] from purrbation."
-					H << "You suddenly don't feel valid anymore."
 					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 					H.dna.features["tail_human"] = "None"
