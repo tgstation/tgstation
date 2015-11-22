@@ -161,6 +161,13 @@
 	if(!istype(target)) //Can only apply to items!
 		user << "<span class='warning'>That would be such a waste of glue.</span>"
 		return
+	else
+		if(istype(target, /obj/item/stack)) //The whole cant_drop thing is EXTREMELY fucky with stacks and can be bypassed easily
+			user << "<span class='warning'>There's not enough glue in \the [src] to cover the whole [target]!</span>"
+			return
+
+		if(target.abstract) //Can't glue TK grabs, grabs, offhands!
+			return
 
 	user << "<span class='info'>You gently apply the whole [src] to \the [target].</span>"
 	spent = 1

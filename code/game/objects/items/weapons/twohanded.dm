@@ -14,6 +14,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	name = "offhand"
+	abstract = 1
 	var/obj/item/wielding = null
 
 /obj/item/offhand/dropped(user)
