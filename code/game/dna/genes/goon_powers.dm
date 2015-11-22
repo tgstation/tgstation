@@ -142,7 +142,7 @@
 	charge_type = Sp_RECHARGE
 	charge_max = 600
 
-	spell_flags = Z2NOCAST
+	spell_flags = 0
 	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
