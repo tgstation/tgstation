@@ -12,6 +12,9 @@
 	var/can_charge = 1 //Can it be charged in a recharger?
 	ammo_x_offset = 2
 	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
+	var/selfcharge = 0
+	var/charge_tick = 0
+	var/charge_delay = 4
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -33,9 +36,29 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	SSobj.processing |= src
 	update_icon()
 	return
 
+/obj/item/weapon/gun/energy/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/weapon/gun/energy/process()
+	if(selfcharge)
+		charge_tick++
+		if(charge_tick < charge_delay)
+			return
+		charge_tick = 0
+		if(!power_supply)
+			return
+		power_supply.give(100)
+		update_icon()
+
+/obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
+	if(ammo_type.len > 1)
+		select_fire(user)
+		update_icon()
 
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
@@ -124,3 +147,11 @@
 		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
+
+/obj/item/weapon/gun/energy/proc/robocharge()
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//... to recharge the shot
