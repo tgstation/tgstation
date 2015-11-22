@@ -40,10 +40,10 @@
 	..()
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
+		var/obj/item/weapon/virusdish/D = I
 
 		if(!c.drop_item(D, src)) return 1
 
-		var/obj/item/weapon/virusdish/D = I
 		if(!D.analysed)
 			if(!dish)
 				dish = D

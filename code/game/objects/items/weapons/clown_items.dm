@@ -131,7 +131,7 @@
 #define GLUE_WEAROFF_TIME -1 //was 9000: 15 minutes, or 900 seconds
 
 /obj/item/weapon/glue
-	name = "superglue"
+	name = "bottle of superglue"
 	desc = "A small plastic bottle full of superglue."
 
 	icon = 'icons/obj/items.dmi'
@@ -144,7 +144,7 @@
 /obj/item/weapon/glue/examine(mob/user)
 	..()
 	if(Adjacent(user))
-		user.show_message("<span class='info'>The label reads: </span><span class='notice'>Instructions: 1) Apply all of the glue to an object 2) Apply object to human flesh.</span>", MESSAGE_SEE)
+		user.show_message("<span class='info'>The label reads:</span><br><span class='notice'>1) Apply glue to the surface of an object<br>2) Apply object to human flesh</span>", MESSAGE_SEE)
 
 /obj/item/weapon/glue/update_icon()
 	..()
@@ -177,7 +177,9 @@
 			target.canremove = initial(target.canremove)
 
 /obj/item/weapon/glue/infinite/afterattack()
-	spent = 0
 	..()
+
+	spent = 0
+	update_icon()
 
 #undef GLUE_WEAROFF_TIME
