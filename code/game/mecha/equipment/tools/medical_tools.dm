@@ -41,6 +41,8 @@
 		return
 	if(!istype(target))
 		return
+	if(target.abiotic())
+		occupant_message("<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 	if(target.locked_to)
 		occupant_message("[target] will not fit into the sleeper because they are buckled to [target.locked_to].")
 		return
@@ -55,7 +57,7 @@
 	chassis.visible_message("[chassis] starts putting [target] into the [src].")
 	var/C = chassis.loc
 	var/T = target.loc
-	if(do_after_cooldown(target))
+	if(do_after_cooldown(target,2) && chassis.Adjacent(target))
 		if(chassis.loc!=C || target.loc!=T)
 			return
 		if(occupant)
