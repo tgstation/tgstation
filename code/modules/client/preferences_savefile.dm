@@ -237,7 +237,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in roundstart_species))
+	if(config.mutant_races && species_id && (species_id in roundstart_species)&&!jobban_isbanned(src, "Race"))
 		var/newtype = roundstart_species[species_id]
 		pref_species = new newtype()
 	else

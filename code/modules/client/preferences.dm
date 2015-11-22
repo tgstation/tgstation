@@ -181,7 +181,10 @@ var/list/preferences_datums = list()
 			if(config.mutant_races)
 				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			else
-				dat += "<b>Species:</b> Human<BR>"
+				if(jobban_isbanned(user, "Race"))
+					dat += "<b>Species:</b> <a href='?_src_=prefs;jobbancheck=["Race"]'>BANNED</a>:Human<br>"
+				else
+					dat += "<b>Species:</b> Human<BR>"
 
 			dat += "<b>Blood Type:</b> [blood_type]<BR>"
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"

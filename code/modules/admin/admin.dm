@@ -47,6 +47,10 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
+	if(jobban_isbanned(M, "Race"))
+		body+= "<A href='?_src_=holder;jobban3=Race;jobban4=\ref[M]'><font color=red>RaceBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=Race;jobban4=\ref[M]'>RaceBan</A> | "
 	if(jobban_isbanned(M, "OOC"))
 		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
 	else
