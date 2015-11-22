@@ -147,7 +147,7 @@
 	if(!istype(to_drop)) //still nothing to drop?
 		return 0 //bail
 
-	if(to_drop.cant_drop && !force_drop)
+	if((to_drop.cant_drop > 0) && !force_drop)
 		return 0
 
 	if(!Target)

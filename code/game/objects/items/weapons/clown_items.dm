@@ -128,7 +128,7 @@
 	hitsound = 'sound/items/quack.ogg'
 	honk_delay = 10
 
-#define GLUE_WEAROFF_TIME -1 //was 9000: 15 minutes, or 900 seconds
+#define GLUE_WEAROFF_TIME -1 //was 9000: 15 minutes, or 900 seconds. Negative values = infinite glue
 
 /obj/item/weapon/glue
 	name = "bottle of superglue"
@@ -150,8 +150,8 @@
 	..()
 	icon_state = "glue[spent]"
 
-/obj/item/weapon/glue/afterattack(obj/item/target, mob/user, flag)
-	if(!flag)
+/obj/item/weapon/glue/afterattack(obj/item/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
 		return
 
 	if(spent)
@@ -162,22 +162,22 @@
 		user << "<span class='warning'>That would be such a waste of glue.</span>"
 		return
 
-	user << "<span class='info'>You gently apply the whole bottle of [src] to \the [target].</span>"
+	user << "<span class='info'>You gently apply the whole [src] to \the [target].</span>"
 	spent = 1
 	update_icon()
 	apply_glue(target)
 
 /obj/item/weapon/glue/proc/apply_glue(obj/item/target)
-	target.cant_drop = 1
-	target.canremove = 0
+	src = null
+
+	target.cant_drop++
 
 	if(GLUE_WEAROFF_TIME > 0)
 		spawn(GLUE_WEAROFF_TIME)
-			target.cant_drop = initial(target.cant_drop)
-			target.canremove = initial(target.canremove)
+			target.cant_drop--
 
 /obj/item/weapon/glue/infinite/afterattack()
-	..()
+	.=..()
 
 	spent = 0
 	update_icon()

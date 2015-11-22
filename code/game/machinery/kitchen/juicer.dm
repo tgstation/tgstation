@@ -40,19 +40,17 @@
 		if (beaker)
 			return 1
 		else
-			user.before_take_item(O)
-			O.loc = src
-			beaker = O
-			src.verbs += /obj/machinery/juicer/verb/detach
-			update_icon()
-			src.updateUsrDialog()
-			return 0
+			if(user.drop_item(O, src))
+				beaker = O
+				src.verbs += /obj/machinery/juicer/verb/detach
+				update_icon()
+				src.updateUsrDialog()
+				return 0
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
 		return 1
-	user.before_take_item(O)
-	O.loc = src
-	src.updateUsrDialog()
+	if(user.drop_item(O, src))
+		src.updateUsrDialog()
 	return 0
 
 /obj/machinery/juicer/attack_paw(mob/user as mob)

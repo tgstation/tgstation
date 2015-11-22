@@ -140,8 +140,8 @@
 	else
 		pronoun = "It is"
 	..(user, " [pronoun] a [size] item.")
-	if((loc == user) && cant_drop)
-		user << "<span class='danger'>It is stuck to your hands!!</span>"
+	if((cant_drop > 0) && ((src==user.l_hand) || (src==user.r_hand))) //Item can't be dropped, and is either in left or right hand!
+		user << "<span class='danger'>It's stuck to your hands!</span>"
 
 
 /obj/item/attack_ai(mob/user as mob)
@@ -262,6 +262,10 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
+	if(cant_drop) //Item can't be dropped
+		if(slot in list(slot_r_hand, slot_l_hand)) //Item was equipped in a hand slot
+			user << "<span class='notice'>\The [src] sticks to your hand!</span>"
+
 	return
 
 // called after an item is unequipped or stripped
@@ -282,7 +286,7 @@
 			M.show_message("You have to unwield \the [wielded.wielding] first.")
 		return 0
 
-	if(cant_drop)
+	if(cant_drop > 0)
 		M << "<span class='danger'>It's stuck to your hands!</span>"
 		return 0
 

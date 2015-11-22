@@ -213,7 +213,7 @@
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
 		return 0 //Storage item is full
-	if(usr && W.cant_drop)
+	if(usr && (W.cant_drop > 0))
 		if(!stop_messages)
 			usr << "<span class='notice'>You can't let go of \the [W]!</span>"
 		return 0 //Item is stuck to our hands

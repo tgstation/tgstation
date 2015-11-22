@@ -157,10 +157,9 @@
 				to_chat(user, "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>")
 				return 1
 
-		user.before_take_item(O)
-		O.loc = src
-		holdingitems += O
-		src.updateUsrDialog()
+		if(user.drop_item(O, src))
+			holdingitems += O
+			src.updateUsrDialog()
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (istype(O,/obj/item/stack) && O:amount>1)

@@ -364,7 +364,7 @@
 	if(!item) return //Grab processing has a chance of returning null
 
 	var/obj/item/I = item
-	if(I.cant_drop)
+	if(I.cant_drop > 0)
 		usr << "<span class='warning'>It's stuck to your hand!</span>"
 		return
 

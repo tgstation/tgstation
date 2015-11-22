@@ -1403,8 +1403,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.before_take_item(O)
-	O.loc = src
+	if(!user.drop_item(O, src))
+		user << "<span class='notice'>\The [O] is stuck to your hands!</span>"
+		return 1
+
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0
