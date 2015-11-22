@@ -156,9 +156,9 @@
 	New()
 		..()
 		for(var/i=0,i<3,i++)
-			new /obj/item/weapon/dnainjector/h2m(src)
+			new /obj/item/weapon/dnainjector/nofail/h2m(src)
 		for(var/i=0,i<3,i++)
-			new /obj/item/weapon/dnainjector/m2h(src)
+			new /obj/item/weapon/dnainjector/nofail/m2h(src)
 
 
 /obj/item/weapon/storage/box/blanks

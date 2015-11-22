@@ -125,4 +125,4 @@
 	if(C.mind)
 		C.mind.transfer_to(V)
 
-	del(C)
+	qdel(C)

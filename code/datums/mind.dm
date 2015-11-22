@@ -920,7 +920,7 @@
 							sleep(0) //because deleting of virus is doing throught spawn(0)
 					log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 					message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
-					var/obj/item/weapon/dnainjector/m2h/m2h = new
+					var/obj/item/weapon/dnainjector/nofail/m2h/m2h = new
 					var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 					src = null
 					m2h.inject(M)
