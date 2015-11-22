@@ -53,10 +53,9 @@
 				return
 
 /obj/structure/bed/blob_act()
-	if(prob(75))
-		if(buildstacktype)
-			new buildstacktype(loc, buildstackamount)
-		qdel(src)
+	if(buildstacktype)
+		new buildstacktype(loc, buildstackamount)
+	qdel(src)
 
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))

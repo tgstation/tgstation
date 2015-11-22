@@ -1,4 +1,4 @@
-#define CAMERA_UPGRADE_XRAY 1 
+#define CAMERA_UPGRADE_XRAY 1
 #define CAMERA_UPGRADE_EMP_PROOF 2
 #define CAMERA_UPGRADE_MOTION 4
 
@@ -105,10 +105,6 @@
 		return
 	else
 		..()
-	return
-
-/obj/machinery/camera/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(num = 7)

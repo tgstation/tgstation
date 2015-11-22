@@ -113,10 +113,8 @@
 			malfunction()
 
 /obj/machinery/vending/blob_act()
-	if(prob(75))
-		malfunction()
-	else
-		qdel(src)
+	malfunction()
+	..()
 
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0, start_empty = null)
