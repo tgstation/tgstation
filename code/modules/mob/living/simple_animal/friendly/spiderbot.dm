@@ -246,6 +246,9 @@
 
 	return
 
+/mob/living/simple_animal/spiderbot/verb_pickup()
+	return get_item()
+
 /mob/living/simple_animal/spiderbot/verb/get_item()
 	set name = "Pick up item"
 	set category = "Spiderbot"
