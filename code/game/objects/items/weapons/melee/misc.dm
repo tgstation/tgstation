@@ -211,3 +211,6 @@
 	shard.Consume()
 	T.ChangeTurf(/turf/space)
 	T.CalculateAdjacentTurfs()
+
+/obj/item/weapon/melee/supermatter_sword/add_blood()
+	return
