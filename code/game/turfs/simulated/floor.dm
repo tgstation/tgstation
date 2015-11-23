@@ -286,6 +286,7 @@ turf/simulated/floor/proc/update_icon()
 		broken = 1
 	else if(is_mineral_floor())
 		if(material=="diamond") return //diamond doesn't break
+		if(material=="plastic") return //you can't break legos
 		if(material=="phazon") //Phazon shatters
 			spawn(rand(2,10))
 				playsound(get_turf(src), "shatter", 70, 1)

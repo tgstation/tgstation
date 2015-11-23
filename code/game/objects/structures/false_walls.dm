@@ -344,9 +344,15 @@
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
-	desc = "A wall with plasma plating. This is definately a bad idea."
+	desc = "A wall with plasma plating. This is definitely a bad idea."
 	icon_state = ""
 	mineral = "plasma"
+
+/obj/structure/falsewall/plastic
+	name = "plastic wall"
+	desc = "A wall made of colorful plastic blocks attached together."
+	icon_state = ""
+	mineral = "plastic"
 
 //-----------wtf?-----------start
 /obj/structure/falsewall/clown

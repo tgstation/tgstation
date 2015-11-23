@@ -119,6 +119,20 @@
 	material = "bananium"
 	var/spam_flag = 0
 
+/obj/item/stack/tile/mineral/plastic
+	name = "plastic tile"
+	singular_name = "plastic floor tile"
+	desc = "A tile made of tiny plastic blocks."
+	icon_state = "tile_plastic"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 60
+
+	material = "plastic"
+
 /obj/item/stack/tile/mineral/phazon
 	name = "phazon tile"
 	singular_name = "phazon floor tile"
