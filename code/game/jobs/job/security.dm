@@ -215,7 +215,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		switch(department)
 			if("supply")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_cargo, access_mineral_storeroom)
+				dep_access = list(access_mailsorting, access_cargo, access_mining, access_mineral_storeroom)
 				destination = /area/security/checkpoint/supply
 				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/cargo
