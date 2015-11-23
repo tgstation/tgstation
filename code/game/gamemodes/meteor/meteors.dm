@@ -14,7 +14,7 @@
 	chosen_dir = pick(cardinal) //Pick a direction
 	max_meteor_size = max_size
 	//Generate a name for our wave
-	var/greek_alphabet = list("Alpha", "Beta", "Delta", "Epsilon", "Zeta", "Eta,", "Theta", "Iota", "Kappa", "Lambda", "Mu", \
+	var/greek_alphabet = list("Alpha", "Beta", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", \
 						 "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
 	var/wave_final_name = "[number > 25 ? "Major":"Minor"] Meteor [pick("Wave", "Cluster", "Group")] [pick(greek_alphabet)]-[rand(1, 999)]"
 	output_information(meteor_wave_delay, chosen_dir, max_size, number, wave_final_name)
@@ -72,21 +72,25 @@
 
 	do
 		switch(chosen_dir)
+
 			if(1) //NORTH
 				starty = world.maxy-(TRANSITIONEDGE + 1)
 				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
 				endy = TRANSITIONEDGE
 				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+
 			if(2) //SOUTH
 				starty = rand((TRANSITIONEDGE + 1),world.maxy - (TRANSITIONEDGE + 1))
 				startx = world.maxx-(TRANSITIONEDGE + 1)
 				endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
 				endx = TRANSITIONEDGE
+
 			if(4) //EAST
 				starty = (TRANSITIONEDGE + 1)
 				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
-				endy = world.maxy-TRANSITIONEDGE
+				endy = world.maxy - TRANSITIONEDGE
 				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+
 			if(8) //WEST
 				starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
 				startx = (TRANSITIONEDGE + 1)
@@ -98,6 +102,7 @@
 		max_i--
 		if(max_i <= 0)
 			return
+
 	while(!istype(pickedstart, /turf/space))
 
 	var/atom/movable/M
@@ -115,8 +120,6 @@
 				if(!max_meteor_size || max_meteor_size >= 1)
 					M = new /obj/effect/meteor/small(pickedstart)
 	if(M)
-		// This currently doesn't do dick.
-		//M.dest = pickedgoal
 		walk_towards(M, pickedgoal, 1)
 	return
 
@@ -145,7 +148,7 @@
 
 /obj/effect/meteor/Bump(atom/A)
 
-	explosion(get_turf(src), 2, 4, 6, 8, 0, 0, 0) //Medium meteor, medium boom
+	explosion(get_turf(src), 2, 4, 6, 8, 0, 1, 0) //Medium meteor, medium boom
 	qdel(src)
 
 /obj/effect/meteor/Move()
@@ -159,7 +162,7 @@
 
 /obj/effect/meteor/small/Bump(atom/A)
 
-	explosion(get_turf(src), -1, 1, 3, 4, 0, 0, 0) //Tiny meteor doesn't cause too much damage
+	explosion(get_turf(src), -1, 1, 3, 4, 0, 1, 0) //Tiny meteor doesn't cause too much damage
 	qdel(src)
 
 /obj/effect/meteor/big
@@ -168,7 +171,7 @@
 
 /obj/effect/meteor/big/Bump(atom/A)
 
-	explosion(get_turf(src), 4, 6, 8, 8, 0, 0, 1) //You have been visited by the nuclear meteor
+	explosion(get_turf(src), 4, 6, 8, 8, 0, 1, 0) //You have been visited by the nuclear meteor
 	qdel(src)
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
