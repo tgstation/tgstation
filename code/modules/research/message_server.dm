@@ -17,6 +17,11 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	if(param_photo)
 		photo = param_photo
 
+/datum/data_pda_msg/proc/get_photo_ref()
+	if(photo)
+		return "<a href='byond://?src=\ref[src];photo=1'>(Photo)</a>"
+	return ""
+
 /datum/data_pda_msg/Topic(href,href_list)
 	..()
 	if(href_list["photo"])

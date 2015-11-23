@@ -720,53 +720,88 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/send_to_all(mob/living/U = usr)
-	var/message = msg_input(U)
+/obj/item/device/pda/proc/send_message(mob/living/user = usr,list/obj/item/device/pda/targets)
+	var/message = msg_input(user)
 
+	if(!message || !targets.len)
+		return
+	
 	if(last_text && world.time < last_text + 5)
 		return
 
-	var/datum/data_pda_msg/msg_ref = null
-	for(var/obj/item/device/pda/P in get_viewable_pdas())
+	var/multiple = targets.len > 1
+
+	var/datum/data_pda_msg/last_sucessful_msg
+	for(var/obj/item/device/pda/P in targets)
 		if(P == src)
 			continue
-		var/temp_ref = create_message(U,P,message,skip_spam = 1)
-		if(temp_ref)
-			msg_ref = temp_ref
+		var/obj/machinery/message_server/MS = null
+		MS = can_send(P)
+		if(MS)
+			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
+			if(msg)
+				last_sucessful_msg = msg
+			if(!multiple)
+				show_to_sender(msg)
+			P.show_recieved_message(msg,src)
+			if(!multiple)
+				show_to_ghosts(msg)
+				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+		else
+			if(!multiple)
+				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
+				return
+	photo = null
+	
+	if(multiple)
+		show_to_sender(last_sucessful_msg,1)
+		show_to_ghosts(last_sucessful_msg,1)
+		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
 
-	var/photo_ref = msg_ref.photo ? "<a href='byond://?src=\ref[msg_ref];photo=1'>(Photo)</a>" : ""
+/obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
+	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+
+/obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
+	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+
+	if (!silent)
+		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+		audible_message("\icon[src] *[ttone]*", null, 3)
+	//Search for holder of the PDA.
+	var/mob/living/L = null
+	if(loc && isliving(loc))
+		L = loc
+	//Maybe they are a pAI!
+	else
+		L = get(src, /mob/living/silicon)
+
+	if(L)
+		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
+
+	overlays.Cut()
+	overlays += image('icons/obj/pda.dmi', "pda-r")
+
+/obj/item/device/pda/proc/show_to_ghosts(datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>ALL</span>: <span class='message'>[message][photo_ref]</span></span>")
+			M.show_message("<span class='game say'>PDA Message - <span class='name'>[msg.sender]</span> -> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
-	log_pda("[usr] (PDA: [src.name]) sent \"[message]\" to Everyone")
+/obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
+	if(!P || qdeleted(P) || P.toff)
+		return null
 
-/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, message = null , skip_spam = 0)
-	var/t = message
-	if(!t)
-		t = msg_input(U)
-
-	if (!t)
-		return
-
-	if (!skip_spam && last_text && world.time < last_text + 5)
-		return
-
-	if (!istype(P) || P.toff || qdeleted(P))
-		return
-
-	last_text = world.time
 	var/obj/machinery/message_server/useMS = null
 	if(message_servers)
 		for (var/obj/machinery/message_server/MS in message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
+				break
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || !U) //in case the PDA or mob gets destroyed during telecomms_process()
-		return
+	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+		return null
 
 	var/useTC = 0
 	if(signal)
@@ -775,47 +810,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/turf/pos = get_turf(P)
 			if(pos.z in signal.data["level"])
 				useTC = 2
-				//Let's make this barely readable
-				if(signal.data["compression"] > 0)
-					t = Gibberish(t, signal.data["compression"] + 50)
 
-	if(useMS && useTC) // only send the message if it's stable
-		if(useTC != 2) // Does our recipient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recipient."
-			return
-		var/msg_ref = useMS.send_pda_message("[P.owner]","[owner]","[t]",photo)
-		var/photo_ref = ""
-		if(photo)
-			photo_ref = "<a href='byond://?src=\ref[msg_ref];photo=1'>(Photo)</a>"
-		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t][photo_ref]<br>"
-		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t][photo_ref]<br>"
-		for(var/mob/M in player_list)
-			if(!skip_spam && isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t][photo_ref]</span></span>")
-
-		if (!P.silent)
-			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-			P.audible_message("\icon[P] *[P.ttone]*", null, 3)
-		//Search for holder of the PDA.
-		var/mob/living/L = null
-		if(P.loc && isliving(P.loc))
-			L = P.loc
-		//Maybe they are a pAI!
-		else
-			L = get(P, /mob/living/silicon)
-
-		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\"[photo_ref] (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-
-		if(!skip_spam)
-			log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		photo = null
-		P.overlays.Cut()
-		P.overlays += image('icons/obj/pda.dmi', "pda-r")
-		return msg_ref
+	if(useTC == 2)
+		return useMS
 	else
-		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
-		return null
+		return null 
+
+
+/obj/item/device/pda/proc/send_to_all(mob/living/U = usr)
+	send_message(U,get_viewable_pdas())
+
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
+	send_message(U,list(P))
 
 /obj/item/device/pda/AltClick()
 	..()
