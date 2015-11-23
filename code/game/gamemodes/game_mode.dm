@@ -284,9 +284,6 @@
 		if(sec.len < 3)
 			print_command_report(intercepttext,"Centcom Status Summary")
 			priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security level elevated. Critical security staff levels detected, additional supplies will be teleported to the brig.  ", 'sound/AI/intercept.ogg')
-			var/spawnloc = secequipment[1]
-			new /obj/structure/closet/secure_closet/lowsec(spawnloc)
-			secequipment -= spawnloc
 			set_security_level(SEC_LEVEL_BLUE)
 		else
 			print_command_report(intercepttext,"Centcom Status Summary")
