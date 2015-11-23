@@ -22,7 +22,7 @@
 	/datum/rcd_schematic/rsf/zippo,
 	/datum/rcd_schematic/rsf/camera,
 	/datum/rcd_schematic/rsf/film,
-	/datum/rcd_schematic/rsf/crayons,
+	/datum/rcd_schematic/rsf/cigar,
 	/datum/rcd_schematic/rsf/cigarettes,
 	/datum/rcd_schematic/rsf/fork
 	)
@@ -53,7 +53,7 @@
 	/datum/rcd_schematic/rsf/zippo,
 	/datum/rcd_schematic/rsf/camera,
 	/datum/rcd_schematic/rsf/film,
-	/datum/rcd_schematic/rsf/crayons,
+	/datum/rcd_schematic/rsf/cigar,
 	/datum/rcd_schematic/rsf/cigarettes,
 	/datum/rcd_schematic/rsf/fork
 	)
