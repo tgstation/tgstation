@@ -237,7 +237,7 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(typesof(/obj/item/weapon/coin) - /obj/item/weapon/coin)
+			var/cointype = pick(subtypesof(/obj/item/weapon/coin))
 			var/obj/item/weapon/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 

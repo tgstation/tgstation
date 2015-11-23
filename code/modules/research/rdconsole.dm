@@ -55,7 +55,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
-	for(var/T in typesof(/datum/tech) - /datum/tech)
+	for(var/T in subtypesof(/datum/tech))
 		check_tech = null
 		check_tech = new T()
 		if(check_tech.id == ID)
@@ -89,7 +89,7 @@ proc/CallMaterialName(ID)
 			if("clown")
 				return_name = "Bananium"
 	else
-		for(var/R in typesof(/datum/reagent) - /datum/reagent)
+		for(var/R in subtypesof(/datum/reagent))
 			temp_reagent = null
 			temp_reagent = new R()
 			if(temp_reagent.id == ID)

@@ -8,7 +8,7 @@ var/list/uplink_items = list()
 		// A keyed list, acting as categories, which are lists to the datum.
 
 		var/list/last = list()
-		for(var/item in typesof(/datum/uplink_item))
+		for(var/item in subtypesof(/datum/uplink_item))
 
 			var/datum/uplink_item/I = new item()
 			if(!I.item)

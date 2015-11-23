@@ -24,7 +24,7 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
 	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 
 	var/area/A = get_area(src)
@@ -75,7 +75,7 @@
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "<span class='warning'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
+				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
 				M.apply_effect(3, STUN)
 
 
@@ -122,12 +122,14 @@
 
 
 /obj/singularity/narsie/proc/acquire(mob/food)
-	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
+	if(food == target)
+		return
+	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
 	target = food
-	if(ishuman(target))
-		target << "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
+	if(isliving(target))
+		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
 	else
-		target << "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
+		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>"
 
 //Wizard narsie
 /obj/singularity/narsie/wizard

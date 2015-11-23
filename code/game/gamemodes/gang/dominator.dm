@@ -15,6 +15,7 @@
 /obj/machinery/dominator/New()
 	..()
 	SetLuminosity(2)
+	poi_list |= src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -109,6 +110,7 @@
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
 		set_broken()
+	poi_list.Remove(src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)

@@ -24,7 +24,7 @@ var/const/INJECT = 5 //injection
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
-		var/paths = typesof(/datum/reagent) - /datum/reagent
+		var/paths = subtypesof(/datum/reagent)
 		chemical_reagents_list = list()
 		for(var/path in paths)
 			var/datum/reagent/D = new path()
@@ -35,7 +35,7 @@ var/const/INJECT = 5 //injection
 		// For example:
 		// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
 
-		var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
+		var/paths = subtypesof(/datum/chemical_reaction)
 		chemical_reactions_list = list()
 
 		for(var/path in paths)

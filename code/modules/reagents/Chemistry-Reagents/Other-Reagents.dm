@@ -240,6 +240,12 @@
 	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
+/datum/reagent/medicine/omnizine/godblood
+	name = "Godblood"
+	id = "godblood"
+	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
+	overdose_threshold = 150
+
 /datum/reagent/lube
 	name = "Space Lube"
 	id = "lube"
@@ -359,8 +365,8 @@
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3)
 	sleep(30)
-	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman, /datum/species)
-	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman)
+	var/list/possible_morphs = subtypesof(/datum/species/) - blacklisted_species
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
