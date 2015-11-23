@@ -277,7 +277,8 @@ var/global/list/loopModeNames=list(
 	popup.open()
 
 /obj/machinery/media/jukebox/proc/ScreenMain(var/mob/user)
-	var/t = "<h1>Jukebox Interface</h1>"
+	var/t = list()
+	t += "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[allowed_modes[loop_mode]]</a><br />"
 	if(playlist == null)
@@ -319,6 +320,7 @@ var/global/list/loopModeNames=list(
 			if(can_change) t += "</A>"
 			t += "</td><td>[song.album]</td></tr>"
 		t += "</table>"
+	t = list2text(t)
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenPayment(var/mob/user)
