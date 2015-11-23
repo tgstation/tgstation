@@ -18,7 +18,7 @@
 
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
 	if(!ready && cast_check())
-		StartChargeup()
+			StartChargeup()
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/StartChargeup(mob/user = usr)
@@ -27,7 +27,7 @@
 	Snd = new/sound('sound/magic/lightning_chargeup.ogg',channel = 7)
 	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
 	user.overlays.Add(halo)
-	playsound(get_turf(usr), Snd, 50, 0)
+	playsound(get_turf(user), Snd, 50, 0)
 	if(do_mob(user,user,100,uninterruptible=1))
 		if(ready && cast_check(skipcharge=1))
 			choose_targets()
@@ -48,13 +48,13 @@
 	ready = 0
 	var/mob/living/carbon/target = targets[1]
 	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
-	playsound(get_turf(usr),Snd,50,0)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
+	playsound(get_turf(user),Snd,50,0)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
 	if(get_dist(user,target)>range)
 		user << "<span class='notice'>They are too far away!</span>"
 		Reset(user)
 		return
 
-	playsound(get_turf(usr), 'sound/magic/lightningbolt.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, 1)
 	user.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 
 	Bolt(user,target,30,5,user)
