@@ -19,7 +19,7 @@
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
-	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 12), ("gold" = 16), ("silver" = 16), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
+	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()
@@ -292,9 +292,9 @@
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
-		new /datum/data/mining_equipment("Resonator v2",        /obj/item/weapon/resonator/upgraded,                              2500),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  3500),
-		new /datum/data/mining_equipment("Accelerator v2",		/obj/item/weapon/gun/energy/kinetic_accelerator/upgraded,		  4000),
+		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2400),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  3000),
+		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  3500),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
 
@@ -538,6 +538,7 @@
 	desc = "An upgraded version of the resonator that can produce more fields at once."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
+	origin_tech = "magnets=3;combat=3"
 	fieldlimit = 5
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)

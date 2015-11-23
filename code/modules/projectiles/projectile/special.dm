@@ -118,12 +118,18 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	var/splash = 0
 
-/obj/item/projectile/kinetic/upgraded
-	damage = 12
+/obj/item/projectile/kinetic/super
+	damage = 11
 	range = 4
 
-obj/item/projectile/kinetic/New()
+/obj/item/projectile/kinetic/hyper
+	damage = 12
+	range = 5
+	splash = 1
+
+/obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
@@ -145,7 +151,11 @@ obj/item/projectile/kinetic/New()
 		var/turf/simulated/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-
+	if(src.splash >= 1)
+		for(var/turf/T in range(splash, target_turf))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
 
 
 /obj/item/effect/kinetic_blast
