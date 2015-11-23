@@ -136,9 +136,10 @@
 	w_class = 4
 	force = 0.001
 	armour_penetration = 1000
-	var/obj/item/add_blood = 0
+	var/can_get_bloody = 0
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
+
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
@@ -212,3 +213,5 @@
 	shard.Consume()
 	T.ChangeTurf(/turf/space)
 	T.CalculateAdjacentTurfs()
+/obj/item/weapon/melee/supermatter_sword/add_blood()
+		return
