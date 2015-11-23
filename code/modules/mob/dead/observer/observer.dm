@@ -868,16 +868,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		A << "Teleporting to [target]..."
 		//var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
 		if(target && target != usr)
-			spawn(0)
-				var/turf/pos = get_turf(A)
-				var/turf/T=get_turf(target)
-				if(T != pos)
-					if(!T)
-						return
-					if(!client)
-						return
-					loc = T
-				following = null
+			var/turf/pos = get_turf(A)
+			var/turf/T=get_turf(target)
+			if(T != pos)
+				if(!T)
+					A << "<span class='warning'>Target not in a turf.</span>"
+					return
+				// Why.
+				//if(!client)
+				//	A << "<span class='warning'>Target doesn't have a client.</span>"
+				//	return
+				forceMove(T)
+			following = null
 
 	if(href_list["jumptoarenacood"])
 		var/datum/bomberman_arena/targetarena = locate(href_list["targetarena"])
