@@ -88,6 +88,7 @@
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
+		I.imp_in = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	H.monkeyizing = 0
 	del(M)
@@ -171,7 +172,13 @@
 	O.stat = M.stat
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
-		I.implanted = O
+		I.implanted = 1
+		I.imp_in = O
+		if(!I.part) //implanted as a monkey, won't have one.
+			I.part = /datum/organ/external/chest
+		for (var/datum/organ/external/affected in O.organs)
+			if(!istype(affected, I.part)) continue
+			affected.implants += I
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	Mo.monkeyizing = 0
 	del(M)
