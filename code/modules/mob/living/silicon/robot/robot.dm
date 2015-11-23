@@ -125,7 +125,7 @@
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	toner = 40
+	toner = tonermax
 	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -573,7 +573,7 @@
 		else
 			if(!user.drop_item())
 				return
-			toner = 40
+			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
