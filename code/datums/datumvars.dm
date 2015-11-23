@@ -31,7 +31,7 @@
 
 
 	var/title = ""
-	var/body = ""
+	var/body = list()
 
 	if(!D)	return
 	if(istype(D, /atom))
@@ -340,6 +340,7 @@
 		body += debug_variable(V, D.vars[V], 0, D)
 
 	body += "</ol>"
+	body = list2text(body)
 
 	var/html = "<html><head>"
 	if (title)
