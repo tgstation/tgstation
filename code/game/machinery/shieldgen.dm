@@ -154,6 +154,7 @@
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
+		deployed_shields -= shield_tile
 		qdel(shield_tile)
 	..()
 
@@ -176,6 +177,7 @@
 	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
+		deployed_shields -= shield_tile
 		qdel(shield_tile)
 
 /obj/machinery/shieldgen/process()
@@ -503,6 +505,7 @@
 	src.cleanup(2)
 	src.cleanup(4)
 	src.cleanup(8)
+	attached = null
 	..()
 
 /obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
@@ -511,22 +514,18 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldwall"
-		anchored = 1
-		density = 1
-		unacidable = 1
-		luminosity = 3
-		var/needs_power = 0
-		var/active = 1
-//		var/power = 10
-		var/delay = 5
-		var/last_active
-		var/mob/U
-		var/obj/machinery/shieldwallgen/gen_primary
-		var/obj/machinery/shieldwallgen/gen_secondary
+	name = "Shield"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldwall"
+	anchored = 1
+	density = 1
+	unacidable = 1
+	luminosity = 3
+	var/needs_power = 0
+	var/active = 1
+	var/obj/machinery/shieldwallgen/gen_primary
+	var/obj/machinery/shieldwallgen/gen_secondary
 
 /obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
 	..()
@@ -534,6 +533,11 @@
 	src.gen_secondary = B
 	if(A && B)
 		needs_power = 1
+
+/obj/machinery/shieldwall/Destroy()
+	..()
+	gen_primary = null
+	gen_secondary = null
 
 /obj/machinery/shieldwall/attack_hand(mob/user as mob)
 	return
