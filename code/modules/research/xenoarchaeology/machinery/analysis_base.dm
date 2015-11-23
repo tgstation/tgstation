@@ -21,6 +21,8 @@
 	idle_power_usage = 20 //watts
 	active_power_usage = 300 //Because  I need to make up numbers~
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+
 	var/obj/item/weapon/reagent_containers/glass/held_container
 	var/obj/item/weapon/tank/fuel_container
 	var/target_scan_ticks = 30
