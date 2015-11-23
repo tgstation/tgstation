@@ -77,10 +77,9 @@
 	spawn_type	= /obj/item/device/camera_film
 	energy_cost	= 2
 
-/datum/rcd_schematic/rsf/crayons
-	name		= "Crayons"
-	spawn_type	= /obj/item/weapon/storage/fancy/crayons
-	energy_cost = 3
+/datum/rcd_schematic/rsf/cigar
+	name		= "Cigar"
+	spawn_type	= /obj/item/clothing/mask/cigarette/cigar
 
 /datum/rcd_schematic/rsf/cigarettes
 	name		= "Cigarette Packet"
