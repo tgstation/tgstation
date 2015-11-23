@@ -350,35 +350,17 @@
 	limit = 3
 	category = "Assistance"
 
-/datum/spellbook_entry/item/super_matter
-	name = "Supermatter Sword"
-	desc = "Buying this is an incredibly bad idea. The radiation will kill you within minutes. Please consider other options."
-	item_path = /obj/item/weapon/melee/supermatter_sword
-	log_name = "SX"
-	category = "Weapons"
-	cost = 6
-
-/datum/spellbook_entry/item/veil_render
-	name = "Veil Render"
-	desc = "A sword that can cut through reality itself, leading to mass destruction. Remember to run after you use it!"
-	item_path = /obj/item/weapon/veilrender
-	log_name = "VR"
-	category = "Weapons"
-	limit = 2
-
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/weapon/twohanded/mjollnir
 	log_name = "MJ"
-	category = "Weapons"
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
-	category = "Weapons"
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
