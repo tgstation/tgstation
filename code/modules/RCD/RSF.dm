@@ -16,7 +16,7 @@
 	/datum/rcd_schematic/rsf/candle,
 	/datum/rcd_schematic/rsf/dice,
 	/datum/rcd_schematic/rsf/cards,
-	/datum/rcd_schematic/rsf/cardboard
+	/datum/rcd_schematic/rsf/mug
 	)
 /obj/item/device/rcd/matter/rsf/attack_self(var/mob/living/user)
 	if(!selected || user.shown_schematics_background || !selected.show(user))
@@ -37,7 +37,7 @@
 	/datum/rcd_schematic/rsf/candle,
 	/datum/rcd_schematic/rsf/dice,
 	/datum/rcd_schematic/rsf/cards,
-	/datum/rcd_schematic/rsf/cardboard
+	/datum/rcd_schematic/rsf/mug
 	)
 	//datum/rcd_schematic/rsf/dosh,
 /obj/item/device/rcd/borg/rsf/attack_self(var/mob/living/user)
