@@ -102,6 +102,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(cast_delay && !spell_do_after(user, cast_delay))
 		return
 	var/list/targets = choose_targets(user)
+	if(!cast_check(skipcharge, user))
+		return //Prevent queueing of spells by opening several choose target windows.
 	if(targets && targets.len)
 		invocation(user, targets)
 		take_charge(user, skipcharge)
