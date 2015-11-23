@@ -70,6 +70,7 @@ var/global/list/bombermangear = list()
 /obj/item/weapon/bomberman/Destroy()
 	..()
 	bombermangear -= src
+	arena = null
 
 /obj/item/weapon/bomberman/attack_self(mob/user)
 	var/turf/T = get_turf(src)
@@ -280,7 +281,7 @@ var/global/list/bombermangear = list()
 		step(src, flame_dir)
 		T2 = get_turf(src)
 		if(T1 == T2)
-			del(src)
+			qdel(src)
 			return
 	else
 		T2 = T1
@@ -764,6 +765,19 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		S.icon = P
 		planners += P
 
+/datum/bomberman_arena/Destroy()
+	..()
+	arena = null
+	under = null
+	center = null
+	planners = null
+	cameras = null
+	spawns = null
+	turfs = null
+	swalls = null
+	gladiators = null
+	tools = null
+
 /datum/bomberman_arena/proc/open(var/size,mob/user)
 	var/x = 1
 	var/y = 1
@@ -1035,7 +1049,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		gladiators += M
 
 		if(S.player_mob)
-			del(S.player_mob)
+			qdel(S.player_mob)
 
 		S.player_mob = M
 
@@ -1049,7 +1063,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 			M << "<span class='danger'>Not enough players. Round canceled.</span>"
 
 		for(var/mob/M in gladiators)
-			del(M)
+			qdel(M)
 
 		gladiators = list()
 		for (var/datum/bomberman_spawn/S in spawns)
@@ -1133,7 +1147,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 	for(var/mob/living/M in gladiators)
 		if(M)
-			del(M)	//qdel doesn't work nicely with mobs
+			qdel(M)	//qdel doesn't work nicely with mobs
 	gladiators = list()
 
 	for(var/obj/structure/softwall/W in swalls)
@@ -1217,7 +1231,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 	for(var/mob/living/M in gladiators)
 		if(M)
-			del(M)	//qdel doesn't work nicely with mobs
+			qdel(M)	//qdel doesn't work nicely with mobs
 	gladiators = list()
 
 	for(var/obj/item/weapon/organ/O in arena)//gibs
@@ -1362,6 +1376,10 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 	..()
 	arena = a
 
+/obj/structure/planner/Destroy()
+	..()
+	arena = null
+
 /obj/structure/planner/ex_act(severity)
 	return
 
@@ -1380,6 +1398,10 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 	..()
 	arena = a
 	spawnpoint = bs
+
+/obj/structure/planner/spawnpoint/Destroy()
+	..()
+	spawnpoint = null
 
 /obj/structure/planner/spawnpoint/attack_ghost(mob/user)
 	if(arena.status != ARENA_AVAILABLE)	return
