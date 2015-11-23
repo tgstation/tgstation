@@ -18,7 +18,7 @@
 
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
 	if(!ready && cast_check())
-			StartChargeup()
+		StartChargeup()
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/StartChargeup(mob/user = usr)
