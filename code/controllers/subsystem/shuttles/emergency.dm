@@ -145,7 +145,6 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
-
 	dwidth = 1
 	width = 3
 	height = 4
@@ -182,9 +181,56 @@
 	admin_controlled = 0
 	icon_state = "dorm_emag"
 
+/obj/docking_port/stationary/random
+	name = "escape pod"
+	id = "pod"
+	dwidth = 1
+	width = 3
+	height = 4
+
 /obj/docking_port/stationary/random/initialize()
 	..()
 	var/target_area = /area/mine/unexplored
 	var/turfs = get_area_turfs(target_area)
 	var/T=pick(turfs)
 	src.loc = T
+
+//Pod suits/pickaxes
+
+
+/obj/item/clothing/head/helmet/space/orange
+	name = "emergency space helmet"
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+
+/obj/item/clothing/suit/space/orange
+	name = "emergency space suit"
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+	slowdown = 3
+
+/obj/item/weapon/pickaxe/emergency
+	name = "emergency disembarkation tool"
+	desc = "For extracting yourself from rough landings."
+
+/obj/item/weapon/storage/secure/safe/pod
+	name = "emergency space suits"
+
+/obj/item/weapon/storage/secure/safe/pod/New()
+	..()
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+
+/obj/item/weapon/storage/secure/safe/pod/attack_hand(mob/user)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		return attack_self(user)
+	else
+		user << "The storage unit will only unlock during a Red of Delta security alert."
