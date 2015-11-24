@@ -213,10 +213,15 @@
 	name = "emergency disembarkation tool"
 	desc = "For extracting yourself from rough landings."
 
-/obj/item/weapon/storage/secure/safe/pod
+/obj/item/weapon/storage/pod
 	name = "emergency space suits"
+	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
+	anchored = 1
+	density = 0
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "safe"
 
-/obj/item/weapon/storage/secure/safe/pod/New()
+/obj/item/weapon/storage/pod/New()
 	..()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
@@ -229,8 +234,14 @@
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 
-/obj/item/weapon/storage/secure/safe/pod/attack_hand(mob/user)
+/obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
+	return
+
+/obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
-		return attack_self(user)
+		return ..()
 	else
-		user << "The storage unit will only unlock during a Red of Delta security alert."
+		usr << "The storage unit will only unlock during a Red or Delta security alert."
+
+/obj/item/weapon/storage/pod/attack_hand(mob/user)
+	return
