@@ -54,6 +54,15 @@
 	mineral = "sandstone"
 	explosion_block = 0
 
+/turf/simulated/wall/mineral/plastic
+	name = "plastic wall"
+	desc = "A wall made of colorful plastic blocks attached together."
+	icon_state = "plastic0"
+	walltype = "plastic"
+	mineral = "plastic"
+	opacity = 0
+	explosion_block = 0
+
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."

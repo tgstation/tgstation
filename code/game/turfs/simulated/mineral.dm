@@ -90,6 +90,20 @@
 	floor_tile = getFromPool(/obj/item/stack/tile/mineral/uranium, null)
 	..()
 
+//PLASTIC
+
+/turf/simulated/floor/mineral/plastic
+	name = "plastic floor"
+	icon_state = "plastic"
+	floor_tile = /obj/item/stack/tile/mineral/plastic
+
+/turf/simulated/floor/mineral/plastic/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/mineral/plastic, null)
+	..()
+
 //PHAZON
 
 /turf/simulated/floor/mineral/phazon
