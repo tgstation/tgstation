@@ -3,7 +3,7 @@
 		Power:
 	</div>
 	<div class="itemContent">
-		{{:~link(on? 'On' : 'Off', null, {'power' : 1})}}
+		{{:helper.link(data.on? 'On' : 'Off', null, {'power' : 1})}}
 	</div>
 </div>
 <div class="item">
@@ -12,40 +12,40 @@
 	</div>
 	<div class="itemContent">
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('MAX', null, {'set_press' : 'max'}, null)}}
-			{{:~link('SET', null, {'set_press' : 'set'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(pressure_set/100)}} kPa&nbsp;</div>
+			{{:helper.link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:helper.link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.pressure_set/100)}} kPa&nbsp;</div>
 		</div>
 	</div>
 </div>
 <h4>Filter Type</h4>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Plasma', null, {'filterset' :  0}, (filter_type ==  0)? 'selected' : null)}}
+		{{:helper.link('Plasma', null, {'filterset' :  0}, (data.filter_type ==  0)? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Oxygen', null, {'filterset' :  1}, (filter_type ==  1)? 'selected' : null)}}
+		{{:helper.link('Oxygen', null, {'filterset' :  1}, (data.filter_type ==  1)? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Nitrogen', null, {'filterset' :  2}, (filter_type ==  2)? 'selected' : null)}}
+		{{:helper.link('Nitrogen', null, {'filterset' :  2}, (data.filter_type ==  2)? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Carbon Dioxide', null, {'filterset' :  3}, (filter_type ==  3)? 'selected' : null)}}
+		{{:helper.link('Carbon Dioxide', null, {'filterset' :  3}, (data.filter_type ==  3)? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Nitrous Oxide', null, {'filterset' :  4}, (filter_type ==  4)? 'selected' : null)}}
+		{{:helper.link('Nitrous Oxide', null, {'filterset' :  4}, (data.filter_type ==  4)? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div style="clear: both; padding-top: 4px;">
-		{{:~link('Nothing', null, {'filterset' :  -1}, (filter_type ==  -1)? 'selected' : null)}}
+		{{:helper.link('Nothing', null, {'filterset' :  -1}, (data.filter_type ==  -1)? 'selected' : null)}}
 	</div>
 </div>

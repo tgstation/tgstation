@@ -33,14 +33,22 @@
   * @param user /mob The mob who is interacting with this ui
   * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
   * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
+  * @param force_open boolean Force the UI to (re)open, even if it's already open
   *
   * @return nothing
   */
-/atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/atom/movable/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/nano_ui/master_ui = null, var/datum/topic_state/state = default_state)
 	return
 
+ /**
+  * Used to get data to send to the Nano UI.
+  *
+  * @param user /mob The mob who is interacting with this ui
+  *
+  * @return list
+  */
 /atom/movable/proc/get_ui_data(mob/user)
 	return list()
 
-// Used by the Nano UI SubSystem (/datum/subsystem/nano) to track UIs opened by this mob
+// Used by the Nano UI Manager (/datum/nanomanager) to track UIs opened by this mob
 /mob/var/list/open_uis = list()

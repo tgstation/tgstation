@@ -795,6 +795,7 @@ var/list/ai_list = list()
 
 	if(stat == 2)
 		return //won't work if dead
+
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)

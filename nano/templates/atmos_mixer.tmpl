@@ -3,7 +3,7 @@
 		Power:
 	</div>
 	<div class="itemContent">
-		{{:~link(on? 'On' : 'Off', null, {'power' : 1})}}
+		{{:helper.link(data.on? 'On' : 'Off', null, {'power' : 1})}}
 	</div>
 </div>
 
@@ -13,9 +13,9 @@
 	</div>
 	<div class="itemContent">
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('MAX', null, {'set_press' : 'max'}, null)}}
-			{{:~link('SET', null, {'set_press' : 'set'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(pressure_set/100)}} kPa&nbsp;</div>
+			{{:helper.link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:helper.link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.pressure_set/100)}} kPa&nbsp;</div>
 		</div>
 	</div>
 </div>
@@ -26,11 +26,11 @@
 	</div>
 	<div class="itemContent">
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('-', null, {'node1_c' : '-0.1'}, null)}}
-			{{:~link('-', null, {'node1_c' : '-0.01'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:node1_concentration}} %&nbsp;</div>
-			{{:~link('+', null, {'node1_c' : '0.01'}, null)}}
-			{{:~link('+', null, {'node1_c' : '0.1'}, null)}}
+			{{:helper.link('-', null, {'node1_c' : '-0.1'}, null)}}
+			{{:helper.link('-', null, {'node1_c' : '-0.01'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.node1_concentration}} %&nbsp;</div>
+			{{:helper.link('+', null, {'node1_c' : '0.01'}, null)}}
+			{{:helper.link('+', null, {'node1_c' : '0.1'}, null)}}
 		</div>
 	</div>
 </div>
@@ -41,11 +41,11 @@
 	</div>
 	<div class="itemContent">
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('-', null, {'node2_c' : '-0.1'}, null)}}
-			{{:~link('-', null, {'node2_c' : '-0.01'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:node2_concentration}} %&nbsp;</div>
-			{{:~link('+', null, {'node2_c' : '0.01'}, null)}}
-			{{:~link('+', null, {'node2_c' : '0.1'}, null)}}
+			{{:helper.link('-', null, {'node2_c' : '-0.1'}, null)}}
+			{{:helper.link('-', null, {'node2_c' : '-0.01'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.node2_concentration}} %&nbsp;</div>
+			{{:helper.link('+', null, {'node2_c' : '0.01'}, null)}}
+			{{:helper.link('+', null, {'node2_c' : '0.1'}, null)}}
 		</div>
 	</div>
 </div>
