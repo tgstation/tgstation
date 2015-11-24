@@ -29,6 +29,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
+	holder_type = /obj/item/weapon/holder/cat
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -39,6 +40,16 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
+
+/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M as mob)
+	if(M.a_intent == "grab")
+		if(!istype(M) || !Adjacent(M))
+			return ..()
+		M << "<span class='notice'>You pick [src] up.</span>"
+		get_scooped(M)
+		return
+	else
+		return ..()
 
 /mob/living/simple_animal/pet/cat/Life()
 	//MICE!

@@ -37,6 +37,7 @@
 	voice_name = "synthesized chirp"
 	languages = DRONE
 	mob_size = MOB_SIZE_SMALL
+	holder_type = /obj/item/weapon/holder/drone
 	has_unlimited_silicon_privilege = 1
 	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) // 0 to receive that damage type, 1 to ignore
 	staticOverlays = list()
