@@ -19,7 +19,10 @@
 
 
 /obj/effect/blob/New(loc)
-	blobs += src
+	var/area/Ablob = loc
+	if (Ablob.blob_legit) //Is the area Legit for blobs?
+		blobs_legit += src
+	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
@@ -31,7 +34,10 @@
 	return
 
 /obj/effect/blob/Destroy()
-	blobs -= src
+	var/area/Ablob = loc
+	if (Ablob.blob_legit) //Only remove for blobs in Legit places, else they didn't add points to begin with.
+		blobs_legit -= src
+	blobs -= src //It's still removed from the normal list
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 	return ..()

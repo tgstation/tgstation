@@ -97,6 +97,7 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	blob_legit = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/nearstation
 	icon_state = "space_near"
@@ -164,6 +165,7 @@ var/list/teleportlocs = list()
 	icon_state = "centcom"
 	requires_power = 0
 	has_gravity = 1
+	blob_legit = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 
 /area/centcom/control
 	name = "Centcom Docks"
@@ -190,6 +192,7 @@ var/list/teleportlocs = list()
 	icon_state = "syndie-ship"
 	requires_power = 0
 	has_gravity = 1
+	blob_legit = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -206,6 +209,7 @@ var/list/teleportlocs = list()
 	icon_state = "asteroid"
 	requires_power = 0
 	has_gravity = 1
+	blob_legit = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -1011,6 +1015,7 @@ var/list/teleportlocs = list()
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = 1
+	blob_legit = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
 	name = "DJ Station Solars"
@@ -1022,6 +1027,7 @@ var/list/teleportlocs = list()
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
+	blob_legit = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
