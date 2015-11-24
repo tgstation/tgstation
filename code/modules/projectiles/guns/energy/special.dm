@@ -148,7 +148,7 @@
 	icon_state = "kineticgun_u"
 	item_state = "kineticgun_u"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
-	overheat_time = 12
+	overheat_time = 14
 	origin_tech = "combat=3;powerstorage=2"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
@@ -158,7 +158,7 @@
 	item_state = "kineticgun_h"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
 	overheat_time = 12
-	origin_tech = "combat=3;powerstorage=2"
+	origin_tech = "combat=4;powerstorage=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1

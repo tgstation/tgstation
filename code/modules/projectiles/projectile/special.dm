@@ -151,7 +151,7 @@
 		var/turf/simulated/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-	if(src.splash >= 1)
+	if(src.splash)
 		for(var/turf/T in range(splash, target_turf))
 			if(istype(T, /turf/simulated/mineral))
 				var/turf/simulated/mineral/M = T

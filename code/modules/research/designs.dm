@@ -191,7 +191,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hyperaccelerator
 	name = "Hyper-Kinetic Accelerator"
-	desc = "An upgraded version of the proto-kinetic accelerator, with eve more superior damage, speed and range."
+	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
 	id = "hyperaccelerator"
 	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
 	build_type = PROTOLATHE
@@ -207,16 +207,6 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
 	build_path = /obj/item/weapon/resonator/upgraded
-	category = list("Mining Designs")
-
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
-	id = "jackhammer"
-	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
-	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
 /////////////////////////////////////////
