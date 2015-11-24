@@ -135,6 +135,11 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!ready)		return
 	if(!active)		return
 	if(!awaygate)	return
+	if(isliving(M))
+		var/mob/living/L = M
+		if(L.mind && L.mind.changeling)
+			L << "The creators of the gates may be gone, but the defenses they left to halt our spread remain active. We can not use the gates safely."
+			return
 
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
@@ -234,10 +239,14 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
 	if(!ready)	return
 	if(!active)	return
-	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				M << "\black The station gate has detected your exile implant and is blocking your entry."
+	if(isliving(M))
+		var/mob/living/L = M
+		if(L.mind && L.mind.changeling)
+			L << "The creators of the gates may be gone, but the defenses they left to halt our spread remain active. We can not use the gates safely."
+			return
+		for(var/obj/item/weapon/implant/exile/E in L)//Checking that there is an exile implant in the contents
+			if(E.imp_in == L)//Checking that it's actually implanted vs just in their pocket
+				L << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
 	M.loc = get_step(stationgate.loc, SOUTH)
 	M.dir = SOUTH
