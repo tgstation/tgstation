@@ -21,9 +21,8 @@
 /obj/item/weapon/reagent_containers/dropper/update_icon()
 	icon_state = "dropper[(reagents.total_volume ? 1 : 0)]"
 
-/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , flag)
-	if(!user.Adjacent(target))
-		return
+/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag) return
 
 	if(!target.reagents)
 		if(reagents.total_volume)
@@ -46,7 +45,7 @@
 		var/trans = 0
 
 		if(ismob(target))
-			if(istype(target , /mob/living/carbon/human))
+			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
 
 				var/obj/item/safe_thing = victim.get_body_part_coverage(EYES)
@@ -56,15 +55,13 @@
 						safe_thing.create_reagents(100)
 					trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='danger'>[] tries to squirt something into []'s eyes, but fails!</span>", user, target), 1)
+					user.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
 					spawn(5)
 						src.reagents.reaction(safe_thing, TOUCH)
 					user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
 					update_icon()
 					return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='danger'>[] squirts something into []'s eyes!</span>", user, target), 1)
+			user.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>")
 			src.reagents.reaction(target, TOUCH)
 
 			var/mob/living/M = target
@@ -86,7 +83,7 @@
 		update_icon()
 
 		// /vg/: Logging transfers of bad things
-		if(isobj(target))
+		if(istype(target))
 			if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
 				var/list/badshit=list()
 				for(var/bad_reagent in reagents_to_log)
@@ -116,7 +113,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/dropper/baster
-	name = "Baster"
+	name = "baster"
 	desc = "A specialized tool for precise addition of chemicals."
 	icon_state = "baster"
 	possible_transfer_amounts = list(1,2,3,4,5,10,15)

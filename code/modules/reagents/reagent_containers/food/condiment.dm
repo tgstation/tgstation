@@ -7,7 +7,7 @@
 //Food items that aren't eaten normally and leave an empty container behind
 //To clarify, these are special containers used to hold reagents specific to cooking, produced from the Kitchen CondiMaster
 /obj/item/weapon/reagent_containers/food/condiment
-	name = "Condiment Container"
+	name = "condiment container"
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "emptycondiment"
@@ -208,14 +208,14 @@
 				icon_state = "mixedcondiments"
 	else
 		icon_state = "emptycondiment"
-		name = "Condiment Bottle"
+		name = "condiment bottle"
 		desc = "An empty condiment bottle."
 		return
 
 //Specific condiment bottle entities for mapping and potentially spawning (these are NOT used for any above procs)
 
 /obj/item/weapon/reagent_containers/food/condiment/enzyme
-	name = "Universal Enzyme"
+	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 
@@ -230,7 +230,7 @@
 		reagents.add_reagent("sugar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
-	name = "Salt Shaker"
+	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	possible_transfer_amounts = list(1, 50) //For clowns turning the lid off.
@@ -241,7 +241,7 @@
 		reagents.add_reagent("sodiumchloride", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
-	name = "Pepper Mill"
+	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
 	possible_transfer_amounts = list(1, 50) //For clowns turning the lid off.
@@ -261,17 +261,17 @@
 		reagents.add_reagent("chefspecial", 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/vinegar
-	name = "Malt Vinegar Bottle"
+	name = "malt vinegar bottle"
 	desc = "Perfect for fish and chips."
 	New()
 		..()
 		reagents.add_reagent("vinegar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/exotic
-	name = "Exotic Bottle"
+	name = "exotic bottle"
 	desc = "If you can see this label, something is wrong."
 	//~9% chance of anything but special sauce, which is .09 chance
-	var/list/possible_condiments = list("enzyme"=10,"blackpepper"=10,"vinegar"=10,"sodiumchloride"=10,"cinnamon"=10,"chefspecial"=1,"frostoil"=10,"soysauce"=10,"capsaicin"=10,"honey"=10,"ketchup"=10,"coco"=10)
+	var/global/list/possible_exotic_condiments = list("enzyme"=10,"blackpepper"=10,"vinegar"=10,"sodiumchloride"=10,"cinnamon"=10,"chefspecial"=1,"frostoil"=10,"soysauce"=10,"capsaicin"=10,"honey"=10,"ketchup"=10,"coco"=10)
 	New()
 		..()
-		reagents.add_reagent(pickweight(possible_condiments), 30)
+		reagents.add_reagent(pickweight(possible_exotic_condiments), 30)
