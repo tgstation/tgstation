@@ -34,6 +34,6 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - tweak: "Burn related code has been changed"
-  - tweak: "This will give a small buff fires by making them burn for longer"
+  - tweak: "This will give a small buff to fires by making them burn for longer"
   - tweak: "This will give a massive nerf to plasma related bombs"
   - tweak: "I am actively seeking feedback, if the nerf to bombs is too bad we can still tweak stuff"
