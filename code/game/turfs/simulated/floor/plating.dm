@@ -163,14 +163,6 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/plating/lava
-	icon_state = "lava"
-
-/turf/simulated/floor/plating/lava/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
-
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
@@ -178,3 +170,58 @@
 /turf/simulated/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
+
+
+
+
+
+///LAVA
+
+
+/turf/simulated/floor/plating/lava
+	name = "lava"
+	icon_state = "lava"
+	baseturf = /turf/simulated/floor/plating/lava //lava all the way down
+	slowdown = 2
+	var/processing = 0
+	luminosity = 1
+
+/turf/simulated/floor/plating/lava/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
+/turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
+	burn_stuff()
+	if(!processing)
+		processing = 1
+		SSobj.processing |= src
+
+/turf/simulated/floor/plating/lava/process()
+	if(!contents)
+		processing = 0
+		SSobj.processing.Remove(src)
+		return
+	burn_stuff()
+
+/turf/simulated/floor/plating/lava/proc/burn_stuff()
+	for(var/atom/movable/AM in contents)
+		if(!istype(AM))
+			return
+		if(istype(AM, /obj))
+			var/obj/O = AM
+			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
+				qdel(O)
+				return
+			if(O.burn_state == -1)
+				O.burn_state = 0 //Even fireproof things burn up in lava
+			O.fire_act()
+		else if (istype(AM, /mob/living))
+			var/mob/living/L = AM
+			L.adjustFireLoss(20)
+			L.adjust_fire_stacks(20)
+			L.IgniteMob()
+
+
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return

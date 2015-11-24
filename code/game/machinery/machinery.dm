@@ -188,7 +188,9 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act()
-	if(prob(50))
+	if(!density)
+		qdel(src)
+	if(prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()

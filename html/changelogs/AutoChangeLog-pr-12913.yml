@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Added a lava turf. Expect to see it in away missions or in admin 'events'"

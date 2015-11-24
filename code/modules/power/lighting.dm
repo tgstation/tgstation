@@ -524,14 +524,6 @@
 				if(prob(25))
 					broken()
 
-//blob effect
-
-/obj/machinery/light/blob_act()
-	if(prob(75))
-		broken()
-
-
-
 // called when area power state changes
 /obj/machinery/light/power_change()
 	var/area/A = get_area(src)
