@@ -5,6 +5,7 @@
 	desc = "A large, pulsating yellow mass."
 	health = 200
 	maxhealth = 200
+	point_return = 25
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
