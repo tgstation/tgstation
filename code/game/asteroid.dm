@@ -165,6 +165,10 @@ var/global/max_secret_rooms = 6
 			valid = 0
 			continue
 
+		if(locate(/area/mine/abandoned) in surroundings)
+			valid = 0
+			continue
+
 		if(locate(/turf/space) in surroundings)
 			valid = 0
 			continue
