@@ -245,8 +245,9 @@
 
 /obj/item/weapon/reagent_containers/pill/time_release
 	name = "time release pill"
-	desc = "A pill which will not be metabolized until all of the sugar inside metabolizes. Unlike other pills, it is specially designed to be compatible with droppers and syringes."
+	desc = "A pill which will not be metabolized until all of the sugar inside metabolizes. By extension, the chemicals inside do not react with one another until entering the body. Unlike other pills, it is specially designed to be compatible with droppers and syringes."
 	icon_state = "pill18"
+	flags = FPRINT | NOREACT
 
 /obj/item/weapon/reagent_containers/pill/time_release/injest(mob/M as mob)
 	if(!reagents) return
