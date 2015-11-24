@@ -99,8 +99,8 @@
 	return 0
 
 /obj/item/device/firing_pin/implant/loyalty
-	name = "loyalty firing pin"
-	desc = "This Security firing pin authorizes the weapon for only loyalty-implanted users."
+	name = "mindshield firing pin"
+	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
 	req_implant = /obj/item/weapon/implant/loyalty
 
