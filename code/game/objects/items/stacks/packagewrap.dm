@@ -75,7 +75,7 @@
 	if(amount >= 2)
 		H.visible_message("<span class='danger'>[user] is trying to wrap up [H]!</span>")
 		if(do_after(user,H,human_wrap_speed))
-			var/obj/present = new manpath(get_turf(H))
+			var/obj/present = new manpath(get_turf(H),H)
 			if (H.client)
 				H.client.perspective = EYE_PERSPECTIVE
 				H.client.eye = present
@@ -101,13 +101,19 @@
 	bigpath = null
 	manpath = /obj/structure/strange_present
 
+/obj/item/stack/package_wrap/syndie
+	//Looks just like normal paper, with a slight description change
+	desc = "Wrapping paper designed to help goods safely navigate the mail system. It has extra-strong adhesive for tight packaging."
+	manpath = /obj/item/delivery/large
+	human_wrap_speed = 30 //same as cuffs
+
 /obj/item/delivery
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag
-	var/obj/item/wrapped
+	var/atom/movable/wrapped
 	flags = FPRINT
 
 /obj/item/delivery/New(turf/loc, var/obj/item/target = null, var/size = 2)
@@ -149,24 +155,21 @@
 /obj/item/delivery/large
 	desc = "A big wrapped package."
 	name = "large parcel"
-	icon_state = "deliverycloset"
 	density = 1
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/item/delivery/large/New(turf/loc, var/obj/structure/target)
+/obj/item/delivery/large/New(turf/loc, atom/movable/target)
 	..()
 	wrapped = target
-	if(istype(wrapped,/obj/structure/closet/crate)) icon_state = "deliverycrate"
+	if(istype(wrapped,/obj/structure/closet/crate) || ishuman(target)) icon_state = "deliverycrate"
 	else if(istype(wrapped,/obj/structure/vendomatpack)) icon_state = "deliverypack"
 	else if(istype(wrapped,/obj/structure/stackopacks)) icon_state = "deliverystack"
+	else if(istype(wrapped,/obj/structure/closet)) icon_state = "deliverycloset" //Only IF it isn't a crate-type
 
 /obj/item/delivery/large/attack_hand(mob/user as mob)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped)
 		wrapped.forceMove(get_turf(src.loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
 	qdel(src)
 
 /obj/item/delivery/large/attack_robot(mob/user)

@@ -3,7 +3,7 @@ delete-after: True
 changes:
  - tweak: Wrapping paper is now a stack, with all of the benefits that entails (merging, disappearing when used up)
  - tweak: Tweaked the amount per use of wrapping paper
- - tweak: Gift wrap is now a child of wrapping paper
  - tweak: Gift wrapping a person is no longer instant, but also no longer requires a straight jacket. It takes a long time (triple handcuffs).
+ - tweak: Cargo techs (and the QM) now have access to Syndicate Wrapping Paper. This very cheap traitor item wraps people up to be indistinguishable from boxes and much faster than normal wrapping paper. They can still talk inside (if alive), but they can't bust out without help.
  - tweak: Wrapping paper is now a size smaller - pocket compatible!
  - tweak: Gifts of all sizes now fit on the MULE
