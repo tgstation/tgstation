@@ -519,3 +519,26 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return 1
 
+/datum/species/tajaran
+	name = "Tajaran"
+	id = "tajaran"
+	say_mod = "hisses"
+	roundstart = 1
+	default_color = "FFFFFF"
+	specflags = list(MUTCOLORS,EYECOLOR)
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+
+/datum/species/tajaran/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return 1
+
+/datum/species/tajaran/handle_speech(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "r", "rrr")
+
+	return message
+

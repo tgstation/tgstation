@@ -258,10 +258,12 @@ SILICON_MAX_LAW_AMOUNT 12
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on
 
 ## Disabling humans is possible but a bit buggy. Some code relies on the notion that white people exist in space.
+## "some"
 ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES tajaran
 #ROUNDSTART_RACES fly
 #ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
