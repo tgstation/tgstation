@@ -236,7 +236,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
 			var/obj/item/ammo_casing/A = initial(M.ammo_type)
-			projectiletype = initial(A.projectile_type)
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/weapon/gun/energy))
 			Zapgun = G
