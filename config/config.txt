@@ -1,5 +1,5 @@
 ## Server name: This appears at the top of the screen in-game. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
-SERVERNAME HateSt4tion
+SERVERNAME HateStation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME The Mugunghwa
@@ -93,7 +93,7 @@ NORESPAWN
 # DONT_DEL_NEWMOB
 
 ## set a hosted by name for unix platforms
-HOSTEDBY chancraft
+HOSTEDBY unsafe.space
 
 ## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
@@ -111,10 +111,10 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-FORUMURL https://8ch.net/nt
+FORUMURL https://8ch.net/nt/
 
 ## Wiki address
-WIKIURL http://http://8station.shoutwiki.com/
+WIKIURL http://http://8station.miraheze.org/
 
 ##Rules address
 RULESURL https://8ch.net/nt/rules.html

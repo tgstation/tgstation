@@ -7,11 +7,7 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-Darts123 = Host
-Gitgud = Game Master
-William Taft = Trial Admin
-Captain Chen = Trial Admin
-Octareenroon91 = Trial Admin
-KSMH = Game Admin
-Zaers = Coder
-Koriath = Host
+Akesson = Host
+Octareenroon91 = Game Master
+JustL = Game Master
+derflammenwerfer = Game Master
