@@ -125,6 +125,11 @@ var/list/uplink_items = list()
 	cost = 2
 	job = list("Cargo Technician", "Quartermaster")
 
+/datum/uplink_item/jobspecific/syndiepaper/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
+	U.uses -= max(cost, 0)
+	feedback_add_details("traitor_uplink_items_bought", name)
+	return new item(loc) //Fix for amount ref
+
 //Shaft Miner
 /datum/uplink_item/jobspecific/mastertrainer
 	name = "Master Trainer's Belt"

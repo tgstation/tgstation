@@ -121,6 +121,11 @@
 	wrapped = target
 	icon_state = "deliverycrate[size]"
 
+/obj/item/delivery/Destroy()
+	..()
+	if(wrapped)
+		wrapped.forceMove(get_turf(src.loc))
+
 /obj/item/delivery/attack_self(mob/user as mob)
 	if(wrapped)
 		if(ishuman(user))
