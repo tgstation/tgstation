@@ -30,6 +30,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/lightswitch = 1
 	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
+	var/blob_legit = 1 //Does it count for blobs score? By default, all areas count.
+
 	var/eject = null
 
 	var/requires_power = 1
@@ -210,6 +212,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	blob_legit = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
+	valid_territory = 0
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"

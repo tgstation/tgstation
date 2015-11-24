@@ -23,7 +23,6 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-	var/blob_legit = 1 //Does it count for blobs score? By default, all areas count.
 
 /area/New()
 	icon_state = ""
