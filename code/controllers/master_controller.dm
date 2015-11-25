@@ -36,12 +36,14 @@ calculate the longest number of ticks the MC can wait between each cycle without
 */
 /datum/controller/game_controller/proc/calculateGCD()
 	var/GCD
+	//shortest fire rate is the lower of two ticks or 1ds
+	var/minimumInterval = min(world.tick_lag*2,1)
 	for(var/datum/subsystem/SS in subsystems)
 		if(SS.wait)
 			GCD = Gcd(round(SS.wait*10), GCD)
 	GCD = round(GCD)
-	if(GCD < world.tick_lag*10)
-		GCD = world.tick_lag*10
+	if(GCD < minimumInterval*10)
+		GCD = minimumInterval*10
 	processing_interval = GCD/10
 
 /datum/controller/game_controller/proc/setup(zlevel)
@@ -94,12 +96,12 @@ calculate the longest number of ticks the MC can wait between each cycle without
 		while(1)	//far more efficient than recursively calling ourself
 			if(processing_interval > 0)
 				++iteration
-
+				var/startingtick = world.time
 				start_time = world.timeofday
 				var/SubSystemRan = 0
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.can_fire > 0)
-						if(SS.next_fire <= world.time)
+						if(SS.next_fire <= world.time && SS.last_fire+(wait*0.5) <= world.time)
 							SubSystemRan = 1
 							timer = world.timeofday
 							last_thing_processed = SS.type
@@ -110,18 +112,27 @@ calculate the longest number of ticks the MC can wait between each cycle without
 								var/oldwait = SS.wait
 								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/(SS.wait/10)))-1
 								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-SS.dwait_buffer+GlobalCostDelta)*SS.dwait_delta)
+								NewWait = NewWait*(world.cpu/100+1)
 								SS.wait = Clamp(NewWait,SS.dwait_lower,SS.dwait_upper)
 								if (oldwait != SS.wait)
 									calculateGCD()
 							SS.next_fire += SS.wait
 							++SS.times_fired
-
+							//we caused byond to miss a tick, stop processing for a bit
+							if (startingtick < world.time || start_time+1 < world.timeofday)
+								break
 							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
 				if (SubSystemRan)
 					calculateSScost()
-				sleep(processing_interval)
+				var/extrasleep = 0
+				if (startingtick < world.time || start_time+1 < world.timeofday)
+					//we caused byond to miss a tick, sleep a bit extra
+					extrasleep += world.tick_lag*2
+				if (world.cpu > 80)
+					extrasleep += extrasleep+processing_interval
+				sleep(processing_interval+extrasleep)
 			else
 				sleep(50)
 
