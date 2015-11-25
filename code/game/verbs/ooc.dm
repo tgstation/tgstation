@@ -14,6 +14,10 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)	return
 
+	if(copytext(msg, 1, 2) in list(".",";",":"))
+		src << "Your message \"[msg]\" looks like it was meant for in game communication."
+		return
+
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
 		return
