@@ -79,6 +79,9 @@
 								qdel(trail)
 
 				current_loc = projectile.loc
+				var/matrix/M = new//matrix(transform)
+				M.Turn(dir2angle(projectile.dir))
+				projectile.transform = M //From this point on you won't need direction icons for projectiles.
 
 				sleep(proj_step_delay)
 

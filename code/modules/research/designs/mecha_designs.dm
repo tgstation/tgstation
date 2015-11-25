@@ -238,7 +238,7 @@
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	req_tech = list("combat" = 6, "materials" = 6)
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
