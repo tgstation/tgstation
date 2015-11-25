@@ -13,14 +13,6 @@
 	returnToPool(A)
 	..()
 
-//Override attackby from table so RSF doesn't end up on table when creating stuff.
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (!W)
-		return
-	if (istype(W, /obj/item/device/rcd/matter/rsf))
-		return
-	..() //super call so we don't break functionality.
-
 /datum/rcd_schematic/rsf/attack(var/atom/A, var/mob/user)
 	if(!is_type_in_list(A, list(/obj/structure/table, /turf/simulated/floor)))
 		return 1
