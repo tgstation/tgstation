@@ -1,6 +1,6 @@
 /world
 
-	hub = "Exadv1.spacestation13"
+	hub = "Exadv1.spacestation13.controlfreak"
 	hub_password = "SORRYNOPASSWORD"
 	name = "/tg/ Station 13"
 
