@@ -77,12 +77,13 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/item/projectile/Bump(atom/A)
-	if(A == firer)
-		loc = A.loc
-		return 0 //cannot shoot yourself
-	if(bumped)//Stops multihit projectiles
-		return 1
+/obj/item/projectile/Bump(atom/A, yes)
+	if(!yes)//prevents double bumps.
+		return
+	if(firer)
+		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+			loc = A.loc
+			return 0 //cannot shoot yourself
 	if(isliving(A))
 		var/mob/living/M = A
 		var/reagent_note
@@ -94,12 +95,12 @@
 		var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 		if(suppressed)
-			playsound(loc, hitsound, 5, 1, -1)
+			playsound(loc, hitsound, 5, 1, -7)
 			M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
-				playsound(loc, hitsound, volume, 1, -1)
+				playsound(loc, hitsound, volume, 1, -7)
 			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>", \
 								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
@@ -110,15 +111,22 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	bumped = 1
-	var/turf/new_loc = get_turf(A)
+	var/turf/target_turf = get_turf(A)
+
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
-		spawn(1)
-			bumped = 0 // reset bumped variable... after a delay. We don't want the projectile to hit AGAIN. Fixes deflecting projectiles.
-		loc = new_loc
-		permutated.Add(A)
+		loc = target_turf
+		if(A)
+			permutated.Add(A)
 		return 0
+	else
+		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+			var/list/mobs_list = list()
+			for(var/mob/living/L in target_turf)
+				mobs_list += L
+			if(mobs_list.len)
+				var/mob/living/picked_mob = pick(mobs_list)
+				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
@@ -136,13 +144,9 @@
 /obj/item/projectile/proc/fire(var/setAngle)
 	if(setAngle) Angle = setAngle
 	if(!legacy)
-		spawn() //New projectile system
+		spawn(1) //New projectile system
 			while(loc)
 				if(!paused)
-					if(range < 1)
-						qdel(src)
-						return
-					range--
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -208,15 +212,11 @@
 							if(!(original in permutated))
 								Bump(original)
 					Range()
-					sleep(max(1, speed))
+				sleep(max(1, speed))
 	else
-		spawn() //Old projectile system
+		spawn(1) //Old projectile system
 			while(loc)
 				if(!paused)
-					if(range < 1)
-						qdel(src)
-						return
-					range--
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 					if(!Angle)
@@ -230,7 +230,7 @@
 							if(!(original in permutated))
 								Bump(original)
 					Range()
-					sleep(1)
+				sleep(1)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
