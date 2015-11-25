@@ -1,5 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - rscadd: A new motorized wheelchair is available from Cargo. It's expensive, and it runs on a battery. You can still use it if the battery runs out, but it's slow. Instead, replace the battery with a screwdriver and crowbar!
- - rscadd: "A new medical doctor traitor item: The Medical Malpractice. This wheelchair comes with a hyper cell and is modified to run over unsuspecting crewmembers."
