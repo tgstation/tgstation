@@ -246,14 +246,38 @@
 
 	return 1 // success
 
+/**
+  * Generate the list of assets to be sent to the client.
+  * Also fcopy's assets to become rscs.
+  *
+  * @return /list The list of resources
+  */
+/datum/subsystem/nano/proc/populate_resources()
+	var/list/resources = list()
+	var/list/resource_dirs = list(\
+		"nano/css/",\
+		"nano/images/",\
+		"nano/js/",\
+		"nano/templates/"\
+	)
+
+	for (var/path in resource_dirs)
+		var/list/filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+				if(fexists(path + filename))
+					resources.Add(fcopy_rsc(path + filename))
+
+	return resources
+
  /**
   * Sends all nano assets to the client
   * This is called on user login
   *
   * @param client /client The user's client
+  * @param resources /list The resources to be sent.
   *
   * @return nothing
   */
-
-/datum/subsystem/nano/proc/send_resources(client)
-	getFilesSlow(client, asset_files)
+/datum/subsystem/nano/proc/send_resources(client, var/list/resources = resource_files)
+	getFilesSlow(client, resources)

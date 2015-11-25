@@ -6,31 +6,16 @@ var/datum/subsystem/nano/SSnano
 	wait = 10
 	priority = 16
 
-	var/list/open_uis = list()			//a list of current open /nanoui UIs, grouped by src_object and ui_key
-	var/list/processing_uis = list()	//a list of current open /nanoui UIs, not grouped, for use in processing
+	var/list/open_uis = list() // A list of open NanoUIs, grouped by src_object and ui_key.
+	var/list/processing_uis = list() // A list of processing NanoUIs, not grouped.
 
-	//List of asset filenames to be sent to the client on user login
-	var/list/asset_files = list()
+	var/list/resource_files // A list of asset files to be send to clients.
 
 
 /datum/subsystem/nano/New()
 	NEW_SS_GLOBAL(SSnano)
 
-	//Generate list of files to send to client for nano UI's
-	var/list/nano_asset_dirs = list(\
-		"nano/css/",\
-		"nano/images/",\
-		"nano/js/",\
-		"nano/templates/"\
-	)
-	var/list/filenames = null
-	for (var/path in nano_asset_dirs)
-		filenames = flist(path)
-		for(var/filename in filenames)
-			//Ignore directories
-			if(copytext(filename, length(filename)) != "/")
-				if(fexists(path + filename))
-					asset_files[filename] = fcopy_rsc(path + filename)
+	resource_files = populate_resources()
 
 
 /datum/subsystem/nano/stat_entry()
