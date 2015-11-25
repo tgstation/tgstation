@@ -261,7 +261,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	/obj/item/device/camera_film,
 	/obj/item/device/camera_film,
 	/obj/item/weapon/storage/photo_album,
-	/obj/item/weapon/packageWrap,
+	/obj/item/stack/package_wrap,
 	/obj/item/weapon/reagent_containers/glass/paint/red,
 	/obj/item/weapon/reagent_containers/glass/paint/green,
 	/obj/item/weapon/reagent_containers/glass/paint/blue,
@@ -271,9 +271,9 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	/obj/item/weapon/reagent_containers/glass/paint/white,
 	/obj/item/weapon/reagent_containers/glass/paint/remover,
 	/obj/item/mounted/poster,
-	/obj/item/weapon/wrapping_paper,
-	/obj/item/weapon/wrapping_paper,
-	/obj/item/weapon/wrapping_paper)
+	/obj/item/stack/package_wrap/gift,
+	/obj/item/stack/package_wrap/gift,
+	/obj/item/stack/package_wrap/gift)
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
 	containername = "Arts and Crafts crate"

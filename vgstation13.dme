@@ -651,6 +651,7 @@
 #include "code\game\objects\items\stacks\cable.dm"
 #include "code\game\objects\items\stacks\medical.dm"
 #include "code\game\objects\items\stacks\nanopaste.dm"
+#include "code\game\objects\items\stacks\packagewrap.dm"
 #include "code\game\objects\items\stacks\rods.dm"
 #include "code\game\objects\items\stacks\stack.dm"
 #include "code\game\objects\items\stacks\teeth.dm"

@@ -91,7 +91,7 @@ var/global/list/all_money_accounts = list()
 		next_account_number += rand(1,25)
 
 		//create a sealed package containing the account details
-		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(source_db.loc)
+		var/obj/item/delivery/P = new /obj/item/delivery(source_db.loc)
 
 		var/obj/item/weapon/paper/R = new /obj/item/weapon/paper(P)
 		P.wrapped = R

@@ -368,7 +368,7 @@
 	var/wrapcheck = 0
 	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 										// travels through the pipes.
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/delivery/O in src)
 		wrapcheck = 1
 
 	if(wrapcheck == 1)
@@ -545,11 +545,11 @@
 				var/mob/living/carbon/human/H = AM
 				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT))		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
-			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
-				var/obj/structure/bigDelivery/T = AM
+			if(istype(AM, /obj/item/delivery/large) && !hasmob)
+				var/obj/item/delivery/large/T = AM
 				src.destinationTag = T.sortTag
-			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
-				var/obj/item/smallDelivery/T = AM
+			if(istype(AM, /obj/item/delivery) && !hasmob)
+				var/obj/item/delivery/T = AM
 				src.destinationTag = T.sortTag
 
 	// start the movement process

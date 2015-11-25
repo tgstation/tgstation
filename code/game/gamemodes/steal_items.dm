@@ -27,8 +27,8 @@
 		if(istype(G.gift, /obj/item/weapon/storage))
 			L += get_contents(G.gift)
 
-	else if(istype(O,/obj/item/smallDelivery))
-		var/obj/item/smallDelivery/D = O
+	else if(istype(O,/obj/item/delivery))
+		var/obj/item/delivery/D = O
 		L += D.wrapped
 		if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
 			L += get_contents(D.wrapped)

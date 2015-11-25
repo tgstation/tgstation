@@ -49,7 +49,7 @@
 /datum/storeitem/wrapping_paper
 	name = "Wrapping Paper"
 	desc = "Makes gifts 200% more touching."
-	typepath = /obj/item/weapon/wrapping_paper
+	typepath = /obj/item/stack/package_wrap/gift
 	cost = 50
 
 /////////////////////////////

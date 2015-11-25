@@ -117,6 +117,19 @@ var/list/uplink_items = list()
 	cost = 3
 	job = list("Librarian")
 
+//Cargo Technician
+/datum/uplink_item/jobspecific/syndiepaper
+	name = "Extra Adhesive Wrapping Paper"
+	desc = "This extra-strong wrapping paper is perfect for concealing bodies or trapping a victim with no escape. Simply apply directly to the victim and wrap them up into a regular-looking delivery package. Takes about three seconds to wrap."
+	item = /obj/item/stack/package_wrap/syndie
+	cost = 2
+	job = list("Cargo Technician", "Quartermaster")
+
+/datum/uplink_item/jobspecific/syndiepaper/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
+	U.uses -= max(cost, 0)
+	feedback_add_details("traitor_uplink_items_bought", name)
+	return new item(loc) //Fix for amount ref
+
 //Shaft Miner
 /datum/uplink_item/jobspecific/mastertrainer
 	name = "Master Trainer's Belt"

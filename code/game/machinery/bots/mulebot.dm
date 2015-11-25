@@ -92,7 +92,7 @@ var/global/mulebot_count = 0
 		/obj/structure/closet/crate,
 		/obj/structure/vendomatpack,
 		/obj/structure/stackopacks,
-		/obj/item/weapon/gift/large,
+		/obj/item/weapon/gift,
 		)
 
 /obj/machinery/bot/mulebot/Destroy()
