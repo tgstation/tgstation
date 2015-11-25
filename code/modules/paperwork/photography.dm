@@ -416,11 +416,12 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc)) return
+	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc))
+		return
 	if(user.Adjacent(target))
 		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
-		for(var/T in bad_targets)
-			if(istype(target,T)) return
+		if(is_type_in_list(target, bad_targets))
+			return
 
 	captureimage(target, user, flag)
 
