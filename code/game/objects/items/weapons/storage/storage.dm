@@ -393,8 +393,7 @@
 				W.dropped(user)
 				user << "<span class='warning'> God damnit!</span>"
 
-	handle_item_insertion(W)
-	return
+	return handle_item_insertion(W)
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
 	..()
