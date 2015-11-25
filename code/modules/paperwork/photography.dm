@@ -416,7 +416,12 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc)) return
+	if(user.Adjacent(target))
+		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
+		for(var/T in bad_targets)
+			if(istype(target,T)) return
+
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
