@@ -2,13 +2,14 @@
 /atom/movable/lighting_overlay
 	name			= ""
 	mouse_opacity	= 0
-	anchored		= 1
+	anchored		= TRUE
 
 	icon_state		= "light1"
 	icon			= LIGHTING_ICON
 	layer			= LIGHTING_LAYER
 	invisibility	= INVISIBILITY_LIGHTING
 	blend_mode		= BLEND_MULTIPLY
+
 	color			= "#000000"
 
 	var/lum_r
@@ -22,6 +23,9 @@
 /atom/movable/lighting_overlay/New()
 	. = ..()
 	verbs.Cut()
+
+	// BYOND was too stupid to realise this is constant.
+	alpha = 255 - round(LIGHTING_SOFT_THRESHOLD * 255) // All overlays should start softly lit.
 
 // This proc should be used to change the lumcounts of the overlay, it applies the changes and queus the overlay for updating, but only the latter if needed.
 /atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
@@ -59,22 +63,32 @@
 	if(mx > 1)
 		. = 1 / mx
 
+	// If there is any light at all, but below the soft light threshold, modify the factor so the highest lumcount is always LIGHTING_SOFT_THRESHOLD.
+	else if(mx < LIGHTING_SOFT_THRESHOLD && mx > LIGHTING_ROUND_VALUE)
+		. = LIGHTING_SOFT_THRESHOLD / mx
+
 	// Change the colour of the overlay, if we are using dynamic lighting we use animate(), else we don't.
 	#if LIGHTING_TRANSITIONS == 1
 	animate(src,
 		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
+		alpha = (mx ? 255 : 255 - round(LIGHTING_SOFT_THRESHOLD * 255)),
 		LIGHTING_TRANSITION_SPEED
 	)
 	#else
 	color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
+	if(mx <= LIGHTING_SOFT_THRESHOLD)
+		alpha = 255 - round(LIGHTING_SOFT_THRESHOLD * 255) // BYOND I fucking hope you do this at compile time.
+
+	else
+		alpha = 255
 	#endif
 
 	var/turf/T = loc
 
 	if(istype(T)) // Incase we're not on a turf, pool ourselves, something happened.
-		if(color != "#000000")
+		if(max(lum_r, lum_g, lum_b) > LIGHTING_SOFT_THRESHOLD)
 			luminosity = 1
-		else  // No light, set the turf's luminosity to 0 to remove it from view()
+		else  // Practically no light, disable luminosity so only people up close (or with high see_in_dark) can see this tile.
 			#if LIGHTING_TRANSITIONS == 1
 			spawn(LIGHTING_TRANSITION_SPEED)
 				luminosity = 0
