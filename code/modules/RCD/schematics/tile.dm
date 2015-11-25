@@ -96,7 +96,7 @@ s
 		if(PAINT_REINFORCED)	nname = "reinforced floor"	//also getting rid of the plaque if it's there
 		if(PAINT_PLATING)   	nname = "plating"
 
-	user << "Painting floor..."
+	to_chat(user, "Painting floor...")
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, A, 20))
 		return 1

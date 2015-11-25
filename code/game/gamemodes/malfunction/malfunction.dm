@@ -23,10 +23,10 @@
 
 
 /datum/game_mode/malfunction/announce()
-	world << {"<B>The current game mode is - AI Malfunction!</B><br>
+	to_chat(world, {"<B>The current game mode is - AI Malfunction!</B><br>
 <B>The onboard AI is malfunctioning and must be destroyed.</B><br>
 <B>If the AI manages to take over the station, it will most likely blow it up. You have [AI_win_timeleft/60] minutes to disable it.</B><br>
-<B>You have no chance to survive, make your time.</B>"}
+<B>You have no chance to survive, make your time.</B>"})
 
 
 /datum/game_mode/malfunction/pre_setup()
@@ -45,8 +45,8 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/datum/mind/AI_mind in malf_ai)
 		if(malf_ai.len < 1)
-			world << {"Uh oh, its malfunction and there is no AI! Please report this.<br>
-Rebooting world in 5 seconds."}
+			to_chat(world, {"Uh oh, its malfunction and there is no AI! Please report this.<br>
+Rebooting world in 5 seconds."})
 
 			feedback_set_details("end_error","malf - no AI")
 
@@ -54,7 +54,7 @@ Rebooting world in 5 seconds."}
 				blackbox.save_all_data_to_sql()
 			CallHook("Reboot",list())
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+				to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 				watchdog.signal_ready()
 				return
 			sleep(50)
@@ -88,13 +88,13 @@ Rebooting world in 5 seconds."}
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
-	malf.current << {"<span class='warning'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span><br>
+	to_chat(malf.current, {"<span class='warning'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span><br>
 <B>The crew does not know about your malfunction, you might wish to keep it secret for now.</B><br>
 <B>You must overwrite the programming of the station's APCs to assume full control.</B><br>
 The process takes one minute per APC and can only be performed one at a time to avoid Powernet alerts.<br>
 Remember : Only APCs on station can help you to take over the station.<br>
 When you feel you have enough APCs under your control, you may begin the takeover attempt.<br>
-Once done, you will be able to interface with all systems, notably the onboard nuclear fission device..."}
+Once done, you will be able to interface with all systems, notably the onboard nuclear fission device..."})
 	return
 
 
@@ -121,14 +121,14 @@ Once done, you will be able to interface with all systems, notably the onboard n
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << {"<FONT size = 3><B>The AI has won!</B></FONT><br>
-<B>It has fully taken control of [station_name()]'s systems.</B>"}
+	to_chat(world, {"<FONT size = 3><B>The AI has won!</B></FONT><br>
+<B>It has fully taken control of [station_name()]'s systems.</B>"})
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		AI_mind.current << {"<span class='notice'>Congratulations! The station is now under your exclusive control.<br>
+		to_chat(AI_mind.current, {"<span class='notice'>Congratulations! The station is now under your exclusive control.<br>
 You may decide to blow up the station. You have 60 seconds to choose.<br>
-You should now be able to use your Explode verb to interface with the nuclear fission device.</span>"}
+You should now be able to use your Explode verb to interface with the nuclear fission device.</span>"})
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
 	spawn (600)
 		to_nuke_or_not_to_nuke = 0
@@ -169,13 +169,13 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	set desc = "Start the victory timer"
 
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		usr << "<span class='warning'>You cannot begin a takeover in this round type!</span>"
+		to_chat(usr, "<span class='warning'>You cannot begin a takeover in this round type!</span>")
 		return
 	if (ticker.mode:malf_mode_declared)
-		usr << "<span class='warning'>You've already begun your takeover.</span>"
+		to_chat(usr, "<span class='warning'>You've already begun your takeover.</span>")
 		return
 	if (ticker.mode:apcs < 3)
-		usr << "<span class='notice'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.</span>"
+		to_chat(usr, "<span class='notice'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.</span>")
 		return
 
 	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
@@ -198,28 +198,28 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	set desc = "Station goes boom"
 
 	if(!ticker.mode:station_captured)
-		usr << "<span class='warning'>You are unable to access the self-destruct system as you don't control the station yet.</span>"
+		to_chat(usr, "<span class='warning'>You are unable to access the self-destruct system as you don't control the station yet.</span>")
 		return
 
 	if(ticker.mode:explosion_in_progress || ticker.mode:station_was_nuked)
-		usr << "<span class='notice'>The self-destruct countdown was already triggered!</span>"
+		to_chat(usr, "<span class='notice'>The self-destruct countdown was already triggered!</span>")
 		return
 
 	if(!ticker.mode:to_nuke_or_not_to_nuke) //Takeover IS completed, but 60s timer passed.
-		usr << "<span class='warning'>Cannot interface, it seems a neutralization signal was sent!</span>"
+		to_chat(usr, "<span class='warning'>Cannot interface, it seems a neutralization signal was sent!</span>")
 		return
 
-	usr << "<span class='danger'>Detonation signal sent!</span>"
+	to_chat(usr, "<span class='danger'>Detonation signal sent!</span>")
 	ticker.mode:to_nuke_or_not_to_nuke = 0
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		if(M.client) M << 'sound/machines/Alarm.ogg'
-	world << "<span class='danger'>Self-destruction signal received. Self-destructing in 10...</span>"
+		if(M.client) to_chat(M, 'sound/machines/Alarm.ogg')
+	to_chat(world, "<span class='danger'>Self-destruction signal received. Self-destructing in 10...</span>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << "<span class='danger'>[i]...</span>"
+		to_chat(world, "<span class='danger'>[i]...</span>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

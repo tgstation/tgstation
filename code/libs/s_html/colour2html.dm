@@ -232,4 +232,4 @@ proc/LoadHTMLAssociations()
 
 proc/SaveHTMLAssociations()
 	var/savefile/F = new ("s_html.sav")
-	F["html_colours"] << html_colours
+	to_chat(F["html_colours"], html_colours)

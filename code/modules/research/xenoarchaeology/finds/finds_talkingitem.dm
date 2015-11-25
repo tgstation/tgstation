@@ -41,21 +41,22 @@
 			var/list/w = heard_words["[lowertext(seperate[Xa])]"]
 			if(w)
 				w.Add("[lowertext(seperate[next])]")
-			//world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
+//			to_chat(world, "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]")
 
 		if(!rand(0, 5))
 			spawn(2) SaySomething(pick(seperate))
 	if(prob(30))
 		for(var/mob/O in viewers(src))
 			O.show_message("<span class='notice'>[src] hums for bit then stops...</span>", 1)
-
-/*/obj/item/weapon/talkingcrystal/proc/debug()
+/*
+/obj/item/weapon/talkingcrystal/proc/debug()
 	//set src in view()
 	for(var/v in heard_words)
-		world << "[uppertext(v)]"
+		to_chat(world, "[uppertext(v)]")
 		var/list/d = heard_words["[v]"]
 		for(var/X in d)
-			world << "[X]"*/
+			to_chat(world, "[X]")
+*/
 
 /obj/item/weapon/proc/SaySomething(var/word = null)
 
@@ -106,5 +107,5 @@
 			listening|=M
 
 	for(var/mob/M in listening)
-		M << "<b>[src]</b> reverberates, <span class='warning'>\"[msg]\"</span>"
+		to_chat(M, "<b>[src]</b> reverberates, <span class='warning'>\"[msg]\"</span>")
 	lastsaid = world.timeofday + rand(300,800)

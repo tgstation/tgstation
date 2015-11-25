@@ -65,13 +65,13 @@ var/global/list/moneytypes = list(
 	if (can_stack_with(target))
 		var/obj/item/weapon/spacecash/S = target
 		if (amount >= 10)
-			user << "\The [src] cannot hold anymore chips."
+			to_chat(user, "\The [src] cannot hold anymore chips.")
 			return 1
 		var/to_transfer = 1
 		if (user.get_inactive_hand()!=S)
 			to_transfer = min(S.amount, 10-amount)
 		amount+=to_transfer
-		user << "You add [to_transfer] chip\s to the stack. It now contains [amount] chips, worth [amount*worth] credits."
+		to_chat(user, "You add [to_transfer] chip\s to the stack. It now contains [amount] chips, worth [amount*worth] credits.")
 		S.amount-=to_transfer
 		if(S.amount<=0)
 			qdel(S)
@@ -85,8 +85,8 @@ var/global/list/moneytypes = list(
 	if(amount > 1)
 		setGender(PLURAL)
 		..()
-		user << "It's a stack holding [amount] chips."
-		user << "<span class='info'>It's worth [worth*amount] credits.</span>"
+		to_chat(user, "It's a stack holding [amount] chips.")
+		to_chat(user, "<span class='info'>It's worth [worth*amount] credits.</span>")
 	else
 		setGender(NEUTER)
 		..()
@@ -124,7 +124,7 @@ var/global/list/moneytypes = list(
 		var/collected = src.collect_from(cash)
 		if(collected)
 			update_icon()
-			user << "<span class='notice'>You add [collected] [src.name][amount > 1 ? "s":""] to your stack of cash.</span>"
+			to_chat(user, "<span class='notice'>You add [collected] [src.name][amount > 1 ? "s":""] to your stack of cash.</span>")
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "cash10"

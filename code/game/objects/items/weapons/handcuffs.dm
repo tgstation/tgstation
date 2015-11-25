@@ -35,7 +35,7 @@
 
 	else
 		if ((M_CLUMSY in usr.mutations) && prob(50))
-			usr << "<span class='warning'>Uh ... how do those things work?!</span>"
+			to_chat(usr, "<span class='warning'>Uh ... how do those things work?!</span>")
 			if (istype(C, /mob/living/carbon/human))
 				if(!C.handcuffed)
 					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
@@ -51,7 +51,7 @@
 				return
 			return
 		if (!usr.dexterity_check())
-			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 		if (istype(C, /mob/living/carbon/human))
 			if(!C.handcuffed)
@@ -155,7 +155,7 @@
 		user.before_take_item(src)
 
 		user.put_in_hands(W)
-		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
 
 		del(src)
 

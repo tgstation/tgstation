@@ -57,7 +57,7 @@
 				transfer_sub(P, E, 5, user)
 				return 2
 			else
-				user << "<span class='notice'>\The [P] is empty!</span>"
+				to_chat(user, "<span class='notice'>\The [P] is empty!</span>")
 				return 1
 		else
 			return 0
@@ -65,20 +65,20 @@
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(!is_open_container())
-		user << "It contains:"
+		to_chat(user, "It contains:")
 		if(reagents && reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "<span class='info'>[R.volume] units of [R.name]</span>"
+				to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 		else
-			user << "<span class='info'>Nothing</span>"
+			to_chat(user, "<span class='info'>Nothing</span>")
 	for(var/thing in src)
-		user << "<span class='warning'>\A [thing] is jammed into the nozzle!</span>"
+		to_chat(user, "<span class='warning'>\A [thing] is jammed into the nozzle!</span>")
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "The safety is [safety ? "on" : "off"]."
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
 /obj/item/weapon/extinguisher/attackby(obj/item/W, mob/user)
@@ -101,16 +101,16 @@
 	if (istype(W, /obj/item) && !is_open_container() && !istype(src, /obj/item/weapon/extinguisher/foam) && !istype(W, /obj/item/weapon/evidencebag))
 		if(W.is_open_container()) return //We're probably trying to fill it
 		if(W.w_class>1)
-			user << "\The [W] won't fit into the nozzle!"
+			to_chat(user, "\The [W] won't fit into the nozzle!")
 			return
 		if(locate(/obj) in src)
-			user << "There's already something crammed into the nozzle."
+			to_chat(user, "There's already something crammed into the nozzle.")
 			return
 		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
-			user << "You're a robot. No."
+			to_chat(user, "You're a robot. No.")
 			return
 		user.drop_item(W, src)
-		user << "You cram \the [W] into the nozzle of \the [src]."
+		to_chat(user, "You cram \the [W] into the nozzle of \the [src].")
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -126,12 +126,12 @@
 				// message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			o.reagents.trans_to(src, 50)
-			user << "<span class='notice'>\The [src] is now refilled</span>"
+			to_chat(user, "<span class='notice'>\The [src] is now refilled</span>")
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
 		if(is_open_container() && reagents.total_volume)
-			user << "<span class='notice'>You empty \the [src] onto [target].</span>"
+			to_chat(user, "<span class='notice'>You empty \the [src] onto [target].</span>")
 			if(reagents.has_reagent("fuel"))
 				message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -142,7 +142,7 @@
 		if (src.reagents.total_volume < 1)
 			var/pack = pack_check(user, src)
 			if (!pack) //Only display the "extinguisher empty" warning if the user is not wearing a chempack, since chempacks are designed to be used with empty items.
-				user << "<span class='warning'>\The [src] is empty!</span>"
+				to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 				return
 			else if (pack == 1)
 				return
@@ -250,7 +250,7 @@
 		if((istype(target, /obj/structure/reagent_dispensers/watertank)))
 			var/obj/o = target
 			o.reagents.trans_to(src, 50)
-			user << "<span class='notice'>\The [src] is now refilled</span>"
+			to_chat(user, "<span class='notice'>\The [src] is now refilled</span>")
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
@@ -258,7 +258,7 @@
 		if (src.reagents.total_volume < 1)
 			var/pack = pack_check(user, src)
 			if (!pack)
-				user << "<span class='warning'>\The [src] is empty!</span>"
+				to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 				return
 			else if (pack == 1)
 				return

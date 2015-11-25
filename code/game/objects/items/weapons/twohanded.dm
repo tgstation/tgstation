@@ -74,7 +74,7 @@
 		user.update_inv_r_hand()
 
 /obj/item/weapon/fireaxe/suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
@@ -124,7 +124,7 @@
 /obj/item/weapon/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
 	if((M_CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>"
+		to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_organ_damage(20,25)
 		return
 	if((wielded) && prob(50))

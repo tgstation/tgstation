@@ -71,14 +71,14 @@
 	if(..()) return
 	if(stat != 0)
 		if(pda_device)
-			usr << "You remove \the [pda_device] from \the [src]."
+			to_chat(usr, "You remove \the [pda_device] from \the [src].")
 			pda_device.loc = get_turf(src)
 			if(!usr.get_active_hand())
 				usr.put_in_hands(pda_device)
 			pda_device = null
 			update_icon()
 		else
-			usr << "There is nothing to remove from the console."
+			to_chat(usr, "There is nothing to remove from the console.")
 		return
 
 	ui_interact(user)
@@ -136,7 +136,7 @@
 						break
 
 				if(!appdatum)
-					usr << "\icon[src]<span class='warning'>An error occured while trying to download: \"[app_name]\"</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>An error occured while trying to download: \"[app_name]\"</span>")
 					flick("pdaterm-problem", src)
 					return
 
@@ -149,12 +149,12 @@
 					if(card)
 						if (connect_account(usr,card,appdatum))
 							appdatum.onInstall(pda_device)
-							usr << "\icon[pda_device]<span class='notice'>Application successfully downloaded!</span>"
+							to_chat(usr, "\icon[pda_device]<span class='notice'>Application successfully downloaded!</span>")
 							flick("pdaterm-purchase", src)
 						else
 							flick("pdaterm-problem", src)
 					else
-						usr << "\icon[src]<span class='warning'>No ID detected. Cannot proceed with the purchase.</span>"
+						to_chat(usr, "\icon[src]<span class='warning'>No ID detected. Cannot proceed with the purchase.</span>")
 						flick("pdaterm-problem", src)
 
 		if ("new_pda")
@@ -166,7 +166,7 @@
 
 				if(card)
 					if (connect_account(usr,card,0))
-						usr << "\icon[src]<span class='notice'>Enjoy your new PDA!</span>"
+						to_chat(usr, "\icon[src]<span class='notice'>Enjoy your new PDA!</span>")
 						flick("pdaterm-purchase", src)
 						if(prob(10))
 							new /obj/item/device/pda/clear(src.loc)//inserting mandatory hidden feature.
@@ -175,7 +175,7 @@
 					else
 						flick("pdaterm-problem", src)
 				else
-					usr << "\icon[src]<span class='warning'>No ID detected. Cannot proceed with the purchase.</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>No ID detected. Cannot proceed with the purchase.</span>")
 					flick("pdaterm-problem", src)
 	return 1
 
@@ -188,14 +188,14 @@
 			if(linked_account)
 				return	scan_card(user,W,appdatum)
 			else
-				user << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+				to_chat(user, "\icon[src]<span class='warning'>Unable to connect to linked account.</span>")
 		else
-			user << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
+			to_chat(user, "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>")
 	return	0
 
 /obj/machinery/computer/pda_terminal/scan_card(var/mob/user,var/obj/item/weapon/card/id/C,var/datum/pda_app/appdatum)
 	if(istype(C))
-		user << "<span class='info'>\the [src] detects and scans the following ID: [C].</span>"
+		to_chat(user, "<span class='info'>\the [src] detects and scans the following ID: [C].</span>")
 		if(linked_account)
 			//we start by checking the ID card's virtual wallet
 			var/datum/money_account/D = C.virtual_wallet
@@ -213,22 +213,22 @@
 				D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0)
 				using_account = "Bank Account"
 				if(!D)								//first we check if there IS a bank account in the first place
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-					usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "\icon[src]<span class='warning'>Unable to access your bank account.</span>")
 					return 0
 				else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-					usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>")
 					return 0
 				else if(D.money < transaction_amount)//and lastly we check if there's enough money on it, duh
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>")
 					return 0
 
 			//transfer the money
 			D.money -= transaction_amount
 			linked_account.money += transaction_amount
 
-			usr << "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
+			to_chat(usr, "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>")
 
 			//create an entry on the buy's account's transaction log
 			var/datum/transaction/T = new()
@@ -251,7 +251,7 @@
 			linked_account.transaction_log.Add(T)
 			return 1
 		else
-			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>")
 			return 0
 
 /obj/machinery/computer/pda_terminal/update_icon()

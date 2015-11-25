@@ -8,7 +8,7 @@ var/global/sent_syndicate_strike_team = 0
 	set desc = "Spawns a squad of commandos in the Syndicate Mothership if you want to run an admin event."
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!ticker)
 		alert("The game hasn't started yet!")
@@ -31,7 +31,7 @@ var/global/sent_syndicate_strike_team = 0
 				return
 
 	if(sent_syndicate_strike_team)
-		src << "Looks like someone beat you to it."
+		to_chat(src, "Looks like someone beat you to it.")
 		return
 
 	sent_syndicate_strike_team = 1
@@ -82,7 +82,7 @@ var/global/sent_syndicate_strike_team = 0
 				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code].</span>")
 			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input].</span>")
 
-			new_syndicate_commando << "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='danger'>[input]</span></span>"
+			to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='danger'>[input]</span></span>")
 
 			syndicate_commando_number--
 

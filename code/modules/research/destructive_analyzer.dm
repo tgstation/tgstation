@@ -48,7 +48,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/r_n_d/destructive_analyzer/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(loaded_item)
-		user << "<span class='rose'>You can't open the maintenance panel while an item is loaded!</span>"
+		to_chat(user, "<span class='rose'>You can't open the maintenance panel while an item is loaded!</span>")
 		return -1
 	return ..()
 
@@ -67,24 +67,24 @@ Note: Must be placed within 3 tiles of the R&D Console
 			if(isMoMMI(user))
 				var/mob/living/silicon/robot/mommi/mommi = user
 				if(mommi.is_in_modules(O,permit_sheets=1))
-					user << "<span class='warning'>You cannot insert something that is part of you.</span>"
+					to_chat(user, "<span class='warning'>You cannot insert something that is part of you.</span>")
 					return
 			else
 				return
 		if(!O.origin_tech)
-			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
+			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "<span class='warning'>You cannot deconstruct this item!</span>"
+			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
 			return
 		/*if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>"
+			to_chat(usr, "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>")
 			return*/
 		busy = 1
 		loaded_item = O
 		user.drop_item(O, src)
-		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
+		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
 		spawn(10)
 			icon_state = "d_analyzer_l"
@@ -95,7 +95,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (..(user))
 		return
 	if (loaded_item && !panel_open && !busy)
-		user << "<span class='notice'>You remove the [loaded_item.name] from the [src].</span>"
+		to_chat(user, "<span class='notice'>You remove the [loaded_item.name] from the [src].</span>")
 		loaded_item.loc = src.loc
 		loaded_item = null
 		icon_state = "d_analyzer"

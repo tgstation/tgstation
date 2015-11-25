@@ -249,7 +249,7 @@
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(iswelder(W) && src.destroyed)
 		if(weld(W, user))
-			user << "<span class='notice'>You salvage whats left of \the [src]</span>"
+			to_chat(user, "<span class='notice'>You salvage whats left of \the [src]</span>")
 			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))//new /obj/item/stack/sheet/metal(src.loc)
 			M.amount = 3
 			del src
@@ -272,7 +272,7 @@
 			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 			thejetpack.merge(removed)
-			user << "You pulse-pressurize your jetpack from the tank."
+			to_chat(user, "You pulse-pressurize your jetpack from the tank.")
 		return
 
 	..()
@@ -473,7 +473,7 @@
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to slice away at \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You start to slice away at \the [src]...</span>")
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1

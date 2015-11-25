@@ -67,7 +67,7 @@
 /turf/examine(mob/user)
 	..()
 	if(bullet_marks)
-		user << "It has bullet markings on it."
+		to_chat(user, "It has bullet markings on it.")
 
 /turf/proc/process()
 	universe.OnTurfTick(src)
@@ -125,10 +125,10 @@
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
 		for(var/obj/obstacle in src)
 			/*if(ismob(mover) && mover:client)
-				world << "<span class='danger'>EXIT</span>origin: checking exit of mob [obstacle]"*/
+				to_chat(world, "<span class='danger'>EXIT</span>origin: checking exit of mob [obstacle]"*/)
 			if(obstacle != mover && obstacle != target && !obstacle.CheckExit(mover, target))
 				/*if(ismob(mover) && mover:client)
-					world << "<span class='danger'>EXIT</span>Origin: We are bumping into [obstacle]"*/
+					to_chat(world, "<span class='danger'>EXIT</span>Origin: We are bumping into [obstacle]"*/)
 				mover.Bump(obstacle, 1)
 				return 0
 	return 1
@@ -156,10 +156,10 @@
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags&ON_BORDER)
 			/*if(ismob(mover) && mover:client)
-				world << "<span class='danger'>ENTER</span>Target(border): checking CanPass of [border_obstacle]"*/
+				to_chat(world, "<span class='danger'>ENTER</span>Target(border): checking CanPass of [border_obstacle]")*/
 			if(!border_obstacle.CanPass(mover, mover.loc) && (forget != border_obstacle) && mover != border_obstacle)
 				/*if(ismob(mover) && mover:client)
-					world << "<span class='danger'>ENTER</span>Target(border): We are bumping into [border_obstacle]"*/
+					to_chat(world, "<span class='danger'>ENTER</span>Target(border): We are bumping into [border_obstacle]")*/
 				mover.Bump(border_obstacle, 1)
 				return 0
 		else
@@ -173,10 +173,10 @@
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in large_dense)
 		/*if(ismob(mover) && mover:client)
-			world << "<span class='danger'>ENTER</span>target(large_dense): [mover] checking CanPass of [obstacle]"*/
+			to_chat(world, "<span class='danger'>ENTER</span>target(large_dense): [mover] checking CanPass of [obstacle]")*/
 		if(!obstacle.CanPass(mover, mover.loc) && (forget != obstacle) && mover != obstacle)
 			/*if(ismob(mover) && mover:client)
-				world << "<span class='danger'>ENTER</span>target(large_dense): checking: We are bumping into [obstacle]"*/
+				to_chat(world, "<span class='danger'>ENTER</span>target(large_dense): checking: We are bumping into [obstacle]")*/
 			mover.Bump(obstacle, 1)
 			return 0
 	return 1 //Nothing found to block so return success!
@@ -317,7 +317,7 @@
 	var/list/old_affecting_lights = affecting_lights
 	var/old_lighting_overlay = lighting_overlay
 
-	//world << "Replacing [src.type] with [N]"
+//	to_chat(world, "Replacing [src.type] with [N]")
 
 	if(connections) connections.erase_all()
 

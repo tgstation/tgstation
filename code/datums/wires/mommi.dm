@@ -10,7 +10,7 @@
 		//if(BORG_WIRE_LAWCHECK) //Cut the law wire, and the borg will no longer receive law updates from its AI
 		//	if(!mended)
 		//		if (R.lawupdate == 1)
-		//			R << "LawSync protocol engaged."
+//					to_chat(R, "LawSync protocol engaged.")
 		//			R.show_laws()
 		//	else
 		//		if (R.lawupdate == 0 && !R.emagged)
@@ -46,7 +46,7 @@
 			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)
 				R.camera.deactivate(usr, 0) // Kick anyone watching the Cyborg's camera, doesn't display you disconnecting the camera.
 				R.visible_message("[R]'s camera lense focuses loudly.")
-				R << "Your camera lense focuses loudly."
+				to_chat(R, "Your camera lense focuses loudly.")
 
 		if(BORG_WIRE_LOCKED_DOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle

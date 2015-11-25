@@ -35,19 +35,20 @@
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
-	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 	callHook("debrain", list(brainmob))
 
 /obj/item/organ/brain/examine(mob/user)
 	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
 		if(mind_can_reenter(brainmob.mind))// This checks if the ghost can re-enter (ghost.can_reenter_corpse)
-			user << "<span class='deadsay'>This one seems unresponsive.</span>" // Should probably make this more realistic,
+			to_chat(user, "<span class='deadsay'>This one seems unresponsive.</span>")// Should probably make this more realistic,
+
 			                                                                    //  but this message ties it in with MMI errors.
 		else
-			user << "<span class='notice'>You can feel the small spark of life still left in this one.</span>"
+			to_chat(user, "<span class='notice'>You can feel the small spark of life still left in this one.</span>")
 	else
-		user << "<span class='deadsay'>This one seems particularly lifeless. Perhaps it will regain some of its luster later..</span>"
+		to_chat(user, "<span class='deadsay'>This one seems particularly lifeless. Perhaps it will regain some of its luster later..</span>")
 
 /obj/item/organ/brain/removed(var/mob/living/target,var/mob/living/user)
 

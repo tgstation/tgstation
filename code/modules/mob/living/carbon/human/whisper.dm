@@ -5,7 +5,7 @@
 	var/oldmsg = message
 #endif
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(stat == DEAD || status_flags & FAKEDEATH)
@@ -35,7 +35,7 @@
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot whisper (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot whisper (muted).</span>")
 			return
 
 	//var/alt_name = get_alt_name()

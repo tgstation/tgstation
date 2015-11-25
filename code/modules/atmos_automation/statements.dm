@@ -108,7 +108,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if (!usr.dexterity_check())
-			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return 1
 
 		var/norange = 0

@@ -33,14 +33,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			to_chat(user, "You pop out the encryption key in the radio!")
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			to_chat(user, "This radio doesn't have any encryption keys!")
 
 	if (istype(W, /obj/item/device/encryptionkey))
 		if (!isnull(keyslot))
-			user << "<SPAN CLASS='notice'>The radio can't hold another key!</SPAN>"
+			to_chat(user, "<SPAN CLASS='notice'>The radio can't hold another key!</SPAN>")
 		else
 			user.drop_item(W, src)
 			insert_key(W)
@@ -82,7 +82,7 @@
 			channels = list()
 		else
 			recalculateChannels()
-		usr << "Subspace Transmission is [(subspace_transmission) ? "enabled" : "disabled"]"
+		to_chat(usr, "Subspace Transmission is [(subspace_transmission) ? "enabled" : "disabled"]")
 	..()
 
 /obj/item/device/radio/borg/interact(mob/user as mob)

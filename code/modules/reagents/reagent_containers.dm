@@ -92,11 +92,11 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 	// Actual transfer checks
 	if (source_empty)
-		user << "<span class='warning'>\The [source] is empty.</span>"
+		to_chat(user, "<span class='warning'>\The [source] is empty.</span>")
 		return -1
 
 	if (target_full)
-		user << "<span class='warning'>\The [target] is full.</span>"
+		to_chat(user, "<span class='warning'>\The [target] is full.</span>")
 		return -1
 
 	return source.reagents.trans_to(target, amount)
@@ -106,7 +106,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
  */
 /proc/splash_sub(var/datum/reagents/reagents, var/atom/target, var/amount, var/mob/user)
 	if (amount == 0 || reagents.is_empty())
-		user << "<span class='warning'>There's nothing to splash with!</span>"
+		to_chat(user, "<span class='warning'>There's nothing to splash with!</span>")
 		return -1
 
 	reagents.reaction(target, TOUCH)
@@ -143,7 +143,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	if (can_receive && istype(target, /obj/structure/reagent_dispensers))
 		var/tx_amount = transfer_sub(target, src, target:amount_per_transfer_from_this, user)
 		if (tx_amount > 0)
-			user << "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>"
+			to_chat(user, "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>")
 
 		return tx_amount
 	// Transfer to container
@@ -157,7 +157,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		success = tx_amount
 		if(success)
 			if (tx_amount > 0)
-				user << "<span class='notice'>You transfer [tx_amount] units of the solution to \the [target].</span>"
+				to_chat(user, "<span class='notice'>You transfer [tx_amount] units of the solution to \the [target].</span>")
 
 			// Log transfers of 'bad things' (/vg/)
 			if (tx_amount > 0 && container.log_reagents && bad_reagents && bad_reagents.len > 0)

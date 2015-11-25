@@ -80,9 +80,9 @@
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
+		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	for(var/datum/objective/objective in rev_mind.objectives)
-		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		rev_mind.special_role = "Head Revolutionary"
 		obj_count++
 
@@ -94,7 +94,7 @@
 		// Tell them about people they might want to contact.
 		var/mob/living/carbon/human/M = get_nt_opposed()
 		if(M && !(M.mind in head_revolutionaries) && !(M in already_considered))
-			rev_mob << "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them."
+			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 ///////////////////////////////////////////////////
@@ -108,7 +108,7 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	rev_mind.current << "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>"
+	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	return 1
@@ -132,8 +132,8 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/revolution/rp_revolution/announce()
-	world << "<B>The current game mode is - Revolution!</B>"
-	world << "<B>Some crewmembers are attempting to start a revolution!</B>"
+	to_chat(world, "<B>The current game mode is - Revolution!</B>")
+	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!</B>")
 
 
 //////////////////////////////////////////////////////////////////////
@@ -142,10 +142,10 @@
 /datum/game_mode/revolution/rp_revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads overthrown")
-		world << "<span class='danger'><FONT size = 3> The heads of staff were overthrown! The revolutionaries win!</FONT></span>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff were overthrown! The revolutionaries win!</FONT></span>")
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - revolution stopped")
-		world << "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>")
 	..()
 	return 1
 
@@ -161,24 +161,24 @@
 	set category = "IC"
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-			src << "<span class='danger'>[M] is already be a revolutionary!</span>"
+			to_chat(src, "<span class='danger'>[M] is already be a revolutionary!</span>")
 		else if(!ticker.mode:is_convertible(M))
-			src << "<span class='danger'>[M] is implanted with a loyalty implant - Remove it first!</span>"
+			to_chat(src, "<span class='danger'>[M] is implanted with a loyalty implant - Remove it first!</span>")
 		else
 			if(world.time < M.mind.rev_cooldown)
-				src << "<span class='warning'>Wait five seconds before reconversion attempt.</span>"
+				to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 				return
-			src << "<span class='warning'>Attempting to convert [M]...</span>"
+			to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
 			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M].</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
-				M << "<span class='notice'>You join the revolution!</span>"
-				src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
+				to_chat(M, "<span class='notice'>You join the revolution!</span>")
+				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 			else if(choice == "No!")
-				M << "<span class='warning'>You reject this traitorous cause!</span>"
-				src << "<span class='danger'>[M] does not support the revolution!</span>"
+				to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
+				to_chat(src, "<span class='danger'>[M] does not support the revolution!</span>")
 			M.mind.rev_cooldown = world.time+50
 
 /datum/game_mode/revolution/rp_revolution/process()
@@ -205,7 +205,7 @@
 				update_rev_icons_added(H.mind)
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-				H << "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>"
+				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
 				added_heads = 1
 				break
 
@@ -238,7 +238,7 @@
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
-	world << sound('sound/AI/commandreport.ogg')
+	to_chat(world, sound('sound/AI/commandreport.ogg'))
 
 /datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
@@ -251,4 +251,4 @@
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."
 			rev_mind.objectives += rev_obj
-			rev_mind.current << "<span class='warning'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>"
+			to_chat(rev_mind.current, "<span class='warning'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>")

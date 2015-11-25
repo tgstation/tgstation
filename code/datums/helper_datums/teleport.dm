@@ -165,7 +165,7 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>"
+			to_chat(MM, "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>")
 	return 1
 
 /datum/teleport/instant/science/teleportChecks()
@@ -186,7 +186,8 @@
 	if(destination.z == 2) //centcomm z-level
 		if(istype(teleatom, /obj/mecha) && (universe.name != "Supermatter Cascade"))
 			var/obj/mecha/MM = teleatom
-			MM.occupant << "<span class='danger'>The mech would not survive the jump to a location so far away!</span>"//seriously though, why? who wrote that?
+			to_chat(MM.occupant, "<span class='danger'>The mech would not survive the jump to a location so far away!</span>")//seriously though, why? who wrote that?
+
 			return 0
 		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)))
 			teleatom.visible_message("<span class='danger'>The Bag of Holding bounces off of the portal!</span>")
@@ -198,7 +199,7 @@
 	if(istype(teleatom,/mob/living/carbon/human)) //Tinfoil hats resist teleportation, but only when worn
 		var/mob/living/carbon/human/H = teleatom
 		if(H.head && istype(H.head,/obj/item/clothing/head/tinfoil))
-			H << "<span class'info'>Your headgear has 'foiled' a teleport!</span>"
+			to_chat(H, "<span class'info'>Your headgear has 'foiled' a teleport!</span>")
 			return 0
 
 	if(destination.z > 7) //Away mission z-levels

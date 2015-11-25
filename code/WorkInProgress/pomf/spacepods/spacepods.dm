@@ -86,10 +86,10 @@
 	if(!health)
 		spawn(0)
 			if(occupant)
-				occupant << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
+				to_chat(occupant, "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>")
 			for(var/i = 10, i >= 0; --i)
 				if(occupant)
-					occupant << "<span class='warning'>[i]</span>"
+					to_chat(occupant, "<span class='warning'>[i]</span>")
 				if(i == 0)
 					explosion(loc, 2, 4, 8)
 				sleep(10)
@@ -103,7 +103,7 @@
 			if(H)
 				H.loc = get_turf(src)
 				H.ex_act(severity + 1)
-				H << "<span class='warning'>You are forcefully thrown from \the [src]!</span>"
+				to_chat(H, "<span class='warning'>You are forcefully thrown from \the [src]!</span>")
 			del(ion_trail)
 			del(src)
 		if(2)
@@ -115,12 +115,12 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob)
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
-		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
+		to_chat(user, "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>")
 	if(istype(W, /obj/item/weapon/cell))
 		if(!hatch_open)
 			return ..()
 		if(battery)
-			user << "<span class='notice'>The pod already has a battery.</span>"
+			to_chat(user, "<span class='notice'>The pod already has a battery.</span>")
 			return
 		user.drop_item(W, src)
 		battery = W
@@ -129,14 +129,14 @@
 		if(!hatch_open)
 			return ..()
 		if(!equipment_system)
-			user << "<span class='warning'>The pod has no equipment datum, yell at pomf</span>"
+			to_chat(user, "<span class='warning'>The pod has no equipment datum, yell at pomf</span>")
 			return
 		if(istype(W, /obj/item/device/spacepod_equipment/weaponry))
 			if(equipment_system.weapon_system)
-				user << "<span class='notice'>The pod already has a weapon system, remove it first.</span>"
+				to_chat(user, "<span class='notice'>The pod already has a weapon system, remove it first.</span>")
 				return
 			else
-				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
+				to_chat(user, "<span class='notice'>You insert \the [W] into the equipment system.</span>")
 				user.drop_item(W, equipment_system)
 				equipment_system.weapon_system = W
 				equipment_system.weapon_system.my_atom = src
@@ -148,7 +148,7 @@
 	if(!hatch_open)
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		user << "<span class='warning'>The pod has no equipment datum, or is the wrong type, yell at pomf.</span>"
+		to_chat(user, "<span class='warning'>The pod has no equipment datum, or is the wrong type, yell at pomf.</span>")
 		return
 	var/list/possible = list()
 	if(battery)
@@ -165,32 +165,32 @@
 	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
 		if("Energy Cell")
 			if(user.put_in_any_hand_if_possible(battery))
-				user << "<span class='notice'>You remove \the [battery] from the space pod</span>"
+				to_chat(user, "<span class='notice'>You remove \the [battery] from the space pod</span>")
 				battery = null
 		if("Weapon System")
 			SPE = equipment_system.weapon_system
 			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				to_chat(user, "<span class='notice'>You remove \the [SPE] from the equipment system.</span>")
 				SPE.my_atom = null
 				equipment_system.weapon_system = null
 				verbs -= typesof(/obj/item/device/spacepod_equipment/weaponry/proc)
 			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
+				to_chat(user, "<span class='warning'>You need an open hand to do that.</span>")
 		/*
 		if("engine system")
 			SPE = equipment_system.engine_system
 			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				to_chat(user, "<span class='notice'>You remove \the [SPE] from the equipment system.</span>")
 				equipment_system.engine_system = null
 			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
+				to_chat(user, "<span class='warning'>You need an open hand to do that.</span>")
 		if("shield system")
 			SPE = equipment_system.shield_system
 			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				to_chat(user, "<span class='notice'>You remove \the [SPE] from the equipment system.</span>")
 				equipment_system.shield_system = null
 			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
+				to_chat(user, "<span class='warning'>You need an open hand to do that.</span>")
 		*/
 
 	return
@@ -226,7 +226,7 @@
 	if(usr!=src.occupant)
 		return
 	src.use_internal_tank = !src.use_internal_tank
-	src.occupant << "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>"
+	to_chat(src.occupant, "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>")
 	return
 
 /obj/spacepod/proc/add_cabin()
@@ -314,18 +314,18 @@
 	if (usr.stat || !ishuman(usr))
 		return
 	if (src.occupant)
-		usr << "<span class='notice'><B>The [src.name] is already occupied!</B></span>"
+		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
 		return
 /*
 	if (usr.abiotic())
-		usr << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
+		to_chat(usr, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 */
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-//	usr << "You start climbing into [src.name]"
+//	to_chat(usr, "You start climbing into [src.name]")
 
 	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
@@ -333,9 +333,9 @@
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
-			usr << "[src.occupant] was faster. Try better next time, loser."
+			to_chat(usr, "[src.occupant] was faster. Try better next time, loser.")
 	else
-		usr << "You stop entering the exosuit."
+		to_chat(usr, "You stop entering the exosuit.")
 	return
 
 /obj/spacepod/verb/exit_pod()
@@ -348,7 +348,7 @@
 	src.inertia_dir = 0 // engage reverse thruster and power down pod
 	src.occupant.loc = src.loc
 	src.occupant = null
-	usr << "<span class='notice'>You climb out of the pod</span>"
+	to_chat(usr, "<span class='notice'>You climb out of the pod</span>")
 	return
 
 /obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
@@ -451,13 +451,13 @@
 				inertia_dir = direction
 	else
 		if(!battery)
-			user << "<span class='warning'>No energy cell detected.</span>"
+			to_chat(user, "<span class='warning'>No energy cell detected.</span>")
 		else if(battery.charge < 3)
-			user << "<span class='warning'>Not enough charge left.</span>"
+			to_chat(user, "<span class='warning'>Not enough charge left.</span>")
 		else if(!health)
-			user << "<span class='warning'>She's dead, Jim</span>"
+			to_chat(user, "<span class='warning'>She's dead, Jim</span>")
 		else
-			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
+			to_chat(user, "<span class='warning'>Unknown error has occurred, yell at pomf.</span>")
 		return 0
 	battery.charge = max(0, battery.charge - 3)
 

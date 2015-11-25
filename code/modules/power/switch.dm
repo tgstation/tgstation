@@ -25,18 +25,18 @@
 /obj/structure/powerswitch/examine(mob/user)
 	..()
 	if(on)
-		user << "The switch is in the on position"
+		to_chat(user, "The switch is in the on position")
 	else
-		user << "The switch is in the off position"
+		to_chat(user, "The switch is in the off position")
 
 /obj/structure/powerswitch/attack_ai(mob/user)
-	user << "<span class='warning'>You're an AI. This is a manual switch. It's not going to work.</span>"
+	to_chat(user, "<span class='warning'>You're an AI. This is a manual switch. It's not going to work.</span>")
 	return
 
 /obj/structure/powerswitch/attack_hand(mob/user)
 
 	if(busy)
-		user << "<span class='warning'>This switch is already being toggled.</span>"
+		to_chat(user, "<span class='warning'>This switch is already being toggled.</span>")
 		return
 
 	..()

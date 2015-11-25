@@ -41,7 +41,7 @@
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		update_icons()
-		src << "<span class='notice'>Your [C.name] was disrupted!</span>"
+		to_chat(src, "<span class='notice'>Your [C.name] was disrupted!</span>")
 		Stun(2)
 
 	flash_weak_pain()

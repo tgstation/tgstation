@@ -20,17 +20,17 @@
 	if (istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match) || istype(W,  /obj/item/weapon/cigbutt))
 		if(user)
 			if (contents.len >= max_butts)
-				user << "This ashtray is full."
+				to_chat(user, "This ashtray is full.")
 				return
 			user.drop_item(W, src)
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if(istype(cig, /obj/item/weapon/cigbutt))
-				user << "You drop the [cig] into [src]."
+				to_chat(user, "You drop the [cig] into [src].")
 			if (istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match))
 				if (cig.lit == 1)
 					src.visible_message("[user] crushes [cig] in [src], putting it out.")
 				else if (cig.lit == 0)
-					user << "You place [cig] in [src] without even lighting it. Why would you do that?"
+					to_chat(user, "You place [cig] in [src] without even lighting it. Why would you do that?")
 				else if (cig.lit == -1)
 					src.visible_message("[user] places [cig] in [src].")
 			add_fingerprint(user)
@@ -42,7 +42,7 @@
 				desc = empty_desc + " It's half-filled."
 	else
 		health = max(0,health - W.force)
-		user << "You hit [src] with [W]."
+		to_chat(user, "You hit [src] with [W].")
 		if (health < 1)
 			die()
 	return

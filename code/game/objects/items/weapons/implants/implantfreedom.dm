@@ -19,7 +19,7 @@
 		if (src.uses < 1)	return 0
 		if (emote == src.activation_emote)
 			src.uses--
-			source << "You feel a faint click."
+			to_chat(source, "You feel a faint click.")
 			if (source.handcuffed)
 				var/obj/item/weapon/W = source.handcuffed
 				source.handcuffed = null
@@ -47,7 +47,7 @@
 
 	implanted(mob/living/carbon/source)
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		to_chat(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 		return 1
 
 

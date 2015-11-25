@@ -45,19 +45,19 @@
 	//I don't want this to be an open container.
 	..()
 	if(get_dist(user,src) > 3)
-		user << "<span class='info'>You can't make out the contents.</span>"
+		to_chat(user, "<span class='info'>You can't make out the contents.</span>")
 		return
 	if(reagents)
-		user << "It contains:"
+		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
 				if (R.id == "blood")
 					var/type = R.data["blood_type"]
-					user << "<span class='info'>[R.volume] units of [R.name], of type [type]</span>"
+					to_chat(user, "<span class='info'>[R.volume] units of [R.name], of type [type]</span>")
 				else
-					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 		else
-			user << "<span class='info'>Nothing.</span>"
+			to_chat(user, "<span class='info'>Nothing.</span>")
 
 //These should be kept for legacy purposes, probably. At least until they disappear from maps.
 /obj/item/weapon/reagent_containers/blood/APlus

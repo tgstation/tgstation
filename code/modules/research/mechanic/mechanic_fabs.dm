@@ -93,13 +93,13 @@
 	if(istype(O, /obj/item/research_blueprint))
 		var/obj/item/research_blueprint/RB = O
 		if(!(RB.design_type in design_types))
-			user <<"<span class='warning'>This isn't the right machine for that kind of blueprint!</span>"
+			to_chat(user, "<span class='warning'>This isn't the right machine for that kind of blueprint!</span>")
 			return 0
 		else if(RB.stored_design && (RB.design_type in design_types))
 			if(src.AddBlueprint(RB, user))
 				if(src.AddMechanicDesign(RB.stored_design, user))
 					overlays += "[base_state]-bp"
-					user <<"<span class='notice'>You successfully load \the [RB.name] into \the [src].</span>"
+					to_chat(user, "<span class='notice'>You successfully load \the [RB.name] into \the [src].</span>")
 					if(RB.delete_on_use)	qdel(RB) //we delete if the thing is set to delete. Always set to 1 right now
 					spawn(10)
 						overlays -= "[base_state]-bp"
@@ -167,7 +167,7 @@
 	for(var/list in src.part_sets)
 		for(var/datum/design/mechanic_design/MD in part_sets[list])
 			if(MD == BPdesign) //because they're the same design, they make exactly the same thing
-				user << "You can't add that design, as it's already loaded into the machine!"
+				to_chat(user, "You can't add that design, as it's already loaded into the machine!")
 				return 0 //can't add to an infinite design
 	return 1 //let's add the new design, since we haven't found it
 

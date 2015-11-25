@@ -57,7 +57,7 @@
 
 	..(user, " [capitalize(pronoun)] [size].")
 	if(meat_taken > 0)
-		user << "<span class='info'>[capitalize(pronoun)] partially butchered.</span>"
+		to_chat(user, "<span class='info'>[capitalize(pronoun)] partially butchered.</span>")
 
 	var/butchery = "" //More information about butchering status, check out "code/datums/helper_datums/butchering.dm"
 
@@ -65,7 +65,7 @@
 		for(var/datum/butchering_product/B in butchering_drops)
 			butchery = "[butchery][B.desc_modifier(src)]"
 	if(butchery)
-		user << "<span class='info'>[butchery]</span>"
+		to_chat(user, "<span class='info'>[butchery]</span>")
 
 /mob/living/Life()
 	if(timestopped) return 0 //under effects of time magick
@@ -78,11 +78,11 @@
 	if(reagents && reagents.has_reagent("bustanut"))
 		if(!(M_HARDCORE in mutations))
 			mutations.Add(M_HARDCORE)
-			src << "<span class='notice'>You feel like you're the best around.  Nothing's going to get you down.</span>"
+			to_chat(src, "<span class='notice'>You feel like you're the best around.  Nothing's going to get you down.</span>")
 	else
 		if(M_HARDCORE in mutations)
 			mutations.Remove(M_HARDCORE)
-			src << "<span class='notice'>You feel like a pleb.</span>"
+			to_chat(src, "<span class='notice'>You feel like a pleb.</span>")
 	handle_beams()
 
 	//handles "call on life", allowing external life-related things to be processed
@@ -94,11 +94,11 @@
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return
-			//world << "[src.name]"
+//			to_chat(world, "[src.name]")
 			var/datum/mind/head = ticker.mode.implanted[mind]
 			//var/list/removal
 			if(!(locate(/obj/item/weapon/implant/traitor) in src.contents))
-				//world << "doesn't have an implant"
+//				to_chat(world, "doesn't have an implant")
 				ticker.mode.remove_traitor_mind(mind, head)
 				/*
 				if((head in ticker.mode.implanters))
@@ -107,7 +107,7 @@
 				if(src.mind in ticker.mode.traitors)
 					ticker.mode.traitors -= src.mind
 					special_role = null
-					current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</FONT></span>"
+					to_chat(current, "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</FONT></span>")
 				*/
 
 // Apply connect damage
@@ -131,7 +131,7 @@
 	if(iscultist(src) && client)
 		var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(src))
 		mind.transfer_to(C)
-		C << "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>"
+		to_chat(C, "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>")
 		dust()
 	else if(client)
 		var/mob/dead/G = (ghostize())
@@ -150,7 +150,7 @@
 			G.overlays += H.obj_overlays[HEAD_LAYER]
 			G.overlays += H.obj_overlays[HANDCUFF_LAYER]
 		G.invisibility = 0
-		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
+		to_chat(G, "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>")
 
 		if(ticker.mode.name == "cult")
 			var/datum/game_mode/cult/mode_ticker = ticker.mode
@@ -178,7 +178,7 @@
 		src.attack_log += "[src] has succumbed to death with [health] points of health!"
 		src.apply_damage(maxHealth + 5 + src.health, OXY) // This will ensure people die when using the command, but don't go into overkill. 15 oxy points over the limit for safety since brute and burn regenerates
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "<span class='info'>You have given up life and succumbed to death.</span>"
+		to_chat(src, "<span class='info'>You have given up life and succumbed to death.</span>")
 
 
 /mob/living/proc/updatehealth()
@@ -198,7 +198,7 @@
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
-		//world << "DEBUG: burn_skin(), mutations=[mutations]"
+//		to_chat(world, "DEBUG: burn_skin(), mutations=[mutations]")
 		if(M_NO_SHOCK in src.mutations) //shockproof
 			return 0
 		if (M_RESIST_HEAT in src.mutations) //fireproof
@@ -239,7 +239,7 @@
 		if(actual < desired)
 			temperature = desired
 //	if(istype(src, /mob/living/carbon/human))
-//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
+//		to_chat(world, "[src] ~ [src.bodytemperature] ~ [temperature]")
 	return temperature
 
 
@@ -459,8 +459,6 @@ Thanks.
 	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/rejuvenate(animation = 0)
-
-
 	var/turf/T = get_turf(src)
 	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
 
@@ -573,11 +571,11 @@ Thanks.
 
 	if(config.allow_Metadata)
 		if(client)
-			usr << "[src]'s Metainfo:<br>[client.prefs.metadata]"
+			to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			usr << "[src] does not have any stored infomation!"
+			to_chat(usr, "[src] does not have any stored infomation!")
 	else
-		usr << "OOC Metadata is not supported by this server!"
+		to_chat(usr, "OOC Metadata is not supported by this server!")
 
 	return
 
@@ -746,7 +744,7 @@ Thanks.
 				L.put_in_hands(B)
 				B.unstick(0)
 			else
-				L << "<span class='warning'>You need to stop moving around while you try to get a hold of \the [B]!</span>"
+				to_chat(L, "<span class='warning'>You need to stop moving around while you try to get a hold of \the [B]!</span>")
 			return
 		else
 			continue
@@ -758,7 +756,7 @@ Thanks.
 
 		H.simple_message("<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>",\
 			"<span class='danger'>You attempt to remember who you are and how the heck did you get here (this will probably take a while).</span>")
-		B.host << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
+		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
 		spawn(rand(350,450)+B.host.brainloss)
 
@@ -767,7 +765,7 @@ Thanks.
 
 			B.host.adjustBrainLoss(rand(5,10))
 			H.simple_message("<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
-			B.host << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+			to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
 
 			var/mob/living/carbon/C=B.host
 			C.do_release_control(0) // Was detach().
@@ -920,7 +918,7 @@ Thanks.
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
 					else
-						CM << "<span class='warning'>Your cuff breaking attempt was interrupted.</span>"
+						to_chat(CM, "<span class='warning'>Your cuff breaking attempt was interrupted.</span>")
 
 
 			else
@@ -961,7 +959,7 @@ Thanks.
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
 					else
-						CM << "<span class='warning'>Your legcuffing breaking attempt was interrupted.</span>"
+						to_chat(CM, "<span class='warning'>Your legcuffing breaking attempt was interrupted.</span>")
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
 				var/breakouttime = HC.breakouttime
@@ -979,14 +977,14 @@ Thanks.
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
 					else
-						CM << "<span class='warning'>Your unlegcuffing attempt was interrupted.</span>"
+						to_chat(CM, "<span class='warning'>Your unlegcuffing attempt was interrupted.</span>")
 
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
 
 	resting = !resting
-	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>"
+	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>")
 
 /mob/living/proc/has_brain()
 	return 1
@@ -1087,12 +1085,12 @@ default behaviour is:
 			for(var/mob/living/M in range(tmob, 1))
 				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
 					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
+						to_chat(src, "<span class='warning'>[tmob] is restrained, you cannot push past</span>")
 					now_pushing = 0
 					return
 				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
 					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
+						to_chat(src, "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>")
 					now_pushing = 0
 					return
 
@@ -1124,7 +1122,7 @@ default behaviour is:
 				return
 			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 				if(prob(40) && !(M_FAT in src.mutations))
-					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
+					to_chat(src, "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>")
 					now_pushing = 0
 					return
 			if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
@@ -1195,15 +1193,15 @@ default behaviour is:
 		return
 
 	if(being_butchered)
-		user << "<span class='notice'>[src] is already being butchered.</span>"
+		to_chat(user, "<span class='notice'>[src] is already being butchered.</span>")
 		return
 
 	if(!can_butcher)
 		if(meat_taken)
-			user << "<span class='notice'>[src] has already been butchered.</span>"
+			to_chat(user, "<span class='notice'>[src] has already been butchered.</span>")
 			return
 		else
-			user << "<span class='notice'>You can't butcher [src]!"
+			to_chat(user, "<span class='notice'>You can't butcher [src]!")
 			return
 		return
 
@@ -1218,7 +1216,7 @@ default behaviour is:
 		if(tool)
 			speed_mod = tool.is_sharp()
 			if(!speed_mod)
-				user << "<span class='notice'>You can't butcher \the [src] with this!</span>"
+				to_chat(user, "<span class='notice'>You can't butcher \the [src] with this!</span>")
 				return
 		else
 			speed_mod = 0.0
@@ -1262,10 +1260,10 @@ default behaviour is:
 				"<span class='info'>You start [our_product.verb_gerund] \the [src].</span>")
 			src.being_butchered = 1
 			if(!do_after(user,src,butchering_time / speed_mod))
-				user << "<span class='warning'>Your attempt to [our_product.verb_name] \the [src] has been interrupted.</span>"
+				to_chat(user, "<span class='warning'>Your attempt to [our_product.verb_name] \the [src] has been interrupted.</span>")
 				src.being_butchered = 0
 			else
-				user << "<span class='info'>You finish [our_product.verb_gerund] \the [src].</span>"
+				to_chat(user, "<span class='info'>You finish [our_product.verb_gerund] \the [src].</span>")
 				src.being_butchered = 0
 				src.update_icons()
 				our_product.spawn_result(get_turf(src), src)
@@ -1276,7 +1274,7 @@ default behaviour is:
 	src.being_butchered = 1
 
 	if(!do_after(user,src,butchering_time / speed_mod))
-		user << "<span class='warning'>Your attempt to butcher \the [src] was interrupted.</span>"
+		to_chat(user, "<span class='warning'>Your attempt to butcher \the [src] was interrupted.</span>")
 		src.being_butchered = 0
 		return
 
@@ -1285,10 +1283,10 @@ default behaviour is:
 	src.being_butchered = 0
 
 	if(src.meat_taken < src.size)
-		user << "<span class='info'>You cut a chunk of meat out of \the [src].</span>"
+		to_chat(user, "<span class='info'>You cut a chunk of meat out of \the [src].</span>")
 		return
 
-	user << "<span class='info'>You butcher \the [src].</span>"
+	to_chat(user, "<span class='info'>You butcher \the [src].</span>")
 	can_butcher = 0
 
 	if(istype(src, /mob/living/simple_animal)) //Animals can be butchered completely, humans - not so
@@ -1300,8 +1298,8 @@ default behaviour is:
 	var/obj/item/weapon/holder/D = getFromPool(holder_type, loc, src)
 
 	if(M.put_in_active_hand(D))
-		M << "You scoop up [src]."
-		src << "[M] scoops you up."
+		to_chat(M, "You scoop up [src].")
+		to_chat(src, "[M] scoops you up.")
 		src.loc = D //Only move the mob into the holder after we're sure he has been picked up!
 	else
 		returnToPool(D)

@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/carp/examine(mob/user)
 	..()
 	if(Adjacent(user))
-		user << "It appears to be [(gender==MALE) ? "male" : "female"]."
+		to_chat(user, "It appears to be [(gender==MALE) ? "male" : "female"].")
 
 /mob/living/simple_animal/hostile/carp/give_birth()
 	spawn(rand(100,200))

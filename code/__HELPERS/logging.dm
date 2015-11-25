@@ -6,7 +6,7 @@
  * print a warning message to world.log
  */
 /* see setup.dm
-#define WARNING(MSG) world << "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr]."
+#define WARNING(MSG) to_chat(world, "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 #define warning(msg) world.log << "## WARNING: [msg]"
 #define testing(msg) world.log << "## TESTING: [msg]"
 #define log_game(text) diary << html_decode("\[[time_stamp()]]GAME: [text]")
@@ -52,7 +52,7 @@
 
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_DEBUGLOGS)
-			C << "DEBUG: [text]"
+			to_chat(C, "DEBUG: [text]")
 
 
 
@@ -133,5 +133,5 @@
  * Standardized method for tracking startup times.
  */
 /proc/log_startup_progress(var/message)
-	world << "<span class='danger'>[message]</span>"
+	to_chat(world, "<span class='danger'>[message]</span>")
 	world.log << message

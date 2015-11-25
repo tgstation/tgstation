@@ -82,7 +82,7 @@
 		if(Controller)
 			mind = Controller
 			ckey = ckey(mind.key)
-			src << "<big><span class='warning'>You have been risen from the dead by your new master, [Owner]. Do his bidding so long as he lives, for when he falls so do you.</span></big>"
+			to_chat(src, "<big><span class='warning'>You have been risen from the dead by your new master, [Owner]. Do his bidding so long as he lives, for when he falls so do you.</span></big>")
 		var/ref = "\ref[Owner.mind]"
 		var/list/necromancers
 		if(!(Owner.mind in ticker.mode.necromancer))

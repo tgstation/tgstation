@@ -127,14 +127,14 @@ Class Procs:
 			T.set_graphic(air.graphics)
 
 /zone/proc/dbg_data(mob/M)
-	M << name
-	M << "O2: [air.oxygen] N2: [air.nitrogen] CO2: [air.carbon_dioxide] P: [air.toxins]"
-	M << "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)"
-	M << "O2 per N2: [(air.nitrogen ? air.oxygen/air.nitrogen : "N/A")] Moles: [air.total_moles]"
-	M << "Simulated: [contents.len] ([air.group_multiplier])"
-	//M << "Unsimulated: [unsimulated_contents.len]"
-	//M << "Edges: [edges.len]"
-	if(invalid) M << "Invalid!"
+	to_chat(M, name)
+	to_chat(M, "O2: [air.oxygen] N2: [air.nitrogen] CO2: [air.carbon_dioxide] P: [air.toxins]")
+	to_chat(M, "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]ï¿½K ([air.temperature - T0C]ï¿½C)")
+	to_chat(M, "O2 per N2: [(air.nitrogen ? air.oxygen/air.nitrogen : "N/A")] Moles: [air.total_moles]")
+	to_chat(M, "Simulated: [contents.len] ([air.group_multiplier])")
+//	to_chat(M, "Unsimulated: [unsimulated_contents.len]")
+//	to_chat(M, "Edges: [edges.len]")
+	if(invalid) to_chat(M, "Invalid!")
 	var/zone_edges = 0
 	var/space_edges = 0
 	var/space_coefficient = 0
@@ -143,10 +143,10 @@ Class Procs:
 		else
 			space_edges++
 			space_coefficient += E.coefficient
-			M << "[E:air:return_pressure()]kPa"
+			to_chat(M, "[E:air:return_pressure()]kPa")
 
-	M << "Zone Edges: [zone_edges]"
-	M << "Space Edges: [space_edges] ([space_coefficient] connections)"
+	to_chat(M, "Zone Edges: [zone_edges]")
+	to_chat(M, "Space Edges: [space_edges] ([space_coefficient] connections)")
 
 	//for(var/turf/T in unsimulated_contents)
-	//	M << "[T] at ([T.x],[T.y])"
+//		to_chat(M, "[T] at ([T.x],[T.y])")

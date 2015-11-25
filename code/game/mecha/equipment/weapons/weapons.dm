@@ -118,7 +118,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.earprot())
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.sleeping = 0
 		M.stuttering += 20
 		M.ear_deaf += 30

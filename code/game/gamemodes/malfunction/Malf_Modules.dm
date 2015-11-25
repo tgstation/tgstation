@@ -48,7 +48,7 @@ rcd light flash thingy on matter drain
 
 	ai_flags |= COREFIRERESIST
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "<span class='warning'>Core fireproofed.</span>"
+	to_chat(src, "<span class='warning'>Core fireproofed.</span>")
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -87,8 +87,8 @@ rcd light flash thingy on matter drain
 				rcd.disabled = 1
 			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 				rcd.disabled = 1
-			src << "RCD-disabling pulse emitted."
-		else src << "Out of uses."
+			to_chat(src, "RCD-disabling pulse emitted.")
+		else to_chat(src, "Out of uses.")
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -112,8 +112,8 @@ rcd light flash thingy on matter drain
 				spawn(50)
 					explosion(get_turf(M), -1, 1, 2, 3) //C4 Radius + 1 Dest for the machine
 					qdel(M)
-			else src << "Out of uses."
-	else src << "That's not a machine."
+			else to_chat(src, "Out of uses.")
+	else to_chat(src, "That's not a machine.")
 
 
 /datum/AI_Module/large/place_cyborg_transformer
@@ -139,7 +139,7 @@ rcd light flash thingy on matter drain
 		return
 
 	if(PCT.uses < 1)
-		src << "Out of uses."
+		to_chat(src, "Out of uses.")
 		return
 
 	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
@@ -175,7 +175,7 @@ rcd light flash thingy on matter drain
 	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
 	src.can_shunt = 0
 	PCT.uses -= 1
-	src << "You cannot shunt anymore."
+	to_chat(src, "You cannot shunt anymore.")
 
 /datum/AI_Module/large/highrescams
 	module_name = "High Resolution Cameras"
@@ -215,7 +215,7 @@ rcd light flash thingy on matter drain
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-		else src << "Out of uses."
+		else to_chat(src, "Out of uses.")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -253,9 +253,9 @@ rcd light flash thingy on matter drain
 					C.deactivate(src)
 					camera.uses --
 				else
-					src << "This camera is either active, or not repairable."
-			else src << "Out of uses."
-	else src << "That's not a camera."
+					to_chat(src, "This camera is either active, or not repairable.")
+			else to_chat(src, "Out of uses.")
+	else to_chat(src, "That's not a camera.")
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
@@ -296,11 +296,11 @@ rcd light flash thingy on matter drain
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "Camera successully upgraded!"
+						to_chat(src, "Camera successully upgraded!")
 					else
-						src << "This camera is already upgraded!"
+						to_chat(src, "This camera is already upgraded!")
 			else
-				src << "Out of uses."
+				to_chat(src, "Out of uses.")
 
 
 /datum/module_picker

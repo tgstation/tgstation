@@ -66,7 +66,7 @@
 
 	if(attack_delayer.blocked()) // This was next_move.  next_attack makes more sense.
 		return
-	//world << "next_attack is [next_attack] and world.time is [world.time]"
+//	to_chat(world, "next_attack is [next_attack] and world.time is [world.time]")
 	if(istype(loc,/obj/mecha))
 		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
 			return
@@ -291,7 +291,7 @@
 		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
-		src << "<span class='warning'>You're out of energy!  You need food!</span>"
+		to_chat(src, "<span class='warning'>You're out of energy!  You need food!</span>")
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)

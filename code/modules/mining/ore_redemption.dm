@@ -35,7 +35,7 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		// N3X - Fixes people's IDs getting eaten when a new card is inserted
 		if(istype(inserted_id))
-			user << "<span class='warning'>There already is an ID in \the [src].</span>"
+			to_chat(user, "<span class='warning'>There already is an ID in \the [src].</span>")
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
@@ -136,23 +136,23 @@
 				var/datum/money_account/acct = get_card_account(inserted_id)
 				if(acct && acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
-					usr << "<span class='notice'>Credits transferred.</span>"
+					to_chat(usr, "<span class='notice'>Credits transferred.</span>")
 				else
-					usr << "<span class='warning'>Failed to claim credits.</span>"
+					to_chat(usr, "<span class='warning'>Failed to claim credits.</span>")
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
 				usr.drop_item(I, src)
 				inserted_id = I
 			else
-				usr << "<span class='warning'>No valid ID.</span>"
+				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 				return 1
 	else if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
 			if(!mat)
-				usr << "<span class='warning'>Unable to find material [release]!</span>"
+				to_chat(usr, "<span class='warning'>Unable to find material [release]!</span>")
 				return 1
 			var/desired = input("How much?","How much [mat.processed_name] to eject?", materials.storage[release]) as num
 			if(desired==0)

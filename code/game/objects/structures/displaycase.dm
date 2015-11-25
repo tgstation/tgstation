@@ -98,7 +98,7 @@
 		msg+= "\icon[occupant] <span class='notice'>\A [occupant]</span>"
 	else
 		msg+= "Nothing."
-	user << msg
+	to_chat(user, msg)
 
 /obj/structure/displaycase/proc/dump()
 	if(occupant)
@@ -171,13 +171,13 @@
 	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I=W
 		if(!check_access(I))
-			user << "<span class='rose'>Access denied.</span>"
+			to_chat(user, "<span class='rose'>Access denied.</span>")
 			return
 		locked = !locked
 		if(!locked)
-			user << "\icon[src] <span class='notice'>\The [src] clicks as locks release, and it slowly opens for you.</span>"
+			to_chat(user, "\icon[src] <span class='notice'>\The [src] clicks as locks release, and it slowly opens for you.</span>")
 		else
-			user << "\icon[src] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>"
+			to_chat(user, "\icon[src] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/crowbar) && (!locked || destroyed))
 		user.visible_message("[user.name] pries \the [src] apart.", \
@@ -212,9 +212,9 @@
 		..()
 	else
 		if(locked)
-			user << "<span class='rose'>It's locked, you can't put anything into it.</span>"
+			to_chat(user, "<span class='rose'>It's locked, you can't put anything into it.</span>")
 		else if(!occupant)
-			user << "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>"
+			to_chat(user, "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>")
 			user.drop_item(W, src)
 			occupant=W
 			update_icon()
@@ -229,7 +229,7 @@
 	if (destroyed)
 		if(occupant)
 			dump()
-			user << "<span class='danger'>You smash your fist into the delicate electronics at the bottom of the case, and deactivate the hoverfield permanently.</span>"
+			to_chat(user, "<span class='danger'>You smash your fist into the delicate electronics at the bottom of the case, and deactivate the hoverfield permanently.</span>")
 			src.add_fingerprint(user)
 			update_icon()
 	else
@@ -243,19 +243,19 @@
 		else if(!locked)
 			if(ishuman(user))
 				if(!ue)
-					user << "<span class='notice'>You press your thumb against the fingerprint scanner, registering your identity with the case.</span>"
+					to_chat(user, "<span class='notice'>You press your thumb against the fingerprint scanner, registering your identity with the case.</span>")
 					ue = getPrint(user)
 					return
 				if(ue!=getPrint(user))
-					user << "<span class='rose'>Access denied.</span>"
+					to_chat(user, "<span class='rose'>Access denied.</span>")
 					return
 
-				user << "<span class='notice'>You press your thumb against the fingerprint scanner, and deactivate the hoverfield built into the case.</span>"
+				to_chat(user, "<span class='notice'>You press your thumb against the fingerprint scanner, and deactivate the hoverfield built into the case.</span>")
 				if(occupant)
 					dump()
 					update_icon()
 				else
-					src << "\icon[src] <span class='rose'>\The [src] is empty!</span>"
+					to_chat(src, "\icon[src] <span class='rose'>\The [src] is empty!</span>")
 		else
 			user.delayNextAttack(10) // prevent spam
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \

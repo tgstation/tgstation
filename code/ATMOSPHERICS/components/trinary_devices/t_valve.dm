@@ -126,7 +126,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/attack_hand(mob/user as mob)
 	if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
-		user << "<span class='warning'>Nope.</span>"
+		to_chat(user, "<span class='warning'>Nope.</span>")
 		return
 
 	investigation_log(I_ATMOS,"was [state ? "opened (straight)" : "closed (side)"] by [key_name(usr)]")
@@ -148,11 +148,11 @@
 			close()
 		if(!node1)
 			if(!nodealert)
-				//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//				to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 				nodealert = 1
 		else if (!node2)
 			if(!nodealert)
-				//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//				to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 				nodealert = 1
 		else if (nodealert)
 			nodealert = 0
@@ -194,7 +194,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/attack_hand(mob/user as mob)
 	if(!src.allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 

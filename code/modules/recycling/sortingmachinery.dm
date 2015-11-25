@@ -83,14 +83,14 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 /obj/item/device/destTagger/attackby(obj/item/W, mob/user)
 	if(isscrewdriver(W))
 		panel = !panel
-		user << "<span class='notify'>You [panel ? "open" : "close"] the panel on \the [src].</span>"
+		to_chat(user, "<span class='notify'>You [panel ? "open" : "close"] the panel on \the [src].</span>")
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		update_icon()
 		return 1
 
 	if(ismultitool(W) && panel)
 		mode = !mode
-		user << "<span class='notify'>You [mode ? "disable" : "enable"] the lock on \the [src].</span>"
+		to_chat(user, "<span class='notify'>You [mode ? "disable" : "enable"] the lock on \the [src].</span>")
 		return 1
 
 	. = ..()
@@ -213,21 +213,21 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 		if(c_mode==0)
 			c_mode=1
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You remove the screws around the power connection."
+			to_chat(user, "You remove the screws around the power connection.")
 			return
 		else if(c_mode==1)
 			c_mode=0
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You attach the screws around the power connection."
+			to_chat(user, "You attach the screws around the power connection.")
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
-			user << "You start slicing the floorweld off the delivery chute."
+			to_chat(user, "You start slicing the floorweld off the delivery chute.")
 			if(do_after(user, src,20))
 				if(!src || !W.isOn()) return
-				user << "You sliced the floorweld off the delivery chute."
+				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
@@ -236,7 +236,7 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 				qdel(src)
 			return
 		else
-			user << "You need more welding fuel to complete this task."
+			to_chat(user, "You need more welding fuel to complete this task.")
 			return
 
 /obj/machinery/disposal/deliveryChute/process()

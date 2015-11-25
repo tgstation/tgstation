@@ -51,7 +51,7 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>\n"
-	src << msg
+	to_chat(src, msg)
 
 /client/verb/adminwho()
 	set category = "Admin"
@@ -111,4 +111,4 @@
 					mNames += "\t[C] is a [C.holder.rank]\n"
 					numModsOnline++
 
-	src << "\n<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators ([numModsOnline]):</b>\n" + mNames + "\n"
+	to_chat(src, "\n<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators ([numModsOnline]):</b>\n" + mNames + "\n")

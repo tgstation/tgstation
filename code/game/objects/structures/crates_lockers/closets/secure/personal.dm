@@ -59,7 +59,7 @@
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
-			user << "<span flags='rose'>It appears to be broken.</span>"
+			to_chat(user, "<span flags='rose'>It appears to be broken.</span>")
 			return
 		var/obj/item/weapon/card/id/I = W
 		if(!I || !I.registered_name)	return
@@ -72,7 +72,7 @@
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
-				O << "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>"
+				to_chat(O, "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>")
 		if(src.locked)
 			src.icon_state = src.icon_locked
 		else
@@ -81,4 +81,4 @@
 			src.registered_name = given_name
 			src.desc = "Owned by [given_name]."
 	else
-		user << "<span class='notice'>Access Denied</span>"
+		to_chat(user, "<span class='notice'>Access Denied</span>")

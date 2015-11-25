@@ -41,8 +41,8 @@
 
 
 /datum/game_mode/vampire/announce()
-	world << "<B>The current game mode is - Vampires!</B>"
-	world << "<B>There are Vampires from Space Transylvania on the station, keep your blood close and neck safe!</B>"
+	to_chat(world, "<B>The current game mode is - Vampires!</B>")
+	to_chat(world, "<B>There are Vampires from Space Transylvania on the station, keep your blood close and neck safe!</B>")
 
 /datum/game_mode/vampire/pre_setup()
 	// mixed mode scaling
@@ -262,17 +262,17 @@
 		dat = "<span class='danger'>You are a Vampire!</br></span>"
 	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers and use coffins to regenerate your body if injured.
 You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel, and especially Holy Water."}
-	vampire.current << dat
-	vampire.current << "<B>You must complete the following tasks:</B>"
+	to_chat(vampire.current, dat)
+	to_chat(vampire.current, "<B>You must complete the following tasks:</B>")
 
 	if (vampire.current.mind)
 		if (vampire.current.mind.assigned_role == "Clown")
-			vampire.current << "<span class='sinister'>Your lust for blood has allowed you to overcome your clumsy nature allowing you to wield weapons without harming yourself.</span>"
+			to_chat(vampire.current, "<span class='sinister'>Your lust for blood has allowed you to overcome your clumsy nature allowing you to wield weapons without harming yourself.</span>")
 			vampire.current.mutations.Remove(M_CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in vampire.objectives)
-		vampire.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(vampire.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -371,17 +371,17 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		H.LAssailant = src
 	while(do_mob(src, H, 50))
 		if(!mind.vampire || !(mind in ticker.mode.vampires))
-			src << "<span class='warning'>Your fangs have disappeared!</span>"
+			to_chat(src, "<span class='warning'>Your fangs have disappeared!</span>")
 			src.mind.vampire.draining = null
 			return 0
 		if(H.species.flags & NO_BLOOD)
-			src << "<span class='warning'>Not a drop of blood here</span>"
+			to_chat(src, "<span class='warning'>Not a drop of blood here</span>")
 			src.mind.vampire.draining = null
 			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
 		if(!H.vessel.get_reagent_amount("blood"))
-			src << "<span class='warning'>They've got no blood left to give.</span>"
+			to_chat(src, "<span class='warning'>They've got no blood left to give.</span>")
 			break
 		if(H.stat < 2) //alive
 			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
@@ -392,12 +392,12 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			blood = min(5, H.vessel.get_reagent_amount("blood"))// The dead only give 5 bloods
 			src.mind.vampire.bloodtotal += blood
 		if(bloodtotal != src.mind.vampire.bloodtotal)
-			src << "<span class='notice'>You have accumulated [src.mind.vampire.bloodtotal] [src.mind.vampire.bloodtotal > 1 ? "units" : "unit"] of blood[src.mind.vampire.bloodusable != bloodusable ?", and have [src.mind.vampire.bloodusable] left to use" : "."]</span>"
+			to_chat(src, "<span class='notice'>You have accumulated [src.mind.vampire.bloodtotal] [src.mind.vampire.bloodtotal > 1 ? "units" : "unit"] of blood[src.mind.vampire.bloodusable != bloodusable ?", and have [src.mind.vampire.bloodusable] left to use" : "."]</span>")
 		check_vampire_upgrade(mind)
 		H.vessel.remove_reagent("blood",25)
 
 	src.mind.vampire.draining = null
-	src << "<span class='notice'>You stop draining [H.name] of blood.</span>"
+	to_chat(src, "<span class='notice'>You stop draining [H.name] of blood.</span>")
 	return 1
 
 /mob/proc/check_vampire_upgrade(datum/mind/v)
@@ -427,7 +427,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		vamp.powers |= VAMP_BATS
 		vamp.powers |= VAMP_SCREAM
 		// Commented out until we can figured out a way to stop this from spamming.
-		//src << "<span class='notice'>Your rejuvination abilities have improved and will now heal you over time when used.</span>"
+//		to_chat(src, "<span class='notice'>Your rejuvination abilities have improved and will now heal you over time when used.</span>")
 
 	// TIER 3.5 (/vg/)
 	if(vamp.bloodtotal >= 250)
@@ -463,58 +463,58 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			switch(n)
 				if(VAMP_SHAPE)
 					msg = "<span class='notice'>You have gained the shapeshifting ability, at the cost of stored blood you can change your form permanently.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_shapeshift
 				if(VAMP_VISION)
 					msg = "<span class='notice'>Your vampiric vision has improved.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_DISEASE)
 					msg = "<span class='notice'>You have gained the Diseased Touch ability which causes those you touch to die shortly after unless treated medically.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_disease
 				if(VAMP_CLOAK)
 					msg = "<span class='notice'>You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_cloak
 				if(VAMP_BATS)
 					msg = "<span class='notice'>You have gained the Summon Bats ability."
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_bats // work in progress
 				if(VAMP_SCREAM)
 					msg = "<span class='notice'>You have gained the Chiroptean Screech ability which stuns anything with ears in a large radius and shatters glass in the process.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_screech
 				if(VAMP_JAUNT)
 					msg = "<span class='notice'>You have gained the Mist Form ability which allows you to take on the form of mist for a short period and pass over any obstacle in your path.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_jaunt
 				if(VAMP_SLAVE)
 					msg = "<span class='notice'>You have gained the Enthrall ability which at a heavy blood cost allows you to enslave a human that is not loyal to any other for a random period of time.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_enthrall
 				if(VAMP_BLINK)
 					msg = "<span class='notice'>You have gained the ability to shadowstep, which makes you disappear into nearby shadows at the cost of blood.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_shadowstep
 				if(VAMP_MATURE)
 					msg = "<span class='sinister'>You have reached physical maturity. You are more resistant to holy things, and your vision has been improved greatly.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_SHADOW)
 					msg = "<span class='notice'>You have gained mastery over the shadows. In the dark, you can mask your identity, instantly terrify non-vampires who approach you, and enter the chapel for a longer period of time.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					verbs += /client/proc/vampire_shadowmenace //also buffs Cloak of Shadows
 				if(VAMP_CHARISMA)
 					msg = "<span class='sinister'>You develop an uncanny charismatic aura that makes you difficult to disobey. Hypnotise and Enthrall take less time to perform, and Enthrall works on implanted targets.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_UNDYING)
 					msg = "<span class='sinister'>You have reached the absolute peak of your power. Your abilities cannot be nullified very easily, and you may return from the grave so long as your body is not burned, destroyed or sanctified. You can also spawn a rather nice cape.</span>"
-					src << "[msg]"
+					to_chat(src, "[msg]")
 					src.mind.store_memory("<font size = 1>[msg]</font>")
 					verbs += /client/proc/vampire_undeath
 					verbs += /client/proc/vampire_spawncape
@@ -582,8 +582,8 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	vampire_mind.special_role = null
 	update_vampire_icons_removed(vampire_mind)
 	vampire_mind.current.unsubLife(src)
-	//world << "Removed [vampire_mind.current.name] from vampire shit"
-	vampire_mind.current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</FONT></span>"
+//	to_chat(world, "Removed [vampire_mind.current.name] from vampire shit")
+	to_chat(vampire_mind.current, "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</FONT></span>")
 
 /mob/living/carbon/human/proc/check_sun()
 
@@ -605,16 +605,16 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(prob(45))
 		switch(health)
 			if(80 to 100)
-				src << "<span class='warning'>Your skin flakes away...</span>"
+				to_chat(src, "<span class='warning'>Your skin flakes away...</span>")
 				adjustFireLoss(1)
 			if(60 to 80)
-				src << "<span class='warning'>Your skin sizzles!</span>"
+				to_chat(src, "<span class='warning'>Your skin sizzles!</span>")
 				adjustFireLoss(1)
 			if((-INFINITY) to 60)
 				if(!on_fire)
-					src << "<span class='danger'>Your skin catches fire!</span>"
+					to_chat(src, "<span class='danger'>Your skin catches fire!</span>")
 				else
-					src << "<span class='danger'>You continue to burn!</span>"
+					to_chat(src, "<span class='danger'>You continue to burn!</span>")
 				fire_stacks += 5
 				IgniteMob()
 		emote("scream",,, 1)
@@ -631,15 +631,15 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(check_holy(src)) //if you're on a holy tile get ready for pain
 		smitetemp += (vampcoat ? 1 : 5)
 		if(prob(35))
-			src << "<span class='danger'>This ground is blessed. Get away, or splatter it with blood to make it safe for you.</span>"
+			to_chat(src, "<span class='danger'>This ground is blessed. Get away, or splatter it with blood to make it safe for you.</span>")
 
 	if(!((VAMP_MATURE in mind.vampire.powers)) && get_area(src) == /area/chapel) //stay out of the chapel unless you want to turn into a pile of ashes
 		mind.vampire.nullified = max(5, mind.vampire.nullified + 2)
 		if(prob(35))
-			src << "<span class='sinister'>You feel yourself growing weaker.</span>"
+			to_chat(src, "<span class='sinister'>You feel yourself growing weaker.</span>")
 		/*smitetemp += (vampcoat ? 5 : 15)
 		if(prob(35))
-			src << "<span class='sinister'>Burn, wretch.</span>"
+			to_chat(src, "<span class='sinister'>Burn, wretch.</span>")
 	*/
 
 	if(!mind.vampire.nullified) //Checks to see if you can benefit from your vamp powers here
@@ -662,13 +662,13 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(1 to 30) //just dizziness
 			dizziness = max(5, dizziness)
 			if(prob(35))
-				src << "<span class='warning'>You feel sick.</span>"
+				to_chat(src, "<span class='warning'>You feel sick.</span>")
 		if(30 to 60) //more dizziness, and occasional disorientation
 			dizziness = max(5, dizziness + 1)
 			remove_vampire_blood(1)
 			if(prob(35))
 				confused = max(5, confused)
-				src << "<span class='warning'>You feel very sick.</span>"
+				to_chat(src, "<span class='warning'>You feel very sick.</span>")
 		if(60 to 90) //this is where you start barfing and losing your powers
 			dizziness = max(10, dizziness + 3)
 			mind.vampire.nullified = max(20, mind.vampire.nullified)
@@ -677,7 +677,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 				vomit()
 			if(prob(35))
 				confused = max(5, confused)
-				src << "<span class='warning'>You feel extremely sick. Get to a coffin as soon as you can.</span>"
+				to_chat(src, "<span class='warning'>You feel extremely sick. Get to a coffin as soon as you can.</span>")
 		if(90 to 100) //previous effects, and skin starts to smoulder
 			dizziness = max(10, dizziness + 6)
 			mind.vampire.nullified = max(20, mind.vampire.nullified + 1)
@@ -685,7 +685,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			confused = max(10, confused)
 			adjustFireLoss(1)
 			if(prob(35))
-				src << "<span class='danger'>Your skin sizzles!</span>"
+				to_chat(src, "<span class='danger'>Your skin sizzles!</span>")
 				visible_message("<span class='danger'>[src]'s skin sizzles!</span>")
 		if(100 to (INFINITY)) //BONFIRE
 			dizziness = max(50, dizziness + 8)
@@ -693,9 +693,9 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			remove_vampire_blood(10)
 			confused = max(10, confused)
 			if(!on_fire)
-				src << "<span class='danger'>Your skin catches fire!</span>"
+				to_chat(src, "<span class='danger'>Your skin catches fire!</span>")
 			else if(prob(35))
-				src << "<span class='danger'>The holy flames continue to burn your flesh!</span>"
+				to_chat(src, "<span class='danger'>The holy flames continue to burn your flesh!</span>")
 			fire_stacks += 5
 			IgniteMob()
 

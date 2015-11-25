@@ -84,13 +84,13 @@
 				N.mind.objectives += escape_objective
 
 
-				M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
+				to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
 
 				message_admins("[N]/([N.ckey]) has accepted a traitor objective from a syndicate beacon.")
 
 				var/obj_count = 1
 				for(var/datum/objective/OBJ in M.mind.objectives)
-					M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+					to_chat(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 					obj_count++
 
 		src.add_fingerprint(usr)
@@ -124,14 +124,14 @@
 
 	proc/Activate(mob/user = null)
 		if(!checkWirePower())
-			if(user) user << "<span class='notice'>The connected wire doesn't have enough current.</span>"
+			if(user) to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 			return
 		for(var/obj/machinery/singularity/singulo in power_machines)
 			if(singulo.z == z)
 				singulo.target = src
 		icon_state = "[icontype]1"
 		active = 1
-		if(user) user << "<span class='notice'>You activate the beacon.</span>"
+		if(user) to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 
 
 	proc/Deactivate(mob/user = null)
@@ -140,7 +140,7 @@
 				singulo.target = null
 		icon_state = "[icontype]0"
 		active = 0
-		if(user) user << "<span class='notice'>You deactivate the beacon.</span>"
+		if(user) to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 
 
 	attack_ai(mob/user as mob)
@@ -151,20 +151,20 @@
 		if(stat & SCREWED)
 			return active ? Deactivate(user) : Activate(user)
 		else
-			user << "<span class='warning'>You need to screw the beacon to the floor first!</span>"
+			to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 			return
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/weapon/screwdriver))
 			if(active)
-				user << "<span class='warning'>You need to deactivate the beacon first!</span>"
+				to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 				return
 
 			if(stat & SCREWED)
 				stat &= ~SCREWED
 				anchored = 0
-				user << "<span class='notice'>You unscrew the beacon from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 				attached = null
 				return
 			else
@@ -172,11 +172,11 @@
 				if(isturf(T) && !T.intact)
 					attached = locate() in T
 				if(!attached)
-					user << "This device must be placed over an exposed cable."
+					to_chat(user, "This device must be placed over an exposed cable.")
 					return
 				stat |= SCREWED
 				anchored = 1
-				user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
+				to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 				return
 		..()
 		return
@@ -218,4 +218,3 @@
 	icon_state = "beaconsynd0"
 
 #undef SCREWED
-

@@ -25,7 +25,7 @@
 	burstfire = !burstfire
 	if(!burstfire)//fixing a bug where burst fire being toggled on then off would leave the gun unable to shoot at its normal speed.
 		fire_delay = initial(fire_delay)
-	usr << "You toggle \the [src]'s firing setting to [burstfire ? "burst fire" : "single fire"]."
+	to_chat(usr, "You toggle \the [src]'s firing setting to [burstfire ? "burst fire" : "single fire"].")
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -37,7 +37,7 @@
 		if(ready_to_fire())
 			fire_delay = 0
 		else
-			usr << "<span class='warning'>\The [src] is still cooling down!</span>"
+			to_chat(usr, "<span class='warning'>\The [src] is still cooling down!</span>")
 			return
 		var/shots_fired = 0 //haha, I'm so clever
 		var/to_shoot = min(burst_count, getAmmo())
@@ -131,7 +131,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
-	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 	update_icon()
 
 
@@ -141,7 +141,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
-		user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
 	else
 		..()
 		update_icon()
@@ -156,12 +156,12 @@
 	else if(cover_open && stored_magazine) //since attack_self toggles the cover and not the magazine, we use this instead
 		//drop the mag
 		RemoveMag(user)
-		user << "<span class='notice'>You remove the magazine from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/ammo_storage/magazine/a762/A as obj, mob/user as mob)
 	if(!cover_open)
-		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
 		return
 	else if(cover_open)
 		..()
@@ -169,11 +169,11 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/force_removeMag() //special because of its cover
 	if(cover_open && stored_magazine)
 		RemoveMag(usr)
-		usr << "<span class='notice'>You remove the magazine from [src].</span>"
+		to_chat(usr, "<span class='notice'>You remove the magazine from [src].</span>")
 	else if(stored_magazine)
-		usr << "<span class='rose'>The [src]'s cover has to be open to do that!</span>"
+		to_chat(usr, "<span class='rose'>The [src]'s cover has to be open to do that!</span>")
 	else
-		usr << "<span class='rose'>There is no magazine to remove!</span>"
+		to_chat(usr, "<span class='rose'>There is no magazine to remove!</span>")
 
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.

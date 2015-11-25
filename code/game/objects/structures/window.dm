@@ -48,26 +48,26 @@
 
 	..()
 	if(!anchored)
-		user << "It appears to be completely loose and movable"
+		to_chat(user, "It appears to be completely loose and movable")
 	//switch most likely can't take inequalities, so here's that if block
 	if(health >= initial(health)) //Sanity
-		user << "It's in perfect shape, not even a scratch"
+		to_chat(user, "It's in perfect shape, not even a scratch")
 	else if(health >= 0.8*initial(health))
-		user << "It has a few scratches and a small impact"
+		to_chat(user, "It has a few scratches and a small impact")
 	else if(health >= 0.5*initial(health))
-		user << "It has a few impacts and some cracks running from them"
+		to_chat(user, "It has a few impacts and some cracks running from them")
 	else if(health >= 0.2*initial(health))
-		user << "It's covered in impact marks and most of the outer sheet is crackled"
+		to_chat(user, "It's covered in impact marks and most of the outer sheet is crackled")
 	else
-		user << "It's completely crackled over multiple layers, it's a miracle it's even standing"
+		to_chat(user, "It's completely crackled over multiple layers, it's a miracle it's even standing")
 	if(reinforced) //Normal windows can be loose or not, reinforced windows are more complex
 		switch(d_state)
 			if(WINDOWSECURE)
-				user << "It is firmly secured"
+				to_chat(user, "It is firmly secured")
 			if(WINDOWUNSECUREFRAME)
-				user << "It appears it was unfastened from its frame"
+				to_chat(user, "It appears it was unfastened from its frame")
 			if(WINDOWLOOSEFRAME)
-				user << "It appears to be loose from its frame"
+				to_chat(user, "It appears to be loose from its frame")
 
 //Allows us to quickly check if we should break the window, can handle not having an user
 /obj/structure/window/proc/healthcheck(var/mob/M, var/sound = 1)
@@ -333,7 +333,7 @@
 							qdel(src)
 							return
 					else
-						user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+						to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 						return
 
 	else if(!reinforced) //Normal window steps
@@ -363,7 +363,7 @@
 					Destroy()
 					return
 			else
-				user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+				to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 				return
 
 	if(W.damtype == BRUTE || W.damtype == BURN)
@@ -395,7 +395,7 @@
 	set src in oview(1)
 
 	if(anchored)
-		usr << "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>"
+		to_chat(usr, "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>")
 		return 0
 
 	update_nearby_tiles() //Compel updates before
@@ -410,7 +410,7 @@
 	set src in oview(1)
 
 	if(anchored)
-		usr << "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>"
+		to_chat(usr, "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>")
 		return 0
 
 	update_nearby_tiles() //Compel updates before

@@ -97,14 +97,14 @@ var/global/list/wizard_cards_normal = list(
 
 /obj/item/toy/singlecard/wizard/legendary/honkmother/special_effect(mob/user)
 	if(!..())
-		user << "Honkmother is not ready yet!"
+		to_chat(user, "Honkmother is not ready yet!")
 		return
 
 	playsound(get_turf(src), 'sound/items/AirHorn.ogg', 50, 1)
 
 /obj/item/toy/singlecard/wizard/legendary/honkmother/pickup(mob/living/user as mob)
 	if(user.mind && user.mind.assigned_role == "Clown")
-		user << "<span class ='notice'>You feel Honkmother's presence as you pick up the card.</span>"
+		to_chat(user, "<span class ='notice'>You feel Honkmother's presence as you pick up the card.</span>")
 
 /obj/item/toy/singlecard/wizard/legendary/singularity
 	name = "rare singularity wizard card"
@@ -136,7 +136,7 @@ var/global/list/wizard_cards_normal = list(
 
 /obj/item/toy/singlecard/wizard/clown/special_effect(mob/user)
 	if(!..())
-		user << "The clown is not ready yet!"
+		to_chat(user, "The clown is not ready yet!")
 		return
 
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
@@ -233,11 +233,11 @@ var/global/list/wizard_cards_normal = list(
 
 /obj/item/toy/singlecard/wizard/borer/special_effect(mob/user)
 	if(!..())
-		user << "The borer is not yet ready."
+		to_chat(user, "The borer is not yet ready.")
 		return
 
 	new /obj/item/toy/singlecard/wizard/borer/small(get_turf(src.loc))
-	user << "You create a borer token card!"
+	to_chat(user, "You create a borer token card!")
 
 /obj/item/toy/singlecard/wizard/borer/small/special_effect()
 	return

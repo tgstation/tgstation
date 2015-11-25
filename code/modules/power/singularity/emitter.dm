@@ -45,7 +45,7 @@
 	set src in oview(1)
 
 	if(src.anchored || usr:stat)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
 	src.dir = turn(src.dir, -90)
 	return 1
@@ -56,7 +56,7 @@
 	set src in oview(1)
 
 	if(src.anchored || usr:stat)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -101,7 +101,7 @@
 		return 0
 
 	var/on
-	//world << "\ref[src] received signal. tag [signal.data["tag"]], cmd [signal.data["command"]], state [signal.data["state"]], sigtype [signal.data["sigtype"]]"
+//	to_chat(world, "\ref[src] received signal. tag [signal.data["tag"]], cmd [signal.data["command"]], state [signal.data["state"]], sigtype [signal.data["sigtype"]]")
 	if(signal.data["command"])
 		switch(signal.data["command"])
 			if("on")
@@ -149,7 +149,7 @@
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!get_powernet())
-			user << "<span class='warning'>\The [src] isn't connected to a wire.</span>"
+			to_chat(user, "<span class='warning'>\The [src] isn't connected to a wire.</span>")
 			return 1
 		if(!src.locked)
 			if(active)
@@ -167,9 +167,9 @@
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigation_log(I_SINGULO,"turned <font color='green'>on</font> by [user.key]")
 		else
-			user << "<span class='warning'>\The [src]'s controls are locked!</span>"
+			to_chat(user, "<span class='warning'>\The [src]'s controls are locked!</span>")
 	else
-		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first.</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
 
 //Important note, those procs not log the emitter being turned on or off, so please use the logs in attack_hand above
@@ -253,7 +253,7 @@
 /obj/machinery/power/emitter/wrenchAnchor(mob/user)
 
 	if(active)
-		user << "<span class='warning'>Turn off \the [src] first.</span>"
+		to_chat(user, "<span class='warning'>Turn off \the [src] first.</span>")
 		return
 	return ..()
 
@@ -276,17 +276,17 @@
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "<span class='warning'>The lock appears to be broken.</span>"
+			to_chat(user, "<span class='warning'>The lock appears to be broken.</span>")
 			return
 		if(src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "<span class='notice'>The controls are now [src.locked ? "locked" : "unlocked"].</span>"
+				to_chat(user, "<span class='notice'>The controls are now [src.locked ? "locked" : "unlocked"].</span>")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='warning'>The controls can only be locked when \the [src] is online</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online</span>")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 /obj/effect/beam/emitter

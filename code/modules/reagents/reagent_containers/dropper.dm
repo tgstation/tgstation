@@ -28,18 +28,18 @@
 		if(reagents.total_volume)
 			if(istype(target, /obj/machinery/artifact))
 				reagents.clear_reagents()
-				user << "<span class='notice'>You squirt the solution onto the [target]!</span>"
+				to_chat(user, "<span class='notice'>You squirt the solution onto the [target]!</span>")
 				update_icon()
 		return
 
 	if(reagents.total_volume)
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>[target] is full.</span>"
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
 		if(!target.is_open_container() && !ismob(target) && !is_type_in_list(target, injectable_types)) //You can inject humans and food but you cant remove the shit.
-			user << "<span class='warning'>You cannot directly fill this object.</span>"
+			to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 			return
 
 		var/trans = 0
@@ -58,7 +58,7 @@
 					user.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
 					spawn(5)
 						src.reagents.reaction(safe_thing, TOUCH)
-					user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
+					to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 					update_icon()
 					return
 			user.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>")
@@ -79,7 +79,7 @@
 				M.LAssailant = user
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 		update_icon()
 
 		// /vg/: Logging transfers of bad things
@@ -97,16 +97,16 @@
 	else
 
 		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-			user << "<span class='warning'>You cannot directly remove reagents from [target].</span>"
+			to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target].</span>")
 			return
 
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty.</span>"
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
-		user << "<span class='notice'>You fill [src] with [trans] units of the solution.</span>"
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
 
 		update_icon()
 

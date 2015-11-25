@@ -99,7 +99,7 @@
 
 /obj/machinery/dna_scannernew/crowbarDestroy(mob/user)
 	if(occupant)
-		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>")
 		return
 	return ..()
 
@@ -129,16 +129,17 @@
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	if (!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
-		usr << "<span class='notice'> Try as you might, you can not climb up into the scanner.</span>"
+		to_chat(usr, "<span class='notice'> Try as you might, you can not climb up into the scanner.</span>")
 		return
 	if (istype(usr, /mob/living/carbon/human/manifested))
-		usr << "<span class='notice'> For some reason, the scanner is unable to read your genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
+		to_chat(usr, "<span class='notice'> For some reason, the scanner is unable to read your genes.</span>")//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
+
 		return
 	if (src.occupant)
-		usr << "<span class='notice'> <B>The scanner is already occupied!</B></span>"
+		to_chat(usr, "<span class='notice'> <B>The scanner is already occupied!</B></span>")
 		return
 	if (usr.abiotic())
-		usr << "<span class='notice'> <B>Subject cannot have abiotic items on.</B></span>"
+		to_chat(usr, "<span class='notice'> <B>Subject cannot have abiotic items on.</B></span>")
 		return
 	usr.stop_pulling()
 	usr.loc = src
@@ -164,25 +165,26 @@
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
 	if(occupant)
-		user << "<span class='notice'>\The [src] is already occupied!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
 	if(istype(O, /mob/living/carbon/human/manifested))
-		usr << "<span class='notice'> For some reason, the scanner is unable to read that person's genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
+		to_chat(usr, "<span class='notice'> For some reason, the scanner is unable to read that person's genes.</span>")//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
+
 		return
 	if(isrobot(user))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			user << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(user, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
-		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
+		to_chat(user, "<span class='danger'>Subject cannot have abiotic items on.</span>")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
-			usr << "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head."
+			to_chat(usr, "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head.")
 			return
 	if(L == user)
 		visible_message("[user] climbs into \the [src].")
@@ -198,12 +200,12 @@
 	if(!ishuman(usr) && !isrobot(usr))
 		return
 	if(!occupant)
-		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
 		return
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(usr, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	if(!istype(over_location) || over_location.density)
 		return
@@ -225,7 +227,7 @@
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
+			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine.</span>")
 			return
 
 		beaker = item
@@ -237,10 +239,10 @@
 		if (!ismob(G.affecting))
 			return
 		if (src.occupant)
-			user << "<span class='notice'><B>The scanner is already occupied!</B></span>"
+			to_chat(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 		if (G.affecting.abiotic())
-			user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
+			to_chat(user, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 			return
 		if(G.affecting.locked_to)
 			return
@@ -266,8 +268,8 @@
 					if(ghost.mind == M.mind)
 						if(ghost.client && ghost.can_reenter_corpse)
 							ghost << 'sound/effects/adminhelp.ogg'
-							ghost << "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
-								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
+							to_chat(ghost, "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
+								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
 						else
 							ghost.canclone = M
 						break
@@ -368,7 +370,7 @@
 		if (!disk)
 			if (user.drop_item(O, src))
 				disk = O
-				user << "You insert [O]."
+				to_chat(user, "You insert [O].")
 	return
 
 /obj/machinery/computer/scan_consolenew/ex_act(severity)

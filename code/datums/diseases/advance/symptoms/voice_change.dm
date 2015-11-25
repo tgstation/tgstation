@@ -31,7 +31,7 @@ Bonus
 		var/mob/living/carbon/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("Your throat hurts.", "You clear your throat.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("Your throat hurts.", "You clear your throat.")]</span>")
 			else
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M

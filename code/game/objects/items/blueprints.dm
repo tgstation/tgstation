@@ -27,7 +27,8 @@
 
 /obj/item/blueprints/attack_self(mob/M as mob)
 	if (!istype(M,/mob/living/carbon/human))
-		M << "This stack of blue paper means nothing to you." //monkeys cannot into projecting
+		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting
+
 		return
 	interact()
 	return
@@ -117,25 +118,25 @@ move an amendment</a> to the drawing.</p>
 	return AREA_STATION
 
 /obj/item/blueprints/proc/create_area()
-	//world << "DEBUG: create_area"
+//	to_chat(world, "DEBUG: create_area")
 	var/res = detect_room(get_turf(usr))
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				usr << "<span class='warning'>The new area must be completely airtight!</span>"
+				to_chat(usr, "<span class='warning'>The new area must be completely airtight!</span>")
 				return
 			if(ROOM_ERR_TOOLARGE)
-				usr << "<span class='warning'>The new area too large!</span>"
+				to_chat(usr, "<span class='warning'>The new area too large!</span>")
 				return
 			else
-				usr << "<span class='warning'>Error! Please notify administration!</span>"
+				to_chat(usr, "<span class='warning'>Error! Please notify administration!</span>")
 				return
 	var/list/turf/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		usr << "<span class='warning'>Name too long.</span>"
+		to_chat(usr, "<span class='warning'>Name too long.</span>")
 		return
 	var/area/station/custom/newarea = new
 	var/area/oldarea = get_area(usr)
@@ -155,18 +156,18 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/edit_area()
 	var/area/areachanged = get_area()
-	//world << "DEBUG: edit_area"
+//	to_chat(world, "DEBUG: edit_area")
 	var/prevname = "[areachanged.name]"
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		usr << "<span class='warning'>Text too long.</span>"
+		to_chat(usr, "<span class='warning'>Text too long.</span>")
 		return
 	areachanged.name = str
 	for(var/atom/allthings in areachanged.contents)
 		allthings.change_area(prevname,areachanged)
-	usr << "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>"
+	to_chat(usr, "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>")
 	interact()
 
 /obj/item/blueprints/proc/delete_area(var/mob/user) //This functionality is currently commented out!
@@ -187,7 +188,7 @@ move an amendment</a> to the drawing.</p>
 
 		for(var/atom/movable/AM in T.contents)
 			AM.change_area(areadeleted,space)
-	usr << "You've erased the \"[areadeleted]\" from the blueprints."
+	to_chat(usr, "You've erased the \"[areadeleted]\" from the blueprints.")
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
 	if (istype(T2, /turf/space))

@@ -20,7 +20,7 @@
 		if(!cable || !istype(cable))
 			return
 		if(world.time < next_shock)
-			user << "<span class='warning'>[src] aren't ready to shock again!</span>"
+			to_chat(user, "<span class='warning'>[src] aren't ready to shock again!</span>")
 			return
 		user.visible_message("<span class='warning'>[user.name] fires an arc of electricity!</span>", \
 			"<span class='warning'>You fire an arc of electricity!</span>", \
@@ -32,11 +32,11 @@
 			if(L.damage >= 200)
 				user.apply_damage(15, BURN, (user.hand ? "l_hand" : "r_hand"))
 				time = 200
-				user << "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!"
+				to_chat(user, "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!")
 			else if(L.damage >= 100)
 				user.apply_damage(5, BURN, (user.hand ? "l_hand" : "r_hand"))
 				time = 150
-				user << "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!"
+				to_chat(user, "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, user)
 			s.start()

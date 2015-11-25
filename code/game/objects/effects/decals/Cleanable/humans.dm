@@ -68,7 +68,7 @@ var/global/list/blood_list = list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	user << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
+	to_chat(user, "It reads: <font color='[basecolor]'>\"[message]\"<font>")
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"

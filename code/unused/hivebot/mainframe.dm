@@ -89,7 +89,7 @@
 
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't deploy because you are dead!"
+		to_chat(usr, "You can't deploy because you are dead!")
 		return
 
 	var/list/bodies = new/list()

@@ -221,7 +221,7 @@ var/paperwork_library
 		return style.Format(text,src,user,P)
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/pen/blue
@@ -243,8 +243,8 @@ var/paperwork_library
 /obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
 	if(!ismob(M))
 		return
-	user << "<span class='warning'>You stab [M] with the pen.</span>"
-	M << "<span class='warning'>You feel a tiny prick!</span>"
+	to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+	to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")

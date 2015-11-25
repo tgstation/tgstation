@@ -31,7 +31,7 @@
 				user.visible_message("<span class='danger'>[user.name] injects [M.name] with [src].</span>")
 				src.injected(M, user)
 			else
-				user << "<span class='warning'>You failed to inject [M.name].</span>"
+				to_chat(user, "<span class='warning'>You failed to inject [M.name].</span>")
 
 	proc/injected(var/mob/living/carbon/target, var/mob/living/carbon/user)
 		target.generate_name()

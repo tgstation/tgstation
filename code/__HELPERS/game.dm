@@ -109,7 +109,7 @@
 
 	var/turf/centerturf = get_turf(center)
 	if(!centerturf)
-		usr << "cant get a center turf?"
+		to_chat(usr, "cant get a center turf?")
 		return
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)

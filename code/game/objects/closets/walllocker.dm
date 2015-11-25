@@ -26,10 +26,10 @@
 	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
 		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
 	if(!amount)
-		usr << "<spawn class='notice'>It's empty."
+		to_chat(usr, "<spawn class='notice'>It's empty.")
 		return
 	if(amount)
-		usr << "<spawn class='notice'>You take out some items from \the [src]."
+		to_chat(usr, "<spawn class='notice'>You take out some items from \the [src].")
 		for(var/path in spawnitems)
 			new path(src.loc)
 		amount--
@@ -68,18 +68,18 @@
 	if(istype(user, /mob/living/silicon/ai)) return
 	if(istype(user, /mob/living/silicon/robot))
 		if(!defib)
-			usr << "<span class='notice'>It's empty.</span>"
+			to_chat(usr, "<span class='notice'>It's empty.</span>")
 			return
 		else
-			usr << "<span class='notice'>You pull out an emergency defibrillator from \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You pull out an emergency defibrillator from \the [src].</span>")
 			defib.loc = get_turf(src)
 			defib = null
 			update_icon()
 	if(!defib)
-		usr << "<span class='notice'>It's empty.</span>"
+		to_chat(usr, "<span class='notice'>It's empty.</span>")
 		return
 	if(defib)
-		usr << "<span class='notice'>You take out an emergency defibrillator from \the [src].</san>"
+		to_chat(usr, "<span class='notice'>You take out an emergency defibrillator from \the [src].</san>")
 		//new /obj/item/weapon/melee/defibrillator(src.loc)
 		usr.put_in_hands(defib)
 		defib = null
@@ -89,10 +89,10 @@
 /obj/structure/closet/walllocker/defiblocker/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
 		if(defib)
-			usr << "<spawn class='notice'>The locker is full."
+			to_chat(usr, "<spawn class='notice'>The locker is full.")
 			return
 		else
-			usr << "<span class='notice'>You put \the [G] in \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You put \the [G] in \the [src].</span>")
 			defib = G
 			update_icon()
 			user.drop_item(G, src)

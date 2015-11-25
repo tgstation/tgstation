@@ -57,7 +57,7 @@
 			if(istype(target, /mob/living/carbon/))
 				shake_camera(L, 3, 2)
 				L.apply_effect(2, WEAKEN)
-				L << "<span class = 'alert'> The force of the bolt knocks you off your feet!"
+				to_chat(L, "<span class = 'alert'> The force of the bolt knocks you off your feet!")
 		return 1
 	return 0
 

@@ -18,11 +18,11 @@
 
 /obj/item/ammo_casing/shotgun/flare/attack_self()
 	if(stored_flare)
-		usr <<"You disassemble the flare shell."
+		to_chat(usr, "You disassemble the flare shell.")
 		stored_flare.loc = usr.loc
 		stored_flare = null
 		BB = null
 		icon_state = "flareshell-empty"
 		update_icon()
 	else
-		usr <<"This flare is empty."
+		to_chat(usr, "This flare is empty.")

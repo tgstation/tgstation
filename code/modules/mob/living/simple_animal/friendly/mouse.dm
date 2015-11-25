@@ -35,7 +35,7 @@
 	..()
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
-			M << 'sound/effects/mousesqueek.ogg'
+			to_chat(M, 'sound/effects/mousesqueek.ogg')
 
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
@@ -92,19 +92,19 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("<span class='notice'>You are now hiding.</span>")
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("<B>[] scurries to the ground!</B>", src)
+				to_chat(O, text("<B>[] scurries to the ground!</B>", src))
 		*/
 	else
 		layer = MOB_LAYER
-		src << text("<span class='notice'>You have stopped hiding.</span>")
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("[] slowly peaks up from the ground...", src)
+				to_chat(O, text("[] slowly peaks up from the ground...", src))
 		*/
 
 //make mice fit under tables etc? this was hacky, and not working
@@ -131,15 +131,15 @@
 //	return 1
 
 /mob/living/simple_animal/mouse/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
-	src << "<span class='warning'>You are too small to pull anything.</span>"
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "<span class='notice'>\icon[src] Squeek!</span>"
-			M << 'sound/effects/mousesqueek.ogg'
+			to_chat(M, "<span class='notice'>\icon[src] Squeek!</span>")
+			to_chat(M, 'sound/effects/mousesqueek.ogg')
 	..()
 
 /mob/living/simple_animal/mouse/Die()

@@ -61,7 +61,7 @@
 			src.overlays += image(src.icon, "bodybag_label")
 		return
 	else if(istype(W, /obj/item/weapon/wirecutters))
-		user << "You cut the tag off the bodybag"
+		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
 		src.overlays.len = 0
 		return
@@ -129,5 +129,5 @@
 /obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
 		if(!ishuman(usr))	return
-		usr << "<span class='warning'>You can't fold that up anymore..</span>"
+		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

@@ -12,8 +12,8 @@
  * Banhammer
  */
 /obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
+	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'> You have <b>BANNED</b> [M]</font>")
 
 /*
  * Classic Baton
@@ -31,7 +31,7 @@
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>You club yourself over the head.</span>"
+		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -193,12 +193,12 @@
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "<span class='notice'>The axe is now energised.</span>"
+		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = 5
 	else
-		user << "<span class='notice'>The axe can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = 5

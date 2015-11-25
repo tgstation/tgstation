@@ -212,7 +212,7 @@ var/global/list/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attack_paw(var/mob/user)
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	attack_hand(user)
 
@@ -249,7 +249,7 @@ var/global/list/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
 	if(stat & NOPOWER || any_power_cut())
-		usr << "<span class='warning'>You don't see anything to mess with.</span>"
+		to_chat(usr, "<span class='warning'>You don't see anything to mess with.</span>")
 		return
 	if(stat & BROKEN && playlist!=null)
 		user.visible_message("<span class='danger'>[user.name] smacks the side of \the [src.name].</span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
@@ -471,11 +471,11 @@ var/global/list/loopModeNames=list(
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
-		usr << "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>"
+		to_chat(usr, "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>")
 		return
 	if(..()) return 1
 	if(emagged)
-		usr << "<span class='warning'>You touch the bluescreened menu. Nothing happens. You feel dumber.</span>"
+		to_chat(usr, "<span class='warning'>You touch the bluescreened menu. Nothing happens. You feel dumber.</span>")
 		return
 
 	if (href_list["power"])
@@ -485,7 +485,7 @@ var/global/list/loopModeNames=list(
 
 	if("screen" in href_list)
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "<span class='warning'>You can't do that.</span>"
+			to_chat(usr, "<span class='warning'>You can't do that.</span>")
 			return
 		screen=text2num(href_list["screen"])
 
@@ -493,11 +493,11 @@ var/global/list/loopModeNames=list(
 		switch(href_list["act"])
 			if("Save Settings")
 				if(isobserver(usr) && !canGhostWrite(usr,src,"saved settings for"))
-					usr << "<span class='warning'>You can't do that.</span>"
+					to_chat(usr, "<span class='warning'>You can't do that.</span>")
 					return
 				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
 				if(!new_linked_account)
-					usr << "<span class='warning'>Unable to link new account. Aborting.</span>"
+					to_chat(usr, "<span class='warning'>Unable to link new account. Aborting.</span>")
 					return
 
 				change_cost = max(0,text2num(href_list["set_change_cost"]))
@@ -511,10 +511,10 @@ var/global/list/loopModeNames=list(
 
 	if (href_list["playlist"])
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "<span class='warning'>You can't do that.</span>"
+			to_chat(usr, "<span class='warning'>You can't do that.</span>")
 			return
 		if(!check_reload())
-			usr << "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>"
+			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return
 		playlist_id=href_list["playlist"]
 		if(isAdminGhost(usr))
@@ -529,10 +529,10 @@ var/global/list/loopModeNames=list(
 
 	if (href_list["song"])
 		if(wires.IsIndexCut(JUKE_CAPITAL))
-			usr << "<span class='warning'>You select a song, but [src] is unresponsive...</span>"
+			to_chat(usr, "<span class='warning'>You select a song, but [src] is unresponsive...</span>")
 			return
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "<span class='warning'>You can't do that.</span>"
+			to_chat(usr, "<span class='warning'>You can't do that.</span>")
 			return
 		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
 		if(isAdminGhost(usr))
@@ -545,7 +545,7 @@ var/global/list/loopModeNames=list(
 				update_music()
 				update_icon()
 		else
-			usr << "<span class='warning'>Swipe card or insert $[num2septext(change_cost)] to set this song.</span>"
+			to_chat(usr, "<span class='warning'>Swipe card or insert $[num2septext(change_cost)] to set this song.</span>")
 			screen = JUKEBOX_SCREEN_PAYMENT
 			credits_needed=change_cost
 
@@ -685,7 +685,7 @@ var/global/list/loopModeNames=list(
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
 	// NO FUN ALLOWED.  Emag list is included, anyway.
 	if(istype(W, /obj/item/weapon/card/emag))
-		user << "<span class='warning'>Your [W] refuses to touch \the [src]!</span>"
+		to_chat(user, "<span class='warning'>Your [W] refuses to touch \the [src]!</span>")
 		return
 	..()
 
@@ -753,7 +753,7 @@ var/global/list/loopModeNames=list(
 /obj/machinery/media/jukebox/superjuke/adminbus/proc/repack()
 	if(playing)
 		for(var/mob/M in range (src,1))
-			M << "<span class='notice'>The jukebox turns itself off to protect itself from any cahot induced damage.</span>"
+			to_chat(M, "<span class='notice'>The jukebox turns itself off to protect itself from any cahot induced damage.</span>")
 	if(popup)
 		popup.close()
 	playing = 0

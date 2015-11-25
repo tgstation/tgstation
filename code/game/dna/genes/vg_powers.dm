@@ -52,7 +52,7 @@ Obviously, requires DNA2.
 			//M.dna.SetSEState(HULKBLOCK,0)
 			M.update_mutations()		//update our mutation overlays
 			M.update_body()
-			M << "<span class='warning'>You suddenly feel very weak.</span>"
+			to_chat(M, "<span class='warning'>You suddenly feel very weak.</span>")
 			M.Weaken(3)
 			M.emote("collapse")
 
@@ -79,7 +79,7 @@ Obviously, requires DNA2.
 
 /spell/targeted/genetic/hulk/cast(list/targets, mob/user)
 	if (istype(user.loc,/mob))
-		usr << "<span class='warning'>You can't hulk out right now!</span>"
+		to_chat(usr, "<span class='warning'>You can't hulk out right now!</span>")
 		return
 	for(var/mob/living/carbon/human/M in targets)
 		M.hulk_time = world.time + src.duration

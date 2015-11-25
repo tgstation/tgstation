@@ -57,9 +57,9 @@ var/list/obj/machinery/power/photocollector/photocollector_list = list()
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
 		if(last_power)
-			user << "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>"
+			to_chat(user, "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>")
 		else
-			user << "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>"
+			to_chat(user, "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>")
 		return 1
 
 /obj/machinery/power/photocollector/proc/update_icons()

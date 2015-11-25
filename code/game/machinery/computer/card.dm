@@ -81,23 +81,23 @@
 	if(!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH))	return
 
 	if(!usr.dexterity_check())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if(scan)
-		usr << "You remove \the [scan] from \the [src]."
+		to_chat(usr, "You remove \the [scan] from \the [src].")
 		scan.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(scan)
 		scan = null
 	else if(modify)
-		usr << "You remove \the [modify] from \the [src]."
+		to_chat(usr, "You remove \the [modify] from \the [src].")
 		modify.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(modify)
 		modify = null
 	else
-		usr << "There is nothing to remove from the console."
+		to_chat(usr, "There is nothing to remove from the console.")
 	return
 
 /obj/machinery/computer/card/attackby(obj/item/weapon/card/id/id_card, mob/user)
@@ -269,7 +269,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							usr << "<span class='warning'>No log exists for this job: [t1]</span>"
+							to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
 							return
 
 						access = jobdatum.get_access()

@@ -21,8 +21,8 @@
 	uplink_uses = 10
 
 /datum/game_mode/meteor/announce()
-	world << "<B>The current game mode is - Meteor!</B>"
-	world << "<B>The space station is about to be struck by a major meteor shower. You must hold out until the escape shuttle arrives.</B>"
+	to_chat(world, "<B>The current game mode is - Meteor!</B>")
+	to_chat(world, "<B>The space station is about to be struck by a major meteor shower. You must hold out until the escape shuttle arrives.</B>")
 
 /datum/game_mode/meteor/pre_setup()
 	log_admin("Starting a round of meteor.")
@@ -37,7 +37,7 @@
 
 /datum/universal_state/meteor_storm/OnShuttleCall(var/mob/user)
 	if(user)
-		user << "<span class='sinister'>You hear an automatic dispatch from Nanotrasen. It states that Centcomm is being shielded due to an incoming meteor storm and that regular shuttle service has been interrupted.</span>"
+		to_chat(user, "<span class='sinister'>You hear an automatic dispatch from Nanotrasen. It states that Centcomm is being shielded due to an incoming meteor storm and that regular shuttle service has been interrupted.</span>")
 	return 0
 
 /datum/game_mode/meteor/post_setup()
@@ -102,9 +102,9 @@
 			survivors++
 
 	if(survivors)
-		world << "<span class='info'><B>The following survived the meteor storm</B>:[text]</span>"
+		to_chat(world, "<span class='info'><B>The following survived the meteor storm</B>:[text]</span>")
 	else
-		world << "<span class='info'><B>The meteors crashed this station with no survivors!</B></span>"
+		to_chat(world, "<span class='info'><B>The meteors crashed this station with no survivors!</B></span>")
 
 	feedback_set_details("round_end_result", "end - evacuation")
 	feedback_set("round_end_result", survivors)

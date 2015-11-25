@@ -54,7 +54,7 @@ mob/proc/airflow_stun()
 		return 0
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
+		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 
 	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
@@ -74,7 +74,7 @@ mob/living/carbon/human/airflow_stun()
 	if(shoes)
 		if(CheckSlip() < 1) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
+		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 
 	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
@@ -263,7 +263,7 @@ proc/AirflowSpace(zone/A)
 			if(H.shoes)
 				if(H.CheckSlip() < 0)
 					return
-		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
+		to_chat(src, "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>")
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -323,7 +323,7 @@ proc/AirflowSpace(zone/A)
 			if(H.shoes)
 				if(H.CheckSlip() < 0)
 					return
-		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
+		to_chat(src, "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>")
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)

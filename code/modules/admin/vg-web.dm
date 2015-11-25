@@ -1,14 +1,14 @@
 #ifdef __OPENBYOND
 // The idea is to eventually be able to call
-//user << VGPanel(...)
+//to_chat(user, VGPanel(...))
 // instead of
-//user << link(GetVGPanel(...))
+//to_chat(user, link(GetVGPanel(...)))
 // But OpenBYOND isn't ready yet.
 #define VGPanel(...) link(getVGPanel(__VA_ARGS__))
 #endif
 
 // Usage:
-// user << link(getVGPanel("route"[, admin=1][, query=list("get_var"="value")]))
+//to_chat(user, link(getVGPanel("route"[, admin=1][, query=list("get_var"="value")])))
 // Turns into:
 // [config.vgws_base_url]/index.php/route?get_var=value
 // s is automatically added when admin=1.

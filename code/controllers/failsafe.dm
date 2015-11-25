@@ -47,10 +47,10 @@ var/global/datum/controller/failsafe/failsafe
 							if(0 to 3)
 								masterControllerAlertLevel++
 							if(4)
-								admins << "<font color='red' size='2'><b>Warning. The master Controller has not fired in the last [masterControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
+								to_chat(admins, "<font color='red' size='2'><b>Warning. The master Controller has not fired in the last [masterControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>")
 								masterControllerAlertLevel = 5
 							if(5)
-								admins << "<font color='red' size='2'><b>Warning. The master Controller has still not fired within the last [masterControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
+								to_chat(admins, "<font color='red' size='2'><b>Warning. The master Controller has still not fired within the last [masterControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>")
 								new /datum/controller/game_controller() // Replace the old master controller (hence killing the old one's process).
 								master_controller.process() // Start it rolling again.
 								masterControllerAlertLevel = 0

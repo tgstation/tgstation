@@ -18,7 +18,7 @@
 	..()
 	if(stacked.len)
 		for(var/stackpack in stacked)
-			user << "There's \a [locate(stackpack)] stacked on top of it."
+			to_chat(user, "There's \a [locate(stackpack)] stacked on top of it.")
 
 /obj/structure/closet/crate/flatpack/New()
 	..()
@@ -62,13 +62,13 @@
 			return 1 */
 	if(istype(A, /obj/item/weapon/crowbar) && !assembling)
 		if(stacked.len)
-			user << "<span class='rose'>You can't open this flatpack while others are stacked on top of it!</span>"
+			to_chat(user, "<span class='rose'>You can't open this flatpack while others are stacked on top of it!</span>")
 			return
 		assembling = 1
 		user.visible_message("<span class='notice'>[user] begins to open the flatpack...</span>", "<span class='notice'>You begin to open the flatpack...</span>")
 		if(do_after(user, src, rand(10,40)))
 			if(machine)
-				user <<"<span class='notice'>\icon [src]You successfully unpack \the [machine]!</span>"
+				to_chat(user, "<span class='notice'>\icon [src]You successfully unpack \the [machine]!</span>")
 //				overlays += "assembly"
 /*				var/obj/item/weapon/paper/instructions = new (get_turf(src))
 				var/list/inst_list = unpacking.GenerateInstructions()
@@ -83,7 +83,7 @@
 				machine = null
 				qdel(src)
 			else
-				user <<"<span class='notice'>\icon [src]It seems this [src] was empty...</span>"
+				to_chat(user, "<span class='notice'>\icon [src]It seems this [src] was empty...</span>")
 				qdel(src)
 		assembling = 0
 		return
@@ -128,10 +128,10 @@
 	if(istype(dropping, /obj/structure/closet/crate/flatpack) && dropping != src)
 		var/obj/structure/closet/crate/flatpack/stacking = dropping
 /*		if(assembling || stacking.assembling)
-			user << "You can't stack opened flatpacks."
+			to_chat(user, "You can't stack opened flatpacks.")
 			return */
 		if((stacked.len + stacking.stacked.len + 2) >= MAX_FLATPACK_STACKS) //how many flatpacks we can in a stack (including the bases)
-			user << "You can't stack flatpacks that high."
+			to_chat(user, "You can't stack flatpacks that high.")
 			return
 		user.visible_message("[user] adds [stacking.stacked.len + 1] flatpack\s to the stack.",
 								"You add [stacking.stacked.len + 1] flatpack\s to the stack.")

@@ -101,7 +101,7 @@
 						flush = 1
 						for(var/mob/living/silicon/ai/A in src)
 							A.suiciding = 1
-							A << "Your core files are being wiped!"
+							to_chat(A, "Your core files are being wiped!")
 							A.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wiped with an [src.name] by [U.name] ([U.ckey])</font>")
 							U.attack_log += text("\[[time_stamp()]\] <font color='red'>Used an [src.name] to wipe [A.name] ([A.ckey])</font>")
 							log_attack("[key_name(U)] Used an [src.name] to wipe [key_name(A)]")
@@ -115,7 +115,7 @@
 			if ("Wireless")
 				for(var/mob/living/silicon/ai/A in src)
 					A.control_disabled = !A.control_disabled
-					A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
+					to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
 					if (A.control_disabled)
 						overlays -= image('icons/obj/pda.dmi', "aicard-on")
 					else

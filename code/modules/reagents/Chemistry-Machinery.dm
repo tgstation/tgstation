@@ -247,7 +247,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/chem_dispenser/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
-		user << "You can't reach the maintenance panel with a beaker in the way!"
+		to_chat(user, "You can't reach the maintenance panel with a beaker in the way!")
 		return
 	return ..()
 
@@ -262,7 +262,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	if(istype(D, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
-			user << "A beaker is already loaded into the machine."
+			to_chat(user, "A beaker is already loaded into the machine.")
 			return
 		else if(!panel_open)
 			src.beaker =  D
@@ -270,11 +270,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				var/mob/living/silicon/robot/R = user
 				R.uneq_active()
 			user.drop_item(D, src)
-			user << "You add the beaker to the machine!"
+			to_chat(user, "You add the beaker to the machine!")
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return 1
 		else
-			user <<"You can't add a beaker to the machine while the panel is open."
+			to_chat(user, "You can't add a beaker to the machine while the panel is open.")
 			return
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
@@ -493,7 +493,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(istype(B, /obj/item/weapon/reagent_containers/glass))
 
 		if(src.beaker)
-			user << "<span class='warning'>There already is a beaker loaded in the machine.</span>"
+			to_chat(user, "<span class='warning'>There already is a beaker loaded in the machine.</span>")
 			return
 		src.beaker = B
 		if(user.type == /mob/living/silicon/robot)
@@ -502,22 +502,22 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
 		user.drop_item(B, src)
-		user << "<span class='notice'>You add the beaker into \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You add the beaker into \the [src]!</span>")
 		src.updateUsrDialog()
 		update_icon()
 		return 1
 
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
 		if(windowtype != "chem_master") //Only the chemmaster will accept pill bottles
-			user << "<span class='warning'>This [name] does not come with a pill dispenser unit built-in.</span>"
+			to_chat(user, "<span class='warning'>This [name] does not come with a pill dispenser unit built-in.</span>")
 			return
 		if(src.loaded_pill_bottle)
-			user << "<span class='warning'>There already is a pill bottle loaded in the machine.</span>"
+			to_chat(user, "<span class='warning'>There already is a pill bottle loaded in the machine.</span>")
 			return
 
 		src.loaded_pill_bottle = B
 		user.drop_item(B, src)
-		user << "<span class='notice'>You add the pill bottle into \the [src]'s dispenser slot!</span>"
+		to_chat(user, "<span class='notice'>You add the pill bottle into \the [src]'s dispenser slot!</span>")
 		src.updateUsrDialog()
 		return 1
 
@@ -1184,7 +1184,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
-			user << "A beaker is already loaded into the machine."
+			to_chat(user, "A beaker is already loaded into the machine.")
 			return
 
 		src.beaker =  I
@@ -1194,7 +1194,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
 		user.drop_item(I, src)
-		user << "You add the beaker to the machine!"
+		to_chat(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
@@ -1325,13 +1325,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
-		user << "You can't reach \the [src]'s maintenance panel with the beaker in the way!"
+		to_chat(user, "You can't reach \the [src]'s maintenance panel with the beaker in the way!")
 		return -1
 	return ..()
 
 /obj/machinery/reagentgrinder/crowbarDestroy(mob/user)
 	if(beaker)
-		user << "You can't do that while \the [src] has a beaker loaded!"
+		to_chat(user, "You can't do that while \the [src] has a beaker loaded!")
 		return -1
 	return ..()
 
@@ -1347,7 +1347,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if (beaker)
 			return 0
 		if (panel_open)
-			user << "You can't load a beaker while the maintenance panel is open."
+			to_chat(user, "You can't load a beaker while the maintenance panel is open.")
 			return 0
 		else
 			src.beaker =  O
@@ -1362,7 +1362,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return 1
 
 	if(holdingitems && holdingitems.len >= limit)
-		usr << "The machine cannot hold any more items."
+		to_chat(usr, "The machine cannot hold any more items.")
 		return 1
 
 	//Fill machine with bags
@@ -1372,17 +1372,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			B.remove_from_storage(G,src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-				user << "You fill the All-In-One grinder to the brim."
+				to_chat(user, "You fill the All-In-One grinder to the brim.")
 				break
 
 		if(!O.contents.len)
-			user << "You empty the [O] into the All-In-One grinder."
+			to_chat(user, "You empty the [O] into the All-In-One grinder.")
 
 		src.updateUsrDialog()
 		return 0
 
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
-		user << "Cannot refine into a reagent."
+		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
 	user.before_take_item(O)
@@ -1728,10 +1728,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/item/weapon/electrolyzer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iswirecutter(W))
 		if(beakers.len)
-			user << "<span class='warning'>The electrolyzer contains beakers!</span>"
+			to_chat(user, "<span class='warning'>The electrolyzer contains beakers!</span>")
 			return
 		else
-			user << "<span class='notice'>You disassemble the electrolyzer.</span>"
+			to_chat(user, "<span class='notice'>You disassemble the electrolyzer.</span>")
 			var/turf/T = get_turf(src)
 			new /obj/item/stack/cable_coil(T,2)
 			new /obj/item/weapon/grenade/chem_grenade(T)
@@ -1740,28 +1740,28 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(is_type_in_list(W, allowed_containers))
 		var/obj/item/weapon/reagent_containers/glass/G = W
 		if(G.reagents.reagent_list.len > 1)
-			user << "<span class='warning'>That mixture is too complex!</span>"
+			to_chat(user, "<span class='warning'>That mixture is too complex!</span>")
 			return
 		if(beakers.len == 2)
-			user << "<span class='warning'>The grenade can not hold more containers.</span>"
+			to_chat(user, "<span class='warning'>The grenade can not hold more containers.</span>")
 			return
 		else if(beakers.len == 1)
 			var/obj/item/weapon/reagent_containers/glass/other = beakers[1]
 			if(other.reagents.total_volume && !G.reagents.total_volume) //We already have one inserted beaker. It must occupy slot 1. Is it empty or active?
-				user << "<span class='notice'>You add \the [G] to the electrolyzer as the empty container.</span>"
+				to_chat(user, "<span class='notice'>You add \the [G] to the electrolyzer as the empty container.</span>")
 				insert_beaker(G,user)
 			else if(!other.reagents.total_volume && G.reagents.total_volume)
-				user << "<span class='notice'>You add \the [G] to the electrolyzer as the active container.</span>"
+				to_chat(user, "<span class='notice'>You add \the [G] to the electrolyzer as the active container.</span>")
 				insert_beaker(G,user)
 			else
-				user << "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>"
+				to_chat(user, "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>")
 				return
 		else
-			user << "<span class='notice'>You add \the [G] to the electrolyzer as the [G.reagents.total_volume ? "active" : "empty"] container.</span>"
+			to_chat(user, "<span class='notice'>You add \the [G] to the electrolyzer as the [G.reagents.total_volume ? "active" : "empty"] container.</span>")
 			insert_beaker(G,user)
 	else if(istype(W, /obj/item/weapon/cell))
 		if(beakers.len < 2)
-			user << "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>"
+			to_chat(user, "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>")
 			return
 		var/obj/item/weapon/cell/C = W
 		var/obj/item/weapon/reagent_containers/active = null
@@ -1769,16 +1769,16 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		var/datum/chemical_reaction/unreaction = null
 		for(var/obj/item/weapon/reagent_containers/B in beakers)
 			if(B.reagents.reagent_list.len > 1) //This only fires if their power ran out with a first cell and they try electrolyzing again without removing the old mix
-				user << "<span class='warning'>That mixture is too complex!</span>"
+				to_chat(user, "<span class='warning'>That mixture is too complex!</span>")
 				return
 			else if(B.reagents.reagent_list.len == 1)
 				active = B
 			else if (!B.reagents.reagent_list.len)
 				empty = B
 			else
-				user << "<span class='warning'>An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>"
+				to_chat(user, "<span class='warning'>An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>")
 		if(!active || !empty)
-			user << "<span class='warning'>There must be both an empty and active beaker.</span>"
+			to_chat(user, "<span class='warning'>There must be both an empty and active beaker.</span>")
 			return
 		var/datum/reagent/target = active.reagents.reagent_list[1] //Should only have one thing anyway
 		for(var/R in allowed_reactions)
@@ -1787,7 +1787,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				unreaction = check
 				break
 		if(!unreaction)
-			user << "<span class='notice'>The system didn't react...</span>"
+			to_chat(user, "<span class='notice'>The system didn't react...</span>")
 			return
 		var/total_reactions = round(active.reagents.total_volume / unreaction.result_amount)
 		var/primary = 1
@@ -1801,7 +1801,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				primary = 0
 			else
 				empty.reagents.add_reagent(E, unreaction.required_reagents[E]*total_reactions)
-		user << "<span class='warning'>The system electrolyzes!</span>"
+		to_chat(user, "<span class='warning'>The system electrolyzes!</span>")
 	else
 		..()
 
@@ -1825,7 +1825,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/structure/centrifuge/examine(mob/user)
 	..()
-	user << "<span class='info'>It contains [cans.len] empty containers[beaker ? " and an active container!" : "."]</span>"
+	to_chat(user, "<span class='info'>It contains [cans.len] empty containers[beaker ? " and an active container!" : "."]</span>")
 
 /obj/structure/centrifuge/attackby(obj/item/weapon/reagent_containers/W as obj, mob/user as mob)
 	if(iscrowbar(W))
@@ -1835,17 +1835,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		T.dir = src.dir
 		T.update_icon()
 		new /obj/item/stack/rods(get_turf(src), 2)
-		user << "<span class='notice'>You pry out the rods, destroying the filter.</span>"
+		to_chat(user, "<span class='notice'>You pry out the rods, destroying the filter.</span>")
 		qdel(src)
 	if(W.is_open_container())
 		if(!W.reagents.total_volume)
 			W.loc = src
 			cans += W
 			user.drop_item(W, src)
-			user << "<span class='notice'>You add a passive container. It now contains [cans.len].</span>"
+			to_chat(user, "<span class='notice'>You add a passive container. It now contains [cans.len].</span>")
 		else
 			if(!beaker)
-				user << "<span class='notice'>You insert an active container.</span>"
+				to_chat(user, "<span class='notice'>You insert an active container.</span>")
 				src.beaker =  W
 				if(user.type == /mob/living/silicon/robot)
 					var/mob/living/silicon/robot/R = user
@@ -1854,7 +1854,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 				user.drop_item(W, src)
 			else
-				user << "<span class='warning'>There is already an active container.</span>"
+				to_chat(user, "<span class='warning'>There is already an active container.</span>")
 		return
 	else
 		..()
@@ -1879,16 +1879,16 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			cans -= O
 		if(beaker)
 			detach()
-		user << "<span class='notice'>You remove everything from the centrifuge.</span>"
+		to_chat(user, "<span class='notice'>You remove everything from the centrifuge.</span>")
 	else
-		user << "<span class='warning'>There is nothing to eject!</span>"
+		to_chat(user, "<span class='warning'>There is nothing to eject!</span>")
 
 /obj/structure/centrifuge/verb/flush()
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
 	add_fingerprint(usr)
-	usr << "<span class='notice'>\The [src] groans as it spits out containers.</span>"
+	to_chat(usr, "<span class='notice'>\The [src] groans as it spits out containers.</span>")
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
 		var/obj/item/weapon/reagent_containers/C = cans[1]
 		var/datum/reagent/R = beaker.reagents.reagent_list[1]
@@ -1896,10 +1896,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		C.loc = src.loc
 		cans -= C
 	if(!cans.len&&beaker.reagents.reagent_list.len)
-		usr << "<span class='warning'>With no remaining containers, the rest of the concoction swirls down the drain...</span>"
+		to_chat(usr, "<span class='warning'>With no remaining containers, the rest of the concoction swirls down the drain...</span>")
 		beaker.reagents.clear_reagents()
 	if(!beaker.reagents.reagent_list.len)
-		usr << "<span class='notice'>The now-empty active container plops out.</span>"
+		to_chat(usr, "<span class='notice'>The now-empty active container plops out.</span>")
 		detach()
 		return
 
@@ -1984,10 +1984,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		new /obj/item/trash/bowl(user.loc)
 		return
 	if (crushable)
-		user << "<span class ='warning'>There's already something inside!</span>"
+		to_chat(user, "<span class ='warning'>There's already something inside!</span>")
 		return 1
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
-		user << "<span class ='warning'>You can't grind that!</span>"
+		to_chat(user, "<span class ='warning'>You can't grind that!</span>")
 		return ..()
 	if(istype(O, /obj/item/stack/))
 		var/obj/item/stack/N = new O.type(src, amount=1)
@@ -2010,13 +2010,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/item/weapon/reagent_containers/mortar/attack_self(mob/user as mob)
 	if(!crushable)
-		user << "<span class='notice'>There is nothing to be crushed.</span>"
+		to_chat(user, "<span class='notice'>There is nothing to be crushed.</span>")
 		return
 	if (reagents.total_volume >= volume)
-		user << "<span class='warning'>There is no more space inside!</span>"
+		to_chat(user, "<span class='warning'>There is no more space inside!</span>")
 		return
 	if(is_type_in_list(crushable, juice_items))
-		user << "<span class='notice'>You smash the contents into juice!</span>"
+		to_chat(user, "<span class='notice'>You smash the contents into juice!</span>")
 		var/id = null
 		for(var/i in juice_items)
 			if(istype(crushable, i))
@@ -2028,7 +2028,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			juiceable.potency = 0
 		reagents.add_reagent(id[1], min(round(5*sqrt(juiceable.potency)), volume - reagents.total_volume))
 	else if(is_type_in_list(crushable, blend_items))
-		user << "<span class='notice'>You grind the contents into dust!</span>"
+		to_chat(user, "<span class='notice'>You grind the contents into dust!</span>")
 		var/id = null
 		var/space = volume - reagents.total_volume
 		for(var/i in blend_items)
@@ -2050,14 +2050,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/obj/item/weapon/rocksliver/R = crushable
 			reagents.add_reagent(id[1],min(id[2], space), R.geological_data)
 		else
-			user << "<span class ='warning'>An error was encountered. Report this message.</span>"
+			to_chat(user, "<span class ='warning'>An error was encountered. Report this message.</span>")
 			return
 	else
-		user << "<span class='notice'>You smash the contents into nothingness.</span>"
+		to_chat(user, "<span class='notice'>You smash the contents into nothingness.</span>")
 	qdel(crushable)
 	crushable = null
 	return
 
 /obj/item/weapon/reagent_containers/mortar/examine(mob/user)
 	..()
-	user << "<span class='info'>It has [crushable ? "an unground \the [crushable] inside." : "nothing to be crushed."]</span>"
+	to_chat(user, "<span class='info'>It has [crushable ? "an unground \the [crushable] inside." : "nothing to be crushed."]</span>")

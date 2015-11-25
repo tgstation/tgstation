@@ -81,7 +81,7 @@
 
 /obj/machinery/media/tapedeck/attack_hand(var/mob/user)
 	if(stat & NOPOWER)
-		usr << "<span class='warning'>You don't see anything to mess with.</span>"
+		to_chat(usr, "<span class='warning'>You don't see anything to mess with.</span>")
 		return
 	if(stat & BROKEN && playlist!=null)
 		user.visible_message("<span class='danger'>[user.name] smacks the side of \the [src.name].</span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
@@ -218,7 +218,7 @@
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
-		usr << "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>"
+		to_chat(usr, "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>")
 		return
 
 	if(..()) return 1
@@ -236,7 +236,7 @@
 			if("Save Settings")
 				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
 				if(!new_linked_account)
-					usr << "<span class='warning'>Unable to link new account. Aborting.</span>"
+					to_chat(usr, "<span class='warning'>Unable to link new account. Aborting.</span>")
 					return
 
 				change_cost = max(0,text2num(href_list["set_change_cost"]))
@@ -252,7 +252,7 @@
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			usr << "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>"
+			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return
 		playlist_id=href_list["playlist"]
 		last_reload=world.time
@@ -404,7 +404,7 @@
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
 	// NO FUN ALLOWED.  Emag list is included, anyway.
 	if(istype(W, /obj/item/weapon/card/emag))
-		user << "<span class='warning'>Your [W] refuses to touch \the [src]!</span>"
+		to_chat(user, "<span class='warning'>Your [W] refuses to touch \the [src]!</span>")
 		return
 	..()
 

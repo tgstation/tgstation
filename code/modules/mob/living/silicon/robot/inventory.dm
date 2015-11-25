@@ -34,7 +34,7 @@
 
 	if(module_active:loc != src)
 		if(!istype(module_active, /obj/item/weapon/reagent_containers/glass/beaker))
-			src << "<span class='warning'>Can't store something you're not holding!</span>"
+			to_chat(src, "<span class='warning'>Can't store something you're not holding!</span>")
 			return
 		else
 			var/obj/item/weapon/reagent_containers/glass/beaker/large/ourbeaker = module_active
@@ -68,7 +68,7 @@
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
 		return
 	if(activated(O))
-		src << "<span class='notice'>Already activated</span>"
+		to_chat(src, "<span class='notice'>Already activated</span>")
 		return
 	if(!module_state_1)
 		module_state_1 = O
@@ -86,7 +86,7 @@
 		O.screen_loc = inv3.screen_loc
 		O.forceMove(src)
 	else
-		src << "<span class='notice'>You need to disable a module first!</span>"
+		to_chat(src, "<span class='notice'>You need to disable a module first!</span>")
 
 /mob/living/silicon/robot/proc/uneq_all()
 	module_active = null

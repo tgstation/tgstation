@@ -264,7 +264,7 @@ font-weight:bold;
 			if(!isnull(G.id_tag) && G.frequency == frequency)
 				sensor_list|=G.id_tag
 		if(!sensor_list.len)
-			user << "<span class=\"warning\">No sensors on this frequency.</span>"
+			to_chat(user, "<span class=\"warning\">No sensors on this frequency.</span>")
 			return MT_ERROR
 
 		// Have the user pick one of them and name its label
@@ -288,7 +288,7 @@ font-weight:bold;
 			if(!isnull(G.id_tag) && G.frequency == frequency)
 				sensor_list|=G.id_tag
 		if(!sensor_list.len)
-			user << "<span class=\"warning\">No sensors on this frequency.</span>"
+			to_chat(user, "<span class=\"warning\">No sensors on this frequency.</span>")
 			return MT_ERROR
 		var/label = sensors[href_list["edit_sensor"]]
 		var/sensor = input(user, "Select a sensor:", "Sensor Data", href_list["edit_sensor"]) as null|anything in sensor_list

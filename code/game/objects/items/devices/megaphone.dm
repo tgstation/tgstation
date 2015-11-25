@@ -15,17 +15,17 @@
 /obj/item/device/megaphone/attack_self(mob/living/user as mob)
 	if (user.client)
 		if(user.client.prefs.muted & MUTE_IC)
-			src << "<span class='warning'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if(!ishuman(user) && (!isrobot(user) || isMoMMI(user))) //Non-humans can't use it, borgs can, mommis can't
-		user << "<span class='warning'>You don't know how to use this!</span>"
+		to_chat(user, "<span class='warning'>You don't know how to use this!</span>")
 		return
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && (H.miming || H.silent)) //Humans get their muteness checked
-		user << "<span class='warning'>You find yourself unable to speak at all.</span>"
+		to_chat(user, "<span class='warning'>You find yourself unable to speak at all.</span>")
 		return
 	if(spamcheck)
-		user << "<span class='warning'>\The [src] needs to recharge!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 		return
 
 	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
@@ -39,7 +39,7 @@
 					O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>",2) // 2 stands for hearable message
 				insults--
 			else
-				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
+				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 		else
 			for(var/mob/O in (viewers(user)))
 				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
@@ -51,7 +51,7 @@
 
 /obj/item/device/megaphone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"
+		to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 		emagged = 1
 		insults = rand(1, 3)//to prevent dickflooding
 		return
@@ -98,11 +98,11 @@ This is to cycle sounds forward
 	set name = "Cycle Sound Forward"
 	switch(sound_flag)
 		if(SOUND_NUM)
-			usr << "There is no sound higher then Double Beep!"
+			to_chat(usr, "There is no sound higher then Double Beep!")
 			return
 		if(0 to SOUND_NUM-1)
 			sound_flag++
-			usr << "Sound switched to [sound_names[1+sound_flag]]!"
+			to_chat(usr, "Sound switched to [sound_names[1+sound_flag]]!")
 			return
 		else
 			sound_flag=0
@@ -117,11 +117,11 @@ And backwards
 
 	switch(sound_flag)
 		if(0)
-			usr << "There is no sound lower then Honk!"
+			to_chat(usr, "There is no sound lower then Honk!")
 			return
 		if(1 to SOUND_NUM)
 			sound_flag--
-			usr << "Sound switched to [sound_names[1+sound_flag]]!"
+			to_chat(usr, "Sound switched to [sound_names[1+sound_flag]]!")
 			return
 		else
 			sound_flag=0
@@ -141,7 +141,7 @@ And backwards
 	if(M == user) //If you target yourself
 		sound_flag++
 		if(sound_flag > SOUND_NUM) sound_flag = 0
-		usr << "Sound switched to [sound_names[1+sound_flag]]!"
+		to_chat(usr, "Sound switched to [sound_names[1+sound_flag]]!")
 	else
 		if(spam_flag + 20 < world.timeofday)
 			var/tmp/playing_sound
@@ -150,6 +150,6 @@ And backwards
 					playing_sound = sound_list[sound_flag+1]
 				else return
 			spam_flag = world.timeofday
-			M << playing_sound
+			to_chat(M, playing_sound)
 
 #undef SOUND_NUM

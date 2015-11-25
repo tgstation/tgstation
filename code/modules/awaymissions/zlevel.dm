@@ -7,7 +7,7 @@
 		return
 
 	var/list/potentialRandomZlevels = list()
-	world << "<span class='danger'>Searching for away missions...</span>"
+	to_chat(world, "<span class='danger'>Searching for away missions...</span>")
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
@@ -44,7 +44,7 @@
 
 	while(1)
 		if(potentialRandomZlevels.len)
-			world << "<span class='danger'>Loading away mission...</span>"
+			to_chat(world, "<span class='danger'>Loading away mission...</span>")
 			var/map = pick(potentialRandomZlevels)
 			log_game("Loading away mission [map]")
 
@@ -57,11 +57,11 @@
 						continue
 					awaydestinations.Add(L)
 
-				world << "<span class='danger'>Away mission loaded.</span>"
+				to_chat(world, "<span class='danger'>Away mission loaded.</span>")
 				return
-			world << "<span class='danger'>Failed to load away mission. Trying again...</span>"
+			to_chat(world, "<span class='danger'>Failed to load away mission. Trying again...</span>")
 			// Remove map from list
 			potentialRandomZlevels -= map
 		else
-			world << "<span class='danger'>No away missions found.</span>"
+			to_chat(world, "<span class='danger'>No away missions found.</span>")
 			return

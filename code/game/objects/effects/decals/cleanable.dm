@@ -57,7 +57,7 @@
 			return
 		var/taken = rand(1,amount)
 		amount -= taken
-		user << "<span class='notice'>You get some of \the [src] on your hands.</span>"
+		to_chat(user, "<span class='notice'>You get some of \the [src] on your hands.</span>")
 		if(transfers_dna)
 			if (!user.blood_DNA)
 				user.blood_DNA = list()

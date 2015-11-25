@@ -60,7 +60,7 @@
 			onclose(user, "[name]")
 	else
 		..() //Only show a regular description if it is too far away to read.
-		user << "<span class='notice'>It is too far away to read.</span>"
+		to_chat(user, "<span class='notice'>It is too far away to read.</span>")
 
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
@@ -68,7 +68,7 @@
 	set src in usr
 
 	if((M_CLUMSY in usr.mutations) && prob(50))
-		usr << "<span class='warning'>You cut yourself on [src].</span>"
+		to_chat(usr, "<span class='warning'>You cut yourself on [src].</span>")
 		return
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label [src]?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
 	if((loc == usr && !usr.stat && !(usr.status_flags & FAKEDEATH)))
@@ -239,7 +239,7 @@
 		var/t = sanitize(input("Enter what you want to write:", "Write", null, null) as message, MAX_MESSAGE_LEN)
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		if(!istype(i,/obj/item/weapon/pen) && !istype(i,/obj/item/toy/crayon))
-			usr << "<span class='warning'>Please ensure your pen is in your active hand and that you're holding the paper.</span>"
+			to_chat(usr, "<span class='warning'>Please ensure your pen is in your active hand and that you're holding the paper.</span>")
 			return
 
 		if(!Adjacent(usr, 1)) //the 1 means that the paper can be in one other item and be written on
@@ -293,7 +293,7 @@
 		//if((!in_range(src, user) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P)) return //What the actual FUCK
 
 		if(istype(P, /obj/item/weapon/stamp/clown) && !clown)
-			user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
+			to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 			return
 
 		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This [src.name] has been stamped with the [P.name].</i>"
@@ -308,15 +308,15 @@
 		stamped += P.type
 		overlays += stampoverlay
 
-		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
+		to_chat(user, "<span class='notice'>You stamp [src] with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/photo))
 		if(img)
-			user << "<span class='notice'>This paper already has a photo attached.</span>"
+			to_chat(user, "<span class='notice'>This paper already has a photo attached.</span>")
 			return
 		img = P
 		user.drop_item(P, src)
-		user << "<span class='notice'>You attach the photo to the piece of paper.</span>"
+		to_chat(user, "<span class='notice'>You attach the photo to the piece of paper.</span>")
 	else if(P.is_hot())
 		src.ashify_item(user)
 		return //no fingerprints, paper is gone
@@ -390,10 +390,10 @@ var/global/list/paper_folding_results = list ( \
 	if(!user)
 		return 0
 	if(user.stat || user.restrained())
-		user << "<span class='notice'>You can't do that while restrained.</span>"
+		to_chat(user, "<span class='notice'>You can't do that while restrained.</span>")
 		return 0
 	if(user.l_hand != src && user.r_hand != src)
-		user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+		to_chat(user, "<span class='notice'>You'll need [src] in your hands to do that.</span>")
 		return 0
 	return 1
 

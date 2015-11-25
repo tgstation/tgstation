@@ -224,9 +224,9 @@ About the Tools:
 	By default, all atom have a reagents var - but its empty. if you want to use an object for the chem.
 	system you'll need to add something like this in its new proc:
 
-		var/datum/reagents/R = new/datum/reagents(100) <<<<< create a new datum , 100 is the maximum_volume of the new holder datum.
-		reagents = R <<<<< assign the new datum to the objects reagents var
-		R.my_atom = src <<<<< set the holders my_atom to src so that we know where we are.
+		to_chat(var/datum/reagents/R = new/datum/reagents(100), <<< create a new datum , 100 is the maximum_volume of the new holder datum.)
+		to_chat(reagents = R, <<< assign the new datum to the objects reagents var)
+		to_chat(R.my_atom = src, <<< set the holders my_atom to src so that we know where we are.)
 
 		This can also be done by calling a convenience proc:
 		atom/proc/create_reagents(var/max_volume)

@@ -27,7 +27,7 @@
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		to_chat(user, "You insert [O].")
 	..()
 
 /obj/machinery/computer/skills/attack_ai(mob/user as mob)
@@ -41,7 +41,7 @@
 	if(..())
 		return
 	if (src.z > 6)
-		user << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 	var/dat
 

@@ -68,7 +68,7 @@
 				else
 					for(var/i = 1, i < H.blood_DNA.len, i++)
 						var/list/templist = H.blood_DNA[i]
-						user << "<span class='notice'>Blood type: [templist[2]]\nDNA: [templist[1]]</span>"
+						to_chat(user, "<span class='notice'>Blood type: [templist[2]]\nDNA: [templist[1]]</span>")
 
 			if (!A.fingerprints)
 				dat += "<span class='notice'>Unable to locate any fingerprints on [A]!\n</span>"

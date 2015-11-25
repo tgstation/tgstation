@@ -264,5 +264,5 @@
 		if (src.health <= 0)
 			src.die()
 	else
-		M << "<span class='good'>That object is useless to you.</span>"
+		to_chat(M, "<span class='good'>That object is useless to you.</span>")
 	return

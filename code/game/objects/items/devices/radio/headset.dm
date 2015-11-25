@@ -288,14 +288,14 @@
 					keyslot2 = null
 
 			recalculateChannels()
-			user << "You pop out the encryption keys in the headset!"
+			to_chat(user, "You pop out the encryption keys in the headset!")
 
 		else
-			user << "This headset doesn't have any encryption keys!  How useless..."
+			to_chat(user, "This headset doesn't have any encryption keys!  How useless...")
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot1 && keyslot2)
-			user << "The headset can't hold another key!"
+			to_chat(user, "The headset can't hold another key!")
 			return
 
 		if(!keyslot1)

@@ -522,9 +522,9 @@ datum
 					SetViruses(R, data) // Includes setting data
 
 					//debug
-					//world << "Adding data"
+//					to_chat(world, "Adding data")
 					//for(var/D in R.data)
-					//	world << "Container data: [D] = [R.data[D]]"
+//						to_chat(world, "Container data: [D] = [R.data[D]]")
 					//debug
 					update_total()
 					my_atom.on_reagent_change()
@@ -628,13 +628,13 @@ datum
 			get_data(var/reagent_id)
 				for(var/datum/reagent/D in reagent_list)
 					if(D.id == reagent_id)
-						//world << "proffering a data-carrying reagent ([reagent_id])"
+//						to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 						return D.data
 
 			set_data(var/reagent_id, var/new_data)
 				for(var/datum/reagent/D in reagent_list)
 					if(D.id == reagent_id)
-						//world << "reagent data set ([reagent_id])"
+//						to_chat(world, "reagent data set ([reagent_id])")
 						D.data = new_data
 
 /datum/reagents/Destroy()

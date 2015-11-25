@@ -17,7 +17,7 @@
 			C.drop_item(I, src)
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
-			user << "<b>The pathogen materializer is still recharging.."
+			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 

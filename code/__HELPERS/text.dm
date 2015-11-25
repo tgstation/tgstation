@@ -26,8 +26,8 @@
 
 /*
 /mob/verb/SanitizeTest(var/t as text)
-	src << "IN: [t]"
-	src << "OUT: [sanitizeSQL(t)]"
+	to_chat(src, "IN: [t]")
+	to_chat(src, "OUT: [sanitizeSQL(t)]")
 */
 /*
  * Text sanitization
@@ -477,4 +477,4 @@ var/list/number_units=list(
 	return out
 
 ///mob/verb/test_num2words(var/number as num)
-//	usr << "\"[list2text(num2words(number), " ")]\""
+//	to_chat(usr, "\"[list2text(num2words(number), " ")]\"")

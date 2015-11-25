@@ -99,8 +99,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/attack_hand(user as mob)
 	if(isobserver(user) && !isAdminGhost(user))
 		return 0
-//	user << "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>"
-	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+//	to_chat(user, "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>")
+	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
 

@@ -43,9 +43,9 @@
 			if (radiation > 100)
 				radiation = 100
 				if(!container)//If it's not in an MMI
-					src << "<span class='warning'>You feel weak.</span>"
+					to_chat(src, "<span class='warning'>You feel weak.</span>")
 				else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
-					src << "<span class='warning'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>"
+					to_chat(src, "<span class='warning'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>")
 
 			switch(radiation)
 				if(1 to 49)
@@ -60,9 +60,9 @@
 					if(prob(5))
 						radiation -= 5
 						if(!container)
-							src << "<span class='warning'>You feel weak.</span>"
+							to_chat(src, "<span class='warning'>You feel weak.</span>")
 						else
-							src << "<span class='warning'>STATUS: DANGEROUS LEVELS OF RADIATION DETECTED.</span>"
+							to_chat(src, "<span class='warning'>STATUS: DANGEROUS LEVELS OF RADIATION DETECTED.</span>")
 					updatehealth()
 
 				if(75 to 100)
@@ -153,7 +153,7 @@
 						silent = 1
 						if(!alert)//Sounds an alarm, but only once per 'level'
 							emote("alarm")
-							src << "<span class='warning'>Major electrical distruption detected: System rebooting.</span>"
+							to_chat(src, "<span class='warning'>Major electrical distruption detected: System rebooting.</span>")
 							alert = 1
 						if(prob(75))
 							emp_damage -= 1
@@ -169,7 +169,7 @@
 						ear_damage = 1
 						if(!alert)
 							emote("alert")
-							src << "<span class='warning'>Primary systems are now online.</span>"
+							to_chat(src, "<span class='warning'>Primary systems are now online.</span>")
 							alert = 1
 						if(prob(50))
 							emp_damage -= 1
@@ -181,13 +181,13 @@
 					if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 						if(!alert)
 							emote("notice")
-							src << "<span class='warning'>System reboot nearly complete.</span>"
+							to_chat(src, "<span class='warning'>System reboot nearly complete.</span>")
 							alert = 1
 						if(prob(25))
 							emp_damage -= 1
 					if(1)
 						alert = 0
-						src << "<span class='warning'>All systems restored.</span>"
+						to_chat(src, "<span class='warning'>All systems restored.</span>")
 						emp_damage -= 1
 
 			//Other

@@ -73,7 +73,7 @@
 		return
 	if(href_list["copy"])
 		if(copying)
-			usr << "<span class='warning'>\The [src] is busy with another print job.</span>"
+			to_chat(usr, "<span class='warning'>\The [src] is busy with another print job.</span>")
 			return
 		if(copy)
 			copies = Clamp(copies, 0, 10)
@@ -145,7 +145,7 @@
 					if(!copying) break
 					var/icon/temp_img
 					if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
-						usr << "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>"
+						to_chat(usr, "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>")
 					else if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 						if(isalien(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 							temp_img = icon("icons/ass/assalien.png")
@@ -182,7 +182,7 @@
 				usr.put_in_hands(copy)
 			else
 				copy.loc = src.loc
-			usr << "<span class='notice'>You take [copy] out of [src].</span>"
+			to_chat(usr, "<span class='notice'>You take [copy] out of [src].</span>")
 			copy = null
 			updateUsrDialog()
 		else if(photocopy)
@@ -191,15 +191,15 @@
 				usr.put_in_hands(photocopy)
 			else
 				photocopy.loc = src.loc
-			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
+			to_chat(usr, "<span class='notice'>You take [photocopy] out of [src].</span>")
 			photocopy = null
 			updateUsrDialog()
 		else if(check_ass())
-			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+			to_chat(ass, "<span class='notice'>You feel a slight pressure on your ass.</span>")
 	else if(href_list["min"])
 		if(copying)
 			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
-				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				to_chat(usr, "<span class='warning'>Must wait for current print job to finish.</span>")
 				return
 			copying = 0
 		if(copies > 1)
@@ -208,7 +208,7 @@
 	else if(href_list["add"])
 		if(copying)
 			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
-				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				to_chat(usr, "<span class='warning'>Must wait for current print job to finish.</span>")
 				return
 			copying = 0
 		if(copies < maxcopies)
@@ -217,7 +217,7 @@
 	else if(href_list["aipic"])
 		if(copying)
 			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
-				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				to_chat(usr, "<span class='warning'>Must wait for current print job to finish.</span>")
 				return
 			copying = 0
 		if(!istype(usr,/mob/living/silicon/ai)) return
@@ -227,7 +227,7 @@
 			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
 			if(tempAI.aicamera.aipictures.len == 0)
-				usr << "<font color=red><B>No images saved<B></font>"
+				to_chat(usr, "<font color=red><B>No images saved<B></font>")
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
@@ -251,7 +251,7 @@
 	else if(href_list["colortoggle"])
 		if(copying)
 			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
-				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				to_chat(usr, "<span class='warning'>Must wait for current print job to finish.</span>")
 				return
 			copying = 0
 		if(greytoggle == "Greyscale")
@@ -263,40 +263,40 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(copying)
 		if(!alert("Cancel current print job?","","Yes","No") == "Yes")
-			usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+			to_chat(usr, "<span class='warning'>Must wait for current print job to finish.</span>")
 			return
 		copying = 0
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			user.drop_item(O, src)
 			copy = O
-			user << "<span class='notice'>You insert [O] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [O] into [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in [src].</span>")
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
 			user.drop_item(O, src)
 			photocopy = O
-			user << "<span class='notice'>You insert [O] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [O] into [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in [src].</span>")
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
 			user.drop_item(O)
 			qdel(O)
 			toner = 40
-			user << "<span class='notice'>You insert [O] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [O] into [src].</span>")
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
+			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>")
 	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
 		var/obj/item/weapon/grab/G = O
 		if(ismob(G.affecting) && G.affecting != ass)
@@ -314,20 +314,20 @@
 			updateUsrDialog()
 	else if(istype(O, /obj/item/weapon/screwdriver))
 		if(anchored)
-			user << "[src] needs to be unanchored."
+			to_chat(user, "[src] needs to be unanchored.")
 			return
 		if(!opened)
 			src.opened = 1
 			//src.icon_state = "photocopier_t"
-			user << "You open the maintenance hatch of [src]."
+			to_chat(user, "You open the maintenance hatch of [src].")
 		else
 			src.opened = 0
 			//src.icon_state = "photocopier"
-			user << "You close the maintenance hatch of [src]."
+			to_chat(user, "You close the maintenance hatch of [src].")
 		return 1
 	if(opened)
 		if(istype(O, /obj/item/weapon/crowbar))
-			user << "You begin to remove the circuits from the [src]."
+			to_chat(user, "You begin to remove the circuits from the [src].")
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, src, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)

@@ -110,7 +110,7 @@
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
 		else
-			user << "<span class='warning'>It's broken!</span>"
+			to_chat(user, "<span class='warning'>It's broken!</span>")
 			return 1
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		var/obj/item/weapon/reagent_containers/R = O
@@ -132,29 +132,29 @@
 					src.flags = OPENCONTAINER
 					return 1
 		else //Otherwise bad luck!!
-			user << "<span class='warning'>It's too dirty!</span>"
+			to_chat(user, "<span class='warning'>It's too dirty!</span>")
 			return 1
 
 	if(..())
 		return 1
 
 	if(holdingitems && holdingitems.len >= limit)
-		usr << "The machine cannot hold anymore items."
+		to_chat(usr, "The machine cannot hold anymore items.")
 		return 1
 	else if(istype(O, /obj/item/weapon/storage/bag/plants) || istype(O, /obj/item/weapon/storage/bag/food/borg))
 		var/obj/item/weapon/storage/bag/B = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/G in O.contents)
 			B.remove_from_storage(G,src)
 			if(contents && contents.len >= limit) //Sanity checking so the microwave doesn't overfill
-				user << "You fill the Microwave to the brim."
+				to_chat(user, "You fill the Microwave to the brim.")
 				break
 
 		if(!O.contents.len)
-			user << "You empty \the [O] into the Microwave."
+			to_chat(user, "You empty \the [O] into the Microwave.")
 			src.updateUsrDialog()
 			return 0
 			if (!is_type_in_list(O.contents))
-				user << "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>"
+				to_chat(user, "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>")
 				return 1
 
 		user.before_take_item(O)
@@ -180,15 +180,15 @@
 			return 1
 		for (var/datum/reagent/R in O.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
-				user << "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>"
+				to_chat(user, "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>")
 				return 1
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
-		user << "<span class='warning'>This is ridiculous. You can not fit \the [G.affecting] in this [src].</span>"
+		to_chat(user, "<span class='warning'>This is ridiculous. You can not fit \the [G.affecting] in this [src].</span>")
 		return 1
 	else
-		user << "<span class='warning'>You have no idea what you can cook with this [O].</span>"
+		to_chat(user, "<span class='warning'>You have no idea what you can cook with this [O].</span>")
 		return 1
 	src.updateUsrDialog()
 
@@ -202,7 +202,7 @@
 			user.set_machine(src)
 			interact(user)
 			return 1
-		user << "<span class='warning'>You aren't equipped to interface with technology this old!</span>"
+		to_chat(user, "<span class='warning'>You aren't equipped to interface with technology this old!</span>")
 		return 0
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
@@ -386,7 +386,7 @@
 	if (src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()
-	usr << "<span class='notice'>You dispose of the microwave contents.</span>"
+	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()

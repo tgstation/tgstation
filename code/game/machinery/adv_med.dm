@@ -105,22 +105,22 @@
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
 	if(occupant)
-		user << "<span class='notice'>\The [src] is already occupied!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
 	if(isrobot(user))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			user << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(user, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
-		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
+		to_chat(user, "<span class='notice'>Subject cannot have abiotic items on.</span>")
 		return
 	for(var/mob/living/carbon/slime/M in range(1, L))
 		if(M.Victim == L)
-			usr << "<span class='notice'>[L] will not fit into \the [src] because they have a slime latched onto their head.</span>"
+			to_chat(usr, "<span class='notice'>[L] will not fit into \the [src] because they have a slime latched onto their head.</span>")
 			return
 	if(L == user)
 		visible_message("[user] climbs into \the [src].")
@@ -143,12 +143,12 @@
 	if(!ishuman(usr) && !isrobot(usr))
 		return
 	if(!occupant)
-		usr << "<span class='warning'>The scanner is unoccupied!</span>"
+		to_chat(usr, "<span class='warning'>The scanner is unoccupied!</span>")
 		return
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(usr, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	if(!istype(over_location) || over_location.density)
 		return
@@ -192,10 +192,10 @@
 	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	if(src.occupant)
-		usr << "<span class='notice'>\The [src] is already occupied!</span>"
+		to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
 	if(usr.abiotic())
-		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
+		to_chat(usr, "<span class='notice'>Subject cannot have abiotic items on.</span>")
 		return
 	if(usr.locked_to)
 		return
@@ -226,7 +226,7 @@
 
 /obj/machinery/bodyscanner/crowbarDestroy(mob/user)
 	if(occupant)
-		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>")
 		return
 	return ..()
 
@@ -239,7 +239,7 @@
 				update_icon()
 			else
 				orient = "RIGHT"
-				user << "<span class='warning'>There is no space!</span>"
+				to_chat(user, "<span class='warning'>There is no space!</span>")
 				generate_console(get_step(get_turf(src), WEST))
 		else
 			orient = "RIGHT"
@@ -256,13 +256,13 @@
 	if((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if(src.occupant)
-		user << "<span class='notice'>\The [src] is already occupied!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
 
 	G.affecting.unlock_from()
 
 	if(G.affecting.abiotic())
-		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
+		to_chat(user, "<span class='notice'>Subject cannot have abiotic items on.</span>")
 		return
 	var/mob/M = G.affecting
 	M.loc = src
@@ -381,10 +381,10 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!connected || (connected.stat & (NOPOWER|BROKEN)))
-		user << "<span class='warning'>This console is not connected to a functioning body scanner.</span>"
+		to_chat(user, "<span class='warning'>This console is not connected to a functioning body scanner.</span>")
 		return
 	if(!ishuman(connected.occupant))
-		user << "<span class='warning'>This device can only scan compatible lifeforms.</span>"
+		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
 
 	var/dat
@@ -410,14 +410,14 @@
 
 	if(href_list["print"])
 		if(!src.connected)
-			usr << "\icon[src]<span class='warning'>Error: No body scanner connected.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>Error: No body scanner connected.</span>")
 			return
 		var/mob/living/carbon/human/occupant = src.connected.occupant
 		if(!src.connected.occupant)
-			usr << "\icon[src]<span class='warning'>\The [src.connected] is empty.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>\The [src.connected] is empty.</span>")
 			return
 		if(!istype(occupant,/mob/living/carbon/human))
-			usr << "\icon[src]<span class='warning'>\The [src.connected] cannot scan that lifeform.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>\The [src.connected] cannot scan that lifeform.</span>")
 			return
 		var/obj/item/weapon/paper/R = new(src.loc)
 		R.name = "paper - 'body scan report'"

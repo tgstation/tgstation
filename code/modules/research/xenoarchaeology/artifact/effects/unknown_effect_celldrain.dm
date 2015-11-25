@@ -10,7 +10,7 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.cell)
 			R.cell.charge = max(R.cell.charge - rand() * 100, 0)
-			R << "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>"
+			to_chat(R, "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 50
 		return 1
@@ -26,7 +26,7 @@
 			if(M.cell)
 				M.cell.charge = max(M.cell.charge - 50, 0)
 				if(world.time >= next_message)
-					M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"
+					to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 300
 		return 1
@@ -42,7 +42,7 @@
 			if(M.cell)
 				M.cell.charge = max(M.cell.charge - rand() * 100, 0)
 				if(world.time >= next_message)
-					M << "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>"
+					to_chat(M, "<span class='danger'>SYSTEM ALERT: Large energy drain detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 300
 		return 1

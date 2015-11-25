@@ -69,7 +69,7 @@ obj/item/proc/get_clamped_volume()
 		if(istype(M, /mob/living/carbon/slime))
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
-				user << "<span class='warning'>[src] passes right through [M]!</span>"
+				to_chat(user, "<span class='warning'>[src] passes right through [M]!</span>")
 				return 0
 
 			if(power > 0)
@@ -155,7 +155,7 @@ obj/item/proc/get_clamped_volume()
 
 		if(!showname && user)
 			if(user.client)
-				user << "<span class='danger'>You attack [M] with [src]. </span>"
+				to_chat(user, "<span class='danger'>You attack [M] with [src]. </span>")
 
 
 	if(istype(M, /mob/living/carbon/human))
@@ -182,7 +182,7 @@ obj/item/proc/get_clamped_volume()
 						var/mob/living/carbon/monkey/K = M
 						power = K.defense(power,def_zone)
 					M.take_organ_damage(0, power)
-					M << "Aargh it burns!"
+					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)
 	return .

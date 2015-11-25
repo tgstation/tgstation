@@ -133,10 +133,10 @@
 	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		t += status()
 	else
-		usr << "<span class='notice'><B>You are too far away.</B></span>"
+		to_chat(usr, "<span class='notice'><B>You are too far away.</B></span>")
 		return 1
 
-	usr << t
+	to_chat(usr, t)
 	return 1
 
 /obj/machinery/meter/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
@@ -152,7 +152,7 @@
 		return ..()
 
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, src, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].</span>", \

@@ -95,7 +95,7 @@
 /obj/item/weapon/gun/projectile/rocketlauncher/nikita/attackby(var/obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1
-		user << "<span class='warning'>You disable \the [src]'s idiot security!</span>"
+		to_chat(user, "<span class='warning'>You disable \the [src]'s idiot security!</span>")
 	else
 		..()
 

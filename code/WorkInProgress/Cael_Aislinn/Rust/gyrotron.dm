@@ -87,7 +87,7 @@
 
 /obj/machinery/rust/gyrotron/weldToFloor(var/obj/item/weapon/weldingtool/WT, var/mob/user)
 	if(emitting)
-		user << "<span class='warning'>Turn \the [src] off first!</span>"
+		to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 		return -1
 	. = ..()
 
@@ -100,7 +100,7 @@
 		return
 
 	if(anchored)
-		usr << "<span class='notify'>\the [src] is anchored to the floor!</span>"
+		to_chat(usr, "<span class='notify'>\the [src] is anchored to the floor!</span>")
 		return
 
 	dir = turn(dir, -90)
@@ -114,7 +114,7 @@
 		return
 
 	if(anchored)
-		usr << "<span class='notify'>\the [src] is anchored to the floor!</span>"
+		to_chat(usr, "<span class='notify'>\the [src] is anchored to the floor!</span>")
 		return
 
 	dir = turn(dir, 90)

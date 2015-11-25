@@ -95,7 +95,7 @@
 
 /obj/structure/bed/chair/vehicle/wheelchair/relaymove(var/mob/user, direction)
 	if(!check_key(user))
-		user << "<span class='warning'>You need at least one hand to use [src]!</span>"
+		to_chat(user, "<span class='warning'>You need at least one hand to use [src]!</span>")
 		return 0
 	return ..()
 
@@ -131,7 +131,7 @@
 	..()
 
 	if(locked_atoms.len > 9)
-		user << "<b>WHAT THE FUCK</b>"
+		to_chat(user, "<b>WHAT THE FUCK</b>")
 
 /obj/structure/bed/chair/vehicle/wheelchair/multi_people/can_buckle(mob/M, mob/user)
 	//Same as parent's, but no occupant check!
@@ -168,9 +168,9 @@
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/examine(mob/user)
 	..()
 	if(internal_battery)
-		user << "<span class='info'>The battery meter reads: [round(internal_battery.percent(),1)]%</span>"
+		to_chat(user, "<span class='info'>The battery meter reads: [round(internal_battery.percent(),1)]%</span>")
 	else
-		user << "<span class='warning'>The 'check battery' light is blinking.</span>"
+		to_chat(user, "<span class='warning'>The 'check battery' light is blinking.</span>")
 
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/Move()
 	..()

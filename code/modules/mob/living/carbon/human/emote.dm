@@ -25,7 +25,7 @@
 			src.remove_spell(spell)
 			qdel(spell)
 		message_admins("[src.name] ([src.ckey]) has broken their oath of silence. (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</a>)")
-		src << "<span class = 'notice'>An unsettling feeling surrounds you...</span>"
+		to_chat(src, "<span class = 'notice'>An unsettling feeling surrounds you...</span>")
 		return
 
 	switch(act)
@@ -80,7 +80,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "<span class = 'warning'>You cannot send IC messages (muted).</span>"
+					to_chat(src, "<span class = 'warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -653,7 +653,7 @@
 						playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
 						if(wearing_suit)
 							if(!wearing_mask)
-								src << "<span class = 'warning'>You gas yourself!</span>"
+								to_chat(src, "<span class = 'warning'>You gas yourself!</span>")
 								reagents.add_reagent("space_drugs", rand(10,50))
 						else
 							// Was /turf/, now /mob/
@@ -693,27 +693,27 @@
 									shake_camera(V,10,5)
 									if (V == src)
 										continue
-									V << "<span class = 'danger'>You're sent flying!</span>"
+									to_chat(V, "<span class = 'danger'>You're sent flying!</span>")
 									V.Weaken(5) // why the hell was this set to 12 christ
 									step_away(V,location,15)
 									step_away(V,location,15)
 									step_away(V,location,15)
 						else
-							usr << "<span class = 'notice'>You were interrupted and couldn't fart! Rude!</span>"
+							to_chat(usr, "<span class = 'notice'>You were interrupted and couldn't fart! Rude!</span>")
 
 					lastFart=world.time
 
 					var/obj/item/weapon/storage/bible/B = locate(/obj/item/weapon/storage/bible) in src.loc
 					if(B)
 						if(iscult(src))
-							src << "<span class='sinister'>Nar-Sie shields you from [B.deity_name]'s wrath!</span>"
+							to_chat(src, "<span class='sinister'>Nar-Sie shields you from [B.deity_name]'s wrath!</span>")
 						else
 							if(istype(src.head, /obj/item/clothing/head/fedora))
-								src << "<span class='notice'>You feel incredibly enlightened after farting on [B]!</span>"
+								to_chat(src, "<span class='notice'>You feel incredibly enlightened after farting on [B]!</span>")
 								var/obj/item/clothing/head/fedora/F = src.head
 								F.tip_fedora()
 							else
-								src << "<span class='danger'>You feel incredibly guilty for farting on [B]!</span>"
+								to_chat(src, "<span class='danger'>You feel incredibly guilty for farting on [B]!</span>")
 							if(prob(80)) //20% chance to escape God's justice
 								spawn(rand(10,30))
 									if(src && B)
@@ -722,7 +722,7 @@
 										sleep(10)
 
 										if(src && B)
-											src << "<span class='danger'>You were disintegrated by [B.deity_name]'s bolt of lightning.</span>"
+											to_chat(src, "<span class='danger'>You were disintegrated by [B.deity_name]'s bolt of lightning.</span>")
 											src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Farted on a bible and suffered [B.deity_name]'s wrath.</font>")
 
 											explosion(get_turf(src),-1,-1,1,5) //Tiny explosion with flash
@@ -735,10 +735,10 @@
 				message = "<b>[src]</b> lets out a [pick("disgusting","revolting","horrible","strangled","god awful")] noise out of \his mutilated asshole."
 				m_type = HEARABLE
 		if ("help")
-			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
+			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
 
 		else
-			src << "<span class = 'notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			to_chat(src, "<span class = 'notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 
 
@@ -779,7 +779,7 @@
 	set category = "IC"
 
 	if(appearance_isbanned(usr))
-		src << "<span class = 'notice'>You are appearance banned!</span>"
+		to_chat(src, "<span class = 'notice'>You are appearance banned!</span>")
 		flavor_text = null
 		return
 	else

@@ -167,13 +167,13 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	return raid_objectives
 
 /datum/event/heist/proc/greet_vox(var/datum/mind/raider)
-	raider.current << {"<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b>
+	to_chat(raider.current, {"<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b>
 The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the [station_name()] for plunder, trade or both.
 Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.
-Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!</b></span>"}
+Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!</b></span>"})
 	var/obj_count = 1
 	for(var/datum/objective/objective in raider.objectives)
-		raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(raider.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
 
@@ -229,17 +229,17 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << {"<span class='danger'><FONT size = 3>[win_type] [win_group] victory!</FONT>
-		[win_msg]</span>"}
+	to_chat(world, {"<span class='danger'><FONT size = 3>[win_type] [win_group] victory!</FONT>
+		[win_msg]</span>"})
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>")
 			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>")
 			feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 

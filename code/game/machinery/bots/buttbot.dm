@@ -89,7 +89,8 @@ Here it is: Buttbot.
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/buttbot/A = new /obj/machinery/bot/buttbot(T)
 		A.name = src.created_name
-		user << "<span class='notice'>You roughly shove the robot arm into the ass! Butt Butt!</span>" //I don't even.
+		to_chat(user, "<span class='notice'>You roughly shove the robot arm into the ass! Butt Butt!</span>")//I don't even.
+
 		user.drop_from_inventory(src)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))

@@ -24,7 +24,7 @@
 
 
 		else
-			user << "There is already a dish inserted"
+			to_chat(user, "There is already a dish inserted")
 
 	//else
 	return

@@ -40,7 +40,7 @@
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
-		user << "Error, no route to host."
+		to_chat(user, "Error, no route to host.")
 
 /obj/machinery/door_control/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -77,7 +77,7 @@
 		return
 
 	if(!allowed(user) && (wires & 1))
-		user << "<span class='warning'>Access Denied</span>"
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 		flick("doorctrl-denied",src)
 		return
 
@@ -148,7 +148,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, src, 30))
-			user << "<span class='notice'>You detach \the [src] from the wall.</span>"
+			to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 			new/obj/item/mounted/frame/driver_button(get_turf(src))
 			del(src)
 		return 1

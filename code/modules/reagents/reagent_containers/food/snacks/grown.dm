@@ -106,7 +106,7 @@
 			W:amount -= 5
 			if(!W:amount)
 				qdel(W)
-			user << "<span class='notice'>You add some cable to \the [src] and slide it inside the battery encasing.</span>"
+			to_chat(user, "<span class='notice'>You add some cable to \the [src] and slide it inside the battery encasing.</span>")
 			var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
@@ -212,7 +212,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
 		qdel(O)
-		user << "<span class='notice'>You roll a blunt out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You roll a blunt out of \the [src].</span>")
 		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
 		B.name = "[src] blunt"
 		reagents.trans_to(B, (reagents.total_volume))
@@ -233,7 +233,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
 		qdel(O)
-		user << "<span class='notice'>You roll a godly blunt.</span>"
+		to_chat(user, "<span class='notice'>You roll a godly blunt.</span>")
 		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
 		reagents.trans_to(B, (reagents.total_volume))
 		B.light_color = filling_color
@@ -390,7 +390,7 @@
 	new /mob/living/simple_animal/tomato(user.loc)
 	qdel(src)
 
-	user << "<span class='notice'>You plant the killer-tomato.</span>"
+	to_chat(user, "<span class='notice'>You plant the killer-tomato.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	name = "blood-tomato"
@@ -522,7 +522,7 @@
 	new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	qdel(src)
 
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	name = "chanterelle cluster"
@@ -549,7 +549,7 @@
 	planted.potency = potency
 	qdel(src)
 
-	user << "<span class='notice'>You plant the glowshroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the glowshroom.</span>")
 
 // *************************************
 // Complex Grown Object Defines -

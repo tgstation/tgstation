@@ -293,14 +293,14 @@ hi
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
-	user << "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>"
+	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>"
+		to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 		return
 	if(!reagents.total_volume)
-		user << "<span class='warning'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 	if (!( istype(M, /mob) ))
 		return
@@ -311,12 +311,12 @@ hi
 				"<span class='notice'>You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.</span>", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "<span class='notice'>You don't want to contaminate the autoinjector.</span>"
+			to_chat(user, "<span class='notice'>You don't want to contaminate the autoinjector.</span>")
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>"
+			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>")
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
@@ -324,9 +324,9 @@ hi
 	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
+			to_chat(usr, "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>")
 	else
-		usr << "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>"
+		to_chat(usr, "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>")
 
 //End strange penlight
 
@@ -603,10 +603,10 @@ hi
 
 	if(src.icon_state == "jane_sid_suit_down")
 		src.color = "jane_sid_suit"
-		usr << "You zip up the [src]."
+		to_chat(usr, "You zip up the [src].")
 	else
 		src.color = "jane_sid_suit_down"
-		usr << "You unzip and roll down the [src]."
+		to_chat(usr, "You unzip and roll down the [src].")
 
 	src.icon_state = "[color]"
 	src.item_state = "[color]"

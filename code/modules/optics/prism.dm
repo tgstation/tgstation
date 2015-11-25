@@ -32,7 +32,7 @@ var/list/obj/machinery/prism/prism_list = list()
 
 /obj/machinery/prism/proc/check_rotation()
 	for(var/obj/effect/beam/emitter/B in beams)
-		world << "[src] \ref[src] found [get_dir(src, B)] its dir is [dir]"
+		to_chat(world, "[src] \ref[src] found [get_dir(src, B)] its dir is [dir]")
 		if(get_dir(src, B) != dir)
 			return 1
 /obj/machinery/prism/verb/rotate_cw()
@@ -41,7 +41,7 @@ var/list/obj/machinery/prism/prism_list = list()
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, -90)
 	qdel(beam)
@@ -55,7 +55,7 @@ var/list/obj/machinery/prism/prism_list = list()
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	qdel(beam)

@@ -37,7 +37,7 @@
 		var/obj/item/stack/cable_coil/CC = W
 
 		if (CC.amount < 10)
-			user << "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>"
+			to_chat(user, "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>")
 			return
 
 		if(make_terminal(user))
@@ -77,7 +77,7 @@
 
 /obj/machinery/power/battery_port/crowbarDestroy(mob/user)
 	if(connected)
-		user << "You can't disconnect \the [src] while it has \the [connected] attached."
+		to_chat(user, "You can't disconnect \the [src] while it has \the [connected] attached.")
 		return -1
 	return ..()
 

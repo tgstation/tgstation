@@ -13,7 +13,7 @@
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights)
-				C << msg
+				to_chat(C, msg)
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -45,4 +45,4 @@
 			if(C.prefs.special_popup)
 				C << output("\[[time_stamp()]] <span style='color:[color];'><b>[key_name(src,1)]</b> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>", "window1.msay_output")
 			else
-				C << "<span class='prefix'>MOD: </span><span class='[color]'><EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>"
+				to_chat(C, "<span class='prefix'>MOD: </span><span class='[color]'><EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>")

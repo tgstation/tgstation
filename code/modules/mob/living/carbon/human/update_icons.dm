@@ -513,7 +513,7 @@ var/global/list/damage_icon_parts = list()
 			if(w_uniform.flags&ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				src << "<span class='warning'>You burst out of \the [w_uniform]!</span>"
+				to_chat(src, "<span class='warning'>You burst out of \the [w_uniform]!</span>")
 				drop_from_inventory(w_uniform)
 				return
 		else
@@ -1047,7 +1047,7 @@ var/global/list/damage_icon_parts = list()
 			//if(!old_tail_state) //only update if we didnt show our tail already
 
 				//overlays_standing[TAIL_LAYER] = image("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
-				//src << "update: tail is different"
+//				to_chat(src, "update: tail is different")
 		//else
 			//overlays_standing[TAIL_LAYER] = null
 

@@ -82,14 +82,14 @@ mob
 
 		Output_Icon()
 			set name = "3. Output Icon"
-			src<<"\icon[getFlatIcon(src)]"
-			src<<"-----------------------------------------"
+			to_chat(src, "\icon[getFlatIcon(src)]")
+			to_chat(src, "-----------------------------------------")
 
 		Output_Fullsize_Icon()
 			set name = "4. Output Fullsize Icon"
 			var/icon/I = getFlatIcon(src)
-			src<<{"<img class="icon" src="\ref[fcopy_rsc(I)]" style="width: [I.Width()]px; height: [I.Height()]px;">"}
-			src<<"-----------------------------------------"
+			to_chat(src, {"<img class="icon" src="\ref[fcopy_rsc(I)]" style="width: [I.Width()]px; height: [I.Height()]px;">"})
+			to_chat(src, "-----------------------------------------")
 
 		Label_Icon()
 			set name = "5. Label Icon"

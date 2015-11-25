@@ -73,19 +73,19 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			if(destroyed)
-				user << "<span class='warning'>\The [src.name] is destroyed beyond repair.</span>"
+				to_chat(user, "<span class='warning'>\The [src.name] is destroyed beyond repair.</span>")
 			add_fingerprint(user)
 			user.visible_message("<span class='notice'>[user] has fixed some of the dents on \the [src].</span>", "<span class='notice'>You fix some of the dents on \the [src]</span>")
 			health += 20
 			HealthCheck()
 		else
-			user << "Need more welding fuel!"
+			to_chat(user, "Need more welding fuel!")
 			return
 	else if(istype(W, /obj/item/key))
 		if(keytype)
-			user << "Hold \the [W] in one of your hands while you drive \the [src]."
+			to_chat(user, "Hold \the [W] in one of your hands while you drive \the [src].")
 		else
-			user << "You don't need a key."
+			to_chat(user, "You don't need a key.")
 
 /obj/structure/bed/chair/vehicle/proc/check_key(var/mob/user)
 	if(!keytype)
@@ -99,11 +99,11 @@
 		unlock_atom(user)
 		return
 	if(!check_key(user))
-		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [src].</span>"
+		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [src].</span>")
 		return 0
 	if(empstun > 0)
 		if(user)
-			user << "<span class='warning'>\The [src] is unresponsive.</span>"
+			to_chat(user, "<span class='warning'>\The [src] is unresponsive.</span>")
 		return 0
 	if(move_delayer.blocked())
 		return 0
@@ -210,7 +210,7 @@
 
 	//Check to see if we slipped
 	if(prob(5))
-		src << "<span class='bnotice'>You slipped!</span>"
+		to_chat(src, "<span class='bnotice'>You slipped!</span>")
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

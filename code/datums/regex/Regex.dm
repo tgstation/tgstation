@@ -35,7 +35,7 @@
 
 		var/regex/R = new("/text/i")
 		if(R.Find(search_text))
-			usr << "Pattern found: [copytext(R.match, R.index)]"
+			to_chat(usr, "Pattern found: [copytext(R.match, R.index)]")
 
 	Procs you may need:
 

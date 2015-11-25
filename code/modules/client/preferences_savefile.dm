@@ -154,7 +154,7 @@
 /datum/preferences/proc/save_preferences_sqlite(var/user, var/ckey)
 	/* FUCK YOU
 	if(!(world.timeofday >= (lastPolled + POLLED_LIMIT)))
-		user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
+		to_chat(user, "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again.")
 		return
 	*/
 
@@ -180,7 +180,7 @@
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
-	user << "Preferences Updated."
+	to_chat(user, "Preferences Updated.")
 	lastPolled = world.timeofday
 	return 1
 
@@ -193,18 +193,18 @@
 	S["version"] << savefile_version
 
 	//general preferences
-	S["ooccolor"]			<< ooccolor
-	S["lastchangelog"]		<< lastchangelog
-	S["UI_style"]			<< UI_style
-	//S["be_special"]			<< be_special
-	S["default_slot"]		<< default_slot
-	S["toggles"]			<< toggles
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
-	S["warns"]				<< warns
-	S["warnbans"]			<< warnbans
-	S["randomslot"]			<< randomslot
-	S["volume"]				<< volume
+	S["ooccolor"]       << ooccolor
+	S["lastchangelog"]  << lastchangelog
+	S["UI_style"]       << UI_style
+//	S["be_special"]     << be_special
+	S["default_slot"]   << default_slot
+	S["toggles"]        << toggles
+	S["UI_style_color"] << UI_style_color
+	S["UI_style_alpha"] << UI_style_alpha
+	S["warns"]          << warns
+	S["warnbans"]       << warnbans
+	S["randomslot"]     << randomslot
+	S["volume"]         << volume
 	return 1
 
 //saving volume changes
@@ -214,7 +214,7 @@
 	if(!S)					return 0
 	S.cd = "/"
 
-	S["volume"]				<< volume
+	S["volume"] << volume
 	return 1
 
 /datum/preferences/proc/load_save_sqlite(var/ckey, var/user, var/slot)
@@ -225,7 +225,7 @@
 	check.Add("SELECT player_ckey FROM players WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			user << "You have no character file to load, please save one first."
+			to_chat(user, "You have no character file to load, please save one first.")
 			return 0
 	else
 		message_admins("load_save_sqlite Check Error #: [check.Error()] - [check.ErrorMsg()]")
@@ -462,7 +462,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 
-	user << "Sucessfully loaded [real_name]."
+	to_chat(user, "Sucessfully loaded [real_name].")
 
 	return 1
 
@@ -625,7 +625,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 
 	if(slot > MAX_SAVE_SLOTS)
-		user << "You are limited to 8 character slots."
+		to_chat(user, "You are limited to 8 character slots.")
 		message_admins("[ckey] attempted to override character slot limit")
 		return 0
 
@@ -647,7 +647,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Created Character"
+			to_chat(user, "Created Character")
 		else
 			q.Add("UPDATE players SET ooc_notes=?,real_name=?,random_name=?,gender=?,age=?,species=?,language=?,flavor_text=?,med_record=?,sec_record=?,gen_record=?,player_alt_titles=?,disabilities=?,nanotrasen_relation=? WHERE player_ckey = ? AND player_slot = ?",\
 									  metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, altTitles, disabilities, nanotrasen_relation, ckey, slot)
@@ -655,7 +655,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Updated Character"
+			to_chat(user, "Updated Character")
 	else
 		message_admins("Error #:[check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -670,7 +670,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Created Body"
+			to_chat(user, "Created Body")
 		else
 			q.Add("UPDATE body SET hair_red=?,hair_green=?,hair_blue=?,facial_red=?,facial_green=?,facial_blue=?,skin_tone=?,hair_style_name=?,facial_style_name=?,eyes_red=?,eyes_green=?,eyes_blue=?,underwear=?,backbag=?,b_type=? WHERE player_ckey = ? AND player_slot = ?",\
 									r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, b_type, ckey, slot)
@@ -678,7 +678,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Updated Body"
+			to_chat(user, "Updated Body")
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -693,7 +693,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Created Job list"
+			to_chat(user, "Created Job list")
 		else
 			q.Add("UPDATE jobs SET alternate_option=?,job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot = ?",\
 									alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
@@ -701,7 +701,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
-			user << "Updated Job List"
+			to_chat(user, "Updated Job List")
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -721,7 +721,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 					message_admins("Error #; [q.Error()] - [q.ErrorMsg()]")
 					warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 					return 0
-			user << "Created Limbs"
+			to_chat(user, "Created Limbs")
 		else
 			for(var/stuff in organ_data)
 				q.Add("UPDATE limbs SET [stuff] = ? WHERE player_ckey = ? AND player_slot = ?", organ_data[stuff], ckey, slot)
@@ -729,7 +729,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 					message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 					warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 					return 0
-			user << "Updated Limbs"
+			to_chat(user, "Updated Limbs")
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -764,54 +764,54 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	S.cd = "/character[default_slot]"
 
 	//Character + misc
-	S["OOC_Notes"]			<< metadata
-	S["real_name"]			<< real_name
+	S["OOC_Notes"]             << metadata
+	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
-	S["gender"]				<< gender
-	S["age"]				<< age
-	S["species"]			<< species
-	S["language"]			<< language
-	S["flavor_text"]		<< flavor_text
-	S["med_record"]			<< med_record
-	S["sec_record"]			<< sec_record
-	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]	<< player_alt_titles
-	//S["be_special"]			<< be_special
-	S["disabilities"]		<< disabilities
-	S["used_skillpoints"]	<< used_skillpoints
-	S["skills"]				<< skills
-	S["skill_specialization"] << skill_specialization
-	S["organ_data"]			<< organ_data
-	S["nanotrasen_relation"] << nanotrasen_relation
+	S["gender"]                << gender
+	S["age"]                   << age
+	S["species"]               << species
+	S["language"]              << language
+	S["flavor_text"]           << flavor_text
+	S["med_record"]            << med_record
+	S["sec_record"]            << sec_record
+	S["gen_record"]            << gen_record
+	S["player_alt_titles"]     << player_alt_titles
+//	S["be_special"]            << be_special
+	S["disabilities"]          << disabilities
+	S["used_skillpoints"]      << used_skillpoints
+	S["skills"]                << skills
+	S["skill_specialization"]  << skill_specialization
+	S["organ_data"]            << organ_data
+	S["nanotrasen_relation"]   << nanotrasen_relation
 	//Body
-	S["hair_red"]			<< r_hair
-	S["hair_green"]			<< g_hair
-	S["hair_blue"]			<< b_hair
-	S["facial_red"]			<< r_facial
-	S["facial_green"]		<< g_facial
-	S["facial_blue"]		<< b_facial
-	S["skin_tone"]			<< s_tone
-	S["hair_style_name"]	<< h_style
-	S["facial_style_name"]	<< f_style
-	S["eyes_red"]			<< r_eyes
-	S["eyes_green"]			<< g_eyes
-	S["eyes_blue"]			<< b_eyes
-	S["underwear"]			<< underwear
-	S["backbag"]			<< backbag
-	S["b_type"]				<< b_type
+	S["hair_red"]              << r_hair
+	S["hair_green"]            << g_hair
+	S["hair_blue"]             << b_hair
+	S["facial_red"]            << r_facial
+	S["facial_green"]          << g_facial
+	S["facial_blue"]           << b_facial
+	S["skin_tone"]             << s_tone
+	S["hair_style_name"]       << h_style
+	S["facial_style_name"]     << f_style
+	S["eyes_red"]              << r_eyes
+	S["eyes_green"]            << g_eyes
+	S["eyes_blue"]             << b_eyes
+	S["underwear"]             << underwear
+	S["backbag"]               << backbag
+	S["b_type"]                << b_type
 
 	//Jobs
-	S["alternate_option"]	<< alternate_option
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
-	//S["skin_style"]			<< skin_style
+	S["alternate_option"]      << alternate_option
+	S["job_civilian_high"]     << job_civilian_high
+	S["job_civilian_med"]      << job_civilian_med
+	S["job_civilian_low"]      << job_civilian_low
+	S["job_medsci_high"]       << job_medsci_high
+	S["job_medsci_med"]        << job_medsci_med
+	S["job_medsci_low"]        << job_medsci_low
+	S["job_engsec_high"]       << job_engsec_high
+	S["job_engsec_med"]        << job_engsec_med
+	S["job_engsec_low"]        << job_engsec_low
+//	S["skin_style"]            << skin_style
 
 	return 1
 

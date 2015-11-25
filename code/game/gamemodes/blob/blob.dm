@@ -66,22 +66,22 @@ var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob/announce()
-	world << {"<B>The current game mode is - <span class='blob'>Blob!</span></B>
+	to_chat(world, {"<B>The current game mode is - <span class='blob'>Blob!</span></B>
 <B>A dangerous alien organism is rapidly spreading throughout the station!</B>
-You must kill it all while minimizing the damage to the station."}
+You must kill it all while minimizing the damage to the station."})
 
 
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
-	blob.current << {"<B><span class='warning'>You are infected by the Blob!</B>
+	to_chat(blob.current, {"<B><span class='warning'>You are infected by the Blob!</B>
 <b>Your body is ready to give spawn to a new blob core which will eat this station.</b>
 <b>Find a good location to spawn the core and then take control and overwhelm the station! Make sure you are ON the station when you burst!</b>
 <b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>
-<b>If you go outside of the station level, or in space, then you will die; make sure your location has plenty of space to expand.</b></span>"}
+<b>If you go outside of the station level, or in space, then you will die; make sure your location has plenty of space to expand.</b></span>"})
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)
 	for(var/datum/mind/blob in infected_crew)
-		blob.current << message
+		to_chat(blob.current, message)
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)
@@ -181,6 +181,6 @@ You must kill it all while minimizing the damage to the station."}
 		if (2)
 			command_alert("Biohazard outbreak containment status reaching critical mass, total quarantine failure is now possibile. As such, Directive 7-12 has now been authorized for [station_name()].", "Final Measure")
 			for(var/mob/camera/blob/B in player_list)
-				B << "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>"
+				to_chat(B, "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>")
 			send_intercept(2)
 	return

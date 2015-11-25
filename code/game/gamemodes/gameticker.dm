@@ -66,15 +66,15 @@ var/global/datum/controller/gameticker/ticker
 	do
 		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
 		pregame_timeleft = world.timeofday + delay_timetotal
-		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
-		world << "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds"
+		to_chat(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
+		to_chat(world, "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds")
 		while(current_state <= GAME_STATE_PREGAME)
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
 				watchdog.check_for_update()
 				//if(watchdog.waiting)
-					//world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
+//					to_chat(world, "<span class='notice'>Server update detected, restarting momentarily.</span>")
 					//watchdog.signal_ready()
 					//return
 			if (world.timeofday < (863800 -  delay_timetotal) &&  pregame_timeleft > 863950) // having a remaining time > the max of time of day is bad....
@@ -114,7 +114,7 @@ var/global/datum/controller/gameticker/ticker
 		runnable_modes = config.get_runnable_modes()
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			return 0
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
@@ -129,7 +129,7 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode = config.pick_mode(master_mode)
 	if (!src.mode.can_start())
-		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
+		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby.")
 		del(mode)
 		current_state = GAME_STATE_PREGAME
 		job_master.ResetOccupations()
@@ -140,7 +140,7 @@ var/global/datum/controller/gameticker/ticker
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
 		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
 		world.log << "The gamemode setup for [mode.name] errored out."
 		del(mode)
@@ -152,8 +152,8 @@ var/global/datum/controller/gameticker/ticker
 		for (var/datum/game_mode/M in runnable_modes)
 			modes+=M.name
 		modes = sortList(modes)
-		world << "<B>The current game mode is - Secret!</B>"
-		world << "<B>Possibilities:</B> [english_list(modes)]"
+		to_chat(world, "<B>The current game mode is - Secret!</B>")
+		to_chat(world, "<B>Possibilities:</B> [english_list(modes)]")
 	else
 		src.mode.announce()
 
@@ -183,8 +183,9 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj in L)
 			if(istype(obj, /obj/effect/landmark/spacepod/random))
 				qdel(obj)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-		//world << sound('sound/AI/welcome.ogg') // Skie //Out with the old, in with the new. - N3X15
+		to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
+//		to_chat(world, sound('sound/AI/welcome.ogg'))// Skie //Out with the old, in with the new. - N3X15
+
 		var/welcome_sentence=list('sound/AI/vox_login.ogg')
 		welcome_sentence += pick(
 			'sound/AI/vox_reminder1.ogg',
@@ -356,7 +357,7 @@ var/global/datum/controller/gameticker/ticker
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))
-				M << "Captainship not forced on anyone."
+				to_chat(M, "Captainship not forced on anyone.")
 
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
@@ -397,11 +398,11 @@ var/global/datum/controller/gameticker/ticker
 			if (mode.station_was_nuked)
 				feedback_set_details("end_proper","nuke")
 				if(!delay_end && !watchdog.waiting)
-					world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
+					to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
 			else
 				feedback_set_details("end_proper","\proper completion")
 				if(!delay_end && !watchdog.waiting)
-					world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
+					to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
 			if(blackbox)
 				if(config.map_voting)
@@ -411,13 +412,13 @@ var/global/datum/controller/gameticker/ticker
 					blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update in [config.map_voting ? "[(restart_timeout/10)] seconds." : "a few seconds."]</B></span>"
+				to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in [config.map_voting ? "[(restart_timeout/10)] seconds." : "a few seconds."]</B></span>")
 				if(config.map_voting)
 					sleep(restart_timeout) //waiting for a mapvote to end
 				if(!delay_end)
 					watchdog.signal_ready()
 				else
-					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					to_chat(world, "<span class='notice'><B>An admin has delayed the round end</B></span>")
 					delay_end = 2
 			else if(!delay_end)
 				sleep(restart_timeout)
@@ -425,10 +426,10 @@ var/global/datum/controller/gameticker/ticker
 					CallHook("Reboot",list())
 					world.Reboot()
 				else
-					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					to_chat(world, "<span class='notice'><B>An admin has delayed the round end</B></span>")
 					delay_end = 2
 			else
-				world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+				to_chat(world, "<span class='notice'><B>An admin has delayed the round end</B></span>")
 				delay_end = 2
 
 	return 1

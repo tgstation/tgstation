@@ -45,7 +45,7 @@ var/global/list/alert_overlays_global = list()
 	return temps
 
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
-#define FIREDOOR_MAX_TEMP 50 // °C
+#define FIREDOOR_MAX_TEMP 50 // ï¿½C
 #define FIREDOOR_MIN_TEMP 0
 
 // Bitflags
@@ -138,9 +138,9 @@ var/global/list/alert_overlays_global = list()
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		user << "<span class='danger'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+		to_chat(user, "<span class='danger'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>")
 
-	user << "<b>Sensor readings:</b>"
+	to_chat(user, "<b>Sensor readings:</b>")
 	for(var/index = 1; index <= tile_info.len; index++)
 		var/o = "&nbsp;&nbsp;"
 		switch(index)
@@ -154,7 +154,7 @@ var/global/list/alert_overlays_global = list()
 				o += "WEST: "
 		if(tile_info[index] == null)
 			o += "<span class='warning'>DATA UNAVAILABLE</span>"
-			usr << o
+			to_chat(usr, o)
 			continue
 		var/celsius = convert_k2c(tile_info[index][1])
 		var/pressure = tile_info[index][2]
@@ -162,17 +162,17 @@ var/global/list/alert_overlays_global = list()
 			o += "<span class='warning'>"
 		else
 			o += "<span style='color:blue'>"
-		o += "[celsius]°C</span> "
+		o += "[celsius]ï¿½C</span> "
 		o += "<span style='color:blue'>"
 		o += "[pressure]kPa</span></li>"
-		user << o
+		to_chat(user, o)
 
 	if( islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		user << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		to_chat(user, "These people have opened \the [src] during an alert: [users_to_open_string].")
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -237,7 +237,7 @@ var/global/list/alert_overlays_global = list()
 		return
 
 	if(blocked)
-		user << "<span class='warning'>\The [src] is welded solid!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
 	var/area/A = get_area_master(src)
@@ -274,15 +274,15 @@ var/global/list/alert_overlays_global = list()
 		return
 	if(user.locked_to)
 		if(!istype(user.locked_to, /obj/structure/bed/chair/vehicle))
-			user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
+			to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 			return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || get_dist(src, user) > 1)
-		user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
+		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
 
 	if(alarmed && density && lockdown && !access_granted/* && !( users_name in users_to_open ) */)
 		// Too many shitters on /vg/ for the honor system to work.
-		user << "<span class='warning'>Access denied.  Please wait for authorities to arrive, or for the alert to clear.</span>"
+		to_chat(user, "<span class='warning'>Access denied.  Please wait for authorities to arrive, or for the alert to clear.</span>")
 		return
 		// End anti-shitter system
 		/*
@@ -379,7 +379,8 @@ var/global/list/alert_overlays_global = list()
 				var/cdir = cardinal[d]
 				// Loop while i = [1, 3], incrementing each loop
 				for(var/i=1;i<=ALERT_STATES.len;i++) //
-					if(dir_alerts[d] & (1<<(i-1))) // Check to see if dir_alerts[d] has the i-1th bit set.
+					if(dir_alerts[d] & (1<<(i-1)))// Check to see if dir_alerts[d] has the i-1th bit set.
+
 						var/list/state_list = alert_overlays_local["alert_[ALERT_STATES[i]]"]
 						if(flags & ON_BORDER)
 							overlays += turn(state_list["[turn(cdir, dir2angle(src.dir))]"], dir2angle(src.dir))

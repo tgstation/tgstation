@@ -48,7 +48,7 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='danger'>The [O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
@@ -63,10 +63,10 @@
 	if(quills<=0)
 		return
 
-	src << "<span class='warning'>You launch a razor-sharp quill at [target]!</span>"
+	to_chat(src, "<span class='warning'>You launch a razor-sharp quill at [target]!</span>")
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>"
+			to_chat(O, "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>")
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
@@ -74,7 +74,7 @@
 	quills--
 
 	spawn(100)
-		src << "<span class='warning'>You feel a fresh quill slide into place.</span>"
+		to_chat(src, "<span class='warning'>You feel a fresh quill slide into place.</span>")
 		quills++
 
 /mob/living/simple_animal/vox/armalis/verb/message_mob()
@@ -96,15 +96,15 @@
 	var/mob/M = targets[target]
 
 	if(istype(M, /mob/dead/observer) || M.stat == DEAD)
-		src << "Not even the armalis can speak to the dead."
+		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 
-	M << "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>"
+	to_chat(M, "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>")
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == "Vox")
 			return
-		H << "<span class='warning'>Your nose begins to bleed...</span>"
+		to_chat(H, "<span class='warning'>Your nose begins to bleed...</span>")
 		H.drip(1)
 
 /mob/living/simple_animal/vox/armalis/verb/shriek()

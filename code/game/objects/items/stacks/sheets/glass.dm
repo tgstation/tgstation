@@ -51,7 +51,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "[src.name] Sheets"
 	title += " ([src.amount] sheet\s left)"
@@ -65,11 +65,11 @@
 				for (var/obj/structure/window/win in user.loc)
 					i++
 					if(i >= 4)
-						user << "<span class='warning'>There are too many windows in this location.</span>"
+						to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
 						return 1
 					directions-=win.dir
 					if(win.is_fulltile())
-						user << "<span class='warning'>Can't let you do that.</span>"
+						to_chat(user, "<span class='warning'>Can't let you do that.</span>")
 						return 1
 				//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 				var/dir_to_set = 2
@@ -91,10 +91,10 @@
 				if(!src)	return 1
 				if(src.loc != user)	return 1
 				if(src.amount < 2)
-					user << "<span class='warning'>You need more glass to do that.</span>"
+					to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 					return 1
 				if(locate(/obj/structure/window/full) in user.loc)
-					user << "<span class='warning'>There is a window in the way.</span>"
+					to_chat(user, "<span class='warning'>There is a window in the way.</span>")
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.d_state = 0
@@ -106,13 +106,13 @@
 				if(!src || src.loc != user)
 					return 1
 				if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-					user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
+					to_chat(user, "<span class='warning'>There is already a windoor assembly in that location.</span>")
 					return 1
 				if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-					user << "<span class='warning'>There is already a windoor in that location.</span>"
+					to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
 					return 1
 				if(src.amount < 5)
-					user << "<span class='warning'>You need more glass to do that.</span>"
+					to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 					return 1
 				var/obj/structure/windoor_assembly/WD = new windoor(user.loc, 0 )
 				WD.state = "01"
@@ -145,11 +145,11 @@
 				for (var/obj/structure/window/win in user.loc)
 					i++
 					if(i >= 4)
-						user << "<span class='warning'>There are too many windows in this location.</span>"
+						to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
 						return 1
 					directions-=win.dir
 					if(win.is_fulltile())
-						user << "<span class='warning'>Can't let you do that.</span>"
+						to_chat(user, "<span class='warning'>Can't let you do that.</span>")
 						return 1
 				//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 				var/dir_to_set = 2
@@ -171,10 +171,10 @@
 				if(!src)	return 1
 				if(src.loc != user)	return 1
 				if(src.amount < 2)
-					user << "<span class='warning'>You need more glass to do that.</span>"
+					to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 					return 1
 				if(locate(/obj/structure/window/full) in user.loc)
-					user << "<span class='warning'>There is a window in the way.</span>"
+					to_chat(user, "<span class='warning'>There is a window in the way.</span>")
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.d_state = 0
@@ -209,15 +209,15 @@
 	if(istype(W,/obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(CC.amount < 2) //Cost changed from 5 to 2, so that you get 15 tiles from a cable coil instead of only 6 (!)
-			user << "<B>There is not enough wire in this coil. You need at least two lengths.</B>"
+			to_chat(user, "<B>There is not enough wire in this coil. You need at least two lengths.</B>")
 			return
 		CC.use(2)
 		src.use(1)
-		user << "<span class='notice'>You attach some wires to the [name].</span></span>"
+		to_chat(user, "<span class='notice'>You attach some wires to the [name].</span></span>")
 		var/obj/item/stack/light_w/L=locate(/obj/item/stack/light_w) in get_turf(user)
 		if(L && L.amount<L.max_amount)
 			L.amount++
-			user << "You add [L] to the stack. It now contains [L.amount] tiles."
+			to_chat(user, "You add [L] to the stack. It now contains [L.amount] tiles.")
 			return
 		else
 			new /obj/item/stack/light_w(user.loc)

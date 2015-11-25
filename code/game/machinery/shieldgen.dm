@@ -224,10 +224,10 @@
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
-		user << "The machine is locked, you are unable to use it."
+		to_chat(user, "The machine is locked, you are unable to use it.")
 		return
 	if(panel_open)
-		user << "The panel must be closed before operating this machine."
+		to_chat(user, "The panel must be closed before operating this machine.")
 		return
 
 	if (src.active)
@@ -242,7 +242,7 @@
 				"You hear heavy droning.")
 			src.shields_up()
 		else
-			user << "The [src] must first be secured to the floor."
+			to_chat(user, "The [src] must first be secured to the floor.")
 
 /obj/machinery/shieldgen/emag(mob/user)
 	if(!emagged)
@@ -252,12 +252,12 @@
 
 /obj/machinery/shieldgen/wrenchAnchor(mob/user)
 	if(locked)
-		user << "The bolts are covered, unlocking this would retract the covers."
+		to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 		return
 	if(active)
-		user << "Turn \the [src] off first!"
+		to_chat(user, "Turn \the [src] off first!")
 	if(panel_open)
-		user << "You have to close \the [src]'s maintenance panel before you can do that."
+		to_chat(user, "You have to close \the [src]'s maintenance panel before you can do that.")
 		return
 	return ..()
 
@@ -267,23 +267,23 @@
 
 	if(istype(W, /obj/item/stack/cable_coil) && malfunction && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
-		user << "<span class='notice'>You begin to replace the wires.</span>"
+		to_chat(user, "<span class='notice'>You begin to replace the wires.</span>")
 		//if(do_after(user, src, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, src, 30))
 			if(!src || !coil) return
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "<span class='notice'>You repair the [src]!</span>"
+			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(src.allowed(user))
 			src.locked = !src.locked
-			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 
@@ -351,13 +351,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
 	if(!anchored)
-		user << "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>"
+		to_chat(user, "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>")
 		return 1
 	if(src.locked && !istype(user, /mob/living/silicon))
-		user << "<span class='warning'>The controls are locked!</span>"
+		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return 1
 	if(power != 1)
-		user << "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>"
+		to_chat(user, "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>")
 		return 1
 
 	if(src.active)
@@ -462,7 +462,7 @@
 
 /obj/machinery/shieldwallgen/wrenchAnchor(mob/user)
 	if(active)
-		user << "Turn off the field generator first."
+		to_chat(user, "Turn off the field generator first.")
 		return
 	if(..())
 		power()
@@ -480,9 +480,9 @@
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)

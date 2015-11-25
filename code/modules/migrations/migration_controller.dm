@@ -86,7 +86,7 @@
 	for(var/datum/migration/M in package)
 		if(M.id > from_version && M.id <= to_version)
 			if(!M.up())
-				//world << "[log_text] <span style='font-weight:bold;color:red;'>FAIL</span><br>Failed to process migration [pkgID] #[M.id]!"
+//				to_chat(world, "[log_text] <span style='font-weight:bold;color:red;'>FAIL</span><br>Failed to process migration [pkgID] #[M.id]!")
 				world.log << "Failed to process migration [pkgID] #[M.id]"
 				return FALSE
 			else

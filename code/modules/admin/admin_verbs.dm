@@ -351,7 +351,7 @@ var/list/admin_verbs_mod = list(
 	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
 	verbs += /client/proc/show_verbs
 
-	src << "<span class='interface'>Most of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -360,7 +360,7 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
-	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -370,7 +370,7 @@ var/list/admin_verbs_mod = list(
 
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
-	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
+	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -388,7 +388,7 @@ var/list/admin_verbs_mod = list(
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(istype(mob,/mob/new_player))
-		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
+		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
 		var/mob/body = mob
@@ -407,13 +407,13 @@ var/list/admin_verbs_mod = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='danger'>Invisimin off. Invisibility reset.</span>"
+			to_chat(mob, "<span class='danger'>Invisimin off. Invisibility reset.</span>")
 			mob.icon_state = "ghost"
 			mob.icon = 'icons/mob/human.dmi'
 			mob.update_icons()
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='notice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
+			to_chat(mob, "<span class='notice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 			mob.icon_state = "ghost"
 			mob.icon = 'icons/mob/mob.dmi'
 
@@ -524,7 +524,7 @@ var/list/admin_verbs_mod = list(
 	else	D = preferences_datums[warned_ckey]
 
 	if(!D)
-		src << "<font color='red'>Error: warn(): No such ckey found.</font>"
+		to_chat(src, "<font color='red'>Error: warn(): No such ckey found.</font>")
 		return
 
 	var/warn_reason = input("Reason for warning?", "Admin abuuuuuuuse") as null|text
@@ -540,7 +540,7 @@ var/list/admin_verbs_mod = list(
 		ban_unban_log_save("[ckey] warned [warned_ckey] - [warn_reason], resulting in a [bantime] minute autoban.")
 		if(C)
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] - [warn_reason], resulting in a [bantime] minute ban.")
-			C << "<span class='danger'><BIG>You have been autobanned due to a warning by [ckey] - Reason: [warn_reason].</BIG></span><br>This is a temporary ban, it will be removed in [bantime] minutes."
+			to_chat(C, "<span class='danger'><BIG>You have been autobanned due to a warning by [ckey] - Reason: [warn_reason].</BIG></span><br>This is a temporary ban, it will be removed in [bantime] minutes.")
 		else
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] - [warn_reason], resulting in a [bantime] minute ban.")
 		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings - [warn_reason]", ckey, 1, bantime)
@@ -550,7 +550,7 @@ var/list/admin_verbs_mod = list(
 		del(C)
 	else
 		if(C)
-			C << "<span class='danger'><BIG>You have been formally warned by an administrator - Reason: [warn_reason].</span></BIG><br>Further warnings will result in an autoban.</font>"
+			to_chat(C, "<span class='danger'><BIG>You have been formally warned by an administrator - Reason: [warn_reason].</span></BIG><br>Further warnings will result in an autoban.</font>")
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] - [warn_reason]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		else
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC) - [warn_reason]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
@@ -562,7 +562,7 @@ var/list/admin_verbs_mod = list(
 
 	if(!warned_ckey || !istext(warned_ckey))	return
 	/*if(warned_ckey in admin_datums)
-		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
+		to_chat(usr, "<font color='red'>Error: warn(): You can't warn admins.</font>")
 		return*/
 
 	var/datum/preferences/D
@@ -571,17 +571,17 @@ var/list/admin_verbs_mod = list(
 	else	D = preferences_datums[warned_ckey]
 
 	if(!D)
-		src << "<font color='red'>Error: unwarn(): No such ckey found.</font>"
+		to_chat(src, "<font color='red'>Error: unwarn(): No such ckey found.</font>")
 		return
 
 	if(D.warns == 0)
-		src << "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>"
+		to_chat(src, "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>")
 		return
 
 	D.warns-=1
 	var/strikesleft = MAX_WARNS-D.warns
 	if(C)
-		C << "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>"
+		to_chat(C, "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>")
 		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 	else
 		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
@@ -721,10 +721,10 @@ var/list/admin_verbs_mod = list(
 	set desc = "Toggle Air Processing"
 	if(air_processing_killed)
 		air_processing_killed = 0
-		usr << "<b>Enabled air processing.</b>"
+		to_chat(usr, "<b>Enabled air processing.</b>")
 	else
 		air_processing_killed = 1
-		usr << "<b>Disabled air processing.</b>"
+		to_chat(usr, "<b>Disabled air processing.</b>")
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] used 'kill air'.</span>", 1)
@@ -741,7 +741,7 @@ var/list/admin_verbs_mod = list(
 		deadmin()
 		verbs += /client/proc/readmin
 		deadmins += ckey
-		src << "<span class='interface'>You are now a normal player.</span>"
+		to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -751,10 +751,10 @@ var/list/admin_verbs_mod = list(
 	if(config)
 		if(config.log_hrefs)
 			config.log_hrefs = 0
-			src << "<b>Stopped logging hrefs</b>"
+			to_chat(src, "<b>Stopped logging hrefs</b>")
 		else
 			config.log_hrefs = 1
-			src << "<b>Started logging hrefs</b>"
+			to_chat(src, "<b>Started logging hrefs</b>")
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"
@@ -781,7 +781,7 @@ var/list/admin_verbs_mod = list(
 	if(!check_rights(R_FUN))	return
 
 	if(!istype(M, /mob/living/carbon/human))
-		usr << "<span class='warning'>You can only do this to humans!</span>"
+		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
 		if("No")
@@ -846,7 +846,7 @@ var/list/admin_verbs_mod = list(
 			if (J.current_positions >= J.total_positions && J.total_positions != -1)
 				jobs += J.title
 		if (!jobs.len)
-			usr << "There are no fully staffed jobs."
+			to_chat(usr, "There are no fully staffed jobs.")
 			return
 		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
 		if (job)
@@ -860,9 +860,9 @@ var/list/admin_verbs_mod = list(
 	prefs.toggles ^= CHAT_ATTACKLOGS
 	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_ATTACKLOGS)
-		usr << "You now will get attack log messages"
+		to_chat(usr, "You now will get attack log messages")
 	else
-		usr << "You now won't get attack log messages"
+		to_chat(usr, "You now won't get attack log messages")
 
 /client/proc/commandname()
 	set name = "Set Command Name"
@@ -879,9 +879,9 @@ var/list/admin_verbs_mod = list(
 	prefs.toggles ^= CHAT_DEBUGLOGS
 	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_DEBUGLOGS)
-		usr << "You now will get debug log messages"
+		to_chat(usr, "You now will get debug log messages")
 	else
-		usr << "You now won't get debug log messages"
+		to_chat(usr, "You now won't get debug log messages")
 
 
 /client/proc/man_up(mob/T as mob in mob_list)
@@ -889,8 +889,8 @@ var/list/admin_verbs_mod = list(
 	set name = "Man Up"
 	set desc = "Tells mob to man up and deal with it."
 
-	T << "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>"
-	T << "<span class='notice'>Move on.</span>"
+	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
+	to_chat(T, "<span class='notice'>Move on.</span>")
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>", 1)
@@ -901,8 +901,8 @@ var/list/admin_verbs_mod = list(
 	set desc = "Tells everyone to man up and deal with it."
 
 	for (var/mob/T as mob in mob_list)
-		T << "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>"
-		T << 'sound/voice/ManUp1.ogg'
+		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
+		to_chat(T, 'sound/voice/ManUp1.ogg')
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>", 1)
@@ -914,15 +914,15 @@ var/list/admin_verbs_mod = list(
 	set desc = "Regain your admin powers."
 	var/datum/admins/D = admin_datums[ckey]
 	if(config.admin_legacy_system)
-		src << "<span class='notice'>Legacy admins is not supported yet</span>"
+		to_chat(src, "<span class='notice'>Legacy admins is not supported yet</span>")
 		return
 	else
 		if(!dbcon.IsConnected())
 			message_admins("Warning, mysql database is not connected.")
-			src << "Warning, mysql database is not connected."
+			to_chat(src, "Warning, mysql database is not connected.")
 			return
 		if(D)
-			src << "You are already an admin."
+			to_chat(src, "You are already an admin.")
 			verbs -= /client/proc/readmin
 			return
 		var/sql_ckey = sanitizeSQL(ckey(ckey))
@@ -954,7 +954,7 @@ var/list/admin_verbs_mod = list(
 	var/achoice = "Cancel"
 
 	if(!player_list.len)
-		usr << "player list is empty!"
+		to_chat(usr, "player list is empty!")
 		return
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
@@ -973,19 +973,19 @@ var/list/admin_verbs_mod = list(
 		if(iscarbon(winner) && (winner.stat == CONSCIOUS))
 			winner.put_in_hands(C)
 	else
-		winner << "<span class='danger'>You win [name]! [desc]</span>"
+		to_chat(winner, "<span class='danger'>You win [name]! [desc]</span>")
 
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 
 	if(glob == "No!")
-		winner.client << sound('sound/misc/achievement.ogg')
+		to_chat(winner.client, sound('sound/misc/achievement.ogg'))
 		for(var/mob/dead/observer/O in player_list)
-			O << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
+			to_chat(O, "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>")
 	else
-		world  << sound('sound/misc/achievement.ogg')
-		world << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
+		to_chat(world, sound('sound/misc/achievement.ogg'))
+		to_chat(world, "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>")
 
-	winner << "<span class='danger'>Congratulations!</span>"
+	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
 	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""
 

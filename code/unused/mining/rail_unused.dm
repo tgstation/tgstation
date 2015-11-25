@@ -98,7 +98,7 @@
 	return
 
 /obj/machinery/rail_switch/attack_hand(user as mob)
-	user << "You switch the rail track's direction"
+	to_chat(user, "You switch the rail track's direction")
 	for (var/obj/machinery/rail_track/T in machines)
 		if (T.id == src.id)
 			var/obj/machinery/rail_car/C = locate(/obj/machinery/rail_car, T.loc)
@@ -179,7 +179,7 @@
 
 /*
 for (var/client/C)
-	C << "Dela."
+	to_chat(C, "Dela.")
 */
 
 /obj/machinery/rail_car/MouseDrop_T(var/atom/movable/C, mob/user)

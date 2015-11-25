@@ -18,10 +18,10 @@
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user as mob)
 	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount*2) as num
 	if(depth>30 || depth<1)
-		user << "<span class='notice'>Invalid depth.</span>"
+		to_chat(user, "<span class='notice'>Invalid depth.</span>")
 		return
 	excavation_amount = depth/2
-	user << "<span class='notice'>You set the depth to [depth]cm.</span>"
+	to_chat(user, "<span class='notice'>You set the depth to [depth]cm.</span>")
 	if (depth<4)
 		icon_state = "excavationdrill0"
 	else if (depth >=4 && depth <8)
@@ -42,4 +42,4 @@
 /obj/item/weapon/pickaxe/excavationdrill/examine(mob/user)
 	..()
 	var/depth = excavation_amount*2
-	user << "<span class='info'>It is currently set at [depth]cm.</span>"
+	to_chat(user, "<span class='info'>It is currently set at [depth]cm.</span>")

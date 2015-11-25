@@ -44,7 +44,7 @@
 
 /obj/item/weapon/gun/stickybomb/examine(mob/user)
 	..()
-	user << "<span class='info'>Has [loaded.len] stickybomb\s loaded, and [fired.len] stickybomb\s placed.</span>"
+	to_chat(user, "<span class='info'>Has [loaded.len] stickybomb\s loaded, and [fired.len] stickybomb\s placed.</span>")
 
 /obj/item/weapon/gun/stickybomb/update_icon()
 	return
@@ -61,13 +61,13 @@
 	if(istype(A, /obj/item/stickybomb))
 		var/obj/item/stickybomb/B = A
 		if(B.live)
-			user << "<span class='warning'>You cannot load a live stickybomb!</span>"
+			to_chat(user, "<span class='warning'>You cannot load a live stickybomb!</span>")
 		else
 			if(loaded.len >= 6)
-				user << "<span class='warning'>You cannot fit any more stickybombs in there!</span>"
+				to_chat(user, "<span class='warning'>You cannot fit any more stickybombs in there!</span>")
 			else
 				user.drop_item(A, src)
-				user << "<span class='notice'>You load \the [A] into \the [src].</span>"
+				to_chat(user, "<span class='notice'>You load \the [A] into \the [src].</span>")
 				loaded += A
 	else
 		..()
@@ -82,7 +82,7 @@
 			spawn()
 				SB.detonate()
 			if(ismob(loc))
-				loc << "<span class='warning'>One of the stickybombs detonates to leave room for the next one.</span>"
+				to_chat(loc, "<span class='warning'>One of the stickybombs detonates to leave room for the next one.</span>")
 		fired += B
 		var/obj/item/projectile/stickybomb/SB = new()
 		SB.sticky = B
@@ -130,9 +130,9 @@
 
 /obj/item/stickybomb/pickup(mob/user)
 	if(stuck_to)
-		user << "<span class='warning'>You reach for \the [src] stuck on \the [stuck_to] and start pulling.</span>"
+		to_chat(user, "<span class='warning'>You reach for \the [src] stuck on \the [stuck_to] and start pulling.</span>")
 		if(do_after(user, src, 30))
-			user << "<span class='warning'>It came off!</span>"
+			to_chat(user, "<span class='warning'>It came off!</span>")
 			unstick()
 			..()
 	else

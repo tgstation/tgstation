@@ -283,7 +283,7 @@
 			user.drop_item()
 			W.loc = src
 			src.diskette = W
-			user << "You insert [W]."
+			to_chat(user, "You insert [W].")
 			src.updateUsrDialog()
 			return
 
@@ -293,12 +293,12 @@
 			var/obj/computer2frame/A = new /obj/computer2frame( src.loc )
 			A.created_icon_state = src.base_icon_state
 			if (src.stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 
@@ -370,7 +370,7 @@
 		return 0
 
 	if(!(program.holder in src))
-//		world << "Not in src"
+//		to_chat(world, "Not in src")
 		program = new program.type
 		program.transfer_holder(src.hd)
 
@@ -396,9 +396,9 @@
 	return 0
 
 /obj/machinery/computer2/proc/delete_file(datum/computer/file/file)
-	//world << "Deleting [file]..."
+//	to_chat(world, "Deleting [file]...")
 	if((!file) || (!file.holder) || (file.holder.read_only))
-		//world << "Cannot delete :("
+//		to_chat(world, "Cannot delete :(")
 		return 0
 
 	if(file in src.processing_programs)
@@ -409,6 +409,6 @@
 
 //	file.holder.root.remove_file(file)
 
-	//world << "Now calling del on [file]..."
+//	to_chat(world, "Now calling del on [file]...")
 	del(file)
 	return 1

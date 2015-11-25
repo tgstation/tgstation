@@ -27,9 +27,9 @@
 		for(var/spell/S in M.spell_list)
 			if(!istype(S, /spell/aoe_turf/charge))
 				S.charge_counter = S.charge_max
-		M <<"<span class='notice'>You feel raw magic flowing through you, it feels good!</span>"
+		to_chat(M, "<span class='notice'>You feel raw magic flowing through you, it feels good!</span>")
 	else
-		M <<"<span class='notice'>You feel very strange for a moment, but then it passes.</span>"
+		to_chat(M, "<span class='notice'>You feel very strange for a moment, but then it passes.</span>")
 	return M
 
 /spell/aoe_turf/charge/proc/cast_charge(var/atom/target)

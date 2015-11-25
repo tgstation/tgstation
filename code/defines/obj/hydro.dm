@@ -35,19 +35,19 @@
 
 /obj/item/seeds/examine(mob/user)
 	..()
-	user << "Plant Yield: <span class='info'>[(yield != -1) ? yield : "<span class='attack'>ERROR</span>"]</span>"
-	user << "Plant Potency: <span class='info'>[(potency != -1) ? potency : "<span class='attack'>ERROR</span>"]</span>"
+	to_chat(user, "Plant Yield: <span class='info'>[(yield != -1) ? yield : "<span class='attack'>ERROR</span>"]</span>")
+	to_chat(user, "Plant Potency: <span class='info'>[(potency != -1) ? potency : "<span class='attack'>ERROR</span>"]</span>")
 
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='info'>[endurance]</span>"
-		user << "-Plant Lifespan: <span class='info'>[lifespan]</span>"
+		to_chat(user, "*** <B>[plantname]</B> ***")
+		to_chat(user, "-Plant Endurance: <span class='info'>[endurance]</span>")
+		to_chat(user, "-Plant Lifespan: <span class='info'>[lifespan]</span>")
 		if(yield != -1)
-			user << "-Plant Yield: <span class='info'>[yield]</span>"
-		user << "-Plant Production: <span class='info'>[production]</span>"
+			to_chat(user, "-Plant Yield: <span class='info'>[yield]</span>")
+		to_chat(user, "-Plant Production: <span class='info'>[production]</span>")
 		if(potency != -1)
-			user << "-Plant Potency: <span class='info'>[potency]</span>"
+			to_chat(user, "-Plant Potency: <span class='info'>[potency]</span>")
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1217,7 +1217,7 @@
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 	new /obj/effect/plantsegment_controller(user.loc)
 	qdel(src)
 
@@ -1320,7 +1320,7 @@
 					if(G.amount>=G.max_amount)
 						continue
 					G.attackby(NG, user)
-					usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+					to_chat(usr, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
 			qdel(src)
 			return
 
@@ -1432,7 +1432,7 @@
 
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/deathnettle/New()
@@ -1498,7 +1498,7 @@
 	var/WeedKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1517,7 +1517,7 @@
 	var/PestKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers

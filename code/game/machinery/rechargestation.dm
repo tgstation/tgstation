@@ -85,7 +85,7 @@
 		upgrade_finished = -1
 		return
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		occupant << "<span class='warning'>Upgrade interrupted due to power failure, movement lock is released.</span>"
+		to_chat(occupant, "<span class='warning'>Upgrade interrupted due to power failure, movement lock is released.</span>")
 		upgrading = 0
 		upgrade_finished = -1
 		return
@@ -99,7 +99,7 @@
 			occupant:cell:charge = occupant:cell.maxcharge // its been in a recharger so it makes sense
 			upgrading = 0
 			upgrade_finished = -1
-			occupant << "<span class='notice'>Upgrade completed.</span>"
+			to_chat(occupant, "<span class='notice'>Upgrade completed.</span>")
 			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 
 /obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/living/user)
@@ -107,10 +107,10 @@
 		if(!(locate(W.type) in upgrade_holder))
 			user.drop_item(W, src)
 			upgrade_holder.Add(W)
-			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
+			to_chat(user, "<span class='notice'>You add \the [W] to \the [src].</span>")
 			return
 		else
-			user << "<span class='notice'>\The [src] already contains something resembling a [W.name].</span>"
+			to_chat(user, "<span class='notice'>\The [src] already contains something resembling a [W.name].</span>")
 			return
 	else
 		..()
@@ -126,7 +126,7 @@
 /obj/machinery/recharge_station/attack_hand(var/mob/user)
 	if(user == occupant)
 		if(upgrading)
-			user << "<span class='notice'>You interrupt the upgrade process.</span>"
+			to_chat(user, "<span class='notice'>You interrupt the upgrade process.</span>")
 			upgrading = 0
 			upgrade_finished = -1
 			return 0
@@ -137,12 +137,12 @@
 				return
 			if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
 				upgrade_finished = world.timeofday + (600/manipulator_coeff)
-				user << "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process."
+				to_chat(user, "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process.")
 				spawn() do_after(user,src,600/manipulator_coeff,needhand = FALSE)
 				return
 			else
 				upgrading = 0
-				user << "You decide not to apply the upgrade"
+				to_chat(user, "You decide not to apply the upgrade")
 				return
 	else if(Adjacent(user))
 		if(upgrade_holder.len)
@@ -222,7 +222,7 @@
 	if(!( src.occupant ))
 		return
 	if(upgrading)
-		occupant << "<span class='notice'>The upgrade hasn't completed yet, interface with \the [src] again to halt the process.</span>"
+		to_chat(occupant, "<span class='notice'>The upgrade hasn't completed yet, interface with \the [src] again to halt the process.</span>")
 		return
 	//for(var/obj/O in src)
 	//	O.loc = src.loc
@@ -351,10 +351,10 @@
 		//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 		return
 	if (!(istype(R, /mob/living/silicon/)))
-		R << "<span class='notice'><B>Only non-organics may enter the recharger!</B></span>"
+		to_chat(R, "<span class='notice'><B>Only non-organics may enter the recharger!</B></span>")
 		return
 	if (src.occupant)
-		R << "<span class='notice'><B>The cell is already occupied!</B></span>"
+		to_chat(R, "<span class='notice'><B>The cell is already occupied!</B></span>")
 		return
 	R.stop_pulling()
 	if(R && R.client)
@@ -368,20 +368,20 @@
 	for(var/obj/O in upgrade_holder)
 		if(istype(O, /obj/item/weapon/cell))
 			if(!R.cell)
-				usr << "<big><span class='notice'>Power Cell replacement available.</span></big>"
+				to_chat(usr, "<big><span class='notice'>Power Cell replacement available.</span></big>")
 			else
 				if(O:maxcharge > R.cell.maxcharge)
-					usr << "<span class='notice'>Power Cell upgrade available.</span></big>"
+					to_chat(usr, "<span class='notice'>Power Cell upgrade available.</span></big>")
 
 /obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(occupant)
-		user <<"<span class='notice'>You can't do that while this charger is occupied.</span>"
+		to_chat(user, "<span class='notice'>You can't do that while this charger is occupied.</span>")
 		return -1
 	return ..()
 
 /obj/machinery/recharge_station/crowbarDestroy(mob/user)
 	if(occupant)
-		user <<"<span class='notice'>You can't do that while this charger is occupied.</span>"
+		to_chat(user, "<span class='notice'>You can't do that while this charger is occupied.</span>")
 		return -1
 	return ..()
 

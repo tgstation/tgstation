@@ -38,7 +38,7 @@ proc/gen_configs()
 
 				else if(admin_gen)
 					adminfiles.Add(line)
-					world << line
+					to_chat(world, line)
 
 
 	// Generate the list of admins now

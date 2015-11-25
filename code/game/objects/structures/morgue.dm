@@ -189,7 +189,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src)
+				to_chat(B, text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src))
 	return
 
 
@@ -252,12 +252,12 @@
 /obj/structure/crematorium/attack_hand(mob/user as mob)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
 //		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
-//		//usr << "Uh-oh, that was a bad idea."
+//		to_chat(usr, "Uh-oh, that was a bad idea.")
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		usr << "<span class='warning'>It's locked.</span>"
+		to_chat(usr, "<span class='warning'>It's locked.</span>")
 		return
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -334,7 +334,7 @@
 		var/inside = get_contents_in_object(src)
 
 		if (locate(/obj/item/weapon/disk/nuclear) in inside)
-			user << "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>"
+			to_chat(user, "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>")
 			return
 
 		for (var/mob/M in viewers(src))
@@ -342,7 +342,7 @@
 				M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
 			else
 				M.show_message("<span class='notice'>You hear chewing as the crematorium consumes its meal.</span>", 1)
-				M << 'sound/items/eatfood.ogg'
+				to_chat(M, 'sound/items/eatfood.ogg')
 
 		locked = 1
 		cremating = 1
@@ -418,7 +418,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src)
+				to_chat(B, text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src))
 			//Foreach goto(99)
 	return
 
@@ -428,5 +428,5 @@
 			if (C.id == id)
 				C.cremate(user)
 	else
-		user << "<SPAN CLASS='alert'>Access denied.</SPAN>"
+		to_chat(user, "<SPAN CLASS='alert'>Access denied.</SPAN>")
 	return

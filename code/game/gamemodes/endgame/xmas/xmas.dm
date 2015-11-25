@@ -20,7 +20,7 @@
 	space_overlay1 = image(icon='icons/turf/snowfx.dmi',icon_state="snowlayer1")
 	space_overlay2 = image(icon='icons/turf/snowfx.dmi',icon_state="snowlayer2")
 
-	world << "<span class='sinister' style='font-size:22pt'>You feel a sudden chill in the air...</span>"
+	to_chat(world, "<span class='sinister' style='font-size:22pt'>You feel a sudden chill in the air...</span>")
 
 	// Yes, this will lag.  No, there's nothing I can do about it.
 	for(var/turf/T in turfs)

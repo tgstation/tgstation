@@ -315,11 +315,11 @@ var/global/list/all_money_accounts = list()
 			else if(access_hop in C.access || access_captain in C.access)
 				access_level = 1
 		attack_hand(user)
-		user << "<span class='notice'>You re-enable the security checks of [src].</span>"
+		to_chat(user, "<span class='notice'>You re-enable the security checks of [src].</span>")
 	else
 		emagged = 1
 		access_level = 3
-		user << "<span class='warning'>You disable the security checks of [src].</span>"
+		to_chat(user, "<span class='warning'>You disable the security checks of [src].</span>")
 	return
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)

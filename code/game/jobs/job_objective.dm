@@ -81,7 +81,7 @@
 			text += "<br><font color='red'><B>The [employee.assigned_role] was a worthless sack of shit!</B></font>"
 			feedback_add_details("employee_success","FAIL")
 	if(numEmployees>0)
-		world << text
+		to_chat(world, text)
 	return 1
 
 /*

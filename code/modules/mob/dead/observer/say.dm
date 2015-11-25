@@ -9,7 +9,7 @@
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "<span class='warning'>You cannot talk in deadchat (muted).</span>"
+			to_chat(src, "<span class='warning'>You cannot talk in deadchat (muted).</span>")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
@@ -50,4 +50,4 @@
 					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTRADIO is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTRADIO]) = [client.prefs.toggles & CHAT_GHOSTRADIO]")
 					return
 
-	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]"
+	to_chat(src, "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]")

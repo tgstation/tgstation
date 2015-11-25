@@ -342,7 +342,7 @@ var/list/bioEffectList = null
 				newEffect.owner = owner
 				newEffect.holder = src
 				newEffect.OnAdd()
-				if(lentext(newEffect.msgGain) > 0) owner << "<span class='notice'>[newEffect.msgGain]</span>"
+				to_chat(if(lentext(newEffect.msgGain) > 0) owner, "<span class='notice'>[newEffect.msgGain]</span>")
 				mobAppearance.UpdateMob()
 				return newEffect
 
@@ -352,7 +352,7 @@ var/list/bioEffectList = null
 		for(var/datum/bioEffect/D in effects)
 			if(lowertext(D.id) == lowertext(id))
 				D.OnRemove()
-				if(lentext(D.msgLose) > 0) owner << "<span class='warning'>[D.msgLose]</span>"
+				to_chat(if(lentext(D.msgLose) > 0) owner, "<span class='warning'>[D.msgLose]</span>")
 				return effects.Remove(D)
 		return 0
 

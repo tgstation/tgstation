@@ -11,7 +11,7 @@
  * sends a message to admins
  */
 /proc/message_admins(msg)
-	world << msg
+	to_chat(world, msg)
 */
 /**
  * logTheThing
@@ -22,9 +22,9 @@
  */
 /proc/logTheThing(type, source, target, text, diaryType)
 	if(diaryType)
-		world << "Diary: \[[diaryType]:[type]] [text]"
+		to_chat(world, "Diary: \[[diaryType]:[type]] [text]")
 	else
-		world << "Log: \[[type]] [text]"
+		to_chat(world, "Log: \[[type]] [text]")
 
 /**
  * var/disposed

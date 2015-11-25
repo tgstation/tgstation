@@ -1,7 +1,7 @@
 
 
 /mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
-	usr << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
+	to_chat(usr, "<B>You summoned [summon_type ? "magic" : "guns"]!</B>")
 	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
 	log_game("[key_name(usr)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
@@ -14,10 +14,10 @@
 			survive.owner = H.mind
 			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivor, and trusts no one!</font>"
-			H << "<B>You are the survivor! Your own safety matters above all else, trust no one and kill anyone who gets in your way. However, armed as you are, now would be the perfect time to settle that score or grab that pair of yellow gloves you've been eyeing...</B>"
+			to_chat(H, "<B>You are the survivor! Your own safety matters above all else, trust no one and kill anyone who gets in your way. However, armed as you are, now would be the perfect time to settle that score or grab that pair of yellow gloves you've been eyeing...</B>")
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in H.mind.objectives)
-				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+				to_chat(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 				obj_count++
 		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw","hecate","osipr","gatling","bison","ricochet","spur","nagant","beegun")
 		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
@@ -129,4 +129,4 @@
 						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-						H << "<span class='notice'>The walls suddenly disappear.</span>"
+						to_chat(H, "<span class='notice'>The walls suddenly disappear.</span>")

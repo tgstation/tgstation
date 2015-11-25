@@ -27,16 +27,16 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 	authenticators += src
 
 /obj/machinery/keycard_auth/attack_ai(mob/user as mob)
-	user << "The station AI is not to interact with these devices."
+	to_chat(user, "The station AI is not to interact with these devices.")
 	return
 
 /obj/machinery/keycard_auth/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device."
+	to_chat(user, "You are too primitive to use this device.")
 	return
 
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
@@ -63,10 +63,10 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 
 /obj/machinery/keycard_auth/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 	if(busy)
-		user << "This device is busy."
+		to_chat(user, "This device is busy.")
 		return
 
 	user.set_machine(src)
@@ -109,10 +109,10 @@ var/global/list/obj/machinery/keycard_auth/authenticators = list()
 /obj/machinery/keycard_auth/Topic(href, href_list)
 	if(..()) return 1
 	if(busy)
-		usr << "This device is busy."
+		to_chat(usr, "This device is busy.")
 		return
 	if(usr.stat || stat & (BROKEN|NOPOWER))
-		usr << "This device is without power."
+		to_chat(usr, "This device is without power.")
 		return
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
@@ -184,13 +184,13 @@ var/global/maint_all_access = 0
 
 /proc/make_maint_all_access()
 	maint_all_access = 1
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
+	to_chat(world, "<font size=4 color='red'>Attention!</font>")
+	to_chat(world, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
 
 /proc/revoke_maint_all_access()
 	maint_all_access = 0
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
+	to_chat(world, "<font size=4 color='red'>Attention!</font>")
+	to_chat(world, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
 
 /obj/machinery/door/airlock/allowed(mob/M)
 	if(maint_all_access && src.check_access_list(list(access_maint_tunnels)))

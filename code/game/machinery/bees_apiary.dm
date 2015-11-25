@@ -36,17 +36,17 @@
 /obj/machinery/apiary/examine(mob/user)
 	..()
 	if(health > 0)
-		user << "You can hear a loud buzzing coming from the inside."
+		to_chat(user, "You can hear a loud buzzing coming from the inside.")
 	else
-		user << "There doesn't seem to be any bees in it."
+		to_chat(user, "There doesn't seem to be any bees in it.")
 
 	switch(honey_level)
 		if(1)
-			user << "<span class='info'>Looks like there's a bit of honey in it.</span>"
+			to_chat(user, "<span class='info'>Looks like there's a bit of honey in it.</span>")
 		if(2)
-			user << "<span class='info'>There's a decent amount of honey dripping from it!</span>"
+			to_chat(user, "<span class='info'>There's a decent amount of honey dripping from it!</span>")
 		if(3)
-			user << "<span class='info'>It's full of honey!</span>"
+			to_chat(user, "<span class='info'>It's full of honey!</span>")
 
 /obj/machinery/apiary/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
@@ -54,10 +54,10 @@
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(!yieldmod)
 			yieldmod += 1
-			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
+//			to_chat(world, "Yield increased by 1, from 0, to a total of [myseed.yield]")
 		else if (prob(1/(yieldmod * yieldmod) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			yieldmod += 1
-			//world << "Yield increased by 1, to a total of [myseed.yield]"
+//			to_chat(world, "Yield increased by 1, to a total of [myseed.yield]")
 	else
 		..()
 		if(src)
@@ -69,29 +69,29 @@
 		return
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
-			user << "<span class='warning'>There is already a queen in there.</span>"
+			to_chat(user, "<span class='warning'>There is already a queen in there.</span>")
 		else
 			health = 10
 			nutrilevel = min(10,nutrilevel+10)
 			user.drop_item(O)
 			qdel(O)
-			user << "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>"
+			to_chat(user, "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>")
 			bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
 		beezeez += 100
 		nutrilevel += 10
 		user.drop_item(O)
 		if(health > 0)
-			user << "<span class='notice'>You insert [O] into [src]. A relaxed humming appears to pick up.</span>"
+			to_chat(user, "<span class='notice'>You insert [O] into [src]. A relaxed humming appears to pick up.</span>")
 		else
-			user << "<span class='notice'>You insert [O] into [src]. Now it just needs some bees.</span>"
+			to_chat(user, "<span class='notice'>You insert [O] into [src]. Now it just needs some bees.</span>")
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/hatchet))
 		if(health > 0)
 			user.visible_message("<span class='danger'>\the [user] begins harvesting the honeycombs, the bees don't like that.</span>","<span class='danger'>You begin harvesting the honeycombs, the bees don't like that.</span>")
 			angry_swarm(user)
 		else
-			user << "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>"
+			to_chat(user, "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>")
 		if(do_after(user, src, 50))
 			var/obj/machinery/created_tray = new hydrotray_type(src.loc)
 			created_tray.component_parts = list()
@@ -111,18 +111,18 @@
 						H.reagents.add_reagent("toxin", toxic)
 				if(honey_level >= 3)
 					new/obj/item/queen_bee(src.loc)
-				user << "<span class='notice'>You successfully harvest the honeycombs. The empty apiary can be relocated.</span>"
+				to_chat(user, "<span class='notice'>You successfully harvest the honeycombs. The empty apiary can be relocated.</span>")
 			else
-				user << "<span class='notice'>You dislodge the apiary from the tray.</span>"
+				to_chat(user, "<span class='notice'>You dislodge the apiary from the tray.</span>")
 			qdel(src)
 	else if(istype(O, /obj/item/weapon/bee_net))
 		var/obj/item/weapon/bee_net/N = O
 		if(N.caught_bees > 0)
-			user << "<span class='notice'>You empty the bees into the apiary.</span>"
+			to_chat(user, "<span class='notice'>You empty the bees into the apiary.</span>")
 			bees_in_hive += N.caught_bees
 			N.caught_bees = 0
 		else
-			user << "<span class='notice'>There are no more bees in the net.</span>"
+			to_chat(user, "<span class='notice'>There are no more bees in the net.</span>")
 	else
 		user.visible_message("<span class='warning'>\the [user] hits \the [src] with \the [O]!</span>","<span class='warning'>You hit \the [src] with \the [O]!</span>")
 		angry_swarm(user)

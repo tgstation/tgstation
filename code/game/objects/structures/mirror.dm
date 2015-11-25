@@ -16,21 +16,21 @@
 		var/mob/living/carbon/human/H = user
 		if(isvampire(H))
 			if(!(VAMP_MATURE in H.mind.vampire.powers))
-				H << "<span class='notice'>You don't see anything.</span>"
+				to_chat(H, "<span class='notice'>You don't see anything.</span>")
 				return
 		if(user.hallucinating())
 			switch(rand(1,100))
 				if(1 to 20)
-					H << "<span class='sinister'>You look like [pick("a monster","a goliath","a catbeast","a ghost","a chicken","the mailman","a demon")]! Your heart skips a beat.</span>"
+					to_chat(H, "<span class='sinister'>You look like [pick("a monster","a goliath","a catbeast","a ghost","a chicken","the mailman","a demon")]! Your heart skips a beat.</span>")
 					H.Weaken(4)
 					return
 				if(21 to 40)
-					H << "<span class='sinister'>There's [pick("somebody","a monster","a little girl","a zombie","a ghost","a catbeast","a demon")] standing behind you!</span>"
+					to_chat(H, "<span class='sinister'>There's [pick("somebody","a monster","a little girl","a zombie","a ghost","a catbeast","a demon")] standing behind you!</span>")
 					H.emote("scream",,, 1)
 					H.dir = turn(H.dir, 180)
 					return
 				if(41 to 50)
-					H << "<span class='notice'>You don't see anything.</span>"
+					to_chat(H, "<span class='notice'>You don't see anything.</span>")
 					return
 		var/userloc = H.loc
 
@@ -92,7 +92,7 @@
 	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass/glass)))
 		var/obj/item/stack/sheet/glass/glass/stack = I
 		if ((stack.amount - 2) < 0)
-			user << "<span class='warning'>You need more glass to do that.</span>"
+			to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 		else
 			stack.use(2)
 			shattered = 0

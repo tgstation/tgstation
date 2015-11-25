@@ -9,7 +9,7 @@ var/global/floorIsLava = 0
 	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
-			C << msg
+			to_chat(C, msg)
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -18,7 +18,7 @@ var/global/floorIsLava = 0
 		if(R_ADMIN & C.holder.rights)
 			if(C.prefs.toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
-				C << msg
+				to_chat(C, msg)
 
 // Not happening.
 // Yes I could do a +PERMISSIONS check but I'm both too lazy and worried admins might do it on accident.
@@ -33,12 +33,12 @@ var/global/floorIsLava = 0
 	set desc="Edit player (respawn, ban, heal, etc)"
 
 	if(!M)
-		usr << "You seem to be selecting a mob that doesn't exist anymore."
+		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 
 	checkSessionKey()
@@ -245,7 +245,7 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	PlayerNotesPage(1)
 
@@ -258,13 +258,13 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	checkSessionKey()
 	var/cid = input("Type computer ID", "CID", 0) as num | null
 	if(cid)
-		usr << link(getVGPanel("rapsheet",admin=1,query=list("cid"=cid)))
-	//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
+		usr << link(getVGPanel("rapsheet", admin = 1, query = list("cid" = cid)))
+//	to_chat(usr, link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]"))
 	return
 
 /datum/admins/proc/checkCKEY()
@@ -276,12 +276,12 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	checkSessionKey()
 	var/ckey = lowertext(input("Type player ckey", "ckey", null) as text | null)
-	usr << link(getVGPanel("rapsheet",admin=1,query=list("ckey"=ckey)))
-	//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
+	usr << link(getVGPanel("rapsheet", admin = 1, query = list("ckey" = ckey)))
+//	usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
 	return
 
 /datum/admins/proc/PlayerNotesPage(page)
@@ -362,7 +362,7 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -390,7 +390,7 @@ var/global/floorIsLava = 0
 			if(I.author == usr.key || check_rights(R_PERMISSIONS, show_msg = 0))
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
 			dat += "<br><br>"
-		if(update_file) info << infos
+		if(update_file) to_chat(info, infos)
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -411,7 +411,7 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat
 	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
@@ -484,21 +484,21 @@ var/global/floorIsLava = 0
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
-				dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid receiving channel name.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid message body.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid channel name.</FONT><BR>"
 			var/check = 0
 			for(var/datum/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
 			if(check)
-				dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Channel name already in use.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
@@ -612,9 +612,9 @@ var/global/floorIsLava = 0
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid name for person wanted.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+={"
@@ -642,8 +642,8 @@ var/global/floorIsLava = 0
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
-	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
+//	to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
+//	to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
@@ -883,7 +883,7 @@ var/global/floorIsLava = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		world << "<span class='warning'><b>Restarting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
+		to_chat(world, "<span class='warning'><b>Restarting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>")
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -895,7 +895,7 @@ var/global/floorIsLava = 0
 		CallHook("Reboot",list())
 
 		if (watchdog.waiting)
-			world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+			to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 			watchdog.signal_ready()
 			return
 
@@ -914,7 +914,7 @@ var/global/floorIsLava = 0
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		world << "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]</span>"
+		to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]</span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -925,9 +925,9 @@ var/global/floorIsLava = 0
 
 	ooc_allowed = !( ooc_allowed )
 	if (ooc_allowed)
-		world << "<B>The OOC channel has been globally enabled!</B>"
+		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 	else
-		world << "<B>The OOC channel has been globally disabled!</B>"
+		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -968,7 +968,7 @@ var/global/floorIsLava = 0
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
-		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
+		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
 		return 0
 
 /datum/admins/proc/toggleenter()
@@ -978,9 +978,9 @@ var/global/floorIsLava = 0
 
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
-		world << "<B>New players may no longer enter the game.</B>"
+		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
-		world << "<B>New players may now enter the game.</B>"
+		to_chat(world, "<B>New players may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>", 1)
 	world.update_status()
@@ -993,9 +993,9 @@ var/global/floorIsLava = 0
 
 	config.allow_ai = !( config.allow_ai )
 	if (!( config.allow_ai ))
-		world << "<B>The AI job is no longer chooseable.</B>"
+		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
-		world << "<B>The AI job is chooseable now.</B>"
+		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
 	feedback_add_details("admin_verb","TAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1007,9 +1007,9 @@ var/global/floorIsLava = 0
 
 	abandon_allowed = !( abandon_allowed )
 	if (abandon_allowed)
-		world << "<B>You may now respawn.</B>"
+		to_chat(world, "<B>You may now respawn.</B>")
 	else
-		world << "<B>You may no longer respawn :(</B>"
+		to_chat(world, "<B>You may no longer respawn :(</B>")
 	message_admins("<span class='notice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>", 1)
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
@@ -1035,7 +1035,7 @@ var/global/floorIsLava = 0
 	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
 		if(ticker.delay_end == 2)
-			world << "<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>"
+			to_chat(world, "<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>")
 			log_admin("<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>")
 			if(watchdog.waiting)
 				watchdog.signal_ready()
@@ -1049,11 +1049,11 @@ var/global/floorIsLava = 0
 	if (!( going ))
 		going = LOBBY_TICKING_RESTARTED
 		ticker.pregame_timeleft = world.timeofday + ticker.remaining_time
-		world << "<b>The game will start soon.</b>"
+		to_chat(world, "<b>The game will start soon.</b>")
 		log_admin("[key_name(usr)] removed the delay.")
 	else
 		going = LOBBY_TICKING_STOPPED
-		world << "<b>The game start has been delayed.</b>"
+		to_chat(world, "<b>The game start has been delayed.</b>")
 		log_admin("[key_name(usr)] delayed the game.")
 	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 #undef LOBBY_TICKING_STOPPED
@@ -1093,7 +1093,7 @@ var/global/floorIsLava = 0
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	world << "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
+	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -1105,7 +1105,7 @@ var/global/floorIsLava = 0
 	CallHook("Reboot",list())
 
 	if (watchdog.waiting)
-		world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+		to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 		watchdog.signal_ready()
 		return
 
@@ -1231,10 +1231,10 @@ var/global/floorIsLava = 0
 	set name = "Show Traitor Panel"
 
 	if(!istype(M))
-		usr << "This can only be used on instances of type /mob"
+		to_chat(usr, "This can only be used on instances of type /mob")
 		return
 	if(!M.mind)
-		usr << "This mob has no mind!"
+		to_chat(usr, "This mob has no mind!")
 		return
 
 	M.mind.edit_memory()
@@ -1248,9 +1248,9 @@ var/global/floorIsLava = 0
 
 	tinted_weldhelh = !( tinted_weldhelh )
 	if (tinted_weldhelh)
-		world << "<B>The tinted_weldhelh has been enabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
-		world << "<B>The tinted_weldhelh has been disabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1262,9 +1262,9 @@ var/global/floorIsLava = 0
 
 	guests_allowed = !( guests_allowed )
 	if (!( guests_allowed ))
-		world << "<B>Guests may no longer enter the game.</B>"
+		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
-		world << "<B>Guests may now enter the game.</B>"
+		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>", 1)
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1282,26 +1282,27 @@ var/global/floorIsLava = 0
 	for(var/mob/living/silicon/S in mob_list)
 		ai_number++
 		if(isAI(S))
-			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
-			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
 		else if (ispAI(S))
 			var/mob/living/silicon/pai/pAI = S
-			usr << "<b>pAI [key_name(S, usr)]'s laws (master: [pAI.master] ):</b>"
+			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws (master: [pAI.master] ):</b>")
 		else
-			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
 		if(ispAI(S))
 			var/mob/living/silicon/pai/pAI = S
 			pAI.show_directives(usr)
 		else if (S.laws == null)
-			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
+			to_chat(usr, "[key_name(S, usr)]'s laws are null?? Contact a coder.")
 		else
 			S.laws.show_laws(usr)
 
 	if(!ai_number)
-		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
+		to_chat(usr, "<b>No AIs located</b>")//Just so you know the thing is actually working and not just ignoring you.
+
 
 /client/proc/update_mob_sprite(mob/living/carbon/human/H as mob in mob_list)
 	set category = "Admin"
@@ -1309,7 +1310,7 @@ var/global/floorIsLava = 0
 	set desc = "Should fix any mob sprite update errors."
 
 	if (!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(istype(H))
@@ -1423,5 +1424,3 @@ proc/formatPlayerPanel(var/mob/U,var/text="PP")
 	tomob.ckey = frommob.ckey
 	qdel(frommob)
 	return 1
-
-

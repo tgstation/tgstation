@@ -142,7 +142,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1&&!node2)
-		usr << "<span class='warning'>There's nothing to connect this pipe section to! A pipe segment must be connected to at least one other object!</span>"
+		to_chat(usr, "<span class='warning'>There's nothing to connect this pipe section to! A pipe segment must be connected to at least one other object!</span>")
 		return 0
 	update_icon()
 	build_network()
@@ -169,13 +169,13 @@
 	/*if(!node1)
 		parent.mingle_with_turf(loc, volume)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 
 	else if(!node2)
 		parent.mingle_with_turf(loc, volume)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if (nodealert)
 		nodealert = 0
@@ -225,7 +225,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/examine(mob/user)
 	..()
-	user << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
+	to_chat(user, "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>")
 
 /obj/machinery/atmospherics/pipe/simple/proc/groan()
 	src.visible_message("<span class='warning'>\The [src] groans from the pressure!</span>");
@@ -454,7 +454,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1&&!node2&&!node3)
-		usr << "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>"
+		to_chat(usr, "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>")
 		return 0
 	update_icon() // Skipped in initialize()!
 	build_network()
@@ -505,17 +505,17 @@
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if(!node2)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if(!node3)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if (nodealert)
 		nodealert = 0
@@ -678,7 +678,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1 && !node2 && !node3 && !node4)
-		usr << "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>"
+		to_chat(usr, "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>")
 		return 0
 	update_icon()
 	build_network()
@@ -721,17 +721,17 @@
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if(!node2)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if(!node3)
 		parent.mingle_with_turf(loc, 70)
 		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+//			to_chat(world, "Missing node from [src] at [src.x],[src.y],[src.z]")
 			nodealert = 1
 	else if (nodealert)
 		nodealert = 0
@@ -872,22 +872,22 @@
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
 		src.color = PIPE_COLOR_RED
-		user << "<span class='notice'>You paint the pipe red.</span>"
+		to_chat(user, "<span class='notice'>You paint the pipe red.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
 		src.color = PIPE_COLOR_BLUE
-		user << "<span class='notice'>You paint the pipe blue.</span>"
+		to_chat(user, "<span class='notice'>You paint the pipe blue.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
 		src.color = PIPE_COLOR_GREEN
-		user << "<span class='notice'>You paint the pipe green.</span>"
+		to_chat(user, "<span class='notice'>You paint the pipe green.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
 		src.color = PIPE_COLOR_ORANGE
-		user << "<span class='notice'>You paint the pipe yellow.</span>"
+		to_chat(user, "<span class='notice'>You paint the pipe yellow.</span>")
 		update_icon()
 		return 1
 
@@ -941,7 +941,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!(locate(/obj/machinery/atmospherics) in layer_nodes) && !other_node)
-		usr << "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>"
+		to_chat(usr, "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>")
 		return 0
 	update_icon()
 	build_network()
@@ -1086,12 +1086,12 @@
 				layer_mod = -1
 
 		user.ventcrawl_layer = Clamp(user.ventcrawl_layer + layer_mod, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
-		user << "You align yourself with the [user.ventcrawl_layer]\th output."
+		to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
 		return 1
 	else
 		if(direction != dir && user.ventcrawl_layer != PIPING_LAYER_DEFAULT) // The mob is moving to the single pipe outlet, we need to align it if it's on a layer that's not the default layer
 			user.ventcrawl_layer = PIPING_LAYER_DEFAULT
-			user << "You are redirected into the [user.ventcrawl_layer]\th piping layer."
+			to_chat(user, "You are redirected into the [user.ventcrawl_layer]\th piping layer.")
 		
 		return ..()
 
@@ -1133,7 +1133,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!mid_node && !layer_node)
-		usr << "<span class='warning'>There's nothing to connect this adapter to! A pipe segment must be connected to at least one other object!</span>"
+		to_chat(usr, "<span class='warning'>There's nothing to connect this adapter to! A pipe segment must be connected to at least one other object!</span>")
 		return 0
 	update_icon()
 	build_network()
@@ -1254,5 +1254,5 @@
 	// Autoset layer
 	if(direction & initialize_directions)
 		user.ventcrawl_layer = (direction == dir) ? PIPING_LAYER_DEFAULT : piping_layer
-		user << "You are redirected into the [user.ventcrawl_layer]\th piping layer."
+		to_chat(user, "You are redirected into the [user.ventcrawl_layer]\th piping layer.")
 		return ..()

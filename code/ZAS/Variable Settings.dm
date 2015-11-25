@@ -171,7 +171,7 @@ vs_control
 			vars[ch] = vw
 		if(how == "Toggle")
 			newvar = (newvar?"ON":"OFF")
-		world << "<span class='notice'><b>[key_name(user)] changed the setting [display_description] to [newvar].</b></span>"
+		to_chat(world, "<span class='notice'><b>[key_name(user)] changed the setting [display_description] to [newvar].</b></span>")
 		if(ch in plc.settings)
 			ChangeSettingsDialog(user,plc.settings)
 		else
@@ -296,7 +296,7 @@ vs_control
 				airflow_mob_slowdown = 3
 
 
-		world << "<span class='notice'><b>[key_name(user)] changed the global plasma/ZAS settings to \"[def]\"</b></span>"
+		to_chat(world, "<span class='notice'><b>[key_name(user)] changed the global plasma/ZAS settings to \"[def]\"</b></span>")
 
 pl_control
 	var/list/settings = list()

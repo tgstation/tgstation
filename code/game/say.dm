@@ -298,9 +298,9 @@ proc/handle_render(var/mob,var/message,var/speaker)
 	if(istype(mob,/mob/dead/observer))
 		var/reference = "<a href='?src=\ref[mob];follow=\ref[speaker]'>(Follow)</a> "
 		message = reference+message
-		mob << message
+		to_chat(mob, message)
 	else
-		mob << message
+		to_chat(mob, message)
 
 var/global/resethearers = 0
 

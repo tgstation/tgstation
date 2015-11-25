@@ -23,7 +23,7 @@
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		user << "<span class='notice'>You carefully locate the manual activation switch and start \the [src]'s boot process.</span>"
+		to_chat(user, "<span class='notice'>You carefully locate the manual activation switch and start \the [src]'s boot process.</span>")
 		search_for_candidates()
 
 /obj/item/device/mmi/posibrain/proc/search_for_candidates()
@@ -42,7 +42,7 @@
 	for(var/mob/dead/observer/O in get_active_candidates(ROLE_POSIBRAIN))
 		if(O.client)
 			if(check_observer(O))
-				O << "<span class=\"recruit\">You are a possible candidate for \a [src]. Get ready. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
+				to_chat(O, "<span class=\"recruit\">You are a possible candidate for \a [src]. Get ready. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>")
 				ghost_volunteers += O
 
 /obj/item/device/mmi/posibrain/proc/check_observer(var/mob/dead/observer/O)
@@ -72,9 +72,9 @@
 	src.brainmob.stat = 0
 	src.name = "positronic brain ([src.brainmob.name])"
 
-	src.brainmob << "<b>You are \a [src], brought into existence on [station_name()].</b>"
-	src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
-	src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
+	to_chat(src.brainmob, "<b>You are \a [src], brought into existence on [station_name()].</b>")
+	to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
+	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
 	var/turf/T = get_turf(src.loc)
@@ -102,32 +102,35 @@
 
 /obj/item/device/mmi/posibrain/proc/volunteer(var/mob/dead/observer/O)
 	if(!searching)
-		O << "Not looking for a ghost, yet."
+		to_chat(O, "Not looking for a ghost, yet.")
 		return
 	if(!istype(O))
-		O << "<span class='warning'>NO.</span>"
+		to_chat(O, "<span class='warning'>NO.</span>")
 		return
 	if(O in ghost_volunteers)
-		O << "<span class='notice'>Removed from registration list.</span>"
+		to_chat(O, "<span class='notice'>Removed from registration list.</span>")
 		ghost_volunteers.Remove(O)
 		return
 	if(!check_observer(O))
-		O << "<span class='warning'>You cannot be \a [src].</span>"
+		to_chat(O, "<span class='warning'>You cannot be \a [src].</span>")
 		return
-	O.<< "<span class='notice'>You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
+	to_chat(O., "<span class='notice'>You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>")
 	ghost_volunteers.Add(O)
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
-//	user << "<span class='info'>*---------</span>*"
+//	to_chat(user, "<span class='info'>*---------</span>*")
 	..()
 	if(src.brainmob)
 		if(src.brainmob.stat == DEAD)
-			user << "<span class='deadsay'>It appears to be completely inactive.</span>" //suicided
+			to_chat(user, "<span class='deadsay'>It appears to be completely inactive.</span>")//suicided
+
 		else if(!src.brainmob.client)
-			user << "<span class='notice'>It appears to be in stand-by mode.</span>" //closed game window
+			to_chat(user, "<span class='notice'>It appears to be in stand-by mode.</span>")//closed game window
+
 		else if(!src.brainmob.key)
-			user << "<span class='warning'>It doesn't seem to be responsive.</span>" //ghosted
-//	user << "<span class='info'>*---------*</span>"
+			to_chat(user, "<span class='warning'>It doesn't seem to be responsive.</span>")//ghosted
+
+//	to_chat(user, "<span class='info'>*---------*</span>")
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
 	if(!src.brainmob)

@@ -61,10 +61,10 @@
 	else
 		var/obj/item/clothing/mask/M = I
 		if(src.clothing_choices.Find(M))
-			user << "<span class='warning'>[M.name]'s pattern is already stored.</span>"
+			to_chat(user, "<span class='warning'>[M.name]'s pattern is already stored.</span>")
 			return
 		src.clothing_choices += M
-		user << "<span class='notice'>[M.name]'s pattern absorbed by \the [src].</span>"
+		to_chat(user, "<span class='notice'>[M.name]'s pattern absorbed by \the [src].</span>")
 		return 1
 	return 0
 
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)
 	vchange = !vchange
-	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
+	to_chat(user, "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"

@@ -86,7 +86,7 @@
 	if(check_tether())
 		if(istype(chain_datum.extremity_B,/mob/living/carbon))
 			var/mob/living/carbon/C = chain_datum.extremity_B
-			C << "<span class='warning'>\The [src] reels you in!</span>"
+			to_chat(C, "<span class='warning'>\The [src] reels you in!</span>")
 		chain_datum.rewind_chain()
 		return
 	..()

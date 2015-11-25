@@ -37,7 +37,7 @@
 	var/be = "are"
 	if(amount == 1) be = "is"
 
-	user << "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME] in the stack.</span>"
+	to_chat(user, "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME] in the stack.</span>")
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
@@ -130,22 +130,22 @@
 		if (!multiplier) multiplier = 1
 		if (src.amount < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 			else
-				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 			for(var/atom/movable/AM in usr.loc)
 				if(istype(AM, /obj/structure/bed/chair/vehicle)) //Bandaid to allow people in vehicles (and wheelchairs) build chairs
 					continue
 				else if(istype(AM, R.result_type))
-					usr << "<span class='warning'>There is another [R.title] here!</span>"
+					to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 					return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
+			to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 			return
 		if (R.time)
-			usr << "<span class='notice'>Building [R.title] ...</span>"
+			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 			if (!do_after(usr, get_turf(src), R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)
@@ -248,7 +248,7 @@
 	if (can_stack_with(target))
 		var/obj/item/stack/S = target
 		if (amount >= max_amount)
-			user << "\The [src] cannot hold anymore [CORRECT_STACK_NAME]."
+			to_chat(user, "\The [src] cannot hold anymore [CORRECT_STACK_NAME].")
 			return 1
 		var/to_transfer as num
 		if (user.get_inactive_hand()==S)
@@ -256,7 +256,7 @@
 		else
 			to_transfer = min(S.amount, max_amount-amount)
 		amount+=to_transfer
-		user << "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME]."
+		to_chat(user, "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME].")
 		if (S && user.machine==S)
 			spawn(0) interact(user)
 		S.use(to_transfer)

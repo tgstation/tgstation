@@ -99,7 +99,7 @@ var/list/impact_master = list()
 	// FUCK mice. - N3X
 	if(ismouse(atarget) && (stun+weaken+paralyze+agony)>5)
 		var/mob/living/simple_animal/mouse/M=atarget
-		M << "<span class='warning'>What would probably not kill a human completely overwhelms your tiny body.</span>"
+		to_chat(M, "<span class='warning'>What would probably not kill a human completely overwhelms your tiny body.</span>")
 		M.splat()
 		return 1
 	if(isanimal(atarget))	return 0
@@ -202,7 +202,7 @@ var/list/impact_master = list()
 			forcedodge = -1
 		else
 			if(silenced)
-				M << "<span class='warning'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>"
+				to_chat(M, "<span class='warning'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 			else
 				visible_message("<span class='warning'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			admin_warn(M)

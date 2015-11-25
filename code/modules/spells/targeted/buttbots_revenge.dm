@@ -27,7 +27,7 @@
 				var/obj/item/clothing/head/butt/B = new(C.loc)
 				B.transfer_buttdentity(C)
 				C.op_stage.butt = 4 //No having two butts.
-				C << "<span class='warning'>Your ass just blew up!</span>"
+				to_chat(C, "<span class='warning'>Your ass just blew up!</span>")
 			playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
 			C.apply_damage(40, BRUTE, "groin")
 			C.apply_damage(10, BURN, "groin")

@@ -49,7 +49,7 @@
 /obj/machinery/shield_gen/emag(mob/user)
 	if(prob(75))
 		src.locked = !src.locked
-		user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		updateDialog()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
@@ -79,10 +79,10 @@
 		var/obj/item/weapon/card/id/C = W
 		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/shield_gen/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -286,14 +286,14 @@
 		del covered_turfs
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning start up."
+			to_chat(M, "\icon[src] You hear heavy droning start up.")
 	else
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
 			del D
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning fade out."
+			to_chat(M, "\icon[src] You hear heavy droning fade out.")
 
 //grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()

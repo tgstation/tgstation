@@ -53,7 +53,7 @@
 				qdel(a)
 
 			if(halloss > 100)
-				src << "<span class='notice'>You're in too much pain to keep going...</span>"
+				to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
 				for(var/mob/O in oviewers(src, null))
 					O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
 				Paralyse(10)
@@ -193,7 +193,7 @@
 		if(druggy)
 			druggy = max(druggy - 1, 0)
 			if(!druggy)
-				src << "It looks like you are back in Kansas."
+				to_chat(src, "It looks like you are back in Kansas.")
 /*
 		// Increase germ_level regularly
 		if(prob(40))

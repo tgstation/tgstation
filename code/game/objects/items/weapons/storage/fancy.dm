@@ -41,11 +41,11 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		user << "<span class='info'>There are no [src.icon_type][plural_type] left in the box.</span>"
+		to_chat(user, "<span class='info'>There are no [src.icon_type][plural_type] left in the box.</span>")
 	else if(contents.len == 1)
-		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
+		to_chat(user, "<span class='info'>There is one [src.icon_type] left in the box.</span>")
 	else
-		user << "<span class='info'>There are [src.contents.len] [src.icon_type][plural_type] in the box.</span>"
+		to_chat(user, "<span class='info'>There are [src.contents.len] [src.icon_type][plural_type] in the box.</span>")
 
 
 /*
@@ -181,10 +181,10 @@
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
-				usr << "This crayon is too sad to be contained in this box."
+				to_chat(usr, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this box."
+				to_chat(usr, "This crayon is too powerful to be contained in this box.")
 				return
 	..()
 
@@ -303,7 +303,7 @@
 		user.equip_to_slot_if_possible(W, slot_wear_mask)
 		reagents.maximum_volume = 15 * contents.len
 		contents.len--
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+		to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 		update_icon()
 	else
 		..()
@@ -403,10 +403,10 @@
 	if(!istype(F))
 		return
 	if(F.on)
-		user <<"You can't put a lit flare in the box!"
+		to_chat(user, "You can't put a lit flare in the box!")
 		return
 	if(!F.fuel)
-		user <<"This flare is empty!"
+		to_chat(user, "This flare is empty!")
 		return
 	..()
 

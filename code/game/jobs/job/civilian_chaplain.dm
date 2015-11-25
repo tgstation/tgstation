@@ -432,7 +432,7 @@
 					accepted = 1
 				if("No")
 					if(outoftime)
-						H << "<span class='warning'>Welp, out of time, buddy. You're stuck with that one. Next time choose faster.</span>"
+						to_chat(H, "<span class='warning'>Welp, out of time, buddy. You're stuck with that one. Next time choose faster.</span>")
 						accepted = 1
 
 		if(ticker)

@@ -68,19 +68,19 @@
 	var/datum/reagents/reagents = reagent_list[mode]
 
 	if(!reagents.total_volume)
-		user << "<span class='notice'>The injector is empty.</span>"
+		to_chat(user, "<span class='notice'>The injector is empty.</span>")
 		return
 
 	if(!ismob(M))
 		return
 
-	user << "<span class='info'>You inject [M] with the injector.<span>"
-	M << "<span class='warning'>You feel a tiny prick!</span>"
+	to_chat(user, "<span class='info'>You inject [M] with the injector.<span>")
+	to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 	reagents.reaction(M, INGEST)
 
 	if(M.reagents)
 		var/transferred = reagents.trans_to(M, amount_per_transfer_from_this)
-		user << "<span class='notice'>[transferred] units injected. [reagents.total_volume] units remaining.</span>"
+		to_chat(user, "<span class='notice'>[transferred] units injected. [reagents.total_volume] units remaining.</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0) // change the mode
@@ -90,14 +90,14 @@
 
 	charge_tick = 0 // prevents wasted chems/cell charge if you're cycling through modes.
 
-	user << "<span class='notice'>Synthesizer is now producing '[reagent_ids[mode]]'.</span>"
+	to_chat(user, "<span class='notice'>Synthesizer is now producing '[reagent_ids[mode]]'.</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
 	..()
 	var/contents_count = 0
 	for(var/datum/reagents/reagents in reagent_list)
-		user << "<span class='info'>It's currently has [reagents.total_volume] units of [reagent_ids[++contents_count]] stored.</span>"
-	user << "<span class='info'>It's currently producing '[reagent_ids[mode]]'.</span>"
+		to_chat(user, "<span class='info'>It's currently has [reagents.total_volume] units of [reagent_ids[++contents_count]] stored.</span>")
+	to_chat(user, "<span class='info'>It's currently producing '[reagent_ids[mode]]'.</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/upgraded
 	name = "Upgraded Cyborg Hypospray"

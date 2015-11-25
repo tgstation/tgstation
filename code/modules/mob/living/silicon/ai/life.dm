@@ -16,7 +16,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "<span class='warning'>ERROR: APC access disabled, hack attempt canceled.</span>"
+				to_chat(src, "<span class='warning'>ERROR: APC access disabled, hack attempt canceled.</span>")
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -70,17 +70,17 @@
 				home.use_power(1000, EQUIP)
 
 			if (src:aiRestorePowerRoutine==2)
-				src << "Alert cancelled. Power has been restored without our assistance."
+				to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
 			else if (src:aiRestorePowerRoutine==3)
-				src << "Alert cancelled. Power has been restored."
+				to_chat(src, "Alert cancelled. Power has been restored.")
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
 			else if (src.aiRestorePowerRoutine == -1)
-				src << "Alert cancelled. External power source detected."
+				to_chat(src, "Alert cancelled. External power source detected.")
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
@@ -101,8 +101,8 @@
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 
-					src << "You've lost power!"
-//							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
+					to_chat(src, "You've lost power!")
+//							to_chat(world, "DEBUG CODE TIME! [loc] is the area the AI is sucking power from")
 					if (!is_special_character(src))
 						src.set_zeroth_law("")
 					//src.clear_supplied_laws() // Don't reset our laws.
@@ -112,32 +112,32 @@
 						if(!src.aiRestorePowerRoutine)
 							blind = 0
 							return // Checking for premature changes.
-						src << "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."
+						to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
 						sleep(50)
 						if(!src.aiRestorePowerRoutine)
 							blind = 0
 							return // Checking for premature changes.
 						if (loc.power_equip)
 							if (!istype(T, /turf/space))
-								src << "Alert cancelled. Power has been restored without our assistance."
+								to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 								src:aiRestorePowerRoutine = 0
 								src.blind.layer = 0
 								return
-						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
+						to_chat(src, "Fault confirmed: missing external power. Shutting down main control system to save power.")
 						sleep(20)
 						if(!src.aiRestorePowerRoutine)
 							blind = 0
 							return // Checking for premature changes.
-						src << "Emergency control system online. Verifying connection to power network."
+						to_chat(src, "Emergency control system online. Verifying connection to power network.")
 						sleep(50)
 						if(!src.aiRestorePowerRoutine)
 							blind = 0
 							return // Checking for premature changes.
 						if (istype(T, /turf/space))
-							src << "Unable to verify! No power connection detected!"
+							to_chat(src, "Unable to verify! No power connection detected!")
 							src:aiRestorePowerRoutine = 2
 							return
-						src << "Connection verified. Searching for APC in power network."
+						to_chat(src, "Connection verified. Searching for APC in power network.")
 						sleep(50)
 						if(!src.aiRestorePowerRoutine)
 							blind = 0
@@ -162,28 +162,28 @@
 									break
 							if (!theAPC)
 								switch(PRP)
-									if (1) src << "Unable to locate APC!"
-									else src << "Lost connection with the APC!"
+									if (1) to_chat(src, "Unable to locate APC!")
+									else to_chat(src, "Lost connection with the APC!")
 								src:aiRestorePowerRoutine = 2
 								return
 							if (loc.power_equip)
 								if (!istype(T, /turf/space))
-									src << "Alert cancelled. Power has been restored without our assistance."
+									to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 									src:aiRestorePowerRoutine = 0
 									src.blind.layer = 0 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
-								if (1) src << "APC located. Optimizing route to APC to avoid needless power waste."
-								if (2) src << "Best route identified. Hacking offline APC power port."
-								if (3) src << "Power port upload access confirmed. Loading control program into APC power port software."
+								if (1) to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
+								if (2) to_chat(src, "Best route identified. Hacking offline APC power port.")
+								if (3) to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
 								if (4)
-									src << "Transfer complete. Forcing APC to execute program."
+									to_chat(src, "Transfer complete. Forcing APC to execute program.")
 									sleep(50)
 									if(!src.aiRestorePowerRoutine)
 										theAPC = null
 										blind = 0
 										return // Checking for premature changes.
-									src << "Receiving control information from APC."
+									to_chat(src, "Receiving control information from APC.")
 									sleep(2)
 									if(!src.aiRestorePowerRoutine)
 										theAPC = null
@@ -192,7 +192,7 @@
 									//bring up APC dialog
 									theAPC.attack_ai(src)
 									src:aiRestorePowerRoutine = 3
-									src << "Here are your current laws:"
+									to_chat(src, "Here are your current laws:")
 									src.show_laws()
 							sleep(50)
 							theAPC = null

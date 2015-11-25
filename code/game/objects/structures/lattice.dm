@@ -43,7 +43,7 @@
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/WeldingTool = C
 		if(WeldingTool.remove_fuel(0, user))
-			user << "<span class='notice'>Slicing lattice joints...</span>"
+			to_chat(user, "<span class='notice'>Slicing lattice joints...</span>")
 		new/obj/item/stack/rods(loc)
 		qdel(src)
 	else

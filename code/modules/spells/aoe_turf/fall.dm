@@ -103,38 +103,38 @@
 
 	sleepfor = world.time + sleeptime
 	for(var/turf/T in targets)
-		//world << "Starting [T]"
+//		to_chat(world, "Starting [T]")
 		oureffects += getFromPool(/obj/effect/stop/sleeping, T, sleepfor, usr:mind, src, invocation == "ZA WARUDO")
 		for(var/atom/movable/everything in T)
-			//world << "[T] doing [everything]"
+//			to_chat(world, "[T] doing [everything]")
 			if(isliving(everything))
-				//world << "[everything] is living"
+//				to_chat(world, "[everything] is living")
 				var/mob/living/L = everything
 				if(L == holder) continue
-				//world << "[everything] is not holder"
-				//world << "paralyzing [everything]"
+//				to_chat(world, "[everything] is not holder")
+//				to_chat(world, "paralyzing [everything]")
 				affected += L
 				invertcolor(L)
 				spawn() recursive_timestop(L)
 				//L.Paralyse(5)
 				//L.update_canmove()
-				//world << "done"
+//				to_chat(world, "done")
 				L.playsound_local(L, invocation == "ZA WARUDO" ? 'sound/effects/theworld2.ogg' : 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
-			//world << "checking for color invertion"
+//			to_chat(world, "checking for color invertion")
 			else
 				spawn() recursive_timestop(everything)
 				if(everything.ignoreinvert)
-					//world << "[everything] is ignoring inverts."
+//					to_chat(world, "[everything] is ignoring inverts.")
 					continue
-				//world << "Inverting [everything] [everything.type] [everything.forceinvertredraw ? "forcing redraw" : ""]"
+//				to_chat(world, "Inverting [everything] [everything.type] [everything.forceinvertredraw ? "forcing redraw" : ""]")
 				invertcolor(everything)
-				//world << "Done"
+//				to_chat(world, "Done")
 				affected += everything
 			everything.timestopped = 1
-		//world << "inverting [T]"
+//		to_chat(world, "inverting [T]")
 		invertcolor(T)
 		T.timestopped = 1
-		//world << "Done"
+//		to_chat(world, "Done")
 		/*var/icon/I = T.tempoverlay
 
 		if(!istype(I))
@@ -205,41 +205,41 @@
 		fallimage.pixel_y = new_y
 		fallimage.loc = T_mob
 
-		src << fallimage
+		to_chat(src, fallimage)
 		animate(fallimage, transform = original / (8/range), time = 3)
 
 /proc/invertcolor(atom/A)
-	//world << "invert color start"
+//	to_chat(world, "invert color start")
 	if(A.ignoreinvert) return
-	//world << "not ignoring"
+//	to_chat(world, "not ignoring")
 	if(A.forceinvertredraw)
-		//world << "force redraw"
+//		to_chat(world, "force redraw")
 		var/icon/I = icon(A.icon, A.icon_state, A.dir)
-		//world << "got \icon[I]"
+//		to_chat(world, "got \icon[I]")
 		if(!istype(I) || ishuman(A))
-			//world << "[ishuman(A) ? "we're human so getting flat icon" : "our icon is not good enough, getting flat icon"]"
+//			to_chat(world, "[ishuman(A) ? "we're human so getting flat icon" : "our icon is not good enough, getting flat icon"]")
 			I = getFlatIcon(A, A.dir, cache = 2)
-			//world << "get flat icon done"
-		//world << "starting color mapping"
+//			to_chat(world, "get flat icon done")
+//		to_chat(world, "starting color mapping")
 		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if(C.lying || C.weakened || C.stat || C.sleeping || C.paralysis)
 				I.Turn(-90)
-		//world << "color mapping done"
-				//world << "done turning"
-		//world << "setting vars"
+//		to_chat(world, "color mapping done")
+//				to_chat(world, "done turning")
+//		to_chat(world, "setting vars")
 		A.tempoverlay = I
 		A.overlays += I
-		//world << "done setting vars"
+//		to_chat(world, "done setting vars")
 	else
-		//world << "not being forced"
+//		to_chat(world, "not being forced")
 		var/icon/I = A.tempoverlay
 		//if(everything.icon_state != initial(everything.icon_state))
 			//I = icon(I, everything.icon_state, everything.dir)
-		//world << "setting vars"
+//		to_chat(world, "setting vars")
 		A.overlays += I
 		A.tempoverlay = I
-		//world << "done settings vars"
+//		to_chat(world, "done settings vars")
 	A.ignoreinvert = 1
-	//world << "invertcolor return"
+//	to_chat(world, "invertcolor return")

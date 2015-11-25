@@ -19,15 +19,15 @@
 		return ..()
 
 	if(istype(I, /obj/item/weapon/evidencebag))
-		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
+		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return
 
 	if(I.w_class > 3)
-		user << "<span class='notice'>[I] won't fit in [src].</span>"
+		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
 	if(contents.len)
-		user << "<span class='notice'>[src] already has something inside it.</span>"
+		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return ..()
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -70,7 +70,7 @@
 		desc = "An empty evidence bag."
 
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 		icon_state = "evidenceobj"
 	return
 
@@ -79,7 +79,7 @@ obj/item/weapon/evidencebag/attackby(obj/item/weapon/W as obj, mob/living/user a
 		var/new_label = sanitize(trim(input("What should the new label be", "") as null|text))
 		if(new_label)
 			name = "bag ([new_label])"
-			user << "<span class='notice'>You write on the label of the bag.</span>"
+			to_chat(user, "<span class='notice'>You write on the label of the bag.</span>")
 	else
 		..(W, user)
 

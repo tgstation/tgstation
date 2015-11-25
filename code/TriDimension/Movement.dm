@@ -6,7 +6,7 @@ var/minZ = 2
 // Note that this assumes the ship's top is at z=1 and bottom at z=4
 /obj/item/weapon/tank/jetpack/proc/move_z(cardinal, mob/user as mob)
 	if (user.z > 1)
-		user << "<span class='warning'>There is nothing of interest in that direction.</span>"
+		to_chat(user, "<span class='warning'>There is nothing of interest in that direction.</span>")
 		return
 	if(allow_thrust(0.01, user))
 		switch(cardinal)
@@ -21,14 +21,15 @@ var/minZ = 2
 						for(var/atom/A in T.contents)
 							if(T.density)
 								blocked = 1
-								user << "<span class='warning'>You bump into [T.name].</span>"
+								to_chat(user, "<span class='warning'>You bump into [T.name].</span>")
 								break
 						if(!blocked)
 							user.Move(T)
 					else
-						user << "<span class='warning'>You bump into the ship's plating.</span>"
+						to_chat(user, "<span class='warning'>You bump into the ship's plating.</span>")
 				else
-					user << "<span class='warning'>The ship's gravity well keeps you in orbit!</span>" // Assuming the ship starts on z level 1, you don't want to go past it
+					to_chat(user, "<span class='warning'>The ship's gravity well keeps you in orbit!</span>")// Assuming the ship starts on z level 1, you don't want to go past it
+
 
 			if (DOWN) // Going down!
 				if (user.z < 1) // If we aren't at the very bottom of the ship, or out in space
@@ -39,11 +40,11 @@ var/minZ = 2
 						for(var/atom/A in T.contents)
 							if(T.density)
 								blocked = 1
-								user << "<span class='warning'>You bump into [T.name].</span>"
+								to_chat(user, "<span class='warning'>You bump into [T.name].</span>")
 								break
 						if(!blocked)
 							user.Move(T)
 					else
-						user << "<span class='warning'>You bump into the ship's plating.</span>"
+						to_chat(user, "<span class='warning'>You bump into the ship's plating.</span>")
 				else
-					user << "<span class='warning'>The ship's gravity well keeps you in orbit!</span>"
+					to_chat(user, "<span class='warning'>The ship's gravity well keeps you in orbit!</span>")

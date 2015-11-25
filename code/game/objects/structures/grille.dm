@@ -17,9 +17,9 @@
 
 	..()
 	if(!anchored)
-		user << "Its screws are loose."
+		to_chat(user, "Its screws are loose.")
 	if(broken) //We're not going to bother with the damage
-		user << "It has been completely smashed apart, only a few rods are still holding together"
+		to_chat(user, "It has been completely smashed apart, only a few rods are still holding together")
 
 /obj/structure/grille/cultify()
 	new /obj/structure/grille/cult(get_turf(src))
@@ -163,18 +163,19 @@
 					else
 						dir_to_set = 4 //User is laying from the right
 			else
-				user << "<span class='warning'>You can't reach far enough.</span>"
+				to_chat(user, "<span class='warning'>You can't reach far enough.</span>")
 				return
 		for(var/obj/structure/window/P in loc)
 			if(P.dir == dir_to_set)
-				user << "<span class='warning'>There's already a window here.</span>" //You idiot
+				to_chat(user, "<span class='warning'>There's already a window here.</span>")//You idiot
+
 				return
 		user.visible_message("<span class='notice'>[user] starts placing a window on \the [src].</span>", \
 		"<span class='notice'>You start placing a window on \the [src].</span>")
 		if(do_after(user, src, 20))
 			for(var/obj/structure/window/P in loc)
 				if(P.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
-					user << "<span class='warning'>There's already a window here.</span>"
+					to_chat(user, "<span class='warning'>There's already a window here.</span>")
 					return
 			var/obj/item/stack/sheet/glass/glass/G = W //This fucking stacks code holy shit
 			var/obj/structure/window/WD = new G.created_window(loc, 0)

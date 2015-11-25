@@ -34,7 +34,7 @@ proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 				if(M_turf && M_turf.z == epicenter.z)
 					var/dist = cheap_pythag(M_turf.x - x0, M_turf.y - y0)
 					if(dist <= round(heavy_range + world.view - 2, 1))
-						M << 'sound/effects/EMPulse.ogg'
+						to_chat(M, 'sound/effects/EMPulse.ogg')
 
 		for(var/turf/T in spiral_block(epicenter,max_range))
 			var/dist = cheap_pythag(T.x - x0, T.y - y0)

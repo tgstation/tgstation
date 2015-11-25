@@ -57,9 +57,9 @@
 /obj/machinery/power/port_gen/pacman2/examine(mob/user)
 	..()
 	if(crit_fail)
-		user << "<span class='warning'>The generator seems to have broken down.</span>"
+		to_chat(user, "<span class='warning'>The generator seems to have broken down.</span>")
 	else
-		user << "<span class='info'>The generator has [P.air_contents.toxins] units of fuel left, producing [power_gen] per cycle.</span>"
+		to_chat(user, "<span class='info'>The generator has [P.air_contents.toxins] units of fuel left, producing [power_gen] per cycle.</span>")
 
 /obj/machinery/power/port_gen/pacman2/handleInactive()
 	heat -= 2
@@ -76,12 +76,12 @@
 /obj/machinery/power/port_gen/pacman2/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/tank/plasma))
 		if(P)
-			user << "<span class='warning'>The generator already has a plasma tank loaded!</span>"
+			to_chat(user, "<span class='warning'>The generator already has a plasma tank loaded!</span>")
 			return
 		P = O
 		user.drop_item()
 		O.loc = src
-		user << "<span class='notice'>You add the plasma tank to the generator.</span>"
+		to_chat(user, "<span class='notice'>You add the plasma tank to the generator.</span>")
 	else if (istype(O, /obj/item/weapon/card/emag))
 		var/obj/item/weapon/card/emag/E = O
 		if(E.uses)
@@ -95,17 +95,17 @@
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(anchored)
-				user << "<span class='notice'>You secure the generator to the floor.</span>"
+				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 			else
-				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 			makepowernets()
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			open = !open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(open)
-				user << "<span class='notice'>You open the access panel.</span>"
+				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
-				user << "<span class='notice'>You close the access panel.</span>"
+				to_chat(user, "<span class='notice'>You close the access panel.</span>")
 		else if(istype(O, /obj/item/weapon/crowbar) && !open)
 			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			for(var/obj/item/I in component_parts)

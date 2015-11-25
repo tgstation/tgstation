@@ -15,7 +15,7 @@
 /obj/item/weapon/barricade_kit/examine(mob/user)
 
 	..()
-	user << "It has [kit_uses] uses left for regular barricades. It can [kit_uses < 3 ? "no longer be used" : "also be used"] for full barricades."
+	to_chat(user, "It has [kit_uses] uses left for regular barricades. It can [kit_uses < 3 ? "no longer be used" : "also be used"] for full barricades.")
 
 //Basically a rip from window construction, because it's the same idea
 /obj/item/weapon/barricade_kit/attack_self(mob/user as mob)
@@ -24,10 +24,10 @@
 	if(!istype(user.loc, /turf))
 		return 0
 	if(istype(user.loc, /turf/space))
-		user << "<span class='warning'>You can't build barricades out in space.</span>"
+		to_chat(user, "<span class='warning'>You can't build barricades out in space.</span>")
 		return
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	switch(alert("What do you want ([kit_uses] use\s left)", "Barricade Kit", "Directional", "Full Tile", "Cancel", null))
 		if("Directional")
@@ -38,12 +38,12 @@
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			for(var/obj/structure/window/barricade/BC in user.loc)
 				if(!BC.is_fulltile() && BC.dir == user.dir)
-					user << "<span class='warning'>There already is a barricade facing that way</span>"
+					to_chat(user, "<span class='warning'>There already is a barricade facing that way</span>")
 					return
 			user.visible_message("<span class='warning'>[user] starts building a barricade.</span>", \
 			"<span class='notice'>You start building a barricade.</span>")
 			if(do_after(user, src, 30))
-				user << "<span class='notice'>You finish the barricade.</span>"
+				to_chat(user, "<span class='notice'>You finish the barricade.</span>")
 				var/obj/structure/window/barricade/BC = new /obj/structure/window/barricade(user.loc)
 				BC.dir = user.dir
 				kit_uses--
@@ -56,15 +56,15 @@
 			if(src.loc != user)
 				return 1
 			if(kit_uses < 3)
-				user << "<span class='warning'>This barricade doesn't have enough planks and nails left for that.</span>"
+				to_chat(user, "<span class='warning'>This barricade doesn't have enough planks and nails left for that.</span>")
 				return 1
 			if(locate(/obj/structure/window/barricade/full) in user.loc)
-				user << "<span class='warning'>There is a barricade in the way.</span>"
+				to_chat(user, "<span class='warning'>There is a barricade in the way.</span>")
 				return 1
 			user.visible_message("<span class='warning'>[user] starts building a full barricade.</span>", \
 			"<span class='notice'>You start building a full barricade.</span>")
 			if(do_after(user, src, 50))
-				user << "<span class='notice'>You finish the full barricade.</span>"
+				to_chat(user, "<span class='notice'>You finish the full barricade.</span>")
 				new /obj/structure/window/barricade/full(user.loc)
 				qdel(src) //Use it up
 
@@ -76,7 +76,7 @@
 		var/turf/T = get_turf(A)
 		for(var/obj/structure/S in T)
 			if(istype(S, /obj/structure/window/barricade/full/block))
-				user << "<span class='warning'>There already is a barricade here</span>"
+				to_chat(user, "<span class='warning'>There already is a barricade here</span>")
 				return
 		user.visible_message("<span class='warning'>[user] starts barricading \the [A].</span>", \
 		"<span class='notice'>You start barricading \the [A].</span>")
@@ -95,7 +95,7 @@
 		var/turf/T = get_turf(A)
 		for(var/obj/structure/S in T)
 			if(istype(S, /obj/structure/window/barricade/full/block))
-				user << "<span class='warning'>There already is a barricade here</span>"
+				to_chat(user, "<span class='warning'>There already is a barricade here</span>")
 				return
 			if(istype(S,/obj/structure/grille)) //Used as a makeshift check for a full window
 				user.visible_message("<span class='warning'>[user] starts barricading \the [A].</span>", \

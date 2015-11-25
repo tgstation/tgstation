@@ -25,7 +25,7 @@ Message ends."}
 			for (var/mob/living/silicon/ai/aiPlayer in player_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
 				aiPlayer.set_zeroth_law(law)
-				aiPlayer << "Laws Updated: [law]"
+				to_chat(aiPlayer, "Laws Updated: [law]")
 		if(2)
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in machines)
@@ -46,7 +46,7 @@ Message ends."}
 			for (var/mob/living/silicon/ai/aiPlayer in player_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
-				aiPlayer << "Laws Updated: [law]"
+				to_chat(aiPlayer, "Laws Updated: [law]")
 
 	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)

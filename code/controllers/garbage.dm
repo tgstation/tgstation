@@ -12,7 +12,7 @@ var/soft_dels = 0
 	set category = "Debug"
 
 	for(var/A in gc_hard_del_types)
-		usr << "[A] = [gc_hard_del_types[A]]"
+		to_chat(usr, "[A] = [gc_hard_del_types[A]]")
 
 /datum/garbage_collector
 	var/list/queue = new
@@ -137,7 +137,7 @@ var/soft_dels = 0
 	set category = "Debug"
 
 	garbageCollector.del_everything = !garbageCollector.del_everything
-	world << "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>"
+	to_chat(world, "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>")
 	log_admin("[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].")
 	message_admins("<span class='notice'>[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].</span>", 1)
 

@@ -371,23 +371,23 @@
 		var/mob/living/carbon/human/H = the_item
 		var/datum/organ/external/limb = H.get_organ(usr.zone_sel.selecting)
 		if(!istype(limb))
-			user << "<span class='warning'>You can't eat this part of them!</span>"
+			to_chat(user, "<span class='warning'>You can't eat this part of them!</span>")
 			return 0
 		if(istype(limb, /datum/organ/external/head))
 			//Bullshit, but prevents being unable to clone someone.
-			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but \his ears tickle your throat!</span>"
+			to_chat(user, "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but \his ears tickle your throat!</span>")
 			return 0
 		if(istype(limb, /datum/organ/external/chest))
 			//Bullshit, but you cannot break it anyways
-			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it's too big to fit!</span>"
+			to_chat(user, "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it's too big to fit!</span>")
 			return 0
 		if(istype(limb, /datum/organ/external/groin))
 			//Bullshit, but you cannot break it anyways
-			user << "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it feels far too inappropriate!</span>"
+			to_chat(user, "<span class='warning'>You try to put [the_item]'s [limb.display_name] in your mouth, but it feels far too inappropriate!</span>")
 			return 0
 		user.visible_message("<span class='danger'>[user] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</span>")
 		if(!do_mob(user, the_item,EAT_MOB_DELAY))
-			user << "<span class='warning'>You were interrupted before you could eat [the_item]'s [limb.display_name]!</span>"
+			to_chat(user, "<span class='warning'>You were interrupted before you could eat [the_item]'s [limb.display_name]!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] eats [the_item]'s [limb.display_name].</span>", \
 			"<span class='danger'>You eat [the_item]'s [limb.display_name].</span>")
@@ -441,7 +441,7 @@
 /spell/targeted/leap/cast(list/targets, mob/user)
 	for(var/mob/living/target in targets)
 		if (istype(target.loc,/mob/) || target.lying || target.stunned || target.locked_to)
-			target << "<span class='warning'>You can't jump right now!</span>"
+			to_chat(target, "<span class='warning'>You can't jump right now!</span>")
 			continue
 
 		var/failed_leap = 0
@@ -488,7 +488,7 @@
 
 		if (istype(target.loc,/obj/))
 			var/obj/container = target.loc
-			target << "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>"
+			to_chat(target, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 			target.paralysis += 3
 			target.weakened += 5
 			container.visible_message("<span class='warning'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
@@ -601,21 +601,21 @@
 		return
 
 	if(!istype(M))
-		user << "<span class='warning'>This can only be used on carbon beings.</span>"
+		to_chat(user, "<span class='warning'>This can only be used on carbon beings.</span>")
 		return
 
 	if (M_PSY_RESIST in M.mutations)
-		user << "<span class='warning'>You can't see into [M.name]'s mind at all!</span>"
+		to_chat(user, "<span class='warning'>You can't see into [M.name]'s mind at all!</span>")
 		return
 
 	if (M.stat == 2)
-		user << "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>"
+		to_chat(user, "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>")
 		return
 	if (M.health < 0)
-		user << "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>"
+		to_chat(user, "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>")
 		return
 
-	user << "<span class='notice'><b>Mind Reading of [M.name]:</b></span>"
+	to_chat(user, "<span class='notice'><b>Mind Reading of [M.name]:</b></span>")
 	var/pain_condition = M.health
 	// lower health means more pain
 	var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -633,33 +633,33 @@
 
 	switch(pain_condition)
 		if (81 to INFINITY)
-			user << "<span class='notice'> <b>Condition</b>: [M.name] feels good.</span>"
+			to_chat(user, "<span class='notice'> <b>Condition</b>: [M.name] feels good.</span>")
 		if (61 to 80)
-			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering mild pain.</span>"
+			to_chat(user, "<span class='notice'> <b>Condition</b>: [M.name] is suffering mild pain.</span>")
 		if (41 to 60)
-			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering significant pain.</span>"
+			to_chat(user, "<span class='notice'> <b>Condition</b>: [M.name] is suffering significant pain.</span>")
 		if (21 to 40)
-			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering severe pain.</span>"
+			to_chat(user, "<span class='notice'> <b>Condition</b>: [M.name] is suffering severe pain.</span>")
 		else
-			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering excruciating pain.</span>"
+			to_chat(user, "<span class='notice'> <b>Condition</b>: [M.name] is suffering excruciating pain.</span>")
 			thoughts = "haunted by their own mortality"
 
 	switch(M.a_intent)
 		if (I_HELP)
-			user << "<span class='notice'> <b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
+			to_chat(user, "<span class='notice'> <b>Mood</b>: You sense benevolent thoughts from [M.name].</span>")
 		if (I_DISARM)
-			user << "<span class='notice'> <b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
+			to_chat(user, "<span class='notice'> <b>Mood</b>: You sense cautious thoughts from [M.name].</span>")
 		if (I_GRAB)
-			user << "<span class='notice'> <b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
+			to_chat(user, "<span class='notice'> <b>Mood</b>: You sense hostile thoughts from [M.name].</span>")
 		if (I_HURT)
-			user << "<span class='notice'> <b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
+			to_chat(user, "<span class='notice'> <b>Mood</b>: You sense cruel thoughts from [M.name].</span>")
 			for(var/mob/living/L in view(7,M))
 				if (L == M)
 					continue
 				thoughts = "thinking about punching [L.name]"
 				break
 		else
-			user << "<span class='notice'> <b>Mood</b>: You sense strange thoughts from [M.name].</span>"
+			to_chat(user, "<span class='notice'> <b>Mood</b>: You sense strange thoughts from [M.name].</span>")
 
 	if (istype(M,/mob/living/carbon/human))
 		var/numbers[0]
@@ -668,13 +668,13 @@
 			numbers += H.mind.initial_account.account_number
 			numbers += H.mind.initial_account.remote_access_pin
 		if(numbers.len>0)
-			user << "<span class='notice'> <b>Numbers</b>: You sense the number[numbers.len>1?"s":""] [english_list(numbers)] [numbers.len>1?"are":"is"] important to [M.name].</span>"
-	user << "<span class='notice'> <b>Thoughts</b>: [M.name] is currently [thoughts].</span>"
+			to_chat(user, "<span class='notice'> <b>Numbers</b>: You sense the number[numbers.len>1?"s":""] [english_list(numbers)] [numbers.len>1?"are":"is"] important to [M.name].</span>")
+	to_chat(user, "<span class='notice'> <b>Thoughts</b>: [M.name] is currently [thoughts].</span>")
 
 	if (/spell/targeted/empath in M.spell_list)
-		M << "<span class='warning'> You sense [usr.name] reading your mind.</span>"
+		to_chat(M, "<span class='warning'> You sense [usr.name] reading your mind.</span>")
 	else if (prob(5) || (M.mind && M.mind.assigned_role=="Chaplain"))
-		M << "<span class='warning'> You sense someone intruding upon your thoughts...</span>"
+		to_chat(M, "<span class='warning'> You sense someone intruding upon your thoughts...</span>")
 
 ////////////////////////////////////////////////////////////////////////
 

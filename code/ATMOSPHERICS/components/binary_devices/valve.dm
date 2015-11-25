@@ -85,7 +85,7 @@
 
 /obj/machinery/atmospherics/binary/valve/attack_hand(mob/user as mob)
 	if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
-		user << "<span class='warning'>Nope.</span>"
+		to_chat(user, "<span class='warning'>Nope.</span>")
 		return
 	src.add_fingerprint(usr)
 	update_icon(0,1)
@@ -128,7 +128,7 @@
 
 /obj/machinery/atmospherics/binary/valve/digital/attack_hand(mob/user as mob)
 	if(!src.allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 
@@ -220,6 +220,6 @@
 // Just for digital valves.
 /obj/machinery/atmospherics/binary/valve/digital/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(src.frequency && istype(W, /obj/item/weapon/wrench))
-		user << "<span class='warning'>You cannot unwrench this [src], it's digitally connected to another device.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's digitally connected to another device.</span>")
 		return 1
 	return ..() 	// Pass to the method below (does stuff ALL valves should do)

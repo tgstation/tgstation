@@ -88,9 +88,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
 	if(active)
-		usr << "<span class='info'>The generator is on.</span>"
+		to_chat(usr, "<span class='info'>The generator is on.</span>")
 	else
-		usr << "<span class='info'>The generator is off.</span>"
+		to_chat(usr, "<span class='info'>The generator is off.</span>")
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
@@ -144,9 +144,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
 	if(crit_fail)
-		user << "<span class='warning'>The generator seems to have broken down.</span>"
+		to_chat(user, "<span class='warning'>The generator seems to have broken down.</span>")
 	else
-		user << "<span class='info'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+		to_chat(user, "<span class='info'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -234,9 +234,9 @@ display round(lastgen) and plasmatank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "<span class='notice'>The [src.name] is full!</span>"
+			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
 			return
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()

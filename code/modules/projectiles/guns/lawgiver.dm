@@ -89,7 +89,7 @@
 
 	if(!dna_profile)
 		dna_profile = H.dna.unique_enzymes
-		usr << "<span class='notice'>You submit a DNA sample to \the [src].</span>"
+		to_chat(usr, "<span class='notice'>You submit a DNA sample to \the [src].</span>")
 		verbs += /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample
 		verbs -= /obj/item/weapon/gun/lawgiver/verb/submit_DNA_sample
 
@@ -103,7 +103,7 @@
 	if(dna_profile)
 		if(dna_profile == H.dna.unique_enzymes)
 			dna_profile = null
-			usr << "<span class='notice'>You erase the DNA profile from \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You erase the DNA profile from \the [src].</span>")
 			verbs += /obj/item/weapon/gun/lawgiver/verb/submit_DNA_sample
 			verbs -= /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample
 		else
@@ -122,7 +122,7 @@
 	if(istype(AM, /obj/item/ammo_storage/magazine/lawgiver) && !magazine)
 		if(user)
 			user.drop_item(AM, src)
-			user << "<span class='notice'>You load the magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load the magazine into \the [src].</span>")
 		magazine = AM
 		AM.update_icon()
 		update_icon()
@@ -135,7 +135,7 @@
 		L.loc = get_turf(src.loc)
 		if(user)
 			user.put_in_hands(L)
-			user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		L.update_icon()
 		magazine = null
 		update_icon()
@@ -216,7 +216,7 @@
 
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
-			user << "<span class='warning'>[src] is not ready to fire again!"
+			to_chat(user, "<span class='warning'>[src] is not ready to fire again!")
 		return
 
 	if(firing_mode == RAPID && !rapidFirechamber)
@@ -238,28 +238,28 @@
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if ((M_CLUMSY in M.mutations) && prob(50))
-				M << "<span class='danger'>[src] blows up in your face.</span>"
+				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
 				M.drop_item(src)
 				qdel(src)
 				return
 
 	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
 		if (M_HULK in M.mutations)
-			M << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(M, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
 		if(user.dna && user.dna.mutantrace == "adamantine")
-			user << "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>"
+			to_chat(user, "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>")
 			return
 		var/datum/organ/external/a_hand = H.get_active_hand_organ()
 		if(!a_hand.can_use_advanced_tools())
-			user << "<span class='warning'>Your [a_hand] doesn't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='warning'>Your [a_hand] doesn't have the dexterity to do this!</span>")
 			return
 
 	in_chamber.damage *= damage_multiplier
@@ -368,7 +368,7 @@
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		if(istype(M.wear_mask, /obj/item/clothing/mask/happy))
-			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			to_chat(M, "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>")
 			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
@@ -394,7 +394,7 @@
 				user.stat=2 // Just to be sure
 				user.death()
 			else
-				user << "<span class = 'notice'>Ow...</span>"
+				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
 			del(in_chamber)
 			mouthshoot = 0
@@ -522,9 +522,9 @@
 		if(!magazine)
 			LoadMag(AM, user)
 		else
-			user << "<span class='rose'>There is already a magazine loaded in \the [src]!</span>"
+			to_chat(user, "<span class='rose'>There is already a magazine loaded in \the [src]!</span>")
 	else if (istype(A, /obj/item/ammo_storage/magazine))
-		user << "<span class='rose'>You can't load \the [src] with that kind of magazine!</span>"
+		to_chat(user, "<span class='rose'>You can't load \the [src] with that kind of magazine!</span>")
 
 /obj/item/weapon/gun/lawgiver/attack_self(mob/user as mob)
 	if (target)
@@ -532,7 +532,7 @@
 	if (magazine)
 		RemoveMag(user)
 	else
-		user << "<span class='warning'>There's no magazine loaded in \the [src]!</span>"
+		to_chat(user, "<span class='warning'>There's no magazine loaded in \the [src]!</span>")
 
 /obj/item/weapon/gun/lawgiver/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, struggle = 0)
 	..()
@@ -550,11 +550,11 @@
 /obj/item/weapon/gun/lawgiver/proc/getAmmo(mob/user)
 	if (magazine)
 		var/obj/item/ammo_storage/magazine/lawgiver/L = magazine
-		user << "<span class='info'>It has enough energy for [L.stuncharge/20] stun shot\s left.</span>"
-		user << "<span class='info'>It has enough energy for [L.lasercharge/20] laser shot\s left.</span>"
-		user << "<span class='info'>It has [L.rapid_ammo_count] rapid fire round\s remaining.</span>"
-		user << "<span class='info'>It has [L.flare_ammo_count] flare round\s remaining.</span>"
-		user << "<span class='info'>It has [L.hi_ex_ammo_count] hi-EX round\s remaining.</span>"
+		to_chat(user, "<span class='info'>It has enough energy for [L.stuncharge/20] stun shot\s left.</span>")
+		to_chat(user, "<span class='info'>It has enough energy for [L.lasercharge/20] laser shot\s left.</span>")
+		to_chat(user, "<span class='info'>It has [L.rapid_ammo_count] rapid fire round\s remaining.</span>")
+		to_chat(user, "<span class='info'>It has [L.flare_ammo_count] flare round\s remaining.</span>")
+		to_chat(user, "<span class='info'>It has [L.hi_ex_ammo_count] hi-EX round\s remaining.</span>")
 
 /obj/item/weapon/gun/lawgiver/proc/countAmmo(var/obj/item/A)
 	var/obj/item/ammo_storage/magazine/lawgiver/L = A

@@ -24,7 +24,7 @@
 	return ..()
 
 /obj/item/weapon/melee/defibrillator/suicide_act(mob/user)
-	viewers(user) << "<span class='warning'>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='warning'>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</span>")
 	playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 	return (FIRELOSS)
 
@@ -48,7 +48,7 @@
 /obj/item/weapon/melee/defibrillator/attack_self(mob/user)
 	if(charges || ready)
 		if((M_CLUMSY in user.mutations) && prob(50) && charges)
-			user << "<span class='warning'>You touch the paddles together, shorting the device.</span>"
+			to_chat(user, "<span class='warning'>You touch the paddles together, shorting the device.</span>")
 			sparks.start()
 			playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 			user.Weaken(5)
@@ -58,11 +58,11 @@
 			update_icon()
 		else
 			ready = !ready
-			user << "<span class='notice'>You turn [src] [ready? "on and take the paddles out" : "off and put the paddles back in"].</span>"
+			to_chat(user, "<span class='notice'>You turn [src] [ready? "on and take the paddles out" : "off and put the paddles back in"].</span>")
 			playsound(get_turf(src),"sparks",75,1,-1)
 			update_icon()
 	else
-		user << "<span class='warning'>[src] is out of charges.</span>"
+		to_chat(user, "<span class='warning'>[src] is out of charges.</span>")
 	add_fingerprint(user)
 	return
 
@@ -78,10 +78,10 @@
 	if(istype(W,/obj/item/weapon/card/emag))
 		emagged = !src.emagged
 		if(emagged)
-			user << "<span class='warning'>You short out [src]'s safety protocols.</span>"
+			to_chat(user, "<span class='warning'>You short out [src]'s safety protocols.</span>")
 			overlays += "defib_emag"
 		else
-			user << "<span class='notice'>You reset [src]'s safety protocols.</span>"
+			to_chat(user, "<span class='notice'>You reset [src]'s safety protocols.</span>")
 			overlays.len = 0
 	else
 		. = ..()
@@ -89,18 +89,18 @@
 
 /obj/item/weapon/melee/defibrillator/attack(mob/M,mob/user)
 	if(!ishuman(M))
-		user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
+		to_chat(user, "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>")
 	else if(!charges)
-		user << "<span class='warning'>[src] is out of charges.</span>"
+		to_chat(user, "<span class='warning'>[src] is out of charges.</span>")
 	else if(!ready)
-		user << "<span class='warning'>Take the paddles out first.</span>"
+		to_chat(user, "<span class='warning'>Take the paddles out first.</span>")
 	else
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
 			if(emagged)
 				shockAttack(target,user)
 			else
-				user << "<span class='warning'>[src] buzzes: Vital signs detected.</span>"
+				to_chat(user, "<span class='warning'>[src] buzzes: Vital signs detected.</span>")
 		else
 			attemptDefib(target,user)
 	return
@@ -135,26 +135,26 @@
 		playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 		charges--
 		update_icon()
-		user << "<span class='notice'>You shock [target] with the paddles.</span>"
+		to_chat(user, "<span class='notice'>You shock [target] with the paddles.</span>")
 		var/datum/organ/external/head/head = target.get_organ("head")
 		if(!head || head.status & ORGAN_DESTROYED || M_NOCLONE in target.mutations  || !target.has_brain() || target.suiciding == 1)
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 			return
 		if(target.wear_suit && istype(target.wear_suit,/obj/item/clothing/suit/armor) && prob(95)) //75 ? Let's stay realistic here
-			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
+			to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>")
 			target.apply_damage(rand(1,5),BURN,"chest")
 			return
 		if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under) && prob(50))
-			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
+			to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>")
 			target.apply_damage(rand(1,5),BURN,"chest")
 			return
 		if(target.mind && !target.client) //Let's call up the ghost! Also, bodies with clients only, thank you.
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == target.mind  && ghost.client && ghost.can_reenter_corpse)
-					ghost << 'sound/effects/adminhelp.ogg'
-					ghost << "<span class='interface'><b><font size = 3>Someone is trying to revive your body. Return to it if you want to be resurrected!</b> \
-						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
-					user << "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>"
+					to_chat(ghost, 'sound/effects/adminhelp.ogg')
+					to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to revive your body. Return to it if you want to be resurrected!</b> \
+						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
+					to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>")
 					return
 			//we couldn't find a suitable ghost.
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
@@ -178,7 +178,7 @@
 			target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumb "pounce back up" behavior
 			target.apply_effect(10, PARALYZE)
 			target.update_canmove()
-			target << "<span class='notice'>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</span>"
+			to_chat(target, "<span class='notice'>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</span>")
 		else
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 		return

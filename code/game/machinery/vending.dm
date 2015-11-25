@@ -164,10 +164,10 @@ var/global/num_vending_terminals = 1
 	if(istype(O,/obj/structure/vendomatpack))
 		var/obj/structure/vendomatpack/P = O
 		if(!anchored)
-			user << "<span class='warning'>You need to anchor the vending machine before you can refill it.</span>"
+			to_chat(user, "<span class='warning'>You need to anchor the vending machine before you can refill it.</span>")
 			return
 		if(!pack)
-			user << "<span class='notice'>You start filling the vending machine with the recharge pack's materials.</span>"
+			to_chat(user, "<span class='notice'>You start filling the vending machine with the recharge pack's materials.</span>")
 			var/user_loc = user.loc
 			var/pack_loc = P.loc
 			var/self_loc = src.loc
@@ -176,7 +176,7 @@ var/global/num_vending_terminals = 1
 				return
 			if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
 				var/obj/machinery/vending/newmachine = new P.targetvendomat(loc)
-				user << "<span class='notice'>\icon[newmachine] You finish filling the vending machine, and use the stickers inside the pack to decorate the frame.</span>"
+				to_chat(user, "<span class='notice'>\icon[newmachine] You finish filling the vending machine, and use the stickers inside the pack to decorate the frame.</span>")
 				playsound(newmachine, 'sound/machines/hiss.ogg', 50, 0, 0)
 				newmachine.pack = P.type
 				var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
@@ -197,7 +197,7 @@ var/global/num_vending_terminals = 1
 				qdel(src)
 		else
 			if(istype(P,pack))
-				user << "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>"
+				to_chat(user, "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>")
 				var/user_loc = user.loc
 				var/pack_loc = P.loc
 				var/self_loc = src.loc
@@ -205,7 +205,7 @@ var/global/num_vending_terminals = 1
 				if(!user || !P || !src)
 					return
 				if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
-					user << "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>"
+					to_chat(user, "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>")
 					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 					for (var/datum/data/vending_product/D in product_records)
 						D.amount = D.original_amount
@@ -218,7 +218,7 @@ var/global/num_vending_terminals = 1
 					if(user.machine==src)
 						src.attack_hand(user)
 			else
-				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
+				to_chat(user, "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>")
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -293,12 +293,12 @@ var/global/num_vending_terminals = 1
 			return product
 	return null
 
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
+//		to_chat(world, "Added: [R.product_name]] - [R.amount] - [R.product_path]")
 
 /obj/machinery/vending/emag(mob/user)
 	if(!emagged)
 		emagged = 1
-		user << "You short out the product lock on \the [src]"
+		to_chat(user, "You short out the product lock on \the [src]")
 		return 1
 	return -1
 
@@ -339,14 +339,14 @@ var/global/num_vending_terminals = 1
 	if(stat & (BROKEN))
 		if(istype(W, /obj/item/stack/sheet/glass/rglass))
 			var/obj/item/stack/sheet/glass/rglass/G = W
-			user << "<span class='notice'>You replace the broken glass.</span>"
+			to_chat(user, "<span class='notice'>You replace the broken glass.</span>")
 			G.use(1)
 			stat &= ~BROKEN
 			src.health = 100
 			src.update_vicon()
 			getFromPool(/obj/item/weapon/shard, loc)
 		else
-			user << "<span class='notice'>[src] is broken! Fix it first.</span>"
+			to_chat(user, "<span class='notice'>[src] is broken! Fix it first.</span>")
 			return
 	. = ..()
 	if(.)
@@ -355,7 +355,7 @@ var/global/num_vending_terminals = 1
 		var/obj/item/stack/sheet/cardboard/C = W
 		if(C.amount>=4)
 			C.use(4)
-			user << "<span class='notice'>You slot some cardboard into the machine into [src].</span>"
+			to_chat(user, "<span class='notice'>You slot some cardboard into the machine into [src].</span>")
 			cardboard = 1
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -365,18 +365,18 @@ var/global/num_vending_terminals = 1
 		if (isnull(coin))
 			user.drop_item(W, src)
 			coin = W
-			user << "<span class='notice'>You insert a coin into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert a coin into [src].</span>")
 		else
-			user << "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>"
+			to_chat(user, "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>")
 
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
 			user.drop_item(W, src)
-			user << "<span class='notice'>You insert [W] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 			return voucher_act(W, user)
 		else
-			user << "<span class='notice'>\The [src] refuses to take [W].</span>"
+			to_chat(user, "<span class='notice'>\The [src] refuses to take [W].</span>")
 			return 1
 	else if(istype(W, /obj/item/weapon/storage/bag))
 		var/obj/item/weapon/storage/bag/bag = W
@@ -390,7 +390,7 @@ var/global/num_vending_terminals = 1
 			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [bag].</span>", \
 								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
 			if(bag.contents.len > 0)
-				user << "<span class='notice'>Some items are refused.</span>"
+				to_chat(user, "<span class='notice'>Some items are refused.</span>")
 	else
 		if(is_type_in_list(W, allowed_inputs))
 			user.drop_item(W, src)
@@ -404,9 +404,9 @@ var/global/num_vending_terminals = 1
 				var/obj/item/weapon/card/I = W
 				scan_card(I)
 			else
-				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+				to_chat(usr, "\icon[src]<span class='warning'>Unable to connect to linked account.</span>")
 		else
-			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"*/
+			to_chat(usr, "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>")*/
 
 //H.wear_id
 
@@ -432,22 +432,22 @@ var/global/num_vending_terminals = 1
 				D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0)
 				using_account = "Bank Account"
 				if(!D)								//first we check if there IS a bank account in the first place
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-					usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "\icon[src]<span class='warning'>Unable to access your bank account.</span>")
 					return 0
 				else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-					usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>")
 					return 0
 				else if(D.money < transaction_amount)//and lastly we check if there's enough money on it, duh
-					usr << "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>")
 					return 0
 
 			//transfer the money
 			D.money -= transaction_amount
 			linked_account.money += transaction_amount
 
-			usr << "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
+			to_chat(usr, "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>")
 
 			//create an entry on the buy's account's transaction log
 			var/datum/transaction/T = new()
@@ -473,7 +473,7 @@ var/global/num_vending_terminals = 1
 			src.vend(src.currently_vending, usr)
 			currently_vending = null
 		else
-			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>")
 
 /obj/machinery/vending/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -564,7 +564,7 @@ var/global/num_vending_terminals = 1
 		if(prob(2))
 			src.TurnOff(600) //A whole minute
 		/*if(prob(1))
-			usr << "<span class='warning'>You fall down and break your leg!</span>"
+			to_chat(usr, "<span class='warning'>You fall down and break your leg!</span>")
 			user.emote("scream",,, 1)
 			shake_camera(user, 2, 1)*/
 		return
@@ -686,20 +686,20 @@ var/global/num_vending_terminals = 1
 			if((R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) || isMoMMI(R))
 				can_vend = 1//only service borgs and MoMMI can buy costly items
 		if(!can_vend)
-			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return
 		else
 			free_vend = 1//so that don't have to swipe their non-existant IDs
 
 	if(href_list["remove_coin"])
 		if(!coin)
-			usr << "There is no coin in this machine."
+			to_chat(usr, "There is no coin in this machine.")
 			return
 
 		coin.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "<span class='notice'>You remove the [coin] from the [src]</span>"
+		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
 		coin = null
 	usr.set_machine(src)
 
@@ -708,7 +708,8 @@ var/global/num_vending_terminals = 1
 		//testing("vend: [href]")
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-			usr << "<span class='warning'>Access denied.</span>" //Unless emagged of course
+			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
+
 			flick(src.icon_deny,src)
 			return
 
@@ -776,22 +777,23 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
-		user << "<span class='warning'>Access denied.</span>" //Unless emagged of course
+		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
+
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
 	if (!by_voucher && (R in coin_records))
 		if (isnull(coin))
-			user << "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>"
+			to_chat(user, "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>")
 			return
 
 		if (coin.string_attached && prob(50))
 			user.put_in_hands(coin)
-			user << "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>"
+			to_chat(user, "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>")
 		else
 			if(coin.string_attached)
-				user << "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>"
+				to_chat(user, "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>")
 
 			if (!isnull(coinbox))
 				if (coinbox.can_be_inserted(coin, TRUE))
@@ -1308,9 +1310,9 @@ var/global/num_vending_terminals = 1
 	switch(build)
 		if(0) // Empty hull
 			if(istype(W, /obj/item/weapon/screwdriver))
-				usr << "You begin removing screws from \the [src] backplate..."
+				to_chat(usr, "You begin removing screws from \the [src] backplate...")
 				if(do_after(user, src, 50))
-					usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
+					to_chat(usr, "<span class='notice'>You unscrew \the [src] from the wall.</span>")
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					new /obj/item/mounted/frame/wallmed(get_turf(src))
 					del(src)
@@ -1318,11 +1320,11 @@ var/global/num_vending_terminals = 1
 			if(istype(W, /obj/item/weapon/circuitboard))
 				var/obj/item/weapon/circuitboard/C=W
 				if(!(istype(C,/obj/item/weapon/circuitboard/vendomat)))
-					user << "<span class='warning'>You cannot install this type of board into a NanoMed frame.</span>"
+					to_chat(user, "<span class='warning'>You cannot install this type of board into a NanoMed frame.</span>")
 					return
-				usr << "You begin to insert \the [C] into \the [src]."
+				to_chat(usr, "You begin to insert \the [C] into \the [src].")
 				if(do_after(user, src, 10))
-					usr << "<span class='notice'>You secure \the [C]!</span>"
+					to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
 					user.drop_item(C, src)
 					_circuitboard=C
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
@@ -1331,7 +1333,7 @@ var/global/num_vending_terminals = 1
 				return 1
 		if(1) // Circuitboard installed
 			if(istype(W, /obj/item/weapon/crowbar))
-				usr << "You begin to pry out \the [W] into \the [src]."
+				to_chat(usr, "You begin to pry out \the [W] into \the [src].")
 				if(do_after(user, src, 10))
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build--
@@ -1349,7 +1351,7 @@ var/global/num_vending_terminals = 1
 				return 1
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C=W
-				user << "You start adding cables to \the [src]..."
+				to_chat(user, "You start adding cables to \the [src]...")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				if(do_after(user, src, 20) && C.amount >= 5)
 					C.use(5)
@@ -1360,7 +1362,7 @@ var/global/num_vending_terminals = 1
 						"You add cables to \the [src].")
 		if(2) // Circuitboard installed, wired.
 			if(istype(W, /obj/item/weapon/wirecutters))
-				usr << "You begin to remove the wiring from \the [src]."
+				to_chat(usr, "You begin to remove the wiring from \the [src].")
 				if(do_after(user, src, 50))
 					new /obj/item/stack/cable_coil(loc,5)
 					user.visible_message(\
@@ -1370,7 +1372,7 @@ var/global/num_vending_terminals = 1
 					update_icon()
 				return 1
 			if(istype(W, /obj/item/weapon/screwdriver))
-				user << "You begin to complete \the [src]..."
+				to_chat(user, "You begin to complete \the [src]...")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, src, 20))
 					if(!_circuitboard)
@@ -1383,7 +1385,7 @@ var/global/num_vending_terminals = 1
 				return 1
 		if(3) // Waiting for a recharge pack
 			if(istype(W, /obj/item/weapon/screwdriver))
-				user << "You begin to unscrew \the [src]..."
+				to_chat(user, "You begin to unscrew \the [src]...")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, src, 30))
 					build--
@@ -1395,7 +1397,7 @@ var/global/num_vending_terminals = 1
 	if(build==3)
 		if(istype(O,/obj/structure/vendomatpack))
 			if(istype(O,/obj/structure/vendomatpack/medical))
-				user << "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>"
+				to_chat(user, "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>")
 				var/user_loc = user.loc
 				var/pack_loc = O.loc
 				var/self_loc = src.loc
@@ -1403,7 +1405,7 @@ var/global/num_vending_terminals = 1
 				if(!user || !O || !src)
 					return
 				if (user.loc == user_loc && O.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
-					user << "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>"
+					to_chat(user, "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>")
 					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 					var/obj/machinery/vending/wallmed1/newnanomed = new /obj/machinery/vending/wallmed1(src.loc)
 					newnanomed.name = "Emergency NanoMed"
@@ -1416,7 +1418,7 @@ var/global/num_vending_terminals = 1
 					contents = 0
 					qdel(src)
 			else
-				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
+				to_chat(user, "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>")
 
 ////////////////////////////////////////
 
@@ -1995,7 +1997,7 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/nazivend/emag(mob/user)
 	if(!emagged)
-		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		to_chat(user, "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>")
 		message_admins("[key_name_admin(user)] unlocked a Nazivend's DANGERMODE")
 		contraband[/obj/item/clothing/head/helmet/space/rig/nazi] = 3
 		contraband[/obj/item/clothing/suit/space/rig/nazi] = 3
@@ -2068,7 +2070,7 @@ var/global/num_vending_terminals = 1
 
 /obj/machinery/vending/sovietvend/emag(mob/user)
 	if(!emagged)
-		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		to_chat(user, "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>")
 		message_admins("[key_name_admin(user)] unlocked a Sovietvend's DANGERMODE")
 		contraband[/obj/item/clothing/head/helmet/space/rig/soviet] = 3
 		contraband[/obj/item/clothing/suit/space/rig/soviet] = 3
@@ -2213,4 +2215,3 @@ var/global/num_vending_terminals = 1
 	req_access_txt = "22"
 
 	pack = /obj/structure/vendomatpack/chapelvend
-

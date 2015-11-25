@@ -25,8 +25,8 @@
 
 
 /datum/game_mode/traitor/announce()
-	world << "<B>The current game mode is - Traitor!</B>"
-	world << "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>"
+	to_chat(world, "<B>The current game mode is - Traitor!</B>")
+	to_chat(world, "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>")
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -165,14 +165,14 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << {"
+	to_chat(traitor.current, {"
 	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
-	"}
+	"})
 
 	var/obj_count = 1
 
 	for (var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 
 		obj_count++
 
@@ -180,10 +180,10 @@
 	//We are firing the alert here, because silicons have a special syndicate intro, courtesy of old mysterious content maker
 	if(istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
-		traitor.current << sound('sound/voice/AISyndiHack.ogg')
+		to_chat(traitor.current, sound('sound/voice/AISyndiHack.ogg'))
 	else
 		equip_traitor(traitor.current)
-		traitor.current << sound('sound/voice/syndicate_intro.ogg')
+		to_chat(traitor.current, sound('sound/voice/syndicate_intro.ogg'))
 	return
 
 
@@ -202,23 +202,23 @@
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	var/law_borg = "Accomplish your AI's objectives at all costs."
-	killer << "<b>Your laws have been changed!</b>"
+	to_chat(killer, "<b>Your laws have been changed!</b>")
 	killer.set_zeroth_law(law, law_borg)
-	killer << "New law: 0. [law]"
+	to_chat(killer, "New law: 0. [law]")
 
 	//Begin code phrase.
-	killer << "The Syndicate provided you with the following information on how to identify their agents:"
+	to_chat(killer, "The Syndicate provided you with the following information on how to identify their agents:")
 	if(prob(80))
-		killer << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
+		to_chat(killer, "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]")
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
-		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
+		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code phrase.")
 	if(prob(80))
-		killer << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
+		to_chat(killer, "<span class='warning'>Code Response: </span>[syndicate_code_response]")
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
-		killer << "Unfortunately, the Syndicate did not provide you with a code response."
-	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
+	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	//End code phrase.
 
 
@@ -296,7 +296,7 @@
 	. = 1
 	if (traitor_mob.mind)
 		if (traitor_mob.mind.assigned_role == "Clown")
-			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.mutations.Remove(M_CLUMSY)
 
 	// find a radio! toolbox(es), backpack, belt, headset
@@ -306,7 +306,7 @@
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
 
 	if (!R)
-		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
+		to_chat(traitor_mob, "Unfortunately, the Syndicate wasn't able to get you a radio.")
 		. = 0
 	else
 		if (istype(R, /obj/item/device/radio))
@@ -325,7 +325,7 @@
 			var/obj/item/device/uplink/hidden/T = new(R)
 			target_radio.hidden_uplink = T
 			target_radio.traitor_frequency = freq
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
+			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += target_radio.hidden_uplink.uses
 		else if (istype(R, /obj/item/device/pda))
@@ -337,29 +337,29 @@
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
 
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
+			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
 	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
-		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
+		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
 		if(prob(80))
-			traitor_mob << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
+			to_chat(traitor_mob, "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]")
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+			to_chat(traitor_mob, "Unfortunetly, the Syndicate did not provide you with a code phrase.")
 		if(prob(80))
-			traitor_mob << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
+			to_chat(traitor_mob, "<span class='warning'>Code Response: </span>[syndicate_code_response]")
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
-			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
-		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
+		to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	//End code phrase.
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
-		traitor_mob << "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them."
+		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
@@ -422,5 +422,5 @@
 	traitors -= traitor_mind
 	traitor_mind.special_role = null
 	update_traitor_icons_removed(traitor_mind)
-	//world << "Removed [traitor_mind.current.name] from traitor shit"
-	traitor_mind.current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</FONT></span>"
+//	to_chat(world, "Removed [traitor_mind.current.name] from traitor shit")
+	to_chat(traitor_mind.current, "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</FONT></span>")

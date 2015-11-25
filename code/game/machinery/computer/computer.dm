@@ -110,12 +110,12 @@
 		for (var/obj/C in src)
 			C.loc = src.loc
 		if (src.stat & BROKEN)
-			user << "<span class='notice'>\icon[src] The broken glass falls out.</span>"
+			to_chat(user, "<span class='notice'>\icon[src] The broken glass falls out.</span>")
 			getFromPool(/obj/item/weapon/shard, loc)
 			A.state = 3
 			A.icon_state = "3"
 		else
-			user << "<span class='notice'>\icon[src] You disconnect the monitor.</span>"
+			to_chat(user, "<span class='notice'>\icon[src] You disconnect the monitor.</span>")
 			A.state = 4
 			A.icon_state = "4"
 		circuit = null // Used by the busy check to avoid multiple 'You disconnect the monitor' messages

@@ -201,7 +201,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_PAI)) // We handle polling ourselves.
 			if(O.client)
 				if(check_recruit(O))
-					O << "<span class='recruit'>A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+					to_chat(O, "<span class='recruit'>A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 					//question(O.client)
 
 	proc/check_recruit(var/mob/dead/observer/O)

@@ -40,11 +40,11 @@
 
 /obj/machinery/space_heater/examine(mob/user)
 	..()
-	user << "<span class='info'>\icon[src]\The [src.name] is [on ? "on" : "off"] and the hatch is [panel_open ? "open" : "closed"].</span>"
+	to_chat(user, "<span class='info'>\icon[src]\The [src.name] is [on ? "on" : "off"] and the hatch is [panel_open ? "open" : "closed"].</span>")
 	if(panel_open)
-		user << "<span class='info'>The power cell is [cell ? "installed" : "missing"].</span>"
+		to_chat(user, "<span class='info'>The power cell is [cell ? "installed" : "missing"].</span>")
 	else
-		user << "<span class='info'>The charge meter reads [cell ? round(cell.percent(),1) : 0]%</span>"
+		to_chat(user, "<span class='info'>The charge meter reads [cell ? round(cell.percent(),1) : 0]%</span>")
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -59,7 +59,7 @@
 	if(istype(I, /obj/item/weapon/cell))
 		if(panel_open)
 			if(cell)
-				user << "There is already a power cell inside."
+				to_chat(user, "There is already a power cell inside.")
 				return
 			else
 				// insert cell
@@ -71,7 +71,7 @@
 
 					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
-			user << "The hatch must be open to insert a power cell."
+			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
 	return
 
@@ -175,12 +175,12 @@
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-					//world << "got [transfer_moles] moles at [removed.temperature]"
+//					to_chat(world, "got [transfer_moles] moles at [removed.temperature]")
 
 					if(removed)
 
 						var/heat_capacity = removed.heat_capacity()
-						//world << "heating ([heat_capacity])"
+//						to_chat(world, "heating ([heat_capacity])")
 						if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
 							if(removed.temperature < set_temperature + T0C)
 								removed.temperature = min(removed.temperature + heating_power/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
@@ -188,11 +188,11 @@
 								removed.temperature = max(removed.temperature - heating_power/heat_capacity, TCMB)
 							cell.use(heating_power/20000)
 
-						//world << "now at [removed.temperature]"
+//						to_chat(world, "now at [removed.temperature]")
 
 					env.merge(removed)
 
-					//world << "turf now at [env.temperature]"
+//					to_chat(world, "turf now at [env.temperature]")
 
 
 		else

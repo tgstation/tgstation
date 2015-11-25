@@ -138,7 +138,7 @@ var/global/list/rnd_machines = list()
 	if (shocked)
 		shock(user,50)
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>")
 		return 1
 	if( ..() )
 		return 1
@@ -155,18 +155,18 @@ var/global/list/rnd_machines = list()
 			switch(result)
 				if("Yes")
 					if(!Adjacent(user))
-						user << "<span class='warning'>Cannot set this as the output location; You're not adjacent to it!</span>"
+						to_chat(user, "<span class='warning'>Cannot set this as the output location; You're not adjacent to it!</span>")
 						return 1
 
 					output_dir = get_dir(src, user)
-					user << "<span class='notice'>Output set.</span>"
+					to_chat(user, "<span class='notice'>Output set.</span>")
 				if("Machine Location")
 					output_dir = 0
-					user << "<span class='notice'>Output set.</span>"
+					to_chat(user, "<span class='notice'>Output set.</span>")
 			return 1
 		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
-		user << "\The [src] must be linked to an R&D console first!"
+		to_chat(user, "\The [src] must be linked to an R&D console first!")
 		return 1
 	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
 		busy = 1
@@ -177,18 +177,18 @@ var/global/list/rnd_machines = list()
 			if(M.sheettype==O.type)
 				found = matID
 		if(!found)
-			user << "<span class='warning'>\The [src] rejects \the [O.name].</span>"
+			to_chat(user, "<span class='warning'>\The [src] rejects \the [O.name].</span>")
 			busy = 0
 			return 1
 		if(allowed_materials && allowed_materials.len)
 			if(!(found in allowed_materials))
-				user << "<span class='warning'>\The [src] rejects \the [O.name].</span>"
+				to_chat(user, "<span class='warning'>\The [src] rejects \the [O.name].</span>")
 				busy = 0
 				return 1
 
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>\The [src]'s material bin is full. Please remove material before adding more.</span>"
+			to_chat(user, "<span class='warning'>\The [src]'s material bin is full. Please remove material before adding more.</span>")
 			busy = 0
 			return 1
 
@@ -216,7 +216,7 @@ var/global/list/rnd_machines = list()
 		icon_state = "[base_state]"
 		use_power(max(1000, (3750*amount/10)))
 		stack.use(amount)
-		user << "<span class='notice'>You add [amount] sheet[amount > 1 ? "s":""] to the [src.].</span>"
+		to_chat(user, "<span class='notice'>You add [amount] sheet[amount > 1 ? "s":""] to the [src.].</span>")
 		icon_state = "[base_state]"
 
 		var/datum/material/material = materials.getMaterial(found)

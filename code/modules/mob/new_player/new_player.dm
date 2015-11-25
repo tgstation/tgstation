@@ -115,7 +115,7 @@
 				ready = 1
 			if(2)
 				ready = 0
-		usr << "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>"
+		to_chat(usr, "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>")
 		new_player_panel_proc()
 		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 		return 1
@@ -131,12 +131,13 @@
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+			to_chat(src, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))// MAD JAMS cant last forever yo
+
 
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
@@ -158,13 +159,13 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='warning'>The round is either not ready, or has already finished...</span>"
+			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(client.prefs.species != "Human")
 
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				src << alert("You are currently not whitelisted to play [client.prefs.species].")
+				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 				return 0
 
 		LateChoices()
@@ -175,11 +176,11 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-			src << alert("You are currently not whitelisted to play [client.prefs.species].")
+			to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 			return 0
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -220,7 +221,7 @@
 			var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
 			var/DBQuery/query_insert = dbcon.NewQuery(sql)
 			query_insert.Execute()
-			usr << "<b>Thank you for your vote!</b>"
+			to_chat(usr, "<b>Thank you for your vote!</b>")
 			usr << browse(null,"window=privacypoll")
 
 	if(!ready && href_list["preference"])
@@ -258,7 +259,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -277,7 +278,7 @@
 				var/id_max = text2num(href_list["maxoptionid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -322,13 +323,13 @@
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		usr << "<span class='warning'>The round is either not ready, or has already finished...</span>"
+		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
-		usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
-		src << alert("[rank] is not available. Please try another.")
+		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
 
 	job_master.AssignRole(src, rank, 1)
@@ -352,7 +353,7 @@
 	// WHY THE FUCK IS THIS HERE
 	// FOR GOD'S SAKE USE EVENTS
 	if(bomberman_mode)
-		character.client << sound('sound/bomberman/start.ogg')
+		to_chat(character.client, sound('sound/bomberman/start.ogg'))
 		if(character.wear_suit)
 			var/obj/item/O = character.wear_suit
 			character.u_equip(O,1)
@@ -367,8 +368,8 @@
 		character.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(character), slot_wear_suit)
 		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)
 		character.update_icons()
-		character << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
-		character << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
+		to_chat(character, "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>")
+		to_chat(character, "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>")
 
 	ticker.mode.latespawn(character)
 
@@ -456,7 +457,8 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	else
 		client.prefs.copy_to(new_character)
 
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+	to_chat(src, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))// MAD JAMS cant last forever yo
+
 
 	if (mind)
 		mind.active = 0 // we wish to transfer the key manually

@@ -80,10 +80,10 @@ var/list/SPS_list = list()
 	..()
 	if(href_list["tag"])
 		if (isobserver(usr))
-			usr << "No way."
+			to_chat(usr, "No way.")
 			return
 		if (usr.get_active_hand() != src || usr.stat) //no silicons allowed
-			usr << "<span class = 'caution'>You need to have the GPS in your hand to do that!</span>"
+			to_chat(usr, "<span class = 'caution'>You need to have the GPS in your hand to do that!</span>")
 			return
 
 		var/a = input("Please enter desired tag.", name, gpstag) as text|null
@@ -91,11 +91,11 @@ var/list/SPS_list = list()
 			return
 
 		if (usr.get_active_hand() != src || usr.stat) //second check in case some chucklefuck drops the GPS while typing the tag
-			usr << "<span class = 'caution'>The GPS needs to be kept in your active hand!</span>"
+			to_chat(usr, "<span class = 'caution'>The GPS needs to be kept in your active hand!</span>")
 			return
 		a = copytext(sanitize(a), 1, 20)
 		if(length(a) != 4)
-			usr << "<span class = 'caution'>The tag must be four letters long!</span>"
+			to_chat(usr, "<span class = 'caution'>The tag must be four letters long!</span>")
 			return
 
 		else

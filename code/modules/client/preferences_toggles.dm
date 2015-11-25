@@ -4,7 +4,7 @@
 	set category = "Preferences"
 	set desc = "Toggle Between seeing all mob speech, and only speech of nearby mobs"
 	prefs.toggles ^= CHAT_GHOSTEARS
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
+	to_chat(src, "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
 	prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","TGE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -13,7 +13,7 @@
 	set category = "Preferences"
 	set desc = "Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
 	prefs.toggles ^= CHAT_GHOSTSIGHT
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
+	to_chat(src, "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
 	prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -22,7 +22,7 @@
 	set category = "Preferences"
 	set desc = "Toggle between hearing all radio chatter, or only from nearby speakers"
 	prefs.toggles ^= CHAT_GHOSTRADIO
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
+	to_chat(src, "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"].")
 	prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","TGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -31,7 +31,7 @@
 	set category = "Preferences"
 	set desc = "Toggle between hearing all PDA messages, or none"
 	prefs.toggles ^= CHAT_GHOSTPDA
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "hear no PDA messages at all"]."
+	to_chat(src, "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "hear no PDA messages at all"].")
 	prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -43,7 +43,7 @@
 	if(!holder) return
 	prefs.toggles ^= CHAT_RADIO
 	prefs.save_preferences_sqlite(src, ckey)
-	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers"
+	to_chat(usr, "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers")
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleadminhelpsound()
@@ -54,7 +54,7 @@
 	if(!holder)	return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences_sqlite(src, ckey)
-	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
+	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
 	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
@@ -65,9 +65,9 @@
 	prefs.save_preferences_sqlite(src, ckey)
 
 	if(src.holder)
-		src << "You will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
+		to_chat(src, "You will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat.")
 	else
-		src << "As a ghost, you will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
+		to_chat(src, "As a ghost, you will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat.")
 
 	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -78,7 +78,7 @@
 
 	prefs.toggles ^= CHAT_PRAYER
 	prefs.save_preferences_sqlite(src, ckey)
-	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
+	to_chat(src, "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggletitlemusic()
@@ -88,13 +88,14 @@
 	prefs.toggles ^= SOUND_LOBBY
 	prefs.save_preferences_sqlite(src, ckey)
 	if(prefs.toggles & SOUND_LOBBY)
-		src << "You will now hear music in the game lobby."
+		to_chat(src, "You will now hear music in the game lobby.")
 		if(istype(mob, /mob/new_player))
 			playtitlemusic()
 	else
-		src << "You will no longer hear music in the game lobby."
+		to_chat(src, "You will no longer hear music in the game lobby.")
 		if(istype(mob, /mob/new_player))
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+			to_chat(src, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))// stop the jamsz
+
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
@@ -104,12 +105,13 @@
 	prefs.toggles ^= SOUND_MIDI
 	prefs.save_preferences_sqlite(src, ckey)
 	if(prefs.toggles & SOUND_MIDI)
-		src << "You will now hear any sounds uploaded by admins."
+		to_chat(src, "You will now hear any sounds uploaded by admins.")
 	else
 		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
 		break_sound.priority = 255
-		src << break_sound	//breaks the client's sound output on channel 777
-		src << "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled."
+		src << break_sound //breaks the client's sound output on channel 777
+
+		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()
@@ -118,7 +120,7 @@
 	set desc = "Toggles seeing OutOfCharacter chat"
 	prefs.toggles ^= CHAT_OOC
 	prefs.save_preferences_sqlite(src,ckey)
-	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
+	to_chat(src, "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel.")
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -128,7 +130,7 @@
 	set desc = "Toggles seeing Local OutOfCharacter chat"
 	prefs.toggles ^= CHAT_LOOC
 	prefs.save_preferences_sqlite(src, ckey)
-	src << "You will [(prefs.toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
+	to_chat(src, "You will [(prefs.toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -139,11 +141,11 @@
 	prefs.toggles ^= SOUND_AMBIENCE
 	prefs.save_preferences_sqlite(src, ckey)
 	if(prefs.toggles & SOUND_AMBIENCE)
-		src << "You will now hear ambient sounds."
+		to_chat(src, "You will now hear ambient sounds.")
 	else
-		src << "You will no longer hear ambient sounds."
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+		to_chat(src, "You will no longer hear ambient sounds.")
+		to_chat(src, sound(null, repeat = 0, wait = 0, volume = 0, channel = 1))
+		to_chat(src, sound(null, repeat = 0, wait = 0, volume = 0, channel = 2))
 	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -153,7 +155,7 @@
 	set desc = "Configure your user interface"
 
 	if(!ishuman(usr))
-		usr << "This only for human"
+		to_chat(usr, "This only for human")
 		return
 
 	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") in list("White", "Midnight", "Orange", "old")
@@ -174,7 +176,7 @@
 		prefs.UI_style_alpha = UI_style_alpha_new
 		prefs.UI_style_color = UI_style_color_new
 		prefs.save_preferences_sqlite(src, ckey)
-		usr << "UI was saved"
+		to_chat(usr, "UI was saved")
 		for(var/obj/screen/I in icons)
 			if(I.color && I.alpha)
 				I.icon = ui_style2icon(UI_style_new)
@@ -188,7 +190,7 @@
 
 	prefs.toggles ^= SOUND_STREAMING
 	prefs.save_preferences_sqlite(src, ckey)
-	usr << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."
+	to_chat(usr, "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media.")
 	if(!media) return
 	if(prefs.toggles & SOUND_STREAMING)
 		media.update_music()
@@ -202,7 +204,7 @@
 
 	prefs.usewmp = !prefs.usewmp
 	prefs.save_preferences_sqlite(src, ckey)
-	usr << "You will use [(prefs.usewmp) ? "WMP" : "VLC"] to hear streamed media."
+	to_chat(usr, "You will use [(prefs.usewmp) ? "WMP" : "VLC"] to hear streamed media.")
 	if(!media) return
 	media.stop_music()
 	media.playerstyle = (prefs.usewmp ? PLAYER_OLD_HTML : PLAYER_HTML)
@@ -226,9 +228,9 @@
 	prefs.save_preferences_sqlite(src, ckey)
 
 	if(!prefs.usenanoui)
-		usr << "You will no longer use nanoUI on cross compatible UIs."
+		to_chat(usr, "You will no longer use nanoUI on cross compatible UIs.")
 	else
-		usr << "You will now use nanoUI on cross compatible UIs."
+		to_chat(usr, "You will now use nanoUI on cross compatible UIs.")
 
 /client/verb/toggle_progress_bars()
 	set name = "Toggle Progress Bars"
@@ -239,6 +241,6 @@
 	prefs.save_preferences_sqlite(src,ckey)
 
 	if(!prefs.progress_bars)
-		usr << "You will no longer see progress bars when doing delayed actions."
+		to_chat(usr, "You will no longer see progress bars when doing delayed actions.")
 	else
-		usr << "You will now see progress bars when doing delayed actions"
+		to_chat(usr, "You will now see progress bars when doing delayed actions")

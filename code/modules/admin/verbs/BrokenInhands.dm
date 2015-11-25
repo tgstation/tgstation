@@ -34,6 +34,6 @@
 	if(text)
 		var/F = file("broken_hand_icons.txt")
 		fdel(F)
-		F << text
-		world << "Completed and written to [F]"
+		to_chat(F, text)
+		to_chat(world, "Completed and written to [F]")
 

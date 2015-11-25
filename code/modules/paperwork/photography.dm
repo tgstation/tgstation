@@ -54,7 +54,7 @@
 		show(user)
 	else
 		..()
-		user << "<span class='notice'>You can't make out the picture from here.</span>"
+		to_chat(user, "<span class='notice'>You can't make out the picture from here.</span>")
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -65,7 +65,7 @@
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
 		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
 	if(info) //Would rather not display a blank line of text
-		user << info
+		to_chat(user, info)
 	onclose(user, "[name]")
 
 
@@ -127,7 +127,7 @@
 
 /obj/item/device/camera/examine(mob/user)
 	..()
-	user <<"<span class='info'>It has [pictures_left] photos left.</span>"
+	to_chat(user, "<span class='info'>It has [pictures_left] photos left.</span>")
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
@@ -157,9 +157,9 @@
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
-			user << "<span class='notice'>[src] still has some film in it!</span>"
+			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		user.drop_item(I)
 		qdel(I)
 		pictures_left = pictures_max
@@ -438,7 +438,8 @@
 	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
-	usr << "<SPAN CLASS='bnotice'>Image recorded</SPAN>"	//feedback to the AI player that the picture was taken
+		to_chat(usr, "<SPAN CLASS='bnotice'>Image recorded</SPAN>")//feedback to the AI player that the picture was taken
+
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
@@ -446,7 +447,7 @@
 	var/find
 	var/datum/picture/selection
 	if(src.aipictures.len == 0)
-		usr << "<font color=red><B>No images saved</B></font>"
+		to_chat(usr, "<font color=red><B>No images saved</B></font>")
 		return
 	for(var/datum/picture/t in src.aipictures)
 		nametemp += t.fields["name"]
@@ -463,7 +464,7 @@
 	P.pixel_y = selection.fields["pixel_y"]
 
 	P.show(usr)
-	usr << P.info
+	to_chat(usr, P.info)
 	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
@@ -473,7 +474,7 @@
 	playsound(loc, "polaroid", 75, 1, -3)
 
 	pictures_left--
-	user << "<span class='notice'>[pictures_left] photos left.</span>"
+	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
 	if(pictures_left > 0)
@@ -489,8 +490,8 @@
 
 /obj/item/device/camera/ai_camera/proc/camera_mode_off()
 	src.in_camera_mode = 0
-	usr << "<B>Camera Mode deactivated</B>"
+	to_chat(usr, "<B>Camera Mode deactivated</B>")
 
 /obj/item/device/camera/ai_camera/proc/camera_mode_on()
 	src.in_camera_mode = 1
-	usr << "<B>Camera Mode activated</B>"
+	to_chat(usr, "<B>Camera Mode activated</B>")

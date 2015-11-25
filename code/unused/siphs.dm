@@ -509,9 +509,9 @@
 			if (istype(W, /obj/item/weapon/wrench))
 				src.alterable = !( src.alterable )
 				if (src.alterable)
-					user << "<span class='notice'>You unlock the interface!</span>"
+					to_chat(user, "<span class='notice'>You unlock the interface!</span>")
 				else
-					user << "<span class='notice'>You lock the interface!</span>"
+					to_chat(user, "<span class='notice'>You lock the interface!</span>")
 	return
 
 

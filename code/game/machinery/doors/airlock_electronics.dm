@@ -33,7 +33,7 @@
 			if(do_after(user, src,40))
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				icon_state = "door_electronics"
-				user << "<span class='notice'>You repair the blown fuses on the circuitboard.</span>"
+				to_chat(user, "<span class='notice'>You repair the blown fuses on the circuitboard.</span>")
 
 /obj/item/weapon/circuitboard/airlock/attack_self(mob/user as mob)
 	if (!ishuman(user) && !isrobot(user))

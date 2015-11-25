@@ -34,7 +34,8 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
+
 		return 0
 	on = !on
 	update_brightness(user)
@@ -49,14 +50,14 @@
 			return ..()	//just hit them in the head
 
 		if (!user.dexterity_check())
-			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
 		if(istype(M, /mob/living/carbon/human))
 			var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
 			if(eye_protection)
-				user << "<span class='notice'>You're going to need to remove their [eye_protection] first.</span>"
+				to_chat(user, "<span class='notice'>You're going to need to remove their [eye_protection] first.</span>")
 				return
 
 		if(M == user)	//they're using it on themselves
@@ -74,14 +75,14 @@
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
+				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
 			else if(M_XRAY in M.mutations)	//mob has X-RAY vision
 				flick("flash", M.flash) //Yes, you can still get flashed wit X-Ray.
-				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
+				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
 			else	//they're okay!
 				if(!M.blinded)
 					flick("flash", M.flash)	//flash the affected mob
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 	else
 		return ..()
 
@@ -175,7 +176,7 @@
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='notice'>It's out of fuel.</span>"
+		to_chat(user, "<span class='notice'>It's out of fuel.</span>")
 		return
 	if(on)
 		return
@@ -186,7 +187,8 @@
 /obj/item/device/flashlight/flare/proc/Light(var/mob/user as mob)
 	if(user)
 		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+			to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
+
 			return 0
 	on = 1
 	src.force = on_damage
@@ -233,7 +235,7 @@
 
 /obj/item/device/flashlight/lamp/slime/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]."
+		to_chat(user, "You cannot turn the light on while in this [user.loc].")
 		return 0
 	on = !on
 	slime_brightness(user)

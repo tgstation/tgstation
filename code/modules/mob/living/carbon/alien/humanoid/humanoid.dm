@@ -80,7 +80,7 @@
 	if(shielded)
 		damage /= 4
 
-	src << "<span class='warning'>The blob attacks you!</span>"
+	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -91,12 +91,12 @@
 		return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if(!ticker)
-		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
+		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	/*
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	*/
 	..()
@@ -118,7 +118,7 @@
 
 /mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
 	if(!ticker)
-		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
+		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -172,12 +172,12 @@
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
 	if(!ticker)
-		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
+		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	/*
 	if(istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	*/
 
@@ -197,7 +197,7 @@
 					visible_message("<span class='danger'>\The [src] has been touched with the stun gloves by [M] !</span>")
 					return
 				else
-					M << "<span class='warning'>Not enough charge !</span>"
+					to_chat(M, "<span class='warning'>Not enough charge !</span>")
 					return
 
 	switch(M.a_intent)
@@ -208,7 +208,7 @@
 			else
 				if(M.health >= -75.0)
 					if(((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32))))))
-						M << "<span class='notice'>Remove that mask!</span>"
+						to_chat(M, "<span class='notice'>Remove that mask!</span>")
 						return
 					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
 					O.source = M
@@ -280,12 +280,12 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/humanoid/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!ticker)
-		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
+		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	/*
 	if(istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	*/
 	..()
@@ -307,7 +307,7 @@ In all, this is a lot like the monkey code. /N
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "<span class='alien'>[name] is too injured for that.</span>"
+				to_chat(M, "<span class='alien'>[name] is too injured for that.</span>")
 	return
 
 

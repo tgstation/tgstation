@@ -19,7 +19,7 @@
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
 	if(user && (M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>\The [src] slips out of your hand.</span>"
+		to_chat(user, "<span class='warning'>\The [src] slips out of your hand.</span>")
 		user.drop_item()
 		return 0
 	return 1
@@ -53,7 +53,7 @@
 		return
 
 	if(broken)
-		user << "<span class='warning'>\The [src] is broken.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is broken.</span>")
 		return
 
 	flash_recharge()
@@ -65,12 +65,12 @@
 			last_used = world.time
 			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
+				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user << "<span class='warning'>*click* *click*</span>"
+			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
 
 	playsound(get_turf(user), 'sound/weapons/flash.ogg', 100, 1)
@@ -96,13 +96,13 @@
 							log_admin("[key_name(user)] has converted [key_name(Subject)] to the revolution at [formatLocation(Subject.loc)]")
 							Subject.mind.has_been_rev = TRUE
 						else if(result == -1 || Subject.mind.has_been_rev) // command positions or has been rev before (according to old code you cannot attempt to rev people that has been deconverted, can be remove)
-							user << "<span class=\"warning\">This mind seems resistant to the flash!</span>"
+							to_chat(user, "<span class=\"warning\">This mind seems resistant to the flash!</span>")
 						else if(result == -2) // rev jobbanned
-							user << "<span class=\"warning\">This mind seems resistant to the flash! (OOC INFO: REVOLUTIONARY JOBBANNED)</span>"
+							to_chat(user, "<span class=\"warning\">This mind seems resistant to the flash! (OOC INFO: REVOLUTIONARY JOBBANNED)</span>")
 						else if(result == -3) // loyalty implanted
-							user << "<span class=\"warning\">Something seems to be blocking the flash!</span>"
+							to_chat(user, "<span class=\"warning\">Something seems to be blocking the flash!</span>")
 					else
-						user << "<span class=\"warning\">This mind is so vacant that it is not susceptible to influence!</span>"
+						to_chat(user, "<span class=\"warning\">This mind is so vacant that it is not susceptible to influence!</span>")
 		else
 			flashfail = TRUE
 	else if(issilicon(M))
@@ -145,7 +145,7 @@
 		if(0 to 5)
 			if(prob(2*times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
+				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
@@ -217,12 +217,12 @@
 	..()
 	if(!broken)
 		broken = 1
-		user << "<span class='warning'>The bulb has burnt out!</span>"
+		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"
 
 /obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1
-		user << "<span class='warning'>The bulb has burnt out!</span>"
+		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"

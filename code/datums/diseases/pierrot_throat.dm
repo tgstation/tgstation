@@ -17,10 +17,14 @@
 	..()
 	switch(stage)
 		if(1)
-			if(prob(10)) affected_mob << "<span class='warning'>You feel a little silly.</span>"
+			if(prob(10))
+				to_chat(affected_mob, "<span class='warning'>You feel a little silly.</span>")
 		if(2)
-			if(prob(10)) affected_mob << "<span class='warning'>You start seeing rainbows.</span>"
+			if(prob(10))
+				to_chat(affected_mob, "<span class='warning'>You start seeing rainbows.</span>")
 		if(3)
-			if(prob(10)) affected_mob << "<span class='danger'>Your thoughts are interrupted by a loud HONK!</span>"
+			if(prob(10))
+				to_chat(affected_mob, "<span class='danger'>Your thoughts are interrupted by a loud HONK!</span>")
 		if(4)
-			if(prob(5)) affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) )
+			if(prob(5))
+				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) )

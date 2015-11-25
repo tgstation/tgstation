@@ -30,7 +30,7 @@
 
 	..()
 	if(!no_light) //There is a light attached or integrated
-		user << "The helmet is mounted with an Internal Lighting System, it is [on ? "":"un"]lit."
+		to_chat(user, "The helmet is mounted with an Internal Lighting System, it is [on ? "":"un"]lit.")
 
 //We check no_light and update everything accordingly
 //Used to clear up the action button and shut down the light if broken
@@ -150,12 +150,12 @@
 		camera.network = list("NUKE")
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
+		to_chat(user, "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
 	if(get_dist(user,src) <= 1)
-		user << "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>"
+		to_chat(user, "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>")
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"

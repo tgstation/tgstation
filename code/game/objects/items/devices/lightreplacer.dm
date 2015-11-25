@@ -69,7 +69,7 @@
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()
-	user << "<span class='info'>It has [uses] light\s remaining.</span>"
+	to_chat(user, "<span class='info'>It has [uses] light\s remaining.</span>")
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -81,14 +81,14 @@
 		if(G.amount - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.amount - decrement, 0)
 			if(!remaining && !(G.amount - decrement) == 0)
-				user << "There isn't enough glass."
+				to_chat(user, "There isn't enough glass.")
 				return
 			G.amount = remaining
 			if(!G.amount)
 				user.drop_item(G)
 				del(G)
 			AddUses(increment)
-			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
+			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
 
 	if(istype(W, /obj/item/weapon/light))
@@ -96,12 +96,12 @@
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
+				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
 				user.drop_item(L)
 				del(L)
 				return
 		else
-			user << "You need a working light."
+			to_chat(user, "You need a working light.")
 			return
 
 
@@ -111,10 +111,10 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
 			src.Emag()
-			usr << "You shortcircuit the [src]."
+			to_chat(usr, "You shortcircuit the [src].")
 			return
 	*/
-	usr << "It has [uses] lights remaining."
+	to_chat(usr, "It has [uses] lights remaining.")
 
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
@@ -143,7 +143,7 @@
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
 			if(!Use(U)) return
-			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+			to_chat(U, "<span class='notice'>You replace the [target.fitting] with the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)
 
@@ -177,10 +177,10 @@
 			return
 
 		else
-			U << failmsg
+			to_chat(U, failmsg)
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		to_chat(U, "There is a working [target.fitting] already inserted.")
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()

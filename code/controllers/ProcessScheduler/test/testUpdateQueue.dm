@@ -4,7 +4,7 @@ var/global/list/updateQueueTestCount = list()
 	var/start
 	proc
 		runTests()
-			world << "<b>Running 9 tests...</b>"
+			to_chat(world, "<b>Running 9 tests...</b>")
 			testUpdateQueuePerformance()
 			sleep(1)
 			testInplace()
@@ -23,14 +23,14 @@ var/global/list/updateQueueTestCount = list()
 			sleep(1)
 			testReallySlowItemInQueue()
 			sleep(1)
-			world << "<b>Finished!</b>"
+			to_chat(world, "<b>Finished!</b>")
 		
 		beginTiming()
 			start = world.time
 			
 		endTiming(text)
 			var/time = (world.time - start) / world.tick_lag
-			world << {"<b><font color="blue">Performance - [text] - <font color="green">[time]</font> ticks</font></b>"}
+			to_chat(world, {"<b><font color="blue">Performance - [text] - <font color="green">[time]</font> ticks</font></b>"})
 		
 		getCount()
 			return updateQueueTestCount[updateQueueTestCount.len]
@@ -50,9 +50,9 @@ var/global/list/updateQueueTestCount = list()
 		
 		assertThat(condition, text)
 			if (condition)
-				world << {"<font color="green"><b>PASS</b></font>: [text]"}
+				to_chat(world, {"<font color="green"><b>PASS</b></font>: [text]"})
 			else
-				world << {"<b><font color="red">FAIL</font>: [text]</b>"}
+				to_chat(world, {"<b><font color="red">FAIL</font>: [text]</b>"})
 			
 		testUpdateQueuePerformance()
 			incrementTestCount()

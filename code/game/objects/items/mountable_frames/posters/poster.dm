@@ -19,7 +19,8 @@
 	..(loc)
 
 /obj/item/mounted/poster/do_build(turf/on_wall, mob/user)
-	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
+
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = new(src.serial_number)
@@ -34,7 +35,7 @@
 	if(!D)	return
 
 	if(do_after(user, on_wall, 17))//Let's check if everything is still there
-		user << "<span class='notice'>You place the poster!</span>"
+		to_chat(user, "<span class='notice'>You place the poster!</span>")
 	else
 		D.roll_and_drop(temp_loc)
 	return
@@ -75,10 +76,10 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
-			user << "<span class='notice'>You remove the remnants of the poster.</span>"
+			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			del(src)
 		else
-			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
+			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
 		return
 

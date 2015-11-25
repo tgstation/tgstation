@@ -30,7 +30,7 @@
 			processScheduler = psched
 			//processScheduler.deferSetupFor(/datum/controller/process/ticker)
 			processScheduler.start()
-			world << "<h1><span class='warning'>Process Scheduler was restarted</span></h1>"
+			to_chat(world, "<h1><span class='warning'>Process Scheduler was restarted</span></h1>")
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 	return
 

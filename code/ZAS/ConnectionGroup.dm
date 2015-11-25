@@ -69,10 +69,10 @@ Class Procs:
 
 /connection_edge/proc/add_connection(connection/c)
 	coefficient++
-	//world << "Connection added: [type] Coefficient: [coefficient]"
+//	to_chat(world, "Connection added: [type] Coefficient: [coefficient]")
 
 /connection_edge/proc/remove_connection(connection/c)
-	//world << "Connection removed: [type] Coefficient: [coefficient-1]"
+//	to_chat(world, "Connection removed: [type] Coefficient: [coefficient-1]")
 	coefficient--
 	if(coefficient <= 0)
 		erase()
@@ -81,7 +81,7 @@ Class Procs:
 
 /connection_edge/proc/erase()
 	air_master.remove_edge(src)
-	//world << "[type] Erased."
+//	to_chat(world, "[type] Erased.")
 
 /connection_edge/proc/tick()
 
@@ -143,7 +143,7 @@ Class Procs:
 	A.edges.Add(src)
 	B.edges.Add(src)
 	//id = edge_id(A,B)
-	//world << "New edge between [A] and [B]"
+//	to_chat(world, "New edge between [A] and [B]")
 
 /connection_edge/zone/add_connection(connection/c)
 	. = ..()
@@ -167,20 +167,20 @@ Class Procs:
 	if(A.invalid || B.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: \..."
+//	to_chat(world, "[id]: Tick [air_master.current_cycle]: \...")
 	if(direct)
 		if(air_master.equivalent_pressure(A, B))
-			//world << "merged."
+//			to_chat(world, "merged.")
 			erase()
 			air_master.merge(A, B)
-			//world << "zones merged."
+//			to_chat(world, "zones merged.")
 			return
 
 	//air_master.equalize(A, B)
 	ShareRatio(A.air,B.air,coefficient)
 	air_master.mark_zone_update(A)
 	air_master.mark_zone_update(B)
-	//world << "equalized."
+//	to_chat(world, "equalized.")
 
 	var/differential = A.air.return_pressure() - B.air.return_pressure()
 	if(abs(differential) < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
@@ -213,7 +213,7 @@ Class Procs:
 	A.edges.Add(src)
 	air = B.return_air()
 	//id = 52*A.id
-	//world << "New edge from [A] to [B]."
+//	to_chat(world, "New edge from [A] to [B].")
 
 /connection_edge/unsimulated/add_connection(connection/c)
 	. = ..()
@@ -236,7 +236,7 @@ Class Procs:
 	if(A.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: To [B]!"
+//	to_chat(world, "[id]: Tick [air_master.current_cycle]: To [B]!")
 	//A.air.mimic(B, coefficient)
 	ShareSpace(A.air,air,dbg_out)
 	air_master.mark_zone_update(A)
@@ -357,7 +357,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		tileslen = avg_unsim.group_multiplier
 
 		if(dbg_output)
-			world << "O2: [unsim_oxygen] N2: [unsim_nitrogen] Size: [share_size] Tiles: [tileslen]"
+			to_chat(world, "O2: [unsim_oxygen] N2: [unsim_nitrogen] Size: [share_size] Tiles: [tileslen]")
 
 	else if(istype(unsimulated_tiles, /list))
 		if(!unsimulated_tiles.len)
@@ -416,8 +416,8 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		ratio = sharing_lookup_table[tileslen]
 
 	if(dbg_output)
-		world << "Ratio: [ratio]"
-		world << "Avg O2: [oxy_avg] N2: [nit_avg]"
+		to_chat(world, "Ratio: [ratio]")
+		to_chat(world, "Avg O2: [oxy_avg] N2: [nit_avg]")
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1 - ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1 - ratio) + nit_avg )
@@ -432,7 +432,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 	A.update_values()
 
-	if(dbg_output) world << "Result: [abs(old_pressure - A.return_pressure())] kPa"
+	if(dbg_output) to_chat(world, "Result: [abs(old_pressure - A.return_pressure())] kPa")
 
 	return abs(old_pressure - A.return_pressure())
 

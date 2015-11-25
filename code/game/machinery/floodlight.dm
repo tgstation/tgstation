@@ -74,7 +74,7 @@
 	if(istype(W, /obj/item/weapon/cell))
 		if(panel_open)
 			if(cell)
-				user << "<span class='warning'>There already is a power cell already installed.</span>"
+				to_chat(user, "<span class='warning'>There already is a power cell already installed.</span>")
 				return
 			else
 				user.drop_item(W, src)

@@ -29,7 +29,7 @@
 	if(istype(ruby))
 		abomination.special_role = "abomination"
 		if(wizardstart.len == 0)
-			wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
+			to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
 		else
 			var/starting_loc = pick(wizardstart)
 			wizard.current.loc = starting_loc
@@ -51,15 +51,15 @@
 /datum/game_mode/ruby/declare_completion()
 	if(abominationwins)
 		feedback_set_details("round_end_result","win - abomination win")
-		world << "<B>The Abomination has murdered the station and sacrificed himself to Cjopaze!</B> (played by [winnerkey])"
+		to_chat(world, "<B>The Abomination has murdered the station and sacrificed himself to Cjopaze!</B> (played by [winnerkey])")
 	else
 		feedback_set_details("round_end_result","loss - abomination killed")
-		world << "<B>The Abomination has been stopped and Cjopaze's influence resisted! The station lives another day,</B>"
+		to_chat(world, "<B>The Abomination has been stopped and Cjopaze's influence resisted! The station lives another day,</B>")
 		if(killed.len > 0)
-			world << "Those who were sacrificed shall be remembered: "
+			to_chat(world, "Those who were sacrificed shall be remembered: ")
 			for(var/mob/M in killed)
 				if(M)
-					world << "[M.real_name]"
+					to_chat(world, "[M.real_name]")
 	/*
 	for(var/datum/mind/traitor in traitors)
 		var/traitorwin = 1
@@ -70,20 +70,20 @@
 		else
 			traitor_name = "[traitor.key] (character destroyed)"
 
-		world << "<B>The syndicate traitor was [traitor_name]</B>"
+		to_chat(world, "<B>The syndicate traitor was [traitor_name]</B>")
 		var/count = 1
 		for(var/datum/objective/objective in traitor.objectives)
 			if(objective.check_completion())
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>"
+				to_chat(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>")
 			else
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>"
+				to_chat(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>")
 				traitorwin = 0
 			count++
 
 		if(traitorwin)
-			world << "<B>The traitor was successful!<B>"
+			to_chat(world, "<B>The traitor was successful!<B>")
 		else
-			world << "<B>The traitor has failed!<B>"
+			to_chat(world, "<B>The traitor has failed!<B>")
 	*/
 	..()
 	return 1
@@ -176,7 +176,7 @@
 	for(var/mob/living/carbon/human/H in player_list)
 		if(!H.client || H.client == src)
 			continue
-		src << "Your work is not done. You will not find release until they are all free."
+		to_chat(src, "Your work is not done. You will not find release until they are all free.")
 		return
 	usr.gib(1)
 	ticker.mode:abominationwins = 1

@@ -68,16 +68,16 @@
 		if(src.beaker)
 			src.beaker.loc = get_turf(src)
 			src.beaker = null
-		user << "<span class='notice'>You dismantle \the [name].</span>"
+		to_chat(user, "<span class='notice'>You dismantle \the [name].</span>")
 		qdel(src)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
-			user << "There is already a reagent container loaded!"
+			to_chat(user, "There is already a reagent container loaded!")
 			return
 
 		user.drop_item(W, src)
 		src.beaker = W
-		user << "You attach \the [W] to \the [src]."
+		to_chat(user, "You attach \the [W] to \the [src].")
 		src.update_icon()
 		return
 	else
@@ -157,23 +157,23 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "<span class='warning'>You can't do that.</span>"
+		to_chat(usr, "<span class='warning'>You can't do that.</span>")
 		return
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 
 	mode = !mode
-	usr << "The [src] is now [mode ? "injecting" : "taking blood"]."
+	to_chat(usr, "The [src] is now [mode ? "injecting" : "taking blood"].")
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()
-	user << "The [src] is [mode ? "injecting" : "taking blood"]."
+	to_chat(user, "The [src] is [mode ? "injecting" : "taking blood"].")
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			user << "<span class='info'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			to_chat(user, "<span class='info'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
 		else
-			user << "<span class='info'>Attached is \an empty [beaker].</span>"
+			to_chat(user, "<span class='info'>Attached is \an empty [beaker].</span>")
 	else
-		user << "<span class='info'>No chemicals are attached.</span>"
-	user << "<span class='info'>It is attached to [attached ? attached : "no one"].</span>"
+		to_chat(user, "<span class='info'>No chemicals are attached.</span>")
+	to_chat(user, "<span class='info'>It is attached to [attached ? attached : "no one"].</span>")

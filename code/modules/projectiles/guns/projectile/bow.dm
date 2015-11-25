@@ -30,7 +30,7 @@
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		user  << "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow."
+		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
@@ -74,7 +74,7 @@
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
 			if(cell)
 				if(cell.charge >= 500)
-					user << "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>"
+					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.charge -= 500
@@ -84,24 +84,24 @@
 		if(!cell)
 			user.drop_item(W, src)
 			cell = W
-			user << "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>"
+			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					user << "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>"
+					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.charge -= 500
 		else
-			user << "<span class='notice'>[src] already has a cell installed.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(cell)
 			var/obj/item/C = cell
 			C.loc = get_turf(user)
 			cell = null
-			user << "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>"
+			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>")
 		else
-			user << "<span class='notice'>[src] doesn't have a cell installed.</span>"
+			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
 
 	else
 		..()
@@ -125,7 +125,7 @@
 
 
 	if(!arrow)
-		user << "You don't have anything nocked to [src]."
+		to_chat(user, "You don't have anything nocked to [src].")
 		return
 
 	if(user.restrained())
@@ -148,7 +148,7 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		usr << "[src] clunks as you draw the string to its maximum tension!"
+		to_chat(usr, "[src] clunks as you draw the string to its maximum tension!")
 	else
 		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
 		spawn(25) increase_tension(user)
@@ -169,11 +169,11 @@
 		return
 
 	if(!tension)
-		user << "You haven't drawn back the bolt!"
+		to_chat(user, "You haven't drawn back the bolt!")
 		return 0
 
 	if (!arrow)
-		user << "You have no arrow nocked to [src]!"
+		to_chat(user, "You have no arrow nocked to [src]!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)

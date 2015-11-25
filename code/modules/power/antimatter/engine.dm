@@ -42,9 +42,9 @@
 
 	if(istype(F, /obj/item/weapon/fuel/H))
 		if(injecting)
-			user << "Theres already a fuel rod in the injector!"
+			to_chat(user, "Theres already a fuel rod in the injector!")
 			return
-		user << "You insert the rod into the injector"
+		to_chat(user, "You insert the rod into the injector")
 		injecting = 1
 		var/fuel = F.fuel
 		del(F)
@@ -55,9 +55,9 @@
 
 	if(istype(F, /obj/item/weapon/fuel/antiH))
 		if(injecting)
-			user << "Theres already a fuel rod in the injector!"
+			to_chat(user, "Theres already a fuel rod in the injector!")
 			return
-		user << "You insert the rod into the injector"
+		to_chat(user, "You insert the rod into the injector")
 		injecting = 1
 		var/fuel = F.fuel
 		del(F)

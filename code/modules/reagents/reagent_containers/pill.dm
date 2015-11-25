@@ -64,12 +64,12 @@
 	if (tx_amount > 0)
 		user.visible_message("<span class='warning'>[user] puts something into \the [target], filling it.</span>")
 		if (src.is_empty())
-			user << "<span class='notice'>You [target_was_empty ? "crush" : "dissolve"] the pill into \the [target].</span>"
+			to_chat(user, "<span class='notice'>You [target_was_empty ? "crush" : "dissolve"] the pill into \the [target].</span>")
 			qdel(src)
 		else
-			user << "<span class='notice'>You [target_was_empty ? "crush partially" : "partially dissolve"] the pill into \the [target], filling it.</span>"
+			to_chat(user, "<span class='notice'>You [target_was_empty ? "crush partially" : "partially dissolve"] the pill into \the [target], filling it.</span>")
 	else
-		user << "<span class='notice'>\The [target] is full!</span>"
+		to_chat(user, "<span class='notice'>\The [target] is full!</span>")
 
 //OOP, HO!
 /obj/item/weapon/reagent_containers/pill/proc/injest(mob/M as mob)

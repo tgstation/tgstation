@@ -8,7 +8,7 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.cell)
 			R.cell.charge += rand() * 100
-			R << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
+			to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 50
 		return 1
@@ -24,7 +24,7 @@
 			if(M.cell)
 				M.cell.charge += 25
 				if(world.time >= next_message)
-					M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
+					to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 300
 		return 1
@@ -40,7 +40,7 @@
 			if(M.cell)
 				M.cell.charge += rand() * 100
 				if(world.time >= next_message)
-					M << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
+					to_chat(M, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
 		if(world.time >= next_message)
 			next_message = world.time + 300
 		return 1

@@ -28,14 +28,14 @@
 	if(istype(A, /obj/item/weapon/storage/bag/gadgets))
 		var/obj/item/weapon/storage/bag/gadgets/G = A
 		if(!contents)
-			user << "<span class='warning'>\The [G] is empty.</span>"
+			to_chat(user, "<span class='warning'>\The [G] is empty.</span>")
 		for(var/obj/item/weapon/stock_parts/S in G.contents)
 			if(src.contents.len < storage_slots)
 				src.contents += S
 			else
-				user << "<span class='notice'>You fill \the [src] to its capacity with \the [G]'s contents.</span>"
+				to_chat(user, "<span class='notice'>You fill \the [src] to its capacity with \the [G]'s contents.</span>")
 				return
-		user << "<span class='notice'>You fill up \the [src] with \the [G]'s contents.</span>"
+		to_chat(user, "<span class='notice'>You fill up \the [src] with \the [G]'s contents.</span>")
 		return 1
 	else
 		..()
@@ -51,11 +51,11 @@
 		var/obj/machinery/M = A
 
 		if(!M.panel_open)
-			user << "<span class='warning'>The maintenance hatch of \the [M] is closed, you can't just stab \the [src] into it and hope it'll work.</span>"
+			to_chat(user, "<span class='warning'>The maintenance hatch of \the [M] is closed, you can't just stab \the [src] into it and hope it'll work.</span>")
 			return
 
 		if(working) //We are already using the RMCE
-			user << "<span class='warning'>You are aleady using \the [src] on another machine. You'll have to pull it out or wait.</span>"
+			to_chat(user, "<span class='warning'>You are aleady using \the [src] on another machine. You'll have to pull it out or wait.</span>")
 			return
 
 		user.visible_message("<span class='notice'>[user] starts setting up \the [src] in \the [M]'s maintenance hatch</span>", \
@@ -66,24 +66,24 @@
 		if(do_after(user, A, 20)) //Two seconds to obtain a complete reading of the machine's components
 
 			if(!M.Adjacent(user))
-				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
+				to_chat(user, "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>")
 				working = 0
 				return
 
 			if(!M.component_parts) //This machine does not use components
-				user << "<span class='warning'>A massive error dump scrolls through \the [src]'s HUD. It looks like \the [M] has yet to be made compatible with this tool.</span>"
+				to_chat(user, "<span class='warning'>A massive error dump scrolls through \the [src]'s HUD. It looks like \the [M] has yet to be made compatible with this tool.</span>")
 				working = 0
 				return
 
 			playsound(get_turf(src), 'sound/machines/Ping.ogg', 50, 1) //User feedback
-			user << "<span class='notice'>\The [src] pings softly. A small message appears on its HUD, instructing to not move until finished."
+			to_chat(user, "<span class='notice'>\The [src] pings softly. A small message appears on its HUD, instructing to not move until finished.")
 
 			component_interaction(M, user) //Our job is done here, we transfer to the second proc (it needs to be recalled if needed)
 
 			return
 
 		else //Interrupted in some way
-			user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
+			to_chat(user, "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>")
 			working = 0
 
 			return
@@ -93,7 +93,7 @@
 
 
 	if(!M.Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
-		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
+		to_chat(user, "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>")
 		working = 0
 		return //Done, done and done, pull out
 
@@ -112,21 +112,22 @@
 		var/ratingpool //Used to give an estimation of the machine's quality rating
 		var/componentamount //Since the fucking circuit board is counted as a component, we can't use component_parts.len
 
-		user << "<span class='notice'><B>Scanning results for \the [M] :</B></span>"
+		to_chat(user, "<span class='notice'><B>Scanning results for \the [M] :</B></span>")
 		if(M.component_parts.len)
 			for(var/obj/item/weapon/stock_parts/P in M.component_parts)
 				sleep(5) //Slow the fuck down, we don't want to kill the user's UI, you can't read that fast anyways
-				user << "<span class='notice'><B>Detected :</B> [P] of effective quality rating [P.rating].</span>"
+				to_chat(user, "<span class='notice'><B>Detected :</B> [P] of effective quality rating [P.rating].</span>")
 				ratingpool += P.rating
 				componentamount++
 			if(ratingpool)
 				sleep(5)
-				user << "<span class='notice'><B>Effective quality rating of machine components : [ratingpool/componentamount].<B></span>"
+				to_chat(user, "<span class='notice'><B>Effective quality rating of machine components : [ratingpool/componentamount].<B></span>")
 		else
 			sleep(5)
-			user << "<span class='warning'>No components detected. Please ensure the scanning unit is still functional.</span>" //Shouldn't happen
+			to_chat(user, "<span class='warning'>No components detected. Please ensure the scanning unit is still functional.</span>")//Shouldn't happen
+
 		sleep(5)
-		user << "<span class='info'>Note : You will be returned to the input menu shortly.</span>"
+		to_chat(user, "<span class='info'>Note : You will be returned to the input menu shortly.</span>")
 
 		spawn(5)
 			component_interaction(M, user)
@@ -139,7 +140,7 @@
 
 		for(var/obj/item/weapon/stock_parts/P in M.component_parts)
 			if(!Adjacent(user)) //Make sure the user doesn't move
-				user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
+				to_chat(user, "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>")
 				return
 			//Yes, an istype list. We don't have helpers for this, and this coder is not that sharp
 			if(istype(P, /obj/item/weapon/stock_parts/capacitor))

@@ -68,7 +68,7 @@ var/shuttle_call/shuttle_calls[0]
 		return 1
 
 	if (!(src.z in list(STATION_Z,CENTCOMM_Z)))
-		usr << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(usr, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 
 	usr.set_machine(src)
@@ -126,11 +126,11 @@ var/shuttle_call/shuttle_calls[0]
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
-					usr << "You are not authorized to do this."
+					to_chat(usr, "You are not authorized to do this.")
 					tmp_alertlevel = 0
 				setMenuState(usr,COMM_SCREEN_MAIN)
 			else
-				usr << "You need to swipe your ID."
+				to_chat(usr, "You need to swipe your ID.")
 
 		if("announce")
 			if(src.authenticated==2 && !issilicon(usr))
@@ -156,38 +156,38 @@ var/shuttle_call/shuttle_calls[0]
 				if(access_captain in I.access)
 					authenticated = 2
 			if(authenticated != 2)
-				usr << "<span class='warning'>You do not have clearance to use this function.</span>"
+				to_chat(usr, "<span class='warning'>You do not have clearance to use this function.</span>")
 				return
 			setMenuState(usr,COMM_SCREEN_ERT)
 			return
 		if("request_emergency_team")
 			if(menu_state != COMM_SCREEN_ERT) return //Not on the right screen.
 			if ((!(ticker) || emergency_shuttle.location))
-				usr << "<span class='warning'>Warning: The evac shuttle has already arrived.</span>"
+				to_chat(usr, "<span class='warning'>Warning: The evac shuttle has already arrived.</span>")
 				return
 
 			if(!universe.OnShuttleCall(usr))
-				usr << "<span class='notice'>\The [src.name] cannot establish a bluespace connection.</span>"
+				to_chat(usr, "<span class='notice'>\The [src.name] cannot establish a bluespace connection.</span>")
 				return
 
 			if(sent_strike_team)
-				usr << "<span class='warning'>PKI AUTH ERROR: SERVER REPORTS BLACKLISTED COMMUNICATION KEY PLEASE CONTACT SERVICE TECHNICIAN</span>"
+				to_chat(usr, "<span class='warning'>PKI AUTH ERROR: SERVER REPORTS BLACKLISTED COMMUNICATION KEY PLEASE CONTACT SERVICE TECHNICIAN</span>")
 				return
 
 			if(world.time < 6000)
-				usr << "<span class='notice'>The emergency response team is away on another mission, Please wait another [round((6000-world.time)/600)] minute\s before trying again.</span>"
+				to_chat(usr, "<span class='notice'>The emergency response team is away on another mission, Please wait another [round((6000-world.time)/600)] minute\s before trying again.</span>")
 				return
 			if(emergency_shuttle.online)
-				usr << "The emergency shuttle is already on its way."
+				to_chat(usr, "The emergency shuttle is already on its way.")
 				return
 			if(!(get_security_level() in list("red", "delta")))
-				usr << "<span class='notice'>The station must be in an emergency to request a Response Team.</span>"
+				to_chat(usr, "<span class='notice'>The station must be in an emergency to request a Response Team.</span>")
 				return
 			if(authenticated != 2 || issilicon(usr))
-				usr << "<span class='warning'>\The [src.name]'s screen flashes, \"Access Denied\".</span>"
+				to_chat(usr, "<span class='warning'>\The [src.name]'s screen flashes, \"Access Denied\".</span>")
 				return
 			if(send_emergency_team)
-				usr << "<span class='notice'>Central Command has already dispatched a Response Team to [station_name()]</span>"
+				to_chat(usr, "<span class='notice'>Central Command has already dispatched a Response Team to [station_name()]</span>")
 				return
 
 			var/response = alert(usr,"Are you sure you want to request a response team?", "ERT Request", "Yes", "No")
@@ -264,13 +264,13 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(centcomm_message_cooldown)
-					usr << "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				usr << "<span class='notice'>Message transmitted.</span>"
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				var/turf/T = get_turf(usr)
 				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
@@ -283,13 +283,13 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(centcomm_message_cooldown)
-					usr << "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				usr << "<span class='notice'>Message transmitted.</span>"
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				var/turf/T = get_turf(usr)
 				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
@@ -298,7 +298,7 @@ var/shuttle_call/shuttle_calls[0]
 			setMenuState(usr,COMM_SCREEN_MAIN)
 
 		if("RestoreBackup")
-			usr << "Backup routing data restored!"
+			to_chat(usr, "Backup routing data restored!")
 			src.emagged = 0
 			setMenuState(usr,COMM_SCREEN_MAIN)
 			update_icon()
@@ -318,7 +318,7 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if (!(src.z in list(STATION_Z, CENTCOMM_Z)))
-		user << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 
 	ui_interact(user)
@@ -398,7 +398,7 @@ var/shuttle_call/shuttle_calls[0]
 /obj/machinery/computer/communications/emag(mob/user as mob)
 	if(!emagged)
 		emagged = 1
-		user << "Syndicate routing data uploaded!"
+		to_chat(user, "Syndicate routing data uploaded!")
 		new/obj/effect/effect/sparks(get_turf(src))
 		playsound(loc,"sparks",50,1)
 		authenticated = 2
@@ -454,23 +454,23 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if(sent_strike_team == 1)
-		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+		to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minute\s before trying again."
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minute\s before trying again.")
 		return
 
 	if(emergency_shuttle.direction == -1)
-		user << "The emergency shuttle may not be called while returning to CentCom."
+		to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 		return
 
 	if(emergency_shuttle.online)
-		user << "The emergency shuttle is already on its way."
+		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
 	if(ticker.mode.name == "blob")
-		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
 	emergency_shuttle.incall()
@@ -479,7 +479,7 @@ var/shuttle_call/shuttle_calls[0]
 	log_game("[key_name(user)] has called the shuttle. Justification given : '[justification]'")
 	message_admins("[key_name_admin(user)] has called the shuttle. Justification given : '[justification]'. You are encouraged to act if that justification is shit", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes. Justification : '[justification]'")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
 
 	return
 
@@ -488,11 +488,11 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if(emergency_shuttle.direction == -1)
-		user << "The shuttle may not be called while returning to CentCom."
+		to_chat(user, "The shuttle may not be called while returning to CentCom.")
 		return
 
 	if(emergency_shuttle.online)
-		user << "The shuttle is already on its way."
+		to_chat(user, "The shuttle is already on its way.")
 		return
 
 	// if force is 0, some things may stop the shuttle call
@@ -501,15 +501,16 @@ var/shuttle_call/shuttle_calls[0]
 			return
 
 		if(emergency_shuttle.deny_shuttle)
-			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+			to_chat(user, "Centcom does not currently have a shuttle available in your sector. Please try again later.")
 			return
 
 		if(sent_strike_team == 1)
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+			to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
 			return
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
+			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
+
 			return
 
 		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
@@ -517,7 +518,7 @@ var/shuttle_call/shuttle_calls[0]
 			emergency_shuttle.fake_recall = rand(300,500)
 
 		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
-			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
 	emergency_shuttle.shuttlealert(1)
@@ -585,7 +586,7 @@ var/shuttle_call/shuttle_calls[0]
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
 
 	..()
 
@@ -610,6 +611,6 @@ var/shuttle_call/shuttle_calls[0]
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
 
 	..()

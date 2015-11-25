@@ -308,7 +308,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			user << "<span class='notice'>Now welding the scrubber.</span>"
+			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 			if(do_after(user, src, 20))
 				if(!src || !WT.isOn()) return
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
@@ -321,14 +321,14 @@
 					welded = 0
 					update_icon()
 			else
-				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
+				to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	return ..()
 

@@ -33,7 +33,7 @@
 
 /obj/item/device/maracas/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='warning'>You're not sure why, but you could swear that you can hear the maracas ticking.</span>"
+		to_chat(user, "<span class='warning'>You're not sure why, but you could swear that you can hear the maracas ticking.</span>")
 		emagged = 1
 	return
 

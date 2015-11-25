@@ -193,7 +193,7 @@
 		cur_target = get_new_target() //get new target
 
 	if(cur_target) //if it's found, proceed
-//		world << "[cur_target]"
+//		to_chat(world, "[cur_target]")
 		if(!isPopping())
 			if(isDown())
 				popUp()
@@ -369,7 +369,7 @@
 
 /obj/machinery/turretid/emag(mob/user)
 	if(!emagged)
-		user << "<span class='warning'>You short out the turret controls' access analysis module.</span>"
+		to_chat(user, "<span class='warning'>You short out the turret controls' access analysis module.</span>")
 		emagged = 1
 		locked = 0
 		if(user.machine==src)
@@ -387,11 +387,11 @@
 	if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
-				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()
@@ -400,19 +400,19 @@
 				if (user.machine==src)
 					src.attack_hand(user)
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	if(!ailock)
 		return attack_hand(user)
 	else
-		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
+		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
-			user << "<span class='notice'>You are too far away.</span>"
+			to_chat(user, "<span class='notice'>You are too far away.</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return
@@ -422,7 +422,7 @@
 	if (istype(loc, /turf))
 		loc = loc:loc
 	if (!istype(loc, /area))
-		user << text("Turret badly positioned - loc.loc is [].", loc)
+		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
 		return
 	var/area/area = loc
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
@@ -447,7 +447,7 @@
 		if (src.health <= 0)
 			src.die()
 	else
-		M << "<span class='warning'>That object is useless to you.</span>"
+		to_chat(M, "<span class='warning'>That object is useless to you.</span>")
 	return
 
 
@@ -461,7 +461,7 @@
 		if (src.health <= 0)
 			src.die()
 	else
-		M << "<span class='good'>That object is useless to you.</span>"
+		to_chat(M, "<span class='good'>That object is useless to you.</span>")
 	return
 
 
@@ -471,7 +471,7 @@
 		return 1
 	if (src.locked)
 		if (!istype(usr, /mob/living/silicon))
-			usr << "Control panel is locked!"
+			to_chat(usr, "Control panel is locked!")
 			return
 	if ( get_dist(src, usr) == 0 || issilicon(usr))
 		if (href_list["toggleOn"])

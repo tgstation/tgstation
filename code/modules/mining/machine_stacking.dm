@@ -33,7 +33,7 @@
 	if(!stacker_data)
 		request_status()
 		if(!stacker_data) //Still no data.
-			user << "<span class='warning'>Unable to find a stacking machine.</span>"
+			to_chat(user, "<span class='warning'>Unable to find a stacking machine.</span>")
 			user.unset_machine(src)
 			return
 

@@ -44,5 +44,5 @@
 
 /obj/effect/rust_particle_catcher/Bumped(atom/AM)
 	if(ismob(AM) && density && prob(10))
-		AM << "<span class='warning'>A powerful force pushes you back.</span>"
+		to_chat(AM, "<span class='warning'>A powerful force pushes you back.</span>")
 	..()

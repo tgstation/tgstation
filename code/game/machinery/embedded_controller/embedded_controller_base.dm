@@ -38,9 +38,9 @@
 		switch(build)
 			if(0) // Empty hull
 				if(istype(W, /obj/item/weapon/screwdriver))
-					usr << "You begin removing screws from \the [src] backplate..."
+					to_chat(usr, "You begin removing screws from \the [src] backplate...")
 					if(do_after(user, src, 50))
-						usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
+						to_chat(usr, "<span class='notice'>You unscrew \the [src] from the wall.</span>")
 						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 						new /obj/item/mounted/frame/airlock_controller(get_turf(src))
 						del(src)
@@ -48,11 +48,11 @@
 				if(istype(W, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/C=W
 					if(C.board_type!="embedded controller")
-						user << "<span class='warning'>You cannot install this type of board into an embedded controller.</span>"
+						to_chat(user, "<span class='warning'>You cannot install this type of board into an embedded controller.</span>")
 						return
-					usr << "You begin to insert \the [C] into \the [src]."
+					to_chat(usr, "You begin to insert \the [C] into \the [src].")
 					if(do_after(user, src, 10))
-						usr << "<span class='notice'>You secure \the [C]!</span>"
+						to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
 						user.drop_item(C, src)
 						_circuitboard=C
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
@@ -61,7 +61,7 @@
 					return 1
 			if(1) // Circuitboard installed
 				if(istype(W, /obj/item/weapon/crowbar))
-					usr << "You begin to pry out \the [W] into \the [src]."
+					to_chat(usr, "You begin to pry out \the [W] into \the [src].")
 					if(do_after(user, src, 10))
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 						build--
@@ -79,7 +79,7 @@
 					return 1
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C=W
-					user << "You start adding cables to \the [src]..."
+					to_chat(user, "You start adding cables to \the [src]...")
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, src, 20) && C.amount >= 10)
 						C.use(5)
@@ -90,7 +90,7 @@
 							"You add cables to \the [src].")
 			if(2) // Circuitboard installed, wired.
 				if(istype(W, /obj/item/weapon/wirecutters))
-					usr << "You begin to remove the wiring from \the [src]."
+					to_chat(usr, "You begin to remove the wiring from \the [src].")
 					if(do_after(user, src, 50))
 						new /obj/item/stack/cable_coil(loc,5)
 						user.visible_message(\
@@ -100,7 +100,7 @@
 						update_icon()
 					return 1
 				if(istype(W, /obj/item/weapon/screwdriver))
-					user << "You begin to complete \the [src]..."
+					to_chat(user, "You begin to complete \the [src]...")
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					if(do_after(user, src, 20))
 						if(!_circuitboard)
@@ -145,7 +145,7 @@
 
 /obj/machinery/embedded_controller/attack_hand(mob/user as mob)
 	if(!user.dexterity_check())
-		user << "You do not have the dexterity to use this."
+		to_chat(user, "You do not have the dexterity to use this.")
 		return
 	if(build<2) return 1
 	src.ui_interact(user)
@@ -221,7 +221,7 @@
 		var/re_init=0
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in vars))
-				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
+				to_chat(usr, "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>")
 				return 1
 			var/current_tag = src.vars[href_list["set_tag"]]
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -238,13 +238,13 @@
 			if(!O)
 				return 1
 			if(!canLink(O))
-				usr << "<span class='warning'>You can't link with that device.</span>"
+				to_chat(usr, "<span class='warning'>You can't link with that device.</span>")
 				return 1
 
 			if(unlinkFrom(usr, O))
-				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
+				to_chat(usr, "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>")
 			else
-				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>")
 			update_mt_menu=1
 
 		if("link" in href_list)
@@ -252,33 +252,33 @@
 			if(!O)
 				return 1
 			if(!canLink(O,href_list))
-				usr << "<span class='warning'>You can't link with that device.</span>"
+				to_chat(usr, "<span class='warning'>You can't link with that device.</span>")
 				return 1
 			if (isLinkedWith(O))
-				usr << "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>")
 				return 1
 
 			if(linkWith(usr, O, href_list))
-				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>"
+				to_chat(usr, "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>")
 				re_init = 1//this is the only thing different, crappy, I know
 			else
-				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>")
 			update_mt_menu=1
 
 		if("buffer" in href_list)
 			if(istype(src, /obj/machinery/telecomms))
 				if(!hasvar(src, "id"))
-					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					to_chat(usr, "<span class='danger'>A red light flashes and nothing changes.</span>")
 					return
 			else if(!hasvar(src, "id_tag"))
-				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				to_chat(usr, "<span class='danger'>A red light flashes and nothing changes.</span>")
 				return
 			P.buffer = src
-			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
+			to_chat(usr, "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>")
 			update_mt_menu=1
 
 		if("flush" in href_list)
-			usr << "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>"
+			to_chat(usr, "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>")
 			P.buffer = null
 			update_mt_menu=1
 

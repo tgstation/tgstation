@@ -13,7 +13,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	if(!cultwords["travel"])
 		runerandom()
 	for (var/word in engwords)
-		usr << "[cultwords[word]] is [word]"
+		to_chat(usr, "[cultwords[word]] is [word]")
 
 /proc/runerandom() //randomizes word meaning
 	var/list/runewords= rnwords///"orkan" and "allaq" removed.
@@ -99,16 +99,16 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	..()
 	if(iscultist(user) || isobserver(user))
 		var/rune_name = get_uristrune_name(word1,word2,word3)
-		user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>.[rune_name ? " From [pick("your intuition, you are pretty sure that","deep memories, you determine that","the rune's energies, you deduct that","Nar-Sie's murmurs, you know that")] this is \a <b>[rune_name]</b> rune." : ""]"
+		to_chat(user, "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>.[rune_name ? " From [pick("your intuition, you are pretty sure that","deep memories, you determine that","the rune's energies, you deduct that","Nar-Sie's murmurs, you know that")] this is \a <b>[rune_name]</b> rune." : ""]")
 
 
 /obj/effect/rune/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
-		user << "You retrace your steps, carefully undoing the lines of the rune."
+		to_chat(user, "You retrace your steps, carefully undoing the lines of the rune.")
 		qdel(src)
 		return
 	else if(istype(I, /obj/item/weapon/nullrod))
-		user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
+		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
 		return
 	return
@@ -123,10 +123,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 /obj/effect/rune/attack_hand(mob/living/user as mob)
 	if(!iscultist(user))
-		user << "You can't mouth the arcane scratchings without fumbling over them."
+		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 		return
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-		user << "You are unable to speak the words of the rune."
+		to_chat(user, "You are unable to speak the words of the rune.")
 		return
 	if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 		return fizzle()
@@ -340,7 +340,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 /*
 /obj/item/weapon/tome/proc/edit_notes()     FUCK IT. Cant get it to work properly. - K0000
-	world << "its been called! [usr]"
+	to_chat(world, "its been called! [usr]")
 	notedat = {"
 	<br><b>Word translation notes</b> <br>
 		[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
@@ -354,7 +354,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 		[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 				"}
-	usr << "whatev"
+	to_chat(usr, "whatev")
 	usr << browse(null, "window=tank")
 */
 
@@ -377,7 +377,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 	for(var/mob/O in viewers(M, null))
 		O.show_message(text("<span class='danger'>[] beats [] with the arcane tome!</span>", user, M), 1)
-	M << "<span class='warning'>You feel searing heat inside!</span>"
+	to_chat(M, "<span class='warning'>You feel searing heat inside!</span>")
 
 
 /obj/item/weapon/tome/attack_self(mob/living/user as mob)
@@ -389,7 +389,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		runerandom()
 	if(iscultist(user))
 		if (!istype(user.loc,/turf))
-			user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
+			to_chat(user, "<span class='warning'>You do not have enough space to write a proper rune.</span>")
 			return
 
 
@@ -460,14 +460,14 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 			return
 		for (var/mob/V in viewers(src))
 			V.show_message("<span class='warning'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='warning'>You hear chanting.</span>", 2)
-		user << "<span class='warning'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
+		to_chat(user, "<span class='warning'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>")
 		user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 		if(do_after(user, user.loc, 50))
 			if(usr.get_active_hand() != src)
 				return
 			var/mob/living/carbon/human/H = user
 			var/obj/effect/rune/R = new /obj/effect/rune(get_turf(user))
-			user << "<span class='warning'>You finish drawing the arcane markings of the Geometer.</span>"
+			to_chat(user, "<span class='warning'>You finish drawing the arcane markings of the Geometer.</span>")
 			R.word1 = w1
 			R.word2 = w2
 			R.word3 = w3
@@ -476,7 +476,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 			R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 		return
 	else
-		user << "The book seems full of illegible scribbles. Is this a joke?"
+		to_chat(user, "The book seems full of illegible scribbles. Is this a joke?")
 		return
 
 /obj/item/weapon/tome/attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
@@ -491,14 +491,14 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 //			if(M == user)
 		for(var/w in words)
 			words[w] = T.words[w]
-		user << "You copy the translation notes from your tome."
+		to_chat(user, "You copy the translation notes from your tome.")
 		flick("tome-copied",src)
 
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
 	if(iscultist(user))
-		user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though.")
 
 /obj/item/weapon/tome/cultify()
 	return
@@ -514,7 +514,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		if(user)
 			var/r
 			if (!istype(user.loc,/turf))
-				user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
+				to_chat(user, "<span class='warning'>You do not have enough space to write a proper rune.</span>")
 			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune

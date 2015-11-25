@@ -218,9 +218,9 @@
 			if(!user) return
 			if(distance <= 1 && user.stat != 1)
 				if(pulse == PULSE_NONE || (status_flags & FAKEDEATH))
-					user << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
+					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
-					user << "<span class='deadsay'>[t_He] has a pulse!</span>"
+					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
 	msg += "<span class='warning'>"
 
@@ -477,7 +477,7 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	user << msg
+	to_chat(user, msg)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M as mob, hudtype)

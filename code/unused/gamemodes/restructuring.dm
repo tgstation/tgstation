@@ -3,8 +3,8 @@
 	config_tag = "restructuring"
 /*
 /datum/game_mode/restructuring/announce()
-	world << "<span class='danger'>GLOBAL TRANSMISSION FROM HEAD OFFICE: A CORPORATE RESTRUCTURING IS TO TAKE PLACE</span>"
-	world << "<span class='danger'>Stay tuned for further news; note that we do care for our employees and any layoffs will be dealt with discretion and compassion</span>"
+	to_chat(world, "<span class='danger'>GLOBAL TRANSMISSION FROM HEAD OFFICE: A CORPORATE RESTRUCTURING IS TO TAKE PLACE</span>")
+	to_chat(world, "<span class='danger'>Stay tuned for further news; note that we do care for our employees and any layoffs will be dealt with discretion and compassion</span>")
 
 
 /datum/game_mode/restructuring/post_setup()
@@ -24,17 +24,17 @@
 	if (!who)
 		target = pick(get_mob_list())
 		target_desc = get_target_desc(target)
-		world << "<span class='danger'>HEAD OFFICE: [target_desc] is accused of attempting to start a Union and is now considered a threat to the station. Terminate the employee immediately.</span>"
+		to_chat(world, "<span class='danger'>HEAD OFFICE: [target_desc] is accused of attempting to start a Union and is now considered a threat to the station. Terminate the employee immediately.</span>")
 	else
 		target = who
 		target_desc = get_target_desc(target)
-		world << "<span class='danger'>HEAD OFFICE: [target_desc] is accused of fornicating with staff of the same sex. Terminate the employee immediately.</span>"
+		to_chat(world, "<span class='danger'>HEAD OFFICE: [target_desc] is accused of fornicating with staff of the same sex. Terminate the employee immediately.</span>")
 	ticker.target = target
 
 	target.store_memory("Head office has ordered your downsizing. Ruh roh", 0)
 
 	for(var/mob/living/silicon/ai/M in world)
-		M << "These are your laws now:"
+		to_chat(M, "These are your laws now:")
 		M.set_zeroth_law("[target_desc] is not human.")
 		M.show_laws()
 
@@ -42,15 +42,15 @@
 	var/list/left_alive = get_mob_list()
 	if (left_alive.len == 1)
 		var/thewinner = the_winner()
-		world << "<span class='warning'><B>HEAD OFFICE: Thanks to his superior brown-nosing abilities, [thewinner] has been promoted to senior management! Congratulations!</span>"
+		to_chat(world, "<span class='warning'><B>HEAD OFFICE: Thanks to his superior brown-nosing abilities, [thewinner] has been promoted to senior management! Congratulations!</span>")
 		return 1
 	else if (left_alive.len == 0)
-		world << "<span class='warning'><B>HEAD OFFICE: Cost cutting measures have achieved 100% efficiency. Thank you for understanding our position during this volatile economic downturn.</span>"
+		to_chat(world, "<span class='warning'><B>HEAD OFFICE: Cost cutting measures have achieved 100% efficiency. Thank you for understanding our position during this volatile economic downturn.</span>")
 		return 1
 	else
 		if(ticker.target.stat != 2)
 			return 0
-		world << "<span class='warning'><B>HEAD OFFICE: It seems we have made a mistake in our paperwork. The previous target for termination was chosen based on race, sex, and/or religious beliefs, which is against company policy. Please cancel previous termination request.</span>"
+		to_chat(world, "<span class='warning'><B>HEAD OFFICE: It seems we have made a mistake in our paperwork. The previous target for termination was chosen based on race, sex, and/or religious beliefs, which is against company policy. Please cancel previous termination request.</span>")
 		pick_target()
 		return 0
 

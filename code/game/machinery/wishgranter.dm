@@ -16,15 +16,15 @@
 	usr.set_machine(src)
 
 	if(charges <= 0)
-		user << "<span class='notice'>\the [src] lies silent.</span>"
+		to_chat(user, "<span class='notice'>\the [src] lies silent.</span>")
 		return
 
 	else if(!istype(user, /mob/living/carbon/human))
-		user << "<span class='sinister'>You feel a dark stirring inside of \the [src], something you want nothing of! Your instincts are better than any man's.</span>"
+		to_chat(user, "<span class='sinister'>You feel a dark stirring inside of \the [src], something you want nothing of! Your instincts are better than any man's.</span>")
 		return
 
 	else if(is_special_character(user))
-		user << "<span class='sinister'>Even to a heart as dark as yours, you know nothing good will come out of messing with \the [src]! Something instinctual pulls you away.</span>"
+		to_chat(user, "<span class='sinister'>Even to a heart as dark as yours, you know nothing good will come out of messing with \the [src]! Something instinctual pulls you away.</span>")
 
 	else if (!insisting)
 		user.visible_message("<span class='sinister'>[user] touches [src] delicately, causing it to stir.</span>", "<span class='sinister'>Your first touch makes [src] stir, listening to you. Are you still sure about this ?</span>")
@@ -75,9 +75,9 @@
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in user.mind.objectives)
-				user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+				to_chat(user, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 				obj_count++
 
-			user << "<span class='sinister'>You have a very bad feeling about this!</span>"
+			to_chat(user, "<span class='sinister'>You have a very bad feeling about this!</span>")
 
 	return

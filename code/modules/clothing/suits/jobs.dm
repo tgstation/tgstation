@@ -164,12 +164,12 @@
 		switch(icon_state)
 			if("ia_jacket_open")
 				src.icon_state = "ia_jacket"
-				usr << "You button up the jacket."
+				to_chat(usr, "You button up the jacket.")
 			if("ia_jacket")
 				src.icon_state = "ia_jacket_open"
-				usr << "You unbutton the jacket."
+				to_chat(usr, "You unbutton the jacket.")
 			else
-				usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+				to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 				return
 		usr.update_inv_wear_suit()	//so our overlays update
 
@@ -194,10 +194,10 @@
 		switch(icon_state)
 			if("fr_jacket_open")
 				src.icon_state = "fr_jacket"
-				usr << "You button up the jacket."
+				to_chat(usr, "You button up the jacket.")
 			if("fr_jacket")
 				src.icon_state = "fr_jacket_open"
-				usr << "You unbutton the jacket."
+				to_chat(usr, "You unbutton the jacket.")
 		usr.update_inv_wear_suit()	//so our overlays update
 
 //Mime

@@ -49,7 +49,7 @@
 		//user.drop_item(null, )
 		//module.loc=src
 		modules += module.copy() // Instead of a reference
-		user << "<span class='notice'>You insert \the [module] into \the [src], and the device reads the module's contents.</span>"
+		to_chat(user, "<span class='notice'>You insert \the [module] into \the [src], and the device reads the module's contents.</span>")
 	else
 		return ..()
 
@@ -57,7 +57,7 @@
 	for(var/obj/item/weapon/aiModule/mod in modules)
 		qdel(mod)
 	modules.len = 0
-	user << "<span class='notice'>You clear \the [src]'s memory buffers!</span>"
+	to_chat(user, "<span class='notice'>You clear \the [src]'s memory buffers!</span>")
 	laws = new base_law_type
 	return
 
@@ -65,19 +65,19 @@
 	..()
 	laws_sanity_check()
 	if(modules.len && istype(modules[1],/obj/item/weapon/aiModule/purge))
-		user << "<b>Purge module inserted!</b> - All laws will be cleared prior to adding the ones below."
+		to_chat(user, "<b>Purge module inserted!</b> - All laws will be cleared prior to adding the ones below.")
 	if(!laws.inherent_cleared)
-		user << "<b><u>Assuming that default laws are unchanged</u>, the laws currently inserted would read as:</b>"
+		to_chat(user, "<b><u>Assuming that default laws are unchanged</u>, the laws currently inserted would read as:</b>")
 	else
-		user << "<b>The laws currently inserted would read as:</b>"
+		to_chat(user, "<b>The laws currently inserted would read as:</b>")
 	if(src.modules.len == 0)
-		user << "<i>No modules have been inserted!</i>"
+		to_chat(user, "<i>No modules have been inserted!</i>")
 		return
 	src.laws.show_laws(user)
 
 /obj/item/weapon/planning_frame/verb/dry_run()
 	set name = "Dry Run"
-	usr << "You read through the list of modules to emulate, in their run order:"
+	to_chat(usr, "You read through the list of modules to emulate, in their run order:")
 	for(var/i=1;i<=modules.len;i++)
 		var/obj/item/weapon/aiModule/module = modules[i]
 		var/notes="<span class='notice'>Looks OK!</span>"
@@ -87,7 +87,7 @@
 			notes="<span class='danger'>A red light is blinking!</span>"
 		if(module.modflags & DANGEROUS_MODULE)
 			notes="<span class='danger'>Your heart skips a beat!</span>"
-		usr << " [i-1]. [module.name] - [notes]"
+		to_chat(usr, " [i-1]. [module.name] - [notes]")
 
 /obj/item/weapon/planning_frame/proc/laws_sanity_check()
 	if (!src.laws)
