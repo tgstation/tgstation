@@ -84,7 +84,8 @@ emp_act
 		return null
 	for(var/obj/item/clothing/C in get_clothing_items())
 		if(!C) continue
-		if(C.body_parts_covered & body_part_flags)
+		 //Check if this piece of clothing contains ALL of the flags we want to check.
+		if((C.body_parts_covered & body_part_flags) == body_part_flags)
 			return C
 	return null
 
