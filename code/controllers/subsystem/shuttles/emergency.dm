@@ -150,7 +150,7 @@
 	height = 4
 
 /obj/docking_port/mobile/pod/request()
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
 		return ..()
 	else
 		return
@@ -185,8 +185,25 @@
 /obj/docking_port/stationary/random/initialize()
 	..()
 	var/target_area = /area/mine/unexplored
-	var/turfs = get_area_turfs(target_area)
-	var/T=pick(turfs)
+	var/list/turfs = get_area_turfs(target_area)
+	var/sanity = 0
+	var/valid = 0
+	var/turf/T
+
+	if(!turfs.len)
+		qdel(src)
+
+	while(!valid)
+		valid = 1
+		sanity++
+		if(sanity > 100)
+			qdel(src)
+		T = pick(turfs)
+		if(!T)
+			qdel(src)
+		if(T.z == ZLEVEL_STATION || T.z == ZLEVEL_CENTCOM)
+			valid = 0
+			continue
 	src.loc = T
 
 //Pod suits/pickaxes
