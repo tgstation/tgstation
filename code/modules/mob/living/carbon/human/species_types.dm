@@ -382,7 +382,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "skeleton"
 	say_mod = "rattles"
 	need_nutrition = 0
-	siemens_coeff = 0
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
