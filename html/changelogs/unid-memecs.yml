@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - tweak: Mimic meat now transforms when injected by 5u blood. It no longer transforms when hit by a rolling pin.
+  - rscadd: Injecting a golden slime core with water spawns a mimic after a slight delay. The resulting mimic's shape and size is affected by the objects closest to it. Putting the core in a crate will create a crate mimic, dropping it near a bunch of items will create an item mimic, and holding it in your hands... What would that do?
