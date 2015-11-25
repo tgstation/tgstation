@@ -77,7 +77,7 @@ datum
 
 The use of this is not allowed in this project as it makes finding definitions via full text searching next to impossible. The only exception is the variables of an object may be nested to the object, but must not nest further.
 
-The previous code made complaint:
+The previous code made compliant:
 
 ```c++
 /datum/datum1
