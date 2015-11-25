@@ -22,7 +22,11 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
-
+	if(href_list["asset_cache_confirm_arrival"])
+		src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
+		var/job = text2num(href_list["asset_cache_confirm_arrival"])
+		completed_asset_jobs += job
+		return
 	//Admin PM
 	if(href_list["priv_msg"])
 		if (href_list["ahelp_reply"])
@@ -205,6 +209,9 @@ var/next_external_rsc = 0
 
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
+
+	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
+		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
 
 
 	//This is down here because of the browse() calls in tooltip/New()
