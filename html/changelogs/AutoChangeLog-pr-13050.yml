@@ -1,4 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "fixes interfaces (like the \"ready\" button) being unresponsive for the first minute or two after connecting."
