@@ -31,9 +31,7 @@
 				{{else}}
 					<span class='good'>
 				{{/if}}
-				{{:helper.round(info.value*100)/100}}
-				</span>
-				{{:info.unit}}
+				{{:helper.round(info.value*100)/100}}</span>{{:info.unit}}
 			</div>
 		</div>
 	{{/for}}
@@ -43,13 +41,12 @@
 		</div>
 		<div class="itemContent">
 			{{if data.danger_level == 2}}
-				<span class='bad'>Danger (Internals Required)
+				<span class='bad'>Danger (Internals Required)</span>
 			{{else data.danger_level == 1}}
-				<span class='average'>Caution
+				<span class='average'>Caution</span>
 			{{else}}
-				<span class='good'>Optimal
+				<span class='good'>Optimal</span>
 			{{/if}}
-			</span>
 		</div>
 	</div>
 	<div class="item">
@@ -58,13 +55,12 @@
 		</div>
 		<div class="itemContent">
 			{{if data.atmos_alarm}}
-				<span class='bad'>Atmosphere Alarm in Area
+				<span class='bad'>Atmosphere Alarm in Area</span>
 			{{else data.fire_alarm}}
-				<span class='average'>Fire Alarm in Area
+				<span class='average'>Fire Alarm in Area</span>
 			{{else}}
-				<span class='good'>No Alerts
+				<span class='good'>No Alerts</span>
 			{{/if}}
-			</span>
 		</div>
 	</div>
 {{else}}

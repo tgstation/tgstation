@@ -52,15 +52,15 @@
 	<div class="itemLabel">
 		Power Cell:
 	</div>
-	{{if data.powerCellStatus == null}}
-		<div class="itemContent bad">		
-			Power cell removed.
-		</div>
-	{{else}}
+	{{if data.powerCellStatus != null}}
 		<div class="itemContent" style="width: 60px">		
 			{{:helper.round(data.powerCellStatus*10)/10}}%
 		</div>	
 		{{:helper.displayBar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
+	{{else}}
+		<div class="itemContent">
+			<span class='bad'>Power cell removed.</span>
+		</div>
 	{{/if}}
 </div>
 {{if data.powerCellStatus != null}}
