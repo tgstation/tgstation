@@ -331,3 +331,16 @@
 	owner.research_scanner = 0
 	active = 0
 	..(T)
+
+/datum/action/innate/genetic
+	name = "Genetic Power"
+	var/mutation_id
+	background_icon_state = "bg_genetic"
+
+/datum/action/innate/genetic/CheckRemoval(mob/living/user)
+	if(!ishuman(user))
+		return 1
+	var/mob/living/carbon/human/H = user
+	if(mutations_list[mutation_id] in H.dna.mutations)
+		return 0
+	return 1

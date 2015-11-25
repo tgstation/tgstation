@@ -77,8 +77,11 @@
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
-			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
+			else 
+				if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
+				if(M.dna.check_mutation(HULK_ACTIVE))
+					user << "<span class='danger'>[M] pupils turn green for a moment!</span>"
 			else	//they're okay!
 				if(!M.eye_blind)
 					flick("flash", M.flash)	//flash the affected mob
