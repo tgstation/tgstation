@@ -10,6 +10,10 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
+	var/icon_idle = "revenant_idle"
+	var/icon_reveal = "revenant_revealed"
+	var/icon_stun = "revenant_stun"
+	var/icon_drain = "revenant_draining"
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -49,7 +53,7 @@
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
-
+	var/image/ghostimage = null //Visible to ghost with darkness off
 
 /mob/living/simple_animal/revenant/Life()
 	ear_damage = 0
@@ -102,15 +106,15 @@
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
-		if(draining)
-			icon_state = "revenant_draining"
-			return
 		if(notransform)
-			icon_state = "revenant_stun"
-			return
-		icon_state = "revenant_revealed"
-		return
-	icon_state = "revenant_idle"
+			if(draining)
+				icon_state = icon_drain
+			else
+				icon_state = icon_stun
+		else
+			icon_state = icon_reveal
+	else
+		icon_state = icon_idle
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -120,6 +124,9 @@
 
 /mob/living/simple_animal/revenant/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/simple_animal/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/simple_animal/revenant/adjustBruteLoss(amount)
 	if(!revealed)
@@ -235,6 +242,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
+
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -268,6 +280,8 @@
 	if(!revealed) //Revenants cannot die if they aren't revealed
 		return 0
 	..(1)
+	ghost_darkness_images -= ghostimage
+	updateallghostimages()
 	src << "<span class='revendanger'>NO! No... it's too late, you can feel your essence breaking apart...</span>"
 	notransform = 1
 	revealed = 1
@@ -407,7 +421,7 @@
 		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(inert || !src)
+	if(gc_destroyed || !src || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")

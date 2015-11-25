@@ -147,7 +147,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new/obj/effect/overlay/temp/emp(src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/emp, src.loc)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -188,7 +188,9 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act()
-	if(prob(50))
+	if(!density)
+		qdel(src)
+	if(prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()

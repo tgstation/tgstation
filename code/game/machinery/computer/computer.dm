@@ -64,13 +64,6 @@
 			set_broken()
 	..()
 
-
-/obj/machinery/computer/blob_act()
-	if (prob(75))
-		verbs.Cut()
-		set_broken()
-		density = 0
-
 /obj/machinery/computer/update_icon()
 	overlays.Cut()
 	if(stat & NOPOWER)

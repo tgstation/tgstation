@@ -45,7 +45,7 @@
 		if(0)	laws = new /datum/ai_laws/default/asimov()
 		if(1)	laws = new /datum/ai_laws/custom()
 		if(2)
-			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
+			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
 			laws = new lawtype()
 	laws.associate(src)
 

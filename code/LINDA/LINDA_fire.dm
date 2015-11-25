@@ -142,7 +142,6 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	..()
 	SetLuminosity(0)
 	SSair.hotspots -= src
 	DestroyTurf()
@@ -151,6 +150,7 @@
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	..()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()
