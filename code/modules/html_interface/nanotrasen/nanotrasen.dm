@@ -29,12 +29,11 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	// Update the title in our custom header (in addition to default functionality)
 	winset(hclient.client, "browser_\ref[src].uiTitle", list2params(list("text" = "[src.title]")))
 
-/datum/html_interface/nanotrasen/sendResources(client/client)
-	. = ..() // we need the default resources
-
-	client << browse_rsc('uiBg.png')
-	client << browse_rsc('uiBgcenter.png')
-	client << browse_rsc('nanotrasen.css')
+/datum/html_interface/nanotrasen/registerResources(var/list/resources = list())
+	resources["uiBg.png"] = 'uiBg.png'
+	resources["uiBgcenter.png"] = 'uiBgcenter.png'
+	resources["nanotrasen.css"] = 'nanotrasen.css'
+	..(resources)
 
 /datum/html_interface/nanotrasen/createWindow(datum/html_interface_client/hclient)
 	. = ..() // we want the default window

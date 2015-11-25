@@ -67,6 +67,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 		sleep(-1)
 
 	crewmonitor.generateMiniMaps()
+	populate_asset_cache()
 
 	world << "<span class='boldannounce'>Initializations complete</span>"
 
