@@ -156,17 +156,19 @@
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	var/obj/item/weapon/card/id/C = H.wear_id
-	var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
-	C.access = J.get_access()
-	C.registered_name = H.real_name
-	C.assignment = H.job
-	C.update_label()
-	H.sec_hud_set_ID()
+	if(istype(C))
+		var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
+		C.access = J.get_access()
+		C.registered_name = H.real_name
+		C.assignment = H.job
+		C.update_label()
+		H.sec_hud_set_ID()
 
 	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
-	PDA.owner = H.real_name
-	PDA.ownjob = H.job
-	PDA.update_label()
+	if(istype(PDA))
+		PDA.owner = H.real_name
+		PDA.ownjob = H.job
+		PDA.update_label()
 
 /datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
