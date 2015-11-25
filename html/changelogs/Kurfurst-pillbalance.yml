@@ -1,0 +1,5 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Time-release pills are now NOREACT.
+ - bugfix: Xenoarch machines can now have their panel opened and be moved about with a wrench. By extension, you can now deconstruct them and upgrade them.
