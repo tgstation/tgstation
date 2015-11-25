@@ -642,6 +642,37 @@
 		playsound(M, "sparks", 50, 1)
 	..()
 
+/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+	name = "Rotatium"
+	id = "rotatium"
+	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	reagent_state = LIQUID
+	color = "#FFFF00" //RGB: 255, 255, 0 Bright ass yellow
+	metabolization_rate = 0.6 * REAGENTS_METABOLISM
+	toxpwr = 0
+	var/rotate_timer = 0
+	var/randrot = 1
+	var/hold = 0
+
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
+	rotate_timer++
+	if(M.reagents.get_reagent_amount("rotatium") < 2)
+		M.client.dir = 1
+		return
+	if(rotate_timer >= rand(5,30)) //Random rotations are wildly unpredictable and hilarious
+		rotate_timer = 0
+		hold = rand(1,8)
+		switch(hold)
+			if(1 to 2)
+				randrot = 2
+			if(3 to 4)
+				randrot = 4
+			if(5 to 6)
+				randrot = 6
+			if(7 to 8)
+				randrot = 8
+		M.client.dir = randrot
+	..()
 
 //ACID
 

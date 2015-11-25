@@ -110,3 +110,11 @@
 	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
 	result_amount = 4
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
+
+/datum/chemical_reaction/rotatium
+	name = "Rotatium"
+	id = "Rotatium"
+	result = "rotatium"
+	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
+	result_amount = 3
+	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
