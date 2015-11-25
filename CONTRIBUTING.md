@@ -104,6 +104,12 @@ The use of the : operator to override type safety checks is strongly discouraged
 
 Exceptions are only made when used in loops that require the performance boast from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
 
+###Type paths must began with a /
+eg: `/datum/thing` not `datum/thing`
+
+###Datum type paths must began with "datum"
+In byond this is optional, but omitting it makes finding definitions harder.
+
 ###Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
