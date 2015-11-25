@@ -379,7 +379,8 @@ var/bomb_set
 		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+			spawn()
+				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 			return
 	return
 
