@@ -6,27 +6,21 @@
 	req_human = 1
 	max_genetic_damage = 100
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/swap_form/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-
-	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.isabsorbing)
-		user << "<span class='warning'>We are already absorbing!</span>"
-		return
-
 	var/obj/item/weapon/grab/G = user.get_active_hand()
-	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them!</span>"
+	if(!istype(G) || (G.state < GRAB_AGGRESSIVE))
+		user << "<span class='warning'>We must have an aggressive grab on creature in our active hand to do this!</span>"
 		return
-	if(G.state <= GRAB_NECK)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
-		return
-
 	var/mob/living/carbon/target = G.affecting
-	return changeling.can_absorb_dna(user,target)
-
-
+	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+		user << "<span class='warning'>The DNA of [target] is ruined beyond usability!</span>"
+		return
+	if(!ishuman(target))
+		user << "<span class='warning'>[target] is not compatible with this ability.</span>"
+		return
+	return 1
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -41,17 +35,17 @@
 				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>")
 			if(3)
 				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>", "<span class='notice'>We stab [target] with the proboscis.</span>")
-				target << "<span class='userdanger'>You feel a sharp pain, followed by an awful draining sensation!</span>"
+				target << "<span class='userdanger'>You feel a sharp stabbing pain!</span>"
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(user, target, 200))
+		if(!do_mob(user, target, 150))
 			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return
 
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
-	target << "<span class='userdanger'>You have been absorbed by a changeling!</span>"
+	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_profile(target, user)
@@ -59,7 +53,6 @@
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
-	var/target_is_changeling = FALSE
 	if(target.mind)//if the victim has got a mind
 
 		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
@@ -88,18 +81,9 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
-			changeling.geneticpoints += target.mind.changeling.total_genetic_points
-			changeling.total_genetic_points += target.mind.changeling.total_genetic_points
-			target_is_changeling = TRUE
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
-			user << "<span class='boldnotice'>Our target was a changeling! We have gained all of their evolution points and genomes.</span>"
-
-	if(!target_is_changeling)
-		changeling.geneticpoints += 2
-		changeling.total_genetic_points += 2
-		user << "<span class='boldnotice'>Our absorption of a human has granted us two additional evolution points.</span>"
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
@@ -124,7 +108,7 @@
 /obj/effect/proc_holder/changeling/swap_form
 	name = "Swap Forms"
 	desc = "We force ourselves into the body of another form, pushing their consciousness into the form we left behind."
-	helptext = "We must be aggressively grabbing the creature to do this. We will retain all genetic information sans that of our old form, and the process will be obvious to any observers."
+	helptext = "We will bring all our abilities with us, but we will lose our old form DNA in exchange for the new one. The process will seem suspicious to any observers."
 	chemical_cost = 40
 	dna_cost = 1
 	req_human = 1 //Monkeys can't grab
@@ -138,7 +122,7 @@
 		return
 	var/mob/living/carbon/target = G.affecting
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
-		user << "<span class='warning'>The DNA of [target] is ruined beyond usability!</span>"
+		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))
 		user << "<span class='warning'>[target] is not compatible with this ability.</span>"
@@ -151,14 +135,15 @@
 	var/mob/living/carbon/target = G.affecting
 	var/datum/changeling/changeling = user.mind.changeling
 
-	user << "<span class='notice'>We merge our fingers into [target]'s flesh and begin the consciousness transfer.</span>"
-	target << "<span class='userdanger'>[user]'s fingers mold into your flesh as an agonizing sensation invades your body!</span>"
+	user << "<span class='notice'>We tighen our grip. We must hold still....</span>"
 	target.do_jitter_animation(500)
 	user.do_jitter_animation(500)
 
 	if(!do_mob(user,target,20))
-		user << "<span class='warning'>Your fingers are pulled away with [target], forcing you to regenerate them! The body swap has been interrupted!</span>"
+		user << "<span class='warning'>The body swap has been interrupted!</span>"
 		return
+
+	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_profile(target, user)
@@ -168,8 +153,8 @@
 	user.mind.transfer_to(target)
 	if(ghost && ghost.mind)
 		ghost.mind.transfer_to(user)
+	else
+		user.key = ghost.key
 
-	user << "<span class='userdanger'>You feel an awful vertigo and are swept into another body!</span>"
 	user.Paralyse(2)
-	target << "<span class='warning'>We swap our consciousness with [target]'s!</span>"
-	target.Paralyse(2) //Metabreaker
+	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"
