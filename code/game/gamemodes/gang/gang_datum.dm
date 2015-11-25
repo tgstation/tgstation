@@ -59,6 +59,7 @@
 /datum/gang/proc/domination(modifier=1)
 	dom_timer = get_domination_time(src) * modifier
 	set_security_level("delta")
+	SSshuttle.force_shuttle = 1
 	SSshuttle.emergencyNoEscape = 1
 
 //////////////////////////////////////////// OUTFITS

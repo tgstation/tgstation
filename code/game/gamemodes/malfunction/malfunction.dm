@@ -194,6 +194,7 @@
 
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
+	SSshuttle.force_shuttle = 1
 
 	for(var/obj/item/weapon/pinpointer/point in world)
 		for(var/datum/mind/AI_mind in ticker.mode.malf_ai)

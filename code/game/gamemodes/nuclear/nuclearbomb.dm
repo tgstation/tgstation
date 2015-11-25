@@ -318,6 +318,7 @@ var/bomb_set
 	if(timing)
 		bomb_set = 1
 		set_security_level("delta")
+		SSshuttle.force_shuttle = 1
 	else
 		bomb_set = 0
 		set_security_level(previous_level)

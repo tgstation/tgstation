@@ -483,6 +483,7 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	only_me()
 	new /obj/item/weapon/multisword(get_turf(user)) //Because the proc skips special roles
+	SSshuttle.force_shuttle = 1
 	SSshuttle.emergency.request()
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have triggerd a multiverse war!</span>"
