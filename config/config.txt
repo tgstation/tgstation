@@ -114,7 +114,7 @@ GUEST_BAN
 FORUMURL https://8ch.net/nt/
 
 ## Wiki address
-WIKIURL http://http://8station.miraheze.org/
+WIKIURL http://8station.miraheze.org/
 
 ##Rules address
 RULESURL https://8ch.net/nt/rules.html
