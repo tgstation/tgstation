@@ -257,8 +257,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
-	var/datum/asset/simple/pda/assetcache = new()
-	send_asset_list(user, assetcache.assets, verify = FALSE)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
+	assets.send(user)
+
 	user.set_machine(src)
 
 	if(active_uplink_check(user))

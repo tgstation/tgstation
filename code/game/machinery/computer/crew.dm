@@ -77,6 +77,10 @@ var/global/datum/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 	src.data = list()
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
+	for (var/z = 1 to world.maxz)
+		register_asset("minimap_[z].png", file("[getMinimapFile(z)].png"))
 
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
@@ -87,6 +91,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	return ..()
 
 /datum/crewmonitor/proc/show(mob/mob, z)
+	if (mob.client)
+		sendResources(mob.client)
 	if (!z) z = mob.z
 
 	if (z > 0 && src.interfaces)
@@ -260,10 +266,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 		sendResources(C)
 	initialized = TRUE
 
-/datum/crewmonitor/proc/sendResources(client/C)
-	C << browse_rsc('crew.js', "crewmonitor.js")
-	C << browse_rsc('crew.css', "crewmonitor.css")
-	for (var/z = 1 to world.maxz) C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
+/datum/crewmonitor/proc/sendResources(var/client/client)
+	send_asset(client, "crewmonitor.js")
+	send_asset(client, "crewmonitor.css")
+	for (var/z = 1 to world.maxz)
+		send_asset(client, "minimap_[z].png")
 
 /datum/crewmonitor/proc/getMinimapFile(z)
 	return "data/minimaps/map_[z]"

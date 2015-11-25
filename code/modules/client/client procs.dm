@@ -324,29 +324,18 @@ var/next_external_rsc = 0
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-
-	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
-	spawn
-		if (crewmonitor && crewmonitor.initialized)
-			crewmonitor.sendResources(src)
-
-	//Send nanoui files to client
-	SSnano.send_resources(src)
+	//get the common files
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
 		'html/browser/scannernew.css',
 		'html/browser/playeroptions.css',
-		'icons/stamp_icons/large_stamp-clown.png',
-		'icons/stamp_icons/large_stamp-deny.png',
-		'icons/stamp_icons/large_stamp-ok.png',
-		'icons/stamp_icons/large_stamp-hop.png',
-		'icons/stamp_icons/large_stamp-cmo.png',
-		'icons/stamp_icons/large_stamp-ce.png',
-		'icons/stamp_icons/large_stamp-hos.png',
-		'icons/stamp_icons/large_stamp-rd.png',
-		'icons/stamp_icons/large_stamp-cap.png',
-		'icons/stamp_icons/large_stamp-qm.png',
-		'icons/stamp_icons/large_stamp-law.png'
 		)
+
+	//Send nanoui files to client
+	SSnano.send_resources(src)
+
+	//Precache the client with all other assets slowly, so as to not block other browse() calls
+	getFilesSlow(src, asset_cache, register_asset = FALSE)
+

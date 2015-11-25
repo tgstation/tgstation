@@ -71,7 +71,8 @@
 		return 0
 
 	for(var/asset in unreceived)
-		client << browse_rsc(asset_cache[asset], asset)
+		if (asset in asset_cache)
+			client << browse_rsc(asset_cache[asset], asset)
 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		client.cache += unreceived
@@ -99,31 +100,55 @@
 
 	return 1
 
+//This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
+proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
+	for(var/file in files)
+		if (register_asset)
+			register_asset(file,files[file])
+		send_asset(client,file)
+
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
-	asset_cache |= asset_name
 	asset_cache[asset_name] = asset
 
-
 //From here on out it's populating the asset cache.
-
 /proc/populate_asset_cache()
 	for(var/type in typesof(/datum/asset) - list(/datum/asset, /datum/asset/simple))
 		var/datum/asset/A = new type()
 		A.register()
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
+
+//all of our asset datums, used for referring to these later
+/var/global/list/asset_datums = list()
+
+//get a assetdatum or make a new one
+/proc/get_asset_datum(var/type)
+	if (!(type in asset_datums))
+		return new type()
+	return asset_datums[type]
+
+/datum/asset/New()
+	asset_datums[type] = src
+
 /datum/asset/proc/register()
+	return
+
+/datum/asset/proc/send(client)
 	return
 
 //If you don't need anything complicated.
 /datum/asset/simple
 	var/assets = list()
+	var/verify = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
+/datum/asset/simple/send(client)
+	send_asset_list(client,assets,verify)
+
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
@@ -159,16 +184,23 @@
 		"pda_status.png"		= 'icons/pda_icons/pda_status.png'
 	)
 
+/datum/asset/simple/paper
+	assets = list(
+		"large_stamp-clown.png" = 'icons/stamp_icons/large_stamp-clown.png',
+		"large_stamp-deny.png" = 'icons/stamp_icons/large_stamp-deny.png',
+		"large_stamp-ok.png" = 'icons/stamp_icons/large_stamp-ok.png',
+		"large_stamp-hop.png" = 'icons/stamp_icons/large_stamp-hop.png',
+		"large_stamp-cmo.png" = 'icons/stamp_icons/large_stamp-cmo.png',
+		"large_stamp-ce.png" = 'icons/stamp_icons/large_stamp-ce.png',
+		"large_stamp-hos.png" = 'icons/stamp_icons/large_stamp-hos.png',
+		"large_stamp-rd.png" = 'icons/stamp_icons/large_stamp-rd.png',
+		"large_stamp-cap.png" = 'icons/stamp_icons/large_stamp-cap.png',
+		"large_stamp-qm.png" = 'icons/stamp_icons/large_stamp-qm.png',
+		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
+	)
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()
-	for(var/path in typesof(/datum/html_interface))
-		var/datum/html_interface/hi = new path()
-		hi.registerResources()
-
-
-//Registers NanoUI assets.
-/datum/asset/NanoUI/register()
 	for(var/path in typesof(/datum/html_interface))
 		var/datum/html_interface/hi = new path()
 		hi.registerResources()
