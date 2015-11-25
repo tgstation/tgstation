@@ -505,9 +505,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 				P.Extinguish(H)
 	H.update_fire()
 
-/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
-	H.equipOutfit(O)
+	H.equipOutfit(O, visualsOnly)
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
