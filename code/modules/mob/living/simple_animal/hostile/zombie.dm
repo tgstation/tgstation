@@ -146,13 +146,18 @@
 
 /mob/living/simple_animal/hostile/zombie/holder
 	name = "infection holder"
+	icon_state = "none"
+	icon_living = "none"
+	icon_dead = "none"
 	desc = "You shouldn't be seeing this."
+	invisibility = 101
 	unsuitable_atmos_damage = 0
 	stat_attack = 2
 	gold_core_spawnable = 0
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
-
+	density = 0
+	
 /mob/living/simple_animal/hostile/zombie/holder/New()
 	..()
 	spawn(rand(800,1200))

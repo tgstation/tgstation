@@ -163,11 +163,11 @@ What are the archived variables for?
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			oxygen_burn_rate = 1.4 - temperature_scale
+			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (toxins*temperature_scale)/4
+				plasma_burn_rate = (toxins*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
-				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
+				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
 				toxins -= plasma_burn_rate
 				oxygen -= plasma_burn_rate*oxygen_burn_rate

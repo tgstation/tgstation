@@ -75,13 +75,6 @@
 		src.healthcheck()
 	..()
 
-
-/obj/machinery/power/solar/blob_act()
-	src.health--
-	src.healthcheck()
-	return
-
-
 /obj/machinery/power/solar/proc/healthcheck()
 	if (src.health <= 0)
 		if(!(stat & BROKEN))
@@ -154,12 +147,6 @@
 			if(3)
 				if(prob(25) && broken())
 					new /obj/item/weapon/shard(src.loc)
-
-/obj/machinery/power/solar/blob_act()
-	if(prob(75))
-		broken()
-		src.density = 0
-
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)

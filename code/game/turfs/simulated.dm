@@ -46,7 +46,7 @@
 		var/mob/living/carbon/M = A
 		switch(wet)
 			if(TURF_WET_WATER)
-				if(!M.slip(4, 2, null, NO_SLIP_WHEN_WALKING))
+				if(!M.slip(3, 1, null, NO_SLIP_WHEN_WALKING))
 					M.inertia_dir = 0
 				return
 			if(TURF_WET_LUBE)

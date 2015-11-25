@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
+	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2
@@ -26,6 +27,8 @@
 		A.blob_act()
 	return
 
+/obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
+	return
 
 /obj/effect/blob/Destroy()
 	blobs -= src
@@ -192,15 +195,15 @@
 	health -= damage
 	update_icon()
 
-/obj/effect/blob/proc/change_to(type)
+/obj/effect/blob/proc/change_to(type, controller)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
 	var/obj/effect/blob/B = new type(src.loc)
-	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
-		B.color = color
-	else
-		B.adjustcolors(color)
+	if(controller)
+		B.overmind = controller
+	B.creation_action()
+	B.adjustcolors(color)
 	qdel(src)
 	return B
 
