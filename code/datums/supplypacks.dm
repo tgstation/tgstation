@@ -1047,6 +1047,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Wheelchair Crate"
 	group = "Medical"
 
+/datum/supply_packs/wheelchair_motorized
+	name = "Motorized Wheelchair Crate"
+	contains = list(/obj/structure/bed/chair/vehicle/wheelchair/motorized)
+	cost = 200
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Motorized Wheelchair Crate"
+	access = access_cmo
+	group = "Medical"
+
 //////SCIENCE//////
 
 /datum/supply_packs/research_parts

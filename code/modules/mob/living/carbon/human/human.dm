@@ -414,20 +414,19 @@
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(var/atom/movable/AM)
-	var/obj/machinery/bot/mulebot/MB = AM
-	if(istype(MB))
+	if(istype(AM,/obj/machinery/bot/mulebot))
+		var/obj/machinery/bot/mulebot/MB = AM
 		MB.RunOverCreature(src,species.blood_color)
-		var/damage = rand(5,15)
-		apply_damage(2*damage, BRUTE, "head")
-		apply_damage(2*damage, BRUTE, "chest")
-		apply_damage(0.5*damage, BRUTE, "l_leg")
-		apply_damage(0.5*damage, BRUTE, "r_leg")
-		apply_damage(0.5*damage, BRUTE, "l_arm")
-		apply_damage(0.5*damage, BRUTE, "r_arm")
-		var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
-		B.New(B.loc)
-		B.blood_DNA = list()
-		B.blood_DNA[src.dna.unique_enzymes] = src.dna.b_type
+	else if(istype(AM,/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate))
+		var/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/WC = AM
+		WC.crush(src,species.blood_color)
+	else
+		return //Don't make blood
+	var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
+	B.New(B.loc)
+	B.blood_DNA = list()
+	B.blood_DNA[src.dna.unique_enzymes] = src.dna.b_type
+
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")

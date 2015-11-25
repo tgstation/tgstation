@@ -218,13 +218,21 @@ var/list/uplink_items = list()
 	cost = 4
 	job = list("Chemist", "Chief Medical Officer")
 
+//Medical Doctor
+/datum/uplink_item/jobspecific/wheelchair
+	name = "Syndicate Wheelchair"
+	desc = "A combat-modified motorized wheelchair pre-loaded with a hyper power cell. Forward thrust is sufficient to knock down and run over victims."
+	item = /obj/item/syndicate_wheelchair_kit
+	cost = 5
+	job = list("Medical Doctor", "Chief Medical Officer")
+
 //Engineer
 /datum/uplink_item/jobspecific/powergloves
 	name = "Power Gloves"
 	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
 	item = /obj/item/clothing/gloves/yellow/power
 	cost = 7
-	job = list("Station Engineer","Chief Engineer")
+	job = list("Station Engineer", "Chief Engineer")
 
 //Atmos Tech
 /datum/uplink_item/jobspecific/contortionist
@@ -232,7 +240,7 @@ var/list/uplink_items = list()
 	desc = "A highly flexible jumpsuit that will help you navigate the ventilation loops of the station internally. Comes with pockets and ID slot, but can't be used without stripping off most gear, including backpack, belt, helmet, and exosuit. Free hands are also necessary to crawl around inside."
 	item = /obj/item/clothing/under/contortionist
 	cost = 7
-	job = list("Atmospheric Technician","Chief Engineer")
+	job = list("Atmospheric Technician", "Chief Engineer")
 
 //Geneticist
 /datum/uplink_item/jobspecific/radgun
