@@ -603,19 +603,68 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 //////HOSPITALITY//////
 
 /datum/supply_packs/food
-	name = "Food crate"
+	name = "Basic cooking crate"
 	contains = list(/obj/item/weapon/reagent_containers/food/drinks/flour,
+					/obj/item/weapon/reagent_containers/food/drinks/flour,
+					/obj/item/weapon/reagent_containers/food/drinks/flour,
+					/obj/item/weapon/reagent_containers/food/drinks/flour,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
-					/obj/item/weapon/storage/fancy/egg_box,
-					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-					/obj/item/weapon/reagent_containers/food/condiment/vinegar,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+					/obj/item/weapon/storage/fancy/egg_box)
 	cost = 10
 	containertype = /obj/structure/closet/crate/freezer
-	containername = "Food crate"
+	containername = "Basic cooking crate"
+	group = "Hospitality"
+
+/datum/supply_packs/randomised/fruit
+	name = "Fruit crate"
+	num_contained = 16
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/orange)
+	cost = 20
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "Fruit crate"
+	group = "Hospitality"
+
+/datum/supply_packs/exotic_garnishes //We don't use a randomised crate because we want some special reagents, and also to control chances
+	name = "Exotic garnishes"
+	contains = list(/obj/item/weapon/reagent_containers/food/condiment/exotic,
+					/obj/item/weapon/reagent_containers/food/condiment/exotic,
+					/obj/item/weapon/reagent_containers/food/condiment/exotic,
+					/obj/item/weapon/reagent_containers/food/condiment/exotic,
+					/obj/item/weapon/reagent_containers/food/condiment/exotic,
+					/obj/item/weapon/reagent_containers/food/condiment/exotic)
+	cost = 15
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Exotic garnishes"
+	access = access_kitchen
+	group = "Hospitality"
+
+/datum/supply_packs/randomised/trophy_meats
+	name = "Trophy meats"
+	num_contained = 8
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/meat/mimic,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/bearmeat,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat/imitation,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
+					/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+					/obj/item/weapon/reagent_containers/food/snacks/spidereggs)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Trophy meats"
+	access = access_kitchen
 	group = "Hospitality"
 
 /datum/supply_packs/party
@@ -645,7 +694,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
-	name = "Surprise pack of five dozen pizzas"
+	name = "Surprise pack of five pizzas"
 	cost = 15
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Pizza crate"
@@ -1225,26 +1274,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Corgi Crate"
 	group = "Hydroponics"
 
-/datum/supply_packs/seeds
-	name = "Seeds Crate"
-	contains = list(/obj/item/seeds/chiliseed,
-					/obj/item/seeds/berryseed,
-					/obj/item/seeds/cornseed,
-					/obj/item/seeds/eggplantseed,
-					/obj/item/seeds/tomatoseed,
-					/obj/item/seeds/soyaseed,
-					/obj/item/seeds/wheatseed,
-					/obj/item/seeds/carrotseed,
-					/obj/item/seeds/sunflowerseed,
-					/obj/item/seeds/chantermycelium,
-					/obj/item/seeds/potatoseed,
-					/obj/item/seeds/sugarcaneseed)
-	cost = 10
-	containertype = /obj/structure/closet/crate/hydroponics
-	containername = "Seeds crate"
-	access = access_hydroponics
-	group = "Hydroponics"
-
 /datum/supply_packs/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,
@@ -1271,7 +1300,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/seeds/random,
 					/obj/item/seeds/kudzuseed)
 	cost = 15
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = /obj/structure/closet/crate/secure/hydrosec
 	containername = "Exotic Seeds crate"
 	access = access_hydroponics
 	group = "Hydroponics"
@@ -1292,7 +1321,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 		/obj/item/weapon/book/manual/hydroponics_beekeeping,
 		)
 	cost = 20
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = /obj/structure/closet/crate/secure/hydrosec
 	containername = "Beekeeping crate"
 	access = access_hydroponics
 	group = "Hydroponics"
@@ -1313,7 +1342,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Ranching crate"
-	access = access_hydroponics
 	group = "Hydroponics"
 
 /datum/supply_packs/Hydroponics_Trays
@@ -1336,7 +1364,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/reagent_containers/glass/beaker,
 					/obj/item/weapon/stock_parts/console_screen)
 	cost = 12
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = /obj/structure/closet/crate/secure/hydrosec
 	containername = "Hydroponic Trays Components Crate"
 	access = access_hydroponics
 	group = "Hydroponics"

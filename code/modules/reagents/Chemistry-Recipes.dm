@@ -1863,6 +1863,22 @@ datum
 			required_reagents = list("soymilk" = 4, "sacid" = 1)
 			result_amount = 5
 
+		vinegar
+			name = "Malt Vinegar"
+			id = "vinegar"
+			result = "vinegar"
+			required_reagents = list("ethanol" = 5)
+			required_catalysts = list("enzyme" = 1)
+			result_amount = 5
+
+		sprinkles
+			name = "Sprinkles"
+			id = "sprinkles"
+			result = "sprinkles"
+			required_reagents = list("sugar" = 5)
+			required_catalysts = list("enzyme" = 1)
+			result_amount = 5
+
 		cheesewheel
 			name = "Cheesewheel"
 			id = "cheesewheel"

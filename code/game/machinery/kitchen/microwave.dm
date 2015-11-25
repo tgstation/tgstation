@@ -23,6 +23,10 @@
 	var/limit = 100
 	var/speed_multiplier = 1
 	var/scanning_power = 0
+	var/global/list/accepts_reagents_from = list(/obj/item/weapon/reagent_containers/glass,
+												/obj/item/weapon/reagent_containers/food/drinks,
+												/obj/item/weapon/reagent_containers/food/condiment,
+												/obj/item/weapon/reagent_containers/dropper)
 
 // see code/modules/food/recipes_microwave.dm for recipes
 //Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
@@ -171,10 +175,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
-	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
-		)
+	else if(is_type_in_list(O,accepts_reagents_from))
 		if (!O.reagents)
 			return 1
 		for (var/datum/reagent/R in O.reagents.reagent_list)
