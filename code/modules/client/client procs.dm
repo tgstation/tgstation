@@ -23,7 +23,7 @@
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 	if(href_list["asset_cache_confirm_arrival"])
-		src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
+		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
