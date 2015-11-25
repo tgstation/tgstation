@@ -235,35 +235,3 @@
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
-
-/turf/simulated/floor/plating/hole
-	name = "hole"
-	desc = "Yep, thats a hole."
-	icon = 'icons/turf/floors/hole.dmi'
-	icon_state = "hole"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
-	mouse_opacity = 0
-	var/tp_x = 0 //hole drop-point
-	var/tp_y = 0
-	var/tp_z = 0
-
-/turf/simulated/floor/plating/hole/Entered(atom/movable/H)
-	if(!istype(H))
-		return
-	if(istype(H, /obj))
-		var/obj/O = H
-		O.visible_message("[O] falls down \the [src]!")
-		O.x = tp_x
-		O.y = tp_y
-		O.z = tp_z
-	else if (istype(H, /mob/living))
-		var/mob/living/M = H
-		M.visible_message("[M] falls down \the [src]!", \
-			"<span class='warning'>You fall down \the [src]!</span>")
-		M.x = tp_x
-		M.y = tp_y
-		M.z = tp_z
-		M.Weaken(6)
-		M.emote("scream")
-		M.adjustBruteLoss(20)

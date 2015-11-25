@@ -9,7 +9,7 @@
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
 	a_intent = "harm"
-	maxHealth = 500
+	maxHealth = 50
 	health = 50
 	speed = 1
 	harm_intent_damage = 5
@@ -36,19 +36,3 @@
 	visible_message("<span class='danger'>The skeleton falls apart!</span>")
 	qdel(src)
 	return
-
-/mob/living/simple_animal/hostile/spawner/skeleton
-	name = "bone pit"
-	desc = "A pit full of bones, some still seem to be moving.."
-	icon_state = "hole"
-	icon_living = "hole"
-	icon = 'icons/mob/nest.dmi'
-	health = 300
-	maxHealth = 300
-	list/spawned_mobs = list()
-	max_mobs = 30
-	spawn_time = 100
-	mob_type = /mob/living/simple_animal/hostile/skeleton
-	spawn_text = "climbs out of"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	faction = list("skeleton")
