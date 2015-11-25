@@ -517,7 +517,7 @@
 	isGlass = 0
 	amount_per_transfer_from_this = 10
 	volume = 30
-	starting_materials = list(MAT_GLASS = 500)
+	starting_materials = list(MAT_IRON = 500)
 
 	on_reagent_change()
 
