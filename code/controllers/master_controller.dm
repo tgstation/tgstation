@@ -101,7 +101,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 				var/SubSystemRan = 0
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.can_fire > 0)
-						if(SS.next_fire <= world.time && SS.last_fire+(wait*0.5) <= world.time)
+						if(SS.next_fire <= world.time && SS.last_fire+(SS.wait*0.5) <= world.time)
 							SubSystemRan = 1
 							timer = world.timeofday
 							last_thing_processed = SS.type
