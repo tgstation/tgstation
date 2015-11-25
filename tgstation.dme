@@ -589,7 +589,6 @@
 #include "code\game\objects\effects\spawners\structure.dm"
 #include "code\game\objects\effects\spawners\vaultspawner.dm"
 #include "code\game\objects\items\apc_frame.dm"
-#include "code\game\objects\items\baddragon.dm"
 #include "code\game\objects\items\blueprints.dm"
 #include "code\game\objects\items\body_egg.dm"
 #include "code\game\objects\items\bodybag.dm"

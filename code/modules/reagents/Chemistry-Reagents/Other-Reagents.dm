@@ -255,11 +255,6 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
-/datum/reagent/lube/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/weapon/dragondildo))
-		var/obj/item/weapon/dragondildo/L = O
-		L.lubbed = 1
-
 /datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
