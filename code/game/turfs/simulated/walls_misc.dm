@@ -55,7 +55,7 @@
 //won't get an underlay of the destination turf on shuttle move
 /turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
 	if(T.type != type)
-		T = new type(T)
+		T.ChangeTurf(type)
 		if(underlays.len)
 			T.underlays = underlays
 	if(T.icon_state != icon_state)
