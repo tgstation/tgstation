@@ -345,6 +345,7 @@
 #include "code\game\gamemodes\changeling\powers\shriek.dm"
 #include "code\game\gamemodes\changeling\powers\spiders.dm"
 #include "code\game\gamemodes\changeling\powers\strained_muscles.dm"
+#include "code\game\gamemodes\changeling\powers\swap_forms.dm"
 #include "code\game\gamemodes\changeling\powers\synaptic_enhancement.dm"
 #include "code\game\gamemodes\changeling\powers\tiny_prick.dm"
 #include "code\game\gamemodes\changeling\powers\transform.dm"
