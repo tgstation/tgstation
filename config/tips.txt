@@ -3,7 +3,7 @@ You can catch thrown items by toggling on your throw mode with an empty hand act
 To crack the safe in the vault, use a stethoscope on it.
 You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table.
 You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that exosuits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
-Clicking on a windoor rather then bumping into it will lock it open.
+Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 You can spray a fire extinguisher or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 All vending machines can be hacked to obtain some contraband items from them, and some can be fed with coins to gain access to premium items.
