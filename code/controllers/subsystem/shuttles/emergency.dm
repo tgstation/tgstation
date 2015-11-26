@@ -152,8 +152,6 @@
 /obj/docking_port/mobile/pod/request()
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
 		return ..()
-	else
-		return
 
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
