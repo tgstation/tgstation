@@ -102,3 +102,4 @@ Tokiko1 = Game Master
 SuperSayu = Game Master
 Lzimann = Game Master
 As334 = Game Master
+Swankcookie = Game Master
