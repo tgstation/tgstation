@@ -119,7 +119,7 @@
 			if(HIGH_BROKEN_AGRESSION)
 				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
 			if(LOW_BROKEN_AGRESSION)
-				phrase = rand(19,23)	// user failed the hack.  Now only plays hilariously nice messages.
+				phrase = rand(19,24)	// user failed the hack.  Now only plays hilariously nice messages.
 
 		switch(phrase)	//sets the properties of the chosen phrase
 			if(1)				// good cop
@@ -191,7 +191,7 @@
 			if(23)
 				phrase_text = "We're police officers! We're not trained to handle this kind of violence!"
 				phrase_sound = "nottrain"
-			if(23)
+			if(24)
 				phrase_text = "These new bracelets will complement your eyes."
 				phrase_sound = "newbracelet"
 
