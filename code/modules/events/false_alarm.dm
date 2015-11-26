@@ -11,7 +11,10 @@
 /datum/round_event/falsealarm/announce()
 	var/list/events_list = list()
 	for(var/datum/round_event_control/E in SSevent.control)
-		if(E.announceWhen < 0 || E.holidayID || E.wizardevent)
+		if(E.holidayID || E.wizardevent)
+			continue
+		var/datum/round_event/event = E.typepath
+		if (inital(E.typepath) < 0)
 			continue
 		events_list += E
 	
