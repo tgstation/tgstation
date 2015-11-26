@@ -167,17 +167,7 @@
 			M.Paralyse(4)
 		else
 			M.Jitter(500)
-		/* //else the mousetraps are useless
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(isobj(H.shoes))
-				var/thingy = H.shoes
-				H.unEquip(H.shoes)
-				walk_away(thingy,chassis,15,2)
-				spawn(20)
-					if(thingy)
-						walk(thingy,0)
-		*/
+
 	chassis.use_power(energy_drain)
 	log_message("Honked from [src.name]. HONK!")
 	var/turf/T = get_turf(src)
@@ -290,7 +280,7 @@
 	var/obj/item/missile/M = new projectile(chassis.loc)
 	M.primed = 1
 	playsound(chassis, fire_sound, 50, 1)
-	M.throw_at(target, missile_range, missile_speed)
+	M.throw_at(target, missile_range, missile_speed, spin = 0)
 	projectiles--
 	log_message("Fired from [src.name], targeting [target].")
 	var/turf/T = get_turf(src)

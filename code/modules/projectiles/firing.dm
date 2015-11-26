@@ -3,7 +3,7 @@
 	for (var/i = max(1, pellets), i > 0, i--)
 		// var/curloc = user.loc
 		var/targloc = get_turf(target)
-		ready_proj(target, user, quiet)
+		ready_proj(target, user, quiet, zone_override)
 		// if(distro) //legacy bullet spread not supported. It never worked correctly anyway.
 		// 	targloc = spread(targloc, curloc, distro)
 		var/spread = 0
@@ -23,7 +23,7 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, var/quiet)
+/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, var/quiet, zone_override = "")
 	if (!BB)
 		return
 	BB.original = target

@@ -4,7 +4,7 @@
 	icon_state = "bullet"
 	density = 1
 	anchored = 1 //so you can't pull them around
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT
 	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -57,8 +57,6 @@
 		range--
 		if(range <= 0)
 			on_range()
-	else
-		return
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	proj_hit = 1
