@@ -60,8 +60,8 @@
 	icon = 'icons/mob/nest.dmi'
 	health = 150
 	maxHealth = 150
-	max_mobs = 10
-	spawn_time = 200
+	max_mobs = 15
+	spawn_time = 150
 	mob_type = /mob/living/simple_animal/hostile/skeleton
 	spawn_text = "climbs out of"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
