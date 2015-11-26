@@ -156,6 +156,16 @@
 	log_say("[src.real_name]/[src.key] : [text]")
 
 
+/mob/living/proc/guardian_recall()
+	set name = "Recall Guardian"
+	set category = "Guardian"
+	set desc = "Forcibly recall your guardian."
+	for(var/mob/M in mob_list)
+		if(istype (M, /mob/living/simple_animal/hostile/guardian))
+			var/mob/living/simple_animal/hostile/guardian/G = M
+			if(G.summoner == src)
+				G.Recall()
+
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		SetLuminosity(3)
