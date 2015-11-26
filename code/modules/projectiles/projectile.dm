@@ -149,12 +149,6 @@
 
 					if(!Angle)
 						Angle=round(Get_Angle(src,current))
-					// world << "[Angle] angle"
-					// overlays.Cut()
-					// var/icon/I=new(initial(icon),icon_state) //using initial(icon) makes sure that the angle for that is reset as well
-					// I.Turn(Angle)
-					// I.DrawBox(rgb(255,0,0,50),1,1,32,32)
-					// icon = I
 					if(spread) //Chaotic spread
 						Angle += (rand() - 0.5) * spread
 					var/matrix/M = new//matrix(transform)
@@ -169,23 +163,19 @@
 					var/new_y = y
 					//Not sure if using whiles for this is good
 					while(pixel_x_offset > 16)
-						// world << "Pre-adjust coords (x++): xy [pixel_x] xy offset [pixel_x_offset]"
 						pixel_x_offset -= 32
 						pixel_x -= 32
 						new_x++// x++
 					while(pixel_x_offset < -16)
-						// world << "Pre-adjust coords (x--): xy [pixel_x] xy offset [pixel_x_offset]"
 						pixel_x_offset += 32
 						pixel_x += 32
 						new_x--
 
 					while(pixel_y_offset > 16)
-						// world << "Pre-adjust coords (y++): py [pixel_y] py offset [pixel_y_offset]"
 						pixel_y_offset -= 32
 						pixel_y -= 32
 						new_y++
 					while(pixel_y_offset < -16)
-						// world << "Pre-adjust coords (y--): py [pixel_y] py offset [pixel_y_offset]"
 						pixel_y_offset += 32
 						pixel_y += 32
 						new_y--
@@ -197,12 +187,6 @@
 						pixel_y = pixel_y_offset
 					else
 						animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (speed <= 3 ? speed - 1 : speed)))
-
-					/*var/turf/T = get_turf(src)
-					if(T)
-						T.color = "#6666FF"
-						spawn(10)
-							T.color = initial(T.color) */
 
 					if(!bumped && ((original && original.layer>=2.75) || ismob(original)))
 						if(loc == get_turf(original))

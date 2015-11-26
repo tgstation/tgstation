@@ -1,17 +1,14 @@
 /obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet, zone_override = "")
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
-		// var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
 		var/spread = 0
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
-				// world << "[spread] spread!"
 			else //Smart spread
 				spread = round((i / pellets - 0.5) * distro)
-				// world << "[spread] spread! [pellets] pellets! [i] i! [distro] variance!"
 		if(!throw_proj(targloc, user, params, spread))
 			return 0
 		if(i > 1)
@@ -90,9 +87,7 @@
 
 			var/ox = round(screenview/2) //"origin" x
 			var/oy = round(screenview/2) //"origin" y
-			// world << "Pixel position: [x] [y]"
 			var/angle = Atan2(y - oy, x - ox)
-			// world << "Angle: [angle]"
 			src.Angle = angle
 	if(spread)
 		src.Angle += spread
