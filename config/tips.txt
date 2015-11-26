@@ -163,9 +163,12 @@ As a Gang Boss, don't wait too long to promote lieutenants! If you get caught by
 As an Abductor, you can select where your victims will be sent on the ship control console.
 As an Abductor Agent, the combat mode vest has much higher resistance to every kind of weapon, and your helmet prevents the AI from tracking you.
 As an Abductor, the baton is set up to allow you to rapidly stun, sleep, and cuff: From stun mode, it cyles to sleep, then to cuff, allowing you to render a target helpless and unable to communicate very rapidly.
-As a Revenant, the Chaplain is your worst enemy, as he can damage you with his null rod and make large swaths of the station impassable with holy water.
+As a Revenant, the Chaplain is your worst enemy, as they can damage you with his null rod and make large swaths of the station impassable with holy water.
 As a Revenant, your essence is also your health, so revealing yourself in front of humans to harvest the essence of the living is much safer if you've already stocked up on essences from poorly guarded corpses.
-As a Revenant, the illness inflicted by Blight can be cured with sleep but a sleeping human is always vulnerable to a revenant's harvest, even if they're completely healthy.
+As a Revenant, your Defile ability removes holy water from tiles in a small radius, allowing you to reclaim the station from the chaplain if they've been covering the station in holy water.
+As a Revenant, your Overload Lights ability will only shock humans with lights if the lights are still on after a brief delay.
+As a Revenant, your Malfunction ability in general damages machinery and mechanical objects, possibly even emagging some objects. Experiment!
+As a Revenant, the illness inflicted on humans by Blight can be easily cured by lying down or with holy water, making it best used on targets that have no time to lie down, such as humans in combat.
 As a Swarmer, you can deconstruct more things than you think. Try deconstructing light switches, buttons, air alarms and more. Experiment!
 As a Swarmer, you can teleport fellow swarmers away if you think they are in danger.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
