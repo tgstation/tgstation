@@ -217,8 +217,7 @@
 	else
 		usr << "You broadcast with your minions, <B>[speak_text]</B>"
 	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
-		if(blob_minion.stat == CONSCIOUS)
-			blob_minion.say(speak_text)
+		blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
