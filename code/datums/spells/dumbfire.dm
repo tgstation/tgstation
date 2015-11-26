@@ -79,6 +79,9 @@
 								qdel(trail)
 
 				current_loc = projectile.loc
+				var/matrix/M = new
+				M.Turn(dir2angle(projectile.dir))
+				projectile.transform = M
 
 				sleep(proj_step_delay)
 

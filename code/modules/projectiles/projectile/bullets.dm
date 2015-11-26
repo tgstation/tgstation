@@ -1,6 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
+	hitsound_wall = "ricochet"
 	damage = 60
 	damage_type = BRUTE
 	nodamage = 0
