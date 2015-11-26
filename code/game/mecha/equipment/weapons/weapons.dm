@@ -9,7 +9,7 @@
 	var/randomspread = 0 //Set this to 1 to disable "smart spread" shotguns use.
 	var/projectile_delay = 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -18,14 +18,14 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target, params)
 	if(!action_checks(target)) return 0
 	set_ready_state(0)
-	var/turf/curloc = chassis.loc
-	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
+	var/turf/curloc = get_turf(chassis)
+	var/turf/targloc = get_turf(target)
+	if (!istype(targloc) || !curloc)
 		return
 	if (targloc == curloc)
 		return
 
-	for (var/i = max(1, projectiles_per_shot), i > 0, i--) //Scattershot support
+	for (var/i in max(1, projectiles_per_shot) to 0 step -1) //Scattershot support
 		playsound(chassis, fire_sound, 50, 1)
 		var/obj/item/projectile/A = new projectile(curloc)
 		A.firer = chassis.occupant
@@ -287,7 +287,6 @@
 	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 	log_game("[chassis.occupant.ckey]([chassis.occupant]) fired a [src] ([T.x],[T.y],[T.z])")
 	do_after_cooldown()
-	return
 
 /obj/item/missile
 	icon = 'icons/obj/grenade.dmi'
@@ -330,7 +329,6 @@
 		if(F)
 			F.prime()
 	do_after_cooldown()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
@@ -366,7 +364,6 @@
 	projectiles--
 	log_message("Bananed from [src.name], targeting [target]. HONK!")
 	do_after_cooldown()
-	return
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
@@ -396,4 +393,3 @@
 	projectiles--
 	log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
 	do_after_cooldown()
-	return

@@ -1,11 +1,9 @@
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet, zone_override = "")
+/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet, zone_override = "")
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
 		// var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		// if(distro) //legacy bullet spread not supported. It never worked correctly anyway.
-		// 	targloc = spread(targloc, curloc, distro)
 		var/spread = 0
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
@@ -28,6 +26,10 @@
 		return
 	BB.original = target
 	BB.firer = user
+	if(zone_override)
+		BB.def_zone = zone_override
+	else
+		BB.def_zone = user.zone_sel.selecting
 	BB.def_zone = user.zone_sel.selecting
 	BB.suppressed = quiet
 
@@ -36,7 +38,7 @@
 		qdel(reagents)
 	return
 
-/obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params, spread)
+/obj/item/ammo_casing/proc/throw_proj(turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
@@ -56,8 +58,8 @@
 	return locate(target.x + round(gaussian(0, distro) * (dy+2)/8, 1), target.y + round(gaussian(0, distro) * (dx+2)/8, 1), target.z)
 
 //This exists to simplify pixel calculations for mechas and other things.
-/obj/item/projectile/proc/preparePixelProjectile(var/turf/targloc, mob/living/user as mob|obj, params, spread)
-	var/turf/curloc = user.loc
+/obj/item/projectile/proc/preparePixelProjectile(turf/targloc, mob/living/user, params, spread)
+	var/turf/curloc = get_turf(user)
 	src.loc = get_turf(user)
 	src.starting = get_turf(user)
 	src.current = curloc

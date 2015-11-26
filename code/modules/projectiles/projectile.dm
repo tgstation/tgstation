@@ -55,7 +55,7 @@
 /obj/item/projectile/proc/Range()
 	if(range)
 		range--
-		if(range <= 0)
+		if(range <= 0 && loc)
 			on_range()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -63,8 +63,10 @@
 	qdel(src)
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+	if(!isliving(target))
+		return 0
+	if(isanimal(target))
+		return 0
 	var/mob/living/L = target
 	L.on_hit(type)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked, stamina, jitter)
@@ -130,16 +132,13 @@
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 
-	// if(istype(mover, /obj/item/projectile))
-	// 	return prob(95)
-	// else
 	return 1
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
 
-/obj/item/projectile/proc/fire(var/setAngle)
+/obj/item/projectile/proc/fire(setAngle)
 	if(setAngle) Angle = setAngle
 	if(!legacy)
 		spawn(1) //New projectile system
@@ -235,6 +234,6 @@
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
 
-/obj/item/projectile/proc/dumbfire(var/dir)
+/obj/item/projectile/proc/dumbfire(dir)
 	current = get_ranged_target_turf(src, dir, world.maxx) //world.maxx is the range. Not sure how to handle this better.
 	fire()
