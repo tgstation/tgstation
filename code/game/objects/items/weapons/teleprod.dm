@@ -2,6 +2,7 @@
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	icon_state = "teleprod_nocell"
+	item_state = "teleprod"
 
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()

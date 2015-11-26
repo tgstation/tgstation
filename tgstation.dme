@@ -923,6 +923,7 @@
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
+#include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client defines.dm"
 #include "code\modules\client\client procs.dm"
 #include "code\modules\client\message.dm"
