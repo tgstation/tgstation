@@ -40,13 +40,7 @@
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
-		var/obj/machinery/bot/bot = AM
-		if(istype(bot))
-			if(src.check_access(bot.botcard))
-				open_and_close()
-			else
-				flick("[src.base_state]deny", src)
-		else if(istype(AM, /obj/mecha))
+		if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()

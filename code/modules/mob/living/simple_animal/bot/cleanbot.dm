@@ -1,19 +1,5 @@
-//Cleanbot assembly
-/obj/item/weapon/bucket_sensor
-	desc = "It's a bucket. With a sensor attached."
-	name = "proxy bucket"
-	icon = 'icons/obj/aibots.dmi'
-	icon_state = "bucket_proxy"
-	force = 3
-	throwforce = 5
-	throw_speed = 2
-	throw_range = 5
-	w_class = 3.
-	var/created_name = "Cleanbot"
-
-
 //Cleanbot
-/obj/machinery/bot/cleanbot
+/mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
@@ -21,94 +7,60 @@
 	layer = 5
 	density = 0
 	anchored = 0
-	//weight = 1.0E7
 	health = 25
-	maxhealth = 25
+	maxHealth = 25
+	radio_channel = "Service" //Service
+	bot_type = CLEAN_BOT
+	model = "Cleanbot"
+	bot_core_type = /obj/machinery/bot_core/cleanbot
+	window_id = "autoclean"
+	window_name = "Automatic Station Cleaner v1.1"
+	pass_flags = PASSMOB
+
 	var/blood = 1
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
-	req_one_access = list(access_janitor, access_robotics)
-//	var/patrol_path[] = null
-//	var/beacon_freq = 1445		// navigation beacon frequency
 	var/closest_dist
 	var/closest_loc
 	var/failed_steps
 	var/next_dest
 	var/next_dest_loc
-	radio_frequency = SERV_FREQ //Service
-	bot_type = CLEAN_BOT
-	model = "Cleanbot"
 
-/obj/machinery/bot/cleanbot/New()
+/mob/living/simple_animal/bot/cleanbot/New()
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"
 
 	var/datum/job/janitor/J = new/datum/job/janitor
-	botcard.access += J.get_access()
-	prev_access = botcard.access
+	access_card.access += J.get_access()
+	prev_access = access_card.access
 
-/obj/machinery/bot/cleanbot/turn_on()
+/mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
 	icon_state = "cleanbot[on]"
-	updateUsrDialog()
+	bot_core.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/turn_off()
+/mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
 	icon_state = "cleanbot[on]"
-	updateUsrDialog()
+	bot_core.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/bot_reset()
+/mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
 
-/obj/machinery/bot/cleanbot/set_custom_texts()
+/mob/living/simple_animal/bot/cleanbot/set_custom_texts()
 	text_hack = "You corrupt [name]'s cleaning software."
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	usr.set_machine(src)
-	interact(user)
-
-/obj/machinery/bot/cleanbot/interact(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += text({"
-<TT><B>Cleaner v1.1 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
-text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
-	if(!locked || issilicon(user))
-		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
-		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"))
-
-	var/datum/browser/popup = new(user, "autoclean", "Automatic Station Cleaner v1.1")
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/machinery/bot/cleanbot/Topic(href, href_list)
-
-	..()
-	switch(href_list["operation"])
-		if("blood")
-			blood =!blood
-			get_targets()
-			updateUsrDialog()
-			updateUsrDialog()
-
-/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(allowed(user) && !open && !emagged)
+		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
 		else
@@ -121,18 +73,18 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	else
 		return ..()
 
-/obj/machinery/bot/cleanbot/Emag(mob/user)
+/mob/living/simple_animal/bot/cleanbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
 			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
-/obj/machinery/bot/cleanbot/process_scan(obj/effect/decal/cleanable/D)
+/mob/living/simple_animal/bot/cleanbot/process_scan(obj/effect/decal/cleanable/D)
 	for(var/T in target_types)
 		if(istype(D, T))
 			return D
 
-/obj/machinery/bot/cleanbot/bot_process()
+/mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	if (!..())
 		return
 
@@ -166,7 +118,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -185,7 +137,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 	oldloc = loc
 
-/obj/machinery/bot/cleanbot/proc/get_targets()
+/mob/living/simple_animal/bot/cleanbot/proc/get_targets()
 	target_types = new/list()
 
 	target_types += /obj/effect/decal/cleanable/oil
@@ -209,7 +161,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		target_types += /obj/effect/decal/cleanable/blood/drip/
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
-/obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
+/mob/living/simple_animal/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
 	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
@@ -222,7 +174,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		mode = BOT_IDLE
 		icon_state = "cleanbot[on]"
 
-/obj/machinery/bot/cleanbot/explode()
+/mob/living/simple_animal/bot/cleanbot/explode()
 	on = 0
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
@@ -246,7 +198,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			return
 		qdel(W)
 		var/turf/T = get_turf(loc)
-		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
+		var/mob/living/simple_animal/bot/cleanbot/A = new /mob/living/simple_animal/bot/cleanbot(T)
 		A.name = created_name
 		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
 		user.unEquip(src, 1)
@@ -259,3 +211,35 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		if (!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
+
+/obj/machinery/bot_core/cleanbot
+	req_one_access = list(access_janitor, access_robotics)
+
+
+/mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
+	var/dat
+	dat += hack(user)
+	dat += text({"
+<TT><B>Cleaner v1.1 controls</B></TT><BR><BR>
+Status: []<BR>
+Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [open ? "opened" : "closed"]"},
+text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
+	if(!locked || issilicon(user))
+		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"))
+	return dat
+
+/mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)
+	..()
+	switch(href_list["operation"])
+		if("blood")
+			blood =!blood
+			get_targets()
+			update_controls()
+
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+	if(istype(A,/obj/effect/decal/cleanable))
+		clean(A)
+	else
+		..()
