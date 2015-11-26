@@ -1,4 +1,4 @@
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet, zone_override = "")
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
 		// var/curloc = user.loc
