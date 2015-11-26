@@ -608,6 +608,7 @@
 	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
 	G << "[G.playstyle_string]"
 	user.verbs += /mob/living/proc/guardian_comm
+	user.verbs += /mob/living/proc/guardian_recall()
 	switch (theme)
 		if("magic")
 			G.name = "[mob_name] [capitalize(picked_color)]"
