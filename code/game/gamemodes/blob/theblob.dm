@@ -19,7 +19,7 @@
 
 
 /obj/effect/blob/New(loc)
-	var/area/Ablob = loc
+	var/area/Ablob = get_area(loc)
 	if (Ablob.blob_legit) //Is the area Legit for blobs?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
@@ -34,7 +34,7 @@
 	return
 
 /obj/effect/blob/Destroy()
-	var/area/Ablob = loc
+	var/area/Ablob = get_area(loc)
 	if (Ablob.blob_legit) //Only remove for blobs in Legit places, else they didn't add points to begin with.
 		blobs_legit -= src
 	blobs -= src //It's still removed from the normal list
