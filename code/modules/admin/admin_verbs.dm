@@ -139,7 +139,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
-	/client/proc/reload_nanoui_templates
+	/client/proc/reload_nanoui_resources
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

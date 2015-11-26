@@ -243,7 +243,7 @@
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
-					resources.Add(fcopy_rsc(path + filename))
+					resources[filename] = fcopy_rsc(path + filename)
 
 	return resources
 
@@ -257,5 +257,9 @@
   * @return nothing
   */
 
-/datum/subsystem/nano/proc/send_resources(client, var/list/resources = resource_files)
-	getFilesSlow(client, resources)
+/datum/subsystem/nano/proc/send_resources(client, var/list/resources = resource_files, var/force = 0)
+	if (force)
+		for(var/resource in resources)
+			client << browse_rsc(resource)
+	else
+		getFilesSlow(client, resources)

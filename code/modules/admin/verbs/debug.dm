@@ -777,7 +777,7 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)	return
 	debug_variables(huds[i])
 
-/client/proc/reload_nanoui_templates()
+/client/proc/reload_nanoui_resources()
 	set category = "Debug"
 	set name = "Reload NanoUI Resources"
 	set desc = "Force the client to redownload NanoUI Resources"
@@ -785,4 +785,4 @@ var/global/list/g_fancy_list_of_types = null
 	var/list/resources = SSnano.populate_resources()
 
 	SSnano.close_user_uis(usr)
-	SSnano.send_resources(src, resources)
+	SSnano.send_resources(src, resources, force = 1)
