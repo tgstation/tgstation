@@ -229,7 +229,7 @@
   *
   * @return /list The list of resources
   */
-/datum/subsystem/nano/proc/populate_resources()
+/datum/subsystem/nano/proc/get_resources()
 	var/list/resources = list()
 	var/list/resource_dirs = list(\
 		"nano/css/",\
@@ -256,10 +256,9 @@
   *
   * @return nothing
   */
-
-/datum/subsystem/nano/proc/send_resources(client, var/list/resources = resource_files, var/force = 0)
+/datum/subsystem/nano/proc/send_resources(client/client, list/resources = resource_files, force = 0)
 	if (force)
 		for(var/resource in resources)
-			client << browse_rsc(resource)
+			client << browse_rsc(resources[resource])
 	else
 		getFilesSlow(client, resources)

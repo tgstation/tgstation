@@ -15,7 +15,7 @@ var/datum/subsystem/nano/SSnano
 /datum/subsystem/nano/New()
 	NEW_SS_GLOBAL(SSnano)
 
-	resource_files = populate_resources()
+	resource_files = get_resources()
 
 
 /datum/subsystem/nano/stat_entry()

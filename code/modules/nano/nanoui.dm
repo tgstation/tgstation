@@ -50,7 +50,7 @@
 	// initial data, containing the full data structure, must be sent to the ui (the data structure cannot be extended later on)
 	var/list/initial_data
 	// set to 1 to update the ui automatically every master_controller tick
-	var/auto_update = 0
+	var/auto_update = 1
 	// the current status/visibility of the ui
 	var/status = NANO_INTERACTIVE
 
@@ -394,7 +394,7 @@
 
 	if (!initial_data)
 		if (!data)
-			data = src_object.get_ui_data()
+			data = src_object.get_ui_data(user)
 		set_initial_data(data)
 
 	var/window_size = ""
