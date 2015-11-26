@@ -5,8 +5,9 @@
 		</div>
 		<div class="itemContentFull">
 			{{:helper.link('Engaged', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}
-			{{:helper.link('Disengaged', 'uxnlocked', {'toggleaccess' : 1}, data.locked ? null : 'selected')}}
+			{{:helper.link('Disengaged', 'unlocked', {'toggleaccess' : 1}, data.locked ? null : 'selected')}}
 		</div>
+		<div class="clearBoth"></div>
 	{{else}}
 		{{if data.locked}}
 			Swipe an ID card to unlock this interface.
@@ -14,69 +15,70 @@
 			Swipe an ID card to lock this interface.
 		{{/if}}
 	{{/if}}
-	<div class="clearBoth"></div>
 </div>
 <h2>Air Status</h2>
-{{if data.environment_data}}
-	{{for data.environment_data :info:i}}
+<div class="statusDisplay">
+	{{if data.environment_data}}
+		{{for data.environment_data :info:i}}
+			<div class="item">
+				<div class="itemLabel">
+					{{:info.name}}:
+				</div>
+				<div class="itemContent">
+					{{if info.danger_level == 2}}
+						<span class='bad'>
+					{{else info.danger_level == 1}}
+						<span class='average'>
+					{{else}}
+						<span class='good'>
+					{{/if}}
+					{{:helper.round(info.value*100)/100}}</span>{{:info.unit}}
+				</div>
+			</div>
+		{{/for}}
 		<div class="item">
 			<div class="itemLabel">
-				{{:info.name}}:
+				Local Status:
 			</div>
 			<div class="itemContent">
-				{{if info.danger_level == 2}}
-					<span class='bad'>
-				{{else info.danger_level == 1}}
-					<span class='average'>
+				{{if data.danger_level == 2}}
+					<span class='bad'>Danger (Internals Required)</span>
+				{{else data.danger_level == 1}}
+					<span class='average'>Caution</span>
 				{{else}}
-					<span class='good'>
+					<span class='good'>Optimal</span>
 				{{/if}}
-				{{:helper.round(info.value*100)/100}}</span>{{:info.unit}}
 			</div>
 		</div>
-	{{/for}}
-	<div class="item">
-		<div class="itemLabel">
-			Local Status:
+		<div class="item">
+			<div class="itemLabel">
+				Area Status:
+			</div>
+			<div class="itemContent">
+				{{if data.atmos_alarm}}
+					<span class='bad'>Atmosphere Alarm</span>
+				{{else data.fire_alarm}}
+					<span class='average'>Fire Alarm</span>
+				{{else}}
+					<span class='good'>Nominal</span>
+				{{/if}}
+			</div>
 		</div>
-		<div class="itemContent">
-			{{if data.danger_level == 2}}
-				<span class='bad'>Danger (Internals Required)</span>
-			{{else data.danger_level == 1}}
-				<span class='average'>Caution</span>
-			{{else}}
-				<span class='good'>Optimal</span>
-			{{/if}}
-		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Area Status:
-		</div>
-		<div class="itemContent">
-			{{if data.atmos_alarm}}
-				<span class='bad'>Atmosphere Alarm in Area</span>
-			{{else data.fire_alarm}}
-				<span class='average'>Fire Alarm in Area</span>
-			{{else}}
-				<span class='good'>No Alerts</span>
-			{{/if}}
-		</div>
-	</div>
-{{else}}
-	<div class="item"><span class='bad'>Warning: Cannot obtain air sample for analysis.</span></div>
-{{/if}}
-{{if data.dangerous}}
-	<hr />
-	<div class="item"><span class='bad'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span></div>
-{{/if}}
+	{{else}}
+		<div class="item"><span class='bad'>Warning: Cannot obtain air sample for analysis.</span></div>
+	{{/if}}
+	{{if data.dangerous}}
+		<hr />
+		<div class="item"><span class='bad'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span></div>
+	{{/if}}
+</div>
 {{if (!data.locked || data.siliconUser)}}
-	<hr />
 	{{if data.screen != 1}}
 		<div class="item">{{:helper.link('Back', 'triangle-1-w', { 'screen' : 1})}}</div>
 	{{/if}}
 	{{if data.screen == 1}}
 		<h2>Air Controls</h2>
+		<div class="statusDisplay">
 		<div class="item">
 			{{if !data.atmos_alarm}}
 				{{:helper.link('Area Atmospheric Alarm', 'power', { 'atmos_alarm' : 1}, null, null)}}
@@ -93,30 +95,34 @@
 		</div>
 		<br />
 		<div class="item">
-			{{:helper.link('Vent Controls', 'wrench', { 'screen' : 2})}}
-		</div>
-		<div class="item">
-			{{:helper.link('Scrubber Controls', 'wrench', { 'screen' : 3})}}
-		</div>
-		<br />
-		<div class="item">
-			{{:helper.link('Set Environmental Mode', 'pencil', { 'screen' : 4})}}
-		</div>
-		<div class="item">
-			{{:helper.link('Set Alarm Threshold', 'pencil', { 'screen' : 5})}}
+				{{:helper.link('Vent Controls', 'wrench', { 'screen' : 2})}}
+			</div>
+			<div class="item">
+				{{:helper.link('Scrubber Controls', 'wrench', { 'screen' : 3})}}
+			</div>
+			<br />
+			<div class="item">
+				{{:helper.link('Set Environmental Mode', 'pencil', { 'screen' : 4})}}
+			</div>
+			<div class="item">
+				{{:helper.link('Set Alarm Threshold', 'pencil', { 'screen' : 5})}}
+			</div>
 		</div>
 	{{else data.screen == 2}}
 		<h2>Vent Controls</h2>
 		{{for data.vents :vent:i}}
+			<h3>{{:vent.long_name}}</h3>
 			<div class="statusDisplay">
-				<h3>{{:vent.long_name}}</h3>
-				<hr />
 				<div class="item">
 					<div class="itemLabel">
 						Power:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(vent.power ? 'On' : 'Off', null, { 'id_tag' : vent.id_tag, 'command' : 'power', 'val' : vent.power ? 0 : 1}, null, vent.power ? null : 'redButton')}}
+						{{if vent.power}}
+							{{:helper.link('On', 'power', {'id_tag': vent.id_tag, 'command': 'power', 'val': 0}, null, null)}}
+						{{else}}
+							{{:helper.link('Off', 'close', {'id_tag': vent.id_tag, 'command': 'power', 'val': 1}, null, 'redButton')}}
+						{{/if}}
 					</div>
 				</div>
 				<div class="item">
@@ -124,7 +130,11 @@
 						Mode:
 					</div>
 					<div class="itemContent">
-						{{:vent.direction == "siphon" ? 'Siphoning' : 'Pressurizing'}}
+						{{if vent.direction == "sipho"}}
+							<span class="bad">Siphoning</span>
+						{{else}}
+							<span class="good">Pressurizing</span>
+						{{/if}}
 					</div>
 				</div>
 				<div class="item">
@@ -132,8 +142,8 @@
 						Pressure Checks:
 					</div>
 					<div class="itemContent">
-						{{:helper.link('External', null, { 'id_tag' : vent.id_tag, 'command' : 'excheck', 'val' : vent.checks}, null, vent.excheck ? 'selected' : null)}}
-						{{:helper.link('Internal', null, { 'id_tag' : vent.id_tag, 'command' : 'incheck', 'val' : vent.checks}, null, vent.incheck ? 'selected' : null)}}
+						{{:helper.link('External', 'arrow-1-n', { 'id_tag' : vent.id_tag, 'command' : 'excheck', 'val' : vent.checks}, null, vent.excheck ? 'selected' : null)}}
+						{{:helper.link('Internal', 'arrow-1-s', { 'id_tag' : vent.id_tag, 'command' : 'incheck', 'val' : vent.checks}, null, vent.incheck ? 'selected' : null)}}
 					</div>
 				</div>
 				<div class="item">
@@ -141,11 +151,10 @@
 						Set Pressure:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(helper.round(vent.external*100)/100, null, { 'id_tag' : vent.id_tag, 'command' : 'set_external_pressure'})}}
-						{{:helper.link('Reset', null, { 'id_tag' : vent.id_tag, 'command' : 'reset_external_pressure'})}}
+						{{:helper.link(helper.round(vent.external*100)/100, 'pencil', { 'id_tag' : vent.id_tag, 'command' : 'set_external_pressure'})}}
+						{{:helper.link('Reset', 'refresh', { 'id_tag' : vent.id_tag, 'command' : 'reset_external_pressure'})}}
 					</div>
 				</div>
-				<br />
 			</div>
 		{{/for}}
 		{{if !data.vents.length}}
@@ -154,15 +163,18 @@
 	{{else data.screen == 3}}
 		<h2>Scrubber Controls</h2>
 		{{for data.scrubbers :scrubber:i}}
+			<h3>{{:scrubber.long_name}}</h3>
 			<div class="statusDisplay">
-				<h3>{{:scrubber.long_name}}</h3>
-				<hr />
 				<div class="item">
 					<div class="itemLabel">
 						Power:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(scrubber.power ? 'On' : 'Off', null, { 'id_tag' : scrubber.id_tag, 'command' : 'power', 'val' : scrubber.power ? 0 : 1}, null, scrubber.power ? null : 'redButton')}}
+						{{if scrubber.power}}
+							{{:helper.link('On', 'power', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 0}, null, null)}}
+						{{else}}
+							{{:helper.link('Off', 'close', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 1}, null, 'redButton')}}
+						{{/if}}
 					</div>
 				</div>
 				<div class="item">
@@ -170,7 +182,11 @@
 						Mode:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(scrubber.scrubbing ? 'Scrubbing' : 'Siphoning', null, { 'id_tag' : scrubber.id_tag, 'command' : 'scrubbing', 'val' : scrubber.scrubbing ? 0 : 1}, null, scrubber.scrubbing ? null : 'redButton')}}
+						{{if scrubber.scrubbing}}
+							{{:helper.link('Scrubbing', 'refresh', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 0}, null, null)}}
+						{{else}}
+							{{:helper.link('Siphoning', 'circle-close', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 1}, null, 'redButton')}}
+						{{/if}}
 					</div>
 				</div>
 				<div class="item">
@@ -178,7 +194,11 @@
 						Range:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(scrubber.widenet ? 'Extended' : 'Normal', null, { 'id_tag' : scrubber.id_tag, 'command' : 'widenet', 'val' : scrubber.widenet ? 0 : 1}, null, scrubber.widenet ? 'selected' : null)}}
+						{{if scrubber.widenet}}
+							{{:helper.link('Extended', 'zoomout', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 0}, null, 'yellowButton')}}
+						{{else}}
+							{{:helper.link('Normal', 'zoomin', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 1}, null, null)}}
+						{{/if}}
 					</div>
 				</div>
 				<div class="item">
@@ -186,12 +206,11 @@
 						Filters:
 					</div>
 					<div class="itemContent">
-						{{:helper.link("Carbon Dioxide", null, {'id_tag': scrubber.id_tag, 'command': "co2_scrub", 'val': scrubber.filter_co2 ? 0 : 1}, null, scrubber.filter_co2 ? 'selected' : null)}}<br class="clearBoth">
-						{{:helper.link("Plasma", null, {'id_tag': scrubber.id_tag, 'command': "tox_scrub", 'val': scrubber.filter_toxins ? 0 : 1}, null, scrubber.filter_toxins ? 'selected' : null)}}<br class="clearBoth">
-						{{:helper.link("Nitrous Oxide", null, {'id_tag': scrubber.id_tag, 'command': "n2o_scrub", 'val': scrubber.filter_n2o ? 0 : 1}, null, scrubber.filter_n2o ? 'selected' : null)}}<br class="clearBoth">
+						{{:helper.link("CO2", scrubber.filter_co2 ? 'check' : 'close', {'id_tag': scrubber.id_tag, 'command': "co2_scrub", 'val': scrubber.filter_co2 ? 0 : 1}, null, scrubber.filter_co2 ? 'selected' : null)}}
+						{{:helper.link("N2O", scrubber.filter_n2o ? 'check' : 'close', {'id_tag': scrubber.id_tag, 'command': "n2o_scrub", 'val': scrubber.filter_n2o ? 0 : 1}, null, scrubber.filter_n2o ? 'selected' : null)}}
+						{{:helper.link("Plasma", scrubber.filter_toxins ? 'check' : 'close', {'id_tag': scrubber.id_tag, 'command': "tox_scrub", 'val': scrubber.filter_toxins ? 0 : 1}, null, scrubber.filter_toxins ? 'selected' : null)}}
 					</div>
 				</div>
-				<br />
 			</div>
 		{{/for}}
 		{{if !data.scrubbers.length}}
@@ -202,7 +221,7 @@
 		<div class="statusDisplay">
 			{{for data.modes :mode:i}}
 				<div class="item">
-					{{:helper.link(mode.name, null, { 'mode': mode.mode }, null, mode.selected ? (mode.danger ? 'redButton' : 'selected') : (mode.danger ? 'yellowButton' : null))}}
+					{{:helper.link(mode.name, mode.selected? 'check' : 'close', { 'mode': mode.mode }, null, mode.selected ? (mode.danger ? 'redButton' : 'selected') : (mode.danger ? 'yellowButton' : null))}}
 				</div>
 			{{/for}}
 		</div>

@@ -186,7 +186,7 @@
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 450, 620)
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 460, 625)
 		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)

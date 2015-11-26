@@ -18,7 +18,6 @@
 	var/recharged = 0
 	var/recharge_delay = 5  //Time it game ticks between recharges
 	var/image/icon_beaker = null //cached overlay
-	var/uiname = "Chem Dispenser 5000"
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","welding_fuel","silver","iodine","bromine","stable_plasma")
@@ -68,7 +67,7 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", uiname, 490, 710)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 490, 710)
 		ui.open()
 
 /obj/machinery/chem_dispenser/get_ui_data()
@@ -1522,7 +1521,6 @@
 	max_energy = 100
 	amount = 30
 	recharge_delay = 5
-	uiname = "Soda Dispenser"
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","tomatojuice")
 
 /obj/machinery/chem_dispenser/drinks/attackby(obj/item/O, mob/user)
@@ -1552,6 +1550,4 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
-	uiname = "Booze Dispenser"
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequila","vermouth","cognac","ale")
-

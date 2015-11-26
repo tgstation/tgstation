@@ -7,6 +7,7 @@
 			{{:helper.link('Engaged', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}
 			{{:helper.link('Disengaged', 'unlocked', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
 		</div>
+		<div class="clearBoth"></div>
 	{{else}}
 		{{if data.locked}}
 			Swipe an ID card to unlock this interface.
@@ -14,101 +15,102 @@
 			Swipe an ID card to lock this interface.
 		{{/if}}
 	{{/if}}
-	<div class="clearBoth"></div>
 </div>
 <h2>Power Status</h2>
-<div class="item">
-	<div class="itemLabel">
-		Main Breaker:
-	</div>
-	<div class="itemContent">
-		{{if data.locked && !data.siliconUser}}
-			{{if data.isOperating}}
-				<span class='good'>On</span>
-			{{else}}
-				<span class='bad'>Off</span>
-			{{/if}}
-		{{else}}
-			{{:helper.link('On', 'power', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}
-			{{:helper.link('Off', 'close', {'breaker' : 1}, data.isOperating ? null : 'selected')}}
-		{{/if}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel">
-		External Power:
-	</div>
-	<div class="itemContent">
-		{{if data.externalPower == 2}}
-			<span class='good'>Good</span>
-		{{else data.externalPower == 1}}
-			<span class='average'>Low</span>
-		{{else}}
-			<span class='bad'>None</span>
-		{{/if}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel">
-		Power Cell:
-	</div>
-	{{if data.powerCellStatus != null}}
-		<div class="itemContent" style="width: 60px">		
-			{{:helper.round(data.powerCellStatus*10)/10}}%
-		</div>	
-		{{:helper.displayBar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
-	{{else}}
-		<div class="itemContent">
-			<span class='bad'>Power cell removed.</span>
-		</div>
-	{{/if}}
-</div>
-{{if data.powerCellStatus != null}}
+<div class="statusDisplay">
 	<div class="item">
 		<div class="itemLabel">
-			Charge Mode:
+			Main Breaker:
 		</div>
 		<div class="itemContent">
 			{{if data.locked && !data.siliconUser}}
-				{{if data.chargeMode}}
-					<span class='good'>Auto</span>
+				{{if data.isOperating}}
+					<span class='good'>On</span>
 				{{else}}
 					<span class='bad'>Off</span>
-				{{/if}}				
+				{{/if}}
 			{{else}}
-				{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
-				{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
-			{{/if}}
-			&nbsp;
-			{{if data.chargingStatus > 1}}
-				[<span class='good'>Fully Charged</span>]
-			{{else data.chargingStatus == 1}}
-				[<span class='average'>Charging</span>]
-			{{else}}
-				[<span class='bad'>Not Charging</span>]
+				{{:helper.link('On', 'power', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}
+				{{:helper.link('Off', 'close', {'breaker' : 1}, data.isOperating ? null : 'selected')}}
 			{{/if}}
 		</div>
 	</div>
-{{/if}}
+	<div class="item">
+		<div class="itemLabel">
+			External Power:
+		</div>
+		<div class="itemContent">
+			{{if data.externalPower == 2}}
+				<span class='good'>Good</span>
+			{{else data.externalPower == 1}}
+				<span class='average'>Low</span>
+			{{else}}
+				<span class='bad'>None</span>
+			{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Power Cell:
+		</div>
+		{{if data.powerCellStatus != null}}
+			<div class="itemContent" style="width: 60px">		
+				{{:helper.round(data.powerCellStatus*10)/10}}%
+			</div>	
+			{{:helper.displayBar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
+		{{else}}
+			<div class="itemContent">
+				<span class='bad'>Power cell removed.</span>
+			</div>
+		{{/if}}
+	</div>
+	{{if data.powerCellStatus != null}}
+		<div class="item">
+			<div class="itemLabel">
+				Charge Mode:
+			</div>
+			<div class="itemContent">
+				{{if data.locked && !data.siliconUser}}
+					{{if data.chargeMode}}
+						<span class='good'>Auto</span>
+					{{else}}
+						<span class='bad'>Off</span>
+					{{/if}}				
+				{{else}}
+					{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
+					{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
+				{{/if}}
+				&nbsp;
+				{{if data.chargingStatus > 1}}
+					[<span class='good'>Fully Charged</span>]
+				{{else data.chargingStatus == 1}}
+					[<span class='average'>Charging</span>]
+				{{else}}
+					[<span class='bad'>Not Charging</span>]
+				{{/if}}
+			</div>
+		</div>
+	{{/if}}
+</div>
 <hr />
 <h2>Power Channels</h2>
 <div class="statusDisplay">
-	{{for data.powerChannels}}
+	{{for data.powerChannels :channel:i}}
 		<div class="item">
 			<div class="itemLabel">
-				{{:value.title}}:
+				{{:channel.title}}:
 			</div>
 			<div class="itemContent" style="width: 70px; text-align: right; margin-right: 10px">
-				{{:value.powerLoad}} W
+				{{:channel.powerLoad}} W
 			</div>
 			<div class="itemContent" style="width: 105px">
-				{{if value.status <= 1}}
+				{{if channel.status <= 1}}
 					<span class='bad'>Off</span>
-				{{else value.status >= 2}}
+				{{else channel.status >= 2}}
 					<span class='good'>On</span>
 				{{/if}}
 				&nbsp;
-				{{if value.status == 1 || value.status == 3}}
+				{{if channel.status == 1 || channel.status == 3}}
 					[Auto]
 				{{else}}
 					[Manual]
@@ -116,9 +118,9 @@
 			</div>
 			{{if !data.locked || data.siliconUser}}
 				<div class="itemContentFull">
-					{{:helper.link('Auto', 'refresh', value.topicParams.auto, (value.status == 1 || value.status == 3) ? 'selected' : null)}}
-					{{:helper.link('On', 'power', value.topicParams.on, (value.status == 2) ? 'selected' : null)}}
-					{{:helper.link('Off', 'close', value.topicParams.off, (value.status == 0) ? 'selected' : null)}}
+					{{:helper.link('Auto', 'refresh', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
+					{{:helper.link('On', 'power', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
+					{{:helper.link('Off', 'close', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
 				</div>
 			{{/if}}
 		</div>
@@ -130,24 +132,6 @@
 		<div class="itemContent" style="width: 70px; text-align: right">
 			{{:data.totalLoad}} W
 		</div>
-	</div>
-</div>
-<hr />
-<div class="item">
-	<div class="itemLabel">
-		Cover Lock:
-	</div>
-	<div class="itemContent">
-		{{if data.locked && !data.siliconUser}}
-			{{if data.coverLocked}}
-				<span class='good'>Engaged</span>
-			{{else}}
-				<span class='bad'>Disengaged</span>
-			{{/if}}
-		{{else}}
-			{{:helper.link('Engaged', 'locked', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}
-			{{:helper.link('Disengaged', 'unlocked', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
-		{{/if}}
 	</div>
 </div>
 {{if data.siliconUser}}
@@ -170,3 +154,22 @@
 		</div>
 	</div>
 {{/if}}
+<br />
+<div class="notice">
+	<div class="itemContentSmall">
+		Cover Lock:
+	</div>
+	<div class="itemContentFull">
+		{{if data.locked && !data.siliconUser}}
+			{{if data.coverLocked}}
+				<span class='good'>Engaged</span>
+			{{else}}
+				<span class='bad'>Disengaged</span>
+			{{/if}}
+		{{else}}
+			{{:helper.link('Engaged', 'locked', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}
+			{{:helper.link('Disengaged', 'unlocked', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
+		{{/if}}
+	</div>
+	<div class="clearBoth"></div>
+</div>
