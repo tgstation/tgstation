@@ -1,10 +1,12 @@
-/**********************************************************
-NANO UI FRAMEWORK
+ /**
+  * NanoUI
+  *
+  * /tg/station user interface library
+  * thanks to baystation12
+  *
+  * modified by neersighted
+ **/
 
-nanoui class (or whatever Byond calls classes)
-
-nanoui is used to open and update nano browser uis
-**********************************************************/
 
 /datum/nanoui
 	// the user who opened this ui
@@ -46,9 +48,9 @@ nanoui is used to open and update nano browser uis
 	// the map z level to display
 	var/map_z_level = 1
 	// initial data, containing the full data structure, must be sent to the ui (the data structure cannot be extended later on)
-	var/list/initial_data[0]
+	var/list/initial_data
 	// set to 1 to update the ui automatically every master_controller tick
-	var/is_auto_updating = 0
+	var/auto_update = 0
 	// the current status/visibility of the ui
 	var/status = NANO_INTERACTIVE
 
@@ -156,7 +158,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_auto_update(nstate = 1)
-	is_auto_updating = nstate
+	auto_update = nstate
 
  /**
   * Set the initial data for the ui. This is vital as the data structure set here cannot be changed when pushing new updates.
@@ -194,11 +196,10 @@ nanoui is used to open and update nano browser uis
   *
   * @return /list data to send to the ui
   */
-/datum/nanoui/proc/get_send_data(var/list/data)
-	var/list/config_data = get_config_data()
+/datum/nanoui/proc/get_send_data(list/data)
+	var/list/send_data = list()
 
-	var/list/send_data = list("config" = config_data)
-
+	send_data["config"] = get_config_data()
 	if (!isnull(data))
 		send_data["data"] = data
 
@@ -329,7 +330,6 @@ nanoui is used to open and update nano browser uis
   * @return string HTML for the UI
   */
 /datum/nanoui/proc/get_html()
-
 	// before the UI opens, add the layout files based on the layout key
 	add_stylesheet("layout_[layout_key].css")
 	add_template("layout", "layout_[layout_key].tmpl")
@@ -337,10 +337,10 @@ nanoui is used to open and update nano browser uis
 	var/head_content = ""
 
 	for (var/filename in scripts)
-		head_content += "<script type='text/javascript' src='[filename]'></script> "
+		head_content += "<script type='text/javascript' src='[filename]' /></script>"
 
 	for (var/filename in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'> "
+		head_content += "<link rel='stylesheet' type='text/css' href='[filename]' /> "
 
 	var/template_data_json = "{}" // An empty JSON object
 	if (templates.len > 0)
@@ -388,9 +388,14 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/open()
+/datum/nanoui/proc/open(list/data = null)
 	if(!user.client)
 		return
+
+	if (!initial_data)
+		if (!data)
+			data = src_object.get_ui_data()
+		set_initial_data(data)
 
 	var/window_size = ""
 	if (width && height)
@@ -423,7 +428,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/close()
-	is_auto_updating = 0
+	auto_update = 0
 	SSnano.ui_closed(src)
 	user << browse(null, "window=[window_id]")
 	for(var/datum/nanoui/child in children)
@@ -495,7 +500,7 @@ nanoui is used to open and update nano browser uis
 		close()
 		return
 
-	if (status && (update || is_auto_updating))
+	if (status && (update || auto_update))
 		update() // Update the UI (update_status() is called whenever a UI is updated)
 	else
 		update_status(1) // Not updating UI, so lets check here if status has changed

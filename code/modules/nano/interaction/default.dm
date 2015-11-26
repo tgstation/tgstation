@@ -1,10 +1,9 @@
 /var/global/datum/topic_state/default/default_state = new()
 
-/datum/topic_state/default/href_list(var/mob/user)
-	return list()
 
 /datum/topic_state/default/can_use_topic(var/src_object, var/mob/user)
 	return user.default_can_use_topic(src_object)
+
 
 /mob/proc/default_can_use_topic(var/src_object)
 	return NANO_CLOSE // By default no mob can do anything with NanoUI
@@ -13,12 +12,6 @@
 	if(check_rights(R_ADMIN, 0, src))
 		return NANO_INTERACTIVE				// Admins are more equal
 	return NANO_UPDATE						// Ghosts can view updates
-
-/mob/living/silicon/pai/default_can_use_topic(var/src_object)
-	if((src_object == src || src_object == radio) && !stat)
-		return NANO_INTERACTIVE
-	else
-		return ..()
 
 /mob/living/silicon/robot/default_can_use_topic(var/src_object)
 	. = shared_nano_interaction()
@@ -45,37 +38,20 @@
 
 /mob/living/silicon/ai/default_can_use_topic(var/src_object)
 	. = shared_nano_interaction()
-	if(. != NANO_INTERACTIVE)
+	if (. != NANO_INTERACTIVE)
 		return
 
-	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
-	// unless it's on the same level as the object it's interacting with.
-	var/turf/T = get_turf(src_object)
-	if(!T || !(z == T.z))
-		return NANO_CLOSE
-
-	// If an object is in view then we can interact with it
-	if(src_object in view(client.view, src))
+	// If an object is in view of the client and a camera then we can interact with it
+	if ((src_object in view(eyeobj)) && cameranet.checkTurfVis(get_turf(src_object)))
 		return NANO_INTERACTIVE
 
 	return NANO_CLOSE
 
-//Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
-/atom/proc/contents_nano_distance(var/src_object, var/mob/living/user)
-	return user.shared_living_nano_distance(src_object)
-
-/mob/living/proc/shared_living_nano_distance(var/atom/movable/src_object)
-	if (!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates
-		return NANO_CLOSE
-
-	var/dist = get_dist(src_object, src)
-	if (dist <= 1)
-		return NANO_INTERACTIVE	// interactive (green visibility)
-	else if (dist <= 2)
-		return NANO_UPDATE 		// update only (orange visibility)
-	else if (dist <= 4)
-		return NANO_DISABLED 		// no updates, completely disabled (red visibility)
-	return NANO_CLOSE
+/mob/living/silicon/pai/default_can_use_topic(var/src_object)
+	if((src_object == src || src_object == radio) && !stat)
+		return NANO_INTERACTIVE
+	else
+		return ..()
 
 /mob/living/default_can_use_topic(var/src_object)
 	. = shared_nano_interaction(src_object)

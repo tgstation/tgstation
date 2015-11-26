@@ -99,7 +99,7 @@
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
@@ -110,16 +110,18 @@
 		bomb_assemble(W,user)
 
 /obj/item/weapon/tank/attack_self(mob/user)
-	if (!(src.air_contents))
-		return
+	if (!user) return
+	interact(user)
 
+/obj/item/weapon/tank/interact(mob/user)
+	if (!(src.air_contents)) return
 	ui_interact(user)
 
-/obj/item/weapon/tank/interact(mob/user, ui_key = "main")
-	SSnano.try_update_ui(user, src, ui_key, null, src.get_ui_data())
-
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "tanks.tmpl", "Tank", 500, 300, 0)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 1)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "tanks.tmpl", name, 500, 300)
+		ui.open()
 
 /obj/item/weapon/tank/get_ui_data()
 	var/mob/living/carbon/location = null
@@ -153,11 +155,10 @@
 	return data
 
 /obj/item/weapon/tank/Topic(href, href_list)
-	..()
-	if (usr.stat|| usr.restrained())
-		return
+	if (..()) return
+	if (usr.stat|| usr.restrained()) return
+
 	if (src.loc == usr)
-		usr.set_machine(src)
 		if (href_list["dist_p"])
 			if (href_list["dist_p"] == "reset")
 				src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE

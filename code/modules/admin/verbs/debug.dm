@@ -779,8 +779,8 @@ var/global/list/g_fancy_list_of_types = null
 
 /client/proc/reload_nanoui_templates()
 	set category = "Debug"
-	set name = "Reload NanoUI Templates"
-	set desc = "Forces the client to redownload NanoUI Templates"
+	set name = "Reload NanoUI Resources"
+	set desc = "Force the client to redownload NanoUI Resources"
 
 	var/list/resources = SSnano.populate_resources()
 

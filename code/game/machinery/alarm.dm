@@ -169,40 +169,25 @@
 	return 0
 
 /obj/machinery/alarm/attack_hand(mob/user)
-	if (..())
+	if (..() || !user) return
+	if (buildstage != 2) return
+
+	interact(user)
+
+/obj/machinery/alarm/interact(mob/user)
+	if (user.has_unlimited_silicon_privilege && src.aidisabled)
+		user << "AI control for this Air Alarm interface has been disabled."
+		user << browse(null, "window=air_alarm")
 		return
 
-	if (buildstage != 2)
-		return
+	if(panel_open && !istype(user, /mob/living/silicon/ai)) wires.Interact(user)
+	else if (!shorted) ui_interact(user)
 
-	user.set_machine(src)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=air_alarm")
-			user << browse(null, "window=AAlarmwires")
-			return
-
-
-		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
-			user << "AI control for this Air Alarm interface has been disabled."
-			user << browse(null, "window=air_alarm")
-			return
-
-	if(!shorted)
-		ui_interact(user)
-
-	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
-		wires.Interact(user)
-
-	return
-
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 440, 600, 1)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 440, 600)
+		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)
 	var/data = list()

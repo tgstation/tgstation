@@ -120,28 +120,18 @@
 		user << "Seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
-	if(..())
-		return
+	if(..() | !user) return
+	interact(user)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/interact(mob/user)
+	if(user == occupant || user.stat || panel_open) return
 	ui_interact(user)
 
-
- /**
-  * The ui_interact proc is used to open and update Nano UIs
-  * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable
-  *
-  * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
-  *
-  * @return nothing
-  */
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(user == occupant || user.stat || panel_open)
-		return
-
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "cryo.tmpl", "Cryo Cell Control System", 520, 410, 1)
-	//user.set_machine(src)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 410)
+		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
@@ -193,11 +183,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
-	if(usr == occupant || panel_open)
-		return 0 // don't update UIs attached to this object
-
-	if(..())
-		return 0 // don't update UIs attached to this object
+	if(..()) return 0
+	if(usr == occupant || panel_open) return 0
 
 	if(href_list["switchOn"])
 		if(!state_open)
@@ -215,9 +202,8 @@
 			B.loc = get_step(loc, SOUTH)
 			beaker = null
 
-	update_icon()
 	add_fingerprint(usr)
-	return 1 // update UIs attached to this object
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))

@@ -1,28 +1,4 @@
  /**
-  * Get an open /nanoui ui for the current user, or create a new one.
-  *
-  * @param user /mob The mob who opened/owns the ui
-  * @param src_object /obj|/mob The obj or mob which the ui belongs to
-  * @param ui_key string A string key used for the ui
-  * @param ui /datum/nanoui An existing instance of the ui (can be null)
-  * @param data list The data to be passed to the ui, if it exists
-  *
-  * @return /nanoui Returns the new or found ui
-  */
-/datum/subsystem/nano/proc/push_open_or_new_ui(mob/user, atom/movable/src_object, ui_key, datum/nanoui/ui, template, title, width, height, auto_update, var/atom/ref = null, var/datum/nanoui/master_ui = null, var/datum/topic_state/state = default_state)
-	var/list/data = src_object.get_ui_data(user)
-	if (!data)
-		data = list()
-
-	ui = try_update_ui(user, src_object, ui_key, ui, data)
-
-	if (isnull(ui))
-		ui = new/datum/nanoui(user, src_object, ui_key, template, title, width, height, ref, master_ui, state)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(auto_update)
-
- /**
   * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
   *
   * @param user /mob The mob who opened/owns the ui
@@ -34,21 +10,22 @@
   *
   * @return /nanoui Returns the found ui, for null if none exists
   */
-/datum/subsystem/nano/proc/try_update_ui(var/mob/user, src_object, ui_key, var/datum/nanoui/ui, data, var/force_open = 0)
-	if (isnull(ui)) // no ui has been passed, so we'll search for one
-	{
-		ui = get_open_ui(user, src_object, ui_key)
-	}
-	if (!isnull(ui))
-		// The UI is already open
-		if (!force_open)
-			ui.push_data(data)
-			return ui
-		else
-			ui.reinitialise(new_initial_data=data)
-			return ui
+/datum/subsystem/nano/proc/try_update_ui(mob/user, atom/movable/src_object, ui_key, datum/nanoui/ui, \
+											list/data = null, force_open = 0)
+	if (!data)
+		data = src_object.get_ui_data(user)
 
-	return null
+	if (isnull(ui)) // No NanoUI was passed, so look for one.
+		ui = get_open_ui(user, src_object, ui_key)
+
+	if (!isnull(ui))
+		if (!force_open) // UI is already open; update it.
+			ui.push_data(data)
+		else // Re-open it anyways.
+			ui.reinitialise(new_initial_data=data)
+		return ui // We found the UI, return it.
+
+	return null // We couldn't find a UI.
 
  /**
   * Get an open /nanoui ui for the current user, src_object and ui_key
@@ -279,5 +256,6 @@
   *
   * @return nothing
   */
+
 /datum/subsystem/nano/proc/send_resources(client, var/list/resources = resource_files)
 	getFilesSlow(client, resources)
