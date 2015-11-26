@@ -58,10 +58,10 @@
 	icon_state = "hole"
 	icon_living = "hole"
 	icon = 'icons/mob/nest.dmi'
-	health = 300
-	maxHealth = 300
-	max_mobs = 30
-	spawn_time = 100
+	health = 150
+	maxHealth = 150
+	max_mobs = 10
+	spawn_time = 200
 	mob_type = /mob/living/simple_animal/hostile/skeleton
 	spawn_text = "climbs out of"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -72,6 +72,9 @@
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."
 	icon_state = "hole"
 	icon_living = "hole"
+	health = 200
+	maxHealth = 200
+	max_mobs = 3
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goldgrub

@@ -179,6 +179,8 @@
 	..()
 	icon_state = "basalt[rand(1,12)]"
 
+/turf/simulated/floor/plating/basalt/Destroy()
+	return QDEL_HINT_LETMELIVE
 
 
 
