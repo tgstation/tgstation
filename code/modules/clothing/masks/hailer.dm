@@ -1,6 +1,12 @@
 
 // **** Security gas mask ****
 
+#define LOW_AGRESSION		1
+#define MEDIUM_AGRESSION	2
+#define HIGH_AGRESSION		3
+#define	HIGH_BROKEN_AGRESSION	4
+#define	LOW_BROKEN_AGRESSION	5
+
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
@@ -13,7 +19,7 @@
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
-	var/aggressiveness = 2
+	var/aggressiveness = MEDIUM_AGRESSION
 	var/cooldown_special
 	var/recent_uses = 0
 	var/broken_hailer = 0
@@ -23,7 +29,7 @@
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	action_button_name = "HALT!"
 	icon_state = "swat"
-	aggressiveness = 3
+	aggressiveness = HIGH_AGRESSION
 	ignore_maskadjust = 1
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
@@ -31,7 +37,7 @@
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_idle"
-	aggressiveness = 1 //Borgs are nicecurity!
+	aggressiveness = LOW_AGRESSION //Borgs are nicecurity!
 	ignore_maskadjust = 1
 
 /obj/item/clothing/mask/gas/sechailer/cyborg/New()
@@ -41,21 +47,25 @@
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
-			if(1)
+			if(LOW_AGRESSION)
 				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
-				aggressiveness = 2
-			if(2)
+				aggressiveness = MEDIUM_AGRESSION
+			if(MEDIUM_AGRESSION)
 				user << "<span class='notice'>You set the restrictor to the last position.</span>"
-				aggressiveness = 3
-			if(3)
+				aggressiveness = HIGH_AGRESSION
+			if(HIGH_AGRESSION)
 				user << "<span class='notice'>You set the restrictor to the first position.</span>"
-				aggressiveness = 1
-			if(4)
+				aggressiveness = LOW_AGRESSION
+			if(HIGH_BROKEN_AGRESSION to LOW_BROKEN_AGRESSION)
 				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
-		if(aggressiveness != 4)
-			user << "<span class='danger'>You broke the restrictor!</span>"
-			aggressiveness = 4
+		if(aggressiveness <= HIGH_AGRESSION)
+			if(prob(20))
+				user << "<span class='danger'>You accidentally overclocked the restrictor!</span>"
+				aggressiveness = LOW_BROKEN_AGRESSION
+			else
+				user << "<span class='danger'>You broke the restrictor!</span>"
+				aggressiveness = HIGH_BROKEN_AGRESSION
 	else
 		..()
 
@@ -100,14 +110,16 @@
 				return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
-			if(1)
+			if(LOW_AGRESSION)
 				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
-			if(2)
+			if(MEDIUM_AGRESSION)
 				phrase = rand(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
-			if(3)
+			if(HIGH_AGRESSION)
 				phrase = rand(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
-			if(4)
+			if(HIGH_BROKEN_AGRESSION)
 				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
+			if(LOW_BROKEN_AGRESSION)
+				phrase = rand(19,23)	// user failed the hack.  Now only plays hilariously nice messages.
 
 		switch(phrase)	//sets the properties of the chosen phrase
 			if(1)				// good cop
@@ -164,6 +176,24 @@
 			if(18)
 				phrase_text = "I am, the LAW!"
 				phrase_sound = "dredd"
+			if(19)				//Overly nice
+				phrase_text = "Golly gee, it would be swell if you turned yourself in."
+				phrase_sound = "golly"
+			if(20)
+				phrase_text = "Let me know if the handcuffs are too tight."
+				phrase_sound = "tightcuff"
+			if(21)
+				phrase_text = "When you are finished with your current activity, please follow me to the brig."
+				phrase_sound = "whenfinish"
+			if(22)
+				phrase_text = "The ground wants to give you a hug, it would be rude to not accept."
+				phrase_sound = "groundhug"
+			if(23)
+				phrase_text = "We're police officers! We're not trained to handle this kind of violence!"
+				phrase_sound = "nottrain"
+			if(23)
+				phrase_text = "These new bracelets will complement your eyes."
+				phrase_sound = "newbracelet"
 
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
