@@ -61,3 +61,10 @@
 /obj/item/device/rcd/borg/rsf/attack_self(var/mob/living/user)
 	if(!selected || user.shown_schematics_background || !selected.show(user))
 		user.hud_used.toggle_show_schematics_display(schematics["Service"], 0, src)
+
+//Override of preattack to perform a check on what is being attacked
+/obj/item/device/rcd/matter/rsf/preattack(var/atom/A, mob/user, proximity_flag)
+	if (istype(A, /obj/structure/table))
+		afterattack(A,user) //If it's a table call afterattack now, and return 1 so it doesn't call the table attackby proc.
+		return 1
+	return 0 //Otherwise proceed as normal.
