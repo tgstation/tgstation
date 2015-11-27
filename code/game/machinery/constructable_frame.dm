@@ -315,7 +315,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=5;bluespace=5;materials=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 3,
+							/obj/item/weapon/ore/bluespace_crystal = 3,
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
 /obj/item/weapon/circuitboard/teleporter_station
@@ -324,7 +324,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4;bluespace=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
@@ -334,7 +334,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=3;materials=3;bluespace=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
