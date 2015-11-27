@@ -224,6 +224,10 @@
 	icon_state = "knight_blue"
 	item_state = "knight_blue"
 
+/obj/item/clothing/suit/armor/riot/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
+
 /obj/item/clothing/suit/armor/riot/knight/templar
 	name = "crusader armour"
 	desc = "God wills it!"

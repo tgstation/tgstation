@@ -185,6 +185,10 @@
 	icon_state = "knight_yellow"
 	item_state = "knight_yellow"
 
+/obj/item/clothing/head/helmet/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
+
 /obj/item/clothing/head/helmet/knight/templar
 	name = "crusader helmet"
 	desc = "Deus Vult."
