@@ -356,6 +356,15 @@
 		Radio.talk_into(src, message, radio_frequency)
 	else
 		say(message)
+
+		//speech bubble
+		var/list/speech_bubble_recipients = list()
+		for(var/mob/M in get_hearers_in_view(7,src))
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+		spawn(0)
+			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+
 	return
 
 	//Generalized behavior code, override where needed!
