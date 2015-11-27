@@ -173,6 +173,7 @@
 	icon_state = "knight_green"
 	item_state = "knight_green"
 	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -184,6 +185,10 @@
 /obj/item/clothing/head/helmet/knight/yellow
 	icon_state = "knight_yellow"
 	item_state = "knight_yellow"
+
+/obj/item/clothing/head/helmet/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
 
 /obj/item/clothing/head/helmet/knight/templar
 	name = "crusader helmet"
