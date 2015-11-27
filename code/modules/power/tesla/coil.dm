@@ -31,5 +31,5 @@
 	add_avail(power_produced)
 	flick("coilhit", src)
 	tesla_zap(src, 3, power_produced)
-	sleep(10)
-	being_shocked = 0
+	spawn(10)
+		being_shocked = 0
