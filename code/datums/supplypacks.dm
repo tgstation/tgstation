@@ -1102,6 +1102,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/hand_labeler_refill,
 					/obj/item/hand_labeler_refill,
 					/obj/item/weapon/paper_bin,
+					/obj/item/weapon/pen/fourcolor,
+					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,

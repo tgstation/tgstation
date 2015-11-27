@@ -45,9 +45,7 @@
 	if(!can_buy(price))
 		return
 	B.color = blob_reagent_datum.color
-	var/obj/effect/blob/N = B.change_to(blobType)
-	N.overmind = src
-	N.adjustcolors(blob_reagent_datum.color)
+	var/obj/effect/blob/N = B.change_to(blobType, src)
 	return N
 
 /mob/camera/blob/verb/create_shield_power()
@@ -79,10 +77,9 @@
 
 /mob/camera/blob/verb/create_storage()
 	set category = "Blob"
-	set name = "Create Storage Blob (40)"
+	set name = "Create Storage Blob (20)"
 	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
-	var/obj/effect/blob/storage/R = createSpecial(40, /obj/effect/blob/storage, 3)
-	R.update_max_blob_points(50)
+	createSpecial(20, /obj/effect/blob/storage, 3)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -91,10 +88,10 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		src << "You must be on a blob!"
+		src << "<span class='warning'>You must be on a blob!</span>"
 		return
 	if(!istype(B, /obj/effect/blob/factory))
-		src << "Unable to use this blob, find a factory blob."
+		src << "<span class='warning'>Unable to use this blob, find a factory blob.</span>"
 		return
 	if(!can_buy(20))
 		return
@@ -112,7 +109,7 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
 	if(!B)
-		src << "You must be on a blob node!"
+		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
 	if(!can_buy(80))
 		return
@@ -123,15 +120,24 @@
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
 	set name = "Remove Blob"
-	set desc = "Removes a blob."
+	set desc = "Removes a blob, giving you back some resources."
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
+	remove_blob(T)
+
+/mob/camera/blob/proc/remove_blob(turf/T)
+	var/obj/effect/blob/B = locate() in T
 	if(!B)
-		src << "You must be on a blob!"
+		src << "<span class='warning'>There is no blob there!</span>"
 		return
-	if(istype(B, /obj/effect/blob/core))
-		src << "Unable to remove this blob."
+	if(B.point_return < 0)
+		src << "<span class='warning'>Unable to remove this blob.</span>"
 		return
+	if(max_blob_points < B.point_return + blob_points)
+		src << "<span class='warning'>You have too many resources to remove this blob!</span>"
+		return
+	if(B.point_return)
+		add_points(B.point_return)
+		src << "<span class='notice'>Gained [B.point_return] resources from removing the [B].</span>"
 	qdel(B)
 
 /mob/camera/blob/verb/expand_blob_power()
@@ -146,11 +152,11 @@
 		return
 	var/obj/effect/blob/B = locate() in T
 	if(B)
-		src << "There is a blob here!"
+		src << "<span class='warning'>There is a blob there!</span>"
 		return
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
-		src << "There is no blob adjacent to you."
+		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
 	if(!can_buy(5))
 		return
@@ -166,14 +172,12 @@
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
-	set name = "Rally Spores (5)"
+	set name = "Rally Spores"
 	set desc = "Rally the spores to move to your location."
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
 /mob/camera/blob/proc/rally_spores(turf/T)
-	if(!can_buy(5))
-		return
 	src << "You rally your spores."
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
@@ -188,11 +192,11 @@
 	set name = "Split consciousness (100) (One use)"
 	set desc = "Expend resources to attempt to produce another sentient overmind"
 	if(!blob_nodes || !blob_nodes.len)
-		src << "<span class='warning'>A node is required to birth your offspring...</span>"
+		src << "<span class='warning'>A node is required to produce another overmind.</span>"
 		return
 	var/obj/effect/blob/node/N = locate(/obj/effect/blob) in blob_nodes
 	if(!N)
-		src << "<span class='warning'>A node is required to birth your offspring...</span>"
+		src << "<span class='warning'>A node is required to produce another overmind.</span>"
 		return
 	if(!can_buy(100))
 		return
@@ -213,19 +217,38 @@
 	else
 		usr << "You broadcast with your minions, <B>[speak_text]</B>"
 	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
-		blob_minion.say(speak_text)
+		if(blob_minion.stat == CONSCIOUS)
+			blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
-	set name = "Reactive Chemical Adaptation (50)"
+	set name = "Reactive Chemical Adaptation (40)"
 	set desc = "Replaces your chemical with a different one"
-	if(!can_buy(50))
+	if(!can_buy(40))
 		return
-	var/list/excluded = list(/datum/reagent/blob, blob_reagent_datum.type)
-	var/datum/reagent/blob/B = pick((typesof(/datum/reagent/blob) - excluded))
+	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new B
 	for(var/obj/effect/blob/BL in blobs)
 		BL.adjustcolors(blob_reagent_datum.color)
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
 		BLO.adjustcolors(blob_reagent_datum.color)
-	src << "Your reagent is now: <b>[blob_reagent_datum.name]</b>!"
+	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
+
+/mob/camera/blob/verb/blob_help()
+	set category = "Blob"
+	set name = "*Blob Help*"
+	set desc = "Help on how to blob."
+	src << "Your blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
+	src << "<b>As the overmind, you can control the blob!</b>"
+	src << "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>"
+	src << "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions."
+	src << "<b>You can upgrade normal blobs into the following types of blob:</b>"
+	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
+	src << "<i>Storage Blobs</i> are blobs which allow you to store 50 more resources. These blobs do not need to be near nodes to function."
+	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
+	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
+	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
+	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
+	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"

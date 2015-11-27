@@ -1,0 +1,8 @@
+author: bgobandit
+delete-after: True
+changes: 
+  - rscadd: "Due to changes in Nanotrasen's mining supply chain, ore redemption machines now offer a variety of upgraded items! However, certain items are more expensive. Point values for minerals have been adjusted to reflect their scarcity."
+  - rscadd: "Nanotrasen R&D has discovered how to improve upon the resonator and kinetic accelerator."
+  - rscadd: "After a colossal tectonic event on Nanotrasen's asteroid, ores are distributed more randomly."
+  - rscadd: "Bluespace crystals have been discovered to be ore. They will now fit into satchels and ore boxes."
+  - rscadd: "Mech advanced mining scanners now include meson functionality."

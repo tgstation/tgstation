@@ -116,6 +116,14 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
 	return
 
+/datum/chemical_reaction/carbondioxide
+	name = "Direct Carbon Oxidation"
+	id = "burningcarbon"
+	result = "co2"
+	required_reagents = list("carbon" = 1, "oxygen" = 2)
+	required_temp = 777 // pure carbon isn't especially reactive.
+	result_amount = 3
+
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
 /datum/chemical_reaction/virus_food

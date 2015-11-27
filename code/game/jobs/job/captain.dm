@@ -40,11 +40,14 @@ Captain
 	backpack = /obj/item/weapon/storage/backpack/captain
 	satchel = /obj/item/weapon/storage/backpack/satchel_cap
 
-/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
+
+	if(visualsOnly)
+		return
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -97,7 +100,10 @@ Head of Personnel
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
 		/obj/item/weapon/melee/classic_baton/telescopic=1)
 
-/datum/outfit/job/hop/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
 
 	announce_head(H, list("Supply", "Service"))

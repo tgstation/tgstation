@@ -287,8 +287,8 @@
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(PATCH, TOUCH))
-			M.adjustBruteLoss(1.25 * reac_volume)
-			M.adjustFireLoss(1.25 * reac_volume)
+			M.adjustBruteLoss(-1.25 * reac_volume)
+			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
 				M << "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>"
 	..()

@@ -12,6 +12,8 @@
 		cameranet.updateVisibility(src)
 
 /obj/structure/blob_act()
+	if(!density)
+		qdel(src)
 	if(prob(50))
 		qdel(src)
 

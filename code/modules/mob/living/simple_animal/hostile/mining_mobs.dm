@@ -264,11 +264,12 @@
 	slot = "hivecore"
 	force = 0
 	var/inert = 0
+	var/preserved = 0
 
 /obj/item/organ/internal/hivelord_core/New()
 	..()
 	spawn(2400)
-		if(!owner)
+		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 

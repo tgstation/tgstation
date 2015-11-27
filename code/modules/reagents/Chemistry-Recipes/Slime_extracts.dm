@@ -202,9 +202,7 @@
 /datum/chemical_reaction/slimebork2/on_reaction(datum/reagents/holder)
 
 	feedback_add_details("slime_cores_used","[type]")
-	var/list/blocked = list(/obj/item/weapon/reagent_containers/food/drinks)
-
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
+	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/drinks)
 	// BORK BORK BORK
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -566,7 +564,7 @@
 /datum/chemical_reaction/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
 	feedback_add_details("slime_cores_used","[type]")
 	if(holder.my_atom)
-		var/obj/item/bluespace_crystal/BC = new(get_turf(holder.my_atom))
+		var/obj/item/weapon/ore/bluespace_crystal/BC = new(get_turf(holder.my_atom))
 		BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 
 //Cerulean
@@ -665,7 +663,7 @@
 
 /datum/chemical_reaction/slimepaint/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/list/paints = typesof(/obj/item/weapon/paint) - /obj/item/weapon/paint
+	var/list/paints = subtypesof(/obj/item/weapon/paint)
 	var/chosen = pick(paints)
 	var/obj/P = new chosen
 	if(P)

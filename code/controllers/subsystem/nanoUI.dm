@@ -30,7 +30,7 @@ var/datum/subsystem/nano/SSnano
 			//Ignore directories
 			if(copytext(filename, length(filename)) != "/")
 				if(fexists(path + filename))
-					asset_files.Add(fcopy_rsc(path + filename))
+					asset_files[filename] = fcopy_rsc(path + filename)
 
 
 /datum/subsystem/nano/stat_entry()

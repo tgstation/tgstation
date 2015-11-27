@@ -17,6 +17,7 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
 			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 
@@ -105,7 +106,7 @@
 						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(4, 0, L)
 						s.start()
-						new/obj/effect/overlay/temp/revenant(L.loc)
+						PoolOrNew(/obj/effect/overlay/temp/revenant, L.loc)
 						sleep(20)
 						if(!L.on) //wait, wait, don't shock me
 							return
@@ -137,19 +138,19 @@
 			spawn(0)
 				if(T.flags & NOJAUNT)
 					T.flags -= NOJAUNT
-					new/obj/effect/overlay/temp/revenant(T)
-				if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/plating) && prob(15))
+					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
+				if(!istype(T, /turf/simulated/floor/plating) && !istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(15))
 					var/turf/simulated/floor/floor = T
 					if(floor.intact)
 						floor.builtin_tile.loc = floor
 					floor.broken = 0
 					floor.burnt = 0
 					floor.make_plating(1)
-				if(!istype(T, /turf/simulated/wall/shuttle) && !istype(T, /turf/simulated/wall/rust) && !istype(T, /turf/simulated/wall/r_wall) && istype(T, /turf/simulated/wall) && prob(15))
-					new/obj/effect/overlay/temp/revenant(T)
+				if(!istype(T, /turf/simulated/wall/shuttle) && !istype(T, /turf/simulated/wall/cult) && !istype(T, /turf/simulated/wall/rust) && !istype(T, /turf/simulated/wall/r_wall) && istype(T, /turf/simulated/wall) && prob(15))
+					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 					T.ChangeTurf(/turf/simulated/wall/rust)
 				if(!istype(T, /turf/simulated/wall/r_wall/rust) && istype(T, /turf/simulated/wall/r_wall) && prob(15))
-					new/obj/effect/overlay/temp/revenant(T)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 					T.ChangeTurf(/turf/simulated/wall/r_wall/rust)
 				for(var/obj/structure/closet/closet in T.contents)
 					closet.open()
@@ -161,7 +162,7 @@
 				for(var/obj/structure/window/window in T.contents)
 					window.hit(rand(50,90))
 					if(window && window.fulltile)
-						new/obj/effect/overlay/temp/revenant/cracks(window.loc)
+						PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
 				for(var/obj/machinery/light/light in T.contents)
 					light.flicker(20) //spooky
 
@@ -182,7 +183,7 @@
 			spawn(0)
 				for(var/obj/machinery/bot/bot in T.contents)
 					if(!bot.emagged)
-						new/obj/effect/overlay/temp/revenant(bot.loc)
+						PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
 						bot.locked = 0
 						bot.open = 1
 						bot.Emag(null)
@@ -190,21 +191,21 @@
 					if(human == user)
 						continue
 					human << "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>"
-					new/obj/effect/overlay/temp/revenant(human.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
 					human.emp_act(1)
 				for(var/obj/thing in T.contents)
 					if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes) || istype(thing, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 						continue
 					if(prob(20))
 						if(prob(50))
-							new/obj/effect/overlay/temp/revenant(thing.loc)
+							PoolOrNew(/obj/effect/overlay/temp/revenant, thing.loc)
 						thing.emag_act(null)
 					else
 						if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 							thing.emp_act(1)
 				for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
 					playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-					new/obj/effect/overlay/temp/revenant(S.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, S.loc)
 					S.spark_system.start()
 					S.emp_act(1)
 
@@ -225,7 +226,7 @@
 				for(var/mob/living/mob in T.contents)
 					if(mob == user)
 						continue
-					new/obj/effect/overlay/temp/revenant(mob.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, mob.loc)
 					if(iscarbon(mob))
 						if(ishuman(mob))
 							var/mob/living/carbon/human/H = mob
@@ -253,18 +254,18 @@
 						mob.adjustToxLoss(5)
 				for(var/obj/effect/spacevine/vine in T.contents) //Fucking with botanists, the ability.
 					vine.color = "#823abb"
-					new/obj/effect/overlay/temp/revenant(vine.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
 					spawn(20)
 						if(vine)
 							qdel(vine)
 				for(var/obj/effect/glowshroom/shroom in T.contents)
 					shroom.color = "#823abb"
-					new/obj/effect/overlay/temp/revenant(shroom.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
 					spawn(20)
 						if(shroom)
 							qdel(shroom)
 				for(var/obj/machinery/hydroponics/tray in T.contents)
-					new/obj/effect/overlay/temp/revenant(tray.loc)
+					PoolOrNew(/obj/effect/overlay/temp/revenant, tray.loc)
 					tray.pestlevel = rand(8, 10)
 					tray.weedlevel = rand(8, 10)
 					tray.toxic = rand(45, 55)

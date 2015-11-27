@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
+kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master
 Gun Hog = Game Master
@@ -99,5 +100,6 @@ Xhuis = Game Master
 Astralenigma = Game Master
 Tokiko1 = Game Master
 SuperSayu = Game Master
-Lzimann = Game MasterTokiko1 = Game Master
+Lzimann = Game Master
 As334 = Game Master
+Swankcookie = Game Master
