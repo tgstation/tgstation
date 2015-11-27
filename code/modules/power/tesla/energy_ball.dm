@@ -38,7 +38,6 @@ proc/get_closest_atom(var/type, var/list, var/source)
 	var/closest_atom
 	var/closest_distance
 	for(var/A in list)
-		world << "LOOKING FOR [type]"
 		if(!istype(A, type))
 			continue
 		var/distance = get_dist(source, A)
@@ -53,7 +52,6 @@ proc/get_closest_atom(var/type, var/list, var/source)
 
 proc/tesla_zap(var/atom/source, var/zap_range = 3, var/power)
 	if(power < 1000)
-		world << "NOT ENOUGH POWER"
 		return
 	var/list/tesla_coils = list()
 	var/list/potential_machine_zaps = list()
@@ -64,42 +62,33 @@ proc/tesla_zap(var/atom/source, var/zap_range = 3, var/power)
 			var/obj/machinery/power/tesla_coil/C = A
 			if(C.being_shocked)
 				continue
-			world << "COIL"
 			tesla_coils.Add(C)
 			continue
 		if(istype(A, /obj/machinery))
 			var/obj/machinery/M = A
-			world << "MACHINE"
 			potential_machine_zaps.Add(M)
 			continue
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			world << "MOB"
 			potential_mob_zaps.Add(L)
 			continue
 	closest_atom = get_closest_atom(/obj/machinery/power/tesla_coil, tesla_coils, source)
-	world << "CLOSEST ATOM IS [closest_atom]"
 	if(closest_atom && istype(closest_atom, /obj/machinery/power/tesla_coil))
 		var/obj/machinery/power/tesla_coil/C = closest_atom
 		source.Beam(C,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 		C.tesla_act(power)
-		world << "SHOCKING [C] TESLA COIL"
 		return
 	if(!closest_atom)
-		world << "NO TESLA, LOOKING FOR MOB"
 		closest_atom = get_closest_atom(/mob/living, potential_mob_zaps, source)
 		if(closest_atom && istype(closest_atom, /mob/living))
 			var/mob/living/L = closest_atom
 			var/shock_damage = Clamp(round(power/400), 10, 200) + rand(-5,5)
 			source.Beam(L,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 			L.electrocute_act(shock_damage, source, 1)
-			world << "SHOCKING [L] MOB"
 			return
 	if(!closest_atom)
-		world << "NO MOB, LOOKING FOR MACHINE"
 		closest_atom = get_closest_atom(/obj/machinery, potential_machine_zaps, source)
 		if(closest_atom)
 			source.Beam(closest_atom,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 			tesla_zap(closest_atom, 3, power / 4)
-			world << "SHOCKING [closest_atom] MACHINE"
 			return
