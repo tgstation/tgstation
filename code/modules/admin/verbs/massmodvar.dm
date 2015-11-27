@@ -453,6 +453,38 @@
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
+	if(method)
+		if(istype(O,/mob))
+			for(var/mob/M in mob_list)
+				if(istype(M,O.type))
+					M.on_varedit(variable)
+
+		else if(istype(O,/obj))
+			for(var/obj/A in world)
+				if(istype(A,O.type))
+					A.on_varedit(variable)
+
+		else if(istype(O,/turf))
+			for(var/turf/A in world)
+				if(istype(A,O.type))
+					A.on_varedit(variable)
+
+	else
+		if(istype(O, /mob))
+			for(var/mob/M in mob_list)
+				if(M.type == O.type)
+					M.on_varedit(variable)
+
+		else if(istype(O, /obj))
+			for(var/obj/A in world)
+				if(A.type == O.type)
+					A.on_varedit(variable)
+
+		else if(istype(O, /turf))
+			for(var/turf/A in world)
+				if(A.type == O.type)
+					A.on_varedit(variable)
+
 	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
