@@ -248,8 +248,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return attack_self(M)
 	return
 
-//NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
+	assets.send(user)
 
 	user.set_machine(src)
 

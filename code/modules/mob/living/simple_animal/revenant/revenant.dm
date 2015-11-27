@@ -224,6 +224,9 @@
 
 
 /mob/living/simple_animal/revenant/say(message)
+	if(!message)
+		return
+	log_say("[key_name(src)] : [message]")
 	for(var/mob/M in mob_list)
 		if (istype(M, /mob/new_player))
 			continue

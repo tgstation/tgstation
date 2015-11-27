@@ -17,6 +17,7 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
 			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 

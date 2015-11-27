@@ -35,7 +35,6 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = new()
-	mannequin.status_flags |= GODMODE // Why not?
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -60,7 +59,7 @@
 
 	if(previewJob)
 		mannequin.job = previewJob.title
-		previewJob.equip(mannequin)
+		previewJob.equip(mannequin, TRUE)
 
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
