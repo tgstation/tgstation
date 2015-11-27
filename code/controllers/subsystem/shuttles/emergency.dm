@@ -179,29 +179,12 @@
 	dwidth = 1
 	width = 3
 	height = 4
+	var/target_area = /area/mine/unexplored
 
 /obj/docking_port/stationary/random/initialize()
 	..()
-	var/target_area = /area/mine/unexplored
 	var/list/turfs = get_area_turfs(target_area)
-	var/sanity = 0
-	var/valid = 0
-	var/turf/T
-
-	if(!turfs.len)
-		qdel(src)
-
-	while(!valid)
-		valid = 1
-		sanity++
-		if(sanity > 100)
-			qdel(src)
-		T = pick(turfs)
-		if(!T)
-			qdel(src)
-		if(T.z == ZLEVEL_STATION || T.z == ZLEVEL_CENTCOM)
-			valid = 0
-			continue
+	var/turf/T = pick(turfs)
 	src.loc = T
 
 //Pod suits/pickaxes
