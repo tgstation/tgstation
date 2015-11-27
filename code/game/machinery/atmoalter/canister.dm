@@ -1,3 +1,7 @@
+#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*10)
+#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE/10)
+#define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	desc = "A canister for the storage of gas."
@@ -268,26 +272,29 @@ update_flag
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "canister.tmpl", name, 480, 400)
+		ui = new(user, src, ui_key, "canister.tmpl", name, 470, 400)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()
 	var/data = list()
-	data["name"] = src.name
-	data["canLabel"] = src.can_label ? 1 : 0
-	data["portConnected"] = src.connected_port ? 1 : 0
-	data["tankPressure"] = round(src.air_contents.return_pressure() ? src.air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(src.release_pressure ? src.release_pressure : 0)
-	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
-	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
-	data["valveOpen"] = src.valve_open ? 1 : 0
+	data["name"] = name
+	data["canLabel"] = can_label ? 1 : 0
+	data["portConnected"] = connected_port ? 1 : 0
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
+	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(CAN_MIN_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(CAN_MAX_RELEASE_PRESSURE)
+	data["valveOpen"] = valve_open ? 1 : 0
 
-	data["hasHoldingTank"] = src.holding ? 1 : 0
+	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list("name" = src.holding.name, "tankPressure" = round(src.holding.air_contents.return_pressure()))
+		data["holdingTank"] = list()
+		data["holdingTank"]["name"] = holding.name
+		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
 	return data
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
@@ -320,14 +327,21 @@ update_flag
 				investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 			holding.loc = loc
 			holding = null
-
-	if (href_list["pressure_adj"])
-		var/diff = text2num(href_list["pressure_adj"])
-		if(diff > 0)
-			release_pressure = min(10*ONE_ATMOSPHERE, release_pressure+diff)
+	if (href_list["release_p"])
+		if (href_list["release_p"] == "custom")
+			var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
+			if(isnum(custom))
+				href_list["release_p"] = custom
+				.()
+		else if (href_list["release_p"] == "reset")
+			release_pressure = CAN_DEFAULT_RELEASE_PRESSURE
+		else if (href_list["release_p"] == "min")
+			release_pressure = CAN_MIN_RELEASE_PRESSURE
+		else if (href_list["release_p"] == "max")
+			release_pressure = CAN_MAX_RELEASE_PRESSURE
 		else
-			release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
-
+			release_pressure = text2num(href_list["release_p"])
+		release_pressure = min(max(round(release_pressure), CAN_MIN_RELEASE_PRESSURE), CAN_MAX_RELEASE_PRESSURE)
 	if (href_list["relabel"])
 		if (can_label)
 			var/list/colors = list(\

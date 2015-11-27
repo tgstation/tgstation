@@ -9,7 +9,7 @@ body {
 }
 
 #uiNoScript {
-	margin: 33% auto;
+    margin: 33% auto;
     width: 50%;
     height: 33%;
     background: #ffffff;
@@ -309,6 +309,10 @@ div.notice {
     margin: 3px 0;
 }
 
+.statusDisplay .itemLabelNarrow, .statusDisplay .itemLabel, .statusDisplay .itemLabelWide, .statusDisplay .itemLabelWider, .statusDisplay .itemLabelWidest {
+    color: #98B0C3;
+}
+
 .statusDisplayRecords {
     background: #000000;
     color: #ffffff;
@@ -317,17 +321,6 @@ div.notice {
     margin: 3px 0;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-.statusLabel {
-    width: 138px;
-    float: left;
-    overflow: hidden;
-    color: #98B0C3;
-}
-
-.statusValue {
-    float: left;
 }
 
 .block {

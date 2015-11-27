@@ -1,97 +1,80 @@
-<!--
-Title: Solar Control Computer
-Used In File(s): \code\modules\power\solar.dm
- -->
-
-<h1>Status:</h1>
-<div class='statusDisplay'>
-	<div class="line">
-		<div class='statusLabel' style='font-weight:bold'>
+<h2>Status</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
 			Generated Power:
 		</div>
-		<div class='statusValue'>
+		<div class="itemContent">
 			{{:data.generated}} W
 		</div>
 	</div>
-
-	<div class='line'>
-		<div class='statusLabel' style='font-weight:bold'>
+	<div class="item">
+		<div class="itemLabel">
 			Orientation:
 		</div>
-
-		<div class='statusValue'>
-		{{:data.angle}}&deg ({{:data.direction}})&nbsp;
+		<div class="itemContent">
+			{{:data.angle}}&deg ({{:data.direction}})
+			{{:helper.link('15&deg', 'minus', {'rate_control': '1', 'cdir': '-15'})}}
+			{{:helper.link('1&deg', 'minus', {'rate_control': '1', 'cdir': '-1'})}}
+			{{:helper.link('1&deg', 'plus', {'rate_control': '1', 'cdir': '1'})}}
+			{{:helper.link('15&deg', 'plus', {'rate_control': '1', 'cdir': '15'})}}
 		</div>
-
-		{{:helper.link('15&deg', 'minus', {'rate_control': '1', 'cdir': '-15'})}}
-		{{:helper.link('1&deg', 'minus', {'rate_control': '1', 'cdir': '-1'})}}
-		{{:helper.link('1&deg', 'plus', {'rate_control': '1', 'cdir': '1'})}}
-		{{:helper.link('15&deg', 'plus', {'rate_control': '1', 'cdir': '15'})}}
 	</div>
 </div>
-
-<h1>Tracking:</h1>
-
-<div class='statusDisplay'>
-	<div class="line">
-		<div class='statusLabel' style='font-weight:bold'>
-			Tracker Status:&nbsp;
+<h2>Tracking</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class='itemLabel'>
+			Tracker Mode:
 		</div>
-
-		{{:helper.link('Off', 'close', {'track': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
-		{{:helper.link('Timed', 'clock', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
-		{{if data.connected_tracker}}
-			{{:helper.link('Auto', 'signal-diag', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
-		{{else}}
-			{{:helper.link('Auto', 'signal-diag', null, 'disabled')}}
-		{{/if}}
-	</div>
-
-	<div class="line">
-		<div class='statusLabel' style='font-weight:bold'>
-			Tracking Rate:
-		</div>
-
-		<div class='statusValue'>
-			 {{:data.tracking_rate}} deg/h ({{:data.rotating_way}})
-		</div>
-	</div>
-
-	<div class='line'>
-		{{:helper.link('180&deg', 'minus', {'rate_control': '1', 'tdir': '-180'})}}
-		{{:helper.link('30&deg', 'minus', {'rate_control': '1', 'tdir': '-30'})}}
-		{{:helper.link('1&deg', 'minus', { 'rate_control': '1', 'tdir': '-1'})}}
-		{{:helper.link('1&deg', 'plus', { 'rate_control': '1', 'tdir': '1'})}}
-		{{:helper.link('30&deg', 'plus', { 'rate_control': '1', 'tdir': '30'})}}
-		{{:helper.link('180&deg', 'plus', { 'rate_control': '1', 'tdir': '180'})}}
-	</div>
-</div>
-
-<h1>Connected Devices:</h1>
-<div class='statusDisplay'>
-	<div class="line">
-		<div class='statusLabel' style='font-weight:bold'>
-			Solars Panels:
-		</div>
-		<div class='statusValue'>
-			{{:data.connected_panels}} connected
-		</div>
-	</div>
-
-	<div class='line'>
-		<div class='statusLabel' style='font-weight:bold'>
-			Solar Tracker:
-		</div>
-
-		<div class='statusValue'>
+		<div class="itemContent">
+			{{:helper.link('Off', 'close', {'track': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
+			{{:helper.link('Timed', 'clock', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
 			{{if data.connected_tracker}}
-				<span class='good'>Found</span>&nbsp;
+				{{:helper.link('Auto', 'signal-diag', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
 			{{else}}
-				<span class='bad'>Not Found</span>&nbsp;
+				{{:helper.link('Auto', 'signal-diag', null, 'disabled')}}
 			{{/if}}
 		</div>
 	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Tracking Rate:
+		</div>
+		<div class="itemContent">
+			{{:data.tracking_rate}} deg/h ({{:data.rotating_way}})
+			{{:helper.link('180&deg', 'minus', {'rate_control': '1', 'tdir': '-180'})}}
+			{{:helper.link('30&deg', 'minus', {'rate_control': '1', 'tdir': '-30'})}}
+			{{:helper.link('1&deg', 'minus', { 'rate_control': '1', 'tdir': '-1'})}}
+			{{:helper.link('1&deg', 'plus', { 'rate_control': '1', 'tdir': '1'})}}
+			{{:helper.link('30&deg', 'plus', { 'rate_control': '1', 'tdir': '30'})}}
+			{{:helper.link('180&deg', 'plus', { 'rate_control': '1', 'tdir': '180'})}}
+		</div>
+	</div>
 </div>
-<div class='line'>
-	{{:helper.link('Search for devices', 'refresh', {'search_connected': '1'})}}
+<h2>Devices</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Solar Tracker:
+		</div>
+		<div class="itemContent">
+			{{if data.connected_tracker}}
+				<span class="good">Found</span>
+			{{else}}
+				<span class="bad">Not Found</span>
+			{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Solars Panels:
+		</div>
+		<div class="itemContent">
+			<span class="{{:data.connected_panels ? 'good' : 'bad'}}">{{:data.connected_panels}} Connected</span>
+		</div>
+	</div>
+	<div class="item">
+		{{:helper.link('', 'refresh', {'search_connected': '1'})}}
+	</div>
 </div>

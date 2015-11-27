@@ -1,42 +1,67 @@
-<h3>Tank Status</h3>
+{{if data.hasHoldingTank }}
+	<div class="noticePlaceholder">The regulator is connected to a tank.</div>
+{{else}}
+	<div class="notice">The regulator is not connected to a tank.</div>
+{{/if}}	
+<h2>Canister</h2>
 <div class="item">
-	<div class="itemLabel">
-		Tank Label:
-	</div>
-	<div class="itemContent">
-		<div style="float: left; width: 180px;">{{:data.name}}</div> {{:helper.link('Relabel', 'pencil', {'relabel' : 1}, data.canLabel ? null : 'disabled')}}
-	</div>
+	{{:helper.link('Relabel', 'pencil', {'relabel' : 1}, data.canLabel ? null : 'disabled')}}
 </div>
-
 <div class="item">
 	<div class="itemLabel">
-		Tank Pressure:
+		Pressure:
 	</div>
 	<div class="itemContent">
 		{{:data.tankPressure}} kPa
 	</div>
 </div>
-
 <div class="item">
 	<div class="itemLabel">
-		Port Status:
+		Port:
 	</div>
 	<div class="itemContent">
-		{{:data.portConnected ? '<span class="good">Connected</span>' : '<span class="average">Disconnected</span>'}}
+		{{if data.portConnected}}
+			<span class="good">Connected</span>
+		{{else}}
+			<span class="bad">Disconnected</span>
+		{{/if}}
 	</div>
 </div>
-
-<h3>Holding Tank Status</h3>
+<h2>Valve</h2>
+<div class="item">
+	<div class="itemLabel">
+		Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
+		{{:data.releasePressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Pressure Regulator:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Reset', 'refresh', {'release_p': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Min', 'minus', {'release_p': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Set', 'pencil', {'release_p': 'custom'}, null)}}
+		{{:helper.link('Max', 'plus', {'release_p': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+		<br class="clearBoth" />
+		{{:helper.link('Open', 'unlocked', {'toggle' : 1}, data.valveOpen ? 'selected' : null)}}
+		{{:helper.link('Close', 'locked', {'toggle' : 1}, data.valveOpen ? null : 'selected')}}
+	</div>
+</div>
+<h2>Holding Tank</h2>
 {{if data.hasHoldingTank}}
+	{{:helper.link('Eject', 'eject', {'remove_tank' : 1})}}
 	<div class="item">
 		<div class="itemLabel">
-			Tank Label:
+			Label:
 		</div>
 		<div class="itemContent">
-			<div style="float: left; width: 180px;">{{:data.holdingTank.name}}</div> {{:helper.link('Eject', 'eject', {'remove_tank' : 1})}}
+			{{:data.holdingTank.name}}
 		</div>
 	</div>
-
 	<div class="item">
 		<div class="itemLabel">
 			Tank Pressure:
@@ -46,38 +71,7 @@
 		</div>
 	</div>
 {{else}}
-	<div class="item"><span class="average"><i>No holding tank inserted.</i></span></div>
-	<div class="item">&nbsp;</div>
+	<div class="item">
+		<span class="average">No Holding Tank</span>
+	</div>
 {{/if}}
-
-
-<h3>Release Valve Status</h3>
-<div class="item">
-	<div class="itemLabel">
-		Release Pressure:
-	</div>
-	<div class="itemContent">
-		{{:helper.displayBar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
-		<div style="clear: both; padding-top: 4px;">
-			{{:helper.link('-', null, {'pressure_adj' : -1000}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('-', null, {'pressure_adj' : -100}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('-', null, {'pressure_adj' : -10}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('-', null, {'pressure_adj' : -1}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.releasePressure}} kPa&nbsp;</div>
-			{{:helper.link('+', null, {'pressure_adj' : 1}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('+', null, {'pressure_adj' : 10}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('+', null, {'pressure_adj' : 100}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
-			{{:helper.link('+', null, {'pressure_adj' : 1000}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
-		</div>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		Release Valve:
-	</div>
-	<div class="itemContent">
-		{{:helper.link('Open', 'unlocked', {'toggle' : 1}, data.valveOpen ? 'selected' : null)}}{{:helper.link('Close', 'locked', {'toggle' : 1}, data.valveOpen ? null : 'selected')}}
-	</div>
-</div>
-
