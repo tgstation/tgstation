@@ -121,9 +121,10 @@
 /obj/structure/grille/Deconstruct()
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	transfer_fingerprints_to(stored)
-	var/turf/T = loc
-	stored.loc = T
+	if(!(flags&ABSTRACT))
+		transfer_fingerprints_to(stored)
+		var/turf/T = loc
+		stored.loc = T
 	..()
 
 /obj/structure/grille/proc/Break()
@@ -131,8 +132,9 @@
 	density = 0
 	destroyed = 1
 	stored.amount = 1
-	var/obj/item/stack/rods/newrods = new(loc)
-	transfer_fingerprints_to(newrods)
+	if(!(flags&ABSTRACT))
+		var/obj/item/stack/rods/newrods = new(loc)
+		transfer_fingerprints_to(newrods)
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
