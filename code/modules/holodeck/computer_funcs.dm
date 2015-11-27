@@ -70,15 +70,25 @@
 	// should also remove/limit/filter reagents?
 	// this is an exercise left to others I'm afraid.  -Sayu
 	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !emagged)
+	for(var/obj/machinery/M in spawned)
+		M.flags |= ABSTRACT
+	for(var/obj/structure/S in spawned)
+		S.flags |= ABSTRACT
 	effects = list()
 
 	spawn(30)
+		var/list/added = list()
 		for(var/obj/effect/holodeck_effect/HE in spawned)
 			effects += HE
 			spawned -= HE
 			var/atom/x = HE.activate(src)
 			if(istype(x) || islist(x))
 				spawned += x // holocarp are not forever
+				added += x
+		for(var/obj/machinery/M in added)
+			M.flags |= ABSTRACT
+		for(var/obj/structure/S in added)
+			S.flags |= ABSTRACT
 
 /obj/machinery/computer/holodeck/proc/derez(var/obj/obj, var/silent = 1, var/forced = 0)
 	// Emagging a machine creates an anomaly in the derez systems.

@@ -278,7 +278,7 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
-	. = !(state_open || panel_open || is_operational()) && istype(C)
+	. = !(state_open || panel_open || is_operational() || (flags & ABSTRACT)) && istype(C)
 	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -286,7 +286,7 @@ Class Procs:
 		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel)
+	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & ABSTRACT)
 	if(.)
 		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -301,7 +301,7 @@ Class Procs:
 		qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
-	if(istype(S))
+	if(istype(S) &&  !(flags & ABSTRACT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(!panel_open)
 			panel_open = 1
@@ -323,7 +323,7 @@ Class Procs:
 	return 0
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W))
+	if(istype(W) &&  !(flags & ABSTRACT))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time, target = src))
@@ -334,6 +334,8 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	if(flags & ABSTRACT)
+		return
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
 		if(panel_open || W.works_from_distance)
