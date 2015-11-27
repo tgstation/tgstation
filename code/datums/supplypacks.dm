@@ -402,6 +402,27 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Formalwear for the best occasions."
 	group = "Clothing"
 
+/datum/supply_packs/waifu
+	name = "Feminine clothing & more!"
+	contains = list(/obj/item/clothing/under/dress/dress_fire,
+					/obj/item/clothing/under/dress/dress_green,
+					/obj/item/clothing/under/dress/dress_orange,
+					/obj/item/clothing/under/dress/dress_pink,
+					/obj/item/clothing/under/dress/dress_yellow,
+					/obj/item/clothing/under/dress/dress_saloon,
+					/obj/item/clothing/under/wedding/bride_orange,
+					/obj/item/clothing/under/wedding/bride_purple,
+					/obj/item/clothing/under/wedding/bride_blue,
+					/obj/item/clothing/under/wedding/bride_red,
+					/obj/item/clothing/under/wedding/bride_white,
+					/obj/item/clothing/under/sundress,
+					/obj/item/weapon/lipstick/random,
+					/obj/item/weapon/lipstick/random)
+	cost = 30
+	containertype = /obj/structure/closet/crate/
+	containername = "Feminine clothing"
+	group = "Clothing"
+
 //////SECURITY//////
 
 /datum/supply_packs/specialops
@@ -723,26 +744,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Bartending equipment"
 	group = "Hospitality"
 	
-/datum/supply_packs/waifu
-	name = "Feminine clothing & more!"
-	contains = list(/obj/item/clothing/under/dress/dress_fire,
-					/obj/item/clothing/under/dress/dress_green,
-					/obj/item/clothing/under/dress/dress_orange,
-					/obj/item/clothing/under/dress/dress_pink,
-					/obj/item/clothing/under/dress/dress_yellow,
-					/obj/item/clothing/under/dress/dress_saloon,
-					/obj/item/clothing/under/wedding/bride_orange,
-					/obj/item/clothing/under/wedding/bride_purple,
-					/obj/item/clothing/under/wedding/bride_blue,
-					/obj/item/clothing/under/wedding/bride_red,
-					/obj/item/clothing/under/wedding/bride_white,
-					/obj/item/clothing/under/sundress,
-					/obj/item/weapon/lipstick/random,
-					/obj/item/weapon/lipstick/random)
-	cost = 30
-	containertype = /obj/structure/closet/crate/
-	containername = "Feminine clothing"
-	group = "Hospitality"
 
 //////ENGINEERING//////
 
