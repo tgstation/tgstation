@@ -235,11 +235,14 @@
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
 	var/list/L = grav_pull > 8 ? ultra_range(grav_pull, src, 1) : orange(grav_pull, src)
+	var/pullmod = rand(1,2)
 	for(var/atom/X in L)
 		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
 		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
+			pullmod++
+			if (pullmod % 2)
+				X.singularity_pull(S, current_size)
 		else if(dist <= consume_range)
 			consume(X)
 	return
