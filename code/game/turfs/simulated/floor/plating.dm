@@ -213,6 +213,8 @@
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				return
+			if(istype(O, /obj/effect/dummy/spell_jaunt) || istype(O, /obj/effect/dummy/slaughter)) //I died while bloodjaunting because this check didn't exist - Y0SH1_M4S73R
+				return
 			if(O.burn_state == -1)
 				O.burn_state = 0 //Even fireproof things burn up in lava
 			O.fire_act()
