@@ -1,16 +1,16 @@
 /obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet, zone_override = "", spread)
 	distro += variance
-	for (var/i=1 to pellets)
+	for (var/i = max(1, pellets), i > 0, i--)
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		if(distro && spread==null) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
+		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread
 				spread = round((i / pellets - 0.5) * distro)
 		if(!throw_proj(target, targloc, user, params, spread))
 			return 0
-		if(i < pellets)
+		if(i > 1)
 			newshot()
 	user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
@@ -43,7 +43,7 @@
 		BB = null
 		return 1
 
-	BB.preparePixelProjectile(targloc, user, params, spread)
+	BB.preparePixelProjectile(target, targloc, user, params, spread)
 	if(BB)
 		BB.fire()
 	BB = null
@@ -57,7 +57,7 @@
 
 // Pixel Projectiles //
 
-/obj/item/projectile/proc/preparePixelProjectile(turf/targloc, mob/living/user, params, spread)
+/obj/item/projectile/proc/preparePixelProjectile(turf/target, turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = user.loc
 	src.loc = get_turf(user)
 	src.starting = get_turf(user)
