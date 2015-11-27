@@ -336,6 +336,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
+	siemens_coeff = 0
 	punchmod = 5
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1

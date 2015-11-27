@@ -31,6 +31,7 @@
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_bluespace = 0
 
 	for (var/obj/item/weapon/ore/C in contents)
 		if (istype(C,/obj/item/weapon/ore/diamond))
@@ -49,6 +50,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/bluespace_crystal))
+			amt_bluespace++
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
 	if (amt_gold)
@@ -67,6 +70,8 @@
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
+	if (amt_bluespace)
+		dat += text("Bluespace crystals: [amt_bluespace]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")

@@ -3694,7 +3694,7 @@
 "btb" = (/obj/structure/table,/obj/item/weapon/folder/blue,/obj/item/weapon/stamp/hop,/obj/machinery/newscaster{hitstaken = 0; pixel_x = 0; pixel_y = -32; tag = "s"},/turf/simulated/floor/plasteel{tag = "icon-darkbluecorners (WEST)"; icon_state = "darkbluecorners"; dir = 8},/area/crew_quarters/heads)
 "btc" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7; tag = "every single paper bin is edited to this"},/obj/item/weapon/pen,/turf/simulated/floor/plasteel/black,/area/crew_quarters/heads)
 "btd" = (/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor/plating{burnt = 1; icon_state = "panelscorched"},/area/maintenance/atmos_control)
-"bte" = (/obj/item/bluespace_crystal,/turf/simulated/floor/plating,/area/maintenance/maintcentral)
+"bte" = (/obj/item/weapon/ore/bluespace_crystal,/turf/simulated/floor/plating,/area/maintenance/maintcentral)
 "btf" = (/obj/machinery/hydroponics/constructable,/obj/machinery/camera{c_tag = "Hydroponics"; dir = 1; icon_state = "camera"; network = list("SS13"); tag = ""},/turf/simulated/floor/plasteel/black,/area/hydroponics)
 "btg" = (/obj/machinery/door/airlock/external{name = "Cargo Escape Airlock"},/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/hallway/secondary/exit)
 "bth" = (/obj/machinery/newscaster{hitstaken = 0; pixel_x = -32; pixel_y = 0; tag = "w"},/turf/simulated/floor/plasteel/brown/corner{tag = "icon-browncorner (NORTH)"; icon_state = "browncorner"; dir = 1},/area/hallway/secondary/exit)
