@@ -245,6 +245,10 @@
 	name = "Circuit board (Telepad Control Console)"
 	build_path = "/obj/machinery/computer/telescience"
 	origin_tech = "programming=3;bluespace=2"
+/obj/item/weapon/circuitboard/forensic_computer
+	name = "Circuit board (Forensics Console)"
+	build_path = "/obj/machinery/computer/forensic_scanning"
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/pda_terminal
 	name = "Circuit board (PDA Terminal)"
 	build_path = "/obj/machinery/computer/pda_terminal"

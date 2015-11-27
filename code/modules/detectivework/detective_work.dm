@@ -58,7 +58,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	var/temp = ""
 	var/canclear = 1
 	var/authenticated = 0
-
+	circuit = "/obj/item/weapon/circuitboard/forensic_computer"
 	light_color = LIGHT_COLOR_RED
 
 //Here's the structure for files: each entry is a list, and entry one in that list is the string of their
