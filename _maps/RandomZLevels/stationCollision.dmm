@@ -76,7 +76,7 @@
 "bx" = (/obj/structure/girder/reinforced,/turf/simulated/floor/plasteel/airless{icon_state = "damaged4"},/area/awaymission/research)
 "by" = (/turf/simulated/wall/r_wall,/area/awaymission/research)
 "bz" = (/obj/machinery/portable_atmospherics/canister/toxins,/turf/simulated/floor/plating,/area/awaymission/syndishuttle)
-"bA" = (/obj/machinery/bot/medbot/mysterious{desc = "A dark little medical robot. She looks somewhat underwhelmed."; name = "Nightingale"},/turf/simulated/floor/plasteel/shuttle/red/syndicate,/area/awaymission/syndishuttle)
+"bA" = (/mob/living/simple_animal/bot/medbot/mysterious{desc = "A dark little medical robot. She looks somewhat underwhelmed."; name = "Nightingale"},/turf/simulated/floor/plasteel/shuttle/red/syndicate,/area/awaymission/syndishuttle)
 "bB" = (/obj/structure/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle/red/syndicate,/area/awaymission/syndishuttle)
 "bC" = (/obj/structure/table,/turf/simulated/floor/plasteel/shuttle/red/syndicate,/area/awaymission/syndishuttle)
 "bD" = (/obj/structure/table,/obj/item/weapon/paper/sc_safehint_paper_shuttle,/turf/simulated/floor/plasteel/shuttle/red/syndicate,/area/awaymission/syndishuttle)
