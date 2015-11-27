@@ -98,9 +98,11 @@
 		return
 	..()
 
-/mob/proc/getWatertankSlot() return slot_back
+/mob/proc/getWatertankSlot()
+	return slot_back
 
-/mob/living/simple_animal/drone/getWatertankSlot() return slot_drone_storage
+/mob/living/simple_animal/drone/getWatertankSlot()
+	return slot_drone_storage
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
