@@ -1,0 +1,5 @@
+author: AnturK
+delete-after: True
+changes: 
+  - rscadd: "Turret control panels can now be made through frames available at autolathe."
+  - rscadd: "Unlocked turrets can be linked with built controls with multiool"
