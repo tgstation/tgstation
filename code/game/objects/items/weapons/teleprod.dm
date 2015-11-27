@@ -3,6 +3,7 @@
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	icon_state = "teleprod_nocell"
 	item_state = "teleprod"
+	origin_tech = "combat=2;bluespace=4;materials=3"
 
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
@@ -22,7 +23,7 @@
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	..()
-	if(istype(I, /obj/item/bluespace_crystal))
+	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
 		if(!bcell)
 			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
 			if(!remove_item_from_storage(user))
@@ -30,7 +31,20 @@
 			user.unEquip(I)
 			user.put_in_hands(S)
 			user << "<span class='notice'>You clamp the bluespace crystal securely with the wirecutters.</span>"
-			qdel(I)
+			I.loc = S//places the crystal into the contents of the prod for later removal
 			qdel(src)
 		else
 			user.visible_message("<span class='warning'>You can't install the crystal onto the stunprod while it has a powercell installed!</span>")
+
+/obj/item/weapon/melee/baton/cattleprod/teleprod/attack_self(mob/user, obj/item/I)//handles removing the bluespace crystal
+	if(!bcell)
+		var/obj/item/weapon/melee/baton/cattleprod/S = new /obj/item/weapon/melee/baton/cattleprod
+		if(!remove_item_from_storage(user))
+			user.unEquip(src)
+		var/turf/floorloc = get_turf(user)
+		floorloc.contents += contents//drops the contents of the prod (the only content should be the crystal) at the user's feet
+		user.unEquip(I)
+		user.put_in_hands(S)
+		user << "<span class='notice'>You carefully remove the bluespace crystal from the teleprod.</span>"
+		qdel(I)
+		qdel(src)
