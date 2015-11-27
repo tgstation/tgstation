@@ -388,6 +388,3 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
-
-/atom/proc/on_varedit(modified_var)
-	return
