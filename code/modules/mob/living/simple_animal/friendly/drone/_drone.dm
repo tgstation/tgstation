@@ -72,7 +72,7 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, "drone_storage_slot")
+		equip_to_slot_or_del(I, slot_drone_storage)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)

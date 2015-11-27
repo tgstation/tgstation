@@ -362,17 +362,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
-	if(ishuman(usr) || ismonkey(usr))
-		if(usr.get_active_hand() == null)
-			usr.UnarmedAttack(src) // Let me know if this has any problems -Giacom | Actually let me know now.  -Sayu
-		/*
-		if(usr.get_active_hand() == null)
-			src.attack_hand(usr)
-		else
-			usr << "\red You already have something in your hand."
-		*/
-	else
-		usr << "<span class='warning'>This mob type can't use this verb!</span>"
+	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
