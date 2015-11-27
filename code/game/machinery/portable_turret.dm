@@ -448,7 +448,7 @@
 
 	if(check_anomalies)	//if it's set to check for xenos/simpleanimals
 		for(var/mob/living/simple_animal/SA in turretview)
-			if(!SA.stat && (!SA.has_unlimited_silicon_privilege || !(faction in SA.faction)) ) //don't target dead animals or NT maint drones.
+			if(!SA.stat && (!SA.has_unlimited_silicon_privilege || !(faction in SA.faction))) //don't target dead animals or NT maint drones.
 				targets += SA
 
 	for(var/mob/living/carbon/C in turretview)	//loops through all carbon-based lifeforms in view(7)

@@ -13,18 +13,27 @@
 	permeability_mod = 1
 	severity = BIOHAZARD
 	var/stagedamage = 0 //Highest stage reached.
+	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
+
+/datum/disease/revblight/cure()
+	if(affected_mob)
+		affected_mob << "<span class='notice'>You feel better.</span>"
+		if(affected_mob.dna && affected_mob.dna.species)
+			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
+			affected_mob.dna.species.handle_hair(affected_mob)
+			affected_mob.dna.species.update_color(affected_mob)
+	..()
 
 /datum/disease/revblight/stage_act()
-	if(affected_mob.lying && prob(stage*2))
-		affected_mob << "<span class='notice'>You feel better.</span>"
+	if(!finalstage && affected_mob.lying && prob(stage*2))
 		cure()
 		return
-	if(prob(stage*3))
+	if(!finalstage && prob(stage*3))
 		affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
 		affected_mob.confused += 10
 		affected_mob.adjustStaminaLoss(10)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
-	if(stagedamage < stage)
+	if(!finalstage && stagedamage < stage)
 		stagedamage++
 		affected_mob.adjustToxLoss(stage*3) //should, normally, do about 45 toxin damage.
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
@@ -42,19 +51,17 @@
 			if(prob(15))
 				affected_mob.emote(pick("pale","shiver","cries"))
 		if(5)
-			affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
-			affected_mob.adjustStaminaLoss(45)
-			PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
-			if(affected_mob.dna && affected_mob.dna.species)
-				affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
-				affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
-				affected_mob.dna.species.update_color(affected_mob,"#1d2953")
-				spawn(100)
-					if(affected_mob && affected_mob.dna && affected_mob.dna.species)
-						affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
-						affected_mob.dna.species.handle_hair(affected_mob)
-						affected_mob.dna.species.update_color(affected_mob)
-			affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>Your skin suddenly looks wrong and awful...</span>")
-			cure()
+			if(!finalstage)
+				finalstage = 1
+				affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
+				affected_mob.adjustStaminaLoss(45)
+				PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
+				if(affected_mob.dna && affected_mob.dna.species)
+					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
+					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
+					affected_mob.dna.species.update_color(affected_mob,"#1d2953")
+					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <span class='italics'>wrong</span>...</span>")
+					spawn(100)
+						cure()
 		else
 			return

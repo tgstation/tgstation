@@ -1,0 +1,5 @@
+author: MMMiracles
+delete-after: True
+changes: 
+  - rscadd: "Adds a brand new away mission for the gateway called 'Caves'."
+  - rscadd: "The away mission has multiple levels to explore and could be quite dangerous, running in without proper preparation is unadvised."
