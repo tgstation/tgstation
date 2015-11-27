@@ -95,7 +95,7 @@
 
 		if(P)
 			var/obj/machinery/telecomms/T = P.buffer
-			if(T && istype(T))
+			if(istype(T))
 				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
 			else
 				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
@@ -286,7 +286,7 @@
 
 		if(P)
 			var/obj/machinery/telecomms/T = P.buffer
-			if(T && istype(T) && T != src)
+			if(istype(T) && T != src)
 				if(!(src in T.links))
 					T.links.Add(src)
 

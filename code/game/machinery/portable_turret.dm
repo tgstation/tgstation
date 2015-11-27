@@ -1016,7 +1016,7 @@
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
 	if(control_area && istext(control_area))
 		for(var/area/A in world)
-			if(A.name && A.name==control_area)
+			if(A.name == control_area)
 				control_area = A
 				break
 	
@@ -1037,7 +1037,7 @@
 		var/obj/item/device/multitool/M = I
 		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
 			turrets |= M.buffer
-			user << "You link [M.buffer] with [src]"
+			user << "You link \the [M.buffer] with \the [src]"
 			return
 
 	if (istype(user, /mob/living/silicon))
