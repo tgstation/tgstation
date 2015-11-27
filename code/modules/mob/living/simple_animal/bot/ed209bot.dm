@@ -135,6 +135,7 @@ Auto Patrol[]"},
 	switch(href_list["operation"])
 		if ("idcheck")
 			idcheck = !idcheck
+			update_controls()
 		if("weaponscheck")
 			weaponscheck = !weaponscheck
 			update_controls()
@@ -500,14 +501,11 @@ Auto Patrol[]"},
 	else
 		..(Proj)
 
-/mob/living/simple_animal/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
-	new /mob/living/simple_animal/bot/ed209(get_turf(src),null,"b")
-	qdel(src)
+/mob/living/simple_animal/bot/ed209/bluetag
+	lasercolor = "b"
 
-
-/mob/living/simple_animal/bot/ed209/redtag/New()
-	new /mob/living/simple_animal/bot/ed209(get_turf(src),null,"r")
-	qdel(src)
+/mob/living/simple_animal/bot/ed209/redtag
+	lasercolor = "r"
 
 /mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A)
 	if(iscarbon(A))

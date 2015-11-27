@@ -4,11 +4,12 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	layer = 5
-	density = 1
+	density = 0
 	anchored = 0
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	pass_flags = PASSMOB
 
 	radio_key = /obj/item/device/encryptionkey/headset_sec
 	radio_channel = "Security" //Security channel

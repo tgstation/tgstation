@@ -35,6 +35,7 @@
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
+	status_flags = NONE //no default canpush
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -660,10 +661,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(D.check_access(access_card))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living/)) && (!anchored))
-		var/mob/living/Mb = M
-		loc = Mb.loc
-		frustration = 0
 
 /mob/living/simple_animal/bot/proc/show_controls(mob/M)
 	users |= M
@@ -727,7 +724,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core
 	use_power = 0
-	interact_offline = 1 //DEBUG
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/New(loc)
