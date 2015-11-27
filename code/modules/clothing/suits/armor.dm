@@ -213,13 +213,16 @@
 /obj/item/clothing/suit/armor/riot/knight
 	name = "plate armour"
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
-	icon_state = "knight_red"
-	item_state = "knight_red"
+	icon_state = "knight_green"
+	item_state = "knight_green"
 
+/obj/item/clothing/suit/armor/riot/knight/yellow
+	icon_state = "knight_yellow"
+	item_state = "knight_yellow"
 
-/obj/item/clothing/suit/armor/riot/knight/black
-	icon_state = "knight_black"
-	item_state = "knight_black"
+/obj/item/clothing/suit/armor/riot/knight/blue
+	icon_state = "knight_blue"
+	item_state = "knight_blue"
 
 /obj/item/clothing/suit/armor/riot/knight/templar
 	name = "crusader armour"
