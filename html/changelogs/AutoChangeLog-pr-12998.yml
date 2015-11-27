@@ -1,4 +1,0 @@
-author: YotaXP
-delete-after: True
-changes: 
-  - bugfix: "Drones can now use the pick-up verb, and watertanks no longer get jammed in their internal storage."
