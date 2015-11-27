@@ -41,14 +41,7 @@ var NanoTemplate = function () {
             $.when($.ajax({
                     url: _templateData[key],
                     cache: false,
-                    dataType: 'text',
-					xhr: function() {
-                        if ('ActiveXObject' in window) {
-                            return new ActiveXObject("Microsoft.XMLHTTP");
-                        } else {
-                            return new XMLHttpRequest();
-                        }
-                    }
+                    dataType: 'text'
                 }))
                 .done(function(templateMarkup) {
 

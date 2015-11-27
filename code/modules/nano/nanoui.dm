@@ -93,8 +93,10 @@
   * Add the assets required by all NanoUIs.
  **/
 /datum/nanoui/proc/add_common_assets()
-	// Libraries: jQuery, doT and timer.js
-	add_script("libraries.min.js")
+	// Libraries: jQuery, jQuery-UI, and doT.
+	add_script("jquery.js")
+	add_script("jquery-ui.js")
+	add_script("doT.js")
 	// Nano Utility: Utility functions and sanity checks.
 	add_script("nano_utility.js") // The NanoUtility JS, this is used to store utility functions.
 	// Nano Template: Renders templates using doT.
@@ -336,12 +338,12 @@
 	add_template("layout", "layout_[layout_key].tmpl")
 
 	// Generate <script> and <link> tags.
-	var/head_content = ""
+	var/script_html = ""
 	for (var/script in scripts)
-		head_content += "<script type='text/javascript' src='[script]'></script>"
-	head_content += "\n"
+		script_html += "<script type='text/javascript' src='[script]'></script>"
+	var/stylesheet_html = ""
 	for (var/stylesheet in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[stylesheet]' />"
+		stylesheet_html += "<link rel='stylesheet' type='text/css' href='[stylesheet]' />"
 
 	// Generate template JSON.
 	var/template_data_json = "{}"
@@ -369,7 +371,8 @@
 				}
 			}
 		</script>
-		[head_content]
+		[script_html]
+		[stylesheet_html]
 	</head>
 	<body scroll=auto data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
 		<div id="uiLayout"></div>

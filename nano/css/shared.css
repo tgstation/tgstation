@@ -9,12 +9,9 @@ body {
 }
 
 #uiNoScript {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin: -60px 0 0 -150px;
-    width: 280px;
-    height: 120px;
+	margin: 33% auto;
+    width: 50%;
+    height: 33%;
     background: #ffffff;
     border: 2px solid #ff0000;
     color: #000000;
@@ -23,6 +20,10 @@ body {
     z-index: 9999;
     padding: 0px 10px;
     text-align: center;
+}
+
+#uiNoScript h1 {
+	color: #000000;
 }
 
 hr {
@@ -447,7 +448,6 @@ div.notice {
 }
 
 /* Used in PDA */
-
 .wholeScreen {
     position: absolute;
     color: #517087;

@@ -4,8 +4,8 @@
 			Interface Lock:
 		</div>
 		<div class="itemContentFull">
-			{{:helper.link('Engaged', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}
-			{{:helper.link('Disengaged', 'unlocked', {'toggleaccess' : 1}, data.locked ? null : 'selected')}}
+			{{:helper.link('Engaged', 'locked', {'toggleaccess': 1}, data.locked ? 'selected' : null)}}
+			{{:helper.link('Disengaged', 'unlocked', {'toggleaccess': 1}, data.locked ? null : 'selected')}}
 		</div>
 		<div class="clearBoth"></div>
 	{{else}}
@@ -74,38 +74,38 @@
 </div>
 {{if (!data.locked || data.siliconUser)}}
 	{{if data.screen != 1}}
-		<div class="item">{{:helper.link('Back', 'triangle-1-w', { 'screen' : 1})}}</div>
+		<div class="item">{{:helper.link('Back', 'triangle-1-w', {'screen': 1})}}</div>
 	{{/if}}
 	{{if data.screen == 1}}
 		<h2>Air Controls</h2>
 		<div class="statusDisplay">
 		<div class="item">
 			{{if !data.atmos_alarm}}
-				{{:helper.link('Area Atmospheric Alarm', 'power', { 'atmos_alarm' : 1}, null, null)}}
+				{{:helper.link('Area Atmospheric Alarm', 'power', {'atmos_alarm': 1}, null, null)}}
 			{{else}}
-				{{:helper.link('Area Atmospheric Alarm', 'close', { 'atmos_reset' : 1}, null, 'yellowButton')}}
+				{{:helper.link('Area Atmospheric Alarm', 'close', {'atmos_reset': 1}, null, 'yellowButton')}}
 			{{/if}}
 		</div>
 		<div class="item">
 			{{if data.mode == 3}}
-				{{:helper.link('Panic Siphon', 'close', { 'mode': 1}, null, 'redButton')}}
+				{{:helper.link('Panic Siphon', 'close', {'mode': 1}, null, 'redButton')}}
 			{{else}}
-				{{:helper.link('Panic Siphon', 'power', { 'mode': 3}, null, null)}}
+				{{:helper.link('Panic Siphon', 'power', {'mode': 3}, null, null)}}
 			{{/if}}
 		</div>
 		<br />
 		<div class="item">
-				{{:helper.link('Vent Controls', 'wrench', { 'screen' : 2})}}
+				{{:helper.link('Vent Controls', 'wrench', {'screen': 2})}}
 			</div>
 			<div class="item">
-				{{:helper.link('Scrubber Controls', 'wrench', { 'screen' : 3})}}
+				{{:helper.link('Scrubber Controls', 'wrench', {'screen': 3})}}
 			</div>
 			<br />
 			<div class="item">
-				{{:helper.link('Set Environmental Mode', 'pencil', { 'screen' : 4})}}
+				{{:helper.link('Set Environmental Mode', 'pencil', {'screen': 4})}}
 			</div>
 			<div class="item">
-				{{:helper.link('Set Alarm Threshold', 'pencil', { 'screen' : 5})}}
+				{{:helper.link('Set Alarm Threshold', 'pencil', {'screen': 5})}}
 			</div>
 		</div>
 	{{else data.screen == 2}}
@@ -142,8 +142,8 @@
 						Pressure Checks:
 					</div>
 					<div class="itemContent">
-						{{:helper.link('External', 'arrow-1-n', { 'id_tag' : vent.id_tag, 'command' : 'excheck', 'val' : vent.checks}, null, vent.excheck ? 'selected' : null)}}
-						{{:helper.link('Internal', 'arrow-1-s', { 'id_tag' : vent.id_tag, 'command' : 'incheck', 'val' : vent.checks}, null, vent.incheck ? 'selected' : null)}}
+						{{:helper.link('External', 'arrow-1-n', {'id_tag': vent.id_tag, 'command': 'excheck', 'val': vent.checks}, null, vent.excheck ? 'selected' : null)}}
+						{{:helper.link('Internal', 'arrow-1-s', {'id_tag': vent.id_tag, 'command': 'incheck', 'val': vent.checks}, null, vent.incheck ? 'selected' : null)}}
 					</div>
 				</div>
 				<div class="item">
@@ -151,8 +151,8 @@
 						Set Pressure:
 					</div>
 					<div class="itemContent">
-						{{:helper.link(helper.round(vent.external*100)/100, 'pencil', { 'id_tag' : vent.id_tag, 'command' : 'set_external_pressure'})}}
-						{{:helper.link('Reset', 'refresh', { 'id_tag' : vent.id_tag, 'command' : 'reset_external_pressure'})}}
+						{{:helper.link(helper.round(vent.external*100)/100, 'pencil', {'id_tag': vent.id_tag, 'command': 'set_external_pressure'})}}
+						{{:helper.link('Reset', 'refresh', { 'id_tag': vent.id_tag, 'command': 'reset_external_pressure'})}}
 					</div>
 				</div>
 			</div>
@@ -221,7 +221,7 @@
 		<div class="statusDisplay">
 			{{for data.modes :mode:i}}
 				<div class="item">
-					{{:helper.link(mode.name, mode.selected? 'check' : 'close', { 'mode': mode.mode }, null, mode.selected ? (mode.danger ? 'redButton' : 'selected') : (mode.danger ? 'yellowButton' : null))}}
+					{{:helper.link(mode.name, mode.selected? 'check' : 'close', {'mode': mode.mode}, null, mode.selected ? (mode.danger ? 'redButton' : 'selected') : (mode.danger ? 'yellowButton' : null))}}
 				</div>
 			{{/for}}
 		</div>

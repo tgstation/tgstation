@@ -1,149 +1,100 @@
-<center>
-<div class="item">
-	<div class="itemLabel">
-		Capacity
-	</div>
-	<div class="itemContent" style="text-align:right">
-		{{:helper.round(data.capacity)}} W
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel">
-		Total Charge
-	</div>
-	<div class="itemContent" style="text-align:right">
-		{{:helper.round(data.charge)}} W
-	</div>
-</div>
-<div class="item" style="text-align:right">
-	<div class="itemLabel">
-		{{:helper.displayBar(data.capacityPercent, 0, 100, data.capacityPercent >= 50 ? 'good' : data.capacityPercent >= 15 ? 'average' : 'bad')}}
-	</div>
-	<div class="itemContent">
-		{{:helper.round(data.capacityPercent*10)/10}}%
-	</div>
-</div>
-</center>
+<h2>Storage</h2>
 <div class="statusDisplay">
-	<div class = "line"><h3>
-		<div class="statusLabel">
-			Input:
-			{{:helper.link('On', 'power', {'input_attempt' : 1}, data.inputAttempt ? 'selected' : null)}}
-			{{:helper.link('Off', 'close', {'input_attempt' : 0}, data.inputAttempt == 0 ? 'selected' : null)}}
-		</div>
-		<div class = "statusValue">
-			{{if data.capacityPercent >= 99}}
-				<span class="good">Fully Charged</span>
-			{{else data.inputting}}
-				<span class="good">Charging</span>
-			{{else}}
-				<span class="bad">Not Charging</span>
-			{{/if}}
-		</div>
-	</div></h3>
-</div>
-<div style="text-align:center">
-	{{:helper.link('0', 'seek-start', {'set_input_level' : '0'}, data.inputLevel == 0 ? 'selected' : null)}}
-	{{:helper.link('', 'triangle-1-w', {'set_input_level' : 'minus'}, data.inputLevel == 0 ? 'disabled' : null)}}
-	{{:helper.link('Change', 'gear', {'set_input_level' : 'custom'}, null)}}
-	{{:helper.link('', 'triangle-1-e', {'set_input_level' : 'plus'}, data.inputLevel == data.inputLevelMax ? 'disabled' : null)}}
-	{{:helper.link('Maximize', 'seek-end', {'set_input_level' : 'max'}, data.inputLevel == data.inputLevelMax ? 'selected' : null)}}
 	<div class="item">
 		<div class="itemLabel">
-			Available
+			Stored Energy:
 		</div>
-		<div class = "itemContent" style="text-align:right">
-			{{if data.inputAvailable > data.inputLevel}}
-				<span class="good">
-			{{else}}
-				<span class="bad">
-			{{/if}}
-			{{:helper.round(data.inputAvailable)}}</span> W
-		</div>
-	</div>
-	<div class = "item">
-		<div class = "itemLabel">
-			Setting
-		</div>
-		<div class = "itemContent" style="text-align:right">
-			{{if data.inputLevel > data.outputLevel}}
-				<span class="good">
-			{{else data.inputLevel == data.outputLevel}}
-				<span class="average">
-			{{else}}
-				<span class = "bad">
-			{{/if}}
-			{{:helper.round(data.inputLevel)}}</span> W
-		</div>
-	</div>
-	<div class = "item">
-		<div class = "itemLabel">
-			Max
-		</div>
-		<div class = "itemContent" style="text-align:right">
-			<span class = "good">{{:helper.round(data.inputLevelMax)}}</span> W
+		<div class="itemContent">
+			{{:helper.displayBar(data.capacityPercent, 0, 100, data.capacityPercent >= 50 ? 'good' : data.capacityPercent >= 15 ? 'average' : 'bad')}}
+			<div class="statusValue">
+				{{:helper.round(data.capacityPercent)}}%
+			</div>
 		</div>
 	</div>
 </div>
-<br>
+<h2>Input</h2>
 <div class="statusDisplay">
-	<div class = "line"><h3>
-		<div class="statusLabel">
-			Output:
-			{{:helper.link('On', 'power', {'output_attempt' : 1}, data.outputAttempt ? 'selected' : null)}}
-			{{:helper.link('Off', 'close', {'output_attempt' : 0}, data.outputAttempt == 0 ? 'selected' : null)}}
-		</div>
-		<div class = "statusValue" style="text-align:center">
-			{{if data.outputting}}
-				<span class="good">Sending Ouput</span>
-			{{else data.charge > 0}}
-				<span class="average">Not Sending Output</span>
-			{{else}}
-				<span class="bad">No Charge to Output</span>
-			{{/if}}
-		</div>
-	</div></h3>
-</div>
-<div style="text-align:center">
-	{{:helper.link('0', 'seek-start', {'set_output_level' : '0'}, data.outputLevel == 0 ? 'selected' : null)}}
-	{{:helper.link('', 'triangle-1-w', {'set_output_level' : 'minus'}, data.outputLevel == 0 ? 'disabled' : null)}}
-	{{:helper.link('Change', 'gear', {'set_output_level' : 'custom'}, null)}}
-	{{:helper.link('', 'triangle-1-e', {'set_output_level' : 'plus'}, data.outputLevel == data.outputLevelMax ? 'disabled' : null)}}
-	{{:helper.link('Maximize', 'seek-end', {'set_output_level' : 'max'}, data.outputLevel == data.outputLevelMax ? 'selected' : null)}}
-	<div class = "item">
+	<div class="item">
 		<div class="itemLabel">
-			Used
+			Charge Mode:
 		</div>
-		<div class = "itemContent" style="text-align:right">
-			{{if data.outputUsed >= data.outputLevel}}
-				<span class="bad">
+		<div class="itemContent">
+			{{:helper.link('Auto', 'refresh', {'input_attempt': 1}, data.inputAttempt ? 'selected' : null)}}
+			{{:helper.link('Off', 'close', {'input_attempt': 0}, data.inputAttempt ? null : 'selected')}}
+			&nbsp;
+			{{if data.capacityPercent >= 99}}
+				[<span class='good'>Fully Charged</span>]
+			{{else data.inputting}}
+				[<span class='average'>Charging</span>]
 			{{else}}
-				<span class="good">
+				[<span class='bad'>Not Charging</span>]
 			{{/if}}
-			{{:helper.round(data.outputUsed)}}</span> W
 		</div>
 	</div>
-	<div class = "item">
-		<div class = "itemLabel">
-			Setting
+	<div class="item">
+		<div class="itemLabel">
+			Input Setting:
 		</div>
-		<div class = "itemContent" style="text-align:right">
-			{{if data.inputLevel > data.outputLevel}}
-				<span class="good">
-			{{else data.inputLevel == data.outputLevel}}
-				<span class="average">
-			{{else}}
-				<span class = "bad">
-			{{/if}}
-			{{:helper.round(data.outputLevel)}}</span> W
+		<div class="itemContent">
+			{{:helper.displayBar(data.inputLevel, 0, data.inputLevelMax)}}
+			&nbsp;{{:data.inputLevel}} W
+			<br class="clearBoth" />
+			{{:helper.link('', 'seek-start', {'set_input_level': '0'}, data.inputLevel ? null : 'selected')}}
+			{{:helper.link('', 'triangle-1-w', {'set_input_level': 'minus'}, data.inputLevel ? null : 'disabled')}}
+			{{:helper.link('Set', 'pencil', {'set_input_level': 'custom'}, null)}}
+			{{:helper.link('', 'triangle-1-e', {'set_input_level': 'plus'}, data.inputLevel == data.inputLevelMax ? 'disabled' : null)}}
+			{{:helper.link('', 'seek-end', {'set_input_level': 'max'}, data.inputLevel == data.inputLevelMax ? 'selected' : null)}}
 		</div>
 	</div>
-	<div class = "item">
-		<div class = "itemLabel">
-			Max
+	<div class="item">
+		<div class="itemLabel">
+			Charging:
 		</div>
-		<div class = "itemContent" style="text-align:right">
-			<span class = "good">{{:helper.round(data.outputLevelMax)}}</span> W
+		<div class="itemContent">
+			{{:data.inputAvailable}} W
+		</div>
+	</div>
+</div>
+<h2>Output</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Charge Mode:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('On', 'power', {'output_attempt': 1}, data.outputAttempt ? 'selected' : null)}}
+			{{:helper.link('Off', 'close', {'output_attempt': 0}, data.outputAttempt ? null : 'selected')}}
+			&nbsp;
+			{{if data.outputting}}
+				[<span class="good">Sending</span>]
+			{{else data.charge > 0}}
+				[<span class="average">Not Sending</span>]
+			{{else}}
+				[<span class="bad">No Charge</span>]
+			{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Output Setting:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.outputLevel, 0, data.outputLevelMax)}}
+			&nbsp;{{:data.outputLevel}} W
+			<br class="clearBoth" />
+			{{:helper.link('', 'seek-start', {'set_output_level': '0'}, data.outputLevel ? null : 'selected')}}
+			{{:helper.link('', 'triangle-1-w', {'set_output_level': 'minus'}, data.outputLevel ? null : 'disabled')}}
+			{{:helper.link('Set', 'pencil', {'set_output_level': 'custom'}, null)}}
+			{{:helper.link('', 'triangle-1-e', {'set_output_level': 'plus'}, data.outputLevel == data.outputLevelMax ? 'disabled' : null)}}
+			{{:helper.link('', 'seek-end', {'set_output_level': 'max'}, data.outputLevel == data.outputLevelMax ? 'selected' : null)}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Sending:
+		</div>
+		<div class="itemContent">
+			{{:data.outputUsed}} W
 		</div>
 	</div>
 </div>
