@@ -10,7 +10,7 @@
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_cap(src)
-	new /obj/item/clothing/cloak/cap(src)
+	new /obj/item/clothing/suit/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
@@ -57,7 +57,7 @@
 
 /obj/structure/closet/secure_closet/hos/New()
 	..()
-	new /obj/item/clothing/cloak/hos(src)
+	new /obj/item/clothing/suit/cloak/hos(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)

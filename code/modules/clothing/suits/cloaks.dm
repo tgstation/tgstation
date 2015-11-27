@@ -1,6 +1,6 @@
 //Cloaks. No, not THAT kind of cloak.
 
-/obj/item/clothing/cloak
+/obj/item/clothing/suit/cloak
 	name = "brown cloak"
 	desc = "It's a cape that can be worn on your back."
 	icon = 'icons/obj/clothing/cloaks.dmi'
@@ -14,39 +14,39 @@
 	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
 	return(OXYLOSS)
 
-/obj/item/clothing/cloak/hos
+/obj/item/clothing/suit/cloak/hos
 	name = "head of security's cloak"
 	desc = "Worn by Securistan, ruling the station with an iron fist. It's slightly armored."
 	icon_state = "hoscloak"
-	armor = list(melee = 10, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
-/obj/item/clothing/cloak/qm
+/obj/item/clothing/suit/cloak/qm
 	name = "quartermaster's cloak"
 	desc = "Worn by Cargonia, supplying the station with the necessary tools for survival."
 
-/obj/item/clothing/cloak/cmo
+/obj/item/clothing/suit/cloak/cmo
 	name = "chief medical officer's cloak"
 	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay. It's slightly shielded from contaminants."
 	icon_state = "cmocloak"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 25, rad = 0)
 
-/obj/item/clothing/cloak/ce
+/obj/item/clothing/suit/cloak/ce
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power. It's slightly shielded against radiation."
 	icon_state = "cecloak"
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10)
 
-/obj/item/clothing/cloak/rd
+/obj/item/clothing/suit/cloak/rd
 	name = "research director's cloak."
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe. It's slightly shielded from contaminants."
 	icon_state = "rdcloak"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 
-/obj/item/clothing/cloak/cap
+/obj/item/clothing/suit/cloak/cap
 	name = "captain's cloak"
-	desc = "Worm by the commander of Space Station 13."
+	desc = "Worn by the commander of Space Station 13."
 	icon_state = "capcloak"
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 10, rad = 10)
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
 
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done
