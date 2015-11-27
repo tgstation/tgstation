@@ -149,6 +149,10 @@
 	width = 3
 	height = 4
 
+/obj/docking_port/mobile/pod/request()
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
+		return ..()
+
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
@@ -156,13 +160,6 @@
 
 /obj/docking_port/mobile/pod/cancel()
 	return
-
-/*
-	findTransitDock()
-		. = SSshuttle.getDock("[id]_transit")
-		if(.)	return .
-		return ..()
-*/
 
 /obj/machinery/computer/shuttle/pod
 	name = "pod control computer"
@@ -176,23 +173,18 @@
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
-/obj/machinery/computer/shuttle/pod/emag_act(mob/user as mob)
-	user << "<span class='warning'> Access requirements overridden. The pod may now be launched manually at any time.</span>"
-	admin_controlled = 0
-	icon_state = "dorm_emag"
-
 /obj/docking_port/stationary/random
 	name = "escape pod"
 	id = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
+	var/target_area = /area/mine/unexplored
 
 /obj/docking_port/stationary/random/initialize()
 	..()
-	var/target_area = /area/mine/unexplored
-	var/turfs = get_area_turfs(target_area)
-	var/T=pick(turfs)
+	var/list/turfs = get_area_turfs(target_area)
+	var/turf/T = pick(turfs)
 	src.loc = T
 
 //Pod suits/pickaxes
