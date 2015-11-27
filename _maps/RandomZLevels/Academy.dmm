@@ -33,7 +33,7 @@
 "aG" = (/obj/structure/safe/floor,/turf/simulated/floor/wood,/area/awaymission/academy/headmaster)
 "aH" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
 "aI" = (/obj/structure/table/reinforced,/obj/item/device/laser_pointer/upgraded,/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
-"aJ" = (/obj/structure/cult/tome,/obj/item/weapon/staff,/turf/simulated/floor/wood,/area/awaymission/academy/headmaster)
+"aJ" = (/obj/structure/table/cult,/obj/item/weapon/staff,/turf/simulated/floor/wood,/area/awaymission/academy/headmaster)
 "aK" = (/obj/structure/bed/chair/wood/wings{dir = 8},/turf/simulated/floor/wood,/area/awaymission/academy/headmaster)
 "aL" = (/obj/item/clothing/suit/space/hardsuit/wizard,/obj/structure/table/wood,/turf/simulated/floor/wood,/area/awaymission/academy/headmaster)
 "aM" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/briefcase,/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)

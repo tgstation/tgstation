@@ -136,9 +136,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		pylons++
 	for(var/obj/structure/cult/forge in orange(3,src))
 		forges++
-	for(var/obj/structure/cult/tome in orange(3,src))
+	for(var/obj/structure/table/cult in orange(3,src))
 		archives++
-	for(var/obj/structure/cult/talisman in orange(3,src))
+	for(var/obj/structure/cult/altar in orange(3,src))
 		altars++
 	if(pylons >= rpylons && forges >= rforges && archives >= rarchives && altars >= raltars)
 		return 1

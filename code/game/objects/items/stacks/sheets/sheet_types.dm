@@ -166,8 +166,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 6, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 4, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 10, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/altar, 10, time = 40, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/runed_metal

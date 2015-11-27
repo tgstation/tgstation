@@ -4176,7 +4176,7 @@
 "bCp" = (/obj/machinery/r_n_d/protolathe,/turf/simulated/floor/plasteel{dir = 9; icon_state = "warning"},/area/toxins/lab)
 "bCq" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 8},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel,/area/hallway/primary/aft{name = "Aft Hallway"})
 "bCr" = (/obj/machinery/r_n_d/destructive_analyzer,/turf/simulated/floor/plasteel{dir = 5; icon_state = "warning"},/area/toxins/lab)
-"bCs" = (/obj/structure/cult/tome,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/library)
+"bCs" = (/obj/structure/table/cult,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/library)
 "bCt" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/lab)
 "bCu" = (/obj/structure/bed/chair/office/light{dir = 4},/obj/effect/landmark/start{name = "Scientist"},/turf/simulated/floor/plasteel{dir = 4; icon_state = "whiteblue"},/area/toxins/lab)
 "bCv" = (/obj/structure/bed/chair/office/dark{dir = 1},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/library)
