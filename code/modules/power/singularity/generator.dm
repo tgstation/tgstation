@@ -8,11 +8,12 @@
 	density = 1
 	use_power = 0
 	var/energy = 0
+	var/creation_type = /obj/singularity
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)
-		new /obj/singularity/(T, 50)
+		new creation_type(T, 50)
 		if(src) qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
