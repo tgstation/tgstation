@@ -449,7 +449,6 @@
 #include "code\game\machinery\syndicatebomb.dm"
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\transformer.dm"
-#include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
