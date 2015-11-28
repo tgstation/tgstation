@@ -5,9 +5,9 @@
 	var/atom/target
 	var/ranged = 0
 	var/rapid = 0
-	var/projectiletype
+	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile ~bear1ake
 	var/projectilesound
-	var/casingtype
+	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING ~bear1ake
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 	var/list/emote_taunt = list()
@@ -226,38 +226,37 @@
 	if(rapid)
 		spawn(1)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 		spawn(4)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 		spawn(6)
 			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
 	else
 		Shoot(target, src.loc, src)
-		if(casingtype)
-			new casingtype
 	ranged_cooldown = ranged_cooldown_cap
 	return
 
-/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
+/mob/living/simple_animal/hostile/proc/Shoot(target, start, user)
 	if(target == start)
 		return
 
-	var/obj/item/projectile/A = new projectiletype(src.loc)
-	playsound(user, projectilesound, 100, 1)
-	if(!A)	return
-	A.current = target
-	A.firer = src
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
-	if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
-		newtonian_move(get_dir(target, user))
-	A.original = target
-	A.fire()
+	if(casingtype)
+		var/obj/item/ammo_casing/casing = new casingtype
+		if(casing.BB)
+			playsound(user, projectilesound, 100, 1)
+			casing.fire(target, user, zone_override = ran_zone())
+			casing.loc = get_turf(src)
+	else if(projectiletype)
+		var/obj/item/projectile/A = new projectiletype(src.loc)
+		playsound(user, projectilesound, 100, 1)
+		if(!A)	return
+		A.current = target
+		A.firer = src
+		A.yo = target:y - start:y
+		A.xo = target:x - start:x
+		if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+			newtonian_move(get_dir(target, user))
+		A.original = target
+		A.fire()
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
