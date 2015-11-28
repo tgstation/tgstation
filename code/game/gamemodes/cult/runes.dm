@@ -369,7 +369,7 @@ var/list/teleport_other_runes = list()
 			rune_in_use = 0
 			return
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
-	color = rgb(255, 0, 0)
+	color = rgb(126, 23, 23)
 	spawn(5)
 		color = initial(color)
 	sac(offering)
@@ -377,15 +377,10 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/sacrifice/proc/sac(mob/living/T)
 	var/sacrifice_fulfilled
 	if(T)
-		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
-			for(var/mob/living/carbon/C in range(2,src))
+		if(istype(T, /mob/living/simple_animal/pet))
+			for(var/mob/living/carbon/C in range(3,src))
 				if(iscultist(C))
 					C << "<span class='cultitalic'>\"A tasty morsel.\"</span>"
-					if(ticker.mode.name == "cult") //Why is this the only way to check the mode that I can find
-						var/datum/game_mode/cult/cult_mode = ticker.mode
-						if(C.reagents && cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
-							C.reagents.add_reagent("hell_water", 1)
-							C << "<span class='cultitalic'>\"And yet,</span> <span class='cultlarge'>NOT WHAT I ASKED FOR! FIND THE ONE I WISH SACRIFICED!\"</span>"
 		if(T.mind)
 			sacrificed.Add(T.mind)
 			if(is_sacrifice_target(T.mind))
@@ -631,7 +626,7 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "Severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "6"
-	color = rgb(0, 0, 255)
+	color = rgb(126, 23, 23)
 	var/rune_in_use = 0 //One at a time, please!
 	var/mob/living/affecting = null
 	grammar = "veri ire ego"
