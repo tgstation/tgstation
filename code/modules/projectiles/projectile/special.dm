@@ -175,6 +175,8 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
+		var/turf/portal_destination = pick(orange(6, src))
+		do_teleport(target, portal_destination)
 		return ..()
 	if(!gun)
 		qdel(src)
