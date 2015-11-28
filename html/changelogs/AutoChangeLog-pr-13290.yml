@@ -1,0 +1,7 @@
+author: neersighted
+delete-after: True
+changes: 
+  - experiment: "Nanotrasen would like to announce NanoUI 2.0, now being rolled out across all our stations. Existing NanoUI devices have been updated, and more will be added soon. Please report any bugs to Nanotrasen Support."
+  - tweak: "Many NanoUI interfaces have had +/- buttons replaced with input fields."
+  - tweak: "Some NanoUI interfaces have had more information added."
+  - bugfix: "Drones can now interact with NanoUI windows."
