@@ -42,8 +42,10 @@
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)	return 1
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSBLOB))
+		return 1
 	return 0
 
 
@@ -97,7 +99,8 @@
 	var/list/dirs = list(1,2,4,8)
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
-		if(!dirs.len)	break
+		if(!dirs.len)
+			break
 		var/dirn = pick(dirs)
 		dirs.Remove(dirn)
 		var/turf/T = get_step(src, dirn)
@@ -124,18 +127,18 @@
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
-			if(!(locate(/obj/effect/blob) in T))	break
-			else	T = null
-
-	if(!T)	return 0
-	//We can keep the above code in this proc, it probably works fine?
-	//new blob code with less BS:
+			if(!(locate(/obj/effect/blob) in T))
+				break
+			else
+				T = null
+	if(!T)
+		return 0
 	var/Blob_spawnable = 1
 	if(istype(T, /turf/space) && prob(65))
 		Blob_spawnable = 0
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 	for(var/atom/A in T)
-		if(A.density) // Unless density is 0, don't spawn a blob
+		if(A.density) //Unless density is 0, don't spawn a blob
 			Blob_spawnable = 0
 		A.blob_act() //Hit everything
 	if(T.density) //Check for walls and such dense turfs
