@@ -63,6 +63,7 @@
 	var/cooldown = 600
 	var/faction = "wizard"
 	var/broken = 0
+	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
 	SSobj.processing |= src
@@ -79,7 +80,11 @@
 				current_wizard = null
 				summon_wizard()
 			if(!current_wizard.client)
-				give_control()
+				if(!braindead_check)
+					braindead_check = 1
+				else
+					braindead_check = 0
+					give_control()
 		next_check = world.time + cooldown
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
@@ -149,6 +154,8 @@
 	name = "Academy Wizard"
 	r_pocket = null
 	r_hand = null
+	suit = /obj/item/clothing/suit/wizrobe/red
+	head = /obj/item/clothing/head/wizard/red
 
 /obj/item/weapon/dice/d20/fate
 	name = "Dice of Fate"
@@ -325,3 +332,11 @@
 
 /obj/structure/ladder/unbreakable/rune/update_icon()
 	return
+
+/obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
+	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
+
+/obj/structure/ladder/can_use(mob/user)
+	if(user.mind in ticker.mode.wizards)
+		return 0
+	return 1

@@ -41,43 +41,38 @@
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
+/obj/structure/ladder/proc/go_up(mob/user,is_ghost)
+	if(!is_ghost)
+		show_fluff_message(1,user)
+		up.add_fingerprint(user)
+	user.loc = get_turf(up)
+
+/obj/structure/ladder/proc/go_down(mob/user,is_ghost)
+	if(!is_ghost)
+		show_fluff_message(0,user)
+		down.add_fingerprint(user)
+	user.loc = get_turf(down)
+
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
 		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
-				if(!is_ghost)
-					user.visible_message("[user] climbs up \the [src].", \
-									 "<span class='notice'>You climb up \the [src].</span>")
-					up.add_fingerprint(user)
-				user.loc = get_turf(up)
+				go_up(user,is_ghost)
 			if("Down")
-				if(!is_ghost)
-					user.visible_message("[user] climbs down \the [src].", \
-									 "<span class='notice'>You climb down \the [src].</span>")
-					down.add_fingerprint(user)
-				user.loc = get_turf(down)
+				go_down(user,is_ghost)
 			if("Cancel")
 				return
-
 	else if(up)
-		if(!is_ghost)
-			user.visible_message("[user] climbs up \the [src].", \
-								 "<span class='notice'>You climb up \the [src].</span>")
-			up.add_fingerprint(user)
-		user.loc = get_turf(up)
-
+		go_up(user,is_ghost)
 	else if(down)
-		if(!is_ghost)
-			user.visible_message("[user] climbs down \the [src].", \
-								 "<span class='notice'>You climb down \the [src].</span>")
-			down.add_fingerprint(user)
-		user.loc = get_turf(down)
+		go_down(user,is_ghost)
 		
 	if(!is_ghost)
 		add_fingerprint(user)
 
 /obj/structure/ladder/attack_hand(mob/user)
-	use(user)
+	if(can_use(user))
+		use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
@@ -87,6 +82,15 @@
 
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	use(user,1)
+
+/obj/structure/ladder/proc/show_fluff_message(up,mob/user)
+	if(up)
+		user.visible_message("[user] climbs up \the [src].","<span class='notice'>You climb up \the [src].</span>")
+	else
+		user.visible_message("[user] climbs down \the [src].","<span class='notice'>You climb down \the [src].</span>")
+
+/obj/structure/ladder/proc/can_use(mob/user)
+	return 1
 
 /obj/structure/ladder/unbreakable/Destroy()
 	return QDEL_HINT_LETMELIVE
