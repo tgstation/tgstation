@@ -380,9 +380,12 @@ var/list/teleport_other_runes = list()
 		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
 			for(var/mob/living/carbon/C in range(2,src))
 				if(iscultist(C))
-					C << "<span class='cultitalic'>\"A tasty morsel. And yet,</span> <span class='cultlarge'>NOT WHAT I ASKED FOR! FIND THE ONE I WISH SACRIFICED!\"</span>"
-					if(C.reagents)
-						C.reagents.add_reagent("hell_water", 1)
+					C << "<span class='cultitalic'>\"A tasty morsel.\"</span>"
+					if(ticker.mode.name == "cult") //Why is this the only way to check the mode that I can find
+						var/datum/game_mode/cult/cult_mode = ticker.mode
+						if(C.reagents && cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+							C.reagents.add_reagent("hell_water", 1)
+							C << "<span class='cultitalic'>\"And yet,</span> <span class='cultlarge'>NOT WHAT I ASKED FOR! FIND THE ONE I WISH SACRIFICED!\"</span>"
 		if(T.mind)
 			sacrificed.Add(T.mind)
 			if(is_sacrifice_target(T.mind))
@@ -519,7 +522,7 @@ var/list/teleport_other_runes = list()
 		log_game("Raise Dead rune failed - revival target moved")
 		return
 	if(mob_to_sacrifice.stat != DEAD)
-		user << "<span class='cultitalic''>The sacrificial target must be dead!</span>"
+		user << "<span class='cultitalic'>The sacrificial target must be dead!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - catalyst corpse is not dead")
 		return
@@ -564,7 +567,7 @@ var/list/teleport_other_runes = list()
 		R.alpha = 100 //To help ghosts distinguish hidden runes
 	for(var/mob/dead/observer/O in orange(3,src))
 		if(!O.invisibility)
-			O << "<span class='cultitalic''>You suddenly feel as if you've vanished...</span>"
+			O << "<span class='cultitalic'>You suddenly feel as if you've vanished...</span>"
 			O.invisibility = INVISIBILITY_OBSERVER
 	qdel(src)
 
@@ -581,7 +584,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/true_sight/invoke()
 	visible_message("<span class='warning'>[src] explodes in a flash of blinding light!</span>")
 	for(var/mob/dead/observer/O in orange(3,src))
-		O << "<span class='cultitalic''>You suddenly feel very obvious...</span>"
+		O << "<span class='cultitalic'>You suddenly feel very obvious...</span>"
 		O.invisibility = 0
 	for(var/obj/effect/rune/R in orange(3,src))
 		R.invisibility = 0
@@ -640,13 +643,13 @@ var/list/teleport_other_runes = list()
 
 /obj/effect/rune/astral/invoke(mob/living/user)
 	if(rune_in_use)
-		user << "<span class='cultitalic''>[src] cannot support more than one body!</span>"
+		user << "<span class='cultitalic'>[src] cannot support more than one body!</span>"
 		fail_invoke()
 		log_game("Astral Communion rune failed - more than one user")
 		return
 	var/turf/T = get_turf(src)
 	if(!user in T.contents)
-		user << "<span class='cultitalic''>You must be standing on top of [src]!</span>"
+		user << "<span class='cultitalic'>You must be standing on top of [src]!</span>"
 		fail_invoke()
 		log_game("Astral Communion rune failed - user not standing on rune")
 		return
