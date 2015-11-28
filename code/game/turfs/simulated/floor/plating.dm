@@ -125,7 +125,7 @@
 	icon_state = "cult"
 
 /turf/simulated/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
 	..()
 
 /turf/simulated/floor/engine/cult/narsie_act()

@@ -8,7 +8,7 @@
 	canSmoothWith = null
 
 /turf/simulated/wall/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
 /turf/simulated/wall/cult/break_wall()
