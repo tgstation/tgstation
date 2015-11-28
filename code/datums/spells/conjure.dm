@@ -3,7 +3,7 @@
 	desc = "This spell conjures objs of the specified types in range."
 
 	var/list/summon_type = list() //determines what exactly will be summoned
-	//should be text, like list("/obj/machinery/bot/ed209")
+	//should be text, like list("/mob/living/simple_animal/bot/ed209")
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
@@ -50,7 +50,7 @@
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
-	summon_type = list(/obj/machinery/bot/ed209)
+	summon_type = list(/mob/living/simple_animal/bot/ed209)
 	summon_amt = 10
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/item/projectile/beam, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
