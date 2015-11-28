@@ -3,49 +3,40 @@
 		Power:
 	</div>
 	<div class="itemContent">
-		{{:helper.link(data.on? 'On' : 'Off', null, {'power' : 1})}}
+		{{:helper.link(data.on? 'On' : 'Off', data.on? 'power' : 'close', {'power' : 1})}}
 	</div>
 </div>
-
 <div class="item">
 	<div class="itemLabel">
-		Output pressure:
+		Output Pressure:
 	</div>
 	<div class="itemContent">
-		<div style="clear: both; padding-top: 4px;">
-			{{:helper.link('MAX', null, {'set_press' : 'max'}, null)}}
-			{{:helper.link('SET', null, {'set_press' : 'set'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.pressure_set/100)}} kPa&nbsp;</div>
-		</div>
+		{{:helper.link('Set', 'pencil', {'set_press' : 'set'})}}
+		{{:helper.link('Max', 'plus', {'set_press' : 'max'}, data.set_pressure == data.max_pressure ? 'disabled' : null)}}
+		{{:data.set_pressure}} kPa
 	</div>
 </div>
-
 <div class="item">
 	<div class="itemLabel">
-		Node 1 Concentration:
+		Node 1:
 	</div>
 	<div class="itemContent">
-		<div style="clear: both; padding-top: 4px;">
-			{{:helper.link('-', null, {'node1_c' : '-0.1'}, null)}}
-			{{:helper.link('-', null, {'node1_c' : '-0.01'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.node1_concentration}} %&nbsp;</div>
-			{{:helper.link('+', null, {'node1_c' : '0.01'}, null)}}
-			{{:helper.link('+', null, {'node1_c' : '0.1'}, null)}}
-		</div>
+		{{:helper.link('', 'seek-start', {'node1_c' : '-0.1'}, null)}}
+		{{:helper.link('', 'triangle-1-w', {'node1_c' : '-0.01'}, null)}}
+		{{:helper.link('', 'triangle-1-e', {'node1_c' : '0.01'}, null)}}
+		{{:helper.link('', 'seek-end', {'node1_c' : '0.1'}, null)}}
+		{{:data.node1_concentration}}%
 	</div>
 </div>
-
 <div class="item">
 	<div class="itemLabel">
-		Node 2 Concentration:
+		Node 2:
 	</div>
 	<div class="itemContent">
-		<div style="clear: both; padding-top: 4px;">
-			{{:helper.link('-', null, {'node2_c' : '-0.1'}, null)}}
-			{{:helper.link('-', null, {'node2_c' : '-0.01'}, null)}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.node2_concentration}} %&nbsp;</div>
-			{{:helper.link('+', null, {'node2_c' : '0.01'}, null)}}
-			{{:helper.link('+', null, {'node2_c' : '0.1'}, null)}}
-		</div>
+		{{:helper.link('', 'seek-start', {'node2_c' : '-0.1'}, null)}}
+		{{:helper.link('', 'triangle-1-w', {'node2_c' : '-0.01'}, null)}}
+		{{:helper.link('', 'triangle-1-e', {'node2_c' : '0.01'}, null)}}
+		{{:helper.link('', 'seek-end', {'node2_c' : '0.1'}, null)}}
+		{{:data.node2_concentration}}%
 	</div>
 </div>

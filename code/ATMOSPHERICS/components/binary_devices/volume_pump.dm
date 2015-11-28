@@ -104,14 +104,14 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_gas_pump.tmpl", name, 400, 120)
+		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["transfer_rate"] = round(transfer_rate*100)
-	data["max_rate"] = MAX_TRANSFER_RATE
+	data["transfer_rate"] = round(transfer_rate)
+	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
@@ -154,10 +154,6 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Topic(href,href_list)
 	if(..()) return
-	if(!src.allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-
 	if(href_list["power"])
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")

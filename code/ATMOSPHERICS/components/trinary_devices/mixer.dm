@@ -133,14 +133,14 @@
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_gas_pump.tmpl", name, 400, 320)
+		ui = new(user, src, ui_key, "atmos_mixer.tmpl", name, 400, 140)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["set_pressure"] = round(target_pressure*100)
-	data["max_pressure"] = MAX_OUTPUT_PRESSURE
+	data["set_pressure"] = round(target_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	data["node1_concentration"] = round(node1_concentration*100)
 	data["node2_concentration"] = round(node2_concentration*100)
 	return data
