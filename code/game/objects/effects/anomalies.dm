@@ -70,13 +70,17 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
+/obj/effect/anomaly/grav/Cross(mob/A)
+	gravShock(A)
+
+/obj/effect/anomaly/grav/Crossed(mob/A)
+	gravShock(A)
+
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
-	return
 
 /obj/effect/anomaly/grav/Bumped(mob/A)
 	gravShock(A)
-	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
 	if(boing && isliving(A) && !A.stat)
@@ -102,6 +106,12 @@
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
 	canshock = 1
+
+/obj/effect/anomaly/flux/Cross(mob/living/M)
+	mobShock(M)
+
+/obj/effect/anomaly/flux/Crossed(mob/living/M)
+	mobShock(M)
 
 /obj/effect/anomaly/flux/Bump(mob/living/M)
 	mobShock(M)
