@@ -3,12 +3,12 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 150
+	charge_max = 200
 	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
-	cooldown_min = 90 //15 deciseconds reduction per rank
+	cooldown_min = 60 //35 deciseconds reduction per rank
 
 	max_targets = 0
 
@@ -159,12 +159,12 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	charge_max = 400
+	charge_max = 500
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
 	range = 0
-	cooldown_min = 90
+	cooldown_min = 100
 	summon_amt = 1
 	action_icon_state = "time"
 

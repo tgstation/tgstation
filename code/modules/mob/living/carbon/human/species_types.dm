@@ -336,6 +336,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
+	siemens_coeff = 0
 	punchmod = 5
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
@@ -505,9 +506,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 				P.Extinguish(H)
 	H.update_fire()
 
-/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
-	H.equipOutfit(O)
+	H.equipOutfit(O, visualsOnly)
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)

@@ -1,0 +1,5 @@
+author: neersighted
+delete-after: True
+changes: 
+  - bugfix: Wooden Barricades now take bullet damage.
+  - tweak: Rebalance Wooden Barricade damage.

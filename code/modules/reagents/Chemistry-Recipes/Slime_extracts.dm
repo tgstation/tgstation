@@ -564,7 +564,7 @@
 /datum/chemical_reaction/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
 	feedback_add_details("slime_cores_used","[type]")
 	if(holder.my_atom)
-		var/obj/item/bluespace_crystal/BC = new(get_turf(holder.my_atom))
+		var/obj/item/weapon/ore/bluespace_crystal/BC = new(get_turf(holder.my_atom))
 		BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 
 //Cerulean

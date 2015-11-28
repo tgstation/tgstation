@@ -2,7 +2,6 @@
 
 /obj/item/weapon/electronics/airlock
 	name = "airlock electronics"
-
 	req_access = list(access_maint_tunnels)
 
 	var/list/conf_access = null
@@ -72,13 +71,9 @@
 		return
 
 	if (href_list["login"])
-		var/obj/item/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = I
-			I = pda.id
-		if (I && src.check_access(I))
+		if(allowed(usr))
 			src.locked = 0
-			src.last_configurator = I:registered_name
+			src.last_configurator = usr.name
 
 	if (locked)
 		return

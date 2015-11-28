@@ -171,6 +171,20 @@
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
+/turf/simulated/floor/plating/basalt
+	name = "basalt floor"
+	icon_state = "basalt1"
+
+/turf/simulated/floor/plating/basalt/New()
+	..()
+	icon_state = "basalt[rand(1,12)]"
+
+/turf/simulated/floor/plating/basalt/Destroy()
+	return QDEL_HINT_LETMELIVE
+
+/turf/simulated/floor/plating/basalt/ex_act()
+	return ..()
+
 
 
 
@@ -190,6 +204,9 @@
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
+
+/turf/simulated/floor/plating/lava/ex_act()
+	return ..()
 
 /turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()

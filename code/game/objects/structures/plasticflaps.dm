@@ -22,7 +22,9 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(M.buckled && istype(M.buckled, /obj/machinery/bot/mulebot)) // mulebot passenger gets a free pass.
+		if(istype(A,/mob/living/simple_animal/bot/mulebot)) //mulebots can pass
+			return 1
+		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0

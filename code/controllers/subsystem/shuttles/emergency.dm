@@ -145,10 +145,13 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
-
 	dwidth = 1
 	width = 3
 	height = 4
+
+/obj/docking_port/mobile/pod/request()
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
+		return ..()
 
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
@@ -157,13 +160,6 @@
 
 /obj/docking_port/mobile/pod/cancel()
 	return
-
-/*
-	findTransitDock()
-		. = SSshuttle.getDock("[id]_transit")
-		if(.)	return .
-		return ..()
-*/
 
 /obj/machinery/computer/shuttle/pod
 	name = "pod control computer"
@@ -177,14 +173,67 @@
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
-/obj/machinery/computer/shuttle/pod/emag_act(mob/user as mob)
-	user << "<span class='warning'> Access requirements overridden. The pod may now be launched manually at any time.</span>"
-	admin_controlled = 0
-	icon_state = "dorm_emag"
+/obj/docking_port/stationary/random
+	name = "escape pod"
+	id = "pod"
+	dwidth = 1
+	width = 3
+	height = 4
+	var/target_area = /area/mine/unexplored
 
 /obj/docking_port/stationary/random/initialize()
 	..()
-	var/target_area = /area/mine/unexplored
-	var/turfs = get_area_turfs(target_area)
-	var/T=pick(turfs)
+	var/list/turfs = get_area_turfs(target_area)
+	var/turf/T = pick(turfs)
 	src.loc = T
+
+//Pod suits/pickaxes
+
+
+/obj/item/clothing/head/helmet/space/orange
+	name = "emergency space helmet"
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+
+/obj/item/clothing/suit/space/orange
+	name = "emergency space suit"
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+	slowdown = 3
+
+/obj/item/weapon/pickaxe/emergency
+	name = "emergency disembarkation tool"
+	desc = "For extracting yourself from rough landings."
+
+/obj/item/weapon/storage/pod
+	name = "emergency space suits"
+	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
+	anchored = 1
+	density = 0
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "safe"
+
+/obj/item/weapon/storage/pod/New()
+	..()
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+
+/obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
+	return
+
+/obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		return ..()
+	else
+		usr << "The storage unit will only unlock during a Red or Delta security alert."
+
+/obj/item/weapon/storage/pod/attack_hand(mob/user)
+	return
