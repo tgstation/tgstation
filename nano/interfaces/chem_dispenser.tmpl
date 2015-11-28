@@ -1,62 +1,54 @@
-<!-- 
-Title: Chem Dispenser 5000 UI 
-Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
- -->
-<div class="item">
-	<div class="itemLabel">
-		Energy:
-	</div>
-	<div class="itemContent">
-		{{:helper.displayBar(data.energy, 0, data.maxEnergy, 'good', data.energy + ' Units')}}
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		Dispense:
-	</div>
-	<div class="itemContent">
-		{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
-		{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
-		{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
-		{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
-		{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50) ? 'selected' : null)}}
-	</div>
-</div>
-<div class="item">&nbsp;</div>
-<div class="item">
-	<div class="itemLabel" style="width: 100%;">
-		Chemical Dispenser
-	</div>
-</div>
-<div class="item">
-	<div class="itemContent" style="width: 100%;">
-		{{for data.chemicals}}
-			{{:helper.link(value.title, 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
-		{{/for}}
-	</div>
-</div>
-<div class="item">&nbsp;</div>
-<div class="item">
-	<div class="itemLabel">
-		Beaker Contents
-	</div>
-	<div class="itemContent">
-		{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
-	</div>
-</div>
-<div class="statusDisplay" style="height: 225px; overflow: auto;">
+<h2>Status</h2>
+<div class="statusDisplay">
 	<div class="item">
-		<div class="itemContent" style="width: 100%;">
+		<div class="itemLabel">
+			Energy:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.energy, 0, data.maxEnergy, 'good')}}
+			{{:data.energy}} Units
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Amount:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
+			{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
+			{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
+			{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
+			{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50) ? 'selected' : null)}}
+		</div>
+	</div>
+</div>
+<h2>Dispense</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemContentWidest">
+			{{for data.chemicals}}
+				{{:helper.link(value.title, 'circle-arrow-s', value.commands, null, 'link fixedLeft')}}
+			{{/for}}
+		</div>
+	</div>
+</div>
+<h2>Beaker</h2>
+<div class="statusDisplay">
+	{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	<div class="item">
+		<div class="itemLabel">
+			Contents:
+		</div>
+		<div class="itemContent" style="min-height: 175px;">
 			{{if data.isBeakerLoaded}}
-				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
+				<b>Volume: {{:data.beakerCurrentVolume}}/{{:data.beakerMaxVolume}} Units</b><br />
 				{{for data.beakerContents}}
-					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
-					<span class="bad">Beaker is empty</span>
+					<span class="bad">Beaker Empty</span>
 				{{/for}}
 			{{else}}
-				<span class="average"><i>No beaker loaded</i></span>
+				<span class="average">No Beaker Loaded</span>
 			{{/if}}
 		</div>
 	</div>
