@@ -36,15 +36,25 @@
 		else
 			user.visible_message("<span class='warning'>You can't install the crystal onto the stunprod while it has a powercell installed!</span>")
 
-/obj/item/weapon/melee/baton/cattleprod/teleprod/attack_self(mob/user, obj/item/I)//handles removing the bluespace crystal
-	if(!bcell)
-		var/obj/item/weapon/melee/baton/cattleprod/S = new /obj/item/weapon/melee/baton/cattleprod
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		var/turf/floorloc = get_turf(user)
-		floorloc.contents += contents//drops the contents of the prod (the only content should be the crystal) at the user's feet
-		user.unEquip(I)
-		user.put_in_hands(S)
-		user << "<span class='notice'>You carefully remove the bluespace crystal from the teleprod.</span>"
-		qdel(I)
-		qdel(src)
+/obj/item/weapon/melee/baton/cattleprod/teleprod/attack_self(mob/user, obj/item/I)//handles removing the bluespace crystal + turning the prod on and off
+	if(bcell && bcell.charge > hitcost)
+		status = !status
+		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		playsound(loc, "sparks", 75, 1, -1)
+	else
+		status = 0
+		if(!bcell)
+			var/obj/item/weapon/melee/baton/cattleprod/S = new /obj/item/weapon/melee/baton/cattleprod
+			if(!remove_item_from_storage(user))
+				user.unEquip(src)
+			var/turf/floorloc = get_turf(user)
+			floorloc.contents += contents//drops the contents of the prod (the only content should be the crystal) at the user's feet
+			user.unEquip(I)
+			user.put_in_hands(S)
+			user << "<span class='notice'>You carefully remove the bluespace crystal from the teleprod.</span>"
+			qdel(I)
+			qdel(src)
+		else
+			user << "<span class='warning'>[src] is out of charge.</span>"
+	update_icon()
+	add_fingerprint(user)
