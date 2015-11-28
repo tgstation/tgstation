@@ -8,7 +8,7 @@
 
 /datum/topic_state/physical/can_use_topic(atom/movable/src_object, mob/user)
 	. = user.shared_nano_interaction(src_object)
-	if(. > NANO_CLOSE)
+	if (. > NANO_CLOSE)
 		return min(., user.physical_can_use_topic(src_object))
 
 /mob/proc/physical_can_use_topic(atom/movable/src_object)
