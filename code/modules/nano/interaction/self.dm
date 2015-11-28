@@ -1,9 +1,12 @@
-/*
-	This state checks that the src_object is the same the as user
-*/
+ /**
+  * NanoUI State: self_state
+  *
+  * Only checks that the user and src_object are the same.
+ **/
+
 /var/global/datum/topic_state/self_state/self_state = new()
 
-/datum/topic_state/self_state/can_use_topic(var/src_object, var/mob/user)
+/datum/topic_state/self_state/can_use_topic(atom/movable/src_object, mob/user)
 	if(src_object != user)
 		return NANO_CLOSE
 	return user.shared_nano_interaction()

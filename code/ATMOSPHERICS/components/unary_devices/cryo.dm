@@ -65,16 +65,11 @@
 	if(!NODE1 || !is_operational())
 		return
 
-	if(!on)
-		updateDialog()
-		return
-
 	if(AIR1)
 		if (occupant)
 			process_occupant()
 		expel_gas()
 
-	updateDialog()
 	return 1
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
@@ -120,17 +115,19 @@
 		user << "Seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
-	if(..() | !user) return
+	if(..() | !user)
+		return
 	interact(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/interact(mob/user)
-	if(user == occupant || user.stat || panel_open) return
+	if(panel_open)
+		return
 	ui_interact(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 410)
+		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 410, state = notcontained_state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -183,8 +180,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
-	if(..()) return 0
-	if(usr == occupant || panel_open) return 0
+	if(..())
+		return
 
 	if(href_list["switchOn"])
 		if(!state_open)
@@ -193,8 +190,11 @@
 	if(href_list["switchOff"])
 		on = 0
 
-	if(href_list["ejectOccupant"])
+	if(href_list["openCell"])
 		open_machine()
+
+	if(href_list["closeCell"])
+		close_machine()
 
 	if(href_list["ejectBeaker"])
 		if(beaker)

@@ -35,7 +35,7 @@
 		if (!force_open) // UI is already open; update it.
 			ui.push_data(data)
 		else // Re-open it anyways.
-			ui.reinitialise(null, data)
+			ui.reinitialize(null, data)
 		return ui // We found the UI, return it.
 	else
 		return null // We couldn't find a UI.

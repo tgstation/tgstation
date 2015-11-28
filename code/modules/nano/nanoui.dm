@@ -407,12 +407,13 @@
 	if (width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
 	update_status(push_update = 0) // Update the window state.
-	if(status == NANO_CLOSE) return // Bail if we should close.
+	if (status == NANO_CLOSE)
+		return // Bail if we should close.
 
 	user << browse(get_html(), "window=[window_id];[window_size][window_options]") // Open the window.
 	winset(user, "mapwindow.map", "focus=true") // Return keyboard focus to map.
 	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
-	SSnano.ui_opened(src) // Call the ui_opened handler.
+	SSnano.ui_opened(src) // Call the opened handler.
 
  /**
   * public
@@ -423,7 +424,7 @@
   * optional template string The filename of the new template.
   * optional data list The new initial data.
  **/
-/datum/nanoui/proc/reinitialise(template, list/data)
+/datum/nanoui/proc/reinitialize(template, list/data)
 	if(template)
 		add_template("main", template) // Replace the 'main' template.
 	if(data)

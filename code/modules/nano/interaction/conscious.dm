@@ -1,7 +1,12 @@
-/*
-	This state only checks if user is conscious.
-*/
+ /**
+  * NanoUI State: conscious_state
+  *
+  * Only checks if the user is conscious.
+ **/
+
 /var/global/datum/topic_state/conscious_state/conscious_state = new()
 
-/datum/topic_state/conscious_state/can_use_topic(var/src_object, var/mob/user)
-	return user.stat == CONSCIOUS ? NANO_INTERACTIVE : NANO_CLOSE
+/datum/topic_state/conscious_state/can_use_topic(atom/movable/src_object, mob/user)
+	if (user.stat == CONSCIOUS)
+		return NANO_INTERACTIVE
+	return NANO_CLOSE
