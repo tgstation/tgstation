@@ -14,7 +14,7 @@
 		if(E.holidayID || E.wizardevent)
 			continue
 		var/datum/round_event/event = E.typepath
-		if (initial(E.typepath) < 0)
+		if(initial(event.announceWhen) <= 0)
 			continue
 		events_list += E
 	
