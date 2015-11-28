@@ -20,6 +20,14 @@
 	name = "\improper Academy Gateway"
 	icon_state = "away4"
 
+/area/awaymission/academy/academycellar
+	name = "\improper Academy Cellar"
+	icon_state = "away4"
+
+/area/awaymission/academy/academyengine
+	name = "\improper Academy Engine"
+	icon_state = "away4"
+
 //Academy Items
 
 /obj/singularity/academy
@@ -307,3 +315,13 @@
 		var/turf/T = get_step(Start,direction)
 		if(!T.density)
 			target_mob.Move(T)
+
+/obj/structure/ladder/unbreakable/rune
+	name = "Teleportation Rune"
+	desc = "Could lead anywhere."
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "1"
+	color = rgb(0,0,255)
+
+/obj/structure/ladder/unbreakable/rune/update_icon()
+	return

@@ -41,41 +41,52 @@
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
-/obj/structure/ladder/attack_hand(mob/user)
+/obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
 		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
-				user.visible_message("[user] climbs up \the [src].", \
+				if(!is_ghost)
+					user.visible_message("[user] climbs up \the [src].", \
 									 "<span class='notice'>You climb up \the [src].</span>")
+					up.add_fingerprint(user)
 				user.loc = get_turf(up)
-				up.add_fingerprint(user)
 			if("Down")
-				user.visible_message("[user] climbs down \the [src].", \
+				if(!is_ghost)
+					user.visible_message("[user] climbs down \the [src].", \
 									 "<span class='notice'>You climb down \the [src].</span>")
+					down.add_fingerprint(user)
 				user.loc = get_turf(down)
-				down.add_fingerprint(user)
 			if("Cancel")
 				return
 
 	else if(up)
-		user.visible_message("[user] climbs up \the [src].", \
-							 "<span class='notice'>You climb up \the [src].</span>")
+		if(!is_ghost)
+			user.visible_message("[user] climbs up \the [src].", \
+								 "<span class='notice'>You climb up \the [src].</span>")
+			up.add_fingerprint(user)
 		user.loc = get_turf(up)
-		up.add_fingerprint(user)
 
 	else if(down)
-		user.visible_message("[user] climbs down \the [src].", \
-							 "<span class='notice'>You climb down \the [src].</span>")
+		if(!is_ghost)
+			user.visible_message("[user] climbs down \the [src].", \
+								 "<span class='notice'>You climb down \the [src].</span>")
+			down.add_fingerprint(user)
 		user.loc = get_turf(down)
-		down.add_fingerprint(user)
+		
+	if(!is_ghost)
+		add_fingerprint(user)
 
-	add_fingerprint(user)
+/obj/structure/ladder/attack_hand(mob/user)
+	use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
 
 /obj/structure/ladder/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)
+
+/obj/structure/ladder/attack_ghost(mob/dead/observer/user)
+	use(user,1)
 
 /obj/structure/ladder/unbreakable/Destroy()
 	return QDEL_HINT_LETMELIVE
