@@ -19,7 +19,7 @@
 
 /obj/effect/blob/New(loc)
 	var/area/Ablob = get_area(loc)
-	if (Ablob.blob_allowed) //Is this area allowed for winning as blob?
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)
@@ -34,7 +34,7 @@
 
 /obj/effect/blob/Destroy()
 	var/area/Ablob = get_area(loc)
-	if (Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
+	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
 		blobs_legit -= src
 	blobs -= src //It's still removed from the normal list
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
@@ -134,14 +134,14 @@
 	if(istype(T, /turf/space) && prob(65))
 		Blob_spawnable = 0
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
-	for (var/atom/A in T)
-		if (A.density != 0) // Unless density is 0, don't spawn a blob
+	for(var/atom/A in T)
+		if(A.density) // Unless density is 0, don't spawn a blob
 			Blob_spawnable = 0
 		A.blob_act() //Hit everything
-	if (T.density != 0) //Check for walls and such dense turfs
+	if(T.density) //Check for walls and such dense turfs
 		Blob_spawnable = 0
 		T.blob_act() //Hit the turf
-	if (Blob_spawnable == 1)
+	if(Blob_spawnable)
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
 		B.color = a_color
 		B.density = 1
