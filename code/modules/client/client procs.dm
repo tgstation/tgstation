@@ -333,9 +333,5 @@ var/next_external_rsc = 0
 		'html/browser/playeroptions.css',
 		)
 	spawn (10)
-		//Send nanoui files to client
-		SSnano.send_resources(src)
-		
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, asset_cache, register_asset = FALSE)
-

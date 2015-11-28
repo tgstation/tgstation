@@ -1,6 +1,6 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
- // New source code should be placed in .dm files: choose File/New --> Code File.
+// New source code should be placed in .dm files: choose File/New --> Code File.
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -33,6 +33,7 @@
 #include "code\__DEFINES\machines.dm"
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\misc.dm"
+#include "code\__DEFINES\nano.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\qdel.dm"
@@ -149,7 +150,7 @@
 #include "code\controllers\subsystem\lighting.dm"
 #include "code\controllers\subsystem\machines.dm"
 #include "code\controllers\subsystem\mobs.dm"
-#include "code\controllers\subsystem\nanoUI.dm"
+#include "code\controllers\subsystem\nano.dm"
 #include "code\controllers\subsystem\npcpool.dm"
 #include "code\controllers\subsystem\objects.dm"
 #include "code\controllers\subsystem\pai.dm"
@@ -1100,6 +1101,10 @@
 #include "code\modules\hydroponics\hydroponics.dm"
 #include "code\modules\hydroponics\seed_extractor.dm"
 #include "code\modules\hydroponics\seeds.dm"
+#include "code\modules\json\json.dm"
+#include "code\modules\json\json_reader.dm"
+#include "code\modules\json\json_token.dm"
+#include "code\modules\json\json_writer.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
@@ -1347,12 +1352,20 @@
 #include "code\modules\mob\new_player\poll.dm"
 #include "code\modules\mob\new_player\preferences_setup.dm"
 #include "code\modules\mob\new_player\sprite_accessories.dm"
-#include "code\modules\nano\_JSON.dm"
-#include "code\modules\nano\JSON Reader.dm"
-#include "code\modules\nano\JSON Writer.dm"
-#include "code\modules\nano\nanoexternal.dm"
-#include "code\modules\nano\nanomanager.dm"
+#include "code\modules\nano\external.dm"
 #include "code\modules\nano\nanoui.dm"
+#include "code\modules\nano\subsystem.dm"
+#include "code\modules\nano\interaction\admin.dm"
+#include "code\modules\nano\interaction\base.dm"
+#include "code\modules\nano\interaction\conscious.dm"
+#include "code\modules\nano\interaction\contained.dm"
+#include "code\modules\nano\interaction\deep_inventory.dm"
+#include "code\modules\nano\interaction\default.dm"
+#include "code\modules\nano\interaction\inventory.dm"
+#include "code\modules\nano\interaction\notcontained.dm"
+#include "code\modules\nano\interaction\physical.dm"
+#include "code\modules\nano\interaction\self.dm"
+#include "code\modules\nano\interaction\zlevel.dm"
 #include "code\modules\ninja\__ninjaDefines.dm"
 #include "code\modules\ninja\admin_ninja_verbs.dm"
 #include "code\modules\ninja\energy_katana.dm"
