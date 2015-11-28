@@ -138,8 +138,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
-	/client/proc/debug_huds,
-	/client/proc/reload_nanoui_resources
+	/client/proc/debug_huds
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -278,6 +277,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin,
+		/client/proc/reload_nanoui_resources
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)

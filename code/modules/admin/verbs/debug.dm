@@ -782,7 +782,12 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Reload NanoUI Resources"
 	set desc = "Force the client to redownload NanoUI Resources"
 
-	var/list/resources = SSnano.get_resources()
-
+	// Close open NanoUIs.
 	SSnano.close_user_uis(usr)
-	SSnano.send_resources(src, resources, force = 1)
+
+	// Re-load the assets.
+	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
+	assets.register()
+
+	// Clear the user's cache so they get resent.
+	usr.client.cache = list()

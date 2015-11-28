@@ -87,6 +87,9 @@
 
 	add_common_assets()
 
+	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
+	assets.send(user, template)
+
  /**
   * private
   *

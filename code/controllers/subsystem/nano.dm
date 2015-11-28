@@ -9,13 +9,9 @@ var/datum/subsystem/nano/SSnano
 	var/list/open_uis = list() // A list of open NanoUIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing NanoUIs, not grouped.
 
-	var/list/resource_files // A list of asset files to be send to clients.
-
 
 /datum/subsystem/nano/New()
 	NEW_SS_GLOBAL(SSnano) // Register the subsystem.
-
-	resource_files = get_resources() // Populate the list of resource files.
 
 
 /datum/subsystem/nano/stat_entry()
