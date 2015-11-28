@@ -510,9 +510,23 @@ var/global/list/rockTurfEdgeCache
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	var/environment_type = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/plating/asteroid/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/simulated/floor/plating/asteroid/basalt
+	name = "volcanic floor"
+	baseturf = /turf/simulated/floor/plating/asteroid/basalt
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "basalt"
+	icon_plating = "basalt"
+	environment_type = "basalt"
+
+/turf/simulated/floor/plating/asteroid/basalt/airless
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
@@ -521,13 +535,8 @@ var/global/list/rockTurfEdgeCache
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
-	//	seedName = pick(list("1","2","3","4"))
-	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid[rand(0,12)]"
-//	spawn(2)
-//O		updateMineralOverlays()
+		icon_state = "[environment_type][rand(0,12)]"
 
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
@@ -600,8 +609,8 @@ var/global/list/rockTurfEdgeCache
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	dug = 1
-	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	icon_plating = "[environment_type]_dug"
+	icon_state = "[environment_type]_dug"
 	return
 
 /turf/simulated/floor/plating/asteroid/singularity_act()
