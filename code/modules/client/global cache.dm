@@ -28,8 +28,14 @@
 
 	client << browse_rsc(asset_cache[asset_name], asset_name)
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
+		if(!client) // winexist() waits for a response from the client, so we need to make sure the client still exists.
+			return 0
+
 		client.cache += asset_name
 		return 1
+
+	if(!client) // winexist() waits for a response from the client, so we need to make sure the client still exists.
+		return 0
 
 	client.sending |= asset_name
 	var/job = ++client.last_asset_job
@@ -74,8 +80,14 @@
 		client << browse_rsc(asset_cache[asset], asset)
 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
+		if(!client) // winexist() waits for a response from the client, so we need to make sure the client still exists.
+			return 0
+		
 		client.cache += unreceived
 		return 1
+
+	if(!client) // winexist() waits for a response from the client, so we need to make sure the client still exists.
+		return 0
 
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
