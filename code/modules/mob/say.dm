@@ -43,13 +43,17 @@
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
 	for(var/mob/M in player_list)
-		if(istype(M, /mob/new_player))
+		var/adminoverride = 0
+		if(M.client || M.client.holder || (M.client.prefs.chat_toggles & CHAT_DEAD))
+			adminoverride = 1
+		if(istype(M, /mob/new_player) && !adminoverride)
 			continue
-		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD)) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
-		else if(M.stat == DEAD)
-			//M.show_message(rendered, 2) //Takes into account blindness and such. //preserved so you can look at it and cry at the stupidity of oldcoders. whoever coded this should be punched into the sun
-			M << rendered
+		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(istype(M, /mob/dead/observer))
+			M << "<a href=?src=\ref[src];follow=\ref[speaker]>(F)</a> [rendered]"
+		else
+			M << "[rendered]"
 
 /mob/proc/emote(var/act)
 	return
