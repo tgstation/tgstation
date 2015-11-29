@@ -57,9 +57,9 @@
 /obj/item/weapon/cell/examine(mob/user)
 	..()
 	if(crit_fail)
-		user << "<span class='warning'>This power cell seems to be faulty.</span>"
+		to_chat(user, "<span class='warning'>This power cell seems to be faulty.</span>")
 	else
-		user << "<span class='info'>The charge meter reads [round(src.percent() )]%.</span>"
+		to_chat(user, "<span class='info'>The charge meter reads [round(src.percent() )]%.</span>")
 
 /obj/item/weapon/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
@@ -69,7 +69,7 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
 
-		user << "You inject the solution into the power cell."
+		to_chat(user, "You inject the solution into the power cell.")
 
 		if(S.reagents.has_reagent("plasma", 5))
 

@@ -84,7 +84,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 
 /obj/machinery/power/rust_core/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
 	if(owned_field)
-		user << user << "<span class='warning'>Turn \the [src] off first!</span>"
+		to_chat(user, user << "<span class='warning'>Turn \the [src] off first!</span>")
 		return -1
 
 	if(..() == 1)

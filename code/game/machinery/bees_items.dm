@@ -18,9 +18,9 @@
 /obj/item/weapon/bee_net/examine(mob/user)
 	..()
 	if(caught_bees)
-		user << "<span class='info'>There's [caught_bees] caught bee\s in it!</span>"
+		to_chat(user, "<span class='info'>There's [caught_bees] caught bee\s in it!</span>")
 	else
-		user << "<span class='info'>It has no bees in it.</span>"
+		to_chat(user, "<span class='info'>It has no bees in it.</span>")
 
 /obj/item/weapon/bee_net/afterattack(atom/A as mob|obj|turf|area, mob/living/user)
 	if(get_dist(A,user) > 1)
@@ -39,7 +39,7 @@
 			B.feral = 5
 			B.target = user
 	if(!caught)
-		user << "<span class='warning'>There are no bees in front of you!</span>"
+		to_chat(user, "<span class='warning'>There are no bees in front of you!</span>")
 
 /obj/item/weapon/bee_net/attack_self(mob/user as mob)
 	var/turf/T = get_step(get_turf(user), user.dir)
@@ -55,7 +55,7 @@
 			B.feral = 5
 			B.target = user
 	if(!caught)
-		user << "<span class='warning'>There are no bees in front of you!</span>"
+		to_chat(user, "<span class='warning'>There are no bees in front of you!</span>")
 
 /obj/item/weapon/bee_net/verb/empty_bees()
 	set src in usr

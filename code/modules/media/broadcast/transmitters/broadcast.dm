@@ -97,7 +97,7 @@
 		attack_hand(user)
 	if(issolder(W))
 		if(integrity>=100)
-			user << "<span class='warning'>[src] doesn't need to be repaired!</span>"
+			to_chat(user, "<span class='warning'>[src] doesn't need to be repaired!</span>")
 			return
 		var/obj/item/weapon/solder/S = W
 		if(!S.remove_fuel(4,user))
@@ -106,7 +106,7 @@
 		if(do_after(user, src,40))
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 			integrity = 100
-			user << "<span class='notice'>You repair the blown fuses on [src].</span>"
+			to_chat(user, "<span class='notice'>You repair the blown fuses on [src].</span>")
 
 /obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
@@ -187,7 +187,7 @@
 		if(!power_connection.powernet)
 			power_connection.connect()
 		if(!power_connection.powered())
-			usr << "<span class='warning'>This machine needs to be hooked up to a powered cable.</span>"
+			to_chat(usr, "<span class='warning'>This machine needs to be hooked up to a powered cable.</span>")
 			return
 		on = !on
 		update_on()
@@ -206,7 +206,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				usr << "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>"
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
 
 /obj/machinery/media/transmitter/broadcast/proc/count_rad_wires()
 	return !wires.IsIndexCut(TRANS_RAD_ONE) + !wires.IsIndexCut(TRANS_RAD_TWO)
@@ -237,23 +237,23 @@
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-				//world << "got [transfer_moles] moles at [removed.temperature]"
+//				to_chat(world, "got [transfer_moles] moles at [removed.temperature]")
 
 				if(removed)
 
 					var/heat_capacity = removed.heat_capacity()
-					//world << "heating ([heat_capacity])"
+//					to_chat(world, "heating ([heat_capacity])")
 					if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
 						if(removed.temperature < MAX_TEMP + T0C)
 							removed.temperature = min(removed.temperature + heating_power/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
 						else
 							removed.temperature = max(removed.temperature - heating_power/heat_capacity, TCMB)
 
-					//world << "now at [removed.temperature]"
+//					to_chat(world, "now at [removed.temperature]")
 
 				env.merge(removed)
 
-				//world << "turf now at [env.temperature]"
+//				to_chat(world, "turf now at [env.temperature]")
 
 		// Checks heat from the environment and applies any integrity damage
 		var/datum/gas_mixture/environment = loc.return_air()

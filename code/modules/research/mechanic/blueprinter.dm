@@ -47,20 +47,20 @@
 				nano_loaded++
 				qdel(P)
 			else
-				user <<"<span class='notice'>\The [src] is full.</span>"
+				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 		else
 			if(max_paper > paper_loaded)
 				paper_loaded++
 				qdel(P)
 			else
-				user <<"<span class='notice'>\The [src] is full.</span>"
+				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 		return
 
 	if(istype(A, /obj/item/weapon/paper_pack))
 		var/obj/item/weapon/paper_pack/PP = A
 		var/usingamount = 0
 		if(!PP.amount)
-			user <<"<span class='notice'>You have to have paper to load the [src]!</span>"
+			to_chat(user, "<span class='notice'>You have to have paper to load the [src]!</span>")
 		else
 			var/load_overlay = "[base_state][PP.pptype ? "nano" : "regular"]"
 			if(PP.pptype == "nano")
@@ -71,7 +71,7 @@
 				paper_loaded += usingamount
 			overlays += load_overlay
 			PP.usepaper(usingamount)
-			user <<"<span class='notice'>You successfully load [usingamount] sheets into the [src].</span>"
+			to_chat(user, "<span class='notice'>You successfully load [usingamount] sheets into the [src].</span>")
 			spawn(30)
 				overlays -= load_overlay
 		return

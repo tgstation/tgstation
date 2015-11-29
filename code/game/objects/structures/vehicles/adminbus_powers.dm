@@ -37,7 +37,7 @@
 	L.pixel_x = 0
 	L.pixel_y = 0
 	L.update_canmove()
-	L << "<span class='notice'>Thank you for riding with \the [src], have a secure day.</span>"
+	to_chat(L, "<span class='notice'>Thank you for riding with \the [src], have a secure day.</span>")
 	passengers -= L
 	update_rearview()
 
@@ -202,7 +202,7 @@
 	for(var/mob/living/M in orange(src,3))
 		M.revive(1)
 		M.suiciding = 0
-		M << "<span class='notice'>THE ADMINBUS IS LOVE. THE ADMINBUS IS LIFE.</span>"
+		to_chat(M, "<span class='notice'>THE ADMINBUS IS LOVE. THE ADMINBUS IS LIFE.</span>")
 		sleep(2)
 	update_rearview()
 
@@ -337,32 +337,32 @@
 				var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(M)
 				spawnedbombs += B
 				M.equip_to_slot_or_del(B, slot_r_hand)
-				M << "<span class='warning'>Lit and throw!</span>"
+				to_chat(M, "<span class='warning'>Lit and throw!</span>")
 				M.update_inv_r_hand()
 			else if(!M.l_hand)
 				var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(M)
 				spawnedbombs += B
 				M.equip_to_slot_or_del(B, slot_l_hand)
-				M << "<span class='warning'>Lit and throw!</span>"
+				to_chat(M, "<span class='warning'>Lit and throw!</span>")
 				M.update_inv_l_hand()
 	for(var/mob/living/carbon/C in passengers)
 		if(!C.r_hand)
 			var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(C)
 			spawnedbombs += B
 			C.equip_to_slot_or_del(B, slot_r_hand)
-			C << "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>"
+			to_chat(C, "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>")
 			distributed++
 			C.update_inv_r_hand()
 		else if(!C.l_hand)
 			var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(C)
 			spawnedbombs += B
 			C.equip_to_slot_or_del(B, slot_l_hand)
-			C << "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>"
+			to_chat(C, "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>")
 			distributed++
 			C.update_inv_l_hand()
 
 	update_rearview()
-	bususer << "[distributed] bombs distributed to passengers.</span>"
+	to_chat(bususer, "[distributed] bombs distributed to passengers.</span>")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/delete_bombs(mob/bususer)
 
@@ -370,7 +370,7 @@
 	flick("icon_delgiven-push",bususer.gui_icons.adminbus_delbombs)
 
 	if(spawnedbombs.len == 0)
-		bususer << "No bombs to delete.</span>"
+		to_chat(bususer, "No bombs to delete.</span>")
 		return
 
 	var/distributed = 0
@@ -388,7 +388,7 @@
 		spawnedbombs -= spawnedbombs[i]
 
 	update_rearview()
-	bususer << "Deleted all [distributed] bombs.</span>"
+	to_chat(bususer, "Deleted all [distributed] bombs.</span>")
 
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/give_lasers(mob/bususer)
@@ -405,13 +405,13 @@
 				var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(M)
 				spawnedlasers += L
 				M.equip_to_slot_or_del(L, slot_r_hand)
-				M << "<span class='warning'>Spray and /pray!</span>"
+				to_chat(M, "<span class='warning'>Spray and /pray!</span>")
 				M.update_inv_r_hand()
 			else if(!M.l_hand)
 				var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(M)
 				spawnedlasers += L
 				M.equip_to_slot_or_del(L, slot_l_hand)
-				M << "<span class='warning'>Spray and /pray!</span>"
+				to_chat(M, "<span class='warning'>Spray and /pray!</span>")
 				M.update_inv_l_hand()
 
 	for(var/mob/living/carbon/C in passengers)
@@ -419,19 +419,19 @@
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
 			spawnedlasers += L
 			C.equip_to_slot_or_del(L, slot_r_hand)
-			C << "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
+			to_chat(C, "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>")
 			distributed++
 			C.update_inv_r_hand()
 		else if(!(C.l_hand))
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
 			spawnedlasers += L
 			C.equip_to_slot_or_del(L, slot_l_hand)
-			C << "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
+			to_chat(C, "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>")
 			distributed++
 			C.update_inv_l_hand()
 
 	update_rearview()
-	bususer << "[distributed] infinite laser guns distributed to passengers.</span>"
+	to_chat(bususer, "[distributed] infinite laser guns distributed to passengers.</span>")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/delete_lasers(mob/bususer)
 
@@ -439,7 +439,7 @@
 	flick("icon_delgiven-push",bususer.gui_icons.adminbus_dellasers)
 
 	if(spawnedlasers.len == 0)
-		bususer << "No laser guns to delete.</span>"
+		to_chat(bususer, "No laser guns to delete.</span>")
 		return
 
 	var/distributed = 0
@@ -457,7 +457,7 @@
 		spawnedlasers -= spawnedlasers[i]
 
 	update_rearview()
-	bususer << "Deleted all [distributed] laser guns.</span>"
+	to_chat(bususer, "Deleted all [distributed] laser guns.</span>")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/Mass_Repair(mob/bususer,var/turf/centerloc=null,var/repair_range=3)//the proc can be called by others, doing (null, <center of the area you want to repair>, <radius of the area you want to repair>)
 
@@ -539,7 +539,7 @@
 		L+=T
 
 	if(!L || !L.len)
-		bususer << "No area available."
+		to_chat(bususer, "No area available.")
 		bususer.gui_icons.adminbus_tele.icon_state = "icon_teleport"
 		warp.icon_state = ""
 		return
@@ -557,7 +557,7 @@
 
 	if(passengers.len == 0)
 		flick("icon_tdobs-flick",bususer.gui_icons.adminbus_tdobs)
-		bususer << "<span class='warning'>There are no passengers to send.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to send.</span>")
 		return
 
 	bususer.gui_icons.adminbus_tdobs.icon_state = "icon_tdobs-push"
@@ -590,7 +590,7 @@
 */
 
 			M.forceMove(pick(tdomeobserve))
-			M << "<span class='notice'>You have been sent to the Thunderdome. Thank you for riding with us and enjoy your games.</span>"
+			to_chat(M, "<span class='notice'>You have been sent to the Thunderdome. Thank you for riding with us and enjoy your games.</span>")
 
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
@@ -612,7 +612,7 @@
 
 	if(passengers.len == 0)
 		flick("icon_tdarena-flick",bususer.gui_icons.adminbus_tdarena)
-		bususer << "<span class='warning'>There are no passengers to send.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to send.</span>")
 		return
 
 	bususer.gui_icons.adminbus_tdarena.icon_state = "icon_tdarena-push"
@@ -636,14 +636,14 @@
 			join_team(A,"Green")
 			alternate = 1
 
-	bususer << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+	to_chat(bususer, "The passengers' belongings were stored inside the Thunderdome's admin lodge.")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Arena_Green(mob/bususer)
 
 
 	if(passengers.len == 0)
 		flick("icon_tdgreen-flick",bususer.gui_icons.adminbus_tdgreen)
-		bususer << "<span class='warning'>There are no passengers to send.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to send.</span>")
 		return
 
 	bususer.gui_icons.adminbus_tdgreen.icon_state = "icon_tdgreen-push"
@@ -660,14 +660,14 @@
 		var/atom/A = passengers[i]
 		join_team(A,"Green")
 
-	bususer << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+	to_chat(bususer, "The passengers' belongings were stored inside the Thunderdome's admin lodge.")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Arena_Red(mob/bususer)
 
 
 	if(passengers.len == 0)
 		flick("icon_tdred-flick",bususer.gui_icons.adminbus_tdred)
-		bususer << "<span class='warning'>There are no passengers to send.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to send.</span>")
 		return
 
 	bususer.gui_icons.adminbus_tdred.icon_state = "icon_tdred-push"
@@ -684,7 +684,7 @@
 		var/atom/A = passengers[i]
 		join_team(A,"Red")
 
-	bususer << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+	to_chat(bususer, "The passengers' belongings were stored inside the Thunderdome's admin lodge.")
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/join_team(var/atom/A, var/team)
 	if(isliving(A))
@@ -795,14 +795,14 @@
 			if("Red")
 				M.loc = pick(tdome2)
 
-		M << "<span class='danger'>You have been chosen to fight for the [team] Team. [pick(\
+		to_chat(M, "<span class='danger'>You have been chosen to fight for the [team] Team. [pick(\
 		"The wheel of fate is turning!",\
 		"Heaven or Hell!",\
 		"Set Spell Card!",\
 		"Hologram Summer Again!",\
 		"Get ready for the next battle!",\
 		"Fight for your life!",\
-		)]</span>"
+		)]</span>")
 
 	else if(isbot(A))
 		var/obj/machinery/bot/B = A
@@ -855,7 +855,7 @@
 
 	if(passengers.len == 0)
 		flick("icon_home-flick",bususer.gui_icons.adminbus_home)
-		bususer << "<span class='warning'>There are no passengers to send.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to send.</span>")
 		return
 
 	bususer.gui_icons.adminbus_home.icon_state = "icon_home-push"
@@ -881,7 +881,7 @@
 
 	if(passengers.len == 0)
 		flick("icon_antag-flick",bususer.gui_icons.adminbus_antag)
-		bususer << "<span class='warning'>There are no passengers to make antag.</span>"
+		to_chat(bususer, "<span class='warning'>There are no passengers to make antag.</span>")
 		return
 
 	bususer.gui_icons.adminbus_antag.icon_state = "icon_antag-push"
@@ -896,7 +896,7 @@
 			bususer.gui_icons.adminbus_antag.icon_state = "icon_antag"
 			for(var/mob/M in passengers)
 				spawn()
-					M << "<span class='danger'>YOU JUST REMEMBERED SOMETHING IMPORTANT!</span>"
+					to_chat(M, "<span class='danger'>YOU JUST REMEMBERED SOMETHING IMPORTANT!</span>")
 					sleep(20)
 					antag_madness_adminbus(M)
 		if("10 seconds")
@@ -921,15 +921,15 @@
 	if(!M.mind)	return
 	if(!ishuman(M) && !ismonkey(M))	return
 
-	M << "<span class='rose'>You feel like you forgot something important!</span>"
+	to_chat(M, "<span class='rose'>You feel like you forgot something important!</span>")
 
 	sleep(delay/2)
 
-	M << "<span class='rose'>You're starting to remember...</span>"
+	to_chat(M, "<span class='rose'>You're starting to remember...</span>")
 
 	sleep(delay/2)
 
-	M << "<span class='danger'>OH THAT'S RIGHT!</span>"
+	to_chat(M, "<span class='danger'>OH THAT'S RIGHT!</span>")
 
 	sleep(20)
 

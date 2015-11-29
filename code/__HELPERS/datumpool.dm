@@ -23,7 +23,7 @@
 
 		#ifdef DEBUG_DATUM_POOL
 		if(ticker)
-			world << text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", type, list2params(B))
+			to_chat(world, text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", type, list2params(B)))
 		#endif
 
 		//so the GC knows we're pooling this type.
@@ -39,7 +39,7 @@
 	masterdatumPool[type] -= O
 
 	#ifdef DEBUG_DATUM_POOL
-	world << text("DEBUG_DATUM_POOL: getFromPool([]) [] left arglist([]).", type, length(masterdatumPool[type]), list2params(B))
+	to_chat(world, text("DEBUG_DATUM_POOL: getFromPool([]) [] left arglist([]).", type, length(masterdatumPool[type]), list2params(B)))
 	#endif
 
 	if(!O || !istype(O))
@@ -69,7 +69,7 @@
 
 	if(istype(D, /atom/movable) && length(masterdatumPool[D.type]) > MAINTAINING_OBJECT_POOL_COUNT)
 		#ifdef DEBUG_DATUM_POOL
-		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_OBJECT_POOL_COUNT)
+		to_chat(world, text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_OBJECT_POOL_COUNT))
 		#endif
 
 		qdel(D)
@@ -84,13 +84,13 @@
 
 	#ifdef DEBUG_DATUM_POOL
 	if(D in masterdatumPool[D.type])
-		world << text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type)
+		to_chat(world, text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type))
 	#endif
 
 	masterdatumPool[D.type] |= D
 
 	#ifdef DEBUG_DATUM_POOL
-	world << text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(masterdatumPool[D.type]))
+	to_chat(world, text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(masterdatumPool[D.type])))
 	#endif
 
 #undef MAINTAINING_DATUM_POOL_COUNT

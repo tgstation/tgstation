@@ -130,7 +130,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 		if (F["/[tile.y]/[tile.x]"] && F["/[tile.y]/[tile.x]"] != temp)
 			CRASH("Mismatch: [tile.type] at [tile.x],[tile.y],[tile.z] ([tile.icon], [tile.icon_state], [tile.dir])")
 		else
-			F["/[tile.y]/[tile.x]"] << temp
+			to_chat(F["/[tile.y]/[tile.x]"], temp)
 		#endif
 
 		hash = md5("[hash][temp]")

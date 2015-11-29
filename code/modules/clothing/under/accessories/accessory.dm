@@ -29,7 +29,7 @@
 	has_suit = S
 	if(user)
 		user.drop_item(src, has_suit)
-		user << "<span class='notice'>You attach [src] to [has_suit].</span>"
+		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
 		src.add_fingerprint(user)
 	else
 		loc = has_suit
@@ -184,7 +184,7 @@
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user as mob)
 	if(!stored_name)
-		user << "Waving around a badge before swiping an ID would be pretty pointless."
+		to_chat(user, "Waving around a badge before swiping an ID would be pretty pointless.")
 		return
 	if(isliving(user))
 		user.visible_message("<span class='warning'>[user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>","<span class='warning'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
@@ -193,11 +193,11 @@
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
-			user << "<span class='warning'>[src] is already cracked.</span>"
+			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
 			return
 		else
 			emagged = 1
-			user << "<span class='warning'>You swipe [O] and crack the holobadge security checks.</span>"
+			to_chat(user, "<span class='warning'>You swipe [O] and crack the holobadge security checks.</span>")
 			return
 
 	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
@@ -211,12 +211,12 @@
 			id_card = pda.id
 
 		if(access_security in id_card.access || emagged)
-			user << "You imprint your ID details onto the badge."
+			to_chat(user, "You imprint your ID details onto the badge.")
 			stored_name = id_card.registered_name
 			name = "holobadge ([stored_name])"
 			desc = "This glowing blue badge marks [stored_name] as THE LAW."
 		else
-			user << "[src] rejects your insufficient access rights."
+			to_chat(user, "[src] rejects your insufficient access rights.")
 		return
 	..()
 

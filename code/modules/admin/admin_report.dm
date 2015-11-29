@@ -53,8 +53,8 @@ proc/make_report(body, author, okey, cid)
 
 	reports.Insert(1, created)
 
-	Reports["reports"]   << reports
-	Reports["lastID"] << lastID
+	to_chat(Reports["reports"], reports)
+	to_chat(Reports["lastID"], lastID)
 
 // load the reports from disk
 proc/load_reports()
@@ -149,16 +149,16 @@ client/proc/mark_report_done(ID as num)
 	for(var/datum/admin_report/N in reports)
 		if(N.ID == ID)
 			found = N
-	if(!found) src << "<b>* An error occured, sorry.</b>"
+	to_chat(if(!found) src, "<b>* An error occured, sorry.</b>")
 
 	found.done = 1
 
-	Reports["reports"]   << reports
+	to_chat(Reports["reports"], reports)
 
 
 client/proc/edit_report(ID as num)
 	if(!src.holder || src.holder.level < 0)
-		src << "<b>You tried to modify the news, but you're not an admin!"
+		to_chat(src, "<b>You tried to modify the news, but you're not an admin!")
 		return
 
 	var/savefile/Reports = new("data/reports.sav")
@@ -170,11 +170,11 @@ client/proc/edit_report(ID as num)
 	for(var/datum/admin_report/N in reports)
 		if(N.ID == ID)
 			found = N
-	if(!found) src << "<b>* An error occured, sorry.</b>"
+	to_chat(if(!found) src, "<b>* An error occured, sorry.</b>")
 
 	var/body = input(src.mob, "Enter a body for the news", "Body") as null|message
 	if(!body) return
 
 	found.body = body
 
-	Reports["reports"]   << reports
+	to_chat(Reports["reports"], reports)

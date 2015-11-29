@@ -26,7 +26,7 @@
 				user.visible_message("<span class='danger'>[user.name] injects [M.name] with [src].</span>")
 				src.injected(user,M)
 			else
-				user << "<span class='warning'>You failed to inject [M.name].</span>"
+				to_chat(user, "<span class='warning'>You failed to inject [M.name].</span>")
 
 		if(src.uses < 1)
 			src.icon_state = "b0"
@@ -53,7 +53,7 @@
 			if (!istype(ID,/datum/appearanceHolder/))
 				return
 
-			target << "<span class='warning'>Your body changes! You feel completely different!</span>"
+			to_chat(target, "<span class='warning'>Your body changes! You feel completely different!</span>")
 			ID.gender = pick("male","female")
 			if(ID.gender == "female")
 				target.real_name = pick(first_names_female)

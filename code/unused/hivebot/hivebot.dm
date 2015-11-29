@@ -1,5 +1,5 @@
 /mob/living/silicon/hivebot/New(loc,mainframe)
-	src << "<span class='notice'>Your icons have been generated!</span>"
+	to_chat(src, "<span class='notice'>Your icons have been generated!</span>")
 	updateicon()
 
 	if(mainframe)
@@ -159,7 +159,7 @@
 				if(prob(20))
 					for(var/mob/M in viewers(src, null))
 						if(M.client)
-							M << M << "<span class='danger'>[src] fails to push [tmob]'s fat ass out of the way.</span>"
+							to_chat(M, M << "<span class='danger'>[src] fails to push [tmob]'s fat ass out of the way.</span>")
 					src.now_pushing = 0
 					//src.unlock_medal("That's No Moon, That's A Gourmand!", 1)
 					return*/
@@ -186,7 +186,7 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
+			to_chat(user, "Need more welding fuel!")
 			return
 
 /mob/living/silicon/hivebot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -330,7 +330,7 @@
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
 		if(activated(O))
-			src << "Already activated"
+			to_chat(src, "Already activated")
 			return
 		if(!src.module_state_1)
 			src.module_state_1 = O
@@ -345,7 +345,7 @@
 			O.layer = 20
 			src.contents += O
 		else
-			src << "You need to disable a module first!"
+			to_chat(src, "You need to disable a module first!")
 		src.installed_modules()
 
 	if (href_list["deact"])
@@ -361,9 +361,9 @@
 				src.module_state_3 = null
 				src.contents -= O
 			else
-				src << "Module isn't activated."
+				to_chat(src, "Module isn't activated.")
 		else
-			src << "Module isn't activated"
+			to_chat(src, "Module isn't activated")
 		src.installed_modules()
 	return
 
@@ -497,5 +497,5 @@ Frequency:
 	if(mainframe)
 		mainframe.return_to(src)
 	else
-		src << "<span class='warning'>You lack a dedicated mainframe!</span>"
+		to_chat(src, "<span class='warning'>You lack a dedicated mainframe!</span>")
 		return

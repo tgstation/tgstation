@@ -430,7 +430,7 @@
 				continue
 
 			H.AdjustStunned(5)
-			H << "<span class='warning'>Gravity!</span>"
+			to_chat(H, "<span class='warning'>Gravity!</span>")
 
 /area/proc/set_apc(var/obj/machinery/power/apc/apctoset)
 	areaapc = apctoset

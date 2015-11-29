@@ -21,7 +21,7 @@
 	if(nearest_artifact_distance >= 0)
 		message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 
-	user << "<span class='info'>[message]</span>"
+	to_chat(user, "<span class='info'>[message]</span>")
 
 	if(world.time - last_scan_time >= scan_delay)
 		spawn(0)

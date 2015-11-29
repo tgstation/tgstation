@@ -215,28 +215,28 @@
 		if(broadcast)
 			broadcast.announce( "The shuttle is currently in process of moving." )
 		else if(user)
-			user << "The shuttle is currently moving"
+			to_chat(user, "The shuttle is currently moving")
 		return 0 //shuttle already travelling
 
 	if(lockdown)
 		if(broadcast)
 			broadcast.announce( "This shuttle is locked down." )
 		else if(user)
-			user << "The shuttle can't move (locked down)"
+			to_chat(user, "The shuttle can't move (locked down)")
 		return 0
 
 	if(!can_move())
 		if(broadcast)
 			broadcast.announce( "The engines are still cooling down from the previous trip." )
 		else if(user)
-			user << "The shuttle can't move (on cooldown)"
+			to_chat(user, "The shuttle can't move (on cooldown)")
 		return 0
 
 	if(D.docked_with)
 		if(broadcast)
 			broadcast.announce( "[capitalize(D.areaname)] is currently used by another shuttle. Please wait until the docking port is free, or select another destination." )
 		else if(user)
-			user << "The shuttle can't move ([D.areaname] is used by another shuttle)"
+			to_chat(user, "The shuttle can't move ([D.areaname] is used by another shuttle)")
 		return 0
 
 	//Handle the message
@@ -263,13 +263,13 @@
 				if(broadcast)
 					broadcast.announce("ERROR: [cant_leave_zlevel[A.type]]")
 				else if(user)
-					user << cant_leave_zlevel[A.type]
+					to_chat(user, cant_leave_zlevel[A.type])
 				return 0
 			else
 				if(broadcast)
 					broadcast.announce("ERROR: [A.name] is preventing the shuttle from departing.")
 				else if(user)
-					user << "[A.name] is preventing the shuttle from departing."
+					to_chat(user, "[A.name] is preventing the shuttle from departing.")
 				return 0
 
 	destination_port = D
@@ -281,12 +281,12 @@
 			if(broadcast)
 				broadcast.announce( "The shuttle has departed and is now moving towards [D.areaname]." )
 			else if(user)
-				user << "The shuttle has departed towards [D.areaname]"
+				to_chat(user, "The shuttle has departed towards [D.areaname]")
 		else
 			if(broadcast)
 				broadcast.announce( "The shuttle has arrived at [D.areaname]." )
 			else if(user)
-				user << "The shuttle has arrived at [D.areaname]"
+				to_chat(user, "The shuttle has arrived at [D.areaname]")
 
 		pre_flight()
 
@@ -725,7 +725,7 @@
 	if(!centered_at)
 		var/turf/user_turf = get_turf(user)
 		if(!user_turf)
-			user << "You must be standing on a turf!"
+			to_chat(user, "You must be standing on a turf!")
 			return
 
 		centered_at = get_step(user_turf,usr.dir)
@@ -733,7 +733,7 @@
 	var/turf/original_center = get_turf(linked_port)
 
 	if(!centered_at)
-		user << "ERROR: Unable to find center turf!"
+		to_chat(user, "ERROR: Unable to find center turf!")
 		return
 
 	var/offsetX = centered_at.x - original_center.x

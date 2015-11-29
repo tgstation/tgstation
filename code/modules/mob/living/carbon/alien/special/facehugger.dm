@@ -64,11 +64,11 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			user << "<span class='deadsay'>\The [src] is not moving.</span>"
+			to_chat(user, "<span class='deadsay'>\The [src] is not moving.</span>")
 		if(CONSCIOUS)
-			user << "<span class='danger'>\The [src] seems active.</span>"
+			to_chat(user, "<span class='danger'>\The [src] seems active.</span>")
 	if (sterile)
-		user << "<span class='danger'>It looks like \the [src]'s proboscis has been removed.</span>"
+		to_chat(user, "<span class='danger'>It looks like \the [src]'s proboscis has been removed.</span>")
 
 /obj/item/clothing/mask/facehugger/attackby()
 	Die()

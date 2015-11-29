@@ -11,7 +11,7 @@
 
 /datum/game_mode/traitor/autotraitor/announce()
 	..()
-	world << "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>"
+	to_chat(world, "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>")
 
 /datum/game_mode/traitor/autotraitor/pre_setup()
 	if(istype(ticker.mode, /datum/game_mode/mixed))
@@ -185,14 +185,14 @@
 				forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "<span class='danger'>You are the traitor.</span>"
+				to_chat(character, "<span class='danger'>You are the traitor.</span>")
 				character.mind.special_role = "traitor"
 				var/obj_count = 1
-				character << "<span class='notice'>Your current objectives:</span>"
+				to_chat(character, "<span class='notice'>Your current objectives:</span>")
 				for(var/datum/objective/objective in character.mind.objectives)
-					character << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+					to_chat(character, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 					obj_count++
-				character << sound('sound/voice/syndicate_intro.ogg')
+				to_chat(character, sound('sound/voice/syndicate_intro.ogg'))
 			//else
 				//message_admins("New traitor roll failed.  No new traitor.")
 	//else

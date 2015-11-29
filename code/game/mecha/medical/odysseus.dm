@@ -43,7 +43,7 @@
 		var/perspective = input("Select a perspective type.",
                       "Client perspective",
                       occupant.client.perspective) in list(MOB_PERSPECTIVE,EYE_PERSPECTIVE)
-		world << "[perspective]"
+		to_chat(world, "[perspective]")
 		occupant.client.perspective = perspective
 		return
 
@@ -55,7 +55,7 @@
 			occupant.client.eye = src
 		else
 			occupant.client.eye = occupant
-		world << "[occupant.client.eye]"
+		to_chat(world, "[occupant.client.eye]")
 		return
 */
 
@@ -66,15 +66,15 @@
 
 /obj/item/clothing/glasses/hud/health/mech/process_hud(var/mob/M) //Is this even necessary? Doesn't the parent already do this?
 /*
-	world<< "view(M)"
+	to_chat(world, "view(M)")
 	for(var/mob/mob in view(M))
-		world << "[mob]"
-	world<< "view(M.client)"
+		to_chat(world, "[mob]")
+	to_chat(world, "view(M.client)")
 	for(var/mob/mob in view(M.client))
-		world << "[mob]"
-	world<< "view(M.loc)"
+		to_chat(world, "[mob]")
+	to_chat(world, "view(M.loc)")
 	for(var/mob/mob in view(M.loc))
-		world << "[mob]"
+		to_chat(world, "[mob]")
 */
 
 	if(!M || M.stat || !(M in view(M)))	return

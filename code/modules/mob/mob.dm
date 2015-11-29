@@ -239,15 +239,15 @@ var/global/obj/screen/fuckstat/FUCK = new
 <span class='notice'> Carbon Dioxide: [environment.carbon_dioxide] \n</span>"}
 	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "<span class='notice'> [trace_gas.type]: [trace_gas.moles] \n</span>"
+		to_chat(usr, "<span class='notice'> [trace_gas.type]: [trace_gas.moles] \n</span>")
 
 	usr.show_message(t, 1)
 
-/mob/proc/simple_message(var/msg, var/hallucination_msg)//Same as M << "message", but with additinal message for hallucinations
+/mob/proc/simple_message(var/msg, var/hallucination_msg) // Same as M << "message", but with additinal message for hallucinations.
 	if(hallucinating() && hallucination_msg)
-		src << hallucination_msg
+		to_chat(src, hallucination_msg)
 	else
-		src << msg
+		to_chat(src, msg)
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1=visible or 2=hearable), alternative message, alt message type (1=if blind or 2=if deaf)
 
@@ -268,7 +268,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 				type = alt_type
 		if((type & MESSAGE_HEAR) && is_deaf()) //Hearing related //We can't hear what the person is saying. Too bad
 			if(!(alt))
-				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
+				to_chat(src, "<span class='notice'>You can almost hear someone talking.</span>")//Well, not THAT deaf
+
 				return //And that does it
 			else
 				msg = alt
@@ -283,13 +284,16 @@ var/global/obj/screen/fuckstat/FUCK = new
 			if(!(alt)) //No alternative message
 				return //We can't see it, we're a bit too dying over here
 			else //Hey look someone passed an alternative message
-				src << "<span class='notice'>You can almost hear someone talking.</span>" //Now we can totally not hear it!
+				to_chat(src, "<span class='notice'>You can almost hear someone talking.</span>")//Now we can totally not hear it!
+
 				return //And we're good
 		else //This is not an emote
-			src << "<span class='notice'>You can almost hear someone talking.</span>" //The sweet silence of death
+			to_chat(src, "<span class='notice'>You can almost hear someone talking.</span>")//The sweet silence of death
+
 			return //All we ever needed to hear
 	else //We're fine
-		src << msg //Send it
+		to_chat(src, msg)//Send it
+
 	return
 
 // Show a message to all mobs in sight of this one
@@ -431,8 +435,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 		narsimage.loc = src.loc
 		narglow.loc = src.loc
 		//Display the new narsimage to the player
-		src << narsimage
-		src << narglow
+		to_chat(src, narsimage)
+		to_chat(src, narglow)
 	else
 		if(narsimage)
 			del(narsimage)
@@ -451,7 +455,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		riftimage.pixel_y = new_y
 		riftimage.loc = T_mob
 
-		src << riftimage
+		to_chat(src, riftimage)
 	else
 		if(riftimage)
 			del(riftimage)
@@ -503,7 +507,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 						W.loc=get_turf(src) // I think.
 					else
 						if(!disable_warning)
-							src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
+							to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+
 				return 0
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
@@ -526,7 +531,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 								qdel(W)
 							else
 								if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
-									src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
+									to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+
 						return
 					else
 						equip_to_slot(W, slot, redraw_mob)
@@ -544,7 +550,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 					W.loc=get_turf(src) // I think.
 				else
 					if(!disable_warning)
-						src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
+						to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+
 			return 0
 
 		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -680,7 +687,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -731,7 +738,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -746,7 +753,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -757,7 +764,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -767,15 +774,15 @@ var/list/slot_equipment_priority = list( \
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "<span class='warning'> You need a suit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'> You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
-						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 					return 0
 				if(src.w_class > 3)
 					if(!disable_warning)
-						usr << "The [name] is too big to attach."
+						to_chat(usr, "The [name] is too big to attach.")
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					if(H.s_store)
@@ -982,7 +989,7 @@ var/list/slot_equipment_priority = list( \
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -994,7 +1001,7 @@ var/list/slot_equipment_priority = list( \
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/proc/store_memory(msg as message, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -1017,7 +1024,7 @@ var/list/slot_equipment_priority = list( \
 
 //	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
 	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -1035,7 +1042,7 @@ var/list/slot_equipment_priority = list( \
 	set src in usr
 
 	if(usr != src)
-		usr << "No."
+		to_chat(usr, "No.")
 	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)
@@ -1046,8 +1053,8 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/warn_flavor_changed()
 	if(flavor_text) // Don't spam people that don't use it!
-		src << "<h2 class='alert'>OOC Warning:</h2>"
-		src << "<span class='alert'>Your flavor text is likely out of date! <a href='?src=\ref[src];flavor_text=change'>Change</a></span>"
+		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
+		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='?src=\ref[src];flavor_text=change'>Change</a></span>")
 
 /mob/proc/print_flavor_text()
 	if(flavor_text)
@@ -1070,20 +1077,20 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 
 	if (!( abandon_allowed ))
-		usr << "<span class='notice'> Respawn is disabled.</span>"
+		to_chat(usr, "<span class='notice'> Respawn is disabled.</span>")
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "<span class='notice'> <B>You must be dead to use this!</B></span>"
+		to_chat(usr, "<span class='notice'> <B>You must be dead to use this!</B></span>")
 		return
 	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic") //BS12 EDIT
-		usr << "<span class='notice'> Respawn is disabled.</span>"
+		to_chat(usr, "<span class='notice'> Respawn is disabled.</span>")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				usr << "<span class='notice'> <B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>"
+				to_chat(usr, "<span class='notice'> <B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
@@ -1094,16 +1101,16 @@ var/list/slot_equipment_priority = list( \
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
+		to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
 		if (deathtime < config.respawn_delay*600)
-			usr << "You must wait [config.respawn_delay] minutes to respawn!"
+			to_chat(usr, "You must wait [config.respawn_delay] minutes to respawn!")
 			return
 		else
-			usr << "You can respawn now, enjoy your new life!"
+			to_chat(usr, "You can respawn now, enjoy your new life!")
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "<span class='notice'> <B>Make sure to play a different character, and please roleplay correctly!</B></span>"
+	to_chat(usr, "<span class='notice'> <B>Make sure to play a different character, and please roleplay correctly!</B></span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -1169,7 +1176,7 @@ var/list/slot_equipment_priority = list( \
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "<span class='notice'> You must be observing to use this!</span>"
+		to_chat(usr, "<span class='notice'> You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -1300,7 +1307,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
-	src << message
+	to_chat(src, message)
 	return 1
 
 /mob/proc/show_viewers(message)
@@ -1611,11 +1618,11 @@ var/list/slot_equipment_priority = list( \
 	delayNextAttack(20)
 
 	if(usr.stat == 1)
-		usr << "You are unconcious and cannot do that!"
+		to_chat(usr, "You are unconcious and cannot do that!")
 		return
 
 	if(usr.restrained())
-		usr << "You are restrained and cannot do that!"
+		to_chat(usr, "You are restrained and cannot do that!")
 		return
 
 	var/mob/S = src
@@ -1632,17 +1639,17 @@ var/list/slot_equipment_priority = list( \
 
 	if(!valid_objects.len)
 		if(self)
-			src << "You have nothing stuck in your body that is large enough to remove."
+			to_chat(src, "You have nothing stuck in your body that is large enough to remove.")
 		else
-			U << "[src] has nothing stuck in their wounds that is large enough to remove."
+			to_chat(U, "[src] has nothing stuck in their wounds that is large enough to remove.")
 		return
 
 	var/obj/item/weapon/selection = input("What do you want to yank out?", "Embedded objects") in valid_objects
 
 	if(self)
-		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span></span>"
+		to_chat(src, "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span></span>")
 	else
-		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
+		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
 	if(!do_after(U, src, 80))
 		return
@@ -1727,7 +1734,7 @@ mob/proc/walking()
 		var/location = pick(" from above"," from below"," in your head","")
 		pre_msg = pick("You hear [adjective] voice[location]...")
 
-	src << "<b>[pre_msg] <em>[msg]</em></b>"
+	to_chat(src, "<b>[pre_msg] <em>[msg]</em></b>")
 
 /mob/attack_pai(mob/user as mob)
 	ShiftClick(user)

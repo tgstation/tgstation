@@ -112,7 +112,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Removing rods...</span>"
+		to_chat(user, "<span class='notice'>Removing rods...</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, src, 30) && istype(src, /turf/simulated/floor/engine)) // Somehow changing the turf does NOT kill the current running proc.
 			new /obj/item/stack/rods(src, 2)

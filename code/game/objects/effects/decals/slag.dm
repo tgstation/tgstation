@@ -47,7 +47,7 @@
 /obj/effect/decal/slag/examine(mob/user)
 	..()
 	if(molten)
-		user << "<span class=\"warning\">Jesus, it's hot!</span>"
+		to_chat(user, "<span class=\"warning\">Jesus, it's hot!</span>")
 
 	var/list/bits=list()
 	for(var/mat_id in materials.storage)
@@ -56,9 +56,9 @@
 			bits.Add(mat.processed_name)
 
 	if(bits.len>0)
-		user << "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>"
+		to_chat(user, "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>")
 	else
-		user << "<span class=\"warning\">It appears to be completely worthless.</span>"
+		to_chat(user, "<span class=\"warning\">It appears to be completely worthless.</span>")
 
 /obj/effect/decal/slag/solidify()
 	icon_state="slagcold"

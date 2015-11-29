@@ -134,7 +134,8 @@
 
 /datum/construction/proc/try_consume(mob/user as mob, atom/movable/used_atom, given_step)
 	if(used_atom.construction_delay_mult && !used_atom.construction_delay_mult[Co_CON_SPEED])
-		user << "<span class='warning'>This tool only works for deconstruction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+		to_chat(user, "<span class='warning'>This tool only works for deconstruction!</span>")//It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+
 		return 0
 
 	if(!(Co_AMOUNT in given_step) && !(Co_DELAY in given_step))
@@ -160,7 +161,7 @@
 		if(istype(used_atom,/obj/item/stack) && !(Co_TAKE in given_step))
 			var/obj/item/stack/stack=used_atom
 			if(stack.amount < amount)
-				user << "<span class='notice'>You start adding [stack] to \the [holder]. It still needs [amount - stack.amount] [stack.singular_name].</span>"
+				to_chat(user, "<span class='notice'>You start adding [stack] to \the [holder]. It still needs [amount - stack.amount] [stack.singular_name].</span>")
 				given_step[Co_AMOUNT] -= stack.amount
 				stack.use(stack.amount)
 				return 0
@@ -169,10 +170,10 @@
 		else if(istype(used_atom,/obj/item/weapon/weldingtool) && !(Co_TAKE in given_step))
 			var/obj/item/weapon/weldingtool/welder=used_atom
 			if(!welder.isOn())
-				user << "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>"
+				to_chat(user, "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>")
 				return 0
 			if(!welder.remove_fuel(amount,user))
-				user << "<span class='warning'>You don't have enough fuel!</span>"
+				to_chat(user, "<span class='warning'>You don't have enough fuel!</span>")
 				return 0
 		//generic things
 		else
@@ -184,7 +185,7 @@
 				qdel(used_atom)
 			given_step[Co_AMOUNT]--
 			if(given_step[Co_AMOUNT] > 0)
-				user << "<span class='notice'>You add \a [atom_name] to \the [holder]. It still needs [amount -1 ] [atom_name]\s.</span>"
+				to_chat(user, "<span class='notice'>You add \a [atom_name] to \the [holder]. It still needs [amount -1 ] [atom_name]\s.</span>")
 				return 0
 		given_step[Co_AMOUNT] = given_step[Co_MAX_AMOUNT]
 	return 1
@@ -278,14 +279,14 @@
 		while("{UN|" in text)
 			var/start_bracket = findtext(text, "{")
 			var/this_verb = copytext(text, start_bracket, findtext(text, "}", start_bracket + 1))
-			world << this_verb
+			to_chat(world, this_verb)
 			var/marker = findtext(this_verb, "|")
 			var/final_verb = ""
 			if(diff == FORWARD)
 				final_verb = copytext(this_verb, marker + 1, findtext(this_verb, "|", marker + 1))
 			else
 				final_verb = copytext(this_verb, findtext(this_verb, "|", marker + 1), findtext(text, "}", start_bracket + 1))
-			world << final_verb
+			to_chat(world, final_verb)
 			replacetext(text, this_verb, final_verb)
 		*/
 
@@ -293,7 +294,8 @@
 	//if we've made some progress on a step, we want to drop it
 	var/current_step = (diff == BACKWARD ? get_forward_step(index) : get_backward_step(index))
 	if(used_atom.construction_delay_mult && !used_atom.construction_delay_mult[diff == FORWARD ? Co_CON_SPEED : Co_DECON_SPEED])
-		user << "<span class='warning'>This tool only works for [diff == FORWARD ? "de" : ""]construction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+		to_chat(user, "<span class='warning'>This tool only works for [diff == FORWARD ? "de" : ""]construction!</span>")//It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+
 		return 0
 	if(current_step && (Co_AMOUNT in current_step) && (Co_MAX_AMOUNT in current_step) && (current_step[Co_AMOUNT] < current_step[Co_MAX_AMOUNT]))
 		var/obj/item/stack/S
@@ -331,7 +333,7 @@
 		if(istype(used_atom,/obj/item/stack) && !(Co_TAKE in given_step))
 			var/obj/item/stack/stack=used_atom
 			if(stack.amount < amount)
-				user << "<span class='notice'>You start adding [stack] to \the [holder]. It still needs [amount - stack.amount] [stack.singular_name].</span>"
+				to_chat(user, "<span class='notice'>You start adding [stack] to \the [holder]. It still needs [amount - stack.amount] [stack.singular_name].</span>")
 				given_step[Co_AMOUNT] -= stack.amount
 				stack.use(stack.amount)
 				return 0
@@ -340,10 +342,10 @@
 		else if(istype(used_atom,/obj/item/weapon/weldingtool) && !(Co_TAKE in given_step))
 			var/obj/item/weapon/weldingtool/welder=used_atom
 			if(!welder.isOn())
-				user << "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>"
+				to_chat(user, "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>")
 				return 0
 			if(!welder.remove_fuel(amount,user))
-				user << "<span class='rose'>You don't have enough fuel!</span>"
+				to_chat(user, "<span class='rose'>You don't have enough fuel!</span>")
 				return 0
 		//generic things
 		else
@@ -357,7 +359,7 @@
 				qdel(used_atom)
 			given_step[Co_AMOUNT]--
 			if(given_step[Co_AMOUNT] > 0)
-				user << "<span class='notice'>You add \a [atom_name] to \the [holder]. It still needs [amount -1 ] [atom_name]\s.</span>"
+				to_chat(user, "<span class='notice'>You add \a [atom_name] to \the [holder]. It still needs [amount -1 ] [atom_name]\s.</span>")
 				return 0
 		given_step[Co_AMOUNT] = given_step[Co_MAX_AMOUNT]
 

@@ -24,7 +24,7 @@
 
 /obj/item/clothing/suit/space/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	to_chat(user, "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 /obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
 	var/mob/living/carbon/human/H=user
@@ -34,7 +34,7 @@
 
 		next_extinguish = world.time + extinguish_cooldown
 		extinguishes_left--
-		H << "<span class='warning'>Your suit automatically extinguishes the fire.</span>"
+		to_chat(H, "<span class='warning'>Your suit automatically extinguishes the fire.</span>")
 		H.ExtinguishMob()
 
 /obj/item/clothing/head/helmet/space/plasmaman
@@ -326,9 +326,9 @@
 		camera.network = list("NUKE")
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
+		to_chat(user, "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>")
 
 /obj/item/clothing/head/helmet/space/plasmaman/nuclear/examine(mob/user)
 	..()
 	if(get_dist(user,src) <= 1)
-		user << "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>"
+		to_chat(user, "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>")

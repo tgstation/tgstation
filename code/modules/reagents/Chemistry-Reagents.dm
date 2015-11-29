@@ -105,7 +105,7 @@
 /datum/reagent/muhhardcores/on_mob_life(var/mob/living/M)
 	if(prob(1))
 		if(prob(90))
-			M << "<span class='notice'>[pick("You feel quite hardcore","Coderbased is your god", "Fucking kickscammers Bustration will be the best")]."
+			to_chat(M, "<span class='notice'>[pick("You feel quite hardcore","Coderbased is your god", "Fucking kickscammers Bustration will be the best")].")
 		else
 			M.say(pick("Muh hardcores.", "Falling down is a feature", "Gorrillionaires and Booty Borgs when?"))
 	..()
@@ -119,7 +119,7 @@
 /datum/reagent/slimejelly/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(M.dna.mutantrace != "slime" || !istype(M, /mob/living/carbon/slime))
 		if(prob(10))
-			M << "<span class='warning'>Your insides are burning!</span>"
+			to_chat(M, "<span class='warning'>Your insides are burning!</span>")
 			M.adjustToxLoss(rand(20,60)*REM)
 	if(prob(40))
 		M.heal_organ_damage(5*REM,0)
@@ -282,11 +282,11 @@
 		if(H.species.name=="Grey")
 			if(method == TOUCH)
 				if(H.wear_mask)
-					H << "<span class='warning'>Your mask protects you from the water!</span>"
+					to_chat(H, "<span class='warning'>Your mask protects you from the water!</span>")
 					return
 
 				if(H.head)
-					H << "<span class='warning'>Your helmet protects you from the water!</span>"
+					to_chat(H, "<span class='warning'>Your helmet protects you from the water!</span>")
 					return
 				if(!M.unacidable)
 					if(prob(15) && volume >= 30)
@@ -522,14 +522,14 @@
 	if(!M)
 		M = holder.my_atom
 	if(istype(M, /mob/living/carbon/human/manifested))
-		M << "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>"
+		to_chat(M, "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>")
 		M.reagents.del_reagent("mutationtoxin")
 		..()
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
 		if(human.dna.mutantrace == null)
-			M << "<span class='warning'>Your flesh rapidly mutates!</span>"
+			to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 			human.dna.mutantrace = "slime"
 			human.update_mutantrace()
 	..()
@@ -547,12 +547,12 @@
 	if(!M) M = holder.my_atom
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
 		if(istype(M, /mob/living/carbon/human/manifested))
-			M << "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>"
+			to_chat(M, "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>")
 			M.reagents.del_reagent("amutationtoxin")
 			..()
 			return
 		else
-			M << "<span class='warning'> Your flesh rapidly mutates!</span>"
+			to_chat(M, "<span class='warning'> Your flesh rapidly mutates!</span>")
 			if(M.monkeyizing)	return
 			M.monkeyizing = 1
 			M.canmove = 0
@@ -698,17 +698,17 @@
 				M.visible_message("<span class='notice'>[M] suddenly becomes calm and collected again, his eyes clear up.</span>",
 				"<span class='notice'>Your blood cools down and you are inhabited by a sensation of untold calmness.</span>")
 			else //Warn the Cultist that it is fucking him up
-				M << "<span class='danger'>A freezing liquid permeates your bloodstream. Your arcane knowledge is becoming osbscure again.</span>"
+				to_chat(M, "<span class='danger'>A freezing liquid permeates your bloodstream. Your arcane knowledge is becoming osbscure again.</span>")
 		//Vampires react to this like acid, and it massively spikes their smitecounter. And they are guaranteed to have adverse effects.
 		if(isvampire(M))
 			if(!M)
 				M = holder.my_atom
 			if(!(VAMP_MATURE in M.mind.vampire.powers))
-				M << "<span class='danger'>A freezing liquid permeates your bloodstream. Your vampiric powers fade and your insides burn.</span>"
+				to_chat(M, "<span class='danger'>A freezing liquid permeates your bloodstream. Your vampiric powers fade and your insides burn.</span>")
 				M.take_organ_damage(0, 5) //FIRE
 				M.mind.vampire.smitecounter += 10 //50 units to catch on fire. Generally you'll get fucked up quickly
 			else
-				M << "<span class='warning'>A freezing liquid permeates your bloodstream. Your vampiric powers counter most of the damage.</span>"
+				to_chat(M, "<span class='warning'>A freezing liquid permeates your bloodstream. Your vampiric powers counter most of the damage.</span>")
 				M.mind.vampire.smitecounter += 2 //Basically nothing, unless you drank multiple bottles of holy water (250 units to catch on fire !)
 	holder.remove_reagent(src.id, 5 * REAGENTS_METABOLISM) //High metabolism to prevent extended uncult rolls. Approx 5 units per roll
 
@@ -721,34 +721,34 @@
 			if(!(VAMP_UNDYING in M.mind.vampire.powers))
 				if(method == TOUCH)
 					if(H.wear_mask)
-						H << "<span class='warning'>Your mask protects you from the holy water!</span>"
+						to_chat(H, "<span class='warning'>Your mask protects you from the holy water!</span>")
 						return
 
 					if(H.head)
-						H << "<span class='warning'>Your helmet protects you from the holy water!</span>"
+						to_chat(H, "<span class='warning'>Your helmet protects you from the holy water!</span>")
 						return
 					if(!M.unacidable)
 						if(prob(15) && volume >= 30)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(!(VAMP_MATURE in M.mind.vampire.powers))
-									M << "<span class='danger'>A freezing liquid covers your face. Its melting!</span>"
+									to_chat(M, "<span class='danger'>A freezing liquid covers your face. Its melting!</span>")
 									M.mind.vampire.smitecounter += 60 //Equivalent from metabolizing all this holy water normally
 									if(affecting.take_damage(30, 0))
 										H.UpdateDamageIcon(1)
 									H.status_flags |= DISFIGURED
 									H.emote("scream",,, 1)
 								else
-									M << "<span class='warning'>A freezing liquid covers your face. Your vampiric powers protect you!</span>"
+									to_chat(M, "<span class='warning'>A freezing liquid covers your face. Your vampiric powers protect you!</span>")
 									M.mind.vampire.smitecounter += 12 //Ditto above
 
 						else
 							if(!(VAMP_MATURE in M.mind.vampire.powers))
-								M << "<span class='danger'>You are doused with a freezing liquid. You're melting!</span>"
+								to_chat(M, "<span class='danger'>You are doused with a freezing liquid. You're melting!</span>")
 								M.take_organ_damage(min(15, volume * 2)) //Uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 								M.mind.vampire.smitecounter += volume * 2
 							else
-								M << "<span class='warning'>You are doused with a freezing liquid. Your vampiric powers protect you!</span>"
+								to_chat(M, "<span class='warning'>You are doused with a freezing liquid. Your vampiric powers protect you!</span>")
 								M.mind.vampire.smitecounter += volume * 0.4
 				else
 					if(!M.unacidable)
@@ -1011,18 +1011,18 @@
 				if(!H.wear_mask.unacidable)
 					del (H.wear_mask)
 					H.update_inv_wear_mask()
-					H << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
-					H << "<span class='warning'>Your mask protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your mask protects you from the acid!</span>")
 				return
 
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					del(H.head)
 					H.update_inv_head()
-					H << "<span class='warning'>Your helmet melts away but protects you from the acid</span>"
+					to_chat(H, "<span class='warning'>Your helmet melts away but protects you from the acid</span>")
 				else
-					H << "<span class='warning'>Your helmet protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your helmet protects you from the acid!</span>")
 				return
 
 		else if(ismonkey(M))
@@ -1031,9 +1031,9 @@
 				if(!MK.wear_mask.unacidable)
 					del (MK.wear_mask)
 					MK.update_inv_wear_mask()
-					MK << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
+					to_chat(MK, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
-					MK << "<span class='warning'>Your mask protects you from the acid!</span>"
+					to_chat(MK, "<span class='warning'>Your mask protects you from the acid!</span>")
 				return
 
 		if(!M.unacidable)
@@ -1066,7 +1066,7 @@
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
 			for(var/mob/M in viewers(5, O))
-				M << "<span class='warning'>\the [O] melts.</span>"
+				to_chat(M, "<span class='warning'>\the [O] melts.</span>")
 			del(O)
 
 /datum/reagent/pacid
@@ -1096,18 +1096,18 @@
 				if(!H.wear_mask.unacidable)
 					del (H.wear_mask)
 					H.update_inv_wear_mask()
-					H << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
-					H << "<span class='warning'>Your mask protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your mask protects you from the acid!</span>")
 				return
 
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					del(H.head)
 					H.update_inv_head()
-					H << "<span class='warning'>Your helmet melts away but protects you from the acid</span>"
+					to_chat(H, "<span class='warning'>Your helmet melts away but protects you from the acid</span>")
 				else
-					H << "<span class='warning'>Your helmet protects you from the acid!</span>"
+					to_chat(H, "<span class='warning'>Your helmet protects you from the acid!</span>")
 				return
 
 			if(!H.unacidable)
@@ -1122,9 +1122,9 @@
 				if(!MK.wear_mask.unacidable)
 					del (MK.wear_mask)
 					MK.update_inv_wear_mask()
-					MK << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
+					to_chat(MK, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
-					MK << "<span class='warning'>Your mask protects you from the acid!</span>"
+					to_chat(MK, "<span class='warning'>Your mask protects you from the acid!</span>")
 				return
 
 			if(!MK.unacidable)
@@ -1148,7 +1148,7 @@
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
 			for(var/mob/M in viewers(5, O))
-				M << "<span class='warning'>\the [O] melts.</span>"
+				to_chat(M, "<span class='warning'>\the [O] melts.</span>")
 			del(O)
 
 /datum/reagent/glycerol
@@ -1376,7 +1376,7 @@
 			if(M.health >= -100 && M.health <= 0)
 				M.crit_op_stage = 0.0
 	if (method==INGEST)
-		usr << "Well, that was stupid."
+		to_chat(usr, "Well, that was stupid.")
 		M.adjustToxLoss(3)
 	return
 
@@ -2360,14 +2360,14 @@
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
-		usr << "The solution melts away the ink on the paper."
+		to_chat(usr, "The solution melts away the ink on the paper.")
 	if(istype(O,/obj/item/weapon/book))
 		if(volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
 			affectedbook.dat = null
-			usr << "The solution melts away the ink on the book."
+			to_chat(usr, "The solution melts away the ink on the book.")
 		else
-			usr << "It wasn't enough..."
+			to_chat(usr, "It wasn't enough...")
 	return
 */
 
@@ -2590,23 +2590,23 @@
 			var/obj/item/eyes_covered = victim.get_body_part_coverage(EYES)
 
 			if ( eyes_covered && mouth_covered )
-				victim << "<span class='warning'>Your [mouth_covered == eyes_covered ? "[mouth_covered] protects" : "[mouth_covered] and [eyes_covered] protect"] you from the pepperspray!</span>"
+				to_chat(victim, "<span class='warning'>Your [mouth_covered == eyes_covered ? "[mouth_covered] protects" : "[mouth_covered] and [eyes_covered] protect"] you from the pepperspray!</span>")
 				return
 			else if ( mouth_covered )	// Reduced effects if partially protected
-				victim << "<span class='warning'>Your [mouth_covered] protect you from most of the pepperspray!</span>"
+				to_chat(victim, "<span class='warning'>Your [mouth_covered] protect you from most of the pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Paralyse(1)
 				victim.drop_item()
 				return
 			else if ( eyes_covered ) // Eye cover is better than mouth cover
-				victim << "<span class='warning'>Your [eyes_covered] protects your eyes from the pepperspray!</span>"
+				to_chat(victim, "<span class='warning'>Your [eyes_covered] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream",,, 1)
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
 				victim.emote("scream",,, 1)
-				victim << "<span class='danger'>You're sprayed directly in the eyes with pepperspray!</span>"
+				to_chat(victim, "<span class='danger'>You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Paralyse(1)
@@ -2713,7 +2713,7 @@
 			M.Dizzy(5)
 			M.Jitter(5)
 			if(prob(5))
-				M << "<span class='warning'>Oh god, the pain!</span>"
+				to_chat(M, "<span class='warning'>Oh god, the pain!</span>")
 		if(25 to INFINITY)
 			if(ishuman(M)) // Does nothing to non-humans.
 				var/mob/living/carbon/human/H=M
@@ -2739,7 +2739,7 @@
 
 /datum/reagent/creatine/proc/dehulk(var/mob/living/carbon/human/H, damage = 200, override_remove = 0, gib = 1, )
 	if(has_been_hulk && !has_ripped_and_torn)
-		H << "<span class='warning'>You feel like your muscles are ripping apart!</span>"
+		to_chat(H, "<span class='warning'>You feel like your muscles are ripping apart!</span>")
 		has_ripped_and_torn=1
 		if(!override_remove)
 			holder.remove_reagent(src.id) // Clean them out
@@ -2789,7 +2789,7 @@
 				var/obj/item/clothing/mask/c_mask = C.wear_mask
 				if(c_mask.body_parts_covered & MOUTH) continue	//If the carbon's mouth is covered, let's assume they don't smell it
 
-			C << "<span class='warning'>You are engulfed by a [pick("tremendous","foul","disgusting","horrible")] stench emanating from [M]!</span>"
+			to_chat(C, "<span class='warning'>You are engulfed by a [pick("tremendous","foul","disgusting","horrible")] stench emanating from [M]!</span>")
 
 	..()
 	return
@@ -2874,7 +2874,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(prob(8))
-				H << "<span class = 'warning'>You feel violently ill.</span>"
+				to_chat(H, "<span class = 'warning'>You feel violently ill.</span>")
 			if(prob(min(data / 10, 100)))	H.vomit()
 			var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 			if (istype(L) && !L.is_broken())
@@ -2891,14 +2891,14 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(prob(12))
-					H << "<span class = 'warning'>You feel violently ill.</span>"
+					to_chat(H, "<span class = 'warning'>You feel violently ill.</span>")
 				H.adjustToxLoss(0.1)
 				if(prob(8)) H.vomit()
 		if(600 to INFINITY)	//ded in 10 minutes with a minimum of 6 units
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(prob(20))
-					H << "<span class = 'sinister'>You feel deathly ill.</span>"
+					to_chat(H, "<span class = 'sinister'>You feel deathly ill.</span>")
 				var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 				if (istype(L) && !L.is_broken())
 					L.take_damage(10, 0)
@@ -3131,20 +3131,20 @@
 		switch(volume)
 			if(1 to 20)
 				if(prob(5))
-					H << "<span class='warning'>You don't feel very good..</span>"
+					to_chat(H, "<span class='warning'>You don't feel very good..</span>")
 					holder.remove_reagent(src.id, 0.1 * REAGENTS_METABOLISM)
 			if(20 to 35)
 				if(prob(10))
-					H << "<span class='warning'>You REALLY don't feel very good..</span>"
+					to_chat(H, "<span class='warning'>You REALLY don't feel very good..</span>")
 				if(prob(5))
 					H.adjustToxLoss(0.1)
 					H.visible_message("[H] groans.")
 					holder.remove_reagent(src.id, 0.3 * REAGENTS_METABOLISM)
 			if(35 to INFINITY)
 				if(prob(10))
-					H << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
+					to_chat(H, "<span class='warning'>Your stomach grumbles unsettlingly..</span>")
 				if(prob(5))
-					H << "<span class='warning'>Something feels wrong with your body..</span>"
+					to_chat(H, "<span class='warning'>Something feels wrong with your body..</span>")
 					var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 					if (istype(L))
 						L.take_damage(0.1, 1)
@@ -3831,14 +3831,14 @@
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
-		usr << "The solution melts away the ink on the paper."
+		to_chat(usr, "The solution melts away the ink on the paper.")
 	if(istype(O,/obj/item/weapon/book))
 		if(volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
 			affectedbook.dat = null
-			usr << "The solution melts away the ink on the book."
+			to_chat(usr, "The solution melts away the ink on the book.")
 		else
-			usr << "It wasn't enough..."
+			to_chat(usr, "It wasn't enough...")
 	return
 
 /datum/reagent/ethanol/beer	//It's really much more stronger than other drinks.

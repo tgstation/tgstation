@@ -18,7 +18,7 @@
 			M.wearclothes(src)
 			return
 		else
-			user << "Those clothes won't fit."
+			to_chat(user, "Those clothes won't fit.")
 			return
 	..()
 

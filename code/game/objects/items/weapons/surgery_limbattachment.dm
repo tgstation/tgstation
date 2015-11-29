@@ -19,14 +19,14 @@
 	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
 		limbloc = "l_foot"
 	else
-		user << "<span class='warning'>That doesn't fit there!</span>"
+		to_chat(user, "<span class='warning'>That doesn't fit there!</span>")
 		return ..()
 
 	var/mob/living/carbon/human/H = M
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 	if(S.status & ORGAN_DESTROYED)
 		if(!(S.status & ORGAN_ATTACHABLE))
-			user << "<span class='warning'>The wound is not ready for a replacement!</span>"
+			to_chat(user, "<span class='warning'>The wound is not ready for a replacement!</span>")
 			return 0
 		if(M != user)
 			M.visible_message( \
@@ -48,7 +48,7 @@
 					"<span class='warning'>You finish attaching your new [S.display_name].</span>")
 
 			if(H == user && prob(25))
-				user << "<span class='warning'>You mess up!</span>"
+				to_chat(user, "<span class='warning'>You mess up!</span>")
 				S.take_damage(15)
 
 			S.status &= ~ORGAN_BROKEN

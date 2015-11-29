@@ -27,11 +27,11 @@
 			// appendix is removed, can't get infected again
 			src.cure()
 		if(prob(5))
-			affected_mob << "<span class='warning'>You feel a stinging pain in your abdomen!</span>"
+			to_chat(affected_mob, "<span class='warning'>You feel a stinging pain in your abdomen!</span>")
 			affected_mob.emote("me",1,"winces slightly.")
 	if(stage > 1)
 		if(prob(3))
-			affected_mob << "<span class='warning'>You feel a stabbing pain in your abdomen!</span>"
+			to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 			affected_mob.emote("me",1,"winces painfully.")
 			affected_mob.adjustToxLoss(1)
 	if(stage > 2)
@@ -40,13 +40,13 @@
 				var/mob/living/carbon/human/H = affected_mob
 				H.vomit()
 			else
-				affected_mob << "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
+				to_chat(affected_mob, "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>")
 				affected_mob.Weaken(10)
 				affected_mob.adjustToxLoss(3)
 	if(stage > 3)
 		if(prob(1) && ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
-			H << "<span class='warning'>Your abdomen is a world of pain!</span>"
+			to_chat(H, "<span class='warning'>Your abdomen is a world of pain!</span>")
 			H.Weaken(10)
 			H.op_stage.appendix = 2.0
 

@@ -175,7 +175,7 @@ Class Procs:
 /obj/machinery/examine(mob/user)
 	..()
 	if(panel_open)
-		user << "<span class='info'>Its maintenance panel is open.</span>"
+		to_chat(user, "<span class='info'>Its maintenance panel is open.</span>")
 
 /obj/machinery/Destroy()
 	if(src in machines)
@@ -286,7 +286,7 @@ Class Procs:
 				message_admins("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
 				return
 			if(!(href_list["set_tag"] in vars))
-				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
+				to_chat(usr, "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>")
 				return 1
 			var/current_tag = src.vars[href_list["set_tag"]]
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -305,9 +305,9 @@ Class Procs:
 				return 1
 
 			if(unlinkFrom(usr, O))
-				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
+				to_chat(usr, "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>")
 			else
-				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>")
 			update_mt_menu=1
 
 		if("link" in href_list)
@@ -315,32 +315,32 @@ Class Procs:
 			if(!O)
 				return 1
 			if(!canLink(O,href_list))
-				usr << "<span class='warning'>You can't link with that device.</span>"
+				to_chat(usr, "<span class='warning'>You can't link with that device.</span>")
 				return 1
 			if (isLinkedWith(O))
-				usr << "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>")
 				return 1
 
 			if(linkWith(usr, O, href_list))
-				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>"
+				to_chat(usr, "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>")
 			else
-				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>"
+				to_chat(usr, "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>")
 			update_mt_menu=1
 
 		if("buffer" in href_list)
 			if(istype(src, /obj/machinery/telecomms))
 				if(!hasvar(src, "id"))
-					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					to_chat(usr, "<span class='danger'>A red light flashes and nothing changes.</span>")
 					return
 			else if(!hasvar(src, "id_tag"))
-				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				to_chat(usr, "<span class='danger'>A red light flashes and nothing changes.</span>")
 				return
 			P.buffer = src
-			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
+			to_chat(usr, "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>")
 			update_mt_menu=1
 
 		if("flush" in href_list)
-			usr << "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>"
+			to_chat(usr, "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>")
 			P.buffer = null
 			update_mt_menu=1
 
@@ -372,12 +372,12 @@ Class Procs:
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if (!usr.dexterity_check())
-			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/T = get_turf(usr)
 		if(!isAI(usr) && T.z != z)
 			if(usr.z != 2)
-				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
+				to_chat(usr, "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>")
 				return 1
 		var/norange = 0
 		if(usr.mutations && usr.mutations.len)
@@ -428,7 +428,7 @@ Class Procs:
 		return 0
 
 	if(!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -441,7 +441,7 @@ Class Procs:
 			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
 			return 1
 
 	src.add_fingerprint(user)
@@ -489,7 +489,7 @@ Class Procs:
 		icon_state = icon_state_open
 	else
 		icon_state = initial(icon_state)
-	user << "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>"
+	to_chat(user, "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>")
 	if(istype(toggleitem, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 	update_icon()
@@ -497,17 +497,17 @@ Class Procs:
 
 /obj/machinery/proc/wrenchAnchor(var/mob/user)
 	if(state == 2 && src.machine_flags & WELD_FIXED)
-		user <<"\The [src] has to be unwelded from the floor first."
+		to_chat(user, "\The [src] has to be unwelded from the floor first.")
 		return -1 //state set to 2, can't do it
 	for(var/obj/machinery/other in loc)
 		if(other.anchored == 1 && other.density == 1 && density && !anchored)
-			user << "\The [other] is already anchored in this location."
+			to_chat(user, "\The [other] is already anchored in this location.")
 			return -1 //other machines are already taking up all the space in this location
 
 	if(!anchored)
 		if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
 			if( !(istype(src.loc, /turf/simulated/shuttle) && (machine_flags & SHUTTLEWRENCH)) ) //If NOT (on top of a shuttle AND can be secured to shuttles)
-				user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+				to_chat(user, "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>")
 				return
 
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
@@ -527,7 +527,7 @@ Class Procs:
 /obj/machinery/proc/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
 	if(!anchored)
 		state = 0 //since this might be wrong, we go sanity
-		user << "You need to secure \the [src] before it can be welded."
+		to_chat(user, "You need to secure \the [src] before it can be welded.")
 		return -1
 	if (WT.remove_fuel(0,user))
 		playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
@@ -539,7 +539,7 @@ Class Procs:
 				return -1
 			switch(state)
 				if(0)
-					user <<"You have to keep \the [src] secure before it can be welded down."
+					to_chat(user, "You have to keep \the [src] secure before it can be welded down.")
 					return -1
 				if(1)
 					state = 2
@@ -550,7 +550,7 @@ Class Procs:
 								)
 			return 1
 	else
-		user << "<span class='rose'>You need more welding fuel to complete this task.</span>"
+		to_chat(user, "<span class='rose'>You need more welding fuel to complete this task.</span>")
 		return -1
 
 /**
@@ -584,7 +584,7 @@ Class Procs:
 		if(!panel_open)
 			return wrenchAnchor(user)
 		else
-			user <<"<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>"
+			to_chat(user, "<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>")
 			return -1 //we return -1 rather than 0 for the if(..()) checks
 
 	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags & SCREWTOGGLE)
@@ -606,7 +606,7 @@ Class Procs:
 		return 1
 
 	if(!anchored && machine_flags & FIXED2WORK)
-		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
+		return to_chat(user, "<span class='warning'>\The [src] must be anchored first!</span>")
 
 	if(istype(O, /obj/item/device/paicard) && machine_flags & WIREJACK)
 		for(var/mob/M in O)
@@ -686,14 +686,14 @@ Class Procs:
 							component_parts -= A
 							component_parts += B
 							B.loc = null
-							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
-			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>    [C.name]</span>"
+				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1

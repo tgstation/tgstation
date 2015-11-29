@@ -43,18 +43,18 @@
 
 /obj/machinery/mommi_spawner/attack_ghost(var/mob/dead/observer/user as mob)
 	if(building)
-		user << "<span class='warning'>\The [src] is busy building something already.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is busy building something already.</span>")
 		return 1
 
 	var/timedifference = world.time - user.client.time_died_as_mouse
 	if(user.client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
 		var/timedifference_text
 		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		user << "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		to_chat(user, "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
 		return
 	/*
 	if(!mmi.brainmob)
-		user << "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>"
+		to_chat(user, "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>")
 		return 1
 	if(!mmi.brainmob.key)
 		var/ghost_can_reenter = 0
@@ -64,23 +64,23 @@
 					ghost_can_reenter = 1
 					break
 		if(!ghost_can_reenter)
-			user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+			to_chat(user, "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>")
 			return TRUE
 
 	if(mmi.brainmob.stat == DEAD)
-		user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
+		to_chat(user, "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>")
 		return TRUE
 
 	if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
-		user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>"
+		to_chat(user, "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>")
 		return TRUE
 	*/
 	if(jobban_isbanned(user, "MoMMI"))
-		user << "<span class='warning'>\The [src] lets out an annoyed buzz.</span>"
+		to_chat(user, "<span class='warning'>\The [src] lets out an annoyed buzz.</span>")
 		return TRUE
 
 	if(metal < metalPerMoMMI)
-		user << "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>"
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>")
 		return 1
 
 	if(alert(user, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No") != "Yes") return
@@ -100,31 +100,31 @@
 		if(istype(O,/obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = O
 			if(building)
-				user << "<span class='warning'>\The [src] is busy building something already.</span>"
+				to_chat(user, "<span class='warning'>\The [src] is busy building something already.</span>")
 				return 1
 			if(!mmi.brainmob)
-				user << "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>"
+				to_chat(user, "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>")
 				return 1
 
 			if(!mmi.brainmob.key)
 				if(!mind_can_reenter(mmi.brainmob.mind))
-					user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+					to_chat(user, "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>")
 					return TRUE
 
 			if(mmi.brainmob.stat == DEAD)
-				user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
+				to_chat(user, "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>")
 				return TRUE
 
 			if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>"
+				to_chat(user, "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>")
 				return TRUE
 
 			if(jobban_isbanned(mmi.brainmob, "Mobile MMI"))
-				user << "<span class='warning'>\The [src] lets out an annoyed buzz and rejects \the [mmi].</span>"
+				to_chat(user, "<span class='warning'>\The [src] lets out an annoyed buzz and rejects \the [mmi].</span>")
 				return TRUE
 
 			if(metal < metalPerMoMMI)
-				user << "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>"
+				to_chat(user, "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>")
 				return TRUE
 
 			building=1

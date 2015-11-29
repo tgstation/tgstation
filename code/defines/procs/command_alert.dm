@@ -12,4 +12,4 @@
 	// END AUTOFIX
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && M.client)
-			M << command
+			to_chat(M, command)

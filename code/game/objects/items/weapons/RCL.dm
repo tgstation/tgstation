@@ -30,10 +30,10 @@
 		else
 			loaded.preattack(W,user,1)
 		update_icon()
-		user << "<span class='notice'>You add the cables to the [src]. It now contains [loaded.amount].</span>"
+		to_chat(user, "<span class='notice'>You add the cables to the [src]. It now contains [loaded.amount].</span>")
 	else if(isscrewdriver(W))
 		if(!loaded) return
-		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>"
+		to_chat(user, "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>")
 		while(loaded.amount>30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
 			if(diff)
@@ -53,7 +53,7 @@
 /obj/item/weapon/rcl/examine(mob/user)
 	..()
 	if(loaded)
-		user << "<span class='info'>It contains [loaded.amount]/90 cables.</span>"
+		to_chat(user, "<span class='info'>It contains [loaded.amount]/90 cables.</span>")
 
 /obj/item/weapon/rcl/Destroy()
 	qdel(loaded)
@@ -83,7 +83,7 @@
 /obj/item/weapon/rcl/proc/is_empty(mob/user)
 	update_icon()
 	if(!loaded.amount)
-		user << "<span class='notice'>The last of the cables unreel from \the [src].</span>"
+		to_chat(user, "<span class='notice'>The last of the cables unreel from \the [src].</span>")
 		returnToPool(loaded)
 		loaded = null
 		return 1
@@ -95,13 +95,13 @@
 
 /obj/item/weapon/rcl/attack_self(mob/user as mob)
 	active = !active
-	user << "<span class='notice'>You turn the [src] [active ? "on" : "off"].<span>"
+	to_chat(user, "<span class='notice'>You turn the [src] [active ? "on" : "off"].<span>")
 	if(active)
 		trigger(user)
 
 /obj/item/weapon/rcl/proc/trigger(mob/user as mob)
 	if(!loaded)
-		user << "<span class='warning'>\The [src] is empty!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 	if(last)
 		if(get_dist(last, user) == 0) //hacky, but it works

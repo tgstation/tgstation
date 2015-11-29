@@ -74,7 +74,7 @@
 	var/choice = null
 	if(!cards.len)
 		src.icon_state = "deck_empty"
-		user << "<span class = 'notice'>There are no more cards to draw.</span>"
+		to_chat(user, "<span class = 'notice'>There are no more cards to draw.</span>")
 		return
 	choice = cards[1]
 	src.cards -= choice
@@ -100,7 +100,7 @@
 			user.visible_message("<span class = 'notice'>[user] adds a card to the bottom of the deck.</span>",
 								 "You add the card to the bottom of the deck.</span>")
 		else
-			user << "<span class = 'warning'>You can't mix cards from other decks.</span>"
+			to_chat(user, "<span class = 'warning'>You can't mix cards from other decks.</span>")
 			update_icon()
 
 	if(istype(I, /obj/item/toy/cardhand))
@@ -114,7 +114,7 @@
 								 "<span class = 'notice'>You put the hand into the deck.</span>")
 			qdel(C)
 		else
-			user << "<span class = 'warning'>You can't mix cards from other decks.</span>"
+			to_chat(user, "<span class = 'warning'>You can't mix cards from other decks.</span>")
 		update_icon()
 
 /obj/item/toy/cards/update_icon()
@@ -132,19 +132,19 @@
 	if(Adjacent(usr))
 		if(over_object == M)
 			M.put_in_hands(src)
-			usr << "<span class = 'notice'>You pick up the deck.</span>"
+			to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("r_hand")
 					M.u_equip(src, 0)
 					M.put_in_r_hand(src)
-					usr << "<span class = 'notice'>You pick up the deck.</span>"
+					to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
 				if("l_hand")
 					M.u_equip(src, 0)
 					M.put_in_l_hand(src)
-					usr << "<span class = 'notice'>You pick up the deck.</span>"
+					to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
 	else
-		usr << "<span class = 'warning'>You can't reach it from here.</span>"
+		to_chat(usr, "<span class = 'warning'>You can't reach it from here.</span>")
 
 ////////////////////////////
 /////////CARD HANDS/////////
@@ -176,7 +176,7 @@
 	if(istype(C))
 		if(!(C.parentdeck || src.parentdeck) || C.parentdeck == src.parentdeck)
 			if(currenthand.len >= max_hand_size)
-				user << "<span class = 'warning'> You can't add any more cards to this hand.</span>"
+				to_chat(user, "<span class = 'warning'> You can't add any more cards to this hand.</span>")
 				return
 			hand_click.action(C, user, params)
 			user.drop_item(C, src)
@@ -184,7 +184,7 @@
 								 "<span class = 'notice'>You add the [C.cardname] to your hand.</span>")
 			update_icon()
 		else
-			user << "<span class = 'warning'> You can't mix cards from other decks.</span>"
+			to_chat(user, "<span class = 'warning'> You can't mix cards from other decks.</span>")
 		return 1
 	if(istype(C, /obj/item/toy/cards)) //shuffle us in
 		return C.attackby(src, user)
@@ -263,7 +263,7 @@
 			cardUser.visible_message("<span class = 'notice'>[cardUser] checks \his card.",
 									 "<span class = 'notice'>The card reads: [src.name]</span>")
 		else
-			cardUser << "<span class = 'notice'>You need to have the card in your hand to check it.</span>"
+			to_chat(cardUser, "<span class = 'notice'>You need to have the card in your hand to check it.</span>")
 
 /obj/item/toy/singlecard/proc/Flip()
 	flipped = !flipped
@@ -276,7 +276,7 @@
 			var/obj/item/toy/cardhand/H = new/obj/item/toy/cardhand(user.loc)
 			H.parentdeck = C.parentdeck
 			user.put_in_active_hand(H)
-			user << "<span class = 'notice'>You combine \the [C] and \the [src] into a hand.</span>"
+			to_chat(user, "<span class = 'notice'>You combine \the [C] and \the [src] into a hand.</span>")
 			user.drop_item(C, H)
 			user.remove_from_mob(src) //we could be anywhere!
 			src.forceMove(H)
@@ -285,7 +285,7 @@
 			H.update_icon()
 			user.put_in_hands(H)
 		else
-			user << "<span class = 'notice'>You can't mix cards from other decks.</span>"
+			to_chat(user, "<span class = 'notice'>You can't mix cards from other decks.</span>")
 
 /obj/item/toy/singlecard/attack_self(mob/user)
 	Flip()

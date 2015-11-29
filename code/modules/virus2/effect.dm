@@ -61,7 +61,7 @@
 	name = "Unidentified Foreign Body"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "<span class='warning'>You feel something tearing its way out of your stomach...</span>"
+		to_chat(mob, "<span class='warning'>You feel something tearing its way out of your stomach...</span>")
 		mob.adjustToxLoss(10)
 		mob.updatehealth()
 		if(prob(40))
@@ -88,7 +88,7 @@
 	stage = 4
 /datum/disease2/effect/minttoxin/activate(var/mob/living/carbon/mob,var/multiplier)
 	if(istype(mob) && mob.reagents.get_reagent_amount("minttoxin") < 5)
-		mob << "<span class = 'notice'>You feel a minty freshness"
+		to_chat(mob, "<span class = 'notice'>You feel a minty freshness")
 		mob.reagents.add_reagent("minttoxin", 5)
 
 /datum/disease2/effect/gibbingtons
@@ -149,7 +149,7 @@
 /datum/disease2/effect/suicide/activate(var/mob/living/carbon/mob,var/multiplier)
 	mob.suiciding = 1
 	//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-	viewers(mob) << "<span class='danger'>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(mob), "<span class='danger'>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</span>")
 	mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 	mob.updatehealth()
 	spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -179,7 +179,7 @@
 		var/datum/organ/external/E = H.organs_by_name[organ]
 		if (!(E.status & ORGAN_DEAD))
 			E.status |= ORGAN_DEAD
-			H << "<span class='notice'>You can't feel your [E.display_name] anymore...</span>"
+			to_chat(H, "<span class='notice'>You can't feel your [E.display_name] anymore...</span>")
 			for (var/datum/organ/external/C in E.children)
 				C.status |= ORGAN_DEAD
 		H.update_body(1)
@@ -217,7 +217,7 @@
 /datum/disease2/effect/immortal/deactivate(var/mob/living/carbon/mob,var/multiplier)
 	if(istype(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
-		H << "<span class='notice'>You suddenly feel hurt and old...</span>"
+		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
 		H.age += 8
 	var/backlash_amt = 5*multiplier
 	mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)
@@ -246,7 +246,7 @@
 	if(!ishuman(mob)) return 0
 	var/mob/living/carbon/human/H = mob
 	mob.reagents.add_reagent("pacid", 10)
-	mob << "<span class = 'warning'> Your body burns as your cells break down.</span>"
+	to_chat(mob, "<span class = 'warning'> Your body burns as your cells break down.</span>")
 	shake_camera(mob,5*multiplier)
 
 	for (var/datum/organ/external/E in H.organs)
@@ -271,7 +271,7 @@
 		switch(inst)
 
 			if(1)
-				H << "<span class='warning'>A chunk of meat falls off of you!</span>"
+				to_chat(H, "<span class='warning'>A chunk of meat falls off of you!</span>")
 				var/totalslabs = 1
 				var/obj/item/weapon/reagent_containers/food/snacks/meat/allmeat[totalslabs]
 				var/sourcename = H.real_name
@@ -304,7 +304,7 @@
 
 			if(3)
 				if(H.species.name != "Skellington")
-					H << "<span class='warning'>Your necrotic skin ruptures!</span>"
+					to_chat(H, "<span class='warning'>Your necrotic skin ruptures!</span>")
 
 					for(var/datum/organ/external/E in H.organs)
 						if(pick(1,0))
@@ -313,7 +313,7 @@
 					if(prob(30))
 						if(H.species.name != "Skellington")
 							if(H.set_species("Skellington"))
-								mob << "<span class='warning'>A massive amount of flesh sloughs off your bones!</span>"
+								to_chat(mob, "<span class='warning'>A massive amount of flesh sloughs off your bones!</span>")
 								H.regenerate_icons()
 				else
 					return
@@ -330,7 +330,7 @@
 	name = "Delightful Effect"
 	stage = 4
 /datum/disease2/effect/delightful/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class = 'notice'> You feel delightful!</span>"
+	to_chat(mob, "<span class = 'notice'> You feel delightful!</span>")
 	if (mob.reagents.get_reagent_amount("doctorsdelight") < 1)
 		mob.reagents.add_reagent("doctorsdelight", 1)
 
@@ -383,11 +383,11 @@
 	if(prob(10))
 		GM.toxins += 100
 		//GM.temperature = 1500+T0C //should be enough to start a fire
-		mob << "<span class='warning'>You exhale a large plume of toxic gas!</span>"
+		to_chat(mob, "<span class='warning'>You exhale a large plume of toxic gas!</span>")
 	else
 		GM.toxins += 10
 		GM.temperature = istype(T) ? T.air.temperature : T20C
-		mob << "<span class = 'warning'> A toxic gas emanates from your pores!</span>"
+		to_chat(mob, "<span class = 'warning'> A toxic gas emanates from your pores!</span>")
 	T.assume_air(GM)
 	return
 
@@ -468,7 +468,7 @@
 	name = "Topographical Cretinism"
 	stage = 3
 /datum/disease2/effect/confusion/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>"
+	to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
 	mob.confused += 10
 
 /datum/disease2/effect/mutation
@@ -620,7 +620,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 		mob.equip_to_slot(magichead, slot_wear_mask)
 	if(!mob.wear_mask)
 		mob.equip_to_slot(magichead, slot_wear_mask)
-	mob << "<span class='warning'>You feel a little horse!</span>"
+	to_chat(mob, "<span class='warning'>You feel a little horse!</span>")
 
 
 /obj/item/clothing/mask/horsehead/magic
@@ -714,7 +714,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	if(istype(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
 		if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
-			H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
+			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 			spawn(50)
 				H.h_style = "Balding Hair"
 				H.update_hair()
@@ -723,7 +723,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Adrenaline Extra"
 	stage = 2
 /datum/disease2/effect/stimulant/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='notice'>You feel a rush of energy inside you!</span>"
+	to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
 	if (mob.reagents.get_reagent_amount("hyperzine") < 10)
 		mob.reagents.add_reagent("hyperzine", 4)
 	if (prob(30))
@@ -733,7 +733,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Glasgow Syndrome"
 	stage = 2
 /datum/disease2/effect/drunk/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='notice'>You feel like you had one hell of a party!</span>"
+	to_chat(mob, "<span class='notice'>You feel like you had one hell of a party!</span>")
 	if (mob.reagents.get_reagent_amount("ethanol") < 325)
 		mob.reagents.add_reagent("ethanol", 5*multiplier)
 
@@ -741,7 +741,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Gaben Syndrome"
 	stage = 2
 /datum/disease2/effect/gaben/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='notice'>Your clothing fits a little tighter!!</span>"
+	to_chat(mob, "<span class='notice'>Your clothing fits a little tighter!!</span>")
 	if (prob(10))
 		mob.reagents.add_reagent("nutriment", 1000)
 		mob.overeatduration = 1000
@@ -755,7 +755,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	if(istype(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
 		if(H.species.name == "Human" && !(H.f_style == "Full Beard"))
-			H << "<span class='warning'>Your chin and neck itch!.</span>"
+			to_chat(H, "<span class='warning'>Your chin and neck itch!.</span>")
 			spawn(50)
 				H.f_style = "Full Beard"
 				H.update_hair()
@@ -805,7 +805,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	stage = 2
 /datum/disease2/effect/lantern/activate(var/mob/living/carbon/mob,var/multiplier)
 	mob.set_light(4)
-	mob << "<span class = 'notice'>You are glowing!</span>"
+	to_chat(mob, "<span class = 'notice'>You are glowing!</span>")
 
 
 
@@ -829,7 +829,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Flemmingtons"
 	stage = 1
 /datum/disease2/effect/gunck/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class = 'notice'> Mucous runs down the back of your throat.</span>"
+	to_chat(mob, "<span class = 'notice'> Mucous runs down the back of your throat.</span>")
 
 /datum/disease2/effect/drool
 	name = "Saliva Effect"
@@ -847,25 +847,25 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Headache"
 	stage = 1
 /datum/disease2/effect/headache/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class = 'notice'> Your head hurts a bit</span>"
+	to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
 
 /datum/disease2/effect/itching
 	name = "Itching"
 	stage = 1
 /datum/disease2/effect/itching/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='warning'>Your skin itches!</span>"
+	to_chat(mob, "<span class='warning'>Your skin itches!</span>")
 
 /datum/disease2/effect/drained
 	name = "Drained Feeling"
 	stage = 1
 /datum/disease2/effect/drained/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class='warning'>You feel drained.</span>"
+	to_chat(mob, "<span class='warning'>You feel drained.</span>")
 
 /datum/disease2/effect/eyewater
 	name = "Watery Eyes"
 	stage = 1
 /datum/disease2/effect/eyewater/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<SPAN CLASS='warning'>Your eyes sting and water!</SPAN>"
+	to_chat(mob, "<SPAN CLASS='warning'>Your eyes sting and water!</SPAN>")
 
 /datum/disease2/effect/wheeze
 	name = "Wheezing"
@@ -878,6 +878,6 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Full Glass Syndrome"
 	stage = 1
 /datum/disease2/effect/optimistic/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob << "<span class = 'notice'> You feel optimistic!</span>"
+	to_chat(mob, "<span class = 'notice'> You feel optimistic!</span>")
 	if (mob.reagents.get_reagent_amount("tricordrazine") < 1)
 		mob.reagents.add_reagent("tricordrazine", 1)

@@ -90,7 +90,7 @@
 			isactive[name] = (SSD ? "SSD" : (active ? "Active" : "Inactive"))
 		else
 			isactive[name] = t.fields["p_stat"]
-			//world << "[name]: [rank]"
+//			to_chat(world, "[name]: [rank]")
 			//cael - to prevent multiple appearances of a player/job combination, add a continue after each line
 		var/department = 0
 		if(real_rank in command_positions)

@@ -80,10 +80,10 @@ var/global/list/status_displays = list() //This list contains both normal status
 	if(isAI(user)) //This allows AIs to load any image into the status displays
 		//Some fluff
 		if(user.stat)
-			user << "<span class='warning'>Unable to connect to [src] (error #408)</span>"
+			to_chat(user, "<span class='warning'>Unable to connect to [src] (error #408)</span>")
 			return
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>"
+			to_chat(user, "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>")
 			return
 
 		var/mob/living/silicon/ai/A = user
@@ -182,7 +182,7 @@ var/global/list/status_displays = list() //This list contains both normal status
 	. = ..()
 	switch(mode)
 		if(MODE_SHUTTLE_TIMER,MODE_MESSAGE,MODE_CARGO_TIMER)
-			user << "<span class='info'>The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp></span>"
+			to_chat(user, "<span class='info'>The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp></span>")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -354,10 +354,10 @@ var/global/list/status_display_images = list(
 
 		//Some fluff
 		if(user.stat)
-			user << "<span class='warning'>Unable to connect to [src] (error #408)</span>"
+			to_chat(user, "<span class='warning'>Unable to connect to [src] (error #408)</span>")
 			return
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>"
+			to_chat(user, "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>")
 			return
 
 		var/new_icon = input(A, "Load an image to be desplayed on [src].", "AI status display") in status_display_images

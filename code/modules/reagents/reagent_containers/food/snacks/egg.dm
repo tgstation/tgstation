@@ -54,7 +54,7 @@
 		if(W.reagents.amount_cache.len == 1 && W.reagents.has_reagent("flour", 5))
 			W.reagents.remove_reagent("flour",5)
 			new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-			user << "You make some dough."
+			to_chat(user, "You make some dough.")
 			qdel(src)
 			return 1
 	else if (istype(W, /obj/item/toy/crayon))
@@ -62,10 +62,10 @@
 		var/clr = C.colourName
 
 		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
-			user << "<span class='notice'>[src] refuses to take on this colour!</span>"
+			to_chat(user, "<span class='notice'>[src] refuses to take on this colour!</span>")
 			return
 
-		user << "<span class='notice'>You colour [src] [clr].</span>"
+		to_chat(user, "<span class='notice'>You colour [src] [clr].</span>")
 		icon_state = "egg-[clr]"
 		_color = clr
 	else

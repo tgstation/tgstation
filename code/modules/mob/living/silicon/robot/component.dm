@@ -178,7 +178,7 @@
 
 /obj/item/device/robotanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
 	if(( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << text("<span class='warning'>You try to analyze the floor's vitals!</span>")
+		to_chat(user, text("<span class='warning'>You try to analyze the floor's vitals!</span>"))
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("<span class='warning'>[user] has analyzed the floor's vitals!</span>"), 1)
 		user.show_message(text("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy</span>"), 1)
@@ -187,10 +187,10 @@
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!istype(M, /mob/living/silicon/robot))
-		user << "<span class='warning'>You can't analyze non-robotic things!</span>"
+		to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 		return
 
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.","<span class='notice'> You have analyzed [M]'s components.")

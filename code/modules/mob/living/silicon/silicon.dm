@@ -55,7 +55,7 @@
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
-					src << msg
+					to_chat(src, msg)
 			else if(alarms_to_show.len)
 
 				var/msg = "--- "
@@ -76,11 +76,11 @@
 					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				src << msg
+				to_chat(src, msg)
 
 			if(alarms_to_clear.len < 3)
 				for(var/msg in alarms_to_clear)
-					src << msg
+					to_chat(src, msg)
 
 			else if(alarms_to_clear.len)
 				var/msg = "--- "
@@ -101,7 +101,7 @@
 					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				src << msg
+				to_chat(src, msg)
 
 
 			alarms_to_show = list()
@@ -135,8 +135,8 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flick("noise", src:flash)
-	src << "<span class='danger'>*BZZZT*</span>"
-	src << "<span class='warning'>Warning: Electromagnetic pulse detected.</span>"
+	to_chat(src, "<span class='danger'>*BZZZT*</span>")
+	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
@@ -307,4 +307,4 @@
 	return 0
 
 /mob/living/silicon/spook()
-	src << "<i>[pick(boo_phrases)]</i>"
+	to_chat(src, "<i>[pick(boo_phrases)]</i>")

@@ -16,7 +16,7 @@
 		if(istype(target, /mob/living/carbon/))
 			var/mob/living/carbon/MM = target
 			MM.apply_effect(1, WEAKEN)
-			MM << "<span class='warning'>The force knocks you off your feet!</span>"
+			to_chat(MM, "<span class='warning'>The force knocks you off your feet!</span>")
 	T.throw_at(get_edge_target_turf(target, throwdir),10,1)
 	return 1
 
@@ -34,6 +34,6 @@
 				if(istype(M, /mob/living/carbon/))
 					var/mob/living/carbon/MM = M
 					MM.apply_effect(2, WEAKEN)
-					MM << "<span class='warning'>The force knocks you off your feet!</span>"
+					to_chat(MM, "<span class='warning'>The force knocks you off your feet!</span>")
 			M.throw_at(get_edge_target_turf(M, throwdir),15,1)
 	return ..()

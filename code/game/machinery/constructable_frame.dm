@@ -41,7 +41,7 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
-		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
+		to_chat(user, "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>")
 		return
 	switch(build_state)
 		if(1)
@@ -49,19 +49,19 @@
 				var/obj/item/stack/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start to add cables to the frame.</span>"
+					to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
 					if(do_after(user, src, 20))
 						if(C && C.amount >= 5) // Check again
 							C.use(5)
-							user << "<span class='notice'>You add cables to the frame.</span>"
+							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							set_build_state(2)
 			else if(istype(P, /obj/item/stack/sheet/glass/glass))
 				var/obj/item/stack/sheet/glass/glass/G=P
 				if(G.amount<1)
-					user << "<span class='warning'>How...?</span>"
+					to_chat(user, "<span class='warning'>How...?</span>")
 					return
 				G.use(1)
-				user << "<span class='notice'>You add the glass to the frame.</span>"
+				to_chat(user, "<span class='notice'>You add the glass to the frame.</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				new /obj/structure/displaycase_frame(src.loc)
 				qdel(src)
@@ -69,7 +69,7 @@
 			else
 				if(istype(P, /obj/item/weapon/wrench))
 					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-					user << "<span class='notice'>You dismantle the frame.</span>"
+					to_chat(user, "<span class='notice'>You dismantle the frame.</span>")
 					//new /obj/item/stack/sheet/metal(src.loc, 5)
 					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
 					M.amount = 5
@@ -80,7 +80,7 @@
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "machine")
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "<span class='notice'>You add the circuit board to the frame.</span>"
+						to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 						circuit = P
 						user.drop_item(B, src)
 						set_build_state(3)
@@ -102,13 +102,13 @@
 							desc = circuit.frame_desc
 						else
 							update_desc()
-						user << desc
+						to_chat(user, desc)
 					else
-						user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+						to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				else
 					if(istype(P, /obj/item/weapon/wirecutters))
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-						user << "<span class='notice'>You remove the cables.</span>"
+						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						set_build_state(1)
 						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 						A.amount = 5
@@ -121,9 +121,9 @@
 					circuit.loc = src.loc
 					circuit = null
 					if(components.len == 0)
-						user << "<span class='notice'>You remove the circuit board.</span>"
+						to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					else
-						user << "<span class='notice'>You remove the circuit board and other components.</span>"
+						to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
 						for(var/obj/item/weapon/W in components)
 							W.loc = src.loc
 					desc = initial(desc)
@@ -175,7 +175,7 @@
 
 							for(var/obj/item/weapon/stock_parts/part in added_components)
 								components += part
-								user << "<span class='notice'>[part.name] applied.</span>"
+								to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 							replacer.play_rped_sound()
 
 							update_desc()
@@ -198,17 +198,17 @@
 												update_desc()
 												break
 											else
-												user << "<span class='warning'>You do not have enough [P]!</span>"
+												to_chat(user, "<span class='warning'>You do not have enough [P]!</span>")
 
 										user.drop_item(P, src)
 										components += P
 										req_components[I]--
 										update_desc()
 										break
-								user << desc
+								to_chat(user, desc)
 
 								if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-									user << "<span class='warning'>You cannot add that component to the machine!</span>"
+									to_chat(user, "<span class='warning'>You cannot add that component to the machine!</span>")
 
 /obj/machinery/constructable_frame/machine_frame/proc/set_build_state(var/state)
 	build_state = state
@@ -245,14 +245,14 @@ to destroy them and players will be able to make replacements.
 		var/boardType = local_fuses.assigned_boards["[local_fuses.localbit]"] //Localbit is an int, but this is an associative list organized by strings
 		if(boardType)
 			if(ispath(boardType))
-				user << "<span class='notice'>The multitool pings softly.</span>"
+				to_chat(user, "<span class='notice'>The multitool pings softly.</span>")
 				new boardType(get_turf(src))
 				qdel(src)
 				return
 			else
-				user << "<span class='warning'>A fatal error with the board type occurred. Report this message.</span>"
+				to_chat(user, "<span class='warning'>A fatal error with the board type occurred. Report this message.</span>")
 		else
-			user << "<span class='warning'>The multitool flashes red briefly.</span>"
+			to_chat(user, "<span class='warning'>The multitool flashes red briefly.</span>")
 	else */if(!soldering&&issolder(O))
 		//local_fuses.Interact(user)
 		var/t = input(user, "Which board should be designed?") as null|anything in allowed_boards

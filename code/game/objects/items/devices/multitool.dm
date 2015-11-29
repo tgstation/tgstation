@@ -38,13 +38,13 @@
 
 	clone = !clone
 	if(clone)
-		user << "<span class='notice'>You enable cloning on \the [src].</span>"
+		to_chat(user, "<span class='notice'>You enable cloning on \the [src].</span>")
 	else
-		user << "<span class='notice'>You disable cloning on \the [src].</span>"
+		to_chat(user, "<span class='notice'>You disable cloning on \the [src].</span>")
 
 /obj/item/device/multitool/examine(var/mob/user)
 	. = ..()
-	user << "<span class='notice'>Cloning is [clone ? "enabled" : "disabled"].</span>"
+	to_chat(user, "<span class='notice'>Cloning is [clone ? "enabled" : "disabled"].</span>")
 
 /////////////////////////
 //Disguised AI detector// - changes color based on proximity to various surveillance devices
@@ -127,10 +127,10 @@ obj/item/device/multitool/ai_detect/examine(mob/user)
 	..()
 	if(src.detected)
 		user << "<span class='info'>The screen displays:</span>"
-		if(DETECT_AI) 		user << "<span class='info'>AI detected</span>"
-		if(DETECT_PAI)  	user << "<span class='info'>pAI detected></span>"
-		if(DETECT_RECORDER)	user << "<span class='info'>Tape recorder detected</span>"
-		if(DETECT_ANALYZER)	user << "<span class='info'>Voice analyzer detected</span>"
+		if(DETECT_AI) 		to_chat(user, "<span class='info'>AI detected</span>")
+		if(DETECT_PAI)  	to_chat(user, "<span class='info'>pAI detected></span>")
+		if(DETECT_RECORDER)	to_chat(user, "<span class='info'>Tape recorder detected</span>")
+		if(DETECT_ANALYZER)	to_chat(user, "<span class='info'>Voice analyzer detected</span>")
 
 ////////////////////////////////////////////////////////////////////////
 #undef DETECT_TICKER_PERIOD

@@ -153,12 +153,12 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			if(!A.locked)
 				A.locked = 1
 				for(var/mob/M in range(1, A))
-					M << "You hear a click from the bottom of the door."
+					to_chat(M, "You hear a click from the bottom of the door.")
 			else
 				if(A.arePowerSystemsOn()) //only can raise bolts if power's on
 					A.locked = 0
 					for(var/mob/M in range(1, A))
-						M << "You hear a click from the bottom of the door."
+						to_chat(M, "You hear a click from the bottom of the door.")
 			A.update_icon()
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)

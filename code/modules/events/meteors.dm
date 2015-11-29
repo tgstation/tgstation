@@ -13,7 +13,7 @@
 
 /datum/event/meteor_wave/announce()
 	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
-	world << sound('sound/AI/meteors.ogg')
+	to_chat(world, sound('sound/AI/meteors.ogg'))
 
 //One to three waves. So 10 to 60. Note that it used to be (20, 50) per wave with two to three waves
 /datum/event/meteor_wave/tick()

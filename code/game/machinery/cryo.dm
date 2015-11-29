@@ -82,22 +82,22 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
-		user << "<span class='bnotice'>The cryo cell is already occupied!</span>"
+		to_chat(user, "<span class='bnotice'>The cryo cell is already occupied!</span>")
 		return
 	if(isrobot(user))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			user << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(user, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
-		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
+		to_chat(user, "<span class='danger'>Subject cannot have abiotic items on.</span>")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
-			usr << "[L.name] will not fit into the cryo cell because they have a slime latched onto their head."
+			to_chat(usr, "[L.name] will not fit into the cryo cell because they have a slime latched onto their head.")
 			return
 	if(put_mob(L))
 		if(L == user)
@@ -111,12 +111,12 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(!ishuman(usr) && !isrobot(usr) || occupant == usr)
 		return
 	if(!occupant)
-		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
 		return
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(usr, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	if(!istype(over_location) || over_location.density)
 		return
@@ -169,17 +169,17 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	..()
 	if(in_range(user,src))
 		if(contents)
-			user << "You can just about make out some properties of the cryo's murky depths:"
+			to_chat(user, "You can just about make out some properties of the cryo's murky depths:")
 			for(var/atom/movable/floater in (contents - beaker))
-				user << "A figure floats in the depths, they appear to be [floater.name]"
+				to_chat(user, "A figure floats in the depths, they appear to be [floater.name]")
 			if(beaker)
-				user << "A beaker, releasing the following chemicals into the fluids:"
+				to_chat(user, "A beaker, releasing the following chemicals into the fluids:")
 				for(var/datum/reagent/R in beaker.reagents.reagent_list)
-					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 		else
-			user << "<span class='info'>The chamber appears devoid of anything but its biotic fluids.</span>"
+			to_chat(user, "<span class='info'>The chamber appears devoid of anything but its biotic fluids.</span>")
 	else
-		user << "<span class='notice'>Too far away to view contents.</span>"
+		to_chat(user, "<span class='notice'>Too far away to view contents.</span>")
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -298,10 +298,10 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 /obj/machinery/atmospherics/unary/cryo_cell/crowbarDestroy(mob/user)
 	if(on)
-		user << "[src] is on."
+		to_chat(user, "[src] is on.")
 		return
 	if(occupant)
-		user << "<span class='warning'>[occupant.name] is inside the [src]!</span>"
+		to_chat(user, "<span class='warning'>[occupant.name] is inside the [src]!</span>")
 		return
 	if(beaker) //special check to avoid destroying this
 		detach()
@@ -310,7 +310,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
+			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine.</span>")
 			return
 		beaker =  G
 		user.drop_item(G, src)
@@ -328,7 +328,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			return
 		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
 			if(M.Victim == G:affecting)
-				usr << "[G:affecting:name] will not fit into the cryo because they have a slime latched onto their head."
+				to_chat(usr, "[G:affecting:name] will not fit into the cryo because they have a slime latched onto their head.")
 				return
 		var/mob/M = G:affecting
 		if(put_mob(M))
@@ -436,18 +436,18 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	return 1
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
-		usr << "<span class='danger'>The cryo cell cannot handle such a lifeform!</span>"
+		to_chat(usr, "<span class='danger'>The cryo cell cannot handle such a lifeform!</span>")
 		return
 	if (occupant)
-		usr << "<span class='danger'>The cryo cell is already occupied!</span>"
+		to_chat(usr, "<span class='danger'>The cryo cell is already occupied!</span>")
 		return
 	if (M.abiotic())
-		usr << "<span class='warning'>Subject may not have abiotic items on.</span>"
+		to_chat(usr, "<span class='warning'>Subject may not have abiotic items on.</span>")
 		return
 	if(M.locked_to)
 		M.locked_to.unlock_atom(M)
 	if(!node)
-		usr << "<span class='warning'>The cell is not correctly connected to its pipe network!</span>"
+		to_chat(usr, "<span class='warning'>The cell is not correctly connected to its pipe network!</span>")
 		return
 	if(usr.pulling == M)
 		usr.stop_pulling()
@@ -455,7 +455,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	M.loc = src
 	M.reset_view()
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
-		M << "<span class='bnotice'>You feel a cold liquid surround you. Your skin starts to freeze up.</span>"
+		to_chat(M, "<span class='bnotice'>You feel a cold liquid surround you. Your skin starts to freeze up.</span>")
 	occupant = M
 	//M.metabslow = 1
 	add_fingerprint(usr)
@@ -470,7 +470,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2 || (usr.status_flags & FAKEDEATH))//and he's not dead....
 			return
-		usr << "<span class='notice'>Release sequence activated. This will take two minutes.</span>"
+		to_chat(usr, "<span class='notice'>Release sequence activated. This will take two minutes.</span>")
 		sleep(1200)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return
@@ -490,7 +490,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
 	if (usr.stat != 0 || stat & (NOPOWER|BROKEN) || (usr.status_flags & FAKEDEATH))
 		return

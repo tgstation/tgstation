@@ -78,43 +78,43 @@
 	Click()
 		switch(master.cl.buildmode)
 			if(1)
-				usr << "<span class='notice'>***********************************************************</span>"
-				usr << "<span class='notice'>Click and drag to do a fill operation</span>"
-				usr << "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>"
-				usr << "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>"
-				usr << "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>"
-				usr << "<span class='notice'>Left Mouse Button + alt  = Airlock</span>"
-				usr << ""
-				usr << "<span class='notice'>Use the button in the upper left corner to</span>"
-				usr << "<span class='notice'>change the direction of built objects.</span>"
-				usr << "<span class='notice'>***********************************************************</span>"
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
+				to_chat(usr, "<span class='notice'>Click and drag to do a fill operation</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button + alt  = Airlock</span>")
+				to_chat(usr, "")
+				to_chat(usr, "<span class='notice'>Use the button in the upper left corner to</span>")
+				to_chat(usr, "<span class='notice'>change the direction of built objects.</span>")
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
 			if(2)
-				usr << "<span class='notice'>***********************************************************</span>"
-				usr << "<span class='notice'>Click and drag to do a fill operation</span>"
-				usr << "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>"
-				usr << "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>"
-				usr << "<span class='notice'>Right Mouse Button                     = Delete objects</span>"
-				usr << "<span class='notice'>Middle Mouse Button                    = Copy atom</span>"
-				usr << ""
-				usr << "<span class='notice'>Ctrl+Shift+Left Mouse Button           = Sets bottom left corner for fill mode</span>"
-				usr << "<span class='notice'>Ctrl+Shift+Right Mouse Button           = Sets top right corner for fill mode</span>"
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
+				to_chat(usr, "<span class='notice'>Click and drag to do a fill operation</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button                     = Delete objects</span>")
+				to_chat(usr, "<span class='notice'>Middle Mouse Button                    = Copy atom</span>")
+				to_chat(usr, "")
+				to_chat(usr, "<span class='notice'>Ctrl+Shift+Left Mouse Button           = Sets bottom left corner for fill mode</span>")
+				to_chat(usr, "<span class='notice'>Ctrl+Shift+Right Mouse Button           = Sets top right corner for fill mode</span>")
 
-				usr << ""
-				usr << "<span class='notice'>Use the button in the upper left corner to</span>"
-				usr << "<span class='notice'>change the direction of built objects.</span>"
-				usr << "<span class='notice'>***********************************************************</span>"
+				to_chat(usr, "")
+				to_chat(usr, "<span class='notice'>Use the button in the upper left corner to</span>")
+				to_chat(usr, "<span class='notice'>change the direction of built objects.</span>")
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
 			if(3)
-				usr << "<span class='notice'>***********************************************************</span>"
-				usr << "<span class='notice'>Click and drag to do a mass edit operation</span>"
-				usr << "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>"
-				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span>"
-				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span>"
-				usr << "<span class='notice'>***********************************************************</span>"
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
+				to_chat(usr, "<span class='notice'>Click and drag to do a mass edit operation</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span>")
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
 			if(4)
-				usr << "<span class='notice'>***********************************************************</span>"
-				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>"
-				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>"
-				usr << "<span class='notice'>***********************************************************</span>"
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
+				to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>")
+				to_chat(usr, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>")
+				to_chat(usr, "<span class='notice'>***********************************************************</span>")
 		return 1
 	DblClick(object,location,control,params)
 		return Click(object,location,control,params)
@@ -272,7 +272,7 @@ obj/effect/bmode/buildholder/New()
 					msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
 					message_admins(msglog)
 					log_admin(msglog)
-					usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
+					to_chat(usr, "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>")
 					var/turf_op = ispath(whatfill, /turf)
 					var/deletions = 0
 					for(var/turf/T in fillturfs)
@@ -312,7 +312,8 @@ obj/effect/bmode/buildholder/New()
 									if(istype(A))
 										A.dir = holder.builddir.dir
 						tcheck(80,1)
-					if(deletions) usr << "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>"
+					if(deletions)
+						to_chat(usr, "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>")
 		if(3)
 			var/list/fillturfs = block(start,end)
 			if(fillturfs.len)
@@ -341,7 +342,7 @@ obj/effect/bmode/buildholder/New()
 					msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
 					message_admins(msglog)
 					log_admin(msglog)
-					usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the mass edit may take longer than typical.</span>"
+					to_chat(usr, "<span class='notice'>If the server is lagging the operation will periodically sleep so the mass edit may take longer than typical.</span>")
 					var/edits = 0
 					for(var/turf/T in fillturfs)
 						if(ispath(chosen, /turf))
@@ -355,12 +356,10 @@ obj/effect/bmode/buildholder/New()
 								tcheck(80,1)
 						edits++
 						tcheck(80,1)
-					if(edits) usr << "<span class='info'>Successfully edited [edits] [chosen]'\s</span>"
-		else return
-
-
-
-
+					if(edits)
+						to_chat(usr, "<span class='info'>Successfully edited [edits] [chosen]'\s</span>")
+		else
+			return
 
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
@@ -434,15 +433,15 @@ obj/effect/bmode/buildholder/New()
 					return
 				if(pa.Find("left"))
 					holder.fill_left = RT
-					usr << "<span class='notice'>Set bottom left fill corner to ([formatJumpTo(RT)])</span>"
+					to_chat(usr, "<span class='notice'>Set bottom left fill corner to ([formatJumpTo(RT)])</span>")
 				else if(pa.Find("right"))
 					holder.fill_right = RT
-					usr << "<span class='notice'>Set top right fill corner to ([formatJumpTo(RT)])</span>"
+					to_chat(usr, "<span class='notice'>Set top right fill corner to ([formatJumpTo(RT)])</span>")
 				if(holder.fill_left && holder.fill_right)
 					var/turf/start = holder.fill_left
 					var/turf/end = holder.fill_right
 					if(start.z != end.z)
-						usr << "<span class='warning'>You can't do a fill across zlevels you silly person.</span>"
+						to_chat(usr, "<span class='warning'>You can't do a fill across zlevels you silly person.</span>")
 						holder.fill_left = null
 						holder.fill_right = null
 						return
@@ -453,7 +452,7 @@ obj/effect/bmode/buildholder/New()
 								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
 									holder.fill_left = null
 									holder.fill_right = null
-									usr << "<span class='notice'>Cleared filling corners.</span>"
+									to_chat(usr, "<span class='notice'>Cleared filling corners.</span>")
 									return
 							var/areaAction = alert("FILL tiles or DELETE them? areaAction will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
 							if(areaAction) areaAction = (alert("Selective(TYPE) Delete or MASS Delete?", "Scorched Earth or selective destruction?", "Selective", "MASS") == "Selective" ? 2 : 1)
@@ -480,7 +479,7 @@ obj/effect/bmode/buildholder/New()
 							msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
 							message_admins(msglog)
 							log_admin(msglog)
-							usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
+							to_chat(usr, "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>")
 							var/turf_op = ispath(holder.buildmode.objholder,/turf)
 							var/deletions = 0
 							for(var/turf/T in fillturfs)
@@ -522,7 +521,8 @@ obj/effect/bmode/buildholder/New()
 								tcheck(80,1)
 							holder.fill_left = null
 							holder.fill_right = null
-							if(deletions) usr << "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>"
+							if(deletions)
+								to_chat(usr, "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>")
 				return
 			if(pa.Find("left"))
 				if(holder.buildmode.copycat)
@@ -587,14 +587,14 @@ obj/effect/bmode/buildholder/New()
 				if(isobj(object)) del(object)
 			else if(pa.Find("middle"))
 				if(istype(object,/mob) && !check_rights(R_DEBUG,0))
-					usr << "<span class='notice'>You don't have sufficient rights to clone [object.type]</span>"
+					to_chat(usr, "<span class='notice'>You don't have sufficient rights to clone [object.type]</span>")
 				else
 					if(ismob(object))
 						holder.buildmode.objholder = object.type
-						usr << "<span class='info'>You will now build [object.type] when clicking.</span>"
+						to_chat(usr, "<span class='info'>You will now build [object.type] when clicking.</span>")
 					else
 						holder.buildmode.copycat = object
-						usr << "<span class='info'>You will now build a lookalike of [object] when clicking.</span>"
+						to_chat(usr, "<span class='info'>You will now build a lookalike of [object] when clicking.</span>")
 
 		if(3)
 			if(pa.Find("left")) //I cant believe this shit actually compiles.
@@ -602,13 +602,13 @@ obj/effect/bmode/buildholder/New()
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder
 				else
-					usr << "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
+					to_chat(usr, "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
 			if(pa.Find("right"))
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = initial(object.vars[holder.buildmode.varholder])
 				else
-					usr << "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
+					to_chat(usr, "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
 
 		if(4)
 			if(pa.Find("left"))
@@ -629,7 +629,7 @@ obj/effect/bmode/buildholder/New()
 			matches += path
 
 	if(matches.len==0)
-		usr << "<span class='warning'>No types of [O] found.</span>"
+		to_chat(usr, "<span class='warning'>No types of [O] found.</span>")
 		return
 
 	if(matches.len==1)

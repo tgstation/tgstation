@@ -37,7 +37,7 @@
 		charged = 0
 		visible_message("<span class='danger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
 	else
-		user << "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>"
+		to_chat(user, "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>")
 
 
 
@@ -51,7 +51,7 @@
 		charged = 0
 		visible_message("<span class='danger'>[src] hums with power as [usr] deals a blow to hunger itself!</span>")
 	else
-		user << "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>"
+		to_chat(user, "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>")
 
 /obj/effect/rend/cow
 	desc = "Reverberates with the sound of ten thousand moos."
@@ -92,7 +92,7 @@
 	hitsound = 'sound/items/welder2.ogg'
 
 /obj/item/weapon/scrying/attack_self(mob/user as mob)
-	user << "<span class='notice'>You can see...everything!</span>"
+	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	user.mind.isScrying = 1
@@ -131,7 +131,7 @@
 
 /obj/item/weapon/staff/necro/attack_self(mob/user)
 	if(next_change > world.timeofday)
-		user << "<span class='warning'>You must wait longer to decide on a minion type.</span>"
+		to_chat(user, "<span class='warning'>You must wait longer to decide on a minion type.</span>")
 		return
 	/*if(raisetype < FAITHLESS)
 		raisetype = !raisetype
@@ -139,7 +139,7 @@
 		raisetype = ZOMBIE*/
 	raisetype = !raisetype
 
-	user << "<span class='notice'>You will now raise [raisetype < 2 ? (raisetype ? "skeletal" : "zombified") : "unknown"] minions from corpses.</span>"
+	to_chat(user, "<span class='notice'>You will now raise [raisetype < 2 ? (raisetype ? "skeletal" : "zombified") : "unknown"] minions from corpses.</span>")
 	next_change = world.timeofday + 30
 
 /obj/item/weapon/staff/necro/afterattack(atom/target, mob/user, proximity)

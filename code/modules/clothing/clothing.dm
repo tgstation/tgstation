@@ -34,7 +34,8 @@
 
 			if(.) //If normally we CAN equip this item,
 				if(!wearable && (slot != 15 && slot != 16)) //But we are a species that CAN'T wear it (sidenote: slots 15 and 16 are pockets)
-					M << "<span class='warning'>Your species cannot wear [src].</span>" //Let us know
+					to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")//Let us know
+
 					return 0
 
 	return ..()
@@ -168,7 +169,7 @@ BLIND     // can't see anything
 		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return
 		if(!can_flip)
-			usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
+			to_chat(usr, "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place.")
 			return
 		if(src.is_flipped == 2)
 			src.icon_state = initial(icon_state)
@@ -177,11 +178,11 @@ BLIND     // can't see anything
 			flags = initial(flags)
 			flags_inv = initial(flags_inv)
 			body_parts_covered = initial(body_parts_covered)
-			usr << "You push \the [src] back into place."
+			to_chat(usr, "You push \the [src] back into place.")
 			src.is_flipped = 1
 		else
 			src.icon_state += "_up"
-			usr << "You push \the [src] out of the way."
+			to_chat(usr, "You push \the [src] out of the way.")
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
 			flags = 0
@@ -310,7 +311,7 @@ BLIND     // can't see anything
 				H.update_inv_w_uniform()
 			return
 		else
-			user << "<span class='notice'>You cannot attach more accessories of this type to [src]</span>"
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src]</span>")
 			return
 
 	for(var/obj/item/clothing/accessory/accessory in priority_accessories())
@@ -381,37 +382,37 @@ BLIND     // can't see anything
 			mode = "Its vital tracker appears to be enabled."
 		if(3)
 			mode = "Its vital tracker and tracking beacon appear to be enabled."
-	user << "<span class='info'>" + mode + "</span>"
+	to_chat(user, "<span class='info'>" + mode + "</span>")
 	for(var/obj/item/clothing/accessory/A in accessories)
-		user << "<span class='info'>\A [A] is clipped to it.</span>"
+		to_chat(user, "<span class='info'>\A [A] is clipped to it.</span>")
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
 	if (usr.stat || usr.restrained()) return
 	if(has_sensor >= 2)
-		usr << "<span class='warning'>The controls are locked.</span>"
+		to_chat(usr, "<span class='warning'>The controls are locked.</span>")
 		return 0
 	if(has_sensor <= 0)
-		usr << "<span class='warning'>This suit does not have any sensors.</span>"
+		to_chat(usr, "<span class='warning'>This suit does not have any sensors.</span>")
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
-		usr << "<span class='warning'>You have moved too far away.</span>"
+		to_chat(usr, "<span class='warning'>You have moved too far away.</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
 	switch(sensor_mode)
 		if(0)
-			usr << "<span class='notice'>You disable your suit's remote sensing equipment.</span>"
+			to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
 		if(1)
-			usr << "<span class='notice'>Your suit will now report whether you are live or dead.</span>"
+			to_chat(usr, "<span class='notice'>Your suit will now report whether you are live or dead.</span>")
 		if(2)
-			usr << "<span class='notice'>Your suit will now report your vital lifesigns.</span>"
+			to_chat(usr, "<span class='notice'>Your suit will now report your vital lifesigns.</span>")
 		if(3)
-			usr << "<span class='notice'>Your suit will now report your vital lifesigns as well as your coordinate position.</span>"
+			to_chat(usr, "<span class='notice'>Your suit will now report your vital lifesigns as well as your coordinate position.</span>")
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

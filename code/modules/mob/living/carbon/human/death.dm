@@ -59,8 +59,8 @@
 	//If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if(B && B.controlling)
-		src << "<span class='danger'>Your host has died.  You reluctantly release control.</span>"
-		B.host_brain << "<span class='danger'>Just before your body passes, you feel a brief return of sensation.  You are now in control...  And dead.</span>"
+		to_chat(src, "<span class='danger'>Your host has died.  You reluctantly release control.</span>")
+		to_chat(B.host_brain, "<span class='danger'>Just before your body passes, you feel a brief return of sensation.  You are now in control...  And dead.</span>")
 		do_release_control(0)
 
 	//Check for heist mode kill count.
@@ -69,7 +69,7 @@
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
-		//world << "Vox kills: [vox_kills]"
+//		to_chat(world, "Vox kills: [vox_kills]")
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 	if(ishuman(LAssailant))
 		var/mob/living/carbon/human/H=LAssailant

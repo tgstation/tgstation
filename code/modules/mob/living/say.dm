@@ -118,10 +118,10 @@ var/list/department_radio_keys = list(
 	if(!message) return
 
 	if(silent)
-		src << "<span class='warning'>You can't speak while silenced.</span>"
+		to_chat(src, "<span class='warning'>You can't speak while silenced.</span>")
 		return
 	if((status_flags & FAKEDEATH) && !stat)
-		src << "<span class='danger'>Talking right now would give us away!</span>"
+		to_chat(src, "<span class='danger'>Talking right now would give us away!</span>")
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -266,7 +266,7 @@ var/list/department_radio_keys = list(
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return

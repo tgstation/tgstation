@@ -170,22 +170,22 @@
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
-			usr << "[spaces]("
+			to_chat(usr, "[spaces](")
 			SDQL_testout(item, indent + 1)
-			usr << "[spaces])"
+			to_chat(usr, "[spaces])")
 
 		else
-			usr << "[spaces][item]"
+			to_chat(usr, "[spaces][item]")
 
 		if(!isnum(item) && query_tree[item])
 
 			if(istype(query_tree[item], /list))
-				usr << "[spaces]    ("
+				to_chat(usr, "[spaces]    (")
 				SDQL_testout(query_tree[item], indent + 2)
-				usr << "[spaces]    )"
+				to_chat(usr, "[spaces]    )")
 
 			else
-				usr << "[spaces]    [query_tree[item]]"
+				to_chat(usr, "[spaces]    [query_tree[item]]")
 
 
 
@@ -299,7 +299,7 @@
 				if("or", "||")
 					result = (result || val)
 				else
-					usr << "<span class='warning'>SDQL2: Unknown op [op]</span>"
+					to_chat(usr, "<span class='warning'>SDQL2: Unknown op [op]</span>")
 					result = null
 		else
 			result = val
@@ -410,7 +410,7 @@
 
 		else if(char == "'")
 			if(word != "")
-				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>"
+				to_chat(usr, "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>")
 				return null
 
 			word = "'"
@@ -430,7 +430,7 @@
 					word += char
 
 			if(i > len)
-				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>"
+				to_chat(usr, "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>")
 				return null
 
 			query_list += "[word]'"
@@ -438,7 +438,7 @@
 
 		else if(char == "\"")
 			if(word != "")
-				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>"
+				to_chat(usr, "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>")
 				return null
 
 			word = "\""
@@ -458,7 +458,7 @@
 					word += char
 
 			if(i > len)
-				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>"
+				to_chat(usr, "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>")
 				return null
 
 			query_list += "[word]\""

@@ -137,24 +137,24 @@ proc/move_mining_shuttle()
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
 			if(ticker.mode:declared)
-				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
+				to_chat(usr, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 				return
 		var/area/A = locate(/area/shuttle/mining/station)
 		if(!mining_shuttle_location)
 			var/list/search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
 			if(!isemptylist(search))
-				usr << "<span class='notice'>The nuclear disk is too precious for Nanotrasen to send it to an Asteroid.</span>"
+				to_chat(usr, "<span class='notice'>The nuclear disk is too precious for Nanotrasen to send it to an Asteroid.</span>")
 				return
 		if (!mining_shuttle_moving)
-			usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			move_mining_shuttle()
 		else
-			usr << "<span class='notice'>Shuttle is already moving.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
 
 /obj/machinery/computer/mining_shuttle/emag(mob/user as mob)
 	..()
 	src.req_access = list()
-	usr << "You disable the console's access requirement."
+	to_chat(usr, "You disable the console's access requirement.")
 */
 /******************************Lantern*******************************/
 
@@ -336,7 +336,7 @@ proc/move_mining_shuttle()
 /obj/item/device/wormhole_jaunter/attack_self(mob/user as mob)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==CENTCOMM_Z||device_turf.z>=map.zLevels.len)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
@@ -350,7 +350,7 @@ proc/move_mining_shuttle()
 					L.Add(B)
 
 		if(!L.len)
-			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
+			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
 			return
 		var/chosen_beacon = pick(L)
 		var/obj/effect/portal/jaunt_tunnel/J = new /obj/effect/portal/jaunt_tunnel(get_turf(src))
@@ -469,11 +469,11 @@ proc/move_mining_shuttle()
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", object = "resonator")
-					L << "<span class='danger'>\The [src] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>\The [src] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			else
 				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>\The [src] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>\The [src] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			del(src)
 
@@ -549,17 +549,17 @@ proc/move_mining_shuttle()
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				user << "<span class='warning'>\The [src] is moving around too much to repair!</span>"
+				to_chat(user, "<span class='warning'>\The [src] is moving around too much to repair!</span>")
 				return
 			if(maxHealth == health)
-				user << "<span class='notice'>\The [src] is at full integrity.</span>"
+				to_chat(user, "<span class='notice'>\The [src] is at full integrity.</span>")
 			else
 				health += 10
 				user.visible_message("<span class='notice'>[user] repairs some of the armor on \the [src].</span>", \
 				"<span class='notice'>You repair some of the armor on \the [src].</span>")
 			return
 	if(istype(I, /obj/item/device/mining_scanner))
-		user << "<span class='notice'>You instruct \the [src] to drop any collected ore.</span>"
+		to_chat(user, "<span class='notice'>You instruct \the [src] to drop any collected ore.</span>")
 		DropOre()
 		return
 	..()
@@ -581,10 +581,10 @@ proc/move_mining_shuttle()
 		switch(search_objects)
 			if(0)
 				SetCollectBehavior()
-				M << "<span class='info'>\The [src] will now search and store loose ore.</span>"
+				to_chat(M, "<span class='info'>\The [src] will now search and store loose ore.</span>")
 			if(2)
 				SetOffenseBehavior()
-				M << "<span class='info'>\The [src] will now attack hostile wildlife.</span>"
+				to_chat(M, "<span class='info'>\The [src] will now attack hostile wildlife.</span>")
 		return
 	..()
 
@@ -679,16 +679,16 @@ proc/move_mining_shuttle()
 				update_icon()
 				return
 			else
-				user << "<span class='warning'>\The [src] is only effective on the dead.</span>"
+				to_chat(user, "<span class='warning'>\The [src] is only effective on the dead.</span>")
 				return
 		else
-			user << "<span class='warning'>\The [src] is only effective on lesser beings.</span>"
+			to_chat(user, "<span class='warning'>\The [src] is only effective on lesser beings.</span>")
 			return
 
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		user << "<span class='info'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='info'>\The [src] is empty.</span>")
 
 /*********************Mob Capsule*************************/
 
@@ -710,13 +710,13 @@ proc/move_mining_shuttle()
 /obj/item/device/mobcapsule/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		if(user != capsuleowner)
-			user << "<span class='warning'>\The [src] briefly flashes an error.</span>"
+			to_chat(user, "<span class='warning'>\The [src] briefly flashes an error.</span>")
 			return 0
 		spawn()
 			var/name = sanitize(input("Choose a name for your friend.", "Name your friend", contained_mob.name) as text|null)
 			if(name)
 				contained_mob.name = name
-				user << "<span class='notice'>Renaming successful, say hello to [contained_mob]</span>"
+				to_chat(user, "<span class='notice'>Renaming successful, say hello to [contained_mob]</span>")
 	..()
 
 /obj/item/device/mobcapsule/throw_impact(atom/A, mob/user)
@@ -821,7 +821,7 @@ proc/move_mining_shuttle()
 			if(M.scan_state)
 				L += M
 		if(!L.len)
-			user << "<span class='notice'>\The [src] reports that nothing was detected nearby.</span>"
+			to_chat(user, "<span class='notice'>\The [src] reports that nothing was detected nearby.</span>")
 			return
 		else
 			for(M in L)

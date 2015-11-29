@@ -71,7 +71,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	<b><u>Black Marks</u></b>:<br> "}
 	for(var/A in marks)
 		text += "<span class='warning'>[A]<br></span>"
-	user << "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>"
+	to_chat(user, "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>")
 	var/turf/T = get_step(src,outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"

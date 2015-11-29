@@ -121,18 +121,18 @@ var/global/list/accessable_z_levels = list()
 
 /*
 /mob/verb/getCurMapData()
-	src << "\nCurrent map data:"
-	src << "* Short name: [map.nameShort]"
-	src << "* Long name: [map.nameLong]"
-	src << "* [map.zLevels.len] Z-levels: [map.zLevels]"
+	to_chat(src, "\nCurrent map data:")
+	to_chat(src, "* Short name: [map.nameShort]")
+	to_chat(src, "* Long name: [map.nameLong]")
+	to_chat(src, "* [map.zLevels.len] Z-levels: [map.zLevels]")
 	for(var/datum/zLevel/level in map.zLevels)
-		src << "  * [level.name], Telejammed : [level.teleJammed], Movejammed : [level.movementJammed]"
-	src << "* Main station Z: [map.zMainStation]"
-	src << "* Centcomm Z: [map.zCentcomm]"
-	src << "* Thunderdome coords: ([map.tDomeX],[map.tDomeY],[map.tDomeZ])"
-	src << "* Space movement chances: [accessable_z_levels]"
+		to_chat(src, "  * [level.name], Telejammed : [level.teleJammed], Movejammed : [level.movementJammed]")
+	to_chat(src, "* Main station Z: [map.zMainStation]")
+	to_chat(src, "* Centcomm Z: [map.zCentcomm]")
+	to_chat(src, "* Thunderdome coords: ([map.tDomeX],[map.tDomeY],[map.tDomeZ])")
+	to_chat(src, "* Space movement chances: [accessable_z_levels]")
 	for(var/z in accessable_z_levels)
-		src << "  * [z] has chance [accessable_z_levels[z]]"
+		to_chat(src, "  * [z] has chance [accessable_z_levels[z]]")
 	return
 */
 

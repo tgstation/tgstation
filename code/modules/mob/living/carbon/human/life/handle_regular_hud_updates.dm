@@ -286,19 +286,19 @@
 				isRemoteObserve = 1
 				//Is he unconscious or dead?
 				if(remoteview_target.stat!=CONSCIOUS)
-					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
+					to_chat(src, "<span class='warning'>Your psy-connection grows too faint to maintain!</span>")
 					isRemoteObserve = 0
 
 				//Does he have psy resist?
 				if(M_PSY_RESIST in remoteview_target.mutations)
-					src << "<span class='warning'>Your mind is shut out!</span>"
+					to_chat(src, "<span class='warning'>Your mind is shut out!</span>")
 					isRemoteObserve = 0
 
 				//Not on the station or mining?
 				var/turf/temp_turf = get_turf(remoteview_target)
 
 				if(temp_turf && (temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
-					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
+					to_chat(src, "<span class='warning'>Your psy-connection grows too faint to maintain!</span>")
 					isRemoteObserve = 0
 			if(!isRemoteObserve && client && !client.adminobs && !isTeleViewing(client.eye))
 				remoteview_target = null

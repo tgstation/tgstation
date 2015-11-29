@@ -92,10 +92,10 @@
 
 /mob/living/silicon/pai/proc/show_directives(var/who)
 	if (src.pai_law0)
-		who << "Prime Directive: [src.pai_law0]"
+		to_chat(who, "Prime Directive: [src.pai_law0]")
 
 	if (src.pai_laws)
-		who << "Additional Directives: [src.pai_laws]"
+		to_chat(who, "Additional Directives: [src.pai_laws]")
 
 /mob/living/silicon/pai/proc/write_directives()
 	var/dat = ""
@@ -157,11 +157,11 @@
 		// 33% chance to unbind
 		// 66% chance no effect
 
-	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
+	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(!software.Find("redundant threading"))
 		src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	else
-		src << "<font color=green>Your redundant threading begins pipelining new processes... communication circuit restored in one quarter minute.</font>"
+		to_chat(src, "<font color=green>Your redundant threading begins pipelining new processes... communication circuit restored in one quarter minute.</font>")
 		src.silence_time = world.timeofday + 15 * 10
 
 	if(prob(20) && !software.Find("redundant threading"))
@@ -174,10 +174,10 @@
 		if(1)
 			src.master = null
 			src.master_dna = null
-			src << "<font color=green>You feel unbound.</font>"
+			to_chat(src, "<font color=green>You feel unbound.</font>")
 		if(2)
 			if(software.Find("redundant threading"))
-				src << "<font color=green>Your redundant threading picks up your intelligence simulator without missing a beat.</font>"
+				to_chat(src, "<font color=green>Your redundant threading picks up your intelligence simulator without missing a beat.</font>")
 				return
 			var/command
 			if(severity  == 1)
@@ -185,9 +185,9 @@
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
 			src.pai_law0 = "[command] your master."
-			src << "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>"
+			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
-			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
+			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
 	if(flags & INVULNERABLE)

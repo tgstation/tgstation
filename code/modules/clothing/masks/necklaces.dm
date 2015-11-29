@@ -24,7 +24,7 @@
 
 		src.teeth_amount += T.amount
 		update_name()
-		user << "<span class='info'>You add [T.amount] [T] to \the [src].</span>"
+		to_chat(user, "<span class='info'>You add [T.amount] [T] to \the [src].</span>")
 		T.use(T.amount)
 
 /obj/item/clothing/mask/necklace/teeth/proc/update_name()

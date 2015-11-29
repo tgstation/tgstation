@@ -193,7 +193,7 @@
 			for(var/sf in audio_sounds)
 				var/sound/voice = sound(sf, wait = 1, channel = VOX_CHANNEL)
 				voice.status = SOUND_STREAM
-				world << voice
+				to_chat(world, voice)
 			lastaudiowarning = world.timeofday - audio_offset
 
 		if(damage > explosion_point)
@@ -336,9 +336,11 @@
 
 /obj/machinery/power/supermatter/attack_ai(mob/user as mob)
 	var/stability = num2text(round((damage / explosion_point) * 100))
-	user << "<span class = \"info\">Matrix Instability: [stability]%</span>"
-	user << "<span class = \"info\">Damage: [format_num(damage)]</span>" // idfk what units we're using.
-	user << "<span class = \"info\">Power: [format_num(power)]J</span>" // Same
+	to_chat(user, "<span class = \"info\">Matrix Instability: [stability]%</span>")
+	to_chat(user, "<span class = \"info\">Damage: [format_num(damage)]</span>")// idfk what units we're using.
+
+	to_chat(user, "<span class = \"info\">Power: [format_num(power)]J</span>")// Same
+
 
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\

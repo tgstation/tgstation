@@ -29,7 +29,7 @@
 
 /obj/item/weapon/storage/secure/examine(mob/user)
 	..()
-	user << "<span class='info'>The service panel is [src.open ? "open" : "closed"].</span>"
+	to_chat(user, "<span class='info'>The service panel is [src.open ? "open" : "closed"].</span>")
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(locked)
@@ -40,7 +40,7 @@
 			src.overlays = null
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			user << "You short out the lock on [src]."
+			to_chat(user, "You short out the lock on [src].")
 			return
 
 		if (istype(W, /obj/item/weapon/screwdriver))
@@ -150,7 +150,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
+		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 	else if ((src.loc == user) && (!src.locked))
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if (user.s_active)
@@ -168,7 +168,7 @@
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M as mob, mob/living/user as mob)
 		if ((M_CLUMSY in user.mutations) && prob(50))
-			user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
+			to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 			user.take_organ_damage(10)
 			user.Paralyse(2)
 			return
@@ -185,7 +185,7 @@
 				if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						H << "<span class='warning'>The helmet protects you from being hit hard in the head!</span>"
+						to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 						return
 					var/time = rand(2, 6)
 					if (prob(75))
@@ -196,7 +196,7 @@
 					for(var/mob/O in viewers(H, null))
 						O.show_message(text("<span class='danger'>[] has been knocked unconscious!</span>", H), 1, "<span class='warning'>You hear someone fall.</span>", 2)
 				else
-					H << text("<span class='warning'>[] tried to knock you unconcious!</span>",user)
+					to_chat(H, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
 					H.eye_blurry += 3
 
 		return*/

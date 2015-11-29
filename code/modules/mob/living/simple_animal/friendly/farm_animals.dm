@@ -79,9 +79,9 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "<span class='warning'>[O] is full.</span>"
+			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
-			user << "<span class='warning'>The udder is dry. Wait a bit longer...</span>"
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 //cow
@@ -121,9 +121,9 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "<span class='warning'>[O] is full.</span>"
+			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
-			user << "<span class='warning'>The udder is dry. Wait a bit longer...</span>"
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 
@@ -146,7 +146,7 @@
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
 											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				to_chat(M, pick(responses))
 	else
 		..()
 
@@ -234,9 +234,9 @@
 			user.drop_item(O)
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//world << eggsleft
+//			to_chat(world, eggsleft)
 		else
-			user << "<span class='notice'>[name] doesn't seem hungry!</span>"
+			to_chat(user, "<span class='notice'>[name] doesn't seem hungry!</span>")
 	else if(istype(O, /obj/item/weapon/dnainjector))
 		var/obj/item/weapon/dnainjector/I = O
 		I.inject(src, user)

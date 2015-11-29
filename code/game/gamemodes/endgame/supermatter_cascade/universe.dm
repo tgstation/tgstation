@@ -9,9 +9,9 @@
 	if(user)
 		if(user.hallucinating())
 			var/msg = pick("your mother and father arguing","a smooth jazz tune","somebody speaking [pick("french","siik'tajr","gibberish")]","[pick("somebody","your parents","a gorilla","a man","a woman")] making [pick("chicken","cow","train","duck","cat","dog","strange","funny")] sounds")
-			user << "<span class='sinister'>All you hear on the frequency is [msg]. There will be no shuttle call today.</span>"
+			to_chat(user, "<span class='sinister'>All you hear on the frequency is [msg]. There will be no shuttle call today.</span>")
 		else
-			user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
+			to_chat(user, "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>")
 	return 0
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
@@ -39,7 +39,7 @@
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()
 	set background = 1
-	world << "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>"
+	to_chat(world, "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>")
 
 	world << sound('sound/effects/cascade.ogg')
 
@@ -94,7 +94,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		ticker.declare_completion()
 		ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
 
-		world << "<B>Resetting in 30 seconds!</B>"
+		to_chat(world, "<B>Resetting in 30 seconds!</B>")
 
 		feedback_set_details("end_error","Universe ended")
 
@@ -102,7 +102,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			blackbox.save_all_data_to_sql()
 
 		if (watchdog.waiting)
-			world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+			to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 			watchdog.signal_ready()
 			return
 		sleep(300)
@@ -195,7 +195,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.objectives += live
 
 		if(failed_objectives)
-			M << "<span class='danger'><font size=3>You have permitted the universe to collapse and have therefore failed your objectives.</font></span>"
+			to_chat(M, "<span class='danger'><font size=3>You have permitted the universe to collapse and have therefore failed your objectives.</font></span>")
 
 		// Delete all runes
 		for(var/obj/effect/rune/R in rune_list)
@@ -204,13 +204,13 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 
 		if(M in ticker.mode.revolutionaries)
 			ticker.mode.revolutionaries -= M
-			M << "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a revolutionary.</FONT></span>"
+			to_chat(M, "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a revolutionary.</FONT></span>")
 			ticker.mode.update_rev_icons_removed(M)
 			M.special_role = null
 
 		if(M in ticker.mode.head_revolutionaries)
 			ticker.mode.head_revolutionaries -= M
-			M.current << "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a head revolutionary.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a head revolutionary.</FONT></span>")
 			ticker.mode.update_rev_icons_removed(M)
 			M.special_role = null
 
@@ -221,8 +221,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
 				cult.memoize_cult_objectives(M)
-			M.current << "<span class='danger'><FONT size = 3>Nar-Sie loses interest in this plane. You are no longer a cultist.</FONT></span>"
-			M.current << "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>Nar-Sie loses interest in this plane. You are no longer a cultist.</FONT></span>")
+			to_chat(M.current, "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>")
 			M.current.remove_language("Cult")
 			M.memory = ""
 
@@ -230,7 +230,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			ticker.mode.wizards -= M
 			M.special_role = null
 			M.current.spellremove(M.current, config.feature_object_spell_system? "object":"verb")
-			M.current << "<span class='danger'><FONT size = 3>Your powers ebb and you feel weak. You are no longer a wizard.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>Your powers ebb and you feel weak. You are no longer a wizard.</FONT></span>")
 			ticker.mode.update_wizard_icons_removed(M)
 
 		if(M in ticker.mode.changelings)
@@ -240,7 +240,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.current.verbs -= /datum/changeling/proc/EvolutionMenu
 			if(M.changeling)
 				del(M.changeling)
-			M.current << "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.vampires)
 			ticker.mode.vampires -= M
@@ -248,7 +248,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.current.remove_vampire_powers()
 			if(M.vampire)
 				del(M.vampire)
-			M.current << "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.syndicates)
 			ticker.mode.syndicates -= M
@@ -256,12 +256,12 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.special_role = null
 			//for (var/datum/objective/nuclear/O in objectives)
 			//	objectives-=O
-			M.current << "<span class='danger'><FONT size = 3>Your masters are likely dead or dying. You are no longer a syndicate operative.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>Your masters are likely dead or dying. You are no longer a syndicate operative.</FONT></span>")
 
 		if(M in ticker.mode.traitors)
 			ticker.mode.traitors -= M
 			M.special_role = null
-			M.current << "<span class='danger'><FONT size = 3>Your masters are likely dead or dying.  You are no longer a traitor.</FONT></span>"
+			to_chat(M.current, "<span class='danger'><FONT size = 3>Your masters are likely dead or dying.  You are no longer a traitor.</FONT></span>")
 			if(isAI(M.current))
 				var/mob/living/silicon/ai/A = M.current
 				A.set_zeroth_law("")
@@ -284,5 +284,5 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			A.show_laws()
 			A.icon_state = "ai"
 
-			A << "<span class='danger'><FONT size = 3>The massive blast of energy has fried the systems that were malfunctioning.  You are no longer malfunctioning.</FONT></span>"
+			to_chat(A, "<span class='danger'><FONT size = 3>The massive blast of energy has fried the systems that were malfunctioning.  You are no longer malfunctioning.</FONT></span>")
 		tcheck(80,1)

@@ -24,7 +24,7 @@
 
 
 /datum/game_mode/rp_revolution/announce()
-	world << "<B>The current game mode is - Revolution RP!</B>"
+	to_chat(world, "<B>The current game mode is - Revolution RP!</B>")
 
 /datum/game_mode/rp_revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
@@ -62,7 +62,7 @@
 	var/rev_number = 0
 
 	if(!revs_possible || !heads)
-		world << "<B> <span class='warning'>Not enough players for RP revolution game mode. Restarting world in 5 seconds.</span>"
+		to_chat(world, "<B> <span class='warning'>Not enough players for RP revolution game mode. Restarting world in 5 seconds.</span>")
 		sleep(50)
 		world.Reboot()
 		return
@@ -88,9 +88,9 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/obj_count = 1
-		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
+		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 		for(var/datum/objective/objective in rev_mind.objectives)
-			rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
 	spawn (rand(waittime_l, waittime_h))
@@ -229,11 +229,11 @@
 
 	var/text = ""
 	if(finished == 1)
-		world << "<span class='danger'><FONT size = 3> The heads of staff were relieved of their posts! The revolutionaries win!</FONT></span>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff were relieved of their posts! The revolutionaries win!</FONT></span>")
 	else if(finished == 2)
-		world << "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>")
 
-	world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>The head revolutionaries were: </B></FONT>")
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		text = ""
 		if(rev_mind.current)
@@ -245,10 +245,10 @@
 		else
 			text += "[rev_mind.key] (character destroyed)"
 
-		world << text
+		to_chat(world, text)
 
 	text = ""
-	world << "<FONT size = 2><B>The converted revolutionaries were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>The converted revolutionaries were: </B></FONT>")
 	for(var/datum/mind/rev_nh_mind in revolutionaries)
 		if(rev_nh_mind.current)
 			text += "[rev_nh_mind.current.real_name]"
@@ -260,9 +260,9 @@
 			text += "[rev_nh_mind.key] (character destroyed)"
 		text += ", "
 
-	world << text
+	to_chat(world, text)
 
-	world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>The heads of staff were: </B></FONT>")
 	var/list/heads = list()
 	heads = get_all_heads()
 	for(var/datum/mind/head_mind in heads)
@@ -276,7 +276,7 @@
 		else
 			text += "[head_mind.key] (character destroyed)"
 
-		world << text
+		to_chat(world, text)
 	return 1
 
 
@@ -286,22 +286,22 @@ mob/living/carbon/human/proc
 		set name = "Rev-Convert"
 		if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 			if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-				src << "<span class='danger'>[M] is already be a revolutionary!</span>"
+				to_chat(src, "<span class='danger'>[M] is already be a revolutionary!</span>")
 			else if(src.mind in ticker.mode:get_unconvertables())
-				src << "<span class='danger'>[M] cannot be a revolutionary!</span>"
+				to_chat(src, "<span class='danger'>[M] cannot be a revolutionary!</span>")
 			else
 				if(world.time < M.mind.rev_cooldown)
-					src << "<span class='warning'>Wait five seconds before reconversion attempt.</span>"
+					to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 					return
-				src << "<span class='warning'>Attempting to convert [M]...</span>"
+				to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 				log_admin("[src]([src.ckey]) attempted to convert [M].")
 				message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M].</span>")
 				var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 				if(choice == "Yes!")
 					ticker.mode:add_revolutionary(M.mind)
-					M << "<span class='notice'>You join the revolution!</span>"
-					src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
+					to_chat(M, "<span class='notice'>You join the revolution!</span>")
+					to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 				else if(choice == "No!")
-					M << "<span class='warning'>You reject this traitorous cause!</span>"
-					src << "<span class='danger'>[M] does not support the revolution!</span>"
+					to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
+					to_chat(src, "<span class='danger'>[M] does not support the revolution!</span>")
 				M.mind.rev_cooldown = world.time+50

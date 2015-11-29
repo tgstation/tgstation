@@ -40,7 +40,7 @@
 
 /obj/item/device/silicate_sprayer/examine(var/mob/user)
 	. = ..()
-	user << "<span class='notice'>It contains [get_amount()]/[max_silicate] units of silicate!</span>"
+	to_chat(user, "<span class='notice'>It contains [get_amount()]/[max_silicate] units of silicate!</span>")
 
 /obj/item/device/silicate_sprayer/proc/remove_silicate(var/amount = 0)
 	reagents.remove_reagent("silicate", amount)
@@ -77,14 +77,14 @@
 		return
 
 	if(!get_amount())
-		user << "<span class='notice'>\The [src] is out of silicate!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is out of silicate!</span>")
 		return 1
 
 	var/obj/structure/window/W = A
 
 	var/diff = initial(W.health) - W.health
 	if(!diff) // Not damaged.
-		user << "<span class='notice'>\The [W] is already in perfect condition!</span>"
+		to_chat(user, "<span class='notice'>\The [W] is already in perfect condition!</span>")
 		return 1
 		
 	diff = min(diff, get_amount() / SILICATE_PER_DAMAGE)
@@ -119,7 +119,7 @@
 
 /obj/item/device/silicate_sprayer/advanced/attack_self(var/mob/user)
 	mode = !mode
-	user << "<span class='notice'>\The [src] is now set to [mode == MODE_REINFORCE ? "reinforce" : "repair"] windows.</span>"
+	to_chat(user, "<span class='notice'>\The [src] is now set to [mode == MODE_REINFORCE ? "reinforce" : "repair"] windows.</span>")
 	update_icon()
 	return 1
 
@@ -130,7 +130,7 @@
 
 /obj/item/device/silicate_sprayer/advanced/examine(var/mob/user)
 	. = ..()
-	user << "<span class='notice'>It is set to [mode == MODE_REINFORCE ? "reinforce" : "repair"] windows.</span>"
+	to_chat(user, "<span class='notice'>It is set to [mode == MODE_REINFORCE ? "reinforce" : "repair"] windows.</span>")
 
 /obj/item/device/silicate_sprayer/advanced/preattack(var/atom/A, var/mob/user)
 	if(get_dist(A, user) > 1) // I purposely don't use proximity_flag so you can get to windows without needing adjacency. (window behind another window for example.)
@@ -140,7 +140,7 @@
 		return
 
 	if(!get_amount())
-		user << "<span class='notice'>\The [src] is out of silicate!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is out of silicate!</span>")
 		return 1
 
 	var/obj/structure/window/W = A
@@ -152,7 +152,7 @@
 	var/extra_health = W.health - initial_health
 
 	if(W.health >= initial_health * MAX_WINDOW_HEALTH_MULTIPLIER)
-		user << "<span class='notice'>You can't reinforce \the [W] any further!</span>"
+		to_chat(user, "<span class='notice'>You can't reinforce \the [W] any further!</span>")
 		return 1
 
 	var/repair_amt = min(get_amount() / SILICATE_PER_REINFORCE, (initial_health * MAX_WINDOW_HEALTH_MULTIPLIER) - (initial_health + extra_health))

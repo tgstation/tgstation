@@ -98,11 +98,11 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "<span class='warning'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
+				to_chat(usr, "<span class='warning'>[src] is wearing too much armor. You can't cause \him any damage.</span>")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				usr << "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.</span>"
+				to_chat(usr, "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.</span>")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 			if(health>0 && prob(15))
@@ -133,7 +133,7 @@
 					inventory_head = null
 					regenerate_icons()
 				else
-					usr << "<span class='warning'>There is nothing to remove from its [remove_from].</span>"
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 					return
 			if("back")
 				if(inventory_back)
@@ -141,7 +141,7 @@
 					inventory_back = null
 					regenerate_icons()
 				else
-					usr << "<span class='warning'>There is nothing to remove from its [remove_from].</span>"
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 					return
 
 		show_inv(usr)
@@ -153,7 +153,7 @@
 
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "<span class='warning'>You have nothing in your hand to put on its [add_to].</span>"
+			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to].</span>")
 			return
 		switch(add_to)
 			if("head")
@@ -161,7 +161,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "<span class='warning'>It's already wearing something.</span>"
+					to_chat(usr, "<span class='warning'>It's already wearing something.</span>")
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -185,7 +185,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
+						to_chat(usr, "You set [item_to_add] on [src]'s back, but \he shakes it off!")
 						usr.drop_item(item_to_add, get_turf(src))
 						if(prob(25))
 							step_rand(item_to_add)
@@ -214,7 +214,7 @@
 		return
 
 	if(inventory_head)
-		if(usr)	usr << "<span class='warning'>You can't put more than one hat on [src]!</span>"
+		if(usr)	to_chat(usr, "<span class='warning'>You can't put more than one hat on [src]!</span>")
 		return
 	if(!item_to_add)
 		usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
@@ -364,7 +364,7 @@
 		regenerate_icons()
 
 	else
-		usr << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
+		to_chat(usr, "You set [item_to_add] on [src]'s head, but \he shakes it off!")
 		usr.drop_item(item_to_add, src.loc)
 		if(prob(25))
 			step_rand(item_to_add)
@@ -490,7 +490,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='warning'>You can't fit this on [src]</span>"
+		to_chat(usr, "<span class='warning'>You can't fit this on [src]</span>")
 		return
 	..()
 
@@ -514,7 +514,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='warning'>[src] already has a cute bow!</span>"
+		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 
@@ -549,6 +549,6 @@
 //Sasha can't wear hats!
 /mob/living/simple_animal/corgi/sasha/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='warning'>[src] won't wear that!</span>"
+		to_chat(usr, "<span class='warning'>[src] won't wear that!</span>")
 		return
 	..()

@@ -79,8 +79,8 @@
 	attack_verb = list("stabbed")
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	viewers(user) << pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
+	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -127,7 +127,7 @@
 		if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 			if(!istype(M.loc,/turf)) return
 			if(C.amount < 10)
-				usr << "<span class='warning'>You need at least 10 lengths to make a bolas wire!</span>"
+				to_chat(usr, "<span class='warning'>You need at least 10 lengths to make a bolas wire!</span>")
 				return
 			var/obj/item/weapon/legcuffs/bolas/cable/B = new /obj/item/weapon/legcuffs/bolas/cable(usr.loc)
 			qdel(src)
@@ -135,10 +135,10 @@
 			B.cable_color = C._color
 			B.screw_state = item_state
 			B.screw_istate = icon_state
-			M << "<span class='notice'>You wind some cable around the screwdriver handle to make a bolas wire.</span>"
+			to_chat(M, "<span class='notice'>You wind some cable around the screwdriver handle to make a bolas wire.</span>")
 			C.use(10)
 		else
-			usr << "<span class='warning'>You cannot do that.</span>"
+			to_chat(usr, "<span class='warning'>You cannot do that.</span>")
 	else
 		..()
 /*
@@ -229,18 +229,18 @@
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
-	user << "It contains [get_fuel()]/[src.max_fuel] units of fuel!"
+	to_chat(user, "It contains [get_fuel()]/[src.max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(welding)
-			user << "<span class='warning'>Stop welding first!</span>"
+			to_chat(user, "<span class='warning'>Stop welding first!</span>")
 			return
 		status = !status
 		if(status)
-			user << "<span class='notice'>You resecure the welder.</span>"
+			to_chat(user, "<span class='notice'>You resecure the welder.</span>")
 		else
-			user << "<span class='notice'>The welder can now be attached and modified.</span>"
+			to_chat(user, "<span class='notice'>The welder can now be attached and modified.</span>")
 		src.add_fingerprint(user)
 		return
 
@@ -313,13 +313,13 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		user << "<span class='notice'>Welder refueled</span>"
+		to_chat(user, "<span class='notice'>Welder refueled</span>")
 		playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
-		user << "<span class='warning'>That was stupid of you.</span>"
+		to_chat(user, "<span class='warning'>That was stupid of you.</span>")
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -355,7 +355,7 @@
 		return 1
 	else
 		if(M)
-			M << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(M, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 		return 0
 
 //Returns whether or not the welding tool is currently on.
@@ -380,18 +380,18 @@
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
-			usr << "<span class='notice'>\The [src] switches on.</span>"
+			to_chat(usr, "<span class='notice'>\The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = "welder1"
 			processing_objects.Add(src)
 		else
-			usr << "<span class='notice'>Need more fuel!</span>"
+			to_chat(usr, "<span class='notice'>Need more fuel!</span>")
 			src.welding = 0
 			return
 	//Otherwise
 	else
-		usr << "<span class='notice'>\The [src] switches off.</span>"
+		to_chat(usr, "<span class='notice'>\The [src] switches off.</span>")
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = "welder"
@@ -411,20 +411,20 @@
 	src.welding = !( src.welding )
 	if (src.welding)
 		if (remove_fuel(1))
-			usr << "<span class='notice'>You switch the [src] on.</span>"
+			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = "welder1"
 			processing_objects.Add(src)
 		else
-			usr << "<span class='notice'>Need more fuel!</span>"
+			to_chat(usr, "<span class='notice'>Need more fuel!</span>")
 			src.welding = 0
 			return
 	else
 		if(!message)
-			usr << "<span class='notice'>You switch the [src] off.</span>"
+			to_chat(usr, "<span class='notice'>You switch the [src] off.</span>")
 		else
-			usr << "<span class='notice'>\The [src] shuts off!</span>"
+			to_chat(usr, "<span class='notice'>\The [src] shuts off!</span>")
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = "welder"
@@ -544,7 +544,7 @@
 
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is smashing \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
@@ -554,7 +554,7 @@
 	item_state = "crowbar_red"
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is smashing \his head in with the [src.name]! It looks like \he's done waiting for half life three!</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing \his head in with the [src.name]! It looks like \he's done waiting for half life three!</span>")
 		return (BRUTELOSS)
 
 
@@ -578,7 +578,7 @@
 				"<span class='attack'>You patch some dents on your [S.display_name]</span>",\
 				"You hear a welder.")
 		else
-			user << "Nothing to fix!"
+			to_chat(user, "Nothing to fix!")
 	else
 		return ..()
 
@@ -603,7 +603,7 @@
 
 	attack_self(mob/user as mob)
 		open = !open
-		user << "<span class='notice'>You [open?"open" : "close"] the conversion kit.</span>"
+		to_chat(user, "<span class='notice'>You [open?"open" : "close"] the conversion kit.</span>")
 		update_icon()
 
 /*
@@ -650,7 +650,7 @@
 
 /obj/item/weapon/solder/examine(mob/user)
 	..()
-	user << "It contains [reagents.get_reagent_amount("sacid")]/[src.max_fuel] units of fuel!"
+	to_chat(user, "It contains [reagents.get_reagent_amount("sacid")]/[src.max_fuel] units of fuel!")
 
 /obj/item/weapon/solder/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/glass/))
@@ -719,17 +719,17 @@
 		reagents = slotzero
 	slot = !slot
 	update_icon()
-	user << "<span class='notice'>You switch the stopper to the other side.</span>"
+	to_chat(user, "<span class='notice'>You switch the stopper to the other side.</span>")
 
 /obj/item/weapon/reagent_containers/glass/fuelcan/examine(mob/user)
 	..()
-	user << "The alternate partition contains:"
+	to_chat(user, "The alternate partition contains:")
 	var/datum/reagents/alternate = (slot ? slotzero : slotone)
 	if(alternate.reagent_list.len) //Copied from atom/examine
 		for(var/datum/reagent/R in alternate.reagent_list)
-			user << "<span class='info'>[R.volume] units of [R.name]</span>"
+			to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 	else
-		user << "<span class='info'>Nothing.</span>"
+		to_chat(user, "<span class='info'>Nothing.</span>")
 
 /obj/item/weapon/reagent_containers/glass/fuelcan/update_icon()
 	icon_state = "fueljar[slot]"

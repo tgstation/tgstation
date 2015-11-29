@@ -20,7 +20,7 @@
 /obj/item/weapon/beacon_dispenser/attack_self(mob/user)
 	id++
 	if(id>4) id=1
-	user << "Spawning beacons with ID: [id]"
+	to_chat(user, "Spawning beacons with ID: [id]")
 
 /obj/item/weapon/beacon_dispenser/afterattack(atom/A, mob/user as mob)
 	var/turf/T = get_turf(A)
@@ -39,7 +39,7 @@
 		B.icon_state = "[src.id]"
 		beacons |= B
 	else
-		usr << "There is already an area there."
+		to_chat(usr, "There is already an area there.")
 
 /obj/item/weapon/beacon_dispenser/verb/commit()
 	set name = "Create an area"
@@ -52,7 +52,7 @@
 			var/area/AR = get_area(B)
 			if(AR.type != /area)
 				if(!conflict)
-					usr << "One or more beacons are conflicting with another area. The area will not be created, and conflicting beacons will be marked as such."
+					to_chat(usr, "One or more beacons are conflicting with another area. The area will not be created, and conflicting beacons will be marked as such.")
 					conflict = 1
 				B.overlays += image('icons/obj/bluespace_beacon.dmi', icon_state = "bad")
 			turfs |= get_turf(B)

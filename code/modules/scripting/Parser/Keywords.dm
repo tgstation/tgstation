@@ -81,7 +81,8 @@ var/const/Represents a special statement in the code triggered by a keyword.
 		ifstmt = L[L.len] //Get the last statement in the current block
 
 	if(!ifstmt || !istype(ifstmt) || ifstmt.else_if)
-		usr << "NTSL: ELSE IF FAILED: [!ifstmt], [!istype(ifstmt)], [!istype(ifstmt) || ifstmt.else_if]" // Usr is unsafe as SHIT but JUST incase I forget this debug line like the fucking asset cache...
+		to_chat(usr, "NTSL: ELSE IF FAILED: [!ifstmt], [!istype(ifstmt)], [!istype(ifstmt) || ifstmt.else_if]")// Usr is unsafe as SHIT but JUST incase I forget this debug line like the fucking asset cache...
+
 		parser.errors += new/datum/scriptError/ExpectedToken("if statement", parser.curToken)
 		return KW_FAIL
 
@@ -108,7 +109,8 @@ var/const/Represents a special statement in the code triggered by a keyword.
 		stmt = L[L.len] //Get the last statement in the current block
 
 	if(!stmt || !istype(stmt) || stmt.else_block) //Ensure that it is an if statement
-		usr << "NTSL: ELSE IF FAILED: [!stmt], [!istype(stmt)], [!istype(stmt) || stmt.else_block]" // Usr is unsafe as SHIT but JUST incase I forget this debug line like the fucking asset cache...
+		to_chat(usr, "NTSL: ELSE IF FAILED: [!stmt], [!istype(stmt)], [!istype(stmt) || stmt.else_block]")// Usr is unsafe as SHIT but JUST incase I forget this debug line like the fucking asset cache...
+
 		parser.errors += new/datum/scriptError/ExpectedToken("if statement", parser.curToken)
 		return KW_FAIL
 

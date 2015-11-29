@@ -11,8 +11,8 @@
 	var/list/target_list = list()
 
 /datum/game_mode/traitor/double_agents/announce()
-	world << "<B>The current game mode is - Double Agents!</B>"
-	world << "<B>There are double agents killing eachother! Do not let them succeed!</B>"
+	to_chat(world, "<B>The current game mode is - Double Agents!</B>")
+	to_chat(world, "<B>There are double agents killing eachother! Do not let them succeed!</B>")
 
 /datum/game_mode/traitor/double_agents/post_setup()
 	var/i = 0
@@ -100,10 +100,10 @@
 	return
 
 /datum/game_mode/traitor/double_agents/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the double agent.<br>Relations with the other groups in the Syndicate Coalition have gone south, take the other agents out before they do the same to you.</font></B>"
+	to_chat(traitor.current, "<B><font size=3 color=red>You are the double agent.<br>Relations with the other groups in the Syndicate Coalition have gone south, take the other agents out before they do the same to you.</font></B>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
-	traitor.current << sound('sound/voice/syndicate_intro.ogg')
+	to_chat(traitor.current, sound('sound/voice/syndicate_intro.ogg'))
 	return

@@ -96,26 +96,26 @@ proc/move_research_shuttle()
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!src.allowed(usr))
-		usr << "<span class='warning'>Unauthorized Access.</span>"
+		to_chat(usr, "<span class='warning'>Unauthorized Access.</span>")
 		return
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
 			if(ticker.mode:declared)
-				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
+				to_chat(usr, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 				return
 		var/area/A = locate(/area/shuttle/research/station)
 		if(!research_shuttle_location)
 			var/list/search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
 			if(!isemptylist(search))
-				usr << "<span class='notice'>The nuclear disk is too precious for Nanotrasen to send it to an Asteroid.</span>"
+				to_chat(usr, "<span class='notice'>The nuclear disk is too precious for Nanotrasen to send it to an Asteroid.</span>")
 				return
 		if (!research_shuttle_moving)
-			usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			move_research_shuttle()
 		else
-			usr << "<span class='notice'>Shuttle is already moving.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
 
 /obj/machinery/computer/research_shuttle/emag(mob/user as mob)
 	..()
 	src.req_access = list()
-	usr << "You disable the console's access requirement."
+	to_chat(usr, "You disable the console's access requirement.")

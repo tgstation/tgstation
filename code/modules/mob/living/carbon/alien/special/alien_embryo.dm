@@ -19,7 +19,7 @@
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_ALIEN,poll="[affected_mob] has been infected by \a [src]!"))
 			if(O.client && O.client.desires_role(ROLE_ALIEN))
 				if(check_observer(O))
-					O << "<span class=\"recruit\">You have automatically been signed up for \a [src]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
+					to_chat(O, "<span class=\"recruit\">You have automatically been signed up for \a [src]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>")
 					ghost_volunteers += O
 		spawn(0)
 			AddInfectionImages(affected_mob)
@@ -35,16 +35,16 @@
 
 /obj/item/alien_embryo/proc/volunteer(var/mob/dead/observer/O)
 	if(!istype(O))
-		O << "<span class='danger'>NO.</span>"
+		to_chat(O, "<span class='danger'>NO.</span>")
 		return
 	if(O in ghost_volunteers)
-		O << "<span class='notice'>You will no longer be considered for this [src]. Click again to volunteer.</span>"
+		to_chat(O, "<span class='notice'>You will no longer be considered for this [src]. Click again to volunteer.</span>")
 		ghost_volunteers.Remove(O)
 		return
 	if(!check_observer(O))
-		O << "<span class='warning'>You cannot be \a [src] in your current condition.</span>"
+		to_chat(O, "<span class='warning'>You cannot be \a [src] in your current condition.</span>")
 		return
-	O << "<span class='notice'>You have been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
+	to_chat(O, "<span class='notice'>You have been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>")
 	ghost_volunteers.Add(O)
 
 /obj/item/alien_embryo/proc/check_observer(var/mob/dead/observer/O)
@@ -87,25 +87,25 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
 			if(prob(1))
-				affected_mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
+				to_chat(affected_mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "<span class='warning'>Your muscles ache.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "<span class='warning'>Your stomach hurts.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
+			to_chat(affected_mob, "<span class='danger'>You feel something tearing its way out of your stomach...</span>")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
@@ -128,7 +128,7 @@
 			picked = affected_mob.key //Pick the person who was infected
 		else
 			for(var/mob/dead/observer/O in candidates)
-				O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+				to_chat(O, "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 
 	else
 		picked = ghostpicked.key
@@ -136,7 +136,7 @@
 		stage = 4 // Let's try again later.
 		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 		for(var/mob/dead/observer/O in candidates) //Shiggy
-			O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+			to_chat(O, "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 		return
 
 	if(affected_mob.lying)
@@ -146,7 +146,8 @@
 	spawn(6)
 		var/mob/living/carbon/alien/larva/new_xeno = new(get_turf(affected_mob))
 		new_xeno.key = picked
-		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+		new_xeno << sound('sound/voice/hiss5.ogg', 0, 0, 0, 100)//To get the player's attention
+
 		if(gib_on_success)
 			affected_mob.gib()
 		qdel(src)

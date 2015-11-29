@@ -99,31 +99,31 @@ var/list/genescanner_addresses = list()
 	examine(mob/user)
 		..()
 		if (src.occupant)
-			user << "<span class='info'>[src.occupant.name] is inside the scanner.</span>"
+			to_chat(user, "<span class='info'>[src.occupant.name] is inside the scanner.</span>")
 		else
-			user << "<span class='info'>There is nobody currently inside the scanner.</span>"
+			to_chat(user, "<span class='info'>There is nobody currently inside the scanner.</span>")
 		if (src.locked)
-			user << "<span class='info'>The scanner is currently locked.</span>"
+			to_chat(user, "<span class='info'>The scanner is currently locked.</span>")
 		else
-			user << "<span class='info'>The scanner is not currently locked.</span>"
+			to_chat(user, "<span class='info'>The scanner is not currently locked.</span>")
 
 	verb/move_inside()
 		set name = "Enter"
 		set src in oview(1)
 
 		if(!iscarbon(usr))
-			usr << "<span class='danger'>The scanner supports only carbon based lifeforms.</span>"
+			to_chat(usr, "<span class='danger'>The scanner supports only carbon based lifeforms.</span>")
 			return
 
 		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 
 		if (src.occupant)
-			usr << "<span class='notice'><B>The scanner is already occupied!</B></span>"
+			to_chat(usr, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
 		if (src.locked)
-			usr << "<span class='danger'>You need to unlock the scanner first.</span>"
+			to_chat(usr, "<span class='danger'>You need to unlock the scanner first.</span>")
 			return
 
 		usr.pulling = null
@@ -144,15 +144,15 @@ var/list/genescanner_addresses = list()
 			return
 
 		if (src.occupant)
-			user << "<span class='danger'>The scanner is already occupied!</span>"
+			to_chat(user, "<span class='danger'>The scanner is already occupied!</span>")
 			return
 
 		if (src.locked)
-			usr << "<span class='danger'>You need to unlock the scanner first.</span>"
+			to_chat(usr, "<span class='danger'>You need to unlock the scanner first.</span>")
 			return
 
 		if(!iscarbon(G.affecting))
-			user << "<span class='notice'><B>The scanner supports only carbon based lifeforms.</B></span>"
+			to_chat(user, "<span class='notice'><B>The scanner supports only carbon based lifeforms.</B></span>")
 			return
 
 		var/mob/M = G.affecting
@@ -177,7 +177,7 @@ var/list/genescanner_addresses = list()
 		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 		if (src.locked)
-			usr << "<span class='danger'>The scanner door is locked!</span>"
+			to_chat(usr, "<span class='danger'>The scanner door is locked!</span>")
 			return
 
 		src.go_out()
@@ -191,7 +191,7 @@ var/list/genescanner_addresses = list()
 		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 		if (usr == src.occupant)
-			usr << "<span class='danger'>You can't reach the scanner lock from the inside.</span>"
+			to_chat(usr, "<span class='danger'>You can't reach the scanner lock from the inside.</span>")
 			return
 
 		playsound(src.loc, 'click.ogg', 50, 1)
@@ -199,12 +199,12 @@ var/list/genescanner_addresses = list()
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				src.occupant << "<span class='warning'>You hear the scanner's lock slide out of place.</span>"
+				to_chat(src.occupant, "<span class='warning'>You hear the scanner's lock slide out of place.</span>")
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				src.occupant << "<span class='warning'>You hear the scanner's lock click into place.</span>"
+				to_chat(src.occupant, "<span class='warning'>You hear the scanner's lock click into place.</span>")
 
 	proc/go_out()
 		if (!src.occupant)

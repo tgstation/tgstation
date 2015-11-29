@@ -162,14 +162,14 @@ var/savefile/panicfile
 	return ..()
 
 //world/Topic(href, href_list[])
-//		world << "Received a Topic() call!"
-//		world << "[href]"
+//		to_chat(world, "Received a Topic() call!")
+//		to_chat(world, "[href]")
 //		for(var/a in href_list)
-//			world << "[a]"
+//			to_chat(world, "[a]")
 //		if(href_list["hello"])
-//			world << "Hello world!"
+//			to_chat(world, "Hello world!")
 //			return "Hello world!"
-//		world << "End of Topic() call."
+//		to_chat(world, "End of Topic() call.")
 //		..()
 
 /world/Topic(T, addr, master, key)
@@ -252,13 +252,16 @@ var/savefile/panicfile
 	paperwork_stop()
 
 	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
+		world << sound(pick('sound/AI/newroundsexy.ogg', 'sound/misc/apcdestroyed.ogg', 'sound/misc/bangindonk.ogg', 'sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
+
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
+
 		else
 			C << link("byond://[world.address]:[world.port]")
+
 
 	..()
 
@@ -273,7 +276,7 @@ var/savefile/panicfile
 				if(C.is_afk(INACTIVITY_KICK))
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
-						C << "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
+						to_chat(C, "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
 						del(C)
 //#undef INACTIVITY_KICK
 
@@ -288,7 +291,7 @@ var/savefile/panicfile
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	F << the_mode
+	to_chat(F, the_mode)
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")

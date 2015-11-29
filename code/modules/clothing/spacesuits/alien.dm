@@ -136,11 +136,11 @@
 	if(src.magpulse)
 		src.flags &= ~NOSLIP
 		src.magpulse = 0
-		usr << "You relax your deathgrip on the flooring."
+		to_chat(usr, "You relax your deathgrip on the flooring.")
 	else
 		src.flags |= NOSLIP
 		src.magpulse = 1
-		usr << "You dig your claws deeply into the flooring, bracing yourself."
+		to_chat(usr, "You dig your claws deeply into the flooring, bracing yourself.")
 
 
 // Vox Casual

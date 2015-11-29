@@ -67,7 +67,7 @@ var/global/list/igniters = list()
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-			user << "<span class='notice'>You begin to cut \the [src] off the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin to cut \the [src] off the floor...</span>")
 			if (do_after(user, src, 40))
 				user.visible_message( \
 					"[user] disassembles \the [src].", \
@@ -77,7 +77,7 @@ var/global/list/igniters = list()
 				del(src)
 				return
 		else:
-			user << "<span class='warning'>You need more welder fuel to do that.</span>"
+			to_chat(user, "<span class='warning'>You need more welder fuel to do that.</span>")
 			return 1
 
 

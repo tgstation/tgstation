@@ -113,7 +113,7 @@ var/global/list/organ_damage_overlays = list(
 #ifdef DEBUG_LIFE
 	#warning "DEBUG_LIFE enabled in [__FILE__]!"
 	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
-		src << chat_message
+		to_chat(src, chat_message)
 		last_processed = stage
 #endif
 
@@ -142,11 +142,11 @@ var/global/list/organ_damage_overlays = list(
 
 	fdel("profile_life.csv")
 	var/f=file("profile_life.csv")
-	f << "proc,calls,time,time/call"
+	to_chat(f, "proc,calls,time,time/call")
 	for(var/procname in profile_life_data)
 		var/data=profile_life_data[procname]
-		f << "[procname],[data[1]],[data[2]],[data[2]/data[1]]"
-	usr << "Wrote to profile_life.csv."
+		to_chat(f, "[procname],[data[1]],[data[2]],[data[2]/data[1]]")
+	to_chat(usr, "Wrote to profile_life.csv.")
 #endif
 
 /mob/living/carbon/human/Life()

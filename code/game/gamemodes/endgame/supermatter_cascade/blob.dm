@@ -68,7 +68,7 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = \"warning\">What the fuck are you doing?</span>"
+		to_chat(user, "<span class = \"warning\">What the fuck are you doing?</span>")
 	return
 
 // /vg/: Don't let ghosts fuck with this.

@@ -200,7 +200,7 @@
 		try // To prevent invalid JSON causing runtimes.
 			ReadCode(code)
 		catch
-			usr << "<span class=warning>Invalid JSON.</span>"
+			to_chat(usr, "<span class=warning>Invalid JSON.</span>")
 			return 1
 		updateUsrDialog()
 		investigation_log(I_ATMOS,"had an automations list imported by [key_name(usr)]: [code]")

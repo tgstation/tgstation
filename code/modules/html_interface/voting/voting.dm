@@ -69,7 +69,7 @@ var/global/datum/controller/vote/vote = new()
 		// No more change mode votes after the game has started.
 		// 3 is GAME_STATE_PLAYING, but that #define is undefined for some reason
 		if(mode == "gamemode" && ticker.current_state >= 2)
-			world << "<b>Voting aborted due to game start.</b>"
+			to_chat(world, "<b>Voting aborted due to game start.</b>")
 			src.reset()
 			return
 
@@ -133,7 +133,7 @@ var/global/datum/controller/vote/vote = new()
 					else
 						factor = 1.4
 				choices["Initiate Crew Transfer"] = round(choices["Initiate Crew Transfer"] * factor)
-				world << "<font color='purple'>Crew Transfer Factor: [factor]</font>"
+				to_chat(world, "<font color='purple'>Crew Transfer Factor: [factor]</font>")
 				greatest_votes = max(choices["Initiate Crew Transfer"], choices["Continue The Round"])
 
 
@@ -170,7 +170,7 @@ var/global/datum/controller/vote/vote = new()
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
-	world << "<font color='purple'>[text]</font>"
+	to_chat(world, "<font color='purple'>[text]</font>")
 	return .
 
 /datum/controller/vote/proc/result()
@@ -190,7 +190,7 @@ var/global/datum/controller/vote/vote = new()
 						master_mode = .
 				if(!going)
 					going = 1
-					world << "<font color='red'><b>The round will start soon.</b></font>"
+					to_chat(world, "<font color='red'><b>The round will start soon.</b></font>")
 			if("crew_transfer")
 				if(. == "Initiate Crew Transfer")
 					init_shift_change(null, 1)
@@ -204,7 +204,7 @@ var/global/datum/controller/vote/vote = new()
 
 
 	if(restart)
-		world << "World restarting due to vote..."
+		to_chat(world, "World restarting due to vote...")
 		feedback_set_details("end_error","restart vote")
 		if(blackbox)	blackbox.save_all_data_to_sql()
 		CallHook("Reboot",list())
@@ -262,7 +262,7 @@ var/global/datum/controller/vote/vote = new()
 				for(var/key in maps)
 					choices.Add(key)
 				if(!choices.len)
-					world << "<span class='danger'>Failed to initiate map vote, no maps found.</span>"
+					to_chat(world, "<span class='danger'>Failed to initiate map vote, no maps found.</span>")
 					return 0
 				ismapvote = maps
 			else
@@ -283,19 +283,19 @@ var/global/datum/controller/vote/vote = new()
 		else
 			if(istype(usr) && usr.client)
 				interact(usr.client)
-		world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
+		to_chat(world, "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>")
 		switch(vote_type)
 			if("crew_transfer")
-				world << sound('sound/voice/Serithi/Shuttlehere.ogg')
+				to_chat(world, sound('sound/voice/Serithi/Shuttlehere.ogg'))
 			if("gamemode")
-				world << sound('sound/voice/Serithi/pretenddemoc.ogg')
+				to_chat(world, sound('sound/voice/Serithi/pretenddemoc.ogg'))
 			if("custom")
-				world << sound('sound/voice/Serithi/weneedvote.ogg')
+				to_chat(world, sound('sound/voice/Serithi/weneedvote.ogg'))
 			if("map")
-				world << sound('sound/misc/rockthevote.ogg')
+				to_chat(world, sound('sound/misc/rockthevote.ogg'))
 		if(mode == "gamemode" && going)
 			going = 0
-			world << "<font color='red'><b>Round start has been delayed.</b></font>"
+			to_chat(world, "<font color='red'><b>Round start has been delayed.</b></font>")
 
 		time_remaining = (ismapvote && ismapvote.len ? 60 : round(config.vote_period/10))
 		return 1
@@ -399,5 +399,5 @@ var/global/datum/controller/vote/vote = new()
 	set category = "OOC"
 	set name = "Vote"
 	if(vote)
-		if(!vote.initialized) usr << "<span class='info'>The voting controller isn't fully initialized yet.</span>"
+		if(!vote.initialized) to_chat(usr, "<span class='info'>The voting controller isn't fully initialized yet.</span>")
 		else vote.interact(usr.client)

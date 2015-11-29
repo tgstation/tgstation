@@ -150,13 +150,13 @@
 
 
 	proc/getcopy()
-//		world << "getting copy"
+//		to_chat(world, "getting copy")
 		var/datum/disease2/disease/disease = new /datum/disease2/disease
 		disease.infectionchance = infectionchance
 		disease.spreadtype = spreadtype
 		disease.stageprob = stageprob
 		for(var/datum/disease2/effectholder/holder in effects)
-	//		world << "adding effects"
+//			to_chat(world, "adding effects")
 			var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
 			newholder.effect = new holder.effect.type
 			newholder.chance = holder.chance
@@ -165,8 +165,8 @@
 			newholder.happensonce = holder.happensonce
 			newholder.stage = holder.stage
 			disease.effects += newholder
-	//		world << "[newholder.effect.name]"
-	//	world << "[disease]"
+//			to_chat(world, "[newholder.effect.name]")
+//		to_chat(world, "[disease]")
 		return disease
 
 /datum/disease2/effect
@@ -256,7 +256,7 @@
 	name = "Flemmingtons"
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
+		to_chat(mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification syndrome"
@@ -288,7 +288,7 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(mob) << "<span class='danger'>[mob.name] is attempting to bite off \his tongue. It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(mob), "<span class='danger'>[mob.name] is attempting to bite off \his tongue. It looks like \he's trying to commit suicide.</span>")
 		mob.oxyloss = max(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss(), mob.getOxyLoss())
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -312,7 +312,7 @@
 	proc/getrandomeffect()
 		var/list/datum/disease2/effect/list = list()
 		for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
-		//	world << "Making [e]"
+//			to_chat(world, "Making [e]")
 			var/datum/disease2/effect/f = new e
 			if(f.stage == src.stage)
 				list += f

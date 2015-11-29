@@ -4,7 +4,7 @@
 
 /obj/effect/step_trigger/message/Trigger(mob/M as mob)
 	if(M.client)
-		M << "<span class='info'>[message]</span>"
+		to_chat(M, "<span class='info'>[message]</span>")
 		if(once)
 			del(src)
 

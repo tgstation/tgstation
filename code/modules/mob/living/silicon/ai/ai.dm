@@ -121,14 +121,14 @@ var/list/ai_list = list()
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
-			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-			src << "To use something, simply click on it."
-			src << "Use say :b to speak to your cyborgs through binary."
+			to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+			to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+			to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+			to_chat(src, "To use something, simply click on it.")
+			to_chat(src, "Use say :b to speak to your cyborgs through binary.")
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
-				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+				to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 			job = "AI"
 	ai_list += src
@@ -145,7 +145,7 @@ var/list/ai_list = list()
 	var/find
 	var/datum/picture/selection
 	if(aicamera.aipictures.len == 0)
-		usr << "<font color=red><B>No images saved<B></font>"
+		to_chat(usr, "<font color=red><B>No images saved<B></font>")
 		return
 	for(var/datum/picture/t in aicamera.aipictures)
 		nametemp += t.fields["name"]
@@ -168,7 +168,7 @@ var/list/ai_list = list()
 			if(length(new_name) > 0)
 				selection.fields["name"] = new_name
 			else
-				usr << "You must write a name."
+				to_chat(usr, "You must write a name.")
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -235,7 +235,7 @@ var/list/ai_list = list()
 		if("Royal") icon_state = "ai-royal"
 		else icon_state = "ai"
 	//else
-			//usr <<"You can only change your display once!"
+//			to_chat(usr, "You can only change your display once!")
 			//return
 
 
@@ -293,12 +293,12 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(src.stat == 2)
-		src << "You can't call the shuttle because you are dead!"
+		to_chat(src, "You can't call the shuttle because you are dead!")
 		return
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			usr << "Wireless control is disabled!"
+			to_chat(usr, "Wireless control is disabled!")
 			return
 
 	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
@@ -319,15 +319,14 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 
 	if(src.stat == 2)
-		src << "You can't send the shuttle back because you are dead!"
+		to_chat(src, "You can't send the shuttle back because you are dead!")
 		return
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			src	 << "Wireless control is disabled!"
+			to_chat(src, "Wireless control is disabled!")
 			return
 	recall_shuttle(src)
-	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
 	if (!current)
@@ -408,7 +407,7 @@ var/list/ai_list = list()
 			if(H)
 				H.attack_ai(src) //may as well recycle
 			else
-				src << "<span class='notice'>Unable to locate the holopad.</span>"
+				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 
 	if(href_list["say_word"])
 		play_vox_word(href_list["say_word"], null, src)
@@ -419,7 +418,7 @@ var/list/ai_list = list()
 		switch(lawcheck[L+1])
 			if ("Yes") lawcheck[L+1] = "No"
 			if ("No") lawcheck[L+1] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+//		to_chat(src, text ("Switching Law [L]'s report status to []", lawcheck[L+1]))
 		checklaws()
 
 	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -427,7 +426,7 @@ var/list/ai_list = list()
 		switch(ioncheck[L])
 			if ("Yes") ioncheck[L] = "No"
 			if ("No") ioncheck[L] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+//		to_chat(src, text ("Switching Law [L]'s report status to []", lawcheck[L+1]))
 		checklaws()
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
@@ -446,12 +445,12 @@ var/list/ai_list = list()
 		if(A && target)
 
 			A.cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
+			to_chat(A, text("Now tracking [] on camera.", target.name))
 			if (usr.machine == null)
 				usr.machine = usr
 
 			while (src.cameraFollow == target)
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				to_chat(usr, "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb).")
 				sleep(40)
 				continue
 
@@ -473,11 +472,11 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -615,7 +614,7 @@ var/list/ai_list = list()
 	var/cameralist[0]
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't change your camera network because you are dead!"
+		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
 	var/mob/living/silicon/ai/U = usr
@@ -644,7 +643,7 @@ var/list/ai_list = list()
 			if(network in C.network)
 				U.eyeobj.forceMove(get_turf(C))
 				break
-		src << "<span class='notice'>Switched to [network] camera network.</span>"
+		to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -659,7 +658,7 @@ var/list/ai_list = list()
 	set name = "AI Status"
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr <<"You cannot change your emotional status because you are dead!"
+		to_chat(usr, "You cannot change your emotional status because you are dead!")
 		return
 
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions //ai_emotions can be found in code/game/machinery/status_display.dm @ 213 (above the AI status display)
@@ -750,7 +749,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		src << "<span class='notice'>You are already in your Main Core.</span>"
+		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return
 	apc.malfvacate()
 
@@ -765,7 +764,7 @@ var/list/ai_list = list()
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
-		src << "Camera lights deactivated."
+		to_chat(src, "Camera lights deactivated.")
 
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.set_light(0)
@@ -775,7 +774,7 @@ var/list/ai_list = list()
 
 	light_cameras()
 
-	src << "Camera lights activated."
+	to_chat(src, "Camera lights activated.")
 	return
 
 //AI_CAMERA_LUMINOSITY

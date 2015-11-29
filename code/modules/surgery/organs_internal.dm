@@ -387,7 +387,7 @@
 		return 0
 
 	if(!target.species)
-		user << "<span class='warning'>You have no idea what species this person is. Report this on the bug tracker.</span>"
+		to_chat(user, "<span class='warning'>You have no idea what species this person is. Report this on the bug tracker.</span>")
 		return 0
 
 	var/o_is = (O.gender == PLURAL) ? "are" : "is"
@@ -397,22 +397,22 @@
 	if(target.species.has_organ[O.organ_tag])
 
 		if(!O.health)
-			user << "<span class='warning'>\The [O.organ_tag] [o_is] in no state to be transplanted.</span>"
+			to_chat(user, "<span class='warning'>\The [O.organ_tag] [o_is] in no state to be transplanted.</span>")
 			return 0
 
 		if(!target.internal_organs_by_name[O.organ_tag])
 			organ_missing = 1
 		else
-			user << "<span class='warning'>\The [target] already has [o_a][O.organ_tag].</span>"
+			to_chat(user, "<span class='warning'>\The [target] already has [o_a][O.organ_tag].</span>")
 			return 0
 
 		if(O.organ_data && affected.name == O.organ_data.parent_organ)
 			organ_compatible = 1
 		else
-			user << "<span class='warning'>\The [O.organ_tag] [o_do] normally go in \the [affected.display_name].</span>"
+			to_chat(user, "<span class='warning'>\The [O.organ_tag] [o_do] normally go in \the [affected.display_name].</span>")
 			return 0
 	else
-		user << "<span class='warning'>\A [target.species.name] doesn't normally have [o_a][O.organ_tag].</span>"
+		to_chat(user, "<span class='warning'>\A [target.species.name] doesn't normally have [o_a][O.organ_tag].</span>")
 		return 0
 
 	return ..() && organ_missing && organ_compatible

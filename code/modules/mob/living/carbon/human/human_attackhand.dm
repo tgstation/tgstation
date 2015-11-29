@@ -1,14 +1,14 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
 	//M.delayNextAttack(10)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	var/datum/organ/external/temp = M:organs_by_name["r_hand"]
 	if (M.hand)
 		temp = M:organs_by_name["l_hand"]
 	if(temp && !temp.is_usable())
-		M << "<span class='warning'>You can't use your [temp.display_name].</span>"
+		to_chat(M, "<span class='warning'>You can't use your [temp.display_name].</span>")
 		return
 
 	..()
@@ -38,7 +38,7 @@
 					apply_effects(5,5,0,0,5,0,0,armorblock)
 					return 1
 				else
-					M << "<span class='warning'>Not enough charge! </span>"
+					to_chat(M, "<span class='warning'>Not enough charge! </span>")
 					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
 				return
 
@@ -78,10 +78,10 @@
 //			if(M.health < -75)	return 0
 
 			if(M.check_body_part_coverage(MOUTH))
-				M << "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>"
+				to_chat(M, "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>")
 				return 0
 			if(src.check_body_part_coverage(MOUTH))
-				M << "<span class='notice'><B>Remove his [src.get_body_part_coverage(MOUTH)]!</B></span>"
+				to_chat(M, "<span class='notice'><B>Remove his [src.get_body_part_coverage(MOUTH)]!</B></span>")
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -103,7 +103,7 @@
 
 			var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M,src)
 			if(locked_to)
-				M << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+				to_chat(M, "<span class='notice'>You cannot grab [src], \he is buckled in!</span>")
 			if(!G)	//the grab will delete itself in New if affecting is anchored
 				return
 			M.put_in_active_hand(G)
@@ -120,16 +120,16 @@
 			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
 				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
 					if(src.check_body_part_coverage(MOUTH))
-						M << "<span class='warning'>Remove their mask!</span>"
+						to_chat(M, "<span class='warning'>Remove their mask!</span>")
 						return 0
 					if(M.check_body_part_coverage(MOUTH))
 						if(M.species.breath_type == "oxygen")
-							M << "<span class='warning'>Remove your mask!</span>"
+							to_chat(M, "<span class='warning'>Remove your mask!</span>")
 							return 0
 						else
-							M << "<span class='notice'>With practiced ease, you shift aside your mask for each gulp of blood.</span>"
+							to_chat(M, "<span class='notice'>With practiced ease, you shift aside your mask for each gulp of blood.</span>")
 					if(mind && mind.vampire && (mind in ticker.mode.vampires))
-						M << "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>"
+						to_chat(M, "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>")
 						return 0
 					//we're good to suck the blood, blaah
 					M.handle_bloodsucking(src)

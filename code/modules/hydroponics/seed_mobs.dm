@@ -40,13 +40,13 @@
 			continue
 
 		currently_querying |= O
-		O << "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>"
+		to_chat(O, "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>")
 
 	for(var/mob/dead/observer/O in dead_mob_list - active_candidates)
 		if(!check_observer(O))
 			continue
 
-		O << "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>"
+		to_chat(O, "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>")
 
 	spawn(600)
 		if(!currently_querying || !currently_querying.len)
@@ -82,12 +82,12 @@
 	// Update mode specific HUD icons.
 	callHook("harvest_podman", list(host))
 
-	host << "<span class='good'><B>You awaken slowly, stirring into sluggish motion as the air caresses you.</B></span>"
+	to_chat(host, "<span class='good'><B>You awaken slowly, stirring into sluggish motion as the air caresses you.</B></span>")
 
 	// This is a hack, replace with some kind of species blurb proc.
 	if(istype(host,/mob/living/carbon/monkey/diona))
-		host << "<B>You are [host], one of a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>"
-		host << "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+		to_chat(host, "<B>You are [host], one of a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
+		to_chat(host, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
 
 	var/newname = input(host,"Enter a name, or leave blank for the default name.", "Name change","") as text
 	newname = copytext(sanitize(newname),1,MAX_NAME_LEN)
@@ -108,16 +108,17 @@
 		return
 
 	if(!check_observer(O))
-		O << "<span class='warning'>You cannot be [display_name].</span>" //Jobbanned or something.
+		to_chat(O, "<span class='warning'>You cannot be [display_name].</span>")//Jobbanned or something.
+
 		return
 
 	if(O in currently_querying)
-		O << "<span class='notice'>Removed from registration list.</span>"
+		to_chat(O, "<span class='notice'>Removed from registration list.</span>")
 		currently_querying -= O
 		return
 
 	else
-		O << "<span class='notice'>Added to registration list.</span>"
+		to_chat(O, "<span class='notice'>Added to registration list.</span>")
 		currently_querying += O
 		return
 

@@ -44,13 +44,13 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 					else
 						transfer_sub(P, src, amount_per_transfer_from_this, user)
 				else
-					user << "<span class='notice'>\The [P] is empty!</span>"
+					to_chat(user, "<span class='notice'>\The [P] is empty!</span>")
 					return
 			else
-				user << "<span class='notice'>\The [src] is empty!</span>"
+				to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 				return
 		else
-			user << "<span class='notice'>\The [src] is empty!</span>"
+			to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 			return
 
 	// Log reagents
@@ -68,7 +68,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	to_chat(user, "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
 
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
 	// Create the chemical puff
@@ -98,7 +98,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	set src in usr
 
 	if(isturf(usr.loc))
-		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"
+		to_chat(usr, "<span class='notice'>You empty the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
 

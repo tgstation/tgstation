@@ -33,11 +33,11 @@ var/global/ingredientLimit = 10
 	. = (input("Deep Fried Nutriment? (1 to 50)"))
 	. = text2num(.)
 	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = . //This is absolutely terrible
-	else usr << "That wasn't a valid number."
+	else to_chat(usr, "That wasn't a valid number.")
 	. = (input("Ingredient Limit? (1 to 100)"))
 	. = text2num(.)
 	if(isnum(.) && (. in 1 to 100)) ingredientLimit = .
-	else usr << "That wasn't a valid number."
+	else to_chat(usr, "That wasn't a valid number.")
 	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
 	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
 	log_admin("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
@@ -109,12 +109,17 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/examine(mob/user)
 	. = ..()
-	if(src.active) user << "<span class='info'>It's currently processing [src.ingredient ? src.ingredient.name : ""].</span>"
-	if(src.cooks_in_reagents) user << "<span class='info'>It seems to have [reagents.total_volume] units left.</span>"
+	if(src.active)
+		to_chat(user, "<span class='info'>It's currently processing [src.ingredient ? src.ingredient.name : ""].</span>")
+	if(src.cooks_in_reagents)
+		to_chat(user, "<span class='info'>It seems to have [reagents.total_volume] units left.</span>")
 
 /obj/machinery/cooking/attack_hand(mob/user)
-	if(isobserver(user))	user << "Your ghostly hand goes straight through."
-	else if(issilicon(user)) user << "This is old analog equipment. You can't interface with it."
+	if(isobserver(user))
+		to_chat(user, "Your ghostly hand goes straight through.")
+	else if(issilicon(user))
+		to_chat(user, "This is old analog equipment. You can't interface with it.")
+
 	else if(src.active)
 		if(alert(user,"Remove \the [src.ingredient.name]?",,"Yes","No") == "Yes")
 			if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
@@ -123,22 +128,21 @@ var/global/ingredientLimit = 10
 					src.icon_state = initial(src.icon_state)
 					src.ingredient.mouse_opacity = 1
 					user.put_in_hands(src.ingredient)
-					user << "<span class='notice'>You remove \the [src.ingredient.name] from \the [src.name].</span>"
+					to_chat(user, "<span class='notice'>You remove \the [src.ingredient.name] from \the [src.name].</span>")
 					src.ingredient = null
-				else user << "You are too far away from [src.name]."
+				else to_chat(user, "You are too far away from [src.name].")
 			else src.active = 0
-		else user << "You leave \the [src.name] alone."
+		else to_chat(user, "You leave \the [src.name] alone.")
 	else . = ..()
-	return
 
 /obj/machinery/cooking/attackby(obj/item/I,mob/user)
 	if(src.active)
-		user << "<span class='warning'>[src.name] is currently busy.</span>"
+		to_chat(user, "<span class='warning'>[src.name] is currently busy.</span>")
 		return
 	else if(..())
 		return 1
 	else if(istype(user,/mob/living/silicon))
-		user << "<span class='warning'>That's a terrible idea.</span>"
+		to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
 		return
 	else
 		src.takeIngredient(I,user)
@@ -153,7 +157,7 @@ var/global/ingredientLimit = 10
 		if(do_after(usr, src, src.reagents.total_volume / 10))
 			src.reagents.clear_reagents()
 			if(usr)
-				usr << "You clean \the [src] of any ingredients."
+				to_chat(usr, "You clean \the [src] of any ingredients.")
 
 // Food Processing /////////////////////////////////////////////
 
@@ -182,9 +186,9 @@ var/global/ingredientLimit = 10
 		user.drop_item(I, src)
 		src.ingredient = I
 		spawn() src.cook(.)
-		user << "<span class='notice'>You add \the [I.name] to \the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You add \the [I.name] to \the [src.name].</span>")
 		return 1
-	else user << "<span class='warning'>You can't put that in \the [src.name]. \n[.]</span>"
+	else to_chat(user, "<span class='warning'>You can't put that in \the [src.name]. \n[.]</span>")
 	return 0
 
 /obj/machinery/cooking/proc/transfer_reagents_to_food(var/obj/item/I)
@@ -370,7 +374,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/deepfryer/takeIngredient(var/obj/item/I, mob/user)
 	if(reagents.total_volume < DEEPFRY_MINOIL)
-		user << "\The [src] doesn't have enough oil to fry in."
+		to_chat(user, "\The [src] doesn't have enough oil to fry in.")
 		return
 	else
 		return ..()

@@ -28,13 +28,13 @@ mob/living/carbon/proc/handle_hallucinations()
 		switch(halpick)
 			if(0 to 15)
 				//Screwy HUD
-				//src << "Screwy HUD"
+//				to_chat(src, "Screwy HUD")
 				hal_screwyhud = pick(1,2,3,3,4,4)
 				spawn(rand(100,250))
 					hal_screwyhud = 0
 			if(16 to 25)
 				//Strange items
-				//src << "Traitor Items"
+//				to_chat(src, "Traitor Items")
 				if(!halitem)
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
@@ -82,7 +82,7 @@ mob/living/carbon/proc/handle_hallucinations()
 							halitem = null
 			if(26 to 40)
 				//Flashes of danger
-				//src << "Danger Flash"
+//				to_chat(src, "Danger Flash")
 				if(!halimage && client)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
@@ -109,13 +109,15 @@ mob/living/carbon/proc/handle_hallucinations()
 
 			if(41 to 65)
 				//Strange audio
-				//src << "Strange Audio"
+//				to_chat(src, "Strange Audio")
 				if(client)
 					switch(rand(1,16))
 						if(1) src << 'sound/machines/airlock.ogg'
 						if(2)
-							if(prob(50))src << 'sound/effects/Explosion1.ogg'
-							else src << 'sound/effects/Explosion2.ogg'
+							if(prob(50))
+								src << 'sound/effects/Explosion1.ogg'
+							else
+								src << 'sound/effects/Explosion2.ogg'
 						if(3) src << 'sound/effects/explosionfar.ogg'
 						if(4) src << 'sound/effects/Glassbr1.ogg'
 						if(5) src << 'sound/effects/Glassbr2.ogg'
@@ -158,11 +160,11 @@ mob/living/carbon/proc/handle_hallucinations()
 						if(16) //rip pomf
 							src << 'sound/machines/ya_dun_clucked.ogg'
 							spawn(rand(1,15))
-								src << "<i>You are filled with a great sadness.</i>"
+								to_chat(src, "<i>You are filled with a great sadness.</i>")
 
 			if(66 to 70)
 				//Flashes of danger
-				//src << "Danger Flash"
+//				to_chat(src, "Danger Flash")
 				if(!halbody && client)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
@@ -197,41 +199,41 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(73 to 75)
 				//Fake changeling/parapen
 				if(prob(0.01))
-					src << "<span class='warning'>You feel a <b>HUGE</b> prick!</span>"
+					to_chat(src, "<span class='warning'>You feel a <b>HUGE</b> prick!</span>")
 				else
-					src << "<span class='warning'>You feel a tiny prick!</span>"
+					to_chat(src, "<span class='warning'>You feel a tiny prick!</span>")
 			if(76)
 				if(prob(5))
-					src << "<h1 class='alert'>Priority Announcement</h1>"
-					src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
+					to_chat(src, "<h1 class='alert'>Priority Announcement</h1>")
+					to_chat(src, "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>")
 					src << sound('sound/AI/shuttledock.ogg')
 				else
 					var/txt_verb = pick("go to","die in","stay in","avoid")
 					var/location = pick("security","arrivals","bridge","your old house","the escape shuttle hallway","deep space","the DJ satelite","science")
-					src << "<i>You feel a sudden urge to [txt_verb] [location][pick("...","!",".")]</i>"
+					to_chat(src, "<i>You feel a sudden urge to [txt_verb] [location][pick("...","!",".")]</i>")
 			if(77) //Sillycone
 				if(prob(5))
-					src << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
-					src << "<font color='red'>[config.alert_desc_delta]</font>"
+					to_chat(src, "<font size=4 color='red'>Attention! Delta security level reached!</font>")
+					to_chat(src, "<font color='red'>[config.alert_desc_delta]</font>")
 					src << sound('sound/AI/aimalf.ogg')
 
 					if(src.client)
 						message_admins("[key_name(usr)] just got a fake delta AI message from hallucinating! [formatJumpTo(get_turf(usr))]")
 				else
 					switch(rand(1,10)) //Copied from nanites disease
-						if(1) src << "Your joints feel stiff."
-						if(2) src << "<span class='warning'>Beep...boop..</span>"
-						if(3) src << "<span class='warning'>Bop...beeep...</span>"
-						if(4) src << "<span class='warning'>Your joints feel very stiff.</span>"
-						if(5) src.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
-						if(6) src << "Your skin feels loose."
-						if(7) src << "<span class='warning'>You feel a stabbing pain in your head.</span>"
-						if(8) src << "<span class='warning'>You can feel something move...inside.</span>"
-						if(9) src << "<span class='warning'>Your skin feels very loose.</span>"
-						if(10) src << "<span class='warning'>Your skin feels as if it's about to burst off...</span>"
+						if(1)  to_chat(src, "Your joints feel stiff.")
+						if(2)  to_chat(src, "<span class='warning'>Beep...boop..</span>")
+						if(3)  to_chat(src, "<span class='warning'>Bop...beeep...</span>")
+						if(4)  to_chat(src, "<span class='warning'>Your joints feel very stiff.</span>")
+						if(5)  src.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
+						if(6)  to_chat(src, "Your skin feels loose.")
+						if(7)  to_chat(src, "<span class='warning'>You feel a stabbing pain in your head.</span>")
+						if(8)  to_chat(src, "<span class='warning'>You can feel something move...inside.</span>")
+						if(9)  to_chat(src, "<span class='warning'>Your skin feels very loose.</span>")
+						if(10) to_chat(src, "<span class='warning'>Your skin feels as if it's about to burst off...</span>")
 
 			if(78 to 80) //Fake ghosts
-				src << "<i>[pick(boo_phrases)]</i>"
+				to_chat(src, "<i>[pick(boo_phrases)]</i>")
 			if(81) //Fake flash
 				src << sound('sound/weapons/flash.ogg')
 				flick("e_flash", src.flash)
@@ -266,9 +268,9 @@ mob/living/carbon/proc/handle_hallucinations()
 						C.images += foodie //Give it the image!
 
 						if(L == src)
-							src << "<span class='info'>You feel like a [initial(random_food.name)]. Oh wow!</span>"
+							to_chat(src, "<span class='info'>You feel like a [initial(random_food.name)]. Oh wow!</span>")
 						else
-							src << "<span class='info'>You smell [initial(random_food.name)]...</span>"
+							to_chat(src, "<span class='info'>You smell [initial(random_food.name)]...</span>")
 
 						var/duration = rand(60 SECONDS, 120 SECONDS)
 
@@ -343,7 +345,7 @@ proc/check_panel(mob/M)
 /obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		M << "<span class='danger'>[my_target] flails around wildly.</span>"
+		to_chat(M, "<span class='danger'>[my_target] flails around wildly.</span>")
 	my_target.show_message("<span class='danger'>[src] has been attacked by [my_target] </span>", 1) //Lazy.
 
 	src.health -= P.force
@@ -356,7 +358,7 @@ proc/check_panel(mob/M)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "<span class='danger'>[my_target] stumbles around.</span>"
+				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
 
 /obj/effect/fake_attacker/New()
 	..()
@@ -384,7 +386,7 @@ proc/check_panel(mob/M)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	my_target << currentimage
+	to_chat(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -404,7 +406,7 @@ proc/check_panel(mob/M)
 		else
 			if(prob(15))
 				if(weapon_name)
-					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
+					to_chat(my_target, sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')))
 					my_target.show_message("<span class='danger'>[my_target] has been attacked with [weapon_name] by [src.name] </span>", 1)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
@@ -412,7 +414,7 @@ proc/check_panel(mob/M)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
+					to_chat(my_target, sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')))
 					my_target.show_message("<span class='danger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.halloss += 4
 					if(prob(33))
@@ -430,7 +432,7 @@ proc/check_panel(mob/M)
 	var/obj/effect/overlay/O = getFromPool(/obj/effect/overlay,target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
+	to_chat(target, I)
 	spawn(300)
 		returnToPool(O)
 
@@ -504,7 +506,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	for(var/icon/i in clone.overlays)
 		F.right.Blend(i)
 
-	target << F.up
+	to_chat(target, F.up)
 	*/
 
 	F.updateimage()

@@ -112,13 +112,13 @@
 				if(istype(A,/mob/living))
 					var/mob/living/M = A
 					M.take_overall_damage(5,0)
-					M << "<span class='warning'>The [src]'s tidal force rips your skin!</span>"
+					to_chat(M, "<span class='warning'>The [src]'s tidal force rips your skin!</span>")
 
 	for(var/mob/living/L in loc)//standing right in the center of the gravity well means double damage
 		if((L.stat == DEAD) && prob(5))
 			L.gib()
 		L.take_overall_damage(3,0)//less brute damage in the center, but the radiations caused by singularity_pull make up for it.
-		L << "<span class='danger'>The [src]'s tidal force is crushing you!</span>"
+		to_chat(L, "<span class='danger'>The [src]'s tidal force is crushing you!</span>")
 
 	sleep(10)
 	Pulse()

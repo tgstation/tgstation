@@ -53,7 +53,7 @@
 
 /obj/machinery/computer/salvage_ship/attack_hand(mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='warning'>Access Denied</span>"
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 		return
 
 	user.set_machine(src)

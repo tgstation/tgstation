@@ -48,7 +48,7 @@
 			src.updateUsrDialog()
 			return 0
 	if (!is_type_in_list(O, allowed_items))
-		user << "It looks as not containing any juice."
+		to_chat(user, "It looks as not containing any juice.")
 		return 1
 	user.before_take_item(O)
 	O.loc = src

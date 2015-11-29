@@ -4,7 +4,7 @@
 	set name = "Add Reagent"
 
 	if(!usr.client || !usr.client.holder)
-		usr << "<span class='warning'>You need to be an administrator to access this.</span>"
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
 	if(!D) return
@@ -14,7 +14,7 @@
 		if(reagentDatum)
 			var/reagentAmount = input(usr, "Amount", "Insert Amount", "") as num
 			if(A.reagents.add_reagent(reagentDatum, reagentAmount))
-				usr << "<span class='warning'>[reagentDatum] doesn't exist.</span>"
+				to_chat(usr, "<span class='warning'>[reagentDatum] doesn't exist.</span>")
 				return
 			log_admin("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
 			message_admins("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
@@ -26,7 +26,7 @@
 
 
 	if(!usr.client || !usr.client.holder)
-		usr << "<span class='warning'>You need to be an administrator to access this.</span>"
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
 
@@ -458,7 +458,7 @@ body
 				html += " <span class='block'>"
 				for(var/i=0;i<4;i++)
 					idx=(block*4)+i
-					bit=1 << idx
+					to_chat(bit=1, idx)
 					bv=value & bit
 					html += "<a href='?_src_=vars;togbit=[idx];var=[name];subject=\ref[DA]' title='bit [idx] ([bit])'>[bv?1:0]</a>"
 				html += "</span>"
@@ -481,7 +481,7 @@ body
 
 		var/mob/M = locate(href_list["rename"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
@@ -496,7 +496,7 @@ body
 
 		var/D = locate(href_list["datumedit"])
 		if(!istype(D,/datum) && !istype(D,/client))
-			usr << "This can only be used on instances of types /client or /datum"
+			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
 		modify_variables(D, href_list["varnameedit"], 1)
@@ -506,10 +506,10 @@ body
 
 		var/atom/D = locate(href_list["subject"])
 		if(!istype(D,/datum) && !istype(D,/client))
-			usr << "This can only be used on instances of types /client or /datum"
+			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 		if(!(href_list["var"] in D.vars))
-			usr << "Unable to find variable specified."
+			to_chat(usr, "Unable to find variable specified.")
 			return
 		var/value = D.vars[href_list["var"]]
 		value ^= 1 << text2num(href_list["togbit"])
@@ -520,7 +520,7 @@ body
 
 		var/D = locate(href_list["datumchange"])
 		if(!istype(D,/datum) && !istype(D,/client))
-			usr << "This can only be used on instances of types /client or /datum"
+			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
 		modify_variables(D, href_list["varnamechange"], 0)
@@ -530,7 +530,7 @@ body
 
 		var/atom/A = locate(href_list["datummass"])
 		if(!istype(A))
-			usr << "This can only be used on instances of type /atom"
+			to_chat(usr, "This can only be used on instances of type /atom")
 			return
 
 		cmd_mass_modify_object_variables(A, href_list["varnamemass"])
@@ -540,7 +540,7 @@ body
 
 		var/mob/M = locate(href_list["mob_player_panel"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		src.holder.show_player_panel(M)
@@ -551,7 +551,7 @@ body
 
 		var/mob/M = locate(href_list["give_spell"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		src.give_spell(M)
@@ -562,7 +562,7 @@ body
 
 		var/mob/M = locate(href_list["give_disease"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		src.give_disease(M)
@@ -573,7 +573,7 @@ body
 
 		var/mob/M = locate(href_list["godmode"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		src.cmd_admin_godmode(M)
@@ -584,7 +584,7 @@ body
 
 		var/mob/M = locate(href_list["gib"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		src.cmd_admin_gib(M)
@@ -594,7 +594,7 @@ body
 
 		var/mob/M = locate(href_list["build_mode"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		togglebuildmode(M)
@@ -605,7 +605,7 @@ body
 
 		var/mob/M = locate(href_list["drop_everything"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		if(usr.client)
@@ -616,7 +616,7 @@ body
 
 		var/mob/M = locate(href_list["direct_control"])
 		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
+			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
 		if(usr.client)
@@ -627,7 +627,7 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
 		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
 
 		H.makeSkeleton()
@@ -638,7 +638,7 @@ body
 
 		var/obj/O = locate(href_list["delall"])
 		if(!isobj(O))
-			usr << "This can only be used on instances of type /obj"
+			to_chat(usr, "This can only be used on instances of type /obj")
 			return
 
 		var/action_type = alert("Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
@@ -660,7 +660,7 @@ body
 						i++
 						qdel(Obj)
 				if(!i)
-					usr << "No objects of this type exist"
+					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
@@ -671,7 +671,7 @@ body
 						i++
 						qdel(Obj)
 				if(!i)
-					usr << "No objects of this type exist"
+					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
@@ -681,7 +681,7 @@ body
 
 		var/atom/A = locate(href_list["explode"])
 		if(!isobj(A) && !ismob(A) && !isturf(A))
-			usr << "This can only be done to instances of type /obj, /mob and /turf"
+			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
 		src.cmd_admin_explosion(A)
@@ -692,7 +692,7 @@ body
 
 		var/atom/A = locate(href_list["emp"])
 		if(!isobj(A) && !ismob(A) && !isturf(A))
-			usr << "This can only be done to instances of type /obj, /mob and /turf"
+			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
 		src.cmd_admin_emp(A)
@@ -703,7 +703,7 @@ body
 
 		var/datum/D = locate(href_list["mark_object"])
 		if(!istype(D))
-			usr << "This can only be done to instances of type /datum"
+			to_chat(usr, "This can only be done to instances of type /datum")
 			return
 
 		src.holder.marked_datum = D
@@ -714,7 +714,7 @@ body
 
 		var/atom/movable/A = locate(href_list["teleport_here"])
 		if(!istype(A))
-			usr << "This can only be done to instances of movable atoms."
+			to_chat(usr, "This can only be done to instances of movable atoms.")
 			return
 
 		var/turf/T = get_turf(usr)
@@ -731,7 +731,7 @@ body
 					for(var/mob/M in range(T,7))
 						shake_camera(M, 4, 1)
 				if(flashy_level > 2)
-					world << "<font size='15' color='red'><b>[uppertext(A.name)] HAS RISEN</b></font>"
+					to_chat(world, "<font size='15' color='red'><b>[uppertext(A.name)] HAS RISEN</b></font>")
 			if("Stealthy")
 				A.alpha = 0
 				animate(A, alpha = 255, time = stealthy_level)
@@ -745,7 +745,7 @@ body
 
 		var/atom/A = locate(href_list["teleport_to"])
 		if(!istype(A))
-			user << "This can only be done to instances of atoms."
+			to_chat(user, "This can only be done to instances of atoms.")
 			return
 
 		user.teleport_to(A)
@@ -755,7 +755,7 @@ body
 
 		var/atom/movable/A = locate(href_list["delete"])
 		if(!istype(A))
-			usr << "This can only be done to instances of movable atoms."
+			to_chat(usr, "This can only be done to instances of movable atoms.")
 			return
 
 		if(ismob(A))
@@ -773,7 +773,7 @@ body
 
 		var/atom/A = locate(href_list["rotatedatum"])
 		if(!istype(A))
-			usr << "This can only be done to instances of type /atom"
+			to_chat(usr, "This can only be done to instances of type /atom")
 			return
 
 		switch(href_list["rotatedir"])
@@ -786,12 +786,12 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
@@ -800,12 +800,12 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
@@ -814,12 +814,12 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["makealien"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makealien"=href_list["makealien"]))
 
@@ -828,12 +828,12 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
@@ -842,12 +842,12 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
 
@@ -856,7 +856,7 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell","vox")
@@ -866,7 +866,7 @@ body
 			if("NONE")
 				new_mutantrace = ""
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		if(H.dna)
 			H.dna.mutantrace = new_mutantrace
@@ -877,27 +877,27 @@ body
 
 		var/mob/living/carbon/human/H = locate(href_list["setspecies"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
 		var/new_species = input("Please choose a new species.","Species",null) as null|anything in all_species
 
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 
 		if(H.set_species(new_species))
-			usr << "Set species of [H] to [H.species]."
+			to_chat(usr, "Set species of [H] to [H.species].")
 			H.regenerate_icons()
 		else
-			usr << "Failed! Something went wrong."
+			to_chat(usr, "Failed! Something went wrong.")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_SPAWN))	return
 
 		var/mob/H = locate(href_list["addlanguage"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob"
+			to_chat(usr, "This can only be done to instances of type /mob")
 			return
 
 		var/new_language = input("Please choose a language to add.","Language",null) as null|anything in all_languages
@@ -906,24 +906,24 @@ body
 			return
 
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 
 		if(H.add_language(new_language))
-			usr << "Added [new_language] to [H]."
+			to_chat(usr, "Added [new_language] to [H].")
 		else
-			usr << "Mob already knows that language."
+			to_chat(usr, "Mob already knows that language.")
 
 	else if(href_list["remlanguage"])
 		if(!check_rights(R_SPAWN))	return
 
 		var/mob/H = locate(href_list["remlanguage"])
 		if(!istype(H))
-			usr << "This can only be done to instances of type /mob"
+			to_chat(usr, "This can only be done to instances of type /mob")
 			return
 
 		if(!H.languages.len)
-			usr << "This mob knows no languages."
+			to_chat(usr, "This mob knows no languages.")
 			return
 
 		var/datum/language/rem_language = input("Please choose a language to remove.","Language",null) as null|anything in H.languages
@@ -932,20 +932,20 @@ body
 			return
 
 		if(!H)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 
 		if(H.remove_language(rem_language.name))
-			usr << "Removed [rem_language] from [H]."
+			to_chat(usr, "Removed [rem_language] from [H].")
 		else
-			usr << "Mob doesn't know that language."
+			to_chat(usr, "Mob doesn't know that language.")
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
 
 		var/mob/M = locate(href_list["regenerateicons"])
 		if(!ismob(M))
-			usr << "This can only be done to instances of type /mob"
+			to_chat(usr, "This can only be done to instances of type /mob")
 			return
 		M.regenerate_icons()
 
@@ -960,7 +960,7 @@ body
 		var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 
 		if(!L)
-			usr << "Mob doesn't exist anymore"
+			to_chat(usr, "Mob doesn't exist anymore")
 			return
 
 		switch(Text)
@@ -971,7 +971,7 @@ body
 			if("brain")	L.adjustBrainLoss(amount)
 			if("clone")	L.adjustCloneLoss(amount)
 			else
-				usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
+				to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 				return
 
 		if(amount != 0)

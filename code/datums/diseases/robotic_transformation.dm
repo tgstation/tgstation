@@ -19,36 +19,36 @@
 	switch(stage)
 		if(2)
 			if (prob(8))
-				affected_mob << "Your joints feel stiff."
+				to_chat(affected_mob, "Your joints feel stiff.")
 				affected_mob.take_organ_damage(1)
 			if (prob(9))
-				affected_mob << "<span class='warning'>Beep...boop..</span>"
+				to_chat(affected_mob, "<span class='warning'>Beep...boop..</span>")
 			if (prob(9))
-				affected_mob << "<span class='warning'>Bop...beeep...</span>"
+				to_chat(affected_mob, "<span class='warning'>Bop...beeep...</span>")
 		if(3)
 			if (prob(8))
-				affected_mob << "<span class='warning'>Your joints feel very stiff.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your joints feel very stiff.</span>")
 				affected_mob.take_organ_damage(1)
 			if (prob(8))
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
 			if (prob(10))
-				affected_mob << "Your skin feels loose."
+				to_chat(affected_mob, "Your skin feels loose.")
 				affected_mob.take_organ_damage(5)
 			if (prob(4))
-				affected_mob << "<span class='warning'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				affected_mob << "<span class='warning'>You can feel something move...inside.</span>"
+				to_chat(affected_mob, "<span class='warning'>You can feel something move...inside.</span>")
 		if(4)
 			if (prob(10))
-				affected_mob << "<span class='warning'>Your skin feels very loose.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your skin feels very loose.</span>")
 				affected_mob.take_organ_damage(8)
 			if (prob(20))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
 			if (prob(8))
-				affected_mob << "<span class='warning'>You can feel... something...inside you.</span>"
+				to_chat(affected_mob, "<span class='warning'>You can feel... something...inside you.</span>")
 		if(5)
-			affected_mob <<"<span class='warning'>Your skin feels as if it's about to burst off...</span>"
+			to_chat(affected_mob, "<span class='warning'>Your skin feels as if it's about to burst off...</span>")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40)) //So everyone can feel like robot Seth Brundle

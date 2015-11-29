@@ -20,8 +20,9 @@
 	// Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 	// Ported. - N3X
 	if (ismob(target) && is_special_character(target) && priority == LAW_ZERO)
-		target << "[sender.real_name] attempted to modify your zeroth law." // And lets them know that someone tried. --NeoFite
-		target << "It would be in your best interest to play along with [sender.real_name] that [law]"
+		to_chat(target, "[sender.real_name] attempted to modify your zeroth law.")// And lets them know that someone tried. --NeoFite
+
+		to_chat(target, "It would be in your best interest to play along with [sender.real_name] that [law]")
 		lawchanges.Add("The law specified [targetName], but the AI's existing law 0 cannot be overriden.")
 		return 1 // Returning 0 would not present the user with successful upload message. - N3X
 
@@ -52,7 +53,7 @@
 
 /obj/item/weapon/aiModule/targetted/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	if(!targetName)
-		usr << "No name detected on module, please enter one."
+		to_chat(usr, "No name detected on module, please enter one.")
 		return 0
 	return ..()
 

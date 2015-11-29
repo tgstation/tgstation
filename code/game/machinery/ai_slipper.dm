@@ -37,7 +37,7 @@
 	else // trying to unlock the interface
 		if(src.allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] the device.</span>"
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the device.</span>")
 			if (locked)
 				if (user.machine == src)
 					user.unset_machine()
@@ -46,7 +46,7 @@
 				if (user.machine == src)
 					src.attack_hand(usr)
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 	return
 
@@ -72,7 +72,7 @@
 	if(..()) return 1
 	if(src.locked)
 		if(!istype(usr, /mob/living/silicon))
-			usr << "<span class='warning'>Control panel is locked!</span>"
+			to_chat(usr, "<span class='warning'>Control panel is locked!</span>")
 			return
 	if(href_list["toggleOn"])
 		src.disabled = !src.disabled

@@ -34,7 +34,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "[pick("<span class='warning'>You feel nauseous...", "<span class='danger'>You feel like you're going to throw up!")]</span>"
+				to_chat(M, "[pick("<span class='warning'>You feel nauseous...", "<span class='danger'>You feel like you're going to throw up!")]</span>")
 			else
 				Vomit(M)
 

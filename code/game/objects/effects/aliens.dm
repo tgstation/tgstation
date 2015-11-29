@@ -103,12 +103,12 @@
 /obj/effect/alien/resin/attack_hand()
 	usr.delayNextAttack(10)
 	if (M_HULK in usr.mutations)
-		usr << "<span class='notice'>You easily destroy the [name].</span>"
+		to_chat(usr, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[usr] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		usr << "<span class='notice'>You claw at the [name].</span>"
+		to_chat(usr, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[usr] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
@@ -121,13 +121,13 @@
 /obj/effect/alien/resin/attack_alien()
 	if (islarva(usr))//Safety check for larva. /N
 		return
-	usr << "<span class='good'>You claw at the [name].</span>"
+	to_chat(usr, "<span class='good'>You claw at the [name].</span>")
 	for(var/mob/O in oviewers(src))
 		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health -= rand(40, 60)
 	if(health <= 0)
-		usr << "<span class='good'>You slice the [name] to pieces.</span>"
+		to_chat(usr, "<span class='good'>You slice the [name] to pieces.</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
@@ -140,19 +140,19 @@
 		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
 			if(!affecting)
 				if(G.state<2)
-					user << "<span class='warning'>You need a better grip to do that!</span>"
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 				G.affecting.loc = src
 				G.affecting.paralysis = 10
 				for(var/mob/O in viewers(world.view, src))
 					if (O.client)
-						O << text("<span class='good'>[] places [] in the resin wall!</span>", G.assailant, G.affecting)
+						to_chat(O, text("<span class='good'>[] places [] in the resin wall!</span>", G.assailant, G.affecting))
 				affecting=G.affecting
 				del(W)
 				spawn(0)
 					process()
 			else
-				user << "<span class='warning'>This wall is already occupied.</span>"
+				to_chat(user, "<span class='warning'>This wall is already occupied.</span>")
 		return */
 	user.delayNextAttack(10)
 	var/aforce = W.force
@@ -414,21 +414,21 @@ Alien plants should do something if theres a lot of poison
 		if(isalien(user))
 			switch(status)
 				if(BURST)
-					user << "<span class='warning'>You clear the hatched egg.</span>"
+					to_chat(user, "<span class='warning'>You clear the hatched egg.</span>")
 					qdel(src)
 					return
 				if(GROWING)
-					user << "<span class='warning'>The child is not developed yet.</span>"
+					to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
 					return
 				if(GROWN)
-					user << "<span class='warning'>You retrieve the child.</span>"
+					to_chat(user, "<span class='warning'>You retrieve the child.</span>")
 					Burst(0)
 					return
 		else
 			return attack_hand(user)
 
 	attack_hand(user as mob)
-		user << "It feels slimy."
+		to_chat(user, "It feels slimy.")
 		return
 
 	proc/GetFacehugger()

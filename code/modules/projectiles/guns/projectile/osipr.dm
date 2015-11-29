@@ -31,10 +31,10 @@
 /obj/item/weapon/gun/osipr/examine(mob/user)
 	..()
 	if(magazine)
-		user << "<span class='info'>Has [magazine.bullets] pulse bullet\s remaining.</span>"
+		to_chat(user, "<span class='info'>Has [magazine.bullets] pulse bullet\s remaining.</span>")
 	else
-		user << "<span class='info'>It has no pulse magazine inserted!</span>"
-	user << "<span class='info'>Has [energy_balls] dark energy core\s remaining.</span>"
+		to_chat(user, "<span class='info'>It has no pulse magazine inserted!</span>")
+	to_chat(user, "<span class='info'>Has [energy_balls] dark energy core\s remaining.</span>")
 
 /obj/item/weapon/gun/osipr/process_chambered()
 	if(in_chamber) return 1
@@ -55,25 +55,25 @@
 /obj/item/weapon/gun/osipr/attackby(var/obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/energy_magazine/osipr))
 		if(magazine)
-			user << "There is another magazine already inserted. Remove it first."
+			to_chat(user, "There is another magazine already inserted. Remove it first.")
 		else
 			user.u_equip(A,1)
 			A.loc = src
 			magazine = A
 			update_icon()
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
-			user << "<span class='info'>You insert a new magazine.</span>"
+			to_chat(user, "<span class='info'>You insert a new magazine.</span>")
 			user.regenerate_icons()
 
 	else if(istype(A, /obj/item/osipr_core))
 		if(energy_balls >= OSIPR_MAX_CORES)
-			user << "The OSIPR cannot receive any additional dark energy core."
+			to_chat(user, "The OSIPR cannot receive any additional dark energy core.")
 		else
 			user.u_equip(A,1)
 			qdel(A)
 			energy_balls++
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
-			user << "<span class='info'>You insert \the [A].</span>"
+			to_chat(user, "<span class='info'>You insert \the [A].</span>")
 	else
 		..()
 
@@ -84,7 +84,7 @@
 		magazine = null
 		update_icon()
 		playsound(get_turf(src), 'sound/machines/click.ogg', 25, 1)
-		user << "<span class='info'>You remove the magazine.</span>"
+		to_chat(user, "<span class='info'>You remove the magazine.</span>")
 		user.regenerate_icons()
 	else
 		..()
@@ -95,12 +95,12 @@
 			mode = OSIPR_SECONDARY_FIRE
 			fire_sound = 'sound/weapons/osipr_altfire.ogg'
 			fire_delay = 20
-			user << "<span class='warning'>Now set to fire dark energy orbs.</span>"
+			to_chat(user, "<span class='warning'>Now set to fire dark energy orbs.</span>")
 		if(OSIPR_SECONDARY_FIRE)
 			mode = OSIPR_PRIMARY_FIRE
 			fire_sound = 'sound/weapons/osipr_fire.ogg'
 			fire_delay = 0
-			user << "<span class='warning'>Now set to fire pulse bullets.</span>"
+			to_chat(user, "<span class='warning'>Now set to fire pulse bullets.</span>")
 
 /obj/item/weapon/gun/osipr/update_icon()
 	if(!magazine)
@@ -133,7 +133,7 @@
 
 /obj/item/energy_magazine/examine(mob/user)
 	..()
-	user << "<span class='info'>Has [bullets] bullet\s remaining.</span>"
+	to_chat(user, "<span class='info'>Has [bullets] bullet\s remaining.</span>")
 
 /obj/item/energy_magazine/update_icon()
 	if(bullets == max_bullets)

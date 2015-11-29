@@ -33,7 +33,7 @@
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -54,19 +54,19 @@
 		if(!src.locked)
 			if(src.active==1)
 				src.active = 0
-				user << "You turn off the [src]."
+				to_chat(user, "You turn off the [src].")
 				src.use_power = 1
 			else
 				src.active = 1
-				user << "You turn on the [src]."
+				to_chat(user, "You turn on the [src].")
 				src.shot_number = 0
 				src.fire_delay = 100
 				src.use_power = 2
 			update_icon()
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>"
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
 
 
@@ -129,17 +129,17 @@
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "<span class='warning'>The lock seems to be broken</span>"
+			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
 		if(src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='warning'>The controls can only be locked when the [src] is online</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when the [src] is online</span>")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	return
 

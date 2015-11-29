@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	user << "<span class='info'>[syringes.len] / [max_syringes] syringes.</span>"
+	to_chat(user, "<span class='info'>[syringes.len] / [max_syringes] syringes.</span>")
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -28,12 +28,12 @@
 			if(syringes.len < max_syringes)
 				user.drop_item(I, src)
 				syringes += I
-				user << "<span class='notice'>You put the syringe in [src].</span>"
-				user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
+				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
+				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 			else
-				user << "<span class='warning'>[src] cannot hold more syringes.</span>"
+				to_chat(user, "<span class='warning'>[src] cannot hold more syringes.</span>")
 		else
-			user << "<span class='warning'>This syringe is broken!</span>"
+			to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 
 		return 1 // Avoid calling the syringe's afterattack()
 
@@ -51,10 +51,10 @@
 	if(syringes.len)
 		if(M_CLUMSY in user.mutations)
 			if(prob(50))
-				user << "<span class='warning'>You accidentally shoot yourself!</span>"
+				to_chat(user, "<span class='warning'>You accidentally shoot yourself!</span>")
 				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
 				if((!S) || (!S.reagents))
-					user << "<span class='notice'>Thankfully, nothing happens.</span>"
+					to_chat(user, "<span class='notice'>Thankfully, nothing happens.</span>")
 					return
 				syringes -= S
 				S.reagents.trans_to(user, S.reagents.total_volume)
@@ -63,7 +63,7 @@
 
 		spawn(0) fire_syringe(target,user)
 	else
-		user << "<span class='warning'>[src] is empty.</span>"
+		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	if (locate (/obj/structure/table, src.loc))

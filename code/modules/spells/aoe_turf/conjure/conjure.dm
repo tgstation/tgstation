@@ -45,7 +45,7 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 		var/atom/summoned_object
 		if(ispath(summoned_object_type,/turf))
 			if(istype(get_turf(user),/turf/simulated/shuttle) || istype(spawn_place, /turf/simulated/shuttle))
-				user << "<span class='warning>You can't build things on shuttles!</span>"
+				to_chat(user, "<span class='warning>You can't build things on shuttles!</span>")
 				continue
 			spawn_place.ChangeTurf(summoned_object_type)
 			summoned_object = spawn_place

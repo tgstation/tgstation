@@ -678,16 +678,16 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution violently bubbles!</span>"
+					to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution spews out foam!</span>"
+					to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
 
-				//world << "Holder volume is [holder.total_volume]"
+//				to_chat(world, "Holder volume is [holder.total_volume]")
 				//for(var/datum/reagent/R in holder.reagent_list)
-				//	world << "[R.name] = [R.volume]"
+//					to_chat(world, "[R.name] = [R.volume]")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
@@ -708,7 +708,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution spews out a metalic foam!</span>"
+					to_chat(M, "<span class='warning'>The solution spews out a metalic foam!</span>")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 1)
@@ -728,7 +728,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution spews out a metalic foam!</span>"
+					to_chat(M, "<span class='warning'>The solution spews out a metalic foam!</span>")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 2)
@@ -1060,16 +1060,16 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution violently bubbles!</span>"
+					to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "<span class='warning'>The solution spews out foam!</span>"
+					to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
 
-				//world << "Holder volume is [holder.total_volume]"
+//				to_chat(world, "Holder volume is [holder.total_volume]")
 				//for(var/datum/reagent/R in holder.reagent_list)
-				//	world << "[R.name] = [R.volume]"
+//					to_chat(world, "[R.name] = [R.volume]")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
@@ -1206,11 +1206,11 @@ datum
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
-							O << "<span class='danger'>A flash blinds you while you start hearing terrifying noises !</span>"
+							to_chat(O, "<span class='danger'>A flash blinds you while you start hearing terrifying noises !</span>")
 						else
-							O << "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>"
+							to_chat(O, "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>")
 					else
-						O << "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>"
+						to_chat(O, "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>")
 
 				for(var/i = 1, i <= 5, i++)
 					var/chosen = pick(critters)
@@ -1279,11 +1279,11 @@ datum
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
-							O << "<span class='rose'>A flash blinds and you can feel a new presence !</span>"
+							to_chat(O, "<span class='rose'>A flash blinds and you can feel a new presence !</span>")
 						else
-							O << "<span class='rose'>You hear a crackling as a creature manifests before you !</span>"
+							to_chat(O, "<span class='rose'>You hear a crackling as a creature manifests before you !</span>")
 					else
-						O << "<span class='rose'>You hear a crackling as a creature manifests before you !</span>"
+						to_chat(O, "<span class='rose'>You hear a crackling as a creature manifests before you !</span>")
 
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
@@ -1339,7 +1339,7 @@ datum
 						var/mob/mimic = new /mob/living/simple_animal/hostile/mimic/crate(get_turf(location), location)
 						mimic.appearance = M.appearance //Because mimics copy appearances from paths, not actual existing objects.
 
-						M << "<span class='sinister'>You feel something thoroughly analyzing you from inside...</span>"
+						to_chat(M, "<span class='sinister'>You feel something thoroughly analyzing you from inside...</span>")
 					else
 						new /mob/living/simple_animal/hostile/mimic/crate
 
@@ -1371,11 +1371,11 @@ datum
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
-							O << "<span class='caution'>A white light blinds you and you think you can smell some food nearby !</span>"
+							to_chat(O, "<span class='caution'>A white light blinds you and you think you can smell some food nearby !</span>")
 						else
-							O << "<span class='notice'>A bunch of snacks appears before your very eyes !</span>"
+							to_chat(O, "<span class='notice'>A bunch of snacks appears before your very eyes !</span>")
 					else
-						O << "<span class='notice'>A bunch of snacks appears before your very eyes !</span>"
+						to_chat(O, "<span class='notice'>A bunch of snacks appears before your very eyes !</span>")
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1424,11 +1424,11 @@ datum
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
-							O << "<span class='caution'>A white light blinds you and you think you can hear bottles rolling on the floor !</span>"
+							to_chat(O, "<span class='caution'>A white light blinds you and you think you can hear bottles rolling on the floor !</span>")
 						else
-							O << "<span class='notice'>A bunch of drinks appears before you !</span>"
+							to_chat(O, "<span class='notice'>A bunch of drinks appears before you !</span>")
 					else
-						O << "<span class='notice'>A bunch of drinks appears before you !</span>"
+						to_chat(O, "<span class='notice'>A bunch of drinks appears before you !</span>")
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1485,7 +1485,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 240
-					M << "<span class='notice'>You feel a chill!</span>"
+					to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange
 		slimecasp

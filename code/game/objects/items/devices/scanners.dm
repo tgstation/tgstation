@@ -100,7 +100,7 @@ REAGENT SCANNER
 		if((M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 			user.show_message("<span class='game say'><b>\The [src] beeps</b>, \"It's dead, Jim.\"</span>", MESSAGE_HEAR ,"<span class='notice'>\The [src] glows black.</span>")
 		else
-			user << "<span class='notice'>\The [src] glows [pick("red", "green", "blue", "pink")]! You wonder what that would mean.</span>"
+			to_chat(user, "<span class='notice'>\The [src] glows [pick("red", "green", "blue", "pink")]! You wonder what that would mean.</span>")
 	src.add_fingerprint(user)
 
 /obj/item/device/healthanalyzer/attack_self(mob/living/user as mob)
@@ -108,11 +108,11 @@ REAGENT SCANNER
 	if(.)
 		return
 	if(!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(last_reading)
-		user << "<span class='bnotice'>Accessing Prior Scan Result</span>"
-		user << last_reading
+		to_chat(user, "<span class='bnotice'>Accessing Prior Scan Result</span>")
+		to_chat(user, last_reading)
 
 //Note : Used directly by other objects. Could benefit of OOP, maybe ?
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, var/skip_checks = 0, var/silent = 0)
@@ -122,7 +122,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, va
 			user.visible_message("<span class='warning'>[user] analyzes the floor's vitals!</span>", \
 			"<span class='warning'>You analyze the floor's vitals!</span>")
 			playsound(user, 'sound/items/healthanalyzer.ogg', 50, 1)
-			user << {"<span class='notice'>Analyzing Results for the floor:<br>Overall Status: Healthy</span>
+			to_chat(user, {"<span class='notice'>Analyzing Results for the floor:<br>Overall Status: Healthy</span>
 Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>
 Damage Specifics: <font color='blue'>0</font> - <font color='green'>0</font> - <font color='#FFA500'>0</font> - <font color='red'>0</font>
 <span class='notice'>Body Temperature: ???&deg;C (???&deg;F)</span>
@@ -130,7 +130,7 @@ Damage Specifics: <font color='blue'>0</font> - <font color='green'>0</font> - <
 <span class='notice'>No limb damage detected.</span>
 Subject bloodstream oxygen level normal | Subject bloodstream toxin level normal | Subject burn injury status clear | Subject brute injury status clear
 Blood Level Unknown: ???% ???cl
-Subject's pulse: ??? BPM"}
+Subject's pulse: ??? BPM"})
 			return
 	if(!silent)
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
@@ -246,7 +246,8 @@ Subject's pulse: ??? BPM"}
 				if(-1000000000 to BLOOD_VOLUME_SURVIVE)
 					message += "<br><span class='danger'>Danger: Blood Level Fatal: [blood_percent]% [blood_volume]cl</span>"
 		message += "<br><span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] BPM</font></span>"
-	user << message //Here goes
+	to_chat(user, message)//Here goes
+
 	return message //To read last scan
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
@@ -254,7 +255,7 @@ Subject's pulse: ??? BPM"}
 	set category = "Object"
 
 	mode = !mode
-	usr << "The scanner will [mode ? "now show specific limb damage" : "no longer show specific limb damage"]."
+	to_chat(usr, "The scanner will [mode ? "now show specific limb damage" : "no longer show specific limb damage"].")
 
 /obj/item/device/analyzer
 	desc = "A hand-held environment scanner which reports data about gas mixtures."
@@ -280,7 +281,7 @@ Subject's pulse: ??? BPM"}
 		return
 
 	if(!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	var/turf/location = get_turf(user)
@@ -365,10 +366,10 @@ Subject's pulse: ??? BPM"}
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(reagents.total_volume)
-			user << "<span class='warning'>This device already has a blood sample!</span>"
+			to_chat(user, "<span class='warning'>This device already has a blood sample!</span>")
 			return
 		if(!user.dexterity_check())
-			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 		if(!C.dna)
 			return
@@ -392,14 +393,14 @@ Subject's pulse: ??? BPM"}
 		return
 
 	if(!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
 				reagents.clear_reagents()
-				user << "<span class='warning'>The sample was contaminated! Please insert another sample.</span>"
+				to_chat(user, "<span class='warning'>The sample was contaminated! Please insert another sample.</span>")
 				return
 			else
 				blood_traces = params2list(R.data["trace_chem"])
@@ -411,7 +412,7 @@ Subject's pulse: ??? BPM"}
 				dat += "<br>[R] [details ? "([blood_traces[R]] units)":""]"
 		else
 			dat = "No trace chemicals found in the sample."
-		user << "<span class='notice'>[dat]</span>"
+		to_chat(user, "<span class='notice'>[dat]</span>")
 		reagents.clear_reagents()
 	return
 
@@ -446,7 +447,7 @@ Subject's pulse: ??? BPM"}
 	if(!istype(O)) //Wrong type sent
 		return
 	if(!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(O.reagents)
 		var/dat = ""
@@ -455,9 +456,9 @@ Subject's pulse: ??? BPM"}
 				var/reagent_percent = (R.volume/O.reagents.total_volume)*100
 				dat += "<br><span class='notice'>[R] [details ? "([R.volume] units, [reagent_percent]%)" : ""]</span>"
 		if(dat)
-			user << "<span class='notice'>Chemicals found in \the [O]:[dat]</span>"
+			to_chat(user, "<span class='notice'>Chemicals found in \the [O]:[dat]</span>")
 		else
-			user << "<span class='notice'>No active chemical agents found in \the [O].</span>"
+			to_chat(user, "<span class='notice'>No active chemical agents found in \the [O].</span>")
 
 	return
 

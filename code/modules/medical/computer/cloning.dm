@@ -89,7 +89,7 @@
 		if (!src.diskette)
 			user.drop_item(W, src)
 			src.diskette = W
-			user << "You insert [W]."
+			to_chat(user, "You insert [W].")
 			src.updateUsrDialog()
 			return 1
 	return
@@ -388,9 +388,9 @@
 	if (!subject.client && subject.mind) //this guy ghosted from his corpse, but he can still come back!
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == subject.mind && ghost.client && ghost.can_reenter_corpse)
-				ghost << 'sound/effects/adminhelp.ogg'
-				ghost << "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be cloned!</b> \
-					(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
+				to_chat(ghost, 'sound/effects/adminhelp.ogg')
+				to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be cloned!</b> \
+					(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
 				scantemp = "Error: Subject's brain is not responding to scanning stimuli, subject may be brain dead. Please try again in five seconds."
 				return
 		//we couldn't find a suitable ghost.
@@ -455,4 +455,3 @@
 			overlays += "cloning-scan"
 		if(pod1 && pod1.occupant)
 			overlays += "cloning-pod"
-

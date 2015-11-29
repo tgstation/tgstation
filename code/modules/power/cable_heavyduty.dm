@@ -16,10 +16,10 @@
 		return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>These cables are too tough to be cut with those [W.name].</span>"
+		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [W.name].</span>")
 		return
 	else if(W.type == /obj/item/stack/cable_coil)
-		user << "<span class='notice'>You will need heavier cables to connect to these.</span>"
+		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
 		return
 	else
 		..()

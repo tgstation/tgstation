@@ -229,7 +229,7 @@
 					M = M.loc
 					count++
 					if(count >= 6)
-						src << "You are not being carried by anyone!"
+						to_chat(src, "You are not being carried by anyone!")
 						return 0
 				spawn CheckDNA(M, src)
 
@@ -287,14 +287,14 @@
 		if("chemsynth")
 			if(href_list["chem"])
 				if(!istype(src.loc.loc,/mob/living/carbon))
-					src << "<span class='warning'>You must have a carrier to inject with chemicals!</span>"
+					to_chat(src, "<span class='warning'>You must have a carrier to inject with chemicals!</span>")
 				else if(chargeloop("chemsynth"))
 					if(istype(src.loc.loc,/mob/living/carbon)) //Sanity
 						var/mob/living/M = src.loc.loc
 						M.reagents.add_reagent(href_list["chem"], 15)
 						playsound(get_turf(src.loc), 'sound/effects/bubbles.ogg', 50, 1)
 				else
-					src << "<span class='warning'>Charge interrupted.</span>"
+					to_chat(src, "<span class='warning'>Charge interrupted.</span>")
 		if("foodsynth")
 			if(href_list["food"] && chargeloop("foodsynth"))
 				var/obj/item/weapon/reagent_containers/food/F
@@ -428,13 +428,13 @@
 		for (var/mob/v in viewers(T))
 			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
 		var/datum/dna/dna = M.dna
-		P << "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>"
+		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		to_chat(P, "[M] does not seem like \he is going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -621,9 +621,9 @@ Target Machine: "}
 	if(prob(10))
 		for(var/mob/living/silicon/ai/AI in player_list)
 			if(T.loc)
-				AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 			else
-				AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(hacktarget && get_dist(src, src.hacktarget) <= 1)
 			hackprogress += rand(10, 20)

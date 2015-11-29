@@ -138,11 +138,11 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
 	src.read_only = !src.read_only
-	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
+	to_chat(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
 
 //Health Tracker Implant
 
@@ -171,7 +171,7 @@
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-		user << "Current clone cycle is [round(completion)]% complete."
+		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 	return
 
 //Clonepod
@@ -233,7 +233,7 @@
 	clonemind.transfer_to(H)
 
 	H.ckey = R.ckey
-	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
+	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
 	// -- Mode/mind specific stuff goes here
 
@@ -331,14 +331,14 @@
 /obj/machinery/cloning/clonepod/emag(mob/user as mob)
 	if (isnull(src.occupant))
 		return
-	user << "You force an emergency ejection."
+	to_chat(user, "You force an emergency ejection.")
 	src.locked = 0
 	src.go_out()
 	return
 
 /obj/machinery/cloning/clonepod/crowbarDestroy(mob/user)
 	if(occupant)
-		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>")
 		return
 	for(biomass; biomass > 0;biomass -= 50)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(loc)
@@ -357,15 +357,15 @@
 		return .
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "<span class='warning'>Access Denied.</span>"
+			to_chat(user, "<span class='warning'>Access Denied.</span>")
 			return
 		else if ((!src.locked) || (isnull(src.occupant)))
 			return
 		else
 			src.locked = 0
-			user << "System unlocked."
+			to_chat(user, "System unlocked.")
 	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		user << "<span class='notice'>\The [src] processes \the [W].</span>"
+		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
 		biomass += 50
 		user.drop_item(W)
 		qdel(W)

@@ -36,8 +36,8 @@
 
 
 		if(istype(L, /obj/effect/landmark/) && istype(L.loc, /turf))
-			usr << "You insert the coordinates into the machine."
-			usr << "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times."
+			to_chat(usr, "You insert the coordinates into the machine.")
+			to_chat(usr, "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times.")
 			user.drop_item(I)
 			qdel(I)
 
@@ -65,7 +65,7 @@
 	..()
 	if(locked)
 		var/area/locked_area = get_area(locked)
-		user << "The destination is set to \"[locked_area.name]\""
+		to_chat(user, "The destination is set to \"[locked_area.name]\"")
 
 /obj/machinery/computer/teleporter/attack_paw(var/mob/user)
 	src.attack_hand(user)
@@ -303,11 +303,11 @@
 			return
 
 		if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
-			MM << "<span class='warning'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>"
+			to_chat(MM, "<span class='warning'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
 			return
 	var/disky = 0
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		world << "Checking [O]([O.type]) for teleport"
+		to_chat(world, "Checking [O]([O.type]) for teleport")
 		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
 				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
@@ -338,12 +338,12 @@
 			return
 
 		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
-			MM << "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>"
+			to_chat(MM, "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>")
 			precision = rand(1,100)
 	if (istype(M, /obj/item/weapon/storage/backpack/holding))
 		precision = rand(1,100)
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		world << "Checking [O]([O.type]) for teleport"
+		to_chat(world, "Checking [O]([O.type]) for teleport")
 		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
 				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))

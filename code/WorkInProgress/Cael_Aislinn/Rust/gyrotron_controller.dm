@@ -95,7 +95,7 @@
 	if(href_list["modifypower"])
 		var/new_val = input("Enter new emission power level (0.001 - 0.01)", "Modifying power level (TJ)", gyro.mega_energy) as num
 		if(!new_val)
-			usr << "<span class='warning'>That's not a valid number.</span>"
+			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return 1
 
 		gyro.mega_energy = Clamp(new_val, 0.001, 0.01)
@@ -107,7 +107,7 @@
 	if(href_list["modifyrate"])
 		var/new_val = input("Enter new emission rate (1 - 10)", "Modifying emission rate (1/10th sec)", gyro.rate) as num
 		if(!new_val)
-			usr << "<span class='warning'>That's not a valid number.</span>"
+			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return 1
 
 		gyro.rate = Clamp(new_val, 10, 100)
@@ -118,7 +118,7 @@
 	if(href_list["modifyfreq"])
 		var/new_val = input("Enter new emission frequency (1 - 50000)", "Modifying emission frequency (GHz)", gyro.frequency) as num
 		if(!new_val)
-			usr << "<span class='warning'>That's not a valid number.</span>"
+			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return 1
 
 		gyro.frequency = Clamp(new_val, 1, 50000)

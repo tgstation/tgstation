@@ -41,7 +41,7 @@ var/global/list/tv_monitors = list()
 
 /obj/machinery/computer/security/attack_hand(var/mob/user as mob)
 	if (src.z > 6)
-		user << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 	if(stat & (NOPOWER|BROKEN))	return
 
@@ -107,7 +107,7 @@ var/global/list/tv_monitors = list()
 
 /obj/machinery/computer/security/telescreen/examine(mob/user)
 	..()
-	user << "Looks like the current channel is \"<span class='info'>[current.c_tag]</span>\""
+	to_chat(user, "Looks like the current channel is \"<span class='info'>[current.c_tag]</span>\"")
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)

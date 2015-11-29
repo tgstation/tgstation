@@ -68,13 +68,13 @@
 
 /obj/machinery/red_injector/attackby(var/obj/item/weapon/ctf_flag/C, mob/user)
 	if(src.operating)
-		user << "Cannot put a flag in right now"
+		to_chat(user, "Cannot put a flag in right now")
 		return
 	src.operating = 1
 	if(istype(C, /obj/item/weapon/ctf_flag/green))
 		if(locate("landmark*Red-Flag", /obj/item/weapon/ctf_flag/red))
 			src.score++
-			world << "<B>[user.real_name] has scored for the red team!</B>"
+			to_chat(world, "<B>[user.real_name] has scored for the red team!</B>")
 			if(ticker.mode.name == "ctf")
 				ticker.red_score++
 				var/obj/L = locate("landmark*Green-Flag")
@@ -82,16 +82,16 @@
 					del(C)
 					new /obj/item/weapon/ctf_flag/green(L.loc)
 				else
-					world << "No green flag spawn point detected"
+					to_chat(world, "No green flag spawn point detected")
 				if(src.score >= 15)
-					world << "<FONT size = 3><B>The Red Team has won!</B></FONT>"
-					world << "<B>They have scored [score] times with the flag!</B>"
+					to_chat(world, "<FONT size = 3><B>The Red Team has won!</B></FONT>")
+					to_chat(world, "<B>They have scored [score] times with the flag!</B>")
 					sleep(300)
 					world.Reboot()
 		else
-			user << "<span class='warning'>You need to have your flag in the beginning position!</span>"
+			to_chat(user, "<span class='warning'>You need to have your flag in the beginning position!</span>")
 	else if(istype(C, /obj/item/weapon/ctf_flag/red))
-		world << "<B>[user.real_name] has tried to score with their own flag! Idiot!</B>"
+		to_chat(world, "<B>[user.real_name] has tried to score with their own flag! Idiot!</B>")
 	src.operating = 0
 	return
 */
@@ -110,13 +110,13 @@
 /*
 /obj/machinery/green_injector/attackby(var/obj/item/weapon/ctf_flag/C, mob/user)
 	if(src.operating)
-		user << "Cannot put a flag in right now"
+		to_chat(user, "Cannot put a flag in right now")
 		return
 	src.operating = 1
 	if(istype(C, /obj/item/weapon/ctf_flag/red))
 		if(locate("landmark*Green-Flag", /obj/item/weapon/ctf_flag/green))
 			src.score++
-			world << "<B>[user.real_name] has scored for the green team!</B>"
+			to_chat(world, "<B>[user.real_name] has scored for the green team!</B>")
 			if(ticker.mode.name == "ctf")
 				ticker.green_score++
 				var/obj/L = locate("landmark*Red-Flag")
@@ -124,16 +124,16 @@
 					del(C)
 					new /obj/item/weapon/ctf_flag/red(L.loc)
 				else
-					world << "No red flag spawn point detected"
+					to_chat(world, "No red flag spawn point detected")
 				if(src.score >= 15)
-					world << "<FONT size = 3><B>The Green Team has won!</B></FONT>"
-					world << "<B>They have scored [score] times with the flag!</B>"
+					to_chat(world, "<FONT size = 3><B>The Green Team has won!</B></FONT>")
+					to_chat(world, "<B>They have scored [score] times with the flag!</B>")
 					sleep(300)
 					world.Reboot()
 		else
-			user << "<span class='warning'>You need to have your flag in the beginning position!</span>"
+			to_chat(user, "<span class='warning'>You need to have your flag in the beginning position!</span>")
 	else if(istype(C, /obj/item/weapon/ctf_flag/green))
-		world << "<B>[user.real_name] has tried to score with their own flag! Idiot!</B>"
+		to_chat(world, "<B>[user.real_name] has tried to score with their own flag! Idiot!</B>")
 	src.operating = 0
 	return
 */

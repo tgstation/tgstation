@@ -268,7 +268,7 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		src << "<span class='danger'>You are too depressed to push [M] out of \the way.</span>"
+		to_chat(src, "<span class='danger'>You are too depressed to push [M] out of \the way.</span>")
 		M.LAssailant = src
 		return
 	..()
@@ -289,7 +289,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/proc/handle_disabilities()
 	if ((prob(5) && paralysis < 10))
-		src << "<span class='warning'>You have a seizure!</span>"
+		to_chat(src, "<span class='warning'>You have a seizure!</span>")
 		Paralyse(10)
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/emote(var/act)

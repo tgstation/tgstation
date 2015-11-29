@@ -294,7 +294,7 @@ var/global/list/atmos_controllers = list()
 			if(input_temperature==null)
 				return 0
 			if(input_temperature > max_temperature || input_temperature < min_temperature)
-				usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
+				to_chat(usr, "Temperature must be between [min_temperature]C and [max_temperature]C")
 			else
 				current.target_temperature = input_temperature + T0C
 			return 1

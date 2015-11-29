@@ -78,7 +78,7 @@ Feel free to do whatever with this if you think it lacks.
 
 /obj/machinery/pdapainter/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(busy)
-		user << "\The [src] is currently busy, try again later."
+		to_chat(user, "\The [src] is currently busy, try again later.")
 		return
 
 	if(..())
@@ -86,7 +86,7 @@ Feel free to do whatever with this if you think it lacks.
 
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
-			user << "There is already a PDA inside."
+			to_chat(user, "There is already a PDA inside.")
 			return
 		else
 			var/obj/item/device/pda/P = O
@@ -124,7 +124,7 @@ Feel free to do whatever with this if you think it lacks.
 		busy = 0 //do not forget this
 
 	else
-		user << "<span class='notice'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -140,7 +140,7 @@ Feel free to do whatever with this if you think it lacks.
 		storedpda = null
 		update_icon()
 	else
-		usr << "<span class='notice'>\The [src] is empty.</span>"
+		to_chat(usr, "<span class='notice'>\The [src] is empty.</span>")
 
 /obj/machinery/pdapainter/verb/printpda()
 	set name = "Print PDA"
@@ -150,10 +150,10 @@ Feel free to do whatever with this if you think it lacks.
 	if(!ishuman(usr))
 		return
 	if(storedpda)
-		usr << "You can't print a PDA while \the [storedpda] is loaded into \the [src]."
+		to_chat(usr, "You can't print a PDA while \the [storedpda] is loaded into \the [src].")
 		return
 	if(busy)
-		usr << "\The [src] is busy, try again later."
+		to_chat(usr, "\The [src] is busy, try again later.")
 		return
 	if(last_print + 300 < world.timeofday)
 		src.visible_message("<span class='notice'>\The [src] begins to hum lightly.</span>")
@@ -164,7 +164,7 @@ Feel free to do whatever with this if you think it lacks.
 		new /obj/item/device/pda(get_turf(src))
 		last_print = world.timeofday
 	else
-		usr << "\The [src] is not ready to print again."
+		to_chat(usr, "\The [src] is not ready to print again.")
 
 
 

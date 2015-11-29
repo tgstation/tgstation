@@ -17,7 +17,7 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -55,26 +55,26 @@
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		user <<"<span class='info'>The baton is [round(bcell.percent())]% charged.</span>"
+		to_chat(user, "<span class='info'>The baton is [round(bcell.percent())]% charged.</span>")
 	if(!bcell)
-		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
 		if(!bcell)
 			user.drop_item(W, src)
 			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
-			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the cell from the [src].</span>")
 			status = 0
 			update_icon()
 			return

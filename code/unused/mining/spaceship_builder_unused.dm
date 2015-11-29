@@ -119,17 +119,17 @@
 /obj/machinery/spaceship_builder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(operating == 1)
-		user << "The machine is processing"
+		to_chat(user, "The machine is processing")
 		return
 
 	if (!usr.dexterity_check())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if (istype(W, /obj/item/stack/sheet/metal))
 
 		var/obj/item/stack/sheet/metal/M = W
-		user << "<span class='notice'>You insert all the metal into the machine.</span>"
+		to_chat(user, "<span class='notice'>You insert all the metal into the machine.</span>")
 		metal_amount += M.amount * 100
 		del(M)
 
@@ -139,7 +139,7 @@
 
 /obj/machinery/spaceship_builder/attack_hand(user as mob)
 	if(operating == 1)
-		user << "The machine is processing"
+		to_chat(user, "The machine is processing")
 		return
 
 	var/dat

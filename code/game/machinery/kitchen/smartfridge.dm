@@ -215,7 +215,7 @@
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(stat & NOPOWER)
-		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is unpowered and useless.</span>")
 		return 1
 
 	if(..())
@@ -223,7 +223,7 @@
 
 	if(accept_check(O))
 		if(contents.len >= MAX_N_OF_ITEMS)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return 1
 		else
 			if(!user.drop_item(O, src))
@@ -244,7 +244,7 @@
 		for(var/obj/G in bag.contents)
 			if(accept_check(G))
 				if(contents.len >= MAX_N_OF_ITEMS)
-					user << "<span class='notice'>\The [src] is full.</span>"
+					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 					return 1
 				else
 					bag.remove_from_storage(G,src)
@@ -260,7 +260,7 @@
 			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [bag].</span>", \
 								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
 			if(bag.contents.len > 0)
-				user << "<span class='notice'>Some items are refused.</span>"
+				to_chat(user, "<span class='notice'>Some items are refused.</span>")
 
 	else if(istype(O, /obj/item/weapon/paper) && user.drop_item(O, src.loc))
 		var/list/params_list = params2list(params)
@@ -269,9 +269,9 @@
 			var/clamp_y = 16
 			O.pixel_x = Clamp(text2num(params_list["icon-x"]) - clamp_x, -clamp_x, clamp_x)
 			O.pixel_y = Clamp(text2num(params_list["icon-y"]) - clamp_y, -clamp_y, clamp_y)
-			user << "<span class='notice'>You hang \the [O.name] on the fridge.</span>"
+			to_chat(user, "<span class='notice'>You hang \the [O.name] on the fridge.</span>")
 	else
-		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
+		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return 1
 	item_quants = sortList(item_quants)
 	updateUsrDialog()

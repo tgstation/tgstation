@@ -45,5 +45,5 @@
 				mind.transfer_to(new_xeno)
 				del(src)
 		else
-			src << "<span class='notice'>We already have an alive queen.</span>"
+			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
 	return

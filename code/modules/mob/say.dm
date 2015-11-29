@@ -3,7 +3,7 @@
 	set category = "IC"
 
 	if(say_disabled)
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.say(message)
 
@@ -21,11 +21,11 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(!usr.stat && (usr.status_flags & FAKEDEATH))
-		usr << "<span class='danger'>Doing this will give us away!</span>"
+		to_chat(usr, "<span class='danger'>Doing this will give us away!</span>")
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if(usr.stat == DEAD)
@@ -38,11 +38,11 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(client && !(client.prefs.toggles & CHAT_DEAD))
-		usr << "<span class='danger'>You have deadchat muted.</span>"
+		to_chat(usr, "<span class='danger'>You have deadchat muted.</span>")
 		return
 
 	if(mind && mind.name)
@@ -60,17 +60,17 @@
 		if(istype(M, /mob/new_player) || !M.client)
 			continue
 		if(M.client && M.client.holder && M.client.holder.rights & R_ADMIN && (M.client.prefs.toggles & CHAT_DEAD)) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			M << rendered2	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			to_chat(M, rendered2)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+
 		else if(M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_DEAD))
 			//M.show_message(rendered2, 2) //Takes into account blindness and such.
-			M << rendered2
+			to_chat(M, rendered2)
 	return
 
 /mob/proc/emote(var/act, var/type, var/message, var/auto)
 	if(timestopped) return //under effects of time magick
 	if(act == "me")
 		return custom_emote(type, message)
-
 
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this

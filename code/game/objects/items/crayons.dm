@@ -46,11 +46,11 @@
 	if(colour != "#FFFFFF" && shadeColour != "#000000")
 		colour = "#FFFFFF"
 		shadeColour = "#000000"
-		user << "You will now draw in white and black with this crayon."
+		to_chat(user, "You will now draw in white and black with this crayon.")
 	else
 		colour = "#000000"
 		shadeColour = "#FFFFFF"
-		user << "You will now draw in black and white with this crayon."
+		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
 /obj/item/toy/crayon/rainbow
@@ -76,7 +76,7 @@
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				user << "You start drawing a letter on the [target.name]."
+				to_chat(user, "You start drawing a letter on the [target.name].")
 			if("graffiti")
 				var/list/graffitis = list(
 					"Random"="graffiti",
@@ -119,30 +119,30 @@
 				preference = input("Choose the graffiti.", "Crayon scribbles") in graffitis
 				drawtype=graffitis[preference]
 				if(drawtype=="cancel") return
-				user << "You start drawing graffiti on the [target.name]."
+				to_chat(user, "You start drawing graffiti on the [target.name].")
 			if("rune")
-				user << "You start drawing a rune on the [target.name]."
+				to_chat(user, "You start drawing a rune on the [target.name].")
 
 		if(user_loc != user.loc) return//check to see if user has moved
 		if(instant || do_after(user,target, 50))
 			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
-			user << "You finish drawing."
+			to_chat(user, "You finish drawing.")
 			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.
 			if(uses)
 				uses--
 				if(!uses)
-					user << "<span class='warning'>You used up your crayon!</span>"
+					to_chat(user, "<span class='warning'>You used up your crayon!</span>")
 					del(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		user << "You take a bite of the crayon. Delicious!"
+		to_chat(user, "You take a bite of the crayon. Delicious!")
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "<span class='warning'>You ate your crayon!</span>"
+				to_chat(user, "<span class='warning'>You ate your crayon!</span>")
 				del(src)
 	else
 		..()

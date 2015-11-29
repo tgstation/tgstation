@@ -600,7 +600,7 @@ obj/structure/bomberflame/Destroy()
 		"Fire",
 		)
 	var/disease = pick(diseases)
-	dispenser.loc << "<span class='danger'>[disease][((disease != "Fire")&&(disease != "Change")) ? " for 40 seconds" : ""]!!</span>"
+	to_chat(dispenser.loc, "<span class='danger'>[disease][((disease != "Fire")&&(disease != "Change")) ? " for 40 seconds" : ""]!!</span>")
 	switch(disease)
 		if("Low Power Disease")
 			dispenser.small_bomb = 1
@@ -966,7 +966,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		log_game("[key_name_admin(user.client)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) ")
 
 		for(var/mob/dead/observer/O in observers)
-			O << "<spawn class='notice'><b>[user.client.key] created a \"[size]\" Bomberman arena at [center.loc.name]. <A HREF='?src=\ref[O];jumptoarenacood=1;targetarena=\ref[src]'>Click here to JUMP to it.</A></b></span>"
+			to_chat(O, "<spawn class='notice'><b>[user.client.key] created a \"[size]\" Bomberman arena at [center.loc.name]. <A HREF='?src=\ref[O];jumptoarenacood=1;targetarena=\ref[src]'>Click here to JUMP to it.</A></b></span>")
 
 	else
 		qdel(src)
@@ -1060,7 +1060,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		status = ARENA_AVAILABLE
 
 		for(var/mob/M in arena)
-			M << "<span class='danger'>Not enough players. Round canceled.</span>"
+			to_chat(M, "<span class='danger'>Not enough players. Round canceled.</span>")
 
 		for(var/mob/M in gladiators)
 			qdel(M)
@@ -1075,22 +1075,22 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 	for(var/mob/M in arena)
 		if(violence)
-			M << "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!"
+			to_chat(M, "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!")
 		if(M.client)
-			M.client << sound('sound/bomberman/start.ogg')
-		M << "<b>READY?</b>"
+			to_chat(M.client, sound('sound/bomberman/start.ogg'))
+		to_chat(M, "<b>READY?</b>")
 
 	for(var/obj/machinery/computer/security/telescreen/entertainment/E in machines)
 		E.visible_message("<span style='color:grey'>\icon[E] \The [E] brightens as it appears that a round is starting in [name].</span>")
 		flick("entertainment_arena",E)
 
 	for(var/mob/dead/observer/O in observers)
-		O << "<b>A round has began in <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>[name]</A>!</b>"
+		to_chat(O, "<b>A round has began in <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>[name]</A>!</b>")
 
 	sleep(40)
 
 	for(var/mob/M in arena)
-		M << "<span class='danger'>GO!</span>"
+		to_chat(M, "<span class='danger'>GO!</span>")
 
 	return
 
@@ -1106,9 +1106,9 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 	for(var/mob/M in arena)
 		if(winner && winner.client)
-			M << "[winner ? "<b>[winner.client.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
+			to_chat(M, "[winner ? "<b>[winner.client.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds.")
 		else
-			M << "Couldn't find a winner. Resetting arena in 20 seconds."
+			to_chat(M, "Couldn't find a winner. Resetting arena in 20 seconds.")
 
 	if(winner)
 		if(winner.client.key in arena_leaderboard)
@@ -1335,7 +1335,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 				if(achoice=="Confirm")
 					choice = 1
 			else
-				user << "<span class='warning'>Part of the arena was outside the Z-Level.</span>"
+				to_chat(user, "<span class='warning'>Part of the arena was outside the Z-Level.</span>")
 		if("39x23 (10 players)")
 			var/obj/structure/planner/pencil = new(center, src)
 			var/w = 38

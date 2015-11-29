@@ -29,7 +29,7 @@
 	implanted(mob/M)
 		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
-		H << "<span class='notice'>Your hair raises on end as you feel a weak bluespace void surround you.</span>"
+		to_chat(H, "<span class='notice'>Your hair raises on end as you feel a weak bluespace void surround you.</span>")
 		H.locked_to_z = ASTEROID_Z
 		return 1
 

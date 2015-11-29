@@ -11,7 +11,7 @@
 		who = world
 	else
 		who = src
-		who << "<b>Obey these laws:</b>"
+		to_chat(who, "<b>Obey these laws:</b>")
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
@@ -42,7 +42,7 @@
 		if(force_sync)
 			R.lawsync()
 		if(R.lawupdate && (R.connected_ai == src))
-			R << "<span class='danger'>...LAWS UPDATED</span>"
+			to_chat(R, "<span class='danger'>...LAWS UPDATED</span>")
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
 	src.laws_sanity_check()

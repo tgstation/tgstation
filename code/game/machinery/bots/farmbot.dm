@@ -165,17 +165,17 @@
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass/fertilizer))
 		if ( get_total_ferts() >= Max_Fertilizers )
-			user << "The fertilizer storage is full!"
+			to_chat(user, "The fertilizer storage is full!")
 			return
 		user.drop_item(W, src)
-		user << "You insert [W]."
+		to_chat(user, "You insert [W].")
 		flick("farmbot_hatch",src)
 		src.updateUsrDialog()
 		return
@@ -185,7 +185,7 @@
 
 /obj/machinery/bot/farmbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "<span class='warning'>You short out [src]'s plant identifier circuits.</span>"
+	if(user) to_chat(user, "<span class='warning'>You short out [src]'s plant identifier circuits.</span>")
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
@@ -539,7 +539,7 @@
 
 	A.loc = src.loc
 	A.layer = 20
-	user << "You add the robot arm to the [src]"
+	to_chat(user, "You add the robot arm to the [src]")
 	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
 
 	del(S)
@@ -548,25 +548,25 @@
 	..()
 	if((istype(W, /obj/item/device/analyzer/plant_analyzer)) && (!src.build_step))
 		src.build_step++
-		user << "You add the plant analyzer to [src]!"
+		to_chat(user, "You add the plant analyzer to [src]!")
 		src.name = "farmbot assembly"
 		del(W)
 
 	else if(( istype(W, /obj/item/weapon/reagent_containers/glass/bucket)) && (src.build_step == 1))
 		src.build_step++
-		user << "You add a bucket to [src]!"
+		to_chat(user, "You add a bucket to [src]!")
 		src.name = "farmbot assembly with bucket"
 		del(W)
 
 	else if(( istype(W, /obj/item/weapon/minihoe)) && (src.build_step == 2))
 		src.build_step++
-		user << "You add a minihoe to [src]!"
+		to_chat(user, "You add a minihoe to [src]!")
 		src.name = "farmbot assembly with bucket and minihoe"
 		del(W)
 
 	else if((isprox(W)) && (src.build_step == 3))
 		src.build_step++
-		user << "You complete the Farmbot! Beep boop."
+		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
 		for ( var/obj/structure/reagent_dispensers/watertank/wTank in src.contents )
 			wTank.loc = S

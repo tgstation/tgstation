@@ -35,5 +35,5 @@
 		charged = 0
 		visible_message("<span class='danger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
 	else
-		user << "<span class='warning'>The unearthly energies that powered the blade are now dormant</span>"
+		to_chat(user, "<span class='warning'>The unearthly energies that powered the blade are now dormant</span>")
 

@@ -32,10 +32,10 @@
 		return
 	var/T = user.loc
 	if (!( istype(T, /turf) ))
-		user << "<span class='warning'>You must be on the ground!</span>"
+		to_chat(user, "<span class='warning'>You must be on the ground!</span>")
 		return
 	if (!( istype(T, /turf/space) ))
-		user << "<span class='warning'>You cannot build on or repair this turf!</span>"
+		to_chat(user, "<span class='warning'>You cannot build on or repair this turf!</span>")
 		return
 	src.build(T)
 	src.add_fingerprint(user)
@@ -56,7 +56,7 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(amount < 4)
-			user << "<span class='warning'>You need at least four tiles to do this.</span>"
+			to_chat(user, "<span class='warning'>You need at least four tiles to do this.</span>")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -96,5 +96,5 @@
 					S.build(T)
 					S.use(1)
 				if(BUILD_FAILURE)
-					user << "<span class='warning'>The plating is going to need some support.</span>"
+					to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 					return

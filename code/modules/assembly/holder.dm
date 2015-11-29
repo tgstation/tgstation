@@ -94,9 +94,9 @@
 /obj/item/device/assembly_holder/examine(mob/user)
 	..()
 	if (secured)
-		user << "<span class='info'>\The [src] is ready!</span>"
+		to_chat(user, "<span class='info'>\The [src] is ready!</span>")
 	else
-		user << "<span class='info'>\The [src] can be attached!</span>"
+		to_chat(user, "<span class='info'>\The [src] can be attached!</span>")
 
 
 /obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
@@ -149,37 +149,37 @@
 /obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(isscrewdriver(W))
 		if(!a_left || !a_right)
-			user << "<span class='warning'>BUG:Assembly part missing, please report this!</span>"
+			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
 		a_left.toggle_secure()
 		a_right.toggle_secure()
 		secured = !secured
 		if(secured)
-			user << "<span class='notice'>\The [src] is ready!</span>"
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			user << "<span class='notice'>\The [src] can now be taken apart!</span>"
+			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
 	else if(W.IsSpecialAssembly())
 		attach_special(W, user)
 	else if(istype(W,/obj/item/weapon/weldingtool))
 		if(!a_left || !a_right)
-			user << "<span class='warning'>BUG:Assembly part missing, please report this!</span>"
+			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
 		if(!isigniter(a_left) && !isigniter(a_right))
-			user << "<span class='warning'>You can't make an igniter without an igniting component!</span>"
+			to_chat(user, "<span class='warning'>You can't make an igniter without an igniting component!</span>")
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-			user << "<span class='notice'>You begin to weld \the [src] to the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin to weld \the [src] to the floor...</span>")
 			if (do_after(user, src, 40))
 				var/obj/machinery/igniter/igniter=new(src.loc)
 				igniter.assembly=src
 				src.loc=igniter
-				user << "<span class='notice'>You attach the assembly to the floor with a few spot welds.</span>"
+				to_chat(user, "<span class='notice'>You attach the assembly to the floor with a few spot welds.</span>")
 		else:
-			user << "<span class='warning'>You need more welder fuel to do that.</span>"
+			to_chat(user, "<span class='warning'>You need more welder fuel to do that.</span>")
 			return
 
 	else
@@ -191,7 +191,7 @@
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
-			user << "<span class='warning'>Assembly part missing!</span>"
+			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))
@@ -276,18 +276,18 @@
 		if(!istype(tmr,/obj/item/device/assembly/timer))
 			tmr = holder.a_right
 		if(!istype(tmr,/obj/item/device/assembly/timer))
-			usr << "<span class='notice'>This detonator has no timer.</span>"
+			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 
 		if(tmr.timing)
-			usr << "<span class='notice'>Clock is ticking already.</span>"
+			to_chat(usr, "<span class='notice'>Clock is ticking already.</span>")
 		else
 			var/ntime = input("Enter desired time in seconds", "Time", "5") as num
 			if (ntime>0 && ntime<1000)
 				tmr.time = ntime
 				name = initial(name) + "([tmr.time] secs)"
-				usr << "<span class='notice'>Timer set to [tmr.time] seconds.</span>"
+				to_chat(usr, "<span class='notice'>Timer set to [tmr.time] seconds.</span>")
 			else
-				usr << "<span class='notice'>Timer can't be [ntime<=0?"negative":"more than 1000 seconds"].</span>"
+				to_chat(usr, "<span class='notice'>Timer can't be [ntime<=0?"negative":"more than 1000 seconds"].</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while [usr.stat?"unconscious/dead":"restrained"].</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while [usr.stat?"unconscious/dead":"restrained"].</span>")

@@ -77,15 +77,15 @@
 
 	if(isanimal(M))
 		if(M.size <= SIZE_TINY) //Fuck off mice
-			user << "The [M] is too small to buckle in."
+			to_chat(user, "The [M] is too small to buckle in.")
 			return
 
 	if(istype(M, /mob/living/carbon/slime))
-		user << "The [M] is too squishy to buckle in."
+		to_chat(user, "The [M] is too squishy to buckle in.")
 		return
 
 	if(locked_atoms.len)
-		user << "Somebody else is already buckled into \the [src]!"
+		to_chat(user, "Somebody else is already buckled into \the [src]!")
 
 	if(M == usr)
 		M.visible_message(\

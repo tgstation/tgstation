@@ -157,9 +157,9 @@
 			use_energy(selected.energy_cost, user)
 	else
 		if(istext(t))
-			user << "<span class='warning'>\the [src]'s error light flickers: [t]</span>"
+			to_chat(user, "<span class='warning'>\the [src]'s error light flickers: [t]</span>")
 		else
-			user << "<span class='warning'>\the [src]'s error light flickers.</span>"
+			to_chat(user, "<span class='warning'>\the [src]'s error light flickers.</span>")
 
 	busy = 0
 
@@ -224,23 +224,23 @@
 
 /obj/item/device/rcd/matter/examine(var/mob/user)
 	..()
-	user << "It currently holds [matter]/[max_matter] matter-units."
+	to_chat(user, "It currently holds [matter]/[max_matter] matter-units.")
 
 /obj/item/device/rcd/matter/attackby(var/obj/item/weapon/W, var/mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		if((matter + 10) > max_matter)
-			user << "<span class='notice'>\the [src] can't hold any more matter-units.</span>"
+			to_chat(user, "<span class='notice'>\the [src] can't hold any more matter-units.</span>")
 			return 1
 
 		qdel(W)
 		matter += 10
 		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
-		user << "<span class='notice'>\the [src] now holds [matter]/[max_matter] matter-units.</span>"
+		to_chat(user, "<span class='notice'>\the [src] now holds [matter]/[max_matter] matter-units.</span>")
 		return 1
 
 	if(isscrewdriver(W))
-		user << "<span class='notice'>You unscrew the access panel and release the cartridge chamber.</span>"
+		to_chat(user, "<span class='notice'>You unscrew the access panel and release the cartridge chamber.</span>")
 		while(matter >= 10)
 			new /obj/item/weapon/rcd_ammo(user.loc)
 			matter -= 10
@@ -249,7 +249,7 @@
 
 /obj/item/device/rcd/matter/use_energy(var/amount, var/mob/user)
 	matter -= amount
-	user << "<span class='notice'>\the [src] currently holds [matter]/[max_matter] matter-units."
+	to_chat(user, "<span class='notice'>\the [src] currently holds [matter]/[max_matter] matter-units.")
 
 /obj/item/device/rcd/matter/get_energy(var/mob/user)
 	return matter

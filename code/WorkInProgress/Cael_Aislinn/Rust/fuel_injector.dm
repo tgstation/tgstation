@@ -35,7 +35,7 @@
 
 /obj/machinery/power/rust_fuel_injector/wrenchAnchor(mob/user)
 	if(injecting)
-		user << "Turn off the [src] first."
+		to_chat(user, "Turn off the [src] first.")
 		return -1
 	return ..()
 
@@ -62,13 +62,13 @@
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "<span class='warning'>The lock seems to be broken</span>"
+			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
 		if(src.allowed(user))
 			src.locked = !src.locked
-			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/fuel_assembly) && !cur_assembly)
@@ -164,7 +164,7 @@
 	if( href_list["fuel_usage"] )
 		var/new_usage = text2num(input("Enter new fuel usage (0.01% - 100%)", "Modifying fuel usage", fuel_usage * 100))
 		if(!new_usage)
-			usr << "<span class='warning'>That's not a valid number.</span>"
+			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return
 		new_usage = max(new_usage, 0.01)
 		new_usage = min(new_usage, 100)
@@ -200,15 +200,15 @@
 	if(cur_assembly)
 		var/amount_left = 0
 		for(var/reagent in cur_assembly.rod_quantities)
-			//world << "checking [reagent]"
+//			to_chat(world, "checking [reagent]")
 			if(cur_assembly.rod_quantities[reagent] > 0)
-				//world << "	rods left: [cur_assembly.rod_quantities[reagent]]"
+//					to_chat(world, "	rods left: [cur_assembly.rod_quantities[reagent]]")
 				var/amount = cur_assembly.rod_quantities[reagent] * fuel_usage
 				var/numparticles = round(amount * 1000)
 				if(numparticles < 1)
 					numparticles = 1
-				//world << "	amount: [amount]"
-				//world << "	numparticles: [numparticles]"
+//					to_chat(world, "	amount: [amount]")
+//					to_chat(world, "	numparticles: [numparticles]")
 				//
 
 				var/obj/effect/accelerated_particle/A = new/obj/effect/accelerated_particle(get_turf(src), dir)

@@ -59,7 +59,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/SKIN_BURNS))
 			if(!pl_head_protected() || !pl_suit_protected())
 				burn_skin(0.75)
-				if(prob(20)) src << "<span class='warning'>Your skin burns!</span>"
+				if(prob(20)) to_chat(src, "<span class='warning'>Your skin burns!</span>")
 				updatehealth()
 
 		//Burn eyes if exposed.
@@ -72,7 +72,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
 			if(rand(1,10000) < zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
 				randmutb(src)
-				src << "<span class='warning'>High levels of toxins cause you to spontaneously mutate.</span>"
+				to_chat(src, "<span class='warning'>High levels of toxins cause you to spontaneously mutate.</span>")
 				domutcheck(src,null)
 
 
@@ -82,11 +82,11 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		return
 	var/datum/organ/internal/eyes/E = internal_organs_by_name["eyes"]
 	if(E)
-		if(prob(20)) src << "<span class='warning'>Your eyes burn!</span>"
+		if(prob(20)) to_chat(src, "<span class='warning'>Your eyes burn!</span>")
 		E.damage += 2.5
 		eye_blurry = min(eye_blurry+1.5,50)
 		if (prob(max(0,E.damage - 15) + 1) && !eye_blind)
-			src << "<span class='warning'>You are blinded!</span>"
+			to_chat(src, "<span class='warning'>You are blinded!</span>")
 			eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()

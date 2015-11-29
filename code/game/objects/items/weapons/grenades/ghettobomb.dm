@@ -8,7 +8,7 @@
         user.before_take_item(G)
         user.before_take_item(src)
         user.put_in_hands(W)
-        user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
+        to_chat(user, "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>")
         W.underlays += image(src.icon, icon_state = src.icon_state)
         del(I)
         del(src)
@@ -36,12 +36,12 @@
 	if(assembled == 0)
 		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
 			if(target.reagents.total_volume < 50)
-				user << "<span  class='notice'>There's not enough fuel left to work with.</span>"
+				to_chat(user, "<span  class='notice'>There's not enough fuel left to work with.</span>")
 				return
 			var/obj/structure/reagent_dispensers/fueltank/F = target
 			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 50 fuel from the welding fuel tank,
 			assembled = 1
-			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
+			to_chat(user, "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>")
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
@@ -54,7 +54,7 @@
 			var/obj/item/stack/cable_coil/C = I
 			C.use(1)
 			assembled = 2
-			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
+			to_chat(user, "<span  class='notice'>You wire the igniter to detonate the fuel.</span>")
 			desc = "A weak, improvised explosive."
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
 			name = "improvised explosive"
@@ -64,7 +64,7 @@
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //Activating the IED
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You light the [name]!</span>"
+			to_chat(user, "<span class='warning'>You light the [name]!</span>")
 			active = 1
 			overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
@@ -101,4 +101,4 @@
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
 	..()
 	if(assembled == 3)
-		user << "<span class='info'>You can't tell when it will explode!</span>" //Stops you from checking the time to detonation unlike regular grenades
+		to_chat(user, "<span class='info'>You can't tell when it will explode!</span>")//Stops you from checking the time to detonation unlike regular grenades

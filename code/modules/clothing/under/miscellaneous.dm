@@ -563,7 +563,7 @@
 	var/list/slot_must_be_empty = list(slot_back,slot_handcuffed,slot_legcuffed,slot_l_hand,slot_r_hand,slot_belt,slot_head,slot_wear_suit)
 	for(var/slot_id in slot_must_be_empty)
 		if(user.get_item_by_slot(slot_id))
-			user << "<span class='warning'>You can't fit inside while wearing that \the [user.get_item_by_slot(slot_id)].</span>"
+			to_chat(user, "<span class='warning'>You can't fit inside while wearing that \the [user.get_item_by_slot(slot_id)].</span>")
 			return 0
 	return 1
 

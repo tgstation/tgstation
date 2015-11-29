@@ -159,7 +159,7 @@ emp_act
 		src.reagents.trans_to (newmeat, round ((src.reagents.total_volume) / 3, 1))
 		src.loc.add_blood(src)
 		--src.meatleft
-		user << "<span class='warning'>You hack off a chunk of meat from [src.name]</span>"
+		to_chat(user, "<span class='warning'>You hack off a chunk of meat from [src.name]</span>")
 		if(!src.meatleft)
 			src.attack_log += "\[[time_stamp()]\] Was chopped up into meat by <b>[user]/[user.ckey]</b>"
 			user.attack_log += "\[[time_stamp()]\] Chopped up <b>[src]/[src.ckey]</b> into meat</b>"
@@ -173,7 +173,7 @@ emp_act
 	if (!affecting)
 		return
 	if(affecting.status & ORGAN_DESTROYED)
-		user << "What [affecting.display_name]?"
+		to_chat(user, "What [affecting.display_name]?")
 		return
 	var/hit_area = affecting.display_name
 
@@ -182,12 +182,12 @@ emp_act
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			user << "<span class='warning'>That limb isn't robotic.</span>"
+			to_chat(user, "<span class='warning'>That limb isn't robotic.</span>")
 			return 0
 		if(affecting.sabotaged)
-			user << "<span class='warning'>[src]'s [affecting.display_name] is already sabotaged!</span>"
+			to_chat(user, "<span class='warning'>[src]'s [affecting.display_name] is already sabotaged!</span>")
 		else
-			user << "<span class='warning'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>"
+			to_chat(user, "<span class='warning'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>")
 			affecting.sabotaged = 1
 		return 0
 

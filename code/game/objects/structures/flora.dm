@@ -85,10 +85,10 @@
 	if(!I)
 		return
 	if(I.w_class>2.0)
-		user << "That item is too big."
+		to_chat(user, "That item is too big.")
 		return
 	if(full)
-		user << "There is already something in the pot."
+		to_chat(user, "There is already something in the pot.")
 	else
 		if(user.drop_item(I, src))
 			full = I
@@ -102,7 +102,7 @@
 		user.put_in_active_hand(full)
 		full = null
 	else
-		user << "You root around in the roots."
+		to_chat(user, "You root around in the roots.")
 
 // /vg/
 /obj/structure/flora/pottedplant/random/New()

@@ -71,25 +71,25 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 
 	if (src.zeroth)
-		who << "0. [src.zeroth]"
+		to_chat(who, "0. [src.zeroth]")
 
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		who << "[num]. [law]"
+		to_chat(who, "[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/write_laws()

@@ -329,43 +329,43 @@
 	switch(stage)
 		if(1)
 			if (prob(8))
-				affected_mob << pick("<span class='warning'>Something about you doesnt feel right.</span>","<span class='warning'>Your head starts to itch.</span>")
+				to_chat(affected_mob, pick("<span class='warning'>Something about you doesnt feel right.</span>","<span class='warning'>Your head starts to itch.</span>"))
 		if(2)
 			if (prob(8))
-				affected_mob << "<span class='warning'>Your limbs feel numb.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your limbs feel numb.</span>")
 				affected_mob.bruteloss += 1
 				affected_mob.updatehealth()
 			if (prob(9))
-				affected_mob << "<span class='warning'>You feel ill...</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel ill...</span>")
 			if (prob(9))
-				affected_mob << "<span class='warning'>You feel a pain in your stomache...</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel a pain in your stomache...</span>")
 		if(3)
 			if (prob(8))
-				affected_mob << text("<span class='warning'>[]</span>", pick("owww...","I want...","Please..."))
+				to_chat(affected_mob, text("<span class='warning'>[]</span>", pick("owww...","I want...","Please...")))
 				affected_mob.bruteloss += 1
 				affected_mob.updatehealth()
 			if (prob(10))
-				affected_mob << "<span class='warning'>You feel very ill.</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel very ill.</span>")
 				affected_mob.bruteloss += 5
 				affected_mob.updatehealth()
 			if (prob(4))
-				affected_mob << "<span class='warning'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your head.</span>")
 				affected_mob.paralysis += 2
 			if (prob(4))
-				affected_mob << "<span class='warning'>Whats going to happen to me?</span>"
+				to_chat(affected_mob, "<span class='warning'>Whats going to happen to me?</span>")
 		if(4)
 			if (prob(10))
-				affected_mob << pick("<span class='warning'>You feel violently sick.</span>")
+				to_chat(affected_mob, pick("<span class='warning'>You feel violently sick.</span>"))
 				affected_mob.bruteloss += 8
 				affected_mob.updatehealth()
 			if (prob(20))
 				affected_mob.say(pick("Mmmmm.", "Hey... You look...", "Hsssshhhhh!"))
 			if (prob(8))
-				affected_mob << "<span class='warning'>You cant... feel...</span>"
+				to_chat(affected_mob, "<span class='warning'>You cant... feel...</span>")
 		if(5)
 			affected_mob.toxloss += 10
 			affected_mob.updatehealth()
-			affected_mob << "You feel the life slowly slip away from you as you join the army of the undead.."
+			to_chat(affected_mob, "You feel the life slowly slip away from you as you join the army of the undead..")
 			affected_mob:Zombify()
 
 
@@ -489,8 +489,8 @@ datum/reagent/zed
 	if (reagents.total_volume)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("<span class='notice'>[] has been stabbed with [] by [].</span>", M, src, user), 1)
-//		user << "<span class='warning'>You stab [M] with the pen.</span>"
-//		M << "<span class='warning'>You feel a tiny prick!</span>"
+//		to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+//		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		if(M.reagents) reagents.trans_to(M, 10)
 		icon_state = "zed_0"
 	return
@@ -534,7 +534,7 @@ datum/reagent/zed
 
 //	if(!istype(ticker.mode, /datum/game_mode/biohazard))
 //		if(src)
-//			src << "<span class='warning'>Wrong game mode!</span>"
+//			to_chat(src, "<span class='warning'>Wrong game mode!</span>")
 //			return
 
 	if(usr) message_admins("[key_name_admin(usr)] has spawned a zombie", 1)
@@ -543,7 +543,7 @@ datum/reagent/zed
 	for(var/obj/landmark/zspawn/O in landmarks_list)
 		t += O
 	if(!t.len)
-		usr<<"No spawn points exist."
+		to_chat(usr, "No spawn points exist.")
 		return
 	var/obj/landmark/s = pick(t)
 	var/mob/living/carbon/human/zombie/Z = new/mob/living/carbon/human/zombie(s.loc)

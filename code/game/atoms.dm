@@ -368,21 +368,21 @@ its easier to just keep the beam vertical.
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]" + size
+	to_chat(user, "\icon[src] That's [f_name]" + size)
 	if(desc)
-		user << desc
+		to_chat(user, desc)
 
 	if(reagents && is_open_container() && !ismob(src)) //is_open_container() isn't really the right proc for this, but w/e
 		if(get_dist(user,src) > 3)
-			user << "<span class='info'>You can't make out the contents.</span>"
+			to_chat(user, "<span class='info'>You can't make out the contents.</span>")
 		else
-			user << "It contains:"
+			to_chat(user, "It contains:")
 			if(!user.hallucinating())
 				if(reagents.reagent_list.len)
 					for(var/datum/reagent/R in reagents.reagent_list)
-						user << "<span class='info'>[R.volume] units of [R.name]</span>"
+						to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 				else
-					user << "<span class='info'>Nothing.</span>"
+					to_chat(user, "<span class='info'>Nothing.</span>")
 
 			else //Show stupid things to hallucinating mobs
 				var/list/fake_reagents = list("Water", "Orange juice", "Banana juice", "Tungsten", "Chloral Hydrate", "Helium",\
@@ -394,16 +394,16 @@ its easier to just keep the beam vertical.
 					var/fake_reagent = pick(fake_reagents)
 					fake_reagents -= fake_reagent
 
-					user << "<span class='info'>[fake_amount] units of [fake_reagent]</span>"
+					to_chat(user, "<span class='info'>[fake_amount] units of [fake_reagent]</span>")
 	if(on_fire)
 		user.simple_message("<span class='danger'>OH SHIT! IT'S ON FIRE!</span>",\
 			"<span class='info'>It's on fire, man.</span>")
 
 	if(min_harm_label && harm_labeled)
 		if(harm_labeled < min_harm_label)
-			user << harm_label_examine[1]
+			to_chat(user, harm_label_examine[1])
 		else
-			user << harm_label_examine[2]
+			to_chat(user, harm_label_examine[2])
 	return
 
 // /atom/proc/MouseDrop_T()
@@ -532,7 +532,7 @@ its easier to just keep the beam vertical.
 	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/reagent_containers/spray)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "<span class='danger'>[src] has been hit by [user] with [W]</span>"
+				to_chat(O, "<span class='danger'>[src] has been hit by [user] with [W]</span>")
 	return
 */
 /atom/proc/add_hiddenprint(mob/living/M as mob)
@@ -704,7 +704,7 @@ its easier to just keep the beam vertical.
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
-//	world << "X = [cur_x]; Y = [cur_y]"
+//	to_chat(world, "X = [cur_x]; Y = [cur_y]")
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else

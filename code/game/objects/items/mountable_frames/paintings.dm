@@ -136,7 +136,7 @@ var/global/list/available_paintings = list(
 			desc = "a blank painting."
 
 /obj/item/mounted/frame/painting/do_build(turf/on_wall, mob/user)
-	user << "<span class='notice'>You hang the [src] on \the [on_wall]...</span>"
+	to_chat(user, "<span class='notice'>You hang the [src] on \the [on_wall]...</span>")
 
 	add_fingerprint(user)
 
@@ -269,7 +269,7 @@ var/global/list/available_paintings = list(
 			desc = "a blank painting."
 
 /obj/structure/painting/attack_hand(mob/user)
-	user << "<span class='notice'>You pick up \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You pick up \the [src]...</span>")
 
 	add_fingerprint(user)
 

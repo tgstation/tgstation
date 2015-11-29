@@ -30,32 +30,32 @@
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
-			user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
+			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first.</span>")
 			return
 
 		if(!tank_one)
 			tank_one = item
 			user.drop_item(item, src)
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 		else if(!tank_two)
 			tank_two = item
 			user.drop_item(item, src)
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
 		update_icon()
 	//TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)
-			user << "<span class='notice'>The device is secured.</span>"
+			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
 		if(attached_device)
-			user << "<span class='warning'>There is already a device attached to the valve, remove it first.</span>"
+			to_chat(user, "<span class='warning'>There is already a device attached to the valve, remove it first.</span>")
 			return
 		user.remove_from_mob(item)
 		attached_device = A
 		A.loc = src
-		user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"
+		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 

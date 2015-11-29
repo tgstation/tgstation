@@ -209,14 +209,14 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	// Cloning stuff goes here.
 	if(P.clone && P.buffer) // Cloning is on.
 		if(!canClone(P.buffer))
-			user << "<span class='attack'>A red light flashes on \the [P]; you cannot clone to this device!</span>"
+			to_chat(user, "<span class='attack'>A red light flashes on \the [P]; you cannot clone to this device!</span>")
 			return
 
 		if(!clone(P.buffer))
-			user << "<span class='attack'>A red light flashes on \the [P]; something went wrong when cloning to this device!</span>"
+			to_chat(user, "<span class='attack'>A red light flashes on \the [P]; something went wrong when cloning to this device!</span>")
 			return
 
-		user << "<span class='confirm'>A green light flashes on \the [P], confirming the device was cloned to.</span>"
+		to_chat(user, "<span class='confirm'>A green light flashes on \the [P], confirming the device was cloned to.</span>")
 		return
 
 	var/dat = {"<html>

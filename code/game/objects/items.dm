@@ -191,7 +191,7 @@
 		if(!A.has_fine_manipulation || w_class >= 4)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
 				A.drop_from_inventory(src)
-			user << "Your claws aren't capable of such fine manipulation."
+			to_chat(user, "Your claws aren't capable of such fine manipulation.")
 			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
@@ -286,7 +286,7 @@
 				testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						H << "<span class='warning'>You're too fat to wear the [name].</span>"
+						to_chat(H, "<span class='warning'>You're too fat to wear the [name].</span>")
 					return 0
 
 		switch(slot)
@@ -361,7 +361,7 @@
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -460,7 +460,7 @@
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -476,7 +476,7 @@
 			if(slot_l_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -493,7 +493,7 @@
 			if(slot_r_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -510,15 +510,15 @@
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "<span class='warning'>You need a suit before you can attach this [name].</span>"
+						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
-						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 					return 0
 				if(src.w_class > 3 && !H.wear_suit.allowed.len)
 					if(!disable_warning)
-						usr << "The [name] is too big to attach."
+						to_chat(usr, "The [name] is too big to attach.")
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					if(H.s_store)
@@ -587,15 +587,15 @@
 	if(!user.canmove || user.stat || user.restrained() || !Adjacent(user))
 		return 0
 	if((!istype(user, /mob/living/carbon) && !isMoMMI(user)) || istype(user, /mob/living/carbon/brain)) //Is not a carbon being, MoMMI, or is a brain
-		user << "You can't pick things up!"
+		to_chat(user, "You can't pick things up!")
 	if( user.stat || user.restrained() )//Is not asleep/dead and is not restrained
-		user << "<span class='warning'>You can't pick things up!</span>"
+		to_chat(user, "<span class='warning'>You can't pick things up!</span>")
 		return 0
 	if(src.anchored) //Object isn't anchored
-		user << "<span class='warning'>You can't pick that up!</span>"
+		to_chat(user, "<span class='warning'>You can't pick that up!</span>")
 		return 0
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		user << "<span class='warning'>You can't pick that up!</span>"
+		to_chat(user, "<span class='warning'>You can't pick that up!</span>")
 		return 0
 	return 1
 
@@ -607,16 +607,16 @@
 	if(!can_pickup(user))
 		return 0
 	if(!user.hand && user.r_hand) //Right hand is not full
-		user << "<span class='warning'>Your right hand is full.</span>"
+		to_chat(user, "<span class='warning'>Your right hand is full.</span>")
 		return
 	if(user.hand && user.l_hand && !isMoMMI(user)) //Left hand is not full
-		user << "<span class='warning'>Your left hand is full.</span>"
+		to_chat(user, "<span class='warning'>Your left hand is full.</span>")
 		return
 	//All checks are done, time to pick it up!
 	if(isMoMMI(user))
 		// Otherwise, we get MoMMIs changing their own laws.
 		if(istype(src,/obj/item/weapon/aiModule))
-			src << "<span class='warning'>Your firmware prevents you from picking up [src]!</span>"
+			to_chat(src, "<span class='warning'>Your firmware prevents you from picking up [src]!</span>")
 			return
 		if(user.get_active_hand() == null)
 			user.put_in_hands(src)
@@ -685,7 +685,7 @@
 	if(istype(H))
 		var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
 		if(eye_protection)
-			user << "<span class='warning'>You're going to need to remove that [eye_protection] first.</span>"
+			to_chat(user, "<span class='warning'>You're going to need to remove that [eye_protection] first.</span>")
 			return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -693,11 +693,11 @@
 			(Mo.wear_mask && Mo.wear_mask.body_parts_covered & EYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='warning'>You're going to need to remove that mask first.</span>"
+		to_chat(user, "<span class='warning'>You're going to need to remove that mask first.</span>")
 		return
 
 	if(!M.has_eyes())
-		user << "<span class='warning'>You cannot locate any eyes on [M]!</span>"
+		to_chat(user, "<span class='warning'>You cannot locate any eyes on [M]!</span>")
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -713,7 +713,7 @@
 	//if((M_CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		M << "<span class='warning'>You stab yourself in the eye.</span>"
+		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
@@ -726,8 +726,8 @@
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
 				O.show_message("<span class='attack'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-			M << "<span class='attack'>[user] stabs you in the eye with [src]!</span>"
-			user << "<span class='attack'>You stab [M] in the eye with [src]!</span>"
+			to_chat(M, "<span class='attack'>[user] stabs you in the eye with [src]!</span>")
+			to_chat(user, "<span class='attack'>You stab [M] in the eye with [src]!</span>")
 		else
 			user.visible_message( \
 				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
@@ -738,17 +738,17 @@
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "<span class='warning'>Your eyes start to bleed profusely!</span>"
+					to_chat(M, "<span class='warning'>Your eyes start to bleed profusely!</span>")
 			if(prob(50))
 				if(M.stat != 2)
-					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
+					to_chat(M, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					M.drop_item()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
-					M << "<span class='warning'>You go blind!</span>"
+					to_chat(M, "<span class='warning'>You go blind!</span>")
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon(1)

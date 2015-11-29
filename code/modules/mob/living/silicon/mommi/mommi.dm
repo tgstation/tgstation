@@ -46,7 +46,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/examination(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	if(ismob(A) && src.can_see_static()) //can't examine what you can't catch!
-		usr << "Your vision module can't determine any of [A]'s features."
+		to_chat(usr, "Your vision module can't determine any of [A]'s features.")
 		return
 
 	..()
@@ -94,7 +94,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	// Sanity check
 	if(connected_ai && keeper)
-		world << "<span class='warning'>ASSERT FAILURE: connected_ai && keeper in mommi.dm</span>"
+		to_chat(world, "<span class='warning'>ASSERT FAILURE: connected_ai && keeper in mommi.dm</span>")
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
@@ -189,7 +189,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/emag_act(mob/user as mob)
 	if(user == src && emagged != 1)//Dont shitpost inside the game, thats just going too far
-		user << "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>"
+		to_chat(user, "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>")
 		return
 	..()
 	remove_static_overlays()
@@ -208,7 +208,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
+			to_chat(user, "Need more welding fuel!")
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
@@ -221,16 +221,16 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(stat == DEAD)
-			user << "You pop the MMI off the base."
+			to_chat(user, "You pop the MMI off the base.")
 			spawn(0)
 				del(src)
 			return
 		if(opened)
 			if(mmi && wiresexposed && wires.IsAllCut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
-				user << "You jam the crowbar into \the [src] and begin levering [mmi]."
+				to_chat(user, "You jam the crowbar into \the [src] and begin levering [mmi].")
 				if (do_after(user, src,3))
-					user << "You damage some parts of the casing, but eventually manage to rip out [mmi]!"
+					to_chat(user, "You damage some parts of the casing, but eventually manage to rip out [mmi]!")
 					var/limbs = list(/obj/item/robot_parts/l_leg, /obj/item/robot_parts/r_leg, /obj/item/robot_parts/l_arm, /obj/item/robot_parts/r_arm)
 					for(var/newlimb = 1 to rand(2, 4))
 						var/limb_to_spawn = pick(limbs)
@@ -243,26 +243,26 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					del(src)
 					return
 			else
-				user << "You close the cover."
+				to_chat(user, "You close the cover.")
 				opened = 0
 				updateicon()
 		else
 			if(locked)
-				user << "The cover is locked and cannot be opened."
+				to_chat(user, "The cover is locked and cannot be opened.")
 			else
-				user << "You open the cover."
+				to_chat(user, "You open the cover.")
 				opened = 1
 				updateicon()
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "Close the panel first."
+			to_chat(user, "Close the panel first.")
 		else if(cell)
-			user << "There is a power cell already installed."
+			to_chat(user, "There is a power cell already installed.")
 		else
 			user.drop_item(W, src)
 			cell = W
-			user << "You insert the power cell."
+			to_chat(user, "You insert the power cell.")
 //			chargecount = 0
 		updateicon()
 
@@ -270,57 +270,57 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if (wiresexposed)
 			wires.Interact(user)
 		else
-			user << "You can't reach the wiring."
+			to_chat(user, "You can't reach the wiring.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		updateicon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 /*
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
-			user << "The interface seems slightly damaged"
+			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			to_chat(user, "You must close the cover to swipe an ID card.")
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				updateicon()
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 */
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "You must access the borgs internals!"
+			to_chat(user, "You must access the borgs internals!")
 		else if(!src.module && U.require_module)
-			user << "The borg must choose a module before he can be upgraded!"
+			to_chat(user, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
-			user << "The upgrade is locked and cannot be used yet!"
+			to_chat(user, "The upgrade is locked and cannot be used yet!")
 		else
 			if(istype(U, /obj/item/borg/upgrade/reset))
-				user << "<span class='warning'>No.</span>"
+				to_chat(user, "<span class='warning'>No.</span>")
 				return
 			if(U.action(src))
-				user << "You apply the upgrade to [src]!"
+				to_chat(user, "You apply the upgrade to [src]!")
 				user.drop_item(U, src)
 			else
-				user << "Upgrade error!"
+				to_chat(user, "Upgrade error!")
 
 	else if(istype(W, /obj/item/device/camera_bug))
 		help_shake_act(user)
@@ -338,7 +338,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
+			to_chat(user, "You remove \the [cell].")
 			cell = null
 			updateicon()
 			return
@@ -380,7 +380,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(weapon_lock)
-		src << "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
+		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
 		return
 
 	if(!module)
@@ -484,7 +484,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		var/obj/item/weapon/aiModule/keeper/mdl = new
 
 		mdl.upload(src.laws,src,src)
-		src << "These are your laws now:"
+		to_chat(src, "These are your laws now:")
 		src.show_laws()
 
 		src.verbs -= /mob/living/silicon/robot/mommi/proc/ActivateKeeper

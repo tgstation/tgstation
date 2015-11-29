@@ -8,13 +8,13 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(stat)
-		src << "<span class='alien'>You must be conscious to do this.</span>"
+		to_chat(src, "<span class='alien'>You must be conscious to do this.</span>")
 		return 0
 	else if(X && getPlasma() < X)
-		src << "<span class='alien'>Not enough plasma stored.</span>"
+		to_chat(src, "<span class='alien'>Not enough plasma stored.</span>")
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		src << "<span class='alien'>Bad place for a garden !</span>"
+		to_chat(src, "<span class='alien'>Bad place for a garden !</span>")
 		return 0
 	else	return 1
 
@@ -53,8 +53,8 @@ Doesn't work on other aliens/AI.*/
 		if(msg)
 			var/turf/T = get_turf(src)
 			log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Alien Whisper: [msg]")
-			M << "<span class='alien'>You hear a strange, alien voice in your head... <em>[msg]</span></em>"
-			src << "<span class='alien'>You said: [msg] to [M]</span>"
+			to_chat(M, "<span class='alien'>You hear a strange, alien voice in your head... <em>[msg]</span></em>")
+			to_chat(src, "<span class='alien'>You said: [msg] to [M]</span>")
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
@@ -70,10 +70,10 @@ Doesn't work on other aliens/AI.*/
 				if (get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
-					M << "<span class='alien'>\The [src] has transfered [amount] plasma to you.</span>"
-					src << "<span class='alien'>You have trasferred [amount] plasma to [M]</span>"
+					to_chat(M, "<span class='alien'>\The [src] has transfered [amount] plasma to you.</span>")
+					to_chat(src, "<span class='alien'>You have trasferred [amount] plasma to [M]</span>")
 				else
-					src << "<span class='alien'>You need to be closer.</span>"
+					to_chat(src, "<span class='alien'>You need to be closer.</span>")
 	return
 
 
@@ -88,18 +88,18 @@ Doesn't work on other aliens/AI.*/
 			if(isobj(O))
 				var/obj/I = O
 				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-					src << "<span class='alien'>You cannot dissolve this object.</span>"
+					to_chat(src, "<span class='alien'>You cannot dissolve this object.</span>")
 					return
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
 				if(istype(T, /turf/simulated/wall/r_wall))
-					src << "<span class='alien'>You cannot dissolve this object.</span>"
+					to_chat(src, "<span class='alien'>You cannot dissolve this object.</span>")
 					return
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
-					src << "<span class='alien'>You cannot dissolve this object.</span>"
+					to_chat(src, "<span class='alien'>You cannot dissolve this object.</span>")
 					return
 			else // Not a type we can acid.
 				return
@@ -108,7 +108,7 @@ Doesn't work on other aliens/AI.*/
 			new /obj/effect/alien/acid(get_turf(O), O)
 			visible_message("<span class='alien'>\The [src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
-			src << "<span class='alien'>Target is too far away.</span>"
+			to_chat(src, "<span class='alien'>Target is too far away.</span>")
 	return
 
 
@@ -119,7 +119,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			src << "<span class='alien'>Your allies are not valid targets.</span>"
+			to_chat(src, "<span class='alien'>Your allies are not valid targets.</span>")
 			return
 		adjustToxLoss(-50)
 		playsound(get_turf(src), 'sound/weapons/pierce.ogg', 30, 1)

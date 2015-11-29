@@ -38,7 +38,7 @@
 /obj/structure/cult/pylon/proc/attackpylon(mob/user as mob, var/damage)
 	if(!isbroken)
 		if(prob(1+ damage * 5))
-			user << "You hit the pylon, and its crystal breaks apart!"
+			to_chat(user, "You hit the pylon, and its crystal breaks apart!")
 			for(var/mob/M in viewers(src))
 				if(M == user)
 					continue
@@ -49,20 +49,20 @@
 			icon_state = "pylon-broken"
 			set_light(0)
 		else
-			user << "You hit the pylon!"
+			to_chat(user, "You hit the pylon!")
 			playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 	else
 		if(prob(damage * 2))
-			user << "You pulverize what was left of the pylon!"
+			to_chat(user, "You pulverize what was left of the pylon!")
 			qdel(src)
 		else
-			user << "You hit the pylon!"
+			to_chat(user, "You hit the pylon!")
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 
 
 /obj/structure/cult/pylon/proc/repair(mob/user as mob)
 	if(isbroken)
-		user << "You repair the pylon."
+		to_chat(user, "You repair the pylon.")
 		isbroken = 0
 		density = 1
 		icon_state = "pylon"
@@ -185,4 +185,4 @@
 		else
 			new_mob.key = M.key
 
-		new_mob << "<B>Your form morphs into that of a cluwne.</B>"
+		to_chat(new_mob, "<B>Your form morphs into that of a cluwne.</B>")

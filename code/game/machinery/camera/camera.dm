@@ -133,7 +133,7 @@ var/list/camera_names=list()
 				if (S.current == src)
 					O.unset_machine()
 					O.reset_view(null)
-					O << "The screen bursts into static."
+					to_chat(O, "The screen bursts into static.")
 		..()
 
 /obj/machinery/camera/ex_act(severity)
@@ -172,7 +172,7 @@ var/list/camera_names=list()
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
-		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
+//		to_chat(user, "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>")
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		togglePanelOpen(W, user, icon_state, icon_state)
 
@@ -191,13 +191,13 @@ var/list/camera_names=list()
 	// Upgrades!
 	else if(is_type_in_list(W, assembly.possible_upgrades)) // Is a possible upgrade
 		if (is_type_in_list(W, assembly.upgrades))
-			user << "The camera already has \a [W] inside!"
+			to_chat(user, "The camera already has \a [W] inside!")
 			return
 		if (!panel_open)
-			user << "You can't reach into the camera's circuitry while the maintenance panel is closed."
+			to_chat(user, "You can't reach into the camera's circuitry while the maintenance panel is closed.")
 			return
 		/*if (!wires.CanDeconstruct())
-			user << "You can't reach into the camera's circuitry with the wires on the way."
+			to_chat(user, "You can't reach into the camera's circuitry with the wires on the way.")
 			return*/
 		if (istype(W, /obj/item/stack))
 			var/obj/item/stack/sheet/mineral/plasma/s = W
@@ -206,7 +206,7 @@ var/list/camera_names=list()
 		else
 			if(!user.drop_item(W, src)) return
 			assembly.upgrades += W
-		user << "You attach the [W] into the camera's inner circuits."
+		to_chat(user, "You attach the [W] into the camera's inner circuits.")
 		update_icon()
 		update_hear()
 		cameranet.updateVisibility(src, 0)
@@ -215,15 +215,15 @@ var/list/camera_names=list()
 	// Taking out upgrades
 	else if(iscrowbar(W))
 		if (!panel_open)
-			user << "You can't reach into the camera's circuitry while the maintenance panel is closed."
+			to_chat(user, "You can't reach into the camera's circuitry while the maintenance panel is closed.")
 			return
 		/*if (!wires.CanDeconstruct())
-			user << "You can't reach into the camera's circuitry with the wires on the way."
+			to_chat(user, "You can't reach into the camera's circuitry with the wires on the way.")
 			return*/
 		if (assembly.upgrades.len)
 			var/obj/U = locate(/obj) in assembly.upgrades
 			if(U)
-				user << "You unattach \the [U] from the camera."
+				to_chat(user, "You unattach \the [U] from the camera.")
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				U.loc = get_turf(src)
 				assembly.upgrades -= U
@@ -232,7 +232,8 @@ var/list/camera_names=list()
 				cameranet.updateVisibility(src, 0)
 			return
 		else //Camera deconned, no upgrades
-			user << "The camera is firmly welded to the wall." //User might be trying to deconstruct the camera with a crowbar, let them know what's wrong
+			to_chat(user, "The camera is firmly welded to the wall.")//User might be trying to deconstruct the camera with a crowbar, let them know what's wrong
+
 			return
 
 	// OTHER
@@ -252,17 +253,18 @@ var/list/camera_names=list()
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \a [itemname] up to the camera ..."
+		to_chat(U, "You hold \a [itemname] up to the camera ...")
 		for(var/mob/living/silicon/ai/O in living_mob_list)
 			if(!O.client) continue
-			if(U.name == "Unknown") O << "<span class='name'>[U]</span> holds \a [itemname] up to one of your cameras ..."
-			else O << "<span class='name'><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></span> holds \a [itemname] up to one of your cameras ..."
+			if(U.name == "Unknown") to_chat( O, "<span class='name'>[U]</span> holds \a [itemname] up to one of your cameras ...")
+			else to_chat(O, "<span class='name'><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></span> holds \a [itemname] up to one of your cameras ...")
+
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
 				if (S.current == src)
-					O << "[U] holds \a [itemname] up to one of the cameras ..."
+					to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 	else
 		..()
@@ -301,7 +303,7 @@ var/list/camera_names=list()
 			if (S.current == src)
 				O.unset_machine()
 				O.reset_view(null)
-				O << "The screen bursts into static."
+				to_chat(O, "The screen bursts into static.")
 	if(choice && can_use()) //camera reactivated
 		adv_camera.update(z, 0, src, adding=1)
 	else //either deactivated OR being destroyed
@@ -377,7 +379,7 @@ var/list/camera_names=list()
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to weld the [src].</span>"
+	to_chat(user, "<span class='notice'>You start to weld the [src].</span>")
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
@@ -414,10 +416,10 @@ var/list/camera_names=list()
 			if(S.current == src)
 				if(istype(S, /obj/machinery/computer/security/telescreen))
 					for(var/mob/M in viewers(world.view,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
+						to_chat(M, "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>")
 				else
 					for(var/mob/M in viewers(1,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
+						to_chat(M, "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>")
 
 /obj/machinery/camera/arena
 	name = "arena camera"
@@ -437,7 +439,7 @@ var/list/camera_names=list()
 
 /obj/machinery/camera/arena/attackby(W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
-		user << "<span class='warning'>There aren't any visible screws to unscrew.</span>"
+		to_chat(user, "<span class='warning'>There aren't any visible screws to unscrew.</span>")
 	else
 		user.visible_message("<span class='warning'>\The [user] hits \the [src] with \the [W] but it doesn't seem to affect it in the least.</span>","<span class='warning'>You hit \the [src] with \the [W] but it doesn't seem to affect it in the least</span>")
 	return

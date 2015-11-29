@@ -35,16 +35,16 @@
 			parts_left = parts[i]
 			j = i
 	if(!to_type)
-		user << "<span class='warning'>You cannot modify \the [O] with this kit.</span>"
+		to_chat(user, "<span class='warning'>You cannot modify \the [O] with this kit.</span>")
 		return
 	if(parts_left <= 0)
-		user << "<span class='warning'>This kit has no parts for this modification left.</span>"
+		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		return
 	if(istype(O,to_type))
-		user << "<span class='notice'>\The [O] is already modified.</span>"
+		to_chat(user, "<span class='notice'>\The [O] is already modified.</span>")
 		return
 	if(!isturf(O.loc))
-		user << "<span class='warning'>\The [O] must be safely placed on the ground for modification.</span>"
+		to_chat(user, "<span class='warning'>\The [O] must be safely placed on the ground for modification.</span>")
 		return
 	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 	var/N = new to_type(O.loc)

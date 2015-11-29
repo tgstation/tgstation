@@ -198,23 +198,23 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		return
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
-			user << "A disk is already loaded into the machine."
+			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
 		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
 		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
-			user << "<span class='warning'>Machine cannot accept disks in that format.</span>"
+			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		user.drop_item(D, src)
-		user << "<span class='notice'>You add the disk to the machine!</span>"
+		to_chat(user, "<span class='notice'>You add the disk to the machine!</span>")
 	src.updateUsrDialog()
 	return
 
 /obj/machinery/computer/rdconsole/emag(mob/user)
 	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 	emagged = 1
-	user << "<span class='notice'>You disable the security protocols</span>"
+	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -230,7 +230,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(temp_screen <= 1.1 || (2 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
 			screen = temp_screen
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = 0.0
@@ -295,7 +295,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='warning'>The destructive analyzer is busy at the moment.</span>"
+				to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
@@ -306,10 +306,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(!src.allowed(usr))
-				usr << "Unauthorized Access."
+				to_chat(usr, "Unauthorized Access.")
 				return
 			if(linked_destroy.busy)
-				usr << "<span class='warning'>The destructive analyzer is busy at the moment.</span>"
+				to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
@@ -321,7 +321,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(linked_destroy)
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
-								usr <<"<span class='warning'>The destructive analyzer appears to be empty.</span>"
+								to_chat(usr, "<span class='warning'>The destructive analyzer appears to be empty.</span>")
 								screen = 1.0
 								linked_destroy.busy = 0
 								return
@@ -359,12 +359,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(src.allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "<span class='warning'>You must connect to the network first!</span>"
+			to_chat(usr, "<span class='warning'>You must connect to the network first!</span>")
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
@@ -428,7 +428,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/datum/design/being_built = null
 
 			if(linked_imprinter.queue.len >= RESEARCH_MAX_Q_LEN)
-				usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
+				to_chat(usr, "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>")
 				return
 
 			for(var/datum/design/D in files.known_designs)
@@ -455,25 +455,25 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
 
 	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		linked_imprinter.reagents.clear_reagents()
 
 	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		linked_lathe.reagents.del_reagent(href_list["dispose"])
 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		linked_lathe.reagents.clear_reagents()
 
@@ -504,7 +504,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
 		if (desired_num_sheets <= 0)
@@ -523,7 +523,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				del sheet
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		if(!src.allowed(usr))
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 			return
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		if (desired_num_sheets <= 0) return

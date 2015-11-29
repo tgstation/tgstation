@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "<span class='warning'>You cannot send IC messages (muted).</span>"
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -30,15 +30,15 @@
 		if ("custom")
 			return custom_emote(m_type, message)
 		if ("alarm")
-			src << "You sound an alarm."
+			to_chat(src, "You sound an alarm.")
 			message = "<B>[src]</B> sounds an alarm."
 			m_type = HEARABLE
 		if ("alert")
-			src << "You let out a distressed noise."
+			to_chat(src, "You let out a distressed noise.")
 			message = "<B>[src]</B> lets out a distressed noise."
 			m_type = HEARABLE
 		if ("notice")
-			src << "You play a loud tone."
+			to_chat(src, "You play a loud tone.")
 			message = "<B>[src]</B> plays a loud tone."
 			m_type = HEARABLE
 		if ("flash")
@@ -48,21 +48,21 @@
 			message = "<B>[src]</B> blinks."
 			m_type = VISIBLE
 		if ("whistle")
-			src << "You whistle."
+			to_chat(src, "You whistle.")
 			message = "<B>[src]</B> whistles."
 			m_type = HEARABLE
 		if ("beep")
-			src << "You beep."
+			to_chat(src, "You beep.")
 			message = "<B>[src]</B> beeps."
 			m_type = HEARABLE
 		if ("boop")
-			src << "You boop."
+			to_chat(src, "You boop.")
 			message = "<B>[src]</B> boops."
 			m_type = HEARABLE
 		if ("help")
-			src << "alarm,alert,notice,flash,blink,whistle,beep,boop"
+			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if (message)
 		log_emote("[name]/[key] (@[x],[y],[z]): [message]")

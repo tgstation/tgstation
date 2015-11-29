@@ -31,14 +31,14 @@
 			return
 
 		if(src.beaker)
-			user << "A syringe is already loaded into the machine."
+			to_chat(user, "A syringe is already loaded into the machine.")
 			return
 
 		src.beaker =  B
 		user.drop_item()
 		B.loc = src
 		if(istype(B,/obj/item/weapon/reagent_containers/syringe))
-			user << "You add the syringe to the machine!"
+			to_chat(user, "You add the syringe to the machine!")
 			src.updateUsrDialog()
 			icon_state = "isolator_in"
 
@@ -128,7 +128,7 @@
 		return
 	..()
 	if(prob(50))
-		user << "The dish shatters"
+		to_chat(user, "The dish shatters")
 		if(virus2.infectionchance > 0)
 			infect_virus2(user,virus2)
 		del src
@@ -136,5 +136,5 @@
 /obj/item/weapon/virusdish/examine(mob/user)
 	..()
 	if(src.info)
-		user << "<span class='info'>It has the following information about its contents</span>"
-		user << src.info
+		to_chat(user, "<span class='info'>It has the following information about its contents</span>")
+		to_chat(user, src.info)

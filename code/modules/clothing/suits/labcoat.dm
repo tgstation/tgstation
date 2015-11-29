@@ -28,9 +28,9 @@
 			return 0
 
 		if(open)
-			usr << "You button up the labcoat."
+			to_chat(usr, "You button up the labcoat.")
 		else
-			usr << "You unbutton the labcoat."
+			to_chat(usr, "You unbutton the labcoat.")
 		open=!open
 		update_icon()
 		usr.update_inv_wear_suit()	//so our overlays update

@@ -31,7 +31,7 @@
 				overlays += H.obj_overlays[HEAD_LAYER]
 				overlays += H.obj_overlays[HANDCUFF_LAYER]
 		invisibility = 0
-		src << "<span class='sinister'>Even as a non-corporal being, you can feel Nar-Sie's presence altering you. You are now visible to everyone.</span>"
+		to_chat(src, "<span class='sinister'>Even as a non-corporal being, you can feel Nar-Sie's presence altering you. You are now visible to everyone.</span>")
 
 /mob/dead/singuloCanEat()
 	return 0

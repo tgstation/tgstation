@@ -182,11 +182,12 @@ var/global/Holiday = null
 // Run at the  start of a round
 /proc/Holiday_Game_Start()
 	if(Holiday)
-		world << "<font color='blue'>and...</font>"
+		to_chat(world, "<font color='blue'>and...</font>")
 		if(Holiday == "Autism Awareness Day")
-			world << "<h4>Happy <span class='sans'>Autism Awareness Day</span> Everybody!</h4>" // Together we can finish the puzzle.
+			to_chat(world, "<h4>Happy <span class='sans'>Autism Awareness Day</span> Everybody!</h4>")// Together we can finish the puzzle.
+
 		else
-			world << "<h4>Happy [Holiday] Everybody!</h4>"
+			to_chat(world, "<h4>Happy [Holiday] Everybody!</h4>")
 		switch(Holiday) // special holidays
 			if("Easter")
 				//do easter stuff

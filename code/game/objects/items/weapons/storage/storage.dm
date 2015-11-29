@@ -210,7 +210,7 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			usr << "<span class='notice'>[src] is full, make some space.</span>"
+			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
 		return 0 //Storage item is full
 
 	if(W.wielded || istype(W, /obj/item/offhand))
@@ -218,7 +218,7 @@
 		var/obj/item/ref_name = W
 		if(istype(offhand))
 			ref_name = offhand.wielding
-		usr << "<span class='notice'>Unwield \the [ref_name] first.</span>"
+		to_chat(usr, "<span class='notice'>Unwield \the [ref_name] first.</span>")
 		return
 
 	if(can_hold.len)
@@ -237,7 +237,7 @@
 			if(!stop_messages)
 				if (istype(W, /obj/item/weapon/hand_labeler))
 					return 0
-				usr << "<span class='notice'>[src] cannot hold [W].</span>"
+				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
@@ -253,12 +253,12 @@
 			break
 		if(nope)
 			if(!stop_messages)
-				usr << "<span class='notice'>[src] cannot hold [W].</span>"
+				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return 0
 
 	if (W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[W] is too big for this [src].</span>"
+			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -267,13 +267,13 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[src] is full, make some space.</span>"
+			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
 		return 0
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
+				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
 	return 1
@@ -297,7 +297,7 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if (M == usr)
-					usr << "<span class='notice'>You put the [W] into [src].</span>"
+					to_chat(usr, "<span class='notice'>You put the [W] into [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
@@ -370,10 +370,10 @@
 		if(isMoMMI(user))
 			var/mob/living/silicon/robot/mommi/M = user
 			if(M.is_in_modules(W))
-				user << "<span class='notice'>You can't throw away something built into you.</span>"
+				to_chat(user, "<span class='notice'>You can't throw away something built into you.</span>")
 				return //Mommis cant give away their modules but can place other items
 		else
-			user << "<span class='notice'> You're a robot. No.</span>"
+			to_chat(user, "<span class='notice'> You're a robot. No.</span>")
 			return //Robots can't interact with storage items.
 
 
@@ -384,14 +384,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				user << "<span class='warning'> The tray won't fit in [src].</span>"
+				to_chat(user, "<span class='warning'> The tray won't fit in [src].</span>")
 				return
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				user << "<span class='warning'> God damnit!</span>"
+				to_chat(user, "<span class='warning'> God damnit!</span>")
 
 	return handle_item_insertion(W)
 
@@ -454,9 +454,9 @@
 	collection_mode = !collection_mode
 	switch (collection_mode)
 		if(1)
-			usr << "[src] now picks up all items in a tile at once."
+			to_chat(usr, "[src] now picks up all items in a tile at once.")
 		if(0)
-			usr << "[src] now picks up one item at a time."
+			to_chat(usr, "[src] now picks up one item at a time.")
 
 
 /obj/item/weapon/storage/verb/quick_empty()
@@ -532,7 +532,7 @@
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
-	user << "<span class='notice'>You fold [src] flat.</span>"
+	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 	new src.foldable(get_turf(src),foldable_amount)
 	del(src)
 //BubbleWrap END
@@ -590,13 +590,13 @@
 				success = 1
 				handle_item_insertion(I, 1)	//The 1 stops the "You put the [target] into [src]" insertion message from being displayed.
 			if(success && !failure)
-				user << "<span class='notice'>You put everything in [src].</span>"
+				to_chat(user, "<span class='notice'>You put everything in [src].</span>")
 				return 1
 			else if(success)
-				user << "<span class='notice'>You put some things in [src].</span>"
+				to_chat(user, "<span class='notice'>You put some things in [src].</span>")
 				return 1
 			else
-				user << "<span class='notice'>You fail to pick anything up with [src].</span>"
+				to_chat(user, "<span class='notice'>You fail to pick anything up with [src].</span>")
 				return 0
 
 		else if(can_be_inserted(target))

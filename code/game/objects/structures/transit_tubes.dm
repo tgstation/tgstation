@@ -92,7 +92,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/Bumped(mob/AM as mob|obj)
 	var/obj/structure/transit_tube/tube = locate() in AM.loc
 	if(tube)
-		AM << "<span class='warning'>The tube's support pylons block your way.</span>"
+		to_chat(AM, "<span class='warning'>The tube's support pylons block your way.</span>")
 		return ..()
 	else
 		var/turf/T = get_turf(src)
@@ -113,7 +113,7 @@ obj/structure/ex_act(severity)
 			if(!obstacle.CanPass(AM, AM.loc) && AM != obstacle)
 				return ..()
 		AM.loc = src.loc
-		AM << "<span class='info'>You slip under the tube.</span>"
+		to_chat(AM, "<span class='info'>You slip under the tube.</span>")
 
 
 /obj/structure/transit_tube/station/New(loc)

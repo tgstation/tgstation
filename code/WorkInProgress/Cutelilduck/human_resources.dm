@@ -34,7 +34,7 @@
 
 /obj/item/demote_chip/attack_self(mob/user as mob)
 	if(target_name != null) //Used hand-labeler as example
-		user << "<span class='notice'>The target name cannot be reset!</span>"
+		to_chat(user, "<span class='notice'>The target name cannot be reset!</span>")
 		return
 	else
 		var/str = copytext(reject_bad_text(input(user,"Enter the properly capitalized name for demotion","Set name","") as text|null),1,MAX_NAME_LEN)
@@ -46,7 +46,7 @@
 		target_name = str
 		name = "[target_name]'s demotion microchip"
 		desc = desc + " Stamped by:"
-		user << "<span class='notice'>The demotion microchip for [src.target_name] is now ready to be stamped.</span>"
+		to_chat(user, "<span class='notice'>The demotion microchip for [src.target_name] is now ready to be stamped.</span>")
 
 /obj/item/demote_chip/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/stamp))
@@ -56,39 +56,39 @@
 				if(cap == 0)
 					desc = desc + "/Captain"
 				cap = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/hop))
 				if(hop == 0)
 					desc = desc + "/HoP"
 				hop = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/hos))
 				if(hos == 0)
 					desc = desc + "/HoS"
 				hos = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/ce))
 				if(ce == 0)
 					desc = desc + "/CE"
 				ce = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/rd))
 				if(rd == 0)
 					desc = desc + "/RD"
 				rd = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/cmo))
 				if(cmo == 0)
 					desc = desc + "/CMO"
 				cmo = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 			if(istype(S, /obj/item/weapon/stamp/clown))
 				if(clown == 0)
 					desc = desc + "/HONK"
 				clown = 1
-				user << "<span class='notice'>You stamp the demotion microchip of [target_name].</span>"
+				to_chat(user, "<span class='notice'>You stamp the demotion microchip of [target_name].</span>")
 		else
-			user << "<span class='notice'>The chip has not been initialized.</span>"
+			to_chat(user, "<span class='notice'>The chip has not been initialized.</span>")
 	else
 		return ..()
 
@@ -97,9 +97,9 @@
 	if(istype(I, /obj/item/demote_chip/))
 		var/obj/item/demote_chip/DE = I
 		if(registered_name != DE.target_name)
-			user << "<span class='notice'>Failed to apply, names do not match.</span>"
+			to_chat(user, "<span class='notice'>Failed to apply, names do not match.</span>")
 		else if(bans != null)
-			user << "<span class='notice'>This card already has a microchip applied</span>"
+			to_chat(user, "<span class='notice'>This card already has a microchip applied</span>")
 		else
 			icon_state = "centcom_old"
 			bans = "9" //if get_region_accesses ever uses 9 we're fucked
@@ -112,11 +112,11 @@
 	if(istype(I, /obj/item/demote_chip))
 		var/obj/item/demote_chip/D = I
 		if(registered_name != D.target_name)
-			user << "<span class='notice'>Failed to apply, names do not match.</span>"
+			to_chat(user, "<span class='notice'>Failed to apply, names do not match.</span>")
 		else if(bans != null)
-			user << "<span class='notice'>This card already has a microchip applied</span>"
+			to_chat(user, "<span class='notice'>This card already has a microchip applied</span>")
 		else if(icon_state == "gold")
-			user << "<span class='notice'>This microchip cannot apply to this card type.</span>"
+			to_chat(user, "<span class='notice'>This microchip cannot apply to this card type.</span>")
 		else
 
 			if(D.cap == 1)
@@ -139,7 +139,7 @@
 				access -= get_region_accesses(2)
 				bans = bans + "2"
 			if(bans == null)
-				user << "<span class='notice'>You require at least one stamp.</span>"
+				to_chat(user, "<span class='notice'>You require at least one stamp.</span>")
 				return
 			icon_state = "centcom_old"
 			del(D)

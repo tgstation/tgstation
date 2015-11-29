@@ -45,7 +45,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, user))
-		if (icon == src) user << "<span class='notice'>It's \a \icon[icon][src]! If you want any more information you'll need to get closer.</span>"
+		if (icon == src) to_chat(user, "<span class='notice'>It's \a \icon[icon][src]! If you want any more information you'll need to get closer.</span>")
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -64,10 +64,10 @@
 	else
 		descriptive = "furiously hot"
 
-	user << "<span class='info'>\The \icon[icon][src] feels [descriptive]</span>"
+	to_chat(user, "<span class='info'>\The \icon[icon][src] feels [descriptive]</span>")
 
 	if(air_contents.volume * 10 < volume)
-		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>"
+		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>")
 		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/blob_act()
@@ -167,17 +167,17 @@
 			if(location.internal == src)
 				location.internal = null
 				location.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
+				to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
 				if (location.internals)
 					location.internals.icon_state = "internal0"
 			else
 				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 					location.internal = src
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
+					to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 				else
-					usr << "<span class='notice'>You need something to connect to \the [src].</span>"
+					to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
 
 	src.add_fingerprint(usr)
 	return 1
@@ -228,7 +228,7 @@
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-		//world << "<span class='warning'>[x],[y] tank is exploding: [pressure] kPa</span>"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is exploding: [pressure] kPa</span>")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -241,7 +241,7 @@
 		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
-		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
+//		to_chat(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5), 1, cap)
 		if(cap)
@@ -256,7 +256,7 @@
 		del(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//world << "<span class='warning'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)
@@ -268,7 +268,7 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//world << "<span class='warning'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)

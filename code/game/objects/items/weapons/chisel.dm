@@ -15,9 +15,9 @@
 /obj/item/weapon/chisel/attack_self(mob/user as mob)
 	use_name = !use_name
 	if(use_name)
-		user << "You will now sign your work."
+		to_chat(user, "You will now sign your work.")
 	else
-		user << "You will no longer sign your work."
+		to_chat(user, "You will no longer sign your work.")
 
 /obj/item/weapon/chisel/attack(mob/M as mob, mob/user as mob)
 	if(istype(M, /mob/living/simple_animal/sculpture))
@@ -59,7 +59,7 @@
 						W.engraving_quality = "an exceptionally designed"
 					if(10)
 						W.engraving_quality = "a <span class='notice'>masterfully designed</span>"
-						user << "<span class='warning'>It's a masterpiece!</span>"
+						to_chat(user, "<span class='warning'>It's a masterpiece!</span>")
 
 				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
 

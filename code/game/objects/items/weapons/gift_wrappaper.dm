@@ -41,9 +41,9 @@
 	if(gift)
 		user.put_in_active_hand(gift)
 		gift.add_fingerprint(user)
-		user << "<span class='notice'>You unwrapped \a [gift]!</span>"
+		to_chat(user, "<span class='notice'>You unwrapped \a [gift]!</span>")
 	else
-		user << "<span class='notice'>The gift was empty!</span>"
+		to_chat(user, "<span class='notice'>The gift was empty!</span>")
 	del(src)
 	return
 
@@ -94,7 +94,7 @@
 
 
 /obj/item/weapon/winter_gift/attack_self(mob/M as mob)
-	M << "<span class='notice'>The gift was empty!</span>"
+	to_chat(M, "<span class='notice'>The gift was empty!</span>")
 	M.u_equip(src,0)
 	qdel(src)
 	return
@@ -157,7 +157,7 @@
 	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	M << "<span class='notice'>You unwrapped \a [I]!</span>"
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]!</span>")
 	qdel(src)
 	return
 
@@ -173,7 +173,7 @@
 	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	M << "<span class='notice'>You unwrapped \a [I]! Tasty!</span>"
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]! Tasty!</span>")
 	qdel(src)
 	return
 
@@ -181,7 +181,7 @@
 /obj/item/weapon/winter_gift/cloth/attack_self(mob/M as mob)
 	if(prob(30))
 		cloth_bundle()
-		M << "<span class='notice'>You unwrapped a bundle of clothes! Looks comfy!</span>"
+		to_chat(M, "<span class='notice'>You unwrapped a bundle of clothes! Looks comfy!</span>")
 		qdel(src)
 		return
 
@@ -195,7 +195,7 @@
 	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	M << "<span class='notice'>You unwrapped \a [I]! Looks comfy!</span>"
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]! Looks comfy!</span>")
 	qdel(src)
 	return
 
@@ -262,7 +262,7 @@
 	message_admins(log_str, 0, 1)
 	log_game(log_str)
 
-	M << "<span class='notice'>You unwrapped \a [I][additional_info]!</span>"
+	to_chat(M, "<span class='notice'>You unwrapped \a [I][additional_info]!</span>")
 
 	qdel(src)
 	return
@@ -291,11 +291,11 @@
 /obj/structure/strange_present/relaymove(mob/user as mob)
 	if (user.stat)
 		return
-	user << "<span class='notice'>You can't move.</span>"
+	to_chat(user, "<span class='notice'>You can't move.</span>")
 
 /obj/structure/strange_present/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut open the present.</span>"
+		to_chat(user, "<span class='notice'>You cut open the present.</span>")
 
 		for(var/mob/M in src) //Should only be one but whatever.
 			M.loc = get_turf(src)
@@ -306,9 +306,9 @@
 		qdel(src)
 
 	else
-		user << "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>"
+		to_chat(user, "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>")
 		return	..()
 
 /obj/structure/strange_present/attack_hand(mob/user as mob)
-	user << "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>"
+	to_chat(user, "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>")
 	return

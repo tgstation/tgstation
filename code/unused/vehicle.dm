@@ -79,7 +79,7 @@
 	del(src)
 
 /obj/machinery/vehicle/Bump(var/atom/A)
-	//world << "[src] bumped into [A]"
+//	to_chat(world, "[src] bumped into [A]")
 	spawn (0)
 		..()
 		src.speed = 0
@@ -123,7 +123,7 @@
 		return
 
 	if (src.one_person_only && locate(/mob, src))
-		usr << "There is no room! You can only fit one person."
+		to_chat(usr, "There is no room! You can only fit one person.")
 		return
 
 	var/mob/M = usr
@@ -143,7 +143,7 @@
 		A.loc = src.loc
 		for(var/mob/O in view(src, null))
 			if ((O.client && !(O.blinded)))
-				O << text("<span class='notice'><B> [] unloads [] from []!</B></span>", usr, A, src)
+				to_chat(O, text("<span class='notice'><B> [] unloads [] from []!</B></span>", usr, A, src))
 
 		if (ismob(A))
 			var/mob/M = A
@@ -162,7 +162,7 @@
 
 		if ((H.pulling && !(H.pulling.anchored)))
 			if (src.one_person_only && !(istype(H.pulling, /obj/item/weapon)))
-				usr << "You may only place items in."
+				to_chat(usr, "You may only place items in.")
 			else
 				H.pulling.loc = src
 				if (ismob(H.pulling))
@@ -173,7 +173,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O << text("<span class='notice'><B> [] loads [] into []!</B></span>", H, H.pulling, src)
+						to_chat(O, text("<span class='notice'><B> [] loads [] into []!</B></span>", H, H.pulling, src))
 
 				H.stop_pulling()
 
@@ -239,7 +239,7 @@
 			src.health -= value
 			if(src.health>0)
 				src.spark_system.start()
-//				world << "[src] health is [health]"
+//				to_chat(world, "[src] health is [health]")
 			else
 				src.ex_act(1)
 		return
@@ -270,7 +270,7 @@
 		else if (src.can_rotate && direction & 8)
 			src.dir = turn(src.dir, 90)
 		if(speed_change)
-//			user << "Desired speed: [get_desired_speed()]%"
+//			to_chat(user, "Desired speed: [get_desired_speed()]%")
 			src.pr_speed_increment.start()
 			src.pr_inertial_movement.start()
 	return
@@ -321,7 +321,7 @@
 			SS.pr_inertial_movement.cur_delay += delta>0?1:-1
 /*
 			for(var/mob/M in SS)
-				M << "Current speed: [SS.get_current_speed()]"
+				to_chat(M, "Current speed: [SS.get_current_speed()]")
 */
 		else
 			src.stop()

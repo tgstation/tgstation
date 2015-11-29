@@ -111,7 +111,7 @@
 		if (M.hand)
 			temp = M:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			M << "<span class='warning'>You can't use your [temp.display_name]</span>"
+			to_chat(M, "<span class='warning'>You can't use your [temp.display_name]</span>")
 			return
 	share_contact_diseases(M)
 	return
@@ -323,7 +323,7 @@
 		return
 
 	if(!istype(loc,/turf))
-		src << "<span class='warning'>You can't do that now!</span>"
+		to_chat(src, "<span class='warning'>You can't do that now!</span>")
 		return
 
 	if(target.type == /obj/screen) return
@@ -524,7 +524,7 @@
 	set category = "IC"
 
 	if(usr.sleeping)
-		usr << "<span class='warning'>You are already sleeping</span>"
+		to_chat(usr, "<span class='warning'>You are already sleeping</span>")
 		return
 	if(alert(src,"Are you sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 150 //Long nap of 5 minutes. Those are MC TICKS. Don't get fooled
@@ -545,8 +545,8 @@
 
 	if(B.controlling)
 		if(rptext)
-			src << "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>"
-			B.host_brain << "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>"
+			to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>")
+			to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
 		B.ckey = ckey
 		B.controlling = 0
 	if(B.host_brain.ckey)
@@ -570,8 +570,8 @@
 		return
 
 	if(B.host_brain.ckey)
-		src << "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>"
-		B.host_brain << "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>"
+		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
+		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()

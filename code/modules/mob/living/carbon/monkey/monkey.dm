@@ -295,7 +295,7 @@
 					uniform = null
 					regenerate_icons()
 				else
-					usr << "<span class='warning'>He has no uniform to remove.</span>"
+					to_chat(usr, "<span class='warning'>He has no uniform to remove.</span>")
 					return
 			if("hat")
 				if(hat)
@@ -303,7 +303,7 @@
 					hat = null
 					regenerate_icons()
 				else
-					usr << "<span class='warning'>He has no hat to remove</span>"
+					to_chat(usr, "<span class='warning'>He has no hat to remove</span>")
 					return
 			if("glasses")
 				if(glasses)
@@ -311,7 +311,7 @@
 					glasses = null
 					regenerate_icons()
 				else
-					usr << "<span class='warning'>He has no glasses to remove</span>"
+					to_chat(usr, "<span class='warning'>He has no glasses to remove</span>")
 					return
 		show_inv(usr)
 	else if(href_list["add_inv"])
@@ -320,24 +320,24 @@
 
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "<span class='warning'> You have nothing in your hand to put on him.</span>"
+			to_chat(usr, "<span class='warning'> You have nothing in your hand to put on him.</span>")
 			return
 		switch(add_to)
 			if("uniform")
 				if(uniform)
-					usr << "<span class='warning'>He's already wearing something.</span>"
+					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
 					return
 				else
 					wearclothes(usr.get_active_hand())
 			if("hat")
 				if(hat)
-					usr << "<span class='warning'>He's already wearing something.</span>"
+					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
 					return
 				else
 					wearhat(usr.get_active_hand())
 			if("glasses")
 				if(glasses)
-					usr << "<span class='warning'>He's already wearing something.</span>"
+					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
 					return
 				else
 					wearglasses(usr.get_active_hand())
@@ -393,11 +393,11 @@
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
@@ -416,7 +416,7 @@
 							O.show_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 					return
 				else
-					M << "<span class='warning'>Not enough charge! </span>"
+					to_chat(M, "<span class='warning'>Not enough charge! </span>")
 					return
 
 	if (M.a_intent == I_HELP)
@@ -485,11 +485,11 @@
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -558,7 +558,7 @@
 
 /mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!

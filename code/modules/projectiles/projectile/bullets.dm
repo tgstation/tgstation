@@ -256,7 +256,7 @@
 			H.Stun(2)
 			H.ear_damage += rand(3, 5)
 			H.ear_deaf = max(H.ear_deaf,15)
-			H << "<span class='warning'>Your ears ring!</span>"
+			to_chat(H, "<span class='warning'>Your ears ring!</span>")
 
 /obj/item/projectile/bullet/hecate/bresenham_step(var/distA, var/distB, var/dA, var/dB)
 	if(..())

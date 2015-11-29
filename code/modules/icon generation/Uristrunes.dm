@@ -180,8 +180,8 @@ var/list/rune_animation = list(
 	var/icon/base = icon('icons/effects/uristrunes.dmi', "")
 
 	for(var/i = 0, i < 10, i++)
-		if(rune_bits & (1 << i))
-			base.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+		to_chat(if(rune_bits & (1, i)))
+			to_chat(base.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1, i]"), ICON_OVERLAY))
 
 	var/icon/result
 
@@ -218,8 +218,8 @@ var/list/rune_animation = list(
 	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 
 	for(var/i = 0, i < 10, i++)
-		if(rune & (1 << i))
-			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+		to_chat(if(rune & (1, i)))
+			to_chat(I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1, i]"), ICON_OVERLAY))
 
 	var/obj/o = new(locate(x, y, z))
 	o.icon = animate_rune(I, color1, border1, color2, border2, alpha1, alpha2)
@@ -230,8 +230,8 @@ var/list/rune_animation = list(
 
 		var/rune = rand(1, 1023)
 		for(var/i = 0, i < 10, i++)
-			if(rune & (1 << i))
-				I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+			to_chat(if(rune & (1, i)))
+				to_chat(I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1, i]"), ICON_OVERLAY))
 
 		var/obj/o = new(t)
 		o.icon = animate_rune_full(I, rand(0, 255), rand(0, 255), rand(0, 255), rand(-255, 255),

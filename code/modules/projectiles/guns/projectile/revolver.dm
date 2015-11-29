@@ -14,7 +14,7 @@
 			if(caliber["38"] == 0) //if it's been modified, this is true
 				return 1
 			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (getAmmo() * 10)))	//minimum probability of 10, maximum of 60
-				M << "<span class='danger'>[src] blows up in your face.</span>"
+				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
 				M.drop_item(src)
 				qdel(src)
@@ -29,14 +29,14 @@
 		var/mob/M = usr
 		if(!M.mind)	return 0
 		if(!M.mind.assigned_role == "Detective")
-			M << "<span class='notice'>You don't feel cool enough to name this gun, chump.</span>"
+			to_chat(M, "<span class='notice'>You don't feel cool enough to name this gun, chump.</span>")
 			return 0
 
 		var/input = stripped_input(usr,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
 		if(src && input && !M.stat && in_range(M,src))
 			name = input
-			M << "You name the gun [input]. Say hello to your new friend."
+			to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 			return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
@@ -46,10 +46,10 @@
 			if(istype(A, /obj/item/weapon/conversion_kit))
 				CK = A
 				if(!CK.open)
-					user << "<span class='notice'>This [CK.name] is useless unless you open it first. </span>"
+					to_chat(user, "<span class='notice'>This [CK.name] is useless unless you open it first. </span>")
 					return
 			if(caliber["38"])
-				user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
+				to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 				if(getAmmo())
 					afterattack(user, user)	//you know the drill
 					playsound(user, fire_sound, 50, 1)
@@ -57,15 +57,15 @@
 					return
 				if(do_after(user, src, 30))
 					if(getAmmo())
-						user << "<span class='notice'>You can't modify it!</span>"
+						to_chat(user, "<span class='notice'>You can't modify it!</span>")
 						return
 					caliber["38"] = 0
 					desc = "The barrel and chamber assembly seems to have been modified."
-					user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
+					to_chat(user, "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>")
 					if(CK && istype(CK))
 						perfect = 1
 			else
-				user << "<span class='notice'>You begin to revert the modifications to [src].</span>"
+				to_chat(user, "<span class='notice'>You begin to revert the modifications to [src].</span>")
 				if(getAmmo())
 					afterattack(user, user)	//and again
 					playsound(user, fire_sound, 50, 1)
@@ -73,11 +73,11 @@
 					return
 				if(do_after(user, src, 30))
 					if(getAmmo())
-						user << "<span class='notice'>You can't modify it!</span>"
+						to_chat(user, "<span class='notice'>You can't modify it!</span>")
 						return
 					caliber["38"] = 1
 					desc = initial(desc)
-					user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
+					to_chat(user, "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>")
 					perfect = 0
 
 

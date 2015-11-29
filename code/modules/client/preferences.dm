@@ -651,12 +651,12 @@ var/const/MAX_SAVE_SLOTS = 8
 	// We just grab the role from the POST(?) data.
 	for(var/role_id in special_roles)
 		if(!(role_id in href_list))
-			user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+			to_chat(user, "<span class='danger'>BUG: Unable to find role [role_id].</span>")
 			continue
 		var/oldval=text2num(roles[role_id])
 		roles[role_id] = text2num(href_list[role_id])
 		if(oldval!=roles[role_id])
-			user << "<span class='info'>Set role [role_id] to [get_role_desire_str(user.client.prefs.roles[role_id])]!</span>"
+			to_chat(user, "<span class='info'>Set role [role_id] to [get_role_desire_str(user.client.prefs.roles[role_id])]!</span>")
 
 	save_preferences_sqlite(user, user.ckey)
 	save_character_sqlite(user.ckey, user, default_slot)
@@ -664,9 +664,9 @@ var/const/MAX_SAVE_SLOTS = 8
 
 /datum/preferences/proc/ToggleRole(var/mob/user, var/list/href_list)
 	var/role_id = href_list["role_id"]
-	//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
+//	to_chat(user, "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>")
 	if(!(role_id in special_roles))
-		user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+		to_chat(user, "<span class='danger'>BUG: Unable to find role [role_id].</span>")
 		return 0
 
 	if(roles[role_id] == null || roles[role_id] == "")
@@ -679,9 +679,9 @@ var/const/MAX_SAVE_SLOTS = 8
 
 /datum/preferences/proc/SetRole(var/mob/user, var/list/href_list)
 	var/role_id = href_list["role_id"]
-	//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
+//	to_chat(user, "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>")
 	if(!(role_id in special_roles))
-		user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+		to_chat(user, "<span class='danger'>BUG: Unable to find role [role_id].</span>")
 		return 0
 
 	if(roles[role_id] == null || roles[role_id] == "")
@@ -847,7 +847,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					if(new_name)
 						real_name = new_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 				if("next_hair_style")
 					if (gender == MALE)
 						h_style = next_list_item(h_style, hair_styles_male_list)
@@ -1209,9 +1209,9 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
 					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+						to_chat(user, sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1))
 					else
-						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+						to_chat(user, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))
 
 				if("jukebox")
 					toggles ^= SOUND_STREAMING
@@ -1240,7 +1240,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						save_character_sqlite(user.ckey, user, default_slot)
 						lastPolled = world.timeofday
 					else
-						user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
+						to_chat(user, "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again.")
 					//random_character_sqlite(user, user.ckey)
 
 				if("reload")
@@ -1458,7 +1458,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	if(!usr || !client)
 		return
 	if(client.mob!=usr)
-		usr << "YOU AREN'T ME GO AWAY"
+		to_chat(usr, "YOU AREN'T ME GO AWAY")
 		return
 	switch(href_list["preference"])
 		if("set_roles")

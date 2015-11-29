@@ -75,7 +75,7 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 
 /obj/machinery/recharger/defibcharger/wallcharger/togglePanelOpen(var/obj/toggleitem, var/mob/user)
 	if(charging)
-		user << "<span class='warning'>Not while [src] is charging!</span>"
+		to_chat(user, "<span class='warning'>Not while [src] is charging!</span>")
 		return
 	return(..())
 
@@ -94,18 +94,18 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
 		var/obj/item/weapon/melee/defibrillator/D = G
 		if(D.ready)
-			user << "<span class='warning'>[D] won't fit. Try putting the paddles back on!</span>"
+			to_chat(user, "<span class='warning'>[D] won't fit. Try putting the paddles back on!</span>")
 			return
 		if(charging)
-			user << "<span class='warning'>Remove [D] first!</span>"
+			to_chat(user, "<span class='warning'>Remove [D] first!</span>")
 			return
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			user << "<span class='warning'>[src] blinks red as you try to insert [D]!</span>"
+			to_chat(user, "<span class='warning'>[src] blinks red as you try to insert [D]!</span>")
 			return
 		if(a.power_equip == 0)
-			user << "<span class='warning'>[src] blinks red as you try to insert [D]!</span>"
+			to_chat(user, "<span class='warning'>[src] blinks red as you try to insert [D]!</span>")
 			return
 		user.drop_item(G, src)
 		charging = G

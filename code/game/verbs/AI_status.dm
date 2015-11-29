@@ -3,7 +3,7 @@
 	set name = "AI status"
 
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr <<"You cannot change your emotional status because you are dead!"
+		to_chat(usr, "You cannot change your emotional status because you are dead!")
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet")
 	if(src.ckey == "serithi")

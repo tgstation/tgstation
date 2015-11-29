@@ -20,12 +20,12 @@
 	if(!active)
 		active = 1
 		workdisk()
-		usr << "<span class='notice'>You activate \the [src]</span>"
+		to_chat(usr, "<span class='notice'>You activate \the [src]</span>")
 		playsound(get_turf(src), 'sound/items/healthanalyzer.ogg', 30, 1)
 	else
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate \the [src]</span>"
+		to_chat(usr, "<span class='notice'>You deactivate \the [src]</span>")
 
 /obj/item/weapon/pinpointer/proc/point_at(atom/target)
 	if(!active)
@@ -64,7 +64,7 @@
 	..()
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
-			user << "<span class='danger'>Extreme danger. Arming signal detected. Time remaining: [bomb.timeleft]</span>"
+			to_chat(user, "<span class='danger'>Extreme danger. Arming signal detected. Time remaining: [bomb.timeleft]</span>")
 
 
 /obj/item/weapon/pinpointer/advpinpointer
@@ -84,11 +84,11 @@
 			point_at(location)
 		if(mode == 2)
 			point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer</span>"
+		to_chat(usr, "<span class='notice'>You activate the pinpointer</span>")
 	else
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate the pinpointer</span>"
+		to_chat(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()
@@ -116,7 +116,7 @@
 
 			location = locate(locationx,locationy,Z.z)
 
-			usr << "You set the pinpointer to locate [locationx],[locationy]"
+			to_chat(usr, "You set the pinpointer to locate [locationx],[locationy]")
 
 
 			return attack_self()
@@ -142,9 +142,9 @@
 						return
 					target=locate(item_paths[targetitem])
 					if(!target)
-						usr << "Failed to locate [targetitem]!"
+						to_chat(usr, "Failed to locate [targetitem]!")
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					to_chat(usr, "You set the pinpointer to locate [targetitem]")
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
@@ -174,14 +174,14 @@
 		active = 1
 		if(!mode)
 			workdisk()
-			user << "<span class='notice'>Authentication Disk Locator active.</span>"
+			to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
 		else
 			worklocation()
-			user << "<span class='notice'>Shuttle Locator active.</span>"
+			to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
 	else
 		active = 0
 		icon_state = "pinoff"
-		user << "<span class='notice'>You deactivate the pinpointer.</span>"
+		to_chat(user, "<span class='notice'>You deactivate the pinpointer.</span>")
 
 
 /obj/item/weapon/pinpointer/nukeop/workdisk()
@@ -260,11 +260,11 @@
 	if(!active)
 		active = 1
 		point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer</span>"
+		to_chat(usr, "<span class='notice'>You activate the pinpointer</span>")
 	else
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate the pinpointer</span>"
+		to_chat(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 /obj/item/weapon/pinpointer/pdapinpointer/verb/select_pda()
 	set category = "Object"
@@ -272,7 +272,7 @@
 	set src in view(1)
 
 	if(used)
-		usr << "Target has already been set!"
+		to_chat(usr, "Target has already been set!")
 		return
 
 	var/list/L = list()
@@ -288,15 +288,15 @@
 		return
 	target = L[t]
 	if(!target)
-		usr << "Failed to locate [target]!"
+		to_chat(usr, "Failed to locate [target]!")
 		return
 	active = 1
 	point_at(target)
-	usr << "You set the pinpointer to locate [target]"
+	to_chat(usr, "You set the pinpointer to locate [target]")
 	used = 1
 
 
 /obj/item/weapon/pinpointer/pdapinpointer/examine(mob/user)
 	..()
 	if (target)
-		user << "<span class='notice'>Tracking [target]</span>"
+		to_chat(user, "<span class='notice'>Tracking [target]</span>")

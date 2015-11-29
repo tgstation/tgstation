@@ -66,8 +66,8 @@
 	return
 
 /obj/item/weapon/shard/suicide_act(mob/user)
-		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
+		to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -107,7 +107,7 @@
 		if(M.flying) //We don't check for lying because it's intended to hurt
 			return
 		else //Stepping on the glass
-			M << "<span class='danger'>You step in the broken glass!</span>"
+			to_chat(M, "<span class='danger'>You step in the broken glass!</span>")
 			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M

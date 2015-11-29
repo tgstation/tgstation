@@ -139,7 +139,7 @@
 		//src.eyeobj.loc = src.loc
 		src.eyeobj.forceMove(src.loc)
 	else
-		src << "ERROR: Eyeobj not found. Creating new eye..."
+		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		src.eyeobj = new(src.loc)
 		src.eyeobj.ai = src
 		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
@@ -159,4 +159,4 @@
 	set name = "Toggle Camera Acceleration"
 
 	acceleration = !acceleration
-	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
+	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")

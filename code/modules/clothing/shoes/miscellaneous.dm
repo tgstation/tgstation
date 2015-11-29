@@ -25,10 +25,10 @@
 	else
 		var/obj/item/clothing/shoes/S = I
 		if(src.clothing_choices.Find(S))
-			user << "<span class='warning'>[S.name]'s pattern is already stored.</span>"
+			to_chat(user, "<span class='warning'>[S.name]'s pattern is already stored.</span>")
 			return
 		src.clothing_choices += S
-		user << "<span class='notice'>[S.name]'s pattern absorbed by \the [src].</span>"
+		to_chat(user, "<span class='notice'>[S.name]'s pattern absorbed by \the [src].</span>")
 		return 1
 	return 0
 
@@ -173,12 +173,12 @@
 
 /obj/item/clothing/shoes/clown_shoes/advanced/attack_self(mob/user)
 	if(user.mind && user.mind.assigned_role != "Clown")
-		user << "<span class='danger'>These shoes are too powerful for you to handle!</span>"
+		to_chat(user, "<span class='danger'>These shoes are too powerful for you to handle!</span>")
 		if(prob(25))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H << sound('sound/items/AirHorn.ogg')
-				H << "<font color='red' size='7'>HONK</font>"
+				to_chat(H, sound('sound/items/AirHorn.ogg'))
+				to_chat(H, "<font color='red' size='7'>HONK</font>")
 				H.sleeping = 0
 				H.stuttering += 20
 				H.ear_deaf += 30
@@ -195,11 +195,11 @@
 	if(Adjacent(user))
 		if(step_sound == CLOWNSHOES_RANDOM_SOUND)
 			step_sound = "clownstep"
-			user << "<span class='sinister'>You set [src]'s step sound to always be random!</span>"
+			to_chat(user, "<span class='sinister'>You set [src]'s step sound to always be random!</span>")
 			random_sound = 1
 		else
 			step_sound = sound_list[new_sound]
-			user << "<span class='sinister'>You set [src]'s step sound to \"[new_sound]\"!</span>"
+			to_chat(user, "<span class='sinister'>You set [src]'s step sound to \"[new_sound]\"!</span>")
 			random_sound = 0
 
 /obj/item/clothing/shoes/clown_shoes/advanced/verb/ChangeSound()

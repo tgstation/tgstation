@@ -54,7 +54,7 @@
 			P.add_fingerprint(user)
 			use(1)
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 	else if(is_type_in_list(target,wrappable_big_stuff) && bigpath)
 		if(istype(target,/obj/structure/closet))
 			var/obj/structure/closet/C = target
@@ -65,9 +65,9 @@
 			P.add_fingerprint(user)
 			use(3)
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 	else
-		user << "<span class='warning'>[src] isn't useful for wrapping [target].</span>"
+		to_chat(user, "<span class='warning'>[src] isn't useful for wrapping [target].</span>")
 	return 1
 
 /obj/item/stack/package_wrap/proc/try_wrap_human(var/mob/living/carbon/human/H, mob/user as mob)
@@ -90,7 +90,7 @@
 			use(2)
 			return 1
 	else
-		user << "<span class='warning'>You need more paper!</span>"
+		to_chat(user, "<span class='warning'>You need more paper!</span>")
 		return 0
 
 /obj/item/stack/package_wrap/gift //For more details, see gift_wrappaper.dm
@@ -140,7 +140,7 @@
 
 		if(src.sortTag != O.currTag)
 			var/tag = uppertext(O.destinations[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
+			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = tag
 			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
 			overlays = 0
@@ -151,10 +151,10 @@
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text.</span>"
+			to_chat(user, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
-			M << "<span class='notice'>[user] labels [src] as [str].</span>"
+			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])" //also needs updating
 
 /obj/item/delivery/large

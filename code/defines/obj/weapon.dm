@@ -14,7 +14,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /*/obj/item/weapon/syndicate_uplink
@@ -60,7 +60,7 @@
 	throw_range = 20
 
 /obj/item/weapon/bananapeel/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>"
+	to_chat(viewers(user), "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/corncob
@@ -199,7 +199,7 @@
 	var/thrown_from
 
 /obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
-	viewers(user) << "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
@@ -208,7 +208,7 @@
 		if(istype(usr, /mob/living/carbon/human)) //if the user is human
 			var/mob/living/carbon/human/H = usr
 			if((M_CLUMSY in H.mutations) && prob(50))
-				H <<"<span class='warning'>You smack yourself in the face while swinging the [src]!</span>"
+				to_chat(H, "<span class='warning'>You smack yourself in the face while swinging the [src]!</span>")
 				H.Stun(2)
 				H.drop_item(src)
 				return
@@ -256,7 +256,7 @@
 				throw_failed()
 				return
 			else //walking, but uncuffed, or the running prob() failed
-				H << "<span class='notice'>You stumble over the thrown bolas</span>"
+				to_chat(H, "<span class='notice'>You stumble over the thrown bolas</span>")
 				step(H, H.dir)
 				H.Stun(1)
 				throw_failed()
@@ -397,7 +397,7 @@
 	var/obj/item/weapon/grenade/iedcasing/IED = null
 
 /obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/update_icon()
@@ -410,7 +410,7 @@
 
 		update_icon()
 
-		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
+		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 		if(armed && IED)
 			message_admins("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")
@@ -419,12 +419,12 @@
 /obj/item/weapon/legcuffs/beartrap/attackby(var/obj/item/I, mob/user as mob) //Let's get explosive.
 	if(istype(I, /obj/item/weapon/grenade/iedcasing))
 		if(IED)
-			user << "<span class='warning'>This beartrap already has an IED hooked up to it!</span>"
+			to_chat(user, "<span class='warning'>This beartrap already has an IED hooked up to it!</span>")
 			return
 		IED = I
 		switch(IED.assembled)
 			if(0,1) //if it's not fueled/hooked up
-				user << "<span class='warning'>You haven't prepared this IED yet!</span>"
+				to_chat(user, "<span class='warning'>You haven't prepared this IED yet!</span>")
 				IED = null
 				return
 			if(2,3)
@@ -434,17 +434,17 @@
 				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
 				message_admins(log_str)
 				log_game(log_str)
-				user << "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>"
+				to_chat(user, "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>")
 				desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
 			else
-				user << "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>"
+				to_chat(user, "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>")
 				IED = null
 				return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(IED)
 			IED.loc = get_turf(src.loc)
 			IED = null
-			user << "<span class='notice'>You remove the IED from the [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the IED from the [src].</span>")
 			return
 	..()
 
@@ -536,7 +536,7 @@
 			return
 		if(armed)
 			armed = 0
-			user << "<span class='notice'>You disarm \the [src].</span>"
+			to_chat(user, "<span class='notice'>You disarm \the [src].</span>")
 			return
 		timing = !timing
 		if(timing)
@@ -544,7 +544,7 @@
 		else
 			armed = 0
 			timepassed = 0
-		H << "<span class='notice'>You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]</span>"
+		to_chat(H, "<span class='notice'>You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]</span>")
 
 /obj/item/weapon/caution/proximity_sign/process()
 	if(!timing)
@@ -645,7 +645,7 @@
 		if(user.mind in ticker.mode.wizards)
 			user.flying = wielded ? 1 : 0
 			if(wielded)
-				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+				to_chat(user, "<span class='notice'>You hold \the [src] between your legs.</span>")
 				user.say("QUID 'ITCH")
 				animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
 			else
@@ -656,7 +656,7 @@
 					user.pixel_y -= 6
 		else
 			if(wielded)
-				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+				to_chat(user, "<span class='notice'>You hold \the [src] between your legs.</span>")
 
 /obj/item/weapon/staff/broom/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item/clothing/mask/horsehead))
@@ -744,7 +744,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 /obj/item/weapon/wire/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/module
@@ -896,7 +896,7 @@
 
 /obj/item/weapon/lightning/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	var/angle = get_angle(A, user)
-	//world << angle
+//	to_chat(world, angle)
 	angle = round(angle) + 45
 	if(angle > 180)
 		angle -= 180
@@ -905,9 +905,9 @@
 
 	if(!angle)
 		angle = 1
-	//world << "adjusted [angle]"
+//	to_chat(world, "adjusted [angle]")
 	icon_state = "[angle]"
-	//world << "[angle] [(get_dist(user, A) - 1)]"
+//	to_chat(world, "[angle] [(get_dist(user, A) - 1)]")
 	user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
 /*Testing
 proc

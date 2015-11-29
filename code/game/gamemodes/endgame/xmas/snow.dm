@@ -75,10 +75,10 @@
 	if(snow_amount != SNOWCOVERING_FULL)
 		return
 	playsound(get_turf(src), "rustle", 50, 1)
-	user << "<span class='notice'>You start digging the snow with your hands.</span>"
+	to_chat(user, "<span class='notice'>You start digging the snow with your hands.</span>")
 	if(do_after(user, src, 30))
 		snow_amount = SNOWCOVERING_MEDIUM
-		user << "<span class='notice'>You form a snowball in your hands.</span>"
+		to_chat(user, "<span class='notice'>You form a snowball in your hands.</span>")
 		user.put_in_hands(new /obj/item/stack/sheet/snow())
 		icon_state = "snow_grabbed"
 

@@ -64,9 +64,9 @@
 	var/fwpcheck=performFalseWallPressureCheck(T)
 	var/wpcheck=performWallPressureCheck(T)
 
-	src << "Pressure Differential (cardinals): [pdiff]"
-	src << "FWPCheck: [fwpcheck]"
-	src << "WPCheck: [wpcheck]"
+	to_chat(src, "Pressure Differential (cardinals): [pdiff]")
+	to_chat(src, "FWPCheck: [fwpcheck]")
+	to_chat(src, "WPCheck: [wpcheck]")
 
 /obj/structure/falsewall
 	name = "wall"
@@ -146,13 +146,13 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
+		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving.</span>")
 		return
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			user << "<span class='warning'>The wall is blocked!</span>"
+			to_chat(user, "<span class='warning'>The wall is blocked!</span>")
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
@@ -174,7 +174,7 @@
 					T.attackby(W,user)
 				del(src)
 	else
-		user << "<span class='notice'>You can't reach, close it first!</span>"
+		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
 
 	if( istype(W, /obj/item/weapon/pickaxe) )
 		var/obj/item/weapon/pickaxe/used_pick = W
@@ -259,7 +259,7 @@
 
 /obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
+		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))

@@ -80,33 +80,35 @@ var/const/max_assembly_amount = 300
 			compressed_matter -= 10
 			ejected = 1
 		if(ejected)
-			usr << "<span class='notice'>\icon[src] [src] ejects some compressed matter units.</span>"
+			to_chat(usr, "<span class='notice'>\icon[src] [src] ejects some compressed matter units.</span>")
 		else
-			usr << "<span class='warning'>\icon[src] there are no more compressed matter units in [src].</span>"
+			to_chat(usr, "<span class='warning'>\icon[src] there are no more compressed matter units in [src].</span>")
 
 	if( href_list["activate"] )
-		//world << "<span class='notice'>New fuel rod assembly</span>"
+//		to_chat(world, "<span class='notice'>New fuel rod assembly</span>")
 		var/obj/item/weapon/fuel_assembly/F = new(src)
 		var/fail = 0
 		var/old_matter = compressed_matter
 		for(var/reagent in new_assembly_quantities)
 			var/req_matter = round(new_assembly_quantities[reagent] / 30)
-			//world << "[reagent] matter: [req_matter]/[compressed_matter]"
+//			to_chat(world, "[reagent] matter: [req_matter]/[compressed_matter]")
 			if(req_matter <= compressed_matter)
 				F.rod_quantities[reagent] = new_assembly_quantities[reagent]
 				compressed_matter -= req_matter
 				if(compressed_matter < 1)
 					compressed_matter = 0
 			else
-				/*world << "bad reagent: [reagent], [req_matter > compressed_matter ? "req_matter > compressed_matter"\
-				 : (req_matter < compressed_matter ? "req_matter < compressed_matter" : "req_matter == compressed_matter")]"*/
+/*
+				to_chat(world, "bad reagent: [reagent], [req_matter > compressed_matter ? "req_matter > compressed_matter"\)
+				 : (req_matter < compressed_matter ? "req_matter < compressed_matter" : "req_matter == compressed_matter")]"
+*/
 				fail = 1
 				break
-			//world << "<span class='notice'>[reagent]: new_assembly_quantities[reagent]<br></span>"
+//			to_chat(world, "<span class='notice'>[reagent]: new_assembly_quantities[reagent]<br></span>")
 		if(fail)
 			del(F)
 			compressed_matter = old_matter
-			usr << "<span class='warning'>\icon[src] [src] flashes red: \'Out of matter.\'</span>"
+			to_chat(usr, "<span class='warning'>\icon[src] [src] flashes red: \'Out of matter.\'</span>")
 		else
 			F.loc = src.loc//get_step(get_turf(src), src.dir)
 			F.percent_depleted = 0

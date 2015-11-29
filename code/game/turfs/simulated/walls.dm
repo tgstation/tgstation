@@ -28,11 +28,11 @@
 /turf/simulated/wall/examine(mob/user)
 	..()
 	if(rotting)
-		user << "It is covered in wallrot and looks weakened"
+		to_chat(user, "It is covered in wallrot and looks weakened")
 	if(thermite)
-		user << "<span class='danger'>It's doused in thermite!</span>"
+		to_chat(user, "<span class='danger'>It's doused in thermite!</span>")
 	if(src.engraving)
-		user << src.engraving
+		to_chat(user, src.engraving)
 
 /turf/simulated/wall/dismantle_wall(devastated = 0, explode = 0)
 	if(mineral == "metal")
@@ -91,7 +91,7 @@
 				M.visible_message("<span class='danger'>[M] smashes through \the [src].</span>", \
 				"<span class='attack'>You smash through \the [src].</span>")
 			else
-				M << "<span class='info'>This [src] is far too strong for you to destroy.</span>"
+				to_chat(M, "<span class='info'>This [src] is far too strong for you to destroy.</span>")
 		else
 			dismantle_wall(1)
 			M.visible_message("<span class='danger'>[M] smashes through \the [src].</span>", \
@@ -127,7 +127,7 @@
 
 /turf/simulated/wall/proc/attack_rotting(mob/user as mob)
 	if(istype(src, /turf/simulated/wall/r_wall)) //I wish I didn't have to do typechecks
-		user << "<span class='notice'>This [src] feels rather unstable.</span>"
+		to_chat(user, "<span class='notice'>This [src] feels rather unstable.</span>")
 		return
 	else
 		//Should be a normal wall or a mineral wall, SHOULD
@@ -139,7 +139,7 @@
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.delayNextAttack(8)
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if(istype(W,/obj/item/weapon/solder) && bullet_marks)
@@ -147,7 +147,7 @@
 		if(!S.remove_fuel(bullet_marks*2,user))
 			return
 		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		user << "<span class='notice'>You remove the bullet marks with \the [W].</span>"
+		to_chat(user, "<span class='notice'>You remove the bullet marks with \the [W].</span>")
 		bullet_marks = 0
 		icon = initial(icon)
 		return
@@ -199,7 +199,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(engraving)
-				user << "<span class='notice'>You deform the wall back into its original shape"
+				to_chat(user, "<span class='notice'>You deform the wall back into its original shape")
 				engraving = null
 				engraving_quality = null
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -222,7 +222,7 @@
 					log_admin("[user.real_name] ([user.ckey]) dismanted a wall with a pdiff of [pdiff] at [loc]!")
 				dismantle_wall()
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe))

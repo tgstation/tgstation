@@ -144,7 +144,7 @@
 	OnAdd()
 		owner:mutantrace = new /datum/mutantrace/premature_clone(owner)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			owner << "<span class='warning'>Your genes feel...disorderly.</span>"
+			to_chat(owner, "<span class='warning'>Your genes feel...disorderly.</span>")
 		return
 
 	OnRemove()

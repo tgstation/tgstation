@@ -21,7 +21,7 @@
 			user.show_message("<span class='warning'>[user]'s [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING CUNT TILL YOU ARE A MASS EATING SHIT CUNT. EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS TO FUCK UP SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FROM THE DEPTHS OF SHIT\"</span>",2) //It's a hearable message silly!
 			insults--
 		else
-			user << "<span class='warning'>*BZZZZcuntZZZZT*</span>"
+			to_chat(user, "<span class='warning'>*BZZZZcuntZZZZT*</span>")
 	else
 		playsound(get_turf(src), 'sound/voice/halt.ogg', 100, 1, vary = 0)
 		user.show_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>",1)
@@ -32,7 +32,7 @@
 
 /obj/item/device/hailer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"
+		to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 		emagged = 1
 		insults = rand(1, 3)//to prevent dickflooding
 		return

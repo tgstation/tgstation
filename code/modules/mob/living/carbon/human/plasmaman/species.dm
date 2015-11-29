@@ -107,7 +107,7 @@
 	H.equip_or_collect(new suit(H), slot_wear_suit)
 	H.equip_or_collect(new helm(H), slot_head)
 	H.equip_or_collect(new/obj/item/weapon/tank/plasma/plasmaman(H), tank_slot) // Bigger plasma tank from Raggy.
-	H << "<span class='notice'>You are now running on plasma internals from the [H.s_store] in your [tank_slot_name].  You must breathe plasma in order to survive, and are extremely flammable.</span>"
+	to_chat(H, "<span class='notice'>You are now running on plasma internals from the [H.s_store] in your [tank_slot_name].  You must breathe plasma in order to survive, and are extremely flammable.</span>")
 	H.internal = H.get_item_by_slot(tank_slot)
 	if (H.internals)
 		H.internals.icon_state = "internal1"
@@ -186,13 +186,13 @@
 			return 1	//godmode
 		if(breath.temperature < cold_level_1)
 			if(prob(20))
-				src << "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>"
+				to_chat(src, "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>")
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")
-					src << "<span class='warning'>You feel supercharged by the extreme heat!</span>"
+					to_chat(src, "<span class='warning'>You feel supercharged by the extreme heat!</span>")
 				else
-					src << "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>"
+					to_chat(src, "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>")
 		if(H.dna.mutantrace == "slime")
 			if(breath.temperature < cold_level_1)
 				H.adjustToxLoss(round(cold_level_1 - breath.temperature))

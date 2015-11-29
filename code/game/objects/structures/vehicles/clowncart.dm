@@ -60,24 +60,24 @@
 /obj/structure/bed/chair/vehicle/clowncart/examine(mob/user)
 	..()
 	if(max_health > 100)
-		user << "<span class='info'>It is reinforced with [(max_health-100)/20] bananium sheets.</span>"
+		to_chat(user, "<span class='info'>It is reinforced with [(max_health-100)/20] bananium sheets.</span>")
 	switch(mode)
 		if(MODE_DRAWING)
-			user << "Currently in drawing mode."
+			to_chat(user, "Currently in drawing mode.")
 		if(MODE_PEELS)
-			user << "Currently in banana mode."
+			to_chat(user, "Currently in banana mode.")
 	switch(health)
 		if(max_health*0.5 to max_health)
-			user << "<span class='notice'>It appears slightly dented.</span>"
+			to_chat(user, "<span class='notice'>It appears slightly dented.</span>")
 		if(1 to max_health*0.5)
-			user << "<span class='warning'>It appears heavily dented.</span>"
+			to_chat(user, "<span class='warning'>It appears heavily dented.</span>")
 		if((INFINITY * -1) to 0)
-			user << "<span class='danger'>It appears completely unsalvageable.</span>"
+			to_chat(user, "<span class='danger'>It appears completely unsalvageable.</span>")
 
 /obj/structure/bed/chair/vehicle/clowncart/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/bikehorn))
 		if(destroyed)
-			user << "<span class='danger'>[src] is completely wrecked, it's over.</span>"
+			to_chat(user, "<span class='danger'>[src] is completely wrecked, it's over.</span>")
 			return
 		if(honk + 20 > world.timeofday)
 			return
@@ -95,7 +95,7 @@
 				activated = 0
 				reagents.remove_reagent("banana", 5)
 			else
-				user << "<span class='warning'>[src] doesn't have enough banana essence!</span>"
+				to_chat(user, "<span class='warning'>[src] doesn't have enough banana essence!</span>")
 		else
 			spawn(5)
 				activated = 1
@@ -116,7 +116,7 @@
 				qdel(I)
 		if(ate_anything)
 			visible_message("<span class='notice'>[user] empties \the [W] into [src].</span>")
-			user << "Added [ate_anything] item\s to \the [src]."
+			to_chat(user, "Added [ate_anything] item\s to \the [src].")
 	else if(istype(W, /obj/item/weapon/bananapeel)) //Banana peels
 		visible_message("<span class='notice'>[user] applies [W] to \the [src].</span>")
 		health += 10 //Banana peels repair some damage
@@ -135,7 +135,7 @@
 		qdel(W)
 	else if(istype(W, /obj/item/stack/sheet/mineral/clown)) //Bananium sheets
 		if(max_health >= max_health_top) //There's a point where the magic doesn't work anymore, sadly
-			user << "<span class='notice'>You fail to reinforce [src] any further.</span>"
+			to_chat(user, "<span class='notice'>You fail to reinforce [src] any further.</span>")
 			return
 
 		visible_message("<span class='notice'>[user] reinforces [src] with [W].</span>")
@@ -144,13 +144,13 @@
 
 		switch(max_health)
 			if(HEALTH_FOR_FLOWER_RECHARGE)
-				user << "You can now recharge your water flower using [src]'s HONKTech pump."
+				to_chat(user, "You can now recharge your water flower using [src]'s HONKTech pump.")
 			if(HEALTH_FOR_70X_MODIFIER)
-				user << "\The [src] will now convert food into banana essence a bit more effectively."
+				to_chat(user, "\The [src] will now convert food into banana essence a bit more effectively.")
 			if(HEALTH_FOR_80X_MODIFIER)
-				user << "\The [src] will now convert food into banana essence much more effectively."
+				to_chat(user, "\The [src] will now convert food into banana essence much more effectively.")
 			if(HEALTH_FOR_FREE_MOVEMENT)
-				user << "\The [src] will no longer use banana essence for powering its engine."
+				to_chat(user, "\The [src] will no longer use banana essence for powering its engine.")
 
 		var/obj/item/stack/ST = W
 		ST.use(1)
@@ -167,8 +167,8 @@
 					playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
 			if(MODE_DRAWING)
 				visible_message("<span class='notice'>[src]'s SmartCrayon Mk.II deploys, ready to draw!</span>")
-				user << {"<span class='notice'>Use a crayon to decide what you want to draw.<br>
-				Use stamps to change the colour of SmartCrayon Mk.II.</span>"}
+				to_chat(user, {"<span class='notice'>Use a crayon to decide what you want to draw.<br>
+				Use stamps to change the colour of SmartCrayon Mk.II.</span>"})
 			if(MODE_PEELS)
 				visible_message("<span class='warning'>[src]'s SmartCrayon Mk.II disappears in a puff of art!</span>")
 				spawn(5)
@@ -182,17 +182,18 @@
 			printing_pos = 0
 			switch(printing_text)
 				if("graffiti")
-					user << "<span class='notice'>Set to draw graffiti!</span>"
+					to_chat(user, "<span class='notice'>Set to draw graffiti!</span>")
 				if("rune")
-					user << "<span class='notice'>Set to draw runes!</span>"
+					to_chat(user, "<span class='notice'>Set to draw runes!</span>")
 				if("" || "nothing")
-					user << "<span class='warning'>No longer drawing anything.</span>"
+					to_chat(user, "<span class='warning'>No longer drawing anything.</span>")
 				if("paint")
-					user << "<span class='notice'>Set to paint the floor!</span>"
+					to_chat(user, "<span class='notice'>Set to paint the floor!</span>")
 				else
-					user << "<span class='notice'>Set to print the following text: [printing_text].</span>"
+					to_chat(user, "<span class='notice'>Set to print the following text: [printing_text].</span>")
 	else if(istype(W, /obj/item/toy/waterflower)) //Water flower
-		user << "<span class='notice'>You plug [W] into [src]!</span>"//Using it on the clown cart will transfer anything in the fuel tank (other than banana juice) into the flower
+		to_chat(user, "<span class='notice'>You plug [W] into [src]!</span>")//Using it on the clown cart will transfer anything in the fuel tank (other than banana juice) into the flower
+
 		if(max_health >= HEALTH_FOR_FLOWER_RECHARGE)
 			if(do_after(user, src, 5))
 				W.reagents.remove_any(10)
@@ -202,10 +203,10 @@
 					visible_message("<span class='notice'>The HONKTech pump has recharged [W].</span>")
 					reagents.trans_to(W, 10)
 				else
-					user << "<span class='warning'>There doesn't seem to be anything other than banana juice in [src]!</span>"
+					to_chat(user, "<span class='warning'>There doesn't seem to be anything other than banana juice in [src]!</span>")
 				reagents.add_reagent("banana", bananas) //adding banan back
 		else
-			user << "<span class='warning'>The HONKTech pump is not strong enough to do that yet. Reinforce it with more bananium sheets first.</span>"
+			to_chat(user, "<span class='warning'>The HONKTech pump is not strong enough to do that yet. Reinforce it with more bananium sheets first.</span>")
 	else if(istype(W, /obj/item/weapon/card/emag)) //emag
 		if(!emagged)
 			emagged = 1
@@ -215,39 +216,39 @@
 			if(istype(W, /obj/item/weapon/stamp/captain))
 				colour1 = "#004B8F"
 				colour2 = "#0060B8"
-				user << "Selected color: Condom Blue"
+				to_chat(user, "Selected color: Condom Blue")
 			else if(istype(W, /obj/item/weapon/stamp/ce))
 				colour1 = "#FF6A00"
 				colour2 = "#FF8432"
-				user << "Selected color: Powerful Orange"
+				to_chat(user, "Selected color: Powerful Orange")
 			else if(istype(W, /obj/item/weapon/stamp/clown))
 				colour1 = "#FFFF00"
 				colour2 = "#FFD000"
-				user << "Selected color: Banana Yellow"
+				to_chat(user, "Selected color: Banana Yellow")
 			else if(istype(W, /obj/item/weapon/stamp/cmo))
 				colour1 = "#FFFFFF"
 				colour2 = "#ECECEC"
-				user << "Selected color: Sanitary White"
+				to_chat(user, "Selected color: Sanitary White")
 			else if(istype(W, /obj/item/weapon/stamp/denied))
 				colour1 = "#FF0000"
 				colour2 = "#E22C00"
-				user << "Selected color: Red Denial"
+				to_chat(user, "Selected color: Red Denial")
 			else if(istype(W, /obj/item/weapon/stamp/hop))
 				colour1 = "#1CA800"
 				colour2 = "#238E0E"
-				user << "Selected color: Green Access"
+				to_chat(user, "Selected color: Green Access")
 			else if(istype(W, /obj/item/weapon/stamp/hos))
 				colour1 = "#7F4D21"
 				colour2 = "#B24611"
-				user << "Selected color: Shitcurity Brown"
+				to_chat(user, "Selected color: Shitcurity Brown")
 			else if(istype(W, /obj/item/weapon/stamp/rd))
 				colour1 = "#D22EF7"
 				colour2 = "#D312E5"
-				user << "Selected color: Plasma Purple"
+				to_chat(user, "Selected color: Plasma Purple")
 			else
 				colour1 = "#000000"
 				colour2 = "#6D6D6D"
-				user << "Selected color: Boring Black"
+				to_chat(user, "Selected color: Boring Black")
 
 /obj/structure/bed/chair/vehicle/clowncart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
@@ -255,11 +256,11 @@
 		return
 	if(empstun > 0)
 		if(user)
-			user << "<span class='warning'>[src]'s banana essence battery has been shorted out.</span>"
+			to_chat(user, "<span class='warning'>[src]'s banana essence battery has been shorted out.</span>")
 		return
 	if(reagents.total_volume <= 0) //No fuel
 		if(user)
-			user << "<span class='warning'>[src] has no fuel, it activates its ejection seat as soon as you jam down the pedal!</span>"
+			to_chat(user, "<span class='warning'>[src] has no fuel, it activates its ejection seat as soon as you jam down the pedal!</span>")
 			unlock_atom(user)
 			activated = 0
 			user.Weaken(5) //Only Weaken after unbuckling
@@ -286,7 +287,7 @@
 				new /obj/item/weapon/bananapeel/traitorpeel/(old_pos)
 				reagents.remove_reagent("banana",BANANA_FOR_TRAITOR_PEEL)
 	else
-		user << "<span class='notice'>You have to honk to be able to ride [src].</span>"
+		to_chat(user, "<span class='notice'>You have to honk to be able to ride [src].</span>")
 
 /obj/structure/bed/chair/vehicle/clowncart/die()
 	destroyed = 1
@@ -341,7 +342,7 @@
 	if(R.has_reagent("banana"))
 		var/added_banana=R.get_reagent_amount("banana")
 		if(reagents.total_volume + added_banana > 5000)
-			user << "<span class='notice'>\The [src] can't hold any more banana essence!</span>"
+			to_chat(user, "<span class='notice'>\The [src] can't hold any more banana essence!</span>")
 			return 0
 		var/modifier=50
 
@@ -353,11 +354,11 @@
 		reagents.add_reagent("banana", added_banana*modifier)
 		if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/pie))
 			playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
-			user << "<span class='warning'>[W] starts boiling inside \the [src]!</span>"
+			to_chat(user, "<span class='warning'>[W] starts boiling inside \the [src]!</span>")
 			trail+=5
 		return added_banana*modifier
 	else
-		user << "<span class='notice'>\The [W] doesn't contain any banana essence!</span>"
+		to_chat(user, "<span class='notice'>\The [W] doesn't contain any banana essence!</span>")
 		return 0
 
 #undef HEALTH_FOR_70X_MODIFIER

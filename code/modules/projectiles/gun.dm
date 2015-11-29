@@ -58,7 +58,8 @@
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(harm_labeled >= min_harm_label)
-		user << "<span class='warning'>A label sticks the trigger to the trigger guard!</span>" //Such a new feature, the player might not know what's wrong if it doesn't tell them.
+		to_chat(user, "<span class='warning'>A label sticks the trigger to the trigger guard!</span>")//Such a new feature, the player might not know what's wrong if it doesn't tell them.
+
 		return
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
@@ -75,28 +76,28 @@
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if ((M_CLUMSY in M.mutations) && prob(50))
-				M << "<span class='danger'>[src] blows up in your face.</span>"
+				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
 				M.drop_item(src)
 				qdel(src)
 				return
 
 	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
 		if (M_HULK in M.mutations)
-			M << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(M, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
 		if(user.dna && user.dna.mutantrace == "adamantine")
-			user << "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>"
+			to_chat(user, "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>")
 			return
 		var/datum/organ/external/a_hand = H.get_active_hand_organ()
 		if(!a_hand.can_use_advanced_tools())
-			user << "<span class='warning'>Your [a_hand] doesn't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='warning'>Your [a_hand] doesn't have the dexterity to do this!</span>")
 			return
 
 	add_fingerprint(user)
@@ -111,7 +112,7 @@
 
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
-			user << "<span class='warning'>[src] is not ready to fire again!"
+			to_chat(user, "<span class='warning'>[src] is not ready to fire again!")
 		return
 
 	if(!process_chambered()) //CHECK
@@ -221,7 +222,7 @@
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		if(istype(M.wear_mask, /obj/item/clothing/mask/happy))
-			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			to_chat(M, "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>")
 			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
@@ -241,7 +242,7 @@
 				user.stat=2 // Just to be sure
 				user.death()
 			else
-				user << "<span class = 'notice'>Ow...</span>"
+				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
 			del(in_chamber)
 			mouthshoot = 0

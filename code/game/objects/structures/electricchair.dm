@@ -31,7 +31,7 @@
 	else
 		on = 1
 		icon_state = "echair1"
-	usr << "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>"
+	to_chat(usr, "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>")
 	return
 
 /obj/structure/bed/chair/e_chair/rotate()
@@ -65,7 +65,7 @@
 	if(locked_atoms.len)
 		var/mob/living/M = locked_atoms[1]
 		M.burn_skin(85)
-		M << "<span class='danger'>You feel a deep shock course through your body!</span>"
+		to_chat(M, "<span class='danger'>You feel a deep shock course through your body!</span>")
 		sleep(1)
 		M.burn_skin(85)
 		M.Stun(600)

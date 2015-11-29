@@ -30,7 +30,7 @@
 
 	// Didn't feel like this was appropriate for a paper that is made of plastic
 	//if((M_CLUMSY in usr.mutations) && prob(50))
-	//	usr << "<span class='warning'>You cut yourself on the paper.</span>"
+//		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 	//	return
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the [src]?", "[src] Labelling", null)  as text), 1, MAX_NAME_LEN)

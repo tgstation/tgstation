@@ -32,7 +32,7 @@
 	var/N = input("Percentage of tank used per shot:","[src]") as null|anything in possible_pressure_amounts
 	if (N)
 		pressure_setting = N
-		usr << "You dial the pressure valve to [pressure_setting]%."
+		to_chat(usr, "You dial the pressure valve to [pressure_setting]%.")
 
 /obj/item/weapon/storage/pneumatic/verb/eject_tank() //Remove the tank.
 
@@ -42,14 +42,14 @@
 	set src in range(0)
 
 	if(tank)
-		usr << "You twist the valve and pop the tank out of [src]."
+		to_chat(usr, "You twist the valve and pop the tank out of [src].")
 		tank.loc = usr.loc
 		tank = null
 		icon_state = "pneumatic"
 		item_state = "pneumatic"
 		usr.update_icons()
 	else
-		usr << "There's no tank in [src]."
+		to_chat(usr, "There's no tank in [src].")
 
 /obj/item/weapon/storage/pneumatic/attackby(obj/item/W as obj, mob/user as mob)
 	if(!tank && istype(W,/obj/item/weapon/tank))
@@ -64,11 +64,11 @@
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
-	user << "<span class='info'>The valve is dialed to [pressure_setting]%.</span>"
+	to_chat(user, "<span class='info'>The valve is dialed to [pressure_setting]%.</span>")
 	if(tank)
-		user << "<span class='info'>The tank dial reads [tank.air_contents.return_pressure()] kPa.</span>"
+		to_chat(user, "<span class='info'>The tank dial reads [tank.air_contents.return_pressure()] kPa.</span>")
 	else
-		user << "<span class='warning'>Nothing is attached to the tank valve!</span>"
+		to_chat(user, "<span class='warning'>Nothing is attached to the tank valve!</span>")
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if (istype(target, /obj/item/weapon/storage/backpack ))
@@ -84,7 +84,7 @@
 		return
 
 	if (length(contents) == 0)
-		user << "There's nothing in [src] to fire!"
+		to_chat(user, "There's nothing in [src] to fire!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
@@ -103,11 +103,11 @@
 
 
 	if (!tank)
-		user << "There is no gas tank in [src]!"
+		to_chat(user, "There is no gas tank in [src]!")
 		return 0
 
 	if (cooldown)
-		user << "The chamber hasn't built up enough pressure yet!"
+		to_chat(user, "The chamber hasn't built up enough pressure yet!")
 		return 0
 
 	add_fingerprint(user)
@@ -120,7 +120,7 @@
 	var/fire_pressure = (tank.air_contents.return_pressure()/100)*pressure_setting
 
 	if (fire_pressure < minimum_tank_pressure)
-		user << "There isn't enough gas in the tank to fire [src]."
+		to_chat(user, "There isn't enough gas in the tank to fire [src].")
 		return 0
 
 	var/obj/item/object = contents[1]
@@ -139,4 +139,4 @@
 	cooldown = 1
 	spawn(cooldown_time)
 		cooldown = 0
-		user << "[src]'s gauge informs you it's ready to be fired again."
+		to_chat(user, "[src]'s gauge informs you it's ready to be fired again.")

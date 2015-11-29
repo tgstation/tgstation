@@ -13,11 +13,11 @@
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 
 	if(!istype(M))
-		user << "<span class='warning'>\The [src] cannot be applied to [M]!</span>"
+		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [M]!</span>")
 		return 1
 
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if(istype(M, /mob/living/carbon/human))
@@ -26,19 +26,19 @@
 
 		if(affecting.display_name == "head")
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
-				user << "<span class='warning'>You can't apply \the [src] through \the [H.head]!</span>"
+				to_chat(user, "<span class='warning'>You can't apply \the [src] through \the [H.head]!</span>")
 				return 1
 		else
 			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
-				user << "<span class='warning'>You can't apply \the [src] through \the [H.wear_suit]!</span>"
+				to_chat(user, "<span class='warning'>You can't apply \the [src] through \the [H.wear_suit]!</span>")
 				return 1
 
 		if(affecting.status & ORGAN_ROBOT)
-			user << "<span class='warning'>This isn't useful at all on a robotic limb.</span>"
+			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb.</span>")
 			return 1
 
 		if(affecting.status & ORGAN_PEG)
-			user << "<span class='warning'>This isn't useful at all on a peg limb.</span>"
+			to_chat(user, "<span class='warning'>This isn't useful at all on a peg limb.</span>")
 			return 1
 
 		H.UpdateDamageIcon()
@@ -70,7 +70,7 @@
 
 		if(affecting.open == 0)
 			if(!affecting.bandage())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been bandaged.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been bandaged.</span>")
 				return 1
 			else
 				for(var/datum/wound/W in affecting.wounds)
@@ -92,7 +92,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than a bandage!</span>"
+				to_chat(user, "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -112,7 +112,7 @@
 
 		if(affecting.open == 0)
 			if(!affecting.salve())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>[user] salves the wounds on [M]'s [affecting.display_name].</span>", \
@@ -123,7 +123,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than some ointment!</span>"
+				to_chat(user, "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than some ointment!</span>")
 
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
@@ -160,7 +160,7 @@
 
 		if(affecting.open == 0)
 			if(!affecting.bandage())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been treated.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been treated.</span>")
 				return 1
 			else
 				for(var/datum/wound/W in affecting.wounds)
@@ -183,7 +183,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even bioglue won't do!</span>"
+				to_chat(user, "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even bioglue won't do!</span>")
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
@@ -204,7 +204,7 @@
 
 		if(affecting.open == 0)
 			if(!affecting.salve())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>[user] disinfects the wounds on [M]'s [affecting.display_name] and covers them with a regenerative membrane.</span>", \
@@ -216,7 +216,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even a regenerative membrane won't do!</span>"
+				to_chat(user, "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even a regenerative membrane won't do!</span>")
 
 /obj/item/stack/medical/splint
 	name = "medical splints"
@@ -234,10 +234,10 @@
 		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 		var/limb = affecting.display_name
 		if(!((affecting.name == "l_arm") || (affecting.name == "r_arm") || (affecting.name == "l_leg") || (affecting.name == "r_leg")))
-			user << "<span class='warning'>You can only apply splints on limbs!</span>"
+			to_chat(user, "<span class='warning'>You can only apply splints on limbs!</span>")
 			return
 		if(affecting.status & ORGAN_SPLINTED)
-			user << "<span class='warning'>[M]'s [limb] is already splinted!</span>"
+			to_chat(user, "<span class='warning'>[M]'s [limb] is already splinted!</span>")
 			return
 		if (M != user)
 			user.visible_message("<span class='warning'>[user] starts to apply \the [src] to [M]'s [limb].</span>", \
@@ -245,7 +245,7 @@
 								"<span class='warning'>You hear something being wrapped.</span>")
 		else
 			if((!user.hand && affecting.name == "r_arm") || (user.hand && affecting.name == "l_arm"))
-				user << "<span class='warning'>You can't apply a splint to the arm you're using!</span>"
+				to_chat(user, "<span class='warning'>You can't apply a splint to the arm you're using!</span>")
 				return
 			user.visible_message("<span class='warning'>[user] starts to apply \the [src] to their [limb].</span>", \
 								"<span class='warning'>You start to apply \the [src] to your [limb].</span>", \

@@ -25,7 +25,7 @@
 				S.remove_from_storage(O,T) //This will remove the item.
 				materials.addAmount(O.material, 1)
 				returnToPool(O)
-		user << "<span class='notice'>You empty \the [W] into the box.</span>"
+		to_chat(user, "<span class='notice'>You empty \the [W] into the box.</span>")
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user as mob)
@@ -51,7 +51,7 @@
 				for(var/i=0;i<materials.storage[ore_id];i++)
 					getFromPool(mat.oretype, get_turf(src))
 				materials.removeAmount(ore_id, materials.storage[ore_id])
-		usr << "<span class='notice'>You empty the box</span>"
+		to_chat(usr, "<span class='notice'>You empty the box</span>")
 	src.updateUsrDialog()
 	return
 

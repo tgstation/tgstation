@@ -28,7 +28,7 @@
 
 	if(cistern && !open)
 		if(!contents.len)
-			user << "<span class='notice'>The cistern is empty.</span>"
+			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 			return
 		else
 			var/obj/item/I = pick(contents)
@@ -36,7 +36,7 @@
 				user.put_in_hands(I)
 			else
 				I.loc = get_turf(src)
-			user << "<span class='notice'>You find \an [I] in the cistern.</span>"
+			to_chat(user, "<span class='notice'>You find \an [I] in the cistern.</span>")
 			w_items -= I.w_class
 			return
 
@@ -48,26 +48,26 @@
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
 	if(iswrench(I))
-		user << "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>")
 		anchored = !anchored
 	if(anchored == 0)
 		return
 	if(open && cistern && state == NORODS && istype(I,/obj/item/stack/rods)) //State = 0 if no rods
 		var/obj/item/stack/rods/R = I
 		if(R.amount < 2) return
-		user << "<span class='notice'>You add the rods to the toilet, creating flood avenues.</span>"
+		to_chat(user, "<span class='notice'>You add the rods to the toilet, creating flood avenues.</span>")
 		R.use(2)
 		state = RODSADDED //State 0 -> 1
 		return
 	if(open && cistern && state == RODSADDED && istype(I,/obj/item/weapon/paper)) //State = 1 if rods are added
-		user << "<span class='notice'>You create a filter with the paper and insert it.</span>"
+		to_chat(user, "<span class='notice'>You create a filter with the paper and insert it.</span>")
 		var/obj/structure/centrifuge/C = new /obj/structure/centrifuge(src.loc)
 		C.dir = src.dir
 		qdel(I)
 		qdel(src)
 		return
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
+		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, src, 30))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
@@ -83,7 +83,7 @@
 
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the toilet.</span>"
+					to_chat(user, "<span class='notice'>[GM.name] needs to be on the toilet.</span>")
 					return
 				if(open && !swirlie)
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
@@ -97,18 +97,18 @@
 					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
 					GM.adjustBruteLoss(8)
 			else
-				user << "<span class='notice'>You need a tighter grip.</span>"
+				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
 		if(I.w_class > 3)
-			user << "<span class='notice'>\The [I] does not fit.</span>"
+			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
 		if(w_items + I.w_class > 5)
-			user << "<span class='notice'>The cistern is full.</span>"
+			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		user.drop_item(I, src)
 		w_items += I.w_class
-		user << "You carefully place \the [I] into the cistern."
+		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
 
@@ -128,12 +128,12 @@
 			var/mob/living/GM = G.affecting
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
+					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
 				GM.adjustBruteLoss(8)
 			else
-				user << "<span class='notice'>You need a tighter grip.</span>"
+				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 /obj/machinery/shower
 	name = "shower"
@@ -172,7 +172,7 @@
 
 /obj/machinery/shower/togglePanelOpen(var/obj/toggleitem, var/mob/user)
 	if(on)
-		user << "<span class='warning'>You need to turn off \the [src] first.</span>"
+		to_chat(user, "<span class='warning'>You need to turn off \the [src] first.</span>")
 		return
 	..()
 
@@ -180,7 +180,7 @@
 	if(..())
 		return
 	if(panel_open)
-		M << "<span class='warning'>The shower's maintenance hatch needs to be closed first.</span>"
+		to_chat(M, "<span class='warning'>The shower's maintenance hatch needs to be closed first.</span>")
 		return
 
 	on = !on
@@ -196,7 +196,7 @@
 	..()
 
 	if(I.type == /obj/item/device/analyzer)
-		user << "<span class='notice'>The water's temperature seems to be [watertemp].</span>"
+		to_chat(user, "<span class='notice'>The water's temperature seems to be [watertemp].</span>")
 	if(panel_open) //The panel is open
 		if(iswrench(I))
 			user.visible_message("<span class='warning'>[user] starts wrenching \the [src] apart.</span>", \
@@ -382,10 +382,10 @@
 		return
 
 	if(busy)
-		M << "<span class='warning'>Someone's already washing here.</span>"
+		to_chat(M, "<span class='warning'>Someone's already washing here.</span>")
 		return
 
-	usr << "<span class='notice'>You start washing your hands.</span>"
+	to_chat(usr, "<span class='notice'>You start washing your hands.</span>")
 
 	busy = 1
 	sleep(40)
@@ -416,11 +416,11 @@
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
-		user << "<span class='warning'>Someone's already washing here.</span>"
+		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
 
 	if(iswrench(O))
-		user << "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>")
 		anchored = !anchored
 	if(anchored == 0)
 		return
@@ -430,7 +430,7 @@
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.reagents.total_volume >= RG.reagents.maximum_volume)
-			user << "<span class='warning'>\The [RG] is full.</span>"
+			to_chat(user, "<span class='warning'>\The [RG] is full.</span>")
 			return
 		if (istype(RG, /obj/item/weapon/reagent_containers/chempack)) //Chempack can't use amount_per_transfer_from_this, so it needs its own if statement.
 			var/obj/item/weapon/reagent_containers/chempack/C = RG
@@ -461,7 +461,7 @@
 		return
 
 	if (isitem(O))
-		user << "<span class='notice'>You start washing \the [O].</span>"
+		to_chat(user, "<span class='notice'>You start washing \the [O].</span>")
 		busy = TRUE
 
 		if (do_after(user,src, 40))

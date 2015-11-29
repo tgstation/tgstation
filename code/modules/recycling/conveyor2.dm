@@ -179,13 +179,13 @@
 
 /obj/machinery/conveyor/togglePanelOpen(var/obj/item/toggle_item, mob/user)
 	if(operating)
-		user << "You can't reach \the [src]'s panel through the moving machinery."
+		to_chat(user, "You can't reach \the [src]'s panel through the moving machinery.")
 		return -1
 	return ..()
 
 /obj/machinery/conveyor/crowbarDestroy(mob/user)
 	if(operating)
-		user << "You can't reach \the [src]'s panel through the moving machinery."
+		to_chat(user, "You can't reach \the [src]'s panel through the moving machinery.")
 		return -1
 	return ..()
 
@@ -353,7 +353,7 @@
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
-		usr << "<span class='warning'>Nope.</span>"
+		to_chat(usr, "<span class='warning'>Nope.</span>")
 		return 0
 	if(position == 0)
 		if(last_pos < 0)
@@ -388,10 +388,10 @@
 	if(.)
 		return .
 	if(istype(W, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Deconstructing \the [src]...</span>"
+		to_chat(user, "<span class='notice'>Deconstructing \the [src]...</span>")
 		if(do_after(user, src,50))
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'>You disassemble \the [src].</span>"
+			to_chat(user, "<span class='notice'>You disassemble \the [src].</span>")
 			var/turf/T=get_turf(src)
 			new /obj/item/device/assembly/signaler(T)
 			new /obj/item/stack/rods(T,1)
@@ -405,7 +405,7 @@
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
-		usr << "<span class='warning'>Nope.</span>"
+		to_chat(usr, "<span class='warning'>Nope.</span>")
 		return 0
 	if(position == 0)
 		position = convdir

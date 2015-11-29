@@ -75,7 +75,7 @@
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 						if(devastation_range > 0)
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
-							M << "<span class='warning'>You feel something shake the structure...</span>"
+							to_chat(M, "<span class='warning'>You feel something shake the structure...</span>")
 							shake_camera(M, 4, 1)
 						else
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
@@ -85,7 +85,7 @@
 		for(var/mob/M in mob_list) if(M.z == epicenter.z) if(!(M in close))
 			//Check if the mob can hear
 			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
-				M << 'sound/effects/explosionfar.ogg'
+				to_chat(M, 'sound/effects/explosionfar.ogg')
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>)")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")

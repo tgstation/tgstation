@@ -19,7 +19,7 @@ var/global/list/cached_icons = list()
 	var/paint_type = ""
 
 /obj/item/weapon/reagent_containers/glass/paint/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</span>")
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/reagent_containers/glass/paint/mop_act(obj/item/weapon/mop/M, mob/user)

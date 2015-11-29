@@ -37,7 +37,7 @@
 	if(iscrowbar(W))
 		var/turf/T = get_turf(src)
 		var/obj/item/stack/sheet/glass/G = solar_assembly.glass_type
-		user << "<span class='notice'>You begin taking the [initial(G.name)] off the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin taking the [initial(G.name)] off the [src].</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, src, 50))
 			if(solar_assembly)

@@ -117,11 +117,11 @@
 
 /obj/item/ammo_storage/magazine/lawgiver/examine(mob/user)
 	..()
-	user << "<span class='info'>It has enough energy for [stuncharge/20] stun shot\s remaining.</span>"
-	user << "<span class='info'>It has enough energy for [lasercharge/20] laser shot\s remaining.</span>"
-	user << "<span class='info'>It has [rapid_ammo_count] rapid fire round\s remaining.</span>"
-	user << "<span class='info'>It has [flare_ammo_count] flare round\s remaining.</span>"
-	user << "<span class='info'>It has [hi_ex_ammo_count] hi-EX round\s remaining.</span>"
+	to_chat(user, "<span class='info'>It has enough energy for [stuncharge/20] stun shot\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has enough energy for [lasercharge/20] laser shot\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has [rapid_ammo_count] rapid fire round\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has [flare_ammo_count] flare round\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has [hi_ex_ammo_count] hi-EX round\s remaining.</span>")
 
 /obj/item/ammo_storage/magazine/lawgiver/update_icon()
 	overlays.len = 0

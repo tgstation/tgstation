@@ -35,7 +35,7 @@
 	max_combined_w_class = 28
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
-		viewers(user) << "<span class = 'danger'><b>[user] puts the [src.name] on \his head and stretches the bag around \himself. With a sudden snapping sound, the bag shrinks to it's original size, leaving no trace of [user] </b></span>"
+		to_chat(viewers(user), "<span class = 'danger'><b>[user] puts the [src.name] on \his head and stretches the bag around \himself. With a sudden snapping sound, the bag shrinks to it's original size, leaving no trace of [user] </b></span>")
 		loc = get_turf(user)
 		qdel(user)
 
@@ -47,18 +47,18 @@
 	if(W == src)
 		return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
 	if(crit_fail)
-		user << "<span class = 'warning'>The Bluespace generator isn't working.</span>"
+		to_chat(user, "<span class = 'warning'>The Bluespace generator isn't working.</span>")
 		return
 	//BoH+BoH=Singularity, WAS commented out
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
 		message_admins("[src] has become a singularity. Caused by [user.key]")
-		user << "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		to_chat(user, "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		del(W)
 		new /obj/machinery/singularity (get_turf(src))
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
-		user << "<span class='danger'>FUCK</span>"
+		to_chat(user, "<span class='danger'>FUCK</span>")
 		user.throw_at(get_turf(src), 10, 5)
 		del(src)
 		return
@@ -67,9 +67,10 @@
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
-		user << "<span class = 'warning'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
+		to_chat(user, "<span class = 'warning'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
+
 	else
-		user << "<span class = 'danger'>The Bluespace generator malfunctions!</span>"
+		to_chat(user, "<span class = 'danger'>The Bluespace generator malfunctions!</span>")
 		for (var/obj/O in src.contents) //it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1

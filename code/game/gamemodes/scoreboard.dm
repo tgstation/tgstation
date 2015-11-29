@@ -274,8 +274,8 @@
 			score["arenabest"] += "[x] "
 
 	//Show the score - might add "ranks" later
-	world << "<b>The crew's final score is:</b>"
-	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
+	to_chat(world, "<b>The crew's final score is:</b>")
+	to_chat(world, "<b><font size='4'>[score["crewscore"]]</font></b>")
 
 	for(var/mob/E in player_list)
 		if(E.client)

@@ -101,11 +101,11 @@
 		return
 
 	if(loaded_food)
-		user << "<span class='notice'>You already have food on \the [src].</span>"
+		to_chat(user, "<span class='notice'>You already have food on \the [src].</span>")
 		return
 
 	if(snack.wrapped)
-		user << "<span class='notice'>You can't eat packaging!</span>"
+		to_chat(user, "<span class='notice'>You can't eat packaging!</span>")
 		return
 
 	if(snack.reagents.total_volume)
@@ -143,14 +143,14 @@
 	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/weapon/kitchen/utensil/knife/suicide_act(mob/user)
-	viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='danger'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+						"<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>You accidentally cut yourself with the [src].</span>"
+		to_chat(user, "<span class='warning'>You accidentally cut yourself with the [src].</span>")
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -188,9 +188,9 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/kitchen/utensil/knife/large/suicide_act(mob/user)
-	viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='danger'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+						"<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/large/ritual
@@ -255,7 +255,7 @@
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
+		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_organ_damage(10)
 		user.Paralyse(2)
 		return
@@ -275,7 +275,7 @@
 			if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					H << "<span class='warning'>The helmet protects you from being hit hard in the head!</span>"
+					to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 					return
 				var/time = rand(2, 6)
 				if (prob(75))
@@ -329,7 +329,7 @@
 
 
 	if((M_CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
-		M << "<span class='warning'>You accidentally slam yourself with the [src]!</span>"
+		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
 		M.Weaken(1)
 		user.take_organ_damage(2)
 		if(prob(50))
@@ -378,7 +378,7 @@
 
 
 	if(istype(M, /mob/living/carbon/human) && H.check_body_part_coverage(EYES))
-		H << "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>"
+		to_chat(H, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)
@@ -408,7 +408,7 @@
 			return
 
 	else //No eye or head protection, tough luck!
-		M << "<span class='warning'>You get slammed in the face with the tray!</span>"
+		to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
 		if(prob(33))
 			src.add_blood(M)
 			var/turf/location = H.loc
@@ -530,11 +530,11 @@
 /*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
-			user << "<span class='warning'>You already have omelette on your fork.</span>"
+			to_chat(user, "<span class='warning'>You already have omelette on your fork.</span>")
 			return
 		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"
-		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+		to_chat(viewers(3,user), "[user] takes a piece of omelette with his fork!")
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
 			del(src)*/

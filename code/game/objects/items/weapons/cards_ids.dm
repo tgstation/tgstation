@@ -149,14 +149,14 @@
 /obj/item/weapon/card/emag/examine(mob/user)
 	..()
 	if(energy==-1)
-		user << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
+		to_chat(user, "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>")
 	else
 		var/class="info"
 		if(energy/max_energy < 0.1 /* 10% energy left */)
 			class="warning"
-		user << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
+		to_chat(user, "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>")
 	if(recharge_rate && recharge_ticks)
-		user << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
+		to_chat(user, "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>")
 
 /obj/item/weapon/card/emag/attack()
 	return
@@ -278,7 +278,7 @@
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W,/obj/item/weapon/id_wallet))
-		user << "You slip [src] into [W]."
+		to_chat(user, "You slip [src] into [W].")
 		src.name = "[src.registered_name]'s [W.name] ([src.assignment])"
 		src.desc = W.desc
 		src.icon = W.icon
@@ -308,7 +308,7 @@
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
-		user << "<span class='notice'>The [src]'s microscanners activate as you pass it over \the [I], copying its access.</span>"
+		to_chat(user, "<span class='notice'>The [src]'s microscanners activate as you pass it over \the [I], copying its access.</span>")
 		access |= I.access
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
@@ -327,7 +327,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "<span class='notice'>You successfully forge the ID card.</span>"
+		to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -344,7 +344,7 @@
 
 						src.registered_name = new_name
 						UpdateName()
-						user << "Name changed to [new_name]."
+						to_chat(user, "Name changed to [new_name].")
 
 					if("Appearance")
 						var/list/appearances = list(
@@ -378,20 +378,20 @@
 						if(!choice)
 							return
 						src.icon_state = choice
-						usr << "Appearance changed to [choice]."
+						to_chat(usr, "Appearance changed to [choice].")
 
 					if("Occupation")
 						var/new_job = sanitize(stripped_input(user,"What job would you like to put on this card?\nChanging occupation will not grant or remove any access levels.","Agent card occupation", "Assistant", MAX_MESSAGE_LEN))
 						if(!Adjacent(user)) return
 						src.assignment = new_job
-						user << "Occupation changed to [new_job]."
+						to_chat(user, "Occupation changed to [new_job].")
 						UpdateName()
 
 					if("Money account")
 						var/new_account = input(user,"What money account would you like to link to this card?","Agent card account",11111) as num
 						if(!Adjacent(user)) return
 						associated_account_number = new_account
-						user << "Linked money account changed to [new_account]."
+						to_chat(user, "Linked money account changed to [new_account].")
 
 					if("Blood type")
 						var/default = "\[UNSET\]"
@@ -404,7 +404,7 @@
 						var/new_blood_type = sanitize(input(user,"What blood type would you like to be written on this card?","Agent card blood type",default) as text)
 						if(!Adjacent(user)) return
 						src.blood_type = new_blood_type
-						user << "Blood type changed to [new_blood_type]."
+						to_chat(user, "Blood type changed to [new_blood_type].")
 
 					if("DNA hash")
 						var/default = "\[UNSET\]"
@@ -417,7 +417,7 @@
 						var/new_dna_hash = sanitize(input(user,"What DNA hash would you like to be written on this card?","Agent card DNA hash",default) as text)
 						if(!Adjacent(user)) return
 						src.dna_hash = new_dna_hash
-						user << "DNA hash changed to [new_dna_hash]."
+						to_chat(user, "DNA hash changed to [new_dna_hash].")
 
 					if("Fingerprint hash")
 						var/default = "\[UNSET\]"
@@ -430,7 +430,7 @@
 						var/new_fingerprint_hash = sanitize(input(user,"What fingerprint hash would you like to be written on this card?","Agent card fingerprint hash",default) as text)
 						if(!Adjacent(user)) return
 						src.fingerprint_hash = new_fingerprint_hash
-						user << "Fingerprint hash changed to [new_fingerprint_hash]."
+						to_chat(user, "Fingerprint hash changed to [new_fingerprint_hash].")
 
 					if("Reset card")
 						name = initial(name)
@@ -444,7 +444,7 @@
 						access = initial(access)
 						registered_user = null
 
-						user << "<span class='notice'>All information has been deleted from \the [src].</span>"
+						to_chat(user, "<span class='notice'>All information has been deleted from \the [src].</span>")
 	else
 		..()
 

@@ -307,57 +307,57 @@
 		return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='warning'>The biogenerator already occuped.</span>"
+			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else if(panel_open)
-			user << "<span class='rose'>The biogenerator's maintenance panel must be closed first.</span>"
+			to_chat(user, "<span class='rose'>The biogenerator's maintenance panel must be closed first.</span>")
 		else
 			user.before_take_item(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
-		user << "<span class='warning'>The biogenerator is currently processing.</span>"
+		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 20)
-			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
+			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
 		else
 			var/obj/item/weapon/storage/bag/B = O
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				B.remove_from_storage(G,src)
 				i++
 				if(i >= 20)
-					user << "<span class='notice'>You fill the biogenerator to its capacity.</span>"
+					to_chat(user, "<span class='notice'>You fill the biogenerator to its capacity.</span>")
 					break
 			if(i<20)
-				user << "<span class='notice'>You empty the plant bag into the biogenerator.</span>"
+				to_chat(user, "<span class='notice'>You empty the plant bag into the biogenerator.</span>")
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]</span>"
+		to_chat(user, "<span class='warning'>You cannot put this in [src.name]</span>")
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 20)
-			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
+			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
 		else
 			user.before_take_item(O)
 			O.loc = src
-			user << "<span class='notice'>You put [O.name] in [src.name]</span>"
+			to_chat(user, "<span class='notice'>You put [O.name] in [src.name]</span>")
 	update_icon()
 	return
 
 /obj/machinery/biogenerator/crowbarDestroy(mob/user)
 	if(beaker)
-		user << "<span class='warning'>A beaker is loaded, you cannot deconstruct \the [src].</span>"
+		to_chat(user, "<span class='warning'>A beaker is loaded, you cannot deconstruct \the [src].</span>")
 		return
 	return ..()
 
 /obj/machinery/biogenerator/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
-		user << "<span class='rose'>You can't open \the [src]'s maintenance panel while a beaker is loaded.</span>"
+		to_chat(user, "<span class='rose'>You can't open \the [src]'s maintenance panel while a beaker is loaded.</span>")
 		return
 	if(..())
 		if(panel_open)
@@ -429,7 +429,7 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		usr << "<span class='warning'>The biogenerator is in the process of working.</span>"
+		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)

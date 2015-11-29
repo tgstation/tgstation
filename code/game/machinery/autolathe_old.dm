@@ -168,14 +168,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 		wires_win(user,50)
 		return
 	if(src.disabled)
-		user << "<span class='warning'>You press the button, but nothing happens.</span>"
+		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
 		return
 	regular_win(user)
 	return
 
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(busy)
-		user << "<span class='warning'>\The [src] is busy. Please wait for the completion of previous operation.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is busy. Please wait for the completion of previous operation.</span>")
 		return 1
 	if(..()) //this has to be above the stat check, because it doesn't require power
 		return 1
@@ -183,21 +183,21 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 	if(isrobot(user))
 		if(!isMoMMI(user))
-			user << "<span class='warning'>\The [src] refuses your inbuilt module.</span>"
+			to_chat(user, "<span class='warning'>\The [src] refuses your inbuilt module.</span>")
 			return 1
 		else
 			var/mob/living/silicon/robot/mommi/M = user
 			if(M.is_in_modules(O, permit_sheets=1))
-				user << "<span class='warning'>\The [src] refuses your inbuilt module.</span>"
+				to_chat(user, "<span class='warning'>\The [src] refuses your inbuilt module.</span>")
 				return 1
 	if (src.m_amount + O.m_amt > max_m_amount)
-		user << "<span class='warning'>\The [src] is full. Please remove metal from \the [src] in order to insert more.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is full. Please remove metal from \the [src] in order to insert more.</span>")
 		return 1
 	if (src.g_amount + O.g_amt > max_g_amount)
-		user << "<span class='warning'>\The [src] is full. Please remove glass from \the [src] in order to insert more.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is full. Please remove glass from \the [src] in order to insert more.</span>")
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by \the [src] due to size or hazardous materials.</span>"
+		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by \the [src] due to size or hazardous materials.</span>")
 		return 1
 	/*
 		if (istype(O, /obj/item/weapon/grab) && src.hacked)
@@ -230,7 +230,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
-	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to \the [src]."
+	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to \the [src].")
 	if (O && O.loc == src)
 		qdel(O)
 	busy = 0
@@ -330,10 +330,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")
 				if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-					usr << "<span class='warning'>You need a multitool!</span>"
+					to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 				else
 					if(src.wires[temp_wire])
-						usr << "<span class='warning'>You can't pulse a cut wire.</span>"
+						to_chat(usr, "<span class='warning'>You can't pulse a cut wire.</span>")
 					else
 						if(src.hack_wire == temp_wire && !emagged)
 							src.hacked = !src.hacked
@@ -348,7 +348,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 							spawn(100) src.shocked = !src.shocked
 			if(href_list["act"] == "wire")
 				if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-					usr << "<span class='warning'>You need wirecutters!</span>"
+					to_chat(usr, "<span class='warning'>You need wirecutters!</span>")
 				else
 					wires[temp_wire] = !wires[temp_wire]
 					if(src.hack_wire == temp_wire && !emagged)
@@ -360,7 +360,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 						src.shocked = !src.shocked
 						src.shock(usr,50)
 	else
-		usr << "<span class='warning'>\The [src] is busy. Please wait for the completion of previous operation.</span>"
+		to_chat(usr, "<span class='warning'>\The [src] is busy. Please wait for the completion of previous operation.</span>")
 	src.updateUsrDialog()
 	return
 

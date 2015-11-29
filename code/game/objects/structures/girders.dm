@@ -20,7 +20,7 @@
 
 			else if(!anchored) //Unanchored, anchor it
 				if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
-					user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+					to_chat(user, "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>")
 					return
 
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
@@ -98,14 +98,14 @@
 	else if(istype(W, /obj/item/stack/rods) && state == 0) //Inserting support struts, stage 0 to 1 (reinforced girder, replaces plasteel step)
 		var/obj/item/stack/rods/R = W
 		if(R.amount < 2) //Do a first check BEFORE the user begins, in case he's using a single rod
-			user << "<span class='warning'>You need more rods to finish the support struts</span>"
+			to_chat(user, "<span class='warning'>You need more rods to finish the support struts</span>")
 			return
 		user.visible_message("<span class='notice'>[user] starts inserting internal support struts into \the [src]</span>", \
 		"<span class='notice'>You start inserting internal support struts into \the [src]</span>")
 		if(do_after(user, src,40))
 			var/obj/item/stack/rods/O = W
 			if(O.amount < 2) //In case our user is trying to be tricky
-				user << "<span class='warning'>You need more rods to finish the support struts</span>"
+				to_chat(user, "<span class='warning'>You need more rods to finish the support struts</span>")
 				return
 			O.use(2)
 			user.visible_message("<span class='notice'>[user] inserts internal support struts into \the [src]</span>", \
@@ -144,7 +144,7 @@
 						FW.add_fingerprint(user)
 						qdel(src)
 					else
-						user << "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>"
+						to_chat(user, "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>")
 						message_admins("Attempted false wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
 						log_admin("Attempted false wall made by [user.real_name] (user.ckey) at [loc] had a pressure difference of [pdiff]!")
 						return
@@ -184,7 +184,7 @@
 						FW.add_fingerprint(user)
 						del(src)
 					else
-						user << "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>"
+						to_chat(user, "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>")
 						message_admins("Attempted false rwall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
 						log_admin("Attempted false rwall made by [user.real_name] ([user.ckey]) at [loc] had a pressure difference of [pdiff]!")
 						return
@@ -226,7 +226,7 @@
 					FW.add_fingerprint(user)
 					qdel(src)
 				else
-					user << "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>"
+					to_chat(user, "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>")
 					message_admins("Attempted false [M] wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
 					log_admin("Attempted false [M] wall made by [user.real_name] ([user.ckey]) at [loc] had a pressure difference of [pdiff]!")
 					return
@@ -378,9 +378,9 @@
 
 /obj/structure/cultgirder/attack_construct(mob/user as mob)
 	if(istype(user, /mob/living/simple_animal/construct/builder))
-		user << "You start repairing the girder."
+		to_chat(user, "You start repairing the girder.")
 		if(do_after(user,src,30))
-			user << "<span class='notice'>Girder repaired.</span>"
+			to_chat(user, "<span class='notice'>Girder repaired.</span>")
 			var/turf/Tsrc = get_turf(src)
 			if(!istype(Tsrc)) return 0
 			Tsrc.ChangeTurf(/turf/simulated/wall/cult)

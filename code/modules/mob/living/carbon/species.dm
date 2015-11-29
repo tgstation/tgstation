@@ -284,13 +284,13 @@ var/global/list/whitelisted_species = list("Human")
 		if(H.status_flags & GODMODE)	return 1	//godmode
 		if(breath.temperature < cold_level_1)
 			if(prob(20))
-				H << "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>"
+				to_chat(H, "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>")
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")
-					H << "<span class='warning'>You feel supercharged by the extreme heat!</span>"
+					to_chat(H, "<span class='warning'>You feel supercharged by the extreme heat!</span>")
 				else
-					H << "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>"
+					to_chat(H, "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>")
 
 		if(H.dna.mutantrace == "slime")
 			if(breath.temperature < cold_level_1)
@@ -658,7 +658,7 @@ var/global/list/whitelisted_species = list("Human")
 		if(helm)
 			H.equip_or_collect(new helm(H), slot_head)
 		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
-		H << "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span>"
+		to_chat(H, "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span>")
 		H.internal = H.get_item_by_slot(tank_slot)
 		if (H.internals)
 			H.internals.icon_state = "internal1"

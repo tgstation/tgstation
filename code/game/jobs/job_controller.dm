@@ -17,7 +17,7 @@ var/global/datum/controller/occupations/job_master
 	occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
-		world << "<span class='danger'>Error setting up jobs, no job datums found</span>"
+		to_chat(world, "<span class='danger'>Error setting up jobs, no job datums found</span>")
 		return 0
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
@@ -339,7 +339,7 @@ var/global/datum/controller/occupations/job_master
 	if(job)
 		job.equip(H)
 	else
-		H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
+		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
 
 	H.job = rank
 
@@ -388,8 +388,8 @@ var/global/datum/controller/occupations/job_master
 			H.mind.store_memory(remembered_info)
 
 		spawn()
-			H << "<span class='danger'>Your bank account number is: <span style='color: black;'>[M.account_number]</span>, your bank account pin is: <span style='color: black;'>[M.remote_access_pin]</span></span>"
-			H << "<span class='danger'>Your virtual wallet funds are: <span style='color: black;'>$[balance_wallet]</span>, your bank account funds are: <span style='color: black;'>$[balance_bank]</span></span>"
+			to_chat(H, "<span class='danger'>Your bank account number is: <span style='color: black;'>[M.account_number]</span>, your bank account pin is: <span style='color: black;'>[M.remote_access_pin]</span></span>")
+			to_chat(H, "<span class='danger'>Your virtual wallet funds are: <span style='color: black;'>$[balance_wallet]</span>, your bank account funds are: <span style='color: black;'>$[balance_bank]</span></span>")
 
 	var/alt_title = null
 	if(H.mind)
@@ -430,10 +430,10 @@ var/global/datum/controller/occupations/job_master
 				H.species.equip(H)
 
 
-	H << "<B>You are the [alt_title ? alt_title : rank].</B>"
-	H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	to_chat(H, "<B>You are the [alt_title ? alt_title : rank].</B>")
+	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title, balance_wallet)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
