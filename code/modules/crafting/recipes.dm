@@ -69,6 +69,18 @@
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
+/datum/table_recipe/teleprod
+	name = "Teleprod"
+	result = /obj/item/weapon/melee/baton/cattleprod/teleprod
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/weapon/wirecutters = 1,
+				/obj/item/weapon/stock_parts/cell = 1,
+				/obj/item/weapon/ore/bluespace_crystal = 1)
+	time = 80
+	parts = list(/obj/item/weapon/stock_parts/cell = 1)
+	category = CAT_WEAPON
+
 /datum/table_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209

@@ -41,9 +41,9 @@
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
 			if(clear || !ishuman(user))
-				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+				M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 			else //Emergency comms
-				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+				M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
@@ -76,12 +76,11 @@
 
 
 /datum/game_mode/cult/pre_setup()
+	cult_objectives += "sacrifice"
 	if(prob(50))
 		cult_objectives += "survive"
-		cult_objectives += "sacrifice"
 	else
 		cult_objectives += "eldergod"
-		cult_objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
