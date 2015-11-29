@@ -179,14 +179,8 @@ var/next_external_rsc = 0
 
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
-
-
-	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
-		spawn (rand(10,150))
-			if (src)
-				sync_client_with_db()
-	else
-		sync_client_with_db()
+		
+	sync_client_with_db()
 
 	send_resources()
 
