@@ -65,9 +65,6 @@
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
-				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
-					return
 				if(!user.unEquip(A))
 					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"

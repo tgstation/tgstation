@@ -8,7 +8,7 @@ var/list/uplink_items = list()
 		// A keyed list, acting as categories, which are lists to the datum.
 
 		var/list/last = list()
-		for(var/item in typesof(/datum/uplink_item))
+		for(var/item in subtypesof(/datum/uplink_item))
 
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
@@ -31,7 +31,7 @@ var/list/uplink_items = list()
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
-	
+
 	for(var/category in uplink_items)
 		for(var/datum/uplink_item/I in uplink_items[category])
 			if(I.gamemodes.len)
@@ -406,7 +406,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
-	desc = "An assortment of deadly chemicals packed into a compact box. Hard to utilize if there is no method of application."
+	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
@@ -441,9 +441,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate before use."
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"

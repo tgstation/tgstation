@@ -28,6 +28,9 @@
 #define JELLYBONES  "Jelly Bones"
 #define ARMBLADE    "Armblade"
 
+#define UI_CHANGED "ui changed"
+#define UE_CHANGED "ue changed"
+
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
 // String identifiers for associative list lookup

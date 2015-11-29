@@ -75,13 +75,6 @@
 		src.healthcheck()
 	..()
 
-
-/obj/machinery/power/solar/blob_act()
-	src.health--
-	src.healthcheck()
-	return
-
-
 /obj/machinery/power/solar/proc/healthcheck()
 	if (src.health <= 0)
 		if(!(stat & BROKEN))
@@ -154,12 +147,6 @@
 			if(3)
 				if(prob(25) && broken())
 					new /obj/item/weapon/shard(src.loc)
-
-/obj/machinery/power/solar/blob_act()
-	if(prob(75))
-		broken()
-		src.density = 0
-
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -370,11 +357,19 @@
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
-	if(!..())
-		ui_interact(user)
+	if (..() || !user) return
+	add_fingerprint(user)
+	interact(user)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "solar_control.tmpl", name, 490, 420, 1)
+/obj/machinery/power/solar_control/interact(mob/user)
+	if (stat & BROKEN) return
+	ui_interact(user)
+
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 395)
+		ui.open()
 
 /obj/machinery/power/solar_control/get_ui_data()
 	var/data = list()

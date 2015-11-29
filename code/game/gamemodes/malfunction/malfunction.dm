@@ -4,7 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	antag_flag = BE_MALF
+	antag_flag = ROLE_MALF
 	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
@@ -29,11 +29,11 @@
 		required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
 	return ..()
 
-/datum/game_mode/malfunction/get_players_for_role(role = BE_MALF)
+/datum/game_mode/malfunction/get_players_for_role(role = ROLE_MALF)
 	var/datum/job/ai/DummyAIjob = new
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & BE_MALF)
+			if(ROLE_MALF in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
 					antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)

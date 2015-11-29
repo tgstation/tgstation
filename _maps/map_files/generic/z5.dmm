@@ -212,7 +212,7 @@
 "ed" = (/obj/machinery/light/small{dir = 4},/obj/structure/bed/roller,/turf/simulated/floor/plasteel{dir = 2; icon_state = "whiteblue"},/area/mine/laborcamp)
 "ee" = (/obj/machinery/alarm{pixel_y = 28},/obj/structure/closet/crate,/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
 "ef" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
-"eg" = (/obj/machinery/bot/secbot/beepsky{desc = "Powered by tears and swet of laborer."; name = "Prison Ofitser"},/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=2-NMine"; location = "1-Storage"},/turf/simulated/floor/plasteel{icon_state = "asteroidfloor"},/area/mine/laborcamp)
+"eg" = (/mob/living/simple_animal/bot/secbot/beepsky{desc = "Powered by tears and swet of laborer."; name = "Prison Ofitser"},/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=2-NMine"; location = "1-Storage"},/turf/simulated/floor/plasteel{icon_state = "asteroidfloor"},/area/mine/laborcamp)
 "eh" = (/obj/structure/plasticflaps/mining,/turf/simulated/floor/plasteel{icon_state = "asteroidfloor"},/area/mine/laborcamp)
 "ei" = (/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=3-SMine"; location = "2-NMine"},/turf/simulated/floor/plasteel{icon_state = "asteroidfloor"},/area/mine/laborcamp)
 "ej" = (/turf/simulated/floor/plating{icon_plating = "asteroidplating"; icon_state = "asteroidplating"},/area/mine/explored)

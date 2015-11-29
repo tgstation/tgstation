@@ -310,6 +310,7 @@
 	flash_protect = 0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
+	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -331,6 +332,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
+	scan_reagents = 1
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/New()
 	..()

@@ -147,7 +147,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new/obj/effect/overlay/temp/emp(src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/emp, src.loc)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -188,7 +188,9 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act()
-	if(prob(50))
+	if(!density)
+		qdel(src)
+	if(prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
@@ -220,53 +222,6 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
-	return
-
-/mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN, 0))
-		return
-
-/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
-	if(incapacitated())
-		return
-	if(no_dextery)
-		if(be_close && in_range(M, src))
-			return 1
-	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
-
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
-	if(incapacitated() || lying )
-		return
-	if(!Adjacent(M))
-		if((be_close == 0) && (dna.check_mutation(TK)))
-			if(tkMaxRangeCheck(src, M))
-				return 1
-		return
-	if(!isturf(M.loc) && M.loc != src)
-		return
-	return 1
-
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat)
-		return
-	if(be_close && !in_range(M, src))
-		return
-	//stop AIs from leaving windows open and using then after they lose vision
-	//apc_override is needed here because AIs use their own APC when powerless
-	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
-	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
-		return
-	return 1
-
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat || lockcharge || stunned || weakened)
-		return
-	if(be_close && !in_range(M, src))
-		return
-	return 1
 
 /obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))

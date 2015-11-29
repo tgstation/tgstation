@@ -8,6 +8,11 @@
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
 
+/obj/structure/ladder/unbreakable //mostly useful for awaymissions to prevent halting progress in a mission
+	name = "sturdy ladder"
+	desc = "An extremely sturdy metal ladder."
+
+
 /obj/structure/ladder/New()
 	spawn(8)
 		for(var/obj/structure/ladder/L in world)
@@ -71,3 +76,7 @@
 
 /obj/structure/ladder/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)
+
+/obj/structure/ladder/unbreakable/Destroy()
+	return QDEL_HINT_LETMELIVE
+

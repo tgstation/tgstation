@@ -31,3 +31,9 @@
 	feedback_add_details("changeling_powers","CR")
 	user.stat = CONSCIOUS
 	return 1
+
+/obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
+	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))
+		user.mind.changeling.purchasedpowers -= src
+		return 0
+	. = ..()

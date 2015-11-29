@@ -6,6 +6,7 @@
 	health = 400
 	maxhealth = 400
 	explosion_block = 6
+	point_return = -1
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
@@ -98,7 +99,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(BE_BLOB)
+		candidates = get_candidates(ROLE_BLOB)
 		if(candidates.len)
 			C = pick(candidates)
 	else

@@ -14,7 +14,7 @@
 
 			if(method == TOUCH || method == VAPOR)
 				M.ContractDisease(D)
-			else //ingest or patch
+			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
 /datum/reagent/blood/on_new(list/data)
@@ -97,7 +97,7 @@
 	color = "#C81040" // rgb: 200, 16, 64
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(islist(data) && method == INGEST)
+	if(islist(data) && (method == INGEST || method == INJECT))
 		for(var/datum/disease/D in M.viruses)
 			if(D.GetDiseaseID() in data)
 				D.cure()
@@ -188,8 +188,9 @@
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-		if(iscultist(M))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
 			ticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
@@ -238,6 +239,12 @@
 	M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
+
+/datum/reagent/medicine/omnizine/godblood
+	name = "Godblood"
+	id = "godblood"
+	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
+	overdose_threshold = 150
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -358,8 +365,8 @@
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3)
 	sleep(30)
-	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman, /datum/species)
-	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman)
+	var/list/possible_morphs = subtypesof(/datum/species/) - blacklisted_species
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
@@ -402,6 +409,16 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
+/datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+
+/datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+	return
+
 /datum/reagent/copper
 	name = "Copper"
 	id = "copper"
@@ -415,6 +432,16 @@
 	description = "A colorless, odorless, tasteless gas."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
+
+/datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+
+/datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+	return
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -712,7 +739,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 /datum/reagent/xenomicrobes
@@ -722,7 +749,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -750,6 +777,23 @@
 	id = "diethylamine"
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
+
+/datum/reagent/carbondioxide
+	name = "Carbon Dioxide"
+	id = "co2"
+	reagent_state = GAS
+	description = "A gas commonly produced by burning carbon fuels."
+	color = "#B0B0B0" // rgb : 192, 192, 192
+
+/datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+
+/datum/reagent/carbondioxide/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+	return
 
 
 

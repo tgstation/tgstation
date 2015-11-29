@@ -19,7 +19,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, attack_not_jump = 1)
 
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))

@@ -134,6 +134,8 @@
 	item_state = "supermatter_sword"
 	slot_flags = null
 	w_class = 4
+	force = 0.001
+	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 
@@ -155,12 +157,12 @@
 		if(!istype(T,/turf/space))
 			consume_turf(T)
 
-/obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user)
-	..()
+/obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	if(user && target == user)
 		user.drop_item()
-	if(Adjacent(target))
+	if(proximity_flag)
 		consume_everything(target)
+	..()
 
 /obj/item/weapon/melee/supermatter_sword/throw_impact(target)
 	..()
@@ -209,3 +211,6 @@
 	shard.Consume()
 	T.ChangeTurf(/turf/space)
 	T.CalculateAdjacentTurfs()
+
+/obj/item/weapon/melee/supermatter_sword/add_blood()
+	return

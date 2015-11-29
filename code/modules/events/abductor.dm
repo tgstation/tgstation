@@ -18,8 +18,8 @@
 			makeAbductorTeam()
 
 /datum/round_event/abductor/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null, BE_ABDUCTOR )
-	
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null, ROLE_ABDUCTOR )
+
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
 		var/number =  ticker.mode.abductor_teams + 1

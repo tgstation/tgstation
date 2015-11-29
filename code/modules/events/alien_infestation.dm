@@ -42,7 +42,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return kill()
 
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
+	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
 	if(!candidates.len)
 		if(end_if_fail)
 			return 0
