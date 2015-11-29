@@ -1223,6 +1223,8 @@ var/proccalls = 1
 #define LIGHTING_LAYER 10 // drawing layer for lighting overlays
 #define LIGHTING_ICON 'icons/effects/lighting_overlay.dmi' // icon used for lighting shading effects
 
+#define LIGHTING_SOFT_THRESHOLD 0.1 // If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting overlays.
+
 //Some defines to generalise colours used in lighting.
 //Important note on colors. Colors can end up significantly different from the basic html picture, especially when saturated
 #define LIGHT_COLOR_RED "#FA8282" //Warm but extremely diluted red. rgb(250, 130, 130)
@@ -1341,4 +1343,3 @@ var/proccalls = 1
 #define MODE_CHANGELING "changeling"
 #define MODE_CULTCHAT "cultchat"
 #define MODE_ANCIENT "ancientchat"
-

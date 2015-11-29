@@ -22,7 +22,6 @@
 
 	// These two lists might just be an assoc list.
 	var/list/effect_str		// List used to store how much we're affecting turfs.
-	var/list/effect_turf	// List of turfs we're affecting.
 
 	var/applied				// Whether we have applied our light yet or not.
 
@@ -52,7 +51,6 @@
 	parse_light_color()
 
 	effect_str = list()
-	effect_turf = list()
 
 	update()
 
@@ -186,7 +184,7 @@
 		. *= light_power;					\
 		. = round(., LIGHTING_ROUND_VALUE);	\
 											\
-		effect_str += .;					\
+		effect_str[T] = .;					\
 											\
 		T.lighting_overlay.update_lumcount	\
 		(									\
@@ -197,7 +195,7 @@
 	}										\
 	else									\
 	{										\
-		effect_str += 0;					\
+		effect_str[T] = 0;					\
 	}										\
 											\
 	if(!T.affecting_lights)					\
@@ -206,12 +204,11 @@
 	}										\
 											\
 	T.affecting_lights	+= src;				\
-	effect_turf			+= T;				\
 
 // Removes a turf from effect.
 // Opposite of the above.
 
-#define REMOVE_TURF(T, i)					\
+#define REMOVE_TURF(T)						\
 	if(T.affecting_lights)					\
 	{										\
 		T.affecting_lights -= src;			\
@@ -219,7 +216,7 @@
 											\
 	if(T.lighting_overlay)					\
 	{										\
-		var/str = effect_str[i];			\
+		var/str = effect_str[T];			\
 		T.lighting_overlay.update_lumcount	\
 		(									\
 			-str * applied_lum_r,			\
@@ -247,14 +244,10 @@
 /datum/light_source/proc/remove_lum()
 	applied = 0
 
-	var/i = 1
-	for(var/turf/T in effect_turf)
-		REMOVE_TURF(T, i)
-
-		i++
+	for(var/turf/T in effect_str)
+		REMOVE_TURF(T)
 
 	effect_str.Cut()
-	effect_turf.Cut()
 
 // Smartly updates the lighting, only removes lum from and adds lum to turfs that actually got changed.
 // This is for lights that need to reconsider due to nearby opacity changes.
@@ -264,34 +257,27 @@
 		view += T	//Filter out turfs.
 
 	// This is the part where we calculate new turfs (if any)
-	var/list/new_turfs = view - effect_turf // This will result with all the tiles that are added.
+	var/list/new_turfs = view - effect_str // This will result with all the tiles that are added.
 	for(var/turf/T in new_turfs)
 		APPLY_TURF(T)
 
-	var/list/old_turfs = effect_turf - view
+	var/list/old_turfs = effect_str - view
 	for(var/turf/T in old_turfs)
-		// Insert not-so-huge copy paste from remove_lum().
-		var/idx = effect_turf.Find(T) // Get the index, luckily Find() is cheap in small lists like this. (with small I mean under a couple thousand len)
-		REMOVE_TURF(T, idx)
+		REMOVE_TURF(T)
 
-		effect_turf.Cut(idx, idx + 1)
-		effect_str.Cut(idx, idx + 1)
+		effect_str -= T
 
 // Calculates lighting for an individual turf, used when a turf's lighting goes dynamic (construction of floors, for example.)
 // Assumes the turf is visible and such.
 // For the love of god don't call this proc when it's not needed! Lighting artifacts WILL happen!
 /datum/light_source/proc/calc_turf(var/turf/T)
-	var/idx = effect_turf.Find(T)
-	if(!idx)
-		return	// WHY.
-
 	if(T.lighting_overlay)
 		LUM_FALLOFF(., T, source_turf)
 		. *= light_power
 
 		. = round(., LIGHTING_ROUND_VALUE)
 
-		effect_str[idx] = .
+		effect_str[T] = .
 		// Since the applied_lum values are what are (later) removed by remove_lum.
 		// Anything we apply to the lighting overlays HAS to match what remove_lum uses.
 		T.lighting_overlay.update_lumcount(
