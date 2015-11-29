@@ -54,6 +54,8 @@
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		adjustBruteLoss(-5)
+		if(src != M)
+			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
