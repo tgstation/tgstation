@@ -1,0 +1,4 @@
+author: GunHog
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen has improved the interface for the hand-held teleportation device. It will now provide the user with the name of the destination tracking beacon."
