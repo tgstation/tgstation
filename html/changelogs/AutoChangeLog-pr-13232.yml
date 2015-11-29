@@ -1,5 +1,0 @@
-author: PKPenguin321
-delete-after: True
-changes: 
-  - rscadd: "Teleprods can now be constructed. Make them via tablecrafting, or by putting a bluespace crystal onto a stunprod. They warp the target to a random nearby area (which may include space/the inside of a wall) in addition to giving the victim a brief stun. Like stunprods, they require a power cell to function."
-  - rscadd: "Teleprods can have their crystal removed and be made back into stunprods by using them in your hand when they have no cell installed."
