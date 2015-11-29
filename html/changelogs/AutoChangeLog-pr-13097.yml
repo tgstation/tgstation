@@ -1,0 +1,4 @@
+author: Remie + Kor
+delete-after: True
+changes: 
+  - tweak: "Holopads now use AltClick to request the AI"
