@@ -56,7 +56,7 @@
 		adjustBruteLoss(-5)
 		if(src != M)
 			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
+		M.emote("me", 1, "repairs some of \the <EM>[src]'s</EM> dents.")
 	else if(src != M)
 		..()
 
@@ -78,7 +78,7 @@
 /mob/living/simple_animal/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A massive, armored construct build to spearhead attacks and soak up enemy fire."
+	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
 	maxHealth = 250
@@ -134,7 +134,7 @@
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
-	desc = "A wicked, clawed shell built to assassinate enemies and sow chaos behind enemy lines."
+	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
 	maxHealth = 75

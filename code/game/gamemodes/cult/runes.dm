@@ -378,10 +378,12 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/sacrifice/proc/sac(mob/living/T)
 	var/sacrifice_fulfilled
 	if(T)
-		if(istype(T, /mob/living/simple_animal/pet))
+		if(istype(T, /mob/living/simple_animal/pet/dog))
 			for(var/mob/living/carbon/C in range(3,src))
 				if(iscultist(C))
-					C << "<span class='cultitalic'>\"A tasty morsel.\"</span>"
+					C << "<span class='cultlarge'>\"Even I have standards, such as they are!\"</span>"
+					if(C.reagents)
+						C.reagents.add_reagent("hell_water", 2)
 		if(T.mind)
 			sacrificed.Add(T.mind)
 			if(is_sacrifice_target(T.mind))

@@ -59,6 +59,12 @@ It also contains rune words, which are soon to be removed.
 		user << "The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie."
 
 /obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
+	if(istype(M,/mob/dead/observer))
+		M.invisibility = 0
+		user.visible_message("<span class='warning'>[user] strikes the air with [src], and a ghost appears!</span>", \
+							 "<span class='cult'>You drag the ghost to your plane of reality!</span>")
+		add_logs(user, M, "smacked", src)
+		return
 	if(!istype(M))
 		return
 	if(!iscultist(user))
