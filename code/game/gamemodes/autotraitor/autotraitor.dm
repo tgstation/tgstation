@@ -22,10 +22,6 @@
 	possible_traitors = get_players_for_role(ROLE_TRAITOR)
 
 	for(var/datum/mind/player in possible_traitors)
-		if(player.current.z == map.zCentcomm) //Players on the centcomm z-level can't turn into traitors!
-			possible_traitors -= player
-			continue
-
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job) //Players with a job that is in the restricted job list can't turn into traitors!
 				possible_traitors -= player
@@ -93,12 +89,13 @@
 		var/traitorcount = 0
 		var/possible_traitors[0]
 		for(var/mob/living/player in mob_list)
-
-			if (player.client && player.stat != 2)
+			if(player.z == map.zCentcomm)
+				continue
+			if(player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if(player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.desires_role(ROLE_TRAITOR)) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
+			if(player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.desires_role(ROLE_TRAITOR)) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)
@@ -160,7 +157,8 @@
 		var/playercount = 0
 		var/traitorcount = 0
 		for(var/mob/living/player in mob_list)
-
+			if(player.z == map.zCentcomm) //Players on the centcomm z-level can't turn into traitors!
+				continue
 			if (player.client && player.stat != 2)
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
