@@ -89,7 +89,7 @@
 /mob/living/simple_animal/hostile/swarmer/death(gibbed)
 	..(gibbed)
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
-	new /obj/item/weapon/ore/bluespace_crystal(src.loc)
+	new /obj/item/weapon/ore/bluespace_crystal/artificial(src.loc)
 	ghostize()
 	qdel(src)
 
