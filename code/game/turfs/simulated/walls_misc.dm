@@ -23,11 +23,11 @@
 	return
 
 /turf/simulated/wall/vault
-	icon = 'icons/turf/walls/icedmetal_wall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 
 /turf/simulated/wall/ice
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
 	walltype = "iced"
