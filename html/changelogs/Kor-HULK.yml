@@ -34,5 +34,6 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "Added a a new Jelly Bones power to genetics, which allows ventcrawling."
+  - rscadd: "Toggle armblade is now obtainable via genetics."
   - rscadd: "Laser eyes is now obtainable via genetics."
   - rscdel: "Hulk is now admin only."
