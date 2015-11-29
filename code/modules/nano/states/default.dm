@@ -30,7 +30,7 @@
 	if (. > NANO_CLOSE)
 		. = min(., shared_living_nano_distance(src_object)) // Check the distance...
 		// Derp a bit if we have brain loss.
-		if (getBrainLoss() && prob(50))
+		if (prob(getBrainLoss()))
 			return NANO_DISABLED
 		// If we have telekinesis and remain close enough, allow interaction.
 		if (. == NANO_UPDATE && dna.check_mutation(TK))
