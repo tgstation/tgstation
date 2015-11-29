@@ -374,7 +374,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
-	
+
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -1343,3 +1343,11 @@ B --><-- A
 		c_dist++
 
 	return L
+
+/atom/proc/contains(var/atom/location)
+        if(!location)
+                return 0
+        for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+        if(location == src)
+                return 1
+        return 0

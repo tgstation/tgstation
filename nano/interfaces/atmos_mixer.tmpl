@@ -1,0 +1,42 @@
+<div class="item">
+	<div class="itemLabel">
+		Power:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.on? 'On' : 'Off', data.on? 'power' : 'close', {'power' : 1})}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Output Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Set', 'pencil', {'set_press' : 'set'})}}
+		{{:helper.link('Max', 'plus', {'set_press' : 'max'}, data.set_pressure == data.max_pressure ? 'disabled' : null)}}
+		{{:data.set_pressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Node 1:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('', 'seek-start', {'node1_c' : '-0.1'}, null)}}
+		{{:helper.link('', 'triangle-1-w', {'node1_c' : '-0.01'}, null)}}
+		{{:helper.link('', 'triangle-1-e', {'node1_c' : '0.01'}, null)}}
+		{{:helper.link('', 'seek-end', {'node1_c' : '0.1'}, null)}}
+		{{:data.node1_concentration}}%
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Node 2:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('', 'seek-start', {'node2_c' : '-0.1'}, null)}}
+		{{:helper.link('', 'triangle-1-w', {'node2_c' : '-0.01'}, null)}}
+		{{:helper.link('', 'triangle-1-e', {'node2_c' : '0.01'}, null)}}
+		{{:helper.link('', 'seek-end', {'node2_c' : '0.1'}, null)}}
+		{{:data.node2_concentration}}%
+	</div>
+</div>

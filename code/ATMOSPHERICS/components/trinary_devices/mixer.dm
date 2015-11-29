@@ -120,26 +120,27 @@
 	return 1
 
 /obj/machinery/atmospherics/components/trinary/mixer/attack_hand(mob/user)
-	if(..())
-		return
+	if(..() | !user) return
+	interact(user)
 
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
+/obj/machinery/atmospherics/components/trinary/mixer/interact(mob/user)
+	if(stat & (BROKEN|NOPOWER)) return
+	if(!src.allowed(usr))
+		usr << "<span class='danger'>Access denied.</span>"
 		return
-
 	ui_interact(user)
 
-/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_mixer.tmpl", name, 400, 320, 0)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "atmos_mixer.tmpl", name, 400, 145)
+		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
-	data["max_pressure"] = MAX_OUTPUT_PRESSURE
+	data["set_pressure"] = round(target_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	data["node1_concentration"] = round(node1_concentration*100)
 	data["node2_concentration"] = round(node2_concentration*100)
 	return data
@@ -166,6 +167,6 @@
 		src.node2_concentration = max(0, min(1, src.node2_concentration + value))
 		src.node1_concentration = max(0, min(1, src.node1_concentration - value))
 		investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
-	src.update_icon()
-	src.updateUsrDialog()
-	return
+
+	add_fingerprint(usr)
+	update_icon()

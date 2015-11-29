@@ -309,3 +309,32 @@
 	if(ghost_role == "No")
 		return
 	createCorpse(death = src.death, ckey = user.ckey)
+
+/////////////////Spooky Undead//////////////////////
+
+/obj/effect/landmark/corpse/skeleton
+	name = "skeletal remains"
+	mobname = "skeleton"
+	mob_species = "skeleton"
+	mobgender = NEUTER
+
+
+/obj/effect/landmark/corpse/skeleton/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
+
+/obj/effect/landmark/corpse/zombie
+	name = "rotting corpse"
+	mobname = "zombie"
+	mob_species = "zombie"
+
+/obj/effect/landmark/corpse/zombie/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."

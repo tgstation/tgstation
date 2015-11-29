@@ -69,9 +69,21 @@
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
+/datum/table_recipe/teleprod
+	name = "Teleprod"
+	result = /obj/item/weapon/melee/baton/cattleprod/teleprod
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/weapon/wirecutters = 1,
+				/obj/item/weapon/stock_parts/cell = 1,
+				/obj/item/weapon/ore/bluespace_crystal = 1)
+	time = 80
+	parts = list(/obj/item/weapon/stock_parts/cell = 1)
+	category = CAT_WEAPON
+
 /datum/table_recipe/ed209
 	name = "ED209"
-	result = /obj/machinery/bot/ed209
+	result = /mob/living/simple_animal/bot/ed209
 	reqs = list(/obj/item/robot_parts/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
@@ -89,7 +101,7 @@
 
 /datum/table_recipe/secbot
 	name = "Secbot"
-	result = /obj/machinery/bot/secbot
+	result = /mob/living/simple_animal/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
 				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/weapon/melee/baton = 1,
@@ -101,7 +113,7 @@
 
 /datum/table_recipe/cleanbot
 	name = "Cleanbot"
-	result = /obj/machinery/bot/cleanbot
+	result = /mob/living/simple_animal/bot/cleanbot
 	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
@@ -110,7 +122,7 @@
 
 /datum/table_recipe/floorbot
 	name = "Floorbot"
-	result = /obj/machinery/bot/floorbot
+	result = /mob/living/simple_animal/bot/floorbot
 	reqs = list(/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/stack/tile/plasteel = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
@@ -120,7 +132,7 @@
 
 /datum/table_recipe/medbot
 	name = "Medbot"
-	result = /obj/machinery/bot/medbot
+	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/device/healthanalyzer = 1,
 				/obj/item/weapon/storage/firstaid = 1,
 				/obj/item/device/assembly/prox_sensor = 1,

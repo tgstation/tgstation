@@ -18,9 +18,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			charge_counter = charge_max
 			return
 		if("Yes")
-			if(H.dna)
-				H.dna.remove_all_mutations()//Also bad, but it makes it so that hulks can't ignore the stun.
-			H.Stun(INFINITY) //This is bad but notransform won't work.
+			H.stunned = INFINITY //This is bad but hulks can't be stunned with the actual procs. I'm sorry.
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -66,7 +64,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.real_name = newNameId
 			H.name = usr.real_name
 			H.status_flags = temp_flags
-			H.SetStunned(0)
+			H.stunned = 0 //Same as above. Due to hulks.
 			H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
