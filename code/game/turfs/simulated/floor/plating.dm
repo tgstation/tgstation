@@ -243,14 +243,22 @@
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
 
-//SNOW
+//SNOW TILES
+
+/turf/simulated/floor/plating/iced
+	name = "plating"
+	desc = "Looks slippery."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "plating"
+	temperature = 200
+	wet = 1
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
-	temperature = 100
+	temperature = 200
 	baseturf = /turf/simulated/floor/plating/snow
 	slowdown = 2
 	var/dug = 0 //shovel the snow to make it easier to walk through
@@ -260,7 +268,6 @@
 
 /turf/simulated/floor/plating/snow/burn_tile()
 	return
-
 
 /turf/simulated/floor/plating/snow/attackby(obj/item/weapon/W, mob/user, params)
 	if(!W || !user)
