@@ -1,0 +1,5 @@
+author: TheNightingale
+delete-after: True
+changes: 
+  - rscadd: "Nuclear operatives can now buy the Elite Syndicate Hardsuit for 8 TC that has better armor and fireproofing."
+  - tweak: "Added throwing stars and Syndicate playing cards to nuclear operative's uplink."
