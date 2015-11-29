@@ -61,11 +61,12 @@
 		qdel(src)
 
 /obj/machinery/chem_dispenser/interact(mob/user)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 490, 710)
 		ui.open()
@@ -101,7 +102,8 @@
 	return data
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (BROKEN)) return
+	if(..())
+		return
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
@@ -1459,11 +1461,13 @@
 			return 1
 
 /obj/machinery/chem_heater/attack_hand(mob/user)
-	if (!user) return
+	if (!user)
+		return
 	interact(user)
 
 /obj/machinery/chem_heater/Topic(href, href_list)
-	if(..()) return
+	if(..())
+		return
 
 	if(href_list["toggle_on"])
 		on = !on
@@ -1483,11 +1487,12 @@
 	add_fingerprint(usr)
 
 /obj/machinery/chem_heater/interact(mob/user)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 270)
 		ui.open()

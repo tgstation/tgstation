@@ -264,16 +264,18 @@ update_flag
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
-	if (!user) return
+	if (!user)
+		return
 	interact(user)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
-	if (src.destroyed) return
+	if (src.destroyed)
+		return
 	add_fingerprint(user)
 	ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "canister.tmpl", name, 470, 400, state = physical_state)
 		ui.open()
@@ -298,6 +300,8 @@ update_flag
 	return data
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
+	if(..())
+		return
 	if(href_list["toggle"])
 		var/logmsg
 		if (valve_open)

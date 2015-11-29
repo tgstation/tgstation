@@ -120,18 +120,20 @@
 	return 1
 
 /obj/machinery/atmospherics/components/trinary/mixer/attack_hand(mob/user)
-	if(..() | !user) return
+	if(..() | !user)
+		return
 	interact(user)
 
 /obj/machinery/atmospherics/components/trinary/mixer/interact(mob/user)
-	if(stat & (BROKEN|NOPOWER)) return
+	if(stat & (BROKEN|NOPOWER))
+		return
 	if(!src.allowed(usr))
 		usr << "<span class='danger'>Access denied.</span>"
 		return
 	ui_interact(user)
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "atmos_mixer.tmpl", name, 400, 145)
 		ui.open()
@@ -146,7 +148,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href,href_list)
-	if(..()) return
+	if(..())
+		return
 	if(href_list["power"])
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
