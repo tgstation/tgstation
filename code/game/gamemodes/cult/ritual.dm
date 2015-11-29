@@ -151,7 +151,7 @@ It also contains rune words, which are soon to be removed.
 	<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>The Rite of Enlightment is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
+	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like a null rod will not be converted.<br><br>"
 
 	text += "<font color='red'><b>Sacrifice</b></font><br>The Rite of Tribute is used to offer sacrifice to the Geometer. Simply place any living creature upon the rune and invoke it (this will not \

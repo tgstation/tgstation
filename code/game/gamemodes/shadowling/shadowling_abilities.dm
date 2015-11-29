@@ -226,11 +226,11 @@
 					target.Weaken(12)
 					sleep(20)
 					if(isloyal(target))
-						usr << "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>"
+						usr << "<span class='notice'>Their mind is protected by an implant - you begin to shut it down - this will take some time.</span>"
 						usr.visible_message("<span class='warning'>[usr] pauses, then dips their head in concentration!</span>")
-						target << "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>"
+						target << "<span class='boldannounce'>You feel your resolve begin to weaken!</span>"
 						sleep(100) //10 seconds - not spawn() so the enthralling takes longer
-						usr << "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>"
+						usr << "<span class='notice'>The mindshield implant have been rendered inert. Now to continue.</span>"
 						usr.visible_message("<span class='warning'>[user] relaxes again.</span>")
 						for(var/obj/item/weapon/implant/loyalty/L in target)
 							if(L && L.implanted)

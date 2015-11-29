@@ -13,8 +13,8 @@
 	category = list("Firing Pins")
 
 /datum/design/pin_loyalty
-	name = "loyalty firing pin"
-	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
+	name = "mindshield firing pin"
+	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6, "powerstorage" = 3)
 	build_type = PROTOLATHE
