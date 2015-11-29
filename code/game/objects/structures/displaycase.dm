@@ -212,10 +212,10 @@
 			if(electronics)
 				electronics.loc = display
 				display.electronics = electronics
-				if(electronics.use_one_access)
-					display.req_one_access = electronics.conf_access
+				if(electronics.one_access)
+					display.req_one_access = electronics.accesses
 				else
-					display.req_access = electronics.conf_access
+					display.req_access = electronics.accesses
 			qdel(src)
 		return
 	return

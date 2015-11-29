@@ -1362,6 +1362,7 @@
 #include "code\modules\nano\states\contained.dm"
 #include "code\modules\nano\states\deep_inventory.dm"
 #include "code\modules\nano\states\default.dm"
+#include "code\modules\nano\states\hands.dm"
 #include "code\modules\nano\states\inventory.dm"
 #include "code\modules\nano\states\notcontained.dm"
 #include "code\modules\nano\states\physical.dm"
