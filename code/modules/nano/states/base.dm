@@ -40,7 +40,7 @@
   *
   * return NANO_state The state of the UI.
  **/
-/mob/proc/shared_nano_interaction()
+/mob/proc/shared_nano_interaction(atom/src_object)
 	if (!client || stat) // Close NanoUIs if mindless or dead/unconcious.
 		return NANO_CLOSE
 	// Update NanoUIs if incapicitated but concious.
@@ -48,12 +48,19 @@
 		return NANO_UPDATE
 	return NANO_INTERACTIVE
 
-/mob/living/silicon/ai/shared_nano_interaction()
+/mob/living/carbon/human/shared_nano_interaction(atom/src_object)
+	// If we have telekinesis and remain close enough, allow interaction.
+	if (dna.check_mutation(TK))
+		if (tkMaxRangeCheck(src, src_object))
+			return NANO_INTERACTIVE
+	return ..()
+
+/mob/living/silicon/ai/shared_nano_interaction(atom/src_object)
 	if (lacks_power()) // Close NanoUIs if the AI is unpowered.
 		return NANO_CLOSE
 	return ..()
 
-/mob/living/silicon/robot/shared_nano_interaction()
+/mob/living/silicon/robot/shared_nano_interaction(atom/src_object)
 	if (cell.charge <= 0) // Close NanoUIs if the Borg is unpowered.
 		return NANO_CLOSE
 	if (lockcharge) // Disable NanoUIs if the Borg is locked.

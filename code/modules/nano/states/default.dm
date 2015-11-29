@@ -20,8 +20,7 @@
 /mob/living/default_can_use_topic(atom/movable/src_object)
 	. = shared_nano_interaction(src_object)
 	if (. > NANO_CLOSE)
-		if(loc) // Check if the loc exists.
-			. = min(., loc.contents_nano_distance(src_object, src)) // Check the distance...
+		. = min(., shared_living_nano_distance(src_object)) // Check the distance...
 	if (. == NANO_INTERACTIVE) // Non-human living mobs can only look, not touch.
 		return NANO_UPDATE
 
@@ -32,12 +31,9 @@
 		// Derp a bit if we have brain loss.
 		if (prob(getBrainLoss()))
 			return NANO_DISABLED
-		// If we have telekinesis and remain close enough, allow interaction.
-		if (. == NANO_UPDATE && dna.check_mutation(TK))
-			return NANO_INTERACTIVE
 
 /mob/living/silicon/robot/default_can_use_topic(atom/movable/src_object)
-	. = shared_nano_interaction()
+	. = shared_nano_interaction(src_object)
 	if (. <= NANO_DISABLED)
 		return
 
@@ -47,7 +43,7 @@
 	return NANO_DISABLED // Otherwise they can keep the UI open.
 
 /mob/living/silicon/ai/default_can_use_topic(atom/movable/src_object)
-	. = shared_nano_interaction()
+	. = shared_nano_interaction(src_object)
 	if (. < NANO_INTERACTIVE)
 		return
 
