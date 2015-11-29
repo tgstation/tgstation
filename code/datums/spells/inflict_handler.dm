@@ -19,7 +19,7 @@
 
 	var/summon_type = null //this will put an obj at the target's location
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,1)
