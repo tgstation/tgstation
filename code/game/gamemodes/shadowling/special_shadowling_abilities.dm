@@ -18,7 +18,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			charge_counter = charge_max
 			return
 		if("Yes")
-			H.Stun(INFINITY) //This is bad but notransform won't work.
+			H.stunned = INFINITY //This is bad but hulks can't be stunned with the actual procs. I'm sorry.
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -33,6 +33,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself afterwards
+			var/temp_flags = H.status_flags
+			H.status_flags |= GODMODE //Can't die while hatching
 
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
@@ -54,14 +56,14 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
 			H << "<i><b>You are free!</b></i>"
-
+			H.status_flags = temp_flags
 			sleep(10)
 			playsound(H.loc, 'sound/effects/ghost.ogg', 100, 1)
 			var/newNameId = pick(possibleShadowlingNames)
 			possibleShadowlingNames.Remove(newNameId)
 			H.real_name = newNameId
 			H.name = user.real_name
-			H.SetStunned(0)
+			H.stunned = 0 //Same as above. Due to hulks.
 			H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
