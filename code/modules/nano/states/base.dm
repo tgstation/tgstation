@@ -43,7 +43,8 @@
 /mob/proc/shared_nano_interaction()
 	if (!client || stat) // Close NanoUIs if mindless or dead/unconcious.
 		return NANO_CLOSE
-	else if (restrained() || lying || stat || stunned || weakened) // Update NanoUIs if incapicitated but concious.
+	// Update NanoUIs if incapicitated but concious.
+	else if (restrained() || incapacitated() || lying || stunned || weakened)
 		return NANO_UPDATE
 	return NANO_INTERACTIVE
 
