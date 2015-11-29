@@ -51,7 +51,7 @@
 		if(M.stat != DEAD && !adminoverride)
 			continue
 		if(istype(M, /mob/dead/observer))
-			M << "<a href=?src=\ref[src];follow=\ref[speaker]>(F)</a> [rendered]"
+			M << "<a href=?src=\ref[M];follow=\ref[src]>(F)</a> [rendered]"
 		else
 			M << "[rendered]"
 
