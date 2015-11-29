@@ -1,5 +1,0 @@
-author: KorPhaeron
-delete-after: True
-changes: 
-  - rscadd: "Guardians and holoparasites can now be manually recalled by their master."
-  - rscadd: "The ghost controlling a guardian or holoparasite can be repicked by their master, only one use which is removed when a new ghost is chosen."
