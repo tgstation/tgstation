@@ -67,7 +67,7 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 490, 710)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 500, 650)
 		ui.open()
 
 /obj/machinery/chem_dispenser/get_ui_data()
@@ -1489,7 +1489,7 @@
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 270)
+		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 400)
 		ui.open()
 
 /obj/machinery/chem_heater/get_ui_data()

@@ -1,44 +1,39 @@
-<!-- 
-Title: ChemHeater UI 
-Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
- -->
-<div class="item">
-	<div class="itemLabel">
-		Status:
-	</div>
-	<div class="itemContent">
-		{{:helper.link(data.isActive ? 'On' : 'Off', 'power', {'toggle_on' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel">
-		Target:
-	</div>
-	<div class="itemContent">
-	        {{:helper.link(data.targetTemp + 'K', 'gear', {'adjust_temperature' : 'input'}, null)}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel">
-		Beaker
-	</div>
-	<div class="itemContent">
-		{{:helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
-	</div>
-</div>
-<div class="statusDisplay" style="height: 110px; overflow: auto;">
+<h2>Status</h2>
+<div class="statusDisplay">
 	<div class="item">
-		<div class="itemContent" style="width: 100%;">
+		<div class="itemLabel">
+			Power:
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.isActive ? 'On' : 'Off', data.isActive ? 'power' : 'close', {'toggle_on' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Target:
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.targetTemp + 'K', 'pencil', {'adjust_temperature' : 'input'})}}
+		</div>
+	</div>
+</div>
+<h2>Beaker</h2>
+<div class="statusDisplay">
+	{{:helper.link('Eject Beaker', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	<div class="item">
+		<div class="itemLabel">
+			Contents:
+		</div>
+		<div class="itemContent" style="min-height: 175px;">
 			{{if data.isBeakerLoaded}}
-				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
-				<b>Temperature:&nbsp;{{:data.currentTemp}}&nbsp;Kelvin</b><br>
+				<b>Temperature: {{:data.currentTemp}}K</b><br />
 				{{for data.beakerContents}}
-					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
-					<span class="bad">Beaker is empty</span>
+					<span class="bad">Beaker Empty</span>
 				{{/for}}
 			{{else}}
-				<span class="average"><i>No beaker loaded</i></span>
+				<span class="average">No Beaker Loaded</span>
 			{{/if}}
 		</div>
 	</div>
