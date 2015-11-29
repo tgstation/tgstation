@@ -3,6 +3,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
+	item_state = "pizzabox"
 	burn_state = 0 //Burnable
 	var/timer = 10 //Adjustable timer
 	var/timer_set = 0

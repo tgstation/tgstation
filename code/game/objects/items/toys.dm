@@ -1127,6 +1127,7 @@
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
+	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	burn_state = 0 //Burnable
