@@ -44,7 +44,7 @@
 	if (!client || stat) // Close NanoUIs if mindless or dead/unconcious.
 		return NANO_CLOSE
 	// Update NanoUIs if incapicitated but concious.
-	else if (restrained() || incapacitated() || lying || stunned || weakened)
+	else if (incapacitated() || lying)
 		return NANO_UPDATE
 	return NANO_INTERACTIVE
 
