@@ -1,0 +1,4 @@
+author: Firecage
+delete-after: True
+changes: 
+  - rscadd: "Hand tools now have variable operating speeds."
