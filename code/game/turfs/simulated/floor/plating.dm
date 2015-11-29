@@ -243,8 +243,6 @@
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
 
-//SNOW TILES
-
 /turf/simulated/floor/plating/iced
 	name = "plating"
 	desc = "Looks slippery."
@@ -252,51 +250,3 @@
 	icon_state = "plating"
 	temperature = 200
 	wet = 1
-
-/turf/simulated/floor/plating/snow
-	name = "snow"
-	desc = "Looks cold."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "snow"
-	temperature = 200
-	baseturf = /turf/simulated/floor/plating/snow
-	slowdown = 2
-	var/dug = 0 //shovel the snow to make it easier to walk through
-
-/turf/simulated/floor/plating/snow/break_tile()
-	return
-
-/turf/simulated/floor/plating/snow/burn_tile()
-	return
-
-/turf/simulated/floor/plating/snow/attackby(obj/item/weapon/W, mob/user, params)
-	if(!W || !user)
-		return 0
-	var/digging_speed = 0
-	if (istype(W, /obj/item/weapon/shovel))
-		var/obj/item/weapon/shovel/S = W
-		digging_speed = S.digspeed
-	if (digging_speed)
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been shoveled!</span>"
-			return
-
-		user << "<span class='notice'>You start shoveling...</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/simulated/floor/plating/snow))
-				user << "<span class='notice'>You shovel a path in the snow.</span>"
-				gets_dug()
-
-/turf/simulated/floor/plating/snow/proc/gets_dug()
-	name = "shoveled snow"
-	dug = 1
-	slowdown = 0
-	icon_plating = "gravsnow"
-	icon_state = "gravsnow"
-	return
