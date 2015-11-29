@@ -186,7 +186,7 @@
 		T.overlays += impact
 		spawn(3)
 			T.overlays -= impact
-		playsound(impact, impact_sound, 30, 1)
+		playsound(loc, impact_sound, 30, 1)
 
 
 	if(istype(A, /turf/unsimulated/mineral))
