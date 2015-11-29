@@ -683,6 +683,7 @@
 #include "code\game\objects\items\weapons\singularityhammer.dm"
 #include "code\game\objects\items\weapons\stunbaton.dm"
 #include "code\game\objects\items\weapons\teleportation.dm"
+#include "code\game\objects\items\weapons\teleprod.dm"
 #include "code\game\objects\items\weapons\tools.dm"
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\vending_items.dm"
