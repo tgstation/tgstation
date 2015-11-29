@@ -491,7 +491,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	if(base == id && !skin)
 		base = "[base]_m"
 	else
-		base = "skinbone_m_s"
+		base = "skinbone_m"
 	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
