@@ -14,7 +14,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 // This is doubled for the first asset, then added per asset after
 #define ASSET_CACHE_SEND_TIMEOUT 7
 
-//When sending mutiple assets, how many before we give the client a quant little sending resources message
+//When sending mutiple assets, how many before we give the client a quaint little sending resources message
 #define ASSET_CACHE_TELL_CLIENT_AMOUNT 8
 
 //List of ALL assets for the above, format is list(filename = asset).
