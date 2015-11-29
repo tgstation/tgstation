@@ -1,7 +1,7 @@
  /**
   * NanoUI State: default_state
   *
-  * Checks a number of things -- mostly phyiscal distance for humans and view for robots.
+  * Checks a number of things -- mostly physical distance for humans and view for robots.
  **/
 
 /var/global/datum/topic_state/default/default_state = new()
