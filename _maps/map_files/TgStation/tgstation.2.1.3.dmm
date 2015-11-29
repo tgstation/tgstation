@@ -2181,7 +2181,7 @@
 "aPW" = (/obj/structure/grille,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/status_display{density = 0; layer = 4},/obj/structure/window/reinforced/fulltile,/obj/machinery/door/poddoor/preopen{id = "bridge blast"; layer = 2.9; name = "bridge blast door"},/turf/simulated/floor/plating,/area/bridge)
 "aPX" = (/obj/structure/grille,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/window/reinforced/fulltile,/obj/machinery/door/poddoor/preopen{id = "bridge blast"; layer = 2.9; name = "bridge blast door"},/turf/simulated/floor/plating,/area/bridge)
 "aPY" = (/obj/structure/bed/stool,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"aPZ" = (/obj/structure/table,/obj/machinery/computer/security/telescreen/entertainment{pixel_x = -31},/obj/item/clothing/head/cakehat,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"aPZ" = (/obj/structure/table,/obj/machinery/computer/security/telescreen/entertainment{pixel_x = -31},/obj/item/clothing/head/hardhat/cakehat,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aQa" = (/obj/structure/table,/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aQb" = (/obj/structure/table,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aQc" = (/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
