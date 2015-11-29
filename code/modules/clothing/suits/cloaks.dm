@@ -6,7 +6,7 @@
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
 	w_class = 2
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_OCLOTHING
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 
