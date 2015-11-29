@@ -842,7 +842,6 @@
 #include "code\modules\admin\holder2.dm"
 #include "code\modules\admin\IsBanned.dm"
 #include "code\modules\admin\NewBan.dm"
-#include "code\modules\admin\newbanjob.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"
 #include "code\modules\admin\sql_notes.dm"
