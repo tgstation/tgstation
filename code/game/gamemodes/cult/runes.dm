@@ -40,6 +40,7 @@ Word definitions:
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/grammar //This is only framework at the moment, but may be required to draw runes in the future
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
+	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
 
 	var/req_pylons = 0
 	var/req_forges = 0
@@ -327,7 +328,7 @@ var/list/teleport_other_runes = list()
 	invocation = "Barhah hra zar'garis!"
 	color = rgb(255, 255, 255)
 	grammar = "veri nahlizet certum"
-	var/rune_in_use = 0
+	rune_in_use = 0
 
 /obj/effect/rune/sacrifice/New()
 	..()
@@ -488,6 +489,8 @@ var/list/teleport_other_runes = list()
 	var/mob/living/mob_to_revive
 	var/list/potential_sacrifice_mobs = list()
 	var/list/potential_revive_mobs = list()
+	if(rune_in_use)
+		return
 	for(var/mob/living/M in orange(1,src))
 		if(!(M in T.contents) && M.stat == DEAD)
 			potential_sacrifice_mobs.Add(M)
@@ -499,13 +502,19 @@ var/list/teleport_other_runes = list()
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
 			potential_revive_mobs.Add(M)
+	if(rune_in_use)
+		return
 	if(!potential_revive_mobs.len)
 		user << "<span class='cultitalic'>There is no eligible revival target on the rune!</span>"
 		log_game("Raise Dead rune failed - no corpse to revived")
 		return
 	mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
+	revive(mob_to_revive, mob_to_sacrifice, user, T)
 
 	//Begin revival
+/obj/effect/rune/raise_dead/proc/revive(mob/living/mob_to_revive, mob/living/mob_to_sacrifice, mob/living/user, turf/T)
+	if(rune_in_use)
+		return
 	if(!in_range(mob_to_sacrifice,src))
 		user << "<span class='cultitalic'>The sacrificial target has been moved!</span>"
 		fail_invoke()
@@ -521,22 +530,27 @@ var/list/teleport_other_runes = list()
 		fail_invoke()
 		log_game("Raise Dead rune failed - catalyst corpse is not dead")
 		return
+	rune_in_use = 1
 	if(user.name == "Herbert West")
 		user.say("To life, to life, I bring them!")
 	else
 		user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice]'s body rises into the air, connected to [mob_to_revive] by a glowing tendril!</span>")
-	mob_to_revive.Beam(mob_to_sacrifice,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=20)
+	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=20)
 	sleep(20)
-	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones[mob_to_revive ? ", the glowing tendril sinking into [mob_to_revive]'s body":""].</span>")
+	if(mob_to_sacrifice) //sighing noise
+		mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones[mob_to_revive ? ", the glowing tendril sinking into [mob_to_revive]'s body":""].</span>")
+		return
 	mob_to_sacrifice.dust()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
 		visible_message("<span class='warning'>The glowing tendril snaps against the rune with a shocking crack.</span>")
+		rune_in_use = 0
 		return
 	mob_to_revive.revive() //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
+	rune_in_use = 0
 
 
 /obj/effect/rune/raise_dead/fail_invoke()
@@ -627,7 +641,7 @@ var/list/teleport_other_runes = list()
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "6"
 	color = rgb(126, 23, 23)
-	var/rune_in_use = 0 //One at a time, please!
+	rune_in_use = 0 //One at a time, please!
 	var/mob/living/affecting = null
 	grammar = "veri ire ego"
 
@@ -812,7 +826,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/imbue
 	cultist_name = "Bind Talisman"
 	cultist_desc = "Transforms papers and valid runes into talismans."
-	invocation = "H'drak v'loso, mir'kanas verbot!"
+	invocation = null //no talisman made, no invocation.
 	icon_state = "3"
 	color = rgb(0, 0, 255)
 	grammar = "veri balaq certum"
@@ -842,6 +856,7 @@ var/list/teleport_other_runes = list()
 	var/imbue_type = split_rune_type[split_rune_type.len]
 	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
 	if(ispath(talisman_type))
+		user.say("H'drak v'loso, mir'kanas verbot!")
 		var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
 		if(istype(picked_rune, /obj/effect/rune/teleport))
 			var/obj/effect/rune/teleport/TR = picked_rune
@@ -861,7 +876,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/construct_shell
 	cultist_name = "Fabricate Shell"
 	cultist_desc = "Turns five plasteel sheets into an empty construct shell, suitable for containing a soul shard."
-	invocation = "Ethra p'ni dedol!"
+	invocation = null //see below; doesn't say the invocation unless there's enough sheets.
 	icon_state = "5"
 	color = rgb(150, 150, 150)
 	grammar = "ire veri balaq"
@@ -872,6 +887,7 @@ var/list/teleport_other_runes = list()
 		if(istype(S, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/M = S
 			if(M.amount >= 5)
+				user.say("Ethra p'ni dedol!")
 				new /obj/structure/constructshell(T)
 				M.visible_message("<span class='warning'>[M] bends and twists into a humanoid shell!</span>")
 				M.amount -= 5
@@ -909,7 +925,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/leeching
 	cultist_name = "Drain Life"
 	cultist_desc = "Drains the life of the target on the rune, restoring it to the user."
-	invocation = "Yu'gular faras desdae. Umathar uf'kal thenar!" //that's a mouthful
+	invocation =  null //see below; doesn't say the invocation if it has no targets.
 	icon_state = "2"
 	color = rgb(255, 0, 0)
 	grammar = "ire nahlizet ego"
@@ -927,6 +943,7 @@ var/list/teleport_other_runes = list()
 		return
 	var/mob/living/carbon/target = pick(potential_targets)
 	var/drained_amount = rand(5,25)
+	user.say("Yu'gular faras desdae. Umathar uf'kal thenar!")
 	target.apply_damage(drained_amount, BRUTE, "chest")
 	user.adjustBruteLoss(-drained_amount)
 	user.Beam(target,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=3)
