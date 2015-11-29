@@ -1,6 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Fixes the excessive amount of time it took the game to initialize."
-  - bugfix: "Fixes some interface bugs."
-  - rscadd: "when an interface window has to send a lot of resources before it can open, it will now tell you with a \"sending resources\" line so you know why it's not opening right away."
