@@ -257,11 +257,6 @@ var/list/ai_list = list()
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/ai/canUseTopic()
-	if(stat)
-		return
-	return 1
-
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
@@ -853,6 +848,6 @@ var/list/ai_list = list()
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
-	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
+	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
