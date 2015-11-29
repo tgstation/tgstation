@@ -8,6 +8,8 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Akesson = Host
+Gitgud = Game Master
 Octareenroon91 = Game Master
 JustL = Game Master
-derflammenwerfer = Game Master
+Dopaper = Game Master
+derflammenwerfer = Game Admin
