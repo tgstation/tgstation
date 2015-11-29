@@ -13,7 +13,7 @@
 
 /turf/simulated/proc/burn_tile()
 
-/turf/simulated/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube
+/turf/simulated/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -51,7 +51,16 @@
 				return
 			if(TURF_WET_LUBE)
 				M.slip(0, 7, null, (SLIDE|GALOSHES_DONT_HELP))
+				return
+			if(TURF_WET_ICE)
+				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
+				return
+
 
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
 	smooth_icon_neighbors(src)
+
+turf/simulated/MakeSlippery()
+	if(TURF_WET_ICE)
+		wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")

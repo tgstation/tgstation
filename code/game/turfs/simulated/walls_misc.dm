@@ -8,7 +8,7 @@
 	canSmoothWith = null
 
 /turf/simulated/wall/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
 /turf/simulated/wall/cult/break_wall()
@@ -31,6 +31,7 @@
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
 	walltype = "iced"
+	canSmoothWith = list(/turf/simulated/wall/ice)
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 

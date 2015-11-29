@@ -839,3 +839,8 @@
 	..()
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/random/New()
+	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
+	new real_type(loc)
+	qdel(src)

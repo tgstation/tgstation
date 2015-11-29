@@ -98,17 +98,24 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/atmospherics/components/binary/pump/interact(mob/user)
+	if(stat & (BROKEN|NOPOWER)) return
+	if(!src.allowed(usr))
+		usr << "<span class='danger'>Access denied.</span>"
 		return
+	ui_interact(user)
 
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
+		ui.open()
 
 /obj/machinery/atmospherics/components/binary/pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
-	data["max_pressure"] = MAX_OUTPUT_PRESSURE
+	data["set_pressure"] = round(target_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -146,15 +153,8 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(usr)
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
-		return
-	usr.set_machine(src)
-	ui_interact(user)
-	return
+	if(..() | !user) return
+	interact(user)
 
 /obj/machinery/atmospherics/components/binary/pump/Topic(href,href_list)
 	if(..()) return
@@ -168,10 +168,9 @@ Thus, the two variables affect pump operation are set in New():
 			if ("set")
 				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
 		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	usr.set_machine(src)
-	src.update_icon()
-	src.updateUsrDialog()
-	return
+
+	add_fingerprint(usr)
+	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/power_change()
 	..()

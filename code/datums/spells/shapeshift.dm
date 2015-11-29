@@ -15,7 +15,7 @@
 	var/list/current_shapes = list()
 	var/list/current_casters = list()
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	for(var/mob/living/M in targets)
 		if(M in current_shapes)
 			Restore(M)

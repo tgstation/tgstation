@@ -22,15 +22,16 @@ Rite of Disorientation
 	var/health_cost = 0 //The amount of health taken from the user when invoking the talisman
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
-	..()
 	if(iscultist(user) || user.stat == DEAD)
 		user << "<b>Name:</b> [cultist_name]"
 		user << "<b>Effect:</b> [cultist_desc]"
 		user << "<b>Uses Remaining:</b> [uses]"
+		return
+	..()
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>There are strange, illegible symbols drawn on [src]. Maybe some sort of blueprint?</span>"
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
 	if(invocation)
 		user.whisper(invocation)
@@ -52,7 +53,7 @@ Rite of Disorientation
 	invocation = "Ra'sha yoka!"
 
 /obj/item/weapon/paper/talisman/malformed/invoke(mob/living/user)
-	user << "<span class='warning'>You feel a pain in your head. The Geometer is displeased.</span>"
+	user << "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>"
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
@@ -77,7 +78,7 @@ Rite of Disorientation
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
 	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"
-	var/datum/browser/popup = new(user, "talisman", "", 800, 600)
+	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat)
 	popup.open()
 	uses++ //To prevent uses being consumed just by opening it
@@ -139,13 +140,13 @@ Rite of Disorientation
 		if(R.keyword == src.keyword)
 			possible_runes.Add(R)
 	if(!possible_runes.len)
-		user << "<span class='warning'>There are no Teleport runes with the same keyword!</span>"
+		user << "<span class='cultitalic'>There are no Teleport runes with the same keyword!</span>"
 		log_game("Teleportation talisman failed - no teleport runes of the same keyword")
 		uses++ //To prevent deletion
 		return
 	var/chosen_rune = pick(possible_runes)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
-						 "<span class='warning'>You speak the words of the talisman and find yourself somewhere else!</span>")
+						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
 	if(user.buckled)
 		user.buckled.unbuckle_mob()
 	user.loc = get_turf(chosen_rune)
@@ -164,20 +165,20 @@ Rite of Disorientation
 //Rite of Knowledge: Same as rune, but has two uses
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
-	cultist_desc = "A two-use talisman that will call untranslated tomes from the archives of the Geometer."
+	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand for a moment.</span>", \
-						 "<span class='warning'>You speak the words of the talisman!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	var/obj/item/weapon/tome/T = new(get_turf(user))
 	if(user.put_in_hands(T))
 		user.visible_message("<span class='warning'>A tome appears in [user]'s hand!</span>", \
-							 "<span class='warning'>An arcane tome materializes in your free hand.</span>")
+							 "<span class='cultitalic'>An arcane tome materializes in your free hand.</span>")
 	else
 		user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
-							 "<span class='warning'>An arcane tome materialzies at your feet.</span>")
+							 "<span class='cultitalic'>An arcane tome materialzies at your feet.</span>")
 
 //Rite of Obscurity: Same as rune, but less range
 /obj/item/weapon/paper/talisman/hide_runes
@@ -188,7 +189,7 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/hide_runes/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand.</span>", \
-						 "<span class='warning'>You speak the words of the talisman, veiling nearby runes.</span>")
+						 "<span class='cultitalic'>You speak the words of the talisman, veiling nearby runes.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.visible_message("<span class='danger'>[R] fades away.</span>")
 		R.invisibility = INVISIBILITY_OBSERVER
@@ -203,7 +204,7 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-						 "<span class='warning'>You speak the words of the talisman, revealing nearby runes.</span>")
+						 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.invisibility = 0
 
@@ -217,21 +218,21 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
-						 "<span class='warning'>You speak the words of the talisman, making nearby runes appear fake.</span>")
+						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.desc = "A rune drawn in crayon."
 
 
-//Rite of Disruption: Same as rune, halved radius
+//Rite of Disruption: Same as rune
 /obj/item/weapon/paper/talisman/emp
-	cultist_name = "Talisman of Electromagnets"
+	cultist_name = "Talisman of Electromagnetic Pulse"
 	cultist_desc = "A talisman that will cause a moderately-sized electromagnetic pulse."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	health_cost = 5
 
 /obj/item/weapon/paper/talisman/emp/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
-						 "<span class='warning'>You speak the words of the talisman, emitting an EMP blast.</span>")
+						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
 
 
@@ -243,17 +244,19 @@ Rite of Disorientation
 	health_cost = 10 //A lot of health because of how powerful this is
 
 /obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
-	user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
-	return
+	if(iscultist(user))
+		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+	else
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
 		user.whisper(invocation)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
-							 "<span class='warning'>You stun [target] with the talisman!</span>")
+							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
 		var/obj/item/weapon/nullrod/N = locate() in target
 		if(N)
-			target.visible_message("<span class='warning'>[target]'s null rod absorbs the talisman's power!</span>", \
+			target.visible_message("<span class='warning'>[target]'s null rod absorbs the talisman's light!</span>", \
 								   "<span class='userdanger'>Your null rod absorbs the blinding light!</span>")
 		else
 			target.Weaken(10)
@@ -274,13 +277,13 @@ Rite of Disorientation
 //Rite of Arming: Equips cultist armor on the user, where available
 /obj/item/weapon/paper/talisman/armor
 	cultist_name = "Talisman of Arming"
-	cultist_desc = "A talisman that will equip the invoker with cultist equipment where available."
+	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	invocation = "N'ath reth sh'yro eth draggathnor!"
 	health_cost = 3
 
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>Otherworldy objects suddenly appear on [user]!</span>", \
-						 "<span class='warning'>You speak the words of the talisman, arming yourself!</span>")
+	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)

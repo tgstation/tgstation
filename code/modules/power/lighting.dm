@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
-				if (!do_after(usr, 30, target = src))
+				if (!do_after(usr, 30/W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \

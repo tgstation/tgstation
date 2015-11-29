@@ -48,7 +48,7 @@
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
-	temperature = 200
+	temperature = 180
 	baseturf = /turf/simulated/floor/plating/snow
 	slowdown = 2
 	var/dug = 0 //shovel the snow to make it easier to walk through
@@ -110,6 +110,21 @@
 
 /turf/simulated/floor/plating/snow/gravsnow/surround
 	icon_state = "gravsnow_surround"
+
+/turf/simulated/floor/plating/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "ice"
+	baseturf = /turf/simulated/floor/plating/snow
+	slowdown = 1
+	wet = 3
+
+/turf/simulated/floor/plating/ice/break_tile()
+	return
+
+/turf/simulated/floor/plating/snow/burn_tile()
+	return
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
