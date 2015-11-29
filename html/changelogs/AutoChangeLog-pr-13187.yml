@@ -1,0 +1,6 @@
+author: ktccd
+delete-after: True
+changes: 
+  - bugfix: "Blob pieces on some areas no longer count for blob mode victory (Such as space or asteroid)."
+  - bugfix: "Blobcode no longer spawns and destroys blobs uselessly, which fixes other stuff too."
+  - bugfix: "Asteroid areas are no longer valid gang territory."
