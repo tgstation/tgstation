@@ -70,7 +70,8 @@ where the admin rank must be properly capitalised.
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled tgstation.dmb file.  Make sure to set the port to the one you 
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
-and the server should start up and be ready to join.
+and the server should start up and be ready to join. It is also recommended that
+you set up the SQL backend (see below).
 
 ###HOSTING ON LINUX
 We use BYGEX for some of our text replacement related code. Unfortunately, we
@@ -112,9 +113,7 @@ To enable an away mission open fileList.txt in the _maps/RandomZLevels directory
 
 ##SQL SETUP
 
-The SQL backend for the library and stats tracking requires a 
-MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
+The SQL backend requires a MySQL server. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 ##IRC BOT SETUP
 

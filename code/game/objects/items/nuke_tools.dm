@@ -66,6 +66,7 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	item_state = "screwdriver_nuke"
+	toolspeed = 2
 
 /obj/item/weapon/screwdriver/nuke/New()
 //to skip screwdriver icon update

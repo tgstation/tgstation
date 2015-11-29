@@ -250,7 +250,7 @@ DEFAULT_LAWS 1
 SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncomment to give players the choice of their species before they join the game
-#JOIN_WITH_MUTANT_RACE
+JOIN_WITH_MUTANT_RACE
 
 
 ## Roundstart Races
@@ -263,7 +263,7 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-#ROUNDSTART_RACES plasmaman
+ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 #ROUNDSTART_RACES shadowling
 

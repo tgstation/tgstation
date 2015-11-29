@@ -507,11 +507,10 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
-	slowdown = 1
 	strip_delay = 80
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
-	var/extinguishes_left = 10
+	var/extinguishes_left = 5
 
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
@@ -536,11 +535,11 @@
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
-		if (extinguishes_left == 10)
+		if (extinguishes_left == 5)
 			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
 			return
 		else
-			extinguishes_left = 10
+			extinguishes_left = 5
 			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
 			qdel(E)
 			return
@@ -550,5 +549,5 @@
 /obj/item/device/extinguisher_refill
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
-	icon_state = "multitool"
+	icon_state = "plasmarefill"
 

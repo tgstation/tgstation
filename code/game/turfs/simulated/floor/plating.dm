@@ -98,7 +98,7 @@
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/simulated/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
@@ -125,7 +125,7 @@
 	icon_state = "cult"
 
 /turf/simulated/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
 	..()
 
 /turf/simulated/floor/engine/cult/narsie_act()
