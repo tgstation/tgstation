@@ -684,3 +684,45 @@
 				mut_overlay |= V
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
+
+/datum/mutation/human/armblade
+
+	name = "Armblade"
+	quality = POSITIVE
+	get_chance = 25
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>You can turn your arm into a sword! Sweet!</span>"
+	text_lose_indication = "<span class='notice'>You have normal, non-sword arms again. Damnit.</span>"
+
+/datum/mutation/human/armblade/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.verbs += /mob/living/carbon/human/verb/armblade
+
+/datum/mutation/human/armblade/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.verbs -= /mob/living/carbon/human/verb/armblade
+
+/mob/living/carbon/human/verb/armblade()
+	set name = "Toggle Armblade"
+	set category = "Mutations"
+	set desc = "Reform your arm into a grotesque organic blade"
+	living_weapon(src, /obj/item/weapon/melee/arm_blade)
+
+/mob/living/carbon/human/proc/living_weapon(mob/user, obj/item/weapon_type, right_hand=1)
+	var/obj/item/hand_item = user.get_active_hand()
+	if(hand_item && istype(hand_item, weapon_type))
+		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [hand_item.name] into an arm!</span>", "<span class='notice'>You assimilate the [hand_item.name] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		qdel(hand_item)
+		if(right_hand)
+			user.update_inv_r_hand()
+		else
+			user.update_inv_l_hand()
+		return 1
+	else
+		if(!user.drop_item())
+			user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_type.name] over it!</span>"
+			return
+		var/obj/item/W = new weapon_type(user)
+		user.put_in_hands(W)
+		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
