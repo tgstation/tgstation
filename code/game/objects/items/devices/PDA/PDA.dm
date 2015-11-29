@@ -159,7 +159,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"'Pronunciation' is the word which is mispronounced the most in the English language.",
 		"Women blink nearly twice as much as men.",
 		"Owls are the only birds who can see the color blue.",
-		"A pizza that has radius 'z' and height 'a' has volume Pi × z × z × a.",
+		"A pizza that has radius 'z' and height 'a' has volume Pi Ã— z Ã— z Ã— a.",
 		"Months that begin on a Sunday will always have a 'Friday the 13th.'",
 		"Zero is an even number.",
 		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
@@ -2135,6 +2135,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
 	else
 		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+
+obj/item/device/pda/AltClick()
+	if ( can_use(usr) ) // Checks that the PDA is in our inventory. This will be checked by the proc anyways, but we don't want to generate an error message if not.
+		verb_remove_pen(usr)
+		return
+	return ..()
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/id_check() called tick#: [world.time]")
