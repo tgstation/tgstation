@@ -1,9 +1,9 @@
 //returns a reason if M is banned from rank, returns 0 otherwise
 /proc/jobban_isbanned(mob/M, rank)
-	if(!M || !istype(M))
+	if(!M || !istype(M) || !M.ckey)
 		return 0
 
-	if(!M.client && M.ckey) //no cache. fallback to a DBQuery
+	if(!M.client) //no cache. fallback to a DBQuery
 		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND job = '[sanitizeSQL(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query.Execute())
 			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
