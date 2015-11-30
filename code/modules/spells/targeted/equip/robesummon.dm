@@ -17,29 +17,9 @@
 
 	hud_state = "wiz_robesummon"
 
-/spell/targeted/equip_item/robesummon/New()
-	..()
-
-	switch(pick("blue","red","marisa")) //Possible Robe is initially picked here so that the spell works the first time it is cast
-
-		if ("blue")
-			equipped_summons = list("[slot_head]" = /obj/item/clothing/head/wizard,
-								    "[slot_wear_suit]" = /obj/item/clothing/suit/wizrobe,
-								    "[slot_shoes]" = /obj/item/clothing/shoes/sandal)
-
-		if ("red")
-			equipped_summons = list("[slot_head]" = /obj/item/clothing/head/wizard/red,
-									"[slot_wear_suit]" = /obj/item/clothing/suit/wizrobe/red,
-									"[slot_shoes]" = /obj/item/clothing/shoes/sandal)
-
-		if("marisa")
-			equipped_summons = list("[slot_head]" = /obj/item/clothing/head/wizard/marisa,
-									"[slot_wear_suit]" = /obj/item/clothing/suit/wizrobe/marisa,
-									"[slot_shoes]" = /obj/item/clothing/shoes/sandal/marisa)
 
 /spell/targeted/equip_item/robesummon/cast(list/targets, mob/user = usr)
-	..()
-	switch(pick("blue","red","marisa")) //Each time the spell is cast equipped_summons is changed so that the next time a new set of robes is picked.
+	switch(pick("blue","red","marisa"))
 
 		if ("blue")
 			equipped_summons = list("[slot_head]" = /obj/item/clothing/head/wizard,
@@ -58,3 +38,5 @@
 
 	usr.visible_message("<span class='danger'>[usr] puts on his robe and wizard hat!</span>", \
 						"<span class='danger'>You put on your robe and wizard hat!</span>")
+
+	..()
