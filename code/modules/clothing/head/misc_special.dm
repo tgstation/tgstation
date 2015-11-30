@@ -67,13 +67,13 @@
 		location.hotspot_expose(700, 1)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
-    ..()
-    force = 15
+	..()
+	force = 15
     damtype = BURN
     SSobj.processing |= src
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
-    ..()
+	..()
     force = 0
     damtype = BRUTE
     SSobj.processing -= src
