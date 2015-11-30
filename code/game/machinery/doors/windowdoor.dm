@@ -311,10 +311,10 @@
 					if(!electronics)
 						ae = new/obj/item/weapon/electronics/airlock( src.loc )
 						if(req_one_access)
-							ae.use_one_access = 1
-							ae.conf_access = src.req_one_access
+							ae.one_access = 1
+							ae.accesses = src.req_one_access
 						else
-							ae.conf_access = src.req_access
+							ae.accesses = src.req_access
 					else
 						ae = electronics
 						electronics = null
