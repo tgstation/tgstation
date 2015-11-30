@@ -98,7 +98,7 @@ Passive gate is similar to the regular pump except:
 	ui_interact(user)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
 		ui.open()
@@ -146,12 +146,14 @@ Passive gate is similar to the regular pump except:
 
 
 /obj/machinery/atmospherics/components/binary/passive_gate/attack_hand(mob/user)
-	if(..() || !user) return
+	if(..() || !user)
+		return
 	add_fingerprint(usr)
 	interact(user)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Topic(href, href_list)
-	if(..()) return
+	if(..())
+		return
 	if(href_list["power"])
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
