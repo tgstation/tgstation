@@ -649,6 +649,7 @@
 	metabolization_rate = 0
 	color = rgb(51, 202, 63)
 	toxpwr = 0.5
+	easily_purgeable = 0
 	var/list/fluff_messages = list("Your vision swims.", "Your head throbs.", "You can't go on.", "Your inside scream in their torment.", "<i>Agony.</i>")
 
 /datum/reagent/toxin/wasting_toxin/on_mob_delete(mob/living/carbon/C)

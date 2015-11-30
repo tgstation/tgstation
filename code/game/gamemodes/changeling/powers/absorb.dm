@@ -6,6 +6,7 @@
 	req_human = 1
 	max_genetic_damage = 100
 
+
 /obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
@@ -18,14 +19,15 @@
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
 		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them!</span>"
-		return
+		return 0
 	if(G.state <= GRAB_NECK)
 		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
-		return
-
+		return 0
+	if(!ishuman(G.affecting))
+		user << "<span class='warning'>We may only absorb humans or other changelings!</span>"
+		return 0
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
-
 
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
@@ -45,7 +47,7 @@
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(user, target, 150))
+		if(!do_mob(user, target, 200))
 			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return
@@ -87,9 +89,18 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
+			changeling.geneticpoints += target.mind.changeling.total_genetic_points
+			changeling.total_genetic_points += target.mind.changeling.total_genetic_points
+			target_is_changeling = TRUE
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
+			user << "<span class='boldnotice'>Our target was a changeling! We have gained all of their evolution points and genomes.</span>"
+
+	if(!target_is_changeling)
+		changeling.geneticpoints += 2
+		changeling.total_genetic_points += 2
+		user << "<span class='boldnotice'>Our absorption of a human has granted us two additional evolution points.</span>"
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
@@ -100,67 +111,3 @@
 	target.death(0)
 	target.Drain()
 	return 1
-
-
-
-//Absorbs the target DNA.
-//datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
-
-//datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
-
-
-
-
-/obj/effect/proc_holder/changeling/swap_form
-	name = "Swap Forms"
-	desc = "We force ourselves into the body of another form, pushing their consciousness into the form we left behind."
-	helptext = "We will bring all our abilities with us, but we will lose our old form DNA in exchange for the new one. The process will seem suspicious to any observers."
-	chemical_cost = 40
-	dna_cost = 1
-	req_human = 1 //Monkeys can't grab
-
-/obj/effect/proc_holder/changeling/swap_form/can_sting(mob/living/carbon/user)
-	if(!..())
-		return
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	if(!istype(G) || (G.state < GRAB_AGGRESSIVE))
-		user << "<span class='warning'>We must have an aggressive grab on creature in our active hand to do this!</span>"
-		return
-	var/mob/living/carbon/target = G.affecting
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
-		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
-		return
-	if(!ishuman(target))
-		user << "<span class='warning'>[target] is not compatible with this ability.</span>"
-		return
-	return 1
-
-
-/obj/effect/proc_holder/changeling/swap_form/sting_action(mob/living/carbon/user)
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	var/mob/living/carbon/target = G.affecting
-	var/datum/changeling/changeling = user.mind.changeling
-
-	user << "<span class='notice'>We tighen our grip. We must hold still....</span>"
-	target.do_jitter_animation(500)
-	user.do_jitter_animation(500)
-
-	if(!do_mob(user,target,20))
-		user << "<span class='warning'>The body swap has been interrupted!</span>"
-		return
-
-	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
-
-	if(!changeling.has_dna(target.dna))
-		changeling.add_new_profile(target, user)
-	changeling.remove_profile(user)
-
-	var/mob/dead/observer/ghost = target.ghostize(0)
-	user.mind.transfer_to(target)
-	if(ghost && ghost.mind)
-		ghost.mind.transfer_to(user)
-	else
-		user.key = ghost.key
-
-	user.Paralyse(2)
-	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"
