@@ -159,6 +159,35 @@
 	src.item_state = "reactiveoff"
 	..()
 
+/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, attack_text)
+	var/mob/living/carbon/human/H = owner
+	visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+	var/list/turfs = new/list()
+	for(var/turf/T in orange(6, H))
+		if(T.density) continue
+		if(T.x>world.maxx-6 || T.x<6)	continue
+		if(T.y>world.maxy-6 || T.y<6)	continue
+		turfs += T
+	if(!turfs.len)
+		turfs += pick(/turf in orange(6, src))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked)) return
+		if(H.buckled)
+			H.buckled.unbuckle_mob()
+		H.forceMove(picked)
+
+
+/obj/item/clothing/suit/armor/reactive/fire
+	name = "reactive incendiary armor"
+
+
+/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(owner, attack_text)
+	visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
+	for(var/mob/living/carbon/C in orange(6, owner))
+		if(C != owner)
+			C.fire_stacks += 8
+			C.IgniteMob()
+
 
 //All of the armor below is mostly unused
 
