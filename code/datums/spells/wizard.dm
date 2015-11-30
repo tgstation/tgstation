@@ -273,7 +273,7 @@
 	action_icon_state = "fireball"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T,mob/user = usr)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 
@@ -303,8 +303,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
-	var/mob/user = usr
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -351,9 +350,9 @@
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
-	if(istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()

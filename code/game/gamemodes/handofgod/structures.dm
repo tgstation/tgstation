@@ -444,12 +444,12 @@
 	maxhealth = 150
 	metal_cost = 25
 	glass_cost = 30
-	var/obj/machinery/gun_turret/defensepylon_internal_turret/pylon_gun
+	var/obj/machinery/porta_turret/defensepylon_internal_turret/pylon_gun
 
 
 /obj/structure/divine/defensepylon/New()
 	..()
-	pylon_gun = new()
+	pylon_gun = new(src)
 	pylon_gun.base = src
 	pylon_gun.faction = list("[side] god")
 
@@ -474,49 +474,50 @@
 		pylon_gun.on = !pylon_gun.on
 		icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
 
-
 //This sits inside the defensepylon, to avoid copypasta
-/obj/machinery/gun_turret/defensepylon_internal_turret
+/obj/machinery/porta_turret/defensepylon_internal_turret
 	name = "defense pylon"
 	desc = "A plyon which is blessed to withstand many blows, and fire strong bolts at nonbelievers."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
-	icon_state = "defensepylon"
+	installation = null
+	always_up = 1
+	use_power = 0
+	has_cover = 0
 	health = 200
+	projectile =  /obj/item/projectile/beam/pylon_bolt
+	eprojectile =  /obj/item/projectile/beam/pylon_bolt
+	shot_sound =  'sound/weapons/emitter2.ogg'
+	eshot_sound = 'sound/weapons/emitter2.ogg'
 	base_icon_state = "defensepylon"
-	scan_range = 7
+	active_state = ""
+	off_state = ""
 	faction = null
-	projectile_type = /obj/item/projectile/beam/pylon_bolt
-	fire_sound = 'sound/weapons/emitter2.ogg'
+	emp_vunerable = 0
 	var/side = "neutral"
-	var/on = 1
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/process()
-	if(on)
-		..()
+/obj/machinery/porta_turret/defensepylon_internal_turret/setup()
+	return
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/fire(atom/target)
+/obj/machinery/porta_turret/defensepylon_internal_turret/shootAt(atom/movable/target)
 	var/obj/item/projectile/A = ..()
 	if(A)
 		A.color = side
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/validate_target(atom/target)
-	. = ..()
-	if(.)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.handcuffed) //dishonourable to kill somebody who might be converted.
-				return 0
-
-		var/badtarget = 0
-		switch(side)
-			if("blue")
-				badtarget = is_handofgod_bluecultist(target)
-			if("red")
-				badtarget = is_handofgod_redcultist(target)
-			else
-				badtarget = 1
-		if(badtarget)
-			return 0
+/obj/machinery/porta_turret/defensepylon_internal_turret/assess_perp(mob/living/carbon/human/perp)
+	if(perp.handcuffed) //dishonourable to kill somebody who might be converted.
+		return 0
+	var/badtarget = 0
+	switch(side)
+		if("blue")
+			badtarget = is_handofgod_bluecultist(perp)
+		if("red")
+			badtarget = is_handofgod_redcultist(perp)
+		else
+			badtarget = 1
+	if(badtarget)
+		return 0
+	return 10
+		
 
 
 /obj/item/projectile/beam/pylon_bolt

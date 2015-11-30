@@ -156,6 +156,33 @@
 	log_say("[src.real_name]/[src.key] : [text]")
 
 
+/mob/living/proc/guardian_recall()
+	set name = "Recall Guardian"
+	set category = "Guardian"
+	set desc = "Forcibly recall your guardian."
+	for(var/mob/living/simple_animal/hostile/guardian/G in mob_list)
+		if(G.summoner == src)
+			G.Recall()
+
+/mob/living/proc/guardian_reset()
+	set name = "Reset Guardian Player (One Use)"
+	set category = "Guardian"
+	set desc = "Re-rolls which ghost will control your Guardian. One use."
+	for(var/mob/living/simple_animal/hostile/guardian/G in mob_list)
+		if(G.summoner == src)
+			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [G.real_name]?", "pAI", null, FALSE, 100)
+			var/mob/dead/observer/new_stand = null
+			if(candidates.len)
+				new_stand = pick(candidates)
+				G << "Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."
+				src << "Your guardian has been successfully reset."
+				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
+				G.ghostize()
+				G.key = new_stand.key
+				src.verbs -= /mob/living/proc/guardian_reset
+			else
+				src << "There were no ghosts willing to take control. Looks like you're stuck with your Guardian for now."
+
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		SetLuminosity(3)
@@ -598,6 +625,8 @@
 	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
 	G << "[G.playstyle_string]"
 	user.verbs += /mob/living/proc/guardian_comm
+	user.verbs += /mob/living/proc/guardian_recall
+	user.verbs += /mob/living/proc/guardian_reset
 	switch (theme)
 		if("magic")
 			G.name = "[mob_name] [capitalize(picked_color)]"

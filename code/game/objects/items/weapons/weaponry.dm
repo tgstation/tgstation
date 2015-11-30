@@ -276,15 +276,16 @@
 	return (OXYLOSS)
 
 /obj/item/weapon/mounted_chainsaw
-        name = "mounted chainsaw"
-        desc = "A chainsaw that has replaced your arm."
-        icon_state = "chainsaw_on"
-        flags = ABSTRACT | NODROP
-        w_class = 5.0
-        force = 21
-        throwforce = 0
-        throw_range = 0
-        throw_speed = 0
-        sharpness = IS_SHARP
-        attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
-        hitsound = "sound/weapons/chainsawhit.ogg"
+	name = "mounted chainsaw"
+	desc = "A chainsaw that has replaced your arm."
+	icon_state = "chainsaw_on"
+	item_state = "mounted_chainsaw"
+	flags = ABSTRACT | NODROP
+	w_class = 5.0
+	force = 21
+	throwforce = 0
+	throw_range = 0
+	throw_speed = 0
+	sharpness = IS_SHARP
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = "sound/weapons/chainsawhit.ogg"

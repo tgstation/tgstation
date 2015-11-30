@@ -51,6 +51,9 @@
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
 
+/turf/simulated/floor/plating/snow/cold
+	temperature = 220 //Enough to deal cold damage on breathing. TODO : Make these points defines
+
 /turf/simulated/floor/plating/snow/gravsnow
 	icon_state = "gravsnow"
 

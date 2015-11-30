@@ -1,0 +1,45 @@
+<!-- 
+Title: ChemHeater UI 
+Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
+ -->
+<div class="item">
+	<div class="itemLabel">
+		Status:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.isActive ? 'On' : 'Off', 'power', {'toggle_on' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Target:
+	</div>
+	<div class="itemContent">
+	        {{:helper.link(data.targetTemp + 'K', 'gear', {'adjust_temperature' : 'input'}, null)}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Beaker
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+	</div>
+</div>
+<div class="statusDisplay" style="height: 110px; overflow: auto;">
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			{{if data.isBeakerLoaded}}
+				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
+				<b>Temperature:&nbsp;{{:data.currentTemp}}&nbsp;Kelvin</b><br>
+				{{for data.beakerContents}}
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+				{{empty}}
+					<span class="bad">Beaker is empty</span>
+				{{/for}}
+			{{else}}
+				<span class="average"><i>No beaker loaded</i></span>
+			{{/if}}
+		</div>
+	</div>
+</div>

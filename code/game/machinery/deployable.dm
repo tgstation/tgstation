@@ -63,16 +63,8 @@ for reference:
 	var/health = 100
 	var/maxhealth = 100
 
-/obj/structure/barricade/wooden/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
-		return
-	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-	add_logs(M, src, "attacked")
-	take_damage(M.melee_damage_upper)
 
-obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
+/obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
 	health -= damage
 	if(health <= 0)
 		if(message)
@@ -82,6 +74,15 @@ obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
 		if(leave_debris)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 3)
 		qdel(src)
+
+/obj/structure/barricade/wooden/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+		return
+	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
+	add_logs(M, src, "attacked")
+	take_damage(M.melee_damage_upper)
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
@@ -95,12 +96,22 @@ obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
 		..()
 		var/damage = 0
 		switch(W.damtype)
-			if("fire")
+			if(BURN)
+				damage = W.force * 1.5
+			if(BRUTE)
 				damage = W.force * 1
-			if("brute")
-				damage = W.force * 0.75
 		take_damage(damage)
 
+/obj/structure/barricade/wooden/bullet_act(var/obj/item/projectile/P)
+	if(P)
+		..()
+		var/damage = 0
+		switch(P.damage_type)
+			if(BURN)
+				damage = P.damage * 1.5
+			if(BRUTE)
+				damage = P.damage * 1
+		take_damage(damage)
 
 /obj/structure/barricade/wooden/ex_act(severity, target)
 	switch(severity)
