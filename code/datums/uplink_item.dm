@@ -252,7 +252,7 @@ var/list/uplink_items = list()
 	name = "Contortionist's Jumpsuit"
 	desc = "A highly flexible jumpsuit that will help you navigate the ventilation loops of the station internally. Comes with pockets and ID slot, but can't be used without stripping off most gear, including backpack, belt, helmet, and exosuit. Free hands are also necessary to crawl around inside."
 	item = /obj/item/clothing/under/contortionist
-	cost = 7
+	cost = 4
 	job = list("Atmospheric Technician", "Chief Engineer")
 
 //Geneticist
@@ -269,7 +269,7 @@ var/list/uplink_items = list()
 	desc = "A modified flaregun, identical in most appearances to the regular kind, as well as 7 rounds of flare ammunition. Capable of firing flares at lethal velocity, as well as firing shotgun ammunition."
 	item = /obj/item/weapon/storage/box/syndie_kit/flaregun
 	cost = 4
-	job = list("Atmospheric Technician")
+	job = list("Atmospheric Technician", "Chief Engineer")
 
 //Mechanic
 /datum/uplink_item/jobspecific/dev_analyser
