@@ -63,9 +63,8 @@
 		item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active && prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
+	if(active)
+		return ..()
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)

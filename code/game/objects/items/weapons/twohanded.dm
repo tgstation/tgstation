@@ -117,11 +117,15 @@
 
 /obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
 	var/mob/user = loc
-	if(!istype(user)) return 1
+	if(!istype(user))
+		return 0
 	var/obj/item/I = user.get_active_hand()
-	if(I == src) I = user.get_inactive_hand()
-	if(!I) return 1
-	return I.hit_reaction()
+	if(I == src)
+		I = user.get_inactive_hand()
+	if(!I)
+		return 0
+	return
+		I.hit_reaction()
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -244,9 +248,8 @@
 		user.adjustStaminaLoss(25)
 
 /obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(wielded && final_block_chance)
-		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-		return 1
+	if(wielded)
+		return ..()
 	return 0
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up

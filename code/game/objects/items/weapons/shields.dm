@@ -18,11 +18,6 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(final_block_chance)
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
-	return 0
 
 /obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/melee/baton))
@@ -54,9 +49,8 @@
 	var/active = 0
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active && prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
+	if(active)
+		return ..()
 	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()
@@ -99,9 +93,8 @@
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active && final_block_chance)
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
+	if(active)
+		return ..()
 	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)

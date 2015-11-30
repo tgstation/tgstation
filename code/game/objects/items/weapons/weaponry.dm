@@ -64,12 +64,7 @@
 	throwforce = 10
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
-/obj/item/weapon/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(prob(final_block_chance))
-		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-		return 1
-	return 0
+	block_chance = 50
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -87,6 +82,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	block_chance = 50
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
@@ -94,12 +90,6 @@
 /obj/item/weapon/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 	return(BRUTELOSS)
-
-/obj/item/weapon/katana/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(prob(final_block_chance))
-		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-		return 1
-	return 0
 
 /obj/item/weapon/wirerod
 	name = "wired rod"

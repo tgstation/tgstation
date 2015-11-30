@@ -482,6 +482,7 @@
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
+	block_chance = 50
 
 /obj/item/weapon/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
@@ -540,7 +541,6 @@
 	return ..()
 
 /obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(wielded && prob(final_block_chance))
-		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-		return 1
+	if(wielded)
+		return ..()
 	return 0

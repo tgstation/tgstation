@@ -32,9 +32,8 @@
 		item_color = "red"
 
 /obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active && prob(final_block_chance))
-		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-		return 1
+	if(active)
+		return ..()
 	return 0
 
 /obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)

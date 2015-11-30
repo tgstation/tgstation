@@ -100,7 +100,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/toolspeed = 1
 
 	var/block_chance = 0
-	var/hit_reaction_chance = 0
+	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -318,6 +318,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0)
+	if(prob(final_block_chance)
+		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
+		return 1
 	return 0
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans)
