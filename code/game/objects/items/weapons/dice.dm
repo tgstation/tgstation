@@ -6,11 +6,12 @@
 
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
-	var/special_die = pick("1","2","00","100")
+	var/special_die = pick("1","2","fudge","00","100")
 	if(special_die == "1")		new /obj/item/weapon/dice/d1(src)
 	if(special_die == "2")		new /obj/item/weapon/dice/d2(src)
 	new /obj/item/weapon/dice/d4(src)
-	new /obj/item/weapon/dice(src)
+	new /obj/item/weapon/dice/d6(src)
+	if(special_die == "fudge")	new /obj/item/weapon/dice/fudge(src)
 	new /obj/item/weapon/dice/d8(src)
 	new /obj/item/weapon/dice/d10(src)
 	if(special_die == "00")		new /obj/item/weapon/dice/d00(src)
@@ -18,14 +19,15 @@
 	new /obj/item/weapon/dice/d20(src)
 	if(special_die == "100")	new /obj/item/weapon/dice/d100(src)
 
-/obj/item/weapon/dice
-	name = "d6"
+/obj/item/weapon/dice //depreciated d6, use /obj/item/weapon/dice/d6 if you actually want a d6
+	name = "die"
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
 	w_class = 1
 	var/sides = 6
 	var/result = null
+	var/list/special_faces = list() //entries should match up to sides var if used
 
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
@@ -48,6 +50,16 @@
 	desc = "A die with four sides. The nerd's caltrop."
 	icon_state = "d4"
 	sides = 4
+
+/obj/item/weapon/dice/d6
+	name = "d6"
+
+/obj/item/weapon/dice/fudge
+	name = "fudge die"
+	desc = "A die with six sides but only three results. Is this a plus or a minus? Your mind is drawing a blank..."
+	sides = 3 //shhh
+	icon_state = "fudge"
+	special_faces = list("minus","blank","plus")
 
 /obj/item/weapon/dice/d8
 	name = "d8"
@@ -85,6 +97,9 @@
 	icon_state = "d100"
 	sides = 100
 
+/obj/item/weapon/dice/d100/update_icon()
+	return
+
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
@@ -103,6 +118,8 @@
 	update_icon()
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
+	if(special_faces.len == sides)
+		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
@@ -120,6 +137,4 @@
 
 /obj/item/weapon/dice/update_icon()
 	overlays.Cut()
-	if(sides == 100)
-		return
 	overlays += "[src.icon_state][src.result]"

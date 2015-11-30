@@ -260,3 +260,26 @@
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+
+//Nuke Disk Roundstart Locations
+
+/obj/effect/landmark/disk/captain
+	name = "captain"
+
+/obj/effect/landmark/disk/hop
+	name = "hop"
+
+/obj/effect/landmark/disk/hos
+	name = "hos"
+
+/obj/effect/landmark/disk/rd
+	name = "rd"
+
+/obj/effect/landmark/disk/chiefmed
+	name = "chiefmed"
+
+/obj/effect/landmark/disk/chiefeng
+	name = "chiefeng"
+
+/obj/effect/landmark/disk/headless
+	name = "headless"
