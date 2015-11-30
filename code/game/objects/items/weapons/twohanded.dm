@@ -124,8 +124,7 @@
 		I = user.get_inactive_hand()
 	if(!I)
 		return 0
-	return
-		I.hit_reaction()
+	return I.hit_reaction()
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
