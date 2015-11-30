@@ -20,10 +20,10 @@
 	item_state = "hardhat[on]_[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	if(on)	
-		user.AddLuminosity(brightness_on)
-	else	
-		user.AddLuminosity(-brightness_on)
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
 
 /obj/item/clothing/head/hardhat/pickup(mob/user)
 	if(on)
@@ -35,6 +35,11 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
+	user.AddLuminosity(brightness_on)
+
+/obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
+	user.AddLuminosity(-brightness_on)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

@@ -54,7 +54,32 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
+	heat = 1000
 
+/obj/item/clothing/head/hardhat/cakehat/process()
+	var/turf/location = src.loc
+	if(istype(location, /mob/))
+		var/mob/living/carbon/human/M = location
+		if(M.l_hand == src || M.r_hand == src || M.head == src)
+			location = M.loc
+
+	if (istype(location, /turf))
+		location.hotspot_expose(700, 1)
+
+/obj/item/clothing/head/hardhat/cakehat/turn_on()
+    ..()
+    force = 15
+    damtype = BURN
+    SSobj.processing |= src
+
+/obj/item/clothing/head/hardhat/cakehat/turn_off()
+    ..()
+    force = 0
+    damtype = BRUTE
+    SSobj.processing -= src
+
+/obj/item/clothing/head/hardhat/cakehat/is_hot()
+ 	return on * heat
 /*
  * Ushanka
  */
