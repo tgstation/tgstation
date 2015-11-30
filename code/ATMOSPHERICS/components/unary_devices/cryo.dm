@@ -80,8 +80,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)	open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
-	if(usr.incapacitated()) // Check that they're able to open the tube.
-		return
 	usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
 	sleep(600)
 	if(!src || !usr || (!occupant && !contents.Find(usr))) // Make sure they didn't disappear.
