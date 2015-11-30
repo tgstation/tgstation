@@ -6746,7 +6746,7 @@
 "czL" = (/obj/structure/bed/chair{dir = 4},/obj/machinery/status_display{density = 0; layer = 3; pixel_x = 0; pixel_y = 32},/obj/machinery/computer/shuttle/pod{pixel_y = -32; possible_destinations = "pod_asteroid4"; shuttleId = "pod4"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/pod_4)
 "czM" = (/obj/structure/bed/chair{dir = 4},/obj/item/device/radio/intercom{pixel_y = 25},/obj/item/weapon/storage/pod{pixel_x = 6; pixel_y = -32},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/pod_4)
 "czN" = (/obj/docking_port/stationary/random{dir = 4; id = "pod_asteroid4"; name = "asteroid"},/turf/space,/area/space)
-"czO" = (/obj/structure/flora/tree/pine/xmas{step_x = 0; step_y = 0},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"czO" = (/obj/structure/flora/tree/pine/xmas,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "czP" = (/obj/structure/flora/tree/festivus,/turf/simulated/floor/plasteel{icon_state = "warnwhite"; dir = 5},/area/crew_quarters/hor)
 
 (1,1,1) = {"
