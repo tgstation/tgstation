@@ -15,7 +15,7 @@
 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
-	var/effeciency = 20000
+	var/efficiency = 20000
 	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
@@ -59,7 +59,7 @@
 	..()
 	user << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
 	if(cell)
-		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%."
+		user << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		user << "There is no power cell installed."
 
@@ -74,11 +74,11 @@
 	heatingPower = laser * 40000
 
 	settableTemperatureRange = cap * 30
-	effeciency = (cap + 1) * 10000
+	efficiency = (cap + 1) * 10000
 
-	var/minTemp = settableTemperatureMedian - settableTemperatureRange
+	var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 	var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-	targetTemperature = dd_range(max(1, minTemp), maxTemp, targetTemperature)
+	targetTemperature = dd_range(minTemp, maxTemp, targetTemperature)
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -96,7 +96,9 @@
 	data["hasPowercell"] = !!cell
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
-	data["targetTemp"] = "[round(targetTemperature - T0C, 1)]°C"
+	data["targetTemp"] = round(targetTemperature - T0C, 1)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
 	var/turf/simulated/L = get_turf(loc)
 	var/curTemp
@@ -109,7 +111,7 @@
 	if(isnull(curTemp))
 		data["currentTemp"] = "N/A"
 	else
-		data["currentTemp"] = "[round(curTemp - T0C, 1)]°C"
+		data["currentTemp"] = round(curTemp - T0C, 1)
 	return data
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
@@ -146,13 +148,9 @@
 		..()
 
 /obj/machinery/space_heater/attack_hand(mob/user)
-	if(!user)
-		return
 	interact(user)
 
 /obj/machinery/space_heater/attack_paw(mob/user)
-	if(!user)
-		return
 	interact(user)
 
 /obj/machinery/space_heater/interact(mob/user)
@@ -168,10 +166,12 @@
 	if((stat & BROKEN) || ..())
 		return
 
+	add_fingerprint(usr)
+
 	if(href_list["power"])
 		on = !!text2num(href_list["power"])
 		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].","<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 		update_icon()
 		SSnano.update_uis(src)
 
@@ -182,14 +182,16 @@
 	else if(href_list["temp"] && panel_open)
 		var/value
 		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num
+			value = input("Please input the target temperature", name) as num|null
+			if(isnull(value))
+				return
 			value += T0C
 		else
 			value = targetTemperature + text2num(href_list["temp"])
 
-		var/minTemp = settableTemperatureMedian - settableTemperatureRange
+		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(max(1, minTemp), maxTemp, round(value, 1))
+		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
 		SSnano.update_uis(src)
 
 	else if(href_list["cellremove"] && panel_open)
@@ -216,9 +218,6 @@
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
 				SSnano.update_uis(src)
-
-	add_fingerprint(usr)
-
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))
@@ -260,7 +259,7 @@
 		if(deltaTemperature)
 			env.temperature += deltaTemperature
 			air_update_turf()
-		cell.use(requiredPower / effeciency)
+		cell.use(requiredPower / efficiency)
 	else
 		on = FALSE
 		update_icon()
