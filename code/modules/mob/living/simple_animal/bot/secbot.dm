@@ -46,7 +46,6 @@
 	..()
 	icon_state = "secbot[on]"
 	spawn(3)
-
 		var/datum/job/detective/J = new/datum/job/detective
 		access_card.access += J.get_access()
 		prev_access = access_card.access
@@ -162,6 +161,8 @@ Auto Patrol: []"},
 
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
+	if(!on)
+		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if(!C.stunned || arrest_type)
@@ -201,7 +202,7 @@ Auto Patrol: []"},
 		C.Weaken(5)
 		C.stuttering = 5
 		C.Stun(5)
-
+	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)

@@ -125,6 +125,12 @@
 
 	bot_core = new bot_core_type(src)
 
+/mob/living/simple_animal/bot/update_canmove()
+	. = ..()
+	if(!on)
+		. = 0
+	canmove = .
+
 /mob/living/simple_animal/bot/Destroy()
 	qdel(Radio)
 	qdel(access_card)
@@ -149,6 +155,7 @@
 		locked = 1 //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
+		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
 		user << "<span class='warning'>You need to open maintenance panel first!</span>"
 
@@ -293,6 +300,24 @@
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
+/mob/living/simple_animal/bot/radio(message, message_mode, list/spans)
+	. = ..()
+	if(. != 0)
+		return .
+
+	switch(message_mode)
+		if(MODE_HEADSET)
+			Radio.talk_into(src, message, , spans)
+			return REDUCE_RANGE
+
+		if(MODE_DEPARTMENT)
+			Radio.talk_into(src, message, message_mode, spans)
+			return REDUCE_RANGE
+
+	if(message_mode in radiochannels)
+		Radio.talk_into(src, message, message_mode, spans)
+		return REDUCE_RANGE
+	return 0
 
 //Generalized behavior code, override where needed!
 
@@ -426,7 +451,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	access_card.access = prev_access
 	tries = 0
 	mode = BOT_IDLE
-
 
 
 
