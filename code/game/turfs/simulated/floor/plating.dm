@@ -98,7 +98,7 @@
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/simulated/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
@@ -125,7 +125,7 @@
 	icon_state = "cult"
 
 /turf/simulated/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
 	..()
 
 /turf/simulated/floor/engine/cult/narsie_act()
@@ -171,6 +171,20 @@
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
+/turf/simulated/floor/plating/basalt
+	name = "basalt floor"
+	icon_state = "basalt1"
+
+/turf/simulated/floor/plating/basalt/New()
+	..()
+	icon_state = "basalt[rand(1,12)]"
+
+/turf/simulated/floor/plating/basalt/Destroy()
+	return QDEL_HINT_LETMELIVE
+
+/turf/simulated/floor/plating/basalt/ex_act()
+	return ..()
+
 
 
 
@@ -190,6 +204,9 @@
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
+
+/turf/simulated/floor/plating/lava/ex_act()
+	return ..()
 
 /turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()

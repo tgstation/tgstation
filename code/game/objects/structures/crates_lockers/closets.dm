@@ -214,7 +214,7 @@
 					return
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, cutting_sound, 40, 1)
-				if(do_after(user,40,5,1, target = src))
+				if(do_after(user,40/W.toolspeed,5,1, target = src))
 					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, cutting_sound, 50, 1)

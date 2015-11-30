@@ -340,14 +340,14 @@
 			if(src.status == 2)
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2

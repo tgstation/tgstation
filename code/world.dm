@@ -34,12 +34,9 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
-	LoadBansjob()
 	if(config.usewhitelist)
 		load_whitelist()
-	jobban_loadbanfile()
 	appearance_loadbanfile()
-	jobban_updatelegacybans()
 	LoadBans()
 	investigate_reset()
 

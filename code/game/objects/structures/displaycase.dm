@@ -126,7 +126,7 @@
 			qdel(src)
 			return
 		user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 20/W.toolspeed, target = src))
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 			open = !open
 			update_icon()
@@ -187,7 +187,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			qdel(src)

@@ -25,8 +25,8 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(slot_back) != src)
-		usr << "<span class='warning'>The watertank needs to be on your back to use!</span>"
+	if (usr.get_item_by_slot(usr.getWatertankSlot()) != src)
+		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
 		return
 	if(usr.incapacitated())
 		return
@@ -75,8 +75,8 @@
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	var/mob/H = src.loc
+	if(istype(H))
 		switch(over_object.name)
 			if("r_hand")
 				if(H.r_hand)
@@ -97,6 +97,12 @@
 		remove_noz()
 		return
 	..()
+
+/mob/proc/getWatertankSlot()
+	return slot_back
+
+/mob/living/simple_animal/drone/getWatertankSlot()
+	return slot_drone_storage
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto

@@ -44,13 +44,7 @@
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
-		var/obj/machinery/bot/bot = AM
-		if(istype(bot))
-			if(src.check_access(bot.botcard))
-				open_and_close()
-			else
-				flick("[src.base_state]deny", src)
-		else if(istype(AM, /obj/mecha))
+		if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
@@ -291,7 +285,7 @@
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
-				if(do_after(user,40, target = src))
+				if(do_after(user,40/I.toolspeed, target = src))
 					if(src.p_open && !src.density && !src.operating && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)

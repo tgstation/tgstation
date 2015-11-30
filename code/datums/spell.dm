@@ -41,6 +41,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/spell_level = 0 //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
+	var/player_lock = 1 //If it can be used by simple mobs
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -62,9 +63,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
-		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
-		return 0
+	if(player_lock)
+		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
+			user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
+			return 0
+	else
+		if(!(src in user.mob_spell_list))
+			return 0
 
 	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
@@ -170,8 +175,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
-	invocation()
-	user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
+	invocation(user)
+	if(user.ckey)
+		user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
@@ -180,7 +186,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(prob(critfailchance))
 		critfail(targets)
 	else
-		cast(targets)
+		cast(targets,user=user)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
@@ -227,7 +233,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				smoke.start()
 
 
-/obj/effect/proc_holder/spell/proc/cast(list/targets)
+/obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
@@ -334,7 +340,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast(user)
 		return
 
-	perform(targets)
+	perform(targets,user=user)
 
 	return
 
@@ -349,7 +355,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast()
 		return
 
-	perform(targets)
+	perform(targets,user=user)
 
 	return
 
@@ -418,7 +424,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!user)
 		revert_cast()
 		return
-	perform(user)
+	perform(null,user=user)
 
 /obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
 	name = "Lesser Heal"
