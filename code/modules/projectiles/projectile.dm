@@ -21,6 +21,7 @@
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 	var/paused = FALSE //for suspending the projectile midair
+	var/stopped = 0 //for resetting fire() for reflecting
 
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
@@ -140,7 +141,7 @@
 		Angle = setAngle
 	if(!legacy)
 		spawn(1)
-			while(loc)
+			while(loc && !stopped)
 				if(!paused)
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
@@ -194,7 +195,7 @@
 				sleep(max(1, speed))
 	else
 		spawn(1) //Old projectile system
-			while(loc)
+			while(loc && !stopped)
 				if(!paused)
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)

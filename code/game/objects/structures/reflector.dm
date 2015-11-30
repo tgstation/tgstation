@@ -13,26 +13,38 @@
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
 	var/turf/reflect_turf
-	var/new_dir = get_reflection(src.dir,P.dir)
 	if(!istype(P, /obj/item/projectile/beam))
 		return..()
-	if(new_dir)
-		reflect_turf = get_step(reflect_turf, new_dir)
-	else
-		visible_message("<span class='notice'>[src] is hit by the [P]!</span>")
+	if(P.legacy)
+		var/new_dir = get_reflection(src.dir,P.dir)
+		if(new_dir)
+			reflect_turf = get_step(reflect_turf, new_dir)
+		else
+			visible_message("<span class='notice'>[src] is hit by the [P]!</span>")
+			new_dir = 0
+			return ..()
+
+		reflect_turf = get_step(loc,new_dir)
+
+		P.original = reflect_turf
+		P.starting = reflector_turf
+		P.current = reflector_turf
+		P.yo = reflect_turf.y - reflector_turf.y
+		P.xo = reflect_turf.x - reflector_turf.x
+		P.range = initial(P.range) //Keep the projectile healthy as long as its bouncing off things
 		new_dir = 0
-		return ..() //Hits as normal, explodes or emps or whatever
-
-	reflect_turf = get_step(loc,new_dir)
-
-	P.original = reflect_turf
-	P.starting = reflector_turf
-	P.current = reflector_turf
-	P.yo = reflect_turf.y - reflector_turf.y
-	P.xo = reflect_turf.x - reflector_turf.x
-	P.range = initial(P.range) //Keep the projectile healthy as long as its bouncing off things
-	new_dir = 0
-	return - 1
+		return - 1
+	else
+		P.stopped = 1
+		var/reflectangle = get_reflection(src.dir,P)
+		if(!isnull(reflectangle)) //0 is a valid angle
+			P.range = initial(P.range)
+			P.stopped = 0
+			P.fire(reflectangle)
+			return -1
+		else
+			visible_message("<span class='notice'>[src] is hit by the [P]!</span>")
+			return ..()
 
 
 /obj/structure/reflector/attackby(obj/item/weapon/W, mob/user, params)
@@ -97,8 +109,22 @@
 				new /obj/structure/reflector/box (src.loc)
 				qdel(src)
 
-/obj/structure/reflector/proc/get_reflection(srcdir,pdir)
-	return 0
+/obj/structure/reflector/proc/get_reflection(srcdir,obj/item/projectile/P)
+	var/max_angle
+	if(angle2dir(P.Angle) == dir) //double reflectors
+		max_angle = dir2angle(dir) //convert dir to angle
+	else //single
+		max_angle = dir2angle(turn(dir,180)) //turn reflector 180
+	var/min_angle = max_angle - 135
+	var/cutoff_angle = max_angle - 45
+	max_angle += 45
+
+	if(P.Angle <= max_angle && P.Angle >= min_angle)
+		//We have to be biased, so we'll be biased towards the reflector's dir
+		if(P.Angle <= cutoff_angle)
+			return P.Angle-90
+		else
+			return P.Angle+90
 
 
 /obj/structure/reflector/verb/rotate()
@@ -141,9 +167,12 @@
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH) )
 
-/obj/structure/reflector/single/get_reflection(srcdir,pdir)
-	var/new_dir = rotations["[srcdir]"]["[pdir]"]
-	return new_dir
+/obj/structure/reflector/single/get_reflection(srcdir,obj/item/projectile/P)
+	if(P.legacy)
+		var/new_dir = rotations["[srcdir]"]["[P.dir]"]
+		return new_dir
+	else
+		return ..()
 
 /obj/structure/reflector/single/mapping
 	admin = 1
@@ -162,9 +191,12 @@
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH, "[SOUTH]" = EAST, "[WEST]" = NORTH) )
 
-/obj/structure/reflector/double/get_reflection(srcdir,pdir)
-	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
-	return new_dir
+/obj/structure/reflector/double/get_reflection(srcdir,obj/item/projectile/P)
+	if(P.legacy)
+		var/new_dir = double_rotations["[srcdir]"]["[P.dir]"]
+		return new_dir
+	else
+		return ..()
 
 /obj/structure/reflector/double/mapping
 	admin = 1
@@ -183,10 +215,12 @@
 "[SOUTH]" = list("[SOUTH]" = SOUTH, "[EAST]" = SOUTH, "[WEST]" = SOUTH, "[NORTH]" = SOUTH),
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
 
-/obj/structure/reflector/box/get_reflection(srcdir,pdir)
-	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]
-	return new_dir
-
+/obj/structure/reflector/box/get_reflection(srcdir,obj/item/projectile/P)
+	if(P.legacy)
+		var/new_dir = box_rotations["[srcdir]"]["[P.dir]"]
+		return new_dir
+	else
+		return dir2angle(dir)
 
 /obj/structure/reflector/box/mapping
 	admin = 1
