@@ -80,28 +80,13 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)	open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
+	if(usr.incapacitated()) // Check that they're able to open the tube.
+		return
+	usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
+	sleep(600)
+	if(!src || !usr || (!occupant && !contents.Find(usr))) // Make sure they didn't disappear.
+		return
 	open_machine()
-	return
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
-	set name = "Eject Cryo Cell"
-	set desc = "Begin the release sequence inside the cryo tube."
-	set category = "Object"
-	set src in oview(1)
-	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
-		if(usr.stat == DEAD)	//and he's not dead....
-			return
-		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
-		sleep(600)
-		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
-			return
-		open_machine()
-		add_fingerprint(usr)
-	else
-		if(!istype(usr, /mob/living) || usr.stat)
-			usr << "<span class='warning'>You can't do that!</span>"
-			return
-		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -281,8 +266,8 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
-//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
