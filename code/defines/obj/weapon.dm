@@ -128,13 +128,6 @@
 	name = "disk"
 	icon = 'icons/obj/items.dmi'
 
-/obj/item/weapon/disk/nuclear
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1.0
-
 //TODO: Figure out wtf this is and possibly remove it -Nodrak
 /obj/item/weapon/dummy
 	name = "dummy"
