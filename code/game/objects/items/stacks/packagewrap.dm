@@ -74,7 +74,7 @@
 	if(!manpath) return 0
 	if(amount >= 2)
 		H.visible_message("<span class='danger'>[user] is trying to wrap up [H]!</span>")
-		if(do_after(user,H,human_wrap_speed))
+		if(do_mob(user,H,human_wrap_speed))
 			var/obj/present = new manpath(get_turf(H),H)
 			if (H.client)
 				H.client.perspective = EYE_PERSPECTIVE
