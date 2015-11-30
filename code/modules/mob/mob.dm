@@ -1373,7 +1373,7 @@ var/list/slot_equipment_priority = list( \
 					process = processScheduler.getProcess("machinery")
 					stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-					process = processScheduler.getProcess("pow_machine")
+					process = processScheduler.getProcess("power")
 					stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
 					process = processScheduler.getProcess("obj")
@@ -1381,9 +1381,6 @@ var/list/slot_equipment_priority = list( \
 
 					process = processScheduler.getProcess("pipenet")
 					stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-					process = processScheduler.getProcess("powernet")
-					stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
 					process = processScheduler.getProcess("nanoui")
 					stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")

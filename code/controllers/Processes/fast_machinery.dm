@@ -2,7 +2,7 @@
 
 var/global/list/fast_machines = list()
 /datum/controller/process/fast_machinery
-	schedule_interval = 7 // every 0.6 second.
+	schedule_interval = 7 // every 0.7 second.
 
 /datum/controller/process/fast_machinery/setup()
 	name = "fast_machinery"
