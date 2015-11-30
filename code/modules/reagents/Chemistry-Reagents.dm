@@ -3562,6 +3562,8 @@
 	data /= sober_str
 
 	//Make all the ethanol-based beverages work together
+	common_data = 0
+
 	if(holder.reagent_list) //Sanity
 		for(var/datum/reagent/ethanol/A in holder.reagent_list)
 			if(isnum(A.data))
