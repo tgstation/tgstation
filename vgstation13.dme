@@ -1778,6 +1778,7 @@
 #include "code\modules\spells\targeted\equip\equip.dm"
 #include "code\modules\spells\targeted\equip\frenchcurse.dm"
 #include "code\modules\spells\targeted\equip\horsemask.dm"
+#include "code\modules\spells\targeted\equip\robesummon.dm"
 #include "code\modules\spells\targeted\projectile\dumbfire.dm"
 #include "code\modules\spells\targeted\projectile\fireball.dm"
 #include "code\modules\spells\targeted\projectile\magic_missile.dm"
