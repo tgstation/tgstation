@@ -8,11 +8,12 @@
 	var/changetype=null
 
 /obj/item/projectile/change/on_hit(var/atom/change)
+	var/type = changetype
 	spawn(1)//fixes bugs caused by the target ceasing to exist before the projectile has died.
-		wabbajack(change)
+		wabbajack(change,type)
 
 
-/obj/item/projectile/change/proc/wabbajack(var/mob/living/M) //WHY: as mob in living_mob_list
+/obj/item/projectile/change/proc/wabbajack(var/mob/living/M,var/type) //WHY: as mob in living_mob_list
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)
 			return
@@ -32,11 +33,11 @@
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
 			if(Robot.mmi)
-				del(Robot.mmi)
+				qdel(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
@@ -46,10 +47,10 @@
 		var/mob/living/new_mob
 
 		// Random chance of fucking up
-		if(changetype!=null && prob(10))
-			changetype = null
+		if(type!=null && prob(10))
+			type = null
 
-		var/randomize = changetype==null?pick(available_staff_transforms):changetype
+		var/randomize = type == null? pick(available_staff_transforms):type
 
 		switch(randomize)
 			if("monkey")
@@ -178,6 +179,6 @@
 
 		to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
-		del(M)
+		qdel(M)
 		return new_mob
 
