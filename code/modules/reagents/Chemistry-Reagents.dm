@@ -4216,6 +4216,13 @@
 	reagent_state = LIQUID
 	color = "#664300" //rgb: 102, 67, 0
 
+/datum/reagent/ethanol/deadrum/pinacolada
+	name = "Pina Colada"
+	id = "pinacolada"
+	description = "Sans pineapple."
+	reagent_state = LIQUID
+	color = "F2F5BF" //rgb: 242, 245, 191
+
 /datum/reagent/ethanol/deadrum/singulo
 	name = "Singulo"
 	id = "singulo"

@@ -318,7 +318,7 @@
 	item_state = "flour"
 /obj/item/weapon/reagent_containers/food/drinks/flour/New()
 	..()
-	reagents.add_reagent("flour", 30)
+	reagents.add_reagent("flour", 50)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -346,13 +346,24 @@
 	src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
-	name = "Duke Purple Tea"
-	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	name = "Tea"
 	icon_state = "tea"
 	item_state = "coffee"
 /obj/item/weapon/reagent_containers/food/drinks/tea/New()
 	..()
-	reagents.add_reagent("tea", 30)
+	switch(pick(1,2,3))
+		if(1)
+			name = "Duke Purple Tea"
+			desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+			reagents.add_reagent("tea", 30)
+		if(2)
+			name = "Century Tea"
+			desc = "In most cultures, if you leave tea out for months it's considered spoiled. Although this tea is black, we still consider it good for cultural reasons. Taste the century."
+			reagents.add_reagent("redtea", 30)
+		if(3)
+			name = "Hippie Farms Eco-Tea"
+			desc = "Remember when the station was powered by solar panels instead of raping space for its plasma, then creating an engine of destruction? Hippie Farms remembers, maaaan."
+			reagents.add_reagent("greentea", 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 

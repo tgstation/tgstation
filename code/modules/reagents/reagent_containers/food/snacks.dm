@@ -520,27 +520,6 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
-/*/obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
-	name = "flour"
-	desc = "Some flour"
-	icon_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)*/
-
-/*
-/obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
-	name = "appendix"
-	desc = "An appendix which looks perfectly healthy."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "appendix"
-	New()
-		..()
-		reagents.add_reagent("nutriment", rand(3,5))
-		reagents.add_reagent("toxin", rand(1,3))
-		src.bitesize = 3
-	*/
-
 /obj/item/weapon/reagent_containers/food/snacks/organ
 	name		=	"organ"
 	desc		=	"It's good for you."
@@ -592,7 +571,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("carppheromones", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
@@ -614,14 +593,14 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 6
 
-/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+/obj/item/weapon/reagent_containers/food/snacks/meat/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
 	icon_state = "spiderleg"
 	food_flags = FOOD_MEAT
-
 	New()
 		..()
+		poisonsacs = new /obj/item/weapon/reagent_containers/food/snacks/spiderpoisongland
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("toxin", 2)
 		bitesize = 2
@@ -742,7 +721,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("carppheromones", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger
@@ -1092,7 +1071,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("carppheromones", 3)
 		reagents.add_reagent("capsaicin", 3)
 		bitesize = 3
 
@@ -1145,7 +1124,6 @@
 	trash = /obj/item/trash/bustanuts
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("bustanut", 6)
 		reagents.add_reagent("sodiumchloride", 6)
 
@@ -1737,7 +1715,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("carppheromones", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
@@ -1909,6 +1887,25 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/riceball
+	name = "Rice Ball"
+	desc = "In mining culture, this is also known as a donut."
+	icon_state = "riceball"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/eggplantsushi
+	name = "Spicy Eggplant Sushi Rolls"
+	desc = "Eggplant rolls are an example of Asian Fusion as eggplants were introduced from mainland Asia to Japan. This dish is Earth Fusion, originating after the introduction of the chili from the Americas to Japan. Fusion HA!"
+	icon_state = "eggplantsushi"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("capsaicin", 2)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "Spaghetti"
@@ -2212,8 +2209,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 30)
-		reagents.add_reagent("toxin", 15)
+		reagents.add_reagent("nutriment", 30) //If the meat is toxic, it will inherit that
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
@@ -2223,10 +2219,6 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 	food_flags = FOOD_MEAT
-
-	New()
-		..()
-		reagents.add_reagent("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread/synth
 	name = "synthmeatbread loaf"
@@ -2972,7 +2964,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("toxin", 2)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs
@@ -2984,7 +2975,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("toxin", 3)
+		reagents.add_reagent("toxin", 1)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
@@ -2998,7 +2989,6 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("sodiumchloride", 1)
-		reagents.add_reagent("toxin", 3)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
@@ -3010,7 +3000,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("toxin", 5)
+		reagents.add_reagent("carppheromones", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/assburger
@@ -3246,6 +3236,17 @@
 	reagents.add_reagent("nutriment", 3)
 	bitesize = 1
 
+/obj/item/weapon/reagent_containers/food/snacks/chicken_fillet
+	name = "Chicken Fillet"
+	desc = "This is a fancy word for chicken fingers so that high class people can forget they're eating fried food."
+	icon_state = "tendies"
+	food_flags = FOOD_MEAT
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets/New()
+	..()
+	reagents.add_reagent("cornoil", 3)
+	bitesize = 2
+
 
 //////////////////CURRY//////////////////
 
@@ -3423,6 +3424,19 @@
 		bitesize = 2
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
+/obj/item/weapon/reagent_containers/food/snacks/honeyflan
+	name = "Honey Flan"
+	desc = "The systematic slavery of an entire society of insects, elegantly sized to fit in your mouth."
+	icon_state = "honeyflan"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("cinnamon", 5)
+		reagents.add_reagent("honey", 6)
+		bitesize = 3
+	food_flags = FOOD_SWEET | FOOD_ANIMAL
+
 /obj/item/weapon/reagent_containers/food/snacks/omurice
 	name = "omelette rice"
 	desc = "Just like your Japanese animes!"
@@ -3579,7 +3593,7 @@
 	..()
 	reagents.add_reagent("nutriment", 1)
 	bitesize = 2
-/
+
 /obj/item/weapon/reagent_containers/food/snacks/slider/carp
 	name = "carp slider"
 	desc = "I wonder how it tastes!"
@@ -3588,7 +3602,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/slider/carp/New()
 	..()
 	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("toxin", 1)
+	bitesize = 2.5
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/toxiccarp
+	name = "carp slider"
+	desc = "I wonder how it tastes!"
+	icon_state = "slider_carp"
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/toxiccarp/New()
+	..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("carpotoxin", 2)
 	bitesize = 2.5
 
 /obj/item/weapon/reagent_containers/food/snacks/slider/carp/spider
@@ -3619,9 +3643,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/slider/slippery/Crossed(atom/movable/O) //exactly the same as soap
 	if (istype(O, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = O
-		if (H.Slip(3, 2, 1))
-			H.simple_message("<span class='notice'>You slipped on the [name]!</span>",
-				"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
+		if (H.CheckSlip() < 1)
+			return
+
+		H.stop_pulling()
+		to_chat(H, "<SPAN CLASS='notice'>You slipped on the [name]!</SPAN>")
+		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+		H.Stun(3)
+		H.Weaken(2)
 
 ////////////////SLIDERS END////////////////
 
@@ -3659,6 +3688,25 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/coleslaw
+	name = "Coleslaw"
+	desc = "You fought the 'slaw, and the 'slaw won."
+	icon_state = "coleslaw"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/risotto
+	name = "Risotto"
+	desc = "For the gentleman's wino, this is an offer one cannot refuse."
+	icon_state = "risotto"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("wine", 2)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cinnamonroll

@@ -2063,6 +2063,13 @@ datum
 			required_catalysts = list("enzyme" = 5)
 			result_amount = 10
 
+		pinacolada
+			name = "Pina Colada"
+			id = "pinacolada"
+			result = "pinacolada"
+			required_reagents = list("rum" = 2, "ice" = 1, "cream" = 1)
+			result_amount = 4
+
 		spacebeer
 			name = "Space Beer"
 			id = "spacebeer"

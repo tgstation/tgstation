@@ -132,6 +132,9 @@
 	src.remove_from_storage(object,user.loc)
 	object.throw_at(target,10,speed)
 
+	if(istype(object,/obj/item/weapon/reagent_containers/food/snacks) && ishuman(target) && object.Adjacent(target))
+		object.attack(target,target) //This way it is instant
+
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)
 	var/datum/gas_mixture/removed = tank.air_contents.remove(lost_gas_amount)
 	user.loc.assume_air(removed)

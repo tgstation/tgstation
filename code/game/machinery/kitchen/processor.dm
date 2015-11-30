@@ -49,12 +49,32 @@
 			what = null
 
 	/* objs */
+
+	poison
+		input = null
+		output = null
+		process(loc, atom/movable/what)
+			if(loc && istype(what,/obj/item/weapon/reagent_containers/food/snacks/meat))
+				var/obj/item/weapon/reagent_containers/food/snacks/meat/M = what
+				if(M.poisonsacs)
+					M.poisonsacs.forceMove(loc)
+					M.poisonsacs = null
+					M.desc = "An excellent [src]!"
+					M.reagents.del_reagent("toxin")
+					M.reagents.del_reagent("carpotoxin")
+				what.forceMove(loc)
+
+	poison/spiderleg
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/spiderleg
+
+	poison/spidermeat
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat
+
+	poison/carpmeat
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat
+
 	meat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-
-	meat2
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 	potato
@@ -68,7 +88,6 @@
 	soybeans
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 		output = /obj/item/weapon/reagent_containers/food/snacks/soydope
-
 
 	/* mobs */
 	mob

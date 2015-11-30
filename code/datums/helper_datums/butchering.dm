@@ -150,7 +150,7 @@
 //--------------Spider legs-------
 
 /datum/butchering_product/spider_legs
-	result = /obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	result = /obj/item/weapon/reagent_containers/food/snacks/meat/spiderleg
 	verb_name = "remove legs from"
 	verb_gerund = "removing legs from"
 	amount = 8 //Amount of legs that all normal spiders have

@@ -485,10 +485,17 @@
 	icon_type = "chicken slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/chicken
 
+/obj/item/weapon/storage/fancy/food_box/slider_box/toxiccarp
+	name = "carp slider box"
+	icon_type = "carp slider"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/toxiccarp
+	storage_slots = 2
+
 /obj/item/weapon/storage/fancy/food_box/slider_box/carp
 	name = "carp slider box"
 	icon_type = "carp slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/carp
+	storage_slots = 2
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/spider
 	name = "spidey slidey box"
