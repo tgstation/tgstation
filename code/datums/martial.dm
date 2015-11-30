@@ -539,8 +539,8 @@
 			return ..()
 	return ..()
 
-/obj/item/weapon/twohanded/bostaff/IsShield()
-	if(wielded)
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(wielded && prob(final_block_chance))
+		visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 		return 1
-	else
-		return 0
+	return 0

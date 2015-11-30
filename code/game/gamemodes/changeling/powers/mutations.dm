@@ -238,17 +238,17 @@
 /obj/item/clothing/head/helmet/space/changeling/dropped()
 	qdel(src)
 
-/obj/item/weapon/shield/changeling/IsShield()
+/obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 			H.unEquip(src, 1)
 		qdel(src)
-		return 0
+		return 1
 	else
 		remaining_uses--
-		return 1
+		return 0
 
 
 /***************************************\
