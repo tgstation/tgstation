@@ -114,9 +114,7 @@
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	world << I
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
-		world << "cell"
 		if(panel_open)
 			if(cell)
 				user << "<span class='warning'>There is already a power cell inside!</span>"
@@ -137,17 +135,14 @@
 			user << "<span class='warning'>The hatch must be open to insert a power cell!</span>"
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
-		world << "screw"
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
 		if(panel_open)
 			interact(user)
 	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
-		world << "machina"
 		return
 	else
-		world << "meh"
 		..()
 
 /obj/machinery/space_heater/attack_hand(mob/user)
@@ -174,7 +169,6 @@
 		return
 
 	if(href_list["power"])
-		world << href_list["power"]
 		on = !!text2num(href_list["power"])
 		mode = HEATER_MODE_STANDBY
 		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].","<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
@@ -201,7 +195,7 @@
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)
 			if(usr.get_active_hand())
-				user << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
+				usr << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
 				return
 			cell.updateicon()
 			usr.put_in_hands(cell)
@@ -270,3 +264,7 @@
 	else
 		on = FALSE
 		update_icon()
+
+#undef HEATER_MODE_STANDBY
+#undef HEATER_MODE_HEAT
+#undef HEATER_MODE_COOL
