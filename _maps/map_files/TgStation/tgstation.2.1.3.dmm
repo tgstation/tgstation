@@ -3910,7 +3910,7 @@
 "bxj" = (/obj/machinery/computer/security/telescreen{desc = "Used for watching the RD's goons from the safety of his office."; name = "Research Monitor"; network = list("RD"); pixel_x = 0; pixel_y = 2},/obj/structure/table,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/hor)
 "bxk" = (/obj/machinery/ai_status_display{pixel_y = 32},/turf/simulated/floor/plasteel{icon_state = "warnwhite"; dir = 1},/area/crew_quarters/hor)
 "bxl" = (/obj/structure/rack,/obj/item/weapon/circuitboard/aicore{pixel_x = -2; pixel_y = 4},/turf/simulated/floor/plasteel{dir = 9; icon_state = "warnwhite"},/area/crew_quarters/hor)
-"bxm" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/flora/tree/pine/xmas{step_x = 0; step_y = 0},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/chapel/main)
+"bxm" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/flora/tree/pine/xmas,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/chapel/main)
 "bxn" = (/turf/simulated/wall,/area/toxins/explab)
 "bxo" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/toxins/explab)
 "bxp" = (/obj/machinery/computer/rdconsole/experiment,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 1},/area/toxins/explab)
