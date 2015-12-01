@@ -12,7 +12,7 @@
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 	state_open = 0
-	var/efficiency
+	var/efficiency = 1
 	var/autoEject = 0
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
@@ -82,8 +82,8 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
-	usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
-	sleep(600)
+	usr << "<span class='notice'>Release sequence activated. This will take a few seconds.</span>"
+	sleep(150)
 	if(!src || !usr || (!occupant && !contents.Find(usr))) // Make sure they didn't disappear.
 		return
 	open_machine()
@@ -270,19 +270,19 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
-			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+			occupant.sleeping = max(5 / efficiency, (1 / occupant.bodytemperature) * 2000 / efficiency)
+			occupant.Paralyse(max(5 / efficiency, (1 / occupant.bodytemperature) * 3000 / efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
+			// Severe damage should heal waaay slower without proper chemicals...
 			if(occupant.bodytemperature < 225)
 				if(occupant.getToxLoss())
 					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
 				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
-				occupant.heal_organ_damage(heal_brute,heal_fire)
+				occupant.heal_organ_damage(heal_brute, heal_fire)
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant, VAPOR)
