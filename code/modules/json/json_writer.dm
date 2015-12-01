@@ -6,7 +6,7 @@ json_writer/proc/WriteObject(list/L)
 	. = ""
 	for(var/k in L)
 		. += text("\"[]\":[][]", k, write(L[k]), (i++ < L.len ? "," : ""))
-	. = text([][][], "{", ., "}")
+	. = text("[][][]", "{", ., "}")
 	
 
 json_writer/proc/write(val)
