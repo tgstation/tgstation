@@ -10,11 +10,11 @@ var/list/emojis
 	var/search = 0
 	var/emoji = ""
 	while(1)
-		search = findtext(text, "*", pos)
+		search = findtext(text, ":", pos)
 		parsed += copytext(text, pos, search)
 		if(search)
 			pos = search
-			search = findtext(text, "*", pos+1)
+			search = findtext(text, ":", pos+1)
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
