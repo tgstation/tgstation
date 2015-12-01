@@ -208,7 +208,8 @@
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 			return
 		update_nearby_icons()
-	else if(!(flags&NODECONSTRUCT))
+
+	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			if(reinf && (state == 2 || state == 1))
@@ -231,6 +232,7 @@
 					anchored = !anchored
 					update_nearby_icons()
 					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+			return
 
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
 			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
@@ -239,6 +241,7 @@
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
 				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
+			return
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -265,16 +268,17 @@
 				disassembled = 1
 				user << "<span class='notice'>You successfully disassemble [src].</span>"
 				qdel(src)
-	else if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
+			return
+
+	if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
 		return
 
+	if(I.damtype == BRUTE || I.damtype == BURN)
+		user.changeNext_move(CLICK_CD_MELEE)
+		hit(I.force)
 	else
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			user.changeNext_move(CLICK_CD_MELEE)
-			hit(I.force)
-		else
-			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		..()
+		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	..()
 	return
 
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
