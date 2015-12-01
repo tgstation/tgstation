@@ -44,17 +44,9 @@
 	msg = emoji_parse(msg)
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") == "Yes")
-			raw_msg = "|~|" + raw_msg
-			ooc(raw_msg)
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
-		else
-			return
-
-	if(copytext(msg, 1, 4) == "|~|")
-		raw_msg = copytext(raw_msg, 4)
-		msg		= copytext(msg, 4)
-
+			
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
