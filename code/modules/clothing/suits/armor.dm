@@ -182,13 +182,16 @@
 	name = "reactive incendiary armor"
 
 
-/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(owner, attack_text)
-	visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
-	for(var/mob/living/carbon/C in orange(6, owner))
-		if(C != owner)
-			C.fire_stacks += 8
-			C.IgniteMob()
-
+/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(prob(hit_reaction_chance))
+		visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
+		for(var/mob/living/carbon/C in range(6, owner))
+			if(C != owner)
+				C.fire_stacks += 8
+				C.IgniteMob()
+		owner.fire_stacks = -20
+		return 1
+	return 0
 
 //All of the armor below is mostly unused
 
