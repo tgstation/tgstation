@@ -570,6 +570,7 @@
 #include "code\game\objects\items\bodybag.dm"
 #include "code\game\objects\items\candle.dm"
 #include "code\game\objects\items\contraband.dm"
+#include "code\game\objects\items\corgiclothes.dm"
 #include "code\game\objects\items\crayons.dm"
 #include "code\game\objects\items\debug.dm"
 #include "code\game\objects\items\latexballoon.dm"
