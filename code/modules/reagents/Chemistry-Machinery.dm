@@ -29,7 +29,6 @@
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
 		use_power(1500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
-		SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
@@ -37,7 +36,6 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
-	SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/process()
 
@@ -146,7 +144,6 @@
 	src.beaker =  B
 	B.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
-	SSnano.update_uis(src) // update all UIs attached to src
 
 	if(!icon_beaker)
 		icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
@@ -1413,16 +1410,12 @@
 			beaker.reagents.handle_reactions()
 			state_change = 1
 
-	if(state_change)
-		SSnano.update_uis(src)
-
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
 		beaker.loc = get_turf(src)
 		beaker.reagents.handle_reactions()
 		beaker = null
 		icon_state = "mixer0b"
-		SSnano.update_uis(src)
 
 /obj/machinery/chem_heater/power_change()
 	if(powered())
@@ -1430,7 +1423,6 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
-	SSnano.update_uis(src)
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
@@ -1446,7 +1438,6 @@
 			I.loc = src
 			user << "<span class='notice'>You add the beaker to the machine.</span>"
 			icon_state = "mixer1b"
-			SSnano.update_uis(src)
 
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
