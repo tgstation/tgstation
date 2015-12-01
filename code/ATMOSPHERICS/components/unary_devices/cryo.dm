@@ -13,6 +13,7 @@
 	var/current_heat_capacity = 50
 	state_open = 0
 	var/efficiency
+	var/autoEject = 0
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
@@ -45,6 +46,7 @@
 		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully fed from the wreckage of the cryotube
 	beaker = null
 	return ..()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
@@ -57,11 +59,10 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-	if(occupant)
-		if(occupant.health >= 100)
-			on = 0
-			open_machine()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(occupant && occupant.health >= 100 && autoEject)
+		on = 0
+		open_machine()
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!NODE1 || !is_operational())
 		return
 
@@ -110,7 +111,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 410, state = notcontained_state)
+		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 560, state = notcontained_state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -120,6 +121,7 @@
 	var/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
+	data["autoEject"] = autoEject
 
 	var/occupantData = list()
 	if (!occupant)
@@ -172,6 +174,9 @@
 
 	if(href_list["switchOff"])
 		on = 0
+
+	if(href_list["autoEject"])
+		autoEject = !autoEject
 
 	if(href_list["openCell"])
 		open_machine()

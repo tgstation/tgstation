@@ -116,6 +116,15 @@
 			{{:helper.link('Close', 'locked', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
 		</div>
 	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Eject:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Auto', 'eject', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
+			{{:helper.link('Manual', 'pin-s', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
+		</div>
+	</div>
 </div>
 <h2>Beaker</h2>
 <div class="statusDisplay">
