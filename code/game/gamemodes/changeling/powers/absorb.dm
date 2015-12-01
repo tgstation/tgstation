@@ -61,6 +61,7 @@
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
+	var/target_is_changeling = TRUE
 	if(target.mind)//if the victim has got a mind
 
 		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
