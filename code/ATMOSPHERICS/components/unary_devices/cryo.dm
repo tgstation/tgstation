@@ -78,7 +78,8 @@
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)	open_machine()
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
+	return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
 	usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
