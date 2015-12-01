@@ -2,15 +2,12 @@ json_writer/var/use_cache = 0
 json_writer/proc/WriteObject(list/L)
 	if(use_cache && L["__json_cache"])
 		return L["__json_cache"]
-
-	. = "{"
-	var/i = 1
+	
+	. = ""
 	for(var/k in L)
-		var/val = L[k]
-		. += {"\"[k]\":[write(val)]"}
-		if(i++ < L.len)
-			. += ","
-	. += "}"
+		. += text("\"[]\":[][]", k, write(L[k]), (i++ < L.len ? "," : ""))
+	. = text([][][], "{", ., "}")
+	
 
 json_writer/proc/write(val)
 	if(isnum(val))
@@ -26,12 +23,7 @@ json_writer/proc/write(val)
 		. += write_string("[val]")
 
 json_writer/proc/write_array(list/L)
-	. = "\["
-	for(var/i = 1 to L.len)
-		. += write(L[i])
-		if(i < L.len)
-			. += ","
-	. += "]"
+	return "\[[list2text(L, ",")]]"
 
 json_writer/proc/write_string(txt)
 	var/static/list/json_escape = list("\\" = "\\\\", "\"" = "\\\"", "\n" = "\\n")
