@@ -127,7 +127,9 @@
 					speak_emote = list("barks", "woofs")
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
-					desc = "It's a corgi."
+					min_oxy = initial(min_oxy)
+					minbodytemp = initial(minbodytemp)
+					maxbodytemp = initial(maxbodytemp)
 					set_light(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
