@@ -103,7 +103,8 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/civilian
-	minimum_distance = 6
+	minimum_distance = 10
+	retreat_distance = 10
 	environment_smash = 0
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()

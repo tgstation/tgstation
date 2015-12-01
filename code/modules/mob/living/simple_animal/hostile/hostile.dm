@@ -219,6 +219,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/proc/summon_backup(distance)
+	do_alert_animation(src)
 	for (var/mob/living/simple_animal/hostile/M in oview(distance, src))
 		for (var/element in src.faction)
 			if (element in M.faction)
