@@ -33,15 +33,16 @@
 	if(reinf)
 		state = 2*anchored
 
-	if(!(flags & ABSTRACT))
-		storeditems.Add(new/obj/item/weapon/shard(src))
-		if(fulltile)
+	spawn(5) // The NODECONSTRUCT flag gets added immediately by the holodeck (but not immediately enough)
+		if(!(flags & NODECONSTRUCT))
 			storeditems.Add(new/obj/item/weapon/shard(src))
-		if(reinf)
-			var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
-			storeditems.Add(R)
 			if(fulltile)
-				R.add(1)
+				storeditems.Add(new/obj/item/weapon/shard(src))
+			if(reinf)
+				var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
+				storeditems.Add(R)
+				if(fulltile)
+					R.add(1)
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -207,7 +208,7 @@
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 			return
 		update_nearby_icons()
-	else if(!(flags&ABSTRACT))
+	else if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			if(reinf && (state == 2 || state == 1))
@@ -377,7 +378,7 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(!disassembled)
+	if(!disassembled && !(flags&NODECONSTRUCT))
 		playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	return ..()

@@ -147,7 +147,7 @@
 	if (istype(I, /obj/item/weapon/grab))
 		tablepush(I, user)
 		return
-	if(!(flags&ABSTRACT))
+	if(!(flags&NODECONSTRUCT))
 		if (istype(I, /obj/item/weapon/screwdriver))
 			if(istype(src, /obj/structure/table/reinforced))
 				var/obj/structure/table/reinforced/RT = src
@@ -205,7 +205,7 @@
 #define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(destroy_type, mob/user)
-	if(!deconstructable || (flags&ABSTRACT))
+	if(!deconstructable || (flags&NODECONSTRUCT))
 		return
 
 	if(destroy_type == TBL_DESTROY)
@@ -462,7 +462,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench) && !(flags&ABSTRACT))
+	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
 		return
@@ -517,7 +517,7 @@
  */
 
 /obj/structure/rack/proc/rack_destroy()
-	if(!(flags&ABSTRACT))
+	if(!(flags&NODECONSTRUCT))
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)

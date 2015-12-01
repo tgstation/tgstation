@@ -121,7 +121,7 @@
 /obj/structure/grille/Deconstruct()
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags&ABSTRACT))
+	if(!(flags&NODECONSTRUCT))
 		transfer_fingerprints_to(stored)
 		var/turf/T = loc
 		stored.loc = T
@@ -132,7 +132,7 @@
 	density = 0
 	destroyed = 1
 	stored.amount = 1
-	if(!(flags&ABSTRACT))
+	if(!(flags&NODECONSTRUCT))
 		var/obj/item/stack/rods/newrods = new(loc)
 		transfer_fingerprints_to(newrods)
 

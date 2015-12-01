@@ -151,7 +151,7 @@
 /obj/machinery/door/window/proc/take_damage(damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		if(!(flags&ABSTRACT))
+		if(!(flags&NODECONSTRUCT))
 			var/debris = list(
 				new /obj/item/weapon/shard(src.loc),
 				new /obj/item/weapon/shard(src.loc),
@@ -270,7 +270,7 @@
 
 	add_fingerprint(user)
 
-	if(!(flags&ABSTRACT))
+	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(src.density || src.operating)
 				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
