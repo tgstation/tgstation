@@ -125,6 +125,12 @@
 
 	bot_core = new bot_core_type(src)
 
+/mob/living/simple_animal/bot/update_canmove()
+	. = ..()
+	if(!on)
+		. = 0
+	canmove = .
+
 /mob/living/simple_animal/bot/Destroy()
 	qdel(Radio)
 	qdel(access_card)
@@ -143,12 +149,15 @@
 		locked = 0
 		emagged = 1
 		user << "<span class='notice'>You bypass [src]'s controls.</span>"
+		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
 		locked = 1 //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
+		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
+		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
 		user << "<span class='warning'>You need to open maintenance panel first!</span>"
 
@@ -175,7 +184,7 @@
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
 	set background = BACKGROUND_ENABLED
 
-	if(!on || ckey)
+	if(!on || client)
 		return
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
@@ -293,6 +302,24 @@
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
+/mob/living/simple_animal/bot/radio(message, message_mode, list/spans)
+	. = ..()
+	if(. != 0)
+		return .
+
+	switch(message_mode)
+		if(MODE_HEADSET)
+			Radio.talk_into(src, message, , spans)
+			return REDUCE_RANGE
+
+		if(MODE_DEPARTMENT)
+			Radio.talk_into(src, message, message_mode, spans)
+			return REDUCE_RANGE
+
+	if(message_mode in radiochannels)
+		Radio.talk_into(src, message, message_mode, spans)
+		return REDUCE_RANGE
+	return 0
 
 //Generalized behavior code, override where needed!
 
@@ -430,7 +457,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Patrol and summon code!
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -556,7 +582,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, turf/user_turf, list/user_access = list())
 	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return 1 //ACCESS DENIED
-	if(ckey)
+	if(client)
 		bot_control_message(command,user,user_turf,user_access)
 	// process control input
 	switch(command)
@@ -754,3 +780,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Login()
 	. = ..()
 	access_card.access += player_access
+
+/mob/living/simple_animal/bot/Logout()
+	. = ..()
+	bot_reset()
