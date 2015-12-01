@@ -1,7 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - bugfix: "Cryo now knocks you out."
-  - bugfix: "Resisting out of cryo has a delay."
-  - rscadd: "Cryo auto-ejection can now be configured."
-  - rscdel: "Remove Cryo eject verb (resist out)."
