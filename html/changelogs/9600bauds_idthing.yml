@@ -32,4 +32,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Alt-clicking a PDA in your hands/PDA slot will now eject it's pen. Much faster than right-clicking or hunting down the verb in the Object tab.
+  - rscadd: You can now also ctrl+click a PDA in your hands/PDA slot to eject it's ID.
