@@ -15,11 +15,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 
 /area
-	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
-	var/party = null
 	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
@@ -27,12 +22,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	layer = 10
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
-	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
+	var/map_name
+
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 	var/blob_allowed = 1 //Does it count for blobs score? By default, all areas count.
 
 	var/eject = null
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
 
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
@@ -53,7 +56,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
-								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
 
