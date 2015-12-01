@@ -2,7 +2,7 @@ json_writer/var/use_cache = 0
 json_writer/proc/WriteObject(list/L)
 	if(use_cache && L["__json_cache"])
 		return L["__json_cache"]
-	
+	var/i = 1
 	. = ""
 	for(var/k in L)
 		. += text("\"[]\":[][]", k, write(L[k]), (i++ < L.len ? "," : ""))
