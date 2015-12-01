@@ -102,8 +102,8 @@
 #define ui_construct_fire "EAST-1:16,CENTER+1:13" //above health, slightly to the left
 #define ui_construct_pull "EAST-1:28,SOUTH+1:10" //above the zone_sel icon
 
-#define ui_spell_master "14:16,14:16"
-#define ui_genetic_master "14:16,12:16"
+#define ui_spell_master "EAST-1:16,NORTH-1:16"
+#define ui_genetic_master "EAST-1:16,NORTH-3:16"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"
