@@ -23,10 +23,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/map_name
+	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
-	var/blob_allowed = 1 //Does it count for blobs score? By default, all areas count.
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
 
 	var/eject = null
 
@@ -38,7 +38,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/lightswitch = 1
 
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
 	var/power_equip = 1
 	var/power_light = 1
