@@ -102,6 +102,15 @@
 	return
 
 
+/mob/living/simple_animal/hostile/syndicate/civilian
+	minimum_distance = 6
+	environment_smash = 0
+
+/mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
+	..()
+	summon_backup(15)
+	say("GUARDS!!")
+
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
