@@ -297,10 +297,8 @@
 //DOPE BLING//
 //////////////
 
-/obj/item/clothing/bling
+/obj/item/clothing/tie/dope_necklace
 	name = "gold necklace"
 	desc = "Damn, it feels good to be a gangster."
-	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bling"
-	item_state = ""	//no inhands
 	item_color = "bling"
