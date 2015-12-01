@@ -184,7 +184,7 @@
 						/obj/item/weapon/tank/oxygen,
 						/obj/item/weapon/tank/air,
 						/obj/item/weapon/extinguisher,
-						/obj/item/corgiclothes/hardsuit
+						/obj/item/clothing/suit/space/rig
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -346,7 +346,7 @@
 			emote_see = list("fiddles around with a sonic-bone", "builds something amazing- thats a poop. He just pooped.")
 			valid = 1
 
-		if(/obj/item/corgiclothes/hardsuithelmet)
+		if(/obj/item/clothing/head/helmet/space/rig)
 			name = "Spessman [real_name]"
 			desc = "Boldly going where no Corgi has gone before!"
 			valid = 1
