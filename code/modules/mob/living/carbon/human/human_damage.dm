@@ -124,21 +124,21 @@
 			if (candidates.len)
 				var/datum/organ/external/O = pick(candidates)
 				O.mutate()
-				src << "<span class = 'notice'>Something is not right with your [O.display_name]...</span>"
+				to_chat(src, "<span class = 'notice'>Something is not right with your [O.display_name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
 			for (var/datum/organ/external/O in organs)
 				if (O.status & ORGAN_MUTATED)
 					O.unmutate()
-					src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+					to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
 		for (var/datum/organ/external/O in organs)
 			if (O.status & ORGAN_MUTATED)
 				O.unmutate()
-				src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+				to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////

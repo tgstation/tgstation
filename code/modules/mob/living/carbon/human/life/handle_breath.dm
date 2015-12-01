@@ -99,7 +99,7 @@
 			if(environment)
 				if(environment.oxygen && environment.total_moles() && (environment.oxygen / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //How's the concentration doing?
 					if(!on_fire)
-						src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
+						to_chat(src, "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>")
 					adjust_fire_stacks(0.5)
 					IgniteMob()
 		else

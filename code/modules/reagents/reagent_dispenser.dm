@@ -21,12 +21,12 @@
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	user << "<span class='info'>It contains:</span>"
+	to_chat(user, "<span class='info'>It contains:</span>")
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			user << "<span class='info'>[R.volume] units of [R.name]</span>"
+			to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 	else
-		user << "<span class='info'>Nothing.</span>"
+		to_chat(user, "<span class='info'>Nothing.</span>")
 
 /obj/structure/reagent_dispensers/cultify()
 	new /obj/structure/reagent_dispensers/bloodkeg(get_turf(src))
@@ -102,9 +102,9 @@
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	..()
 	if (modded)
-		user << "<span class='warning'>Fuel faucet is wrenched open, leaking the fuel!</span>"
+		to_chat(user, "<span class='warning'>Fuel faucet is wrenched open, leaking the fuel!</span>")
 	if(rig)
-		user << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
+		to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
 	if (rig)
@@ -123,7 +123,7 @@
 		modded = modded ? 0 : 1
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			user << "<span class='warning'>There is another device in the way.</span>"
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, src, 20))
@@ -230,7 +230,7 @@
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/user as mob)
 	if(paper_cups > 0)
 		user.put_in_hands(new/obj/item/weapon/reagent_containers/food/drinks/sillycup())
-		user << "You pick up an empty paper cup from \the [src]"
+		to_chat(user, "You pick up an empty paper cup from \the [src]")
 		paper_cups--
 		desc = "[initial(desc)] There's [paper_cups] paper cups stored inside."
 
@@ -318,11 +318,11 @@
 	if(issilicatesprayer(W))
 		var/obj/item/device/silicate_sprayer/S = W
 		if(S.get_amount() >= S.max_silicate) // Already filled.
-			user << "<span class='notice'>\The [S] is already full!</span>"
+			to_chat(user, "<span class='notice'>\The [S] is already full!</span>")
 			return
 
 		reagents.trans_to(S, S.max_silicate)
 		S.update_icon()
-		user << "<span class='notice'>Sprayer refilled.</span>"
+		to_chat(user, "<span class='notice'>Sprayer refilled.</span>")
 		playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 		return 1

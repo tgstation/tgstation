@@ -17,7 +17,7 @@
 
 /obj/item/weapon/gun/gravitywell/examine(mob/user)
 	..()
-	user << "<span class='info'>Charge = [charge]%</span>"
+	to_chat(user, "<span class='info'>Charge = [charge]%</span>")
 
 /obj/item/weapon/gun/gravitywell/Destroy()
 	if(charge < maxcharge)

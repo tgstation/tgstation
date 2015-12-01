@@ -54,21 +54,21 @@ var/global/datum/store/centcomm_store=new
 		D = linked_db.attempt_account_access(card.associated_account_number, 0, 2, 0)
 		using_account = "Bank Account"
 		if(!D)								//first we check if there IS a bank account in the first place
-			usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-			usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+			to_chat(usr, "\icon[src]<span class='warning'>Unable to access your bank account.</span>")
 			return 0
 		else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
-			usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
-			usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+			to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+			to_chat(usr, "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>")
 			return 0
 		else if(D.money < amount)			//and lastly we check if there's enough money on it, duh
-			user << "\icon[merchcomp]<span class='warning'>You don't have that much money on your bank account!</span>"
+			to_chat(user, "\icon[merchcomp]<span class='warning'>You don't have that much money on your bank account!</span>")
 			return 0
 
 	//transfer the money
 	D.money -= amount
 
-	user << "\icon[merchcomp]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
+	to_chat(user, "\icon[merchcomp]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>")
 
 	//create an entry on the buy's account's transaction log
 	var/datum/transaction/T = new()

@@ -49,7 +49,7 @@
 		if(!user.get_active_hand()) //User's hand is empty.
 			user.put_in_hands(id)
 
-		user << "<span class='notify'>You pry the ID card out of \the [src]</span>"
+		to_chat(user, "<span class='notify'>You pry the ID card out of \the [src]</span>")
 		id = null
 
 	interact(user)
@@ -63,7 +63,7 @@
 	if(!smelter_data)
 		request_status()
 		if(!smelter_data) //Still no data.
-			user << "<span class='warning'>Unable to find an ore processing machine.</span>"
+			to_chat(user, "<span class='warning'>Unable to find an ore processing machine.</span>")
 			if(user.machine == src)
 				user.unset_machine(src)
 			return
@@ -189,7 +189,7 @@
 			return 1
 
 		if(id)
-			usr << "<span class='notify'>There is already an ID in the console!</span>"
+			to_chat(usr, "<span class='notify'>There is already an ID in the console!</span>")
 			return 1
 
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
@@ -217,7 +217,7 @@
 			return 1
 
 		if(id)
-			usr << "<span class='notify'>There is already an ID in the console!</span>"
+			to_chat(usr, "<span class='notify'>There is already an ID in the console!</span>")
 			return 1
 
 		user.drop_item(W, src)

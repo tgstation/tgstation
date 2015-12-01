@@ -54,7 +54,7 @@ var/global/vox_shuttle_location
 
 /obj/machinery/computer/vox_station/attack_hand(mob/user as mob)
 	if(!allowed(user) || issilicon(user))
-		user << "<span class=\"warning\">Access denied</span>"
+		to_chat(user, "<span class=\"warning\">Access denied</span>")
 		return
 
 	user.set_machine(src)

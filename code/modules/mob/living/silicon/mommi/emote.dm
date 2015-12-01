@@ -11,7 +11,7 @@
 
 	switch(act)
 		if ("help")
-			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look"
+			to_chat(src, "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look")
 			return
 		if ("salute")
 			//if (!src.locked_to)
@@ -92,7 +92,7 @@
 		if ("me")
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					to_chat(src, "You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -235,7 +235,7 @@
 			m_type = VISIBLE
 
 		else
-			custom_emote(VISIBLE, act) //src << text("Invalid Emote: [], use *help", act)
+//			to_chat(custom_emote(VISIBLE, act) src, text("Invalid Emote: [], use *help", act))
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

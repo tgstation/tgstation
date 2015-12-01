@@ -12,14 +12,14 @@
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!istype(M))
-		user << "<span class='notice'>Incompatible object, scan aborted.</span>"
+		to_chat(user, "<span class='notice'>Incompatible object, scan aborted.</span>")
 		return
 	var/mob/living/carbon/C = M
 	if(!C.antibodies)
-		user << "<span class='notice'>Unable to detect antibodies.</span>"
+		to_chat(user, "<span class='notice'>Unable to detect antibodies.</span>")
 		return
 	var/code = antigens2string(M.antibodies)
-	user << "<span class='notice'>[src] The antibody scanner displays a cryptic set of data: [code]</span>"
+	to_chat(user, "<span class='notice'>[src] The antibody scanner displays a cryptic set of data: [code]</span>")
 
 ///////////////VIRUS DISH///////////////
 
@@ -46,7 +46,7 @@
 		return
 	..()
 	if(prob(50))
-		user << "The dish shatters"
+		to_chat(user, "The dish shatters")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
@@ -57,8 +57,8 @@
 /obj/item/weapon/virusdish/examine(mob/user)
 	..()
 	if(src.info)
-		user << "<span class='info'>It has the following information about its contents</span>"
-		user << src.info
+		to_chat(user, "<span class='info'>It has the following information about its contents</span>")
+		to_chat(user, src.info)
 
 ///////////////GNA DISK///////////////
 

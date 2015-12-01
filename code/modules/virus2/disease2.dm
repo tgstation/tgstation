@@ -2,7 +2,7 @@ var/global/list/disease2_list = list()
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = "Contact" // Can also be "Airborne"
+	var/spreadtype = "Contact" // Can also be "Airborne" or "Blood"
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
@@ -35,7 +35,7 @@ var/global/list/disease2_list = list()
 	infectionchance = rand(60,90)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = prob(70) ? "Airborne" : "Contact"
+	spreadtype = prob(70) ? "Airborne" : prob(20) ? "Blood" :"Contact" //Try for airborne then try for blood.
 
 /proc/virus2_make_custom(client/C)
 	if(!C.holder || !istype(C))
@@ -68,7 +68,7 @@ var/global/list/disease2_list = list()
 	D.antigen |= text2num(pick(ANTIGENS))
 	D.antigen |= text2num(pick(ANTIGENS))
 
-	D.spreadtype = input(C, "Select spread type", "Spread Type") in list("Airborne", "Contact") // select how the disease is spread
+	D.spreadtype = input(C, "Select spread type", "Spread Type") in list("Airborne", "Contact", "Blood") // select how the disease is spread
 	infectedMob.virus2["[D.uniqueID]"] = D // assign the disease datum to the infectedMob/ selected user.
 	log_admin("[infectedMob] was infected with a virus with uniqueID : [D.uniqueID] by [C.ckey]")
 	message_admins("[infectedMob] was infected with a virus with uniqueID : [D.uniqueID] by [C.ckey]")

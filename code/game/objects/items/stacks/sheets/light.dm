@@ -30,7 +30,7 @@
 		var/obj/item/stack/tile/light/L=locate(/obj/item/stack/tile/light) in get_turf(user)
 		if(L && L.amount<L.max_amount)
 			L.amount++
-			user << "You add [L] to the stack. It now contains [L.amount] tiles."
+			to_chat(user, "You add [L] to the stack. It now contains [L.amount] tiles.")
 		else
 			new/obj/item/stack/tile/light(user.loc)
 

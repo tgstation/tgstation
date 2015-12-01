@@ -77,4 +77,3 @@
 				world << sound('sound/AI/outbreak7.ogg')
 	Tick()
 		ActiveFor = Lifetime //killme
-

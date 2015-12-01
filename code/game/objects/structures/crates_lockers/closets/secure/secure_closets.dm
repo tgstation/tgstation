@@ -48,13 +48,13 @@
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
-				O << "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>"
+				to_chat(O, "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>")
 		if(src.locked)
 			src.icon_state = src.icon_locked
 		else
 			src.icon_state = src.icon_closed
 	else
-		user << "<span class='notice'>Access Denied</span>"
+		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
@@ -68,10 +68,10 @@
 			if(do_after(user, src,40))
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				broken = 0
-				user << "<span class='notice'>You repair the electronics inside the locking mechanism!</span>"
+				to_chat(user, "<span class='notice'>You repair the electronics inside the locking mechanism!</span>")
 				src.icon_state = src.icon_closed
 		else
-			user << "<span class='notice'>The locker appears to be broken.</span>"
+			to_chat(user, "<span class='notice'>The locker appears to be broken.</span>")
 			return
 	else if(istype(W, /obj/item/weapon/card/emag) && !src.broken)
 		broken = 1
@@ -86,7 +86,7 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0,user))
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			src.welded =! src.welded
 			src.update_icon()
@@ -113,13 +113,13 @@
 		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	else
 		if(!can_open())
-			user << "<span class='notice'>It won't budge!</span>"
+			to_chat(user, "<span class='notice'>It won't budge!</span>")
 		else
-			user << "<span class='notice'>The locker is locked!</span>"
+			to_chat(user, "<span class='notice'>The locker is locked!</span>")
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in hearers(src, null))
-				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>"
+				to_chat(M, "<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>")
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
@@ -151,7 +151,7 @@
 		if (!opened)
 			togglelock(usr)
 	else
-		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.len = 0

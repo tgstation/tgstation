@@ -125,7 +125,7 @@
 	holder:attack_delayer.delayNext(0)
 	if(isliving(A))
 		zapzap--
-		if(zapzap) holder << "<span class='info'>You can throw lightning [zapzap] more time\s</span>"
+		if(zapzap) to_chat(holder, "<span class='info'>You can throw lightning [zapzap] more time\s</span>")
 		else
 			usr.overlays -= chargeoverlay
 			take_charge(holder, 0)
@@ -165,22 +165,22 @@
 		sleep(world.tick_lag)
 	target = lastbumped
 	if(!istype(target)) //hit something
-		//world << "we hit a [formatJumpTo(target)] (<a href='?_src_=vars;Vars=\ref[target]'>VV</a>) instead of a mob"
+//		to_chat(world, "we hit a [formatJumpTo(target)] (<a href='?_src_=vars;Vars=\ref[target]'>VV</a>) instead of a mob")
 		U = get_turf(target)
 		var/list/zappanic = list()
 		for(var/mob/living/Living in get_turf(target)) //find a mob in the tile
 			if(Living == user || Living == holder || (Living in zapped))
 				continue
-			//world << "adding [Living](<a href='?_src_=vars;Vars=\ref[Living]'>VV</a>) to the potentials list"
+//			to_chat(world, "adding [Living](<a href='?_src_=vars;Vars=\ref[Living]'>VV</a>) to the potentials list")
 			zappanic |= Living
 		if(zappanic.len)
 			target = pick(zappanic)
-			//world << "picked [formatJumpTo(target)](<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)"
+//			to_chat(world, "picked [formatJumpTo(target)](<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)")
 		else
-			//world << "no potentials"
+//			to_chat(world, "no potentials")
 			if(isturf(target))
 				target = get_step_towards(target, get_dir(target, user))
-				//world << "new target is [formatJumpTo(target)](<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)"
+//				to_chat(world, "new target is [formatJumpTo(target)](<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)")
 	if(istype(target))
 		target.emp_act(2)
 		target.apply_damage((issilicon(target) ? basedamage*0.66 : basedamage), BURN, "chest", "blocked" = 0)
@@ -194,24 +194,24 @@
 		var/mob/next_target
 		var/currdist = -1
 		for(var/mob/living/M in view(target,bounce_range))
-			//world << "checking [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) for a bounce"
+//			to_chat(world, "checking [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) for a bounce")
 			if((M != holder && M != usr) && M != user)
 				if(!(M in zapped) && target == otarget)//we are chaining off something going to our original target
 					continue
 				var/dist = get_dist(M, user)
 				if(currdist == -1)
-					//world << "distance to [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) is the shortest so far([dist])"
+//					to_chat(world, "distance to [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) is the shortest so far([dist])")
 					currdist = dist
 					next_target = M
 				else if(dist < currdist)
-					//world << "distance to [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) is the shortest so far([dist])"
+//					to_chat(world, "distance to [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) is the shortest so far([dist])")
 					next_target = M
 					currdist = dist
 				else
-					//world << "too far away from [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) "
+//					to_chat(world, "too far away from [formatJumpTo(M)] (<a href='?_src_=vars;Vars=\ref[M]'>VV</a>) ")
 
 		if(!next_target)
-			//world << "didn't have a next target"
+//			to_chat(world, "didn't have a next target")
 			return //bail out bail out!
-		//world << "going one more time 'user' = [formatJumpTo(target)] (<a href='?_src_=vars;Vars=\ref[target]'>VV</a>) ; 'target' = [formatJumpTo(next_target)](<a href='?_src_=vars;Vars=\ref[next_target]'>VV</a>)"
+//		to_chat(world, "going one more time 'user' = [formatJumpTo(target)] (<a href='?_src_=vars;Vars=\ref[target]'>VV</a>) ; 'target' = [formatJumpTo(next_target)](<a href='?_src_=vars;Vars=\ref[next_target]'>VV</a>)")
 		zapmuthafucka("user" = target, "target" = next_target, "chained" = chained-1, "zapped" = zapped, "oursound" = oursound)

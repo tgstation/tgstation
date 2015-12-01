@@ -80,22 +80,22 @@
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
 		src.color = PIPE_COLOR_RED
-		user << "<span class='warning'>You paint the pipe red.</span>"
+		to_chat(user, "<span class='warning'>You paint the pipe red.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
 		src.color = PIPE_COLOR_BLUE
-		user << "<span class='warning'>You paint the pipe blue.</span>"
+		to_chat(user, "<span class='warning'>You paint the pipe blue.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
 		src.color = PIPE_COLOR_GREEN
-		user << "<span class='warning'>You paint the pipe green.</span>"
+		to_chat(user, "<span class='warning'>You paint the pipe green.</span>")
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
 		src.color = PIPE_COLOR_ORANGE
-		user << "<span class='warning'>You paint the pipe yellow.</span>"
+		to_chat(user, "<span class='warning'>You paint the pipe yellow.</span>")
 		update_icon()
 		return 1
 

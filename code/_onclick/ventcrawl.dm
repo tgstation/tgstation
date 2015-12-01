@@ -6,7 +6,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/proc/ventcrawl_carry()
 	for(var/atom/A in src.contents)
 		if(!(isInTypes(A, canEnterVentWith)))
-			src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
+			to_chat(src, "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>")
 			return 0
 	return 1
 
@@ -47,7 +47,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		if(is_type_in_list(U,ventcrawl_machinery) && Adjacent(U))
 			pipes |= U
 	if(!pipes || !pipes.len)
-		src << "There are no pipes that you can ventcrawl into within range!"
+		to_chat(src, "There are no pipes that you can ventcrawl into within range!")
 		return
 	if(pipes.len == 1)
 		pipe = pipes[1]
@@ -96,7 +96,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 /*
 			if(clicked_on)
-				world << "We start with [clicked_on], and [clicked_on.type]"
+				to_chat(world, "We start with [clicked_on], and [clicked_on.type]")
 */
 			var/obj/machinery/atmospherics/unary/vent_found
 
@@ -120,28 +120,28 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			if(vent_found)
 				if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.line_members.len))
 
-					src << "You begin climbing into the ventilation system..."
+					to_chat(src, "You begin climbing into the ventilation system...")
 					if(vent_found.air_contents && !issilicon(src))
 
 						switch(vent_found.air_contents.temperature)
 							if(0 to BODYTEMP_COLD_DAMAGE_LIMIT)
-								src << "<span class='danger'>You feel a painful freeze coming from the vent!</span>"
+								to_chat(src, "<span class='danger'>You feel a painful freeze coming from the vent!</span>")
 							if(BODYTEMP_COLD_DAMAGE_LIMIT to T0C)
-								src << "<span class='warning'>You feel an icy chill coming from the vent.</span>"
+								to_chat(src, "<span class='warning'>You feel an icy chill coming from the vent.</span>")
 							if(T0C + 40 to BODYTEMP_HEAT_DAMAGE_LIMIT)
-								src << "<span class='warning'>You feel a hot wash coming from the vent.</span>"
+								to_chat(src, "<span class='warning'>You feel a hot wash coming from the vent.</span>")
 							if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-								src << "<span class='danger'>You feel a searing heat coming from the vent!</span>"
+								to_chat(src, "<span class='danger'>You feel a searing heat coming from the vent!</span>")
 
 						switch(vent_found.air_contents.pressure)
 							if(0 to HAZARD_LOW_PRESSURE)
-								src << "<span class='danger'>You feel a rushing draw pulling you into the vent!</span>"
+								to_chat(src, "<span class='danger'>You feel a rushing draw pulling you into the vent!</span>")
 							if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-								src << "<span class='warning'>You feel a strong drag pulling you into the vent.</span>"
+								to_chat(src, "<span class='warning'>You feel a strong drag pulling you into the vent.</span>")
 							if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-								src << "<span class='warning'>You feel a strong current pushing you away from the vent.</span>"
+								to_chat(src, "<span class='warning'>You feel a strong current pushing you away from the vent.</span>")
 							if(HAZARD_HIGH_PRESSURE to INFINITY)
-								src << "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>"
+								to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
 
 					if(!do_after(src,vent_found, 45,,0))
 						return
@@ -158,16 +158,16 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 					add_ventcrawl(vent_found)
 
 				else
-					src << "This vent is not connected to anything."
+					to_chat(src, "This vent is not connected to anything.")
 
 			else
-				src << "You must be standing on or beside an air vent to enter it."
+				to_chat(src, "You must be standing on or beside an air vent to enter it.")
 
 		else
-			src << "You can't vent crawl while you're stunned!"
+			to_chat(src, "You can't vent crawl while you're stunned!")
 
 	else
-		src << "You must be conscious to do this!"
+		to_chat(src, "You must be conscious to do this!")
 	return
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)

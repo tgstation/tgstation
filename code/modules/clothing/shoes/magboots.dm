@@ -20,13 +20,13 @@
 		src.slowdown = SHOES_SLOWDOWN
 		src.magpulse = 0
 		icon_state = "[base_state]0"
-		usr << "You disable the mag-pulse traction system."
+		to_chat(usr, "You disable the mag-pulse traction system.")
 	else
 		src.flags |= NOSLIP
 		src.slowdown = mag_slow
 		src.magpulse = 1
 		icon_state = "[base_state]1"
-		usr << "You enable the mag-pulse traction system."
+		to_chat(usr, "You enable the mag-pulse traction system.")
 	usr.update_inv_shoes()	//so our mob-overlays update
 
 /obj/item/clothing/shoes/magboots/attack_self()
@@ -39,7 +39,7 @@
 	var/state = "disabled"
 	if(src.flags&NOSLIP)
 		state = "enabled"
-	user << "<span class='info'>Its mag-pulse traction system appears to be [state].</span>"
+	to_chat(user, "<span class='info'>Its mag-pulse traction system appears to be [state].</span>")
 
 //CE
 /obj/item/clothing/shoes/magboots/elite

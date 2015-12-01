@@ -24,15 +24,15 @@
 
 	//Seems about right
 	//if(handcuffed || legcuffed)
-		//src << "<span class='warning'>You cannot evolve when you are cuffed.</span>"
+//		to_chat(src, "<span class='warning'>You cannot evolve when you are cuffed.</span>")
 
 	if(amount_grown >= max_grown)	//TODO ~Carn
 		//green is impossible to read, so i made these blue and changed the formatting slightly
-		src << {"<span class='notice'><B>You are growing into a beautiful alien! It is time to choose a caste.</B><br>
+		to_chat(src, {"<span class='notice'><B>You are growing into a beautiful alien! It is time to choose a caste.</B><br>
 		There are three castes to choose from:<br>
 		<B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves.<br>
 		<B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters.<br>
-		<B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."}
+		<B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."})
 		var/alien_caste = alert(src, "Please choose which alien caste you shall evolve to.",,"Hunter","Sentinel","Drone")
 
 		var/mob/living/carbon/alien/humanoid/new_xeno
@@ -50,5 +50,5 @@
 		playsound(get_turf(src), 'sound/effects/evolve.ogg', 40, 1)
 		return
 	else
-		src << "<span class='warning'>You are not fully grown yet.</span>"
+		to_chat(src, "<span class='warning'>You are not fully grown yet.</span>")
 		return

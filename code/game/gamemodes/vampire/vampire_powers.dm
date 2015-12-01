@@ -7,7 +7,7 @@
 
 	if(!src.mind)		return 0
 	if(!ishuman(src))
-		src << "<span class='warning'>You are in too weak of a form to do this!</span>"
+		to_chat(src, "<span class='warning'>You are in too weak of a form to do this!</span>")
 		return 0
 
 	var/datum/vampire/vampire = src.mind.vampire
@@ -19,25 +19,25 @@
 	var/fullpower = (VAMP_MATURE in vampire.powers)
 
 	if(src.stat > max_stat)
-		src << "<span class='warning'>You are incapacitated.</span>"
+		to_chat(src, "<span class='warning'>You are incapacitated.</span>")
 		return 0
 
 	if(vampire.nullified)
 		if(!fullpower)
-			src << "<span class='warning'>Something is blocking your powers!</span>"
+			to_chat(src, "<span class='warning'>Something is blocking your powers!</span>")
 			return 0
 	if(vampire.bloodusable < required_blood)
-		src << "<span class='warning'>You require at least [required_blood] units of usable blood to do that!</span>"
+		to_chat(src, "<span class='warning'>You require at least [required_blood] units of usable blood to do that!</span>")
 		return 0
 	//chapel check
 	if(istype(areaMaster, /area/chapel))
 		if(!fullpower)
-			src << "<span class='warning'>Your powers are useless on this holy ground.</span>"
+			to_chat(src, "<span class='warning'>Your powers are useless on this holy ground.</span>")
 			return 0
 	if(check_holy(src) && !fullpower)
 		var/turf/T = get_turf(src)
 		if((T.get_lumcount() * 10) > 2)
-			src << "<span class='warning'>This ground has been blessed and illuminated, suppressing your abilities.</span>"
+			to_chat(src, "<span class='warning'>This ground has been blessed and illuminated, suppressing your abilities.</span>")
 			return 0
 	return 1
 
@@ -86,7 +86,7 @@
 		M.current.stunned = 0
 		M.current.paralysis = 0
 		//M.vampire.bloodusable -= 10
-		M.current << "<span class='notice'>You flush your system with clean blood and remove any incapacitating effects.</span>"
+		to_chat(M.current, "<span class='notice'>You flush your system with clean blood and remove any incapacitating effects.</span>")
 		spawn(1)
 			if(M.vampire.bloodtotal >= 200)
 				for(var/i = 0; i < 5; i++)
@@ -106,13 +106,13 @@
 	var/datum/mind/M = usr.mind
 	if(!M)	return
 	if(M.current.on_fire || M.vampire.smitecounter)
-		M.current << "span class='warning'>Your corpse has been sanctified!</span>"
+		to_chat(M.current, "span class='warning'>Your corpse has been sanctified!</span>")
 		return
 
 	if(M.current.vampire_power(0, 3))
 		M.current.remove_vampire_blood(M.vampire.bloodusable)
 		M.current.revive(0)
-		M.current << "<span class='sinister'>You awaken, ready to strike fear into the hearts of mortals once again.</span>"
+		to_chat(M.current, "<span class='sinister'>You awaken, ready to strike fear into the hearts of mortals once again.</span>")
 		M.current.update_canmove()
 		M.current.make_vampire()
 	M.current.regenerate_icons()
@@ -127,18 +127,18 @@
 
 	if(M.current.vampire_power(0, 3))
 		if(!M.current.stat)
-			M.current << "<span class='warning'>You need to be dead to do that. Well, you're already dead; undead to be precise, but you need to be DEAD dead to use it.</span>"
+			to_chat(M.current, "<span class='warning'>You need to be dead to do that. Well, you're already dead; undead to be precise, but you need to be DEAD dead to use it.</span>")
 			return
 		if(M.current.on_fire || M.vampire.smitecounter)
-			M.current << "span class='warning'>Your corpse has been sanctified!</span>"
+			to_chat(M.current, "span class='warning'>Your corpse has been sanctified!</span>")
 			return
-		M.current << "<span class='notice'>You attempt to recover.</span>"
+		to_chat(M.current, "<span class='notice'>You attempt to recover.</span>")
 
 		M.current.update_canmove()
 		M.current.remove_vampire_powers()
 
 		sleep(rand(300,450))
-		src << "<span class='sinister'>Your corpse twitches slightly. It's safe to assume nobody noticed.</span>"
+		to_chat(src, "<span class='sinister'>Your corpse twitches slightly. It's safe to assume nobody noticed.</span>")
 		src.verbs += /client/proc/vampire_returntolife
 		return 1
 
@@ -159,16 +159,16 @@
 	var/enhancements = ((C.weakened ? 2 : 0) + (C.stunned ? 1 : 0) + (C.sleeping || C.paralysis ? 3 : 0))
 	if(do_mob(M.current, C, 10 - enhancements))
 		if(C.mind && C.mind.vampire)
-			M.current << "<span class='warning'>Your piercing gaze fails to knock out [C.name].</span>"
-			C << "<span class='notice'>[M.current.name]'s feeble gaze is ineffective.</span>"
+			to_chat(M.current, "<span class='warning'>Your piercing gaze fails to knock out [C.name].</span>")
+			to_chat(C, "<span class='notice'>[M.current.name]'s feeble gaze is ineffective.</span>")
 			return
 		else
-			M.current << "<span class='warning'>Your piercing gaze knocks out [C.name].</span>"
-			C << "<span class='sinister'>You find yourself unable to move and barely able to speak.</span>"
+			to_chat(M.current, "<span class='warning'>Your piercing gaze knocks out [C.name].</span>")
+			to_chat(C, "<span class='sinister'>You find yourself unable to move and barely able to speak.</span>")
 			C.stuttering = 50
 			C.Paralyse(20)
 	else
-		M.current << "<span class='warning'>You broke your gaze.</span>"
+		to_chat(M.current, "<span class='warning'>You broke your gaze.</span>")
 		return
 
 /client/proc/vampire_disease()
@@ -181,12 +181,12 @@
 	var/mob/living/carbon/C = M.current.vampire_active(50, 0, 1)
 	if(!C) return
 	if(!M.current.vampire_can_reach(C, 1))
-		M.current << "<span class='danger'>You cannot touch [C.name] from where you are standing!</span>"
+		to_chat(M.current, "<span class='danger'>You cannot touch [C.name] from where you are standing!</span>")
 		return
-	M.current << "<span class='sinister'>You stealthily infect [C.name] with your diseased touch.</span>"
+	to_chat(M.current, "<span class='sinister'>You stealthily infect [C.name] with your diseased touch.</span>")
 	C.help_shake_act(M.current) // i use da colon
 	if(!C.vampire_affected(M))
-		M.current << "<span class='warning'>They seem to be unaffected.</span>"
+		to_chat(M.current, "<span class='warning'>They seem to be unaffected.</span>")
 		return
 	log_admin("[ckey(src.key)] has death-touched [ckey(C.key)]. The latter will die in moments.")
 	message_admins("[ckey(src.key)] has death-touched [ckey(C.key)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[C.x];Y=[C.y];Z=[C.z]'>JMP</A>). The latter will die in moments.")
@@ -224,7 +224,7 @@
 		spawn(300)
 			M.current.verbs += /client/proc/vampire_glare
 		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
-			M.current << "<span class='warning'>You're blindfolded!</span>"
+			to_chat(M.current, "<span class='warning'>You're blindfolded!</span>")
 			return
 		var/list/close_mobs = list()
 		var/list/dist_mobs = list()
@@ -250,7 +250,7 @@
 			C.stuttering += 5+distance_value * ((VAMP_CHARISMA in M.vampire.powers) ? 2 : 1) //double stutter time with Charisma
 			if(!C.blinded) C.blinded = 1
 			C.blinded += max(1, distance_value)
-		(dist_mobs + close_mobs) << "<span class='warning'>You are blinded by [M.current.name]'s glare</span>"
+		to_chat((dist_mobs + close_mobs), "<span class='warning'>You are blinded by [M.current.name]'s glare</span>")
 
 
 /client/proc/vampire_shapeshift()
@@ -282,7 +282,7 @@
 				var/mob/living/carbon/human/H = C
 				if(H.earprot()) continue
 			if(!C.vampire_affected(M)) continue
-			C << "<span class='danger'><font size='3'>You hear a ear piercing shriek and your senses dull!</font></span>"
+			to_chat(C, "<span class='danger'><font size='3'>You hear a ear piercing shriek and your senses dull!</font></span>")
 			C.Weaken(8)
 			C.ear_deaf = 20
 			C.stuttering = 20
@@ -305,14 +305,14 @@
 	var/mob/living/carbon/C = M.current.vampire_active(300, 0, 1)
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name] bites [C.name]'s neck!</span>", "<span class='warning'>You bite [C.name]'s neck and begin the flow of power.</span>")
-	C << "<span class='sinister'>You feel the tendrils of evil [VAMP_CHARISMA in M.vampire.powers ? "aggressively" : "slowly"] invade your mind.</span>"
+	to_chat(C, "<span class='sinister'>You feel the tendrils of evil [VAMP_CHARISMA in M.vampire.powers ? "aggressively" : "slowly"] invade your mind.</span>")
 	if(!ishuman(C))
-		M.current << "<span class='warning'>You can only enthrall humanoids.</span>"
+		to_chat(M.current, "<span class='warning'>You can only enthrall humanoids.</span>")
 		return
 
 	if(M.current.can_enthrall(C) && do_mob(M.current, C, (VAMP_CHARISMA in M.vampire.powers) ? 150 : 300)) //takes half the time with Charisma unlocked
 		if(!M.current.can_enthrall(C))
-			M.current << "<span class='warning'>Either you or your target moved, and you couldn't finish enthralling them!</span>"
+			to_chat(M.current, "<span class='warning'>Either you or your target moved, and you couldn't finish enthralling them!</span>")
 			return
 		if(M.current.vampire_power(300, 0)) // recheck
 			M.current.handle_enthrall(C)
@@ -331,7 +331,7 @@
 	if(!M) return
 	if(M.current.vampire_power(0, 0))
 		M.vampire.iscloaking = !M.vampire.iscloaking
-		M.current << "<span class='notice'>You will now be [M.vampire.iscloaking ? "hidden" : "seen"] in darkness.</span>"
+		to_chat(M.current, "<span class='notice'>You will now be [M.vampire.iscloaking ? "hidden" : "seen"] in darkness.</span>")
 
 /mob/proc/handle_vampire_cloak()
 	if(!mind || !mind.vampire || !ishuman(src))
@@ -372,7 +372,7 @@
 		world.log << "something bad happened on enthralling a mob src is [src] [src.key] \ref[src]"
 		return 0
 	if(!C.mind)
-		src << "<span class='warning'>[C.name]'s mind is not there for you to enthrall.</span>"
+		to_chat(src, "<span class='warning'>[C.name]'s mind is not there for you to enthrall.</span>")
 		return 0
 	if(enthrall_safe || ( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
 		C.visible_message("<span class='warning'>[C] seems to resist the takeover!</span>", "<span class='notice'>You feel a familiar sensation in your skull that quickly dissipates.</span>")
@@ -380,13 +380,13 @@
 	if(!C.vampire_affected(mind))
 		C.visible_message("<span class='warning'>[C] seems to resist the takeover!</span>", "<span class='notice'>Your faith of [ticker.Bible_deity_name] has kept your mind clear of all evil</span>")
 	if(!ishuman(C))
-		src << "<span class='warning'>You can only enthrall humanoids!"
+		to_chat(src, "<span class='warning'>You can only enthrall humanoids!")
 		return 0
 	return 1
 
 /mob/proc/handle_enthrall(mob/living/carbon/human/H as mob)
 	if(!istype(H))
-		src << "<b><span class='warning'>SOMETHING WENT WRONG, YELL AT POMF OR NEXIS</b>"
+		to_chat(src, "<b><span class='warning'>SOMETHING WENT WRONG, YELL AT POMF OR NEXIS</b>")
 		return 0
 	var/ref = "\ref[src.mind]"
 	if(!(ref in ticker.mode.thralls))
@@ -401,8 +401,8 @@
 	ticker.mode.enthralled.Add(H.mind)
 	ticker.mode.enthralled[H.mind] = src.mind
 	H.mind.special_role = "VampThrall"
-	H << "<span class='sinister'>You have been Enthralled by [src.name]. Follow their every command.</span>"
-	src << "<span class='warning'>You have successfully Enthralled [H.name]. <i>If they refuse to do as you say just adminhelp.</i></span>"
+	to_chat(H, "<span class='sinister'>You have been Enthralled by [src.name]. Follow their every command.</span>")
+	to_chat(src, "<span class='warning'>You have successfully Enthralled [H.name]. <i>If they refuse to do as you say just adminhelp.</i></span>")
 	ticker.mode.update_vampire_icons_added(H.mind)
 	ticker.mode.update_vampire_icons_added(src.mind)
 	log_admin("[ckey(src.key)] has mind-slaved [ckey(H.key)].")
@@ -485,7 +485,7 @@
 				turfs += T
 
 			if(!turfs.len)
-				usr << "<span class='warning'>You cannot find darkness to step to.</span>"
+				to_chat(usr, "<span class='warning'>You cannot find darkness to step to.</span>")
 				return
 
 			var/turf/picked = pick(turfs)
@@ -511,7 +511,7 @@
 
 	if(M.current.vampire_power(0, 0))
 		M.vampire.ismenacing = !M.vampire.ismenacing
-		M.current << "<span class='notice'>You will [M.vampire.ismenacing ? "now" : "no longer"] terrify those who see you the in dark.</span>"
+		to_chat(M.current, "<span class='notice'>You will [M.vampire.ismenacing ? "now" : "no longer"] terrify those who see you the in dark.</span>")
 
 /mob/proc/handle_vampire_menace()
 	if(!mind || !mind.vampire || !ishuman(src))
@@ -534,7 +534,7 @@
 		C.stuttering += 20
 		C.Jitter(20)
 		C.Dizzy(20)
-		C << "<span class='sinister'>Your heart is filled with dread, and you shake uncontrollably.</span>"
+		to_chat(C, "<span class='sinister'>Your heart is filled with dread, and you shake uncontrollably.</span>")
 
 /client/proc/vampire_spawncape()
 	set category = "Vampire"
@@ -558,4 +558,4 @@
 	bloodold = mind.vampire.bloodusable
 	mind.vampire.bloodusable = max(0, (mind.vampire.bloodusable - amount))
 	if(bloodold != mind.vampire.bloodusable)
-		src << "<span class='notice'><b>You have [mind.vampire.bloodusable] left to use.</b></span>"
+		to_chat(src, "<span class='notice'><b>You have [mind.vampire.bloodusable] left to use.</b></span>")

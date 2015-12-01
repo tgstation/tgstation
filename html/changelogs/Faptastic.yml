@@ -1,2 +1,3 @@
 author: Faptastic
-changes: []
+changes:
+  - rscadd: Added 'Blood' transmission vector for virus samples.

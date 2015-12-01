@@ -20,9 +20,9 @@
 	..()
 	switch(setting)
 		if(0)
-			user << "It's current setting is <span style='color: #0066FF;'>blue</span>."
+			to_chat(user, "It's current setting is <span style='color: #0066FF;'>blue</span>.")
 		if(1)
-			user << "It's current setting is <span style='color: #FF6600;'>red</span>."
+			to_chat(user, "It's current setting is <span style='color: #FF6600;'>red</span>.")
 
 /obj/item/weapon/gun/portalgun/Destroy()
 	if(blue_portal)
@@ -46,11 +46,11 @@
 		if(0)
 			setting = 1
 			fire_sound = 'sound/weapons/portalgun_red.ogg'
-			user << "Now set to fire <span style='color: #FF6600;'>red portals</span>."
+			to_chat(user, "Now set to fire <span style='color: #FF6600;'>red portals</span>.")
 		if(1)
 			setting = 0
 			fire_sound = 'sound/weapons/portalgun_blue.ogg'
-			user << "Now set to fire <span style='color: #0066FF;'>blue portals</span>."
+			to_chat(user, "Now set to fire <span style='color: #0066FF;'>blue portals</span>.")
 	update_icon()
 	user.regenerate_icons()
 

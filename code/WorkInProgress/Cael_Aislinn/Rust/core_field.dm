@@ -141,13 +141,13 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//have a max of 1000 moles suspended
 	if(held_plasma.toxins < transfer_ratio * 1000)
 		var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
-		//world << "<span class='notice'>moles_covered: [moles_covered]</span>"
+//		to_chat(world, "<span class='notice'>moles_covered: [moles_covered]</span>")
 		//
 		var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
 		var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
 		//
 		plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
-		//world << "<span class='warning'>[plasma_captured.toxins] moles of plasma captured</span>"
+//		to_chat(world, "<span class='warning'>[plasma_captured.toxins] moles of plasma captured</span>")
 		plasma_captured.temperature = gas_covered.temperature
 		plasma_captured.update_values()
 		//
@@ -181,7 +181,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	if(held_plasma.toxins > 1)
 		//lose a random amount of plasma back into the air, increased by the field strength (want to switch this over to frequency eventually)
 		var/loss_ratio = rand() * (0.05 + (0.05 * 50 / field_strength))
-		//world << "lost [loss_ratio*100]% of held plasma"
+//		to_chat(world, "lost [loss_ratio*100]% of held plasma")
 		//
 		var/datum/gas_mixture/plasma_lost = new
 		plasma_lost.temperature = held_plasma.temperature
@@ -306,7 +306,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	var/list/reactants_reacting_pool = dormant_reactant_quantities.Copy()
 	/*
 	for(var/reagent in dormant_reactant_quantities)
-		world << "	before: [reagent]: [dormant_reactant_quantities[reagent]]"
+			to_chat(world, "	before: [reagent]: [dormant_reactant_quantities[reagent]]")
 		*/
 
 	//cant have any reactions if there aren't any reactants present
@@ -326,7 +326,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			//pick one of the unprocessed reacting reagents randomly
 			var/cur_primary_reactant = pick(primary_reactant_pool)
 			primary_reactant_pool.Remove(cur_primary_reactant)
-			//world << "<span class='notice'>primary reactant chosen: [cur_primary_reactant]</span>"
+//			to_chat(world, "<span class='notice'>primary reactant chosen: [cur_primary_reactant]</span>")
 
 			//grab all the possible reactants to have a reaction with
 			var/list/possible_secondary_reactants = reactants_reacting_pool.Copy()
@@ -342,12 +342,12 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 					continue
 				var/datum/fusion_reaction/cur_reaction = get_fusion_reaction(cur_primary_reactant, cur_secondary_reactant)
 				if(cur_reaction)
-					//world << "<span class='notice'>secondary reactant: [cur_secondary_reactant], [reaction_products.len]</span>"
+//					to_chat(world, "<span class='notice'>secondary reactant: [cur_secondary_reactant], [reaction_products.len]</span>")
 					possible_reactions.Add(cur_reaction)
 
 			//if there are no possible reactions here, abandon this primary reactant and move on
 			if(!possible_reactions.len)
-				//world << "<span class='notice'>no reactions</span>"
+//				to_chat(world, "<span class='notice'>no reactions</span>")
 				continue
 
 			//split up the reacting atoms between the possible reactions
@@ -420,12 +420,12 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//var/list/protonic_radiation = new
 		for(var/reactant in produced_reactants)
 			AddParticles(reactant, produced_reactants[reactant])
-			//world << "produced: [reactant], [dormant_reactant_quantities[reactant]]"
+//			to_chat(world, "produced: [reactant], [dormant_reactant_quantities[reactant]]")
 
 		//check whether there are reactants left, and add them back to the pool
 		for(var/reactant in reactants_reacting_pool)
 			AddParticles(reactant, reactants_reacting_pool[reactant])
-			//world << "retained: [reactant], [reactants_reacting_pool[reactant]]"
+//			to_chat(world, "retained: [reactant], [reactants_reacting_pool[reactant]]")
 
 /obj/effect/rust_em_field/Destroy()
 	//radiate everything in one giant burst

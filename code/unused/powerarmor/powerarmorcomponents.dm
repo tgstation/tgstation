@@ -69,15 +69,15 @@
 				if (prob(src.reliability))
 					for (var/mob/M in range(0,src.parent)) //Only a minor failure, enjoy your radiation.
 						if (src.parent in M.contents)
-							M << "<span class='warning'>Your armor feels pleasantly warm for a moment.</span>"
+							to_chat(M, "<span class='warning'>Your armor feels pleasantly warm for a moment.</span>")
 						else
-							M << "<span class='warning'>You feel a warm sensation.</span>"
+							to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
 						M.radiation += rand(1,40)
 				else
 					for (var/mob/M in range(rand(1,4),src.parent)) //Big failure, TIME FOR RADIATION BITCHES
 						if (src.parent in M.contents)
-							M << "<span class='warning'>Your armor's reactor overloads!</span>"
-						M << "<span class='warning'>You feel a wave of heat wash over you.</span>"
+							to_chat(M, "<span class='warning'>Your armor's reactor overloads!</span>")
+						to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
 						M.radiation += 100
 					crit_fail = 1 //broken~
 					parent.powerdown(1)
@@ -97,9 +97,9 @@
 		switch(parent.active)
 			if(1)
 				if(!sudden)
-					usr << "<span class='notice'>Reactive armor systems disengaged.</span>"
+					to_chat(usr, "<span class='notice'>Reactive armor systems disengaged.</span>")
 			if(0)
-				usr << "<span class='notice'>Reactive armor systems engaged.</span>"
+				to_chat(usr, "<span class='notice'>Reactive armor systems engaged.</span>")
 		var/list/switchover = list()
 		for (var/armorvar in parent.armor)
 			switchover[armorvar] = togglearmor[armorvar]
@@ -129,10 +129,10 @@
 		switch(parent.active)
 			if(1)
 				if(!sudden)
-					usr << "<span class='notice'>Movement assist servos disengaged.</span>"
+					to_chat(usr, "<span class='notice'>Movement assist servos disengaged.</span>")
 				parent.slowdown += toggleslowdown
 			if(0)
-				usr << "<span class='notice'>Movement assist servos engaged.</span>"
+				to_chat(usr, "<span class='notice'>Movement assist servos engaged.</span>")
 				parent.slowdown -= toggleslowdown
 
 /obj/item/powerarmor/atmoseal
@@ -145,7 +145,7 @@
 		switch(parent.active)
 			if(1)
 				if(!sudden)
-					usr << "<span class='notice'>Atmospheric seals disengaged.</span>"
+					to_chat(usr, "<span class='notice'>Atmospheric seals disengaged.</span>")
 				parent.gas_transfer_coefficient = 1
 				parent.permeability_coefficient = 1
 				parent.heat_transfer_coefficient = 1
@@ -166,7 +166,7 @@
 				sealed = 0
 
 			if(0)
-				usr << "<span class='notice'>Atmospheric seals engaged.</span>"
+				to_chat(usr, "<span class='notice'>Atmospheric seals engaged.</span>")
 				parent.gas_transfer_coefficient = 0.01
 				parent.permeability_coefficient = 0.02
 				parent.heat_transfer_coefficient = 0.02
@@ -202,10 +202,10 @@
 				helm = user.head
 
 				if(!sealed)
-					user << "<span class='warning'>Unable to initialize helmet seal, armor seals not active.</span>"
+					to_chat(user, "<span class='warning'>Unable to initialize helmet seal, armor seals not active.</span>")
 					return
 				if(!helm.parent)
-					user << "<span class='notice'>Helmet locked.</span>"
+					to_chat(user, "<span class='notice'>Helmet locked.</span>")
 					helm.canremove = 0
 					parent.helm = helm
 					helm.parent = parent
@@ -214,14 +214,14 @@
 					parent.helm.permeability_coefficient = 0.02
 					parent.helm.heat_transfer_coefficient = 0.02
 					parent.helm.flags |= HEADSPACE
-					user << "<span class='notice'>Helmet atmospheric seals engaged.</span>"
+					to_chat(user, "<span class='notice'>Helmet atmospheric seals engaged.</span>")
 					if(manual)
 						for (var/armorvar in helm.armor)
 							helm.armor[armorvar] = parent.armor[armorvar]
 					return
 				else
 					if(manual)
-						user << "<span class='notice'>Helmet atmospheric seals disengaged.</span>"
+						to_chat(user, "<span class='notice'>Helmet atmospheric seals disengaged.</span>")
 					parent.helm.gas_transfer_coefficient = 1
 					parent.helm.permeability_coefficient = 1
 					parent.helm.heat_transfer_coefficient = 1
@@ -232,7 +232,7 @@
 					if(!sudden)
 						if(manual)
 							sleep(20)
-							user << "<span class='notice'>Helmet unlocked.</span>"
+							to_chat(user, "<span class='notice'>Helmet unlocked.</span>")
 						helm.canremove = 1
 						parent.helm = null
 						helm.parent = null

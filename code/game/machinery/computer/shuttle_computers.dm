@@ -127,7 +127,7 @@
 	if(..())
 		return
 	if(issilicon(usr) && !allow_silicons)
-		usr << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
+		to_chat(usr, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return
 
 	usr.set_machine(src)
@@ -135,7 +135,7 @@
 	if(href_list["move"])
 		if(!shuttle) return
 		if(!allowed(usr))
-			usr << "<font color='red'>Access denied.</font>"
+			to_chat(usr, "<font color='red'>Access denied.</font>")
 			return
 
 		if(!selected_port && shuttle.docking_ports.len >= 2)
@@ -156,7 +156,7 @@
 		if(!shuttle) return
 		if(!shuttle.linked_area) return
 		if(!allowed(usr))
-			usr << "<font color='red'>Access denied.</font>"
+			to_chat(usr, "<font color='red'>Access denied.</font>")
 			return
 
 		var/list/ports = list()
@@ -172,13 +172,13 @@
 
 		if(S)
 			S.link_to_shuttle(shuttle)
-			usr << "Successfully linked [capitalize(shuttle.name)] to the port."
+			to_chat(usr, "Successfully linked [capitalize(shuttle.name)] to the port.")
 			return src.updateUsrDialog()
-		usr << "No docking ports found."
+		to_chat(usr, "No docking ports found.")
 
 	if(href_list["select"])
 		if(!allowed(usr))
-			usr << "<font color='red'>Access denied.</font>"
+			to_chat(usr, "<font color='red'>Access denied.</font>")
 			return
 		var/obj/structure/docking_port/A = locate(href_list["select"]) in all_docking_ports
 		if(!A)
@@ -188,7 +188,7 @@
 		src.updateUsrDialog()
 	if(href_list["link_to_shuttle"])
 		if(!allowed(usr))
-			usr << "<font color='red'>Access denied.</font>"
+			to_chat(usr, "<font color='red'>Access denied.</font>")
 			return
 		var/list/L = list()
 		for(var/datum/shuttle/S in shuttles)
@@ -219,13 +219,13 @@
 				return
 			else
 				link_to(L[choice])
-			usr << "Successfully linked [src] to [capitalize(S.name)]!"
+			to_chat(usr, "Successfully linked [src] to [capitalize(S.name)]!")
 			src.updateUsrDialog()
 
 
 	if(href_list["admin_link_to_shuttle"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		var/list/L = list()
@@ -246,14 +246,14 @@
 
 	if(href_list["admin_unlink_shuttle"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		shuttle = null
 
 	if(href_list["admin_toggle_lockdown"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		if(!shuttle.lockdown)
@@ -271,35 +271,35 @@
 		src.updateUsrDialog()
 	if(href_list["admin_toggle_select_all"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		if(allow_selecting_all)
 			allow_selecting_all = 0
-			usr << "Now selecting from shuttle's docking ports."
+			to_chat(usr, "Now selecting from shuttle's docking ports.")
 		else
 			allow_selecting_all = 1
-			usr << "Now selecting from all existing docking ports."
+			to_chat(usr, "Now selecting from all existing docking ports.")
 
 		src.updateUsrDialog()
 	if(href_list["admin_reset"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		shuttle.initialize()
-		usr << "Shuttle's list of travel destinations has been reset"
+		to_chat(usr, "Shuttle's list of travel destinations has been reset")
 	if(href_list["admin_toggle_silicon_use"])
 		if(!isAdminGhost(usr))
-			usr << "You must be an admin for this"
+			to_chat(usr, "You must be an admin for this")
 			return
 
 		if(allow_silicons)
 			allow_silicons = 0
-			usr << "Silicons can no longer use [src]."
+			to_chat(usr, "Silicons can no longer use [src].")
 		else
 			allow_silicons = 1
-			usr << "Silicons may now use [src] again."
+			to_chat(usr, "Silicons may now use [src] again.")
 
 		src.updateUsrDialog()
 
@@ -320,6 +320,6 @@
 /obj/machinery/computer/shuttle_control/emag(mob/user as mob)
 	..()
 	src.req_access = list()
-	usr << "You disable the console's access requirement."
+	to_chat(usr, "You disable the console's access requirement.")
 
 #undef MAX_SHUTTLE_NAME_LEN

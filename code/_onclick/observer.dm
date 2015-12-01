@@ -28,10 +28,10 @@
 			if(!targetloc)
 				return
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
-			usr << "<span class='sinister'>A dark forcefield prevents you from entering the area.<span>"
+			to_chat(usr, "<span class='sinister'>A dark forcefield prevents you from entering the area.<span>")
 		else
 			if(targetloc.holy && ((src.invisibility == 0) || iscult(src)))
-				usr << "<span class='warning'>These are sacred grounds, you cannot go there!</span>"
+				to_chat(usr, "<span class='warning'>These are sacred grounds, you cannot go there!</span>")
 			else
 				forceEnter(targetloc)
 
@@ -99,13 +99,13 @@
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user as mob)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts

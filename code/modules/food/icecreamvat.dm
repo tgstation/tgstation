@@ -36,9 +36,9 @@
 			user.drop_item(I, src)
 			src.beaker = I
 			. = 1
-			user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You add the [I.name] to the [src.name].</span>")
 			src.updateUsrDialog()
-		else user << "<span class='warning'>The [src.name] already has a beaker.</span>"
+		else to_chat(user, "<span class='warning'>The [src.name] already has a beaker.</span>")
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/icecream))
 		if(!I.reagents.has_reagent("sprinkles"))
 			I.reagents.add_reagent("sprinkles",1)
@@ -58,7 +58,8 @@
 	return attack_hand(user)
 
 /obj/machinery/cooking/icemachine/attack_hand(mob/user)
-	if(istype(user,/mob/dead/observer))	user << "Your ghostly hand goes straight through."
+	if(istype(user,/mob/dead/observer))
+		to_chat(user, "Your ghostly hand goes straight through.")
 	user.set_machine(src)
 	var/dat = ""
 	if(src.beaker)

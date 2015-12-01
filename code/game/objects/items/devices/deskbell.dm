@@ -53,7 +53,7 @@
 
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(anchored)
-			user << "You need to unwrench \the [src] first."
+			to_chat(user, "You need to unwrench \the [src] first.")
 			return
 		var/obj/item/device/deskbell_assembly/A = new /obj/item/device/deskbell_assembly(get_turf(src))
 		A.frequency = frequency
@@ -93,7 +93,7 @@
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
 		if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/carbon/monkey))
 			if(anchored)
-				user << "You must undo the securing bolts before you can pick it up."
+				to_chat(user, "You must undo the securing bolts before you can pick it up.")
 				return
 			if( !user.get_active_hand() )		//if active hand is empty
 				src.loc = user
@@ -150,7 +150,7 @@
 
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(anchored)
-			user << "You need to unwrench \the [src] first."
+			to_chat(user, "You need to unwrench \the [src] first.")
 			return
 		var/obj/item/device/deskbell_assembly/A = new /obj/item/device/deskbell_assembly(get_turf(src))
 		A.frequency = frequency
@@ -275,7 +275,7 @@
 		switch(build_step)
 			if(0)
 				if(istype(W,/obj/item/weapon/wrench))
-					user << "<span class='notice'>You deconstruct \the [src].</span>"
+					to_chat(user, "<span class='notice'>You deconstruct \the [src].</span>")
 					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 					//new /obj/item/stack/sheet/metal( get_turf(src.loc), 2)
 					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
@@ -293,12 +293,12 @@
 					update_icon()
 					return
 				if(istype(W,/obj/item/device/assembly/signaler))
-					user << "<span class='warning'>You must add wires first.</span>"
+					to_chat(user, "<span class='warning'>You must add wires first.</span>")
 					return
 			if(1)
 				if(istype(W,/obj/item/weapon/wirecutters))
 					if(has_signaler)
-						user << "<span class='warning'>You must remove the signaler first.</span>"
+						to_chat(user, "<span class='warning'>You must remove the signaler first.</span>")
 						return
 					new /obj/item/stack/cable_coil(get_turf(src),1)
 					user.visible_message(
@@ -318,7 +318,7 @@
 					D.code = code
 					if(final_name)
 						D.name = final_name
-					user << "<span class='notice'>You finish \the [D].</span>"
+					to_chat(user, "<span class='notice'>You finish \the [D].</span>")
 					qdel(src)
 					return
 				if(istype(W,/obj/item/device/assembly/signaler) && !has_signaler)
@@ -336,7 +336,7 @@
 
 /obj/item/device/deskbell_assembly/attack_self(mob/living/carbon/user)
 	if(has_signaler)
-		user << "<span class='notice'>You remove the signaling device.</span>"
+		to_chat(user, "<span class='notice'>You remove the signaling device.</span>")
 		var/obj/item/device/assembly/signaler/S = new /obj/item/device/assembly/signaler(get_turf(src))
 		S.frequency = frequency
 		if(code != 0)

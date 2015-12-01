@@ -13,7 +13,7 @@
 		if ("me")
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					to_chat(src, "You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -195,7 +195,7 @@
 				playsound(get_turf(src), 'sound/voice/biamthelaw.ogg', 50, 0)
 				m_type = HEARABLE
 			else
-				src << "You are not THE LAW, pal."
+				to_chat(src, "You are not THE LAW, pal.")
 
 		if("halt")
 			if (istype(module,/obj/item/weapon/robot_module/security))
@@ -204,7 +204,7 @@
 				playsound(get_turf(src), 'sound/voice/halt.ogg', 50, 0)
 				m_type = HEARABLE
 			else
-				src << "You are not security."
+				to_chat(src, "You are not security.")
 
 		/*
 		if ("fart")
@@ -216,9 +216,9 @@
 		*/
 
 		if ("help")
-			src << "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt"
+			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt")
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if ((message && src.stat == 0))
 		if (m_type & 1)

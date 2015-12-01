@@ -48,7 +48,7 @@
 		else
 			visible_message("<span class='danger'>[src] blocks [O] with its shield! </span>")
 	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 

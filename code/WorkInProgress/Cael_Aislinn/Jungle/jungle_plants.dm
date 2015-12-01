@@ -30,12 +30,12 @@
 	if(istype(I, /obj/item/weapon/hatchet) && !stump)
 		if(indestructable)
 			//this bush marks the edge of the map, you can't destroy it
-			user << "<span class='warning'>You flail away at the undergrowth, but it's too thick here.</span>"
+			to_chat(user, "<span class='warning'>You flail away at the undergrowth, but it's too thick here.</span>")
 		else
 			user.visible_message("<span class='danger'><b>[user] begins clearing away [src].</b>","<span class='warning'>You begin clearing away [src].</span></span>")
 			spawn(rand(15,30))
 				if(get_dist(user,src) < 2)
-					user << "<span class='notice'>You clear away [src].</span>"
+					to_chat(user, "<span class='notice'>You clear away [src].</span>")
 					var/obj/item/stack/sheet/wood/W = new(src.loc)
 					W.amount = rand(3,15)
 					if(prob(50))
@@ -102,7 +102,7 @@ var/jungle_plants_init = 0
 /obj/structure/jungle_plant/attack_hand(var/mob/user as mob)
 	if(fruits_left > 0)
 		fruits_left--
-		user << "<span class='notice'>You pick a fruit off [src].</span>"
+		to_chat(user, "<span class='notice'>You pick a fruit off [src].</span>")
 
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit/J = new (src.loc)
 		J.potency = plant_strength
@@ -116,4 +116,4 @@ var/jungle_plants_init = 0
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
 		overlays += fruit_overlay
 	else
-		user << "<span class='warning'>There are no fruit left on [src].</span>"
+		to_chat(user, "<span class='warning'>There are no fruit left on [src].</span>")

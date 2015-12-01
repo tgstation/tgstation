@@ -53,7 +53,7 @@
 	if(..())
 		return 1
 	if(busy)
-		user <<"<span class='notice'>The [src] is currently busy, please wait until the current operation is finished.</span>"
+		to_chat(user, "<span class='notice'>The [src] is currently busy, please wait until the current operation is finished.</span>")
 		return
 	if(istype(O, /obj/item/device/device_analyser))
 		var/obj/item/device/device_analyser/DA = O
@@ -72,7 +72,7 @@
 					if(!AddDesign(loop_design, DA.loaded_designs, user))
 						break
 					i++
-				user << "Sucessfully transferred [i] design\s."
+				to_chat(user, "Sucessfully transferred [i] design\s.")
 				return 1
 		return
 	if(istype(O, /obj/item/device/pda))
@@ -93,20 +93,20 @@
 	for(var/datum/design/mechanic_design/MD in research_queue)
 		if(MD.build_path == design.build_path)
 			design_list -= design
-			user <<"<span class='notice'>The [design.name] is already loaded onto \the [src]!</span>"
+			to_chat(user, "<span class='notice'>The [design.name] is already loaded onto \the [src]!</span>")
 			return
 	for(var/datum/design/mechanic_design/MD in ready_queue)
 		if(MD.build_path == design.build_path)
 			design_list -= design
-			user <<"<span class='notice'>The [design.name] has already been researched by \the [src]!</span>"
+			to_chat(user, "<span class='notice'>The [design.name] has already been researched by \the [src]!</span>")
 			return
 	if(research_queue.len >= max_queue_len)
-		user <<"<span class='notice'>The [src]'s research queue is full. Research some designs first before adding more.</span>"
+		to_chat(user, "<span class='notice'>The [src]'s research queue is full. Research some designs first before adding more.</span>")
 		return
 	if(design in design_list) //let's make sure, here
 		research_queue += design
 		design_list -= design
-		user <<"<span class='notice'>The [design.name] was successfully loaded onto the [src].</span>"
+		to_chat(user, "<span class='notice'>The [design.name] was successfully loaded onto the [src].</span>")
 		return 1
 	return
 

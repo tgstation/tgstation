@@ -20,7 +20,7 @@
 	if(!is_type_in_list(AM, list(/obj/item/pipe, /obj/item/pipe_meter, /obj/item/pipe_gsensor, /obj/structure/disposalconstruct)))
 		return 1
 
-	user << "Destroying Pipe..."
+	to_chat(user, "Destroying Pipe...")
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, AM, 5))
 		return 1
@@ -149,7 +149,7 @@
 	if(!isturf(A))
 		return
 
-	user << "Building gas sensor..."
+	to_chat(user, "Building gas sensor...")
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, A, 20))
 		return 1
@@ -166,7 +166,7 @@
 	if(!isturf(A))
 		return
 
-	user << "Building pipe meter..."
+	to_chat(user, "Building pipe meter...")
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, A, 20))
 		return 1
@@ -333,7 +333,7 @@
 		master.update_options_menu()
 
 /datum/rcd_schematic/pipe/attack(var/atom/A, var/mob/user)
-	user << "Building Pipes ..."
+	to_chat(user, "Building Pipes ...")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, A, 20))
 		return 1
@@ -377,7 +377,7 @@
 	return "<a href='?src=\ref[master.interface];set_dir=[dir]'[selected] title='[title]'><img src='RPD_D_[pipe_id]_[dir].png'/></a>"
 
 /datum/rcd_schematic/pipe/disposal/attack(var/atom/A, var/mob/user)
-	user << "Building Pipes ..."
+	to_chat(user, "Building Pipes ...")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, A, 20))
 		return 1

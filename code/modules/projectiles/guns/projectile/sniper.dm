@@ -23,12 +23,13 @@
 /obj/item/weapon/gun/projectile/hecate/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(harm_labeled >= min_harm_label)
-		user << "<span class='warning'>A label sticks the trigger to the trigger guard!</span>" //Such a new feature, the player might not know what's wrong if it doesn't tell them.
+		to_chat(user, "<span class='warning'>A label sticks the trigger to the trigger guard!</span>")//Such a new feature, the player might not know what's wrong if it doesn't tell them.
+
 		return
 	if(wielded)
 		Fire(A,user,params, "struggle" = struggle)
 	else
-		user << "<span class='warning'>You must dual-wield \the [src] before you can fire it!</span>"
+		to_chat(user, "<span class='warning'>You must dual-wield \the [src] before you can fire it!</span>")
 
 /obj/item/weapon/gun/projectile/hecate/update_wield(mob/user)
 	if(wielded)

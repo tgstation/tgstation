@@ -30,13 +30,13 @@
 
 			remove_file(datum/computer/R)
 				if(holder && !holder.read_only || !R)
-//					world << "Removing file [R]. File_used: [src.holder.file_used]"
+//					to_chat(world, "Removing file [R]. File_used: [src.holder.file_used]")
 					src.contents.Remove(R)
 					src.holder.file_used -= src.size
 					src.size -= R.size
 					src.holder.file_used += src.size
 					src.holder.file_used = max(src.holder.file_used, 0)
-//					world << "Removed file [R]. File_used: [src.holder.file_used]"
+//					to_chat(world, "Removed file [R]. File_used: [src.holder.file_used]")
 					return 1
 				return 0
 	file
@@ -102,7 +102,7 @@
 				return 1
 
 			if(!(holder in src.master.contents))
-				//world << "Holder [holder] not in [master] of prg:[src]"
+//				to_chat(world, "Holder [holder] not in [master] of prg:[src]")
 				if(master.active_program == src)
 					master.active_program = null
 				return 1
@@ -181,7 +181,7 @@
 			if(istype(newholder.loc,/obj/machinery/computer2))
 				src.master = newholder.loc
 
-			//world << "Setting [src.holder] to [newholder]"
+//			to_chat(world, "Setting [src.holder] to [newholder]")
 			src.holder = newholder
 			return 1
 

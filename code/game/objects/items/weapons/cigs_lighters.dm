@@ -42,11 +42,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	..()
 	switch(lit)
 		if(1)
-			user << "The match is lit."
+			to_chat(user, "The match is lit.")
 		if(0)
-			user << "The match is unlit and ready to be used."
+			to_chat(user, "The match is unlit and ready to be used.")
 		if(-1)
-			user << "The match is burnt."
+			to_chat(user, "The match is burnt.")
 
 //Also updates the name, the damage and item_state for good measure
 /obj/item/weapon/match/update_icon()
@@ -168,7 +168,8 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 /obj/item/clothing/mask/cigarette/examine(mob/user)
 
 	..()
-	user << "\The [src] is [lit ? "":"un"]lit" //Shared with all cigarette sub-types
+	to_chat(user, "\The [src] is [lit ? "":"un"]lit")//Shared with all cigarette sub-types
+
 
 //Also updates the name, the damage and item_state for good measure
 /obj/item/clothing/mask/cigarette/update_icon()
@@ -210,7 +211,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	..()
 
 	if(lit) //The cigarette is already lit
-		user << "<span class='warning'>\The [src] is already lit.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is already lit.</span>")
 		return //Don't bother
 
 	//Items with special messages go first
@@ -251,23 +252,23 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		if(glass.reagents.has_reagent("sacid") || glass.reagents.has_reagent("pacid")) //Dumping into acid, a dumb idea
 			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
-			user << "<span class='warning'>Half of \the [src] dissolves with a nasty fizzle as you dip it into \the [glass].</span>"
+			to_chat(user, "<span class='warning'>Half of \the [src] dissolves with a nasty fizzle as you dip it into \the [glass].</span>")
 			user.drop_item(src)
 			qdel(src)
 			return
 		if(glass.reagents.has_reagent("water") && lit) //Dumping a lit cigarette into water, the result is obvious
 			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
-			user << "<span class='warning'>\The [src] fizzles as you dip it into \the [glass].</span>"
+			to_chat(user, "<span class='warning'>\The [src] fizzles as you dip it into \the [glass].</span>")
 			user.drop_item(src)
 			qdel(src)
 			return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//If reagents were transfered, show the message
-			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
+			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
 		else	//If not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume) //Only show an explicit message if the beaker was empty, you can't tell a cigarette is "full"
-				user << "<span class='warning'>\The [glass] is empty.</span>"
+				to_chat(user, "<span class='warning'>\The [glass] is empty.</span>")
 				return
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights \the [src].")
@@ -275,7 +276,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		return //"Normal" situations were already handled in attackby, don't show a message
 
 	if(reagents.get_reagent_amount("water")) //The cigarette was dipped into water, it's useless now
-		usr << "<span class='warning'>You fail to light \the [src]. It appears to be wet.</span>"
+		to_chat(usr, "<span class='warning'>You fail to light \the [src]. It appears to be wet.</span>")
 		return
 
 	if(reagents.get_reagent_amount("plasma")) //Plasma explodes when exposed to fire
@@ -330,7 +331,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		lit = 0 //Actually unlight the cigarette so that the lighting can update correctly
 		update_brightness()
 		if(ismob(loc))
-			M << "<span class='notice'>Your [name] goes out.</span>"
+			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 			M.u_equip(src, 0)	//Un-equip it so the overlays can update
 		qdel(src)
 		return
@@ -430,7 +431,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	if(istype(W, /obj/item/weapon/match))
 		..()
 	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>"
+		to_chat(user, "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>")
 */
 
 ///////////////////
@@ -553,7 +554,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	if(istype(W, /obj/item/weapon/match))
 		..()
 	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such means.</span>"
+		to_chat(user, "<span class='notice'>\The [src] straight out REFUSES to be lit by such means.</span>")
 */
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
@@ -605,7 +606,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 /obj/item/weapon/lighter/examine(mob/user)
 
 	..()
-	user << "The lighter is [lit ? "":"un"]lit"
+	to_chat(user, "The lighter is [lit ? "":"un"]lit")
 
 //Also updates the name, the damage and item_state for good measure
 /obj/item/weapon/lighter/update_icon()

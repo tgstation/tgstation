@@ -27,33 +27,33 @@
 /obj/structure/bed/chair/vehicle/janicart/examine(mob/user)
 	..()
 	if(in_range(src, user) && reagents.has_reagent("lube"))
-		user << "<span class='warning'> Something is very off about this water.</span>"
+		to_chat(user, "<span class='warning'> Something is very off about this water.</span>")
 	switch(health)
 		if(75 to 99)
-			user << "<span class='info'>It appears slightly dented.</span>"
+			to_chat(user, "<span class='info'>It appears slightly dented.</span>")
 		if(40 to 74)
-			user << "<span class='warning'>It appears heavily dented.</span>"
+			to_chat(user, "<span class='warning'>It appears heavily dented.</span>")
 		if(1 to 39)
-			user << "<span class='warning'>It appears severely dented.</span>"
+			to_chat(user, "<span class='warning'>It appears severely dented.</span>")
 		if((INFINITY * -1) to 0)
-			user << "<span class='danger'>It appears completely unsalvageable</span>"
+			to_chat(user, "<span class='danger'>It appears completely unsalvageable</span>")
 	if(mybag)
-		user << "\A [mybag] is hanging on \the [nick]."
+		to_chat(user, "\A [mybag] is hanging on \the [nick].")
 
 /obj/structure/bed/chair/vehicle/janicart/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/mecha_parts/janicart_upgrade) && !upgraded && !destroyed)
 		user.drop_item(W)
 		qdel(W)
-		user << "<span class='notice'>You upgrade \the [nick].</span>"
+		to_chat(user, "<span class='notice'>You upgrade \the [nick].</span>")
 		upgraded = 1
 		name = "upgraded [name]"
 		icon_state = "pussywagon_upgraded"
 	else if(istype(W, /obj/item/weapon/storage/bag/trash))
 		if(mybag)
-			user << "<span class='warning'>There's already a [W.name] on \the [nick]!</span>"
+			to_chat(user, "<span class='warning'>There's already a [W.name] on \the [nick]!</span>")
 			return
-		user << "<span class='notice'>You hook \the [W] onto \the [nick].</span>"
+		to_chat(user, "<span class='notice'>You hook \the [W] onto \the [nick].</span>")
 		user.drop_item(W, src)
 		mybag = W
 
@@ -61,10 +61,10 @@
 	if(istype(M))
 		if(reagents.total_volume >= 2)
 			reagents.trans_to(M, 3)
-			user << "<span class='notice'>You wet the mop in \the [nick].</span>"
+			to_chat(user, "<span class='notice'>You wet the mop in \the [nick].</span>")
 			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 		if(reagents.total_volume < 1)
-			user << "<span class='notice'>\The [nick] is out of water!</span>"
+			to_chat(user, "<span class='notice'>\The [nick] is out of water!</span>")
 	return 1
 
 /obj/structure/bed/chair/vehicle/janicart/attack_hand(mob/user)
@@ -112,5 +112,5 @@
 							cleaned_human.shoes.clean_blood()
 							cleaned_human.update_inv_shoes(0)
 						cleaned_human.clean_blood()
-						cleaned_human << "<span class='warning'>[src] cleans your face!</span>"
+						to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 	return

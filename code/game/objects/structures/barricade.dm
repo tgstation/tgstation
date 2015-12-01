@@ -24,15 +24,15 @@
 	..()
 	//Switch most likely can't take inequalities, so here's that if block
 	if(health >= initial(health)) //Sanity
-		user << "It's in perfect shape, not even a scratch."
+		to_chat(user, "It's in perfect shape, not even a scratch.")
 	else if(health >= 0.8*initial(health))
-		user << "It has a few splinters and a plank is broken."
+		to_chat(user, "It has a few splinters and a plank is broken.")
 	else if(health >= 0.5*initial(health))
-		user << "It has a fair amount of splinters and broken plants."
+		to_chat(user, "It has a fair amount of splinters and broken plants.")
 	else if(health >= 0.2*initial(health))
-		user << "It has most of its planks broken, you can barely tell how much weight the support beams are bearing."
+		to_chat(user, "It has most of its planks broken, you can barely tell how much weight the support beams are bearing.")
 	else
-		user << "It has only one or two planks still in shape, it's a miracle it's even standing."
+		to_chat(user, "It has only one or two planks still in shape, it's a miracle it's even standing.")
 
 //Allows us to quickly check if we should break the barricade, can handle not having an user
 //Sound is technically deprecated, but barricades should really have a build sound

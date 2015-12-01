@@ -71,7 +71,7 @@
 		busy = 1
 		if(do_after(user, src, 40))
 			busy = 0
-			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>"
+			to_chat(user, "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
 		else
 			busy = 0
 		return
@@ -82,7 +82,7 @@
 		if(!(P.diggables & DIG_ROCKS))
 			return
 
-		user << "<span class='rose'>You start [P.drill_verb] [src].</span>"
+		to_chat(user, "<span class='rose'>You start [P.drill_verb] [src].</span>")
 
 		busy = 1
 
@@ -90,13 +90,13 @@
 
 			busy = 0
 
-			user << "<span class='notice'>You finish [P.drill_verb] [src].</span>"
+			to_chat(user, "<span class='notice'>You finish [P.drill_verb] [src].</span>")
 			excavation_level += P.excavation_amount
 
 			if(excavation_level > 100)
 				//failure
 				src.visible_message("<span class='danger'>\The [src] suddenly crumbles away.</span>")
-				user << "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>"
+				to_chat(user, "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>")
 				returnToPool(src)
 				return
 
@@ -111,7 +111,7 @@
 						if(X.my_effect)
 							X.my_effect.artifact_id = artifact_find.artifact_id
 				else
-					user << "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>"
+					to_chat(user, "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>")
 				returnToPool(src)
 		else
 			busy = 0

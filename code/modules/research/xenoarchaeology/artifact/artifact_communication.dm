@@ -16,7 +16,7 @@
 	if(istype(W,/obj/item/commstone))
 		if((W in allstones) && remaining < 6)
 			user.drop_item(W, src)
-			user << "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>"
+			to_chat(user, "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>")
 	..()
 
 /obj/machinery/communication/attack_ghost(mob/user as mob)
@@ -30,7 +30,7 @@
 	if(contents.len)
 		var/obj/item/commstone/stone = contents[1]
 		user.put_in_hands(stone)
-		user << "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>"
+		to_chat(user, "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>")
 		return
 	if(remaining)
 		var/obj/item/commstone/stone = new(remaining)
@@ -38,17 +38,17 @@
 		stone.commdevice = src
 		allstones += stone
 		remaining--
-		user << "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>"
+		to_chat(user, "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>")
 		return
 
 /obj/machinery/communication/examine(mob/user as mob)
 	..()
 	if(remaining)
-		user << "<span class='info'>The device's slots still apears to hold [remaining] stone\s."
+		to_chat(user, "<span class='info'>The device's slots still apears to hold [remaining] stone\s.")
 	else
-		user << "<span class='info'>The device no longer has any stones in any of its holders."
+		to_chat(user, "<span class='info'>The device no longer has any stones in any of its holders.")
 	if(stat & NOPOWER)
-		user << "<span class='info'>It seems the machine is currently dark, perhaps it would activate when anchored into a powered area."
+		to_chat(user, "<span class='info'>It seems the machine is currently dark, perhaps it would activate when anchored into a powered area.")
 
 /obj/machinery/communication/Destroy()
 	for(var/stone in contents)
@@ -80,7 +80,7 @@
 /obj/item/commstone/examine(mob/user as mob)
 	..()
 	if(!commdevice || (commdevice.stat & NOPOWER))
-		user << "<span class='info'>It seems to have lost its luster, perhaps the device it is connected to isn't functional."
+		to_chat(user, "<span class='info'>It seems to have lost its luster, perhaps the device it is connected to isn't functional.")
 
 
 /obj/item/commstone/update_icon()

@@ -13,7 +13,7 @@
 
 /obj/machinery/computer/security/advanced/attack_hand(var/mob/user as mob)
 	if (src.z > 6)
-		user << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 	if(stat & (NOPOWER|BROKEN))	return
 	adv_camera.show(user, (current ? current.z : z))
@@ -54,8 +54,8 @@ var/global/datum/interactive_map/camera/adv_camera = new
 	z = text2num(z)
 	if (!z) z = mob.z
 	if (!(z in zlevels))
-		mob << "zlevel([z]) good levels: [list2text(zlevels, " ")]"
-		mob << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
+		to_chat(mob, "zlevel([z]) good levels: [list2text(zlevels, " ")]")
+		to_chat(mob, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 
 	if (src.interfaces)

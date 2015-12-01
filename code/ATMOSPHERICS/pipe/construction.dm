@@ -409,7 +409,7 @@ var/global/list/nlist = list( \
 		if(M.piping_layer != src.piping_layer && !((M.pipe_flags & ALL_LAYER) || (pipe_type in unstackable_pipes)))
 			continue
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "<span class='warning'>There is already a pipe at that location.</span>"
+			to_chat(user, "<span class='warning'>There is already a pipe at that location.</span>")
 			return 1
 	// no conflicts found
 
@@ -539,11 +539,11 @@ var/global/list/nlist = list( \
 			pipe = P
 			break
 	if(!pipe)
-		user << "<span class='warning'>You need to fasten it to a pipe</span>"
+		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")
 		return 1
 	new/obj/machinery/meter(src.loc, pipe)
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe</span>"
+	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe</span>")
 	del(src)
 
 /obj/item/pipe_meter/dropped()
@@ -571,5 +571,5 @@ var/global/list/nlist = list( \
 		return ..()
 	new/obj/machinery/air_sensor( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the gas sensor</span>"
+	to_chat(user, "<span class='notice'>You have fastened the gas sensor</span>")
 	del(src)

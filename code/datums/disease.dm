@@ -55,10 +55,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/proc/stage_act()
 	age++
 	var/cure_present = has_cure()
-	//world << "[cure_present]"
+//	to_chat(world, "[cure_present]")
 
 	if(carrier&&!cure_present)
-		//world << "[affected_mob] is carrier"
+//		to_chat(world, "[affected_mob] is carrier")
 		return
 
 	spread = (cure_present?"Remissive":initial_spread)
@@ -108,7 +108,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return 0
 
 /datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
-	//world << "Disease [src] proc spread was called from holder [source]"
+//	to_chat(world, "Disease [src] proc spread was called from holder [source]")
 
 	// If we're overriding how we spread, say so here
 	var/how_spread = spread_type
@@ -169,7 +169,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 				spread_type = CONTACT_GENERAL
 			affected_mob = null
 	if(!affected_mob) //the virus is in inanimate obj
-//		world << "[src] longevity = [longevity]"
+//		to_chat(world, "[src] longevity = [longevity]")
 
 		if(prob(70))
 			if(--longevity<=0)

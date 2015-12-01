@@ -20,16 +20,16 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("<span class='notice'>You are now hiding.</span>")
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "<B>[src] tries to hide itself!</B>"
+				to_chat(O, "<B>[src] tries to hide itself!</B>")
 	else
 		layer = MOB_LAYER
-		src << text("<span class='notice'>You have stopped hiding.</span>")
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "[src] slowly peeks up..."
+				to_chat(O, "[src] slowly peeks up...")
 	updateicon()
 
 /mob/living/silicon/robot/mommi/verb/park()

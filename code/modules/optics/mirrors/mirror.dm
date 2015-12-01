@@ -61,7 +61,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, -90)
 	kill_all_beams()
@@ -74,7 +74,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	kill_all_beams()

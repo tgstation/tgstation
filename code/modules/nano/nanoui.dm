@@ -484,7 +484,8 @@ nanoui is used to open and update nano browser uis
 
 	var/list/send_data = get_send_data(data)
 
-	//user << list2json(data) // used for debugging
+//	to_chat(user, list2json(data))// used for debugging
+
 	user << output(list2params(list(list2json(send_data))),"[window_id].browser:receiveUpdateData")
 
  /**
@@ -510,7 +511,7 @@ nanoui is used to open and update nano browser uis
 		if(!newz || isnull(newz))
 			return 0
 		if(newz < 1 || newz > 6 || newz == 2)
-			usr << "<span class='danger'>Unable to establish a connection</span>"
+			to_chat(usr, "<span class='danger'>Unable to establish a connection</span>")
 			return 0
 		if(newz != map_z_level)
 			set_map_z_level(newz)

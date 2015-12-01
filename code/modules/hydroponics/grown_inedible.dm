@@ -62,7 +62,7 @@
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-			user << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+			to_chat(user, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
 		qdel(src)
 		return
 
@@ -81,8 +81,8 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
+	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
 
 /obj/item/weapon/grown/novaflower
 	plantname = "novaflowers"
@@ -129,14 +129,14 @@
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(istype(user))
 		if(!user.gloves)
-			user << "<span class='warning'>The nettle burns your bare hand!</span>"
+			to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
 				user.UpdateDamageIcon()
 	else
 		user.take_organ_damage(0,force)
-		user << "<span class='warning'>The nettle burns your bare hand!</span>"
+		to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
@@ -145,7 +145,7 @@
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
+		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		user.drop_item(src)
 		qdel(src)
 
@@ -175,7 +175,7 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
@@ -189,12 +189,12 @@
 			user.take_organ_damage(0,force)
 		if(prob(50))
 			user.Paralyse(5)
-			user << "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>"
+			to_chat(user, "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>")
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>"
+		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
@@ -215,7 +215,7 @@
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
-		user << "All the leaves have fallen off the deathnettle from violent whacking."
+		to_chat(user, "All the leaves have fallen off the deathnettle from violent whacking.")
 		user.drop_item(src)
 		qdel(src)
 
@@ -237,7 +237,7 @@
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large/ritual))
-		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
+		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.drop_item(src)
 		qdel(src)

@@ -67,5 +67,5 @@
 					if(FD && FD.density)
 						FD.open(1)
 			else
-				usr << "<span class='warning'>You fail to open \the [D].</span>"
+				to_chat(usr, "<span class='warning'>You fail to open \the [D].</span>")
 			return

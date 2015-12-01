@@ -77,9 +77,10 @@
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		T.send_speech(speech, 7, "R")
-		src << "<i><span class='[speech.render_wrapper_classes()]'>Holopad transmitted, <span class='name'>[real_name]</span> [speech.render_message()]</span></i>"//The AI can "hear" its own message.
+		to_chat(src, "<i><span class='[speech.render_wrapper_classes()]'>Holopad transmitted, <span class='name'>[real_name]</span> [speech.render_message()]</span></i>")//The AI can "hear" its own message.
+
 	else
-		src << "No holopad connected."
+		to_chat(src, "No holopad connected.")
 	return
 
 /*
@@ -146,11 +147,11 @@ var/const/VOX_DELAY = 600
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.control_disabled)
-			usr << "Wireless control is disabled!"
+			to_chat(usr, "Wireless control is disabled!")
 			return
 
 	if(announcing_vox > world.time)
-		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -179,12 +180,12 @@ var/const/VOX_DELAY = 600
 		if(word in vox_wordlen)
 			wordlen=vox_wordlen[word]
 		if(total_word_len+wordlen>50)
-			src << "<span class='notice'>There are too many words in this announcement.</span>"
+			to_chat(src, "<span class='notice'>There are too many words in this announcement.</span>")
 			return
 		total_word_len+=wordlen
 
 	if(incorrect_words.len)
-		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
+		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
 		return
 
 	announcing_vox = world.time + VOX_DELAY
@@ -258,7 +259,7 @@ var/list/vox_units=list(
 			if(M.client)
 				var/turf/T = get_turf(M)
 				if(T.z == z_level)
-					M << voice
+					to_chat(M, voice)
 	else
-		only_listener << voice
+		to_chat(only_listener, voice)
 	return 1

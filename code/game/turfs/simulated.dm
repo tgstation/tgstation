@@ -25,7 +25,8 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "<span class='warning'>Movement is admin-disabled.</span>" //This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+
 		return
 
 	if (istype(A,/mob/living/carbon))
@@ -72,7 +73,7 @@
 					if(H.m_intent == "run" && prob(5))
 						H.stop_pulling()
 						step(H, H.dir)
-						H << "<span class='notice'>You tripped over your hair!</span>"
+						to_chat(H, "<span class='notice'>You tripped over your hair!</span>")
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						H.Stun(4)
 						H.Weaken(5)

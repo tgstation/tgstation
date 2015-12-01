@@ -49,7 +49,7 @@
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
 		var/newlevel = 	round(charging.percent() * 4.0 / 99)
-		//world << "nl: [newlevel]"
+//		to_chat(world, "nl: [newlevel]")
 
 		if(chargelevel != newlevel)
 			overlays.len = 0
@@ -60,9 +60,9 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	user << "There's [charging ? "a" : "no"] cell in the charger."
+	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 	if(charging)
-		user << "Current charge: [charging.charge]"
+		to_chat(user, "Current charge: [charging.charge]")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -72,11 +72,11 @@
 		return 1
 	if(istype(W, /obj/item/weapon/cell) && anchored)
 		if(charging)
-			user << "<span class='warning'>There is already a cell in [src].</span>"
+			to_chat(user, "<span class='warning'>There is already a cell in [src].</span>")
 			return
 		else
 			if(areaMaster.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='warning'>[src] blinks red as you try to insert the cell!</span>"
+				to_chat(user, "<span class='warning'>[src] blinks red as you try to insert the cell!</span>")
 				return
 
 			user.drop_item(W, src)
@@ -116,7 +116,7 @@
 
 /obj/machinery/cell_charger/wrenchAnchor(mob/user)
 	if(charging)
-		user << "<span class='warning'>Remove the cell first!</span>"
+		to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 		return
 	..()
 
@@ -132,7 +132,7 @@
 
 
 /obj/machinery/cell_charger/process()
-	//world << "ccpt [charging] [stat]"
+//	to_chat(world, "ccpt [charging] [stat]")
 	if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 		return
 

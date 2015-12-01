@@ -48,10 +48,10 @@
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(planted && myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
 			myseed.yield += 1
-			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
+//			to_chat(world, "Yield increased by 1, from 0, to a total of [myseed.yield]")
 		else if (planted && (prob(1/(myseed.yield * myseed.yield) *100)))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			myseed.yield += 1
-			//world << "Yield increased by 1, to a total of [myseed.yield]"
+//			to_chat(world, "Yield increased by 1, to a total of [myseed.yield]")
 	else
 		..()
 		return
@@ -462,7 +462,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		updateicon()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawned a <span class='notice'>[myseed.plantname]!</span></span>")
 	else
-		usr << "The few weeds in the [src] seem to react, but only for a moment..."
+		to_chat(usr, "The few weeds in the [src] seem to react, but only for a moment...")
 	return
 
 
@@ -483,7 +483,8 @@ obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm,
 //		spawn(10)
 //		new /obj/effect/alien/spaceworm(loc)
 	else
-		usr << "The pests seem to behave oddly, but quickly settle down..." //Modified to give a better idea of what's happening when you inject mutagen. There's still nothing proper to spawn here though. -Cheridan
+		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")//Modified to give a better idea of what's happening when you inject mutagen. There's still nothing proper to spawn here though. -Cheridan
+
 	return
 
 
@@ -502,7 +503,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			O.reagents.remove_reagent("water", b_amount)
 			waterlevel += b_amount
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-			user << "You fill the [src] with [b_amount] units of water."
+			to_chat(user, "You fill the [src] with [b_amount] units of water.")
 
 	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 			toxic -= round(b_amount/4)
@@ -510,9 +511,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				toxic = 0
 
 		else if(waterlevel >= 100)
-			user << "<span class='warning'>The [src] is already full.</span>"
+			to_chat(user, "<span class='warning'>The [src] is already full.</span>")
 		else
-			user << "<span class='warning'>The bucket is not filled with water.</span>"
+			to_chat(user, "<span class='warning'>The bucket is not filled with water.</span>")
 		updateicon()
 
 	else if ( istype(O, /obj/item/nutrient) )
@@ -521,7 +522,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		nutrilevel = 10
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
-		user << "You replace the nutrient solution in the [src]."
+		to_chat(user, "You replace the nutrient solution in the [src].")
 		del(O)
 		updateicon()
 
@@ -530,9 +531,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (planted)
 			if (S.mode == 1)
 				if(!S.reagents.total_volume)
-					user << "<span class='warning'>The syringe is empty.</span>"
+					to_chat(user, "<span class='warning'>The syringe is empty.</span>")
 					return
-				user << "<span class='warning'>You inject the [myseed.plantname] with a chemical solution.</span>"
+				to_chat(user, "<span class='warning'>You inject the [myseed.plantname] with a chemical solution.</span>")
 
 				// There needs to be a good amount of mutagen to actually work
 
@@ -542,10 +543,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (81  to 90)  mutatespecie()
 						if (66	to 80)	hardmutate()
 						if (41  to 65)  mutate()
-						if (21  to 41)  user << "The plants don't seem to react..."
+						to_chat(if (21  to 41)  user, "The plants don't seem to react...")
 						if (11	to 20)  mutateweed()
 						if (1   to 10)  mutatepest()
-						else 			user << "Nothing happens..."
+									to_chat(else 			user, "Nothing happens...")
 
 				// Antitoxin binds shit pretty well. So the tox goes significantly down
 				if(S.reagents.has_reagent("anti_toxin", 1))
@@ -657,10 +658,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (81  to 90)  mutatespecie()
 						if (66	to 80)	hardmutate()
 						if (41  to 65)  mutate()
-						if (21  to 41)  user << "The plants don't seem to react..."
+						to_chat(if (21  to 41)  user, "The plants don't seem to react...")
 						if (11	to 20)  mutateweed()
 						if (1   to 10)  mutatepest()
-						else 			user << "Nothing happens..."
+									to_chat(else 			user, "Nothing happens...")
 
 				// The best stuff there is. For testing/debugging.
 				if(S.reagents.has_reagent("adminordrazine", 1))
@@ -674,7 +675,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (66  to 100)  mutatespecie()
 						if (33	to 65)  mutateweed()
 						if (1   to 32)  mutatepest()
-						else 			user << "Nothing happens..."
+									to_chat(else 			user, "Nothing happens...")
 
 				S.reagents.clear_reagents()
 				if (weedlevel < 0 ) // The following checks are to prevent the stats from going out of bounds.
@@ -694,15 +695,15 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if (nutrilevel > 10 )
 					nutrilevel = 10
 			else
-				user << "You can't get any extract out of this plant."
+				to_chat(user, "You can't get any extract out of this plant.")
 		else
-			user << "There's nothing to apply the solution into."
+			to_chat(user, "There's nothing to apply the solution into.")
 		updateicon()
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!planted)
 			user.u_equip(O, 0)
-			user << "You plant the [O.name]"
+			to_chat(user, "You plant the [O.name]")
 			dead = 0
 			myseed = O
 			planted = 1
@@ -719,33 +720,34 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(!RP.source)
 					RP.request_player()
 		else
-			user << "<span class='warning'>The [src] already has seeds in it!</span>"
+			to_chat(user, "<span class='warning'>The [src] already has seeds in it!</span>")
 
 	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
-			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
-			user << "-Plant Age: <span class='notice'>[age]</span>"
-			user << "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>"
-			user << "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>"
+			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
+
+			to_chat(user, "-Plant Age: <span class='notice'>[age]</span>")
+			to_chat(user, "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>")
+			to_chat(user, "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>")
 			if(myseed.yield != -1)
-				user << "-Plant Yield: <span class='notice'>[myseed.yield]</span>"
-			user << "-Plant Production: <span class='notice'>[myseed.production]</span>"
+				to_chat(user, "-Plant Yield: <span class='notice'>[myseed.yield]</span>")
+			to_chat(user, "-Plant Production: <span class='notice'>[myseed.production]</span>")
 			if(myseed.potency != -1)
-				user << "-Plant Potency: <span class='notice'>[myseed.potency]</span>"
-			user << "-Weed level: <span class='notice'>[weedlevel]/10</span>"
-			user << "-Pest level: <span class='notice'>[pestlevel]/10</span>"
-			user << "-Toxicity level: <span class='notice'>[toxic]/100</span>"
-			user << "-Water level: <span class='notice'>[waterlevel]/100</span>"
-			user << "-Nutrition level: <span class='notice'>[nutrilevel]/10</span>"
-			user << ""
+				to_chat(user, "-Plant Potency: <span class='notice'>[myseed.potency]</span>")
+			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
+			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
+			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
+			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/100</span>")
+			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/10</span>")
+			to_chat(user, "")
 		else
-			user << "<B>No plant found.</B>"
-			user << "-Weed level: <span class='notice'>[weedlevel]/10</span>"
-			user << "-Pest level: <span class='notice'>[pestlevel]/10</span>"
-			user << "-Toxicity level: <span class='notice'>[toxic]/100</span>"
-			user << "-Water level: <span class='notice'>[waterlevel]/100</span>"
-			user << "-Nutrition level: <span class='notice'>[nutrilevel]/10</span>"
-			user << ""
+			to_chat(user, "<B>No plant found.</B>")
+			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
+			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
+			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
+			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/100</span>")
+			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/10</span>")
+			to_chat(user, "")
 
 	else if (istype(O, /obj/item/weapon/reagent_containers/spray/plantbgone))
 		if(planted && myseed)
@@ -773,7 +775,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			updateicon()
 			src.updateicon()
 		else
-			user << "<span class='warning'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
+			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
 
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
@@ -784,7 +786,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			weedlevel = 0
 		if (toxic > 100 ) // Make sure it won't go overoboard
 			toxic = 100
-		user << "You apply the weedkiller solution into the [src]."
+		to_chat(user, "You apply the weedkiller solution into the [src].")
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		updateicon()
@@ -806,17 +808,17 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			pestlevel = 0
 		if (toxic > 100 ) // Make sure it won't go overoboard
 			toxic = 100
-		user << "You apply the pestkiller solution into the [src]."
+		to_chat(user, "You apply the pestkiller solution into the [src].")
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		updateicon()
 	else if(istype(O, /obj/item/weapon/shovel))
 		if(istype(src, /obj/machinery/hydroponics/soil))
-			user << "You clear up the [src]!"
+			to_chat(user, "You clear up the [src]!")
 			del(src)
 	else if(istype(O, /obj/item/apiary))
 		if(planted)
-			user << "<span class='warning'>The hydroponics tray is already occupied!</span>"
+			to_chat(user, "<span class='warning'>The hydroponics tray is already occupied!</span>")
 		else
 			user.drop_item()
 			del(O)
@@ -834,7 +836,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/machinery/hydroponics/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(anchored)
-		user <<"<span class='rose'>\The [src] must be unanchored before you can do that!</span>"
+		to_chat(user, "<span class='rose'>\The [src] must be unanchored before you can do that!</span>")
 		return
 	..()
 
@@ -849,23 +851,24 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(dead)
 		planted = 0
 		dead = 0
-		usr << text("You remove the dead plant from the [src].")
+		to_chat(usr, text("You remove the dead plant from the [src]."))
 		del(myseed)
 		updateicon()
 	else
 		if(planted && !dead)
-			usr << text("The [src] has <span class='notice'>[myseed.plantname] </span>planted.")
+			to_chat(usr, text("The [src] has <span class='notice'>[myseed.plantname] </span>planted."))
 			if(health <= (myseed.endurance / 2))
-				usr << text("The plant looks unhealthy")
+				to_chat(usr, text("The plant looks unhealthy"))
 		else
-			usr << text("The [src] is empty.")
-		usr << text("Water: [waterlevel]/100")
-		usr << text("Nutrient: [nutrilevel]/10")
+			to_chat(usr, text("The [src] is empty."))
+		to_chat(usr, text("Water: [waterlevel]/100"))
+		to_chat(usr, text("Nutrient: [nutrilevel]/10"))
 		if(weedlevel >= 5) // Visual aid for those blind
-			usr << text("The [src] is filled with weeds!")
+			to_chat(usr, text("The [src] is filled with weeds!"))
 		if(pestlevel >= 5) // Visual aid for those blind
-			usr << text("The [src] is filled with tiny worms!")
-		usr << text ("") // Empty line for readability.
+			to_chat(usr, text("The [src] is filled with tiny worms!"))
+		to_chat(usr, text (""))// Empty line for readability.
+
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/produce = text2path(productname)
@@ -974,9 +977,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	harvest = 0
 	lastproduce = age
 	if((yieldmod * myseed.yield) <= 0 || istype(myseed,/obj/item/seeds/dionanode))
-		user << text("<span class='warning'>You fail to harvest anything useful.</span>")
+		to_chat(user, text("<span class='warning'>You fail to harvest anything useful.</span>"))
 	else
-		user << text("You harvest from the [myseed.plantname].")
+		to_chat(user, text("You harvest from the [myseed.plantname]."))
 	if(myseed.oneharvest)
 		del(myseed)
 		planted = 0

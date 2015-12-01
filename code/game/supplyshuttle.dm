@@ -60,7 +60,7 @@ var/list/mechtoys = list(
 
 /obj/structure/plasticflaps/examine(mob/user as mob)
 	..()
-	user << "It appears to be [anchored? "anchored to" : "unachored from"] the floor, [airtight? "and it seems to be airtight as well." : "but it does not seem to be airtight."]"
+	to_chat(user, "It appears to be [anchored? "anchored to" : "unachored from"] the floor, [airtight? "and it seems to be airtight as well." : "but it does not seem to be airtight."]")
 
 /obj/structure/plasticflaps/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -287,7 +287,7 @@ var/list/mechtoys = list(
 			if(O.CheckFulfilled())
 				O.Pay()
 				centcomm_orders -= O
-		//world << "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored"
+//		to_chat(world, "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored")
 		qdel(MA)
 
 	//Buyin
@@ -481,11 +481,11 @@ var/list/mechtoys = list(
 				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
-				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
+				to_chat(usr, "<span class='warning'>Please wear an ID with an associated bank account.</span>")
 				return
-			usr << "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>"
+			to_chat(usr, "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
 			if(account && (account.money < P.cost))
-				usr << "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>"
+				to_chat(usr, "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account
@@ -552,7 +552,7 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='warning'>Access Denied.</span>"
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return
 
 	if(..())
@@ -582,14 +582,14 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "<span class='notice'>Special supplies unlocked.</span>"
+		to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
 		hacked = 1
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 20))
 			if (stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
 				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
@@ -601,7 +601,7 @@ var/list/mechtoys = list(
 				A.anchored = 1
 				del(src)
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
 				if(can_order_contraband)
@@ -693,11 +693,11 @@ var/list/mechtoys = list(
 				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
-				usr << "\icon[src]<span class='warning'>Please wear an ID with an associated bank account.</span>"
+				to_chat(usr, "\icon[src]<span class='warning'>Please wear an ID with an associated bank account.</span>")
 				return
-			usr << "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>"
+			to_chat(usr, "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
 			if(account && (account.money < P.cost))
-				usr << "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>"
+				to_chat(usr, "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account

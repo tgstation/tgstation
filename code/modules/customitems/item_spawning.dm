@@ -62,14 +62,14 @@
 			Item.loc = M.back
 			ok = 1
 			testing("Added to [M.back.name]!")
-			M << "<span class='notice'>Your [Item.name] has been added to your [M.back.name].</span>"
+			to_chat(M, "<span class='notice'>Your [Item.name] has been added to your [M.back.name].</span>")
 		else
 			for(var/obj/item/weapon/storage/S in M.contents) // Try to place it in any item that can store stuff, on the mob.
 				if (S.contents.len < S.storage_slots)
 					Item.loc = S
 					ok = 1
 					testing("Added to [S]!")
-					M << "<span class='notice'>Your [Item.name] has been added to your [S.name].</span>"
+					to_chat(M, "<span class='notice'>Your [Item.name] has been added to your [S.name].</span>")
 					break
 
 		//skip:

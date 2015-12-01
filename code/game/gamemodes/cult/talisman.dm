@@ -9,31 +9,31 @@
 	if(iscultist(user) || isobserver(user))
 		switch(imbue)
 			if("newtome")
-				user << "This talisman has been imbued with the power of spawning a new Arcane Tome."
+				to_chat(user, "This talisman has been imbued with the power of spawning a new Arcane Tome.")
 			if("armor")
-				user << "This talisman has been imbued with the power of clothing yourself in cult fighting gear."
+				to_chat(user, "This talisman has been imbued with the power of clothing yourself in cult fighting gear.")
 			if("emp")
-				user << "This talisman has been imbued with the power of disabling technology in a small radius around you."
+				to_chat(user, "This talisman has been imbued with the power of disabling technology in a small radius around you.")
 			if("conceal")
-				user << "This talisman has been imbued with the power of concealing nearby runes."
+				to_chat(user, "This talisman has been imbued with the power of concealing nearby runes.")
 			if("revealrunes")
-				user << "This talisman has been imbued with the power of revealing hidden nearby runes."
+				to_chat(user, "This talisman has been imbued with the power of revealing hidden nearby runes.")
 			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-				user << "This talisman has been imbued with the power of taking you to someplace else. You can read <i>[imbue]</i> on it."
+				to_chat(user, "This talisman has been imbued with the power of taking you to someplace else. You can read <i>[imbue]</i> on it.")
 			if("communicate")
-				user << "This talisman has been imbued with the power of communicating your whispers to your allies."
+				to_chat(user, "This talisman has been imbued with the power of communicating your whispers to your allies.")
 			if("deafen")
-				user << "This talisman has been imbued with the power of deafening visible enemies."
+				to_chat(user, "This talisman has been imbued with the power of deafening visible enemies.")
 			if("blind")
-				user << "This talisman has been imbued with the power of blinding visible enemies."
+				to_chat(user, "This talisman has been imbued with the power of blinding visible enemies.")
 			if("runestun")
-				user << "This talisman has been imbued with the power of paralyzing the beings you touch with it. The effect works on silicons as well, but humans will also be muted for a short time."
+				to_chat(user, "This talisman has been imbued with the power of paralyzing the beings you touch with it. The effect works on silicons as well, but humans will also be muted for a short time.")
 			if("supply")
-				user << "This talisman has been imbued with the power of providing you and your allies with some supplies to start your cult."
+				to_chat(user, "This talisman has been imbued with the power of providing you and your allies with some supplies to start your cult.")
 			else
-				user << "This talisman.....has no particular power. Is this some kind of joke?"
+				to_chat(user, "This talisman.....has no particular power. Is this some kind of joke?")
 	else
-		user << "Something about the blood stains on this paper fills you with uneasiness."
+		to_chat(user, "Something about the blood stains on this paper fills you with uneasiness.")
 
 /obj/item/weapon/paper/talisman/proc/findNullRod(var/atom/target)
 	if(istype(target,/obj/item/weapon/nullrod))
@@ -82,7 +82,7 @@
 				blind()
 				qdel(src)
 			if("runestun")
-				user << "<span class='warning'>To use this talisman, attack your target directly.</span>"
+				to_chat(user, "<span class='warning'>To use this talisman, attack your target directly.</span>")
 				return
 			if("supply")
 				supply()
@@ -92,7 +92,7 @@
 				qdel(src)
 		return
 	else
-		user << "You see strange symbols on the paper. Are they supposed to mean something?"
+		to_chat(user, "You see strange symbols on the paper. Are they supposed to mean something?")
 		return
 
 
@@ -212,10 +212,10 @@
 		C.eye_blind += 10
 		//talismans is weaker.
 		affected++
-		C << "<span class='warning'>You feel a sharp pain in your eyes, and the world disappears into darkness..</span>"
+		to_chat(C, "<span class='warning'>You feel a sharp pain in your eyes, and the world disappears into darkness..</span>")
 	if(affected)
 		usr.whisper("Sti[pick("'","`")] kaliesin!")
-		usr << "<span class='warning'>Your talisman turns into gray dust, blinding those who not follow the Nar-Sie.</span>"
+		to_chat(usr, "<span class='warning'>Your talisman turns into gray dust, blinding those who not follow the Nar-Sie.</span>")
 
 
 /obj/item/weapon/paper/talisman/proc/deafen()
@@ -234,7 +234,7 @@
 		affected++
 	if(affected)
 		usr.whisper("Sti[pick("'","`")] kaliedir!")
-		usr << "<span class='warning'>Your talisman turns into gray dust, deafening everyone around.</span>"
+		to_chat(usr, "<span class='warning'>Your talisman turns into gray dust, deafening everyone around.</span>")
 		for (var/mob/V in orange(1,src))
 			if(!(iscultist(V)))
 				V.show_message("<span class='warning'>Dust flows from [usr]'s hands for a moment, and the world suddenly becomes quiet..</span>", 3)

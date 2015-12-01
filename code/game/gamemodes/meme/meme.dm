@@ -37,8 +37,8 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/meme/announce()
-	world << "<B>The current game mode is - Meme!</B>"
-	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>"
+	to_chat(world, "<B>The current game mode is - Meme!</B>")
+	to_chat(world, "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>")
 
 /datum/game_mode/meme/can_start()
 	if(!..())
@@ -127,11 +127,11 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
-		meme.current << "<span class='danger'>You are a meme!</span>"
+		to_chat(meme.current, "<span class='danger'>You are a meme!</span>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)
-		meme.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(meme.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -154,17 +154,17 @@
 		var/memewin = 1
 		var/attuned = 0
 		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
-			world << "<B>The meme was [meme.current.key].</B>"
-			world << "<B>The last host was [meme.current:host.key].</B>"
-			world << "<B>Hosts attuned: [attuned]</B>"
+			to_chat(world, "<B>The meme was [meme.current.key].</B>")
+			to_chat(world, "<B>The last host was [meme.current:host.key].</B>")
+			to_chat(world, "<B>Hosts attuned: [attuned]</B>")
 
 			var/count = 1
 			for(var/datum/objective/objective in meme.objectives)
 				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>"
+					to_chat(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>")
 					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>"
+					to_chat(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>")
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
 					memewin = 0
 				count++
@@ -173,9 +173,9 @@
 			memewin = 0
 
 		if(memewin)
-			world << "<B>The meme was successful!<B>"
+			to_chat(world, "<B>The meme was successful!<B>")
 			feedback_add_details("meme_success","SUCCESS")
 		else
-			world << "<B>The meme has failed!<B>"
+			to_chat(world, "<B>The meme has failed!<B>")
 			feedback_add_details("meme_success","FAIL")
 	return 1

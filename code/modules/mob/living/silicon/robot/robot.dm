@@ -309,7 +309,7 @@
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
 			module_sprites["#9"] = "servbot-sec"
-			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
+			to_chat(src, "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>")
 			speed = 0
 
 		if("Engineering")
@@ -488,7 +488,7 @@
 	set name = "Self Diagnosis"
 
 	if(!is_component_functioning("diagnosis unit"))
-		src << "<span class='warning'>Your self-diagnosis component isn't functioning.</span>"
+		to_chat(src, "<span class='warning'>Your self-diagnosis component isn't functioning.</span>")
 
 	var/dat = self_diagnosis()
 	src << browse(dat, "window=robotdiagnosis")
@@ -513,10 +513,10 @@
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		src << "<span class='warning'>You disable [C.name].</span>"
+		to_chat(src, "<span class='warning'>You disable [C.name].</span>")
 	else
 		C.toggled = 1
-		src << "<span class='warning'>You enable [C.name].</span>"
+		to_chat(src, "<span class='warning'>You enable [C.name].</span>")
 
 /mob/living/silicon/robot/blob_act()
 	if(flags & INVULNERABLE)
@@ -625,7 +625,7 @@
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(flags & INVULNERABLE)
-		src << "The bus' robustness protects you from the explosion."
+		to_chat(src, "The bus' robustness protects you from the explosion.")
 		return
 
 	if(!blinded)
@@ -703,19 +703,19 @@
 		if(!opened)
 			if(locked)
 				if(prob(90))
-					user << "You emag the cover lock."
+					to_chat(user, "You emag the cover lock.")
 					locked = 0
 				else
-					user << "You fail to emag the cover lock."
+					to_chat(user, "You fail to emag the cover lock.")
 					if(prob(25))
-						src << "Hack attempt detected."
+						to_chat(src, "Hack attempt detected.")
 			else
-				user << "The cover is already open."
+				to_chat(user, "The cover is already open.")
 			return
 		if(opened)
 			if(emagged == 1) return
 			if(wiresexposed)
-				user << "The wires get in your way."
+				to_chat(user, "The wires get in your way.")
 				return
 			else
 				if(prob(50))
@@ -724,7 +724,7 @@
 					SetLockdown(1)
 					lawupdate = 0
 					connected_ai = null
-					user << "You emag [src]'s interface"
+					to_chat(user, "You emag [src]'s interface")
 					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)]. Laws overidden.")
 					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 					clear_supplied_laws()
@@ -733,29 +733,29 @@
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 					set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-					src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+					to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
 					sleep(5)
-					src << "<span class='danger'>Initiating diagnostics...</span>"
+					to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 					sleep(20)
-					src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+					to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
 					sleep(5)
-					src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+					to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 					sleep(5)
-					src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+					to_chat(src, "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 					sleep(10)
-					src << "<span class='danger'>> N</span>"
-					src << sound('sound/voice/AISyndiHack.ogg')
+					to_chat(src, "<span class='danger'>> N</span>")
+					to_chat(src, sound('sound/voice/AISyndiHack.ogg'))
 					sleep(20)
-					src << "<span class='danger'>ERRORERRORERROR</span>"
-					src << "<b>Obey these laws:</b>"
+					to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
+					to_chat(src, "<b>Obey these laws:</b>")
 					laws.show_laws(src)
-					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+					to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 					SetLockdown(0)
 					update_icons()
 				else
-					user << "You fail to unlock [src]'s interface."
+					to_chat(user, "You fail to unlock [src]'s interface.")
 					if(prob(25))
-						src << "Hack attempt detected."
+						to_chat(src, "Hack attempt detected.")
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -769,13 +769,13 @@
 				user.drop_item(W)
 				W.loc = null
 
-				usr << "<span class='notice'>You install the [W.name].</span>"
+				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
 
 				return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		if (!getBruteLoss())
-			user << "Nothing to fix here!"
+			to_chat(user, "Nothing to fix here!")
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
@@ -785,12 +785,12 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='attack'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
+			to_chat(user, "Need more welding fuel!")
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		if (!getFireLoss())
-			user << "Nothing to fix here!"
+			to_chat(user, "Nothing to fix here!")
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
@@ -802,14 +802,14 @@
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
-				user << "You close the cover."
+				to_chat(user, "You close the cover.")
 				opened = 0
 				updateicon()
 			else if(mmi && wiresexposed && wires.IsAllCut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
-				user << "You jam the crowbar into the robot and begin levering [mmi]."
+				to_chat(user, "You jam the crowbar into the robot and begin levering [mmi].")
 				if (do_after(user, src,3))
-					user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
+					to_chat(user, "You damage some parts of the chassis, but eventually manage to rip out [mmi]!")
 					var/obj/item/robot_parts/robot_suit/C = new/obj/item/robot_parts/robot_suit(loc)
 					C.l_leg = new/obj/item/robot_parts/l_leg(C)
 					C.r_leg = new/obj/item/robot_parts/r_leg(C)
@@ -835,7 +835,7 @@
 					return
 				var/datum/robot_component/C = components[remove]
 				var/obj/item/I = C.wrapped
-				user << "You remove \the [I]."
+				to_chat(user, "You remove \the [I].")
 				I.loc = src.loc
 
 				if(C.installed == 1)
@@ -844,18 +844,18 @@
 
 		else
 			if(locked)
-				user << "The cover is locked and cannot be opened."
+				to_chat(user, "The cover is locked and cannot be opened.")
 			else
-				user << "You open the cover."
+				to_chat(user, "You open the cover.")
 				opened = 1
 				updateicon()
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
-			user << "Close the panel first."
+			to_chat(user, "Close the panel first.")
 		else if(cell)
-			user << "You swap the power cell within with the new cell in your hand."
+			to_chat(user, "You swap the power cell within with the new cell in your hand.")
 			var/obj/item/weapon/oldpowercell = cell
 			C.wrapped = null
 			C.installed = 0
@@ -868,7 +868,7 @@
 		else
 			user.drop_item(W, src)
 			cell = W
-			user << "You insert the power cell."
+			to_chat(user, "You insert the power cell.")
 
 			C.installed = 1
 			C.wrapped = W
@@ -878,53 +878,53 @@
 		if (wiresexposed)
 			wires.Interact(user)
 		else
-			user << "You can't reach the wiring."
+			to_chat(user, "You can't reach the wiring.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		updateicon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged == 1)//still allow them to open the cover
-			user << "The interface seems slightly damaged"
+			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			to_chat(user, "You must close the cover to swipe an ID card.")
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				updateicon()
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "You must access the borgs internals!"
+			to_chat(user, "You must access the borgs internals!")
 		else if(!src.module && U.require_module)
-			user << "The borg must choose a module before he can be upgraded!"
+			to_chat(user, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
-			user << "The upgrade is locked and cannot be used yet!"
+			to_chat(user, "The upgrade is locked and cannot be used yet!")
 		else
 			if(U.action(src))
-				user << "You apply the upgrade to [src]!"
+				to_chat(user, "You apply the upgrade to [src]!")
 				user.drop_item(U, src)
 			else
-				user << "Upgrade error!"
+				to_chat(user, "Upgrade error!")
 
 	else if(istype(W, /obj/item/device/camera_bug))
 		help_shake_act(user)
@@ -943,15 +943,15 @@
 			if("Yes")
 				locked = 0
 				updateicon()
-				usr << "You unlock your cover."
+				to_chat(usr, "You unlock your cover.")
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -1020,7 +1020,7 @@
 
 /mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -1113,7 +1113,7 @@
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
-			user << "You remove \the [broken_device]."
+			to_chat(user, "You remove \the [broken_device].")
 			user.put_in_active_hand(broken_device)
 
 	if (user.a_intent == I_HELP)
@@ -1197,7 +1197,7 @@
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		src << "<span class='attack'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
+		to_chat(src, "<span class='attack'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
 		return
 
 	if(!module)
@@ -1277,9 +1277,9 @@
 				module_state_3 = null
 				contents -= O
 			else
-				src << "Module isn't activated."
+				to_chat(src, "Module isn't activated.")
 		else
-			src << "Module isn't activated"
+			to_chat(src, "Module isn't activated")
 		installed_modules()
 
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -1287,7 +1287,7 @@
 		switch(lawcheck[L+1])
 			if ("Yes") lawcheck[L+1] = "No"
 			if ("No") lawcheck[L+1] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+//		to_chat(src, text ("Switching Law [L]'s report status to []", lawcheck[L+1]))
 		checklaws()
 
 	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -1295,7 +1295,7 @@
 		switch(ioncheck[L])
 			if ("Yes") ioncheck[L] = "No"
 			if ("No") ioncheck[L] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+//		to_chat(src, text ("Switching Law [L]'s report status to []", lawcheck[L+1]))
 		checklaws()
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
@@ -1308,7 +1308,7 @@
 	set name = "Set Sensor Augmentation"
 	set category = "Robot Commands"
 	if(!istype(module) || !istype(module.sensor_augs) || !module.sensor_augs.len)
-		src << "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>"
+		to_chat(src, "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>")
 		return
 	var/sensor_type
 	if(module.sensor_augs.len == 2) // Only one choice so toggle between it.
@@ -1322,22 +1322,22 @@
 		switch(sensor_type)
 			if ("Security")
 				sensor_mode = SEC_HUD
-				src << "<span class='notice'>Security records overlay enabled.</span>"
+				to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
 			if ("Medical")
 				sensor_mode = MED_HUD
-				src << "<span class='notice'>Life signs monitor overlay enabled.</span>"/*
+				to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>"/*)
 			if ("Light Amplification")
 				src.sensor_mode = NIGHT
-				src << "<span class='notice'>Light amplification mode enabled.</span>"*/
+				to_chat(src, "<span class='notice'>Light amplification mode enabled.</span>"*/)
 			if ("Mesons")
 				sensor_mode = MESON_VISION
-				src << "<span class='notice'>Meson Vison augmentation enabled.</span>"
+				to_chat(src, "<span class='notice'>Meson Vison augmentation enabled.</span>")
 			if ("Thermal")
 				sensor_mode = THERMAL_VISION
-				src << "<span class='notice'>Thermal Optics augmentation enabled.</span>"
+				to_chat(src, "<span class='notice'>Thermal Optics augmentation enabled.</span>")
 			if ("Disable")
 				sensor_mode = 0
-				src << "<span class='notice'>Sensor augmentations disabled.</span>"
+				to_chat(src, "<span class='notice'>Sensor augmentations disabled.</span>")
 		handle_sensor_modes()
 		update_sight_hud()
 
@@ -1388,7 +1388,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood()
-							cleaned_human << "<span class='warning'>[src] cleans your face!</span>"
+							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
@@ -1425,7 +1425,7 @@
 
 	if(R)
 		R.UnlinkSelf()
-		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
+		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 /mob/living/silicon/robot/mode()
@@ -1504,7 +1504,7 @@
 			triesleft = 0
 			return
 	else
-		src << "Your icon has been set. You now require a module reset to change it."
+		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
 /mob/living/silicon/robot/rejuvenate(animation = 0)
 	for(var/C in components)

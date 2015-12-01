@@ -16,9 +16,9 @@
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
-			user << "The contract has been used, you can't get your points back now."
+			to_chat(user, "The contract has been used, you can't get your points back now.")
 		else
-			user << "You feed the contract back into the spellbook, refunding your points."
+			to_chat(user, "You feed the contract back into the spellbook, refunding your points.")
 			src.max_uses++
 			src.uses++
 			del (O)
@@ -337,7 +337,7 @@
 								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 								H.see_in_dark = 8
 								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-								H << "<span class='notice'>The walls suddenly disappear.</span>"
+								to_chat(H, "<span class='notice'>The walls suddenly disappear.</span>")
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
 						if("chariot")
@@ -378,15 +378,15 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
-					user <<"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>"
+					to_chat(user, "<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
-					user <<"<span class='notice'>You've already read this one.</span>"
+					to_chat(user, "<span class='notice'>You've already read this one.</span>")
 			return
 	if(used)
 		recoil(user)
 	else
 		user.add_spell(S)
-		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		to_chat(user, "<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
 
@@ -419,7 +419,7 @@
 
 /obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user as mob)
 	..()
-	user <<"<span class='caution'>Your stomach rumbles...</span>"
+	to_chat(user, "<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.nutrition -= 200
 		if(user.nutrition <= 0)
@@ -433,7 +433,7 @@
 
 /obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user as mob)
 	..()
-	user <<"<span class='warning'>You go blind!</span>"
+	to_chat(user, "<span class='warning'>You go blind!</span>")
 	user.eye_blind = 10
 
 /obj/item/weapon/spellbook/oneuse/mindswap
@@ -455,10 +455,10 @@
 		stored_swap = null
 	if(!stored_swap)
 		stored_swap = user
-		user <<"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>"
+		to_chat(user, "<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>")
 		return
 	if(stored_swap == user)
-		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
+		to_chat(user, "<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
 
 	if(user.mind.special_verbs.len)
@@ -487,8 +487,8 @@
 		for(var/V in user.mind.special_verbs)
 			user.verbs += V
 
-	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
-	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
+	to_chat(stored_swap, "<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
+	to_chat(user, "<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	stored_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
@@ -499,7 +499,7 @@
 
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user as mob)
 	..()
-	user <<"<span class='warning'>You suddenly feel very solid!</span>"
+	to_chat(user, "<span class='warning'>You suddenly feel very solid!</span>")
 	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
 	S.timer = 30
 	user.drop_item()
@@ -513,7 +513,7 @@
 
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user as mob)
 	..()
-	user <<"<span class='warning'>You're knocked down!</span>"
+	to_chat(user, "<span class='warning'>You're knocked down!</span>")
 	user.Weaken(20)
 
 /obj/item/weapon/spellbook/oneuse/horsemask
@@ -524,7 +524,7 @@
 
 /obj/item/weapon/spellbook/oneuse/horsemask/recoil(mob/living/carbon/user as mob)
 	if(istype(user, /mob/living/carbon/human))
-		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
+		to_chat(user, "<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.canremove = 0		//curses!
 		magichead.flags_inv = null	//so you can still see their face
@@ -533,7 +533,7 @@
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)
 	else
-		user <<"<span class='notice'>I say thee neigh</span>"
+		to_chat(user, "<span class='notice'>I say thee neigh</span>")
 
 /obj/item/weapon/spellbook/oneuse/charge
 	spell = /spell/aoe_turf/charge
@@ -543,5 +543,5 @@
 
 /obj/item/weapon/spellbook/oneuse/charge/recoil(mob/user as mob)
 	..()
-	user <<"<span class='warning'>[src] suddenly feels very warm!</span>"
+	to_chat(user, "<span class='warning'>[src] suddenly feels very warm!</span>")
 	empulse(src, 1, 1)

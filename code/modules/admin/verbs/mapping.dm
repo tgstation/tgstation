@@ -208,9 +208,9 @@ var/intercom_range_display_status = 0
 			if(i*10+j <= atom_list.len)
 				temp_atom = atom_list[i*10+j]
 				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
+		to_chat(world, line)*/
 
-	world << "There are [count] objects of type [type_path] on z-level [num_level]"
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
 	feedback_add_details("admin_verb","mOBJZ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
@@ -236,9 +236,9 @@ var/intercom_range_display_status = 0
 			if(i*10+j <= atom_list.len)
 				temp_atom = atom_list[i*10+j]
 				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
+		to_chat(world, line)*/
 
-	usr << "There are [count] objects of type [type_path] in the game world"
+	to_chat(usr, "There are [count] objects of type [type_path] in the game world")
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/check_sim_unsim()
@@ -332,7 +332,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Regroup All Airgroups Attempt"
 
-	usr << "<span class='warning'>Proc disabled.</span>"
+	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	/*prevent_airgroup_regroup = 0
 	for(var/datum/air_group/AG in air_master.air_groups)
@@ -343,7 +343,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Kill pipe processing"
 
-	usr << "<span class='warning'>Proc disabled.</span>"
+	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	/*pipe_processing_killed = !pipe_processing_killed
 	if(pipe_processing_killed)
@@ -355,7 +355,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Kill air processing"
 
-	usr << "<span class='warning'>Proc disabled.</span>"
+	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	/*air_processing_killed = !air_processing_killed
 	if(air_processing_killed)
@@ -370,7 +370,7 @@ var/global/say_disabled = 0
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
 
-	usr << "<span class='warning'>Proc disabled.</span>"
+	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	/*say_disabled = !say_disabled
 	if(say_disabled)
@@ -387,7 +387,7 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	set category = "Mapping"
 	set name = "Disable all movement"
 
-	usr << "<span class='warning'>Proc disabled.</span>"
+	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	/*movement_disabled = !movement_disabled
 	if(movement_disabled)

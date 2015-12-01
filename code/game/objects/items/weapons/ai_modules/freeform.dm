@@ -35,13 +35,13 @@ By N3X15
 		while(1)
 			lawpos = input("Please enter the priority for your new law. Can only write to law sectors [allowed_priority_min] - [allowed_priority_max].", "Law Priority (15+)", lawpos) as num
 			if(allowed_priority_min > 0 && lawpos < allowed_priority_min)
-				user << "<span class='warning'>Desired law sector is too low.</span>"
+				to_chat(user, "<span class='warning'>Desired law sector is too low.</span>")
 				continue
 			if(allowed_priority_max > 0 && lawpos > allowed_priority_max)
-				user << "<span class='warning'>Desired law sector is too high.</span>"
+				to_chat(user, "<span class='warning'>Desired law sector is too high.</span>")
 				continue
 			priority=lawpos
-			user << "<span class='notice'>Target law sector set to [priority].</span>"
+			to_chat(user, "<span class='notice'>Target law sector set to [priority].</span>")
 			break
 
 	law = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", law)),1,MAX_MESSAGE_LEN)
@@ -49,7 +49,7 @@ By N3X15
 
 /obj/item/weapon/aiModule/freeform/upload(var/datum/ai_laws/laws, var/atom/target=null, var/mob/sender=null, var/notify_target=0)
 	..()
-	//target << law
+//	to_chat(target, law)
 	if((!priority || priority < allowed_priority_min) && !(priority == LAW_IONIC || priority == LAW_INHERENT || priority == LAW_ZERO))
 		priority = allowed_priority_min
 	laws.add_law(priority, law)
@@ -60,7 +60,7 @@ By N3X15
 /obj/item/weapon/aiModule/freeform/validate(var/datum/ai_laws/laws, var/atom/subject=null, var/mob/sender=null)
 	if(!law)
 		if(sender)
-			sender << "No law detected on module, please create one."
+			to_chat(sender, "No law detected on module, please create one.")
 		return 0
 	return ..()
 

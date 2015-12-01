@@ -24,9 +24,9 @@
 
 
 /datum/game_mode/nuclear/announce()
-	world << "<B>The current game mode is - Nuclear Emergency!</B>"
-	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
-	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
+	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
+	to_chat(world, "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>")
+	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
 /datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
 	if(!..())
@@ -190,7 +190,7 @@
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -215,12 +215,12 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
-		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+		to_chat(syndicate.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
-		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
-	syndicate.current << sound('sound/voice/syndicate_intro.ogg')
+	to_chat(syndicate.current, sound('sound/voice/syndicate_intro.ogg'))
 	return
 
 
@@ -233,7 +233,7 @@
 	var/tank_slot = slot_r_hand
 
 	if(synd_mob.overeatduration) //We need to do this here and now, otherwise a lot of gear will fail to spawn
-		synd_mob << "<span class='notice'>Your intensive physical training to become a Nuclear Operative has paid off and made you fit again!</span>"
+		to_chat(synd_mob, "<span class='notice'>Your intensive physical training to become a Nuclear Operative has paid off and made you fit again!</span>")
 		synd_mob.overeatduration = 0 //Fat-B-Gone
 		if(synd_mob.nutrition > 400) //We are also overeating nutriment-wise
 			synd_mob.nutrition = 400 //Fix that
@@ -268,7 +268,7 @@
 	if(istype(synd_mob.species, /datum/species/vox))
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/vox(synd_mob), slot_wear_mask)
 		synd_mob.equip_to_slot_or_del(new/obj/item/weapon/tank/nitrogen(synd_mob), slot_r_hand)
-		synd_mob << "<span class='notice'>You are now running on nitrogen internals from the [slot_r_hand] in your right hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only.</span>"
+		to_chat(synd_mob, "<span class='notice'>You are now running on nitrogen internals from the [slot_r_hand] in your right hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only.</span>")
 		synd_mob.internal = synd_mob.get_item_by_slot(tank_slot)
 		if (synd_mob.internals)
 			synd_mob.internals.icon_state = "internal1"
@@ -421,7 +421,7 @@
 
 	else
 		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
+			to_chat(M, "That name is reserved.")
 			return nukelastname(M)
 
 	return newname

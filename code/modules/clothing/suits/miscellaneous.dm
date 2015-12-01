@@ -212,13 +212,13 @@
 	if(src.icon_state == "suitjacket_blue_open")
 		src.icon_state = "suitjacket_blue"
 		src.item_state = "suitjacket_blue"
-		usr << "You button up the suit jacket."
+		to_chat(usr, "You button up the suit jacket.")
 	else if(src.icon_state == "suitjacket_blue")
 		src.icon_state = "suitjacket_blue_open"
 		src.item_state = "suitjacket_blue_open"
-		usr << "You unbutton the suit jacket."
+		to_chat(usr, "You unbutton the suit jacket.")
 	else
-		usr << "You button-up some imaginary buttons on your [src]."
+		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
 	usr.update_inv_wear_suit()
 

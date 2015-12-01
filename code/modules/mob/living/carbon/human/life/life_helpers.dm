@@ -182,7 +182,7 @@
 /mob/living/carbon/human/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 	if(nodamage)
 		return
-	//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
+//	to_chat(world, "body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]")
 	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 
 	if(exposed_temperature > bodytemperature)
@@ -192,7 +192,7 @@
 		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT * 2 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
 	else
 		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT //Dangercon 2011 - now with less magic numbers!
-	//world <<"[discomfort]"
+//	to_chat(world, "[discomfort]")
 
 	switch(body_part)
 		if(HEAD)

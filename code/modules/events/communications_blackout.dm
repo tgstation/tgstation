@@ -7,9 +7,9 @@
 						"#4nd%;f4y6,>£%-BZZZZZZZT")
 
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.
-		A << "<br>"
-		A << "<span class='danger'>[alert]</span>"
-		A << "<br>"
+		to_chat(A, "<br>")
+		to_chat(A, "<span class='danger'>[alert]</span>")
+		to_chat(A, "<br>")
 
 	if(prob(30))	//most of the time, we don't want an announcement, so as to allow AIs to fake blackouts.
 		command_alert(alert)

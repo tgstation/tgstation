@@ -13,7 +13,7 @@
 
 /datum/event/spider_infestation/announce()
 	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	world << sound('sound/AI/aliens.ogg')
+	to_chat(world, sound('sound/AI/aliens.ogg'))
 
 
 /datum/event/spider_infestation/start()

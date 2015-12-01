@@ -17,7 +17,7 @@
 		for(var/button_id in controller.buttons)
 			var/obj/item/button = controller.get_button_by_id(button_id)
 			if(button)
-				user << "\icon [button] It has \a [button] attached."
+				to_chat(user, "\icon [button] It has \a [button] attached.")
 
 /obj/item/device/remote/attack_self(mob/user, params)
 	if(controller)

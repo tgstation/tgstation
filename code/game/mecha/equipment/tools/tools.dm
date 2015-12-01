@@ -696,7 +696,7 @@
 		return chassis.dynattackby(W,user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(chassis.deflect_chance*deflect_coeff))
-		user << "<span class='warning'>The [W] bounces off [chassis] armor.</span>"
+		to_chat(user, "<span class='warning'>The [W] bounces off [chassis] armor.</span>")
 		chassis.log_append_to_last("Armor saved.")
 	else
 		chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
@@ -1057,7 +1057,7 @@
 	if(isnull(result))
 		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [weapon] cannot be used as fuel.</font>")
 	else if(!result)
-		user << "Unit is full."
+		to_chat(user, "Unit is full.")
 	else
 		user.visible_message("[user] loads [src] with [fuel].","[result] unit\s of [fuel] successfully loaded.")
 	return

@@ -53,12 +53,12 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			++loaded
 			moveToStorage(G)
 			if(contents.len >= MAX_N_OF_ITEMS)
-				user << "<span class='notice'>You fill \the [src] to the brim.</span>"
+				to_chat(user, "<span class='notice'>You fill \the [src] to the brim.</span>")
 				return
 		if (loaded)
-			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
+			to_chat(user, "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>")
 		else
-			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
+			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
 		return
 
 	// Loading individual seeds into the machine
@@ -67,7 +67,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			return
 		user.drop_item()
 		moveToStorage(O)
-		user << "<span class='notice'>You add [O] to [src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 		updateUsrDialog()
 		return
 
@@ -85,28 +85,28 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			new_seed_type = seed_types[F.plantname]
 
 		if(new_seed_type)
-			user << "<span class='notice'>You extract some seeds from [O].</span>"
+			to_chat(user, "<span class='notice'>You extract some seeds from [O].</span>")
 			var/produce = rand(min_seeds,max_seeds)
 			for(var/i = 0;i<=produce;i++)
 				var/obj/item/seeds/seeds = new(get_turf(src))
 				seeds.seed_type = new_seed_type.name
 				seeds.update_seed()
 		else
-			user << "[O] doesn't seem to have any usable seeds inside it."
+			to_chat(user, "[O] doesn't seem to have any usable seeds inside it.")
 
 		qdel(O)
 
 	//Grass. //Why isn't this using the nonplant_seed_type functionality below?
 	else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
-		user << "<span class='notice'>You extract some seeds from the [S.name].</span>"
+		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
 	if(O)
 		var/obj/item/F = O
 		if(F.nonplant_seed_type)
-			user << "<span class='notice'>You extract some seeds from the [F.name].</span>"
+			to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 			user.drop_item(O)
 			var/t_amount = 0
 			var/t_max = rand(1,4)
@@ -217,6 +217,6 @@ obj/machinery/seed_extractor/proc/moveToStorage(var/obj/item/seeds/O as obj)
 
 obj/machinery/seed_extractor/proc/hasSpaceCheck(mob/user as mob)
 	if(contents.len >= MAX_N_OF_ITEMS)
-		user << "<span class='notice'>\The [src] is full.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 		return 0
 	else return 1

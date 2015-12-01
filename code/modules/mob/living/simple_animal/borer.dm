@@ -133,14 +133,14 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 /mob/living/simple_animal/borer/Topic(href, href_list)
 	if(!usr.check_rights(R_ADMIN))
-		usr << "<span class='danger'>Hell no.</span>"
+		to_chat(usr, "<span class='danger'>Hell no.</span>")
 		return
 
 	switch(href_list["act"])
 		if("detach")
-			src << "<span class='danger'>You feel dazed, and then appear outside of your host!</span>"
+			to_chat(src, "<span class='danger'>You feel dazed, and then appear outside of your host!</span>")
 			if(host)
-				host << "<span class='info'>You no longer feel the presence in your mind!</span>"
+				to_chat(host, "<span class='info'>You no longer feel the presence in your mind!</span>")
 			detach()
 		if("release")
 			if(host)
@@ -155,8 +155,8 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 			C.name=chemID
 			C.cost=0
 			avail_chems[C.name]=C
-			usr << "ADDED!"
-			src << "<span class='info'>You learned how to secrete [C.name]!</span>"
+			to_chat(usr, "ADDED!")
+			to_chat(src, "<span class='info'>You learned how to secrete [C.name]!</span>")
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -174,7 +174,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='warning'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -186,13 +186,13 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		return borer_speak(copytext(message,2))
 
 	if(!host)
-		src << "You have no host to speak to."
+		to_chat(src, "You have no host to speak to.")
 		return //No host, no audible speech.
 
 	var/encoded_message = html_encode(message)
 
-	src << "You drop words into [host]'s mind: <span class='borer2host'>\"[encoded_message]\"</span>"
-	host << "<span class='borer2host'>\"[encoded_message]\"</span>"
+	to_chat(src, "You drop words into [host]'s mind: <span class='borer2host'>\"[encoded_message]\"</span>")
+	to_chat(host, "<span class='borer2host'>\"[encoded_message]\"</span>")
 	var/turf/T = get_turf(src)
 	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) -> [host]([key_name(host)]) Borer->Host Speech: [message]")
 
@@ -209,7 +209,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	/*
 	for(var/mob/M in mob_list)
 		if(M.mind && (istype(M, /mob/dead/observer)))
-			M << "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(html_encode(message), 2)]</i>"
+			to_chat(M, "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(html_encode(message), 2)]</i>")
 	*/
 
 /mob/living/simple_animal/borer/Stat()
@@ -246,7 +246,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 					controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
 				controls += ") in [host]"
 
-			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
+			to_chat(M, "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>")
 
 /mob/living/simple_animal/borer/proc/bond_brain()
 	set category = "Alien"
@@ -254,23 +254,23 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Fully connect to the brain of your host."
 
 	if(!host)
-		src << "You are not inside a host body."
+		to_chat(src, "You are not inside a host body.")
 		return
 
 	if(src.stat)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	if(host.stat==DEAD)
-		src << "You cannot do that in your host's current state."
+		to_chat(src, "You cannot do that in your host's current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 
-	src << "You begin delicately adjusting your connection to the host brain..."
+	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 
 	spawn(300+(host.brainloss*5))
 
@@ -283,8 +283,8 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	if(!host || host.stat==DEAD || !src || controlling || research.unlocking)
 		return
 
-	src << "<span class='danger'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
-	host << "<span class='danger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
+	to_chat(src, "<span class='danger'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>")
+	to_chat(host, "<span class='danger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>")
 
 	host_brain.ckey = host.ckey
 	host_brain.name = host.real_name
@@ -306,27 +306,27 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Give the host massive brain damage, killing them nearly instantly."
 
 	if(!host)
-		src << "You are not inside a host body."
+		to_chat(src, "You are not inside a host body.")
 		return
 
 	if(stat)
-		src << "You cannot secrete chemicals in your current state."
+		to_chat(src, "You cannot secrete chemicals in your current state.")
 		return
 
 	if(host.stat==DEAD)
-		src << "You cannot do that in your host's current state."
+		to_chat(src, "You cannot do that in your host's current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	var/reason = sanitize(input(usr,"Please enter a brief reason for killing the host, or press cancel.\n\nThis will be logged, and presented to the host.","Oh snap") as null|text, MAX_MESSAGE_LEN)
 	if(isnull(reason) || reason=="")
 		return
 
-	src << "<span class='danger'>You thrash your probosci around the host's brain, triggering massive brain damage and stopping your host's heart.</span>"
-	host << "<span class='sinister'>You get a splitting headache, and then, as blackness descends upon you, you hear: [reason]</span>"
+	to_chat(src, "<span class='danger'>You thrash your probosci around the host's brain, triggering massive brain damage and stopping your host's heart.</span>")
+	to_chat(host, "<span class='sinister'>You get a splitting headache, and then, as blackness descends upon you, you hear: [reason]</span>")
 
 	spawn(10)
 		if(!host || !src || stat)
@@ -346,23 +346,23 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
 
 	if(!host)
-		src << "You are not inside a host body."
+		to_chat(src, "You are not inside a host body.")
 		return
 
 	if(stat)
-		src << "You cannot secrete chemicals in your current state."
+		to_chat(src, "You cannot secrete chemicals in your current state.")
 		return
 
 	if(host.stat==DEAD)
-		src << "You cannot do that in your host's current state."
+		to_chat(src, "You cannot do that in your host's current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
-	src << "<span class='danger'>You twitch your probosci.</span>"
-	host << "<span class='sinister'>You feel something twitch, and get a headache.</span>"
+	to_chat(src, "<span class='danger'>You twitch your probosci.</span>")
+	to_chat(host, "<span class='sinister'>You feel something twitch, and get a headache.</span>")
 
 	host.adjustBrainLoss(15)
 
@@ -372,23 +372,23 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Upgrade yourself or your host."
 
 	if(!host)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat)
-		src << "<span class='warning'>You cannot secrete chemicals in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot secrete chemicals in your current state.</span>")
 		return
 
 	if(controlling)
-		src << "<span class='warning'>You're too busy controlling your host.</span>"
+		to_chat(src, "<span class='warning'>You're too busy controlling your host.</span>")
 		return
 
 	if(host.stat==DEAD)
-		src << "<span class='warning'>You cannot do that in your host's current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that in your host's current state.</span>")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	research.display(src)
@@ -399,23 +399,23 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Push some chemicals into your host's bloodstream."
 
 	if(!host)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat)
-		src << "<span class='warning'>You cannot secrete chemicals in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot secrete chemicals in your current state.</span>")
 		return
 
 	if(controlling)
-		src << "<span class='warning'>You're too busy controlling your host.</span>"
+		to_chat(src, "<span class='warning'>You're too busy controlling your host.</span>")
 		return
 
 	if(host.stat==DEAD)
-		src << "<span class='warning'>You cannot do that in your host's current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that in your host's current state.</span>")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	var/chemID = input("Select a chemical to secrete.", "Chemicals") as null|anything in avail_chems
@@ -429,7 +429,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		max_amount = round(chemicals / chem.cost)
 
 	if(max_amount==0)
-		src << "<span class='warning'>You don't have enough energy to even synthesize one unit!</span>"
+		to_chat(src, "<span class='warning'>You don't have enough energy to even synthesize one unit!</span>")
 		return
 
 	var/units = input("Enter dosage in units.\n\nMax: [max_amount]\nCost: [chem.cost]/unit","Chemicals") as num
@@ -437,18 +437,18 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	units = round(units)
 
 	if(units < 1)
-		src << "<span class='warning'>You cannot synthesize this little.</span>"
+		to_chat(src, "<span class='warning'>You cannot synthesize this little.</span>")
 		return
 
 	if(chemicals < chem.cost*units)
-		src << "<span class='warning'>You don't have enough energy to synthesize this much!</span>"
+		to_chat(src, "<span class='warning'>You don't have enough energy to synthesize this much!</span>")
 		return
 
 
 	if(!host || controlling || !src || stat) //Sanity check.
 		return
 
-	src << "<span class='info'>You squirt a measure of [chem.name] from your reservoirs into [host]'s bloodstream.</span>"
+	to_chat(src, "<span class='info'>You squirt a measure of [chem.name] from your reservoirs into [host]'s bloodstream.</span>")
 	add_gamelogs(src, "secreted [units]U of '[chemID]' into \the [host]", admin = TRUE, tp_link = TRUE, span_class = "danger")
 	host.reagents.add_reagent(chem.name, units)
 	chemicals -= chem.cost*units
@@ -469,34 +469,34 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 	var/in_head= istype(loc, /obj/item/weapon/organ/head)
 	if(!host && !in_head)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat)
-		src << "<span class='warning'>You cannot leave your host in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot leave your host in your current state.</span>")
 		return
 
 	if(research.unlocking && !in_head)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	if(!src)
 		return
 
-	src << "<span class='info'>You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.</span>"
+	to_chat(src, "<span class='info'>You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.</span>")
 
 	spawn(200)
 
 		if((!host && !in_head) || !src) return
 
 		if(src.stat)
-			src << "<span class='warning'>You cannot abandon [host] in your current state.</span>"
+			to_chat(src, "<span class='warning'>You cannot abandon [host] in your current state.</span>")
 			return
 
 		if(in_head)
-			src << "<span class='info'>You wiggle out of the ear of \the [loc] and plop to the ground.</span>"
+			to_chat(src, "<span class='info'>You wiggle out of the ear of \the [loc] and plop to the ground.</span>")
 		else
-			src << "<span class='info'>You wiggle out of [host]'s ear and plop to the ground.</span>"
+			to_chat(src, "<span class='info'>You wiggle out of [host]'s ear and plop to the ground.</span>")
 
 		detach()
 
@@ -556,15 +556,15 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Infest a suitable humanoid host."
 
 	if(host)
-		src << "You are already within a host."
+		to_chat(src, "You are already within a host.")
 		return
 
 	if(stat)
-		src << "You cannot infest a target in your current state."
+		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	var/list/choices = list()
@@ -579,39 +579,39 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	if(!(src.Adjacent(M))) return
 
 	if(M.has_brain_worms())
-		src << "You cannot infest someone who is already infested!"
+		to_chat(src, "You cannot infest someone who is already infested!")
 		return
 
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.check_body_part_coverage(EARS))
-			src << "You cannot get through that host's protective gear."
+			to_chat(src, "You cannot get through that host's protective gear.")
 			return
 
-	src << "You slither up [M] and begin probing at their ear canal..."
-	M << "<span class='sinister'>You feel something slithering up your leg...</span>"
+	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
+	to_chat(M, "<span class='sinister'>You feel something slithering up your leg...</span>")
 
 	if(!do_after(src,M,50))
-		src << "As [M] moves away, you are dislodged and fall to the ground."
+		to_chat(src, "As [M] moves away, you are dislodged and fall to the ground.")
 		return
 
 	if(!M || !src) return
 
 	if(src.stat)
-		src << "You cannot infest a target in your current state."
+		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
 	if(M.stat == 2)
-		src << "That is not an appropriate target."
+		to_chat(src, "That is not an appropriate target.")
 		return
 
 	if(M in view(1, src))
-		src << "You wiggle into [M]'s ear."
+		to_chat(src, "You wiggle into [M]'s ear.")
 		src.perform_infestation(M)
 
 		return
 	else
-		src << "They are no longer in range!"
+		to_chat(src, "They are no longer in range!")
 		return
 
 /mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
@@ -656,11 +656,11 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 
 	if(stat)
-		src << "You cannot ventcrawl your current state."
+		to_chat(src, "You cannot ventcrawl your current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	var/pipe = start_ventcrawl()
@@ -675,10 +675,10 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("<span class='notice'>You are now hiding.</span>")
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		src << text("<span class='notice'>You have stopped hiding.</span>")
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 
 
@@ -688,25 +688,25 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 
 	if(stat)
-		src << "You cannot reproduce in your current state."
+		to_chat(src, "You cannot reproduce in your current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
 	if(busy)
-		src << "<span class='warning'>You are already doing something.</span>"
+		to_chat(src, "<span class='warning'>You are already doing something.</span>")
 		return
 
 	if(chemicals >= 100)
 		busy=1
-		src << "<span class='warning'>You strain, trying to push out your young...</span>"
+		to_chat(src, "<span class='warning'>You strain, trying to push out your young...</span>")
 		visible_message("<span class='warning'>\The [src] begins to struggle and strain!</span>", \
 			drugged_message = "<span class='notice'>\The [src] starts dancing.</span>")
 		var/turf/T = get_turf(src)
 		if(do_after(src, T, 5 SECONDS))
-			src << "<span class='danger'>You twitch and quiver as you rapidly excrete an egg from your sluglike body.</span>"
+			to_chat(src, "<span class='danger'>You twitch and quiver as you rapidly excrete an egg from your sluglike body.</span>")
 			visible_message("<span class='danger'>\The [src] heaves violently, expelling a small, gelatinous egg!</span>", \
 				drugged_message = "<span class='notice'>\The [src] starts farting a rainbow! Suddenly, a pot of gold appears.</span>")
 			chemicals -= 100
@@ -720,7 +720,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		busy=0
 
 	else
-		src << "You do not have enough chemicals stored to reproduce."
+		to_chat(src, "You do not have enough chemicals stored to reproduce.")
 		return()
 
 //Procs for grabbing players.
@@ -769,16 +769,16 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		//forge_objectives()
 
 		// tl;dr
-		src << "<span class='danger'>You are a Cortical Borer!</span>"
-		src << "<span class='info'>You are a small slug-like symbiote that attaches to your host's brain.  Your only goals are to survive and procreate. However, there are those who would like to destroy you, and hosts don't take kindly to jerks.  Being as helpful to your host as possible is the best option for survival.</span>"
-		src << "<span class='info'>Borers can speak with other borers over the Cortical Link.  To do so, release control and use <code>say \";message\"</code>.  To communicate with your host only, speak normally.</span>"
-		src << "<span class='info'><b>New:</b> To get new abilities for you and your host, use <em>Evolve</em> to unlock things.  Borers are now symbiotic biological pAIs.</span>"
+		to_chat(src, "<span class='danger'>You are a Cortical Borer!</span>")
+		to_chat(src, "<span class='info'>You are a small slug-like symbiote that attaches to your host's brain.  Your only goals are to survive and procreate. However, there are those who would like to destroy you, and hosts don't take kindly to jerks.  Being as helpful to your host as possible is the best option for survival.</span>")
+		to_chat(src, "<span class='info'>Borers can speak with other borers over the Cortical Link.  To do so, release control and use <code>say \";message\"</code>.  To communicate with your host only, speak normally.</span>")
+		to_chat(src, "<span class='info'><b>New:</b> To get new abilities for you and your host, use <em>Evolve</em> to unlock things.  Borers are now symbiotic biological pAIs.</span>")
 		if(config.borer_takeover_immediately)
-			src << "<span class='info'><b>Important:</b> While you receive full control at the start, <em>it is asked that you release control at some point so your host has a chance to play.</em>  If they misbehave, you are permitted to kill them.</span>"
+			to_chat(src, "<span class='info'><b>Important:</b> While you receive full control at the start, <em>it is asked that you release control at some point so your host has a chance to play.</em>  If they misbehave, you are permitted to kill them.</span>")
 
 		//var/obj_count = 1
 		//for(var/datum/objective/objective in mind.objectives)
-		//	src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+//			to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		//	obj_count++
 
 /mob/living/simple_animal/borer/proc/forge_objectives()
@@ -799,7 +799,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Check the health of your host."
 	set category = "Alien"
 
-	src << "<span class='info'>You listen to the song of your host's nervous system, hunting for dischordant notes...</span>"
+	to_chat(src, "<span class='info'>You listen to the song of your host's nervous system, hunting for dischordant notes...</span>")
 	spawn(5 SECONDS)
 		healthanalyze(host, src, mode=1, silent=1, skip_checks=1) // I am not rewriting this shit with more immersive strings.  Deal with it. - N3X
 
@@ -809,14 +809,14 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 
 	if(stat)
-		src << "You cannot taste blood in your current state."
+		to_chat(src, "You cannot taste blood in your current state.")
 		return
 
 	if(research.unlocking)
-		src << "<span class='warning'>You are busy evolving.</span>"
+		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
-	src << "<span class='info'>You taste the blood of your host, and process it for abnormalities.</span>"
+	to_chat(src, "<span class='info'>You taste the blood of your host, and process it for abnormalities.</span>")
 	if(!isnull(host.reagents))
 		var/dat = ""
 		if(host.reagents.reagent_list.len > 0)
@@ -824,8 +824,8 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 				if(R.id == "blood") continue // Like we need to know that blood contains blood.
 				dat += "\n \t <span class='notice'>[R] ([R.volume] units)</span>"
 		if(dat)
-			src << "<span class='notice'>Chemicals found: [dat]</span>"
+			to_chat(src, "<span class='notice'>Chemicals found: [dat]</span>")
 		else
-			src << "<span class='notice'>No active chemical agents found in [host]'s blood.</span>"
+			to_chat(src, "<span class='notice'>No active chemical agents found in [host]'s blood.</span>")
 	else
-		src << "<span class='notice'>No significant chemical agents found in [host]'s blood.</span>"
+		to_chat(src, "<span class='notice'>No significant chemical agents found in [host]'s blood.</span>")

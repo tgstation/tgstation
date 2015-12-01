@@ -49,7 +49,7 @@ var/global/list/investigations=list(
 	handle = file(src.filename)
 
 /datum/log_controller/proc/write(var/message)
-	handle << url_decode(message)
+	to_chat(handle, url_decode(message))
 
 /datum/log_controller/proc/read(var/mob/user)
 	user << browse(handle,"window=investigate[subject];size=800x300")
@@ -74,16 +74,16 @@ var/global/list/investigations=list(
 	set category = "Admin"
 
 	if(!holder)
-		src << "<span class='warning'>You're not an admin, go away.</span>"
+		to_chat(src, "<span class='warning'>You're not an admin, go away.</span>")
 		return
 
 	if(!(subject in investigations))
-		src << "<span class='warning'>Unable to find that subject.</span>"
+		to_chat(src, "<span class='warning'>Unable to find that subject.</span>")
 		return
 
 	var/datum/log_controller/I = investigations[subject]
 	if(!I)
-		src << "<span class='warning'>No log for [subject] can be found.</span>"
+		to_chat(src, "<span class='warning'>No log for [subject] can be found.</span>")
 		return
 
 	I.read(usr)

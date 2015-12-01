@@ -25,7 +25,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		if(occupant)
-			user << "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>"
+			to_chat(user, "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>")
 			return
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 2
@@ -43,13 +43,13 @@
 	if(!istype(our_mob)) return
 
 	if(occupant)
-		user << "<span class='warning'>[occupant.name] is already hanging from \the [src], finish collecting its meat first!</span>"
+		to_chat(user, "<span class='warning'>[occupant.name] is already hanging from \the [src], finish collecting its meat first!</span>")
 		return
 
 	for(var/T in allowed_mobs)
 		if(istype(our_mob, T))
 			if(our_mob.abiotic())
-				user << "<span class='warning'>Subject may not have abiotic items on.</span>"
+				to_chat(user, "<span class='warning'>Subject may not have abiotic items on.</span>")
 				return
 			else
 				src.occupant = our_mob
@@ -81,9 +81,9 @@
 			src.occupant.drop_meat(get_turf(src))
 
 			if(src.meat_remaining)
-				user << "You remove some meat from \the [src.occupant]."
+				to_chat(user, "You remove some meat from \the [src.occupant].")
 			else
-				user << "You remove the last piece of meat from \the [src]!"
+				to_chat(user, "You remove the last piece of meat from \the [src]!")
 				src.clean()
 	else
 		src.clean()

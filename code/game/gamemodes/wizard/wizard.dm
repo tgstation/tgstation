@@ -23,8 +23,8 @@
 
 
 /datum/game_mode/wizard/announce()
-	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a <span class='danger'>SPACE WIZARD on the station. You can't let him achieve his objective!</span>"
+	to_chat(world, "<B>The current game mode is - Wizard!</B>")
+	to_chat(world, "<B>There is a <span class='danger'>SPACE WIZARD on the station. You can't let him achieve his objective!</span>")
 
 /datum/game_mode/wizard/pre_setup()
 	var/list/datum/mind/possible_wizards = get_players_for_role(ROLE_WIZARD)
@@ -51,7 +51,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
+		to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
 		log_admin("Failed to set-up a round of wizard. Couldn't find any wizard spawn points.")
 		message_admins("Failed to set-up a round of wizard. Couldn't find any wizard spawn points.")
 		return 0
@@ -150,12 +150,12 @@
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
+	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in wizard.objectives)
-		wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -198,8 +198,8 @@
 	// For Vox and plasmadudes.
 	//wizard_mob.species.handle_post_spawn(wizard_mob)
 
-	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
+	to_chat(wizard_mob, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
+	to_chat(wizard_mob, "In your pockets you will find a teleport scroll. Use it as needed.")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
 	return 1
@@ -322,19 +322,19 @@
 /*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/wearing_wiz_garb()
-	src << "Silly creature, you're not a human. Only humans can cast this spell."
+	to_chat(src, "Silly creature, you're not a human. Only humans can cast this spell.")
 	return 0
 
 // Humans can wear clothes.
 /mob/living/carbon/human/wearing_wiz_garb()
 	if(!is_wiz_garb(src.wear_suit))
-		src << "<span class='warning'>I don't feel strong enough without my robe.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my robe.</span>")
 		return 0
 	if(!is_wiz_garb(src.shoes))
-		src << "<span class='warning'>I don't feel strong enough without my sandals.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my sandals.</span>")
 		return 0
 	if(!is_wiz_garb(src.head))
-		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my hat.</span>")
 		return 0
 	return 1
 
@@ -342,13 +342,13 @@ Made a proc so this is not repeated 14 (or more) times.*/
 /*
 /mob/living/carbon/monkey/wearing_wiz_garb()
 	if(!is_wiz_garb(src.wear_suit))
-		src << "<span class='warning'>I don't feel strong enough without my robe.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my robe.</span>")
 		return 0
 	if(!is_wiz_garb(src.shoes))
-		src << "<span class='warning'>I don't feel strong enough without my sandals.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my sandals.</span>")
 		return 0
 	if(!is_wiz_garb(src.head))
-		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
+		to_chat(src, "<span class='warning'>I don't feel strong enough without my hat.</span>")
 		return 0
 	return 1
 */

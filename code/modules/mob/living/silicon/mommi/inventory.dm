@@ -35,7 +35,7 @@
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
 	//if(is_in_modules(W))
-		//src << "<span class='warning'>Picking up something that's built-in to you seems a bit silly.</span>"
+//		to_chat(src, "<span class='warning'>Picking up something that's built-in to you seems a bit silly.</span>")
 		//return 0
 	if(W.type == /obj/item/device/material_synth)
 		drop_item(W)
@@ -106,7 +106,7 @@
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		if(is_in_modules(tool_state))
 			if((tool_state in contents) && (tool_state in src.module.modules))
-				src << "<span class='warning'>This item cannot be dropped.</span>"
+				to_chat(src, "<span class='warning'>This item cannot be dropped.</span>")
 				return 0
 		if(client)
 			client.screen -= tool_state
@@ -281,7 +281,7 @@
 	if(W == tool_state)
 		// Don't allow the MoMMI to equip tools to their head. I mean, they cant anyways, but stop them here
 		if(is_in_modules(tool_state))
-			src << "<span class='warning'>You cannot equip a module to your head.</span>"
+			to_chat(src, "<span class='warning'>You cannot equip a module to your head.</span>")
 			return 0
 		// Remove the item in the MoMMI's claw from their HuD
 		if (client)
@@ -313,7 +313,7 @@
 			if (client)
 				client.screen += head_state
 		else
-			src << "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
+			to_chat(src, "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return 0
 	// Set the item layer and update the MoMMI's icons
 	W.layer = 20
@@ -326,7 +326,7 @@
 		if(equip_to_slot(W, slot))
 			update_items()
 		else
-			src << "<span class='warning'>You are unable to equip that.</span>"
+			to_chat(src, "<span class='warning'>You are unable to equip that.</span>")
 
 // Quickly equip a hat by pressing "e"
 /mob/living/silicon/robot/mommi/verb/quick_equip()
@@ -344,11 +344,11 @@
 		// Check to see if we are holding something
 		var/obj/item/I = M.tool_state
 		if(!I)
-			M << "<span class='notice'>You are not holding anything to equip.</span>"
+			to_chat(M, "<span class='notice'>You are not holding anything to equip.</span>")
 			return
 		// Attempt to equip it and, if it succedes, update our icon
 		if(M.equip_to_slot(I, slot_head))
 			update_items()
 		else
-			M << "<span class='warning'>You are unable to equip that.</span>"
+			to_chat(M, "<span class='warning'>You are unable to equip that.</span>")
 

@@ -34,14 +34,14 @@
 			mode = "It's empty and lacks wiring."
 		if(2)
 			mode = "It's wired."
-	user << "<span class='info'>[mode]</span>"
+	to_chat(user, "<span class='info'>[mode]</span>")
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-			usr << "You begin deconstructing [src]."
+			to_chat(usr, "You begin deconstructing [src].")
 			if (!do_after(usr, src, 30))
 				return
 			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
@@ -51,7 +51,7 @@
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
-			usr << "You have to remove the wires first."
+			to_chat(usr, "You have to remove the wires first.")
 			return
 
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -264,13 +264,13 @@ var/global/list/obj/machinery/light/alllights = list()
 	..()
 	switch(status)
 		if(LIGHT_OK)
-			user << "<span class='info'>[desc] It is turned [on? "on" : "off"].</span>"
+			to_chat(user, "<span class='info'>[desc] It is turned [on? "on" : "off"].</span>")
 		if(LIGHT_EMPTY)
-			user << "<span class='info'>[desc] The [fitting] has been removed.</span>"
+			to_chat(user, "<span class='info'>[desc] The [fitting] has been removed.</span>")
 		if(LIGHT_BURNED)
-			user << "<span class='info'>[desc] The [fitting] is burnt out.</span>"
+			to_chat(user, "<span class='info'>[desc] The [fitting] is burnt out.</span>")
 		if(LIGHT_BROKEN)
-			user << "<span class='info'>[desc] The [fitting] has been smashed.</span>"
+			to_chat(user, "<span class='info'>[desc] The [fitting] has been smashed.</span>")
 
 
 // attack with item - insert light (if right type), otherwise try to break the light
@@ -288,14 +288,14 @@ var/global/list/obj/machinery/light/alllights = list()
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))
 		if(status != LIGHT_EMPTY)
-			user << "There is a [fitting] already inserted."
+			to_chat(user, "There is a [fitting] already inserted.")
 			return
 		else
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(L.fitting == fitting)
 				status = L.status
-				user << "You insert \the [L.name]."
+				to_chat(user, "You insert \the [L.name].")
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness_range = L.brightness_range
@@ -317,7 +317,7 @@ var/global/list/obj/machinery/light/alllights = list()
 
 					explode()
 			else
-				user << "This type of light requires a [fitting]."
+				to_chat(user, "This type of light requires a [fitting].")
 				return
 
 		// attempt to break the light
@@ -328,7 +328,7 @@ var/global/list/obj/machinery/light/alllights = list()
 
 		if(prob(1+W.force * 5))
 
-			user << "You hit the light, and it smashes!"
+			to_chat(user, "You hit the light, and it smashes!")
 			for(var/mob/M in viewers(src))
 				if(M == user)
 					continue
@@ -340,7 +340,7 @@ var/global/list/obj/machinery/light/alllights = list()
 			broken()
 
 		else
-			user << "You hit the light!"
+			to_chat(user, "You hit the light!")
 	// attempt to deconstruct / stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/wirecutters)) //If it's a wirecutter take out the wires
@@ -365,7 +365,8 @@ var/global/list/obj/machinery/light/alllights = list()
 			qdel(src)
 			return
 
-		user << "You stick \the [W] into the light socket!" //If not stick it in the socket.
+		to_chat(user, "You stick \the [W] into the light socket!")//If not stick it in the socket.
+
 		if(has_power() && (W.is_conductor()))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -421,7 +422,7 @@ var/global/list/obj/machinery/light/alllights = list()
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		user << "<span class='good'>That object is useless to you.</span>"
+		to_chat(user, "<span class='good'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/M in viewers(src))
@@ -432,7 +433,7 @@ var/global/list/obj/machinery/light/alllights = list()
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)	return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		M << "<span class='warning'>That object is useless to you.</span>"
+		to_chat(M, "<span class='warning'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/O in viewers(src))
@@ -451,7 +452,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
-		user << "There is no [fitting] in this light."
+		to_chat(user, "There is no [fitting] in this light.")
 		return
 
 	// make it burn hands if not wearing fire-insulated gloves
@@ -468,9 +469,9 @@ var/global/list/obj/machinery/light/alllights = list()
 			prot = 1
 
 		if(prot > 0 || (M_RESIST_HEAT in user.mutations))
-			user << "You remove the light [fitting]"
+			to_chat(user, "You remove the light [fitting]")
 		else
-			user << "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand."
+			to_chat(user, "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand.")
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -674,7 +675,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
-		user << "You inject the solution into the [src]."
+		to_chat(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 5))
 

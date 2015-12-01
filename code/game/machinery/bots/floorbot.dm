@@ -133,19 +133,19 @@ var/global/list/floorbot_targets=list()
 		var/loaded = min(50-src.amount, T.amount)
 		T.use(loaded)
 		src.amount += loaded
-		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
+		to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>")
 		src.updateicon()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 		src.updateUsrDialog()
 	else
 		..()
@@ -153,7 +153,7 @@ var/global/list/floorbot_targets=list()
 /obj/machinery/bot/floorbot/Emag(mob/user as mob)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		if(user) to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if(..())
@@ -657,7 +657,7 @@ var/global/list/floorbot_targets=list()
 	//for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
+//		to_chat(world, "sent [key],[keyval[key]] on [freq]")
 	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	else
@@ -709,14 +709,14 @@ var/global/list/floorbot_targets=list()
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
+		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")
 		return
 	if(user.s_active)
 		user.s_active.close(user)
 	del(T)
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
-	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
+	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
 	user.drop_from_inventory(src)
 	del(src)
 
@@ -727,7 +727,7 @@ var/global/list/floorbot_targets=list()
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
-		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
+		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
 		user.drop_from_inventory(src)
 		del(src)
 
@@ -747,7 +747,7 @@ var/global/list/floorbot_targets=list()
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
-		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
+		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		user.drop_from_inventory(src)
 		del(src)
 	else if (istype(W, /obj/item/weapon/pen))

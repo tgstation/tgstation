@@ -30,7 +30,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>")
 			else
 				M.overeatduration = min(M.overeatduration + 100, 600)
 				M.nutrition = min(M.nutrition + 100, 500)
@@ -71,9 +71,9 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel hungry.", "You crave for food.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("You feel hungry.", "You crave for food.")]</span>")
 			else
-				M << "<span class='notice'>Your stomach rumbles.</span>"
+				to_chat(M, "<span class='notice'>Your stomach rumbles.</span>")
 				M.overeatduration = max(M.overeatduration - 100, 0)
 				M.nutrition = max(M.nutrition - 100, 0)
 

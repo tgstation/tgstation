@@ -40,7 +40,7 @@
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		user << "<span class = 'notice'>You fill the balloon with the contents of [A].</span>"
+		to_chat(user, "<span class = 'notice'>You fill the balloon with the contents of [A].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
@@ -49,15 +49,15 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
-				user << "The [O] is empty."
+				to_chat(user, "The [O] is empty.")
 			else if(O.reagents.total_volume >= 1)
 				if(O.reagents.has_reagent("pacid", 1))
-					user << "The acid chews through the balloon!"
+					to_chat(user, "The acid chews through the balloon!")
 					O.reagents.reaction(user)
 					del(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					user << "<span class = 'info'>You fill the balloon with the contents of [O].</span>"
+					to_chat(user, "<span class = 'info'>You fill the balloon with the contents of [O].</span>")
 					O.reagents.trans_to(src, 10)
 	src.update_icon()
 	return
@@ -114,7 +114,7 @@
 	icon_state = "singularity_s1"
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class = 'danger'><b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		to_chat(viewers(user), "<span class = 'danger'><b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b></span>")
 		return (BRUTELOSS|TOXLOSS|OXYLOSS)
 
 
@@ -139,22 +139,22 @@
 
 /obj/item/toy/gun/examine(mob/user)
 	..()
-	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
+	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
-			user << "<span class = 'notice'>It's already fully loaded!</span>"
+			to_chat(user, "<span class = 'notice'>It's already fully loaded!</span>")
 			return 1
 		if (A.amount_left <= 0)
-			user << "<span class = 'warning'>There is no more caps!</span>"
+			to_chat(user, "<span class = 'warning'>There is no more caps!</span>")
 			return 1
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
-			user << text("<span class = 'warning'>You reload [] caps\s!</span>", A.amount_left)
+			to_chat(user, text("<span class = 'warning'>You reload [] caps\s!</span>", A.amount_left))
 			A.amount_left = 0
 		else
-			user << text("<span class = 'warning'>You reload [] caps\s!</span>", 7 - src.bullets)
+			to_chat(user, text("<span class = 'warning'>You reload [] caps\s!</span>", 7 - src.bullets))
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_icon()
@@ -165,7 +165,7 @@
 	if (flag)
 		return
 	if (!user.dexterity_check())
-		user << "<span class = 'warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class = 'warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
@@ -197,7 +197,7 @@
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
-	user << "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
+	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
 
 
 /*
@@ -218,7 +218,7 @@
 /obj/item/toy/crossbow/examine(mob/user)
 	..()
 	if (bullets)
-		user << "<span class = 'info'>It is loaded with [bullets] foam dart\s!</span>"
+		to_chat(user, "<span class = 'info'>It is loaded with [bullets] foam dart\s!</span>")
 
 /obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
@@ -226,9 +226,9 @@
 			user.drop_item()
 			del(I)
 			bullets++
-			user << "<span class = 'info'>You load the foam dart into the crossbow.</span>"
+			to_chat(user, "<span class = 'info'>You load the foam dart into the crossbow.</span>")
 		else
-			usr << "<span class = 'warning'>It's already fully loaded.</span>"
+			to_chat(usr, "<span class = 'warning'>It's already fully loaded.</span>")
 
 
 /obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -334,13 +334,13 @@
 	attack_self(mob/user as mob)
 		src.active = !( src.active )
 		if (src.active)
-			user << "<span class = 'info'>You extend the plastic blade with a quick flick of your wrist.</span>"
+			to_chat(user, "<span class = 'info'>You extend the plastic blade with a quick flick of your wrist.</span>")
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
 			src.item_state = "swordblue"
 			src.w_class = 4
 		else
-			user << "<span class = 'info'>You push the plastic blade back down into the handle.</span>"
+			to_chat(user, "<span class = 'info'>You push the plastic blade back down into the handle.</span>")
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
 			src.item_state = "sword0"
@@ -390,7 +390,7 @@
 	return style.Format(text,src,user,P)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	viewers(user) << "<span class = 'danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>"
+	to_chat(viewers(user), "<span class = 'danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
 
 
@@ -450,7 +450,7 @@
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
-			M << "<span class = 'warning'>You step on the snap pop!</span>"
+			to_chat(M, "<span class = 'warning'>You step on the snap pop!</span>")
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
@@ -490,12 +490,12 @@
 
 	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		user << "<span class = 'notice'>You refill your flower!</span>"
+		to_chat(user, "<span class = 'notice'>You refill your flower!</span>")
 		return
 
 	else if (src.reagents.total_volume < 1)
 		src.empty = 1
-		user << "<span class = 'notice'>Your flower has run dry!</span>"
+		to_chat(user, "<span class = 'notice'>Your flower has run dry!</span>")
 		return
 
 	else
@@ -517,7 +517,7 @@
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
 					if(ismob(T) && T:client)
-						T:client << "<span class = 'danger'>[user] has sprayed you with water!</span>"
+						to_chat(T:client, "<span class = 'danger'>[user] has sprayed you with water!</span>")
 				sleep(4)
 			del(D)
 
@@ -525,7 +525,7 @@
 
 /obj/item/toy/waterflower/examine(mob/user)
 	..()
-	user << "[src.reagents.total_volume] units of water left!"
+	to_chat(user, "[src.reagents.total_volume] units of water left!")
 
 /*
  * Mech prizes
@@ -538,14 +538,14 @@
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
 	if(cooldown < world.time - 8)
-		user << "<span class='notice'>You play with [src].</span>"
+		to_chat(user, "<span class='notice'>You play with [src].</span>")
 		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
 		cooldown = world.time
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(cooldown < world.time - 8)
-			user << "<span class='notice'>You play with [src].</span>"
+			to_chat(user, "<span class='notice'>You play with [src].</span>")
 			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			cooldown = world.time
 			return
@@ -630,7 +630,7 @@
 	icon_state = "gooncode"
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class = 'danger'>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</span>"
+		to_chat(viewers(user), "<span class = 'danger'>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 
@@ -657,16 +657,16 @@
 /obj/item/device/whisperphone/attack_self(mob/living/user as mob)
 	if (user.client)
 		if(user.client.prefs.muted & MUTE_IC)
-			src << "<span class = 'warning'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class = 'warning'>You cannot speak in IC (muted).</span>")
 			return
 	if(!ishuman(user))
-		user << "<span class = 'warning'>You don't know how to use this!</span>"
+		to_chat(user, "<span class = 'warning'>You don't know how to use this!</span>")
 		return
 	if(user:miming || user.silent)
-		user << "<span class = 'warning'>You find yourself unable to speak at all.</span>"
+		to_chat(user, "<span class = 'warning'>You find yourself unable to speak at all.</span>")
 		return
 	if(spamcheck)
-		user << "<span class = 'warning'>\The [src] needs to recharge!</span>"
+		to_chat(user, "<span class = 'warning'>\The [src] needs to recharge!</span>")
 		return
 
 	var/message = copytext(sanitize(input(user, "'Shout' a message?", "Whisperphone", null)  as text),1,MAX_MESSAGE_LEN)

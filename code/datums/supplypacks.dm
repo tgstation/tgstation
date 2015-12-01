@@ -419,7 +419,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/lipstick/random,
 					/obj/item/weapon/lipstick/random)
 	cost = 30
-	containertype = /obj/structure/closet/crate/
+	containertype = /obj/structure/closet/crate
 	containername = "Feminine clothing"
 	group = "Clothing"
 

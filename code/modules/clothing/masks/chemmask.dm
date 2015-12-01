@@ -113,13 +113,13 @@
 /obj/item/clothing/mask/chemmask/proc/can_use_verbs(mob/user)
 	var/mob/living/carbon/human/M = user
 	if (M.stat == DEAD)
-		user << "You can't do that while you're dead!"
+		to_chat(user, "You can't do that while you're dead!")
 		return 0
 	else if (M.stat == UNCONSCIOUS)
-		user << "You must be conscious to do this!"
+		to_chat(user, "You must be conscious to do this!")
 		return 0
 	else if (M.handcuffed)
-		user << "You can't reach the controls while you're restrained!"
+		to_chat(user, "You can't reach the controls while you're restrained!")
 		return 0
 	else
 		return 1
@@ -127,27 +127,27 @@
 /obj/item/clothing/mask/chemmask/examine(mob/user)
 	..()
 	if (power)
-		user << "The mask is active!"
+		to_chat(user, "The mask is active!")
 		if (tankactive)
-			user << "The mask is drawing from the main tank."
+			to_chat(user, "The mask is drawing from the main tank.")
 		else
-			user << "The mask is not drawing from the main tank."
+			to_chat(user, "The mask is not drawing from the main tank.")
 		if (beakeractive && has_beaker(user))
-			user << "The mask is drawing from the auxiliary beaker."
+			to_chat(user, "The mask is drawing from the auxiliary beaker.")
 		else if (!beakeractive && has_beaker(user))
-			user << "The mask is not drawing from the auxiliary beaker."
+			to_chat(user, "The mask is not drawing from the auxiliary beaker.")
 	else
 		var/mob/living/carbon/human/M = user
 		if(M.wear_mask == src)
-			user << "The mask is inactive."
+			to_chat(user, "The mask is inactive.")
 			if (tankactive)
-				user << "The mask is set to draw from the main tank."
+				to_chat(user, "The mask is set to draw from the main tank.")
 			else
-				user << "The mask is not set to draw from the main tank."
+				to_chat(user, "The mask is not set to draw from the main tank.")
 			if (beakeractive && has_beaker(user))
-				user << "The mask is set to draw from the auxiliary beaker."
+				to_chat(user, "The mask is set to draw from the auxiliary beaker.")
 			else if (!beakeractive && has_beaker(user))
-				user << "The mask is not set to draw from the auxiliary beaker."
+				to_chat(user, "The mask is not set to draw from the auxiliary beaker.")
 
 /obj/item/clothing/mask/chemmask/verb/toggle_power()
 	set name = "Toggle mask power"
@@ -162,18 +162,18 @@
 		if (istype(M.back,/obj/item/weapon/reagent_containers/chempack))
 			var/obj/item/weapon/reagent_containers/chempack/P = M.back
 			if (P.safety)
-				usr << "<span class='notice'>You activate \the [src].</span>"
+				to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
 				power = 1
 				icon_state = "chemmask1"
 //				start_flow(usr)
 				usr.update_inv_wear_mask()
 				update_verbs()
 			else
-				usr << "<span class='warning'>You must disable \the [P]'s safeties before you can activate \the [src]!</span>"
+				to_chat(usr, "<span class='warning'>You must disable \the [P]'s safeties before you can activate \the [src]!</span>")
 		else
-			usr << "<span class='warning'>You need to be wearing a chemical pack before you can activate \the [src]!</span>"
+			to_chat(usr, "<span class='warning'>You need to be wearing a chemical pack before you can activate \the [src]!</span>")
 	else
-		usr << "<span class='notice'>You deactivate \the [src].</span>"
+		to_chat(usr, "<span class='notice'>You deactivate \the [src].</span>")
 		mask_shutdown(usr)
 
 /obj/item/clothing/mask/chemmask/verb/set_pack_injection()
@@ -199,10 +199,10 @@
 
 	if (!beakeractive)
 		beakeractive = 1
-		usr << "<span class='notice'>You enable connection to the chemical pack's auxiliary beaker chamber.</span>"
+		to_chat(usr, "<span class='notice'>You enable connection to the chemical pack's auxiliary beaker chamber.</span>")
 	else
 		beakeractive = 0
-		usr << "<span class='notice'>You disable connection to the chemical pack's auxiliary beaker chamber.</span>"
+		to_chat(usr, "<span class='notice'>You disable connection to the chemical pack's auxiliary beaker chamber.</span>")
 
 /obj/item/clothing/mask/chemmask/verb/set_tank_usage()
 	set name = "Toggle primary tank usage"
@@ -214,10 +214,10 @@
 
 	if (!tankactive)
 		tankactive = 1
-		usr << "<span class='notice'>You enable connection to the chemical pack's primary tank system.</span>"
+		to_chat(usr, "<span class='notice'>You enable connection to the chemical pack's primary tank system.</span>")
 	else
 		tankactive = 0
-		usr << "<span class='notice'>You disable connection to the chemical pack's primary tank system.</span>"
+		to_chat(usr, "<span class='notice'>You disable connection to the chemical pack's primary tank system.</span>")
 
 /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method()
 	set name = "Set auxiliary beaker injection method"
@@ -289,7 +289,7 @@
 	var/mob/living/M = user
 	if (!(M && M.back && istype(M.back,/obj/item/weapon/reagent_containers/chempack)))
 		mask_shutdown(user)
-		user << "<span class='notice'>\The [src] shuts off!</span>"
+		to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 		return 0
 	else
 		return 1
@@ -298,11 +298,11 @@
 	var/mob/living/M = user
 	if (!(M && M.wear_mask && istype(M.wear_mask,/obj/item/clothing/mask/chemmask)))
 		mask_shutdown(user)
-		user << "<span class='notice'>\The [src] shuts off!</span>"
+		to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 		return 0
 	else if (!(M.wear_mask == src))
 		mask_shutdown(user)
-		user << "<span class='notice'>\The [src] shuts off!</span>"
+		to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 		return 0
 	else
 		return 1
@@ -311,7 +311,7 @@
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
 	if (P.is_empty() && firstalert_tank == 0 && tankactive)
 		firstalert_tank = 1
-		user << "<span class='warning'>The chemical pack is empty!</span>"
+		to_chat(user, "<span class='warning'>The chemical pack is empty!</span>")
 	else if (!P.is_empty())
 		firstalert_tank = 0
 
@@ -326,7 +326,7 @@
 	if (B.is_empty() && firstalert_beaker == 0)
 		firstalert_beaker = 1
 		playsound(get_turf(src),'sound/mecha/internaldmgalarm.ogg', 100, 1)
-		user << "<span class='warning'>The auxiliary beaker is empty!</span>"
+		to_chat(user, "<span class='warning'>The auxiliary beaker is empty!</span>")
 	else if (!B.is_empty())
 		firstalert_beaker = 0
 

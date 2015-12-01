@@ -16,7 +16,7 @@
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
-			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
+			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
 		user.drop_item(W)
 		var/obj/structure/bed/chair/e_chair/E = new /obj/structure/bed/chair/e_chair(src.loc)
@@ -85,7 +85,7 @@
 
 			M.Weaken(5)
 		else
-			user << "You can't buckle [M.name] to [src], They just fell out!"
+			to_chat(user, "You can't buckle [M.name] to [src], They just fell out!")
 
 	else
 		buckle_mob(M, user)

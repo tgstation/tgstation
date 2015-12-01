@@ -27,7 +27,7 @@
 	set desc = "Drops the bodytemperature of another person. Currently on cooldown, ironically enough."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your cryokinetic ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your cryokinetic ability is recharging.</span>")
 
 /proc/bioproc_cryokinesis(var/mob/living/carbon/C in view())
 	set name = "Cryokinesis"
@@ -35,7 +35,7 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(C))
-		usr << "<span class='warning'>This will only work on normal organic beings.</span>"
+		to_chat(usr, "<span class='warning'>This will only work on normal organic beings.</span>")
 		return
 
 	if(!can_act(usr)) return
@@ -103,7 +103,7 @@
 	set desc = "Eat just about anything! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Matter Eating ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Matter Eating ability is recharging.</span>")
 
 /proc/bioproc_mattereater()
 	set name = "Eat"
@@ -123,7 +123,7 @@
 	for(var/obj/item/C in range(1,usr))
 		edible_items += C
 	if (!edible_items.len)
-		usr << "/red You can't find anything nearby that's small enough to eat."
+		to_chat(usr, "/red You can't find anything nearby that's small enough to eat.")
 		return
 
 	var/obj/item/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in edible_items
@@ -185,7 +185,7 @@
 	set desc = "Leap great distances! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Jumping ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Jumping ability is recharging.</span>")
 
 /proc/bioproc_jumpy()
 	set name = "Jump"
@@ -194,7 +194,7 @@
 
 	if(!can_act(usr)) return
 	if (istype(usr.loc,/mob/))
-		usr << "<span class='warning'>You can't jump right now!</span>"
+		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
 	usr.verbs -= /proc/bioproc_jumpy
@@ -226,7 +226,7 @@
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>"
+		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
 		usr.weakened += 5
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
@@ -274,7 +274,7 @@
 	set desc = "Mimic the appearance of others! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Polymorphing ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Polymorphing ability is recharging.</span>")
 
 /proc/bioproc_polymorphism(var/mob/M in view())
 	set name = "Polymorph"
@@ -282,7 +282,7 @@
 	set category = "Mutant Abilities"
 
 	if(!ishuman(M))
-		usr << "<span class='warning'>You can only change your appearance to that of another human.</span>"
+		to_chat(usr, "<span class='warning'>You can only change your appearance to that of another human.</span>")
 		return
 
 	if(!ishuman(usr)) return
@@ -339,18 +339,18 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(M))
-		usr << "<span class='warning'>You may only use this on other organic beings.</span>"
+		to_chat(usr, "<span class='warning'>You may only use this on other organic beings.</span>")
 		return
 
 	if(!can_act(usr))
 		return
 
 	if (M:bioHolder.HasEffect("psy_resist"))
-		usr << "<span class='warning'>You can't contact [M.name]'s mind at all!</span>"
+		to_chat(usr, "<span class='warning'>You can't contact [M.name]'s mind at all!</span>")
 		return
 
 	if(!M.client || M.stat)
-		M << "<span class='warning'>You can't seem to get through to [M.name] mentally.</span>"
+		to_chat(M, "<span class='warning'>You can't seem to get through to [M.name] mentally.</span>")
 		return
 
 	var/msg = input(usr, "Message to [M.name]:","Telepathy")
@@ -361,8 +361,8 @@
 	if (M:bioHolder.HasOneOfTheseEffects("telepathy","empath"))
 		psyname = "[usr.name]"
 
-	M << {"<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>"}
-	usr << {"<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[M.name]</b>.</span>"}
+	to_chat(M, {"<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>"})
+	to_chat(usr, {"<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[M.name]</b>.</span>"})
 
 	telepathy_log.Add("<b>[round(((world.time / 10) / 60))]M: [usr.real_name] ([usr.key])</b> to [M.name]: [msg]")
 
@@ -397,24 +397,24 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(M))
-		usr << "<span class='warning'>You may only use this on other organic beings.</span>"
+		to_chat(usr, "<span class='warning'>You may only use this on other organic beings.</span>")
 		return
 
 	if(!can_act(usr))
 		return
 
 	if (M:bioHolder.HasEffect("psy_resist"))
-		usr << "<span class='warning'>You can't see into [M.name]'s mind at all!</span>"
+		to_chat(usr, "<span class='warning'>You can't see into [M.name]'s mind at all!</span>")
 		return
 
 	if (M.stat == 2)
-		usr << "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>"
+		to_chat(usr, "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>")
 		return
 	if (M.health < 0)
-		usr << "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>"
+		to_chat(usr, "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>")
 		return
 
-	usr << "<span class='notice'>Mind Reading of [M.name]:</b></span>"
+	to_chat(usr, "<span class='notice'>Mind Reading of [M.name]:</b></span>")
 	var/pain_condition = M.health
 	// lower health means more pain
 	var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -429,43 +429,43 @@
 
 	switch(pain_condition)
 		if (81 to INFINITY)
-			usr << "<span class='notice'><b>Condition</b>: [M.name] feels good.</span>"
+			to_chat(usr, "<span class='notice'><b>Condition</b>: [M.name] feels good.</span>")
 		if (61 to 80)
-			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering mild pain.</span>"
+			to_chat(usr, "<span class='notice'><b>Condition</b>: [M.name] is suffering mild pain.</span>")
 		if (41 to 60)
-			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering significant pain.</span>"
+			to_chat(usr, "<span class='notice'><b>Condition</b>: [M.name] is suffering significant pain.</span>")
 		if (21 to 40)
-			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering severe pain.</span>"
+			to_chat(usr, "<span class='notice'><b>Condition</b>: [M.name] is suffering severe pain.</span>")
 		else
-			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering excruciating pain.</span>"
+			to_chat(usr, "<span class='notice'><b>Condition</b>: [M.name] is suffering excruciating pain.</span>")
 			thoughts = "haunted by their own mortality"
 
 	switch(M.a_intent)
 		if ("help")
-			usr << "<span class='notice'><b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
+			to_chat(usr, "<span class='notice'><b>Mood</b>: You sense benevolent thoughts from [M.name].</span>")
 		if ("disarm")
-			usr << "<span class='notice'><b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
+			to_chat(usr, "<span class='notice'><b>Mood</b>: You sense cautious thoughts from [M.name].</span>")
 		if ("grab")
-			usr << "<span class='notice'><b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
+			to_chat(usr, "<span class='notice'><b>Mood</b>: You sense hostile thoughts from [M.name].</span>")
 		if ("harm")
-			usr << "<span class='notice'><b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
+			to_chat(usr, "<span class='notice'><b>Mood</b>: You sense cruel thoughts from [M.name].</span>")
 			for(var/mob/living/L in view(7,M))
 				if (L == M)
 					continue
 				thoughts = "thinking about punching [L.name]"
 				break
 		else
-			usr << "<span class='notice'><b>Mood</b>: You sense strange thoughts from [M.name].</span>"
+			to_chat(usr, "<span class='notice'><b>Mood</b>: You sense strange thoughts from [M.name].</span>")
 
 	if (istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		usr << "<span class='notice'><b>Numbers</b>: You sense the number [H.pin] is important to [M.name].</span>"
-	usr << "<span class='notice'><b>Thoughts</b>: [M.name] is currently [thoughts].</span>"
+		to_chat(usr, "<span class='notice'><b>Numbers</b>: You sense the number [H.pin] is important to [M.name].</span>")
+	to_chat(usr, "<span class='notice'><b>Thoughts</b>: [M.name] is currently [thoughts].</span>")
 
 	if (M:bioHolder.HasEffect("empath"))
-		M << "<span class='warning'>You sense [usr.name] reading your mind.</span>"
+		to_chat(M, "<span class='warning'>You sense [usr.name] reading your mind.</span>")
 	else if (prob(5) || M:bioHolder.HasEffect("training_chaplain"))
-		M << "<span class='warning'>You sense someone intruding upon your thoughts...</span>"
+		to_chat(M, "<span class='warning'>You sense someone intruding upon your thoughts...</span>")
 	return
 
 ////////////////////////////////////////////////////////////////////////
@@ -498,7 +498,7 @@
 	set desc = "Wreath yourself in burning flames. Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Immolation ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Immolation ability is recharging.</span>")
 
 /proc/bioproc_immolate()
 	set name = "Immolate"
@@ -605,7 +605,7 @@
 	set desc = "Unleash a gigantic fart! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Super Fart ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Super Fart ability is recharging.</span>")
 
 /proc/bioproc_superfart()
 	set name = "Super Fart"
@@ -618,7 +618,7 @@
 		var/mob/living/L = usr
 
 		if (L.stat || !can_act(L))
-			L << "<span class='warning'>You can't do that while incapacitated.</span>"
+			to_chat(L, "<span class='warning'>You can't do that while incapacitated.</span>")
 			return
 
 		L.visible_message("<span class='warning'><b>[L.name]</b> hunches down and grits their teeth!</span>")
@@ -632,7 +632,7 @@
 				shake_camera(V,10,5)
 				if (V == L)
 					continue
-				V << "<span class='warning'>You are sent flying!</span>"
+				to_chat(V, "<span class='warning'>You are sent flying!</span>")
 				V.weakened += 5 // why the hell was this set to 12 christ
 				step_away(V,get_turf(L),15)
 				step_away(V,get_turf(L),15)
@@ -641,7 +641,7 @@
 			 	for(var/turf/T in view(get_turf(L),2))
 			 		new /obj/effects/fart_cloud(T,L)
 		else
-			L << "<span class='warning'>You were interrupted and couldn't fart! Rude!</span>"
+			to_chat(L, "<span class='warning'>You were interrupted and couldn't fart! Rude!</span>")
 			usr.verbs += /proc/bioproc_superfart
 			usr.verbs -= /proc/bioproc_superfart_cd
 			return
@@ -684,7 +684,7 @@
 	set desc = "Shoot lasers from your eyes. Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "<span class='warning'>Your Eye Beams ability is recharging.</span>"
+	to_chat(usr, "<span class='warning'>Your Eye Beams ability is recharging.</span>")
 
 /proc/bioproc_eyebeams()
 	set name = "Eye Beams"

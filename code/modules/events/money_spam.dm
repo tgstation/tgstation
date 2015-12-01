@@ -59,7 +59,7 @@
 					message = pick("Luxury watches for Blowout sale prices!", \
 					"Watches, Jewelry & Accessories, Bags & Wallets !", \
 					"Deposit 100$ and get 300$ totally free!", \
-					" 100K NT.|WOWGOLD õnly $89            <HOT>", \
+					" 100K NT.|WOWGOLD ï¿½nly $89            <HOT>", \
 					"We have been filed with a complaint from one of your customers in respect of their business relations with you.", \
 					"We kindly ask you to open the COMPLAINT REPORT (attached) to reply on this complaint..")
 				if(4)
@@ -117,7 +117,8 @@
 				L = get(P, /mob/living/silicon)
 
 			if(L && (!filter_app || (filter_app.function == 0)))//the owner will still be able to manually read the spam in his Message log.
-				L << "\icon[P] <b>Message from [sender] (Unknown), </b>\"[message]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+				to_chat(L, "\icon[P] <b>Message from [sender] (Unknown), </b>\"[message]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+
 	else if(world.time > time_failed + 1200)
 		//if there's no server active for two minutes, give up
 		kill()

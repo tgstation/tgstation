@@ -330,7 +330,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	// FUCK mice. - N3X
 	if(ismouse(src) && (Proj.stun+Proj.weaken+Proj.paralyze+Proj.agony)>5)
 		var/mob/living/simple_animal/mouse/M=src
-		M << "<span class='warning'>What would probably not kill a human completely overwhelms your tiny body.</span>"
+		to_chat(M, "<span class='warning'>What would probably not kill a human completely overwhelms your tiny body.</span>")
 		M.splat()
 		return 0
 	adjustBruteLoss(Proj.damage)
@@ -444,7 +444,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -474,7 +474,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 					adjustBruteLoss(-MED.heal_brute)
 					src.visible_message("<span class='notice'>[user] applies \the [MED] on [src].</span>")
 		else
-			user << "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>"
+			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
 	else if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(O.is_sharp())
 			butcher()
@@ -492,7 +492,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user]. </span>")
 		else
-			usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")

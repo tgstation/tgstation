@@ -251,10 +251,10 @@ var/global/ZAS_Settings/zas_settings = new
 	fdel(F)
 	for(var/id in src.settings)
 		var/datum/ZAS_Setting/setting = src.settings[id]
-		F << "# [setting.name]"
-		F << "#   [setting.desc]"
-		F << "[id] [setting.value]"
-		F << ""
+		to_chat(F, "# [setting.name]")
+		to_chat(F, "#   [setting.desc]")
+		to_chat(F, "[id] [setting.value]")
+		to_chat(F, "")
 
 /ZAS_Settings/proc/Load()
 	for(var/t in file2list("config/ZAS.txt"))
@@ -312,7 +312,7 @@ var/global/ZAS_Settings/zas_settings = new
 		else
 			error("[id] has an invalid typeval.")
 			return
-	world << "<span class='notice'><b>[key_name(user)] changed ZAS setting <i>[setting.name]</i> to <i>[displayedValue]</i>.</b></span>"
+	to_chat(world, "<span class='notice'><b>[key_name(user)] changed ZAS setting <i>[setting.name]</i> to <i>[displayedValue]</i>.</b></span>")
 
 	ChangeSettingsDialog(user)
 
@@ -514,4 +514,4 @@ a { color: white; }
 			Set("/datum/ZAS_Setting/airflow_speed_decay",       1)
 			Set("/datum/ZAS_Setting/airflow_delay",             20)
 			Set("/datum/ZAS_Setting/airflow_mob_slowdown",      3)
-	world << "<span class='notice'><b>[key_name(usr)] loaded ZAS preset <i>[def]</i></b></span>"
+	to_chat(world, "<span class='notice'><b>[key_name(usr)] loaded ZAS preset <i>[def]</i></b></span>")

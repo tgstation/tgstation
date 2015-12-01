@@ -159,24 +159,24 @@
 /obj/machinery/power/apc/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "Looks broken."
+		to_chat(user, "Looks broken.")
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			to_chat(user, "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
 		else if (!has_electronics && terminal)
-			user << "There are some wires but no any electronics."
+			to_chat(user, "There are some wires but no any electronics.")
 		else if (has_electronics && !terminal)
-			user << "Electronics installed but not wired."
+			to_chat(user, "Electronics installed but not wired.")
 		else /* if (!has_electronics && !terminal) */
-			user << "There is no electronics nor connected wires."
+			to_chat(user, "There is no electronics nor connected wires.")
 	else
 		if (stat & MAINT)
-			user << "The cover is closed. Something wrong with it: it doesn't work."
+			to_chat(user, "The cover is closed. Something wrong with it: it doesn't work.")
 		else if (malfhack)
-			user << "The cover is broken. It may be hard to force it open."
+			to_chat(user, "The cover is broken. It may be hard to force it open.")
 		else
-			user << "The cover is closed."
+			to_chat(user, "The cover is closed.")
 
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
@@ -365,10 +365,11 @@
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
 			if (terminal)
-				user << "<span class='warning'>Disconnect wires first.</span>"
+				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
 				return
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
+			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
+
 			if (do_after(user, src, 50) && opened && !terminal && has_electronics == 1)
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
@@ -387,14 +388,14 @@
 			update_icon()
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
-			user << "<span class='warning'>The cover is locked and cannot be opened.</span>"
+			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 			return
 		else
 			opened = 1
 			update_icon()
 	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			user << "You swap the power cell within with the new cell in your hand."
+			to_chat(user, "You swap the power cell within with the new cell in your hand.")
 			var/obj/item/weapon/oldpowercell = cell
 			user.drop_item(W, src)
 			cell = W
@@ -404,7 +405,7 @@
 			return
 		else
 			if (stat & MAINT)
-				user << "<span class='warning'>There is no connector for your power cell.</span>"
+				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
 				return
 			user.drop_item(W, src)
 			cell = W
@@ -416,70 +417,71 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				user << "<span class='warning'>Close the APC first.</span>" //Less hints more mystery!
+				to_chat(user, "<span class='warning'>Close the APC first.</span>")//Less hints more mystery!
+
 				return
 			else
 				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-					user << "You screw the circuit electronics into place."
+					to_chat(user, "You screw the circuit electronics into place.")
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-					user << "You unfasten the electronics."
+					to_chat(user, "You unfasten the electronics.")
 				else /* has_electronics==0 */
-					user << "<span class='warning'>There is nothing to secure.</span>"
+					to_chat(user, "<span class='warning'>There is nothing to secure.</span>")
 					return
 				update_icon()
 		else if(emagged)
-			user << "The interface is broken."
+			to_chat(user, "The interface is broken.")
 		else if(has_electronics == 2)
 			wiresexposed = !wiresexposed
-			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			update_icon()
 		else
-			user << "<span class='warning'>You open the panel and find nothing inside.</span>"
+			to_chat(user, "<span class='warning'>You open the panel and find nothing inside.</span>")
 			return
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
-			user << "The interface is broken."
+			to_chat(user, "The interface is broken.")
 		else if(opened)
-			user << "You must close the cover to swipe an ID card."
+			to_chat(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
-			user << "You must close the panel"
+			to_chat(user, "You must close the panel")
 		else if(stat & (BROKEN|MAINT))
-			user << "Nothing happens."
+			to_chat(user, "Nothing happens.")
 		else
 			if(src.allowed(usr) && !isWireCut(APC_WIRE_IDSCAN))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] the APC interface."
+				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				update_icon()
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if (istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			to_chat(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
-			user << "You must close the panel first"
+			to_chat(user, "You must close the panel first")
 		else if(stat & (BROKEN|MAINT))
-			user << "Nothing happens."
+			to_chat(user, "Nothing happens.")
 		else
 			flick("apc-spark", src)
 			if (do_after(user, src, 6) && !opened && !wiresexposed && !(stat & (BROKEN|MAINT)) && !emagged)
 				if(prob(50))
 					emagged = 1
 					locked = 0
-					user << "You emag the APC interface."
+					to_chat(user, "You emag the APC interface.")
 					update_icon()
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
+					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
-			user << "<span class='warning'>You need more wires.</span>"
+			to_chat(user, "<span class='warning'>You need more wires.</span>")
 			return
 
 		if(make_terminal(user))
@@ -489,9 +491,9 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && opened && terminal && has_electronics!=2)
 		var/turf/T = get_turf(src)
 		if (T.intact)
-			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
+			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
 			return
-		user << "You begin to cut the cables..."
+		to_chat(user, "You begin to cut the cables...")
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if (do_after(user, src, 50) && opened && terminal && has_electronics != 2 && !T.intact)
 			if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
@@ -505,21 +507,21 @@
 				"You cut the cables and dismantle the power terminal.")
 			del(terminal)
 	else if (istype(W, /obj/item/weapon/circuitboard/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
-		user << "You begin to insert the power control board into the frame..."
+		to_chat(user, "You begin to insert the power control board into the frame...")
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if (do_after(user, src, 10) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 			has_electronics = 1
-			user << "You place the power control board inside the frame."
+			to_chat(user, "You place the power control board inside the frame.")
 			del(W)
 	else if (istype(W, /obj/item/weapon/circuitboard/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
-		user << "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>"
+		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-		user << "You start welding the APC frame..."
+		to_chat(user, "You start welding the APC frame...")
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 		if (do_after(user, src, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
@@ -548,9 +550,9 @@
 		update_icon()
 	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
-			user << "You cannot repair this APC until you remove the electronics still inside."
+			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
 			return
-		user << "You begin to replace the damaged APC frame..."
+		to_chat(user, "You begin to replace the damaged APC frame...")
 		if(do_after(user, src, 50))
 			user.visible_message(\
 				"<span class='warning'>[user.name] has replaced the damaged APC frame with new one.</span>",\
@@ -610,7 +612,7 @@
 
 				src.cell = null
 				user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
-				//user << "You remove the power cell."
+//				to_chat(user, "You remove the power cell.")
 				charging = 0
 				src.update_icon()
 			return
@@ -741,13 +743,13 @@
 		areaMaster.power_environ = (environ > 1)
 //		if (area.name == "AI Chamber")
 //			spawn(10)
-//				world << " [area.name] [area.power_equip]"
+//				to_chat(world, " [area.name] [area.power_equip]")
 	else
 		areaMaster.power_light = 0
 		areaMaster.power_equip = 0
 		areaMaster.power_environ = 0
 //		if (area.name == "AI Chamber")
-//			world << "[area.power_equip]"
+//			to_chat(world, "[area.power_equip]")
 	areaMaster.power_change()
 
 /obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
@@ -756,20 +758,20 @@
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
 	if (user.stat && !isobserver(user))
-		user << "<span class='warning'>You must be conscious to use this [src]!</span>"
+		to_chat(user, "<span class='warning'>You must be conscious to use this [src]!</span>")
 		return 0
 	if(!user.client)
 		return 0
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to use this [src]!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to use this [src]!</span>")
 		nanomanager.close_user_uis(user, src)
 
 		return 0
 	if(user.restrained())
-		user << "<span class='warning'>You must have free hands to use this [src]</span>"
+		to_chat(user, "<span class='warning'>You must have free hands to use this [src]</span>")
 		return 0
 	if(user.lying)
-		user << "<span class='warning'>You must stand to use this [src]!</span>"
+		to_chat(user, "<span class='warning'>You must stand to use this [src]!</span>")
 		return 0
 	if (istype(user, /mob/living/silicon))
 		var/mob/living/silicon/ai/AI = user
@@ -783,14 +785,14 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "<span class='warning'>\The [src] have AI control disabled!</span>"
+				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 				nanomanager.close_user_uis(user, src)
 
 			return 0
 	else if(isobserver(user))
 		if(malfhack && istype(malfai) && !isAdminGhost(user))
 			if(!loud)
-				user << "<span class='warning'>\The [src] have AI control disabled!</span>"
+				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 				nanomanager.close_user_uis(user, src)
 			return 0
 	else
@@ -803,10 +805,10 @@
 	if (istype(H))
 		if(H.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
-				M << "<span class='warning'>[H] stares cluelessly at [src] and drools.</span>"
+				to_chat(M, "<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return 0
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
 			return 0
 	return 1
 
@@ -820,7 +822,7 @@
 		return 0
 	if(!istype(usr, /mob/living/silicon) && locked)
 	// Shouldn't happen, this is here to prevent href exploits
-		usr << "You must unlock the panel to use this!"
+		to_chat(usr, "You must unlock the panel to use this!")
 		return 1
 	if (href_list["lock"])
 		coverlocked = !coverlocked
@@ -860,9 +862,9 @@
 		var/mob/living/silicon/ai/malfai = usr
 		if(get_malf_status(malfai)==1)
 			if (malfai.malfhacking)
-				malfai << "You are already hacking an APC."
+				to_chat(malfai, "You are already hacking an APC.")
 				return 1
-			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+			to_chat(malfai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
@@ -878,7 +880,7 @@
 						src.malfai = usr:parent
 					else
 						src.malfai = usr
-					malfai << "Hack complete. The APC is now under your exclusive control."
+					to_chat(malfai, "Hack complete. The APC is now under your exclusive control.")
 					update_icon()
 
 	else if (href_list["occupyapc"])
@@ -892,7 +894,7 @@
 	else if (href_list["toggleaccess"])
 		if(istype(usr, /mob/living/silicon))
 			if(emagged || (stat & (BROKEN|MAINT)))
-				usr << "The APC does not respond to the command."
+				to_chat(usr, "The APC does not respond to the command.")
 			else
 				locked = !locked
 				update_icon()
@@ -914,10 +916,10 @@
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		to_chat(malf, "<span class='warning'>You must evacuate your current apc first.</span>")
 		return
 	if(!malf.can_shunt)
-		malf << "<span class='warning'>You cannot shunt.</span>"
+		to_chat(malf, "<span class='warning'>You cannot shunt.</span>")
 		return
 	if(STATION_Z != z)
 		return
@@ -957,7 +959,7 @@
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
-		src.occupant << "<span class='warning'>Primary core damaged, unable to return core processes.</span>"
+		to_chat(src.occupant, "<span class='warning'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
 			src.occupant.loc = src.loc
 			src.occupant.death()
@@ -972,7 +974,7 @@
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
-//				world << "<span class='warning'>blew APC in [src.loc.loc]</span>"
+//				to_chat(world, "<span class='warning'>blew APC in [src.loc.loc]</span>")
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1

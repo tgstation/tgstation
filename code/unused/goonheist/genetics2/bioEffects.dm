@@ -75,7 +75,7 @@
 		owner.radiation = max(owner.radiation, 20)
 		for(var/mob/living/L in range(1, owner))
 			if(L == owner) continue
-			L << "<span class='warning'>You are enveloped by a soft green glow emanating from [owner].</span>"
+			to_chat(L, "<span class='warning'>You are enveloped by a soft green glow emanating from [owner].</span>")
 			L.radiation += 5
 		return
 
@@ -343,9 +343,9 @@
 			owner.bioHolder.AddEffect("thermal_resist",2)
 			owner.bioHolder.RemoveEffect("fire_resist")
 			owner.bioHolder.RemoveEffect("cold_resist")
-			owner << "<span class='notice'>Your thermal resistances merge into one!</span>"
+			to_chat(owner, "<span class='notice'>Your thermal resistances merge into one!</span>")
 		else
-			owner << "<span class='notice'>You feel cold.</span>"
+			to_chat(owner, "<span class='notice'>You feel cold.</span>")
 		return
 
 	OnMobDraw()
@@ -368,9 +368,9 @@
 			owner.bioHolder.AddEffect("thermal_resist",1)
 			owner.bioHolder.RemoveEffect("fire_resist")
 			owner.bioHolder.RemoveEffect("cold_resist")
-			owner << "<span class='notice'>Your thermal resistances merge into one!</span>"
+			to_chat(owner, "<span class='notice'>Your thermal resistances merge into one!</span>")
 		else
-			owner << "<span class='notice'>You feel warm.</span>"
+			to_chat(owner, "<span class='notice'>You feel warm.</span>")
 		return
 
 	OnMobDraw()
@@ -390,10 +390,10 @@
 	OnRemove()
 		if (src.variant == 1)
 			owner.bioHolder.AddEffect("cold_resist")
-			owner << "<span class='warning'>You feel warm.</span>"
+			to_chat(owner, "<span class='warning'>You feel warm.</span>")
 		else if (src.variant == 2)
 			owner.bioHolder.AddEffect("fire_resist")
-			owner << "<span class='warning'>You feel cold.</span>"
+			to_chat(owner, "<span class='warning'>You feel cold.</span>")
 		return
 
 	OnMobDraw()
@@ -527,7 +527,7 @@
 	OnLife()
 		if (owner:health <= 25)
 			timeLeft = 1
-			owner << "<span class='warning'>You suddenly feel very weak.</span>"
+			to_chat(owner, "<span class='warning'>You suddenly feel very weak.</span>")
 			owner:weakened = 3
 			owner:emote("collapse")
 
@@ -634,9 +634,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					C << "<span class='warning'>[src.personalized_stink]</span>"
+					to_chat(C, "<span class='warning'>[src.personalized_stink]</span>")
 				else
-					C << "<span class='warning'>[stinkString()]</span>"
+					to_chat(C, "<span class='warning'>[stinkString()]</span>")
 
 /datum/bioEffect/consumed
 	name = "Consumed"

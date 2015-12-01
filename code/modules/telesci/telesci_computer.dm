@@ -59,11 +59,11 @@
 
 	if(istype(W, /obj/item/weapon/cell) && anchored)
 		if(cell)
-			user << "<span class='warning'>There is already a cell in \the [name].</span>"
+			to_chat(user, "<span class='warning'>There is already a cell in \the [name].</span>")
 			return
 		else
 			if(areaMaster.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>"
+				to_chat(user, "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>")
 				return
 
 			user.drop_item(W, src)
@@ -125,7 +125,7 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "You are too primitive to use this computer."
+	to_chat(user, "You are too primitive to use this computer.")
 	return
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
@@ -219,7 +219,7 @@
 			sparks()
 			for(var/mob/living/carbon/human/M in viewers(L, null))
 				M.apply_effect((rand(10, 20)), IRRADIATE, 0)
-				M << "<span class='warning'>You feel strange.</span>"
+				to_chat(M, "<span class='warning'>You feel strange.</span>")
 		return
 	/* Lets not, for now.  - N3X
 	if(prob(1))
@@ -249,12 +249,12 @@
 	if(prob(5))
 		// HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONK
 		for(var/mob/living/carbon/M in hearers(src, null))
-			M << sound('sound/items/AirHorn.ogg')
+			to_chat(M, sound('sound/items/AirHorn.ogg'))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.earprot())
 					continue
-			M << "<font color='red' size='7'>HONK</font>"
+			to_chat(M, "<font color='red' size='7'>HONK</font>")
 			M.sleeping = 0
 			M.stuttering += 20
 			M.ear_deaf += 30
@@ -312,7 +312,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		s.set_up(5, 1, telepad)
 		s.start()
 		flick("pad-beam", telepad)
-		user << "<span class='caution'>Teleport successful.</span>"
+		to_chat(user, "<span class='caution'>Teleport successful.</span>")
 		var/sparks = get_turf(target)
 		var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
 		y.set_up(5, 1, sparks)
@@ -335,11 +335,11 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(x_co == null || y_co == null || z_co == null)
-		user << "<span class='caution'>Error: coordinates not set.</span>"
+		to_chat(user, "<span class='caution'>Error: coordinates not set.</span>")
 		telefail()
 		return
 	if(cell && cell.charge<teleport_cell_usage)
-		user << "<span class='caution'>Error: not enough energy.</span>"
+		to_chat(user, "<span class='caution'>Error: not enough energy.</span>")
 		return
 	cell.use(teleport_cell_usage)
 	if(teles_left > 0)
@@ -359,7 +359,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 	if(href_list["setPOffsetX"])
 		var/new_x = input("Please input desired X offset.", name, x_player_off) as num
 		if(new_x < -10 || new_x > 10)
-			usr << "<span class='caution'>Error: Invalid X offset (-10 to 10)</span>"
+			to_chat(usr, "<span class='caution'>Error: Invalid X offset (-10 to 10)</span>")
 		else
 			x_player_off = new_x
 		src.updateUsrDialog()
@@ -368,7 +368,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 	if(href_list["setPOffsetY"])
 		var/new_y = input("Please input desired X offset.", name, y_player_off) as num
 		if(new_y < -10 || new_y > 10)
-			usr << "<span class='caution'>Error: Invalid Y offset (-10 to 10)</span>"
+			to_chat(usr, "<span class='caution'>Error: Invalid Y offset (-10 to 10)</span>")
 		else
 			y_player_off = new_y
 		src.updateUsrDialog()
@@ -379,7 +379,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		var/new_x = input("Please input desired X coordinate.", name, x_co) as num
 		var/x_validate=new_x+x_off
 		if(x_validate < -49 || x_validate > world.maxx+50)
-			usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
+			to_chat(usr, "<span class='caution'>Error: Invalid X coordinate.</span>")
 		else
 			x_co = new_x
 		src.updateUsrDialog()
@@ -389,7 +389,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		var/new_y = input("Please input desired Y coordinate.", name, y_co) as num
 		var/y_validate=new_y+y_off
 		if(y_validate < -49 || y_validate > world.maxy+50)
-			usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
+			to_chat(usr, "<span class='caution'>Error: Invalid Y coordinate.</span>")
 		else
 			y_co = new_y
 		src.updateUsrDialog()
@@ -398,7 +398,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 	if(href_list["setz"])
 		var/new_z = input("Please input desired Z coordinate.", name, z_co) as num
 		if(new_z == map.zCentcomm || new_z < 1 || new_z > map.zLevels.len)
-			usr << "<span class='caution'>Error: Invalid Z coordinate.</span>"
+			to_chat(usr, "<span class='caution'>Error: Invalid Z coordinate.</span>")
 		else
 			z_co = new_z
 		src.updateUsrDialog()
@@ -434,7 +434,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		x_off = rand(-10,10)
 		y_off = rand(-10,10)
 		sparks()
-		usr << "<span class='caution'>Calibration successful.</span>"
+		to_chat(usr, "<span class='caution'>Calibration successful.</span>")
 		src.updateUsrDialog()
 		return 1
 	return 0

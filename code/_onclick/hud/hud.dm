@@ -211,9 +211,9 @@
 			hud_used.persistant_inventory_update()
 			update_action_buttons()
 		else
-			usr << "<span class='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
+			to_chat(usr, "<span class='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")
 	else
-		usr << "<span class='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class='warning'>This mob type does not use a HUD.</span>")
 
 /*
 	The global hud:
@@ -316,7 +316,7 @@ var/datum/global_hud/global_hud = new()
 					if(!istype(R))
 						return
 		if((!R.schematics || !R.schematics.len) && !override)
-			usr << "<span class='danger'>This [R] has no schematics to choose from.</span>"
+			to_chat(usr, "<span class='danger'>This [R] has no schematics to choose from.</span>")
 			return
 
 		if(!L.schematics_background)
@@ -339,7 +339,7 @@ var/datum/global_hud/global_hud = new()
 			var/datum/rcd_schematic/RS = schematic
 			if(!istype(RS))
 				if(!istype(RS, /datum/selection_schematic))
-					usr << "<span class='danger'>Unexpected type in schematics list. [RS][RS ? "/[RS.type]" : "null"]"
+					to_chat(usr, "<span class='danger'>Unexpected type in schematics list. [RS][RS ? "/[RS.type]" : "null"]")
 					continue
 			if(!RS.ourobj)
 				RS.ourobj = getFromPool(/obj/screen/schematics, null, RS)

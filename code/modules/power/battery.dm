@@ -217,10 +217,10 @@ var/global/list/battery_online =	list(
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-//world << "[href] ; [href_list[href]]"
+//to_chat(world, "[href] ; [href_list[href]]")
 
 	if (!isturf(src.loc) && !istype(usr, /mob/living/silicon/))
 		return 0 // Do not update ui

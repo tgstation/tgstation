@@ -32,17 +32,17 @@
 
 	..()
 	if(smashed)
-		user << "The protective glass shield has been damaged beyond repair"
+		to_chat(user, "The protective glass shield has been damaged beyond repair")
 	else if(hitstaken)
-		user << "You count [hitstaken] impacts on the protective glass shield"
+		to_chat(user, "You count [hitstaken] impacts on the protective glass shield")
 	else
-		user << "The protective glass shield appears intact"
+		to_chat(user, "The protective glass shield appears intact")
 	if(!fireaxe)
-		user << "The fireaxe is gone from the cabinet"
+		to_chat(user, "The fireaxe is gone from the cabinet")
 	else
-		user << "The fireaxe is still in the cabinet [localopened ? "and up for grabs" : "behind the protective glass"]"
+		to_chat(user, "The fireaxe is still in the cabinet [localopened ? "and up for grabs" : "behind the protective glass"]")
 
-	user << "A small [locked ? "red" : "green"] light indicates the cabinet is [locked ? "" : "un"]locked"
+	to_chat(user, "A small [locked ? "red" : "green"] light indicates the cabinet is [locked ? "" : "un"]locked")
 
 /obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 
@@ -91,7 +91,7 @@
 		if(!fireaxe)
 			var/obj/item/weapon/fireaxe/F = O
 			if(F.wielded)
-				user << "<span class='warning'>Unwield [F] first!</span>"
+				to_chat(user, "<span class='warning'>Unwield [F] first!</span>")
 				return
 			fireaxe = O
 			user.drop_item(F, src)
@@ -100,7 +100,7 @@
 			update_icon()
 		else
 			if(smashed)
-				user << "<span class='warning'>[src]'s protective glass is broken. Cutting hazard right there!</span>"
+				to_chat(user, "<span class='warning'>[src]'s protective glass is broken. Cutting hazard right there!</span>")
 				return
 			if(istype(O, /obj/item/device/multitool))
 				if(localopened)
@@ -130,7 +130,7 @@
 						update_icon()
 	else
 		if(iswrench(O) && src.localopened && !src.fireaxe)
-			user << "<span class='notice'>You disassemble \the [src].</span>"
+			to_chat(user, "<span class='notice'>You disassemble \the [src].</span>")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			new /obj/item/stack/sheet/plasteel (src.loc,2)
 			qdel(src)
@@ -154,7 +154,7 @@
 		hasaxe = 1
 
 	if(locked)
-		user <<"<span class='warning'>[src] is locked tight!</span>"
+		to_chat(user, "<span class='warning'>[src] is locked tight!</span>")
 		return
 	if(localopened)
 		if(fireaxe)
@@ -195,9 +195,9 @@
 
 	if(isrobot(usr) || locked || smashed)
 		if(locked)
-			usr << "<span class='warning'>\The [src] is locked tight!</span>"
+			to_chat(usr, "<span class='warning'>\The [src] is locked tight!</span>")
 		else if(smashed)
-			usr << "<span class='notice'>\The [src]'s protective glass is broken!</span>"
+			to_chat(usr, "<span class='notice'>\The [src]'s protective glass is broken!</span>")
 		return
 
 	localopened = !localopened
@@ -217,9 +217,9 @@
 			"<span class='notice'>You take [fireaxe] from \the [src].</span>")
 			fireaxe = null
 		else
-			usr << "<span class='notice'>\The [src] is empty.</span>"
+			to_chat(usr, "<span class='notice'>\The [src] is empty.</span>")
 	else
-		usr << "<span class='notice'>\The [src] is closed.</span>"
+		to_chat(usr, "<span class='notice'>\The [src] is closed.</span>")
 	update_icon()
 
 /obj/structure/closet/fireaxecabinet/attack_paw(mob/user as mob)
@@ -230,7 +230,7 @@
 	if(isobserver(user))
 		return //NO. FUCK OFF.
 	if(smashed)
-		user << "<span class='warning'>\The [src]'s security protocols have locked down its electronic systems. Might have to do with the smashed glass.</span>"
+		to_chat(user, "<span class='warning'>\The [src]'s security protocols have locked down its electronic systems. Might have to do with the smashed glass.</span>")
 		return
 	else
 		locked = !locked

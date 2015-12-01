@@ -84,7 +84,7 @@
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
-		H << "<span class='danger'>You step on the D4!</span>"
+		to_chat(H, "<span class='danger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 
@@ -99,7 +99,7 @@
 	message_admins("[key_name(user)] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
 	log_game("[key_name(user)] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
 	if(result == 1)
-		user << "<span class='danger'>Rocks fall, you die.</span>"
+		to_chat(user, "<span class='danger'>Rocks fall, you die.</span>")
 		user.gib()
 		user.drop_item(src)
 	else

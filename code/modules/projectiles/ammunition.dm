@@ -72,22 +72,22 @@
 		if(AC.BB && accepted && stored_ammo.len < max_ammo)
 			stored_ammo += AC
 			user.drop_item(A, src)
-			user << "<span class='notice'>You successfully load the [src] with \the [AC]</span>"
+			to_chat(user, "<span class='notice'>You successfully load the [src] with \the [AC]</span>")
 			update_icon()
 		else if(!AC.BB)
-			user << "<span class='notice'>You can't load a spent bullet.</span>"
+			to_chat(user, "<span class='notice'>You can't load a spent bullet.</span>")
 		else if (stored_ammo.len == max_ammo)
-			user << "<span class='notice'>\The [src] can't hold any more shells.</span>"
+			to_chat(user, "<span class='notice'>\The [src] can't hold any more shells.</span>")
 		return
 	if(istype(A, /obj/item/ammo_storage)) //loads all the bullets from one magazine to the other
 		var/obj/item/ammo_storage/AS = A
 		if(stored_ammo.len < max_ammo && AS.stored_ammo)
 			var/loaded_bullets = LoadInto(AS, src)
 			if(loaded_bullets)
-				user << "<span class='notice'>You successfully fill the [src] with [loaded_bullets] shell\s from the [AS]</span>"
+				to_chat(user, "<span class='notice'>You successfully fill the [src] with [loaded_bullets] shell\s from the [AS]</span>")
 				update_icon()
 		else if (stored_ammo.len >= max_ammo)
-			user << "<span class='notice'>\The [src] can't hold any more shells.</span>"
+			to_chat(user, "<span class='notice'>\The [src] can't hold any more shells.</span>")
 
 /obj/item/ammo_storage/update_icon()
 	if(multiple_sprites)
@@ -101,7 +101,7 @@
 /obj/item/ammo_storage/examine(mob/user) //never change descriptions, always use examine
 	..()
 	if(max_ammo > 0)
-		user << "<span class='info'>There are [stored_ammo.len] shell\s left!</span>"
+		to_chat(user, "<span class='info'>There are [stored_ammo.len] shell\s left!</span>")
 
 /obj/item/ammo_storage/attack_self(mob/user) //allows you to remove individual bullets
 	if(stored_ammo.len)
@@ -109,7 +109,7 @@
 		dropped.loc = get_turf(user)
 		stored_ammo -= dropped
 		update_icon()
-		user << "<span class='notice'>You remove \a [dropped] from \the [src].</span>"
+		to_chat(user, "<span class='notice'>You remove \a [dropped] from \the [src].</span>")
 
 //used for loading from or to boxes. Has the fumble check
 //this doesn't load any bullets by itself, but is a check for the slow loading used by boxes
@@ -126,7 +126,7 @@
 		var/obj/item/ammo_storage/AS = target
 		trying_to_load = min(AS.max_ammo - AS.stored_ammo.len, bullets_from.stored_ammo.len) //either we fill to max, or we fill as much as possible
 	if(usr && trying_to_load)
-		usr << "You begin loading \the [target]..."
+		to_chat(usr, "You begin loading \the [target]...")
 	if(trying_to_load && do_after(usr,target,trying_to_load * 5)) //bit of a wait, but that's why it's SLOW
 		return 1
 	else if(trying_to_load)
@@ -139,7 +139,7 @@
 			dropped_bullets++
 			bullets_from.update_icon()
 		if(usr)
-			usr << "<span class='rose'>You fumble around and drop [dropped_bullets] shell\s!</span>"
+			to_chat(usr, "<span class='rose'>You fumble around and drop [dropped_bullets] shell\s!</span>")
 		return 0
 	return 0
 

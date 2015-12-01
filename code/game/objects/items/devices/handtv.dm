@@ -15,7 +15,7 @@ var/global/list/camera_bugs = list()
 		if(C.network == network)
 			cameras += C
 	if(!cameras.len)
-		user << "<span class='warning'>No camera bugs found.</span>"
+		to_chat(user, "<span class='warning'>No camera bugs found.</span>")
 		return
 	var/list/friendly_cameras = new/list()
 

@@ -34,7 +34,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null, amount = length)
@@ -74,7 +74,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 				"<span class='warning'>You repair some burn damage on your [S.display_name].</span>",\
 				"<span class='warning'>You hear wires being cut.</span>")
 		else
-			user << "<span class='warning'>There's nothing to fix on this limb!</span>"
+			to_chat(user, "<span class='warning'>There's nothing to fix on this limb!</span>")
 	else
 		return ..()
 
@@ -103,11 +103,11 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	set src in view(1)
 
 	if(amount == 1)
-		usr << "A short piece of power cable."
+		to_chat(usr, "A short piece of power cable.")
 	else if(amount == 2)
-		usr << "A piece of power cable."
+		to_chat(usr, "A piece of power cable.")
 	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
+		to_chat(usr, "A coil of power cable. There are [amount] lengths of cable in the coil.")
 
 //Items usable on a cable coil :
 // - Wirecutters : Cut a piece off
@@ -116,7 +116,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
 		use(1)
 		getFromPool(/obj/item/stack/cable_coil, user.loc, 1, _color)
-		user << "<span class='notice'>You cut a piece off the cable coil.</span>"
+		to_chat(user, "<span class='notice'>You cut a piece off the cable coil.</span>")
 		update_icon()
 		return
 	return ..()
@@ -131,11 +131,11 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		return
 
 	if(!user.Adjacent(F)) //Too far
-		user << "<span class='warning'>You can't lay cable that far away.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable that far away.</span>")
 		return
 
 	if(F.intact) //If floor is intact, complain
-		user << "<span class='warning'>You can't lay cable there until the floor is removed.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable there until the floor is removed.</span>")
 		return
 	var/dirn = null
 	if(!dirnew) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
@@ -147,7 +147,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		dirn = dirnew
 	for(var/obj/structure/cable/LC in F)
 		if(LC.d2 == dirn && LC.d1 == 0)
-			user << "<span class='warning'>There already is a cable at that position.</span>"
+			to_chat(user, "<span class='warning'>There already is a cable at that position.</span>")
 			return
 
 	var/obj/structure/cable/C = getFromPool(/obj/structure/cable, F)
@@ -192,7 +192,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		return
 
 	if(get_dist(C, user) > 1) //Make sure it's close enough
-		user << "<span class='warning'>You can't lay cable that far away.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable that far away.</span>")
 		return
 
 	if(U == T) //If clicked on the turf we're standing on, try to put a cable in the direction we're facing
@@ -204,7 +204,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	//One end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(U.intact) //Can't place a cable if the floor is complete
-			user << "<span class='warning'>You can't lay cable there until the floor is removed.</span>"
+			to_chat(user, "<span class='warning'>You can't lay cable there until the floor is removed.</span>")
 			return
 		else
 			//Cable is pointing at us, we're standing on an open tile
@@ -227,7 +227,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 				continue
 
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1)) //Make sure no cable matches either direction
-				user << "<span class='warning'>There's already a cable at that position.</span>"
+				to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 				return
 
 		C.cableColor(_color)

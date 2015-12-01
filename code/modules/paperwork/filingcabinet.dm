@@ -35,7 +35,7 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo))
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		user.drop_item(P, src)
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
@@ -44,14 +44,14 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	else
-		user << "<span class='notice'>You can't put [P] in [src]!</span>"
+		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user as mob)
 	if(contents.len <= 0)
-		user << "<span class='notice'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return
 
 	user.set_machine(src)

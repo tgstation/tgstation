@@ -33,6 +33,6 @@ proc/invertHTML(HTMLstring)
 /*
 //Testing code/sample implementation
 mob/verb/test_invertHTML()
-	usr << "#CC9933"
-	usr << invertHTML("#CC9933")
+	to_chat(usr, "#CC9933")
+	to_chat(usr, invertHTML("#CC9933"))
 */

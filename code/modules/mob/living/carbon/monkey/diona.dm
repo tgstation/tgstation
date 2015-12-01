@@ -84,19 +84,19 @@
 	set desc = "Grow to a more complex form."
 
 	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
-		src << alert("You are currently not whitelisted to play an adult Diona.")
+		to_chat(src, alert("You are currently not whitelisted to play an adult Diona."))
 		return 0
 
 	if(stat == DEAD)
-		src << "You cannot evolve if you are dead!"
+		to_chat(src, "You cannot evolve if you are dead!")
 		return
 
 	if(donors.len < 5)
-		src << "You are not yet ready for your growth..."
+		to_chat(src, "You are not yet ready for your growth...")
 		return
 
 	if(nutrition < 400)
-		src << "You have not yet consumed enough to grow..."
+		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
 	src.visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark and twigs!</span>","<span class='warning'>You begin to shift and quiver, then erupt in a shower of shed bark and twigs, attaining your adult form!</span>")
@@ -142,7 +142,7 @@
 	if(!M || !src) return
 
 	if(donors.Find(M.real_name))
-		src << "<span class='warning'>That donor offers you nothing new.</span>"
+		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
 	src.visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
@@ -158,16 +158,16 @@
 
 	if(donors.len == 5)
 		ready_evolve = 1
-		src << "<span class='good'>You feel ready to move on to your next stage of growth.</span>"
+		to_chat(src, "<span class='good'>You feel ready to move on to your next stage of growth.</span>")
 	else if(donors.len == 2)
-		src << "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>"
+		to_chat(src, "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>")
 	else if(donors.len == 4)
-		src << "<span class='good'>You feel your vocal range expand, and realize you know how to speak with the creatures around you.</span>"
+		to_chat(src, "<span class='good'>You feel your vocal range expand, and realize you know how to speak with the creatures around you.</span>")
 		add_language("Sol Common")
 	else if(donors.len == 3)
-		src << "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>"
+		to_chat(src, "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>")
 	else
-		src << "<span class='good'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>"
+		to_chat(src, "<span class='good'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>")
 
 /mob/living/carbon/monkey/diona/dexterity_check()
 	return 0

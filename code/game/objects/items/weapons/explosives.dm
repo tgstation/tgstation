@@ -28,7 +28,7 @@
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
-	viewers(user) << "<span class='danger'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -47,7 +47,7 @@
 /obj/item/weapon/plastique/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
 		wires.Interact(user)
 	else
@@ -58,14 +58,14 @@
 	if(newtime > 60000)
 		newtime = 60000
 	timer = newtime
-	user << "Timer set for [timer] seconds."
+	to_chat(user, "Timer set for [timer] seconds.")
 
 /obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
 	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
-	user << "Planting explosives..."
+	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
@@ -87,7 +87,7 @@
 			else
 				M.LAssailant = user
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
-		user << "Bomb has been planted. Timer counting down from [timer]."
+		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		spawn(timer*10)
 			explode(get_turf(target))
 

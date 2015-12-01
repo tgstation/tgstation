@@ -63,16 +63,16 @@
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(anchored)
-		user << "You have to unanchor the [src] first!"
+		to_chat(user, "You have to unanchor the [src] first!")
 		return
 	if(src.on)
-		user << "You have to turn off the [src]!"
+		to_chat(user, "You have to turn off the [src]!")
 		return
 	return ..()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/wrenchAnchor(mob/user)
 	if(src.on)
-		user << "You have to turn off the [src] first!"
+		to_chat(user, "You have to turn off the [src] first!")
 		return
 	..()
 	if(!anchored)
@@ -147,7 +147,7 @@
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -158,7 +158,7 @@
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -230,16 +230,16 @@
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(anchored)
-		user << "You have to unanchor the [src] first!"
+		to_chat(user, "You have to unanchor the [src] first!")
 		return
 	if(src.on)
-		user << "You have to turn off the [src]!"
+		to_chat(user, "You have to turn off the [src]!")
 		return
 	return ..()
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/wrenchAnchor(mob/user)
 	if(src.on)
-		user << "You have to turn off the [src] first!"
+		to_chat(user, "You have to turn off the [src] first!")
 		return
 	..()
 	if(!anchored)
@@ -311,7 +311,7 @@
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -322,7 +322,7 @@
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1

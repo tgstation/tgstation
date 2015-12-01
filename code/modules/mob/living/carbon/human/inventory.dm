@@ -6,7 +6,7 @@
 		var/mob/living/carbon/human/H = src
 		var/obj/item/I = H.get_active_hand()
 		if(!I)
-			H << "<span class='notice'>You are not holding anything to equip.</span>"
+			to_chat(H, "<span class='notice'>You are not holding anything to equip.</span>")
 			return
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
@@ -14,7 +14,7 @@
 			else
 				update_inv_r_hand(0)
 		else
-			H << "<span class='warning'>You are unable to equip that.</span>"
+			to_chat(H, "<span class='warning'>You are unable to equip that.</span>")
 
 /mob/living/carbon/human/get_all_slots()
 	. = get_head_slots() | get_body_slots()
@@ -410,7 +410,7 @@
 			W.loc = src.back
 			return
 		else
-			src << "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 			return
 
 	update_hidden_item_icons(W)
@@ -606,7 +606,7 @@
 				if(!pickpocket)
 					message = "<span class='danger'>[source] is trying to take off the [target.belt] from [target]'s belt!</span>"
 				else
-					source << "<span class='notice'>You try to take off the [target.belt] from [target]'s belt!</span>"
+					to_chat(source, "<span class='notice'>You try to take off the [target.belt] from [target]'s belt!</span>")
 			if("suit")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their suit ([target.wear_suit]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) suit ([target.wear_suit])</font>")
@@ -660,7 +660,7 @@
 				if(!pickpocket)
 					message = "<span class='danger'>[source] is trying to take off [target.wear_id] from [target]'s uniform!</span>"
 				else
-					source << "<span class='notice'>You try to take off [target.wear_id] from [target]'s uniform!</span>"
+					to_chat(source, "<span class='notice'>You try to take off [target.wear_id] from [target]'s uniform!</span>")
 			if("internal")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
@@ -802,8 +802,8 @@ It can still be worn/put on as normal.
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
 					O.show_message("<span class='warning'>[source] performs CPR on [target]!</span>", 1)
-				target << "<span class='notice'><b>You feel a breath of fresh air enter your lungs. It feels good.</b></span>"
-				source << "<span class='warning'>Repeat at least every 7 seconds.</span>"
+				to_chat(target, "<span class='notice'><b>You feel a breath of fresh air enter your lungs. It feels good.</b></span>")
+				to_chat(source, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)

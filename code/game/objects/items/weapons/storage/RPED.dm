@@ -23,13 +23,13 @@
 	if(istype(W, /obj/item/weapon/storage/bag/gadgets)) //I guess this allows for moving stuff between RPEDs, honk.
 		var/obj/item/weapon/storage/bag/gadgets/A = W
 		if(A.contents.len <= 0)
-			user << "<span class='notify'>\the [A] is empty!</span>"
+			to_chat(user, "<span class='notify'>\the [A] is empty!</span>")
 			return 1
 		if(src.contents.len >= storage_slots)
-			user << "<span class='notify'>\the [src] is full!</span>"
+			to_chat(user, "<span class='notify'>\the [src] is full!</span>")
 			return 1
 		A.mass_remove(src)
-		user << "<span class='notify'>You fill up \the [src] with \the [A]"
+		to_chat(user, "<span class='notify'>You fill up \the [src] with \the [A]")
 		return 1
 
 	return ..()

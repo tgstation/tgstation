@@ -46,14 +46,14 @@
 
 /obj/item/weapon/switchtool/examine()
 	..()
-	usr << "This one is capable of holding [get_formatted_modules()]."
+	to_chat(usr, "This one is capable of holding [get_formatted_modules()].")
 
 /obj/item/weapon/switchtool/attack_self(mob/user)
 	if(!user)
 		return
 
 	if(deployed)
-		user << "You store \the [deployed]."
+		to_chat(user, "You store \the [deployed].")
 		undeploy()
 	else
 		choose_deploy(user)
@@ -93,12 +93,12 @@
 		var/type_path = text2path(get_module_type(module))
 		if(istype(used_item, type_path))
 			if(stored_modules[module])
-				user << "\The [src] already has a [get_module_name(module)]."
+				to_chat(user, "\The [src] already has a [get_module_name(module)].")
 				return
 			else
 				stored_modules[module] = used_item
 				user.drop_item(used_item, src)
-				user << "You successfully load \the [used_item] into \the [src]'s [get_module_name(module)] slot."
+				to_chat(user, "You successfully load \the [used_item] into \the [src]'s [get_module_name(module)] slot.")
 				return 1
 
 /obj/item/weapon/switchtool/proc/remove_module(mob/user)
@@ -107,7 +107,7 @@
 		if(stored_modules[module] == deployed)
 			stored_modules[module] = null
 			break
-	user << "You successfully remove \the [deployed] from \the [src]."
+	to_chat(user, "You successfully remove \the [deployed] from \the [src].")
 	playsound(get_turf(src), "sound/items/screwdriver.ogg", 10, 1)
 	undeploy()
 	return 1
@@ -137,12 +137,12 @@
 			potential_modules += get_module_name(module)
 
 	if(!potential_modules.len)
-		user << "No modules to deploy."
+		to_chat(user, "No modules to deploy.")
 		return
 
 	else if(potential_modules.len == 1)
 		deploy(potential_modules[1])
-		user << "You deploy \the [potential_modules[1]]"
+		to_chat(user, "You deploy \the [potential_modules[1]]")
 		return 1
 
 	else
@@ -154,7 +154,7 @@
 					true_module = checkmodule
 					break
 			deploy(true_module)
-			user << "You deploy \the [deployed]."
+			to_chat(user, "You deploy \the [deployed].")
 			return 1
 		return
 

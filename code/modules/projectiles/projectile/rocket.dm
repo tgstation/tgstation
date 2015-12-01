@@ -130,7 +130,7 @@
 
 	if(kill_count == (initial(kill_count)/5))
 		mob.playsound_local(mob, 'sound/machines/twobeep.ogg', 30, 1)
-		mob << "<span class='warning'>WARNING: 20% fuel left on missile before self-detonation.<span>"
+		to_chat(mob, "<span class='warning'>WARNING: 20% fuel left on missile before self-detonation.<span>")
 	if(dir != last_dir)
 		last_dir = dir
 		steps_since_last_turn = 0

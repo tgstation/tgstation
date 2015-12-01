@@ -14,10 +14,10 @@
 			src.flipped = !src.flipped
 			if(src.flipped)
 				icon_state = "[_color]soft_flipped"
-				user << "You flip the hat backwards."
+				to_chat(user, "You flip the hat backwards.")
 			else
 				icon_state = "[_color]soft"
-				user << "You flip the hat back in normal position."
+				to_chat(user, "You flip the hat back in normal position.")
 			user.update_inv_head()	//so our mob-overlays update
 
 	attack_self(var/mob/user as mob)

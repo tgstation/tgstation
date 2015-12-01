@@ -46,10 +46,10 @@
 	if(!C || !user)
 		return 0
 	if(istype(C, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You begin undoing the screws holding the catwalk together.</span>"
+		to_chat(user, "<span class='notice'>You begin undoing the screws holding the catwalk together.</span>")
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		if(do_after(user, src, 30) && src)
-			user << "<span class='notice'>You finish taking taking the catwalk apart.</span>"
+			to_chat(user, "<span class='notice'>You finish taking taking the catwalk apart.</span>")
 			new /obj/item/stack/rods(src.loc, 2)
 			new /obj/structure/lattice(src.loc)
 			qdel(src)

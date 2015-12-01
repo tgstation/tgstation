@@ -79,7 +79,7 @@
 	real_name = name
 	spawn (1)
 		regenerate_icons()
-		src << "<span class='notice'>Your icons have been generated!</span>"
+		to_chat(src, "<span class='notice'>Your icons have been generated!</span>")
 	..()
 
 /mob/living/carbon/slime/adult/New()
@@ -284,7 +284,7 @@
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(Victim) return // can't attack while eating!
@@ -329,11 +329,11 @@
 	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	..()
 
@@ -357,11 +357,11 @@
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	..()
@@ -441,7 +441,7 @@
 							O.show_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
 					return
 				else
-					M << "<span class='warning'>Not enough charge! </span>"
+					to_chat(M, "<span class='warning'>Not enough charge! </span>")
 					return
 
 	switch(M.a_intent)
@@ -504,11 +504,11 @@
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -726,12 +726,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
 			if(enhanced == 1)
-				user << "<span class='warning'>This extract has already been enhanced!</span>"
+				to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
 				return ..()
 			if(Uses == 0)
-				user << "<span class='warning'>You can't enhance a used extract!</span>"
+				to_chat(user, "<span class='warning'>You can't enhance a used extract!</span>")
 				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
+			to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 			Uses = 3
 			enhanced = 1
 			del (O)
@@ -837,20 +837,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'>The potion only works on baby slimes!</span>"
+			to_chat(user, "<span class='warning'>The potion only works on baby slimes!</span>")
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "<span class='warning'>Only baby slimes can be tamed!</span>"
+			to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 			return..()
 		if(M.stat)
-			user << "<span class='warning'>The slime is dead!</span>"
+			to_chat(user, "<span class='warning'>The slime is dead!</span>")
 			return..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 		pet.icon_state = "[M.colour] baby slime"
 		pet.icon_living = "[M.colour] baby slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing its powers and calming it."
+		to_chat(user, "You feed the slime the potion, removing its powers and calming it.")
 		if(M.mind)
 			M.mind.transfer_to(pet)
 		del (M)
@@ -874,17 +874,17 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/adult/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
-			user << "<span class='warning'>The potion only works on adult slimes!</span>"
+			to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 			return ..()
 		if(M.stat)
-			user << "<span class='warning'>The slime is dead!</span>"
+			to_chat(user, "<span class='warning'>The slime is dead!</span>")
 			return..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
 		pet.icon_living = "[M.colour] adult slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing its powers and calming it."
+		to_chat(user, "You feed the slime the potion, removing its powers and calming it.")
 		if(M.mind)
 			M.mind.transfer_to(pet)
 		del (M)
@@ -909,19 +909,19 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'>The steroid only works on baby slimes!</span>"
+			to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
+			to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 			return..()
 		if(M.stat)
-			user << "<span class='warning'>The slime is dead!</span>"
+			to_chat(user, "<span class='warning'>The slime is dead!</span>")
 			return..()
 		if(M.cores == 3)
-			user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
+			to_chat(user, "<span class='warning'>The slime already has the maximum amount of extract!</span>")
 			return..()
 
-		user <<"You feed the slime the steroid. It now has triple the amount of extract."
+		to_chat(user, "You feed the slime the steroid. It now has triple the amount of extract.")
 		M.cores = 3
 		del (src)
 
@@ -934,12 +934,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))
 			if(target.enhanced == 1)
-				user << "<span class='warning'>This extract has already been enhanced!</span>"
+				to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
 				return ..()
 			if(target.Uses == 0)
-				user << "<span class='warning'>You can't enhance a used extract!</span>"
+				to_chat(user, "<span class='warning'>You can't enhance a used extract!</span>")
 				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
+			to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 			target.Uses = 3
 			target.enahnced = 1
 			del (src)*/
@@ -1056,7 +1056,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			ghost = O
 			break
 		if(!ghost)
-			user << "The rune fizzles uselessly. There is no spirit nearby."
+			to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
 		G.dna.mutantrace = "adamantine"
@@ -1069,11 +1069,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
 		G.forceMove(src.loc) //we use move to get the entering procs - this fixes gravity
 		G.key = ghost.key
-		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+		to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
 		del (src)
 		if(ticker.mode.name == "sandbox")
 			G.CanBuild()
-			G << "Sandbox tab enabled."
+			to_chat(G, "Sandbox tab enabled.")
 
 
 	proc/announce_to_ghosts()
@@ -1081,7 +1081,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			if(O.client)
 				var/area/A = get_area(src)
 				if(A)
-					O << "<span class=\"recruit\">Golem rune created in [A.name]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+					to_chat(O, "<span class=\"recruit\">Golem rune created in [A.name]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 
 	Topic(href,href_list)
 		if("signup" in href_list)
@@ -1104,13 +1104,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	proc/volunteer(var/mob/dead/observer/O)
 		if(O in ghosts)
 			ghosts.Remove(O)
-			O << "<span class='warning'>You are no longer signed up to be a golem.</span>"
+			to_chat(O, "<span class='warning'>You are no longer signed up to be a golem.</span>")
 		else
 			if(!check_observer(O))
-				O << "<span class='warning'>You are not eligable.</span>"
+				to_chat(O, "<span class='warning'>You are not eligable.</span>")
 				return
 			ghosts.Add(O)
-			O << "<span class='notice'>You are signed up to be a golem.</span>"
+			to_chat(O, "<span class='notice'>You are signed up to be a golem.</span>")
 
 
 /mob/living/carbon/slime/has_eyes()

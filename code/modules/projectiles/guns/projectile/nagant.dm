@@ -64,7 +64,7 @@
 	if(istype(src, /obj/item/weapon/gun/projectile/nagant/obrez))
 		return
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
-		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(getAmmo())
 			user.visible_message("<span class='danger'>Take the ammo out first.</span>", "<span class='danger'>You need to take the ammo out first.</span>")
 			return
@@ -73,7 +73,7 @@
 			for(var/obj/item/ammo_casing/AC in newObrez.loaded)
 				newObrez.loaded -= AC
 			del(src)
-			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
+			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 	return
 
 /obj/item/weapon/gun/projectile/nagant/obrez
@@ -100,7 +100,7 @@
 			flame_turf(turflist)
 
 		if(prob(15))
-			user << "<span class='danger'>[src] flies out of your hands.</span>"
+			to_chat(user, "<span class='danger'>[src] flies out of your hands.</span>")
 			user.take_organ_damage(0,10)
 			user.drop_item(src)
 	Fire(A,user,params, "struggle" = struggle)

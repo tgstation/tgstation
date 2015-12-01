@@ -273,7 +273,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(!announcementConsole)	return
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player) && M.client)
-				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -412,7 +412,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				hackState = 0
 				icon_state="req_comp_open"
 		else
-			user << "You can't do much with that."
+			to_chat(user, "You can't do much with that.")
 	if(iswrench(O) && open && !departmentType)
 		user.visible_message("<span class='notice'>[user] disassembles the [src]!</span>", "<span class='notice'>You disassemble the [src]</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
@@ -426,7 +426,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "<span class='warning'>You are not authorized to configure this panel.</span>"
+				to_chat(user, "<span class='warning'>You are not authorized to configure this panel.</span>")
 			updateUsrDialog()
 		if(screen == 9)
 			var/obj/item/weapon/card/id/ID = O.GetID()
@@ -439,7 +439,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = TRUE
 			else
 				announceAuth = FALSE
-				user << "<span class='warning'>You are not authorized to send announcements.</span>"
+				to_chat(user, "<span class='warning'>You are not authorized to send announcements.</span>")
 
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))

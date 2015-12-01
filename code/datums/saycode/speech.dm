@@ -67,7 +67,7 @@
 
 /datum/speech/proc/render_message()
 #ifdef SAY_DEBUG
-	speaker << "[type]/render_message(): message_classes = {[list2text(message_classes, ", ")]}"
+	to_chat(speaker, "[type]/render_message(): message_classes = {[list2text(message_classes, ", ")]}")
 #endif
 	var/rendered=message
 	// Sanity
@@ -84,7 +84,7 @@
 		else
 			warning("Speaker not set! (message=\"[message]\")")
 #ifdef SAY_DEBUG
-	speaker << "[type]/render_message(): message = \"[html_encode(rendered)]\""
+	to_chat(speaker, "[type]/render_message(): message = \"[html_encode(rendered)]\"")
 #endif
 	return rendered
 

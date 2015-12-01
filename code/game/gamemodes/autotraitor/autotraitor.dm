@@ -11,7 +11,7 @@
 
 /datum/game_mode/traitor/autotraitor/announce()
 	..()
-	world << "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>"
+	to_chat(world, "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>")
 
 /datum/game_mode/traitor/autotraitor/pre_setup()
 	if(istype(ticker.mode, /datum/game_mode/mixed))
@@ -22,10 +22,6 @@
 	possible_traitors = get_players_for_role(ROLE_TRAITOR)
 
 	for(var/datum/mind/player in possible_traitors)
-		if(player.current.z == map.zCentcomm) //Players on the centcomm z-level can't turn into traitors!
-			possible_traitors -= player
-			continue
-
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job) //Players with a job that is in the restricted job list can't turn into traitors!
 				possible_traitors -= player
@@ -93,12 +89,13 @@
 		var/traitorcount = 0
 		var/possible_traitors[0]
 		for(var/mob/living/player in mob_list)
-
-			if (player.client && player.stat != 2)
+			if(player.z == map.zCentcomm)
+				continue
+			if(player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if(player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.desires_role(ROLE_TRAITOR)) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
+			if(player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.desires_role(ROLE_TRAITOR)) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)
@@ -160,7 +157,8 @@
 		var/playercount = 0
 		var/traitorcount = 0
 		for(var/mob/living/player in mob_list)
-
+			if(player.z == map.zCentcomm) //Players on the centcomm z-level can't turn into traitors!
+				continue
 			if (player.client && player.stat != 2)
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
@@ -187,14 +185,14 @@
 				forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "<span class='danger'>You are the traitor.</span>"
+				to_chat(character, "<span class='danger'>You are the traitor.</span>")
 				character.mind.special_role = "traitor"
 				var/obj_count = 1
-				character << "<span class='notice'>Your current objectives:</span>"
+				to_chat(character, "<span class='notice'>Your current objectives:</span>")
 				for(var/datum/objective/objective in character.mind.objectives)
-					character << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+					to_chat(character, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 					obj_count++
-				character << sound('sound/voice/syndicate_intro.ogg')
+				to_chat(character, sound('sound/voice/syndicate_intro.ogg'))
 			//else
 				//message_admins("New traitor roll failed.  No new traitor.")
 	//else

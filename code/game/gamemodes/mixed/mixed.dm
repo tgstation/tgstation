@@ -30,8 +30,8 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/mixed/announce()
-	world << "<B>The current game mode is - Mixed!</B>"
-	world << "<B>Anything can happen!</B>"
+	to_chat(world, "<B>The current game mode is - Mixed!</B>")
+	to_chat(world, "<B>Anything can happen!</B>")
 
 /datum/game_mode/mixed/pre_setup()
 	var/list/datum/game_mode/possible = typesof(/datum/game_mode) - list(/datum/game_mode, /datum/game_mode/mixed, /datum/game_mode/malfunction, /datum/game_mode/traitor, /datum/game_mode/traitor/double_agents, /datum/game_mode/sandbox, /datum/game_mode/revolution, /datum/game_mode/meteor, /datum/game_mode/extended, /datum/game_mode/heist, /datum/game_mode/nuclear, /datum/game_mode/traitor/changeling, /datum/game_mode/wizard/raginmages, /datum/game_mode/blob)

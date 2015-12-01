@@ -29,7 +29,7 @@
 		icon_state = "piano"
 
 /obj/structure/device/piano/proc/playnote(var/note as text)
-	//world << "Note: [note]"
+//	to_chat(world, "Note: [note]")
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
@@ -205,7 +205,7 @@
 		if("Cn9")	soundfile = 'sound/piano/Cn9.ogg'
 		else		return
 
-//	hearers(15, src) << sound(soundfile)
+//	to_chat(hearers(15, src), sound(soundfile))
 	var/turf/source = get_turf(src)
 	for(var/mob/M in hearers(15, source))
 		M.playsound_local(source, file(soundfile), 100, falloff = 5)
@@ -220,18 +220,18 @@
 			cur_acc[i] = "n"
 
 		for(var/line in song.lines)
-			//world << line
+//			to_chat(world, line)
 			for(var/beat in text2list(lowertext(line), ","))
-				//world << "beat: [beat]"
+//				to_chat(world, "beat: [beat]")
 				var/list/notes = text2list(beat, "/")
 				for(var/note in text2list(notes[1], "-"))
-					//world << "note: [note]"
+//					to_chat(world, "note: [note]")
 					if(!playing || !anchored)//If the piano is playing, or is loose
 						playing = 0
 						return
 					if(length(note) == 0)
 						continue
-					//world << "Parse: [copytext(note,1,2)]"
+//					to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
@@ -257,7 +257,7 @@
 
 /obj/structure/device/piano/attack_paw(var/mob/user)
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	attack_hand(user)
 
@@ -413,12 +413,12 @@
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
 				if(lines.len > 50)
-					usr << "Too many lines!"
+					to_chat(usr, "Too many lines!")
 					lines.Cut(51)
 				var/linenum = 1
 				for(var/l in lines)
 					if(length(l) > 50)
-						usr << "Line [linenum] too long!"
+						to_chat(usr, "Line [linenum] too long!")
 						lines.Remove(l)
 					else
 						linenum++
@@ -435,7 +435,7 @@
 	if (istype(O, /obj/item/weapon/wrench))
 		if (anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You begin to loosen \the [src]'s casters...</span>"
+			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
 			if (do_after(user, src, 40))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
@@ -444,7 +444,7 @@
 				src.anchored = 0
 		else
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You begin to tighten \the [src] to the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, src, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \

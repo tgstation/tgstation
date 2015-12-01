@@ -124,13 +124,13 @@
 	var/obj/item/weapon/implant/compressed/c = imp
 	if (!c)	return
 	if (c.scanned == null)
-		user << "Please scan an object with the implanter first."
+		to_chat(user, "Please scan an object with the implanter first.")
 		return
 	..()
 
 /obj/item/weapon/implanter/compressed/afterattack(var/obj/item/I, mob/user as mob)
 	if(is_type_in_list(I,forbidden_types))
-		user << "<span class='warning'>A red light flickers on the implanter.</span>"
+		to_chat(user, "<span class='warning'>A red light flickers on the implanter.</span>")
 		return
 	if(istype(I) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
@@ -138,7 +138,7 @@
 			if(istype(I,/obj/item/weapon/storage))
 				..()
 				return
-			user << "<span class='warning'>Something is already scanned inside the implant!</span>"
+			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		if(user)
 			user.u_equip(I,0)

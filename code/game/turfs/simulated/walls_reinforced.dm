@@ -27,17 +27,18 @@
 	if(d_state)
 		switch(d_state) //How fucked or unfinished is our wall
 			if(WALLCOVEREXPOSED)
-				user << "It has no outer grille"
+				to_chat(user, "It has no outer grille")
 			if(WALLCOVERUNSECURED)
-				user << "It has no outer grille and the external reinforced cover is exposed"
+				to_chat(user, "It has no outer grille and the external reinforced cover is exposed")
 			if(WALLCOVERWEAKENED)
-				user << "It has no outer grille and the external reinforced cover has been welded into"
+				to_chat(user, "It has no outer grille and the external reinforced cover has been welded into")
 			if(WALLCOVERREMOVED)
-				user << "It has no outer grille or external reinforced cover and the external support rods are exposed"
+				to_chat(user, "It has no outer grille or external reinforced cover and the external support rods are exposed")
 			if(WALLRODSUNSECURED)
-				user << "It has no outer grille or external reinforced cover and the external support rods are loose"
+				to_chat(user, "It has no outer grille or external reinforced cover and the external support rods are loose")
 			if(WALLRODSCUT)
-				user << "It has no outer grille, external reinforced cover or external support rods and the inner reinforced cover is exposed" //And that's terrible
+				to_chat(user, "It has no outer grille, external reinforced cover or external support rods and the inner reinforced cover is exposed")//And that's terrible
+
 
 //We need to export this here because we want to handle it differently
 //This took me longer to find this than it should havle
@@ -56,7 +57,7 @@
 /turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if(istype(W,/obj/item/weapon/solder) && bullet_marks)
@@ -64,7 +65,7 @@
 		if(!S.remove_fuel(bullet_marks*2,user))
 			return
 		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		user << "<span class='notice'>You remove the bullet marks with \the [W].</span>"
+		to_chat(user, "<span class='notice'>You remove the bullet marks with \the [W].</span>")
 		bullet_marks = 0
 		icon = initial(icon)
 		return
@@ -152,7 +153,7 @@
 						"<span class='notice'>You mend the damage on \the [src]'s outer grille.</span>", \
 						"<span class='warning'>You hear welding noises.</span>")
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
 		if(WALLCOVERUNSECURED)
@@ -173,7 +174,7 @@
 						"<span class='notice'>You finish weakening \the [src]'s external cover.</span>", \
 						"<span class='warning'>You hear welding noises.</span>")
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter)) //Ah, snowflake coding, my favorite
@@ -240,7 +241,7 @@
 						"<span class='notice'>You fix the welding damage on \the [src]'s external cover.</span>", \
 						"<span class='warning'>You hear welding noises.</span>")
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
 		if(WALLCOVERREMOVED)
@@ -289,7 +290,7 @@
 						user.visible_message("<span class='warning'>[user] slices through \the [src]'s external support rods.</span>", \
 						"<span class='notice'>You slice through \the [src]'s external support rods, exposing its internal cover.</span>")
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
@@ -350,7 +351,7 @@
 						user.visible_message("<span class='warning'>[user] mends \the [src]'s external support rods.</span>", \
 						"<span class='notice'>You mend \the [src]'s external support rods.</span>")
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 
 //This is where we perform actions that aren't deconstructing, constructing or thermiting the reinforced wall

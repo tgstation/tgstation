@@ -36,7 +36,7 @@ mob/Login()
 	var/list/servers = list()
 	for(var/x in global.servers)
 
-		world << "[x] [servernames[ global.servers.Find(x) ]]"
+		to_chat(world, "[x] [servernames[ global.servers.Find(x) ]]")
 
 		var/info = world.Export("[x]?status")
 		var/datum/server/S = new()
@@ -46,8 +46,8 @@ mob/Login()
 		S.weight += player_weight * S.players
 		S.link = x
 
-		world << S.players
-		world << S.admins
+		to_chat(world, S.players)
+		to_chat(world, S.admins)
 
 		weights.Add(S.weight)
 		servers.Add(S)
@@ -58,7 +58,7 @@ mob/Login()
 		if(S.weight == lowest)
 			serverlink = S.link
 
-	src << link(serverlink)
+	to_chat(src, link(serverlink))
 
 proc/extract(var/data, var/type = PLAYERS)
 

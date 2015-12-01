@@ -97,12 +97,12 @@
 			if (src.connected)
 				if (src.connected.occupant)
 					if (src.connected.occupant.stat == DEAD)
-						usr << "<span class='danger'>This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>"
+						to_chat(usr, "<span class='danger'>This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>")
 					else if(href_list["chemical"] == "stoxin" && src.connected.sedativeblock)
 						if(src.connected.sedativeblock < 3)
-							usr << "<span class='warning'>Sedative injections not yet ready. Please try again in a few seconds.</span>"
+							to_chat(usr, "<span class='warning'>Sedative injections not yet ready. Please try again in a few seconds.</span>")
 						else //if this guy is seriously just mashing the soporific button...
-							usr << "[pick( \
+							to_chat(usr, "[pick( \
 							"<span class='warning'>This guy just got jammed into the machine, give them a breath before trying to pump them full of drugs.</span>", \
 							"<span class='warning'>Give it a rest.</span>", \
 							"<span class='warning'>Aren't you going to tuck them in before putting them to sleep?</span>", \
@@ -110,10 +110,10 @@
 							"<span class='warning'>Just got to make sure you're not tripping the fuck out of an innocent bystander, stay tight.</span>", \
 							"<span class='warning'>The occupant is still moving around!</span>", \
 							"<span class='warning'>Sorry pal, safety procedures.</span>", \
-							"<span class='warning'>But it's not bedtime yet!</span>")]"
+							"<span class='warning'>But it's not bedtime yet!</span>")]")
 						src.connected.sedativeblock++
 					else if(src.connected.occupant.health < 0 && href_list["chemical"] != "inaprovaline")
-						usr << "<span class='danger'>This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
+						to_chat(usr, "<span class='danger'>This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>")
 					else
 						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
 		if (href_list["refresh"])
@@ -250,22 +250,22 @@
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
 	if(occupant)
-		user << "<span class='notice'>\The [src] is already occupied!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
 	if(isrobot(user))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			user << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(user, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
-		user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
+		to_chat(user, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
-			usr << "[L.name] will not fit into the sleeper because they have a slime latched onto their head."
+			to_chat(usr, "[L.name] will not fit into the sleeper because they have a slime latched onto their head.")
 			return
 
 	if(L == user)
@@ -277,7 +277,7 @@
 	L.reset_view()
 	src.occupant = L
 	update_icon()
-	L << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	to_chat(L, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 	for(var/obj/OO in src)
 		OO.loc = src.loc
 	src.add_fingerprint(user)
@@ -295,12 +295,12 @@
 	if(!ishuman(usr) && !isrobot(usr))
 		return
 	if(!occupant)
-		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
 		return
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/robit = usr
 		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
-			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			to_chat(usr, "<span class='warning'>You do not have the means to do this!</span>")
 			return
 	if(!istype(over_location) || over_location.density)
 		return
@@ -338,7 +338,7 @@
 
 /obj/machinery/sleeper/crowbarDestroy(mob/user)
 	if(occupant)
-		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>")
 		return
 	return ..()
 
@@ -351,7 +351,7 @@
 				update_icon()
 			else
 				orient = "RIGHT"
-				user << "<span class='warning'>There is no space!</span>"
+				to_chat(user, "<span class='warning'>There is no space!</span>")
 		else
 			orient = "RIGHT"
 			if(generate_console(get_step(get_turf(src), WEST)))
@@ -365,12 +365,12 @@
 	var/obj/item/weapon/grab/G = W
 	if(!(ismob(G.affecting)) || G.affecting.locked_to) return
 	if(src.occupant)
-		user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
+		to_chat(user, "<span class='notice'><B>The sleeper is already occupied!</B></span>")
 		return
 
 	for(var/mob/living/carbon/slime/M in range(1,G.affecting))
 		if(M.Victim == G.affecting)
-			usr << "[G.affecting.name] will not fit into the sleeper because they have a slime latched onto their head."
+			to_chat(usr, "[G.affecting.name] will not fit into the sleeper because they have a slime latched onto their head.")
 			return
 
 	visible_message("[user] places [G.affecting.name] into the sleeper.", 3)
@@ -383,7 +383,7 @@
 	src.occupant = M
 	update_icon()
 
-	M << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	to_chat(M, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 
 	for(var/obj/O in src)
 		O.loc = src.loc
@@ -460,21 +460,21 @@
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
 	if(!src.occupant)
-		user << "<span class='warning'>There's no occupant in the sleeper!</span>"
+		to_chat(user, "<span class='warning'>There's no occupant in the sleeper!</span>")
 		return
 	if(isnull(src.occupant.reagents))
-		user << "<span class='warning'>The occupant appears to somehow lack a bloodstream. Please consult a shrink.</span>"
+		to_chat(user, "<span class='warning'>The occupant appears to somehow lack a bloodstream. Please consult a shrink.</span>")
 		return
 	if(src.occupant.reagents.get_reagent_amount(chemical) + amount > 20)
-		user << "<span class='warning'>Overdose Prevention System: The occupant already has enough [available_chemicals[chemical]] in their system.</span>"
+		to_chat(user, "<span class='warning'>Overdose Prevention System: The occupant already has enough [available_chemicals[chemical]] in their system.</span>")
 		return
 	src.occupant.reagents.add_reagent(chemical, amount)
-	user << "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in their bloodstream.</span>"
+	to_chat(user, "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in their bloodstream.</span>")
 	return
 
 /obj/machinery/sleeper/proc/check(mob/living/user as mob)
 	if(src.occupant)
-		user << text("<span class='notice'><B>Occupant ([]) Statistics:</B></span>", src.occupant)
+		to_chat(user, text("<span class='notice'><B>Occupant ([]) Statistics:</B></span>", src.occupant))
 		var/t1
 		switch(src.occupant.stat)
 			if(0.0)
@@ -484,16 +484,16 @@
 			if(2.0)
 				t1 = "*dead*"
 			else
-		user << text("[]\t Health %: [] ([])</span>", (src.occupant.health > 50 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.health, t1)
-		user << text("[]\t -Core Temperature: []&deg;C ([]&deg;F)</FONT><BR></span>", (src.occupant.bodytemperature > 50 ? "<font color='blue'>" : "<font color='red'>"), src.occupant.bodytemperature-T0C, src.occupant.bodytemperature*1.8-459.67)
-		user << text("[]\t -Brute Damage %: []</span>", (src.occupant.getBruteLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getBruteLoss())
-		user << text("[]\t -Respiratory Damage %: []</span>", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getOxyLoss())
-		user << text("[]\t -Toxin Content %: []</span>", (src.occupant.getToxLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getToxLoss())
-		user << text("[]\t -Burn Severity %: []</span>", (src.occupant.getFireLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getFireLoss())
-		user << "<span class='notice'>Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate)</span>"
-		user << text("<span class='notice'>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)</span>", src.occupant.paralysis / 5)
+		to_chat(user, text("[]\t Health %: [] ([])</span>", (src.occupant.health > 50 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.health, t1))
+		to_chat(user, text("[]\t -Core Temperature: []&deg;C ([]&deg;F)</FONT><BR></span>", (src.occupant.bodytemperature > 50 ? "<font color='blue'>" : "<font color='red'>"), src.occupant.bodytemperature-T0C, src.occupant.bodytemperature*1.8-459.67))
+		to_chat(user, text("[]\t -Brute Damage %: []</span>", (src.occupant.getBruteLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getBruteLoss()))
+		to_chat(user, text("[]\t -Respiratory Damage %: []</span>", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getOxyLoss()))
+		to_chat(user, text("[]\t -Toxin Content %: []</span>", (src.occupant.getToxLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getToxLoss()))
+		to_chat(user, text("[]\t -Burn Severity %: []</span>", (src.occupant.getFireLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getFireLoss()))
+		to_chat(user, "<span class='notice'>Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate)</span>")
+		to_chat(user, text("<span class='notice'>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)</span>", src.occupant.paralysis / 5))
 	else
-		user << "<span class='notice'>There is no one inside!</span>"
+		to_chat(user, "<span class='notice'>There is no one inside!</span>")
 	return
 
 
@@ -517,20 +517,20 @@
 		return
 
 	if(src.occupant)
-		usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
+		to_chat(usr, "<span class='notice'><B>The sleeper is already occupied!</B></span>")
 		return
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
 	if(usr.locked_to)
 		return
 	visible_message("[usr] starts climbing into the sleeper.", 3)
 	if(do_after(usr, src, 20))
 		if(src.occupant)
-			usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
+			to_chat(usr, "<span class='notice'><B>The sleeper is already occupied!</B></span>")
 			return
 		if(usr.locked_to)
 			return

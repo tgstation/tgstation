@@ -69,9 +69,9 @@
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living/carbon/human/manifested))
-		M << "<span class='warning'> Apparently it didn't work.</span>"
+		to_chat(M, "<span class='warning'> Apparently it didn't work.</span>")
 		if(M != user)
-			user << "<span class='warning'> Apparently it didn't work.</span>"
+			to_chat(user, "<span class='warning'> Apparently it didn't work.</span>")
 	else
 		if(istype(M,/mob/living))
 			M.radiation += rand(5,20)
@@ -111,7 +111,7 @@
 	if (!istype(M, /mob))
 		return
 	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
@@ -169,7 +169,7 @@
 					O.show_message(text("<span class='warning'>[] has been injected with [] by [].</span>", M, src, user), 1)
 					//Foreach goto(192)
 				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-					user << "<span class='warning'>Apparently it didn't work.</span>"
+					to_chat(user, "<span class='warning'>Apparently it didn't work.</span>")
 					return
 
 				if (buf.types & DNA2_BUF_SE)

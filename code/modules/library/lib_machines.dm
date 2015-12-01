@@ -85,7 +85,7 @@
 	if("[id]" in cached_books)
 		var/datum/cachedbook/CB = cached_books["[id]"]
 		if(CB.programmatic)
-			user << "<span class='danger'>That book cannot be removed from the system, as it does not actually exist in the database.</span>"
+			to_chat(user, "<span class='danger'>That book cannot be removed from the system, as it does not actually exist in the database.</span>")
 			return
 
 	var/sqlid = text2num(id)
@@ -142,7 +142,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
-		user << "<span class='danger'>Nope.</span>"
+		to_chat(user, "<span class='danger'>Nope.</span>")
 		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>

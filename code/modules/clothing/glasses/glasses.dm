@@ -35,7 +35,7 @@
 			see_invisible |= SEE_INVISIBLE_MINIMUM
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			C << "You turn [src] on."
+			to_chat(C, "You turn [src] on.")
 		else //Mesons are like cyclops' visons. When off, your eyes are exposed
 			src.on = !src.on
 			eyeprot = 0
@@ -43,7 +43,7 @@
 			vision_flags &= ~SEE_TURFS
 			see_invisible &= ~SEE_INVISIBLE_MINIMUM
 			icon_state = "[initial(icon_state)]off"
-			C << "You turn [src] off."
+			to_chat(C, "You turn [src] off.")
 
 		C.update_inv_glasses()
 
@@ -167,13 +167,13 @@
 			eyeprot = 2
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			C << "You flip the [src] down to protect your eyes."
+			to_chat(C, "You flip the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			eyeprot = 0
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
-			C << "You push the [src] up out of your face."
+			to_chat(C, "You push the [src] up out of your face.")
 
 		C.update_inv_glasses()
 
@@ -235,7 +235,7 @@
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = src.loc
-			M << "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>"
+			to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 			if(M.glasses == src)
 				M.eye_blind = 3
 				M.eye_blurry = 5

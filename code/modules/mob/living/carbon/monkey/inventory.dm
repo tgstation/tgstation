@@ -228,7 +228,7 @@
 		if(slot_in_backpack)
 			W.loc = src.back
 		else
-			usr << "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
+			to_chat(usr, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
 	W.layer = 20

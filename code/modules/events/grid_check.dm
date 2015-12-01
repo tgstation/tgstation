@@ -9,7 +9,7 @@
 
 /datum/event/grid_check/announce()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Automated Grid Check")
-	world << sound('sound/AI/poweroff.ogg')
+	to_chat(world, sound('sound/AI/poweroff.ogg'))
 
 /datum/event/grid_check/end()
 	if(universe.name != "Normal")

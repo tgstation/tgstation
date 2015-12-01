@@ -52,7 +52,7 @@
 
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
-				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
+				to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>")
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
 		if(1)
@@ -217,7 +217,7 @@
 /obj/machinery/computer/library/checkout/emag(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user << "<span class='notice'>You override the library computer's printing restrictions.</span>"
+		to_chat(user, "<span class='notice'>You override the library computer's printing restrictions.</span>")
 		return 1
 	return
 
@@ -225,7 +225,7 @@
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
-		user << "[scanner]'s associated machine has been set to [src]."
+		to_chat(user, "[scanner]'s associated machine has been set to [src].")
 		for (var/mob/V in hearers(src))
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
@@ -277,7 +277,7 @@
 		screenstate = 4
 	if(href_list["del"])
 		if(!usr.check_rights(R_ADMIN))
-			usr << "You aren't an admin, piss off."
+			to_chat(usr, "You aren't an admin, piss off.")
 			return
 		var/datum/cachedbook/target = getBookByID(href_list["del"]) // Sanitized in getBookByID
 		var/ans = alert(usr, "Are you sure you wish to delete \"[target.title]\", by [target.author]? This cannot be undone.", "Library System", "Yes", "No")
@@ -285,7 +285,7 @@
 			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE id=[target.id]")
 			var/response = query.Execute()
 			if(!response)
-				usr << query.ErrorMsg()
+				to_chat(usr, query.ErrorMsg())
 				return
 			log_admin("LIBRARY: [usr.name]/[usr.key] has deleted \"[target.title]\", by [target.author] ([target.ckey])!")
 			message_admins("[key_name_admin(usr)] has deleted \"[target.title]\", by [target.author] ([target.ckey])!")
@@ -294,7 +294,7 @@
 
 	if(href_list["delbyckey"])
 		if(!usr.check_rights(R_ADMIN))
-			usr << "You aren't an admin, piss off."
+			to_chat(usr, "You aren't an admin, piss off.")
 			return
 		var/tckey = ckey(href_list["delbyckey"])
 		var/ans = alert(usr,"Are you sure you wish to delete all books by [tckey]? This cannot be undone.", "Library System", "Yes", "No")
@@ -302,11 +302,11 @@
 			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE ckey='[sanitizeSQL(tckey)]'")
 			var/response = query.Execute()
 			if(!response)
-				usr << query.ErrorMsg()
+				to_chat(usr, query.ErrorMsg())
 				return
 			var/affected=query.RowsAffected()
 			if(affected==0)
-				usr << "<span class='danger'>Unable to find any matching rows.</span>"
+				to_chat(usr, "<span class='danger'>Unable to find any matching rows.</span>")
 				return
 			log_admin("LIBRARY: [usr.name]/[usr.key] has deleted [affected] books written by [tckey]!")
 			message_admins("[key_name_admin(usr)] has deleted [affected] books written by [tckey]!")
@@ -399,7 +399,7 @@
 						var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[ckey(usr.key)]')")
 						var/response = query.Execute()
 						if(!response)
-							usr << query.ErrorMsg()
+							to_chat(usr, query.ErrorMsg())
 						else
 							world.log << response
 							log_admin("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] characters in length")

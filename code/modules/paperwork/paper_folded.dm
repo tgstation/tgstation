@@ -67,10 +67,10 @@
 	if(!user)
 		return 0
 	if(user.stat || user.restrained())
-		user << "<span class='notice'>You can't do that while restrained.</span>"
+		to_chat(user, "<span class='notice'>You can't do that while restrained.</span>")
 		return 0
 	if(user.l_hand != P && user.r_hand != P)
-		user << "<span class='notice'>You'll need \the [src] in your hands to do that.</span>"
+		to_chat(user, "<span class='notice'>You'll need \the [src] in your hands to do that.</span>")
 		return 0
 	return 1
 
@@ -81,7 +81,7 @@
 	var/frame = 0
 /obj/item/weapon/p_folded/crane/attack_self(mob/user)
 	if(user.stat || user.restrained())
-		user << "<span class='notice'>You can't do that while restrained.</span>"
+		to_chat(user, "<span class='notice'>You can't do that while restrained.</span>")
 		return 0
 	frame = !frame
 	icon_state = (frame ? "crane_2" : "crane_1")
@@ -100,17 +100,17 @@
 		if(ishuman(target) && (user.zone_sel.selecting == "eyes" || prob(20)))
 			var/mob/living/carbon/human/H = target
 			if (H.check_body_part_coverage(EYES))
-				H << "<span class='warning'>\The [src] flies right into your eyes! Luckily your eyewear protects you.</span>"
+				to_chat(H, "<span class='warning'>\The [src] flies right into your eyes! Luckily your eyewear protects you.</span>")
 			else
 				if (src.nano)
-					H << "<span class='warning'>OW! Something sharp stabs your [pick("right","left")] eye!</span>"
+					to_chat(H, "<span class='warning'>OW! Something sharp stabs your [pick("right","left")] eye!</span>")
 					H.eye_blurry = max(H.eye_blurry, rand(10,15))
 					H.eye_blind = max(H.eye_blind, 2)
 					H.Stun(2)
 					var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
 					eyes.damage += 3
 				else
-					H << "<span class='warning'>\The [src] flies right into your [pick("right","left")] eye!</span>"
+					to_chat(H, "<span class='warning'>\The [src] flies right into your [pick("right","left")] eye!</span>")
 					H.eye_blurry = max(H.eye_blurry, rand(3,6))
 					H.eye_blind = max(H.eye_blind, src.nano)
 //at last, my block at a rest, bereft of all mortal doubts, I have been enlightened, touched by the sage wisdom, my undying gratitude goes to Comic in this emotional moment

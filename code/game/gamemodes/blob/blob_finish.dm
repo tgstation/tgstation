@@ -32,7 +32,7 @@
 		var/percent = round( 100.0 *  start_state.score(end_state), 0.1)
 		completion_text += "<br><B>The station is [percent]% intact.</B>"
 		log_game("Blob mode was won with station [percent]% intact.")
-		world << "<br><span class='notice'>Rebooting in 30s</span>"
+		to_chat(world, "<br><span class='notice'>Rebooting in 30s</span>")
 	..()
 	return 1
 
@@ -73,12 +73,12 @@ datum/game_mode/proc/auto_declare_completion_blob()
 						else
 							numAlive += 1
 		if (numSpace==0 && numOffStation==0)
-			world << {"<FONT size = 3><B>The AI has succeeded!</B></FONT>
-<B>The AI successfully maintained the quarantine - no players were in space or were off-station (as far as we can tell).</B>"}
+			to_chat(world, {"<FONT size = 3><B>The AI has succeeded!</B></FONT>
+<B>The AI successfully maintained the quarantine - no players were in space or were off-station (as far as we can tell).</B>"})
 			log_game("AI won at Blob mode despite overall loss.")
 		else
-			world << {"<FONT size = 3><B>The AI has failed!</B></FONT>
-<B>The AI failed to maintain the quarantine - [numSpace] were in space and [numOffStation] were off-station (as far as we can tell).</B>"}
+			to_chat(world, {"<FONT size = 3><B>The AI has failed!</B></FONT>
+<B>The AI failed to maintain the quarantine - [numSpace] were in space and [numOffStation] were off-station (as far as we can tell).</B>"})
 			log_game("AI lost at Blob mode.")
 	log_game("Blob mode was lost.")
 	return 1

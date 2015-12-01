@@ -21,7 +21,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>")
 		return (BRUTELOSS)
 
 	IsShield()
@@ -73,7 +73,7 @@
 	var/active = 0
 
 /obj/item/weapon/shield/energy/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/shield/energy/IsShield()
@@ -84,19 +84,19 @@
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
+		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_organ_damage(5)
 	active = !active
 	if (active)
 		force = 10
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	icon_state = "eshield[active]"
 	item_state = "eshield[active]"
 	user.regenerate_icons()
@@ -123,10 +123,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "<span class='notice'>The cloaking device is now active.</span>"
+		to_chat(user, "<span class='notice'>The cloaking device is now active.</span>")
 		src.icon_state = "shield1"
 	else
-		user << "<span class='notice'>The cloaking device is now inactive.</span>"
+		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

@@ -41,11 +41,11 @@
 
 	if(istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
 		if(reagents.total_volume < 1)
-			user << "<span class='notice'>Your mop is dry!</span>"
+			to_chat(user, "<span class='notice'>Your mop is dry!</span>")
 			return
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 		if(do_after(user,A, 30))
 			if(A)
 				clean(get_turf(A))
 				reagents.remove_any(1) //Might be a tad wonky with "special mop mixes", but fuck it
-				user << "<span class='notice'>You have finished mopping \the [get_turf(A)]!</span>"
+				to_chat(user, "<span class='notice'>You have finished mopping \the [get_turf(A)]!</span>")

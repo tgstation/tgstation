@@ -144,7 +144,7 @@
 		var/victory = rand(1,10)
 
 		#ifdef DEBUG_SLOT_MACHINES
-		user << "Rolled [victory]!"
+		to_chat(user, "Rolled [victory]!")
 		#endif
 
 		switch(victory)
@@ -245,7 +245,7 @@
 					dispense_cash(win_value, get_turf(src))
 					playsound(get_turf(src), "polaroid", 50, 1)
 
-					user << "<span class='notice'>You win $[win_value]!</span>"
+					to_chat(user, "<span class='notice'>You win $[win_value]!</span>")
 				else
 					src.visible_message("<span class='danger'>[src]'s screen flashes red.</span>")
 
@@ -308,7 +308,7 @@
 
 	if(istype(I,/obj/item/weapon/spacecash))
 		if(!can_play())
-			user << "<span class='notice'>[src] rejects your money.</span>"
+			to_chat(user, "<span class='notice'>[src] rejects your money.</span>")
 			return
 
 		var/obj/item/weapon/spacecash/S = I

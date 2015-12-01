@@ -96,7 +96,7 @@ Class Procs:
 	set background = 1
 	#endif
 
-	world << "<span class='danger'>Processing Geometry...</span>"
+	to_chat(world, "<span class='danger'>Processing Geometry...</span>")
 	sleep(-1)
 
 	var/start_time = world.timeofday
@@ -107,10 +107,10 @@ Class Procs:
 		simulated_turf_count++
 		S.update_air_properties()
 
-	world << {"<font color='red'><b>Geometry initialized in [round(0.1*(world.timeofday-start_time),0.1)] seconds.</b>
+	to_chat(world, {"<font color='red'><b>Geometry initialized in [round(0.1*(world.timeofday-start_time),0.1)] seconds.</b>
 Total Simulated Turfs: [simulated_turf_count]
 Total Zones: [zones.len]
-Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]</font>"}
+Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]</font>"})
 
 //	spawn Start()
 
@@ -161,7 +161,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		#ifdef ZASDBG
 		if(updated != updating.len)
 			tick_progress = "[updating.len - updated] tiles left unupdated."
-			world << "<span class='warning'>[tick_progress]</span>"
+			to_chat(world, "<span class='warning'>[tick_progress]</span>")
 			. = 0
 		#endif
 

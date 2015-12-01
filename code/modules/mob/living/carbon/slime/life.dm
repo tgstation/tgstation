@@ -53,7 +53,7 @@
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
 
-	//world << "AI proc started."
+//	to_chat(world, "AI proc started.")
 	if(AIproc || stat == DEAD || client) return
 
 	var/hungry = 0
@@ -68,33 +68,33 @@
 			if(150 to 900) hungry = 1
 			if(0 to 149) starving = 1
 	AIproc = 1
-	//world << "AIproc [AIproc] && stat != 2 [stat] && (attacked > 0 [attacked] || starving [starving] || hungry [hungry] || Victim [Victim] || Target [Target]"
+//	to_chat(world, "AIproc [AIproc] && stat != 2 [stat] && (attacked > 0 [attacked] || starving [starving] || hungry [hungry] || Victim [Victim] || Target [Target]")
 	while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || Victim))
 		if(Victim) // can't eat AND have this little process at the same time
-			//world << "break 1"
+//			to_chat(world, "break 1")
 			break
 
 		if(!Target || client)
-			//world << "break 2"
+//			to_chat(world, "break 2")
 			break
 
 
 		if(Target.health <= -70 || Target.stat == 2)
 			Target = null
 			AIproc = 0
-			//world << "break 3"
+//			to_chat(world, "break 3")
 			break
 
 		if(Target)
-			//world << "[Target] Target Found"
+//			to_chat(world, "[Target] Target Found")
 			for(var/mob/living/carbon/slime/M in view(1,Target))
 				if(M.Victim == Target)
 					Target = null
 					AIproc = 0
-					//world << "break 4"
+//					to_chat(world, "break 4")
 					break
 			if(!AIproc)
-				//world << "break 5"
+//				to_chat(world, "break 5")
 				break
 
 			if(Target in view(1,src))
@@ -108,7 +108,7 @@
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
-					//world << "retrun 1"
+//					to_chat(world, "retrun 1")
 					return
 				if(!Target.lying && prob(80))
 
@@ -142,7 +142,7 @@
 				else
 					Target = null
 					AIproc = 0
-					//world << "break 6"
+//					to_chat(world, "break 6")
 					break
 
 		var/sleeptime = movement_delay()
@@ -151,7 +151,7 @@
 		sleep(sleeptime + 2) // this is about as fast as a player slime can go
 
 	AIproc = 0
-	//world << "AI proc ended."
+//	to_chat(world, "AI proc ended.")
 
 /mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
 	if(flags & INVULNERABLE)

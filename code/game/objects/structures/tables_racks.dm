@@ -358,7 +358,7 @@
 					visible_message("<span class='warning'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
 					playsound(get_turf(src), 'sound/weapons/tablehit1.ogg', 50, 1)
 				else
-					user << "<span class='warning'>You need a better grip to do that!</span>"
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
 				G.affecting.loc = src.loc
@@ -369,7 +369,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench) && can_disassemble())
 		//if(!params_list.len || text2num(params_list["icon-y"]) < 8) //8 above the bottom of the icon
-		user << "<span class='notice'>Now disassembling table</span>"
+		to_chat(user, "<span class='notice'>Now disassembling table</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, src,50))
 			destroy()
@@ -404,7 +404,7 @@
 	if (user.stat)	//zombie goasts go away
 		return 0
 	if (issilicon(user))
-		user << "<span class='notice'>You need hands for this.</span>"
+		to_chat(user, "<span class='notice'>You need hands for this.</span>")
 		return 0
 	return 1
 
@@ -418,7 +418,7 @@
 	if (!can_touch(usr))
 		return
 	if(!flip(get_cardinal_dir(usr,src)))
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 	else
 		usr.visible_message("<span class='warning'>[usr] flips \the [src]!</span>")
 		return
@@ -450,7 +450,7 @@
 		return
 
 	if (!unflipping_check())
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 	unflip()
 
@@ -555,18 +555,18 @@
 			return ..()
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "<span class='notice'>Now weakening the reinforced table</span>"
+				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table weakened</span>"
+					to_chat(user, "<span class='notice'>Table weakened</span>")
 					src.status = 1
 			else
-				user << "<span class='notice'>Now strengthening the reinforced table</span>"
+				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table strengthened</span>"
+					to_chat(user, "<span class='notice'>Table strengthened</span>")
 					src.status = 2
 			return
 		return

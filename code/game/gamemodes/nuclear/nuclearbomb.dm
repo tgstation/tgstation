@@ -51,7 +51,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "<span class='warning'>You need more fuel to complete this task.</span>"
+						to_chat(user, "<span class='warning'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
@@ -78,7 +78,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "<span class='notice'>You need more fuel to complete this task.</span>"
+						to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
@@ -161,14 +161,14 @@ var/bomb_set
 
 	if (!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH)) return
 	if (!usr.dexterity_check())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if (src.deployable)
-		usr << "<span class='notice'>You close several panels to make [src] undeployable.</span>"
+		to_chat(usr, "<span class='notice'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
-		usr << "<span class='notice'>You adjust some panels to make [src] deployable.</span>"
+		to_chat(usr, "<span class='notice'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
@@ -176,7 +176,7 @@ var/bomb_set
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!usr.dexterity_check())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if (istype(src.loc, /turf))
 		usr.set_machine(src)
@@ -215,7 +215,7 @@ var/bomb_set
 					if (src.timing == -1.0)
 						return
 					if (src.safety)
-						usr << "<span class='warning'>The safety is still on.</span>"
+						to_chat(usr, "<span class='warning'>The safety is still on.</span>")
 						return
 					src.timing = !( src.timing )
 					if (src.timing)
@@ -305,13 +305,13 @@ var/bomb_set
 				var/datum/game_mode/nuclear/GM = ticker.mode
 				GM.nukes_left --
 			else
-				world << "<B>The station was destoyed by the nuclear blast!</B>"
+				to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 
 			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 															//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 30 seconds!</B>"
+				to_chat(world, "<B>Resetting in 30 seconds!</B>")
 
 				feedback_set_details("end_error","nuke - unhandled ending")
 
@@ -321,7 +321,7 @@ var/bomb_set
 				CallHook("Reboot",list())
 
 				if (watchdog.waiting)
-					world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+					to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 					watchdog.signal_ready()
 					return
 				sleep(300)
@@ -329,21 +329,37 @@ var/bomb_set
 				world.Reboot()
 				return
 	return
+
+/obj/item/weapon/disk/nuclear
+	name = "nuclear authentication disk"
+	desc = "Better keep this safe."
+	icon_state = "nucleardisk"
+	item_state = "card-id"
+	w_class = 1.0
+	var/respawned = 0
+	var/watched_by = list()
+
+/obj/item/weapon/disk/nuclear/Destroy()
+	..()
+	replace_disk()
+	for(var/obj/item/weapon/pinpointer/pinpointers in watched_by)
+		if(pinpointers.the_disk == src)
+			pinpointers.the_disk = null
+	watched_by = null
+
 /**
  * NOTE: Don't change it to Destroy().
  */
 /obj/item/weapon/disk/nuclear/Del()
-	if(blobstart.len > 0)
-		var/picked_turf = get_turf(pick(blobstart))
-
-		var/picked_area = formatLocation(picked_turf)
-
-		var/log_message = "[type] has been destroyed. Creating one at"
-
-		log_game("[log_message] [picked_area]")
-
-		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
-
-		new /obj/item/weapon/disk/nuclear(picked_turf)
-
+	replace_disk()
 	..()
+
+/obj/item/weapon/disk/nuclear/proc/replace_disk()
+	if(blobstart.len > 0 && !respawned)
+		var/picked_turf = get_turf(pick(blobstart))
+		var/picked_area = formatLocation(picked_turf)
+		var/log_message = "[type] has been destroyed. Creating one at"
+		log_game("[log_message] [picked_area]")
+		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
+		new /obj/item/weapon/disk/nuclear(picked_turf)
+		respawned = 1

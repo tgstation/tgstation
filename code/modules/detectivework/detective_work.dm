@@ -174,7 +174,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					scanning = I
 					M.drop_item(I, src)
 			else
-				usr << "Invalid Object Rejected."
+				to_chat(usr, "Invalid Object Rejected.")
 		if("card")  //Processing a fingerprint card.
 			var/mob/M = usr
 			var/obj/item/I = M.get_active_hand()
@@ -185,7 +185,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					usr << "<span class='warning'>ERROR: No prints/too many cards.</span>"
+					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -193,7 +193,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				M.drop_item(I, src)
 				process_card()
 			else
-				usr << "<span class='warning'>Invalid Object Rejected.</span>"
+				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -235,7 +235,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					if(new_title)
 						dossier[2] = new_title
 					else
-						usr << "Illegal or blank name."
+						to_chat(usr, "Illegal or blank name.")
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:219: temp = "<b>Criminal Evidence Database</b><br><br>"
@@ -337,7 +337,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						for(var/named in blood)
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 			else
-				usr << "ERROR.  Database not found!<br>"
+				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("auxiliary") //Viewing a record from the "misc" database.
 			canclear = 0
 			if(misc)
@@ -420,7 +420,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					for(var/named in blood)
 						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 			else
-				usr << "ERROR.  Database not found!<br>"
+				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("scan")
 			if(istype(scanning,/obj/item/weapon/f_card))
 				card = scanning
@@ -649,7 +649,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 
 /obj/machinery/computer/forensic_scanning/proc/process_card()	//Same as above, but for fingerprint cards
 	if(card.fingerprints && !(card.amount > 1) && islist(card.fingerprints) && files && files.len)
-		usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
+		to_chat(usr, "You insert the card, and it is destroyed by the machinery in the process of comparing prints.")
 		var/found = 0
 		for(var/master_print in card.fingerprints)
 			var/list/data_entry = files[master_print]
@@ -657,12 +657,12 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				found = 1
 				data_entry[1] = master_print
 		if(found)
-			usr << "The machinery finds it can complete a match."
+			to_chat(usr, "The machinery finds it can complete a match.")
 		else
-			usr << "No match found."
+			to_chat(usr, "No match found.")
 		del(card)
 	else
-		usr << "<span class='warning'>ERROR: No prints/too many cards.</span>"
+		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null

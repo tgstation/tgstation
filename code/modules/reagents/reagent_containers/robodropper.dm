@@ -18,11 +18,11 @@
 		if(filled)
 
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "<span class='warning'>[target] is full.</span>"
+				to_chat(user, "<span class='warning'>[target] is full.</span>")
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) //You can inject humans and food but you cant remove the shit.
-				user << "<span class='warning'>You cannot directly fill this object.</span>"
+				to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 				return
 
 
@@ -41,7 +41,7 @@
 						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 				trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
+				to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 				if (src.reagents.total_volume<=0)
 					filled = 0
 					icon_state = "dropper[filled]"
@@ -63,7 +63,7 @@
 							src.reagents.reaction(safe_thing, TOUCH)
 
 
-						user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
+						to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 						if (src.reagents.total_volume<=0)
 							filled = 0
 							icon_state = "dropper[filled]"
@@ -90,16 +90,16 @@
 		else
 
 			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-				user << "<span class='warning'>You cannot directly remove reagents from [target].</span>"
+				to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target].</span>")
 				return
 
 			if(!target.reagents.total_volume)
-				user << "<span class='warning'>[target] is empty.</span>"
+				to_chat(user, "<span class='warning'>[target] is empty.</span>")
 				return
 
 			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
-			user << "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>"
+			to_chat(user, "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>")
 
 			filled = 1
 			icon_state = "dropper[filled]"

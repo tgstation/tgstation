@@ -67,20 +67,20 @@
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("lockdown")
 		var/obj/mecha/M = MT.in_mecha()
 		if(M.state)
-			usr << "That exosuit is already under lockdown!"
+			to_chat(usr, "That exosuit is already under lockdown!")
 			return
 		switch(alert("Are you sure? The exosuit will enter maintenance mode.","Transmit Beacon Lockdown Code","Yes","No"))
 			if ("Yes")
 				MT.lockdown()
 			if ("No")
-				usr << "You have second thoughts."
+				to_chat(usr, "You have second thoughts.")
 	if(href_list["shock"])
 		switch(alert("Are you sure? This cannot be undone.","Transmit Beacon Self-Destruct Code","Yes","No"))
 			if ("Yes")
 				var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
 				MT.shock()
 			if ("No")
-				usr << "You have second thoughts."
+				to_chat(usr, "You have second thoughts.")
 	if(href_list["get_log"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
 		stored_data = MT.get_mecha_log()
@@ -136,7 +136,7 @@
 	if(M)
 		M.log_message("Exosuit tracking beacon self-destruct activated.",1)
 		M.occupant_message("<font color='red'><b>Exosuit tracking beacon short-circuits!</b></font>")
-		M.occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+		to_chat(M.occupant, sound('sound/machines/warning-buzzer.ogg',wait=0))
 		if (M.get_charge())
 			if (M.cell.charge < 5000 && M)
 				M.use_power(M.cell.charge/4)
@@ -155,7 +155,7 @@
 		M.log_message("Emergency maintenance protocols activated.",1)
 		if(M.occupant)
 			M.occupant_message("<font color='red'>Exosuit emergency maintenance protocols activated.</font>")
-			M.occupant << sound('sound/mecha/mechlockdown.ogg',wait=0)
+			to_chat(M.occupant, sound('sound/mecha/mechlockdown.ogg',wait=0))
 		M.state = 1
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()

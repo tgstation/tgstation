@@ -176,7 +176,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "<span class='warning'>You do not have the required access level</span>"
+		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return
 
 	if(href_list["main"])
@@ -330,7 +330,7 @@
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 20))
 			if (src.stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
@@ -342,7 +342,7 @@
 				A.anchored = 1
 				del(src)
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
 				for (var/obj/C in src)
@@ -355,7 +355,7 @@
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols</span>"
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 	src.updateUsrDialog()
 	return
 

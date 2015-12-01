@@ -46,7 +46,7 @@
 		/*
 		for(var/index=1,index <= scanned_sample.find_presence.len, index++)
 			var/find = scanned_sample.find_presence[index]
-			//world << "index: [index], find: [find], response: [responsive_carriers[index]], carrier: [carrier]"
+//			to_chat(world, "index: [index], find: [find], response: [responsive_carriers[index]], carrier: [carrier]")
 			if(find && responsive_carriers[index] == carrier)
 				results += " - [finds_as_strings[index]] [find * 100]%<br>"
 				found++

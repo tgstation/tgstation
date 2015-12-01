@@ -82,7 +82,7 @@
 	// DNA sample from syringe.
 	if(!prints_prosthetics && istype(W, /obj/item/weapon/reagent_containers/syringe))
 		//Finish the feature first, muh immulsions
-		//user << "<span class='notice'>You inject the blood sample into \the [src], but it simply drains away through a tube in the back.</span>."
+//		to_chat(user, "<span class='notice'>You inject the blood sample into \the [src], but it simply drains away through a tube in the back.</span>.")
 		return
 	// Meat for biomass.
 	else if(!prints_prosthetics && istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))

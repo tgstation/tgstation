@@ -17,11 +17,11 @@
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
 	if(!(grenades.len))
-		user << "<span class='info'>It is empty.</span>"
+		to_chat(user, "<span class='info'>It is empty.</span>")
 		return
-	user << "<span class='info'>It has [grenades.len] / [max_grenades] grenades loaded.</span>"
+	to_chat(user, "<span class='info'>It has [grenades.len] / [max_grenades] grenades loaded.</span>")
 	for(var/obj/item/weapon/grenade/G in grenades)
-		user << "\icon [G] [G.name]"
+		to_chat(user, "\icon [G] [G.name]")
 
 /obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
 
@@ -29,10 +29,10 @@
 		if(grenades.len < max_grenades)
 			user.drop_item(I, src)
 			grenades += I
-			user << "<span class='notice'>You load the [I.name] into the [src.name].</span>"
-			user << "<span class='notice'>[grenades.len] / [max_grenades] grenades loaded.</span>"
+			to_chat(user, "<span class='notice'>You load the [I.name] into the [src.name].</span>")
+			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] grenades loaded.</span>")
 		else
-			user << "<span class='warning'>The [src.name] cannot hold more grenades.</span>"
+			to_chat(user, "<span class='warning'>The [src.name] cannot hold more grenades.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
 
@@ -48,12 +48,12 @@
 	if(grenades.len)
 		spawn(0) fire_grenade(target,user)
 	else
-		usr << "<span class='warning'>The [src.name] is empty.</span>"
+		to_chat(usr, "<span class='warning'>The [src.name] is empty.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
 	for(var/mob/O in viewers(world.view, user))
 		O.show_message(text("<span class='warning'>[] fired a grenade!</span>", user), 1)
-	user << "<span class='warning'>You fire the grenade launcher!</span>"
+	to_chat(user, "<span class='warning'>You fire the grenade launcher!</span>")
 	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc

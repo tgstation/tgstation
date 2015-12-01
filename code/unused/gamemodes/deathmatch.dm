@@ -6,8 +6,8 @@
 	var/const/gamelength = 15 * 600 // 1/10 second
 
 	announce()
-		world << "<B>The current game mode is - Death Commando Deathmatch!</B>"
-		world << "<B>Just kill everyone else. They're gonna try to kill you, after all. Respawning is enabled.</B>"
+		to_chat(world, "<B>The current game mode is - Death Commando Deathmatch!</B>")
+		to_chat(world, "<B>Just kill everyone else. They're gonna try to kill you, after all. Respawning is enabled.</B>")
 
 	post_setup()
 		startedat = world.realtime

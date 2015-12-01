@@ -20,7 +20,7 @@
 	desc = "Smells faintly of potato."
 
 /obj/item/weapon/storage/briefcase/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'><b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+	to_chat(viewers(user), "<span class='danger'><b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b></span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/briefcase/New()
@@ -33,7 +33,7 @@
 	//..()
 
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
+		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_organ_damage(10)
 		user.Paralyse(2)
 		return
@@ -51,7 +51,7 @@
 		var/mob/H = M
 		// ******* Check
 		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "<span class='warning'>The helmet protects you from being hit hard in the head!</span>"
+			to_chat(M, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
@@ -62,7 +62,7 @@
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("<span class='danger'>[] has been knocked unconscious!</span>", M), 1, "<span class='warning'>You hear someone fall.</span>", 2)
 	else
-		M << text("<span class='warning'>[] tried to knock you unconcious!</span>",user)
+		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
 		M.eye_blurry += 3
 
 	return
@@ -98,35 +98,35 @@
 /obj/item/weapon/storage/briefcase/false_bottomed/attackby(var/obj/item/item, mob/user)
 	if(istype(item, /obj/item/weapon/screwdriver))
 		if(!bottom_open && !busy_hunting)
-			user << "You begin to hunt around the rim of \the [src]..."
+			to_chat(user, "You begin to hunt around the rim of \the [src]...")
 			busy_hunting = 1
 			if(do_after(user, src, 20))
 				if(user)
-					user << "You pry open the false bottom!"
+					to_chat(user, "You pry open the false bottom!")
 				bottom_open = 1
 			busy_hunting = 0
 		else if(bottom_open)
-			user << "You push the false bottom down and close it with a click[stored_item ? ", with \the [stored_item] snugly inside." : "."]"
+			to_chat(user, "You push the false bottom down and close it with a click[stored_item ? ", with \the [stored_item] snugly inside." : "."]")
 			bottom_open = 0
 	else if(bottom_open)
 		if(stored_item)
-			user << "<span class='warning'>There's already something in the false bottom!</span>"
+			to_chat(user, "<span class='warning'>There's already something in the false bottom!</span>")
 			return
 		if(item.w_class > 3.0)
-			user << "<span class='warning'>\The [item] is too big to fit in the false bottom!</span>"
+			to_chat(user, "<span class='warning'>\The [item] is too big to fit in the false bottom!</span>")
 			return
 		stored_item = item
 		user.drop_item(item)
 		max_w_class = 3.0 - stored_item.w_class
 		item.loc = null //null space here we go - to stop it showing up in the briefcase
-		user << "You place \the [item] into the false bottom of the briefcase."
+		to_chat(user, "You place \the [item] into the false bottom of the briefcase.")
 	else
 		return ..()
 
 /obj/item/weapon/storage/briefcase/false_bottomed/attack_hand(mob/user)
 	if(bottom_open && stored_item)
 		user.put_in_hands(stored_item)
-		user << "You pull out \the [stored_item] from \the [src]'s false bottom."
+		to_chat(user, "You pull out \the [stored_item] from \the [src]'s false bottom.")
 		stored_item = null
 		max_w_class = initial(max_w_class)
 	else

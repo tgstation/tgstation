@@ -14,18 +14,33 @@
 	melt_temperature = MELTPOINT_STEEL
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
+	var/watches_nuke = 1
 
+/obj/item/weapon/pinpointer/Destroy()
+	..()
+	processing_objects -= src
 
 /obj/item/weapon/pinpointer/attack_self()
 	if(!active)
 		active = 1
 		workdisk()
-		usr << "<span class='notice'>You activate \the [src]</span>"
+		to_chat(usr,"<span class='notice'>You activate \the [src]</span>")
 		playsound(get_turf(src), 'sound/items/healthanalyzer.ogg', 30, 1)
+		processing_objects += src
 	else
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate \the [src]</span>"
+		to_chat(usr,"<span class='notice'>You deactivate \the [src]</span>")
+		processing_objects -= src
+
+/obj/item/weapon/pinpointer/proc/workdisk()
+	if(!the_disk)
+		the_disk = locate()
+		the_disk.watched_by += src
+	process()
+
+/obj/item/weapon/pinpointer/process()
+	point_at(the_disk)
 
 /obj/item/weapon/pinpointer/proc/point_at(atom/target)
 	if(!active)
@@ -36,14 +51,17 @@
 
 	var/turf/T = get_turf(target)
 	var/turf/L = get_turf(src)
-	if(!T || !L)
+	update_icon(L,T)
+
+/obj/item/weapon/pinpointer/update_icon(turf/location,turf/target)
+	if(!target || !location)
 		icon_state = "pinonnull"
 		return
-	if(T.z != L.z)
+	if(target.z != location.z)
 		icon_state = "pinonnull"
 	else
-		dir = get_dir(L, T)
-		switch(get_dist(L, T))
+		dir = get_dir(location,target)
+		switch(get_dist(location,target))
 			if(-1)
 				icon_state = "pinondirect"
 			if(1 to 8)
@@ -52,20 +70,18 @@
 				icon_state = "pinonmedium"
 			if(16 to INFINITY)
 				icon_state = "pinonfar"
-	spawn(5)
-		.()
-
-/obj/item/weapon/pinpointer/proc/workdisk()
-	if(!the_disk)
-		the_disk = locate()
-	point_at(the_disk)
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
-		if(bomb.timing)
-			user << "<span class='danger'>Extreme danger. Arming signal detected. Time remaining: [bomb.timeleft]</span>"
-
+	if(watches_nuke)
+		var/bomb_timeleft
+		for(var/obj/machinery/nuclearbomb/bomb in machines)
+			if(bomb.timing)
+				bomb_timeleft = bomb.timeleft
+		if(bomb_timeleft)
+			to_chat(user,"<span class='danger'>Extreme danger. Arming signal detected. Time remaining: [bomb_timeleft]</span>")
+		else
+			to_chat(user,"<span class='info'>No active nuclear devices detected.</span>")
 
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "Advanced Pinpointer"
@@ -74,22 +90,28 @@
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.
 	var/turf/location = null
 	var/obj/target = null
+	watches_nuke = 0
 
 /obj/item/weapon/pinpointer/advpinpointer/attack_self()
 	if(!active)
 		active = 1
-		if(mode == 0)
-			workdisk()
-		if(mode == 1)
-			point_at(location)
-		if(mode == 2)
-			point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer</span>"
+		processing_objects += src
+		process()
+		to_chat(usr,"<span class='notice'>You activate the pinpointer</span>")
 	else
+		processing_objects -= src
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate the pinpointer</span>"
+		to_chat(usr,"<span class='notice'>You deactivate the pinpointer</span>")
 
+/obj/item/weapon/pinpointer/advpinpointer/process()
+	switch(mode)
+		if(0)
+			workdisk()
+		if(1)
+			point_at(location)
+		if(2)
+			point_at(target)
 
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()
 	set category = "Object"
@@ -106,17 +128,17 @@
 			mode = 1
 
 			var/locationx = input(usr, "Please input the x coordinate to search for.", "Location?" , "") as num
-			if(!locationx || !(usr in view(1,src)))
+			if(!locationx || !Adjacent(usr))
 				return
 			var/locationy = input(usr, "Please input the y coordinate to search for.", "Location?" , "") as num
-			if(!locationy || !(usr in view(1,src)))
+			if(!locationy || !!Adjacent(usr))
 				return
 
 			var/turf/Z = get_turf(src)
 
 			location = locate(locationx,locationy,Z.z)
 
-			usr << "You set the pinpointer to locate [locationx],[locationy]"
+			to_chat(usr,"You set the pinpointer to locate [locationx],[locationy]")
 
 
 			return attack_self()
@@ -142,9 +164,9 @@
 						return
 					target=locate(item_paths[targetitem])
 					if(!target)
-						usr << "Failed to locate [targetitem]!"
+						to_chat(usr,"Failed to locate [targetitem]!")
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					to_chat(usr,"You set the pinpointer to locate [targetitem]")
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
@@ -173,22 +195,25 @@
 	if(!active)
 		active = 1
 		if(!mode)
-			workdisk()
-			user << "<span class='notice'>Authentication Disk Locator active.</span>"
+			to_chat(user,"<span class='notice'>Authentication Disk Locator active.</span>")
 		else
-			worklocation()
-			user << "<span class='notice'>Shuttle Locator active.</span>"
+			to_chat(user,"<span class='notice'>Shuttle Locator active.</span>")
+		process()
+		processing_objects += src
 	else
 		active = 0
 		icon_state = "pinoff"
-		user << "<span class='notice'>You deactivate the pinpointer.</span>"
+		to_chat(user,"<span class='notice'>You deactivate the pinpointer.</span>")
+		processing_objects -= src
 
 
-/obj/item/weapon/pinpointer/nukeop/workdisk()
-	if(!active) return
+/obj/item/weapon/pinpointer/nukeop/process()
 	if(mode)		//Check in case the mode changes while operating
 		worklocation()
-		return
+	else
+		workdisk()
+
+/obj/item/weapon/pinpointer/nukeop/workdisk()
 	if(bomb_set)	//If the bomb is set, lead to the shuttle
 		mode = 1	//Ensures worklocation() continues to work
 		worklocation()
@@ -197,32 +222,14 @@
 		return		//Get outta here
 	if(!the_disk)
 		the_disk = locate()
+		the_disk.watched_by += src
 		if(!the_disk)
 			icon_state = "pinonnull"
 			return
-//	if(loc.z != the_disk.z)	//If you are on a different z-level from the disk
-//		icon_state = "pinonnull"
-//	else
-	dir = get_dir(src, the_disk)
-	switch(get_dist(src, the_disk))
-		if(0)
-			icon_state = "pinondirect"
-		if(1 to 8)
-			icon_state = "pinonclose"
-		if(9 to 16)
-			icon_state = "pinonmedium"
-		if(16 to INFINITY)
-			icon_state = "pinonfar"
-
-	spawn(5) .()
+	point_at(the_disk)
 
 
 /obj/item/weapon/pinpointer/nukeop/proc/worklocation()
-	if(!active)
-		return
-	if(!mode)
-		workdisk()
-		return
 	if(!bomb_set)
 		mode = 0
 		workdisk()
@@ -234,37 +241,27 @@
 		if(!home)
 			icon_state = "pinonnull"
 			return
-	if(loc.z != home.z)	//If you are on a different z-level from the shuttle
-		icon_state = "pinonnull"
-	else
-		dir = get_dir(src, home)
-		switch(get_dist(src, home))
-			if(0)
-				icon_state = "pinondirect"
-			if(1 to 8)
-				icon_state = "pinonclose"
-			if(9 to 16)
-				icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				icon_state = "pinonfar"
-
-	spawn(5) .()
+	point_at(home)
 
 /obj/item/weapon/pinpointer/pdapinpointer
 	name = "pda pinpointer"
 	desc = "A pinpointer that has been illegally modified to track the PDA of a crewmember for malicious reasons."
 	var/obj/target = null
 	var/used = 0
+	watches_nuke = 0
 
 /obj/item/weapon/pinpointer/pdapinpointer/attack_self()
 	if(!active)
 		active = 1
-		point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer</span>"
+		process()
+		to_chat(usr,"<span class='notice'>You activate the pinpointer</span>")
 	else
 		active = 0
 		icon_state = "pinoff"
-		usr << "<span class='notice'>You deactivate the pinpointer</span>"
+		to_chat(usr,"<span class='notice'>You deactivate the pinpointer</span>")
+
+/obj/item/weapon/pinpointer/pdapinpointer/process()
+	point_at(target)
 
 /obj/item/weapon/pinpointer/pdapinpointer/verb/select_pda()
 	set category = "Object"
@@ -272,7 +269,7 @@
 	set src in view(1)
 
 	if(used)
-		usr << "Target has already been set!"
+		to_chat(usr,"Target has already been set!")
 		return
 
 	var/list/L = list()
@@ -288,15 +285,15 @@
 		return
 	target = L[t]
 	if(!target)
-		usr << "Failed to locate [target]!"
+		to_chat(usr,"Failed to locate [target]!")
 		return
 	active = 1
 	point_at(target)
-	usr << "You set the pinpointer to locate [target]"
+	to_chat(usr,"You set the pinpointer to locate [target]")
 	used = 1
 
 
 /obj/item/weapon/pinpointer/pdapinpointer/examine(mob/user)
 	..()
 	if (target)
-		user << "<span class='notice'>Tracking [target]</span>"
+		to_chat(user,"<span class='notice'>Tracking [target]</span>")

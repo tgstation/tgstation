@@ -65,7 +65,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!procname)	return
 
 		if(target && !hascall(target, procname))
-			usr << "<span style='color: red;'>Error: callproc(): target has no such call [procname].</span>"
+			to_chat(usr, "<span style='color: red;'>Error: callproc(): target has no such call [procname].</span>")
 			return
 
 		var/argnum = input("Number of arguments","Number:",0) as num|null
@@ -125,7 +125,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if(targetselected)
 			if(!target)
-				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+				to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 				return
 
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -135,7 +135,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 
-		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+		to_chat(usr, "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>")
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callatomproc(var/datum/target as anything)
@@ -154,7 +154,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!procname)	return
 
 		if(!hascall(target, procname))
-			usr << "<span style='color: red;'>Error: callatomproc(): target has no such call [procname].</span>"
+			to_chat(usr, "<span style='color: red;'>Error: callatomproc(): target has no such call [procname].</span>")
 
 		var/argnum = input("Number of arguments","Number:",0) as num|null
 		if(!argnum && (argnum!=0))	return
@@ -214,7 +214,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 
-		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+		to_chat(usr, "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>")
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -393,7 +393,7 @@ Pressure: [env.return_pressure()]"}
 	set category = null
 	set name = "Make Abomination"
 
-	usr << "Ruby Mode disabled. Command aborted."
+	to_chat(usr, "Ruby Mode disabled. Command aborted.")
 	return
 	if(!ticker)
 		alert("Wait until the game starts.")
@@ -417,35 +417,35 @@ Pressure: [env.return_pressure()]"}
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>"
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>")
 				new /obj/item/weapon/tome(M.loc)
 			else
-				M << "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>")
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>")
 				if("2")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>")
 				if("3")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>")
 				if("4")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>")
 				if("5")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>")
 				if("6")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>")
 				if("7")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>")
 				if("8")
-					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>"
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>")
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
-				M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+				to_chat(M, "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>")
 				M.add_language("Cult")
-			src << "Made [M] a cultist."
+			to_chat(src, "Made [M] a cultist.")
 */
 
 //TODO: merge the vievars version into this or something maybe mayhaps
@@ -592,33 +592,33 @@ Pressure: [env.return_pressure()]"}
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	world << "<b>AREAS WITHOUT AN APC:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
 	for(var/areatype in areas_without_APC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
 	for(var/areatype in areas_without_air_alarm)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
 	for(var/areatype in areas_without_RC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
 	for(var/areatype in areas_without_light)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
 	for(var/areatype in areas_without_LS)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
 	for(var/areatype in areas_without_intercom)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
@@ -1168,7 +1168,7 @@ Pressure: [env.return_pressure()]"}
 		magic.output=200000 // AKA rape
 		magic.online=1
 
-	//world << "<b>LET THERE BE JUICE</b>"
+//	to_chat(world, "<b>LET THERE BE JUICE</b>")
 
 
 // Getting tired of doing this shit every fucking round when I'm testing something atmos-related
@@ -1192,7 +1192,7 @@ Pressure: [env.return_pressure()]"}
 	for(var/obj/machinery/atmospherics/trinary/filter/F in atmos_machines)
 		F.target_pressure=4500
 
-	//world << "<b>LET THERE BE AIR</b>"
+//	to_chat(world, "<b>LET THERE BE AIR</b>")
 
 
 /client/proc/cmd_debug_mob_lists()
@@ -1202,17 +1202,17 @@ Pressure: [env.return_pressure()]"}
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
 		if("Players")
-			usr << list2text(player_list,",")
+			to_chat(usr, list2text(player_list,","))
 		if("Admins")
-			usr << list2text(admins,",")
+			to_chat(usr, list2text(admins,","))
 		if("Mobs")
-			usr << list2text(mob_list,",")
+			to_chat(usr, list2text(mob_list,","))
 		if("Living Mobs")
-			usr << list2text(living_mob_list,",")
+			to_chat(usr, list2text(living_mob_list,","))
 		if("Dead Mobs")
-			usr << list2text(dead_mob_list,",")
+			to_chat(usr, list2text(dead_mob_list,","))
 		if("Clients")
-			usr << list2text(clients,",")
+			to_chat(usr, list2text(clients,","))
 
 
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
@@ -1238,11 +1238,11 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
-	F << "Types,Number of Instances"
+	to_chat(F, "Types,Number of Instances")
 	for(var/key in type_instances)
-		F << "[key],[type_instances[key]]"
+		to_chat(F, "[key],[type_instances[key]]")
 
-	usr << "<span class='notice'>Dumped to [F]</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 
 /client/proc/cmd_admin_find_bad_blood_tracks()
 	set category = "Debug"
@@ -1254,8 +1254,8 @@ Pressure: [env.return_pressure()]"}
 	fdel(F)
 	for(var/obj/effect/decal/cleanable/blood/tracks/T in blood_list)
 		if(!T.loc)
-			F << "Found [T] in a null location but still in the blood list"
-			F << "--------------------------------------"
+			to_chat(F, "Found [T] in a null location but still in the blood list")
+			to_chat(F, "--------------------------------------")
 			continue
 		var/dat
 		for(var/b in cardinal)
@@ -1265,9 +1265,9 @@ Pressure: [env.return_pressure()]"}
 				for(var/key in T.setdirs)
 					dat += (key)
 		dat += "--------------------------------------"
-		F << dat
+		to_chat(F, dat)
 
-	usr << "<span class='notice'>Dumped to [F]</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
@@ -1277,20 +1277,20 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
 	fdel(F)
-	F << "type,nanoseconds"
+	to_chat(F, "type,nanoseconds")
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
-		F << "[typepath],[ns]"
+		to_chat(F, "[typepath],[ns]")
 
-	usr << "<span class='notice'>Dumped to [F]</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
 	fdel(FF)
-	FF << "type,nanoseconds"
+	to_chat(FF, "type,nanoseconds")
 	for(var/typepath in object_profiling)
 		var/ns = object_profiling[typepath]
-		FF << "[typepath],[ns]"
+		to_chat(FF, "[typepath],[ns]")
 
-	usr << "<span class='notice'>Dumped to [FF].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [FF].</span>")
 
 
 /client/proc/cmd_admin_dump_machine_type_list()
@@ -1298,12 +1298,12 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Machine type list"
 
 	if(!machines.len && !power_machines.len)
-		usr << "Machines has no length!"
+		to_chat(usr, "Machines has no length!")
 		return
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_machine_instances.csv")
 	fdel(F)
-	F << "type,count"
+	to_chat(F, "type,count")
 	var/list/machineinstances = list()
 	for(var/atom/typepath in machines)
 		if(!typepath.type in machineinstances)
@@ -1311,12 +1311,12 @@ Pressure: [env.return_pressure()]"}
 		machineinstances["[typepath.type]"] += 1
 	for(var/T in machineinstances)
 		var/count = machineinstances[T]
-		F << "[T],[count]"
+		to_chat(F, "[T],[count]")
 
-	usr << "<span class='notice'>Dumped to [F].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
 	fdel(F)
-	F << "type,count"
+	to_chat(F, "type,count")
 	machineinstances.len = 0
 	for(var/atom/typepath in power_machines)
 		if(!typepath.type in machineinstances)
@@ -1324,9 +1324,9 @@ Pressure: [env.return_pressure()]"}
 		machineinstances["[typepath.type]"] += 1
 	for(var/T in machineinstances)
 		var/count = machineinstances[T]
-		F << "[T],[count]"
+		to_chat(F, "[T],[count]")
 
-	usr << "<span class='notice'>Dumped to [F].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
@@ -1336,29 +1336,29 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
 	fdel(F)
-	F << "type,deletes"
+	to_chat(F, "type,deletes")
 	for(var/typepath in del_profiling)
 		var/ns = del_profiling[typepath]
-		F << "[typepath],[ns]"
+		to_chat(F, "[typepath],[ns]")
 
-	usr << "<span class='notice'>Dumped to [F].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
 	fdel(F)
-	F << "type,soft deletes"
+	to_chat(F, "type,soft deletes")
 	for(var/typepath in gdel_profiling)
 		var/ns = gdel_profiling[typepath]
-		F << "[typepath],[ns]"
+		to_chat(F, "[typepath],[ns]")
 
-	usr << "<span class='notice'>Dumped to [F].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 
 	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
 	fdel(F)
-	F << "type,hard deletes"
+	to_chat(F, "type,hard deletes")
 	for(var/typepath in ghdel_profiling)
 		var/ns = ghdel_profiling[typepath]
-		F << "[typepath],[ns]"
+		to_chat(F, "[typepath],[ns]")
 
-	usr << "<span class='notice'>Dumped to [F].</span>"
+	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1374,7 +1374,7 @@ var/global/blood_virus_spreading_disabled = 0
 	set category = "Debug"
 	set name = "Disable Blood Virus Spreading"
 
-	//usr << "<span class='warning'>Proc disabled.</span>"
+//	to_chat(usr, "<span class='warning'>Proc disabled.</span>")
 
 	blood_virus_spreading_disabled = !blood_virus_spreading_disabled
 	if(blood_virus_spreading_disabled)
@@ -1528,11 +1528,11 @@ client/proc/control_bomberman_arena()
 	if(!check_rights(R_FUN)) return
 
 	if(!arenas.len)
-		usr << "There are no arenas in the world!"
+		to_chat(usr, "There are no arenas in the world!")
 		return
 
 	var/datum/bomberman_arena/arena_target = input("Which arena do you wish to control?", "Arena Control Panel") in arenas
-	usr << "Arena Control Panel: [arena_target]"
+	to_chat(usr, "Arena Control Panel: [arena_target]")
 	var/arena_status = ""
 	switch(arena_target.status)
 		if(ARENA_SETUP)
@@ -1543,23 +1543,23 @@ client/proc/control_bomberman_arena()
 			arena_status = "IN-GAME"
 		if(ARENA_ENDGAME)
 			arena_status = "END-GAME"
-	usr << "status: <b>[arena_status]</b>"
-	usr << "violence mode: [arena_target.violence ? "ON" : "OFF"]"
-	usr << "opacity mode: [arena_target.opacity ? "ON" : "OFF"]"
+	to_chat(usr, "status: <b>[arena_status]</b>")
+	to_chat(usr, "violence mode: [arena_target.violence ? "ON" : "OFF"]")
+	to_chat(usr, "opacity mode: [arena_target.opacity ? "ON" : "OFF"]")
 	if(arena_status == "SETUP")
-		usr << "<span class='warning'>Arena Under Construction</span>"
+		to_chat(usr, "<span class='warning'>Arena Under Construction</span>")
 	if(arena_status == "AVAILABLE")
 		var/i = 0
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
 			if(S.availability)
 				i++
-		usr << "Available spawn points: <b>[i]</b>"
+		to_chat(usr, "Available spawn points: <b>[i]</b>")
 	if((arena_status == "IN-GAME") || (arena_status == "END-GAME"))
 		var/j = "players: "
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
 			if(S.player_client)
 				j += "<b>[S.player_client.key]</b>, "
-		usr << "[j]"
+		to_chat(usr, "[j]")
 
 	var/list/choices = list(
 		"CANCEL",
@@ -1608,7 +1608,7 @@ client/proc/mob_list()
 	set category = "Debug"
 
 	if(!holder) return
-	usr << "mob list length is [mob_list.len]"
+	to_chat(usr, "mob list length is [mob_list.len]")
 	var/foundnull = 0
 	for(var/mob/V in mob_list)
 		var/msg = "mob ([V]) is in slot [mob_list.Find(V)]"
@@ -1616,9 +1616,9 @@ client/proc/mob_list()
 			if(isnull(V))
 				foundnull++
 			msg = "<span class='danger'><font size=3>Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]</span></font>"
-		usr << msg
+		to_chat(usr, msg)
 	if(foundnull)
-		usr << "Found [foundnull] null entries in the mob list, running null clearer."
+		to_chat(usr, "Found [foundnull] null entries in the mob list, running null clearer.")
 		listclearnulls(mob_list)
 
 client/proc/check_bomb()
@@ -1734,7 +1734,7 @@ client/proc/cure_disease()
 					D.cure(1)
 					count++
 					active_diseases -= D
-	src << "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>"
+	to_chat(src, "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>")
 	log_admin("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
 	message_admins("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
 
@@ -1758,7 +1758,7 @@ client/proc/check_convertables()
 		else
 			dat += "[M.real_name]/([ckey(M.key)]): <font color=green><b>CONVERTABLE</b></font></br>"
 
-	usr << dat
+	to_chat(usr, dat)
 
 /client/proc/spawn_datum(var/object as text)
 	set category = "Debug"
@@ -1775,7 +1775,7 @@ client/proc/check_convertables()
 			matches += path
 
 	if(matches.len == 0)
-		usr << "Unable to find any matches."
+		to_chat(usr, "Unable to find any matches.")
 		return
 
 	var/chosen
@@ -1788,7 +1788,7 @@ client/proc/check_convertables()
 
 	holder.marked_datum = new chosen()
 
-	usr << "<span class='notify'>A reference to the new [chosen] has been stored in your marked datum.</span>"
+	to_chat(usr, "<span class='notify'>A reference to the new [chosen] has been stored in your marked datum.</span>")
 
 	log_admin("[key_name(usr)] spawned the datum [chosen] to his marked datum.")
 	feedback_add_details("admin_verb","SD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1802,7 +1802,7 @@ client/proc/check_convertables()
 		return
 
 	if(!holder.marked_datum)
-		usr << "<span class='warning'>You do not have a marked datum!</span>"
+		to_chat(usr, "<span class='warning'>You do not have a marked datum!</span>")
 		return
 
 	debug_variables(holder.marked_datum)

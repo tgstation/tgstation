@@ -311,8 +311,8 @@
 	..()
 	/*spawn(10)
 		for(var/obj/machinery/artifact_analyser/analyser in orange(1))
-			world << "pad found analyser"
+			to_chat(world, "pad found analyser")
 			if(!analyser.owned_pad)
 				analyser.owned_pad = src
-				world << "pad set analyser to self"
+				to_chat(world, "pad set analyser to self")
 				break*/

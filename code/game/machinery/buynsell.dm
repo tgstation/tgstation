@@ -24,6 +24,6 @@
 				var/obj/item/weapon/card/I = W
 				scan_card(I)
 			else
-				user << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+				to_chat(user, "\icon[src]<span class='warning'>Unable to connect to linked account.</span>")
 		else
-			user << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
+			to_chat(user, "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>")

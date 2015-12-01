@@ -50,12 +50,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_recruiting(var/list/args)
 	var/mob/dead/observer/O = args["player"]
 	var/controls = args["controls"]
-	O << "<span class='recruit'>\The [src] is starting to hatch. You have been added to the list of potential ghosts. ([controls])</span>"
+	to_chat(O, "<span class='recruit'>\The [src] is starting to hatch. You have been added to the list of potential ghosts. ([controls])</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_not_recruiting(var/list/args)
 	var/mob/dead/observer/O = args["player"]
 	var/controls = args["controls"]
-	O << "<span class='recruit'>\The [src] is starting to hatch. ([controls])</span>"
+	to_chat(O, "<span class='recruit'>\The [src] is starting to hatch. ([controls])</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_recruited(var/list/args)
 	var/mob/dead/observer/O = args["player"]

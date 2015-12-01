@@ -90,7 +90,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 		var/new_label = copytext(sanitize(input("What should the new label be?","Label solution tray") as text|null), 1, MAX_NAME_LEN)
 		if(new_label && Adjacent(user) && !user.stat)
 			name = "solution tray ([new_label])"
-			user << "<span class='notice'> You write on the label of the solution tray.</span>"
+			to_chat(user, "<span class='notice'> You write on the label of the solution tray.</span>")
 	else
 		..(W, user)
 

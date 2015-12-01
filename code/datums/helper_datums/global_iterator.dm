@@ -139,7 +139,7 @@ Data storage vars:
 			arg_list = arguments
 			return 1
 		else
-//			world << "<span class='warning'>Invalid arguments supplied for [src.type], ref = \ref[src]</span>"
+//			to_chat(world, "<span class='warning'>Invalid arguments supplied for [src.type], ref = \ref[src]</span>")
 			return 0
 
 	proc/toggle_null_checks()

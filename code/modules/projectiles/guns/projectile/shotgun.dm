@@ -102,7 +102,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel/attack_self(mob/living/user as mob)
 	if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !getAmmo())
-		user << "<span class='notice'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return
 
 	for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
@@ -110,7 +110,7 @@
 			loaded -= shell
 		shell.loc = get_turf(src.loc)
 
-	user << "<span class='notice'>You break \the [src].</span>"
+	to_chat(user, "<span class='notice'>You break \the [src].</span>")
 	update_icon()
 
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -118,7 +118,7 @@
 	A.update_icon()
 	update_icon()
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
-		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(getAmmo())
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
@@ -133,4 +133,4 @@
 			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
-			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
+			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")

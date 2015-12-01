@@ -254,9 +254,9 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 	if(.)
 		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
-		user << "You begin to pry \the [src] off the wall..."
+		to_chat(user, "You begin to pry \the [src] off the wall...")
 		if(do_after(user, src, 50))
-			user << "You successfully pry \the [src] off the wall."
+			to_chat(user, "You successfully pry \the [src] off the wall.")
 			new /obj/item/mounted/frame/airlock_sensor(get_turf(src))
 			qdel(src)
 
@@ -309,7 +309,7 @@ obj/machinery/access_button/update_icon()
 obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)
 	if(!allowed(user))
-		user << "<span class='warning'>Access Denied</span>"
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 
 	else if(radio_connection)
 		var/datum/signal/signal = getFromPool(/datum/signal)
@@ -326,9 +326,9 @@ obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
 	if(.)
 		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
-		user << "You begin to pry \the [src] off the wall..."
+		to_chat(user, "You begin to pry \the [src] off the wall...")
 		if(do_after(user, src, 50))
-			user << "You successfully pry \the [src] off the wall."
+			to_chat(user, "You successfully pry \the [src] off the wall.")
 			new /obj/item/mounted/frame/access_button(get_turf(src))
 			qdel(src)
 

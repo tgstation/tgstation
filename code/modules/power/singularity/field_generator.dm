@@ -89,7 +89,7 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
-				user << "You are unable to turn off the [src.name] once it is online."
+				to_chat(user, "You are unable to turn off the [src.name] once it is online.")
 				return 1
 			else
 				user.visible_message("[user.name] turns on the [src.name]", \
@@ -100,19 +100,19 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 
 				src.add_fingerprint(user)
 	else
-		user << "The [src] needs to be firmly secured to the floor first."
+		to_chat(user, "The [src] needs to be firmly secured to the floor first.")
 		return 0
 
 /obj/machinery/field_generator/wrenchAnchor(mob/user)
 	if(active)
-		user << "Turn off the [src] first."
+		to_chat(user, "Turn off the [src] first.")
 		return -1
 	return ..()
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active)
-		user << "The [src] needs to be off."
+		to_chat(user, "The [src] needs to be off.")
 		return
 	else if(..())
 		return 1

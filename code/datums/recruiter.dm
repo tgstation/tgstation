@@ -45,13 +45,13 @@
 
 		currently_querying |= O
 		recruiting_player(O)
-		//O << "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>"
+		//to_chat(O, "<span class='recruit'>Someone is harvesting [display_name]. You have been added to the list of potential ghosts. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>retract</a>)</span>")
 
 	for(var/mob/dead/observer/O in dead_mob_list - active_candidates)
 		if(!check_observer(O))
 			continue
 		nonrecruiting_player(O)
-		//O << "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>"
+		//to_chat(O, "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[subject]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>")
 
 	spawn(recruitment_timeout)
 		if(!currently_querying || currently_querying.len==0)
@@ -82,14 +82,15 @@
 		return
 
 	if(!check_observer(O))
-		O << "<span class='warning'>You cannot be [display_name].</span>" //Jobbanned or something.
+		to_chat(O, "<span class='warning'>You cannot be [display_name].</span>")//Jobbanned or something.
+
 		return
 
 	if(O in currently_querying)
-		O << "<span class='notice'>Removed from registration list.</span>"
+		to_chat(O, "<span class='notice'>Removed from registration list.</span>")
 		currently_querying -= O
 	else
-		O << "<span class='notice'>Added to registration list.</span>"
+		to_chat(O, "<span class='notice'>Added to registration list.</span>")
 		currently_querying += O
 
 /datum/recruiter/proc/check_observer(var/mob/dead/observer/O)

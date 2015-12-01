@@ -67,7 +67,7 @@ var/list/genetics_computers = list()
 	if((istype(W, /obj/item/screwdriver)) && ((src.stat & BROKEN) || !src.scanner))
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 20))
-			user << "<span class='notice'>The broken glass falls out.</span>"
+			to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			new /obj/item/shard( src.loc )
 			var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
@@ -298,10 +298,10 @@ var/list/genetics_computers = list()
 
 		var/price = genResearch.injector_cost
 		if (genResearch.researchMaterial < price)
-			usr << "<span class='warning'><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>"
+			to_chat(usr, "<span class='warning'><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>")
 			return
 		if (!E.can_make_injector)
-			usr << "<span class='warning'><b>SCANNER ALERT:</b> Cannot make an injector using this gene.</span>"
+			to_chat(usr, "<span class='warning'><b>SCANNER ALERT:</b> Cannot make an injector using this gene.</span>")
 			return
 
 		src.equipment_cooldown("injector")
@@ -312,7 +312,8 @@ var/list/genetics_computers = list()
 		I.genes += "[E.id]"
 
 		spawn(0)
-			usr << link("byond://?src=\ref[src];vieweffect=\ref[E]")
+			to_chat(usr, link("byond:)//?src=\ref[src];vieweffect=\ref[E]")
+
 
 	else if(href_list["checkstability"])
 		if(checkOccupant()) return
@@ -333,11 +334,12 @@ var/list/genetics_computers = list()
 				right_count++
 			else
 				bp.marker = "red"
-		usr << "<b>SCANNER REPORT:</b> [right_count]/[block_count] base pairs stable."
+		to_chat(usr, "<b>SCANNER REPORT:</b> [right_count]/[block_count] base pairs stable.")
 
 		src.equipment_cooldown("analyser")
 
-		usr << link("byond://?src=\ref[src];viewpool=\ref[E]")
+		to_chat(usr, link("byond:)//?src=\ref[src];viewpool=\ref[E]")
+
 
 	else if(href_list["rademitter"])
 		topbotbutton_html = ""
@@ -345,7 +347,7 @@ var/list/genetics_computers = list()
 		if(checkOccupant()) return
 
 		if(scanner.occupant.stat)
-			usr << "<b>SCANNER ALERT:</b> Emitter cannot be used on dead or dying patients."
+			to_chat(usr, "<b>SCANNER ALERT:</b> Emitter cannot be used on dead or dying patients.")
 			return
 
 		var/rads = 75
@@ -357,9 +359,10 @@ var/list/genetics_computers = list()
 
 		src.equipment_cooldown("emitter")
 
-		usr << "<B>SCANNER:</B> Genes successfully scrambled."
+		to_chat(usr, "<B>SCANNER:</B> Genes successfully scrambled.")
 
-		usr << link("byond://?src=\ref[src];menu=potential")
+		to_chat(usr, link("byond:)//?src=\ref[src];menu=potential")
+
 
 	else if(href_list["Prademitter"])
 		if(checkOccupant()) return
@@ -367,7 +370,7 @@ var/list/genetics_computers = list()
 		if (bioEffect_sanity_check(E)) return
 
 		if(scanner.occupant.stat)
-			usr << "<b>SCANNER ALERT:</b> Emitter cannot be used on dead or dying patients."
+			to_chat(usr, "<b>SCANNER ALERT:</b> Emitter cannot be used on dead or dying patients.")
 			return
 
 		topbotbutton_html = ""
@@ -382,8 +385,9 @@ var/list/genetics_computers = list()
 
 		src.equipment_cooldown("precision_emitter")
 
-		usr << "<b>SCANNER ALERT:</b> Gene successfully scrambled."
-		usr << link("byond://?src=\ref[src];menu=potential")
+		to_chat(usr, "<b>SCANNER ALERT:</b> Gene successfully scrambled.")
+		to_chat(usr, link("byond:)//?src=\ref[src];menu=potential")
+
 
 	else if(href_list["reclaimer"])
 		if(checkOccupant()) return
@@ -393,23 +397,24 @@ var/list/genetics_computers = list()
 
 		var/reclamation_cap = genResearch.max_material * 1.5
 		if (prob(E.reclaim_fail))
-			usr << "<b>SCANNER:</b> Reclamation failed."
+			to_chat(usr, "<b>SCANNER:</b> Reclamation failed.")
 		else
 			var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
 			if (waste == E.reclaim_mats)
-				usr << "<b>SCANNER ALERT:</b> Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted."
+				to_chat(usr, "<b>SCANNER ALERT:</b> Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.")
 				return
 			else
 				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
 				if (waste > 0)
-					usr << "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit."
+					to_chat(usr, "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else
-					usr << "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]."
+					to_chat(usr, "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
 				scanner.occupant.bioHolder.RemovePoolEffect(E)
 
 		src.equipment_cooldown("reclaimer")
 		src.currently_browsing = null
-		usr << link("byond://?src=\ref[src];menu=potential")
+		to_chat(usr, link("byond:)//?src=\ref[src];menu=potential")
+
 
 	else if(href_list["print"])
 		print = 1
@@ -432,12 +437,12 @@ var/list/genetics_computers = list()
 			if(href_list["setseq1"])
 				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
 				if (bp.marker == "locked")
-					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
+					to_chat(usr, "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
 					return
 			else if(href_list["setseq2"])
 				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
 				if (bp.marker == "locked")
-					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
+					to_chat(usr, "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
 					return
 
 		var/input = input(usr, "Select:", "GeneTek") as null|anything in list("G", "T", "C", "A", "Swap Pair")
@@ -465,7 +470,8 @@ var/list/genetics_computers = list()
 					bp.bpp2 = temp_holder
 				else
 					bp.bpp2 = input
-		usr << link("byond://?src=\ref[src];viewpool=\ref[E]") //OH MAN LOOK AT THIS CRAP. FUCK BYOND. (This refreshes the page)
+		to_chat(usr, link("byond:)//?src=\ref[src];viewpool=\ref[E]") //OH MAN LOOK AT THIS CRAP. FUCK BYOND. (This refreshes the page)
+
 		return
 
 	else if(href_list["marker"])
@@ -476,30 +482,30 @@ var/list/genetics_computers = list()
 		var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["themark"])]
 
 		if(bp.marker == "locked")
-			usr << "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>"
+			to_chat(usr, "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>")
 			var/characters = ""
 			for(var/X in E.lockedChars)
 				characters += "[X] "
-			usr << "<span class='notice'>Possible characters in this code: [characters]</span>"
+			to_chat(usr, "<span class='notice'>Possible characters in this code: [characters]</span>")
 			var/code = input("Enter decryption code.","Genetic Decryption") as null|text
 			if(!code)
 				return
 			if(lentext(code) != lentext(bp.lockcode))
-				usr << "<span class='warning'><b>SCANNER ALERT:</b> Invalid code length.</span>"
+				to_chat(usr, "<span class='warning'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 				return
 			if (code == bp.lockcode)
 				var/datum/basepair/bpc = E.dnaBlocks.blockList[text2num(href_list["themark"])]
 				bp.bpp1 = bpc.bpp1
 				bp.bpp2 = bpc.bpp2
 				bp.marker = "green"
-				usr << "<span class='notice'><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>"
+				to_chat(usr, "<span class='notice'><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>")
 			else
 				if (bp.locktries <= 1)
 					bp.lockcode = ""
 					for (var/c = E.lockedDiff, c > 0, c--)
 						bp.lockcode += pick(E.lockedChars)
 					bp.locktries = E.lockedTries
-					usr << "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has been changed.</span>"
+					to_chat(usr, "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has been changed.</span>")
 				else
 					bp.locktries--
 					var/length = lentext(bp.lockcode)
@@ -526,10 +532,10 @@ var/list/genetics_computers = list()
 							if (lockcode_list[current] <= 0)
 								lockcode_list -= current
 
-					usr << "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed.</span>"
-					usr << "<span class='warning'>[correct_char]/[length] correct characters in entered code.</span>"
-					usr << "<span class='warning'>[correct_full]/[length] characters in correct position.</span>"
-					usr << "<span class='warning'>Attempts remaining: [bp.locktries].</span>"
+					to_chat(usr, "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed.</span>")
+					to_chat(usr, "<span class='warning'>[correct_char]/[length] correct characters in entered code.</span>")
+					to_chat(usr, "<span class='warning'>[correct_full]/[length] characters in correct position.</span>")
+					to_chat(usr, "<span class='warning'>Attempts remaining: [bp.locktries].</span>")
 		else
 			switch(bp.marker)
 				if("green")
@@ -538,7 +544,8 @@ var/list/genetics_computers = list()
 					bp.marker = "blue"
 				if("blue")
 					bp.marker = "green"
-		usr << link("byond://?src=\ref[src];viewpool=\ref[E]") // i hear ya buddy =(
+		to_chat(usr, link("byond:)//?src=\ref[src];viewpool=\ref[E]") // i hear ya buddy =(
+
 		return
 
 	else if(href_list["activatepool"])
@@ -548,7 +555,8 @@ var/list/genetics_computers = list()
 		var/datum/bioEffect/E = locate(href_list["activatepool"])
 		if (bioEffect_sanity_check(E)) return
 		scanner.occupant.bioHolder.ActivatePoolEffect(E)
-		usr << link("byond://?src=\ref[src];menu=mutations") //send them to the mutations page.
+		to_chat(usr, link("byond:)//?src=\ref[src];menu=mutations") //send them to the mutations page.
+
 		return
 
 	else if(href_list["viewopenres"])
@@ -567,10 +575,11 @@ var/list/genetics_computers = list()
 
 		topbotbutton_html = ""
 		if (!genResearch.addResearch(E))
-			usr << "<b>SCANNER ERROR: Unable to begin research.</b>"
+			to_chat(usr, "<b>SCANNER ERROR: Unable to begin research.</b>")
 		else
-			usr << "<b>SCANNER:</b> Research initiated successfully."
-		usr << link("byond://?src=\ref[src];viewpool=\ref[E]")
+			to_chat(usr, "<b>SCANNER:</b> Research initiated successfully.")
+		to_chat(usr, link("byond:)//?src=\ref[src];viewpool=\ref[E]")
+
 		return
 
 	else if(href_list["researchmut_sample"])
@@ -580,11 +589,12 @@ var/list/genetics_computers = list()
 		if (sample_sanity_check(sample)) return
 
 		if (!genResearch.addResearch(E))
-			usr << "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>"
+			to_chat(usr, "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>")
 		else
-			usr << "<b>SCANNER:</b> Research initiated successfully."
+			to_chat(usr, "<b>SCANNER:</b> Research initiated successfully.")
 
-		usr << link("byond://?src=\ref[src];sample_viewpool=\ref[E];sample_to_viewpool=\ref[sample]")
+		to_chat(usr, link("byond:)//?src=\ref[src];sample_viewpool=\ref[E];sample_to_viewpool=\ref[sample]")
+
 		return
 
 	else if(href_list["research"])
@@ -593,10 +603,11 @@ var/list/genetics_computers = list()
 
 		topbotbutton_html = ""
 		if(genResearch.addResearch(E))
-			usr << "<b>SCANNER:</b> Research initiated successfully."
-			usr << link("byond://?src=\ref[src];menu=resopen")
+			to_chat(usr, "<b>SCANNER:</b> Research initiated successfully.")
+			to_chat(usr, link("byond:)//?src=\ref[src];menu=resopen")
+
 		else
-			usr << "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>"
+			to_chat(usr, "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>")
 		return
 
 	else if(href_list["copyself"])
@@ -624,7 +635,8 @@ var/list/genetics_computers = list()
 		if (!istype(R,/datum/geneticsResearchEntry/))
 			return
 		src.tracked_research = R
-		usr << link("byond://?src=\ref[src];menu=resrunning")
+		to_chat(usr, link("byond:)//?src=\ref[src];menu=resrunning")
+
 		return
 
 	else if(href_list["menu"])
@@ -716,7 +728,7 @@ var/list/genetics_computers = list()
 				var/amount = input("50 credits per 1 point.","Buying Materials") as null|num
 				if (amount + genResearch.researchMaterial > genResearch.max_material)
 					amount = genResearch.max_material - genResearch.researchMaterial
-					usr << "You cannot exceed [genResearch.max_material] research materials with this option."
+					to_chat(usr, "You cannot exceed [genResearch.max_material] research materials with this option.")
 				if (!amount || amount <= 0)
 					return
 

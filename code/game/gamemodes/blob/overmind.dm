@@ -31,15 +31,15 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-	src << "<span class='blob'>You are the overmind!</span>"
-	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place special blob types."
-	src << "The location of your thoughts (eye), nodes, and core can power your buildings and expand the blob much further, use them well!"
-	src << "<b>Normal Blobs</b> will expand your reach and can be upgraded into other special blobs that perform certain functions."
-	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires. It can also begin to repair itself when powered."
-	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
-	src << "<b>Node Blob</b> is a blob which will grow, like the core. It will not provide income, but will power all the other special nodes and expand your blob by itself."
-	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. You must make sure it is powered to operate properly!"
-	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob, Middle Mouse Click = Rally Spores, Alt Click = Create Shield, Double Click: Teleport to Blob"
+	to_chat(src, "<span class='blob'>You are the overmind!</span>")
+	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place special blob types.")
+	to_chat(src, "The location of your thoughts (eye), nodes, and core can power your buildings and expand the blob much further, use them well!")
+	to_chat(src, "<b>Normal Blobs</b> will expand your reach and can be upgraded into other special blobs that perform certain functions.")
+	to_chat(src, "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires. It can also begin to repair itself when powered.")
+	to_chat(src, "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all.")
+	to_chat(src, "<b>Node Blob</b> is a blob which will grow, like the core. It will not provide income, but will power all the other special nodes and expand your blob by itself.")
+	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. You must make sure it is powered to operate properly!")
+	to_chat(src, "<b>Shortcuts:</b> CTRL Click = Expand Blob, Middle Mouse Click = Rally Spores, Alt Click = Create Shield, Double Click: Teleport to Blob")
 	update_health()
 
 /mob/camera/blob/proc/update_health()
@@ -59,7 +59,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "You cannot send IC messages (muted)."
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return

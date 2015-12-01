@@ -208,7 +208,7 @@
 	if(!istype(wearer)) return
 	if(wearer.head == src)
 		if(prob(1))
-			wearer << "<span class=\"warning\">You feel positively euphoric!</span>"
+			to_chat(wearer, "<span class=\"warning\">You feel positively euphoric!</span>")
 
 //TIPS FEDORA
 /obj/item/clothing/head/fedora/verb/tip_fedora()

@@ -20,13 +20,13 @@
 		return
 
 	if(!M.client)
-		src << "This being is missing a brain."
+		to_chat(src, "This being is missing a brain.")
 		return
 
 	visible_message("[src] extends a probiscis and stabs it into [M]")
 
 	if (!do_mob(usr, M, 50))
-		usr << "<span class='warning'>The injection of the egg has been interrupted!</span>"
+		to_chat(usr, "<span class='warning'>The injection of the egg has been interrupted!</span>")
 		return
 
 	if(M.client)
@@ -37,7 +37,7 @@
 		M.update_body()
 		M.death()
 	else
-		src << "This being is missing a brain."
+		to_chat(src, "This being is missing a brain.")
 
 	return
 

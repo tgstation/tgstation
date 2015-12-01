@@ -32,10 +32,10 @@
 /obj/item/seeds/examine(mob/user)
 	..()
 	if(seed && !seed.roundstart)
-		user << "It's tagged as variety <span class='info'>#[seed.uid].</span>"
+		to_chat(user, "It's tagged as variety <span class='info'>#[seed.uid].</span>")
 	else
-		user << "Plant Yield: <span class='info'>[(seed.yield != -1) ? seed.yield : "<span class='warning'> ERROR</span>"]</span>"
-		user << "Plant Potency: <span class='info'>[(seed.potency != -1) ? seed.potency : "<span class='warning> ERROR</span>"]</span>"
+		to_chat(user, "Plant Yield: <span class='info'>[(seed.yield != -1) ? seed.yield : "<span class='warning'> ERROR</span>"]</span>")
+		to_chat(user, "Plant Potency: <span class='info'>[(seed.potency != -1) ? seed.potency : "<span class='warning> ERROR</span>"]</span>")
 
 /obj/item/seeds/cutting
 	name = "cuttings"

@@ -53,25 +53,25 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
 			if(prob(1))
-				affected_mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
+				to_chat(affected_mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "<span class='warning'>Your muscles ache.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "<span class='warning'>Your stomach hurts.</span>"
+				to_chat(affected_mob, "<span class='warning'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "<span class='warning'>You feel something tearing its way out of your stomach...</span>"
+			to_chat(affected_mob, "<span class='warning'>You feel something tearing its way out of your stomach...</span>")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
@@ -94,7 +94,8 @@
 
 				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				new_xeno.key = picked
-				new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+					new_xeno << sound('sound/voice/hiss5.ogg', 0, 0, 0, 100)) // To get the player's attention.
+
 				affected_mob.gib()
 				src.cure(0)
 				gibbed = 1

@@ -5,7 +5,7 @@
 	set hidden = 1
 
 	if(!config.renders_url || config.renders_url == "")
-		src << "<span class='danger'>The Map Renders url has not been set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The Map Renders url has not been set in the server configuration.</span>")
 		return
 	if(alert("This will open the map render(s) in your browser. Are you sure?",,"Yes","No")=="No")
 		return
@@ -20,7 +20,7 @@
 			if("taxi")
 				src << link("[config.renders_url]/taxistation/")
 			else
-				src << "<span class='warning'>No map render for [map.nameLong], bug Pomf about it!</span>"
+				to_chat(src, "<span class='warning'>No map render for [map.nameLong], bug Pomf about it!</span>")
 	return
 
 /client/verb/wiki()
@@ -32,7 +32,7 @@
 			return
 		src << link(config.wikiurl)
 	else
-		src << "<span class='danger'>The wiki URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/forum()
@@ -44,7 +44,7 @@
 			return
 		src << link(config.forumurl)
 	else
-		src << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
 #define RULES_FILE "config/rules.html"
@@ -115,10 +115,10 @@ Admin:
 \tF8 = Invisimin
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 	if(holder)
-		src << admin
+		to_chat(src, admin)
 
 // Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
 // Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)

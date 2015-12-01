@@ -98,7 +98,7 @@
 				del src
 
 			if(active)
-				M << "That [src] is being used."
+				to_chat(M, "That [src] is being used.")
 				return // It is a tiny airlock, only one at a time.
 
 			active = 1

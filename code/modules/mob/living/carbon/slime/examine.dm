@@ -26,4 +26,4 @@
 				msg += "<span class='danger'>It is radiating with massive levels of electrical activity!</span>\n"
 
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)

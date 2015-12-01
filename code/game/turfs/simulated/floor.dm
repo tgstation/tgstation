@@ -169,7 +169,7 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
-				//world << "[icon_state]y's got [icon_state]"
+//				to_chat(world, "[icon_state]y's got [icon_state]")
 	else if(is_mineral_floor())
 		if(!broken && !burnt)
 			icon_state = floor_tile.material
@@ -481,12 +481,12 @@ turf/simulated/floor/proc/update_icon()
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "<span class='warning'>You remove the broken plating.</span>"
+			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
 		else
 			if(is_wood_floor())
-				user << "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>"
+				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
-				user << "<span class='notice'>You remove the [floor_tile.name].</span>"
+				to_chat(user, "<span class='notice'>You remove the [floor_tile.name].</span>")
 				floor_tile.loc = src
 				floor_tile = null
 
@@ -501,7 +501,7 @@ turf/simulated/floor/proc/update_icon()
 				return
 			else
 				if(is_wood_floor())
-					user << "<span class='notice'>You unscrew the planks.</span>"
+					to_chat(user, "<span class='notice'>You unscrew the planks.</span>")
 					new floor_tile.type(src)
 
 			make_plating()
@@ -511,16 +511,16 @@ turf/simulated/floor/proc/update_icon()
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.amount >= 2)
-				user << "<span class='notice'>Reinforcing the floor...</span>"
+				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
 				if(do_after(user, src, 30) && R && R.amount >= 2 && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return
 			else
-				user << "<span class='warning'>You need more rods.</span>"
+				to_chat(user, "<span class='warning'>You need more rods.</span>")
 		else
-			user << "<span class='warning'>You must remove the plating first.</span>"
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return
 	else if(istype(C, /obj/item/stack/tile))
 		if(is_plating())
@@ -553,34 +553,34 @@ turf/simulated/floor/proc/update_icon()
 					levelupdate()
 					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "<span class='warning'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
+				to_chat(user, "<span class='warning'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
 	else if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating())
 			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
-			user << "<span class='warning'>You must remove the plating first.</span>"
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 	else if(istype(C, /obj/item/weapon/pickaxe/shovel))
 		if(is_grass_floor())
 			playsound(src, 'sound/items/shovel.ogg', 50, 1)
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "<span class='notice'>You shovel the grass.</span>"
+			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
 			make_plating()
 		else
-			user << "<span class='warning'>You cannot shovel this.</span>"
+			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "<span class='warning'>You fix some dents on the broken plating.</span>"
+					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 /turf/simulated/floor/Enter(mob/AM)
 	.=..()

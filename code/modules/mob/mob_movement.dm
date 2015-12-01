@@ -40,7 +40,7 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='warning'>This mob type cannot throw items.</span>"
+		to_chat(usr, "<span class='warning'>This mob type cannot throw items.</span>")
 	return
 
 
@@ -48,13 +48,13 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			usr << "<span class='warning'> You have nothing to drop in your hand.</span>"
+			to_chat(usr, "<span class='warning'> You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
 	else if(isMoMMI(usr))
 		var/mob/living/silicon/robot/mommi/M = usr
 		if(!M.get_active_hand())
-			M << "<span class='warning'> You have nothing to drop or store.</span>"
+			to_chat(M, "<span class='warning'> You have nothing to drop or store.</span>")
 			return
 		M.uneq_active()
 	else if(isrobot(usr))
@@ -63,7 +63,7 @@
 			return
 		R.uneq_active()
 	else
-		usr << "<span class='warning'> This mob type cannot drop items.</span>"
+		to_chat(usr, "<span class='warning'> This mob type cannot drop items.</span>")
 	return
 
 //This gets called when you press the delete button.
@@ -71,7 +71,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "<span class='notice'> You are not pulling anything.</span>"
+		to_chat(usr, "<span class='notice'> You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -210,7 +210,7 @@
 
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
-		src << "<span class='warning'>You cannot move this mob.</span>"
+		to_chat(src, "<span class='warning'>You cannot move this mob.</span>")
 		return
 
 	if(mob.control_object)
@@ -272,7 +272,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
@@ -280,15 +280,15 @@
 				var/datum/chain/chain_datum = mob.tether.chain_datum
 				if(chain_datum.extremity_A == mob)
 					if(istype(chain_datum.extremity_B,/mob/living))
-						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
 						return 0
 				else if(chain_datum.extremity_B == mob)
 					if(istype(chain_datum.extremity_A,/mob/living))
-						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
 						return 0
 
 		if(mob.pinned.len)
-			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
+			to_chat(src, "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
 
 		// COMPLEX MOVE DELAY SHIT
@@ -390,10 +390,10 @@
 			var/turf/T = get_step(mob, direct)
 			var/area/A = get_area(T)
 			if(A && A.anti_ethereal && !isAdminGhost(mob))
-				mob << "<span class='sinister'>A dark forcefield prevents you from entering the area.</span>"
+				to_chat(mob, "<span class='sinister'>A dark forcefield prevents you from entering the area.</span>")
 			else
 				if((T && T.holy) && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
-					mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
+					to_chat(mob, "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>")
 				else
 					mob.forceEnter(get_step(mob, direct))
 					mob.dir = direct
@@ -441,7 +441,7 @@
 				mob.forceEnter(newLoc)
 				mob.dir = direct
 			else
-				mob << "<span class='warning'>Some strange aura is blocking the way!</span>"
+				to_chat(mob, "<span class='warning'>Some strange aura is blocking the way!</span>")
 			mob.delayNextMove(2)
 			return 1
 	// Crossed is always a bit iffy
@@ -502,7 +502,7 @@
 
 	//Check to see if we slipped
 	if(!ignore_slip && prob(Process_Spaceslipping(5)))
-		src << "<span class='notice'> <B>You slipped!</B></span>"
+		to_chat(src, "<span class='notice'> <B>You slipped!</B></span>")
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

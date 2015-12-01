@@ -44,7 +44,7 @@
 	if(!proximity_flag) return 0 // Not adjacent
 
 	if(reagents.total_volume < 1)
-		user << "<span class='notice'>Your rag is dry!</span>"
+		to_chat(user, "<span class='notice'>Your rag is dry!</span>")
 		return
 	user.visible_message("<span class='warning'>[user] begins to wipe down \the [target].</span>", "<span class='notice'>You begin to wipe down \the [target].</span>")
 	if(do_after(user,target, 50))

@@ -281,7 +281,7 @@
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				if(C.legcuffed)
-					C << "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>"
+					to_chat(C, "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>")
 					C.m_intent = "walk"	//Just incase
 					C.hud_used.move_intent.icon_state = "walking"
 					return 1
@@ -322,12 +322,12 @@
 				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
 					if(C.internal)
 						C.internal = null
-						C << "<span class='notice'>No longer running on internals.</span>"
+						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
 						if(!istype(C.wear_mask, /obj/item/clothing/mask))
-							C << "<span class='notice'>You are not wearing a mask.</span>"
+							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
 							return 1
 						else
 							var/list/nicename = null
@@ -400,7 +400,7 @@
 							//We've determined the best container now we set it as our internals
 
 							if(best)
-								C << "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>"
+								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
 								C.internal = tankcheck[best]
 
 
@@ -408,7 +408,7 @@
 								if(C.internals)
 									C.internals.icon_state = "internal1"
 							else
-								C << "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
+								to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")
@@ -545,7 +545,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetMove()
 			gun_click_time = world.time
@@ -554,7 +554,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetMove()
 			gun_click_time = world.time
@@ -563,7 +563,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetRun()
 			gun_click_time = world.time
@@ -572,7 +572,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetRun()
 			gun_click_time = world.time
@@ -581,7 +581,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetClick()
 			gun_click_time = world.time
@@ -591,7 +591,7 @@
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
+				to_chat(usr, "You need your gun in your active hand to do that!")
 				return
 			usr.client.AllowTargetClick()
 			gun_click_time = world.time

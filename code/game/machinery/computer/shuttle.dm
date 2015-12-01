@@ -16,16 +16,16 @@
 				var/obj/item/device/pda/pda = W
 				W = pda.id
 			if (!W:access) //no access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
+				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return
 
 			var/list/cardaccess = W:access
 			if(!istype(cardaccess, /list) || !cardaccess.len) //no access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
+				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return
 
 			if(!(access_heads in W:access)) //doesn't have this access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
+				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return 0
 
 			var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
@@ -38,11 +38,11 @@
 					if (src.auth_need - src.authorized.len > 0)
 						message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 						log_game("[user.ckey] has authorized early shuttle launch")
-						world << text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
+						to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 					else
 						message_admins("[key_name_admin(user)] has launched the shuttle")
 						log_game("[user.ckey] has launched the shuttle early")
-						world << "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
+						to_chat(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
@@ -51,10 +51,10 @@
 
 				if("Repeal")
 					src.authorized -= W:registered_name
-					world << text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
+					to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 
 				if("Abort")
-					world << "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>"
+					to_chat(world, "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
 					src.authorized.len = 0
 					src.authorized = list(  )
 		return
@@ -67,7 +67,7 @@
 		if(emergency_shuttle.location == 1)
 			switch(choice)
 				if("Launch")
-					world << "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
+					to_chat(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 					emergency_shuttle.settimeleft( 10 )
 					emagged = 1
 					return 1

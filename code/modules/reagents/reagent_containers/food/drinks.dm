@@ -39,11 +39,12 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user as mob)
 	if(!is_open_container())
-		user << "<span class='warning'>You can't, \the [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		to_chat(user, "<span class='warning'>You can't, \the [src] is closed.</span>")//Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+
 		return 0
 
 	else if(!src.reagents.total_volume || !src)
-		user << "<span class='warning'>\The [src] is empty.<span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty.<span>")
 		return 0
 
 	else
@@ -137,11 +138,12 @@
 		return
 
 	else if(!is_open_container())
-		user << "<span class='warning'>You can't, \the [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		to_chat(user, "<span class='warning'>You can't, \the [src] is closed.</span>")//Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+
 		return 0
 
 	else if(!R.total_volume || !R)
-		user << "<span class='warning'>\The [src] is empty.<span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty.<span>")
 		return 0
 
 	else if(M == user)
@@ -214,35 +216,35 @@
 		var/charge_amount = max(30, 4*sent_amount)
 		borg.cell.use(charge_amount)
 
-		user << "Now synthesizing [sent_amount] units of [refill_name]..."
+		to_chat(user, "Now synthesizing [sent_amount] units of [refill_name]...")
 		spawn(300)
 			reagents.add_reagent(refill_id, sent_amount)
-			user << "<span class='notice'>Cyborg [src] refilled with [refill_name] ([sent_amount] units).</span>"
+			to_chat(user, "<span class='notice'>Cyborg [src] refilled with [refill_name] ([sent_amount] units).</span>")
 
 /obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 
 	if(viewcontents)
 		..()
 	else
-		user << "\icon[src] That's \a [src]."
-		user << desc
-		user << "<span class='info'>You can't quite make out its content!</span>"
+		to_chat(user, "\icon[src] That's \a [src].")
+		to_chat(user, desc)
+		to_chat(user, "<span class='info'>You can't quite make out its content!</span>")
 
 	if(!reagents || reagents.total_volume == 0)
-		user << "<span class='info'>\The [src] is empty!</span>"
+		to_chat(user, "<span class='info'>\The [src] is empty!</span>")
 	else if (reagents.total_volume <= src.volume/4)
-		user << "<span class='info'>\The [src] is almost empty!</span>"
+		to_chat(user, "<span class='info'>\The [src] is almost empty!</span>")
 	else if (reagents.total_volume <= src.volume*0.66)
-		user << "<span class='info'>\The [src] is about half full, or about half empty!</span>"
+		to_chat(user, "<span class='info'>\The [src] is about half full, or about half empty!</span>")
 	else if (reagents.total_volume <= src.volume*0.90)
-		user << "<span class='info'>\The [src] is almost full!</span>"
+		to_chat(user, "<span class='info'>\The [src] is almost full!</span>")
 	else
-		user << "<span class='info'>\The [src] is full!</span>"
+		to_chat(user, "<span class='info'>\The [src] is full!</span>")
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //Drink the liquid within
 
 
-	user << "<span  class='notice'>You swallow a gulp of \the [src].[lit ? " It's hot!" : ""]</span>"
+	to_chat(user, "<span  class='notice'>You swallow a gulp of \the [src].[lit ? " It's hot!" : ""]</span>")
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 	if(lit)
@@ -524,7 +526,7 @@
 	icon_state = "toddler"
 
 /obj/item/weapon/groans/attack_self(mob/user as mob)
-	user << "Now spawning groans."
+	to_chat(user, "Now spawning groans.")
 	var/turf/T = get_turf(user.loc)
 	var/obj/item/weapon/reagent_containers/food/drinks/groans/A = new /obj/item/weapon/reagent_containers/food/drinks/groans(T)
 	A.desc += " It also smells like a toddler." //This is required
@@ -562,7 +564,7 @@
 	src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen/attack_self(mob/user as mob)
-	user << "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the soup in disgust."
+	to_chat(user, "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the soup in disgust.")
 	var/turf/T = get_turf(user.loc)
 	var/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/A = new /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot(T)
 	A.desc += " It feels warm.." //This is required
@@ -1074,7 +1076,7 @@
 				new /obj/effect/decal/cleanable/ash(get_turf(src))
 				var/turf/loca = get_turf(src)
 				if(loca)
-					//world << "<span  class='warning'>Burning...</span>"
+//					to_chat(world, "<span  class='warning'>Burning...</span>")
 					loca.hotspot_expose(700, 1000,surfaces=istype(loc,/turf))
 			else
 				new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
@@ -1111,7 +1113,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass/rag) && molotov == -1)  //check if it is a molotovable drink - just beer and ale for now - other bottles require different rag overlay positions - if you can figure this out then go for it
-		user << "<span  class='notice'>You stuff the [I] into the mouth of the [src].</span>"
+		to_chat(user, "<span  class='notice'>You stuff the [I] into the mouth of the [src].</span>")
 		del(I)
 		molotov = 1
 		flags ^= OPENCONTAINER
@@ -1175,7 +1177,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/process()
 	var/turf/loca = get_turf(src)
 	if(lit && loca)
-		//world << "<span  class='warning'>Burning...</span>"
+//		to_chat(world, "<span  class='warning'>Burning...</span>")
 		loca.hotspot_expose(700, 1000,surfaces=istype(loc,/turf))
 	return
 

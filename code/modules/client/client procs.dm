@@ -53,7 +53,7 @@
 
 	// Global Asset cache stuff.
 	if(href_list["asset_cache_confirm_arrival"])
-		// src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
+//		to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
@@ -76,11 +76,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>"
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message = message
@@ -90,13 +90,13 @@
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
-		src << "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>"
+		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
 /*	//Don't need this at the moment. But it's here if it's needed later.
 	//Helps prevent multiple files being uploaded at once. Or right after eachother.
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
-		src << "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
+		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
@@ -110,7 +110,7 @@
 		winset(src, null, "outputwindow.output.style=[config.world_style_config];")
 		winset(src, null, "window1.msay_output.style=[config.world_style_config];") // it isn't possible to set two window elements in the same winset so we need to call it for each element we're assigning a stylesheet.
 	else
-		src << "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>"
+		to_chat(src, "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>")
 
 	TopicData = null							//Prevent calls to client.Topic from connect
 
@@ -135,7 +135,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
+	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
 	clients += src
 	directory[ckey] = src
@@ -152,10 +152,10 @@
 	. = ..()	//calls mob.Login()
 
 	if(custom_event_msg && custom_event_msg != "")
-		src << "<h1 class='alert'>Custom Event</h1>"
-		src << "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>"
-		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
-		src << "<br>"
+		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
+		to_chat(src, "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>")
+		to_chat(src, "<span class='alert'>[html_encode(custom_event_msg)]</span>")
+		to_chat(src, "<br>")
 
 	if( (world.address == address || !address) && !host )
 		host = key
@@ -172,7 +172,7 @@
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
 		prefs.SetChangelog(ckey,changelog_hash)
-		src << "<span class='info'>Changelog has changed since your last visit.</span>"
+		to_chat(src, "<span class='info'>Changelog has changed since your last visit.</span>")
 
 	//Set map label to correct map name
 	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
@@ -184,7 +184,7 @@
 	))
 
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
-		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
+		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 	
 	//////////////
 	//DISCONNECT//
@@ -252,11 +252,11 @@
 			return
 	//else
 		//var/url = pick("byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336")
-		//src << link(url)
+//		to_chat(src, link(url))
 
 		//var/Server/s = random_server_list[key]
 		//world.log << "Sending [src.key] to random server: [url]"
-		//src << link(s.url)
+//		to_chat(src, link(s.url))
 		//del(src)
 
 	var/admin_rank = "Player"
@@ -313,7 +313,7 @@
 	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
 	set category = "Preferences"
 
-	usr << "<span class='notice'>Re-sending NanoUI resources.  This may result in lag.</span>"
+	to_chat(usr, "<span class='notice'>Re-sending NanoUI resources.  This may result in lag.</span>")
 	nanomanager.send_resources(src)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
@@ -373,5 +373,5 @@
 				//testing("Client [src] answered [answer] to [role_id] poll.")
 				prefs.roles[role_id] |= ROLEPREF_POLLED
 		else
-			src << "<span style='recruit'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&preference=set_role&role_id=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>"
+			to_chat(src, "<span style='recruit'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&preference=set_role&role_id=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>")
 	return role_desired & ROLEPREF_ENABLE

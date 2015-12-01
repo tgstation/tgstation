@@ -21,11 +21,11 @@
 
 // INTERNAL: Begin unlocking process.
 /datum/unlockable/borer/begin_unlock()
-	borer << "<span class='warning'>You begin concentrating intensely on producing the necessary changes.</span>"
-	borer << "<span class='danger'>You will be unable to use any borer abilities until the process completes.</span>"
+	to_chat(borer, "<span class='warning'>You begin concentrating intensely on producing the necessary changes.</span>")
+	to_chat(borer, "<span class='danger'>You will be unable to use any borer abilities until the process completes.</span>")
 
 /datum/unlockable/borer/end_unlock()
-	//Redundant borer << "<span class='info'>You finally finish your task.</span>"
+//	to_chat(Redundant borer, "<span class='info'>You finally finish your task.</span>")
 	borer.chemicals -= cost
 
 // additional checks to perform when unlocking things.
@@ -55,7 +55,7 @@
 /datum/unlockable/borer/chem_unlock/unlock_action()
 	var/datum/borer_chem/C = new chem_type()
 	borer.avail_chems[C.name]=C
-	borer << "<span class='info'>You learned how to secrete [C.name]!</span>"
+	to_chat(borer, "<span class='info'>You learned how to secrete [C.name]!</span>")
 
 /datum/unlockable/borer/chem_unlock/peridaxon
 	id = "peridaxon"
@@ -132,7 +132,7 @@
 				host.update_mutations()
 				break
 
-	borer << "<span class='info'>You feel the genetic changes take hold in your host.</span>"
+	to_chat(borer, "<span class='info'>You feel the genetic changes take hold in your host.</span>")
 
 /datum/unlockable/borer/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
@@ -196,7 +196,7 @@
 		borer.attached_verbs|=verb_type
 	if(give_when_detached)
 		borer.detached_verbs|=verb_type
-	borer << "<span class='info'>You learned [name]!</span>"
+	to_chat(borer, "<span class='info'>You learned [name]!</span>")
 	borer.update_verbs(borer.host != null)
 
 /datum/unlockable/borer/verb_unlock/relock_action()
@@ -204,7 +204,7 @@
 		borer.attached_verbs-=verb_type
 	if(give_when_detached)
 		borer.detached_verbs-=verb_type
-	borer << "<span class='warning'>You forgot [name]!</span>"
+	to_chat(borer, "<span class='warning'>You forgot [name]!</span>")
 	//borer.update_verbs(borer.attached)
 
 /datum/unlockable/borer/verb_unlock/taste_blood

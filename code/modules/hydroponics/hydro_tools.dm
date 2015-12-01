@@ -52,7 +52,7 @@
 		grown_reagents = H.reagents
 
 	if(!grown_seed)
-		user << "<span class='warning'>[src] can tell you nothing about [target].</span>"
+		to_chat(user, "<span class='warning'>[src] can tell you nothing about [target].</span>")
 		return
 
 	var/dat = "<h3>Plant data for [target]</h3>"
@@ -395,11 +395,11 @@
 
 /obj/item/claypot/attackby(var/obj/item/O,var/mob/user)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/weapon/grown))
-		user << "<span class='warning'>You have to transplant the plant into the pot directly from the hydroponic tray, using a spade.</span>"
+		to_chat(user, "<span class='warning'>You have to transplant the plant into the pot directly from the hydroponic tray, using a spade.</span>")
 	else if(istype(O,/obj/item/weapon/pickaxe/shovel))
-		user << "<span class='warning'>There is no plant to remove in \the [src].</span>"
+		to_chat(user, "<span class='warning'>There is no plant to remove in \the [src].</span>")
 	else
-		user << "<span class='warning'>You cannot plant \the [O] in \the [src].</span>"
+		to_chat(user, "<span class='warning'>You cannot plant \the [O] in \the [src].</span>")
 
 
 /obj/item/claypot/throw_impact(atom/hit_atom)
@@ -422,10 +422,10 @@
 /obj/structure/claypot/examine(mob/user)
 	..()
 	if(plant_name)
-		user << "<span class='info'>You can see [plant_name] planted in it.</span>"
+		to_chat(user, "<span class='info'>You can see [plant_name] planted in it.</span>")
 
 /obj/structure/claypot/attack_hand(mob/user as mob)
-	user << "It's too heavy to pick up while it has a plant in it."
+	to_chat(user, "It's too heavy to pick up while it has a plant in it.")
 
 /obj/structure/claypot/attackby(var/obj/item/O,var/mob/user)
 	if(istype(O,/obj/item/weapon/wrench))
@@ -436,7 +436,7 @@
 									"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 									"<span class='notice'>You hear a ratchet.</span>")
 	else if(plant_name && istype(O,/obj/item/weapon/pickaxe/shovel))
-		user << "<span class='notice'>\icon[src] You start removing the [plant_name] from \the [src].</span>"
+		to_chat(user, "<span class='notice'>\icon[src] You start removing the [plant_name] from \the [src].</span>")
 		if(do_after(user, src, 30))
 			playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 			user.visible_message(	"<span class='notice'>[user] removes the [plant_name] from \the [src].</span>",
@@ -447,7 +447,7 @@
 			qdel(src)
 
 	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/weapon/grown))
-		user << "<span class='warning'>There is already a plant in \the [src]</span>"
+		to_chat(user, "<span class='warning'>There is already a plant in \the [src]</span>")
 
 	else
 		..()

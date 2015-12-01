@@ -102,7 +102,7 @@
 				if(src.allowed(usr))
 					screen = !screen
 				else
-					usr << "Unauthorized Access."
+					to_chat(usr, "Unauthorized Access.")
 
 			else if(href_list["warn"])
 				var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
@@ -110,7 +110,7 @@
 				var/obj/item/weapon/implant/I = locate(href_list["warn"])
 				if((I)&&(I.imp_in))
 					var/mob/living/carbon/R = I.imp_in
-					R << "<span class='good'>You hear a voice in your head saying: '[warning]'</span>"
+					to_chat(R, "<span class='good'>You hear a voice in your head saying: '[warning]'</span>")
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()

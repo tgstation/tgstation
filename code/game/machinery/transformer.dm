@@ -148,7 +148,7 @@
 
 /obj/machinery/transformer/Topic(href, href_list)
 	if(!isAI(usr))
-		usr << "<span class='warning'>This machine is way above your pay-grade.</span>"
+		to_chat(usr, "<span class='warning'>This machine is way above your pay-grade.</span>")
 		return 0
 	if(!("act" in href_list))
 		return 0

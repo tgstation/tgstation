@@ -12,7 +12,7 @@
 		if(istype(T, /turf/simulated/wall/r_wall) && !can_r_wall)
 			return "it cannot deconstruct reinforced walls!"
 
-		user << "Deconstructing \the [T]..."
+		to_chat(user, "Deconstructing \the [T]...")
 		playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 
 		if(do_after(user, T, 40))
@@ -25,7 +25,7 @@
 
 	else if(istype(A, /turf/simulated/floor))
 		var/turf/simulated/floor/T = A
-		user << "Deconstructing \the [T]..."
+		to_chat(user, "Deconstructing \the [T]...")
 		if(do_after(user, T, 50))
 			if(master.get_energy(user) < energy_cost)
 				return 1
@@ -36,7 +36,7 @@
 
 	else if(istype(A, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/D = A
-		user << "Deconstructing \the [D]..."
+		to_chat(user, "Deconstructing \the [D]...")
 		if(do_after(user, D, 50))
 			if(master.get_energy(user) < energy_cost)
 				return 1
@@ -62,7 +62,7 @@
 
 	var/turf/space/S = A
 
-	user << "Building floor..."
+	to_chat(user, "Building floor...")
 	playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
 	S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	return 0
@@ -79,7 +79,7 @@
 		return 1
 
 	var/turf/simulated/floor/T = A
-	user << "Building wall"
+	to_chat(user, "Building wall")
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 	if(do_after(user, A, 20))
 		if(master.get_energy(user) < energy_cost)
@@ -220,7 +220,7 @@
 					. += {"<input type="checkbox" name="[A]"/> [access_name] <br/>"}
 				*/
 				. += {"<input type="checkbox" name="[A]"[checked]/> [access_name] <br/>"}
-				//world << "[access_name]([A]) is [checked ? "in" : "not in"] selected access. [selected_access.Find(A) ? "find returned true" : "find returned false"]"
+//				to_chat(world, "[access_name]([A]) is [checked ? "in" : "not in"] selected access. [selected_access.Find(A) ? "find returned true" : "find returned false"]")
 				. += "<br>"
 			. += "</td>"
 		. += "</tr></table>"
@@ -334,7 +334,7 @@
 	for(var/obj/machinery/door/airlock/D in A)
 		return "there is already an airlock on this spot!"
 
-	user << "Building airlock..."
+	to_chat(user, "Building airlock...")
 
 	if(!do_after(user, A, 50))
 		return 1

@@ -159,7 +159,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"'Pronunciation' is the word which is mispronounced the most in the English language.",
 		"Women blink nearly twice as much as men.",
 		"Owls are the only birds who can see the color blue.",
-		"A pizza that has radius 'z' and height 'a' has volume Pi × z × z × a.",
+		"A pizza that has radius 'z' and height 'a' has volume Pi Ã— z Ã— z Ã— a.",
 		"Months that begin on a Sunday will always have a 'Friday the 13th.'",
 		"Zero is an even number.",
 		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
@@ -458,11 +458,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/namecounts = list()
 
 	if(usr.stat == 2)
-		usr << "You can't send PDA messages because you are dead!"
+		to_chat(usr, "You can't send PDA messages because you are dead!")
 		return
 
 	if(src.aiPDA.toff)
-		usr << "Turn on your receiver in order to send messages."
+		to_chat(usr, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
@@ -495,7 +495,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Send Message"
 	set src in usr
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't send PDA messages because you are dead!"
+		to_chat(usr, "You can't send PDA messages because you are dead!")
 		return
 	var/list/plist = available_pdas()
 	if (plist)
@@ -511,10 +511,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Toggle Sender/Receiver"
 	set src in usr
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	toff = !toff
-	usr << "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>"
+	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
@@ -522,10 +522,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	silent=!silent
-	usr << "<span class='notice'>PDA ringer toggled [(silent ? "Off" : "On")]!</span>"
+	to_chat(usr, "<span class='notice'>PDA ringer toggled [(silent ? "Off" : "On")]!</span>")
 
 
 /obj/item/device/pda/ai/verb/cmd_show_message_log()
@@ -533,20 +533,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Show Message Log"
 	set src in usr
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[tnote]</body></html>"
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log()
 	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -1457,12 +1457,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/mob/user = usr
 				var/amount = round(input("How much money do you wish to print?", "Currency Printer", 0) as num)
 				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
-					user << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>"
+					to_chat(user, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
 					return
 				if(amount > id.virtual_wallet.money)
 					amount = id.virtual_wallet.money
 				if(amount > 10000) // prevent crashes
-					user << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>"
+					to_chat(user, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>")
 					amount = 10000
 
 				id.virtual_wallet.money -= amount
@@ -1491,14 +1491,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						var/new_x = input("Please input desired X coordinate.", "Station Map App", app.markx) as num
 						var/x_validate=new_x+WORLD_X_OFFSET[map.zMainStation]
 						if(x_validate < 1 || x_validate > 255)
-							usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
+							to_chat(usr, "<span class='caution'>Error: Invalid X coordinate.</span>")
 						else
 							app.markx = new_x
 					if("y")
 						var/new_y = input("Please input desired Y coordinate.", "Station Map App", app.marky) as num
 						var/y_validate=new_y+WORLD_Y_OFFSET[map.zMainStation]
 						if(y_validate < 1 || y_validate > 255)
-							usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
+							to_chat(usr, "<span class='caution'>Error: Invalid Y coordinate.</span>")
 						else
 							app.marky = new_y
 					if("add")
@@ -1757,7 +1757,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (in_range(src, U) && loc == U)
 					if (t)
 						if(src.hidden_uplink && hidden_uplink.check_trigger(U, trim(lowertext(t)), trim(lowertext(lock_code))))
-							U << "The PDA softly beeps."
+							to_chat(U, "The PDA softly beeps.")
 							U << browse(null, "window=pda")
 							src.mode = 0
 						else
@@ -1776,18 +1776,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				var/amount = round(input("How much money do you wish to transfer to [P.owner]?", "Money Transfer", 0) as num)
 				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
-					usr << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>"
+					to_chat(usr, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
 					return
 				if(amount > id.virtual_wallet.money)
 					amount = id.virtual_wallet.money
 
 				switch(P.receive_funds(owner,amount,name))
 					if(1)
-						usr << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete!'</span>"
+						to_chat(usr, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete!'</span>")
 					if(2)
-						usr << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete! The recipient will earn the funds once he enters his ID in his PDA.'</span>"
+						to_chat(usr, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete! The recipient will earn the funds once he enters his ID in his PDA.'</span>")
 					else
-						usr << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Error, transaction canceled'</span>"
+						to_chat(usr, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Error, transaction canceled'</span>")
 						return
 
 				id.virtual_wallet.money -= amount
@@ -1809,7 +1809,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							U.show_message("<span class='notice'>Virus sent!</span>", 1)
 							P.honkamt = (rand(15,20))
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -1823,7 +1823,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							P.silent = 1
 							P.ttone = "silence"
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -1873,7 +1873,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeded", 1)
 								P.explode()
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U.unset_machine()
 					U << browse(null, "window=pda")
@@ -1923,7 +1923,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_id,/obj/item/weapon/storage/wallet))
 			dispense_cash(arbitrary_sum,H.wear_id)
-			usr << "\icon[src]<span class='notice'>Funds were transferred into your physical wallet!</span>"
+			to_chat(usr, "\icon[src]<span class='notice'>Funds were transferred into your physical wallet!</span>")
 			return
 	dispense_cash(arbitrary_sum,get_turf(src))
 
@@ -1943,7 +1943,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L)
-		L << "\icon[src] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]"
+		to_chat(L, "\icon[src] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]")
 
 	tnote += "<i><b>&larr; Money transfer from [creditor_name] ([arbitrary_sum]$)<br>"
 
@@ -1984,7 +1984,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mob/living/L = null
 	if(src.loc && isliving(src.loc))
 		L = src.loc
-	L << "\icon[src]<span class='notice'> <b>Transactions successfully received! </b></span>"
+	to_chat(L, "\icon[src]<span class='notice'> <b>Transactions successfully received! </b></span>")
 
 
 /obj/item/device/pda/proc/remove_id()
@@ -1992,7 +1992,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null
@@ -2042,7 +2042,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if(useMS && useTC) // only send the message if it's stable
 		if(useTC != 2) // Does our recepient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recepient."
+			to_chat(U, "ERROR: Cannot reach recepient.")
 			return
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
@@ -2081,7 +2081,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays.len = 0
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
-		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
+		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
 
 /obj/item/device/pda/verb/verb_remove_id()
@@ -2096,9 +2096,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -2116,13 +2116,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/mob/M = loc
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
-					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
+					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
+			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+
+obj/item/device/pda/AltClick()
+	if ( can_use(usr) ) // Checks that the PDA is in our inventory. This will be checked by the proc anyways, but we don't want to generate an error message if not.
+		verb_remove_pen(usr)
+		return
+	return ..()
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -2150,26 +2156,26 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		user.drop_item(C, src)
-		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			name = "PDA-[owner] ([ownjob])"
-			user << "<span class='notice'>Card scanned.</span>"
+			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if( can_use(user) )//If they can still act.
 					id_check(user, 2)
-					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+					to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 					if(incoming_transactions.len)
 						receive_incoming_transactions(id)
 					updateSelfDialog()//Update self dialog on success.
@@ -2178,18 +2184,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
 		user.drop_item(C, src)
 		pai = C
-		user << "<span class='notice'>You slot \the [C] into [src].</span>"
+		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
 		updateUsrDialog()
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notice'>There is already a pen in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
 			user.drop_item(C, src)
-			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	else if(istype(C,/obj/item/weapon/spacecash))
 		if(!id)
-			user << "\icon[src]<span class='warning'>There is no ID in the PDA!</span>"
+			to_chat(user, "\icon[src]<span class='warning'>There is no ID in the PDA!</span>")
 			return
 		var/obj/item/weapon/spacecash/dosh = C
 		id.virtual_wallet.money += dosh.worth * dosh.amount
@@ -2207,7 +2213,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		T.time = worldtime2text()
 		id.virtual_wallet.transaction_log.Add(T)
 
-		user << "<span class='info'>You insert [dosh] into the PDA.</span>"
+		to_chat(user, "<span class='info'>You insert [dosh] into the PDA.</span>")
 		qdel(dosh)
 		updateUsrDialog()
 
@@ -2222,21 +2228,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
-					user << "<span class='notice'>No fingerprints found on [C]</span>"
+					to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
-						user << "<span class='notice'>No fingerprints found on [C]</span>"
+						to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else
-					user << text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>")
+					to_chat(user, text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>"))
 				if ( !(C:blood_DNA) )
-					user << "<span class='notice'>No blood found on [C]</span>"
+					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
 					if(C:blood_DNA)
 						del(C:blood_DNA)
 				else
-					user << "<span class='notice'>Blood found on [C]. Analysing...</span>"
+					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
 					spawn(15)
 						for(var/blood in C:blood_DNA)
-							user << "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>"
+							to_chat(user, "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>")
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -2257,7 +2263,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
-		user << "<span class='notice'>Paper scanned.</span>" //concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
+
 
 /obj/item/device/pda/preattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
@@ -2265,13 +2272,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>"
+					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
-						user << "<span class='notice'>\t [re]</span>"
+						to_chat(user, "<span class='notice'>\t [re]</span>")
 				else
-					user << "<span class='notice'>No active chemical agents found in [A].</span>"
+					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else
-				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 			. = 1
 
 		if (6)
@@ -2323,7 +2330,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				src.cartridge:honk_charges++
 
 		M.stop_pulling()
-		M << "<span class='notice'>You slipped on the PDA!</span>"
+		to_chat(M, "<span class='notice'>You slipped on the PDA!</span>")
 		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)
@@ -2334,7 +2341,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/namecounts = list()
 
 	if (toff)
-		usr << "Turn on your receiver in order to send messages."
+		to_chat(usr, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in PDAs)

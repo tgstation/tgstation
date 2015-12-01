@@ -25,14 +25,14 @@
 	if(..())
 		if(src.reagents.total_volume >= 1)
 			if(M.reagents.total_volume >= 1)
-				user << "<span class='notice'>You dip \the [M]'s tip into \the [src] but don't soak anything up.</span>"
+				to_chat(user, "<span class='notice'>You dip \the [M]'s tip into \the [src] but don't soak anything up.</span>")
 				return 1
 			else
 				src.reagents.trans_to(M, 1)
-				user << "<span class='notice'>You barely manage to wet [M]</span>"
+				to_chat(user, "<span class='notice'>You barely manage to wet [M]</span>")
 				playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 		else
-			user << "<span class='notice'>Nothing left to wet [M] with!</span>"
+			to_chat(user, "<span class='notice'>Nothing left to wet [M] with!</span>")
 		return 1
 
 /*

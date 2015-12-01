@@ -23,26 +23,26 @@
 	switch(construct_op)
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You unfasten the bolts."
+				to_chat(user, "You unfasten the bolts.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You fasten the bolts."
+				to_chat(user, "You fasten the bolts.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You dislodge the external plating."
+				to_chat(user, "You dislodge the external plating.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You secure the external plating."
+				to_chat(user, "You secure the external plating.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "You remove the cables."
+				to_chat(user, "You remove the cables.")
 				construct_op ++
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( user.loc )
 				A.amount = 5
@@ -51,7 +51,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/A = P
 				if(A.amount >= 5)
-					user << "You insert the cables."
+					to_chat(user, "You insert the cables.")
 					A.amount -= 5
 					if(A.amount <= 0)
 						user.drop_item(A)
@@ -59,12 +59,12 @@
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "You need more cable"
+					to_chat(user, "You need more cable")
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "You begin prying out the circuit board and components..."
+				to_chat(user, "You begin prying out the circuit board and components...")
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, src,60))
-					user << "You finish prying out the components."
+					to_chat(user, "You finish prying out the components.")
 
 					// Drop all the component stuff
 					if(contents.len > 0)

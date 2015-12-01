@@ -48,7 +48,7 @@
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((M_HULK in usr.mutations))
-		usr << text("<span class='notice'>You destroy the operating table.</span>")
+		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='warning'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		del(src)
@@ -61,7 +61,7 @@
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if (M_HULK in usr.mutations)
-		usr << text("<span class='notice'>You destroy the table.</span>")
+		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='warning'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		del(src)
@@ -128,7 +128,7 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	if (victim)
-		user << "<span class='bnotice'>The table is already occupied!</span>"
+		to_chat(user, "<span class='bnotice'>The table is already occupied!</span>")
 
 	C.unlock_from()
 	C.forceMove(loc)

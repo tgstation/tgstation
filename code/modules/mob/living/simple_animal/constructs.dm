@@ -51,7 +51,7 @@
 		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [html_encode(speech.message)]")
 		for(var/mob/M in mob_list)
 			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
-				M << "<span class='sinister'><b>[src.name]:</b> [html_encode(speech.message)]</span>"
+				to_chat(M, "<span class='sinister'><b>[src.name]:</b> [html_encode(speech.message)]</span>")
 		return 1
 
 /mob/living/simple_animal/construct/gib()
@@ -100,13 +100,13 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		if(src.health >= src.maxHealth)
-			M << "<span class='notice'>[src] has nothing to mend.</span>"
+			to_chat(M, "<span class='notice'>[src] has nothing to mend.</span>")
 			return
 		health = min(maxHealth, health + 5) // Constraining health to maxHealth
 		M.visible_message("[M] mends some of \the <EM>[src]'s</EM> wounds.","You mend some of \the <em>[src]'s</em> wounds.")
@@ -135,7 +135,7 @@
 		adjustBruteLoss(damage)
 		user.visible_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		user.visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 
@@ -180,7 +180,7 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
@@ -309,7 +309,7 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
@@ -366,7 +366,7 @@
 	if (istype(usr,/mob/living/simple_animal/constructbehemoth))
 
 		if(usr.energy<300)
-			usr << "<span class='warning'>You do not have enough power stored!</span>"
+			to_chat(usr, "<span class='warning'>You do not have enough power stored!</span>")
 			return
 
 		if(usr.stat)

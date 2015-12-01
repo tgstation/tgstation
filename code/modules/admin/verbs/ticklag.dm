@@ -15,4 +15,4 @@
 		world.tick_lag = newtick
 		feedback_add_details("admin_verb","TICKLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		src << "<span class='warning'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>"
+		to_chat(src, "<span class='warning'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>")

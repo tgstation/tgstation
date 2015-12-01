@@ -61,7 +61,7 @@ var/global/list/sec_hud_users = list() //list of all entities using a security H
 			var/list/L = chemical_reactions_list[reaction]
 			for(var/t in L)
 				. += "    has: [t]\n"
-	world << .
+	to_chat(world, .)
 */
 
 var/global/list/escape_list = list()

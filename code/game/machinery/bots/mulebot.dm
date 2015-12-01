@@ -113,12 +113,12 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
 		flick("mulebot-emagged", src)
 		playsound(get_turf(src), 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I, /obj/item/weapon/card/id))
 		if(toggle_lock(user))
-			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
+			to_chat(user, "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>")
 
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
@@ -129,7 +129,7 @@ var/global/mulebot_count = 0
 		attack_hand(user)
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			user << "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>"
+			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
 
 		open = !open
@@ -150,13 +150,13 @@ var/global/mulebot_count = 0
 				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			user << "<span class='notice'>[src] does not need a repair!</span>"
+			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
 			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "You hit [src] with \the [I] but to no effect."
+			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
 		..()
 	return
@@ -282,7 +282,7 @@ var/global/mulebot_count = 0
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "<span class='warning'>You can't switch on [src].</span>"
+						to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 						return
 				else
 					return
@@ -388,7 +388,7 @@ var/global/mulebot_count = 0
 		updateDialog()
 		return 1
 	else
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return 0
 
 // mousedrop a crate to load the bot
@@ -509,7 +509,7 @@ var/global/mulebot_count = 0
 		return
 	if(on)
 		var/speed = (wires.Motor1() ? 1 : 0) + (wires.Motor2() ? 2 : 0)
-		//world << "speed: [speed]"
+//		to_chat(world, "speed: [speed]")
 		switch(speed)
 			if(0)
 				// do nothing
@@ -533,7 +533,7 @@ var/global/mulebot_count = 0
 	if(refresh) updateDialog()
 
 /obj/machinery/bot/mulebot/proc/process_bot()
-	//if(mode) world << "Mode: [mode]"
+//	to_chat(if(mode) world, "Mode: [mode]")
 	switch(mode)
 		if(0)		// idle
 			icon_state = "mulebot0"
@@ -554,7 +554,7 @@ var/global/mulebot_count = 0
 					path -= next
 					return
 				if(istype( next, /turf/simulated))
-					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
+//					to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
 					if(bloodiness)
 						var/turf/simulated/T=loc
 						if(istype(T))
@@ -576,7 +576,7 @@ var/global/mulebot_count = 0
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
 					if(moved)	// successful move
-						//world << "Successful move."
+//						to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -592,7 +592,7 @@ var/global/mulebot_count = 0
 
 					else		// failed to move
 
-						//world << "Unable to move."
+//						to_chat(world, "Unable to move.")
 
 
 
@@ -619,16 +619,16 @@ var/global/mulebot_count = 0
 				else
 					src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 					playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
-					//world << "Bad turf."
+//					to_chat(world, "Bad turf.")
 					mode = 5
 					return
 			else
-				//world << "No path."
+//				to_chat(world, "No path.")
 				mode = 5
 				return
 
 		if(5)		// calculate new path
-			//world << "Calc new path."
+//			to_chat(world, "Calc new path.")
 			mode = 6
 			spawn(0)
 
@@ -646,9 +646,9 @@ var/global/mulebot_count = 0
 
 					mode = 7
 		//if(6)
-			//world << "Pending path calc."
+//			to_chat(world, "Pending path calc.")
 		//if(7)
-			//world << "No dest / no route."
+//			to_chat(world, "No dest / no route.")
 	return
 
 
@@ -774,9 +774,9 @@ var/global/mulebot_count = 0
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 	var/recv = signal.data["command"]
 	// process all-bot input
@@ -864,7 +864,7 @@ var/global/mulebot_count = 0
 	//for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
+//		to_chat(world, "sent [key],[keyval[key]] on [freq]")
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	else if (signal.data["type"] == "mulebot")

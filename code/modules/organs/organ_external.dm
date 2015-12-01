@@ -423,7 +423,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//Overdosing is necessary to stop severe infections
 		if(!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
-			owner << "<span class='notice'>You can't feel your [display_name] anymore.</span>"
+			to_chat(owner, "<span class='notice'>You can't feel your [display_name] anymore.</span>")
 			owner.update_body(1)
 
 		germ_level++
@@ -586,7 +586,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(spawn_limb)
 			organ = generate_dropped_organ(organ_item)
 		if(body_part == LOWER_TORSO)
-			owner << "<span class='danger'>You are now sterile.</span>"
+			to_chat(owner, "<span class='danger'>You are now sterile.</span>")
 
 		if(slots_to_drop && slots_to_drop.len)
 			for(var/slot_id in slots_to_drop)
@@ -1185,7 +1185,7 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 		for(var/datum/butchering_product/B in butchering_drops)
 			butchery = "[butchery][B.desc_modifier(src, user)]"
 	if(butchery)
-		user << "<span class='warning'>[butchery]</span>"
+		to_chat(user, "<span class='warning'>[butchery]</span>")
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS DEFINES

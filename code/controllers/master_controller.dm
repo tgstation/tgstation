@@ -59,7 +59,7 @@ datum/controller/game_controller/New()
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
 		job_master.LoadJobs("config/jobs.txt")
-		//world << "<span class='danger'>Job setup complete in </span>"
+//		to_chat(world, "<span class='danger'>Job setup complete in </span>")
 		log_startup_progress("Job setup complete in [stop_watch(watch)]s.")
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
@@ -249,7 +249,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 					if(!air_master.Tick()) //Runtimed.
 						air_master.failed_ticks++
 						if(air_master.failed_ticks > 5)
-							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
+							to_chat(world, "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>")
 							world.log << "### ZAS SHUTDOWN"
 							message_admins("ZASALERT: unable to run [air_master.tick_progress], shutting down!")
 							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")

@@ -1075,7 +1075,7 @@ What are the archived variables for?
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
-			//world << "temp fail [temperature] & [sample.temperature]"
+//			to_chat(world, "temp fail [temperature] & [sample.temperature]")
 			return 0
 	var/check_moles
 	if(sample.trace_gases.len)

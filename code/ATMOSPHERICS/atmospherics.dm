@@ -229,14 +229,14 @@ Pipelines + Other Objects -> Pipe network
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		if(istype(W, /obj/item/weapon/wrench/socket) && istype(src, /obj/machinery/atmospherics/pipe))
-			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
+			to_chat(user, "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>")
 			if(do_after(user, src, 50))
 				if(!loc) return
 				playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
@@ -252,10 +252,10 @@ Pipelines + Other Objects -> Pipe network
 					env_air.add(transit) //put it in the air
 				del(transit) //remove the carrier
 		else
-			user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 			return 1
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, src, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

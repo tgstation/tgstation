@@ -39,22 +39,22 @@
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine) || istype(G, /obj/item/ammo_storage/magazine/lawgiver))
 		if(charging)
-			user << "<span class='warning'>There's \a [charging] already charging inside!</span>"
+			to_chat(user, "<span class='warning'>There's \a [charging] already charging inside!</span>")
 			return
 		if(!anchored)
-			user << "<span class='warning'>You must anchor \the [src] before you can make use of it!</span>"
+			to_chat(user, "<span class='warning'>You must anchor \the [src] before you can make use of it!</span>")
 			return
 
 		//Checks to make sure the recharger is powered and functional
 		if(stat & (NOPOWER | BROKEN))
-			user << "<span class='notice'>[src] isn't connected to a power source.</span>"
+			to_chat(user, "<span class='notice'>[src] isn't connected to a power source.</span>")
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
-			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
+			to_chat(user, "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>")
 			return
 		if (istype(G, /obj/item/weapon/gun/energy/staff))
-			user << "<span class='notice'>The recharger rejects the magical apparatus.</span>"
+			to_chat(user, "<span class='notice'>The recharger rejects the magical apparatus.</span>")
 			return
 		appearance_backup = G.appearance
 		var/matrix/M = matrix()
@@ -71,7 +71,7 @@
 
 /obj/machinery/recharger/wrenchAnchor(mob/user)
 	if(charging)
-		user << "<span class='notice'>Remove the charging item first!</span>"
+		to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 		return
 	if(..() == 1)
 		pixel_x = 0

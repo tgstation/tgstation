@@ -134,7 +134,7 @@
 
 /obj/machinery/replicator/Topic(href, href_list)
 	if(spawning_types.len > 0)
-		usr << "<span class='warning'>The machine is already processing something. The buttons are unresponsive.</span>"
+		to_chat(usr, "<span class='warning'>The machine is already processing something. The buttons are unresponsive.</span>")
 		return
 
 	if(href_list["activate"])

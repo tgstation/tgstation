@@ -115,13 +115,13 @@
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				src << "Unable to locate an airlock"
+				to_chat(src, "Unable to locate an airlock")
 				return
 			if(H.digitalcamo)
-				src << "Unable to locate an airlock"
+				to_chat(src, "Unable to locate an airlock")
 				return
 		if (!near_camera(target))
-			src << "Target is not near any active cameras."
+			to_chat(src, "Target is not near any active cameras.")
 			return
 		var/obj/machinery/door/airlock/tobeopened
 		var/dist = -1
@@ -129,36 +129,36 @@
 			if(!D.density) continue
 			if(dist < 0)
 				dist = get_dist(D, target)
-				//world << dist
+//				to_chat(world, dist)
 				tobeopened = D
 			else
 				if(dist > get_dist(D, target))
 					dist = get_dist(D, target)
-					//world << dist
+//					to_chat(world, dist)
 					tobeopened = D
-					//world << "found [tobeopened.name] closer"
+//					to_chat(world, "found [tobeopened.name] closer")
 				else
-					//world << "[D.name] not close enough | [get_dist(D, target)] | [dist]"
+//					to_chat(world, "[D.name] not close enough | [get_dist(D, target)] | [dist]")
 		if(tobeopened)
 			switch(alert(src, "Do you want to open \the [tobeopened] for [target]?","Doorknob_v2a.exe","Yes","No"))
 				if("Yes")
 					var/nhref = "src=\ref[tobeopened];aiEnable=7"
 					tobeopened.Topic(nhref, params2list(nhref), tobeopened, 1)
-					src << "<span class='notice'>You've opened \the [tobeopened] for [target].</span>"
+					to_chat(src, "<span class='notice'>You've opened \the [tobeopened] for [target].</span>")
 				if("No")
-					src << "<span class='warning'>You deny the request.</span>"
+					to_chat(src, "<span class='warning'>You deny the request.</span>")
 		else
-			src << "<span class='warning'>You've failed to open an airlock for [target]</span>"
+			to_chat(src, "<span class='warning'>You've failed to open an airlock for [target]</span>")
 		return
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
-	//U << text("Now tracking [] on camera.", target.name)
+//	to_chat(U, text("Now tracking [] on camera.", target.name))
 	//if (U.machine == null)
 	//	U.machine = U
-	U << "Now tracking [target.name] on camera."
+	to_chat(U, "Now tracking [target.name] on camera.")
 
 	spawn (0)
 		while (U.cameraFollow == target)
@@ -167,21 +167,21 @@
 			if (istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					U << "Follow camera mode terminated."
+					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null
 					return
 				if(H.digitalcamo)
-					U << "Follow camera mode terminated."
+					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null
 					return
 
 			if(istype(target.loc,/obj/effect/dummy))
-				U << "Follow camera mode ended."
+				to_chat(U, "Follow camera mode ended.")
 				U.cameraFollow = null
 				return
 
 			if (!near_camera(target))
-				U << "Target is not near any active cameras."
+				to_chat(U, "Target is not near any active cameras.")
 				sleep(100)
 				continue
 

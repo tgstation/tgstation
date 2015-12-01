@@ -54,7 +54,7 @@
 		scheck()
 
 	// TODO: Need debug pane for this.
-	//world << "LIT: [light_updates]:[overlay_updates]"
+//	to_chat(world, "LIT: [light_updates]:[overlay_updates]")
 
 
 #undef MAX_LIGHT_UPDATES_PER_WORK

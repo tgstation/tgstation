@@ -15,13 +15,13 @@
 	var/obj/item/weapon/reagent_containers/syringe/B = W
 
 	if(src.beaker)
-		user << "A syringe is already loaded into the machine."
+		to_chat(user, "A syringe is already loaded into the machine.")
 		return
 
 	src.beaker =  B
 	user.drop_item(B, src)
 	if(istype(B,/obj/item/weapon/reagent_containers/syringe))
-		user << "You add the syringe to the machine!"
+		to_chat(user, "You add the syringe to the machine!")
 		src.updateUsrDialog()
 		icon_state = "isolator_in"
 
@@ -40,7 +40,7 @@
 				break
 		// /vg/: Try to fix isolators
 		if(!Blood)
-			usr << "<span class='warning'>ERROR: Unable to locate blood within the beaker.  Bug?</span>"
+			to_chat(usr, "<span class='warning'>ERROR: Unable to locate blood within the beaker.  Bug?</span>")
 			testing("Unable to locate blood in [beaker]!")
 			return
 		var/list/virus = virus_copylist(Blood.data["virus2"])

@@ -15,7 +15,7 @@
 				air_master.failed_ticks++
 
 				if(air_master.failed_ticks > 5)
-					world << "<SPAN CLASS='danger'>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</SPAN>"
+					to_chat(world, "<SPAN CLASS='danger'>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</SPAN>")
 					world.log << "### ZAS SHUTDOWN"
 
 					message_admins("ZASALERT: Shutting down! status: [air_master.tick_progress]")

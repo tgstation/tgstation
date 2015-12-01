@@ -24,22 +24,22 @@
 	if (istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
 		if(src.broken)
-			user << "<span class='rose'>It appears to be broken.</span>"
+			to_chat(user, "<span class='rose'>It appears to be broken.</span>")
 			return
 		if(src.allowed(user))
 			src.locked = !( src.locked )
 			if(src.locked)
 				src.icon_state = src.icon_locked
-				user << "<span class='rose'>You lock the [src.name]!</span>"
+				to_chat(user, "<span class='rose'>You lock the [src.name]!</span>")
 				tracked_access = "The tracker reads: 'Last locked by [ID.registered_name].'"
 				return
 			else
 				src.icon_state = src.icon_closed
-				user << "<span class='rose'>You unlock the [src.name]!</span>"
+				to_chat(user, "<span class='rose'>You unlock the [src.name]!</span>")
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 		else
-			user << "<span class='warning'>Access Denied</span>"
+			to_chat(user, "<span class='warning'>Access Denied</span>")
 	else if(istype(W, /obj/item/weapon/card/emag) && !src.broken)
 		broken = 1
 		locked = 0
@@ -51,13 +51,13 @@
 	if(!locked)
 		..()
 	else
-		user << "<span class='warning'>Its locked!</span>"
+		to_chat(user, "<span class='warning'>Its locked!</span>")
 	return
 
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		user << "<span class='warning'>Its locked!</span>"
+		to_chat(user, "<span class='warning'>Its locked!</span>")
 	else
 		..()
 	return
@@ -162,24 +162,24 @@
 
 /obj/item/weapon/storage/lockbox/examine(mob/user)
 	..()
-	user << "<span class='info'>[tracked_access]</span>"
+	to_chat(user, "<span class='info'>[tracked_access]</span>")
 
 /obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = O
 		if(src.broken)
-			user << "<span class='rose'>It appears to be broken.</span>"
+			to_chat(user, "<span class='rose'>It appears to be broken.</span>")
 			return
 		else
 			src.locked = !( src.locked )
 			if(src.locked)
 				src.icon_state = src.icon_locked
-				user << "<span class='rose'>You lock the [src.name]!</span>"
+				to_chat(user, "<span class='rose'>You lock the [src.name]!</span>")
 				tracked_access = "The tracker reads: 'Last locked by [ID.registered_name]'."
 				return
 			else
 				src.icon_state = src.icon_closed
-				user << "<span class='rose'>You unlock the [src.name]!</span>"
+				to_chat(user, "<span class='rose'>You unlock the [src.name]!</span>")
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 	else

@@ -35,7 +35,7 @@
 	                            /obj/item/weapon/reagent_containers/pill/time_release)
 
 /obj/item/weapon/reagent_containers/syringe/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] appears to be injecting an air bubble using a [src.name]! It looks like \he's trying to commit suicide.</span>"
+	to_chat(viewers(user), "<span class='danger'>[user] appears to be injecting an air bubble using a [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
@@ -73,7 +73,7 @@
 	if(!target.reagents) return
 
 	if(mode == SYRINGE_BROKEN)
-		user << "<span class='warning'>\The [src] is broken!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
 		return
 
 	if (user.a_intent == I_HURT && ismob(target))
@@ -81,7 +81,7 @@
 			target = user
 
 		if (target != user && !can_stab) // You still can stab yourself if you're clumsy, honk
-			user << "<span class='notice'>You can't grasp \the [src] properly for stabbing!</span>"
+			to_chat(user, "<span class='notice'>You can't grasp \the [src] properly for stabbing!</span>")
 			return
 
 		syringestab(target, user)
@@ -123,21 +123,21 @@
 		return
 
 	if (src.is_full())
-		user << "<span class='warning'>\The [src] is full.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is full.</span>")
 		return
 
 	// Drawing from mobs draws from their blood or equivalent
 	if (ismob(target))
 		if (!can_draw_blood)
-			user << "This needle isn't designed for drawing fluids from living things."
+			to_chat(user, "This needle isn't designed for drawing fluids from living things.")
 			return
 
 		if (istype(target, /mob/living/carbon/slime))
-			user << "<span class='warning'>You are unable to locate any blood.</span>"
+			to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 			return
 
 		if (reagents.has_reagent("blood")) // TODO Current reagent system can't handle multiple blood sources properly
-			user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
+			to_chat(user, "<span class='warning'>There is already a blood sample in this syringe!</span>")
 			return
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -148,12 +148,12 @@
 		if (iscarbon(target))
 			var/mob/living/carbon/T = target
 			if (!T.dna)
-				user << "<span class='warning'>You are unable to locate any blood.</span>"
+				to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 				warning("Tried to draw blood or equivalent from [target] (\ref[target]) but it's missing their DNA datum!")
 				return
 
 			if (M_NOCLONE in T.mutations) // Target has been husked
-				user << "<span class='warning'>You are unable to locate any blood.</span>"
+				to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 				return
 
 			var/amount = src.reagents.maximum_volume - src.reagents.total_volume
@@ -169,7 +169,7 @@
 	// Drawing from objects draws their contents
 	else if (isobj(target))
 		if (!target.is_open_container() && !istype(target, /obj/structure/reagent_dispensers) && !istype(target, /obj/item/slime_extract))
-			user << "<span class='warning'>You cannot directly remove reagents from this object."
+			to_chat(user, "<span class='warning'>You cannot directly remove reagents from this object.")
 			return
 
 		var/tx_amount = 0
@@ -179,9 +179,9 @@
 			tx_amount = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
 		if (tx_amount > 0)
-			user << "<span class='notice'>You fill \the [src] with [tx_amount] units of the solution.</span>"
+			to_chat(user, "<span class='notice'>You fill \the [src] with [tx_amount] units of the solution.</span>")
 		else if (tx_amount == 0)
-			user << "<span class='warning'>\The [target] is empty.</span>"
+			to_chat(user, "<span class='warning'>\The [target] is empty.</span>")
 
 	if (src.is_full())
 		mode = SYRINGE_INJECT
@@ -189,16 +189,16 @@
 
 /obj/item/weapon/reagent_containers/syringe/proc/handle_inject(var/atom/target, var/mob/user)
 	if (src.is_empty())
-		user << "<span class='warning'>\The [src] is empty.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 
 	// TODO Remove snowflake
 	if (!ismob(target) && !target.is_open_container() && !is_type_in_list(target, injectable_types))
-		user << "<span class='warning'>You cannot directly fill this object.</span>"
+		to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 		return
 
 	if (target.reagents.total_volume >= target.reagents.maximum_volume)
-		user << "<span class='warning'>\The [target] is full.</span>"
+		to_chat(user, "<span class='warning'>\The [target] is full.</span>")
 		return
 
 	// Attempting to inject someone else takes time
@@ -229,7 +229,7 @@
 		reagents.reaction(target, INGEST)
 
 	tx_amount = reagents.trans_to(target, tx_amount)
-	user << "<span class='notice'>You inject [tx_amount] units of the solution. The syringe now contains [reagents.total_volume] units.</span>"
+	to_chat(user, "<span class='notice'>You inject [tx_amount] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
 
 	// Log transfers of 'bad things' (/vg/)
 	if (tx_amount > 0 && isobj(target) && target:log_reagents && bad_reagents && bad_reagents.len > 0)
@@ -263,7 +263,7 @@
 		if (!affecting)
 			return
 		else if (affecting.status & ORGAN_DESTROYED)
-			user << "What [affecting.display_name]?"
+			to_chat(user, "What [affecting.display_name]?")
 			return
 
 		var/hit_area = affecting.display_name

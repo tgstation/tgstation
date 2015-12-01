@@ -29,10 +29,10 @@ LINEN BINS
 	else if(istype(I, /obj/item/weapon/kitchen/utensil/knife/plastic))
 		cut_time=160
 	if(cut_time)
-		user << "<span  class='notice'>You begin cutting the [src].</span>"
+		to_chat(user, "<span  class='notice'>You begin cutting the [src].</span>")
 		if(do_after(user, src, cut_time))
 			if(!src) return
-			user << "<span  class='notice'>You have cut the [src] into rags.</span>"
+			to_chat(user, "<span  class='notice'>You have cut the [src] into rags.</span>")
 			var/turf/location = get_turf(src)
 			for(var/x=0; x<=8; x++)
 				var/obj/item/weapon/reagent_containers/glass/rag/S = new/obj/item/weapon/reagent_containers/glass/rag/(location)
@@ -141,11 +141,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount == 0)
-		user << "<span class='info'>There are no bed sheets in the bin.</span>"
+		to_chat(user, "<span class='info'>There are no bed sheets in the bin.</span>")
 	else if(amount == 1)
-		user << "<span class='info'>There is one bed sheet in the bin.</span>"
+		to_chat(user, "<span class='info'>There is one bed sheet in the bin.</span>")
 	else
-		user << "<span class='info'>There are [amount] bed sheets in the bin.</span>"
+		to_chat(user, "<span class='info'>There are [amount] bed sheets in the bin.</span>")
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -160,11 +160,11 @@ LINEN BINS
 		user.drop_item(I, src)
 		sheets.Add(I)
 		amount++
-		user << "<span class='notice'>You put [I] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		user.drop_item(I, src)
 		hidden = I
-		user << "<span class='notice'>You hide [I] among the sheets.</span>"
+		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
 
@@ -186,11 +186,11 @@ LINEN BINS
 
 		B.loc = user.loc
 		user.put_in_hands(B)
-		user << "<span class='notice'>You take [B] out of [src].</span>"
+		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 
 		if(hidden)
 			hidden.loc = user.loc
-			user << "<span class='notice'>[hidden] falls out of [B]!</span>"
+			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
 
@@ -209,7 +209,7 @@ LINEN BINS
 			B = new /obj/item/weapon/bedsheet(loc)
 
 		B.loc = loc
-		user << "<span class='notice'>You telekinetically remove [B] from [src].</span>"
+		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)

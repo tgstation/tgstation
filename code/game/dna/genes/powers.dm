@@ -52,7 +52,7 @@
 		return
 
 	if(istype(user.l_hand, /obj/item/tk_grab) || istype(user.r_hand, /obj/item/tk_grab/))
-		user << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
+		to_chat(user, "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>")
 		user.remoteview_target = null
 		user.reset_view(0)
 		return
@@ -283,7 +283,7 @@
 			M.dna.SetSEState(HULKBLOCK,0)
 			M.update_mutations()		//update our mutation overlays
 			M.update_body()
-			M << "<span class='warning'>You suddenly feel very weak.</span>"
+			to_chat(M, "<span class='warning'>You suddenly feel very weak.</span>")
 			M.Weaken(3)
 			M.emote("collapse")
 */

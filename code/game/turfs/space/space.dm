@@ -39,7 +39,8 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		usr << "<span class='warning'>Movement is admin-disabled.</span>" //This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -86,7 +87,7 @@
 					if(src.z == mommi.locked_to_z)
 						locked_to_current_z = 1
 					else
-						mommi << "<span class='warning'>You find your way back.</span>"
+						to_chat(mommi, "<span class='warning'>You find your way back.</span>")
 						move_to_z = mommi.locked_to_z
 
 			var/safety = 1
@@ -150,9 +151,9 @@
 		target_z = y_arr[cur_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Target Z = [target_z]"
-		world << "Next X = [next_x]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Target Z = [target_z]")
+		to_chat(world, "Next X = [next_x]")
 		//debug
 */
 		if(target_z)
@@ -175,9 +176,9 @@
 		target_z = y_arr[cur_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Target Z = [target_z]"
-		world << "Next X = [next_x]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Target Z = [target_z]")
+		to_chat(world, "Next X = [next_x]")
 		//debug
 */
 		if(target_z)
@@ -199,9 +200,9 @@
 		target_z = y_arr[next_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Next Y = [next_y]"
-		world << "Target Z = [target_z]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Next Y = [next_y]")
+		to_chat(world, "Target Z = [target_z]")
 		//debug
 */
 		if(target_z)
@@ -224,9 +225,9 @@
 		target_z = y_arr[next_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Next Y = [next_y]"
-		world << "Target Z = [target_z]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Next Y = [next_y]")
+		to_chat(world, "Target Z = [target_z]")
 		//debug
 */
 		if(target_z)

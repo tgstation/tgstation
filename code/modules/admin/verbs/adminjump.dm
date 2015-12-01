@@ -3,7 +3,7 @@
 	set desc = "Area to jump to"
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -18,7 +18,7 @@
 
 		var/turf/T = pick_n_take(turfs)
 		if(!T)
-			src << "Nowhere to jump to!"
+			to_chat(src, "Nowhere to jump to!")
 			return
 		usr.loc = T
 
@@ -32,7 +32,7 @@
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
 		log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
@@ -48,7 +48,7 @@
 	set name = "Jump to Mob"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -61,7 +61,7 @@
 				feedback_add_details("admin_verb","JM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 				A.loc = T
 			else
-				A << "This mob is not located in the game world."
+				to_chat(A, "This mob is not located in the game world.")
 	else
 		alert("Admin jumping disabled")
 
@@ -70,7 +70,7 @@
 	set name = "Jump to Coordinate"
 
 	if (!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if (config.allow_admin_jump)
@@ -90,7 +90,7 @@
 	set name = "Jump to Key"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -100,7 +100,7 @@
 				keys["[M.ckey]"] = M //used to be M.client but GHOSTED PEOPLE WERE PUTTING NULL ENTRIES IN THE FUCKING LIST
 		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortList(keys)
 		if(!selection)
-			src << "No keys found."
+			to_chat(src, "No keys found.")
 			return
 		var/mob/M = keys[selection]
 		log_admin("[key_name(usr)] jumped to [key_name(M)]")
@@ -115,7 +115,7 @@
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
 		log_admin("[key_name(usr)] teleported [key_name(M)]")
@@ -131,7 +131,7 @@
 	set desc = "Key to teleport"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -157,7 +157,7 @@
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas
 	if(A)

@@ -65,21 +65,21 @@
 						R.module.modules += created_sheet
 						if(amount <= created_sheet.max_amount)
 							created_sheet.amount += (amount-created_sheet.amount)
-							R << "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>"
+							to_chat(R, "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>")
 						else
 							if(created_sheet.amount <= created_sheet.max_amount)
 								var/transfer_amount = min(created_sheet.max_amount - created_sheet.amount, amount)
 								created_sheet.amount += (transfer_amount-1)
 								amount -= transfer_amount
 							if(amount >= 1 && (created_sheet.amount >= created_sheet.max_amount))
-								R << "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>"
+								to_chat(R, "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>")
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = (amount - 1)
 
 					else
 						if((inside_sheet.amount + amount) <= inside_sheet.max_amount)
 							inside_sheet.amount += amount
-							R << "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>"
+							to_chat(R, "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>")
 							return
 						else
 							if(inside_sheet.amount <= inside_sheet.max_amount)
@@ -87,20 +87,20 @@
 								inside_sheet.amount += transfer_amount
 								amount -= transfer_amount
 							if(amount >= 1 && (inside_sheet.amount >= inside_sheet.max_amount))
-								R << "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>"
+								to_chat(R, "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>")
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = amount
 					R.module.rebuild()
 					R.hud_used.update_robot_modules_display()
 					return
 				else
-					R << "<span class='warning'>You can't make that much [initial(material_type.name)] without shutting down!</span>"
+					to_chat(R, "<span class='warning'>You can't make that much [initial(material_type.name)] without shutting down!</span>")
 					return
 
 				return
 
 		else if(R.cell.charge)
-			R << "<span class='warning'>You need to select a sheet type first!</span>"
+			to_chat(R, "<span class='warning'>You need to select a sheet type first!</span>")
 			return
 	else
 		if (material_type && matter >= 1)
@@ -128,13 +128,13 @@
 
 					TakeCost(tospawn, modifier, user)
 			else
-				user << "<span class='warning'>\The [src] matter is not enough to create the selected material!</span>"
+				to_chat(user, "<span class='warning'>\The [src] matter is not enough to create the selected material!</span>")
 				return
 		else if (matter >= 1)
-			user << "<span class='warning'>You must select a sheet type first!</span>"
+			to_chat(user, "<span class='warning'>You must select a sheet type first!</span>")
 			return
 		else
-			user << "<span class='warning'>\The [src] is empty!</span>"
+			to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 	return 1
 
@@ -144,31 +144,31 @@
 	if(istype(target, /obj/item/stack/sheet))
 		for(var/matID in materials_scanned)
 			if(materials_scanned[matID] == target.type)
-				user <<"<span class='warning'>You have already scanned \the [target].</span>"
+				to_chat(user, "<span class='warning'>You have already scanned \the [target].</span>")
 				return
 		materials_scanned["[initial(target.name)]"] = target.type
-		user <<"<span class='notice'>You successfully scan \the [target] into \the [src]'s material banks.</span>"
+		to_chat(user, "<span class='notice'>You successfully scan \the [target] into \the [src]'s material banks.</span>")
 		return 1
 	return ..()
 
 /obj/item/device/material_synth/examine(mob/user)
 	..()
 	if(istype(src, /obj/item/device/material_synth/robot))
-		user << "It's been set to draw power from a power cell."
+		to_chat(user, "It's been set to draw power from a power cell.")
 	else
-		user << "It currently holds [matter]/[MAX_MATSYNTH_MATTER] matter-units."
+		to_chat(user, "It currently holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.")
 
 /obj/item/device/material_synth/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/RA = O
 		if(matter + 10 > MAX_MATSYNTH_MATTER)
-			user <<"<span class='warning'>\The [src] can't take any more material right now.</span>"
+			to_chat(user, "<span class='warning'>\The [src] can't take any more material right now.</span>")
 			return
 		else
 			matter += 10
 			playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 			qdel(RA)
-			user << "<span class='notice'>The material synthetizer now holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.</span>"
+			to_chat(user, "<span class='notice'>The material synthetizer now holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.</span>")
 	if(istype(O, /obj/item/weapon/card/emag))
 		if(!emagged)
 			emagged = 1
@@ -183,11 +183,11 @@
 				matter -= matter_rng
 				return 1
 			else
-				user<<"<span class='danger'>The lack of matter in \the [src] shorts out the device!</span>"
+				to_chat(user, "<span class='danger'>The lack of matter in \the [src] shorts out the device!</span>")
 				explosion(src.loc, 0, 0, 1, 2) //traitors - fuck them, am I right?
 				qdel(src)
 		else
-			user << "<span class='warning'>You don't think you can do that again.</span>"
+			to_chat(user, "<span class='warning'>You don't think you can do that again.</span>")
 			return
 	return ..()
 
@@ -196,12 +196,12 @@
 		var/selection = materials_scanned[input("Select the material you'd like to synthesize", "Change Material Type") as null|anything in materials_scanned]
 		if(selection)
 			active_material = selection
-			user << "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>"
+			to_chat(user, "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>")
 		else
 			active_material = null
 			return
 	else
-		user << "<span class='warning'>ERROR: NO MATERIAL DATA FOUND</span>"
+		to_chat(user, "<span class='warning'>ERROR: NO MATERIAL DATA FOUND</span>")
 		return 0
 	create_material(user, active_material)
 
@@ -214,7 +214,7 @@
 	if(!proximity_flag)
 		return 0 //Not Adjacent
 	if(istype(target, /obj/item/stack/sheet))
-		user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
+		to_chat(user, "<span class='notice'>Your [src.name] does not contain this functionality.</span>")
 	return 0
 
 /obj/item/device/material_synth/robot/TakeCost(var/spawned, var/modifier, mob/user)

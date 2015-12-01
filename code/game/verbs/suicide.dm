@@ -3,20 +3,20 @@
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!ticker)
-		src << "<span class='warning'>You can't commit suicide before the game starts!</span>"
+		to_chat(src, "<span class='warning'>You can't commit suicide before the game starts!</span>")
 		return
 
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(istype(wear_mask, /obj/item/clothing/mask/happy))
-		src << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+		to_chat(src, "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>")
 		return
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(B && B.controlling) //Borer
-		src << "<span class='warning'>You cannot commit suicide, your host is clinging to life enough to resist it.</span>"
+		to_chat(src, "<span class='warning'>You cannot commit suicide, your host is clinging to life enough to resist it.</span>")
 		return
 
 	var/permitted = 1
@@ -28,18 +28,18 @@
 
 	if(!permitted)
 		message_admins("<span class='danger'>[ckey] has tried to suicide, but they were not permitted to due to being an antagonist.</span>", 1) //Fairly urgent
-		src << "<span class='warning'>Your masters and the gods won't let you do that without a proper reason.</span>"
+		to_chat(src, "<span class='warning'>Your masters and the gods won't let you do that without a proper reason.</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
 		if(!canmove || restrained()) //Just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-			src << "<span class='warning'>You can't commit suicide whilst restrained!</span>"
+			to_chat(src, "<span class='warning'>You can't commit suicide whilst restrained!</span>")
 			return
 		suiciding = 1
 		var/obj/item/held_item = get_active_hand()
@@ -95,15 +95,15 @@
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
 	if(!ticker)
-		src << "<span class='warning'>You can't commit suicide before the game starts!</span>"
+		to_chat(src, "<span class='warning'>You can't commit suicide before the game starts!</span>")
 		return
 
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -119,20 +119,20 @@
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
 	if(!ticker)
-		src << "<span class='warning'>You can't commit suicide before the game starts!</span>"
+		to_chat(src, "<span class='warning'>You can't commit suicide before the game starts!</span>")
 		return
 
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if (B && B.controlling) // Borer
-		src << "You cannot suicide as your host, you dick."
+		to_chat(src, "You cannot suicide as your host, you dick.")
 		return
 
 
@@ -140,7 +140,7 @@
 
 	if(confirm == "Yes")
 		if(!canmove || restrained())
-			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+			to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 			return
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
@@ -151,11 +151,11 @@
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -170,11 +170,11 @@
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -203,11 +203,11 @@
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -222,11 +222,11 @@
 /mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -245,11 +245,11 @@
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -262,11 +262,11 @@
 /mob/living/simple_animal/spiderbot/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -279,11 +279,11 @@
 /mob/living/simple_animal/borer/suicide()
 	set hidden = 1
 	if(stat == DEAD)
-		src << "<span class='warning'>You're already dead!</span>"
+		to_chat(src, "<span class='warning'>You're already dead!</span>")
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
+		to_chat(src, "<span class='warning'>You're already committing suicide! Be patient!</span>")
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")

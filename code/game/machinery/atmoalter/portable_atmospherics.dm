@@ -93,7 +93,7 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
-			user << "<span class='notice'>You disconnect [name] from the port.</span>"
+			to_chat(user, "<span class='notice'>You disconnect [name] from the port.</span>")
 			update_icon()
 			pixel_x = 0
 			pixel_y = 0
@@ -102,7 +102,7 @@
 			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					user << "<span class='notice'>You connect [name] to the port.</span>"
+					to_chat(user, "<span class='notice'>You connect [name] to the port.</span>")
 					var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 					if(src.air_contents.toxins > 0 || (istype(S)))
 						log_admin("[usr]([ckey(usr.key)]) connected a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] to a connector_port at [loc.x], [loc.y], [loc.z]")
@@ -111,11 +111,11 @@
 					pixel_y = possible_port.pixel_y
 					return 1
 				else
-					user << "<span class='notice'>[name] failed to connect to the port.</span>"
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return 0
 			else
 				if(..()) return 1 //Give a chance for the wrench flag if it is wrenchable, it's not snowflake if I say it isn't ya hear!
-				user << "<span class='notice'>Nothing happens.</span>"
+				to_chat(user, "<span class='notice'>Nothing happens.</span>")
 				return 0
 	if(..()) //Let the other machine flags have a shot
 		return 1

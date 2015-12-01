@@ -41,7 +41,7 @@
 
 /obj/machinery/power/treadmill/examine(mob/user as mob)
 	..()
-	user << "<span class='info'>During the last cycle, it produced [tick_power] watts.</span>"
+	to_chat(user, "<span class='info'>During the last cycle, it produced [tick_power] watts.</span>")
 
 /obj/machinery/power/treadmill/process()
 	tick_power = count_power

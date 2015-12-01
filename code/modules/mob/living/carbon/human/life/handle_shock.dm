@@ -20,7 +20,7 @@
 		return
 
 	if(shock_stage == 10)
-		src << "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>"
+		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30)
@@ -29,23 +29,23 @@
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		src << "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>"
+		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if(shock_stage >= 60)
 		if(shock_stage == 60)
 			emote("me",1,"'s body becomes limp.")
 		if(prob(2))
-			src << "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>"
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if(prob(5))
-			src << "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>"
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if(prob(2))
-			src << "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>"
+			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)

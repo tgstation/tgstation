@@ -193,7 +193,7 @@
 		return
 
 	if (!usr.dexterity_check())
-		usr << "<span class='warning>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning>You don't have the dexterity to do this!</span>")
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -214,7 +214,7 @@
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		busy = 1
 		if(do_after(user, src,25))
-			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
+			to_chat(user, "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 			busy = 0
 		else
 			busy = 0
@@ -247,7 +247,7 @@
 
 				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
 
-		user << "<span class='rose'>You start [P.drill_verb][fail_message].</span>"
+		to_chat(user, "<span class='rose'>You start [P.drill_verb][fail_message].</span>")
 
 		if(fail_message && prob(90))
 			if(prob(25))
@@ -260,7 +260,7 @@
 		busy = 1
 
 		if(do_after(user, src, P.digspeed) && user)
-			user << "<span class='notice'>You finish [P.drill_verb] the rock.</span>"
+			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			busy = 0
 
@@ -386,7 +386,7 @@
 	//make sure to destroy them before changing the turf though
 	if(artifact_find && artifact_fail)
 		for(var/mob/living/M in range(src, 200))
-			M << "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</b></font>"
+			to_chat(M, "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</b></font>")
 			if(prob(50)) //pain
 				flick("pain",M.pain)
 				if(prob(50))
@@ -522,19 +522,19 @@
 			return
 
 		if(!(used_digging.diggables & DIG_SOIL)) //if the pickaxe can't dig soil, we don't
-			user << "<span class='rose'>You can't dig soft soil with \the [W].</span>"
+			to_chat(user, "<span class='rose'>You can't dig soft soil with \the [W].</span>")
 			return
 
 		if (dug)
-			user << "<span class='rose'>This area has already been dug.</span>"
+			to_chat(user, "<span class='rose'>This area has already been dug.</span>")
 			return
 
-		user << "<span class='rose'>You start digging.<span>"
+		to_chat(user, "<span class='rose'>You start digging.<span>")
 		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		if(do_after(user, used_digging.digspeed) && user) //the better the drill, the faster the digging
 			playsound(src, 'sound/items/shovel.ogg', 50, 1)
-			user << "<span class='notice'>You dug a hole.</span>"
+			to_chat(user, "<span class='notice'>You dug a hole.</span>")
 			gets_dug()
 
 	else
@@ -840,13 +840,13 @@
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.get_active_hand(),/obj/item/weapon/pickaxe) || istype(H.get_inactive_hand(),/obj/item/weapon/pickaxe)) && src.stage == 1)
-			H << "<span class='warning'>You don't think that's a good idea...</span>"
+			to_chat(H, "<span class='warning'>You don't think that's a good idea...</span>")
 			bump_reject = 1
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active, /obj/item/weapon/pickaxe))
-			R << "<span class='warning'>You don't think that's a good idea...</span>"
+			to_chat(R, "<span class='warning'>You don't think that's a good idea...</span>")
 			bump_reject = 1
 		else if(istype(R.module_active, /obj/item/device/mining_scanner))
 			attackby(R.module_active, R) //let's bump to disable. This is kinder, because borgs need some love

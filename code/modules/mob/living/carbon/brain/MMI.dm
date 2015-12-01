@@ -38,27 +38,27 @@ obj/item/device/mmi/Destroy()
 			var/req=mommi_assembly_parts[t]
 			if(cc<req)
 				var/temppart = new t(src)
-				user << "<span class='warning'>You're short [req-cc] [temppart]\s.</span>"
+				to_chat(user, "<span class='warning'>You're short [req-cc] [temppart]\s.</span>")
 				del(temppart)
 				return TRUE
 		if(!istype(loc,/turf))
-			user << "<span class='warning'>You can't assemble the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>"
+			to_chat(user, "<span class='warning'>You can't assemble the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>")
 			return TRUE
 		if(!brainmob)
-			user << "<span class='warning'>What are you doing oh god put the brain back in.</span>"
+			to_chat(user, "<span class='warning'>What are you doing oh god put the brain back in.</span>")
 			return TRUE
 		if(!brainmob.key)
 			if(!mind_can_reenter(brainmob.mind))
-				user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+				to_chat(user, "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>")
 				return TRUE
 		if(brainmob.stat == DEAD)
-			user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
+			to_chat(user, "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>")
 			return TRUE
 		if(brainmob.mind in ticker.mode.head_revolutionaries)
-			user << "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>"
+			to_chat(user, "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>")
 			return TRUE
 		if(jobban_isbanned(brainmob, "Mobile MMI"))
-			user << "<span class='warning'>This brain does not seem to fit.</span>"
+			to_chat(user, "<span class='warning'>This brain does not seem to fit.</span>")
 			return TRUE
 		//canmove = 0
 		icon = null
@@ -86,14 +86,14 @@ obj/item/device/mmi/Destroy()
 			var/cc=contents_count(t)
 			if(cc<mommi_assembly_parts[t])
 				if(!brainmob)
-					user << "<span class='warning'>Why are you sticking robot legs on an empty [src], you idiot?</span>"
+					to_chat(user, "<span class='warning'>Why are you sticking robot legs on an empty [src], you idiot?</span>")
 					return TRUE
 				contents += O
 				user.drop_item(O, src)
-				user << "<span class='notice'>You successfully add \the [O] to the contraption,</span>"
+				to_chat(user, "<span class='notice'>You successfully add \the [O] to the contraption,</span>")
 				return TRUE
 			else if(cc==mommi_assembly_parts[t])
-				user << "<span class='warning'>You have enough of these.</span>"
+				to_chat(user, "<span class='warning'>You have enough of these.</span>")
 				return TRUE
 	return FALSE
 
@@ -103,18 +103,18 @@ obj/item/device/mmi/Destroy()
 	if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
 		// MaMIs inherit from brain, but they shouldn't be insertable into a MMI
 		if (istype(O, /obj/item/organ/brain/mami))
-			user << "<span class='warning'>You are only able to fit organic brains on a MMI. [src] won't work.</span>"
+			to_chat(user, "<span class='warning'>You are only able to fit organic brains on a MMI. [src] won't work.</span>")
 			return
 
 		var/obj/item/organ/brain/BO = O
 		if(!BO.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
+			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
 
 		// Checking to see if the ghost has been moused/borer'd/etc since death.
 		var/mob/living/carbon/brain/BM = BO.brainmob
 		if(!BM.client)
-			user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+			to_chat(user, "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>")
 			return
 		src.visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
@@ -140,9 +140,9 @@ obj/item/device/mmi/Destroy()
 	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src].</span>"
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src].</span>")
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	if(istype(O, /obj/item/weapon/implanter))
@@ -156,11 +156,11 @@ obj/item/device/mmi/Destroy()
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
 /obj/item/device/mmi/attack_self(mob/user as mob)
 	if(!brainmob)
-		user << "<span class='warning'>You upend \the [src], but there's nothing in it."
+		to_chat(user, "<span class='warning'>You upend \the [src], but there's nothing in it.")
 	else if(locked)
-		user << "<span class='warning'>You upend \the [src], but the brain is clamped into place."
+		to_chat(user, "<span class='warning'>You upend \the [src], but the brain is clamped into place.")
 	else
-		user << "<span class='notice'>You upend \the [src], spilling the brain onto the floor.</span>"
+		to_chat(user, "<span class='notice'>You upend \the [src], spilling the brain onto the floor.</span>")
 		var/obj/item/organ/brain/brain = new(user.loc)
 		brainmob.container = null//Reset brainmob mmi var.
 		brainmob.loc = brain//Throw mob into brain.
@@ -204,10 +204,10 @@ obj/item/device/mmi/Destroy()
 	set popup_menu = 0//Will not appear when right clicking.
 
 	if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
-		brainmob << "Can't do that while incapacitated or dead."
+		to_chat(brainmob, "Can't do that while incapacitated or dead.")
 
 	radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-	brainmob << "<<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>"
+	to_chat(brainmob, "<<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>")
 
 /obj/item/device/mmi/radio_enabled/verb/Toggle_Listening()
 	set name = "Toggle Listening"
@@ -217,10 +217,10 @@ obj/item/device/mmi/Destroy()
 	set popup_menu = 0
 
 	if(brainmob.stat)
-		brainmob << "Can't do that while incapacitated or dead."
+		to_chat(brainmob, "Can't do that while incapacitated or dead.")
 
 	radio.listening = radio.listening==1 ? 0 : 1
-	brainmob << "<span class='notice'>Radio is [radio] receiving broadcast.</span>"
+	to_chat(brainmob, "<span class='notice'>Radio is [radio] receiving broadcast.</span>")
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)
@@ -245,18 +245,21 @@ obj/item/device/mmi/Destroy()
 
 
 /obj/item/device/mmi/examine(mob/user)
-	user << "<span class='info'>*---------*</span>"
+	to_chat(user, "<span class='info'>*---------*</span>")
 	..()
 	if(locked!=2)
 		if(src.brainmob)
 			if(src.brainmob.stat == DEAD)
-				user << "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>" //suicided
+				to_chat(user, "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>")//suicided
+
 			else if(!src.brainmob.client)
-				user << "<span class='notice'>It appears to be lost in its own thoughts</span>" //closed game window
+				to_chat(user, "<span class='notice'>It appears to be lost in its own thoughts</span>")//closed game window
+
 			else if(!src.brainmob.key)
-				user << "<span class='warning'>It seems to be in a deep dream-state</span>" //ghosted
-		user << "<span class='info'>It's interface is [locked ? "locked" : "unlocked"] </span>"
-	user << "<span class='info'>*---------*</span>"
+				to_chat(user, "<span class='warning'>It seems to be in a deep dream-state</span>")//ghosted
+
+		to_chat(user, "<span class='info'>It's interface is [locked ? "locked" : "unlocked"] </span>")
+	to_chat(user, "<span class='info'>*---------*</span>")
 
 /obj/item/device/mmi/OnMobDeath(var/mob/living/carbon/brain/B)
 	icon_state = "mmi_dead"

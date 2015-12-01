@@ -40,7 +40,7 @@ DEBUG
 	set name = "list all jobbans"
 
 	for(var/s in jobban_keylist)
-		world << s
+		to_chat(world, s)
 
 /mob/verb/reload_jobbans()
 	set name = "reload jobbans"
@@ -88,7 +88,7 @@ DEBUG
 
 /proc/jobban_savebanfile()
 	var/savefile/S=new("data/job_full.ban")
-	S["keys[0]"] << jobban_keylist
+	to_chat(S["keys[0]"], jobban_keylist)
 
 /proc/jobban_unban(mob/M, rank)
 	jobban_remove("[M.ckey] - [rank]")

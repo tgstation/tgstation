@@ -11,7 +11,7 @@
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		user << "<span class='warning'>It looks like it's armed.</span>"
+		to_chat(user, "<span class='warning'>It looks like it's armed.</span>")
 
 /obj/item/device/assembly/mousetrap/update_icon()
 	if(armed)
@@ -52,7 +52,7 @@
 
 /obj/item/device/assembly/mousetrap/attack_self(mob/living/user as mob)
 	if(!armed)
-		user << "<span class='notice'>You arm [src].</span>"
+		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60 || (M_CLUMSY in user.mutations)) && prob(50)))
 			var/which_hand = "l_hand"
@@ -62,7 +62,7 @@
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-		user << "<span class='notice'>You disarm [src].</span>"
+		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
@@ -124,4 +124,4 @@
 		return
 
 	layer = TURF_LAYER+0.2
-	usr << "<span class='notice'>You hide [src].</span>"
+	to_chat(usr, "<span class='notice'>You hide [src].</span>")

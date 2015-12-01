@@ -46,7 +46,7 @@
 		owner.radiation = max(owner.radiation, 20)
 		for(var/mob/living/L in range(1, owner))
 			if(L == owner) continue
-			L << "<span class='warning'>You are enveloped by a soft green glow emanating from [owner].</span>"
+			to_chat(L, "<span class='warning'>You are enveloped by a soft green glow emanating from [owner].</span>")
 			L.radiation += 5
 		return
 
@@ -327,9 +327,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					C << "<span class='warning'>[src.personalized_stink]</span>"
+					to_chat(C, "<span class='warning'>[src.personalized_stink]</span>")
 				else
-					C << "<span class='warning'>[stinkString()]</span>"
+					to_chat(C, "<span class='warning'>[stinkString()]</span>")
 */
 
 
@@ -413,7 +413,7 @@
 		if (istype(M,/mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = M
 			if(H.species && H.species.name == "Skellington")
-				H << "<span class='warning'>You have no flesh left to melt!</span>"
+				to_chat(H, "<span class='warning'>You have no flesh left to melt!</span>")
 				return 0
 
 			H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")

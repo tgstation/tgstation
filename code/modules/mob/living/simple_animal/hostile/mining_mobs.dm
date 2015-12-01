@@ -280,23 +280,23 @@
 
 /obj/item/asteroid/hivelord_core/proc/consume(var/mob/living/user, var/mob/living/carbon/target)
 	if (inert)
-		user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+		to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
 		return TRUE
 
 	if (target.stat == DEAD)
-		user << "<span class='notice'>[src] are useless on the dead.</span>"
+		to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 		return
 
 	// revive() requires a check for suiciding
 	if (target.suiciding)
-		user << "<span class='notice'>It's dead, Jim.</span>"
+		to_chat(user, "<span class='notice'>It's dead, Jim.</span>")
 		return
 
 	if (!target.hasmouth)
 		if (target != user)
-			user << "<span class='warning'>You attempt to feed \the [src] to [target], but you realize they don't have a mouth. How dumb!</span>"
+			to_chat(user, "<span class='warning'>You attempt to feed \the [src] to [target], but you realize they don't have a mouth. How dumb!</span>")
 		else
-			user << "<span class='warning'>You don't have a mouth to eat \the [src] with.</span>"
+			to_chat(user, "<span class='warning'>You don't have a mouth to eat \the [src] with.</span>")
 		return
 
 	// Delay feeding to others, just like in regular food
@@ -306,7 +306,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] feeds [target] the [src]... They look better!</span>")
 	else
-		user << "<span class='notice'>You chomp into \the [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
+		to_chat(user, "<span class='notice'>You chomp into \the [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>")
 
 	playsound(get_turf(src), 'sound/items/eatfood.ogg', rand(10, 50), 1)
 	target.revive()
@@ -441,8 +441,8 @@
 			var/current_armor = C.armor
 			if(current_armor.["melee"] < 90)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 90)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				qdel(src)
 			else
-				user << "<span class='info'>You can't improve [C] any further.</span>"
+				to_chat(user, "<span class='info'>You can't improve [C] any further.</span>")
 	return

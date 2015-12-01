@@ -29,15 +29,15 @@
 	if(query)
 		var/where = 0
 		if(query.title && query.title != "")
-			//world << "\red query title ([query.title])"
+//			to_chat(world, "\red query title ([query.title])")
 			searchquery += " WHERE title LIKE '%[query.title]%'"
 			where = 1
 		if(query.author && query.author != "")
-			//world << "\red query author ([query.author])"
+//			to_chat(world, "\red query author ([query.author])")
 			searchquery += " [!where ? "WHERE" : "AND"] author LIKE '%[query.author]%'"
 			where = 1
 		if(query.category && query.category != "")
-			//world << "\red query category ([query.category])"
+//			to_chat(world, "\red query category ([query.category])")
 			searchquery += " [!where ? "WHERE" : "AND"] category LIKE '%[query.category]%'"
 			if(query.category == "Fiction")
 				searchquery += " AND category NOT LIKE '%Non-Fiction%'"
@@ -47,7 +47,7 @@
 	//if(query)
 		//sql += " [query.toSQL()]"
 	// Pagination
-	//world << sql
+//	to_chat(world, sql)
 	var/DBQuery/_query = dbcon_old.NewQuery(sql)
 	_query.Execute()
 	if(_query.ErrorMsg())

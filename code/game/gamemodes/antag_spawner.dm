@@ -60,7 +60,7 @@
 		H.set_machine(src)
 		if(href_list["school"])
 			if (used)
-				H << "You already used this contract!"
+				to_chat(H, "You already used this contract!")
 				return
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
@@ -68,49 +68,49 @@
 				var/client/C = pick(candidates)
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
 			else
-				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
+				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	new /datum/effect/effect/system/smoke_spread(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	M.key = C.key
-	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
+	to_chat(M, "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.")
 	switch(type)
 		if("destruction")
 			M.add_spell(new /spell/targeted/projectile/magic_missile)
 			M.add_spell(new /spell/targeted/projectile/dumbfire/fireball)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
 		if("bluespace")
 			M.add_spell(new /spell/area_teleport)
 			M.add_spell(new /spell/targeted/ethereal_jaunt)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		/*
 		if("healing")
 			M.spell_list += new /obj/effect/proc_holder/spell/targeted/charge(M)
 			M.spell_list += new /spell/aoe_turf/conjure/forcewall(M)
 			// TODO M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
 		*/
 		if("robeless")
 			M.add_spell(new /spell/aoe_turf/knock)
 			M.add_spell(new /spell/targeted/mind_transfer)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 		if("clown")
 			M.add_spell(new /spell/targeted/equip_item/clowncurse)
 			M.add_spell(new /spell/targeted/shoesnatch)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned the venerable and ancient art of Clown Magic. You are able to cast the clown curse and shoe snatch."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned the venerable and ancient art of Clown Magic. You are able to cast the clown curse and shoe snatch.")
 		if("misdirection")
 			M.add_spell(new /spell/targeted/subjugation)
 			M.add_spell(new /spell/targeted/genetic/blind)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned spells for misdirection and trickery. You are able to cast subjugate and blind."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned spells for misdirection and trickery. You are able to cast subjugate and blind.")
 		if("muscle")
 			M.add_spell(new /spell/targeted/genetic/mutate)
 			M.add_spell(new /spell/aoe_turf/blink)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have gained great strength and a natty physique. You are able to cast mutate and blink."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have gained great strength and a natty physique. You are able to cast mutate and blink.")
 		if("technology")
 			M.add_spell(new /spell/aoe_turf/disable_tech)
 			M.add_spell(new /spell/lightning)
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have futuristic, technological spells. You are able to cast disable tech and lightning."
+			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have futuristic, technological spells. You are able to cast disable tech and lightning.")
 
 	equip_antag(M)
 	var/wizard_name_first = pick(wizard_first)
@@ -149,7 +149,7 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
 	if(used)
-		user << "The teleporter is out of power."
+		to_chat(user, "The teleporter is out of power.")
 		return
 	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
 	if(borg_candicates.len > 0)
@@ -157,7 +157,7 @@
 		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+		to_chat(user, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread

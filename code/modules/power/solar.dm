@@ -76,7 +76,7 @@ var/list/solars_list = list()
 				else
 					new /obj/machinery/power/solar/panel(get_turf(src), src)
 			else
-				user << "<span class='notice'>You lack enough [W.type] to finish the solar.</span>"
+				to_chat(user, "<span class='notice'>You lack enough [W.type] to finish the solar.</span>")
 			return 1
 
 	if(!tracker)

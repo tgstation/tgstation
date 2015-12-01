@@ -11,14 +11,14 @@
 	if(src.stat == 2 || user.stat == 2 || src.client == null)
 		return
 	if(src.handcuffed)
-		user << "<span class='warning'>Those hands are cuffed right now.</span>"
+		to_chat(user, "<span class='warning'>Those hands are cuffed right now.</span>")
 		return //Can't receive items while cuffed
 	if(src == user) //Shouldn't happen
-		user << "<span class='warning'>You feel stupider, suddenly.</span>"
+		to_chat(user, "<span class='warning'>You feel stupider, suddenly.</span>")
 		return
 	var/obj/item/I
 	if(user.get_active_hand() == null)
-		user << "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src]."
+		to_chat(user, "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src].")
 		return
 	I = user.get_active_hand()
 	if(!I)
@@ -29,16 +29,17 @@
 				if(!I)
 					return
 				if(!Adjacent(user))
-					user << "<span class='warning'>You need to stay still while giving an object.</span>"
-					src << "<span class='warning'>[user] moved away.</span>" //What an asshole
+					to_chat(user, "<span class='warning'>You need to stay still while giving an object.</span>")
+					to_chat(src, "<span class='warning'>[user] moved away.</span>")//What an asshole
+
 					return
 				if(user.get_active_hand() != I)
-					user << "<span class='warning'>You need to keep the item in your hand.</span>"
-					src << "<span class='warning'>[user] has put \the [I] away!</span>"
+					to_chat(user, "<span class='warning'>You need to keep the item in your hand.</span>")
+					to_chat(src, "<span class='warning'>[user] has put \the [I] away!</span>")
 					return
 				if(src.r_hand != null && src.l_hand != null)
-					src << "<span class='warning'>Your hands are full.</span>"
-					user << "<span class='warning'>Their hands are full.</span>"
+					to_chat(src, "<span class='warning'>Your hands are full.</span>")
+					to_chat(user, "<span class='warning'>Their hands are full.</span>")
 					return
 				user.drop_item(I)
 				src.put_in_hands(I)
@@ -46,4 +47,4 @@
 			if("No")
 				src.visible_message("<span class='warning'>[user] tried to hand \the [I] to [src] but \he didn't want it.</span>")
 	else
-		user << "<span class='warning'>[src]'s hands are full.</span>"
+		to_chat(user, "<span class='warning'>[src]'s hands are full.</span>")

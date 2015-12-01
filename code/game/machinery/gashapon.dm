@@ -107,6 +107,6 @@
 	M.u_equip(src, 0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	M << "<span class='notice'>You got \a [I]!</span>"
+	to_chat(M, "<span class='notice'>You got \a [I]!</span>")
 	qdel(src)
 	return
