@@ -15,7 +15,7 @@ var/datum/subsystem/nano/SSnano
 
 
 /datum/subsystem/nano/stat_entry()
-	..("P:[processing_uis.len]") // Show how many interfaces we are processing.
+	..("O: [open_uis.len] P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
 
 
 /datum/subsystem/nano/fire() // Process UIs.

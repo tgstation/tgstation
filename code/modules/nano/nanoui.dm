@@ -184,15 +184,19 @@
  **/
 /datum/nanoui/proc/get_config_data()
 	var/list/config_data = list(
-			"title" = title,
-			"srcObject" = list("name" = src_object.name),
+			"title" = sanitize(title),
+			"srcObject" = list(
+				"name" = sanitize(src_object.name)
+			),
 			"stateKey" = state_key,
 			"status" = status,
 			"autoUpdateLayout" = auto_update_layout,
 			"autoUpdateContent" = auto_update_content,
 			"showMap" = show_map,
 			"mapZLevel" = map_z_level,
-			"user" = list("name" = user.name)
+			"user" = list(
+				"name" = user.name
+			)
 		)
 	return config_data
 
