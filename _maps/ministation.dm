@@ -35,7 +35,6 @@ Many jobs have been combined or just plainly cut out, mainly heads and some misc
  * Botanist		- Hydroponics
  * Janitor		- Cleans the station, removes litter and empty trash bins to be recycled by the crusher.
  * Clown		- Create laughter and boost the morale of the crew. Honk!
- * Mime			- Complain about not having a theathre
 
  * Station Engineer x3 - Keeping the power running and fixing station damage.
  * Atmospheric Technician - Keep the air flowing and assist the engineers in setting up the engine.
@@ -53,7 +52,7 @@ Many jobs have been combined or just plainly cut out, mainly heads and some misc
 
  * Assistant xInfinity	- Not in charge at all.
 
-There will be 26 job slots (not including Assistant) available on MiniStation; the HoP can add more from his ID computer.
+There are 34 job slots (not including Assistant) available on MiniStation; the HoP can add more from his ID computer.
 There is a more simplified command system, with the Captain being the big boss and the HoP being second in command.
 The heads will have control over all departments and jobs.
 
@@ -80,7 +79,7 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
 		        #include "map_files\MiniStation\supplypacks.dm"
-		        #include "map_files\MiniStation\telecomms.dm"
+//		        #include "map_files\MiniStation\telecomms.dm"	Obsolete
 		        #include "map_files\MiniStation\uplink_item.dm"
 		        #include "map_files\MiniStation\job\jobs.dm"
 		        #include "map_files\MiniStation\job\removed.dm"
