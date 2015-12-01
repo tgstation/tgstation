@@ -575,7 +575,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	starting_materials = list(MAT_IRON = 60)
+	//starting_materials = list(MAT_IRON = 60) //Not necessary, as this exact type should never appear and each subtype has its materials defined.
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
@@ -589,7 +589,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	icon_state = "tube"
 	base_state = "tube"
 	item_state = "c_tube"
-	starting_materials = list(MAT_GLASS = 100)
+	starting_materials = list(MAT_GLASS = 100, MAT_IRON = 60)
 	w_type = RECYK_GLASS
 	brightness_range = 8
 	brightness_power = 3
@@ -599,6 +599,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	name = "high efficiency light tube"
 	desc = "An efficient light used to reduce strain on the station's power grid."
 	base_state = "hetube"
+	starting_materials = list(MAT_GLASS = 300, MAT_IRON = 60)
 	cost = 2
 
 /obj/item/weapon/light/tube/large
@@ -606,6 +607,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4
+	starting_materials = list(MAT_GLASS = 200, MAT_IRON = 100)
 	cost = 15
 
 /obj/item/weapon/light/bulb
@@ -618,7 +620,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	brightness_range = 5
 	brightness_power = 2
 	brightness_color = LIGHT_COLOR_TUNGSTEN
-	starting_materials = list(MAT_GLASS = 100)
+	starting_materials = list(MAT_GLASS = 50, MAT_IRON = 30)
 	cost = 5
 	w_type = RECYK_GLASS
 
@@ -627,6 +629,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	desc = "An efficient light used to reduce strain on the station's power grid."
 	base_state = "hebulb"
 	cost = 1
+	starting_materials = list(MAT_GLASS = 150, MAT_IRON = 30)
 	brightness_color = null//These should be white
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
@@ -641,7 +644,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	item_state = "egg4"
 	brightness_range = 5
 	brightness_power = 2
-	starting_materials = list(MAT_GLASS = 100)
+	starting_materials = list(MAT_GLASS = 300, MAT_IRON = 60)
 
 // update the icon state and description of the light
 
