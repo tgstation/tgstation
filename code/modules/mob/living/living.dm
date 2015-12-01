@@ -162,6 +162,8 @@ Sorry Giacom. Please don't be mad :(
 
 	if(AM.Adjacent(src))
 		src.start_pulling(AM)
+	if(pulling == AM)
+		stop_pulling()
 	return
 
 //same as above
