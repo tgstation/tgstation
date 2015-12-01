@@ -48,6 +48,8 @@
 			raw_msg = "|~|" + raw_msg
 			ooc(raw_msg)
 			return
+		else
+			return
 
 	if(copytext(msg, 1, 4) == "|~|")
 		raw_msg = copytext(raw_msg, 4)
