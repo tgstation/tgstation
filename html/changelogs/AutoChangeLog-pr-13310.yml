@@ -1,0 +1,4 @@
+author: swankcookie
+delete-after: True
+changes: 
+  - tweak: "Switches cloak usage to overclothing slot"
