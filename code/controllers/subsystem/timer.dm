@@ -21,7 +21,6 @@ var/datum/subsystem/timer/SStimer
 		can_fire = 0 //nothing to do, lets stop firing.
 		return
 	for (var/datum/timedevent/event in processing)
-		// hacky i know, but its the only way to ensure this works with clients
 		if (!event.thingToCall || qdeleted(event.thingToCall))
 			qdel(event)
 		if (event.timeToRun <= world.time)
