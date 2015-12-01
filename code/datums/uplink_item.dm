@@ -234,9 +234,9 @@ var/list/uplink_items = list()
 //Medical Doctor
 /datum/uplink_item/jobspecific/wheelchair
 	name = "Syndicate Wheelchair"
-	desc = "A combat-modified motorized wheelchair pre-loaded with a hyper power cell. Forward thrust is sufficient to knock down and run over victims."
+	desc = "A combat-modified motorized wheelchair. Forward thrust is sufficient to knock down and run over victims."
 	item = /obj/item/syndicate_wheelchair_kit
-	cost = 5
+	cost = 6
 	job = list("Medical Doctor", "Chief Medical Officer")
 
 //Engineer
