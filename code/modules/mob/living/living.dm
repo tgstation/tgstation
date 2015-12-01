@@ -160,10 +160,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(AM.Adjacent(src))
-		src.start_pulling(AM)
 	if(pulling == AM)
 		stop_pulling()
+	if(AM.Adjacent(src))
+		src.start_pulling(AM)
 	return
 
 //same as above
