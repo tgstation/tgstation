@@ -816,8 +816,8 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=4;engineering=3;bluespace=3"
 	frame_desc = "Requires 2 Phasic Scanning Modules, 3 Super Capacitors, 2 Subspace Ansibles, 2 Hyperwave filters, 1 Subspace Treatment Disc, 2 Ansible Crystals, and 4 Subspace Transmitters."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module/phasic" = 2,
-							"/obj/item/weapon/stock_parts/capacitor/super" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module/adv/phasic" = 2,
+							"/obj/item/weapon/stock_parts/capacitor/adv/super" = 3,
 							"/obj/item/weapon/stock_parts/subspace/ansible" = 2,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 2,
 							"/obj/item/weapon/stock_parts/subspace/treatment" = 1,
@@ -831,8 +831,8 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=4;engineering=3;bluespace=3"
 	frame_desc = "Requires 2 Phasic Scanning Modules, 2 Super Capacitors, 2 Subspace Ansibles, and 4 Subspace Wavelength Analyzers."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module/phasic" = 2,
-							"/obj/item/weapon/stock_parts/capacitor/super" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module/adv/phasic" = 2,
+							"/obj/item/weapon/stock_parts/capacitor/adv/super" = 2,
 							"/obj/item/weapon/stock_parts/subspace/ansible" = 2,
 							"/obj/item/weapon/stock_parts/subspace/analyzer" = 4)
 
