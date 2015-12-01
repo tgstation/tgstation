@@ -131,7 +131,7 @@
 					minbodytemp = initial(minbodytemp)
 					maxbodytemp = initial(maxbodytemp)
 					set_light(0)
-					inventory_head.loc = src.loc
+					inventory_head.forceMove(src.loc)
 					inventory_head = null
 					regenerate_icons()
 				else
