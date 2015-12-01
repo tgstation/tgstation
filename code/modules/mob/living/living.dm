@@ -162,7 +162,7 @@ Sorry Giacom. Please don't be mad :(
 
 	if(pulling == AM)
 		stop_pulling()
-	if(AM.Adjacent(src))
+	else if(AM.Adjacent(src))
 		src.start_pulling(AM)
 	return
 
