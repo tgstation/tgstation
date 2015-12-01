@@ -85,6 +85,7 @@
 				desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime] \nBan type: [bantype] \nExpires: [expires] \nAppeal: [config.banappeals]"
 			else
 				desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime] \nBan type: [bantype] \nExpires: [expires] \nAppeal: <span class='warning'>No ban appeals link set</span>"
+			log_access("Failed Login: [key] [computer_id] [address] - Banned [desc]")
 			return list("reason"="[bantype]", "desc"="[desc]")
 			//return "[bantype][desc]"
 
