@@ -21,12 +21,12 @@ var/datum/subsystem/timer/SStimer
 		can_fire = 0 //nothing to do, lets stop firing.
 		return
 	for (var/datum/timedevent/event in processing)
-		//                    hacky i know, but its the only way to ensure this works with clients
+		// hacky i know, but its the only way to ensure this works with clients
 		if (!event.thingToCall || qdeleted(event.thingToCall))
 			qdel(event)
 		if (event.timeToRun <= world.time)
 			spawn(-1)
-				call(event.thingToCall,event.procToCall)(arglist(event.argList))
+				call(event.thingToCall, event.procToCall)(arglist(event.argList))
 			qdel(event)
 
 /datum/timedevent
@@ -45,7 +45,7 @@ var/datum/subsystem/timer/SStimer
 	SStimer.processing -= src
 	return ..()
 
-/proc/addtimer(thingToCall, procToCall, wait, argList = list())
+/proc/addtimer(thingToCall, procToCall, wait, ...)
 	if (!SStimer) //can't run timers before the mc has been created
 		return
 	if (!thingToCall || !procToCall || wait <= 0)
@@ -58,7 +58,8 @@ var/datum/subsystem/timer/SStimer
 	event.thingToCall = thingToCall
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
-	event.argList = argList
+	if (args.len > 3)
+		event.argList = args.Copy(4)
 
 	SStimer.processing += event
 
