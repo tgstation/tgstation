@@ -1,8 +1,8 @@
 /turf/simulated/floor/holofloor
 	icon_state = "floor"
 	thermal_conductivity = 0
-	broken_states = list()
-	burnt_states = list()
+	broken_states = list("engine")
+	burnt_states = list("engine")
 
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK

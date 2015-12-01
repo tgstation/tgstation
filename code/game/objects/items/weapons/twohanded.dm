@@ -177,17 +177,15 @@
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		qdel(A)
+			W.spawnfragments() // this will qdel and spawn shards
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			G.health = -6
+			G.destroyed += prob(25) // If this is set, healthcheck will completely remove the grille
+			G.healthcheck()
 
 
 /*
