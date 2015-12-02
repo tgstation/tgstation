@@ -403,7 +403,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Clothing"
 
 /datum/supply_packs/waifu
-	name = "Feminine formalware"
+	name = "Feminine formalwear"
 	contains = list(/obj/item/clothing/under/dress/dress_fire,
 					/obj/item/clothing/under/dress/dress_green,
 					/obj/item/clothing/under/dress/dress_orange,
