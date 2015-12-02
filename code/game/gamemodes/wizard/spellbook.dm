@@ -779,12 +779,12 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
+/*/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
 	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
 	S.timer = 30
-	user.drop_item()
+	user.drop_item()*/
 
 
 /obj/item/weapon/spellbook/oneuse/knock

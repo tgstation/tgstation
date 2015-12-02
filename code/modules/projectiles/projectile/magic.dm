@@ -266,25 +266,19 @@
 /obj/item/projectile/magic/animate/Bump(atom/change)
 	..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		if(istype(change, /obj/structure/closet/statue))
-			for(var/mob/living/carbon/human/H in change.contents)
-				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
-				S.name = "statue of [H.name]"
-				S.faction = list("\ref[firer]")
-				S.icon = change.icon
-				if(H.mind)
-					H.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
-				H = change
-				H.loc = S
-				qdel(src)
-				return
+		var/obj/O = change
+		if(istype(O, /obj/item/weapon/gun))
+			new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
 		else
-			var/obj/O = change
-			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
-			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+
+	else if(istype(change, /mob/living/simple_animal/hostile/statue))
+		var/mob/living/simple_animal/hostile/statue/S = change
+		if(!S.active)
+			S.active = 1
+			S.AIStatus = initial(S.AIStatus)
+			S.desc = initial(S.desc)
+			S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
