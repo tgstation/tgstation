@@ -3444,7 +3444,7 @@
 "bol" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel/green/side{dir = 4},/area/hydroponics)
 "bom" = (/obj/structure/sink{pixel_y = 24},/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plasteel/green,/area/hydroponics)
 "bon" = (/obj/machinery/hydroponics/constructable,/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel/black,/area/hydroponics)
-"boo" = (/obj/structure/table,/obj/machinery/computer/security/telescreen/entertainment{pixel_x = -31},/obj/item/clothing/head/cakehat,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"boo" = (/obj/structure/table,/obj/machinery/computer/security/telescreen/entertainment{pixel_x = -31},/obj/item/clothing/head/hardhat/cakehat,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bop" = (/obj/structure/bed/stool,/turf/simulated/floor/plasteel/bar,/area/crew_quarters/bar)
 "boq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel/bar,/area/crew_quarters/bar)
 "bor" = (/turf/simulated/floor/plasteel/bar,/area/crew_quarters/bar)
