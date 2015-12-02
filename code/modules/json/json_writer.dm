@@ -1,29 +1,42 @@
+#define LIST_FLAT 0
+#define LIST_NESTED 1
+#define LIST_OBJECT 2 //object in this case means json object, orther wise known as an associative list
+
 json_writer/var/use_cache = 0
 json_writer/proc/WriteObject(list/L)
 	if(use_cache && L["__json_cache"])
 		return L["__json_cache"]
-	var/i = 1
-	. = ""
+	. = list()
 	for(var/k in L)
-		. += text("\"[]\":[][]", k, write(L[k]), (i++ < L.len ? "," : ""))
-	. = text("[][][]", "{", ., "}")
+		. += "\"[k]\":[write(L[k])]"
+	
+	. = "{[list2text(., ",")]}"
 	
 
 json_writer/proc/write(val)
 	if(isnum(val))
-		return num2text(val)
+		. = num2text(val)
 	else if(isnull(val))
-		return "null"
+		. =  "null"
 	else if(istype(val, /list))
-		if(is_associative(val))
-			return WriteObject(val)
-		else
-			return write_array(val)
+		switch (listtype(val))
+			if (LIST_FLAT)
+				. = write_flat_array(val)
+			if (LIST_NESTED)
+				. = write_array(val)
+			if (LIST_OBJECT)
+				. = WriteObject(val)
 	else
-		. += write_string("[val]")
+		. = write_string("[val]")
+
+json_writer/proc/write_flat_array(list/L)
+	. = "\[[list2text(L, ",")]]"
 
 json_writer/proc/write_array(list/L)
-	return "\[[list2text(L, ",")]]"
+	. = list()
+	for(var/item in L)
+		. += write(item)
+	. = "\[[list2text(., ",")]]"
 
 json_writer/proc/write_string(txt)
 	var/static/list/json_escape = list("\\" = "\\\\", "\"" = "\\\"", "\n" = "\\n")
@@ -34,13 +47,21 @@ json_writer/proc/write_string(txt)
 			if(!i)
 				break
 			var/lrep = length(json_escape[targ])
-			txt = copytext(txt, 1, i) + json_escape[targ] + copytext(txt, i + length(targ))
+			txt = "[copytext(txt, 1, i)][json_escape[targ]][copytext(txt, i + length(targ))]"
 			start = i + lrep
 
 	return {""[txt]""}
 
-json_writer/proc/is_associative(list/L)
+json_writer/proc/listtype(list/L)
+	. = LIST_FLAT	
 	for(var/key in L)
-		// if the key is a list that means it's actually an array of lists (stupid Byond...)
-		if(!isnum(key) && !isnull(L[key]) && !istype(key, /list))
-			return TRUE
+		if (. == LIST_FLAT && istype(key, /list))
+			. = LIST_NESTED
+		if (!isnum(key) && !isnull(L[key]) && !istype(key, /list))
+			. = LIST_OBJECT
+			break // if it's an object, we can just stop now
+			
+		
+#undef LIST_FLAT
+#undef LIST_NESTED
+#undef LIST_OBJECT 
