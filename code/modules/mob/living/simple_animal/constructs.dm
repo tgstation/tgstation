@@ -14,6 +14,8 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
+	environment_smash = 1
+	see_in_dark = 7
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -56,7 +58,11 @@
 		adjustBruteLoss(-5)
 		if(src != M)
 			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-		M.emote("me", 1, "repairs some of \the <EM>[src]'s</EM> dents.")
+			M.visible_message("<span class='danger'>[M] repairs some of \the <EM>[src]'s</EM> dents.</span>", \
+					   "<span class='cult'>You repair some of <EM>[src]'s</EM> dents, leaving <EM>[src]</EM> at [health]/[maxHealth] health.</span>")
+		else
+			M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
+					   "<span class='cult'>You repair some of your own dents, leaving you at [M.health]/[M.maxHealth] health.</span>")
 	else if(src != M)
 		..()
 
@@ -67,6 +73,9 @@
 		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src)
 	return 0
+
+/mob/living/simple_animal/construct/Process_Spacemove(movement_dir = 0)
+	return 1
 
 /mob/living/simple_animal/construct/narsie_act()
 	return
@@ -142,8 +151,6 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
-	speed = 0
-	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
@@ -165,7 +172,6 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "rams"
-	speed = 0
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -191,13 +197,8 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 5
 	attacktext = "prods"
-	speed = 0
-	environment_smash = 1
-	see_in_dark = 7
 	attack_sound = 'sound/weapons/tap.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
-	return 1
