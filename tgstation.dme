@@ -24,6 +24,7 @@
 #include "code\__DATASTRUCTURES\stacks.dm"
 #include "code\__DEFINES\admin.dm"
 #include "code\__DEFINES\atmospherics.dm"
+#include "code\__DEFINES\bots.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\flags.dm"
