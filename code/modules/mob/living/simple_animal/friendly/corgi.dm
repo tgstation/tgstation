@@ -127,9 +127,11 @@
 					speak_emote = list("barks", "woofs")
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
-					desc = "It's a corgi."
+					min_oxy = initial(min_oxy)
+					minbodytemp = initial(minbodytemp)
+					maxbodytemp = initial(maxbodytemp)
 					set_light(0)
-					inventory_head.loc = src.loc
+					inventory_head.forceMove(src.loc)
 					inventory_head = null
 					regenerate_icons()
 				else
@@ -181,7 +183,8 @@
 						/obj/item/clothing/suit/cardborg,
 						/obj/item/weapon/tank/oxygen,
 						/obj/item/weapon/tank/air,
-						/obj/item/weapon/extinguisher
+						/obj/item/weapon/extinguisher,
+						/obj/item/clothing/suit/space/rig
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -342,6 +345,14 @@
 			emote_hear =  list("barks cleverly.")
 			emote_see = list("fiddles around with a sonic-bone", "builds something amazing- thats a poop. He just pooped.")
 			valid = 1
+
+		if(/obj/item/clothing/head/helmet/space/rig)
+			name = "Spessman [real_name]"
+			desc = "Boldly going where no Corgi has gone before!"
+			valid = 1
+			min_oxy = 0
+			minbodytemp = 0
+			maxbodytemp = 999
 
 		/*
 		if(/obj/item/clothing/head/hardhat/reindeer)
