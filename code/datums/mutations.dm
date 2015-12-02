@@ -111,12 +111,11 @@
 /datum/mutation/human/hulk
 
 	name = "Hulk"
-	quality = POSITIVE
+	quality = NON_SCANNABLE
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human") //no skeleton/lizard hulk
-	health_req = 25
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -137,7 +136,7 @@
 	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
-	if(owner.health < 25)
+	if(owner.health < HULK_HEALTH_TRESHOLD)
 		on_losing(owner)
 		owner << "<span class='danger'>You suddenly feel very weak.</span>"
 		owner.Weaken(3)
@@ -152,6 +151,58 @@
 	if(message)
 		message = "[uppertext(replacetext(message, ".", "!"))]!!"
 	return message
+
+/datum/mutation/human/hulk_active
+	name = "Hulk Active"
+	quality = POSITIVE
+	get_chance = 15
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>Your feel angry!</span>"
+	species_allowed = list("human") //no skeleton/lizard hulk
+
+/datum/mutation/human/hulk_active/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	var/datum/action/innate/genetic/hulk/A = new
+	A.Grant(owner)
+
+/datum/mutation/human/hulk_active/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	if(mutations_list[HULK] in owner.dna.mutations) //remove hulk if cleansed during hulkout
+		owner.dna.remove_mutation(HULK)
+
+/datum/action/innate/genetic/hulk
+	name = "Hulk out"
+	button_icon_state = "mutate"
+	mutation_id = HULK_ACTIVE
+	var/duration = 300
+	var/next_use = 0
+
+/datum/action/innate/genetic/hulk/Activate()
+	if(active)
+		return
+	if(world.time < next_use || owner.health < HULK_HEALTH_TRESHOLD)
+		owner << "<span class='danger'>You're too exhausted too do this.</span>"
+		return
+	active = 1
+	var/mob/living/carbon/human/H = owner
+	H.say("RAAAAAAAAAAAAAAAAAGH!!")
+	H.dna.add_mutation(HULK)
+	//scale duration with health
+	var/lost_health_coeff = max(0,(H.maxHealth - H.health)/(HULK_HEALTH_TRESHOLD))
+	//thrice as long at 25
+	var/effective_duration = duration + lost_health_coeff * 2 * duration
+	//less health = more angry = longer hulk.
+	spawn(effective_duration)
+		H.dna.remove_mutation(HULK)
+		active = 0
+		H << "<span class='danger'>You suddenly feel very weak.</span>"
+		next_use = world.time + duration
+
+/datum/action/innate/genetic/hulk/IsAvailable()
+	return !active && world.time >= next_use
+
 
 /datum/mutation/human/telekinesis
 

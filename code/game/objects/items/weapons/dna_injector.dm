@@ -85,6 +85,14 @@
 	New()
 		..()
 		add_mutations.Add(mutations_list[HULK])
+
+/obj/item/weapon/dnainjector/hulkactivemut
+	name = "\improper DNA injector (Hulk)"
+	desc = "This will make you big and strong, but give you a bad skin condition."
+	New()
+		..()
+		add_mutations.Add(mutations_list[HULK_ACTIVE])
+
 /obj/item/weapon/dnainjector/xraymut
 	name = "\improper DNA injector (Xray)"
 	desc = "Finally you can see what the Captain does."

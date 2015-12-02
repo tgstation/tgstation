@@ -1,6 +1,7 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
 #define HULK		"Hulk"
+#define HULK_ACTIVE	"Hulk Active"
 #define XRAY		"X Ray Vision"
 #define COLDRES		"Cold Resistance"
 #define TK			"Telekinesis"
@@ -30,6 +31,7 @@
 #define UE_CHANGED "ue changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
+#define HULK_HEALTH_TRESHOLD 25
 
 // String identifiers for associative list lookup
 
