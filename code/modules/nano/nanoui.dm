@@ -114,7 +114,9 @@
 	add_script("nano_base_callbacks.js")
 	// Nano Base Helpers: Template helpers common across all NanoUIs.
 	add_script("nano_base_helpers.js")
-	// Common style elements
+	// CSS reset.
+	add_stylesheet("normalize.css")
+	// Common style elements.
 	add_stylesheet("shared.css")
 	// Icons.
 	add_stylesheet("icons.css")
@@ -184,9 +186,9 @@
  **/
 /datum/nanoui/proc/get_config_data()
 	var/list/config_data = list(
-			"title" = sanitize(title),
+			"title" = title,
 			"srcObject" = list(
-				"name" = sanitize(src_object.name)
+				"name" = src_object.name
 			),
 			"stateKey" = state_key,
 			"status" = status,
@@ -368,6 +370,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta http-equiv="x-ua-compatible" content="IE=edge">
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
