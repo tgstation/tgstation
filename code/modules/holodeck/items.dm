@@ -213,8 +213,9 @@
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/holo/W in currentarea)
-		qdel(W)
+	for(var/obj/structure/window/W in currentarea)
+		if(W.flags&NODECONSTRUCT) // Just in case: only holo-windows
+			qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"

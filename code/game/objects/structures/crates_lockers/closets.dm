@@ -165,7 +165,8 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
-	new material_drop(loc)
+	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
+		new material_drop(loc)
 	dump_contents()
 	qdel(src)
 	..()

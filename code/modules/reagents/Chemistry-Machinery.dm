@@ -29,7 +29,6 @@
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
 		use_power(1500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
-		SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
@@ -37,7 +36,6 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
-	SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/process()
 
@@ -61,11 +59,12 @@
 		qdel(src)
 
 /obj/machinery/chem_dispenser/interact(mob/user)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 500, 650)
 		ui.open()
@@ -101,7 +100,8 @@
 	return data
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (BROKEN)) return
+	if(..())
+		return
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
@@ -144,7 +144,6 @@
 	src.beaker =  B
 	B.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
-	SSnano.update_uis(src) // update all UIs attached to src
 
 	if(!icon_beaker)
 		icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
@@ -1411,16 +1410,12 @@
 			beaker.reagents.handle_reactions()
 			state_change = 1
 
-	if(state_change)
-		SSnano.update_uis(src)
-
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
 		beaker.loc = get_turf(src)
 		beaker.reagents.handle_reactions()
 		beaker = null
 		icon_state = "mixer0b"
-		SSnano.update_uis(src)
 
 /obj/machinery/chem_heater/power_change()
 	if(powered())
@@ -1428,7 +1423,6 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
-	SSnano.update_uis(src)
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
@@ -1444,7 +1438,6 @@
 			I.loc = src
 			user << "<span class='notice'>You add the beaker to the machine.</span>"
 			icon_state = "mixer1b"
-			SSnano.update_uis(src)
 
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -1459,11 +1452,13 @@
 			return 1
 
 /obj/machinery/chem_heater/attack_hand(mob/user)
-	if (!user) return
+	if (!user)
+		return
 	interact(user)
 
 /obj/machinery/chem_heater/Topic(href, href_list)
-	if(..()) return
+	if(..())
+		return
 
 	if(href_list["toggle_on"])
 		on = !on
@@ -1483,11 +1478,12 @@
 	add_fingerprint(usr)
 
 /obj/machinery/chem_heater/interact(mob/user)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 400)
 		ui.open()

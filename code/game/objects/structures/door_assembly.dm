@@ -636,10 +636,10 @@
 				//door.req_access = src.req_access
 				door.electronics = src.electronics
 				door.heat_proof = src.heat_proof_finished
-				if(src.electronics.use_one_access)
-					door.req_one_access = src.electronics.conf_access
+				if(src.electronics.one_access)
+					door.req_one_access = src.electronics.accesses
 				else
-					door.req_access = src.electronics.conf_access
+					door.req_access = src.electronics.accesses
 				if(created_name)
 					door.name = created_name
 				src.electronics.loc = door

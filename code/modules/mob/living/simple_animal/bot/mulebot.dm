@@ -795,6 +795,11 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 	else
 		return null
 
+/mob/living/simple_animal/bot/mulebot/resist()
+	..()
+	if(load)
+		unload()
+
 #undef SIGH
 #undef ANNOYED
 #undef DELIGHT

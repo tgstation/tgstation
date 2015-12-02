@@ -8,16 +8,16 @@
 	var/sound1 = "sound/weapons/ZapBang.ogg"
 	var/sound2 = "sound/weapons/ZapBang.ogg"
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
+/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
 		revert_cast()
 		return
-	invocation(thearea)
+	invocation(thearea,user)
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
-	cast(targets,thearea)
+	cast(targets,thearea,user)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)

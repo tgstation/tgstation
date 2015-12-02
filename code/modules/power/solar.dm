@@ -357,16 +357,18 @@
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
-	if (..() || !user) return
+	if (..() || !user)
+		return
 	add_fingerprint(user)
 	interact(user)
 
 /obj/machinery/power/solar_control/interact(mob/user)
-	if (stat & BROKEN) return
+	if (stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 395)
 		ui.open()

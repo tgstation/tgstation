@@ -440,6 +440,10 @@ div.notice {
     float: right;
 }
 
+.alignTop {
+    vertical-align: top;
+}
+
 /* Used in PDA */
 .wholeScreen {
     position: absolute;
