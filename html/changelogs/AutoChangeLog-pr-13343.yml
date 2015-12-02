@@ -1,0 +1,4 @@
+author: GunHog
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen has discovered a flaw in the weapon recharging station's design that makes it incompatible with the Rapid Part Exchange Device. This has been corrected."
