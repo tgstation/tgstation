@@ -1,0 +1,4 @@
+author: Swankcookie
+delete-after: True
+changes: 
+  - bugfix: "Cakehat now creates light"
