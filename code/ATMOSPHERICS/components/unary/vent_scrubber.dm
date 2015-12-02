@@ -54,6 +54,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon()
 	if(welded)
 		icon_state = "hweld"
+		return
 	var/suffix=""
 	if(scrub_O2)
 		suffix="1"
@@ -307,7 +308,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
+		if (WT.remove_fuel(1,user))
 			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 			if(do_after(user, src, 20))
 				if(!src || !WT.isOn()) return
