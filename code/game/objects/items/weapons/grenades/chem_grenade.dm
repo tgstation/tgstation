@@ -228,7 +228,7 @@
 		steam.attach(src)
 		steam.start()
 
-		for(var/atom/A in view(affected_area, src.loc))
+		for(var/atom/A in view(affected_area, get_turf(src)))
 			if( A == src ) continue
 			src.reagents.reaction(A, 1, 10)
 

@@ -1,0 +1,4 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: The Syndicate Wheelchair now moves slower than a person (instead of equal speed), deals 25% less damage, costs +1 TC (total 6), does not have an enlarged power cell, and deals no damage to arms or head zones.
