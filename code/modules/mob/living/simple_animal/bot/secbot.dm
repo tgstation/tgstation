@@ -126,6 +126,15 @@ Auto Patrol: []"},
 			declare_arrests = !declare_arrests
 			update_controls()
 
+/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/M)
+	if(M.a_intent == "harm")
+		threatlevel = M.assess_threat(src)
+		threatlevel += 6
+		if(threatlevel >= 4)
+			target = M
+			mode = BOT_HUNT
+	return ..()
+
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
