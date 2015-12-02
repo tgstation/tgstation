@@ -1398,7 +1398,6 @@
 	..()
 	if(stat & NOPOWER)
 		return
-	var/state_change = 0
 	if(on)
 		if(beaker)
 			if(beaker.reagents.chem_temp > desired_temp)
@@ -1408,7 +1407,6 @@
 			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
 
 			beaker.reagents.handle_reactions()
-			state_change = 1
 
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
