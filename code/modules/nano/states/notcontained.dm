@@ -14,6 +14,9 @@
 /mob/proc/notcontained_can_use_topic(atom/movable/src_object)
 	return NANO_CLOSE
 
+/mob/dead/observer/notcontained_can_use_topic(atom/movable/src_object)
+	return default_can_use_topic(src_object)
+
 /mob/living/notcontained_can_use_topic(atom/movable/src_object)
 	if (src_object.contains(src))
 		return NANO_CLOSE // Close if we're inside it.
