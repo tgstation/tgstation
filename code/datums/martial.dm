@@ -51,7 +51,7 @@
 
 	add_logs(A, D, "punched")
 
-	if((D.stat != DEAD) && damage >= 9)
+	if(!D.stat && !D.paralysis && !D.stunned && !D.weakened && damage >= 9)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
 		D.apply_effect(4, WEAKEN, armor_block)
