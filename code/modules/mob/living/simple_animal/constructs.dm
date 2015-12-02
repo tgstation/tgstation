@@ -56,13 +56,19 @@
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		adjustBruteLoss(-5)
-		if(src != M)
-			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-			M.visible_message("<span class='danger'>[M] repairs some of \the <EM>[src]'s</EM> dents.</span>", \
-					   "<span class='cult'>You repair some of <EM>[src]'s</EM> dents, leaving <EM>[src]</EM> at [health]/[maxHealth] health.</span>")
+		if(health < maxHealth)
+			if(src != M)
+				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+				M.visible_message("<span class='danger'>[M] repairs some of \the <EM>[src]'s</EM> dents.</span>", \
+						   "<span class='cult'>You repair some of <EM>[src]'s</EM> dents, leaving <EM>[src]</EM> at [health]/[maxHealth] health.</span>")
+			else
+				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
+						   "<span class='cult'>You repair some of your own dents, leaving you at [M.health]/[M.maxHealth] health.</span>")
 		else
-			M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
-					   "<span class='cult'>You repair some of your own dents, leaving you at [M.health]/[M.maxHealth] health.</span>")
+			if(src != M)
+				M << "<span class='cult'>You cannot repair <EM>[src]'s</EM> dents, as it has none!</span>"
+			else
+				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
 		..()
 
