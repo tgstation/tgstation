@@ -116,7 +116,17 @@
 		//No linked area - the shuttle doesn't exist (very bad)
 		return INIT_NO_AREA
 
-	var/obj/structure/docking_port/shuttle/shuttle_docking_port = locate() in linked_area.contents.Copy()
+	//This line below used to cause weird bugs with some maps (https://github.com/d3athrow/vgstation13/issues/6773)
+
+	//var/obj/structure/docking_port/shuttle/shuttle_docking_port = locate() in linked_area.contents.Copy()
+
+	//I have no idea what was causing it, but after replacing it with the following five lines everything started working as intended
+	var/obj/structure/docking_port/shuttle/shuttle_docking_port
+
+	for(var/obj/structure/docking_port/shuttle/S in linked_area)
+		shuttle_docking_port = S
+		break
+	//
 
 	if(shuttle_docking_port)
 		//In case this shuttle already has a shuttle docking port, unlink it
