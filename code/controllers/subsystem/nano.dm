@@ -15,14 +15,12 @@ var/datum/subsystem/nano/SSnano
 
 
 /datum/subsystem/nano/stat_entry()
-	..("O: [open_uis.len]|P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
+	..("O:[open_uis.len]|P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
 
 
 /datum/subsystem/nano/fire() // Process UIs.
-	for(var/thing in SSnano.processing_uis)
-		if(thing)
-			var/datum/nanoui/ui = thing
-			if(ui.src_object && ui.user)
-				ui.process()
-				continue
-		processing_uis.Remove(thing)
+	for(var/datum/nanoui/ui in processing_uis)
+		if(ui && ui.src_object && ui.user)
+			ui.process()
+			continue
+		processing_uis.Remove(ui)
