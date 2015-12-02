@@ -109,8 +109,7 @@
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
-			if(P.damage_type == BURN || P.damage_type == BRUTE)
-				adjustBruteLoss(P.damage * 0.5)
+			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
 							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>")
 
