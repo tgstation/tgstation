@@ -1,7 +1,3 @@
-<!-- 
-Title: Space Heater UI 
-Used In File(s): \code\game\machinery\spaceheater.dm
- -->
 <h2>Status</h2>
 <div class="statusDisplay">
     <div class="item">
@@ -19,7 +15,7 @@ Used In File(s): \code\game\machinery\spaceheater.dm
         </div>
         <div class="itemContent">
             {{if data.hasPowercell}}
-                {{:helper.displayBar(data.powerLevel, 0, 100, 'good')}}&nbsp;{{>data.powerLevel.toString()}}%
+                {{:helper.displayBar(data.powerLevel, 0, 100, 'good')}}&nbsp;{{:data.powerLevel}}%
                 {{if data.open}}
                     <br />
                     {{:helper.link('Eject', 'eject', {'cellremove' : 1}, null)}}
@@ -41,7 +37,7 @@ Used In File(s): \code\game\machinery\spaceheater.dm
             Current Temp:
         </div>
         <div class="itemContent">
-            {{>data.currentTemp.toString()}}°C
+            {{:data.currentTemp}}&deg;C
         </div>
     </div>
     <div class="item">
@@ -49,7 +45,7 @@ Used In File(s): \code\game\machinery\spaceheater.dm
             Target Temp:
         </div>
         <div class="itemContent">
-            {{>data.targetTemp.toString()}}°C
+            {{:data.targetTemp}}&deg;C
             {{if data.open}}
                 <br />
                 {{:helper.link('',    'seek-prev',    {'temp': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
