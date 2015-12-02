@@ -112,7 +112,8 @@
 	newscreen.name = spell.name
 	newscreen.update_charge(1)
 	spell_objects.Add(newscreen)
-	toggle_open(2) //forces the icons to refresh on screen
+	if(spell_holder.client)
+		toggle_open(2) //forces the icons to refresh on screen
 
 /obj/screen/movable/spell_master/proc/remove_spell(var/spell/spell)
 	returnToPool(spell.connected_button)
