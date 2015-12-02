@@ -19,6 +19,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -160,6 +161,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
+	icon_alert = "pda-r-library"
 	default_cartridge = /obj/item/weapon/cartridge/librarian
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
@@ -771,7 +773,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
 	overlays.Cut()
-	overlays += image('icons/obj/pda.dmi', "pda-r")
+	overlays += image(icon, icon_alert)
 
 /obj/item/device/pda/proc/show_to_ghosts(datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
