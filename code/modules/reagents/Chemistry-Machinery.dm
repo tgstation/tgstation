@@ -80,7 +80,7 @@
 	var beakerCurrentVolume = 0
 	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker:reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
@@ -118,6 +118,16 @@
 
 			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+
+	if(href_list["remove"])
+		if(beaker)
+			if(href_list["removeamount"])
+				var/amount = text2num(href_list["removeamount"])
+				if(isnum(amount) && (amount > 0))
+					var/obj/item/weapon/reagent_containers/glass/B = beaker
+					var/datum/reagents/R = B.reagents
+					var/id = href_list["remove"]
+					R.remove_reagent(id, amount)
 
 	if(href_list["ejectBeaker"])
 		if(beaker)

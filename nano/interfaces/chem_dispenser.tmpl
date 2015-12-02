@@ -43,7 +43,16 @@
 			{{if data.isBeakerLoaded}}
 				<b>Volume: {{:data.beakerCurrentVolume}}/{{:data.beakerMaxVolume}} Units</b><br />
 				{{for data.beakerContents}}
-					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
+					<div style="min-height: 20px;">
+						<span class="floatRight">
+							{{:helper.link('5', 'minus', {'remove' : value.id, 'removeamount' : 5})}}
+							{{:helper.link('10', 'minus', {'remove' : value.id, 'removeamount' : 10})}}
+							{{:helper.link('All', 'close', {'remove' : value.id, 'removeamount' : value.volume})}}
+						</span>
+						<span class="highlight">
+							{{:value.volume}} units of {{:value.name}}
+						</span>
+					</div>
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}

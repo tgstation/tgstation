@@ -28,7 +28,7 @@
 			{{if data.isBeakerLoaded}}
 				<b>Temperature: {{:data.currentTemp}}K</b><br />
 				{{for data.beakerContents}}
-					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}
