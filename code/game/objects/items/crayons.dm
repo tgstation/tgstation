@@ -130,8 +130,8 @@
 	if(capped)
 		return
 	else
-		if(iscarbon(target))
-			if(uses)
+		if(uses)
+			if(iscarbon(target))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 				var/mob/living/carbon/human/C = target
 				user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
@@ -145,7 +145,16 @@
 				C.lip_style = "spray_face"
 				C.lip_color = colour
 				C.update_body()
-				uses = max(0,uses-10)
+				uses = max(0,uses-10) // this precludes unlimited uses. TODO: make a use() for crayons.
+			
+			if( istype(target, /obj/item/device/flashlight) || istype(target, /obj/machinery/light) )
+				user << "<span class='notice'>You begin to color \the [target]...</span>"
+				if(do_after(user, 20, target = target))
+					user.visible_message("<span class='danger'>[user] paints with [src] on [target] to change \his color!</span>")
+					playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+					uses = max(0, uses - 2)
+					target.light_color = colour
+					target.update_light() // this precludes unlimited uses.
 		..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
