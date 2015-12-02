@@ -709,12 +709,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//No ..() to prevent strip panel showing up - Todo: make that saner
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
-		return
+		return 1
 	add_fingerprint(usr)
 	if(href_list["close"])// HUE HUE
 		if(usr in users)
 			users.Remove(usr)
-		return
+		return 1
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
