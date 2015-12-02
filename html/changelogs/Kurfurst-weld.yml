@@ -1,5 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - bugfix: Welding a scrubber now costs 1 fuel (instead of 0)
- - bugfix: Scrubbers now properly change sprite when welded
