@@ -30,17 +30,21 @@
 	health = maxhealth
 	if(re)
 		reinf = re
-	storeditems.Add(new/obj/item/weapon/shard(src))
-	if(fulltile)
-		storeditems.Add(new/obj/item/weapon/shard(src))
-	ini_dir = dir
 	if(reinf)
 		state = 2*anchored
-		var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
-		storeditems.Add(R)
-		if(fulltile)
-			R.add(1)
 
+	spawn(5) // The NODECONSTRUCT flag gets added immediately by the holodeck (but not immediately enough)
+		if(!(flags & NODECONSTRUCT))
+			storeditems.Add(new/obj/item/weapon/shard(src))
+			if(fulltile)
+				storeditems.Add(new/obj/item/weapon/shard(src))
+			if(reinf)
+				var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
+				storeditems.Add(R)
+				if(fulltile)
+					R.add(1)
+
+	ini_dir = dir
 	air_update_turf(1)
 
 	return
@@ -191,44 +195,13 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-		if(reinf && (state == 2 || state == 1))
-			user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
-		else if(reinf && state == 0)
-			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
-		else if(!reinf)
-			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
-
-		if(do_after(user, 40, target = src))
-			if(reinf && (state == 1 || state == 2))
-				//If state was unfastened, fasten it, else do the reverse
-				state = (state == 1 ? 2 : 1)
-				user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
-			else if(reinf && state == 0)
-				anchored = !anchored
-				update_nearby_icons()
-				user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
-			else if(!reinf)
-				anchored = !anchored
-				update_nearby_icons()
-				user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
-
-	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
-		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
-		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-		if(do_after(user, 40, target = src))
-			//If state was out of frame, put into frame, else do the reverse
-			state = (state == 0 ? 1 : 0)
-			user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
-
-	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
 		if(health < maxhealth)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 40/I.toolspeed, target = src))
 					health = maxhealth
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 		else
@@ -236,41 +209,76 @@
 			return
 		update_nearby_icons()
 
-	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-		user << "<span class='notice'> You begin to disassemble [src]...</span>"
-		if(do_after(user, 40, target = src))
-			if(disassembled)
-				return //Prevents multiple deconstruction attempts
+	if(!(flags&NODECONSTRUCT))
+		if(istype(I, /obj/item/weapon/screwdriver))
+			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			if(reinf && (state == 2 || state == 1))
+				user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
+			else if(reinf && state == 0)
+				user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
+			else if(!reinf)
+				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-			if(reinf)
-				var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-				RG.add_fingerprint(user)
-				if(fulltile) //fulltiles drop two panes
-					RG = new (user.loc)
+			if(do_after(user, 40/I.toolspeed, target = src))
+				if(reinf && (state == 1 || state == 2))
+					//If state was unfastened, fasten it, else do the reverse
+					state = (state == 1 ? 2 : 1)
+					user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
+				else if(reinf && state == 0)
+					anchored = !anchored
+					update_nearby_icons()
+					user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
+				else if(!reinf)
+					anchored = !anchored
+					update_nearby_icons()
+					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+			return
+
+		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
+			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
+			playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
+			if(do_after(user, 40/I.toolspeed, target = src))
+				//If state was out of frame, put into frame, else do the reverse
+				state = (state == 0 ? 1 : 0)
+				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
+			return
+
+		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
+			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+			user << "<span class='notice'> You begin to disassemble [src]...</span>"
+			if(do_after(user, 40/I.toolspeed, target = src))
+				if(disassembled)
+					return //Prevents multiple deconstruction attempts
+
+				if(reinf)
+					var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 					RG.add_fingerprint(user)
+					if(fulltile) //fulltiles drop two panes
+						RG = new (user.loc)
+						RG.add_fingerprint(user)
 
-			else
-				var/obj/item/stack/sheet/glass/G = new (user.loc)
-				G.add_fingerprint(user)
-				if(fulltile)
-					G = new (user.loc)
+				else
+					var/obj/item/stack/sheet/glass/G = new (user.loc)
 					G.add_fingerprint(user)
+					if(fulltile)
+						G = new (user.loc)
+						G.add_fingerprint(user)
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			disassembled = 1
-			user << "<span class='notice'>You successfully disassemble [src].</span>"
-			qdel(src)
-	else if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				disassembled = 1
+				user << "<span class='notice'>You successfully disassemble [src].</span>"
+				qdel(src)
+			return
+
+	if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
 		return
 
+	if(I.damtype == BRUTE || I.damtype == BURN)
+		user.changeNext_move(CLICK_CD_MELEE)
+		hit(I.force)
 	else
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			user.changeNext_move(CLICK_CD_MELEE)
-			hit(I.force)
-		else
-			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		..()
+		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	..()
 	return
 
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
@@ -374,7 +382,7 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(!disassembled)
+	if(!disassembled && !(flags&NODECONSTRUCT))
 		playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	return ..()

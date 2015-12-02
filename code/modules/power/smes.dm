@@ -314,16 +314,18 @@
 		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/attack_hand(mob/user)
-	if (!user) return
+	if (!user)
+		return
 	add_fingerprint(user)
 	interact(user)
 
 /obj/machinery/power/smes/interact(mob/user)
-	if (stat & BROKEN) return
+	if (stat & BROKEN)
+		return
 	ui_interact(user)
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "smes.tmpl", name, 500, 400)
 		ui.open()
@@ -349,9 +351,10 @@
 	return data
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	if(..()) return
+	if(..())
+		return
 
-	else if( href_list["input_attempt"] )
+	if( href_list["input_attempt"] )
 		input_attempt = text2num(href_list["input_attempt"])
 		if(!input_attempt)
 			inputting = 0

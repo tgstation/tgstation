@@ -109,7 +109,7 @@ mob/verb/test()
 
 	// A type associated list of assets the interface needs.
 	//Sent to the client when the interface opens on the client for the first time.
-	var/static/asset_list = list()
+	var/static/list/asset_list
 
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
 	html_interfaces.Add(src)
@@ -143,7 +143,8 @@ mob/verb/test()
 	for (var/R in resources)
 		register_asset(R,resources[R])
 		assetlist += R
-
+	if (!asset_list)
+		asset_list = list()
 	asset_list[type] = assetlist
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
@@ -220,7 +221,8 @@ mob/verb/test()
 	hclient = getClient(hclient, TRUE)
 
 	if (istype(hclient))
-		send_asset_list(hclient.client,asset_list[type], TRUE)
+		if (type in asset_list && islist(asset_list[type]))
+			send_asset_list(hclient.client, asset_list[type], TRUE)
 
 		if (!winexists(hclient.client, "browser_\ref[src]"))
 			src.createWindow(hclient)

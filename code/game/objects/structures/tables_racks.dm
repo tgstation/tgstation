@@ -147,26 +147,26 @@
 	if (istype(I, /obj/item/weapon/grab))
 		tablepush(I, user)
 		return
-
-	if (istype(I, /obj/item/weapon/screwdriver))
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
+	if(!(flags&NODECONSTRUCT))
+		if (istype(I, /obj/item/weapon/screwdriver))
+			if(istype(src, /obj/structure/table/reinforced))
+				var/obj/structure/table/reinforced/RT = src
+				if(RT.status == 1)
+					table_destroy(2, user)
+					return
+			else
 				table_destroy(2, user)
 				return
-		else
-			table_destroy(2, user)
-			return
 
-	if (istype(I, /obj/item/weapon/wrench))
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
+		if (istype(I, /obj/item/weapon/wrench))
+			if(istype(src, /obj/structure/table/reinforced))
+				var/obj/structure/table/reinforced/RT = src
+				if(RT.status == 1)
+					table_destroy(3, user)
+					return
+			else
 				table_destroy(3, user)
 				return
-		else
-			table_destroy(3, user)
-			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
@@ -205,7 +205,7 @@
 #define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(destroy_type, mob/user)
-	if(!deconstructable)
+	if(!deconstructable || (flags&NODECONSTRUCT))
 		return
 
 	if(destroy_type == TBL_DESTROY)
@@ -340,14 +340,14 @@
 			if(src.status == 2)
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2
@@ -462,7 +462,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
 		return
@@ -517,9 +517,10 @@
  */
 
 /obj/structure/rack/proc/rack_destroy()
-	density = 0
-	var/obj/item/weapon/rack_parts/newparts = new(loc)
-	transfer_fingerprints_to(newparts)
+	if(!(flags&NODECONSTRUCT))
+		density = 0
+		var/obj/item/weapon/rack_parts/newparts = new(loc)
+		transfer_fingerprints_to(newparts)
 	qdel(src)
 
 

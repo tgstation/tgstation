@@ -97,11 +97,6 @@
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
 
-/obj/machinery/power/apc/updateDialog()
-	if (stat & (BROKEN|MAINT))
-		return
-	..()
-
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
 	//The terminal is what the power computer looks for anyway.
@@ -386,7 +381,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 50/W.toolspeed, target = src))
 				if (has_electronics==1)
 					has_electronics = 0
 					if ((stat & BROKEN) || malfhack)
@@ -518,7 +513,7 @@
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 50/W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -626,12 +621,15 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(stat & (BROKEN|MAINT)) return
-	if(wiresexposed && !istype(user, /mob/living/silicon/ai)) wires.Interact(user)
-	else ui_interact(user)
+	if(stat & (BROKEN|MAINT))
+		return
+	if(wiresexposed && !istype(user, /mob/living/silicon/ai))
+		wires.Interact(user)
+	else
+		ui_interact(user)
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "apc.tmpl", name, 515, 550)
 		ui.open()
@@ -766,8 +764,10 @@
 	return 1
 
 /obj/machinery/power/apc/Topic(href, href_list)
-	if(..()) return
-	if(!can_use(usr, 1)) return
+	if(..())
+		return
+	if(!can_use(usr, 1))
+		return
 
 	if (href_list["lock"])
 		coverlocked = !coverlocked

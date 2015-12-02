@@ -1,4 +1,0 @@
-author: incoming5643
-delete-after: True
-changes: 
-  - rscadd: "OOC will now take steps to try and prevent accidental IC from people who mistakenly use OOC instead of say. This doesn't catch all mistakes, so please don't test it."

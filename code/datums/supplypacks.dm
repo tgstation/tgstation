@@ -1184,8 +1184,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/plasmaman,
 					/obj/item/weapon/tank/internals/plasmaman/belt/full,
 					/obj/item/weapon/tank/internals/plasmaman/belt/full,
-					/obj/item/clothing/head/helmet/plasmaman,
-					/obj/item/clothing/head/helmet/plasmaman)
+					/obj/item/clothing/head/helmet/space/plasmaman,
+					/obj/item/clothing/head/helmet/space/plasmaman)
 	cost = 20
 	containername = "plasma-man supply kit"
 
