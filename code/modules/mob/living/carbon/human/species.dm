@@ -936,7 +936,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= 9)
+				if(!H.stat && !H.paralysis && !H.stunned && !H.weakened && damage >= 9)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
