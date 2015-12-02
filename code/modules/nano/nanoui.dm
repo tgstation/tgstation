@@ -475,9 +475,11 @@
   * If the src_object's Topic() returns 1, update all UIs attacked to it.
  **/
 /datum/nanoui/Topic(href, href_list)
-	update_status(0) // update the status
-	if (status != NANO_INTERACTIVE || user != usr) // If UI is not interactive or usr calling Topic is not the UI user
-		return
+	update_status(push_update = 0) // Update the window state.
+	if (status != NANO_INTERACTIVE || user != usr)
+		return // If UI is not interactive or usr calling Topic is not the UI user.
+
+	var/update = src_object.Topic(href, href_list, 0, state) // Call Topic() on the src_object.
 
 	// Code to toggle/update the Map UI.
 	var/map_update = 0
@@ -488,9 +490,8 @@
 		set_map_z_level(text2num(href_list["mapZLevel"]))
 		map_update = 1
 
-	// If we have a src_object and its Topic() returns 1, update.
-	if ((src_object && src_object.Topic(href, href_list, 0, state)) || map_update)
-		SSnano.update_uis(src_object)
+	if ((src_object && update) || map_update)
+		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.
 
  /**
   * private
