@@ -32,14 +32,14 @@
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
 #define LIGHTING_ICON_STATE "white"
-#define LIGHTING_TIME 1.2									//Time to do any lighting change. Actual number pulled out of my ass
-#define LIGHTING_DARKEST_VISIBLE_ALPHA 240					//Anything darker than this is so dark, we'll just consider the whole tile unlit
-#define LIGHTING_LUM_FOR_FULL_BRIGHT 7						//Anything who's lum is lower then this starts off less bright.
+#define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
+#define LIGHTING_DARKEST_VISIBLE_ALPHA 250					//Anything darker than this is so dark, we'll just consider the whole tile unlit
+#define LIGHTING_LUM_FOR_FULL_BRIGHT 6						//Anything who's lum is lower then this starts off less bright.
 #define LIGHTING_MIN_RADIUS 4								//Lowest radius a light source can effect.
 
 /datum/light_source
 	var/atom/owner
-	var/radius = LIGHTING_MIN_RADIUS
+	var/radius = 0
 	var/luminosity = 0
 	var/cap = 0
 	var/changed = 0
@@ -52,13 +52,13 @@
 		CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 	..()
 	owner = A
-	UpdateLuminosity()
-	changed()
+	UpdateLuminosity(A.luminosity)
 
 /datum/light_source/Destroy()
 	if(owner && owner.light == src)
 		remove_effect()
 		owner.light = null
+		owner.luminosity = 0
 		owner = null
 	if(changed)
 		SSlighting.changed_lights -= src
@@ -68,14 +68,13 @@
 	if(new_luminosity < 0)
 		new_luminosity = 0
 
-	if (!new_cap)
-		new_cap = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*new_luminosity
-
 	if(luminosity == new_luminosity && (new_cap == null || cap == new_cap))
 		return
+
 	radius = max(LIGHTING_MIN_RADIUS, new_luminosity)
 	luminosity = new_luminosity
-	cap = new_cap
+	if (new_cap != null)
+		cap = new_cap
 
 	changed()
 
@@ -112,17 +111,20 @@
 
 	effect.Cut()
 
-//Apply a new effect
+//Apply a new effect.
 /datum/light_source/proc/add_effect()
 	// only do this if the light is turned on and is on the map
 	if(!owner || !owner.loc)
 		return 0
-	if(radius <= 0 || cap <= 0 || luminosity <= 0)
+	var/range = owner.get_light_range(radius)
+	if(range <= 0 || luminosity <= 0)
+		owner.luminosity = 0
 		return 0
 
 	effect = list()
 	var/turf/To = get_turf(owner)
-	var/range = owner.get_light_range(radius)
+
+
 	for(var/atom/movable/AM in To)
 		if(AM == owner)
 			continue
@@ -130,8 +132,23 @@
 			range = 0
 			break
 
-	for(var/turf/T in view(range, To))
-		var/delta_lumcount = T.lumen(src)
+	owner.luminosity = range
+	var/center_strength = 0
+	if (cap <= 0)
+		center_strength = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*(luminosity)
+	else
+		center_strength = cap
+
+	for(var/turf/T in view(range+1, To))
+
+#ifdef LIGHTING_CIRCULAR
+		var/distance = cheap_hypotenuse(T.x, T.y, __x, __y)
+#else
+		var/distance = max(abs(T,x - __x), abs(T.y - __y))
+#endif
+
+		var/delta_lumcount = Clamp(center_strength * (range - distance) / range, 0, LIGHTING_CAP)
+
 		if(delta_lumcount > 0)
 			effect[T] = delta_lumcount
 			T.update_lumcount(delta_lumcount)
@@ -141,19 +158,6 @@
 			T.affecting_lights |= src
 
 	return 1
-
-
-//How much light light_source L should apply to src
-/turf/proc/lumen(datum/light_source/L)
-	var/distance = 0
-#ifdef LIGHTING_CIRCULAR
-	distance = cheap_hypotenuse(x, y, L.__x, L.__y)
-#else
-	distance = max(abs(x - L.__x), abs(y - L.__y))
-#endif
-
-	return Clamp(L.cap * (L.radius - distance) / L.radius, 0, LIGHTING_CAP)
-
 
 /atom
 	var/datum/light_source/light
@@ -200,7 +204,6 @@
 //The second arg allows you to scale the light cap for calculating falloff.
 
 /atom/proc/SetLuminosity(new_luminosity, new_cap)
-	luminosity = new_luminosity
 	if (!light)
 		if (new_luminosity <= 0)
 			return
@@ -210,7 +213,7 @@
 
 /atom/proc/AddLuminosity(delta_luminosity)
 	if(light)
-		SetLuminosity(luminosity + delta_luminosity)
+		SetLuminosity(light.luminosity + delta_luminosity)
 	else
 		SetLuminosity(delta_luminosity)
 
@@ -332,6 +335,7 @@
 				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
+				lighting_object.luminosity = 0
 
 	lighting_changed = 0
 
@@ -372,6 +376,8 @@
 #undef LIGHTING_CAP
 #undef LIGHTING_CAP_FRAC
 #undef LIGHTING_DARKEST_VISIBLE_ALPHA
+#undef LIGHTING_LUM_FOR_FULL_BRIGHT
+#undef LIGHTING_MIN_RADIUS
 
 
 //set the changed status of all lights which could have possibly lit this atom.
