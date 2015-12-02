@@ -89,7 +89,8 @@
 			return
 		else
 			spell_objects.Add(spell.connected_button)
-			toggle_open(2)
+			if(spell_holder.client)
+				toggle_open(2)
 			return
 
 	if(spell.spell_flags & NO_BUTTON) //no button to add if we don't get one
