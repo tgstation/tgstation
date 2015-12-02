@@ -1,0 +1,4 @@
+author: neersighted
+delete-after: True
+changes: 
+  - tweak: "You can now stop pulling by trying to pull the same object again."
