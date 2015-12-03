@@ -330,6 +330,7 @@ var/global/list/rockTurfEdgeCache
 	var/length = 100
 	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
 	var/sanity = 1
+	turf_type = /turf/simulated/floor/plating/asteroid/airless
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
 
@@ -509,6 +510,7 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
 	nitrogen = 0.01
+	turf_type = /turf/simulated/floor/plating/asteroid/airless
 	temperature = TCMB
 
 /turf/simulated/floor/plating/asteroid/basalt
