@@ -10,7 +10,7 @@ var/global/list/rockTurfEdgeCache
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
-	baseturf = /turf/simulated/floor/plating/asteroid
+	baseturf = /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
