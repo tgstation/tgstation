@@ -29,6 +29,7 @@ body {
 hr {
     background-color: #40628a;
     height: 1px;
+    border: none;
 }
 
 .link, .linkOn, .linkOff, .selected, .disabled, .yellowButton, .redButton {
@@ -44,6 +45,7 @@ hr {
     margin: 0 2px 2px 0;
     cursor: default;
     white-space: nowrap;
+    display: inline-block;
 }
 
 .hasIcon {
@@ -206,7 +208,7 @@ h4 {
     font-style: italic;
     font-weight: bold;
     padding: 3px 4px 3px 4px;
-    margin: 4px 0 4px 0;
+    margin: 4px 0;
 }
 
 .notice {
@@ -217,7 +219,7 @@ h4 {
     font-style: italic;
     font-weight: bold;
     padding: 3px 4px 3px 4px;
-    margin: 4px 0 4px 0;
+    margin: 4px 0;
 }
 
 .notice.icon {
@@ -244,8 +246,8 @@ div.notice {
 }
 
 .item {
+    display: inline-block;
     width: 100%;
-    margin: 4px 0 0 0;
     clear: both;
 }
 
@@ -302,11 +304,13 @@ div.notice {
 }
 
 .statusDisplay {
+    display: block;
+    position: relative;
     background: #000000;
     color: #ffffff;
     border: 1px solid #40628a;
     padding: 4px;
-    margin: 3px 0;
+    margin: 4px 0;
 }
 
 .statusDisplay .itemLabelNarrow, .statusDisplay .itemLabel, .statusDisplay .itemLabelWide, .statusDisplay .itemLabelWider, .statusDisplay .itemLabelWidest {

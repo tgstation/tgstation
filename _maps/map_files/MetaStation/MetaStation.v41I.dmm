@@ -4601,7 +4601,7 @@
 "bKy" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/maintenance/maintcentral{name = "Central Maintenance"})
 "bKz" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 8; on = 1; scrub_Toxins = 0},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "bKA" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/turf/simulated/floor/plasteel{dir = 2; icon_state = "neutralcorner"},/area/hallway/primary/central)
-"bKB" = (/obj/structure/table,/obj/item/clothing/head/cakehat,/obj/machinery/newscaster{pixel_x = -30; pixel_y = 0},/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"bKB" = (/obj/structure/table,/obj/item/clothing/head/hardhat/cakehat,/obj/machinery/newscaster{pixel_x = -30; pixel_y = 0},/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bKC" = (/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -28},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bKD" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/bed/stool{pixel_y = 8},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bKE" = (/obj/machinery/light,/obj/machinery/camera{c_tag = "Kitchen Hatch"; dir = 1; network = list("SS13")},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)

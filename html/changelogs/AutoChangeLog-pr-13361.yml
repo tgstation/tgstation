@@ -1,0 +1,5 @@
+author: neersighted
+delete-after: True
+changes: 
+  - bugfix: "Unwrenching atmos pipes is less... nuts..."
+  - bugfix: "You don't get hopelessly spun when standing on a unwrenched pipe... Don't try it, though."
