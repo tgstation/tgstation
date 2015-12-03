@@ -280,7 +280,7 @@
 	text_dehack_fail = "You fail to reset [name]."
 
 /mob/living/simple_animal/bot/attack_ai(mob/user as mob)
-	attack_hand(user)
+	show_controls(user)
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
