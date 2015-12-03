@@ -203,6 +203,9 @@ What are the archived variables for?
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
 	//Copies variables from sample
 
+/datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
+	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
+	//Return: amount of gas exchanged (+ if sharer received)
 /datum/gas_mixture/proc/mimic(turf/model)
 	//Similar to share(...), except the model is not modified
 	//Return: amount of gas exchanged
@@ -386,6 +389,135 @@ What are the archived variables for?
 				return 0
 
 	return 1
+
+/datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+	if(!sharer)	return 0
+	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
+	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
+	var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/(atmos_adjacent_turfs+1)
+	var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/(atmos_adjacent_turfs+1)
+
+	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+
+	var/old_self_heat_capacity = 0
+	var/old_sharer_heat_capacity = 0
+
+	var/heat_capacity_self_to_sharer = 0
+	var/heat_capacity_sharer_to_self = 0
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+
+		var/delta_air = delta_oxygen+delta_nitrogen
+		if(delta_air)
+			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
+			if(delta_air > 0)
+				heat_capacity_self_to_sharer += air_heat_capacity
+			else
+				heat_capacity_sharer_to_self -= air_heat_capacity
+
+		if(delta_carbon_dioxide)
+			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
+			if(delta_carbon_dioxide > 0)
+				heat_capacity_self_to_sharer += carbon_dioxide_heat_capacity
+			else
+				heat_capacity_sharer_to_self -= carbon_dioxide_heat_capacity
+
+		if(delta_toxins)
+			var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
+			if(delta_toxins > 0)
+				heat_capacity_self_to_sharer += toxins_heat_capacity
+			else
+				heat_capacity_sharer_to_self -= toxins_heat_capacity
+
+		old_self_heat_capacity = heat_capacity()
+		old_sharer_heat_capacity = sharer.heat_capacity()
+
+	oxygen -= delta_oxygen
+	sharer.oxygen += delta_oxygen
+
+	carbon_dioxide -= delta_carbon_dioxide
+	sharer.carbon_dioxide += delta_carbon_dioxide
+
+	nitrogen -= delta_nitrogen
+	sharer.nitrogen += delta_nitrogen
+
+	toxins -= delta_toxins
+	sharer.toxins += delta_toxins
+
+	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
+	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
+
+	var/list/trace_types_considered = list()
+
+	if(trace_gases.len)
+		for(var/datum/gas/trace_gas in trace_gases)
+
+			var/datum/gas/corresponding = locate(trace_gas.type) in sharer.trace_gases
+			var/delta = 0
+
+			if(corresponding)
+				delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/(atmos_adjacent_turfs+1)
+			else
+				corresponding = new trace_gas.type()
+				sharer.trace_gases += corresponding
+
+				delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
+
+			trace_gas.moles -= delta
+			corresponding.moles += delta
+
+			if(delta)
+				var/individual_heat_capacity = trace_gas.specific_heat*delta
+				if(delta > 0)
+					heat_capacity_self_to_sharer += individual_heat_capacity
+				else
+					heat_capacity_sharer_to_self -= individual_heat_capacity
+
+			moved_moles += delta
+			last_share += abs(delta)
+
+			trace_types_considered += trace_gas.type
+
+
+	if(sharer.trace_gases.len)
+		for(var/datum/gas/trace_gas in sharer.trace_gases)
+			if(trace_gas.type in trace_types_considered) continue
+			else
+				var/datum/gas/corresponding
+				var/delta = 0
+
+				corresponding = new trace_gas.type()
+				trace_gases += corresponding
+
+				delta = trace_gas.moles_archived/5
+
+				trace_gas.moles -= delta
+				corresponding.moles += delta
+
+				//Guaranteed transfer from sharer to self
+				var/individual_heat_capacity = trace_gas.specific_heat*delta
+				heat_capacity_sharer_to_self += individual_heat_capacity
+
+				moved_moles += -delta
+				last_share += abs(delta)
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
+		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
+
+		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity
+
+		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+
+			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
+				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
+					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+
+	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
+		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
 /datum/gas_mixture/mimic(turf/model, border_multiplier, atmos_adjacent_turfs = 4)
 	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
