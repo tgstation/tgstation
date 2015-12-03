@@ -330,8 +330,8 @@
 				return
 
 
-	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	//If windoor is unpowered, crowbar or fireaxe can force it.
+	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe))
 		if(!hasPower())
 			if(src.density)
 				open(2)

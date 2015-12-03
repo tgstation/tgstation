@@ -25,6 +25,7 @@
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/easily_purgeable = 1 //If charcoal can remove the reagent (charcoal being an easy-to-make antitoxin)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

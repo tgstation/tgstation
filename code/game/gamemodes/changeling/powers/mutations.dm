@@ -1,10 +1,7 @@
 /*
 	Changeling Mutations! ~By Miauw (ALL OF IT :V)
 	Contains:
-		Arm Blade
 		Space Suit
-		Shield
-		Armor
 */
 
 
@@ -124,134 +121,6 @@
 
 //fancy headers yo
 /***************************************\
-|***************ARM BLADE***************|
-\***************************************/
-/obj/effect/proc_holder/changeling/weapon/arm_blade
-	name = "Arm Blade"
-	desc = "We reform one of our arms into a deadly blade."
-	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
-	chemical_cost = 20
-	dna_cost = 2
-	genetic_damage = 10
-	req_human = 1
-	max_genetic_damage = 20
-	weapon_type = /obj/item/weapon/melee/arm_blade
-	weapon_name_simple = "blade"
-
-/obj/item/weapon/melee/arm_blade
-	name = "arm blade"
-	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "arm_blade"
-	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
-	w_class = 5.0
-	force = 25
-	throwforce = 0 //Just to be on the safe side
-	throw_range = 0
-	throw_speed = 0
-	sharpness = IS_SHARP
-
-/obj/item/weapon/melee/arm_blade/New(location,silent)
-	..()
-	if(ismob(loc) && !silent)
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	qdel(src)
-
-/obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.table_destroy(1)
-
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
-
-	else if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = target
-
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
-			return
-
-		if(A.hasPower())
-			if(A.locked)
-				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
-				return
-			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
-			if(do_after(user, 100, target = A))
-				A.open(2)
-			return
-
-		else if(A.locked)
-			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
-			return
-
-		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='italics'>You hear a metal screeching sound.</span>")
-			A.open(1)
-
-
-/***************************************\
-|****************SHIELD*****************|
-\***************************************/
-/obj/effect/proc_holder/changeling/weapon/shield
-	name = "Organic Shield"
-	desc = "We reform one of our arms into a hard shield."
-	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
-	chemical_cost = 20
-	dna_cost = 1
-	genetic_damage = 12
-	req_human = 1
-	max_genetic_damage = 20
-
-	weapon_type = /obj/item/weapon/shield/changeling
-	weapon_name_simple = "shield"
-
-/obj/effect/proc_holder/changeling/weapon/shield/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling //So we can read the absorbedcount.
-	if(!changeling)
-		return
-
-	var/obj/item/weapon/shield/changeling/S = ..(user)
-	S.remaining_uses = round(changeling.absorbedcount * 3)
-	return 1
-
-/obj/item/weapon/shield/changeling
-	name = "shield-like mass"
-	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	flags = ABSTRACT | NODROP
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "ling_shield"
-
-	var/remaining_uses //Set by the changeling ability.
-
-/obj/item/weapon/shield/changeling/New()
-	..()
-	if(ismob(loc))
-		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
-
-/obj/item/weapon/shield/changeling/IsShield()
-	if(remaining_uses < 1)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-			H.unEquip(src, 1)
-		qdel(src)
-		return 0
-	else
-		remaining_uses--
-		return 1
-
-
-/***************************************\
 |*********SPACE SUIT + HELMET***********|
 \***************************************/
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
@@ -259,7 +128,7 @@
 	desc = "We grow an organic suit to protect ourselves from space exposure."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 3
 	genetic_damage = 8
 	req_human = 1
 	max_genetic_damage = 20
@@ -302,55 +171,4 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
-
-
-/***************************************\
-|*****************ARMOR*****************|
-\***************************************/
-/obj/effect/proc_holder/changeling/suit/armor
-	name = "Chitinous Armor"
-	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
-	chemical_cost = 20
-	dna_cost = 1
-	genetic_damage = 11
-	req_human = 1
-	max_genetic_damage = 20
-	recharge_slowdown = 0.25
-
-	suit_type = /obj/item/clothing/suit/armor/changeling
-	helmet_type = /obj/item/clothing/head/helmet/changeling
-	suit_name_simple = "armor"
-	helmet_name_simple = "helmet"
-
-/obj/item/clothing/suit/armor/changeling
-	name = "chitinous mass"
-	desc = "A tough, hard covering of black chitin."
-	icon_state = "lingarmor"
-	flags = NODROP
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-	cold_protection = 0
-	heat_protection = 0
-
-/obj/item/clothing/suit/armor/changeling/New()
-	..()
-	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/clothing/suit/armor/changeling/dropped()
-	qdel(src)
-
-/obj/item/clothing/head/helmet/changeling
-	name = "chitinous mass"
-	desc = "A tough, hard covering of black chitin with transparent chitin in front."
-	icon_state = "lingarmorhelmet"
-	flags = BLOCKHAIR | NODROP
-	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-	flags_inv = HIDEEARS
-	flags_cover = HEADCOVERSEYES
-
-/obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

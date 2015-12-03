@@ -80,7 +80,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
+	/*var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 	var/list/possible_team_objectives = list()
 	for(var/T in team_objectives)
 		var/datum/objective/changeling_team_objective/CTO = T
@@ -89,7 +89,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			possible_team_objectives += T
 
 	if(possible_team_objectives.len && prob(20*changelings.len))
-		changeling_team_objective_type = pick(possible_team_objectives)
+		changeling_team_objective_type = pick(possible_team_objectives)*/
 
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
@@ -279,7 +279,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/changelingprofile/first_prof = null
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
-	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
+	var/dna_max = INFINITY //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -289,7 +289,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/isabsorbing = 0
-	var/geneticpoints = 10
+	var/geneticpoints = 5
+	var/total_genetic_points = 5 //How many genetic points the changeling has absorbed overall
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0

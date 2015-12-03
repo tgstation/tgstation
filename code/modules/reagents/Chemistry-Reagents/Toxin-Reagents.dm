@@ -642,6 +642,32 @@
 		playsound(M, "sparks", 50, 1)
 	..()
 
+/datum/reagent/toxin/wasting_toxin //Used by the changeling death sting. Very weak, but never metabolizes and will kill the target unless they receive treatment
+	name = "Wasting Toxin"
+	id = "wasting_toxin"
+	description = "An insidious, biologically-produced poison. The body is incapable of metabolizing it, meaning it will slowly kill them unless help is received."
+	metabolization_rate = 0
+	color = rgb(51, 202, 63)
+	toxpwr = 0.5
+	easily_purgeable = 0
+	var/list/fluff_messages = list("Your vision swims.", "Your head throbs.", "You can't go on.", "Your inside scream in their torment.", "<i>Agony.</i>")
+
+/datum/reagent/toxin/wasting_toxin/on_mob_delete(mob/living/carbon/C)
+	if(!C.stat)
+		C << "<span class='warning'><b>The hellish pain recedes. Your wracked body drags you toward unconsciousness...</span>"
+		if(C.health >= 35)
+			C << "<span class='warning'>...but you manage to resist it.</span>"
+		else
+			C.visible_message("<span class='warning'>[C] slips into unconsciousness.</span>", \
+							"<span class='warning'>...and you fall gratefully into it.</span>")
+			C.sleeping += 30 //Knock out for 30 seconds
+	..()
+
+/datum/reagent/toxin/wasting_toxin/on_mob_life(mob/living/M)
+	if(prob(5) && !M.stat)
+		M << "<span class='userdanger'>[pick(fluff_messages)]</span>" //Spooky messages to remind them that they're dying
+	..()
+	toxpwr += 0.1 //Wasting toxin slowly becomes more powerful
 
 //ACID
 
