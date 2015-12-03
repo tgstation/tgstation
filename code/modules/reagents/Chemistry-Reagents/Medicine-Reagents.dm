@@ -346,6 +346,7 @@
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2.5)
+			M.client.dir = NORTH
 	if(M.health > 20)
 		M.adjustToxLoss(2.5*REM)
 	..()
