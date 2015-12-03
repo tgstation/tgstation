@@ -89,8 +89,7 @@
 			return
 		else
 			spell_objects.Add(spell.connected_button)
-			if(spell_holder.client)
-				toggle_open(2)
+			toggle_open(2)
 			return
 
 	if(spell.spell_flags & NO_BUTTON) //no button to add if we don't get one
@@ -112,8 +111,7 @@
 	newscreen.name = spell.name
 	newscreen.update_charge(1)
 	spell_objects.Add(newscreen)
-	if(spell_holder.client)
-		toggle_open(2) //forces the icons to refresh on screen
+	toggle_open(2) //forces the icons to refresh on screen
 
 /obj/screen/movable/spell_master/proc/remove_spell(var/spell/spell)
 	returnToPool(spell.connected_button)

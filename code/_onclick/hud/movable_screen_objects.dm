@@ -44,50 +44,68 @@
 		var/pix_Y = text2num(screen_loc_Y[2]) - 16
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
+/obj/screen/movable/proc/get_view_size()
+	if(usr && usr.client)
+		. = usr.client.view
+	else
+		. = world.view
+
+/obj/screen/movable/spell_master/get_view_size()
+	if(spell_holder && spell_holder.client)
+		. = spell_holder.client.view
+	else if(usr && usr.client)
+		. = usr.client.view
+	else
+		. = world.view
+
 /obj/screen/movable/proc/encode_screen_X(X)
-	if(X > usr.client.view+1)
-		. = "EAST-[usr.client.view*2 + 1-X]"
-	else if(X < usr.client.view+1)
+	var/view = get_view_size()
+	if(X > view+1)
+		. = "EAST-[view*2 + 1-X]"
+	else if(X < view+1)
 		. = "WEST+[X-1]"
 	else
 		. = "CENTER"
 
 /obj/screen/movable/proc/decode_screen_X(X)
 	//Find EAST/WEST implementations
+	var/view = get_view_size()
 	if(findtext(X,"EAST-"))
 		var/num = text2num(copytext(X,6)) //Trim EAST-
 		if(!num)
 			num = 0
-		. = usr.client.view*2 + 1 - num
+		. = view*2 + 1 - num
 	else if(findtext(X,"WEST+"))
 		var/num = text2num(copytext(X,6)) //Trim WEST+
 		if(!num)
 			num = 0
 		. = num+1
 	else if(findtext(X,"CENTER"))
-		. = usr.client.view+1
+		. = view+1
 
 /obj/screen/movable/proc/encode_screen_Y(Y)
-	if(Y > usr.client.view+1)
-		. = "NORTH-[usr.client.view*2 + 1-Y]"
-	else if(Y < usr.client.view+1)
+	var/view = get_view_size()
+	if(Y > view+1)
+		. = "NORTH-[view*2 + 1-Y]"
+	else if(Y < view+1)
 		. = "SOUTH+[Y-1]"
 	else
 		. = "CENTER"
 
 /obj/screen/movable/proc/decode_screen_Y(Y)
+	var/view = get_view_size()
 	if(findtext(Y,"NORTH-"))
 		var/num = text2num(copytext(Y,7)) //Trim NORTH-
 		if(!num)
 			num = 0
-		. = usr.client.view*2 + 1 - num
+		. = view*2 + 1 - num
 	else if(findtext(Y,"SOUTH+"))
 		var/num = text2num(copytext(Y,7)) //Time SOUTH+
 		if(!num)
 			num = 0
 		. = num+1
 	else if(findtext(Y,"CENTER"))
-		. = usr.client.view+1
+		. = view+1
 
 //Debug procs
 /client/proc/test_movable_UI()
