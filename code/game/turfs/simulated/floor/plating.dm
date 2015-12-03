@@ -254,7 +254,7 @@
 	smooth = SMOOTH_TRUE
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/simulated/wall)
+	canSmoothWith = list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/floor/plating/lava/smooth)
 
 /turf/simulated/floor/plating/lava/smooth/airless
 	oxygen = 0
