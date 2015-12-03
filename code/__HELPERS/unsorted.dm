@@ -369,13 +369,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0)
+/proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
 	for(var/mob/M in mobs)
+		if(skip_mindless && (!M.mind && !M.ckey))
+			if(!isbot(M))
+				continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
