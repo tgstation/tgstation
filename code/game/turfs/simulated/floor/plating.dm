@@ -173,7 +173,6 @@
 
 ///LAVA
 
-
 /turf/simulated/floor/plating/lava
 	name = "lava"
 	icon_state = "lava"
