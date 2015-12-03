@@ -177,7 +177,7 @@
 
 /turf/simulated/floor/plating/basalt/New()
 	..()
-	icon_state = "basalt[rand(1,12)]"
+	icon_state = "basalt[rand(0,12)]"
 
 /turf/simulated/floor/plating/basalt/Destroy()
 	return QDEL_HINT_LETMELIVE
@@ -204,9 +204,6 @@
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
-
-/turf/simulated/floor/plating/lava/ex_act()
-	return ..()
 
 /turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
@@ -239,6 +236,27 @@
 			L.adjust_fire_stacks(20)
 			L.IgniteMob()
 
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return
+
+/turf/simulated/floor/plating/lava/break_tile()
+	return
+
+/turf/simulated/floor/plating/lava/burn_tile()
+	return
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
+
+/turf/simulated/floor/plating/lava/smooth
+	name = "lava"
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	smooth = SMOOTH_TRUE
+	icon = 'icons/turf/floors/lava.dmi'
+	icon_state = "smooth"
+	canSmoothWith = list(/turf/simulated/wall)
+
+/turf/simulated/floor/plating/lava/smooth/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
