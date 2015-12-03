@@ -28,7 +28,7 @@
 		. = min(., shared_living_nano_distance(src_object)) // Check the distance...
 		// Derp a bit if we have brain loss.
 		if (prob(getBrainLoss()))
-			return NANO_DISABLED
+			return NANO_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(atom/movable/src_object)
 	. = shared_nano_interaction(src_object)
@@ -36,7 +36,7 @@
 		return
 
 	// Robots can interact with anything they can see.
-	if ((src_object in view(src)) && get_dist(src_object, src) <= src.client.view)
+	if (get_dist(src, src_object) <= src.client.view)
 		return NANO_INTERACTIVE
 	return NANO_DISABLED // Otherwise they can keep the UI open.
 
@@ -46,7 +46,7 @@
 		return
 
 	// The AI can interact with anything it can see nearby, or with cameras.
-	if ((src_object in view(src)) || ((src_object in view(eyeobj)) && cameranet.checkTurfVis(get_turf(src_object))))
+	if ((get_dist(src, src_object) <= src.client.view) || ((get_dist(eyeobj, src_object) <= src.client.view) && cameranet.checkTurfVis(get_turf_pixel(src_object))))
 		return NANO_INTERACTIVE
 	return NANO_CLOSE
 
