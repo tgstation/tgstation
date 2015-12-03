@@ -1,0 +1,4 @@
+author: neersighted
+delete-after: True
+changes: 
+  - tweak: "You can now cancel pulling by Ctrl+Clicking anything else"
