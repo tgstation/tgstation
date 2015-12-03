@@ -175,20 +175,6 @@
 	name = "basalt floor"
 	icon_state = "basalt1"
 
-/turf/simulated/floor/plating/basalt/New()
-	..()
-	icon_state = "basalt[rand(0,12)]"
-
-/turf/simulated/floor/plating/basalt/Destroy()
-	return QDEL_HINT_LETMELIVE
-
-/turf/simulated/floor/plating/basalt/ex_act()
-	return ..()
-
-
-
-
-
 ///LAVA
 
 
