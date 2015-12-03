@@ -351,19 +351,27 @@
 			else if(!config.revival_cloning)
 				temp = "Error: Unable to initiate cloning cycle."
 
-			var/mob/selected = find_dead_player("[C.ckey]")
-			if(!selected)
-				temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
-				return
-			selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
-			var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
-			if(answer != "No" && pod1.growclone(C))
+			var/success = pod1.growclone(C)
+			if(success)
 				temp = "Initiating cloning cycle..."
 				records.Remove(C)
 				del(C)
 				menu = 1
 			else
-				temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
+
+				var/mob/selected = find_dead_player("[C.ckey]")
+				if(!selected)
+					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
+					return
+				selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+				if(answer != "No" && pod1.growclone(C))
+					temp = "Initiating cloning cycle..."
+					records.Remove(C)
+					del(C)
+					menu = 1
+				else
+					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 
 		else
 			temp = "Error: Data corruption."

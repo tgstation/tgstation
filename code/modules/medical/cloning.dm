@@ -197,7 +197,7 @@
 					else
 						return 0
 				else
-					if(G.mind && G.mind.current.stat != DEAD)
+					if((G.mind && (G.mind.current.stat != DEAD) ||  G.mind != clonemind))
 						return 0
 
 
