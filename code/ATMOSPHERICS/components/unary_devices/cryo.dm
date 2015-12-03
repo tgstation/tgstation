@@ -100,9 +100,7 @@
 		user << "Seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
-	if(..() | !user)
-		return
-	interact(user)
+	return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/interact(mob/user)
 	if(panel_open)
