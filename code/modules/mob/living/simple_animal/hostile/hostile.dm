@@ -218,6 +218,14 @@
 	LoseTarget()
 	..(gibbed)
 
+/mob/living/simple_animal/hostile/proc/summon_backup(distance)
+	do_alert_animation(src)
+	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
+	for (var/mob/living/simple_animal/hostile/M in oview(distance, src))
+		var/list/L = M.faction&faction
+		if(L.len)
+			M.Goto(src,M.move_to_delay,M.minimum_distance)
+
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
