@@ -267,7 +267,7 @@
 	return
 
 /datum/reagent/consumable/spacemountainwind
-	name = "Space Mountain Wind"
+	name = "SM Wind"
 	id = "spacemountainwind"
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
