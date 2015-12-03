@@ -182,6 +182,9 @@
 	desc = "For all your crime-fighting bat needs."
 	icon_state = "bmbelt"
 	item_state = "bmbelt"
+/obj/item/weapon/storage/belt/security/batmanbelt/New()
+	..()
+	can_hold |= "/obj/item/weapon/gun/hookshot"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
