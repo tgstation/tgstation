@@ -1,0 +1,7 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Artificers now have feedback when healing other constructs, showing how much health the target has."
+  - tweak: "Constructs can move in space."
+  - imageadd: "Fixes cult flooring not lining up with normal floors."
+  - imageadd: "Fixes a juggernaut back spine not glowing where it should."
