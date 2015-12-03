@@ -2217,7 +2217,7 @@ datum
 			name = "B-52"
 			id = "b52"
 			result = "b52"
-			required_reagents = list("irishcream" = 1, "kahlua" = 1, "cognac" = 1)
+			required_reagents = list("irishcarbomb" = 1, "kahlua" = 1, "cognac" = 1)
 			result_amount = 3
 
 		atomicbomb
