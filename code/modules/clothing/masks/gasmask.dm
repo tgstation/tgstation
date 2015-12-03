@@ -86,6 +86,7 @@
 	icon = A.icon
 	icon_state = A.icon_state
 	item_state = A.item_state
+	flags_inv = A.flags_inv
 	usr.update_inv_wear_mask(1)	//so our overlays update.
 
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)
