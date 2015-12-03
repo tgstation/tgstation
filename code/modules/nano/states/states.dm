@@ -1,5 +1,5 @@
  /**
-  * NanoUI State
+  * NanoUI States
   *
   * Base state and helpers for states. Just does some sanity checks, implement a state for in-depth checks.
  **/
@@ -68,7 +68,7 @@
 	return ..()
 
 /mob/dead/observer/shared_nano_interaction(atom/movable/src_object)
-	if (check_rights(R_ADMIN, 0, src))
+	if (check_rights_for(client, R_ADMIN))
 		return NANO_INTERACTIVE // Admins can interact anyway.
 	if(!client || get_dist(src_object, src)	> client.view)
 		return NANO_CLOSE // Keep ghosts from opening too many NanoUIs.
