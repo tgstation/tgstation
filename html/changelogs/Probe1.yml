@@ -1,0 +1,11 @@
+author: Probe1
+
+delete-after: True
+
+changes: 
+  - tweak: (Box) Botany Backroom has been reworked to allow for more space.  We lost some maint space.
+  - tweak: (Box) Significantly redesigns Research Outposts Botany room.  It now has botany machines and generally doesn't look like a hole in the wall you were sent to as punishment for picking Research Botanist.
+  - tweak: (Box) The security disposal bin closest to the Warden is now where packages will exit when shipped through disposals.  Mind the bombs please.
+  - bugfix: (Box) Adds a new APC and area to Perma.  It is now called Permanent Confinement rather than just part of the prison wing.  This should partially mitigate the prison wing running out of power so quickly.  It may need further tweaking so please report in if it is a problem area still.
+  - rscadd: (Box) Mailman outfit hidden in maint.
+  - rscadd: (Box) Adds two pairs of magboots to the research outposts Expedition Preparation Room.

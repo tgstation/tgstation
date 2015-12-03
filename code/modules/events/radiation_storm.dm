@@ -4,6 +4,7 @@
 		/area/maintenance,
 		/area/crew_quarters/sleep,
 		/area/security/prison,
+		/area/security/perma,
 		/area/security/gas_chamber,
 		/area/security/brig,
 		/area/shuttle,

@@ -97,3 +97,7 @@
 /area/research_outpost/solars
 	name = "Research Outpost Solar Array"
 	icon_state = "outpost_solars"
+
+/area/research_outpost/xenobot
+	name = "Research Outpost Xenobotany"
+	icon_state = "outpost_xenobot"
