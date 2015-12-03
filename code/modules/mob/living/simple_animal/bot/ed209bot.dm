@@ -508,6 +508,8 @@ Auto Patrol[]"},
 	lasercolor = "r"
 
 /mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A)
+	if(!on)
+		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if(!C.stunned || arrest_type)
@@ -518,6 +520,8 @@ Auto Patrol[]"},
 		..()
 
 /mob/living/simple_animal/bot/ed209/RangedAttack(atom/A)
+	if(!on)
+		return
 	if(ismob(A))
 		shootAt(A)
 	else
@@ -539,7 +543,7 @@ Auto Patrol[]"},
 		C.Weaken(5)
 		C.stuttering = 5
 		C.Stun(5)
-
+	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)

@@ -7,6 +7,6 @@
 /var/global/datum/topic_state/admin_state/admin_state = new()
 
 /datum/topic_state/admin_state/can_use_topic(atom/movable/src_object, mob/user)
-	if (check_rights(R_ADMIN, 0, user))
+	if (check_rights_for(user.client, R_ADMIN))
 		return NANO_INTERACTIVE
 	return NANO_CLOSE

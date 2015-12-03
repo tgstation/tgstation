@@ -11,7 +11,6 @@
 #define MODE_INTERCOM "intercom"
 #define MODE_BINARY "binary"
 #define MODE_WHISPER "whisper"
-#define MODE_SECURE_HEADSET "secure headset"
 #define MODE_DEPARTMENT "department"
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"

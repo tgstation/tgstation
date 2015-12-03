@@ -17,6 +17,8 @@ var/global/list/rockTurfEdgeCache
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
+	var/environment_type = "asteroid"
+	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -24,6 +26,11 @@ var/global/list/rockTurfEdgeCache
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
+
+/turf/simulated/mineral/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt
+	baseturf = /turf/simulated/floor/plating/asteroid/basalt
 
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
@@ -128,6 +135,9 @@ var/global/list/rockTurfEdgeCache
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
 				M.mineralAmt = rand(1, 5)
+				M.environment_type = src.environment_type
+				M.turf_type = src.turf_type
+				M.baseturf = src.baseturf
 				src = M
 				M.levelupdate()
 	return
@@ -311,12 +321,8 @@ var/global/list/rockTurfEdgeCache
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
-	var/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains/G = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains)
+	var/turf/simulated/floor/plating/asteroid/G = ChangeTurf(turf_type)
 	G.fullUpdateMineralOverlays()
-
-/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains
-	var/det_time = 0
-	var/stage = 0
 
 ////////////////////////////////End Gibtonite
 
@@ -393,7 +399,7 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid/airless(T)
+	var/turf/simulated/floor/t = new turf_type(T)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
@@ -448,7 +454,7 @@ var/global/list/rockTurfEdgeCache
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
-	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	var/turf/simulated/floor/plating/asteroid/N = ChangeTurf(turf_type)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
@@ -464,20 +470,6 @@ var/global/list/rockTurfEdgeCache
 	if(do_after(M,40, target = src))
 		M << "<span class='notice'>You tunnel into the rock.</span>"
 		gets_drilled(M)
-
-/*
-/turf/simulated/mineral/proc/setRandomMinerals()
-	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
-	if (s)
-		mineralName = s
-
-	var/N = text2path("/turf/simulated/mineral/[s]")
-	if (N)
-		var/turf/simulated/mineral/M = new N
-		src = M
-		if (src.mineralName)
-			mineralAmt = 5
-	return*/
 
 /turf/simulated/mineral/Bumped(AM as mob|obj)
 	..()
@@ -510,9 +502,27 @@ var/global/list/rockTurfEdgeCache
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	var/environment_type = "asteroid"
+	var/turf_type = /turf/simulated/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/plating/asteroid/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/simulated/floor/plating/asteroid/basalt
+	name = "volcanic floor"
+	baseturf = /turf/simulated/floor/plating/asteroid/basalt
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "basalt"
+	icon_plating = "basalt"
+	environment_type = "basalt"
+
+/turf/simulated/floor/plating/asteroid/basalt/lava //lava underneath
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+
+/turf/simulated/floor/plating/asteroid/basalt/airless
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
@@ -521,13 +531,8 @@ var/global/list/rockTurfEdgeCache
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
-	//	seedName = pick(list("1","2","3","4"))
-	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid[rand(0,12)]"
-//	spawn(2)
-//O		updateMineralOverlays()
+		icon_state = "[environment_type][rand(0,12)]"
 
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
@@ -600,8 +605,8 @@ var/global/list/rockTurfEdgeCache
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	dug = 1
-	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	icon_plating = "[environment_type]_dug"
+	icon_state = "[environment_type]_dug"
 	return
 
 /turf/simulated/floor/plating/asteroid/singularity_act()

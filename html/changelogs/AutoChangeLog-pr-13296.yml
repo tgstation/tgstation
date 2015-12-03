@@ -1,7 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - tweak: "NanoUI becomes... difficult to operate with brain damage. Who would have guessed?"
-  - tweak: "Telekinesis enables you to use NanoUI at a distance."
-  - bugfix: "Canisters require physical proximity to actuate..."
-  - bugfix: "NanoUI no longer leaks memory on click."

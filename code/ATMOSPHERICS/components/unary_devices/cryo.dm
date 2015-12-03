@@ -12,7 +12,8 @@
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 	state_open = 0
-	var/efficiency
+	var/efficiency = 1
+	var/autoEject = 0
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
@@ -45,6 +46,7 @@
 		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully fed from the wreckage of the cryotube
 	beaker = null
 	return ..()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
@@ -57,11 +59,10 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-	if(occupant)
-		if(occupant.health >= 100)
-			on = 0
-			open_machine()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(occupant && occupant.health >= 100 && autoEject)
+		on = 0
+		open_machine()
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!NODE1 || !is_operational())
 		return
 
@@ -77,31 +78,15 @@
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)	open_machine()
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
-	open_machine()
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	return
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
-	set name = "Eject Cryo Cell"
-	set desc = "Begin the release sequence inside the cryo tube."
-	set category = "Object"
-	set src in oview(1)
-	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
-		if(usr.stat == DEAD)	//and he's not dead....
-			return
-		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
-		sleep(600)
-		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
-			return
-		open_machine()
-		add_fingerprint(usr)
-	else
-		if(!istype(usr, /mob/living) || usr.stat)
-			usr << "<span class='warning'>You can't do that!</span>"
-			return
-		open_machine()
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
+	usr << "<span class='notice'>Release sequence activated. This will take a few seconds.</span>"
+	sleep(150)
+	if(!src || !usr || (!occupant && !contents.Find(usr))) // Make sure they didn't disappear.
+		return
+	open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -127,7 +112,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 410, state = notcontained_state)
+		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 560, state = notcontained_state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -137,6 +122,7 @@
 	var/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
+	data["autoEject"] = autoEject
 
 	var/occupantData = list()
 	if (!occupant)
@@ -189,6 +175,9 @@
 
 	if(href_list["switchOff"])
 		on = 0
+
+	if(href_list["autoEject"])
+		autoEject = !autoEject
 
 	if(href_list["openCell"])
 		open_machine()
@@ -281,19 +270,19 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
-//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+			occupant.sleeping = max(5 / efficiency, (1 / occupant.bodytemperature) * 2000 / efficiency)
+			occupant.Paralyse(max(5 / efficiency, (1 / occupant.bodytemperature) * 3000 / efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
+			// Severe damage should heal waaay slower without proper chemicals...
 			if(occupant.bodytemperature < 225)
 				if(occupant.getToxLoss())
 					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
 				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
-				occupant.heal_organ_damage(heal_brute,heal_fire)
+				occupant.heal_organ_damage(heal_brute, heal_fire)
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant, VAPOR)
