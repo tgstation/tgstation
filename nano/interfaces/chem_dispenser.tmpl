@@ -34,7 +34,10 @@
 </div>
 <h2>Beaker</h2>
 <div class="statusDisplay">
-	{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	{{:helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	{{for data.beakerTransferAmounts :amount:i}}
+		{{:helper.link(amount, 'minus', {'remove': amount})}}
+	{{/for}}
 	<div class="item">
 		<div class="itemLabel">
 			Contents:
@@ -43,16 +46,7 @@
 			{{if data.isBeakerLoaded}}
 				<b>Volume: {{:data.beakerCurrentVolume}}/{{:data.beakerMaxVolume}} Units</b><br />
 				{{for data.beakerContents}}
-					<div style="min-height: 20px;">
-						<span class="floatRight">
-							{{:helper.link('5', 'minus', {'remove' : value.id, 'removeamount' : 5})}}
-							{{:helper.link('10', 'minus', {'remove' : value.id, 'removeamount' : 10})}}
-							{{:helper.link('All', 'close', {'remove' : value.id, 'removeamount' : value.volume})}}
-						</span>
-						<span class="highlight">
-							{{:value.volume}} units of {{:value.name}}
-						</span>
-					</div>
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}

@@ -8,7 +8,7 @@
 
 	var/on = 0
 	var/temperature_archived
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 	state_open = 0
@@ -43,7 +43,7 @@
 	T.contents += contents
 
 	if(beaker)
-		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully fed from the wreckage of the cryotube
+		beaker.loc = get_step(loc, SOUTH) // Beaker is carefully ejected from the wreckage of the cryotube.
 	beaker = null
 	return ..()
 
@@ -159,8 +159,8 @@
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	var beakerContents[0]
-	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker:reagents.reagent_list)
+	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
@@ -187,8 +187,7 @@
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			var/obj/item/weapon/reagent_containers/glass/B = beaker
-			B.loc = get_step(loc, SOUTH)
+			beaker.loc = get_step(loc, SOUTH)
 			beaker = null
 
 	add_fingerprint(usr)
