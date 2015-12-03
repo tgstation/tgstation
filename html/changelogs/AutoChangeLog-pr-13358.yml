@@ -1,4 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - bugfix: "Dominator now shows the correct area name on non-Box maps."
