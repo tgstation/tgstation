@@ -207,7 +207,7 @@
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='warning'>You don't feel so good...</span>"
-		else if(M.getFireLoss())
+		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='danger'>You feel your bruises healing! It stings like hell!</span>"
