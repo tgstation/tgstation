@@ -31,7 +31,7 @@
 
 	//Force nexuses after 2 minutes in hand of god mode
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
-		addtimer(src,"forceplacenexus",1200)
+		addtimer(src, "forceplacenexus", 1200, FALSE)
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
