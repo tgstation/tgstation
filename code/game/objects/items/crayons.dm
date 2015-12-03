@@ -150,11 +150,12 @@
 			if( istype(target, /obj/item/device/flashlight) || istype(target, /obj/machinery/light) )
 				user << "<span class='notice'>You begin to color \the [target]...</span>"
 				if(do_after(user, 20, target = target))
-					user.visible_message("<span class='danger'>[user] paints with [src] on [target] to change \his color!</span>")
+					user.visible_message("<span class='danger'>[user] paints [target] a different color with [src]! </span>")
 					playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-					uses = max(0, uses - 2)
+					uses = max(0, uses - 2) // this precludes unlimited uses.
 					target.light_color = colour
-					target.update_light() // this precludes unlimited uses.
+					target.color = colour // Effects a visible change on the painted light. Black-painted flashlights don't shine.
+					target.update_light() 
 		..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
