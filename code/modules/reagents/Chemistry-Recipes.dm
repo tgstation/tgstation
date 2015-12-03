@@ -2522,8 +2522,8 @@ datum
 			name = "Brown Star"
 			id = "brownstar"
 			result = "brownstar"
-			required_reagents = list("orangejuice" = 2, "cola" = 1)
-			result_amount = 2
+			required_reagents = list("kahlua" = 1, "irish_cream" = 4)
+			result_amount = 5
 
 		milkshake
 			name = "Milkshake"
