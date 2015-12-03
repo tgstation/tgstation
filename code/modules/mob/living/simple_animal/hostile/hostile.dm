@@ -223,10 +223,9 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
 	mob_loop:
 		for (var/mob/living/simple_animal/hostile/M in oview(distance, src))
-			for (var/element in src.faction)
-				if (element in M.faction)
-					M.Goto(src,M.move_to_delay,M.minimum_distance)
-					continue mob_loop
+			var/list/L = M.faction&faction
+			if(L.len)
+				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 
