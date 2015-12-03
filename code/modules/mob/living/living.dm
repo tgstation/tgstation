@@ -164,7 +164,6 @@ Sorry Giacom. Please don't be mad :(
 		stop_pulling()
 	else if(AM.Adjacent(src))
 		src.start_pulling(AM)
-	return
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
