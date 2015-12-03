@@ -38,13 +38,6 @@
 
 			beaker.reagents.handle_reactions()
 
-/obj/machinery/chem_heater/proc/eject_beaker()
-	if(beaker)
-		beaker.loc = get_turf(src)
-		beaker.reagents.handle_reactions()
-		beaker = null
-		icon_state = "mixer0b"
-
 /obj/machinery/chem_heater/power_change()
 	if(powered())
 		stat &= ~NOPOWER
@@ -132,3 +125,10 @@
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
+
+/obj/machinery/chem_heater/proc/eject_beaker()
+	if(beaker)
+		beaker.loc = get_turf(src)
+		beaker.reagents.handle_reactions()
+		beaker = null
+		icon_state = "mixer0b"

@@ -192,8 +192,8 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	energy = 5
-	max_energy = 5
+	energy = 10
+	max_energy = 10
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
@@ -291,10 +291,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
-	energy = 100
-	max_energy = 100
-	amount = 30
-	recharge_delay = 5
+	amount = 10
 	dispensable_reagents = list(
 		"water",
 		"ice",
