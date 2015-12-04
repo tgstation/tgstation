@@ -50,7 +50,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
-	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	languages = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
@@ -89,6 +89,7 @@
 /mob/living/simple_animal/hostile/swarmer/death(gibbed)
 	..(gibbed)
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
+	new /obj/item/weapon/ore/bluespace_crystal/artificial(src.loc)
 	ghostize()
 	qdel(src)
 

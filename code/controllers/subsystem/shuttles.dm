@@ -52,9 +52,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	ordernum = rand(1,9000)
 
-	for(var/typepath in typesof(/datum/supply_packs))
-		if(typepath == /datum/supply_packs)
-			continue
+	for(var/typepath in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P

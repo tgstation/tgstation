@@ -91,11 +91,12 @@
 		for(var/obj/O in T)
 			var/obj/O2 = DuplicateObject(O , 1, newloc = X, nerf=nerf_weapons)
 			if(!O2) continue
-			copiedobjs += O2.contents + O2
+			copiedobjs += O2.GetAllContents() + O2
 
 		for(var/mob/M in T)
 			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-			copiedobjs += DuplicateObject(M , 1, newloc = X)
+			var/mob/SM = DuplicateObject(M , 1, newloc = X)
+			copiedobjs += SM.GetAllContents() + SM
 
 		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
 		for(var/V in T.vars - forbidden_vars)

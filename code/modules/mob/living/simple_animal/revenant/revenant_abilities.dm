@@ -17,6 +17,7 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
 			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 
@@ -180,7 +181,7 @@
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			spawn(0)
-				for(var/obj/machinery/bot/bot in T.contents)
+				for(var/mob/living/simple_animal/bot/bot in T.contents)
 					if(!bot.emagged)
 						PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
 						bot.locked = 0
@@ -193,7 +194,7 @@
 					PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
 					human.emp_act(1)
 				for(var/obj/thing in T.contents)
-					if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes) || istype(thing, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
+					if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 						continue
 					if(prob(20))
 						if(prob(50))

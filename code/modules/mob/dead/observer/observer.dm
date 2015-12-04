@@ -421,4 +421,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))
-		return
+		return 1
+	return

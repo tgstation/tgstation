@@ -1,6 +1,6 @@
 /obj/item/weapon/book/manual/random/New()
-	var/static/banned_books = list(/obj/item/weapon/book/manual,/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
-	var/newtype = pick(typesof(/obj/item/weapon/book/manual) - banned_books)
+	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
+	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
 	qdel(src)
 

@@ -34,6 +34,18 @@
 	var/charge_tick = 0
 	ammo_x_offset = 3
 
+/obj/item/weapon/gun/energy/laser/captain/scattershot
+	name = "scatter shot laser rifle"
+	icon_state = "lasercannon"
+	item_state = "laser"
+	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
+	origin_tech = "combat=5;materials=4;powerstorage=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+
+/obj/item/weapon/gun/energy/laser/captain/scattershot/attack_self(mob/living/user as mob)
+	select_fire(user)
+	update_icon()
+
 /obj/item/weapon/gun/energy/laser/captain/New()
 	..()
 	SSobj.processing |= src

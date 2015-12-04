@@ -1,0 +1,44 @@
+<h2>Status</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Power:
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.isActive ? 'On' : 'Off', data.isActive ? 'power' : 'close', {'toggle_on' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Target:
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.targetTemp + 'K', 'pencil', {'adjust_temperature' : 'input'})}}
+		</div>
+	</div>
+</div>
+<h2>Beaker</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			{{:helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Contents:
+		</div>
+		<div class="itemContent" style="min-height: 175px;">
+			{{if data.isBeakerLoaded}}
+				<b>Temperature: {{:data.currentTemp}}K</b><br />
+				{{for data.beakerContents}}
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
+				{{empty}}
+					<span class="bad">Beaker Empty</span>
+				{{/for}}
+			{{else}}
+				<span class="average">No Beaker Loaded</span>
+			{{/if}}
+		</div>
+	</div>
+</div>

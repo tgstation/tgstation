@@ -411,7 +411,7 @@ body
 
 	else if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(!istype(DAT, /datum))
+		if(!DAT) //can't be an istype() because /client etc aren't datums
 			return
 		src.debug_variables(DAT)
 
@@ -857,14 +857,14 @@ body
 			if(H.dna.species.id == "human")
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
-					H << "You suddenly feel valid."
+					H << "Something is nya~t right."
 					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 					H.dna.features["tail_human"] = "Cat"
 					H.dna.features["ears"] = "Cat"
 				else
 					usr << "Removed [H] from purrbation."
-					H << "You suddenly don't feel valid anymore."
+					H << "You are no longer a cat."
 					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 					H.dna.features["tail_human"] = "None"

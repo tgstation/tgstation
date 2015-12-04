@@ -321,10 +321,11 @@
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
-	var/uses = 30 //0 for unlimited uses
+	var/uses = 30 //-1 or less for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
@@ -355,7 +356,7 @@
 
 /obj/item/toy/crayon/proc/update_window(mob/living/user)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
-	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
+	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter/number</a>"
 	dat += "<hr>"
 	dat += "<h3>Runes:</h3><br>"
 	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
@@ -386,7 +387,7 @@
 		if("random_letter")
 			temp = pick(letters)
 		if("letter")
-			temp = input("Choose the letter.", "Scribbles") in letters
+			temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
 		if("random_rune")
 			temp = "rune[rand(1,6)]"
 		if("random_graffiti")
@@ -413,6 +414,8 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+		else if(numerals.Find(drawtype))
+			temp = "number"
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -468,7 +471,7 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,paint_color,drawtype,temp,graf_rot)
 
-			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
+			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			if(uses < 0)

@@ -155,3 +155,10 @@
 
 /obj/effect/landmark/mobcorpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka
+
+/obj/effect/landmark/mobcorpse/wizard
+	name = "Space Wizard"
+	corpseuniform = /obj/item/clothing/under/color/lightpurple
+	corpsesuit = /obj/item/clothing/suit/wizrobe
+	corpseshoes = /obj/item/clothing/shoes/sandal
+	corpsehelmet = /obj/item/clothing/head/wizard

@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
+	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2
@@ -16,9 +17,11 @@
 	var/fire_resist = 1
 	var/mob/camera/blob/overmind
 
-
 /obj/effect/blob/New(loc)
-	blobs += src
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		blobs_legit += src
+	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
@@ -26,17 +29,23 @@
 		A.blob_act()
 	return
 
+/obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
+	return
 
 /obj/effect/blob/Destroy()
-	blobs -= src
-	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
+		blobs_legit -= src
+	blobs -= src //It's still removed from the normal list
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)	return 1
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSBLOB))
+		return 1
 	return 0
 
 
@@ -90,7 +99,8 @@
 	var/list/dirs = list(1,2,4,8)
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
-		if(!dirs.len)	break
+		if(!dirs.len)
+			break
 		var/dirn = pick(dirs)
 		dirs.Remove(dirn)
 		var/turf/T = get_step(src, dirn)
@@ -117,27 +127,36 @@
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
-			if(!(locate(/obj/effect/blob) in T))	break
-			else	T = null
-
-	if(!T)	return 0
-	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+			if(!(locate(/obj/effect/blob) in T))
+				break
+			else
+				T = null
+	if(!T)
+		return 0
+	var/Blob_spawnable = 1
 	if(istype(T, /turf/space) && prob(65))
-		B.health = 0
-	B.color = a_color
-	B.density = 1
-	if(T.Enter(B,src))//Attempt to move into the tile
-		B.density = initial(B.density)
-		B.loc = T
-		B.update_icon()
-	else
-		T.blob_act()//If we cant move in hit the turf
-		B.loc = null //So we don't play the splat sound, see Destroy()
-		qdel(B)
-
-	for(var/atom/A in T)//Hit everything in the turf
-		A.blob_act()
+		Blob_spawnable = 0
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+	for(var/atom/A in T)
+		if(A.density) //Unless density is 0, don't spawn a blob
+			Blob_spawnable = 0
+		A.blob_act() //Hit everything
+	if(T.density) //Check for walls and such dense turfs
+		Blob_spawnable = 0
+		T.blob_act() //Hit the turf
+	if(Blob_spawnable)
+		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+		B.color = a_color
+		B.density = 1
+		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+			B.density = initial(B.density)
+			B.loc = T
+			B.update_icon()
+		else
+			T.blob_act() //If we cant move in hit the turf
+			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
 	return 1
+
 
 /obj/effect/blob/ex_act(severity, target)
 	..()
@@ -192,15 +211,15 @@
 	health -= damage
 	update_icon()
 
-/obj/effect/blob/proc/change_to(type)
+/obj/effect/blob/proc/change_to(type, controller)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
 	var/obj/effect/blob/B = new type(src.loc)
-	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
-		B.color = color
-	else
-		B.adjustcolors(color)
+	if(controller)
+		B.overmind = controller
+	B.creation_action()
+	B.adjustcolors(color)
 	qdel(src)
 	return B
 
