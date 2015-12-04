@@ -137,7 +137,7 @@
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					qdel(B)
-					N = null
+					B = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(B)
