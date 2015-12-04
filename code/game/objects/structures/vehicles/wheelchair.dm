@@ -157,7 +157,7 @@
 	nick = "cripplin' revenge"
 	desc = "A chair with fitted wheels which is powered by an internal cell. It propels itself without the need for hands as long as it is charged."
 	var/maintenance = 0
-	var/default_cell_path = /obj/item/weapon/cell/high
+	var/const/default_cell_path = /obj/item/weapon/cell/high
 	var/obj/item/weapon/cell/internal_battery = null
 
 
@@ -207,7 +207,9 @@
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate
 	nick = "medical malpractice"
 	desc = "A chair with fitted wheels which is powered by an internal cell. It seems to ride higher than other wheelchairs."
-	default_cell_path = /obj/item/weapon/cell/hyper
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/getMovementDelay()
+	return (..() + 1) //Somewhat slower
 
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/Bump(var/atom/A)
 	if(isliving(A))
@@ -229,13 +231,10 @@
 /obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/proc/crush(var/mob/living/H,var/bloodcolor) //Basically identical to the MULE, see mulebot.dm
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-	var/damage = rand(5,10) //We're not as heavy as a MULE. Where it does 30-90 damage, we do 20-40 damage
-	H.apply_damage(damage, BRUTE, "head")
+	var/damage = rand(5,10) //We're not as heavy as a MULE. Where it does 30-90 damage, we do 15-30 damage
 	H.apply_damage(damage, BRUTE, "chest")
-	H.apply_damage(0.5*damage, BRUTE, "l_leg")
-	H.apply_damage(0.5*damage, BRUTE, "r_leg")
-	H.apply_damage(0.5*damage, BRUTE, "l_arm")
-	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+	H.apply_damage(damage, BRUTE, "l_leg")
+	H.apply_damage(damage, BRUTE, "r_leg")
 
 /obj/item/syndicate_wheelchair_kit
 	name = "Compressed Wheelchair Kit"
