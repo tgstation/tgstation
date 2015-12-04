@@ -169,7 +169,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 			spell.anchored = 1
 			spell.density = 0
 			spawn(overlay_lifespan)
-				del(spell)
+				qdel(spell)
 	return valid_targets
 
 /spell/proc/after_cast(list/targets)

@@ -395,7 +395,7 @@
 			var/turf/T=get_turf(src)
 			new /obj/item/device/assembly/signaler(T)
 			new /obj/item/stack/rods(T,1)
-			del(src)
+			qdel(src)
 		return 1
 
 /obj/machinery/conveyor_switch/oneway

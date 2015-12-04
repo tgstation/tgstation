@@ -512,7 +512,7 @@ var/global/list/nlist = list( \
 	else
 		// If the pipe's still around, nuke it.
 		if(P)
-			del(P)
+			qdel(P)
 	return 1
 	 //TODO: DEFERRED
 
@@ -544,7 +544,7 @@ var/global/list/nlist = list( \
 	new/obj/machinery/meter(src.loc, pipe)
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe</span>")
-	del(src)
+	qdel(src)
 
 /obj/item/pipe_meter/dropped()
 	..()
@@ -572,4 +572,4 @@ var/global/list/nlist = list( \
 	new/obj/machinery/air_sensor( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have fastened the gas sensor</span>")
-	del(src)
+	qdel(src)

@@ -160,7 +160,7 @@
 				T.ChangeTurf(/turf/simulated/wall)
 			else
 				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-			del(src)
+			qdel(src)
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W
@@ -172,7 +172,7 @@
 				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
 					T = get_turf(src)
 					T.attackby(W,user)
-				del(src)
+				qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
 
@@ -188,7 +188,7 @@
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
-		del(src)
+		qdel(src)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
@@ -266,7 +266,7 @@
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
 		T.ChangeTurf(/turf/simulated/wall/r_wall) //Why not make rwall?
-		del(src)
+		qdel(src)
 
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W

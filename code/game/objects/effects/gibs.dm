@@ -37,7 +37,7 @@
 	for(var/datum/disease/D in viruses)
 		if(D.spread_type == SPECIAL)
 			D.cure(1)
-			del(D)
+			qdel(D)
 
 	if(sparks)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

@@ -66,7 +66,7 @@ proc
 	text_image.color = AverageColor(atom_icon)
 	text_image.pixel_x = 6
 	text_image.pixel_y = 5
-	del(atom_icon)
+	qdel(atom_icon)
 	return text_image
 
 //For photo camera.

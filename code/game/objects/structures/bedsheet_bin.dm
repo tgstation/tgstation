@@ -38,7 +38,7 @@ LINEN BINS
 				var/obj/item/weapon/reagent_containers/glass/rag/S = new/obj/item/weapon/reagent_containers/glass/rag/(location)
 				S.pixel_x = rand(-5.0, 5)
 				S.pixel_y = rand(-5.0, 5)
-			del(src)
+			qdel(src)
 
 //todo: hold one if possible?
 //todo: coloring and molotov coloring?
@@ -218,4 +218,3 @@ LINEN BINS
 
 
 	add_fingerprint(user)
-

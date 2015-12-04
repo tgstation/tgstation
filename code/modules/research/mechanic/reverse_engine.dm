@@ -227,7 +227,7 @@
 		var/datum/design/mechanic_design/design = research_queue[text2num(href_list["remove_tosearch"])]
 		if(design)
 			research_queue -= design
-			del(design)
+			qdel(design)
 		ui_interact(usr)
 		return 1
 
@@ -235,7 +235,7 @@
 		var/datum/design/mechanic_design/design = ready_queue[text2num(href_list["remove_researched"])]
 		if(design)
 			ready_queue -= design
-			del(design)
+			qdel(design)
 		ui_interact(usr)
 		return 1
 

@@ -61,7 +61,7 @@ client/verb/JoinResponseTeam()
 				return
 			var/leader_selected = isemptylist(response_team_members)
 			var/mob/living/carbon/human/new_commando = create_response_team(L.loc, leader_selected, new_name)
-			del(L)
+			qdel(L)
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
@@ -154,7 +154,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	for (var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "nukecode")
 			P.loc = A.loc
-			del(A)
+			qdel(A)
 			continue
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
@@ -201,7 +201,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
 
 //	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 //hair

@@ -316,10 +316,10 @@
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
 	if(isprox(D))
 		to_chat(user, "You add \the [D] to \the [src].")
-		del(D)
+		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

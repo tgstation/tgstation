@@ -14,7 +14,7 @@
 				M1.rabid()
 			var/mob/living/carbon/slime/M2 = new primarytype(loc)
 			M2.rabid()
-			if(src)	del(src)
+			if(src)	qdel(src)
 		else
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist

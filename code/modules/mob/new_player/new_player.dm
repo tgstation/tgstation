@@ -153,7 +153,7 @@
 				observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 			observer.key = key
 			mob_list -= src
-			del(src)
+			qdel(src)
 
 			return 1
 
@@ -380,7 +380,7 @@
 		FuckUpGenes(character)
 	else
 		character.Robotize()
-	del(src)
+	qdel(src)
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)

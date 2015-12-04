@@ -74,7 +74,7 @@
 				A.loc = src
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
 	else
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
@@ -90,7 +90,7 @@
 			src.connected.dir = src.dir
 		else
 			//src.connected = null
-			del(src.connected)
+			qdel(src.connected)
 	src.add_fingerprint(user)
 	update()
 	return
@@ -138,7 +138,7 @@
 		src.connected.icon_state = "morguet"
 	else
 		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
 	return
 
 /obj/structure/morgue/on_log()
@@ -176,7 +176,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -265,7 +265,7 @@
 				A.loc = src
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
 	else if (src.locked == 0)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/c_tray( src.loc )
@@ -280,7 +280,7 @@
 			src.connected.icon_state = "cremat"
 		else
 			//src.connected = null
-			del(src.connected)
+			qdel(src.connected)
 	src.add_fingerprint(user)
 	update()
 
@@ -315,7 +315,7 @@
 		src.connected.icon_state = "cremat"
 	else
 		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
 	return
 
 /obj/structure/crematorium/proc/cremate(mob/user)
@@ -352,12 +352,12 @@
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
+			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be qdeleted
 			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
 			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
 			M.ghostize()
-			del(M)
+			qdel(M)
 
 		for (var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			qdel(O)
@@ -405,7 +405,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		del(src)
+		qdel(src)
 		return
 	return
 

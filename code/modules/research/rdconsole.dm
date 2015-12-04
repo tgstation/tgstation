@@ -344,11 +344,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									S.amount--
 									linked_destroy.loaded_item = S
 								else
-									del(S)
+									qdel(S)
 									linked_destroy.icon_state = "d_analyzer"
 							else
 								if(!(I in linked_destroy.component_parts))
-									del(I)
+									qdel(I)
 									linked_destroy.icon_state = "d_analyzer"
 						use_power(250)
 						screen = 1.0
@@ -567,7 +567,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			screen = 0.0
-			del(files)
+			qdel(files)
 			files = new /datum/research(src)
 			spawn(20)
 				screen = 1.6

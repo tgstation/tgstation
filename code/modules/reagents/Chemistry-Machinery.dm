@@ -130,7 +130,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
@@ -217,7 +217,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if(!B.gcDestroyed)
 					B.create_reagents(B.volume)
 				else
-					del(B)
+					qdel(B)
 					return
 			var/space = R.maximum_volume - R.total_volume
 
@@ -1542,7 +1542,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
 	holdingitems -= O
-	del(O)
+	qdel(O)
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()
@@ -1735,7 +1735,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/turf/T = get_turf(src)
 			new /obj/item/stack/cable_coil(T,2)
 			new /obj/item/weapon/grenade/chem_grenade(T)
-			del(src)
+			qdel(src)
 			return
 	else if(is_type_in_list(W, allowed_containers))
 		var/obj/item/weapon/reagent_containers/glass/G = W

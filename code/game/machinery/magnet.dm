@@ -368,7 +368,7 @@
 				// N, S, E, W are directional
 				// C is center
 				// R is random (in magnetic field's bounds)
-				del(signal)
+				qdel(signal)
 				break // break the loop if the character located is invalid
 
 			signal.data["command"] = nextmove

@@ -9,7 +9,7 @@
 	if(!reagents.total_volume)  //This should only happen if a chemical reaction removes the reagents from the bar
 		icon_state = "" //So it isn't visible in the 1/10th of a second before it is deleted
 		spawn(1) //A small delay is needed before deleting to allow for reactions to occur
-			del(src) //We don't want empty snack bars
+			qdel(src) //We don't want empty snack bars
 	else
 		update_icon()
 		update_name()

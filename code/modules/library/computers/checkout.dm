@@ -197,7 +197,7 @@
 				M = new manual_type()
 				dat += "<tr><td><A href='?src=\ref[src];manual=[manualcount]'>[M.title]</A></td></tr>"
 				manualcount++
-				del(M)
+				qdel(M)
 			dat += "</table>"
 			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 
@@ -482,4 +482,3 @@
 		B.dat = http
 		B.icon_state = "book[rand(1,9)]"
 	src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
-

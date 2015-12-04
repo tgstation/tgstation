@@ -91,7 +91,7 @@
 		I.imp_in = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	H.monkeyizing = 0
-	del(M)
+	qdel(M)
 	return
 
 /datum/dna/gene/monkey/deactivate(var/mob/living/M, var/connected, var/flags)
@@ -181,5 +181,5 @@
 			affected.implants += I
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	Mo.monkeyizing = 0
-	del(M)
+	qdel(M)
 	return

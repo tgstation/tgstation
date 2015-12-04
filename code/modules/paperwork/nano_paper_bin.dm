@@ -56,7 +56,7 @@
 	to_chat(user, "<span class='notice'>you load the [i] in the dispenser</span>")
 	i:amount--
 	if(i:amount < 1)
-		del(i)
+		qdel(i)
 	ressources += 30
 	update_icon()
 

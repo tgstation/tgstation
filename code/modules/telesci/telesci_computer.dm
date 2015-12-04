@@ -306,7 +306,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 				src.visible_message("<span class='warning'>\icon[src] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "\icon[src]<span class='warning'>You hear something buzz.</span></span>")
 				return
 			if(prob(25))
-				del(telepad.amplifier)
+				qdel(telepad.amplifier)
 				src.visible_message("\icon[src]<span class='notice'>You hear something shatter.</span>","\icon[src]<span class='notice'>You hear something shatter.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)

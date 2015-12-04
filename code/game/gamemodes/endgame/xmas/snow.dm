@@ -339,7 +339,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
-			del(src)
+			qdel(src)
 		..()
 
 /obj/structure/window/barricade/snow/ex_act(severity)
@@ -362,7 +362,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	src.health -= 25
 	if (src.health <= 0)
 		visible_message("<span class='danger'>The blob eats through \the [src]!</span>")
-		del(src)
+		qdel(src)
 	return
 
 /obj/structure/window/barricade/snow/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.

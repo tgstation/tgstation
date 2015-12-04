@@ -44,7 +44,7 @@
 		to_chat(user, "<span class='notice'>You unwrapped \a [gift]!</span>")
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/gift/ashify()//so the content of player-made gifts can be recovered.

@@ -1444,7 +1444,7 @@
 					C.update()
 					C.anchored = 1
 					C.density = 1
-					del(src)
+					qdel(src)
 				return
 			else
 				to_chat(user, "You need more welding fuel to complete this task.")

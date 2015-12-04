@@ -43,7 +43,7 @@
 
 			if (src.internal)
 				if (!src.internal.air_contents)
-					del(src.internal)
+					qdel(src.internal)
 				else
 					stat("Internal Atmosphere Info", src.internal.name)
 					stat("Tank Pressure", src.internal.air_contents.return_pressure())

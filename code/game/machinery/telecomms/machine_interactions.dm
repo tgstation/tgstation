@@ -92,7 +92,7 @@
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.set_build_state(2)
 					F.loc = src.loc
-					del(src)
+					qdel(src)
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)

@@ -250,7 +250,7 @@ Pipelines + Other Objects -> Pipe network
 				if(pipe_parent)
 					transit.divide(pipe_parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
 					env_air.add(transit) //put it in the air
-				del(transit) //remove the carrier
+				qdel(transit) //remove the carrier
 		else
 			to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 			return 1

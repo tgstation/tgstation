@@ -107,7 +107,7 @@
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
 	spawn(1)
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/cell/proc/corrupt()
 	charge /= 2

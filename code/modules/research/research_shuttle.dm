@@ -41,7 +41,7 @@ proc/move_research_shuttle()
 				AM.Move(D)
 
 			if(istype(T, /turf/simulated))
-				del(T)
+				qdel(T)
 		//Do I really need to explain this loop?
 		for(var/atom/A in toArea)
 			if(istype(A,/mob/living))

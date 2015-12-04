@@ -21,4 +21,4 @@
 				continue
 
 			new loot_path(get_turf(src))
-	del(src)
+	qdel(src)

@@ -235,7 +235,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!src.reagents.total_volume)
 		to_chat(R, "You hear a faint click from your chest.")
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/item/weapon/implant/chem/emp_act(severity)

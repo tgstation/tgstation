@@ -435,7 +435,7 @@
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
 			if(X)
 				visible_message("<span class='danger'>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</span>")
-				del(X)
+				qdel(X)
 
 	finds.Remove(F)
 

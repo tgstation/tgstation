@@ -139,7 +139,7 @@
 
 		H.update_icon()
 
-		del(src)
+		qdel(src)
 	else return ..()
 
 /obj/item/weapon/hand/verb/discard(datum/playingcard/card in cards)

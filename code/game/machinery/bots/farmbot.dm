@@ -221,7 +221,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/bot/farmbot/process()
@@ -542,7 +542,7 @@
 	to_chat(user, "You add the robot arm to the [src]")
 	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
 
-	del(S)
+	qdel(S)
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -550,19 +550,19 @@
 		src.build_step++
 		to_chat(user, "You add the plant analyzer to [src]!")
 		src.name = "farmbot assembly"
-		del(W)
+		qdel(W)
 
 	else if(( istype(W, /obj/item/weapon/reagent_containers/glass/bucket)) && (src.build_step == 1))
 		src.build_step++
 		to_chat(user, "You add a bucket to [src]!")
 		src.name = "farmbot assembly with bucket"
-		del(W)
+		qdel(W)
 
 	else if(( istype(W, /obj/item/weapon/minihoe)) && (src.build_step == 2))
 		src.build_step++
 		to_chat(user, "You add a minihoe to [src]!")
 		src.name = "farmbot assembly with bucket and minihoe"
-		del(W)
+		qdel(W)
 
 	else if((isprox(W)) && (src.build_step == 3))
 		src.build_step++
@@ -573,8 +573,8 @@
 			S.tank = wTank
 		S.loc = get_turf(src)
 		S.name = src.created_name
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text

@@ -216,7 +216,7 @@
 			if (href_list["del_all2"])
 				for(var/datum/data/record/R in data_core.medical)
 					//R = null
-					del(R)
+					qdel(R)
 					//Foreach goto(494)
 				src.temp = "All records deleted."
 
@@ -382,7 +382,7 @@
 			if (href_list["del_r2"])
 				if (src.active2)
 					//src.active2 = null
-					del(src.active2)
+					qdel(src.active2)
 
 			if (href_list["d_rec"])
 				var/datum/data/record/R = locate(href_list["d_rec"])
@@ -508,7 +508,7 @@
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)
@@ -525,5 +525,3 @@
 	density = 0
 
 	light_color = LIGHT_COLOR_GREEN
-
-

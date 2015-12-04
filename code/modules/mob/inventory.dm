@@ -321,7 +321,7 @@
 	else
 		switch(act_on_fail)
 			if(EQUIP_FAILACTION_DELETE)
-				del(W)
+				qdel(W)
 			if(EQUIP_FAILACTION_DROP)
 				W.loc=get_turf(src) // I think.
 	return equipped
@@ -331,4 +331,3 @@
 		. = I.GetID()
 		if(.)
 			break
-

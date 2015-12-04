@@ -217,7 +217,7 @@
 			src.loc.ex_act(1,src)
 
 		// Delete ourselves.
-		del(src)
+		qdel(src)
 
 
 // this doesn't do anything but the timer etc. expects it to be here

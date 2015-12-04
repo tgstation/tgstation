@@ -296,7 +296,7 @@
 /obj/item/missile/throw_impact(atom/hit_atom)
 	if(primed)
 		explosion(hit_atom, 0, 1, 2)
-		del(src)
+		qdel(src)
 	else
 		..()
 	return

@@ -24,7 +24,7 @@
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
-		del(overmind)
+		qdel(overmind)
 	processing_objects.Remove(src)
 	..()
 
@@ -76,7 +76,7 @@
 	overmind_get_delay = world.time + 300 // 30 seconds
 
 	if(overmind)
-		del(overmind)
+		qdel(overmind)
 
 	var/client/C = null
 	var/list/candidates = list()
@@ -100,4 +100,3 @@
 			mode.infected_crew += B.mind
 		return 1
 	return 0
-

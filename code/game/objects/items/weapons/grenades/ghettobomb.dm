@@ -10,8 +10,8 @@
         user.put_in_hands(W)
         to_chat(user, "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>")
         W.underlays += image(src.icon, icon_state = src.icon_state)
-        del(I)
-        del(src)
+        qdel(I)
+        qdel(src)
 
 
 /obj/item/weapon/grenade/iedcasing
@@ -96,7 +96,7 @@
 
 				qdel(H.legcuffed)
 				H.legcuffed = null
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
 	..()

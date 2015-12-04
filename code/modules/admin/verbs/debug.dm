@@ -529,7 +529,7 @@ Pressure: [env.return_pressure()]"}
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
 	if( isobserver(adminmob) )
-		del(adminmob)
+		qdel(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_areatest()
@@ -673,7 +673,7 @@ Pressure: [env.return_pressure()]"}
 		for (var/obj/item/I in M)
 			if (istype(I, /obj/item/weapon/implant))
 				continue
-			del(I)
+			qdel(I)
 	switch(dresscode)
 		if ("strip")
 			//do nothing
@@ -760,7 +760,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			var/obj/item/weapon/storage/backpack/backpack = new(M)
 			for(var/obj/item/I in backpack)
-				del(I)
+				qdel(I)
 			M.equip_to_slot_or_del(backpack, slot_back)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/mop(M), slot_r_hand)
@@ -852,7 +852,7 @@ Pressure: [env.return_pressure()]"}
 
 			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
-				del(briefcase_item)
+				qdel(briefcase_item)
 			for(var/i=3, i>0, i--)
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
@@ -1129,7 +1129,7 @@ Pressure: [env.return_pressure()]"}
 		if(G.anchored)
 			var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
 			spawn(0)
-				del(G)
+				qdel(G)
 			S.energy = 1250 //No energy dissipates
 			S.current_size = 7
 			S.icon = 'icons/effects/224x224.dmi'

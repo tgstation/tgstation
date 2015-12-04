@@ -131,7 +131,7 @@
 
 	if(targloc == curloc)
 		user.bullet_act(in_chamber)
-		del(in_chamber)
+		qdel(in_chamber)
 		update_icon()
 		return
 
@@ -244,7 +244,7 @@
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
-			del(in_chamber)
+			qdel(in_chamber)
 			mouthshoot = 0
 			return
 		else

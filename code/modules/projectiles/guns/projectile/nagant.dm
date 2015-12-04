@@ -72,7 +72,7 @@
 			var/obj/item/weapon/gun/projectile/nagant/obrez/newObrez = new /obj/item/weapon/gun/projectile/nagant/obrez(get_turf(src))
 			for(var/obj/item/ammo_casing/AC in newObrez.loaded)
 				newObrez.loaded -= AC
-			del(src)
+			qdel(src)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 	return
 

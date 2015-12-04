@@ -234,7 +234,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
-		del(src)	   //correctly before deleting the grenade.
+		qdel(src)	   //correctly before deleting the grenade.
 	/*else
 		icon_state = initial(icon_state) + "_locked"
 		crit_fail = 1

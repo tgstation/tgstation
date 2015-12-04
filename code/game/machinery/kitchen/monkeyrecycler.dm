@@ -51,7 +51,7 @@
 				to_chat(user, "<span class='warning'>The monkey may not have abiotic items on.</span>")
 			else
 				user.drop_item(G)
-				del(target)
+				qdel(target)
 				to_chat(user, "<span class='notice'>You stuff the monkey in the machine.")
 				playsound(get_turf(src), 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)

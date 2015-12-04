@@ -660,7 +660,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			to_chat(usr, "The machinery finds it can complete a match.")
 		else
 			to_chat(usr, "No match found.")
-		del(card)
+		qdel(card)
 	else
 		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)

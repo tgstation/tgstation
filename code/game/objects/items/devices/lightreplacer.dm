@@ -86,7 +86,7 @@
 			G.amount = remaining
 			if(!G.amount)
 				user.drop_item(G)
-				del(G)
+				qdel(G)
 			AddUses(increment)
 			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
@@ -98,7 +98,7 @@
 				AddUses(1)
 				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
 				user.drop_item(L)
-				del(L)
+				qdel(L)
 				return
 		else
 			to_chat(user, "You need a working light.")
@@ -170,7 +170,7 @@
 			target.brightness_color = L2.brightness_color
 			target.on = target.has_power()
 			target.update()
-			del(L2)
+			qdel(L2)
 
 			if(target.on && target.rigged)
 				target.explode()

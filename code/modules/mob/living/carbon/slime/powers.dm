@@ -185,7 +185,7 @@
 				new_slime.key = src.key
 			new_slime.languages = languages.Copy()
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
-			del(src)
+			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to evolve yet...</i>")
 	else
@@ -232,7 +232,7 @@
 				new_slime.key = src.key
 
 			to_chat(new_slime, "<B>You are now a slime!</B>")
-			del(src)
+			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
 	else

@@ -168,7 +168,7 @@ emp_act
 				LAssailant = null
 			else
 				LAssailant = user
-			del(src)
+			qdel(src)
 	var/datum/organ/external/affecting = get_organ(target_zone)
 	if (!affecting)
 		return
@@ -334,7 +334,7 @@ emp_act
 
 			else if (stat == 2 && !client)
 				gibs(loc, viruses)
-				del(src)
+				qdel(src)
 				return
 
 			if (!shielded)

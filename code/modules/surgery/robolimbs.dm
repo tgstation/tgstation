@@ -182,7 +182,7 @@
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon()
-	del(tool)
+	qdel(tool)
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -266,7 +266,7 @@
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon()
-	del(tool)
+	qdel(tool)
 
 /datum/surgery_step/limb/attach_flesh/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

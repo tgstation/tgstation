@@ -154,4 +154,4 @@
 
 /obj/effect/glowshroom/proc/CheckEndurance()
 	if(endurance <= 0)
-		del(src)
+		qdel(src)

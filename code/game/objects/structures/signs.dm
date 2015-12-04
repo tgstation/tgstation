@@ -33,7 +33,7 @@
 		//var/icon/I = icon('icons/obj/decals.dmi', icon_state)
 		//S.icon = I.Scale(24, 24)
 		S.sign_state = icon_state
-		del(src)
+		qdel(src)
 	else ..()
 
 /obj/item/sign
@@ -62,7 +62,7 @@
 		S.desc = desc
 		S.icon_state = sign_state
 		to_chat(user, "You fasten \the [S] with your [tool].")
-		del(src)
+		qdel(src)
 	else ..()
 
 /obj/structure/sign/double/map

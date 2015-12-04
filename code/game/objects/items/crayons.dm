@@ -132,7 +132,7 @@
 				uses--
 				if(!uses)
 					to_chat(user, "<span class='warning'>You used up your crayon!</span>")
-					del(src)
+					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
@@ -143,6 +143,6 @@
 			uses -= 5
 			if(uses <= 0)
 				to_chat(user, "<span class='warning'>You ate your crayon!</span>")
-				del(src)
+				qdel(src)
 	else
 		..()

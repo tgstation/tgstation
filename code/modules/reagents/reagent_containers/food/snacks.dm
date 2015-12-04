@@ -45,7 +45,7 @@
 			else if(istype(trash, /obj/item))
 				user.put_in_hands(trash)
 
-		del(src) //Remove the item, we consumed it
+		qdel(src) //Remove the item, we consumed it
 
 	return
 
@@ -65,7 +65,7 @@
 		//This is mostly caused either by "persistent" food items or spamming
 		to_chat(user, "<span class='notice'>There's nothing left of \the [src]!</span>")
 		M.drop_from_inventory(src)	//Drop our item before we delete it
-		del(src)
+		qdel(src)
 		return 0
 
 	if(istype(M, /mob/living/carbon)) //Avoid messing with simple mobs
@@ -239,7 +239,7 @@
 					C.health += 5
 				else
 					C.health = C.maxHealth
-				del(src)
+				qdel(src)
 			else
 				M.visible_message("[M] takes a bite of \the [src].", "<span class='notice'>You take a bite of \the [src].</span>")
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10, 50), 1)
@@ -871,7 +871,7 @@
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	new trash(src.loc)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/empty //so the H.O.N.K. cream pie mortar can't generate free nutriment
 	trash = null

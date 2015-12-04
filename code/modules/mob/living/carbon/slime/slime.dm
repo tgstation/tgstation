@@ -226,7 +226,7 @@
 		return
 
 	else if (stat == 2 && !client)
-		del(src)
+		qdel(src)
 		return
 
 	var/b_loss = null
@@ -1214,7 +1214,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	spawn(rand(50,100))
 		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()

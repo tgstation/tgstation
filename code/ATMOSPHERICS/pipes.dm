@@ -280,7 +280,7 @@
 			BP.level=src.level
 			BP.do_connect()
 
-	del(src) // NOT qdel.
+	qdel(src) // NOT qdel.
 
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
@@ -1092,7 +1092,7 @@
 		if(direction != dir && user.ventcrawl_layer != PIPING_LAYER_DEFAULT) // The mob is moving to the single pipe outlet, we need to align it if it's on a layer that's not the default layer
 			user.ventcrawl_layer = PIPING_LAYER_DEFAULT
 			to_chat(user, "You are redirected into the [user.ventcrawl_layer]\th piping layer.")
-		
+
 		return ..()
 
 

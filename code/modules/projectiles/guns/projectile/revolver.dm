@@ -107,7 +107,7 @@
 
 
 	for(var/obj/item/ammo_casing/AC in loaded)
-		del(AC)
+		qdel(AC)
 	loaded = list()
 	var/random = rand(1, max_shells)
 	for(var/i = 1; i <= max_shells; i++)
@@ -178,4 +178,3 @@
 					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
 				return
 	..()
-

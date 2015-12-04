@@ -329,7 +329,7 @@
 					else
 						code = S.code
 					user.drop_item(W)
-					del(W)
+					qdel(W)
 					has_signaler = 1
 					update_icon()
 					return

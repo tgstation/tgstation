@@ -182,7 +182,7 @@
 						var/obj/structure/falserwall/FW = new /obj/structure/falserwall(src.loc)
 						FW.add_hiddenprint(user)
 						FW.add_fingerprint(user)
-						del(src)
+						qdel(src)
 					else
 						to_chat(user, "<span class='warning'>There is too much air moving through the gap!  The door wouldn't stay closed if you built it.</span>")
 						message_admins("Attempted false rwall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
@@ -374,7 +374,7 @@
 			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>",
 								"<span class='notice'>Your [PK] tears through the last of \the [src]!</span>")
 			new /obj/effect/decal/remains/human(loc)
-			del(src)
+			qdel(src)
 
 /obj/structure/cultgirder/attack_construct(mob/user as mob)
 	if(istype(user, /mob/living/simple_animal/construct/builder))
@@ -421,4 +421,3 @@
 	new /obj/effect/decal/remains/human(loc)
 	qdel(src)
 	return
-

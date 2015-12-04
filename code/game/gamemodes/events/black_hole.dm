@@ -16,12 +16,12 @@
 	while(src)
 
 		if(!isturf(loc))
-			del(src)
+			qdel(src)
 			return
 
 		//DESTROYING STUFF AT THE EPICENTER
 		for(var/mob/living/M in orange(1,src))
-			del(M)
+			qdel(M)
 		for(var/obj/O in orange(1,src))
 			qdel(O)
 		for(var/turf/simulated/ST in orange(1,src))
@@ -57,7 +57,7 @@
 
 /obj/effect/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
 	if(!isturf(loc))	//blackhole cannot be contained inside anything. Weird stuff might happen
-		del(src)
+		qdel(src)
 		return
 	for(var/t = -r, t < r, t++)
 		affect_coord(x+t, y-r, ex_act_force, pull_chance, turf_removal_chance)

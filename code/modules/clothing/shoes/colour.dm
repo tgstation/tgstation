@@ -108,5 +108,5 @@
 		src.chaintype = H.type
 		src.slowdown = 15
 		src.icon_state = "orange1"
-		del(H)
+		qdel(H)
 	return

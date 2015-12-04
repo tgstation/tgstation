@@ -239,7 +239,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.current.remove_changeling_powers()
 			M.current.verbs -= /datum/changeling/proc/EvolutionMenu
 			if(M.changeling)
-				del(M.changeling)
+				qdel(M.changeling)
 			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.vampires)
@@ -247,7 +247,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.special_role = null
 			M.current.remove_vampire_powers()
 			if(M.vampire)
-				del(M.vampire)
+				qdel(M.vampire)
 			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.syndicates)
@@ -280,7 +280,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 
 
 			A.laws = new base_law_type
-			del(A.malf_picker)
+			qdel(A.malf_picker)
 			A.show_laws()
 			A.icon_state = "ai"
 

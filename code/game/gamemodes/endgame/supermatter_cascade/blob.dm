@@ -50,7 +50,7 @@
 			for(var/atom/movable/A in T)
 				if(A)
 					if(istype(A,/mob/living))
-						del(A)
+						qdel(A)
 					else if(istype(A,/mob)) // Observers, AI cameras.
 						continue
 					qdel(A)

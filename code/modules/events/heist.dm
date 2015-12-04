@@ -62,7 +62,7 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "voxstart")
 			raider_spawn += get_turf(L)
-			del(L)
+			qdel(L)
 			continue
 
 	//Generate objectives for the group.

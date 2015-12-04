@@ -1218,7 +1218,7 @@ About the new airlock wires panel:
 				S.victim = L
 
 				spawn (20)
-					del(S)
+					qdel(S)
 
 				L.emote("scream",,, 1)
 

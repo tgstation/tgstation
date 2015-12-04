@@ -19,7 +19,7 @@
 		src.visible_message("[src] dispenses a capsule!")
 		var/obj/item/weapon/capsule/b = new(src.loc)
 		b.icon_state = "capsule[rand(1,12)]"
-		del(O)
+		qdel(O)
 	else
 		return ..()
 

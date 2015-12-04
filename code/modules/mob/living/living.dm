@@ -22,14 +22,14 @@
 		for(var/image/I in static_overlays)
 			MoMMI.static_overlays.Remove(I) //no checks, since it's either there or its not
 			MoMMI.client.images.Remove(I)
-			del(I)
+			qdel(I)
 	if(static_overlays)
 		static_overlays = null
 
 	if(butchering_drops)
 		for(var/datum/butchering_product/B in butchering_drops)
 			butchering_drops -= B
-			del(B)
+			qdel(B)
 
 	. = ..()
 
@@ -513,7 +513,7 @@ Thanks.
 				if(istype(s))
 					O.implants -= s
 					H.contents -= s
-					del(s)
+					qdel(s)
 			O.amputated = 0
 			O.brute_dam = 0
 			O.burn_dam = 0
@@ -718,7 +718,7 @@ Thanks.
 		if(istype(H.loc, /mob/living))
 			var/mob/living/Location = H.loc
 			Location.drop_from_inventory(H)
-		del(H)
+		qdel(H)
 		return
 
 	//Detaching yourself from a tether
@@ -777,7 +777,7 @@ Thanks.
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
-			del(O)
+			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
@@ -914,7 +914,7 @@ Thanks.
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
 										   "<span class='notice'>You successfuly break your handcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.handcuffed)
+						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
 					else
@@ -955,7 +955,7 @@ Thanks.
 						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>",
 										   "<span class='notice'>You successfully break your legcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.legcuffed)
+						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
 					else

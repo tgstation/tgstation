@@ -48,7 +48,7 @@
 		if ("nothing")
 			return
 		if ("delete")
-			del(src)
+			qdel(src)
 			return
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)

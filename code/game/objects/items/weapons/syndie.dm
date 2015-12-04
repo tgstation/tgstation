@@ -44,7 +44,7 @@
 					D.open()
 			if(istype(T,/turf/simulated/wall))
 				T.dismantle_wall(1)
-		del(src)
+		qdel(src)
 
 
 /*Detonator, disguised as a lighter*/

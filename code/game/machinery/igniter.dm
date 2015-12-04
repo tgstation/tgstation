@@ -74,7 +74,7 @@ var/global/list/igniters = list()
 					"<span class='notice'>You have disassembled \the [src].</span>", \
 					"You hear welding.")
 				src.assembly.loc=src.loc
-				del(src)
+				qdel(src)
 				return
 		else:
 			to_chat(user, "<span class='warning'>You need more welder fuel to do that.</span>")
