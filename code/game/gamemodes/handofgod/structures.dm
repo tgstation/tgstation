@@ -387,11 +387,11 @@
 	autocolours = FALSE
 	var/time_between_uses = 1800
 	var/last_process = 0
-	var/cult_only = 1
+	var/cult_only = TRUE
 
 /obj/structure/divine/healingfountain/anyone
 	desc = "A fountain containing the waters of life."
-	cult_only = 0
+	cult_only = FALSE
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
 	if(last_process + time_between_uses > world.time)
