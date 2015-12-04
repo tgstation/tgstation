@@ -237,6 +237,32 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/*
+ * Snow
+ */
+/obj/item/stack/sheet/mineral/snow
+	name = "snow"
+	icon_state = "sheet-snow"
+	singular_name = "snow block"
+	force = 3
+	throwforce = 2
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=1"
+	sheettype = "snow"
+	materials = list(MAT_SNOW=MINERAL_MATERIAL_AMOUNT)
+
+var/global/list/datum/stack_recipe/snow_recipes = list ( \
+	new/datum/stack_recipe("Snow Wall",/turf/simulated/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
+	recipes = snow_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
 
 /****************************** Others ****************************/
 
