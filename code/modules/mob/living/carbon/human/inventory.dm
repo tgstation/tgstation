@@ -278,8 +278,13 @@
 			Human.unEquip(src)
 
 		if(bomb)
-			for(var/obj/item/Item in contents) //Empty out the contents
-				Item.loc = src.loc
+			if(istype(src, /obj/item/weapon/storage)) //Empty out the contents of bags and boxes, to handle the UI/opacity changes
+				var/obj/item/weapon/storage/Box = src
+				for(var/obj/item/Item in Box.contents)
+					Box.remove_from_storage(Item, Box)
+			else
+				for(var/obj/item/Item in contents) //Empty out the contents of other things like jumpsuits
+					Item.loc = src.loc
 			spawn(1) //so the shreds aren't instantly deleted by the explosion
 				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
 				Shreds.desc = "The sad remains of what used to be [src.name]."

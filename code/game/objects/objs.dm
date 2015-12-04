@@ -173,9 +173,15 @@
 		return 1
 
 /obj/proc/burn()
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = src.loc
-		Item.fire_act() //Set them on fire, too
+	if(istype(src, /obj/item/weapon/storage))  //Empty out the contents of bags and boxes, to handle the UI/opacity changes
+		var/obj/item/weapon/storage/Box = src
+		for(var/obj/item/Item in Box.contents)
+			Box.remove_from_storage(Item, Box)
+			Item.fire_act()
+	else
+		for(var/obj/item/Item in contents) //Empty out the contents of other things like jumpsuits
+			Item.loc = src.loc
+			Item.fire_act()
 	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
 	SSobj.burning -= src
