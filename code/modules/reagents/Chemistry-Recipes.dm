@@ -2217,7 +2217,7 @@ datum
 			name = "B-52"
 			id = "b52"
 			result = "b52"
-			required_reagents = list("irishcream" = 1, "kahlua" = 1, "cognac" = 1)
+			required_reagents = list("irishcarbomb" = 1, "kahlua" = 1, "cognac" = 1)
 			result_amount = 3
 
 		atomicbomb
@@ -2522,8 +2522,8 @@ datum
 			name = "Brown Star"
 			id = "brownstar"
 			result = "brownstar"
-			required_reagents = list("orangejuice" = 2, "cola" = 1)
-			result_amount = 2
+			required_reagents = list("kahlua" = 1, "irish_cream" = 4)
+			result_amount = 5
 
 		milkshake
 			name = "Milkshake"
