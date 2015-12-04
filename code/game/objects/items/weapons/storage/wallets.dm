@@ -46,7 +46,7 @@
 			refreshID()
 			update_icon()
 
-/obj/item/weapon/storage/wallet/refreshID()
+/obj/item/weapon/storage/wallet/proc/refreshID()
 	net_id.access.Cut()
 	for(var/obj/item/weapon/card/id/I in contents)
 		if(!front_id)
