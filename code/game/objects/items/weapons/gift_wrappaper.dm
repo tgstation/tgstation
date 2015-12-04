@@ -127,6 +127,7 @@
 //		/obj/item/toy/blink,	//this one reaaally needs a revamp. there's a limit to how lame a toy can be.
 		/obj/item/toy/crossbow,
 		/obj/item/toy/gun,
+		/obj/item/toy/bomb,
 		/obj/item/toy/katana,
 		/obj/item/toy/prize/deathripley,
 		/obj/item/toy/prize/durand,

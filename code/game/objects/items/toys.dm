@@ -6,6 +6,7 @@
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
+ *      Bomb clock
  *		Crayons
  *		Snap pops
  *		Water flower
@@ -363,6 +364,31 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
+ * Clock bomb
+ */
+/obj/item/toy/bomb
+	name = "commemorative Toxins clock"
+	desc = "A bright-colored plastic clock, commemorating 20 years of Nanotrasen's Plasma division. Comes with permanent snooze button, just twist the valve!"
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "valve"
+
+/obj/item/toy/bomb/New()
+	..()
+	overlays += "plasma"
+	var/icon/J = new(icon, icon_state = "oxygen")
+	J.Shift(WEST, 13)
+	underlays += J
+	overlays += "device"
+
+/obj/item/toy/bomb/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
+
+/obj/item/toy/bomb/attack_self(mob/user)
+	var/turf/T = get_turf(src)
+	T.visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+
+/*
  * Crayons
  */
 
@@ -605,20 +631,6 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
-
-/obj/item/toy/katana
-	name = "replica katana"
-	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "katana"
-	item_state = "katana"
-	flags = FPRINT
-	siemens_coefficient = 1
-	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 5
-	throwforce = 5
-	w_class = 3
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
  * OMG THEIF

@@ -23,6 +23,7 @@
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
 							/obj/item/toy/sword								= 2,
+							/obj/item/toy/bomb								= 1,
 							/obj/item/toy/gun								= 2,
 							/obj/item/toy/crossbow							= 2,
 							/obj/item/clothing/suit/syndicatefake			= 2,
@@ -82,7 +83,7 @@
 	A.game_data.len = 0
 	A.game_data["name"] = name
 	A.game_data["emagged"] = emagged
-	A.game_data["enemy_name"] = enemy_name 
+	A.game_data["enemy_name"] = enemy_name
 	A.game_data["temp"] = temp
 	A.game_data["player_hp"] = player_hp
 	A.game_data["player_mp"] = player_mp

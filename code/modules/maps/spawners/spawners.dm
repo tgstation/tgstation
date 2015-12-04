@@ -486,6 +486,7 @@
 		/obj/item/toy/gun,
 		/obj/item/toy/snappop,
 		/obj/item/toy/sword,
+		/obj/item/toy/bomb,
 		/obj/item/clothing/mask/facehugger/toy,
 		/obj/item/trash/candle,
 		/obj/item/trash/candy,
@@ -928,5 +929,3 @@
 		/obj/item/seeds/whitebeetseed,
 		/obj/item/seeds/cinnamomum,
 		)
-
-
