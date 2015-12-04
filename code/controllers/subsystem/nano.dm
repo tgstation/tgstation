@@ -11,12 +11,10 @@ var/datum/subsystem/nano/SSnano
 
 
 /datum/subsystem/nano/New()
-	NEW_SS_GLOBAL(SSnano) // Register the subsystem.
-
+	NEW_SS_GLOBAL(SSnano)
 
 /datum/subsystem/nano/stat_entry()
 	..("O:[open_uis.len]|P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
-
 
 /datum/subsystem/nano/fire() // Process UIs.
 	for(var/thing in processing_uis)

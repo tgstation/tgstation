@@ -20,7 +20,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-		//These bible variables should be a preference
+	//These bible variables should be a preference
 	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
 	var/Bible_item_state					//item_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
@@ -178,8 +178,7 @@ var/datum/subsystem/ticker/ticker
 	equip_characters()
 	data_core.manifest()
 
-	master_controller.roundHasStarted()
-
+	Master.RoundStart()
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
