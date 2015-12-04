@@ -1,4 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - bugfix: "Voice Changer now inherits flags_inv from the spite you have selected for it (e.g.: cigarette will no longer hide your face/glasses)"
