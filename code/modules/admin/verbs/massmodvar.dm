@@ -465,7 +465,7 @@
 					A.on_varedit(variable)
 
 		else if(istype(O,/turf))
-			for(var/turf/A in world)
+			for(var/turf/A in block(locate(1,1,1),locate(world.maxx,world.maxy,world.maxz)))
 				if(istype(A,O.type))
 					A.on_varedit(variable)
 
