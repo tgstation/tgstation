@@ -1326,6 +1326,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\statue.dm"
 #include "code\modules\mob\living\simple_animal\hostile\syndicate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\tree.dm"
+#include "code\modules\mob\living\simple_animal\hostile\venus_human_trap.dm"
 #include "code\modules\mob\living\simple_animal\hostile\wizard.dm"
 #include "code\modules\mob\living\simple_animal\hostile\zombie.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\bat.dm"
