@@ -23,6 +23,7 @@
 			MoMMI.static_overlays.Remove(I) //no checks, since it's either there or its not
 			MoMMI.client.images.Remove(I)
 			qdel(I)
+			I = null
 	if(static_overlays)
 		static_overlays = null
 
@@ -30,6 +31,7 @@
 		for(var/datum/butchering_product/B in butchering_drops)
 			butchering_drops -= B
 			qdel(B)
+			B = null
 
 	. = ..()
 
@@ -514,6 +516,7 @@ Thanks.
 					O.implants -= s
 					H.contents -= s
 					qdel(s)
+					s = null
 			O.amputated = 0
 			O.brute_dam = 0
 			O.burn_dam = 0
@@ -719,6 +722,7 @@ Thanks.
 			var/mob/living/Location = H.loc
 			Location.drop_from_inventory(H)
 		qdel(H)
+		H = null
 		return
 
 	//Detaching yourself from a tether
@@ -778,6 +782,7 @@ Thanks.
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
+			O = null
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++

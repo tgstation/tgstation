@@ -108,6 +108,7 @@
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc
 		qdel(L)
+		L = null
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)

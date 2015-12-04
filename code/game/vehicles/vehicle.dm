@@ -182,6 +182,7 @@
 					mecha.loc.assume_air(leaked_gas)
 				else
 					qdel(leaked_gas)
+					leaked_gas = null
 		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			if(mecha.get_charge())
 				mecha.spark_system.start()

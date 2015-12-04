@@ -243,6 +243,7 @@ That prevents a few funky behaviors.
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
 							qdel(T)
+							T = null
 			if("AIFIXER")//AI Fixer terminal.
 				var/obj/machinery/computer/aifixer/T = target
 				switch(interaction)

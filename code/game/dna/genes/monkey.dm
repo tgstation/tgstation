@@ -92,6 +92,7 @@
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	H.monkeyizing = 0
 	qdel(M)
+	M = null
 	return
 
 /datum/dna/gene/monkey/deactivate(var/mob/living/M, var/connected, var/flags)
@@ -182,4 +183,5 @@
 //		O.update_icon = 1	//queue a full icon update at next life() call
 	Mo.monkeyizing = 0
 	qdel(M)
+	M = null
 	return

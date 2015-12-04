@@ -49,6 +49,7 @@
 		if(prob(50))
 			I.visible_message("<span class='warning'>[I] catches fire!</span>")
 			qdel(I)
+			I = null
 		else
 			I.used = 0
 			charged_item = I

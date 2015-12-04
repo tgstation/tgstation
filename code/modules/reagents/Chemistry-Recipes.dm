@@ -1792,6 +1792,7 @@ datum
 									sleep(20)
 									M.client.screen -= blueeffect
 									qdel(blueeffect)
+									blueeffect = null
 		slimecrystal
 			name = "Slime Crystal"
 			id = "m_crystal"

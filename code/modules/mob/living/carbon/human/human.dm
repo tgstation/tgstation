@@ -169,6 +169,7 @@
 		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)
+				internal = null
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
@@ -1028,6 +1029,7 @@
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
+		H = null
 
 	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
 
@@ -1043,6 +1045,7 @@
 		var/datum/sprite_accessory/facial_hair/H = new x
 		fhairs.Add(H.name)
 		qdel(H)
+		H = null
 
 	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
 
@@ -1122,6 +1125,7 @@
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
+					H = null
 				if(H.borer)
 					H.borer.perform_infestation(src)
 					H.borer=null

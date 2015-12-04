@@ -63,6 +63,7 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 		if(L.name == "voxstart")
 			raider_spawn += get_turf(L)
 			qdel(L)
+			L = null
 			continue
 
 	//Generate objectives for the group.

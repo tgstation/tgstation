@@ -65,6 +65,7 @@
 		var/obj/item/stack/sheet/wetleather/WL = new(src)
 		WL.amount = HH.amount
 		qdel(HH)
+		HH = null
 
 
 	if(crayon)
@@ -99,9 +100,11 @@
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
 					qdel(J)
+					J = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(J)
+				J = null
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
@@ -110,9 +113,11 @@
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
 					qdel(G)
+					G = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(G)
+				G = null
 			for(var/T in typesof(/obj/item/clothing/shoes))
 				var/obj/item/clothing/shoes/S = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
@@ -120,9 +125,11 @@
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
 					qdel(S)
+					S = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(S)
+				S = null
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
@@ -130,9 +137,11 @@
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					qdel(B)
+					N = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(B)
+				B = null
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
@@ -140,9 +149,11 @@
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
 					qdel(H)
+					H = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
 				qdel(H)
+				H = null
 
 			for(var/T in typesof(/obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/test = new T
@@ -150,8 +161,10 @@
 //					to_chat(world, "Found the right cable coil, _color: [test._color]")
 					ccoil_test = 1
 					qdel(test)
+					test = null
 					break
 				qdel(test)
+				test = null
 
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
@@ -240,6 +253,7 @@
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
 				G.affecting.loc = src
 				qdel(G)
+				G = null
 				wash_state = 3
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \

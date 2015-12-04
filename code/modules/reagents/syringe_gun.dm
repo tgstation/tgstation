@@ -77,6 +77,7 @@
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		syringes -= S
 		qdel(S)
+		S = null
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)

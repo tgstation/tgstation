@@ -165,6 +165,7 @@
 			flick("blspell", animation)
 			sleep(5)
 			qdel(animation)
+			animation = null
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		if(prob(50))

@@ -33,6 +33,7 @@
 		if(B.feral < 0)
 			caught_bees += B.strength
 			qdel(B)
+			B = null
 			user.visible_message("<span class='notice'>[user] nets some bees.</span>","<span class='notice'>You net up some of the becalmed bees.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] swings at some bees, they don't seem to like it.</span>","<span class='warning'>You swing at some bees, they don't seem to like it.</span>")
@@ -49,6 +50,7 @@
 		if(B.feral < 0)
 			caught_bees += B.strength
 			qdel(B)
+			B = null
 			user.visible_message("<span class='notice'>[user] nets some bees.</span>","<span class='notice'>You net up some of the becalmed bees.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] swings at some bees, they don't seem to like it.</span>","<span class='warning'>You swing at some bees, they don't seem to like it.</span>")

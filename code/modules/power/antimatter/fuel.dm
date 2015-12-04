@@ -30,6 +30,7 @@
 		if(istype(F, /obj/item/weapon/fuel/H))
 			src.fuel += F.fuel
 			qdel(F)
+			F = null
 			src:annihilation(src.fuel)
 	if(istype(src, /obj/item/weapon/fuel/H))
 		if(istype(F, /obj/item/weapon/fuel/H))

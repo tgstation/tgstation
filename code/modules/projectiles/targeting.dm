@@ -39,6 +39,7 @@
 			if(M)
 				M.NotTargeted(src) //Untargeting people.
 		qdel(target)
+		target = null
 
 //Compute how to fire.....
 /obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params, struggle = 0)
@@ -64,6 +65,7 @@
 				if(L)
 					L.NotTargeted(src)
 			qdel(target)
+			target = null
 			usr.visible_message("<span class='danger'>[usr] turns \the [src] on [M]!</span>")
 		else
 			usr.visible_message("<span class='danger'>[usr] aims \a [src] at [M]!</span>")
@@ -220,6 +222,7 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
 		qdel(I.target)
+		I.target = null
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
 		T.client.remove_gun_icons()
@@ -301,6 +304,7 @@ client/verb/AllowTargetMove()
 		to_chat(usr, "Target may no longer move.")
 		target_can_run = 0
 		qdel(usr.gun_run_icon)	//no need for icon for running permission
+		usr.gun_run_icon = null
 
 	//Updating walking permission button
 	if(usr.gun_move_icon)

@@ -419,6 +419,7 @@
 	O.changeling_update_languages(O.mind.changeling.absorbed_languages)
 	feedback_add_details("changeling_powers","LF")
 	qdel(C)
+	C =  null
 	return 1
 
 
@@ -464,6 +465,7 @@
 	flick("monkey2h", animation)
 	sleep(48)
 	qdel(animation)
+	animation = null
 
 	for(var/obj/item/W in src)
 		C.u_equip(W, 1)
@@ -505,6 +507,7 @@
 
 	feedback_add_details("changeling_powers","LFT")
 	qdel(C)
+	C = null
 	return 1
 
 

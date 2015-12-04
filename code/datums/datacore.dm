@@ -273,6 +273,8 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 	if(clothes_s)
 		preview_icon.Blend(clothes_s, ICON_OVERLAY)
 	qdel(eyes_s)
+	eyes_s = null
 	qdel(clothes_s)
+	clothes_s = null
 
 	return preview_icon

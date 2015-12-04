@@ -180,6 +180,7 @@ var/prison_shuttle_timeleft = 0
 						AM.Move(D)
 					if(istype(T, /turf/simulated))
 						qdel(T)
+						T = null
 				start_location.move_contents_to(end_location)
 
 			if(1)

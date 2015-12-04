@@ -45,6 +45,7 @@
 		D.has_loot = 0
 
 		qdel(D)
+		D = null
 		num_recovered++
 
 	if(num_recovered > drones_list.len * 0.75)

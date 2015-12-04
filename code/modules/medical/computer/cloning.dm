@@ -267,6 +267,7 @@
 		if(istype(src.active_record,/datum/dna2/record))
 			if ((isnull(src.active_record.ckey)))
 				qdel(src.active_record)
+				src.active_record = null
 				src.temp = "ERROR: Record Corrupt"
 			else
 				src.menu = 3
@@ -287,6 +288,7 @@
 				if(src.check_access(C))
 					src.records.Remove(src.active_record)
 					qdel(src.active_record)
+					src.active_record = null
 					src.temp = "Record deleted."
 					src.menu = 2
 				else
@@ -356,6 +358,7 @@
 				temp = "Initiating cloning cycle..."
 				records.Remove(C)
 				qdel(C)
+				C = null
 				menu = 1
 			else
 

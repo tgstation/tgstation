@@ -571,6 +571,7 @@
 		A.skin = "o2"
 
 	qdel(S)
+	S = null
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
 	user.drop_from_inventory(src)

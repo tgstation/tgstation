@@ -25,6 +25,7 @@
 	blob_cores -= src
 	if(overmind)
 		qdel(overmind)
+		overmind = null
 	processing_objects.Remove(src)
 	..()
 
@@ -77,6 +78,7 @@
 
 	if(overmind)
 		qdel(overmind)
+		overmind = null
 
 	var/client/C = null
 	var/list/candidates = list()

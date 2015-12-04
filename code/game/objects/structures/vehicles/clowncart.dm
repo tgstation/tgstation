@@ -176,6 +176,7 @@
 					visible_message("<span class='notice'>You hear a ping as [src]'s SynthPeel Generator starts transforming banana juice into slippery peels.</span>")
 					playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 1)
 		qdel(W)
+		W = null
 	else if(istype(W, /obj/item/toy/crayon/)) //Any crayon
 		if(mode == MODE_DRAWING)
 			printing_text = lowertext(input(user, "Enter a message to print. Possible options: 'rune', 'graffiti', 'paint', 'nothing'", "Message", printing_text))

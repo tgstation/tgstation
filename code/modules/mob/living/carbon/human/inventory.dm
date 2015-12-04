@@ -111,6 +111,7 @@
 	switch (act_on_fail)
 		if(EQUIP_FAILACTION_DELETE)
 			qdel(W)
+			W = null
 		if(EQUIP_FAILACTION_DROP)
 			W.loc=get_turf(src) // I think.
 	return null

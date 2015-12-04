@@ -109,4 +109,5 @@
 		src.slowdown = 15
 		src.icon_state = "orange1"
 		qdel(H)
+		H = null
 	return

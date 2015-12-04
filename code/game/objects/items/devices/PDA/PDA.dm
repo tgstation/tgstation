@@ -1515,6 +1515,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/to_remove = text2num(href_list["rMark"])
 				var/datum/minimap_marker/mkr = app.markers[to_remove]
 				qdel(mkr)
+				mkr = null
 
 //GAME FUNCTIONS====================================
 
@@ -2243,6 +2244,7 @@ obj/item/device/pda/AltClick()
 					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
 					if(C:blood_DNA)
 						qdel(C:blood_DNA)
+						C:blood_DNA = null
 				else
 					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
 					spawn(15)

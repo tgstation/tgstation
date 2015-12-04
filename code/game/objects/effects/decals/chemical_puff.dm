@@ -14,6 +14,7 @@
 
 /obj/effect/decal/chemical_puff/Destroy()
 	qdel(reagents)
+	reagents = null
 	..()
 
 // Reacts with the current turf and its contents

@@ -1219,6 +1219,7 @@ About the new airlock wires panel:
 
 				spawn (20)
 					qdel(S)
+					S = null
 
 				L.emote("scream",,, 1)
 

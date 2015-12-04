@@ -317,6 +317,7 @@
 	if(isprox(D))
 		to_chat(user, "You add \the [D] to \the [src].")
 		qdel(D)
+		D = null
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
 		qdel(src)

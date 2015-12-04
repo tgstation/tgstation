@@ -39,6 +39,7 @@
 	flick("cultfloor",animation)
 	spawn(10)
 		qdel(animation)
+		animation = null
 
 /spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
@@ -58,6 +59,7 @@
 	flick("cultwall",animation)
 	spawn(10)
 		qdel(animation)
+		animation = null
 
 /spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"

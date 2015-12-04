@@ -140,6 +140,7 @@ var/list/beam_master = list()
 			continue
 		if(TT.density)
 			qdel(X)
+			X = null
 			break
 		for(var/atom/O in TT)
 			if(!O.CanPass(src))
@@ -150,11 +151,13 @@ var/list/beam_master = list()
 			if(istype(O, /mob/living))
 				if(O.density)
 					qdel(X)
+					X = null
 					broke = 1
 					break
 		if(broke)
 			if(X)
 				qdel(X)
+				X = null
 			break
 	spawn(10)
 		for(var/atom/thing in ouroverlays)

@@ -182,7 +182,9 @@
 		HI.Insert(J, frame=2, delay = 5)
 
 		qdel(I)
+		I = null
 		qdel(J)
+		J = null
 		H.icon = HI
 		H.layer = 25
 		usr.mapobjs += H
@@ -308,6 +310,7 @@
 
 		H.icon = I
 		qdel(I)
+		I = null
 		H.layer = 25
 		usr.mapobjs += H
 

@@ -34,6 +34,7 @@
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
+		air_contents = null
 
 	processing_objects.Remove(src)
 

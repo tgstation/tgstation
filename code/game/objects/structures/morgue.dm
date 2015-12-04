@@ -75,6 +75,7 @@
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
 		qdel(src.connected)
+		src.connected = null
 	else
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
@@ -89,8 +90,8 @@
 			src.connected.icon_state = "morguet"
 			src.connected.dir = src.dir
 		else
-			//src.connected = null
 			qdel(src.connected)
+			src.connected = null
 	src.add_fingerprint(user)
 	update()
 	return
@@ -264,8 +265,8 @@
 			if (!( A.anchored ))
 				A.loc = src
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		//src.connected = null
 		qdel(src.connected)
+		src.connected = null
 	else if (src.locked == 0)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/c_tray( src.loc )
@@ -279,8 +280,8 @@
 				A.loc = src.connected.loc
 			src.connected.icon_state = "cremat"
 		else
-			//src.connected = null
 			qdel(src.connected)
+			src.connected = null
 	src.add_fingerprint(user)
 	update()
 
@@ -314,8 +315,8 @@
 			//Foreach goto(106)
 		src.connected.icon_state = "cremat"
 	else
-		//src.connected = null
 		qdel(src.connected)
+		src.connected = null
 	return
 
 /obj/structure/crematorium/proc/cremate(mob/user)
@@ -358,6 +359,7 @@
 			M.death(1)
 			M.ghostize()
 			qdel(M)
+			M = null
 
 		for (var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			qdel(O)

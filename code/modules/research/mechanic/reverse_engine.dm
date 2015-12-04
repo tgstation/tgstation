@@ -228,6 +228,7 @@
 		if(design)
 			research_queue -= design
 			qdel(design)
+			design = null
 		ui_interact(usr)
 		return 1
 
@@ -236,6 +237,7 @@
 		if(design)
 			ready_queue -= design
 			qdel(design)
+			design = null
 		ui_interact(usr)
 		return 1
 

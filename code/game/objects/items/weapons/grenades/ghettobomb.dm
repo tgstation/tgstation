@@ -11,6 +11,7 @@
         to_chat(user, "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>")
         W.underlays += image(src.icon, icon_state = src.icon_state)
         qdel(I)
+        I = null
         qdel(src)
 
 

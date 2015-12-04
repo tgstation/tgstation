@@ -36,6 +36,7 @@
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(num_stored_bags < 10)
 			qdel(W)
+			W = null
 			num_stored_bags += 1
 			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
 		else

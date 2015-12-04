@@ -345,10 +345,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									linked_destroy.loaded_item = S
 								else
 									qdel(S)
+									S = null
 									linked_destroy.icon_state = "d_analyzer"
 							else
 								if(!(I in linked_destroy.component_parts))
 									qdel(I)
+									I = null
 									linked_destroy.icon_state = "d_analyzer"
 						use_power(250)
 						screen = 1.0

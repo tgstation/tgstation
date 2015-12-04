@@ -52,6 +52,7 @@
 			else
 				user.drop_item(G)
 				qdel(target)
+				target = null
 				to_chat(user, "<span class='notice'>You stuff the monkey in the machine.")
 				playsound(get_turf(src), 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)

@@ -1879,6 +1879,7 @@
 						t_air.merge(removed)
 					else //just delete the cabin gas, we're in space or some shit
 						qdel(removed)
+						removed = null
 		else
 			return stop()
 		return
@@ -1922,6 +1923,7 @@
 					mecha.loc.assume_air(leaked_gas)
 				else
 					qdel(leaked_gas)
+					leaked_gas = null
 		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			if(mecha.get_charge())
 				mecha.spark_system.start()

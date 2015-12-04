@@ -369,6 +369,7 @@
 				// C is center
 				// R is random (in magnetic field's bounds)
 				qdel(signal)
+				signal = null
 				break // break the loop if the character located is invalid
 
 			signal.data["command"] = nextmove

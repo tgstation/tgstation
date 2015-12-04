@@ -22,8 +22,10 @@
 		//DESTROYING STUFF AT THE EPICENTER
 		for(var/mob/living/M in orange(1,src))
 			qdel(M)
+			M = null
 		for(var/obj/O in orange(1,src))
 			qdel(O)
+			O = null
 		for(var/turf/simulated/ST in orange(1,src))
 			ST.ChangeTurf(get_base_turf(ST.z))
 

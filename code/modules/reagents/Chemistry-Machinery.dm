@@ -218,6 +218,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					B.create_reagents(B.volume)
 				else
 					qdel(B)
+					B = null
 					return
 			var/space = R.maximum_volume - R.total_volume
 
@@ -1543,6 +1544,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
 	holdingitems -= O
 	qdel(O)
+	O = null
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()

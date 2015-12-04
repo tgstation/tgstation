@@ -132,6 +132,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 		qdel(I)
+		I = null
 		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/wirecutters))
@@ -143,6 +144,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>")
 		qdel(I)
+		I =  null
 		qdel(src)
 
 

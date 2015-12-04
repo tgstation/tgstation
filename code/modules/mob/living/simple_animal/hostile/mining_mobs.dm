@@ -178,6 +178,7 @@
 		if(!(O.type in ore_types_eaten))
 			ore_types_eaten += O.type
 		qdel(O)
+		O = null
 	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
 		ore_eaten = 5
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")

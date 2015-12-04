@@ -113,6 +113,7 @@
 		if (isobj(target))
 			if (target)
 				qdel(target)
+				target = null
 	qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)

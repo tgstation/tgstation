@@ -26,6 +26,7 @@ datum/puddle/Del()
 	puddles -= src
 	for(var/obj/O in liquid_objects)
 		qdel(O)
+		O = null
 	..()
 
 client/proc/splash()
@@ -70,6 +71,7 @@ obj/effect/liquid/New()
 	for( var/obj/effect/liquid/L in loc )
 		if(L != src)
 			qdel(L)
+			L = null
 
 obj/effect/liquid/proc/spread()
 

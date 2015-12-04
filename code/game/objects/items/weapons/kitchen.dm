@@ -83,6 +83,7 @@
 		reagents.trans_to(M.reagents, reagents.total_volume)
 		overlays -= loaded_food
 		qdel(loaded_food)
+		loaded_food = null
 		loaded_food_name = null
 		return
 	else

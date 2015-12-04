@@ -11,6 +11,7 @@
 					M.death(1)
 					stomach_contents.Remove(M)
 					qdel(M)
+					M = null
 					continue
 				if(air_master.current_cycle % 3 == 1)
 					if(!(M.status_flags & GODMODE))

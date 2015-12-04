@@ -55,6 +55,7 @@
 				//I.pin = C.pin
 				//replace old ID
 				qdel(C)
+				C = null
 				ok = M.equip_if_possible(I, slot_wear_id, 0)	//if 1, last argument deletes on fail
 				break
 			testing("Replaced ID!")

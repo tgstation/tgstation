@@ -331,6 +331,7 @@
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
 		qdel(cover)
+		cover = null
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)

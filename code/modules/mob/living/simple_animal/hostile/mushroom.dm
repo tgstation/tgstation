@@ -129,6 +129,7 @@
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
+			I = null
 		else
 			to_chat(user, "<span class='notice'>[src] won't eat it!</span>")
 		return

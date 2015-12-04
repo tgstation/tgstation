@@ -577,6 +577,7 @@
 			for(var/obj/item/W in C)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
 					qdel(W)
+					W = null
 					continue
 				W.layer = initial(W.layer)
 				W.loc = C.loc
@@ -1016,6 +1017,7 @@
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					qdel(H.head)
+					H.head = null
 					H.update_inv_head()
 					to_chat(H, "<span class='warning'>Your helmet melts away but protects you from the acid</span>")
 				else
@@ -1064,6 +1066,7 @@
 			I.desc = "Looks like this was \an [O] some time ago."
 			O.visible_message("<span class='warning'>\The [O] melts.</span>")
 			qdel(O)
+			O = null
 
 /datum/reagent/pacid
 	name = "Polytrinic acid"
@@ -1098,6 +1101,7 @@
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					qdel(H.head)
+					H.head = null
 					H.update_inv_head()
 					to_chat(H, "<span class='warning'>Your helmet melts away but protects you from the acid</span>")
 				else
@@ -1145,6 +1149,7 @@
 			I.desc = "Looks like this was \an [O] some time ago."
 			O.visible_message("<span class='warning'>\The [O] melts.</span>")
 			qdel(O)
+			O = null
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -1555,6 +1560,7 @@
 		alien_weeds.healthcheck()
 	else if(istype(O, /obj/effect/glowshroom)) //Even a small amount is enough to kill it
 		qdel(O)
+		O = null
 	else if(istype(O,/obj/effect/plantsegment))
 		if(prob(50))
 			qdel(O) //Kills kudzu too.
@@ -2807,6 +2813,7 @@
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
+		hotspot = null
 
 /datum/reagent/enzyme
 	name = "Universal Enzyme"

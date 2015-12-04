@@ -20,6 +20,7 @@
 		var/obj/item/weapon/capsule/b = new(src.loc)
 		b.icon_state = "capsule[rand(1,12)]"
 		qdel(O)
+		O = null
 	else
 		return ..()
 

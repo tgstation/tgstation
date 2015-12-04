@@ -57,6 +57,7 @@
 	i:amount--
 	if(i:amount < 1)
 		qdel(i)
+		i = null
 	ressources += 30
 	update_icon()
 

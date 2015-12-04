@@ -755,7 +755,9 @@
 					special_role = null
 					current.remove_changeling_powers()
 					current.verbs -= /datum/changeling/proc/EvolutionMenu
-					if(changeling)	qdel(changeling)
+					if(changeling)
+						qdel(changeling)
+						changeling = null
 					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
 			if("changeling")
@@ -793,7 +795,9 @@
 					ticker.mode.vampires -= src
 					special_role = null
 					current.remove_vampire_powers()
-					if(vampire)	qdel(vampire)
+					if(vampire)
+						qdel(vampire)
+						vampire = null
 					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a vampire and are stuck in your current form!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-vampired [current].")
 			if("vampire")
@@ -926,6 +930,7 @@
 					m2h.inject(M)
 					src = mobfinder.loc:mind
 					qdel(mobfinder)
+					mobfinder = null
 					current.radiation -= 50
 
 	else if (href_list["silicon"])
@@ -945,6 +950,7 @@
 
 					A.laws = new base_law_type
 					qdel(A.malf_picker)
+					A.malf_picker = null
 					A.show_laws()
 					A.icon_state = "ai"
 

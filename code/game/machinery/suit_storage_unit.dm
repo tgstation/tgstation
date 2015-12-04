@@ -582,6 +582,7 @@
 			//	O.loc = src.loc
 			src.add_fingerprint(user)
 			qdel(G)
+			G = null
 			src.updateUsrDialog()
 			src.update_icon()
 			return

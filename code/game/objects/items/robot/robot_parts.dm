@@ -275,6 +275,7 @@
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item(W)
 		qdel(W)
+		W = null
 		qdel(src)
 		return
 	return

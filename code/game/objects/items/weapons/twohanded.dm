@@ -91,6 +91,7 @@
 			W.Destroy(brokenup = 1)
 		else
 			qdel(A)
+			A = null
 
 
 /*

@@ -330,6 +330,7 @@
 						code = S.code
 					user.drop_item(W)
 					qdel(W)
+					W = null
 					has_signaler = 1
 					update_icon()
 					return

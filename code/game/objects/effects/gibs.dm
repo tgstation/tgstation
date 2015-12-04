@@ -38,6 +38,7 @@
 		if(D.spread_type == SPECIAL)
 			D.cure(1)
 			qdel(D)
+			D = null
 
 	if(sparks)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

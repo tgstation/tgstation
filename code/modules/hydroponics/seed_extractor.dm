@@ -188,6 +188,7 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 			if (N.amount <= 0)
 				piles -= N
 				qdel(N)
+				N = null
 			break
 
 	for (var/obj/T in contents)//Now we find the seed we need to vend

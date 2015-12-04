@@ -477,6 +477,7 @@
 		to_chat(user, "<span class='notice'>You rig [src].</span>")
 		user.drop_item(W)
 		qdel(W)
+		W = null
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))

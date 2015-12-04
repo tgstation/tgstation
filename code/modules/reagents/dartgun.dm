@@ -152,6 +152,7 @@
 		src.update_icon()
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		qdel(S)
+		S = null
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		D.flags |= NOREACT
@@ -196,15 +197,21 @@
 					to_chat(M, "<span class='danger'>You feel a slight prick.</span>")
 
 					qdel(D)
+					D = null
 					break
 			if(D)
 				for(var/atom/A in D.loc)
 					if(A == user) continue
-					if(A.density) qdel(D)
+					if(A.density)
+						qdel(D)
+						D = null
 
 			sleep(1)
 
-		if (D) spawn(10) qdel(D)
+		if (D)
+			spawn(10)
+			qdel(D)
+			D = null
 
 		return
 

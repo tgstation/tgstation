@@ -48,6 +48,7 @@
 		injecting = 1
 		var/fuel = F.fuel
 		qdel(F)
+		F = null
 		spawn( 300 )
 			injecting = 0
 			new/obj/item/weapon/fuel(src.loc)
@@ -61,6 +62,7 @@
 		injecting = 1
 		var/fuel = F.fuel
 		qdel(F)
+		F = null
 		spawn( 300 )
 			injecting = 0
 			new /obj/item/weapon/fuel(src.loc)

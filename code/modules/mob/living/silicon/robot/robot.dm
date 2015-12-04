@@ -1191,6 +1191,7 @@
 /mob/living/silicon/robot/update_targeted()
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
+		target_locked = null
 	updateicon()
 	if (targeted_by && target_locked)
 		overlays += target_locked

@@ -50,6 +50,7 @@
 		return 1
 
 	qdel(G)
+	G = null
 	return
 
 /obj/item/weapon/tank/jetpack/ui_action_click()

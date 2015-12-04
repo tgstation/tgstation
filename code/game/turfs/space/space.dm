@@ -140,6 +140,7 @@
 	if(src.x <= 1)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 			qdel(A)
+			A = null
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -165,6 +166,7 @@
 	else if (src.x >= world.maxx)
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
+			A = null
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -190,6 +192,7 @@
 	else if (src.y <= 1)
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
+			A = null
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return
@@ -215,6 +218,7 @@
 	else if (src.y >= world.maxy)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 			qdel(A)
+			A = null
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return

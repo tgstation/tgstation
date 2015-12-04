@@ -87,6 +87,7 @@
 			if(!G.amount)
 				user.drop_item(G)
 				qdel(G)
+				G = null
 			AddUses(increment)
 			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
@@ -99,6 +100,7 @@
 				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
 				user.drop_item(L)
 				qdel(L)
+				L = null
 				return
 		else
 			to_chat(user, "You need a working light.")
@@ -171,6 +173,7 @@
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
+			L2 = null
 
 			if(target.on && target.rigged)
 				target.explode()

@@ -605,6 +605,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			spark_system.start()
 			spawn(10)
 				qdel(spark_system)
+				spark_system = null
 
 		if(organ)
 			owner.visible_message("<span class='danger'>[owner.name]'s [display_name] flies off in an arc.</span>", \
@@ -834,6 +835,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		spark_system.start()
 		spawn(10)
 			qdel(spark_system)
+			spark_system = null
 		if(!isturf(c_hand.loc) || !istype(c_hand.loc, /obj/structure/closet))
 			c_hand.loc = get_turf(c_hand)
 

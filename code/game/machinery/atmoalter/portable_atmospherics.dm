@@ -35,6 +35,7 @@
 
 /obj/machinery/portable_atmospherics/Destroy()
 	qdel(air_contents)
+	air_contents = null
 	..()
 
 /obj/machinery/portable_atmospherics/update_icon()

@@ -714,6 +714,7 @@ var/global/list/floorbot_targets=list()
 	if(user.s_active)
 		user.s_active.close(user)
 	qdel(T)
+	T = null
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
@@ -724,6 +725,7 @@ var/global/list/floorbot_targets=list()
 	..()
 	if(isprox(W))
 		qdel(W)
+		W = null
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)

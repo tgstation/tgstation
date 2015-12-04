@@ -226,6 +226,7 @@
 		if(bullets <= 4)
 			user.drop_item()
 			qdel(I)
+			I = null
 			bullets++
 			to_chat(user, "<span class = 'info'>You load the foam dart into the crossbow.</span>")
 		else
@@ -258,6 +259,7 @@
 						O.show_message(text("<span class = 'danger'>[] was hit by the foam dart!</span>", M), 1)
 					new /obj/item/toy/ammo/crossbow(M.loc)
 					qdel(D)
+					D = null
 					return
 
 				for(var/atom/A in D.loc)
@@ -265,6 +267,7 @@
 					if(A.density)
 						new /obj/item/toy/ammo/crossbow(A.loc)
 						qdel(D)
+						D = null
 
 			sleep(1)
 
@@ -272,6 +275,7 @@
 			if(D)
 				new /obj/item/toy/ammo/crossbow(D.loc)
 				qdel(D)
+				D = null
 
 		return
 	else if (bullets == 0)
@@ -546,6 +550,7 @@
 						to_chat(T:client, "<span class = 'danger'>[user] has sprayed you with water!</span>")
 				sleep(4)
 			qdel(D)
+			D = null
 
 		return
 

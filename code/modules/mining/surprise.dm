@@ -264,6 +264,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 			else if(complex_max_size==nrooms)
 				// Failed to make first room, abort.
 				qdel(complex_area)
+				complex_area = null
 				return 0
 			else
 				maxtries--

@@ -82,6 +82,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			immrod.z = 1
 		if(immrod.loc == end)
 			qdel(immrod)
+			immrod = null
 		sleep(10)
 	for(var/obj/effect/immovablerod/imm in world)
 		return

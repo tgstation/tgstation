@@ -11,6 +11,7 @@
 		if(I.type in typesof(path))
 			user.drop_item()
 			qdel(I)
+			I = null
 			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
 			return
 	user.drop_item()

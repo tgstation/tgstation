@@ -46,6 +46,7 @@
 			new src.output(loc)
 		if (what)
 			qdel(what)
+			what = null
 
 	/* objs */
 	meat
@@ -156,6 +157,7 @@
 						I.throw_at(pick(throwzone),rand(2,5),0)
 					hgibs(loc, target.viruses, target.dna, target.species.flesh_color, target.species.blood_color)
 					qdel(target)
+					target = null
 					for(var/i = 1;i<=6;i++)
 						new /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets(loc)
 						sleep(2)

@@ -372,7 +372,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(N.chained)
 		if(narsimage)
 			qdel(narsimage)
+			narsimage = null
 			qdel(narglow)
+			narglow = null
 		return
 
 	//No need to make an exception for mechas, as they get deleted as soon as they get in view of narnar
@@ -440,7 +442,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	else
 		if(narsimage)
 			qdel(narsimage)
+			narsimage = null
 			qdel(narglow)
+			narglow = null
 
 /mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
 	var/turf/T_mob = get_turf(src)
@@ -459,6 +463,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	else
 		if(riftimage)
 			qdel(riftimage)
+			riftimage = null
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -503,6 +508,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 				switch(act_on_fail)
 					if(EQUIP_FAILACTION_DELETE)
 						qdel(W)
+						W = null
 					if(EQUIP_FAILACTION_DROP)
 						W.loc=get_turf(src) // I think.
 					else
@@ -546,6 +552,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 			switch(act_on_fail)
 				if(EQUIP_FAILACTION_DELETE)
 					qdel(W)
+					W = null
 				if(EQUIP_FAILACTION_DROP)
 					W.loc=get_turf(src) // I think.
 				else
@@ -1124,6 +1131,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)
+		M = null
 		return
 
 	M.key = key

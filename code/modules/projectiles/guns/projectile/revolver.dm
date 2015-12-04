@@ -108,6 +108,7 @@
 
 	for(var/obj/item/ammo_casing/AC in loaded)
 		qdel(AC)
+		AC = null
 	loaded = list()
 	var/random = rand(1, max_shells)
 	for(var/i = 1; i <= max_shells; i++)

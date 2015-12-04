@@ -513,6 +513,7 @@ var/global/list/nlist = list( \
 		// If the pipe's still around, nuke it.
 		if(P)
 			qdel(P)
+			P = null
 	return 1
 	 //TODO: DEFERRED
 

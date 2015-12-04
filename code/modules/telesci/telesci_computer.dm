@@ -307,6 +307,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 				return
 			if(prob(25))
 				qdel(telepad.amplifier)
+				telepad.amplifier = null
 				src.visible_message("\icon[src]<span class='notice'>You hear something shatter.</span>","\icon[src]<span class='notice'>You hear something shatter.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)

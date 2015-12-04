@@ -223,6 +223,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	dead = 0
 	if(myseed) // In case there's nothing in the tray beforehand
 		qdel(myseed)
+		myseed = null
 	switch(rand(1,18))		// randomly pick predominative weed
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishimycelium
@@ -524,6 +525,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		mutmod = myNut.mutmod
 		to_chat(user, "You replace the nutrient solution in the [src].")
 		qdel(O)
+		O = null
 		updateicon()
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
@@ -789,6 +791,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		to_chat(user, "You apply the weedkiller solution into the [src].")
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		qdel(O)
+		O = null
 		updateicon()
 
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
@@ -811,6 +814,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		to_chat(user, "You apply the pestkiller solution into the [src].")
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		qdel(O)
+		O = null
 		updateicon()
 	else if(istype(O, /obj/item/weapon/shovel))
 		if(istype(src, /obj/machinery/hydroponics/soil))
@@ -822,6 +826,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			user.drop_item()
 			qdel(O)
+			O = null
 
 			var/obj/machinery/apiary/A = new(src.loc)
 			A.icon = src.icon
@@ -831,7 +836,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.contents = contents.Copy()
 			contents.len = 0
 			component_parts.len = 0
-			qdel(src)
+			f(src)
 	return
 
 /obj/machinery/hydroponics/togglePanelOpen(var/obj/toggleitem, mob/user)
@@ -853,6 +858,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		dead = 0
 		to_chat(usr, text("You remove the dead plant from the [src]."))
 		qdel(myseed)
+		myseed = null
 		updateicon()
 	else
 		if(planted && !dead)
@@ -982,6 +988,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		to_chat(user, text("You harvest from the [myseed.plantname]."))
 	if(myseed.oneharvest)
 		qdel(myseed)
+		myseed = null
 		planted = 0
 		dead = 0
 	updateicon()

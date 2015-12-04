@@ -83,6 +83,7 @@
 					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")
 				qdel(terminal)
+				terminal = null
 		else
 			user.set_machine(src)
 			interact(user)

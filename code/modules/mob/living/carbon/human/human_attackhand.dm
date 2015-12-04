@@ -288,6 +288,7 @@
 						talked = 1
 					spawn(1)
 						qdel(lgrab)
+						lgrab = null
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
@@ -295,6 +296,7 @@
 						talked = 1
 					spawn(1)
 						qdel(rgrab)
+						rgrab = null
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
