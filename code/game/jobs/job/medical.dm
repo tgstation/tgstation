@@ -39,8 +39,12 @@ Chief Medical Officer
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel_med
 
-/datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	announce_head(H, list("Medical")) //tell underlings (medical radio) they have a head
 
 /*
@@ -98,6 +102,7 @@ Chemist
 /datum/outfit/job/chemist
 	name = "Chemist"
 
+	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/device/pda/chemist
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/chemist

@@ -289,7 +289,7 @@
 
 	return shredded
 
-/mob/living/carbon/human/proc/equipOutfit(outfit)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -301,4 +301,4 @@
 	if(!O)
 		return 0
 
-	return O.equip(src)
+	return O.equip(src, visualsOnly)

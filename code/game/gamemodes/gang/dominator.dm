@@ -15,6 +15,7 @@
 /obj/machinery/dominator/New()
 	..()
 	SetLuminosity(2)
+	poi_list |= src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -41,10 +42,10 @@
 			if(!warned && (gang.dom_timer < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [initial(domloc.name)]!")
+				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [domloc.map_name]!")
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(G != gang)
-						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [initial(domloc.name)] must be destroyed!",1,1)
+						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 		else
 			SSmachine.processing -= src
 
@@ -109,6 +110,7 @@
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
 		set_broken()
+	poi_list.Remove(src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)

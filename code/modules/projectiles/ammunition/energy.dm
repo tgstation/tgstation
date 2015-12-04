@@ -110,7 +110,13 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg' // fine spelling there chap
+
+/obj/item/ammo_casing/energy/kinetic/super
+	projectile_type = /obj/item/projectile/kinetic/super
+
+/obj/item/ammo_casing/energy/kinetic/hyper
+	projectile_type = /obj/item/projectile/kinetic/hyper
 
 /obj/item/ammo_casing/energy/disabler
 	projectile_type = /obj/item/projectile/beam/disabler

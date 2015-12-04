@@ -5,6 +5,7 @@
 	desc = "A thick spire of tendrils."
 	health = 200
 	maxhealth = 200
+	point_return = 25
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0

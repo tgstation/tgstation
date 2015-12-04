@@ -497,3 +497,57 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+
+/obj/item/clothing/under/plasmaman
+	name = "Plasma-man Jumpsuit"
+	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
+	icon_state = "plasmaman"
+	item_state = "plasmaman"
+	item_color = "plasmaman"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	can_adjust = 0
+	strip_delay = 80
+	var/next_extinguish = 0
+	var/extinguish_cooldown = 100
+	var/extinguishes_left = 5
+
+
+/obj/item/clothing/under/plasmaman/examine(mob/user)
+	..()
+	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+
+
+/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	if(H.fire_stacks)
+		if(extinguishes_left)
+			if(next_extinguish > world.time)
+				return
+			next_extinguish = world.time + extinguish_cooldown
+			extinguishes_left--
+			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.ExtinguishMob()
+			PoolOrNew(/obj/effect/particle_effect/water, get_turf(H))
+	return 0
+
+/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
+	if (istype(E, /obj/item/device/extinguisher_refill))
+		if (extinguishes_left == 5)
+			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			return
+		else
+			extinguishes_left = 5
+			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			qdel(E)
+			return
+		return
+	return
+
+/obj/item/device/extinguisher_refill
+	name = "Plasma-man jumpsuit refill pack"
+	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	icon_state = "plasmarefill"
+

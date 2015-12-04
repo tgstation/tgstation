@@ -368,13 +368,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else		. = pick(ais)
 	return .
 
-//Returns a list of all mobs with their name
-/proc/getmobs()
-
+//Returns a list of all items of interest with their name
+/proc/getpois(mobs_only=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
-	var/list/creatures = list()
+	var/list/pois = list()
 	var/list/namecounts = list()
+
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -390,10 +390,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-		creatures[name] = M
+		pois[name] = M
 
-	return creatures
+	if(!mobs_only)
+		for(var/atom/A in poi_list)
+			if(!A || !A.loc)
+				continue
+			var/name = A.name
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			pois[name] = A
 
+	return pois
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
@@ -693,14 +705,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(timefraction)
 		if(!user || !target)
 			continue_looping = 0
-			
+
 		if (continue_looping && !uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
 			continue_looping = 0
-		
+
 		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
 		if(!continue_looping)
 			return 0
-			
+
 	cancel_progress_bar(user, progbar)
 	return 1
 
@@ -711,11 +723,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
 		progbar.pixel_y = 32
 		return progbar
-		
+
 /proc/cancel_progress_bar(mob/user, image/progbar)
 	if(user && user.client && progbar)
 		user.client.images -= progbar
-	
+
 /proc/assign_progress_bar(mob/user, image/progbar)
 	if(user && user.client && progbar)
 		user.client.images |= progbar
@@ -732,22 +744,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		Tloc = target.loc
 
 	var/delayfraction = round(delay/numticks)
-	
+
 	var/atom/Uloc = user.loc
-	
+
 	var/holding = user.get_active_hand()
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
-		
+
 	var/image/progbar
-	
-	var/continue_looping = 1 
+
+	var/continue_looping = 1
 	for (var/i = 1 to numticks)
 		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
 			assign_progress_bar(user, progbar)
-		
+
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
 			continue_looping = 0
@@ -763,11 +775,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					continue_looping = 0
 			if(continue_looping && user.get_active_hand() != holding)
 				continue_looping = 0
-		
+
 		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
 		if(!continue_looping)
 			return 0
-	
+
 	cancel_progress_bar(user,progbar)
 	return 1
 
@@ -833,157 +845,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			for(var/atom/A in N)
 				atoms += A
 	return atoms
-
-/datum/coords //Simple datum for storing coordinates.
-	var/x_pos = null
-	var/y_pos = null
-	var/z_pos = null
-
-/proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
-	if(!original)
-		return null
-
-	var/obj/O = null
-
-	if(sameloc)
-		O=new original.type(original.loc)
-	else
-		O=new original.type(locate(0,0,0))
-
-	if(perfectcopy)
-		if((O) && (original))
-			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
-					O.vars[V] = original.vars[V]
-	return O
-
-
-/area/proc/copy_contents_to(area/A , platingRequired = 0 )
-	//Takes: Area. Optional: If it should copy to areas that don't have plating
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
-	//       Movement based on lower left corner. Tiles that do not fit
-	//		 into the new area will not be moved.
-
-	if(!A || !src) return 0
-
-	var/list/turfs_src = get_area_turfs(src.type)
-	var/list/turfs_trg = get_area_turfs(A.type)
-
-	var/src_min_x = 0
-	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
-		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
-		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
-	var/list/refined_src = new/list()
-	for(var/turf/T in turfs_src)
-		refined_src += T
-		refined_src[T] = new/datum/coords
-		var/datum/coords/C = refined_src[T]
-		C.x_pos = (T.x - src_min_x)
-		C.y_pos = (T.y - src_min_y)
-
-	var/list/refined_trg = new/list()
-	for(var/turf/T in turfs_trg)
-		refined_trg += T
-		refined_trg[T] = new/datum/coords
-		var/datum/coords/C = refined_trg[T]
-		C.x_pos = (T.x - trg_min_x)
-		C.y_pos = (T.y - trg_min_y)
-
-	var/list/toupdate = new/list()
-
-	var/copiedobjs = list()
-
-
-	moving:
-		for (var/turf/T in refined_src)
-			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
-				var/datum/coords/C_trg = refined_trg[B]
-				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
-
-					var/old_dir1 = T.dir
-					var/old_icon_state1 = T.icon_state
-					var/old_icon1 = T.icon
-
-					if(platingRequired)
-						if(istype(B, /turf/space))
-							continue moving
-
-					var/turf/X = new T.type(B)
-					X.dir = old_dir1
-					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
-
-
-					var/list/objs = new/list()
-					var/list/newobjs = new/list()
-					var/list/mobs = new/list()
-					var/list/newmobs = new/list()
-
-					for(var/obj/O in T)
-
-						if(!istype(O,/obj))
-							continue
-
-						objs += O
-
-
-					for(var/obj/O in objs)
-						newobjs += DuplicateObject(O , 1)
-
-
-					for(var/obj/O in newobjs)
-						O.loc = X
-
-					for(var/mob/M in T)
-						if(!M.move_on_shuttle)
-							continue
-						mobs += M
-
-					for(var/mob/M in mobs)
-						newmobs += DuplicateObject(M , 1)
-
-					for(var/mob/M in newmobs)
-						M.loc = X
-
-					copiedobjs += newobjs
-					copiedobjs += newmobs
-
-
-
-					for(var/V in T.vars)
-						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
-							X.vars[V] = T.vars[V]
-
-//					var/area/AR = X.loc
-
-//					if(AR.lighting_use_dynamic)
-//						X.opacity = !X.opacity
-//						X.sd_SetOpacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
-
-					toupdate += X
-
-					refined_src -= T
-					refined_trg -= B
-					continue moving
-
-
-	if(toupdate.len)
-		for(var/turf/simulated/T1 in toupdate)
-			T1.CalculateAdjacentTurfs()
-			SSair.add_to_active(T1,1)
-
-
-	return copiedobjs
 
 
 
@@ -1054,6 +915,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/rough_y = 0
 		var/final_x = 0
 		var/final_y = 0
+		var/final_z = 0
 
 		//Assume standards
 		var/i_width = world.icon_size
@@ -1077,11 +939,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			rough_y = round(AM.pixel_y/n_height)
 
 		//Find coordinates
-		final_x = AM.x + rough_x
-		final_y = AM.y + rough_y
+		if(!isturf(AM.loc))
+			var/turf/T = get_turf(AM)
+			final_x = T.x + rough_x
+			final_y = T.y + rough_y
+			final_z = T.z
+		else	
+			final_x = AM.x + rough_x
+			final_y = AM.y + rough_y
+			final_z = AM.z
 
 		if(final_x || final_y)
-			return locate(final_x, final_y, AM.z)
+			return locate(final_x, final_y, final_z)
 
 //Finds the distance between two atoms, in pixels
 //centered = 0 counts from turf edge to edge
@@ -1482,3 +1351,11 @@ B --><-- A
 		c_dist++
 
 	return L
+
+/atom/proc/contains(var/atom/location)
+        if(!location)
+                return 0
+        for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+        if(location == src)
+                return 1
+        return 0

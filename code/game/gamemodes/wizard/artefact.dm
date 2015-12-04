@@ -14,7 +14,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/narsie/wizard
+	var/spawn_type = /obj/singularity/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -81,6 +81,26 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+////TEAR IN REALITY
+
+/obj/singularity/wizard
+	name = "tear in the fabric of reality"
+	desc = "This isn't right."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "singularity_s1"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "reality"
+	pixel_x = -96
+	pixel_y = -96
+	grav_pull = 6
+	consume_range = 3
+	current_size = STAGE_FOUR
+	allowed_size = STAGE_FOUR
+
+/obj/singularity/wizard/process()
+	move()
+	eat()
+	return
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/weapon/scrying
@@ -270,7 +290,7 @@ var/global/list/multiverse = list()
 	M.faction = list("[usr.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!S.dangerous_existence)
 				all_species += speciestype

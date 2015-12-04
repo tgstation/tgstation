@@ -186,8 +186,8 @@
 	return
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0)
-	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+	var/mob/living/simple_animal/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
 	if(stoner && iscultist(stoner) || cultoverride)

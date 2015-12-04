@@ -10,9 +10,6 @@
 	ghostize()
 	return ..()
 
-/mob/proc/sac_act(obj/effect/rune/R, mob/victim)
-	return
-
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
@@ -539,55 +536,7 @@ var/list/slot_equipment_priority = list( \
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortNames(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -657,9 +606,6 @@ var/list/slot_equipment_priority = list( \
 	if(!Adjacent(usr))	return
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
-
-/mob/proc/can_use_hands()
-	return
 
 /mob/proc/is_active()
 	return (0 >= usr.stat)
@@ -1010,3 +956,27 @@ var/list/slot_equipment_priority = list( \
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
 	return 1
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	if(stat == DEAD) //Ghosts and such can always see reagents
+		return 1
+	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
+		return 1
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.head && istype(H.head, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.head
+			if(CL.scan_reagents)
+				return 1
+		if(H.wear_mask && H.wear_mask.scan_reagents)
+			return 1
+		if(H.glasses && istype(H.glasses, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.glasses
+			if(CL.scan_reagents)
+				return 1
+	return 0
+
+//Can the mob use Topic to interact with machines
+/mob/proc/canUseTopic()
+	return

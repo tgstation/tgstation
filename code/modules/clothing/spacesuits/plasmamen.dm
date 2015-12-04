@@ -1,5 +1,6 @@
  //Suits for the pink and grey skeletons!
 
+
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "plasmaman suit"
 	desc = "A special containment suit designed to protect a plasmaman's volatile body from outside exposure and quickly extinguish it in emergencies."
@@ -33,16 +34,14 @@
 
 
 //I just want the light feature of the hardsuit helmet
-/obj/item/clothing/head/helmet/space/hardsuit/plasmaman
+/obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasmaman helmet"
 	desc = "A special containment helmet designed to protect a plasmaman's volatile body from outside exposure and quickly extinguish it in emergencies."
-	icon_state = "plasmaman_helmet0-plasma"
+	icon_state = "plasmaman-helm"
 	item_color = "plasma" //needed for the helmet lighting
-	item_state = "plasmaman_helmet0"
+	item_state = "plasmaman-helm"
 	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	//Removed the NODROP from /helmet/space/hardsuit.
+	strip_delay = 80
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
-	//Removed the HIDEFACE from /helmet/space/hardsuit
-	basestate = "plasmaman_helmet"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 

@@ -163,6 +163,9 @@
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 
+//Slime evolution threshold. Controls how fast slimes can split/grow
+#define SLIME_EVOLUTION_THRESHOLD 10
+
 //singularity defines
 #define STAGE_ONE 1
 #define STAGE_TWO 3
@@ -285,3 +288,18 @@ var/list/bloody_footprints_cache = list()
 #define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
 #define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
 #define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )
+
+//subtypesof(), typesof() without the parent path
+#define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Bot types
+#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
+#define MULE_BOT			2	// MULEbots
+#define FLOOR_BOT			4	// Floorbots
+#define CLEAN_BOT			8	// Cleanbots
+#define MED_BOT				16	// Medibots
+
+//Sentience types
+#define SENTIENCE_ORGANIC 1
+#define SENTIENCE_ARTIFICIAL 2
+#define SENTIENCE_OTHER 3

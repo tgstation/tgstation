@@ -43,8 +43,12 @@ Chief Engineer
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
 
-/datum/outfit/job/ce/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/ce/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	announce_head(H, list("Engineering"))
 
 /*

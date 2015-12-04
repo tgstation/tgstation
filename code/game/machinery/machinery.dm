@@ -147,7 +147,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new/obj/effect/overlay/temp/emp(src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/emp, src.loc)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -188,7 +188,9 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act()
-	if(prob(50))
+	if(!density)
+		qdel(src)
+	if(prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
@@ -220,53 +222,6 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
-	return
-
-/mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN, 0))
-		return
-
-/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
-	if(incapacitated())
-		return
-	if(no_dextery)
-		if(be_close && in_range(M, src))
-			return 1
-	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
-
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
-	if(incapacitated() || lying )
-		return
-	if(!Adjacent(M))
-		if((be_close == 0) && (dna.check_mutation(TK)))
-			if(tkMaxRangeCheck(src, M))
-				return 1
-		return
-	if(!isturf(M.loc) && M.loc != src)
-		return
-	return 1
-
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat)
-		return
-	if(be_close && !in_range(M, src))
-		return
-	//stop AIs from leaving windows open and using then after they lose vision
-	//apc_override is needed here because AIs use their own APC when powerless
-	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
-	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
-		return
-	return 1
-
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat || lockcharge || stunned || weakened)
-		return
-	if(be_close && !in_range(M, src))
-		return
-	return 1
 
 /obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
@@ -323,7 +278,7 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
-	. = !(state_open || panel_open || is_operational()) && istype(C)
+	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -331,7 +286,7 @@ Class Procs:
 		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel)
+	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -346,7 +301,7 @@ Class Procs:
 		qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
-	if(istype(S))
+	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(!panel_open)
 			panel_open = 1
@@ -368,10 +323,10 @@ Class Procs:
 	return 0
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W))
+	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time, target = src))
+		if(do_after(user, time/W.toolspeed, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -379,6 +334,8 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	if(flags & NODECONSTRUCT)
+		return
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
 		if(panel_open || W.works_from_distance)

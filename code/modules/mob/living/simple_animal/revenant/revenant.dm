@@ -10,11 +10,14 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
+	var/icon_idle = "revenant_idle"
+	var/icon_reveal = "revenant_revealed"
+	var/icon_stun = "revenant_stun"
+	var/icon_drain = "revenant_draining"
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
-	alpha = 160
 	layer = 5
 	healable = 0
 	see_invisible = SEE_INVISIBLE_MINIMUM
@@ -24,7 +27,7 @@
 	response_disarm = "swings at"
 	response_harm   = "punches through"
 	unsuitable_atmos_damage = 0
-	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -50,7 +53,7 @@
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
-
+	var/image/ghostimage = null //Visible to ghost with darkness off
 
 /mob/living/simple_animal/revenant/Life()
 	ear_damage = 0
@@ -61,7 +64,6 @@
 		unreveal_time = 0
 		revealed = 0
 		invisibility = INVISIBILITY_REVENANT
-		alpha = 160
 		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
@@ -69,6 +71,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
+	update_spooky_icon()
 	..()
 
 
@@ -79,12 +82,13 @@
 		return
 	revealed = 1
 	invisibility = 0
-	alpha = 255
 	if(!unreveal_time)
 		src << "<span class='revendanger'>You have been revealed!</span>"
+		unreveal_time = world.time + time
 	else
 		src << "<span class='revenwarning'>You have been revealed!</span>"
-	unreveal_time = world.time + time
+		unreveal_time = unreveal_time + time
+	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
@@ -94,9 +98,23 @@
 	notransform = 1
 	if(!unstun_time)
 		src << "<span class='revendanger'>You cannot move!</span>"
+		unstun_time = world.time + time
 	else
 		src << "<span class='revenwarning'>You cannot move!</span>"
-	unstun_time = world.time + time
+		unstun_time = unstun_time + time
+	update_spooky_icon()
+
+/mob/living/simple_animal/revenant/proc/update_spooky_icon()
+	if(revealed)
+		if(notransform)
+			if(draining)
+				icon_state = icon_drain
+			else
+				icon_state = icon_stun
+		else
+			icon_state = icon_reveal
+	else
+		icon_state = icon_idle
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -106,6 +124,9 @@
 
 /mob/living/simple_animal/revenant/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/simple_animal/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/simple_animal/revenant/adjustBruteLoss(amount)
 	if(!revealed)
@@ -169,7 +190,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
+				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
 				if(do_after(src, 50, 15, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
@@ -185,12 +206,15 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					src << "<span class='revenwarning'>[target] has been drawn out of your grasp. The link has been broken.</span>"
-					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
-										   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
-				icon_state = "revenant_idle"
+					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
+					draining = 0
+					essence_drained = 0
+					if(target) //Wait, target is WHERE NOW?
+						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+					return
 			else
-				src << "<span class='revenwarning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
+				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
 				draining = 0
 				essence_drained = 0
 				return
@@ -200,6 +224,9 @@
 
 
 /mob/living/simple_animal/revenant/say(message)
+	if(!message)
+		return
+	log_say("[key_name(src)] : [message]")
 	for(var/mob/M in mob_list)
 		if (istype(M, /mob/new_player))
 			continue
@@ -218,6 +245,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
+
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -244,12 +276,15 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed) //Revenants cannot die if they aren't revealed
 		return 0
 	..(1)
+	ghost_darkness_images -= ghostimage
+	updateallghostimages()
 	src << "<span class='revendanger'>NO! No... it's too late, you can feel your essence breaking apart...</span>"
 	notransform = 1
 	revealed = 1
@@ -389,7 +424,7 @@
 		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(inert || !src)
+	if(gc_destroyed || !src || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")

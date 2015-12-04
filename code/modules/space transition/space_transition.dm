@@ -119,70 +119,41 @@ var/list/z_levels_list = list()
 	for(var/A in z_levels_list)
 		grid[A] = z_levels_list[A]
 
-	for(var/turf/space/S in world) //Define the transistions of the z levels
-		if(S.x <= TRANSITIONEDGE)
-			D = grid["[S.z]"]
-			if(!D)
-				CRASH("[S.z] position has no space level datum")
-			if(!(D.neigbours.len))
-				continue
-			if(D.neigbours[Z_LEVEL_WEST] && D.neigbours[Z_LEVEL_WEST] != D)
-				D = D.neigbours[Z_LEVEL_WEST]
-				S.destination_z = D.z_value
-			else
-				while(D.neigbours[Z_LEVEL_EAST] && D.neigbours[Z_LEVEL_EAST]  != D)
-					D = D.neigbours[Z_LEVEL_EAST]
-				S.destination_z = D.z_value
-			S.destination_x = world.maxx - TRANSITIONEDGE - 2
-			S.destination_y = S.y
+	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
+	//Its either this or madness with lotsa math
 
-		if(S.x >= (world.maxx - TRANSITIONEDGE - 1))
-			D = grid["[S.z]"]
-			if(!D)
-				CRASH("[S.z] position has no space level datum")
-			if(!(D.neigbours.len))
-				continue
-			if(D.neigbours[Z_LEVEL_EAST] && D.neigbours[Z_LEVEL_EAST] != D)
-				D = D.neigbours[Z_LEVEL_EAST]
-				S.destination_z = D.z_value
-			else
-				while(D.neigbours[Z_LEVEL_WEST] && D.neigbours[Z_LEVEL_WEST] != D)
-					D = D.neigbours[Z_LEVEL_WEST]
-				S.destination_z = D.z_value
-			S.destination_x = TRANSITIONEDGE + 2
-			S.destination_y = S.y
+	var/list/x_pos_beginning = list(1, 1, world.maxx - TRANSITIONEDGE, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
+	var/list/y_pos_beginning = list(world.maxy - TRANSITIONEDGE, 1, TRANSITIONEDGE, TRANSITIONEDGE)  //y values respectively
+	var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, TRANSITIONEDGE)	//x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
+	var/list/y_pos_ending = list(world.maxy, TRANSITIONEDGE, world.maxy - TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)	//y values respectively
+	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)		//values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
+	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2, 1, 1)		//values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
 
-		if(S.y <= TRANSITIONEDGE)
-			D = grid["[S.z]"]
-			if(!D)
-				CRASH("[S.z] position has no space level datum")
-			if(!(D.neigbours.len))
-				continue
-			if(D.neigbours[Z_LEVEL_SOUTH] && D.neigbours[Z_LEVEL_SOUTH] != D)
-				D = D.neigbours[Z_LEVEL_SOUTH]
-				S.destination_z = D.z_value
+	for(var/zlevelnumber = 1, zlevelnumber<=grid.len, zlevelnumber++)
+		D = grid["[zlevelnumber]"]
+		if(!D)
+			CRASH("[zlevelnumber] position has no space level datum.")
+		if(!(D.neigbours.len))
+			continue
+		for(var/side = 1, side<5, side++)
+			var/turf/beginning = locate(x_pos_beginning[side], y_pos_beginning[side], zlevelnumber)
+			var/turf/ending = locate(x_pos_ending[side], y_pos_ending[side], zlevelnumber)
+			var/list/turfblock = block(beginning, ending)
+			var/dirside = 2**(side-1)
+			var/zdestination = zlevelnumber
+			if(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
+				D = D.neigbours["[dirside]"]
+				zdestination = D.z_value
 			else
-				while(D.neigbours[Z_LEVEL_NORTH] && D.neigbours[Z_LEVEL_NORTH] != D)
-					D = D.neigbours[Z_LEVEL_NORTH]
-				S.destination_z = D.z_value
-			S.destination_x = S.x
-			S.destination_y = world.maxy - TRANSITIONEDGE - 2
-
-		if(S.y >= (world.maxy - TRANSITIONEDGE - 1))
-			D = grid["[S.z]"]
-			if(!D)
-				CRASH("[S.z] position has no space level datum")
-			if(!(D.neigbours.len))
-				continue
-			if(D.neigbours[Z_LEVEL_NORTH] && D.neigbours[Z_LEVEL_NORTH] != D)
-				D = D.neigbours[Z_LEVEL_NORTH]
-				S.destination_z = D.z_value
-			else
-				while(D.neigbours[Z_LEVEL_SOUTH] && D.neigbours[Z_LEVEL_SOUTH] != D)
-					D = D.neigbours[Z_LEVEL_SOUTH]
-				S.destination_z = D.z_value
-			S.destination_x = S.x
-			S.destination_y = TRANSITIONEDGE + 2
+				dirside = turn(dirside, 180)
+				while(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
+					D = D.neigbours["[dirside]"]
+				zdestination = D.z_value
+			D = grid["[zlevelnumber]"]
+			for(var/turf/space/S in turfblock)
+				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
+				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
+				S.destination_z = zdestination
 
 	for(var/A in grid)
 		z_levels_list[A] = grid[A]

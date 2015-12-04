@@ -94,17 +94,25 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/binary/volume_pump/interact(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
+	if(!src.allowed(usr))
+		usr << "<span class='danger'>Access denied.</span>"
+		return
+	ui_interact(user)
 
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
+		ui.open()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["transfer_rate"] = round(transfer_rate*100) //Nano UI can't handle rounded non-integers, apparently.
-	data["max_rate"] = MAX_TRANSFER_RATE
+	data["transfer_rate"] = round(transfer_rate)
+	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
@@ -142,18 +150,13 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/components/binary/volume_pump/attack_hand(mob/user)
-	if(..())
+	if(..() | !user)
 		return
-	src.add_fingerprint(usr)
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
-		return
-	usr.set_machine(src)
-	ui_interact(user)
-	return
+	interact(user)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Topic(href,href_list)
-	if(..()) return
+	if(..())
+		return
 	if(href_list["power"])
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
@@ -164,16 +167,13 @@ Thus, the two variables affect pump operation are set in New():
 			if ("set")
 				transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
 		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
-	usr.set_machine(src)
-	src.update_icon()
-	src.updateUsrDialog()
-	return
+
+	add_fingerprint(usr)
+	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/power_change()
 	..()
 	update_icon()
-
-
 
 /obj/machinery/atmospherics/components/binary/volume_pump/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))

@@ -99,6 +99,9 @@
 			var/obj/item/weapon/melee/baton/B = I
 			if(B.bcell)
 				B.bcell.charge = B.bcell.maxcharge
+
+	R.toner = R.tonermax
+
 	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module

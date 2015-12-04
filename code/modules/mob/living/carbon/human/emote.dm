@@ -196,6 +196,9 @@
 		if ("me")
 			if(silent)
 				return
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
+				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
 					src << "<span class='danger'>You cannot send IC messages (muted).</span>"

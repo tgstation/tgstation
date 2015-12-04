@@ -40,8 +40,12 @@ Research Director
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
-/datum/outfit/job/rd/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/rd/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	announce_head(H, list("Science")) //tell underlings (science radio) they have a head
 
 /*

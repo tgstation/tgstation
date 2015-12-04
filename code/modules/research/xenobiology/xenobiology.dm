@@ -162,6 +162,7 @@
 	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
+	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
@@ -172,6 +173,12 @@
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
 		return..()
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != sentience_type)
+		user << "<span class='warning'>The potion won't work on [M].</span>"
+		return ..()
+
+
 
 	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
 	being_used = 1
@@ -525,7 +532,7 @@
 
 
 /obj/effect/timestop/wizard
-	duration = 90
+	duration = 100
 
 
 /obj/item/stack/tile/bluespace

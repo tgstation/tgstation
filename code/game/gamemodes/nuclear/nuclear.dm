@@ -10,7 +10,6 @@
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
@@ -43,6 +42,11 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
+		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
+			var/mob/living/carbon/human/human = synd_mind.current
+			if(human.dna && human.dna.species.dangerous_existence)
+				human.set_species(/datum/species/human)
+
 	return 1
 
 
@@ -180,7 +184,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in world)
+	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break

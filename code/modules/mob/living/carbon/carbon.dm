@@ -84,6 +84,8 @@
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
+	if(reagents.has_reagent("teslium"))
+		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
@@ -269,13 +271,6 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
-/mob/living/carbon/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/bed/chair)) // buckling does not restrict hands
-		return 0
-	return 1
-
 /mob/living/carbon/restrained()
 	if (handcuffed)
 		return 1
@@ -351,6 +346,7 @@ var/const/NO_SLIP_WHEN_WALKING = 1
 var/const/SLIDE = 2
 var/const/GALOSHES_DONT_HELP = 4
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
+	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)

@@ -142,6 +142,24 @@
 	unique_rename = 1
 	origin_tech = "combat=2;powerstorage=1"
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/super
+	name = "super-kinetic accelerator"
+	desc = "An upgraded, superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_u"
+	item_state = "kineticgun_u"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
+	overheat_time = 14
+	origin_tech = "combat=3;powerstorage=2"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper
+	name = "hyper-kinetic accelerator"
+	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_h"
+	item_state = "kineticgun_h"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
+	overheat_time = 12
+	origin_tech = "combat=4;powerstorage=3"
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
 	spawn(overheat_time)
@@ -194,6 +212,13 @@
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
+	shoot_live_shot()
+	return (OXYLOSS)
 
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"

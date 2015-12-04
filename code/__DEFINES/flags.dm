@@ -15,6 +15,7 @@
 #define NOSHIELD		32		// weapon not affected by shield
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
@@ -65,8 +66,9 @@
 #define NOFIRE			2048
 #define VIRUSIMMUNE		4096
 #define PIERCEIMMUNE	8192
+#define NOTRANSSTING	16384
 
-#define MUTCOLORS_PARTSONLY 	16384	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

@@ -74,6 +74,9 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
+	if(NOTRANSSTING in selected_dna.dna.species.specflags)
+		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
+		return
 	..()
 
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
@@ -172,7 +175,7 @@
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_profile(target, user)
+		user.mind.changeling.add_new_profile(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 

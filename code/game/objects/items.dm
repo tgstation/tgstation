@@ -97,6 +97,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
+	var/toolspeed = 1
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -230,12 +231,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	pickup(user)
 	add_fingerprint(user)
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src))
+		dropped(user)
 	return
 
 
 /obj/item/attack_paw(mob/user)
-
+	var/picked_up = 0
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)
@@ -249,8 +251,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
+		picked_up = 1
 
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src) && picked_up)
+		dropped(user)
 	return
 
 
@@ -359,17 +363,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
-	if(ishuman(usr) || ismonkey(usr))
-		if(usr.get_active_hand() == null)
-			usr.UnarmedAttack(src) // Let me know if this has any problems -Giacom | Actually let me know now.  -Sayu
-		/*
-		if(usr.get_active_hand() == null)
-			src.attack_hand(usr)
-		else
-			usr << "\red You already have something in your hand."
-		*/
-	else
-		usr << "<span class='warning'>This mob type can't use this verb!</span>"
+	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().

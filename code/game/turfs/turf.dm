@@ -325,3 +325,8 @@
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
 
+/turf/indestructible/rock
+	name = "dense rock"
+	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock"

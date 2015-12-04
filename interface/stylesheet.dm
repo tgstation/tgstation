@@ -65,7 +65,10 @@ h1.alert, h2.alert		{color: #000000;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
-.cult					{color: #960000; font-weight: bold; font-size: 3;}
+.cult					{color: #960000;}
+.cultitalic				{color: #960000;	font-style: italic;}
+.cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
+.narsie					{color: #960000; font-weight: bold; font-size: 15;}
 .purple					{color: #5e2d79;}
 
 .revennotice			{color: #1d2953;}

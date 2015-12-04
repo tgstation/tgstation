@@ -254,6 +254,33 @@
 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
 	..()
 
+
+//Elite Syndie suit
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	name = "elite syndicate hardsuit helmet"
+	desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in travel mode. Property of Gorlex Marauders."
+	alt_desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in combat mode. Property of Gorlex Marauders."
+	icon_state = "hardsuit1-syndi"
+	item_state = "syndie_helm"
+	item_color = "syndi"
+	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+
+
+/obj/item/clothing/suit/space/hardsuit/syndi/elite
+	name = "elite syndicate hardsuit"
+	desc = "An elite version of the syndicate hardsuit, with improved armour and fire shielding. It is in travel mode."
+	alt_desc = "An elite version of the syndicate hardsuit, with improved armour and fire shielding. It is in combat mode."
+	icon_state = "hardsuit1-syndi"
+	item_state = "syndie_suit"
+	item_color = "syndi"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+
+
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
 	name = "owl hardsuit helmet"
@@ -310,6 +337,7 @@
 	flash_protect = 0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
+	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -331,6 +359,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
+	scan_reagents = 1
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/New()
 	..()

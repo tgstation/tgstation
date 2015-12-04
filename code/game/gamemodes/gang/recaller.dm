@@ -286,7 +286,8 @@
 						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
 						pointcost = 30
 				else
-					usr << "<span class='notice'>The <b>dominator</b> can be spawned only on territory controlled by your gang.</span>"
+					usr << "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>"
+					return
 
 		if(item_type)
 			gang.points -= pointcost
