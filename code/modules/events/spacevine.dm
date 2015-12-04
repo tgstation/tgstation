@@ -137,10 +137,11 @@
 	name = "light"
 	hue = "#ffff00"
 	quality = POSITIVE
+	severity = 4
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
-	if(prob(10*severity))
-		holder.SetLuminosity(4)
+	if(holder.energy)
+		holder.SetLuminosity(severity, 3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -162,12 +163,13 @@
 	name = "explosive"
 	hue = "#ff0000"
 	quality = NEGATIVE
+	severity = 2
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	var/turf/T = holder.loc
 	src = T
-	spawn(10)
-		explosion(T, 0, 0, 2, 0, 0)
+	spawn(5)
+		explosion(T, 0, 0, severity, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -194,6 +196,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
+	target.ex_act(severity)
 	for(var/atom/A in target)
 		if(!istype(A, /obj/effect))
 			A.ex_act(severity)  //To not be the same as self-eating vine
