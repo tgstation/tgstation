@@ -91,6 +91,11 @@
 		if(!ai_in_use && !is_in_use)
 			in_use = 0
 
+
+/obj/attack_ghost(mob/user)
+	..()
+	ui_interact(user)
+
 /obj/proc/interact(mob/user)
 	return
 

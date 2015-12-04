@@ -86,7 +86,6 @@
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	projectiletype = /obj/item/projectile/bullet/midbullet2
 
 	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
 
@@ -102,6 +101,16 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return
 
+
+/mob/living/simple_animal/hostile/syndicate/civilian
+	minimum_distance = 10
+	retreat_distance = 10
+	environment_smash = 0
+
+/mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
+	..()
+	summon_backup(15)
+	say("GUARDS!!")
 
 
 /mob/living/simple_animal/hostile/viscerator

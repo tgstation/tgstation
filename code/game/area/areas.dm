@@ -30,6 +30,7 @@
 	master = src
 	uid = ++global_uid
 	related = list(src)
+	map_name = name // Save the initial (the name set in the map) name of the area.
 
 	if(requires_power)
 		luminosity = 0

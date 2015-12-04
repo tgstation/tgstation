@@ -106,7 +106,7 @@ Thus, the two variables affect pump operation are set in New():
 	ui_interact(user)
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
 		ui.open()
@@ -153,11 +153,13 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
-	if(..() | !user) return
+	if(..() | !user)
+		return
 	interact(user)
 
 /obj/machinery/atmospherics/components/binary/pump/Topic(href,href_list)
-	if(..()) return
+	if(..())
+		return
 	if(href_list["power"])
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")

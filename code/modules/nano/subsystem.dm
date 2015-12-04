@@ -40,7 +40,7 @@
 	else
 		return null // We couldn't find a UI.
  /**
-  * public
+  * private
   *
   * Get a open NanoUI given a user, src_object, and ui_key.
   *
@@ -64,7 +64,7 @@
 	return null // Couldn't find a UI!
 
  /**
-  * public
+  * private
   *
   * Update all NanoUIs attached to src_object.
   *
@@ -86,7 +86,7 @@
 	return update_count
 
  /**
-  * public
+  * private
   *
   * Close all NanoUIs attached to src_object.
   *
@@ -103,12 +103,12 @@
 	for (var/ui_key in open_uis[src_object_key])
 		for (var/datum/nanoui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user && ui.src_object.nano_host()) // Check the UI is valid.
-				ui.close() // Close the UI
+				ui.close() // Close the UI.
 				close_count++ // Count each UI we close.
 	return close_count
 
  /**
-  * public
+  * private
   *
   * Update all NanoUIs belonging to a user.
   *
@@ -130,7 +130,7 @@
 	return update_count
 
  /**
-  * public
+  * private
   *
   * Close all NanoUIs belonging to a user.
   *
