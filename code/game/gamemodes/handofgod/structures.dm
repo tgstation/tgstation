@@ -387,14 +387,18 @@
 	autocolours = FALSE
 	var/time_between_uses = 1800
 	var/last_process = 0
+	var/cult_only = 1
 
+/obj/structure/divine/healingfountain/anyone
+	desc = "A fountain containing the waters of life."
+	cult_only = 0
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
 	if(last_process + time_between_uses > world.time)
 		user << "<span class='notice'>The fountain appears to be empty.</span>"
 		return
 	last_process = world.time
-	if(!is_handofgod_cultist(user))
+	if(!is_handofgod_cultist(user) && cult_only)
 		user << "<span class='danger'><B>The water burns!</b></spam>"
 		user.reagents.add_reagent("hell_water",20)
 	else
@@ -517,7 +521,7 @@
 	if(badtarget)
 		return 0
 	return 10
-		
+
 
 
 /obj/item/projectile/beam/pylon_bolt
