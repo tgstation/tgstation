@@ -3,14 +3,14 @@
 	var/target
 
 /obj/effect/statclick/New(text, target)
-	src.name = text
+	name = text
 	src.target = target
 
 /obj/effect/statclick/proc/update(text)
-	src.name = text
+	name = text
 	return src
 
-/obj/effect/statclick
+/obj/effect/statclick/debug
 	var/class
 
 /obj/effect/statclick/debug/Click()

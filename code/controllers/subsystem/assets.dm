@@ -7,7 +7,7 @@ var/datum/subsystem/assets/SSasset
 	var/list/cache = list()
 
 /datum/subsystem/assets/New()
-	NEW_SS_GLOBAL(SSassets)
+	NEW_SS_GLOBAL(SSasset)
 
 /datum/subsystem/assets/Initialize(timeofday, zlevel)
 	if (zlevel)
