@@ -650,18 +650,23 @@ var/list/slot_equipment_priority = list( \
 
 	if(client && client.holder)
 		if(statpanel("MC"))
-			stat("Location:","([x], [y], [z])")
-			stat("CPU:","[world.cpu]")
-			stat("Instances:","[world.contents.len]")
-
+			stat("Location:", "([x], [y], [z])")
+			stat("CPU:", "[world.cpu]")
+			stat("Instances:", "[world.contents.len]")
 			if(master_controller)
-				stat("MasterController:","[round(master_controller.cost,0.001)]ds (Interval:[master_controller.processing_interval] | Iteration:[master_controller.iteration])")
-				stat("Subsystem cost per second:","[round(master_controller.SSCostPerSecond,0.001)]ds")
+				master_controller.stat_entry()
+			else
+				stat("Master Controller:", "ERROR")
+			if(Failsafe)
+				Failsafe.stat_entry()
+			else
+				stat("Failsafe Controller:", "ERROR")
+			if(master_controller)
+				stat("Subsystems:", "[round(master_controller.SSCostPerSecond, 0.001)]ds")
+				stat(null)
 				for(var/datum/subsystem/SS in master_controller.subsystems)
 					if(SS.can_fire)
 						SS.stat_entry()
-			else
-				stat("MasterController:","ERROR")
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))

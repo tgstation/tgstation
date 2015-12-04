@@ -6,13 +6,16 @@
 var/global/datum/controller/game_controller/master_controller = new()
 
 /datum/controller/game_controller
-	var/processing_interval = 1	//The minimum length of time between MC ticks (in deciseconds). The highest this can be without affecting schedules, is the GCD of all subsystem var/wait. Set to 0 to disable all processing.
+	var/name = "Master"
+	var/processing_interval = 1	// The minimum length of time between MC ticks (in deciseconds). The highest this can be without affecting schedules, is the GCD of all subsystem var/wait. Set to 0 to disable all processing.
 	var/iteration = 0
 	var/cost = 0
 	var/SSCostPerSecond = 0
 	var/last_thing_processed
 
 	var/list/subsystems = list()
+
+	var/obj/effect/statclick/statclick // clickable stat button
 
 /datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
@@ -71,7 +74,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	crewmonitor.generateMiniMaps()
 	populate_asset_cache()
 
-	world << "<span class='boldannounce'>Initializations complete</span>"
+	world << "<span class='boldannounce'>Initializations Complete!</span>"
 
 	world.sleep_offline = 1
 	world.fps = config.fps
@@ -84,7 +87,8 @@ calculate the longest number of ticks the MC can wait between each cycle without
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 
 /datum/controller/game_controller/process()
-	if(!Failsafe)	new /datum/controller/failsafe()
+	if(!Failsafe)
+		new /datum/controller/failsafe() // (re)Start the failsafe.
 	spawn(0)
 		var/timer = world.time
 		for(var/datum/subsystem/SS in subsystems)
@@ -125,13 +129,13 @@ calculate the longest number of ticks the MC can wait between each cycle without
 							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
-				if (SubSystemRan)
+				if(SubSystemRan)
 					calculateSScost()
 				var/extrasleep = 0
-				if (startingtick < world.time || start_time+1 < world.timeofday)
+				if(startingtick < world.time || start_time+1 < world.timeofday)
 					//we caused byond to miss a tick, sleep a bit extra
 					extrasleep += world.tick_lag*2
-				if (world.cpu > 80)
+				if(world.cpu > 80)
 					extrasleep += extrasleep+processing_interval
 				sleep(processing_interval+extrasleep)
 			else
@@ -167,3 +171,9 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	world.log << msg
 
 	subsystems = master_controller.subsystems
+
+/datum/controller/game_controller/proc/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+
+	stat("Master Controller:", statclick.update("[round(master_controller.cost, 0.001)]ds (Interval: [master_controller.processing_interval] | Iteration:[master_controller.iteration])"))

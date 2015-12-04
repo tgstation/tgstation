@@ -1,10 +1,12 @@
 var/datum/controller/failsafe/Failsafe
 
 /datum/controller/failsafe // This thing pretty much just keeps poking the master controller
+	var/name = "Failsafe"
 	var/processing_interval = 100	//poke the MC every 10 seconds - set to 0 to disable
-
 	var/MC_iteration = 0
 	var/MC_defcon = 0			//alert level. For every poke that fails this is raised by 1. When it reaches 5 the MC is replaced with a new one. (effectively killing any master_controller.process() and starting a new one)
+
+	var/obj/effect/statclick/statclick // clickable stat button
 
 /datum/controller/failsafe/New()
 	//There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one)
@@ -18,7 +20,8 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/process()
 	spawn(0)
 		while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
-			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
+			if(!master_controller)
+				new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
 
 			if(processing_interval > 0)
 				if(master_controller.processing_interval > 0)	//only poke if these overrides aren't in effect
@@ -41,3 +44,9 @@ var/datum/controller/failsafe/Failsafe
 			else
 				MC_defcon = 0
 				sleep(100)
+
+/datum/controller/failsafe/proc/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+
+	stat("Failsafe Controller:", statclick.update("Defcon: [Failsafe.MC_defcon] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.MC_iteration])"))

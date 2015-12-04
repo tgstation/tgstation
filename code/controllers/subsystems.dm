@@ -24,6 +24,8 @@
 	var/cost = 0			//average time to execute
 	var/times_fired = 0		//number of times we have called fire()
 
+	var/obj/effect/statclick/statclick // clickable stat button
+
 //used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
 
@@ -37,19 +39,22 @@
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)
 	var/time = (world.timeofday - start_timeofday) / 10
-	var/msg = "Initialized [name] SubSystem within [time] seconds"
-	if (zlevel)
+	var/msg = "Initialized [name] subsystem within [time] seconds!"
+	if(zlevel)
 		testing(msg)
 		return
 	world << "<span class='boldannounce'>[msg]</span>"
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+
 	var/dwait = ""
 	if (dynamic_wait)
 		dwait = "DWait:[round(wait,0.1)]ds "
 
-	stat(name, "[round(cost,0.001)]ds\t[dwait][msg]")
+	stat(name, statclick.update("[round(cost,0.001)]ds\t[dwait][msg]"))
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
