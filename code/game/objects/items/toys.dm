@@ -1181,6 +1181,15 @@
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)
 
+
+
+/obj/item/toy/beach_ball/basketball
+	name = "basketball"
+	desc = "Here's your chance, do your dance at the Space Jam."
+	icon = 'icons/obj/basketball.dmi'
+	icon_state = "basketball"
+	item_state = "basketball"
+
 /*
  * Xenomorph action figure
  */
