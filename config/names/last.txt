@@ -618,3 +618,6 @@ Pavlov
 Semenov
 Andreev
 Alekseev
+Hitler
+Stalin
+Mussolini

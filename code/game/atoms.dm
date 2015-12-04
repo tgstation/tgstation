@@ -370,12 +370,12 @@ var/list/blood_splatter_icons = list()
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 
 		if(M.reagents)
-			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-			for(var/datum/reagent/R in reagents.reagent_list)		//clears the stomach of anything that might be digested as food
+			M.reagents.trans_to(this, M.reagents.total_volume / 10) // Drop 1/10th of overall reagents. Below, drop all of anything nutritive.
+			for(var/datum/reagent/R in M.reagents.reagent_list)	//clears the stomach of anything that might be digested as food
 				if (istype(R, /datum/reagent/consumable))
 					var/datum/reagent/consumable/nutri_check = R
 					if(nutri_check.nutriment_factor >0)
-						reagents.add_reagent(R.id,R.volume)
+						this.reagents.add_reagent(R.id,R.volume)
 						M.reagents.remove_reagent(R.id,R.volume)
 
 		// Make toxins vomit look different
