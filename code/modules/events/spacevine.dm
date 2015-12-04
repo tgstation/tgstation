@@ -168,7 +168,7 @@
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	var/turf/T = holder.loc
 	src = T
-	spawn(0)
+	spawn(5)
 		explosion(T, 0, 0, severity, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
