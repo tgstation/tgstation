@@ -77,6 +77,8 @@
 			<I>This spell turns an adjacent target into a miserable clown. This spell does not require robes to cast.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=shoesnatch'>Shoe Snatching Charm</A> (15)<BR>
 			<I>This spell will remove your victim's shoes and materialize them in your hands. This spell does not require robes to cast.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=robesummon'>Summon Robes</A> (50)<BR>
+			<I>This spell will allow you to summon a new set of robes. Useful for stealthy wizards. This spell (quite obviously) does not require robes to cast.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>
 			<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
@@ -268,6 +270,10 @@
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/shoesnatch,H)
 							temp = "You have learned the shoe snatching charm."
+						if("robesummon")
+							feedback_add_details("wizard_spell_learned", "RS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							add_spell(new/spell/targeted/equip_item/robesummon,H)
+							temp = "you have learned summon robes."
 						if("fleshtostone")
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/flesh_to_stone,H)
