@@ -1,0 +1,9 @@
+author: Probe1
+
+delete-after: True
+
+changes: 
+  - bugfix: (Meta) Squashes over a half dozen bugs, from disposal mail not working for security to the brig cell locker not working and a dozen other little things like cargo not having metal/glass at roundstart.
+  - tweak: (Meta) EVA was redone based on player feedback
+  - tweak: (Meta) Research Outpost Botany was greatly expanded and is on par with the one on Box
+  - tweak: (Meta) Firewall removed from the turret controls outside the AI Core foyer it shares with telecomms.
