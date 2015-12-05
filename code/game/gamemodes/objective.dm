@@ -1,3 +1,6 @@
+#define ABSTRACT_OBJECTIVES	 //better way of doing this? var on datum/objective?
+var/list/types_of_objectives =  - ABSTRACT_OBJECTIVES
+
 /datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
@@ -7,7 +10,9 @@
 	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 	var/required_role = null			//If the objective can only be done by a certain role, such as absorb for changelings.
-	var/randomgen = 1
+	var/randomgen = 1					//Whether the objective can be generated randomly.
+	var/error_text = ""					//If the objective is impossible on creation (e.g. destroy the AI with no AIs on board)
+										//this text can be displayed. Useful for admin objective editing in mind/Topic().
 
 /proc/generate_objectives(var/datum/mind/M, var/objectives_made = 2, var/has_escape = TRUE)
 	var/list/objective_types = (typesof(/datum/objective/default) - /datum/objective/default)
@@ -30,12 +35,19 @@
 			add_objective(M, holder_obj)
 
 
-/proc/add_objective(var/datum/mind/M, var/datum/objective/O, var/announce_new_objectives = 0)
-	var/datum/objective/objective = new O
+/proc/add_objective(var/datum/mind/M, var/obj_path, var/announce_new_objectives = 0, var/replace_if_impossible = 1, var/text)
+	var/datum/objective/objective = new obj_path(text)
 	objective.owner = M
 	M.objectives += objective
 	objective.find_target()
-	objective.extra_prep()
+
+	if(!objective.extra_prep())
+		if(replace_if_impossible)
+			generate_objectives(objective.owner, 1, FALSE) // Generate another objective to replace this one.
+		objective.owner.objectives -= src
+		qdel(src)
+		return null
+
 	objective.update_explanation_text()
 	if(announce_new_objectives)
 		if(M.special_role)
@@ -54,7 +66,7 @@
 	return completed
 
 /datum/objective/proc/extra_prep()
-	return
+	return 1
 
 /datum/objective/proc/is_unique_objective(possible_target)
 	for(var/datum/objective/O in owner.objectives)
@@ -468,9 +480,7 @@ var/global/list/possible_items = list()
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
 		if (!custom_target) return
-		var/tmp_obj = new custom_target
-		var/custom_name = tmp_obj:name
-		qdel(tmp_obj)
+		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
@@ -664,6 +674,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/default/destroy
 	dangerrating = 10
 	martyr_compatible = 1
+	error_text = "No active AIs with minds."
 
 /datum/objective/default/destroy/find_target()
 	var/list/possible_targets = active_ais(1)
@@ -688,12 +699,8 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/default/destroy/extra_prep()
 	if(!target)
-		if(owner)
-			generate_objectives(owner, 1, FALSE) // Generate another objective to replace this one.
-			owner.objectives -= src
-			qdel(src)
-			return
-	return
+			return 0
+	return 1
 
 /datum/objective/summon_guns
 	explanation_text = "Steal at least five guns!"
@@ -882,4 +889,5 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
 
-
+/datum/objective/custom
+	explanation_text = "Free Objective"

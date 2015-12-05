@@ -613,20 +613,18 @@
 
 		if (href_list["obj_edit"])
 			objective = locate(href_list["obj_edit"])
-			if (!objective) return
-			objective_pos = objectives.Find(objective)
+			if (!objective) return //sanity
+			def_value = objective.type
 
-			//Text strings are easy to manipulate. Revised for simplicity.
-			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
-			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
-			if(!def_value)//If it's a custom objective, it will be an empty string.
-				def_value = "custom"
-
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in (typesof(datum/objective) - list(/datum/objective, /datum/objective/default, /datum/objective/escape_obj, /datum/objective/changeling_team_objective)) //keep out the abstract ones
 		if (!new_obj_type) return
+		if (initial(new_obj_type.required_role) != special_role)
+			if(alert("The objective requires a special_role that this mind does not have. The player may not be able to complete the objective. Are you sure you want to continue?", Button1="Yes",Button2="No") == "No")
+				return
 
-		var/datum/objective/new_objective = null
+		var/datum/objective/new_objective = add_objective(src, new_obj_type)
 
+		/*
 		switch (new_obj_type)
 			if ("assassinate","protect","debrain","maroon")
 				var/list/possible_targets = list("Free objective")
@@ -728,8 +726,10 @@
 				new_objective = new /datum/objective
 				new_objective.owner = src
 				new_objective.explanation_text = expl
-
-		if (!new_objective) return
+		*/
+		if (!new_objective)
+			usr << initial(new_obj_type.error_text)
+			return
 
 		if (objective)
 			objectives -= objective
