@@ -957,14 +957,20 @@ var/list/admin_verbs_mod = list(
 		to_chat(usr, "player list is empty!")
 		return
 
-	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
-	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
-	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
-
+	var/mob/winner = input("Who's a winner?", "Achievement Winner", null) as null|anything in player_list
+	if(!winner)	return
+	
+	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement", null) as null|text
+	if(!name) return
+	
+	var/desc = input("What description will you give it?", "Achievement Description", "You Win", null) as null|text
+	if(!desc) return
+	
 	if(istype(winner, /mob/living))
-		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
-
-	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm", "Cancel")
+		if(achoice == "Cancel") return
+		
+	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)", "Last Question", "No!","Yes!")
 
 	if(achoice == "Confirm")
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
