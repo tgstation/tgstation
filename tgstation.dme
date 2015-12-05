@@ -143,7 +143,7 @@
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"
 #include "code\controllers\master.dm"
-#include "code\controllers\subsystems.dm"
+#include "code\controllers\subsystem.dm"
 #include "code\controllers\subsystem\air.dm"
 #include "code\controllers\subsystem\assets.dm"
 #include "code\controllers\subsystem\diseases.dm"

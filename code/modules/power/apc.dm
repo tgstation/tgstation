@@ -631,7 +631,7 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "apc.tmpl", name, 515, 550)
+		ui = new(user, src, ui_key, "apc.tmpl", name, 550, 550)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)

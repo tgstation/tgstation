@@ -654,6 +654,7 @@ var/list/slot_equipment_priority = list( \
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			config.stat_entry()
+			stat(null)
 			if(Master)
 				Master.stat_entry()
 			else

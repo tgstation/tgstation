@@ -14,6 +14,7 @@ var/datum/controller/failsafe/Failsafe
 	var/processing_interval = 100
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 0
+	var/list/defcon_pretty = list(5, 4, 3, 2, 1)
 
 	// Track the MC iteration to make sure its still on track.
 	var/master_iteration = 0
@@ -38,13 +39,13 @@ var/datum/controller/failsafe/Failsafe
 					// Check if processing is done yet.
 					if(Master.iteration == master_iteration)
 						switch(defcon)
-							if(1 to 3)
+							if(1 to 2)
 								++defcon
+							if(3)
+								admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
+								defcon = 4
 							if(4)
-								admins << "<span class='boldannounce'>Warning: DEFCON [defcon]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
-								defcon = 5
-							if(5)
-								admins << "<span class='boldannounce'>Warning: DEFCON [defcon]. The Master Controller has still not fired within the last [defcon * processing_interval] ticks. Killing and restarting...</span>"
+								admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [defcon * processing_interval] ticks. Killing and restarting...</span>"
 								// Replace the old master controller by creating a new one.
 								new/datum/controller/master()
 								// Get it rolling again.
@@ -56,10 +57,13 @@ var/datum/controller/failsafe/Failsafe
 				sleep(processing_interval)
 			else
 				defcon = 0
-				sleep(100)
+				sleep(initial(processing_interval))
+
+/datum/controller/failsafe/proc/defcon_pretty()
+	return 5 - Failsafe.defcon
 
 /datum/controller/failsafe/proc/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
-	stat("Failsafe Controller:", statclick.update("Defcon: [Failsafe.defcon] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration])"))
+	stat("Failsafe Controller:", statclick.update("Defcon: [Failsafe.defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration])"))
