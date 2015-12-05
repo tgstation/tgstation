@@ -1,0 +1,9 @@
+# Your name.  
+author: Probe
+
+delete-after: True
+
+changes: 
+  - rscadd: (Meta)Added a deskbell to cargo.
+  - tweak: (Meta)Adjusted the singlo containment field to prevent silly stuff.
+  - tweak: (Meta)Replaces the invulnerable shuttle window on Security Escape Pod with a full compliment of reinforced plasma windows.  This opens up a way into security, but is more secure than the windows in perma.
