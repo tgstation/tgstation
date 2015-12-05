@@ -40,7 +40,7 @@
 	icon_state = "power_display"
 
 
-/datum/hud/proc/human_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/proc/human_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight.dmi')
 	adding = list()
 	other = list()
 	hotkeybuttons = list()	//These can be disabled for hotkey users
@@ -261,9 +261,9 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
 
-	mymob.healthdoll = new /obj/screen()
+/*	mymob.healthdoll = new /obj/screen()
 	mymob.healthdoll.name = "health doll"
-	mymob.healthdoll.screen_loc = ui_healthdoll
+	mymob.healthdoll.screen_loc = ui_healthdoll*/
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
@@ -301,13 +301,13 @@
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
+	mymob.zone_sel = new /obj/screen/zone_sel/large()
+	mymob.zone_sel.icon = large_style
 	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths,/* mymob.healthdoll,*/ mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0;

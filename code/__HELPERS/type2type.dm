@@ -296,11 +296,17 @@
 		. += "[seperator]-[verbpath]"
 	return .
 
-/proc/ui_style2icon(ui_style)
-	switch(ui_style)
-		if("Retro")		return 'icons/mob/screen_retro.dmi'
-		if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
-		else			return 'icons/mob/screen_midnight.dmi'
+/proc/ui_style2icon(ui_style, var/large = 0)
+	if(!large)
+		switch(ui_style)
+			if("Retro")		return 'icons/mob/screen_retro.dmi'
+			if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
+			else			return 'icons/mob/screen_midnight.dmi'
+	else
+		switch(ui_style)
+			if("Retro")		return 'icons/mob/screen_retro_sel.dmi'
+			if("Plasmafire")	return 'icons/mob/screen_plasmafire_sel.dmi'
+			else			return 'icons/mob/screen_midnight_sel.dmi'
 
 //colour formats
 /proc/rgb2hsl(red, green, blue)

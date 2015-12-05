@@ -61,15 +61,15 @@
 #define ui_drone_head "CENTER-3:14,SOUTH:5"     //maintenance drones
 
 //Lower right, persistant menu
-#define ui_drop_throw "EAST-1:28,SOUTH+1:7"
-#define ui_pull_resist "EAST-2:26,SOUTH+1:7"
+#define ui_drop_throw "EAST-2:26,SOUTH+1:7"
+#define ui_pull_resist "EAST-3:24,SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
 #define ui_acti "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
 
-#define ui_borg_pull "EAST-2:26,SOUTH+1:7"
-#define ui_borg_radio "EAST-1:28,SOUTH+1:7"
+#define ui_borg_pull "EAST-3:24,SOUTH+1:7"
+#define ui_borg_radio "EAST-2:26,SOUTH+1:7"
 #define ui_borg_intents "EAST-2:26,SOUTH:5"
 
 

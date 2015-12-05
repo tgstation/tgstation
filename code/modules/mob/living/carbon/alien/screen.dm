@@ -1,3 +1,7 @@
+/obj/screen/zone_sel/large/alien/update_icon()
+	overlays.Cut()
+	overlays += image('icons/mob/screen_alien_sel.dmi', "[selecting]")
+
 /obj/screen/zone_sel/alien/update_icon()
 	overlays.Cut()
 	overlays += selecting
