@@ -70,27 +70,24 @@ var/global/datum/controller/master/Master = new()
 			SS.Initialize(world.timeofday, zlevel)
 			sleep(-1)
 		return
-	world << "<span class='boldannounce'>Initializing Subsystems...</span>"
-
-
-	// Sort subsystems by priority, so they initialize in the correct order.
-	sortTim(subsystems, /proc/cmp_subsystem_priority)
+	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	// Pick a random away mission.
 	createRandomZlevel()
+	// Generate asteroid.
+	make_mining_asteroid_secrets()
 	// Set up Z-level transistions.
 	setup_map_transitions()
 
-	// Generate asteroid.
-	for(1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+	// Sort subsystems by priority, so they initialize in the correct order.
+	sortTim(subsystems, /proc/cmp_subsystem_priority)
 
 	// Initialize subsystems.
 	for(var/datum/subsystem/SS in subsystems)
 		SS.Initialize(world.timeofday, zlevel)
 		sleep(-1)
 
-	world << "<span class='boldannounce'>Initializations Complete!</span>"
+	world << "<span class='boldannounce'>Initializations complete!</span>"
 
 	// Set world options.
 	world.sleep_offline = 1

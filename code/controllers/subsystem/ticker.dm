@@ -67,7 +67,7 @@ var/datum/subsystem/ticker/ticker
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
+			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
 			current_state = GAME_STATE_PREGAME
 
@@ -204,7 +204,7 @@ var/datum/subsystem/ticker/ticker
 	return 1
 
 
-	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
+//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 
@@ -260,8 +260,6 @@ var/datum/subsystem/ticker/ticker
 		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
-
-
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
