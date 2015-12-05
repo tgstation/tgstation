@@ -64,7 +64,7 @@
 			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
 				return 0
 			return 1
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -75,7 +75,7 @@
 	switch(slot_id)
 		if(slot_head)
 			return head
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			return internal_storage
 	..()
 
@@ -99,7 +99,7 @@
 		if(slot_head)
 			head = I
 			update_inv_head()
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
@@ -135,6 +135,6 @@
 	else if (istype(T) && T.can_be_inserted(I,1)) // If carrying storage item like toolbox
 		T.handle_item_insertion(I)
 	else if(!internal_storage)
-		equip_to_slot(I, "drone_storage_slot")
+		equip_to_slot(I, slot_drone_storage)
 	else
 		usr << "<span class='warning'>You are unable to equip that!</span>"

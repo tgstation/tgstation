@@ -373,7 +373,6 @@ var/list/uplink_items = list()
 	desc = "A box of shurikens from ancient Earth martial arts. They are highly effective throwing weapons, and will embed into limbs when possible."
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -582,6 +581,16 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
 	excludefrom = list(/datum/game_mode/gang)
+
+/datum/uplink_item/device_tools/hardsuit
+	name = "Elite Syndicate Hardsuit"
+	desc = "The elite Syndicate hardsuit is worn by only the best nuclear agents. Features much better armoring and complete fireproofing, as well as a built in jetpack. \
+	When the built in helmet is deployed your identity will be protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit into combat mode \
+	will allow you all the mobility of a loose fitting uniform without sacrificing armoring. Additionally the suit is collapsible, small enough to fit within a backpack. \
+	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -793,7 +802,6 @@ var/list/uplink_items = list()
 	You can also play card games with them or leave them on your victims."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
-	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 40
 
 /datum/uplink_item/badass/syndiecash

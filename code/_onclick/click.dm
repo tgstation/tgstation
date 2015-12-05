@@ -224,9 +224,10 @@
 /atom/proc/CtrlClick(mob/user)
 	return
 
-/atom/movable/CtrlClick(mob/user)
-	if(Adjacent(user))
-		user.start_pulling(src)
+/atom/movable/CtrlClick(mob/living/user)
+	var/mob/living/ML = user
+	if(istype(ML))
+		ML.pulled(src)
 
 /*
 	Alt click

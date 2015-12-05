@@ -27,7 +27,7 @@
 	response_disarm = "swings at"
 	response_harm   = "punches through"
 	unsuitable_atmos_damage = 0
-	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -224,6 +224,9 @@
 
 
 /mob/living/simple_animal/revenant/say(message)
+	if(!message)
+		return
+	log_say("[key_name(src)] : [message]")
 	for(var/mob/M in mob_list)
 		if (istype(M, /mob/new_player))
 			continue

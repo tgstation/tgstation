@@ -1,4 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - bugfix: "Make Airlock Electronics use standard ID checks, allowing Drones to use them."

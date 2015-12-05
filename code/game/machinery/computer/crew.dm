@@ -29,6 +29,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	var/const/MAX_ICON_DIMENSION = 1024
 	var/const/ICON_SIZE = 4
 	var/initialized = FALSE
+	var/max_initialized_zlevel = 0
 
 /datum/crewmonitor/New()
 	. = ..()
@@ -77,6 +78,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 	src.data = list()
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
@@ -87,6 +90,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	return ..()
 
 /datum/crewmonitor/proc/show(mob/mob, z)
+	if (mob.client)
+		sendResources(mob.client)
 	if (!z) z = mob.z
 
 	if (z > 0 && src.interfaces)
@@ -250,20 +255,24 @@ var/global/datum/crewmonitor/crewmonitor = new
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	procqueue.schedule(50, crewmonitor, "update", z)
+	addtimer(crewmonitor, "update", 5, TRUE, z)
 
 /datum/crewmonitor/proc/generateMiniMaps()
 	for(var/z = 1 to world.maxz)
 		generateMiniMap(z)
+	for (var/z = 1 to world.maxz)
+		register_asset("minimap_[z].png", file("[getMinimapFile(z)].png"))
+
+	max_initialized_zlevel = world.maxz
+
 	world << "<span class='boldannounce'>All minimaps have been generated."
-	for(var/client/C in clients)
-		sendResources(C)
 	initialized = TRUE
 
-/datum/crewmonitor/proc/sendResources(client/C)
-	C << browse_rsc('crew.js', "crewmonitor.js")
-	C << browse_rsc('crew.css', "crewmonitor.css")
-	for (var/z = 1 to world.maxz) C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
+/datum/crewmonitor/proc/sendResources(var/client/client)
+	send_asset(client, "crewmonitor.js")
+	send_asset(client, "crewmonitor.css")
+	for (var/z = 1 to max_initialized_zlevel)
+		send_asset(client, "minimap_[z].png")
 
 /datum/crewmonitor/proc/getMinimapFile(z)
 	return "data/minimaps/map_[z]"

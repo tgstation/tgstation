@@ -11,6 +11,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
+	stat_attack = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -41,21 +42,22 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	armour_penetration = 28
 	status_flags = 0
-	maxHealth = 150
-	health = 150
+	maxHealth = 170
+	health = 170
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(65))
+	if(prob(50))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage
 	else
@@ -84,7 +86,6 @@
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	projectiletype = /obj/item/projectile/bullet/midbullet2
 
 	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
 
@@ -100,6 +101,16 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return
 
+
+/mob/living/simple_animal/hostile/syndicate/civilian
+	minimum_distance = 10
+	retreat_distance = 10
+	environment_smash = 0
+
+/mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
+	..()
+	summon_backup(15)
+	say("GUARDS!!")
 
 
 /mob/living/simple_animal/hostile/viscerator

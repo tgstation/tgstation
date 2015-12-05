@@ -39,8 +39,12 @@ Chief Medical Officer
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel_med
 
-/datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	announce_head(H, list("Medical")) //tell underlings (medical radio) they have a head
 
 /*

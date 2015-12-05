@@ -62,6 +62,8 @@
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
 			step_towards(O,src)
+	for(var/mob/living/M in range(0, src))
+		gravShock(M)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
 	for(var/obj/O in range(0,src))
@@ -70,13 +72,14 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
+/obj/effect/anomaly/grav/Crossed(mob/A)
+	gravShock(A)
+
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
-	return
 
 /obj/effect/anomaly/grav/Bumped(mob/A)
 	gravShock(A)
-	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
 	if(boing && isliving(A) && !A.stat)
@@ -102,6 +105,11 @@
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
 	canshock = 1
+	for(var/mob/living/M in range(0, src))
+		mobShock(M)
+
+/obj/effect/anomaly/flux/Crossed(mob/living/M)
+	mobShock(M)
 
 /obj/effect/anomaly/flux/Bump(mob/living/M)
 	mobShock(M)

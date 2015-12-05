@@ -80,7 +80,7 @@
 		if(!origin.changeling)
 			M.make_changeling()
 		if(origin.changeling.can_absorb_dna(M, owner))
-			origin.changeling.add_profile(owner, M)
+			origin.changeling.add_new_profile(owner, M)
 
 		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key

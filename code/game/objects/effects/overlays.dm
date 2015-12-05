@@ -39,15 +39,20 @@
 	spawn(duration)
 		qdel(src)
 
-
 /obj/effect/overlay/temp/cult
-	name = "unholy glow"
-	icon_state = "wallglow"
-	layer = 2.01
 	randomdir = 0
 	duration = 10
 
-/obj/effect/overlay/temp/cult/floor
+/obj/effect/overlay/temp/cult/sac
+	name = "maw of Nar-Sie"
+	icon_state = "sacconsume"
+
+/obj/effect/overlay/temp/cult/turf
+	name = "unholy glow"
+	icon_state = "wallglow"
+	layer = 2.01
+
+/obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
 

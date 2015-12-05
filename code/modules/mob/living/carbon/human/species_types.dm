@@ -12,6 +12,7 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
+
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
 		return 1	//Pure humans are always allowed in all roles.
@@ -336,6 +337,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
+	siemens_coeff = 0
 	punchmod = 5
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
@@ -474,22 +476,28 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	need_nutrition = 0 //Hard to eat through a helmet
+	burnmod = 2
+	heatmod = 2
+	speedmod = 1
 	var/skin = 0
 
 /datum/species/plasmaman/skin
 	name = "Skinbone"
 	skin = 1
+	roundstart = 0
 
 /datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
 	var/base = ..()
-	if(base == id)
-		base = "[base][skin]"
+	if(base == id && !skin)
+		base = "[base]_m"
+	else
+		base = "skinbone_m"
 	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/plasmaman))
+	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
@@ -505,9 +513,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 				P.Extinguish(H)
 	H.update_fire()
 
-/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
-	H.equipOutfit(O)
+	H.equipOutfit(O, visualsOnly)
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
