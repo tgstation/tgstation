@@ -1,9 +1,8 @@
-/mob/living/simple_animal/construct
+/mob/living/simple_animal/hostile/construct
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails.","screeches.")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
@@ -14,7 +13,6 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	environment_smash = 1
 	see_in_dark = 7
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -24,16 +22,17 @@
 	faction = list("cult")
 	flying = 1
 	unique_name = 1
+	AIStatus = AI_OFF //normal constructs don't have AI
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist.</b>"
 
 
-/mob/living/simple_animal/construct/New()
+/mob/living/simple_animal/hostile/construct/New()
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
-/mob/living/simple_animal/construct/death()
+/mob/living/simple_animal/hostile/construct/death()
 	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
@@ -41,7 +40,7 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/construct/examine(mob/user)
+/mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
@@ -54,8 +53,8 @@
 
 	user << msg
 
-/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/construct/builder))
+/mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < maxHealth)
 			adjustBruteLoss(-5)
 			if(src != M)
@@ -73,16 +72,16 @@
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/construct/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/construct/narsie_act()
+/mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
 
 
 /////////////////Juggernaut///////////////
-/mob/living/simple_animal/construct/armored
+/mob/living/simple_animal/hostile/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
@@ -105,7 +104,11 @@
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
-/mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
+	AIStatus = AI_ON
+	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+/mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -134,7 +137,7 @@
 
 
 ////////////////////////Wraith/////////////////////////////////////////////
-/mob/living/simple_animal/construct/wraith
+/mob/living/simple_animal/hostile/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
@@ -144,15 +147,19 @@
 	health = 75
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
 
+/mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
+	AIStatus = AI_ON
+
 
 
 /////////////////////////////Artificer/////////////////////////
-/mob/living/simple_animal/construct/builder
+/mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
@@ -164,6 +171,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	retreat_distance = 10
+	minimum_distance = 10 //AI artificers will flee like fuck
 	attacktext = "rams"
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
@@ -177,10 +186,52 @@
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
 
+/mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
+	if(isliving(A))
+		var/mob/living/L = A
+		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health < L.maxHealth) //is this a hurt construct? let's go heal it if it is
+			return 1
+		else
+			return 0
+	else
+		return 0
+
+/mob/living/simple_animal/hostile/construct/builder/CanAttack(atom/the_target)
+	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return 0
+	if(Found(the_target) || ..()) //If we Found it or Can_Attack it normally, we Can_Attack it as long as it wasn't invisible
+		return 1 //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
+
+/mob/living/simple_animal/hostile/construct/builder/MoveToTarget(var/list/possible_targets)
+	..()
+	if(target && isliving(target))
+		var/mob/living/L = target
+		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
+			LoseTarget()
+			return 0
+		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
+			retreat_distance = null
+			minimum_distance = 1
+
+/mob/living/simple_animal/hostile/construct/builder/Aggro()
+	..()
+	if(target && istype(target, /mob/living/simple_animal/hostile/construct)) //oh the target is a construct no need to flee
+		retreat_distance = null
+		minimum_distance = 1
+
+/mob/living/simple_animal/hostile/construct/builder/LoseAggro()
+	..()
+	retreat_distance = initial(retreat_distance)
+	minimum_distance = initial(minimum_distance)
+
+/mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
+	AIStatus = AI_ON
+	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
 
 
 /////////////////////////////Harvester/////////////////////////
-/mob/living/simple_animal/construct/harvester
+/mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
@@ -190,9 +241,13 @@
 	health = 60
 	melee_damage_lower = 1
 	melee_damage_upper = 5
+	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
 	attacktext = "prods"
 	attack_sound = 'sound/weapons/tap.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+
+/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
+	AIStatus = AI_ON
 
