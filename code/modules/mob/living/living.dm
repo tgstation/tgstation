@@ -1292,6 +1292,14 @@ default behaviour is:
 	if(istype(src, /mob/living/simple_animal)) //Animals can be butchered completely, humans - not so
 		gib(meat = 0) //"meat" argument only exists for mob/living/simple_animal/gib()
 
+/mob/living/proc/get_strength() //Returns a mob's strength. Isn't used in damage calculations, but rather in things like cutting down trees etc.
+	var/strength = 1.0
+
+	strength += (M_HULK in src.mutations)
+	strength += (M_STRONG in src.mutations)
+
+	. = strength
+
 /mob/living/proc/scoop_up(mob/M) //M = mob who scoops us up!
 	if(!holder_type) return
 
