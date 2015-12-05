@@ -38,6 +38,9 @@
 	density = 0
 	flying = 1
 	anchored = 1
+	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	speed = 0
 	unique_name = 1
 
 	var/essence = 75 //The resource, and health, of revenants.
@@ -63,6 +66,7 @@
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = 0
+		incorporeal_move = 3
 		invisibility = INVISIBILITY_REVENANT
 		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
 	if(unstun_time && world.time >= unstun_time)
@@ -82,6 +86,7 @@
 		return
 	revealed = 1
 	invisibility = 0
+	incorporeal_move = 0
 	if(!unreveal_time)
 		src << "<span class='revendanger'>You have been revealed!</span>"
 		unreveal_time = world.time + time
@@ -115,6 +120,12 @@
 			icon_state = icon_reveal
 	else
 		icon_state = icon_idle
+	if(ghostimage)
+		ghostimage.icon_state = src.icon_state
+		updateallghostimages()
+
+/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
+	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
