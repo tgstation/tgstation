@@ -30,35 +30,31 @@
 	slot_flags = SLOT_ID
 
 	var/obj/item/weapon/card/id/front_id = null
-	var/obj/item/weapon/card/id/net_id = null
+	var/list/combined_access = list()
 
 
-/obj/item/weapon/storage/wallet/New()
-	..()
-	net_id = new /obj/item/weapon/card/id(src)
-
-/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
 	. = ..(W, new_location)
 	if(.)
-		if(W == front_id)
-			front_id = null
 		if(istype(W, /obj/item/weapon/card/id))
+			if(W == front_id)
+				front_id = null
 			refreshID()
 			update_icon()
 
 /obj/item/weapon/storage/wallet/proc/refreshID()
-	net_id.access.Cut()
+	combined_access.Cut()
 	for(var/obj/item/weapon/card/id/I in contents)
 		if(!front_id)
 			front_id = I
-		net_id.access |= I.access // Merge access from any and all cards in wallet
+			update_icon()
+		combined_access |= I.access
 
-/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
+/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	. = ..(W, prevent_warning)
 	if(.)
 		if(istype(W, /obj/item/weapon/card/id))
 			refreshID()
-			update_icon()
 
 /obj/item/weapon/storage/wallet/update_icon()
 
@@ -80,12 +76,11 @@
 
 
 /obj/item/weapon/storage/wallet/GetID()
-	return front_id // net_id is only a holder for accesses.
+	return front_id
 
-/obj/item/weapon/storage/wallet/GetAccess()
-	var/list/myaccess = net_id.GetAccess() // favor OOP by not using net_id.access directly.
-	if(myaccess.len) // is there any access to be had this way?
-		return myaccess
+/obj/item/weapon/storage/wallet/GetAccess(
+	if(combined_access.len) 
+		return combined_access
 	else
 		return ..()
 
