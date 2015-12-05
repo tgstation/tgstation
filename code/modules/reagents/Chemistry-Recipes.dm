@@ -2026,6 +2026,13 @@ datum
 			required_reagents = list("ice" = 1, "tea" = 3)
 			result_amount = 4
 
+		arnoldpalmer
+			name = "Arnold Palmer"
+			id = "arnoldpalmer"
+			result = "arnoldpalmer"
+			required_reagents = list("lemonade" = 1, "icetea" = 1)
+			result_amount = 2
+			
 		icecoffee
 			name = "Iced Coffee"
 			id = "icecoffee"
