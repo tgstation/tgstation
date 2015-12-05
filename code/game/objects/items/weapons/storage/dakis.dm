@@ -51,7 +51,7 @@
 		"Squid",
 		"Squiggly",
 		"Sue Bowchief",
-		"Suu,
+		"Suu",
 		"Tomoko",
 		"Toriel",
 		"Umaru",
