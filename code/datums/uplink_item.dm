@@ -358,6 +358,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
+/datum/uplink_item/stealthy_weapons/knuckles
+	name = "Brass Knuckles"
+	desc = "A pair of metal knuckles that can be worn on your hands, increasing damage done by your punches."
+	item = /obj/item/clothing/gloves/knuckles
+	cost = 1
 
 // STEALTHY TOOLS
 

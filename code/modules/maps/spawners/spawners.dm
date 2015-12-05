@@ -368,6 +368,8 @@
 		/obj/item/clothing/glasses/sunglasses/sechud,
 		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/gloves/knuckles,
+		/obj/item/clothing/gloves/knuckles/spiked,
 		/obj/item/clothing/head/bomb_hood,
 		/obj/item/clothing/mask/gas,
 		/obj/item/clothing/mask/gas/monkeymask,

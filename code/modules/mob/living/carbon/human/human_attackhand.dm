@@ -174,6 +174,7 @@
 
 
 			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT // edited again by Iamgoofball to fix species attacks
+
 			if(!damage)
 				if(M.species.attack_verb == "punch")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -188,8 +189,15 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(M_HULK in M.mutations)							damage += 5
-			if((M_CLAWS in M.mutations) && !istype(M.gloves))	damage += 3 //Claws mutation + no gloves
 
+			var/knockout = damage
+
+			if((M_CLAWS in M.mutations) && !istype(M.gloves))	damage += 3 //Claws mutation + no gloves (doesn't affect weaken chance)
+
+			if(istype(M.gloves)) //Attacker has gloves
+				var/obj/item/clothing/gloves/G = M.gloves
+				damage += G.damage_added //Increase damage by the gloves' damage modifier
+				knockout += G.bonus_knockout //Increase knockout chance by the gloves' knockout modifier
 
 			if(M.species.attack_verb == "punch")
 				playsound(loc, "punch", 25, 1, -1)
@@ -197,13 +205,14 @@
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 
 			visible_message("<span class='danger'>[M] has [M.species.attack_verb]ed [src]!</span>")
-			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= M.species.max_hurt_damage && prob(50))
+
+			if((knockout >= M.species.max_hurt_damage) && prob(50))
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
 				apply_effect(2, WEAKEN, armor_block)
 
 			if(M.species.punch_damage)
 				damage += M.species.punch_damage
+
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 			// Horror form can punch people so hard they learn how to fly.
