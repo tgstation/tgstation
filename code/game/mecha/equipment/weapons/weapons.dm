@@ -23,7 +23,7 @@
 		return 0
 
 	var/turf/curloc = get_turf(chassis)
-	var/turf/targloc = get_turf(target)
+	var/atom/targloc = get_turf(target)
 	if (!targloc || !istype(targloc) || !curloc)
 		return 0
 	if (targloc == curloc)

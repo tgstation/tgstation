@@ -141,7 +141,7 @@
 		Angle = setAngle
 	if(!legacy)
 		spawn(1)
-			while(loc && !stopped)
+			while(loc)
 				if(!paused)
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
@@ -195,7 +195,7 @@
 				sleep(max(1, speed))
 	else
 		spawn(1) //Old projectile system
-			while(loc && !stopped)
+			while(loc)
 				if(!paused)
 					if((!( current ) || loc == current))
 						current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)

@@ -57,7 +57,7 @@
 
 // Pixel Projectiles //
 
-/obj/item/projectile/proc/preparePixelProjectile(turf/target, turf/targloc, mob/living/user, params, spread)
+/obj/item/projectile/proc/preparePixelProjectile(var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = user.loc
 	src.loc = get_turf(user)
 	src.starting = get_turf(user)
