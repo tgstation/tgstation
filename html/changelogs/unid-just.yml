@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Trees may be cut down with sharp and big enough objects, yielding 3 to 8 big logs (they are too big to be held by small plant bags).
-  - rscadd: Trees fall in a random direction when chopped down. Standing in a large tree's way is a great way to get yourself killed (you can see the direction in which it's going to fall).
+  - rscadd: Trees may be cut down with sharp and big enough objects, yielding from 3 to 8 big logs.
+  - rscadd: Trees fall in a random direction when chopped down. Standing in a large tree's way is a sure way to get some broken bones, and you can see the direction in which the tree is going to fall before it's cut down.

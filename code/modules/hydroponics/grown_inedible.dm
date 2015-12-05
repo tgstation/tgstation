@@ -67,6 +67,7 @@
 
 /obj/item/weapon/grown/log/tree
 	name = "log"
+	plantname = "tree"
 	desc = "A very heavy log, a main product of woodcutting. Much heavier than tower-cap logs."
 	force = 10
 	w_class = 4.0

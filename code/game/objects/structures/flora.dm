@@ -9,7 +9,6 @@
 	icon_state = "tree_1"
 
 	pixel_x = -16
-	pixel_y = 21
 
 	var/health = 100
 	var/maxHealth = 100
@@ -30,11 +29,6 @@
 		maxHealth = health
 
 		height = rand(3, 8)
-
-		if(prob(5)) //5% chance to make a tree 4 times as resilent, yield 6-15 logs and have an "ancient" prefix
-			height = rand(6, 15)
-			health *= 4
-			name = "ancient [name]"
 
 		icon_state = pick(
 		"tree_1",
@@ -72,14 +66,7 @@
 		else
 			to_chat(user, "<span class='info'>\The [W] doesn't appear to be sharp enough to cut into \the [src]. Try something sharper.</span>")
 
-	if(health < 40 && !falling_dir)
-		falling_dir = pick(cardinal)
-		visible_message("<span class='danger'>\The [src] starts leaning to the [dir2text(falling_dir)]!</span>",
-			drugged_message = "<span class='sinister'>[pick("Treebeard", "The ent")] cries in agony as \the [W] tears into his bark, sap oozing from the wound.</span>")
-
-	if(health <= 0)
-		fall_down()
-		qdel(src)
+	update_health()
 
 	return 1
 
@@ -90,17 +77,40 @@
 	var/turf/our_turf = get_turf(src) //Turf at which this tree is located
 	var/turf/current_turf = get_turf(src) //Turf in which to spawn a log. Updated in the loop
 
-	while(height > 0)
-		if(!current_turf) break //If the turf in which to spawn a log doesn't exist, stop the thing
+	qdel(src)
 
-		var/obj/item/I = new log_type(our_turf) //Spawn a log and throw it at the "current_turf"
-		I.throw_at(current_turf, 10, 10)
+	spawn()
+		while(height > 0)
+			if(!current_turf) break //If the turf in which to spawn a log doesn't exist, stop the thing
 
-		current_turf = get_step(current_turf, falling_dir)
+			var/obj/item/I = new log_type(our_turf) //Spawn a log and throw it at the "current_turf"
+			I.throw_at(current_turf, 10, 10)
 
-		height--
+			current_turf = get_step(current_turf, falling_dir)
 
-		sleep(1)
+			height--
+
+			sleep(1)
+
+/obj/structure/flora/tree/proc/update_health()
+	if(health < 40 && !falling_dir)
+		falling_dir = pick(cardinal)
+		visible_message("<span class='danger'>\The [src] starts leaning to the [dir2text(falling_dir)]!</span>",
+			drugged_message = "<span class='sinister'>\The [src] is coming to life, man.</span>")
+
+	if(health <= 0)
+		fall_down()
+
+/obj/structure/flora/tree/ex_act(severity)
+	switch(severity)
+		if(1) //Epicentre
+			return qdel(src)
+		if(2) //Major devastation
+			height -= rand(1,4) //Some logs are lost
+			fall_down()
+		if(3) //Minor devastation (IED)
+			health -= rand(10,30)
+			update_health()
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
