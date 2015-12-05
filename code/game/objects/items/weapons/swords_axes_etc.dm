@@ -197,11 +197,13 @@
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = 5
+		src.sharpness = 1.5
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = 5
+		src.sharpness = 1.0
 	src.add_fingerprint(user)
 	return
 

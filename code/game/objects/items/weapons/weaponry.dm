@@ -50,6 +50,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	sharpness = 1.2
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 

@@ -38,7 +38,6 @@
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
-	color
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
@@ -86,12 +85,14 @@
 	if (active)
 		force = 30
 		w_class = 4
+		sharpness = 1.5
 		hitsound = "sound/weapons/blade1.ogg"
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	else
 		force = 3
 		w_class = 2
+		sharpness = 0
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		hitsound = "sound/weapons/empty.ogg"
 		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")

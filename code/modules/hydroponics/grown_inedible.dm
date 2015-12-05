@@ -37,7 +37,6 @@
 	potency = newValue
 
 /obj/item/weapon/grown/log
-	name = "towercap"
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
 	icon = 'icons/obj/harvest.dmi'
@@ -65,6 +64,12 @@
 			to_chat(user, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
 		qdel(src)
 		return
+
+/obj/item/weapon/grown/log/tree
+	name = "log"
+	desc = "A very heavy log, a main product of woodcutting. Much heavier than tower-cap logs."
+	force = 10
+	w_class = 4.0
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	plantname = "sunflowers"

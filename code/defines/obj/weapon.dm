@@ -797,6 +797,7 @@
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
+	sharpness = 1.2
 	starting_materials = list(MAT_IRON = 15000)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
@@ -813,6 +814,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "unathiknife"
 	attack_verb = list("ripped", "torn", "cut")
+	sharpness = 1.35
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
@@ -823,6 +825,7 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
+	sharpness = 1.0
 	starting_materials = list(MAT_IRON = 15000)
 	w_type = RECYK_METAL
 	flags = FPRINT
