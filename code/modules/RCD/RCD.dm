@@ -135,7 +135,11 @@
 		return selected.Topic(href, href_list)
 
 /obj/item/device/rcd/afterattack(var/atom/A, var/mob/user)
+
 	if(!selected)
+		return 1
+		
+	if(istype(A, /obj/item/weapon/storage/))
 		return 1
 
 	if(selected.flags ^ (RCD_SELF_SANE | RCD_RANGE) && !(user.Adjacent(A) && A.Adjacent(user)))	//If RCD_SELF_SANE and RCD_RANGE are disabled we use adjacency.
