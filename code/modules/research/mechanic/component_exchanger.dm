@@ -38,7 +38,7 @@
 		to_chat(user, "<span class='notice'>You fill up \the [src] with \the [G]'s contents.</span>")
 		return 1
 	else
-		..()
+		. = ..()
 
 //Redirect the attack only if it's a machine, otherwise don't bother
 /obj/item/weapon/storage/component_exchanger/preattack(var/atom/A, var/mob/user, proximity_flag)

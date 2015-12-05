@@ -16,7 +16,7 @@
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(get_turf(src), "rustle", 50, 1, -5)
-	..()
+	. = ..()
 
 /*
  * Backpack Types
@@ -62,7 +62,7 @@
 		user.throw_at(get_turf(src), 10, 5)
 		del(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
 	if (prob(src.reliability)) return 1 //No failure

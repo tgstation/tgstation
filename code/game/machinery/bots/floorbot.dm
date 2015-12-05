@@ -706,7 +706,7 @@ var/global/list/floorbot_targets=list()
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
-		..()
+		. = ..()
 		return
 	if(src.contents.len >= 1)
 		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")

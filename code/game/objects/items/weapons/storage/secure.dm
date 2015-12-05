@@ -69,7 +69,7 @@
 		return
 
 	// -> storage/attackby() what with handle insertion, etc
-	..()
+	. = ..()
 
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)

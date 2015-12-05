@@ -157,7 +157,7 @@
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(get_turf(src), "rustle", 50, 1, -5)
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/bible/pickup(mob/living/user as mob)
 	if(user.mind && user.mind.assigned_role == "Chaplain") //We are the Chaplain, yes we are

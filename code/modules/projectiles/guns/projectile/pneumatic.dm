@@ -60,7 +60,7 @@
 		item_state = "pneumatic-tank"
 		user.update_icons()
 	else
-		..()
+		. = ..()
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()

@@ -49,7 +49,7 @@
 			O.show_message(text("<span class='notice'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 
 	if(!locked)
-		..()
+		. = ..()
 	else
 		to_chat(user, "<span class='warning'>Its locked!</span>")
 	return
@@ -183,7 +183,7 @@
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 	else
-		..()
+		. = ..()
 
 /obj/item/weapon/storage/lockbox/coinbox
 	name = "coinbox"
