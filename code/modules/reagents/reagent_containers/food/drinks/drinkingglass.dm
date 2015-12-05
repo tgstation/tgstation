@@ -457,6 +457,10 @@
 					icon_state = "icetea"
 					name = "iced tea"
 					desc = "No relation to a certain rap artist/ actor."
+				if("arnoldpalmer")
+					icon_state = "arnoldpalmer"
+					name = "Arnold Palmer"
+					desc = "Known as half and half to some.  A mix of ice tea and lemonade"					
 				if("milkshake")
 					icon_state = "milkshake"
 					name = "milkshake"

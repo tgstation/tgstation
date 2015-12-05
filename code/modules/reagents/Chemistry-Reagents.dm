@@ -3329,6 +3329,16 @@
 	color = "#104038" //rgb: 16, 64, 56
 	adj_temp = -5
 
+/datum/reagent/drink/tea/arnoldpalmer
+	name = "Arnold Palmer"
+	id = "arnoldpalmer"
+	description = "Known as half and half to some.  A mix of ice tea and lemonade."
+	color = "#104038" //rgb: 16, 64, 56
+	adj_temp = -5
+	adj_sleepy = -3
+	adj_dizzy = -1
+	adj_drowsy = -3
+	
 /datum/reagent/drink/kahlua
 	name = "Kahlua"
 	id = "kahlua"
