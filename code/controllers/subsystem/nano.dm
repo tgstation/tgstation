@@ -2,9 +2,11 @@ var/datum/subsystem/nano/SSnano
 
 /datum/subsystem/nano
 	name = "NanoUI"
-	can_fire = 1
 	wait = 10
 	priority = 16
+	display = 6
+
+	can_fire = 1 // This needs to fire before round start.
 
 	var/list/open_uis = list() // A list of open NanoUIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing NanoUIs, not grouped.

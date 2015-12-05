@@ -89,6 +89,9 @@ var/global/datum/controller/master/Master = new()
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
 
+	// Sort subsystems by display setting for easy access.
+	sortTim(subsystems, /proc/cmp_subsystem_display)
+
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps

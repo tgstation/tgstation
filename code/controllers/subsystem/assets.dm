@@ -2,7 +2,7 @@ var/datum/subsystem/assets/SSasset
 
 /datum/subsystem/assets
 	name = "Assets"
-	priority = 19
+	priority = -3
 
 	var/list/cache = list()
 

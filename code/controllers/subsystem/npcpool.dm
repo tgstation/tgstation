@@ -2,7 +2,8 @@ var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool
 	name = "NPC Pool"
-	priority = 100
+	priority = 17
+	display = 6
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()

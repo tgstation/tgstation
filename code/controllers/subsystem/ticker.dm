@@ -4,8 +4,9 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	can_fire = 1
 	priority = 0
+
+	can_fire = 1 // This needs to fire before round start.
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention

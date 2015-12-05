@@ -8,7 +8,7 @@ var/datum/subsystem/minimap/SSminimap
 
 /datum/subsystem/minimap
 	name = "Minimap"
-	priority = 20
+	priority = -2
 
 	var/const/MAX_ICON_DIMENSION = 1024
 	var/const/ICON_SIZE = 4

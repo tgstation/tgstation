@@ -5,6 +5,7 @@
 	var/name				//name of the subsystem
 	var/priority = 0		//priority affects order of initialization. Higher priorities are initialized first, lower priorities later. Can be decimal and negative values.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+	var/display = 100		//display affects order the subsystem is displayed in the MC tab
 
 	// Dynamic Wait
 	// A system for scaling a subsystem's fire rate based on lag.
@@ -42,10 +43,11 @@
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] seconds!"
-	if(zlevel)
+	if(zlevel) // If only initialized for one Z-level.
 		testing(msg)
-		return
+		return time
 	world << "<span class='boldannounce'>[msg]</span>"
+	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
@@ -53,10 +55,15 @@
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	var/dwait = ""
-	if (dynamic_wait)
+	if(dynamic_wait)
 		dwait = "DWait:[round(wait,0.1)]ds "
 
-	stat(name, statclick.update("[round(cost,0.001)]ds\t[dwait][msg]"))
+	if(can_fire)
+		msg = "[round(cost,0.001)]ds\t[dwait][msg]"
+	else
+		msg = "OFFLINE"
+
+	stat(name, statclick.update(msg))
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
