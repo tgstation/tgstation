@@ -1202,8 +1202,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	planted.endurance = endurance
 	planted.yield = yield
 	planted.potency = potency
+	user << "<span class='notice'>You plant [src].</span>"
 	qdel(src)
-	user << "<span class='notice'>You plant the glowshroom.</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
@@ -1218,6 +1218,27 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	user.AddLuminosity(round(-potency / 10,1))
 	SetLuminosity(round(potency / 10,1))
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	seed = /obj/item/seeds/glowcap
+	name = "glowcap cluster"
+	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but aren't bioluminescent. They're warm to the touch..."
+	icon_state = "glowcap"
+	filling_color = "#00FA9A"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap/On_Consume()
+	if(!reagents.total_volume)
+		var/batteries_recharged = 0
+		for(var/obj/item/weapon/stock_parts/cell/C in usr.GetAllContents())
+			var/newcharge = (potency/100)*C.maxcharge
+			if(C.charge < newcharge)
+				C.charge = newcharge
+				if(isobj(C.loc))
+					var/obj/O = C.loc
+					O.update_icon() //update power meters and such
+				batteries_recharged = 1
+		if(batteries_recharged)
+			usr << "<span class='notice'>Battery has recovered.</span>"
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	seed = /obj/item/seeds/cashseed
