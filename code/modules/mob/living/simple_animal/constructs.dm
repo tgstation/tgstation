@@ -188,9 +188,9 @@
 						and shells to place those soulstones into.</b>"
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
-	if(isliving(A))
-		var/mob/living/L = A
-		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health < L.maxHealth) //is this a hurt construct? let's go heal it if it is
+	if(istype(A, /mob/living/simple_animal/hostile/construct)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/C = A
+		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
 			return 1
 		else
 			return 0
@@ -205,7 +205,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/MoveToTarget(var/list/possible_targets)
 	..()
-	if(target && isliving(target))
+	if(isliving(target))
 		var/mob/living/L = target
 		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
@@ -216,7 +216,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/Aggro()
 	..()
-	if(target && istype(target, /mob/living/simple_animal/hostile/construct)) //oh the target is a construct no need to flee
+	if(istype(target, /mob/living/simple_animal/hostile/construct)) //oh the target is a construct no need to flee
 		retreat_distance = null
 		minimum_distance = 1
 
