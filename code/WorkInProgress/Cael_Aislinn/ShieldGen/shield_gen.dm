@@ -291,6 +291,7 @@
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
 			qdel (D)
+			D = null
 
 		for(var/mob/M in view(5,src))
 			to_chat(M, "\icon[src] You hear heavy droning fade out.")
