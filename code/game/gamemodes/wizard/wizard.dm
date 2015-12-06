@@ -35,7 +35,7 @@
 	var/datum/mind/wizard
 	while(possible_wizards.len)
 		wizard = pick(possible_wizards)
-		if(wizard.special_role)
+		if(wizard.special_role || (mixed && (wizard in ticker.mode.modePlayer)))
 			possible_wizards -= wizard
 			wizard = null
 			continue
@@ -47,6 +47,9 @@
 		return 0
 	wizards += wizard
 	modePlayer += wizard
+	if(mixed)
+		ticker.mode.modePlayer += wizards //merge into master antag list
+		ticker.mode.wizards += wizards
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
@@ -75,8 +78,8 @@
 	update_all_wizard_icons()
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
-			send_intercept()
-	..()
+			if(!mixed) send_intercept()
+		..()
 	return
 
 

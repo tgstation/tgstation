@@ -22,6 +22,9 @@
 	var/list/datum/mind/possible_changelings = get_players_for_role(ROLE_CHANGELING)
 
 	for(var/datum/mind/player in possible_changelings)
+		if(mixed && (player in ticker.mode.modePlayer))
+			possible_changelings -= player
+			continue
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
 				possible_changelings -= player
@@ -31,7 +34,18 @@
 		//possible_changelings-=changeling
 		changelings += changeling
 		modePlayer += changelings
-		return ..()
+		if(mixed)
+			ticker.mode.modePlayer += changelings
+			ticker.mode.changelings += changelings
+		. = ..()
+		if(!. && mixed)
+			for(var/datum/mind/P in modePlayer)
+				ticker.mode.modePlayer -= P
+				ticker.mode.changelings -= P
+		else
+			ticker.mode.modePlayer += traitors
+			ticker.mode.traitors += traitors
+		return .
 	else
 		return 0
 

@@ -94,7 +94,7 @@
 			obj_count++
 
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 /datum/game_mode/rp_revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"

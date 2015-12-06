@@ -52,6 +52,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/list/datum/mind/possible_changelings = get_players_for_role(ROLE_CHANGELING)
 
 	for(var/datum/mind/player in possible_changelings)
+		if(mixed && (player in ticker.mode.modePlayer))
+			possible_changelings -= player
+			continue
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
 				possible_changelings -= player
@@ -74,10 +77,16 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			modePlayer += changelings
 		log_admin("Starting a round of changeling with [changelings.len] changelings.")
 		message_admins("Starting a round of changeling with [changelings.len] changelings.")
+		if(mixed)
+			ticker.mode.modePlayer += changelings //merge into master antag list
+			ticker.mode.changelings += changelings
 		return 1
 	else
 		log_admin("Failed to set-up a round of changeling. Couldn't find any volunteers to be changeling.")
 		message_admins("Failed to set-up a round of changeling. Couldn't find any volunteers to be changeling.")
+		if(mixed)
+			ticker.mode.modePlayer -= changelings //merge into master antag list
+			ticker.mode.traitors -= changelings
 		return 0
 
 /datum/game_mode/changeling/post_setup()
@@ -88,8 +97,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		greet_changeling(changeling)
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
-			send_intercept()
-	..()
+			if(!mixed) send_intercept()
+		..()
 	return
 
 

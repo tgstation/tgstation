@@ -178,7 +178,7 @@
 		the_bomb.r_code = nuke_code
 
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 	return ..()
 

@@ -186,7 +186,7 @@
 			if("rainbow")
 				to_chat(usr, "This crayon is too powerful to be contained in this box.")
 				return
-	..()
+	. = ..()
 
 /*
  * Match Box
@@ -367,7 +367,7 @@
 	return
 
 /obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	. = ..()
 	update_icon()
 
 //FLARE BOX
@@ -408,7 +408,7 @@
 	if(!F.fuel)
 		to_chat(user, "This flare is empty!")
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/fancy/flares/update_icon()
 	..()

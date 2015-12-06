@@ -77,8 +77,8 @@
 	modePlayer += traitors
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
-			send_intercept()
-	..()
+			if(!mixed) send_intercept()
+		..()
 	return 1
 
 

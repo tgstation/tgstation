@@ -101,7 +101,7 @@
 		greet_vox(raider)
 
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
 	var/raider_crew_count = raiders.len

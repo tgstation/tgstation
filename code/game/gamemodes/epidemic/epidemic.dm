@@ -138,7 +138,7 @@
 	stage = 1
 
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 
 	..()
