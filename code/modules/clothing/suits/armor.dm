@@ -161,7 +161,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
-		visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(6, H))
 			if(T.density) continue
@@ -184,7 +184,7 @@
 
 /obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(prob(hit_reaction_chance))
-		visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
+		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
 				C.fire_stacks += 8
