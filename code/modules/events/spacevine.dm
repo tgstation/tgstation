@@ -204,10 +204,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
-	target.ex_act(severity)
-	for(var/atom/A in target.contents + target)
-		if(!istype(A, /obj/effect))
-			A.ex_act(severity)  //To not be the same as self-eating vine
+	target.ex_act(severity, src)
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
@@ -514,8 +511,6 @@
 			break
 
 	growth_queue = growth_queue + queue_end
-	//sleep(5)
-	//src.process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -558,41 +553,9 @@
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 
-/*
-/obj/effect/spacevine/proc/Life()
-	if (!src) return
-	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
-	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated)) dogrowth = 0
-	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door/))
-			if(O:p_open == 0 && prob(50)) O:open()
-			else dogrowth = 0
-	if (dogrowth == 1)
-		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
-		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
-		spawn(20)
-			if(B)
-				B.Life()
-	src.growth += 1
-	if (src.growth == 10)
-		src.name = "Thick Space Kudzu"
-		src.icon_state = pick("vine-med1", "vine-med2", "vine-med3")
-		src.opacity = 1
-		src.waittime = 80
-	if (src.growth == 20)
-		src.name = "Dense Space Kudzu"
-		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = 1
-	spawn(src.waittime)
-		if (src.growth < 20) src.Life()
-
-*/
-
 /obj/effect/spacevine/ex_act(severity, target)
+	if(istype(target, type)) //if its agressive spread vine dont do anything
+		return
 	var/i
 	for(var/datum/spacevine_mutation/SM in mutations)
 		i += SM.on_explosion(severity, target, src)
