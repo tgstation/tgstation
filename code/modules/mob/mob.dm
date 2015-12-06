@@ -179,6 +179,7 @@ var/next_mob_id = 0
 	return 0
 
 /mob/proc/Life()
+	set waitfor = 0
 	return
 
 /mob/proc/get_item_by_slot(slot_id)
