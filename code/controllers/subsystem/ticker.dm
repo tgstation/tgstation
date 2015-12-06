@@ -493,11 +493,25 @@ var/num_escapees = 0
 	if(station_evacuated)
 		world << "<br><b>Evacuation Rate:</b> [num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%"
 
+	/* Uncomment this block to enable announcement of the people with the highest and lowest kill count
 	//Announce who killed the most people
 	var/most_kills = -1
 	for(var/mob/M in player_list)
 		if(M.client && M.client.murders > most_kills)
 			chara = M.client
-			most_kills = M.client.murders
+			most_kills = chara.murders
 	var/list/fluff_messages = list("<font color='red'>* In my way.</span>", "Had the highest LOVE", "Had the most EXP")
 	world << "<br><b>[pick(fluff_messages)]:</b> [chara] <i>([chara.murders] kills)</i>"
+
+	//Announce who killed the least people:
+	var/least_kills = chara.murders
+	for(var/mob/M in player_list)
+		if(M.client && M.client.murders < least_kills)
+			frisk = M.client
+			least_kills = frisk.murders
+	fluff_messages = list("Has a stupid saccharine schtick", "Had the lowest LOVE", "Had the least EXP")
+	world << "<br><b>[pick(fluff_messages)]:</b> [frisk] <i>([frisk.murders] kills)</i>"*/
+
+	world << "<br><b>Total Player Deaths:</b> [total_deaths]"
+	world << "<br><b>How Many Times The Clown Honked:</b> [horn_honks]"
+	world << "<br><b>Total Slips:</b> [total_slips]"

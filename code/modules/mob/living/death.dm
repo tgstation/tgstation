@@ -39,6 +39,8 @@
 		var/mob/M = lastattacker
 		if(M.client)
 			M.client.murders++ //Your LOVE increased.
+	if(client)
+		total_deaths++
 	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
 

@@ -118,6 +118,8 @@
 		spam_flag = 1
 		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
+		if(user.mind && user.mind.assigned_role == "Clown")
+			horn_honks++
 		spawn(cooldowntime)
 			spam_flag = 0
 	return
