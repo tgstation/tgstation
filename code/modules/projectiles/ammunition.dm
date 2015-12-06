@@ -13,7 +13,7 @@
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 1								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-	var/randomspread = 0						//Randomspread for burst weapons
+	var/randomspread = 0						//Randomspread is for burst weapons
 	var/delay = 0								//Delay for energy weapons
 
 /obj/item/ammo_casing/New()

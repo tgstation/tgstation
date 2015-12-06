@@ -23,8 +23,6 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
-	legacy = 1
-	animate_movement = SLIDE_STEPS
 
 /obj/item/projectile/magic/fireball/Range()
 	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
