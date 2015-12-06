@@ -255,6 +255,7 @@
 			TV.child_ruptured(src, range)
 
 		qdel(src)
+		return
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 //		to_chat(world, "<span class='warning'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
@@ -265,6 +266,7 @@
 			T.assume_air(air_contents)
 			playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
 			qdel(src)
+			return
 		else
 			integrity--
 

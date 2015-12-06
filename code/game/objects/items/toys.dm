@@ -56,6 +56,7 @@
 					to_chat(user, "The acid chews through the balloon!")
 					O.reagents.reaction(user)
 					qdel(src)
+					return
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 					to_chat(user, "<span class = 'info'>You fill the balloon with the contents of [O].</span>")

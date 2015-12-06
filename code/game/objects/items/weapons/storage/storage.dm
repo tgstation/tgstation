@@ -168,6 +168,7 @@
 	New(obj/item/sample as obj)
 		if(!istype(sample))
 			qdel(src)
+			return
 		sample_object = sample
 		number = 1
 

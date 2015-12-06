@@ -122,6 +122,7 @@
 			var/spawn_type = pick(spider_types)
 			new spawn_type(src.loc)
 			qdel(src)
+			return
 
 	..()
 

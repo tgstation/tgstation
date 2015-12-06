@@ -169,6 +169,7 @@ emp_act
 			else
 				LAssailant = user
 			qdel(src)
+			return
 	var/datum/organ/external/affecting = get_organ(target_zone)
 	if (!affecting)
 		return

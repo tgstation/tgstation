@@ -37,6 +37,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				clong.ex_act(2)
 		else
 			qdel(src)
+			return
 
 		if(clong && prob(25))
 			src.loc = clong.loc

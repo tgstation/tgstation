@@ -52,6 +52,7 @@
 		visible_message("<span class='warning'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
+		return
 	if (!( locate(/obj/machinery/optable, user.loc) ))
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)

@@ -340,6 +340,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			qdel(src)
+			return
 		..()
 
 /obj/structure/window/barricade/snow/ex_act(severity)

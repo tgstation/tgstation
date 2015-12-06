@@ -67,6 +67,7 @@ obj/effect/liquid/New()
 	..()
 	if( !isturf(loc) )
 		qdel(src)
+		return
 
 	for( var/obj/effect/liquid/L in loc )
 		if(L != src)
@@ -130,6 +131,7 @@ obj/effect/liquid/proc/apply_calculated_effect()
 
 	if(volume < LIQUID_TRANSFER_THRESHOLD)
 		qdel(src)
+		return
 	new_volume = 0
 	update_icon2()
 
