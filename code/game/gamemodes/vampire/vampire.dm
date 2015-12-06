@@ -76,7 +76,9 @@
 			modePlayer += vampires
 		log_admin("Starting a round of vampire with [vampires.len] vampires.")
 		message_admins("Starting a round of vampire with [vampires.len] vampires.")
-		//if(mixed) ticker.mode.modePlayer |= vampires
+		if(mixed)
+			ticker.mode.modePlayer += vampires //merge into master antag list
+			ticker.mode.vampires += vampires
 		return 1
 	else
 		log_admin("Failed to set-up a round of vampire. Couldn't find any volunteers to be vampires.")
@@ -92,7 +94,7 @@
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
 			if(!mixed) send_intercept()
-	..()
+		..()
 	return
 
 /datum/game_mode/proc/vampire_completion()

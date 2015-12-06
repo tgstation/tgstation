@@ -69,7 +69,9 @@
 			continue
 		if(istype(traitor))
 			traitor.special_role = "traitor"
-	//if(mixed)ticker.mode.modePlayer |= traitors //merge into master antag list
+	if(mixed)
+		ticker.mode.modePlayer += traitors //merge into master antag list
+		ticker.mode.traitors += traitors
 	log_admin("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
 	message_admins("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
 
@@ -79,7 +81,7 @@
 
 
 /datum/game_mode/traitor/autotraitor/post_setup()
-	..()
+	if(!mixed) ..()
 	abandon_allowed = 1
 	traitorcheckloop()
 
@@ -101,6 +103,9 @@
 			if(player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.desires_role(ROLE_TRAITOR)) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
+			if(mixed && (player in ticker.mode.modePlayer))
+				possible_traitors -= player
+				continue
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					possible_traitors -= player
@@ -188,6 +193,9 @@
 				forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
+				if(mixed)
+					ticker.mode.traitors |= character.mind
+					ticker.mode.modePlayer |= character.mind
 				to_chat(character, "<span class='danger'>You are the traitor.</span>")
 				character.mind.special_role = "traitor"
 				var/obj_count = 1

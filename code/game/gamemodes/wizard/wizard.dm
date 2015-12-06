@@ -47,6 +47,9 @@
 		return 0
 	wizards += wizard
 	modePlayer += wizard
+	if(mixed)
+		ticker.mode.modePlayer += wizards //merge into master antag list
+		ticker.mode.wizards += wizards
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
@@ -76,7 +79,7 @@
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
 			if(!mixed) send_intercept()
-	..()
+		..()
 	return
 
 

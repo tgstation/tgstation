@@ -78,7 +78,7 @@
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
 			if(!mixed) send_intercept()
-	..()
+		..()
 	return 1
 
 

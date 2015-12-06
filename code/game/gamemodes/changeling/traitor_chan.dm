@@ -34,11 +34,17 @@
 		//possible_changelings-=changeling
 		changelings += changeling
 		modePlayer += changelings
-		//if(mixed) ticker.mode.modePlayer |= changelings
+		if(mixed)
+			ticker.mode.modePlayer += changelings
+			ticker.mode.changelings += changelings
 		. = ..()
 		if(!. && mixed)
 			for(var/datum/mind/P in modePlayer)
 				ticker.mode.modePlayer -= P
+				ticker.mode.changelings -= P
+		else
+			ticker.mode.modePlayer += traitors
+			ticker.mode.traitors += traitors
 		return .
 	else
 		return 0

@@ -48,7 +48,7 @@
 		if(!M.pre_setup())
 			del(M)
 			continue
-		modePlayer |= M.modePlayer
+		//modePlayer += M.modePlayer
 		modes += M
 		possible = shuffle(possible)
 	if(!modes.len)

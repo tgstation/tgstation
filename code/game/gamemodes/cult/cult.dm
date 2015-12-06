@@ -112,7 +112,9 @@
 	else
 		log_admin("Starting a round of cult with [cult.len] starting cultists.")
 		message_admins("Starting a round of cult with [cult.len] starting cultists.")
-		//if(mixed) ticker.mode.modePlayer |= cult
+		if(mixed)
+			ticker.mode.modePlayer += cult //merge into master antag list
+			ticker.mode.cult += cult
 
 	return !.
 
@@ -267,7 +269,7 @@
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
 			if(!mixed) send_intercept()
-	..()
+		..()
 
 /datum/game_mode/cult/proc/pick_objective()
 	var/list/possible_objectives = list()
