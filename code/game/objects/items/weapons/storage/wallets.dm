@@ -78,7 +78,7 @@
 /obj/item/weapon/storage/wallet/GetID()
 	return front_id
 
-/obj/item/weapon/storage/wallet/GetAccess(
+/obj/item/weapon/storage/wallet/GetAccess()
 	if(combined_access.len) 
 		return combined_access
 	else
