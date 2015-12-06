@@ -346,15 +346,11 @@ var/datum/subsystem/ticker/ticker
 				M << "Captainship not forced on anyone."
 
 
-
+var/station_evacuated
+var/num_survivors = 0
+var/num_escapees = 0
 /datum/subsystem/ticker/proc/declare_completion()
-	var/station_evacuated
-	if(SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		station_evacuated = 1
-	var/num_survivors = 0
-	var/num_escapees = 0
-
-	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended!</B></FONT>"
 
 	//Player status report
 	for(var/mob/Player in mob_list)
@@ -371,20 +367,6 @@ var/datum/subsystem/ticker/ticker
 					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
 				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
-
-	//Round statistics report
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
-
-	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
-	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
-		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
-	world << "<BR>"
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
@@ -412,6 +394,8 @@ var/datum/subsystem/ticker/ticker
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
+
+	announce_statistics()
 
 	mode.declare_completion()//To declare normal completion.
 
@@ -489,3 +473,31 @@ var/datum/subsystem/ticker/ticker
 		return
 	spawn(-1) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
 		maprotate()
+
+/datum/subsystem/ticker/proc/announce_statistics() //Display five random round-end stats, plus a few guaranteed ones.
+	world << "<br>"
+	world << "<span class='big'><b>Round Statistics Report</b></span>"
+
+	//Get info for the generic stats
+	if(SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
+		station_evacuated = 1
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
+
+	//Generic stats: time, integrity, population...
+	world << "<br><b>Shift Duration:</b> [round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]"
+	world << "<br><b>Station Integrity:</b> [mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]"
+	world << "<br><b>Total Population:</b> [joined_player_list.len]"
+	world << "<br><b>Survival Rate:</b> [num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)"
+	if(station_evacuated)
+		world << "<br><b>Evacuation Rate:</b> [num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%"
+
+	//Announce who killed the most people
+	var/most_kills = -1
+	for(var/mob/M in player_list)
+		if(M.client && M.client.murders > most_kills)
+			chara = M.client
+			most_kills = M.client.murders
+	var/list/fluff_messages = list("<font color='red'>* In my way.</span>", "Had the highest LOVE", "Had the most EXP")
+	world << "<br><b>[pick(fluff_messages)]:</b> [chara] <i>([chara.murders] kills)</i>"

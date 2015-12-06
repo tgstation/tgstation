@@ -158,6 +158,7 @@
 #include "code\controllers\subsystem\radio.dm"
 #include "code\controllers\subsystem\server_maintenance.dm"
 #include "code\controllers\subsystem\shuttles.dm"
+#include "code\controllers\subsystem\statistics.dm"
 #include "code\controllers\subsystem\sun.dm"
 #include "code\controllers\subsystem\ticker.dm"
 #include "code\controllers\subsystem\timer.dm"
