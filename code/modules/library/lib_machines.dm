@@ -316,7 +316,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
 		return
-	if(href_list["page"] && screenstate == 4))
+	if(href_list["page"] && screenstate == 4)
 		page = text2num(href_list["page"])
 	if(href_list["switchscreen"])
 		switch(href_list["switchscreen"])
