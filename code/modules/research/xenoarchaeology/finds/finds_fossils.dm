@@ -16,7 +16,7 @@
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/unsimulated/mineral))
 		T:last_find = W
-	del src
+	qdel (src)
 
 /obj/item/weapon/fossil/bone
 	name = "Fossilised bone"
@@ -39,8 +39,9 @@
 		var/b = new src.type
 		o.contents.Add(a)
 		o.contents.Add(b)
-		del W
-		del src
+		qdel (W)
+		W = null
+		qdel (src)
 
 /obj/skeleton
 	name = "Incomplete skeleton"
@@ -61,7 +62,8 @@
 		if(!bstate)
 			bnum++
 			src.contents.Add(new/obj/item/weapon/fossil/bone)
-			del W
+			qdel (W)
+			W = null
 			if(bnum==breq)
 				usr = user
 				icon_state = "skel"

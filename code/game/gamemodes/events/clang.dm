@@ -36,7 +36,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			if(clong.density || prob(10))
 				clong.ex_act(2)
 		else
-			del(src)
+			qdel(src)
+			return
 
 		if(clong && prob(25))
 			src.loc = clong.loc
@@ -81,7 +82,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if (immrod.z != 1)
 			immrod.z = 1
 		if(immrod.loc == end)
-			del(immrod)
+			qdel(immrod)
+			immrod = null
 		sleep(10)
 	for(var/obj/effect/immovablerod/imm in world)
 		return

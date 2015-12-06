@@ -59,7 +59,7 @@ var/global/list/lightfloor_colors = list(
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
-			del(src)
+			qdel(src)
 		return 1
 	else if(istype(O,/obj/item/device/multitool))
 		var/list/choice_list = list(LIGHTFLOOR_OPTION_CUSTOM) + lightfloor_colors

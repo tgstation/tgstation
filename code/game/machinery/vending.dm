@@ -238,7 +238,7 @@ var/global/num_vending_terminals = 1
 	if(prob(75))
 		malfunction()
 	else
-		del(src)
+		qdel(src)
 
 /obj/machinery/vending/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -1315,7 +1315,7 @@ var/global/num_vending_terminals = 1
 					to_chat(usr, "<span class='notice'>You unscrew \the [src] from the wall.</span>")
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					new /obj/item/mounted/frame/wallmed(get_turf(src))
-					del(src)
+					qdel(src)
 				return 1
 			if(istype(W, /obj/item/weapon/circuitboard))
 				var/obj/item/weapon/circuitboard/C=W

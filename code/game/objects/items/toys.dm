@@ -55,7 +55,8 @@
 				if(O.reagents.has_reagent("pacid", 1))
 					to_chat(user, "The acid chews through the balloon!")
 					O.reagents.reaction(user)
-					del(src)
+					qdel(src)
+					return
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 					to_chat(user, "<span class = 'info'>You fill the balloon with the contents of [O].</span>")
@@ -72,7 +73,7 @@
 		src.icon_state = "burst"
 		spawn(5)
 			if(src)
-				del(src)
+				qdel(src)
 	return
 
 /obj/item/toy/balloon/update_icon()
@@ -225,7 +226,8 @@
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
 			user.drop_item()
-			del(I)
+			qdel(I)
+			I = null
 			bullets++
 			to_chat(user, "<span class = 'info'>You load the foam dart into the crossbow.</span>")
 		else
@@ -257,21 +259,24 @@
 					for(var/mob/O in viewers(world.view, D))
 						O.show_message(text("<span class = 'danger'>[] was hit by the foam dart!</span>", M), 1)
 					new /obj/item/toy/ammo/crossbow(M.loc)
-					del(D)
+					qdel(D)
+					D = null
 					return
 
 				for(var/atom/A in D.loc)
 					if(A == user) continue
 					if(A.density)
 						new /obj/item/toy/ammo/crossbow(A.loc)
-						del(D)
+						qdel(D)
+						D = null
 
 			sleep(1)
 
 		spawn(10)
 			if(D)
 				new /obj/item/toy/ammo/crossbow(D.loc)
-				del(D)
+				qdel(D)
+				D = null
 
 		return
 	else if (bullets == 0)
@@ -446,7 +451,7 @@
 
 
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
-	del(src)
+	qdel(src)
 
 
 
@@ -470,7 +475,7 @@
 	new /obj/effect/decal/cleanable/ash(src.loc)
 	src.visible_message("<span class = 'danger'>The [src.name] explodes!</span>","<span class = 'danger'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
-	del(src)
+	qdel(src)
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
@@ -484,7 +489,7 @@
 			new /obj/effect/decal/cleanable/ash(src.loc)
 			src.visible_message("<span class = 'danger'>The [src.name] explodes!</span>","<span class = 'danger'>You hear a snap!</span>")
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
-			del(src)
+			qdel(src)
 
 /*
  * Water flower
@@ -545,7 +550,8 @@
 					if(ismob(T) && T:client)
 						to_chat(T:client, "<span class = 'danger'>[user] has sprayed you with water!</span>")
 				sleep(4)
-			del(D)
+			qdel(D)
+			D = null
 
 		return
 

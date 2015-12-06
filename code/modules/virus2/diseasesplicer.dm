@@ -128,7 +128,7 @@
 	if (href_list["grab"])
 		memorybank = locate(href_list["grab"])
 		analysed = dish.analysed
-		del(dish)
+		qdel(dish)
 		dish = null
 		scanning = 10
 

@@ -72,7 +72,7 @@
 	if(health <= 0)
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/weapon/storage/lockbox/ex_act(severity)

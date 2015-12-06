@@ -5,7 +5,7 @@
 
 	timed_alert = new(target,message,title,button1,button2,button3)
 	sleep(time)
-	del(timed_alert)
+	qdel(timed_alert)
 
 /mob/proc/timed_alert(time,message,title,button1,button2,button3)
 	var/selected_button = ""

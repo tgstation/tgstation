@@ -131,7 +131,7 @@
 		to_chat(user, "The dish shatters")
 		if(virus2.infectionchance > 0)
 			infect_virus2(user,virus2)
-		del src
+		qdel (src)
 
 /obj/item/weapon/virusdish/examine(mob/user)
 	..()

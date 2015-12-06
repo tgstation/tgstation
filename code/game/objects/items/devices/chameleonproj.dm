@@ -75,7 +75,8 @@
 			return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
-		del(O)
+		qdel(O)
+		O = null
 		to_chat(usr, "<span class='notice'>You activate [src].</span>")
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
@@ -94,7 +95,7 @@
 		spark_system.start()
 		eject_all()
 		if(delete_dummy)
-			del(active_dummy)
+			qdel(active_dummy)
 		active_dummy = null
 		can_use = 0
 		spawn(50)

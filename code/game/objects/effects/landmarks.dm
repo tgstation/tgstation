@@ -14,7 +14,7 @@
 	switch(name)			//some of these are probably obsolete
 		if("shuttle")
 			shuttle_z = z
-			del(src)
+			qdel(src)
 
 		if("airtunnel_stop")
 			airtunnel_stop = x
@@ -27,26 +27,26 @@
 
 		if("monkey")
 			monkeystart += loc
-			del(src)
+			qdel(src)
 		if("start")
 			newplayer_start += loc
-			del(src)
+			qdel(src)
 
 		if("wizard")
 			wizardstart += loc
-			del(src)
+			qdel(src)
 
 		if("JoinLate")
 			latejoin += loc
-			del(src)
+			qdel(src)
 		if("AssetJoinLate")
 			assistant_latejoin += loc
-			del(src)
+			qdel(src)
 
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
-			del(src)
+			qdel(src)
 	//	if("mazewarp")
 	//		mazewarp += loc
 		if("Holding Facility")
@@ -62,22 +62,22 @@
 		//not prisoners
 		if("prisonsecuritywarp")
 			prisonsecuritywarp += loc
-			del(src)
+			qdel(src)
 
 		if("blobstart")
 			blobstart += loc
-			del(src)
+			qdel(src)
 
 		if("xeno_spawn")
 			xeno_spawn += loc
-			del(src)
+			qdel(src)
 
 		if("endgame_exit")
 			endgame_safespawns += loc
-			del(src)
+			qdel(src)
 		if("bluespacerift")
 			endgame_exits += loc
-			del(src)
+			qdel(src)
 
 	landmarks_list += src
 	return 1

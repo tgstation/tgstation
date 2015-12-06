@@ -33,7 +33,7 @@
 				handle_faction(x,L)
 			// Spawn some hostile critters
 		postPrime(spawned_atoms)
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/grenade/spawnergrenade/proc/handle_faction(var/mob/living/spawned, var/mob/living/L)

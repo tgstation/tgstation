@@ -626,7 +626,8 @@ its easier to just keep the beam vertical.
 
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
-		del(fingerprints)
+		qdel(fingerprints)
+		fingerprints = null
 	return
 
 

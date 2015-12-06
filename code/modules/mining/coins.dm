@@ -96,7 +96,8 @@
 
 		if(CC.amount <= 0)
 			to_chat(user, "<span class='notice'>This cable coil appears to be empty.</span>")
-			del(CC)
+			qdel(CC)
+			CC = null
 			return
 
 		overlays += image('icons/obj/items.dmi',"coin_string_overlay")

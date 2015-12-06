@@ -104,7 +104,7 @@
 	if(target)
 		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		if(!(target.singuloCanEat()))//mostly adminbus objects. It'd make sense though that C4 can't destroy what even a singulo can't eat.
-			del(src)
+			qdel(src)
 			return
 		if (istype(target, /turf/simulated/wall))
 			target:dismantle_wall(1)
@@ -112,8 +112,9 @@
 			target.ex_act(1)
 		if (isobj(target))
 			if (target)
-				del(target)
-	del(src)
+				qdel(target)
+				target = null
+	qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

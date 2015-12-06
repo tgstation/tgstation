@@ -169,7 +169,7 @@
 		if(die)
 			newHead.Die()
 
-		del(src)
+		qdel(src)
 
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
@@ -178,16 +178,19 @@
 					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent
 						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
-						del(oldStack)
+						qdel(oldStack)
+						oldStack = null
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
 					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
-					del(oldItem)
+					qdel(oldItem)
+					oldItem = null
 					continue
 				else
 					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
-					del(stomachContent)
+					qdel(stomachContent)
+					stomachContent = null
 					continue
 
 		if(previous)

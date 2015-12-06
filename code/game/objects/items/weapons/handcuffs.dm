@@ -157,7 +157,7 @@
 		user.put_in_hands(W)
 		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
 
-		del(src)
+		qdel(src)
 
 /* mite b cool - N3X
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)

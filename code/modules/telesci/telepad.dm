@@ -77,7 +77,7 @@
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
 		new /obj/item/stack/sheet/glass/glass(get_turf(src))
-		del(src)
+		qdel(src)
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -93,7 +93,7 @@
 		to_chat(user, "<span class = 'caution'> Locked In</span>")
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 ///HANDHELD TELEPAD USER///

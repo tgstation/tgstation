@@ -191,7 +191,7 @@ display round(lastgen) and plasmatank amount
 
 	if (heat > 300)
 		overheat()
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/power/port_gen/pacman/handleInactive()

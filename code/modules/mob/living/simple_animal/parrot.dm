@@ -738,7 +738,7 @@
 
 //parrots will eat crackers instead of dropping them
 	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
-		del(held_item)
+		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)
 			adjustBruteLoss(-10)

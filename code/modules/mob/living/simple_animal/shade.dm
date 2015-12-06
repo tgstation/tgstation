@@ -54,7 +54,7 @@
 			if((M.client && !( M.blinded )))
 				M.show_message("<span class='warning'> [src] lets out a contented sigh as their form unwinds.</span>")
 				ghostize()
-		del src
+		qdel (src)
 		return
 
 

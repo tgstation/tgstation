@@ -114,8 +114,9 @@
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
 			new /obj/item/weapon/dualsaber(user.loc)
-			del(W)
-			del(src)
+			qdel(W)
+			W = null
+			qdel(src)
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"

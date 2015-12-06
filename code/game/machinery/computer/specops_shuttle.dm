@@ -76,7 +76,8 @@ var/specops_shuttle_timeleft = 0
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
+			T = null
 
 	start_location.move_contents_to(end_location)
 
@@ -89,7 +90,8 @@ var/specops_shuttle_timeleft = 0
 	for(var/obj/machinery/computer/specops_shuttle/S in machines)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
-	del(announcer)
+	qdel(announcer)
+	announcer = null
 /proc/AliceAnnounce(var/atom/movable/announcer,var/message)
 	var/datum/speech/speech = announcer.create_speech(message=message, frequency=radiochannels["Response Team"], transmitter=announcer)
 	//speech.name="A.L.I.C.E."
@@ -226,7 +228,8 @@ var/specops_shuttle_timeleft = 0
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
+			T = null
 
 	start_location.move_contents_to(end_location)
 
@@ -237,7 +240,7 @@ var/specops_shuttle_timeleft = 0
 	for(var/obj/machinery/computer/specops_shuttle/S in machines)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
-	del(announcer)
+	qdel(announcer)
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
@@ -489,7 +492,7 @@ var/specops_shuttle_timeleft = 0
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
 
 	start_location.move_contents_to(end_location)
 

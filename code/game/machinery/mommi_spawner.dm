@@ -165,7 +165,7 @@
 	//M.Namepick()
 	M.updatename()
 
-	del(user)
+	qdel(user)
 
 	metal=0
 	building=0

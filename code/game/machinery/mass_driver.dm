@@ -38,7 +38,7 @@ var/list/mass_drivers = list()
 			F.anchored = 1
 			F.build = 4
 			F.update_icon()
-			del(src)
+			qdel(src)
 		return 1
 
 	return ..()
@@ -120,7 +120,7 @@ var/list/mass_drivers = list()
 				if(do_after(user, src, 30) && (build == 0))
 					to_chat(user, "<span class='notice'>You detach the plasteel sheets from each others.</span>")
 					new /obj/item/stack/sheet/plasteel(get_turf(src),3)
-					del(src)
+					qdel(src)
 				return 1
 			if(istype(W, /obj/item/weapon/wrench))
 				to_chat(user, "You begin to anchor \the [src] on the floor.")
@@ -208,7 +208,7 @@ var/list/mass_drivers = list()
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				var/obj/machinery/mass_driver/M = new(get_turf(src))
 				M.dir = src.dir
-				del(src)
+				qdel(src)
 				return 1
 	..()
 

@@ -1,9 +1,9 @@
 
 /datum/universal_state/supermatter_cascade
- 	name = "Supermatter Cascade"
- 	desc = "Unknown harmonance affecting universal substructure, converting nearby matter to supermatter."
+  name = "Supermatter Cascade"
+  desc = "Unknown harmonance affecting universal substructure, converting nearby matter to supermatter."
 
- 	decay_rate = 5 // 5% chance of a turf decaying on lighting update (there's no actual tick for turfs). Code that triggers this is lighting_overlays.dm, line #62.
+  decay_rate = 5 // 5% chance of a turf decaying on lighting update (there's no actual tick for turfs). Code that triggers this is lighting_overlays.dm, line #62.
 
 /datum/universal_state/supermatter_cascade/OnShuttleCall(var/mob/user)
 	if(user)
@@ -239,7 +239,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.current.remove_changeling_powers()
 			M.current.verbs -= /datum/changeling/proc/EvolutionMenu
 			if(M.changeling)
-				del(M.changeling)
+				qdel(M.changeling)
+				M.changeling = null
 			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.vampires)
@@ -247,7 +248,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			M.special_role = null
 			M.current.remove_vampire_powers()
 			if(M.vampire)
-				del(M.vampire)
+				qdel(M.vampire)
+				M.vampire = null
 			to_chat(M.current, "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</FONT></span>")
 
 		if(M in ticker.mode.syndicates)
@@ -280,7 +282,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 
 
 			A.laws = new base_law_type
-			del(A.malf_picker)
+			qdel(A.malf_picker)
+			A.malf_picker = null
 			A.show_laws()
 			A.icon_state = "ai"
 

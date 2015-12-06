@@ -220,7 +220,7 @@
 			feedback_inc("cyborg_birth",1)
 			O.Namepick()
 
-			del(src)
+			qdel(src)
 		else
 			to_chat(user, "<span class='notice'>The MMI must go in after everything else!</span>")
 
@@ -274,8 +274,9 @@
 		to_chat(user, "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>")
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item(W)
-		del(W)
-		del(src)
+		qdel(W)
+		W = null
+		qdel(src)
 		return
 	return
 

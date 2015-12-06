@@ -80,14 +80,14 @@ var/const/tk_maxrange = 15
 			if(focus.Adjacent(loc))
 				focus.loc = loc
 
-		del(src)
+		qdel(src)
 		return
 
 
 	//stops TK grabs being equipped anywhere but into hands
 	equipped(var/mob/user, var/slot)
 		if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
-		del(src)
+		qdel(src)
 		return
 
 
@@ -101,10 +101,10 @@ var/const/tk_maxrange = 15
 		if(!target || !user)	return
 		if(last_throw+3 > world.time)	return
 		if(!host || host != user)
-			del(src)
+			qdel(src)
 			return
 		if(!(M_TK in host.mutations))
-			del(src)
+			qdel(src)
 			return
 		if(isobj(target) && !isturf(target.loc))
 			return
@@ -158,7 +158,7 @@ var/const/tk_maxrange = 15
 	proc/focus_object(var/obj/target, var/mob/living/user)
 		if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
 		if(target.anchored || !isturf(target.loc))
-			del src
+			qdel(src)
 			return
 		focus = target
 		update_icon()
@@ -211,4 +211,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-

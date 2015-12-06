@@ -79,7 +79,8 @@
 		verbs += rotate_verbs
 		if(node)
 			node.disconnect(src)
-			del(network)
+			qdel(network)
+			network = null
 			node = null
 	else if(anchored)
 		verbs -= rotate_verbs
@@ -246,7 +247,8 @@
 		verbs += rotate_verbs
 		if(node)
 			node.disconnect(src)
-			del(network)
+			qdel(network)
+			network = null
 			node = null
 	else if(anchored)
 		verbs -= rotate_verbs

@@ -13,7 +13,7 @@
 	if(created_field.len)
 		for(var/obj/effect/energy_field/F in created_field)
 			created_field.Remove(F)
-			del F
+			qdel (F)
 	else if(holder)
 		var/turf/T = get_turf(holder)
 		while(created_field.len < 16)

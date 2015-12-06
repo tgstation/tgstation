@@ -39,7 +39,8 @@ obj/item/device/mmi/Destroy()
 			if(cc<req)
 				var/temppart = new t(src)
 				to_chat(user, "<span class='warning'>You're short [req-cc] [temppart]\s.</span>")
-				del(temppart)
+				qdel(temppart)
+				temppart = null
 				return TRUE
 		if(!istype(loc,/turf))
 			to_chat(user, "<span class='warning'>You can't assemble the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>")
@@ -126,7 +127,8 @@ obj/item/device/mmi/Destroy()
 		brainmob.resurrect()
 
 		user.drop_item(O)
-		del(O)
+		qdel(O)
+		O = null
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		icon_state = "mmi_full"

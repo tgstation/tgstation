@@ -313,7 +313,9 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 
 		if(fuel)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
-			if(fuel.moles <= 0) del fuel
+			if(fuel.moles <= 0)
+				qdel (fuel)
+				fuel = null
 
 		if(can_use_turf)
 			if(T.getFireFuel()>0)

@@ -33,7 +33,8 @@
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
-		del(air_contents)
+		qdel(air_contents)
+		air_contents = null
 
 	processing_objects.Remove(src)
 
@@ -74,12 +75,12 @@
 	if(prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
-			del(src)
+			qdel(src)
 
 		if(src.air_contents)
 			location.assume_air(air_contents)
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -253,7 +254,8 @@
 			var/obj/item/device/transfer_valve/TV = src.loc
 			TV.child_ruptured(src, range)
 
-		del(src)
+		qdel(src)
+		return
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 //		to_chat(world, "<span class='warning'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
@@ -263,7 +265,8 @@
 				return
 			T.assume_air(air_contents)
 			playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
-			del(src)
+			qdel(src)
+			return
 		else
 			integrity--
 

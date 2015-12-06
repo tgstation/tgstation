@@ -64,7 +64,8 @@
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
 		var/obj/item/stack/sheet/wetleather/WL = new(src)
 		WL.amount = HH.amount
-		del(HH)
+		qdel(HH)
+		HH = null
 
 
 	if(crayon)
@@ -98,10 +99,12 @@
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
-					del(J)
+					qdel(J)
+					J = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
-				del(J)
+				qdel(J)
+				J = null
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
@@ -109,49 +112,59 @@
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
-					del(G)
+					qdel(G)
+					G = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
-				del(G)
+				qdel(G)
+				G = null
 			for(var/T in typesof(/obj/item/clothing/shoes))
 				var/obj/item/clothing/shoes/S = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
 				if(color == S._color)
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
-					del(S)
+					qdel(S)
+					S = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
-				del(S)
+				qdel(S)
+				S = null
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
 				if(color == B._color)
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
-					del(B)
+					qdel(B)
+					B = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
-				del(B)
+				qdel(B)
+				B = null
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
 //				to_chat(world, "DEBUG: [color] == [J._color]")
 				if(color == H._color)
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
-					del(H)
+					qdel(H)
+					H = null
 //					to_chat(world, "DEBUG: YUP! [new_icon_state] and [new_item_state]")
 					break
-				del(H)
+				qdel(H)
+				H = null
 
 			for(var/T in typesof(/obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/test = new T
 				if(test._color == color)
 //					to_chat(world, "Found the right cable coil, _color: [test._color]")
 					ccoil_test = 1
-					del(test)
+					qdel(test)
+					test = null
 					break
-				del(test)
+				qdel(test)
+				test = null
 
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
@@ -201,7 +214,7 @@
 //					to_chat(world, "DEBUG: YUP! FOUND IT!")
 					H._color = color
 					H.icon_state = "coil_[color]"
-		del(crayon)
+		qdel(crayon)
 		crayon = null
 
 
@@ -239,7 +252,8 @@
 			var/obj/item/weapon/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
 				G.affecting.loc = src
-				del(G)
+				qdel(G)
+				G = null
 				wash_state = 3
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \

@@ -55,7 +55,7 @@
 	..()
 	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/sheet/wood(loc)
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -68,4 +68,4 @@
 /mob/living/simple_animal/hostile/tree/festivus/Die()
 	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/weapon/nullrod(loc)
-	del(src)
+	qdel(src)

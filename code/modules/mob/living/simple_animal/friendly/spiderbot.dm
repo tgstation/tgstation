@@ -192,7 +192,7 @@
 		held_item = null
 
 	robogibs(src.loc, viruses)
-	del(src)
+	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/spiderbot/verb/ventcrawl()

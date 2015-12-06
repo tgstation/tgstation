@@ -3,7 +3,8 @@
 /turf/var/zone/zone
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	del(giver)
+	qdel(giver)
+	giver = null
 	return 0
 
 /turf/return_air()
@@ -137,7 +138,8 @@
 
 /turf/simulated/Destroy()
 	if(active_hotspot)
-		del(active_hotspot)
+		qdel(active_hotspot)
+		active_hotspot = null
 	if(blocks_air)
 		for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 			var/turf/simulated/tile = get_step(src,direction)

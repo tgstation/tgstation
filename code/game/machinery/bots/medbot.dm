@@ -495,7 +495,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/bot/medbot/Bump(M as mob|obj) //Leave no door unopened!
@@ -570,11 +570,12 @@
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
 
-	del(S)
+	qdel(S)
+	S = null
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
 	user.drop_from_inventory(src)
-	del(src)
+	qdel(src)
 
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -608,7 +609,7 @@
 					S.skin = src.skin
 					S.name = src.created_name
 					user.drop_from_inventory(src)
-					del(src)
+					qdel(src)
 
 
 /obj/machinery/bot/medbot/declare()

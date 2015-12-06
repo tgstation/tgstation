@@ -110,7 +110,8 @@
 			return slot
 	switch (act_on_fail)
 		if(EQUIP_FAILACTION_DELETE)
-			del(W)
+			qdel(W)
+			W = null
 		if(EQUIP_FAILACTION_DROP)
 			W.loc=get_turf(src) // I think.
 	return null
@@ -925,7 +926,3 @@ It can still be worn/put on as normal.
 	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
 		return get_inactive_hand()
 	return null
-
-
-
-

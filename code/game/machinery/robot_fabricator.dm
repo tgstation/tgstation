@@ -26,7 +26,8 @@
 						count++
 
 					if (O:amount < 1)
-						del(O)
+						qdel(O)
+						O = null
 
 					to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
 					src.overlays -= "fab-load-metal"

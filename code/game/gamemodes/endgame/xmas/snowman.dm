@@ -61,7 +61,7 @@
 			hat.loc = T
 		if(carrot)
 			carrot.loc = T
-		del(src)
+		qdel(src)
 
 	else if(fire_alert)
 		src.say(pick("Oh god the heat...","I'm meltiiinggg...","Someone turn off the heater!"))

@@ -58,7 +58,8 @@
 
 		for (var/datum/playingcard/P in H.cards) src.cards.Add(P)
 
-		del (O)
+		qdel (O)
+		O = null
 
 		user.show_message("You place your cards on the bottom of the deck.")
 	else return ..()
@@ -127,7 +128,9 @@
 	src.update_conceal()
 
 /obj/item/weapon/hand/Del()
-	if (src.hi) del src.hi
+	if (src.hi)
+		qdel (src.hi)
+		src.hi = null
 
 	return ..()
 
@@ -139,7 +142,8 @@
 
 		H.update_icon()
 
-		del(src)
+		qdel(src)
+		return
 	else return ..()
 
 /obj/item/weapon/hand/verb/discard(datum/playingcard/card in cards)
@@ -196,7 +200,7 @@
 	else               src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
 
 /obj/item/weapon/hand/update_icon()
-	if (!cards.len) del (src)
+	if (!cards.len) qdel (src)
 	else if(cards.len > 1)
 		name = "hand of cards"
 		desc = "Some playing cards."

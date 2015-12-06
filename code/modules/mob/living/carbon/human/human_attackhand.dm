@@ -287,14 +287,16 @@
 						visible_message("<span class='danger'>[M] has broken [src]'s grip on [lgrab.affecting]!</span>")
 						talked = 1
 					spawn(1)
-						del(lgrab)
+						qdel(lgrab)
+						lgrab = null
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
 						visible_message("<span class='danger'>[M] has broken [src]'s grip on [rgrab.affecting]!</span>")
 						talked = 1
 					spawn(1)
-						del(rgrab)
+						qdel(rgrab)
+						rgrab = null
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap

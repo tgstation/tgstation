@@ -71,7 +71,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del src
+	qdel (src)
 	return
 
 /mob/living/simple_animal/hostile/hivebot/tele//this still needs work
@@ -122,4 +122,3 @@
 	if(stat == 0)
 		if(prob(2))//Might be a bit low, will mess with it likely
 			warpbots()
-

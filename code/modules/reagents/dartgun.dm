@@ -151,7 +151,8 @@
 		cartridge.darts--
 		src.update_icon()
 		S.reagents.trans_to(D, S.reagents.total_volume)
-		del(S)
+		qdel(S)
+		S = null
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		D.flags |= NOREACT
@@ -195,16 +196,22 @@
 						D.reagents.trans_to(M, 15)
 					to_chat(M, "<span class='danger'>You feel a slight prick.</span>")
 
-					del(D)
+					qdel(D)
+					D = null
 					break
 			if(D)
 				for(var/atom/A in D.loc)
 					if(A == user) continue
-					if(A.density) del(D)
+					if(A.density)
+						qdel(D)
+						D = null
 
 			sleep(1)
 
-		if (D) spawn(10) del(D)
+		if (D)
+			spawn(10)
+			qdel(D)
+			D = null
 
 		return
 

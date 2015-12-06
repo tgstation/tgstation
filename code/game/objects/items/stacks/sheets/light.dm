@@ -20,7 +20,7 @@
 		new/obj/item/stack/sheet/glass/glass(user.loc)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
-			del(src)
+			qdel(src)
 		return
 
 	if(istype(O,/obj/item/stack/sheet/metal))
@@ -36,7 +36,7 @@
 
 		if(amount <= 0)
 			user.drop_from_inventory(src)
-			del(src)
+			qdel(src)
 		return
 
 	return ..()

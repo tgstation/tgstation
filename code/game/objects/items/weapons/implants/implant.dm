@@ -235,7 +235,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!src.reagents.total_volume)
 		to_chat(R, "You hear a faint click from your chest.")
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/item/weapon/implant/chem/emp_act(severity)
@@ -496,7 +496,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		imp_in.put_in_hands(scanned)
 	else
 		scanned.loc = t
-	del src
+	qdel (src)
 
 /obj/item/weapon/implant/compressed/implanted(mob/source as mob)
 	src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")

@@ -344,11 +344,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									S.amount--
 									linked_destroy.loaded_item = S
 								else
-									del(S)
+									qdel(S)
+									S = null
 									linked_destroy.icon_state = "d_analyzer"
 							else
 								if(!(I in linked_destroy.component_parts))
-									del(I)
+									qdel(I)
+									I = null
 									linked_destroy.icon_state = "d_analyzer"
 						use_power(250)
 						screen = 1.0
@@ -520,7 +522,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				linked_lathe.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
-				del sheet
+				qdel (sheet)
+				sheet = null
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		if(!src.allowed(usr))
 			to_chat(usr, "Unauthorized Access.")
@@ -538,7 +541,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				linked_imprinter.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
-				del sheet
+				qdel (sheet)
+				sheet = null
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = 0.0
@@ -567,7 +571,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			screen = 0.0
-			del(files)
+			qdel(files)
 			files = new /datum/research(src)
 			spawn(20)
 				screen = 1.6

@@ -90,7 +90,8 @@
 			var/obj/structure/window/W = A
 			W.Destroy(brokenup = 1)
 		else
-			del(A)
+			qdel(A)
+			A = null
 
 
 /*

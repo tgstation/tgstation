@@ -38,7 +38,8 @@
 	animation.icon_state = "cultfloor"
 	flick("cultfloor",animation)
 	spawn(10)
-		del(animation)
+		qdel(animation)
+		animation = null
 
 /spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
@@ -57,7 +58,8 @@
 	animation.icon_state = "cultwall"
 	flick("cultwall",animation)
 	spawn(10)
-		del(animation)
+		qdel(animation)
+		animation = null
 
 /spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"

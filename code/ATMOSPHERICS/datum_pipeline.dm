@@ -16,7 +16,8 @@
 		returnToPool(network)
 	if(air && air.volume) //For the pipeline rebuild next tick
 		temporarily_store_air()
-		del(air)
+		qdel(air)
+		air = null
 	//Null the fuck out of all these references
 	for(var/obj/machinery/atmospherics/pipe/M in members) //Edges are a subset of members
 		M.parent = null

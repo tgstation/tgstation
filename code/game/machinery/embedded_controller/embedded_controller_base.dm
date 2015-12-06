@@ -43,7 +43,7 @@
 						to_chat(usr, "<span class='notice'>You unscrew \the [src] from the wall.</span>")
 						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 						new /obj/item/mounted/frame/airlock_controller(get_turf(src))
-						del(src)
+						qdel(src)
 					return 1
 				if(istype(W, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/C=W
@@ -112,7 +112,7 @@
 						user.visible_message(\
 							"<span class='warning'>[user.name] has finished \the [src]!</span>",\
 							"You finish \the [src].")
-						del(src)
+						qdel(src)
 					return 1
 	if(build<2)
 		return ..()
@@ -207,7 +207,8 @@
 	if(radio_connection)
 		return radio_connection.post_signal(src, signal)
 	else
-		del(signal)
+		qdel(signal)
+		signal = null
 
 /obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

@@ -54,13 +54,14 @@
 		investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
 		message_admins("[src] has become a singularity. Caused by [user.key]")
 		to_chat(user, "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
-		del(W)
+		qdel(W)
+		W = null
 		new /obj/machinery/singularity (get_turf(src))
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		to_chat(user, "<span class='danger'>FUCK</span>")
 		user.throw_at(get_turf(src), 10, 5)
-		del(src)
+		qdel(src)
 		return
 	. = ..()
 

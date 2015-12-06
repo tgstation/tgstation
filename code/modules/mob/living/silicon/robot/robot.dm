@@ -820,7 +820,7 @@
 					// This doesn't work.  Don't use it.
 					//src.Destroy()
 					// del() because it's infrequent and mobs act weird in qdel.
-					del(src)
+					qdel(src)
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()

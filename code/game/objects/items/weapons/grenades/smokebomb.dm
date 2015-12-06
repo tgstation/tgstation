@@ -31,5 +31,5 @@
 			B.health -= damage
 			B.update_icon()
 		sleep(80)
-		del(src)
+		qdel(src)
 		return

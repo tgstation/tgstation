@@ -330,7 +330,8 @@
 	src.stat |= BROKEN
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
-		del(cover)
+		qdel(cover)
+		cover = null
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
@@ -526,22 +527,22 @@
 
 
 	ex_act()
-		del src
+		qdel (src)
 		return
 
 	emp_act()
-		del src
+		qdel (src)
 		return
 
 	proc/update_health()
 		if(src.health<=0)
-			del src
+			qdel (src)
 		return
 
 	proc/take_damage(damage)
 		src.health -= damage
 		if(src.health<=0)
-			del src
+			qdel (src)
 		return
 
 

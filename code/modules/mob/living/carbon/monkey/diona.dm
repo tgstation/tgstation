@@ -107,7 +107,8 @@
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc
-		del(L)
+		qdel(L)
+		L = null
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
@@ -117,7 +118,7 @@
 	adult.real_name = src.real_name
 	src.mind.transfer_to(adult)
 	src.drop_all()
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()

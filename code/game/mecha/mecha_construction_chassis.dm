@@ -3,7 +3,8 @@
 /datum/construction/mecha_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 	holder.overlays += used_atom.icon_state+"+o"
-	del used_atom
+	qdel (used_atom)
+	used_atom = null
 	return 1
 
 /datum/construction/mecha_chassis/action(atom/used_atom,mob/user as mob)
@@ -27,7 +28,7 @@
 	const_holder.density = 1
 	const_holder.overlays.len = 0
 	spawn()
-		del src
+		qdel (src)
 	return
 
 //        FIREFIGHTER      //
@@ -47,7 +48,7 @@
 	const_holder.icon_state = "firefighter0"
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return
 
 //          GYGAX          //
@@ -67,7 +68,7 @@
 	const_holder.icon_state = "gygax0"
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return
 
 //          DURAND         //
@@ -88,7 +89,7 @@
 	const_holder.icon_state = "durand0"
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return
 
 
@@ -109,7 +110,7 @@
 	const_holder.icon_state = "odysseus0"
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return
 
 
@@ -131,7 +132,7 @@
 	const_holder.icon_state = "phazon0"
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return
 
 
@@ -150,5 +151,5 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/honker(const_holder)
 	const_holder.density = 1
 	spawn()
-		del src
+		qdel (src)
 	return

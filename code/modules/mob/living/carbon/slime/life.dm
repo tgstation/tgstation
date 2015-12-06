@@ -365,7 +365,7 @@
 					M.Discipline = Discipline
 					if(i != 1) step_away(M,src)
 					feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
-				del(src)
+				qdel(src)
 
 		else
 			if(!client)
@@ -375,7 +375,7 @@
 				A.powerlevel = max(0, powerlevel-1)
 				A.Friends = Friends
 				A.tame = tame
-				del(src)
+				qdel(src)
 
 
 /mob/living/carbon/slime/proc/handle_targets()

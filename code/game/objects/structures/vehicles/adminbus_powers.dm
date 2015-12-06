@@ -117,7 +117,7 @@
 		var/turf/T = get_turf(M)
 		if(T)
 			T.turf_animation('icons/effects/96x96.dmi',"beamin",xoffset,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
-		del(M)
+		qdel(M)
 	spawned_mobs.len = 0
 
 //SINGULARITY/NARSIE HOOK&CHAIN
@@ -980,15 +980,15 @@
 		singulo.on_release()
 
 	for(var/obj/structure/singulo_chain/N in chain)
-		del(N)
+		qdel(N)
 
 	for(var/obj/structure/hookshot/H in hookshot)
-		del(H)
+		qdel(H)
 
 	busjuke.disconnect_media_source()
-	del(busjuke)
-	del(warp)
-	del(lightsource)
+	qdel(busjuke)
+	qdel(warp)
+	qdel(lightsource)
 
 	var/turf/T = get_turf(src)
 	T.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
@@ -997,4 +997,4 @@
 		var/mob/living/M = locked_atoms[1]
 		M.hud_used.remove_adminbus_hud()
 
-	del(src)//RIP ADMINBUS
+	qdel(src)//RIP ADMINBUS

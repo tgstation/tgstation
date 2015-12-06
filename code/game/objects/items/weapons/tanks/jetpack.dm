@@ -49,7 +49,8 @@
 	if(allgases >= 0.005)
 		return 1
 
-	del(G)
+	qdel(G)
+	G = null
 	return
 
 /obj/item/weapon/tank/jetpack/ui_action_click()

@@ -183,4 +183,3 @@
 #undef M_R_HAND_LAYER
 #undef TARGETED_LAYER
 #undef M_TOTAL_LAYERS
-

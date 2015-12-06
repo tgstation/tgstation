@@ -203,7 +203,7 @@
 		for(var/obj/O in contents)
 			O.loc = T
 		to_chat(user, "<span class='notice'>You remove the protective coil.</span>")
-		del(src)
+		qdel(src)
 	else
 		return attack_hand(user)
 
@@ -212,19 +212,18 @@
 	for(var/obj/O in contents)
 		O.loc = T
 	to_chat(M, "<span class='notice'>You rip the protective coil apart.</span>")
-	del(src)
+	qdel(src)
 
 /obj/structure/stackopacks/attack_paw(mob/M as mob)
 	var/turf/T = get_turf(src)
 	for(var/obj/O in contents)
 		O.loc = T
 	to_chat(M, "<span class='notice'>You rip the protective coil apart.</span>")
-	del(src)
+	qdel(src)
 
 /obj/structure/stackopacks/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	var/turf/T = get_turf(src)
 	for(var/obj/O in contents)
 		O.loc = T
 	to_chat(M, "<span class='notice'>You rip the protective coil apart.</span>")
-	del(src)
-
+	qdel(src)

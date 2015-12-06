@@ -24,7 +24,7 @@
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
-		del(src)
+		qdel(src)
 
 /obj/item/alien_embryo/Topic(href,href_list)
 	if("signup" in href_list)

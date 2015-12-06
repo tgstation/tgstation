@@ -43,7 +43,7 @@
 			if(do_after(src, src, 50))
 				var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
 				mind.transfer_to(new_xeno)
-				del(src)
+				qdel(src)
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
 	return

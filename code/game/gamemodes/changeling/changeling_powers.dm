@@ -418,7 +418,8 @@
 	O.verbs += /mob/proc/changeling_lesser_transform
 	O.changeling_update_languages(O.mind.changeling.absorbed_languages)
 	feedback_add_details("changeling_powers","LF")
-	del(C)
+	qdel(C)
+	C =  null
 	return 1
 
 
@@ -463,7 +464,8 @@
 	animation.master = src
 	flick("monkey2h", animation)
 	sleep(48)
-	del(animation)
+	qdel(animation)
+	animation = null
 
 	for(var/obj/item/W in src)
 		C.u_equip(W, 1)
@@ -504,7 +506,8 @@
 	O.changeling_update_languages(changeling.absorbed_languages)
 
 	feedback_add_details("changeling_powers","LFT")
-	del(C)
+	qdel(C)
+	C = null
 	return 1
 
 

@@ -187,7 +187,8 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 			N.amount = max(N.amount - amt, 0)
 			if (N.amount <= 0)
 				piles -= N
-				del(N)
+				qdel(N)
+				N = null
 			break
 
 	for (var/obj/T in contents)//Now we find the seed we need to vend

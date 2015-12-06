@@ -1514,7 +1514,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
 				var/to_remove = text2num(href_list["rMark"])
 				var/datum/minimap_marker/mkr = app.markers[to_remove]
-				del(mkr)
+				qdel(mkr)
+				mkr = null
 
 //GAME FUNCTIONS====================================
 
@@ -2242,7 +2243,8 @@ obj/item/device/pda/AltClick()
 				if ( !(C:blood_DNA) )
 					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
 					if(C:blood_DNA)
-						del(C:blood_DNA)
+						qdel(C:blood_DNA)
+						C:blood_DNA = null
 				else
 					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
 					spawn(15)
@@ -2304,7 +2306,7 @@ obj/item/device/pda/AltClick()
 
 		explosion(T, -1, -1, 2, 3)
 
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/device/pda/Destroy()

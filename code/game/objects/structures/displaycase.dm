@@ -20,7 +20,7 @@
 				MF.state = 1
 				MF.set_build_state(2)
 				new /obj/item/stack/sheet/glass/glass(T)
-				del(src)
+				qdel(src)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				return
 
@@ -34,7 +34,7 @@
 					C.req_access = circuit.conf_access
 					C.req_one_access = null
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				del(src)
+				qdel(src)
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				circuit.loc=T
@@ -134,7 +134,7 @@
 	if (prob(75))
 		getFromPool(/obj/item/weapon/shard, loc)
 		if(occupant) dump()
-		del(src)
+		qdel(src)
 
 /obj/structure/displaycase/proc/healthcheck()
 	if (src.health <= 0)
@@ -204,7 +204,7 @@
 			C.loc=T
 			circuit=null
 			new /obj/machinery/constructable_frame/machine_frame(T)
-		del(src)
+		qdel(src)
 	else if(user.a_intent == I_HURT)
 		user.delayNextAttack(8)
 		src.health -= W.force
@@ -261,4 +261,3 @@
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
 				"You gently run your hands over \the [src] in appreciation of its contents.", \
 				"You hear someone streaking glass with their greasy hands.")
-

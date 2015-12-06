@@ -97,7 +97,8 @@
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
-		del original
+		qdel (original)
+		original = null
 
 	log_admin("Created [memes.len] memes.")
 

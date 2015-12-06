@@ -223,7 +223,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(stat == DEAD)
 			to_chat(user, "You pop the MMI off the base.")
 			spawn(0)
-				del(src)
+				qdel(src)
 			return
 		if(opened)
 			if(mmi && wiresexposed && wires.IsAllCut())
@@ -240,7 +240,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					// This doesn't work.  Don't use it.
 					//src.Destroy()
 					// del() because it's infrequent and mobs act weird in qdel.
-					del(src)
+					qdel(src)
 					return
 			else
 				to_chat(user, "You close the cover.")

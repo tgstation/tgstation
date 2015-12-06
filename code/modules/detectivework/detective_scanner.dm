@@ -26,7 +26,8 @@
 			else
 				src.amount += W.amount
 				//W = null
-				del(W)
+				qdel(W)
+				W = null
 			add_fingerprint(user)
 			if (W)
 				W.add_fingerprint(user)

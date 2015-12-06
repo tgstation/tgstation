@@ -377,7 +377,7 @@ proc/move_mining_shuttle()
 	if(!(istype(M, /atom/movable)))
 		return
 	if(!(target))
-		del(src)
+		qdel(src)
 
 	//For safety. May be unnecessary.
 	var/T = target
@@ -457,7 +457,7 @@ proc/move_mining_shuttle()
 		playsound(src, 'sound/effects/sparks4.ogg',50,1)
 		M.GetDrilled()
 		spawn(5)
-			del(src)
+			qdel(src)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -475,7 +475,7 @@ proc/move_mining_shuttle()
 				for(var/mob/living/L in src.loc)
 					to_chat(L, "<span class='danger'>\The [src] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
-			del(src)
+			qdel(src)
 
 /**********************Facehugger toy**********************/
 

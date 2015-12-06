@@ -150,7 +150,7 @@
 		if(do_after(user, src, 30))
 			to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 			new/obj/item/mounted/frame/driver_button(get_turf(src))
-			del(src)
+			qdel(src)
 		return 1
 
 	return src.attack_hand(user)

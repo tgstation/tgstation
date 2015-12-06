@@ -93,7 +93,8 @@
 			LR.left = holder
 			to_chat(user, "<span class='notice'>You switch the label rolls.</span>")
 		else
-			del(LR)
+			qdel(LR)
+			LR = null
 			to_chat(user, "<span class='notice'>You replace the label roll.</span>")
 			icon_state = "labeler0"
 

@@ -82,7 +82,8 @@
 				user.visible_message(\
 					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")
-				del(terminal)
+				qdel(terminal)
+				terminal = null
 		else
 			user.set_machine(src)
 			interact(user)
@@ -108,4 +109,3 @@
 	infinite_power = 1
 
 	mech_flags = MECH_SCAN_FAIL
-

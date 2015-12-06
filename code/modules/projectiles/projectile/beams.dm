@@ -139,22 +139,25 @@ var/list/beam_master = list()
 		if(TT == firer.loc)
 			continue
 		if(TT.density)
-			del(X)
+			qdel(X)
+			X = null
 			break
 		for(var/atom/O in TT)
 			if(!O.CanPass(src))
-				del(X)
+				qdel(X)
 				broke = 1
 				break
 		for(var/mob/living/O in TT.contents)
 			if(istype(O, /mob/living))
 				if(O.density)
-					del(X)
+					qdel(X)
+					X = null
 					broke = 1
 					break
 		if(broke)
 			if(X)
-				del(X)
+				qdel(X)
+				X = null
 			break
 	spawn(10)
 		for(var/atom/thing in ouroverlays)

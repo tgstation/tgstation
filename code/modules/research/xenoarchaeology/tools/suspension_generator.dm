@@ -316,7 +316,8 @@
 		M.weakened = min(M.weakened, 3)
 
 	src.visible_message("<span class='notice'>\icon[src] [src] deactivates with a gentle shudder.</span>")
-	del(suspension_field)
+	qdel(suspension_field)
+	suspension_field = null
 	icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()

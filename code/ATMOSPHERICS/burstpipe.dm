@@ -50,7 +50,7 @@
 			"<span class='notice'>You have removed \the [src].</span>", \
 			"You hear a ratchet.")
 		//new /obj/item/pipe(T, make_from=src)
-		del(src)
+		qdel(src)
 
 /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging
 	icon_state = "burst_he"

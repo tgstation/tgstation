@@ -502,7 +502,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 			if(0)
 				switch(act_on_fail)
 					if(EQUIP_FAILACTION_DELETE)
-						del(W)
+						qdel(W)
+						W = null
 					if(EQUIP_FAILACTION_DROP)
 						W.loc=get_turf(src) // I think.
 					else
@@ -545,7 +546,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 		if(!W.mob_can_equip(src, slot, disable_warning))
 			switch(act_on_fail)
 				if(EQUIP_FAILACTION_DELETE)
-					del(W)
+					qdel(W)
+					W = null
 				if(EQUIP_FAILACTION_DROP)
 					W.loc=get_turf(src) // I think.
 				else
@@ -1123,7 +1125,8 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
+		M = null
 		return
 
 	M.key = key

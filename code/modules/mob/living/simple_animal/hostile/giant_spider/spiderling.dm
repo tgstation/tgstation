@@ -52,7 +52,7 @@
 	visible_message("<span class='alert'>[src] dies!</span>")
 	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
 	..()
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/giant_spider/spiderling/Aggro()
 	..()
@@ -121,7 +121,8 @@
 		if(amount_grown >= 100)
 			var/spawn_type = pick(spider_types)
 			new spawn_type(src.loc)
-			del(src)
+			qdel(src)
+			return
 
 	..()
 

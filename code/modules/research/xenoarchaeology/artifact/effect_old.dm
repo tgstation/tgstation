@@ -33,7 +33,8 @@
 /datum/artifact_effect/proc/HaltEffect()
 	for(var/obj/effect/energy_field/F in created_field)
 		created_field.Remove(F)
-		del F
+		qdel (F)
+		F = null
 
 /datum/artifact_effect/proc/UpdateEffect(var/atom/originator)
 	/*for(var/obj/effect/energy_field/F in created_field)
