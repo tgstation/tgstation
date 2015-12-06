@@ -165,7 +165,7 @@
 			if(can_be_inserted(O))
 				handle_item_insertion(O, 1)
 		return 1
-	return ..()
+	. = ..()
 var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#00137F","Green" = "#129E0A","Orange" = "#FF6A00","Purple" = "#A17FFF","Red" = "#BE0000","Yellow" = "#FFD800","Grey" = "#9F9F9F","White" = "#FFFFFF","Custom" = "#FFFFFF",)
 /obj/item/weapon/storage/pill_bottle/verb/change()
 	set name = "Add Coloured Label"
