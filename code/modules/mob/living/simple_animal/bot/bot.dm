@@ -1,26 +1,4 @@
-#define BOT_STEP_DELAY 4 //Delay between movemements
-
-#define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
-
-//Mode defines
-#define BOT_IDLE 			0	// idle
-#define BOT_HUNT 			1	// found target, hunting
-#define BOT_PREP_ARREST 	2	// at target, preparing to arrest
-#define BOT_ARREST			3	// arresting target
-#define BOT_START_PATROL	4	// start patrol
-#define BOT_PATROL			5	// patrolling
-#define BOT_SUMMON			6	// summoned by PDA
-#define BOT_CLEANING 		7	// cleaning (cleanbots)
-#define BOT_REPAIRING		8	// repairing hull breaches (floorbots)
-#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
-#define BOT_HEALING			10	// healing people (medbots)
-#define BOT_RESPONDING		11	// responding to a call from the AI
-#define BOT_DELIVER			12	// moving to deliver
-#define BOT_GO_HOME			13	// returning to home
-#define BOT_BLOCKED			14	// blocked
-#define BOT_NAV				15	// computing navigation
-#define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
-#define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
+//Defines for bots are now found in code\__DEFINES\bots.dm
 
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
@@ -92,17 +70,24 @@
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD) //Diagnostic HUD views
+
 /mob/living/simple_animal/bot/proc/get_mode()
-	if(!mode)
-		return "Idle"
+	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
+		return "<b>Sentient</b>"
+	else if(!on)
+		return "<span class='bad'>Inactive</span>"
+	else if(!mode)
+		return "<span class='good'>Idle</span>"
 	else
-		return mode_name[mode]
+		return "<span class='average'>[mode_name[mode]]</span>"
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
 	SetLuminosity(initial(luminosity))
 	update_icon()
+	diag_hud_set_botstat()
 	return 1
 
 /mob/living/simple_animal/bot/proc/turn_off()
@@ -124,6 +109,13 @@
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
+
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_bothealth()
+	diag_hud_set_botstat()
+	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -181,8 +173,13 @@
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..(amount)
 
+/mob/living/simple_animal/bot/updatehealth()
+	..()
+	diag_hud_set_bothealth()
+
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
 	set background = BACKGROUND_ENABLED
+	diag_hud_set_botmode()
 
 	if(!on || client)
 		return
@@ -280,7 +277,7 @@
 	text_dehack_fail = "You fail to reset [name]."
 
 /mob/living/simple_animal/bot/attack_ai(mob/user as mob)
-	attack_hand(user)
+	show_controls(user)
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
@@ -376,7 +373,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		path = list()
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
-	
+
 	if(step_count >= 1 && tries < 4)
 		for(var/step_number = 0, step_number < step_count,step_number++)
 			spawn(BOT_STEP_DELAY*step_number)
@@ -453,6 +450,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	access_card.access = prev_access
 	tries = 0
 	mode = BOT_IDLE
+	diag_hud_set_botstat()
+	diag_hud_set_botmode()
 
 
 
@@ -709,13 +708,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//No ..() to prevent strip panel showing up - Todo: make that saner
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
-		href_list = list()
-		return
+		return 1
 	add_fingerprint(usr)
 	if(href_list["close"])// HUE HUE
 		if(usr in users)
 			users.Remove(usr)
-		return
+		return 1
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -761,12 +759,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
-		if(hacked) //Manually emagged by a human - access denied to all.
+		if(!hacked) //Manually emagged by a human - access denied to all.
 			return 1
 		else if(!issilicon(user)) //Bot is hacked, so only silicons are allowed access.
 			return 1
-	else
-		return 0
+	return 0
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
@@ -780,6 +777,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Login()
 	. = ..()
 	access_card.access += player_access
+	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
