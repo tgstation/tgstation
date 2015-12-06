@@ -514,7 +514,7 @@ What are the archived variables for?
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
-/datum/gas_mixture/mimic(turf/model, border_multiplier, atmos_adjacent_turfs = 4)
+/datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
 	var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
@@ -546,16 +546,10 @@ What are the archived variables for?
 
 		old_self_heat_capacity = heat_capacity()
 
-	if(border_multiplier)
-		oxygen -= delta_oxygen*border_multiplier
-		carbon_dioxide -= delta_carbon_dioxide*border_multiplier
-		nitrogen -= delta_nitrogen*border_multiplier
-		toxins -= delta_toxins*border_multiplier
-	else
-		oxygen -= delta_oxygen
-		carbon_dioxide -= delta_carbon_dioxide
-		nitrogen -= delta_nitrogen
-		toxins -= delta_toxins
+	oxygen -= delta_oxygen
+	carbon_dioxide -= delta_carbon_dioxide
+	nitrogen -= delta_nitrogen
+	toxins -= delta_toxins
 
 	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
 	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
@@ -566,10 +560,7 @@ What are the archived variables for?
 
 			delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
 
-			if(border_multiplier)
-				trace_gas.moles -= delta*border_multiplier
-			else
-				trace_gas.moles -= delta
+			trace_gas.moles -= delta
 
 			var/heat_cap_transferred = delta*trace_gas.specific_heat
 			heat_transferred += heat_cap_transferred*temperature_archived
@@ -580,12 +571,9 @@ What are the archived variables for?
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			if(border_multiplier)
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
-			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
+			temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
 
-		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
+		temperature_mimic(model, model.thermal_conductivity)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
@@ -607,7 +595,7 @@ What are the archived variables for?
 			temperature -= heat/self_heat_capacity
 			sharer.temperature += heat/sharer_heat_capacity
 
-/datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
+/datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (temperature - model.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
@@ -616,10 +604,7 @@ What are the archived variables for?
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
-			if(border_multiplier)
-				temperature -= heat*border_multiplier/self_heat_capacity
-			else
-				temperature -= heat/self_heat_capacity
+			temperature -= heat/self_heat_capacity
 
 /datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
@@ -687,14 +672,12 @@ What are the archived variables for?
 //Does handle trace gases!
 
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
-	var/breath_pressure = (total_moles()*R_IDEAL_GAS_EQUATION*temperature)/BREATH_VOLUME
-	return (gas_pressure/total_moles())*breath_pressure
+	return (gas_pressure*R_IDEAL_GAS_EQUATION*temperature)/BREATH_VOLUME
 
 
 //Reverse of the above
 /datum/gas_mixture/proc/get_true_breath_pressure(breath_pp)
-	var/breath_pressure = (total_moles()/R_IDEAL_GAS_EQUATION/temperature)*BREATH_VOLUME
-	return (breath_pp/breath_pressure*total_moles())
+	return (breath_pp*BREATH_VOLUME)/(R_IDEAL_GAS_EQUATION*temperature)
 
 //Mathematical proofs:
 /*
