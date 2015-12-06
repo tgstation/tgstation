@@ -8,7 +8,7 @@
 	anchored = 0
 	density = 1
 
-	movement_delay = 3
+	movement_delay = 6
 
 	health = 50
 	max_health = 50
