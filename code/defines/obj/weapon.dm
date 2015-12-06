@@ -837,8 +837,10 @@
 	if(istype(A, /obj/effect/plantsegment))
 		for(var/obj/effect/plantsegment/B in orange(A,1))
 			if(prob(80))
-				del B
-		del A
+				qdel (B)
+				B = null
+		qdel (A)
+		A = null
 
 /*
 /obj/item/weapon/cigarpacket

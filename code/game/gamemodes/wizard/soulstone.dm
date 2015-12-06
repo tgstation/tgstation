@@ -167,7 +167,8 @@
 							ticker.mode.update_necro_icons_added(U.mind)
 							ticker.mode.update_necro_icons_added(S.mind)
 							ticker.mode.risen.Add(S.mind)
-							del T
+							qdel (T)
+							T = null
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src

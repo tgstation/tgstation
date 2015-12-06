@@ -44,7 +44,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 */
 /datum/n_Keyword/nS_Keyword/New(var/inline = 0)
 	if(inline)
-		del src
+		qdel (src)
 
 /datum/n_Keyword/nS_Keyword/kwReturn/Parse(var/datum/n_Parser/nS_Parser/parser)
 	. = KW_PASS

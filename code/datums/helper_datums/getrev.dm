@@ -15,7 +15,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 	proc/abort()
 		spawn()
-			del src
+			qdel (src)
 
 	New(filename)
 		..()

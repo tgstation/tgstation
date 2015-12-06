@@ -69,7 +69,7 @@
 			else
 				D.organ_names += ", [O.display_name]"
 
-		del D.organs_scanned[O.name]
+		qdel (D.organs_scanned[O.name])
 		D.organs_scanned[O.name] = W.copy()
 
 	for(var/V in O.trace_chemicals)

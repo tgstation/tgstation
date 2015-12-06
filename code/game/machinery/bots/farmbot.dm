@@ -405,7 +405,8 @@
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.nutrilevel = 10
 		fert.reagents.trans_to(tray, fert.reagents.total_volume)
-		del fert
+		qdel (fert)
+		fert = null
 		//tray.updateicon()
 		icon_state = "farmbot_fertile"
 		mode = FARMBOT_MODE_WAITING

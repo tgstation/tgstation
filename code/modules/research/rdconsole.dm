@@ -522,7 +522,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				linked_lathe.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
-				del sheet
+				qdel (sheet)
+				sheet = null
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		if(!src.allowed(usr))
 			to_chat(usr, "Unauthorized Access.")
@@ -540,7 +541,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				linked_imprinter.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
-				del sheet
+				qdel (sheet)
+				sheet = null
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = 0.0

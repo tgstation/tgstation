@@ -35,27 +35,28 @@
 							if(istype(target))
 								icon_state = top_icon_state
 							else
-								del src
+								qdel (src)
 						else
-							del src
+							qdel (src)
 					else if("down" in adjacent_to_me)
 						target = locate() in locate(x,y,adjacent_to_me["down"])
 						if(istype(target))
 							icon_state = bottom_icon_state
 						else
-							del src
+							qdel (src)
 					else
-						del src
+						qdel (src)
 					if(target)
 						target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
 						target.target = src
 			else
-				del src
+				qdel (src)
 
 	Del()
 		spawn(1)
 			if(target)
-				del target
+				qdel (target)
+				target = null
 		return ..()
 
 	attack_paw(var/mob/M)
@@ -66,7 +67,7 @@
 
 	attack_hand(var/mob/M)
 		if(!target || !istype(target.loc, /turf))
-			del src
+			qdel (src)
 		var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
 		M.visible_message("<span class='notice'>\The [M] climbs [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You climb [target.z == adjacent_to_me["up"]  ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.</span>")
 		M.Move(target.loc)
@@ -95,7 +96,7 @@
 		attack_hand(var/mob/M)
 
 			if(!target || !istype(target.loc, /turf))
-				del src
+				qdel (src)
 
 			if(active)
 				to_chat(M, "That [src] is being used.")
@@ -113,7 +114,7 @@
 
 			spawn(7)
 				if(!target || !istype(target.loc, /turf))
-					del src
+					qdel (src)
 				if(M.z == z && get_dist(src,M) <= 1)
 					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
 					M.visible_message("<span class='notice'>\The [M] scurries [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You scramble [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You hear some grunting, and a hatch sealing.</span>")
@@ -153,17 +154,17 @@
 								if(istype(target))
 									icon_state = top_icon_state
 								else
-									del src
+									qdel (src)
 							else
-								del src
+								qdel (src)
 						else if("down" in adjacent_to_me)
 							target = locate() in locate(x,y,adjacent_to_me["down"])
 							if(istype(target))
 								icon_state = bottom_icon_state
 							else
-								del src
+								qdel (src)
 						else
-							del src
+							qdel (src)
 						if(target)
 							target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
 							target.target = src
@@ -171,13 +172,14 @@
 						if(lead_in)
 							lead_in.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
 				else
-					del src
+					qdel (src)
 
 
 		Del()
 			spawn(1)
 				if(target)
-					del target
+					qdel (target)
+					target = null
 			return ..()
 
 
@@ -187,7 +189,7 @@
 		//If it's the top, they can fall down just fine.
 
 		if(!target || !istype(target.loc, /turf))
-			del src
+			qdel (src)
 
 		if(ismob(M) && M:client)
 			M:client.moving = 1
@@ -199,7 +201,7 @@
 		if(!istype(usr,/mob/dead/observer))
 			return ..()
 		if(!target || !istype(target.loc, /turf))
-			del src
+			qdel (src)
 		usr.client.moving = 1
 		usr.Move(target.loc)
 		usr.client.moving = 0

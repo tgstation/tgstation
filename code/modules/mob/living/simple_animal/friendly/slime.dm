@@ -71,7 +71,7 @@
 	pet.icon_living = "[colour] baby slime eat"
 	pet.icon_dead = "[colour] baby slime dead"
 	pet.colour = "[colour]"
-	del (src)
+	qdel (src)
 
 /mob/living/simple_animal/adultslime/proc/rabid()
 	if(stat)
@@ -83,4 +83,4 @@
 	pet.icon_living = "[colour] baby adult eat"
 	pet.icon_dead = "[colour] baby slime dead"
 	pet.colour = "[colour]"
-	del (src)
+	qdel (src)

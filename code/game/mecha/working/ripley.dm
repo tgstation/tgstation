@@ -64,7 +64,8 @@
 
 	//Deletes the beacon so it can't be found easily
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)
-		del (B)
+		qdel (B)
+		B = null
 		src.tracking = null
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)

@@ -734,7 +734,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 			Uses = 3
 			enhanced = 1
-			del (O)
+			qdel (O)
+			O = null
 
 /obj/item/slime_extract/New()
 		..()
@@ -853,7 +854,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		to_chat(user, "You feed the slime the potion, removing its powers and calming it.")
 		if(M.mind)
 			M.mind.transfer_to(pet)
-		del (M)
+		qdel (M)
+		M = null
 		var/newname = ""
 		if(pet.client)//leaving the player-controlled slimes the ability to choose their new name
 			newname = copytext(sanitize(input(pet, "You have been fed a docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
@@ -864,7 +866,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel (src)
 
 /obj/item/weapon/slimepotion2
 	name = "advanced docility potion"
@@ -887,7 +889,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		to_chat(user, "You feed the slime the potion, removing its powers and calming it.")
 		if(M.mind)
 			M.mind.transfer_to(pet)
-		del (M)
+		qdel (M)
+		M = null
 		var/newname = ""
 		if(pet.client)//leaving the player-controlled slimes the ability to choose their new name
 			newname = copytext(sanitize(input(pet, "You have been fed an advanced docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
@@ -898,7 +901,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel (src)
 
 
 /obj/item/weapon/slimesteroid
@@ -923,7 +926,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 		to_chat(user, "You feed the slime the steroid. It now has triple the amount of extract.")
 		M.cores = 3
-		del (src)
+		qdel (src)
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -1070,7 +1073,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.forceMove(src.loc) //we use move to get the entering procs - this fixes gravity
 		G.key = ghost.key
 		to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
-		del (src)
+		qdel (src)
 		if(ticker.mode.name == "sandbox")
 			G.CanBuild()
 			to_chat(G, "Sandbox tab enabled.")
@@ -1137,7 +1140,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	for(var/mob/M in Friends)
 		rabid.friends += M
 
-	del (src)
+	qdel (src)
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

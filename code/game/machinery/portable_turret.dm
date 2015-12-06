@@ -438,13 +438,15 @@ Status: []<BR>"},
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1
-			del (Proj)
+			qdel (Proj)
+			Proj = null
 			sleep(100)
 			src.disabled = 0
 	if((src.lasercolor == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
 			src.disabled = 1
-			del (Proj)
+			qdel (Proj)
+			Proj = null
 			sleep(100)
 			src.disabled = 0
 	return

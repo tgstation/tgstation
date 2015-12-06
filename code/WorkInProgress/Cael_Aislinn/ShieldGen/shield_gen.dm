@@ -290,7 +290,7 @@
 	else
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
-			del D
+			qdel (D)
 
 		for(var/mob/M in view(5,src))
 			to_chat(M, "\icon[src] You hear heavy droning fade out.")

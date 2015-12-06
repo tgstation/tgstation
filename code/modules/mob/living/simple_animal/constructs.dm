@@ -86,7 +86,7 @@
 		if((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[src] collapses in a shattered heap. </span>")
 	ghostize()
-	del src
+	qdel (src)
 	return
 
 /mob/living/simple_animal/construct/examine(mob/user)

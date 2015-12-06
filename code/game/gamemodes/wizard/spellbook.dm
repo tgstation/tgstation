@@ -21,7 +21,8 @@
 			to_chat(user, "You feed the contract back into the spellbook, refunding your points.")
 			src.max_uses++
 			src.uses++
-			del (O)
+			qdel (O)
+			O = null
 
 /obj/item/weapon/spellbook/attack_self(mob/user = usr)
 	if(!user)

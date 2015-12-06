@@ -527,22 +527,22 @@
 
 
 	ex_act()
-		del src
+		qdel (src)
 		return
 
 	emp_act()
-		del src
+		qdel (src)
 		return
 
 	proc/update_health()
 		if(src.health<=0)
-			del src
+			qdel (src)
 		return
 
 	proc/take_damage(damage)
 		src.health -= damage
 		if(src.health<=0)
-			del src
+			qdel (src)
 		return
 
 

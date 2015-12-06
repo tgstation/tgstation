@@ -52,7 +52,7 @@
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
 						infect_virus2(target,src.virus2, notes="([src] attacked by [key_name(user)])")
-		del src
+		qdel (src)
 
 /obj/item/weapon/virusdish/examine(mob/user)
 	..()

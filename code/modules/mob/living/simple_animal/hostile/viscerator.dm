@@ -35,7 +35,7 @@
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()
 	visible_message("<span class='warning'><b>[src]</b> is smashed into pieces!</span>")
-	del src
+	qdel (src)
 	return
 
 /mob/living/simple_animal/hostile/viscerator/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
