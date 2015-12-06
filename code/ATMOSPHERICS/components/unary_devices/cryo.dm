@@ -59,15 +59,16 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-	if(occupant && occupant.health >= 100 && autoEject)
+	if(occupant && occupant.health >= 100)
 		on = 0
-		open_machine()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		if(autoEject)
+			open_machine()
+
 	if(!NODE1 || !is_operational())
 		return
-
 	if(AIR1)
-		if (occupant)
+		if(on && occupant)
 			process_occupant()
 		expel_gas()
 
@@ -82,7 +83,7 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
-	usr << "<span class='notice'>Release sequence activated. This will take a few seconds.</span>"
+	usr << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot.</span>"
 	sleep(150)
 	if(!src || !usr || (!occupant && !contents.Find(usr))) // Make sure they didn't disappear.
 		return
@@ -260,6 +261,8 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/process_occupant()
 	var/datum/gas_mixture/air_contents = AIR1
+	if(!on)
+		return
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
