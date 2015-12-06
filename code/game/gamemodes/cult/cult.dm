@@ -183,6 +183,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
+		cult_mind.current.faction |= "cult"
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
@@ -200,6 +201,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		cult_mind.current.faction -= "cult"
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
 		cult_mind.current.Paralyse(5)
 		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
