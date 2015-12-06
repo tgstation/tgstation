@@ -517,15 +517,16 @@ var/list/ai_list = list()
 	var/ai_Zlevel = ai_current_turf.z
 	var/d
 	var/area/bot_area
-	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
+	d += "<A HREF=?src=\ref[src];botrefresh=1>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
 	for (Bot in living_mob_list)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
-			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name] ([Bot.model])</td>"
+			var/bot_mode = Bot.get_mode()
+			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
-			d += "<td width='30%'>[Bot.on ? "[Bot.mode ? "<span class='average'>[ Bot.get_mode() ]</span>": "<span class='good'>Idle</span>"]" : "<span class='bad'>Inactive</span>"]</td>"
+			d += "<td width='30%'>[bot_mode]</td>"
 			d += "<td width='30%'>[bot_area.name]</td>"
 			d += "<td width='10%'><A HREF=?src=\ref[src];interface=\ref[Bot]>Interface</A></td>"
 			d += "<td width='10%'><A HREF=?src=\ref[src];callbot=\ref[Bot]>Call</A></td>"

@@ -118,7 +118,9 @@
 			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
-	..()
+	if(..())
+		return 1
+	
 	switch(href_list["operation"])
 		if("replace")
 			replacetiles = !replacetiles

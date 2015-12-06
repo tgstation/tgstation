@@ -204,10 +204,11 @@
 				if(do_after(user, 40/I.toolspeed, target = src))
 					health = maxhealth
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					update_nearby_icons()
 		else
 			user << "<span class='warning'>[src] is already in good condition!</span>"
-			return
-		update_nearby_icons()
+		return
+
 
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
