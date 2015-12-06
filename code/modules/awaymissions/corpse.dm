@@ -31,6 +31,7 @@
 	var/roundstart = TRUE
 	var/death = TRUE
 	var/flavour_text = "The mapper forgot to set this!"
+	var/faction = null
 	density = 1
 
 /obj/effect/landmark/corpse/initialize()
@@ -56,6 +57,8 @@
 		M.death(1) //Kills the new mob
 		if(src.corpsehusk)
 			M.Drain()
+	if(faction)
+		M.faction = list(src.faction)
 	M.adjustBruteLoss(src.corpsebrute)
 	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
