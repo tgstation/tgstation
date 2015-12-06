@@ -131,8 +131,10 @@
 		if(AM.opacity)
 			range = 0
 			break
-
+	
 	owner.luminosity = range
+	if (!range)
+		return 0
 	var/center_strength = 0
 	if (cap <= 0)
 		center_strength = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*(luminosity)
