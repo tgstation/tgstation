@@ -37,8 +37,21 @@
 		var/turf/simulated/wall/W = target
 		W.add_fingerprint(user)
 		if(!W.engraving)
-			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...","Basic engraving") as text)
-			var/engraving = sanitize(input(usr, "Depicted on the wall is an image of [engraving_name]. ...","Details of the engraving") as text)
+			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...", "Basic engraving", null) as null | text)
+			if(!engraving_name) return
+			
+			var/engraving = sanitize(input(usr, "Depicted on the wall is an image of [engraving_name]. ...","Details of the engraving", null) as null | text)
+			if(!engraving) return
+
+			var/list/engravings = list("Amyjon"="amyjon", "Face"="face", "Matt wuz here"="matt", "Vive la Revolution"="revolution", "Engi"="engie", "Killroy"="guy", "End is nigh"= "end", "Dorf"="dwarf", "Uboa"="uboa") 
+
+			var/engravingdesign = input("Your engraving", null)as null|anything in engravings
+			if(!engravingdesign) return
+
+			var/engraving_icon_state = engravings[engravingdesign]
+
+			//Get icon
+			var/icon/engraving_overlay = new/icon('icons/effects/crayondecal.dmi',"[engraving_icon_state]",2.1)
 
 			user.visible_message("<span class='notice'>[user.name] starts engraving something on the [W.name].</span>", "<span class='notice'>You start engraving an image of [engraving_name] on the [W.name].</span>")
 			if(do_after(user, target, 60))
@@ -61,10 +74,7 @@
 						W.engraving_quality = "a <span class='notice'>masterfully designed</span>"
 						to_chat(user, "<span class='warning'>It's a masterpiece!</span>")
 
-				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
-
-				var/icon/overlay_type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
-				var/icon/engraving_overlay = new/icon('icons/effects/crayondecal.dmi',"[overlay_type]",2.1)
+				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]."}
 
 				W.overlays += engraving_overlay
 				W.engraving = engraving
