@@ -158,7 +158,7 @@
 			set name = "Eject occupant"
 			set category = "Object"
 			set src in oview(1)
-			if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+			if(usr.isUnconscious())
 				return
 			src.go_out(usr)
 			add_fingerprint(usr)
@@ -169,7 +169,7 @@
 			set name = "Move Inside"
 			set category = "Object"
 			set src in oview(1)
-			if(usr.stat != 0 || stat & (NOPOWER|BROKEN) || (usr.status_flags & FAKEDEATH))
+			if(usr.isUnconscious() || stat & (NOPOWER|BROKEN))
 				return
 			put_mob(usr)
 			return

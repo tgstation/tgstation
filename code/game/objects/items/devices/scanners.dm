@@ -97,7 +97,7 @@ REAGENT SCANNER
 	if(!user.hallucinating())
 		last_reading = healthanalyze(M, user, mode)
 	else
-		if((M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+		if(M.isDead())
 			user.show_message("<span class='game say'><b>\The [src] beeps</b>, \"It's dead, Jim.\"</span>", MESSAGE_HEAR ,"<span class='notice'>\The [src] glows black.</span>")
 		else
 			to_chat(user, "<span class='notice'>\The [src] glows [pick("red", "green", "blue", "pink")]! You wonder what that would mean.</span>")
@@ -149,7 +149,7 @@ Subject's pulse: ??? BPM"})
 	message += "<br>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>"
 	message += "<br>Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font>"
 	message += "<br><span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>"
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+	if(M.tod && M.isDead())
 		message += "<br><span class='notice'>Time of Death: [M.tod]</span>"
 	if(istype(M, /mob/living/carbon/human) && mode)
 		var/mob/living/carbon/human/H = M

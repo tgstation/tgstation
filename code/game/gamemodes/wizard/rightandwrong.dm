@@ -5,7 +5,7 @@
 	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
 	log_game("[key_name(usr)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 		if(prob(35) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind

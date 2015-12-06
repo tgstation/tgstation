@@ -51,7 +51,7 @@
 	..()
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.isUnconscious() || H.restrained())
 		return
 	if(!istype(H, /mob/living/carbon/human))
 		return 1

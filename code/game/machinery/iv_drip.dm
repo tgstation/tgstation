@@ -160,7 +160,7 @@
 		to_chat(usr, "<span class='warning'>You can't do that.</span>")
 		return
 
-	if(usr.stat || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 
 	mode = !mode

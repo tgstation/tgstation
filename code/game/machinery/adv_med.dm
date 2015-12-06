@@ -178,7 +178,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 	go_out()
 	add_fingerprint(usr)
@@ -189,7 +189,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 	if(src.occupant)
 		to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")

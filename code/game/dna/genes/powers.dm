@@ -46,7 +46,7 @@
 	if(!targets || !targets.len || !user || !istype(user))
 		return
 
-	if(user.stat!=CONSCIOUS)
+	if(user.isUnconscious())
 		user.remoteview_target = null
 		user.reset_view(0)
 		return

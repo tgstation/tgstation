@@ -1,3 +1,11 @@
+/mob/proc/isUnconscious() //Returns 1 if unconscious, dead or faking death
+	if(stat || (status_flags & FAKEDEATH))
+		return 1
+
+/mob/proc/isDead() //Returns 1 if dead or faking death
+	if(stat == DEAD || (status_flags & FAKEDEATH))
+		return 1
+
 /proc/RemoveAllFactionIcons(var/datum/mind/M)
 	ticker.mode.update_cult_icons_removed(M)
 	ticker.mode.update_rev_icons_removed(M)
