@@ -1,0 +1,4 @@
+author: neersighted
+delete-after: True
+changes: 
+  - bugfix: "Cryo now properly checks it is on before healing..."
