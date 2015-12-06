@@ -6,7 +6,7 @@
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
-	required_players = 1
+	required_players = 20
 	required_players_secret = 25
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
