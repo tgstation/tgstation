@@ -484,7 +484,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious())
 		return
 	src.eject_occupant(usr)
 	add_fingerprint(usr)
@@ -498,7 +498,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious())
 		return
 	if (!src.isopen)
 		to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")

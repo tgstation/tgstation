@@ -153,7 +153,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.locked_to || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious() || !ishuman(usr) || usr.locked_to || usr.restrained())
 		return
 
 	take_victim(usr, usr)

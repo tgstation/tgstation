@@ -159,7 +159,7 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH)) return
+	if (!usr || usr.lying || usr.isUnconscious()) return
 	if (!usr.dexterity_check())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return

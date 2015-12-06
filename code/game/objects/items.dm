@@ -107,7 +107,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
+	if(!istype(src.loc, /turf) || usr.isUnconscious() || usr.restrained())
 		return
 
 	var/turf/T = src.loc

@@ -89,7 +89,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0 || istype(usr, /mob/living/simple_animal) || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious() || istype(usr, /mob/living/simple_animal))
 		return
 
 	eject_occupant()
@@ -126,7 +126,7 @@
 	set category = "Object"
 	set name = "Enter DNA Scanner"
 
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	if (!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
 		to_chat(usr, "<span class='notice'> Try as you might, you can not climb up into the scanner.</span>")
@@ -154,7 +154,7 @@
 		return
 	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+	if(user.restrained() || usr.isUnconscious() || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
@@ -470,7 +470,7 @@
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
 	if(connected)
-		if(user == connected.occupant || user.stat)
+		if(user == connected.occupant || user.isUnconscious())
 			return
 	else
 		src.visible_message("\icon[src]<span class='notice'>No scanner connected!<span>")
