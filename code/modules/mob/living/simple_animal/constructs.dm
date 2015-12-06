@@ -21,10 +21,11 @@
 	healable = 0
 	faction = list("cult")
 	flying = 1
+	pressure_resistance = 200
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
 	var/list/construct_spells = list()
-	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist.</b>"
+	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 
 
 /mob/living/simple_animal/hostile/construct/New()
@@ -60,10 +61,10 @@
 			if(src != M)
 				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at [health]/[maxHealth] health.</span>")
+						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
 				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at [M.health]/[M.maxHealth] health.</span>")
+						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
 				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
@@ -89,7 +90,7 @@
 	icon_living = "behemoth"
 	maxHealth = 250
 	health = 250
-	response_harm   = "harmlessly punches"
+	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -243,11 +244,14 @@
 	melee_damage_upper = 5
 	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
 	attacktext = "prods"
+	environment_smash = 3
 	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor.
+							/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-
+	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP

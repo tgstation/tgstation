@@ -171,13 +171,13 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
 
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
 				qdel(T)
 				qdel(src)
