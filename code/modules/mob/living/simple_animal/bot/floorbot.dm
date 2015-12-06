@@ -75,7 +75,7 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Tiles left: [amount]<BR>"
 	dat += "Behvaiour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user) || IsAGhost(user))
 		dat += "Add tiles to new hull plating: <A href='?src=\ref[src];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
 		dat += "Replace floor tiles: <A href='?src=\ref[src];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[eattiles ? "Yes" : "No"]</A><BR>"

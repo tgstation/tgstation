@@ -21,6 +21,8 @@
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAGhost(user))
+		user << "Just use your Set Security Level verb!"
 	user << "The station AI is not to interact with these devices."
 	return
 

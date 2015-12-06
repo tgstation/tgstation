@@ -1860,7 +1860,7 @@
 		else
 			var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
-				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admincaster_signature, src.admincaster_feed_channel.locked, 1)
+				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
 				feedback_inc("newscaster_channels",1)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
@@ -1883,7 +1883,7 @@
 		if(src.admincaster_feed_message.returnBody(-1) =="" || src.admincaster_feed_message.returnBody(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
-			news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admincaster_signature, src.admincaster_feed_channel.channel_name, null, 1)
+			news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
 			feedback_inc("newscaster_stories",1)
 			src.admincaster_screen=4
 
@@ -1940,10 +1940,10 @@
 			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admincaster_signature, null, 1, 1)
+					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
 					src.admincaster_screen = 15
 				else
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admincaster_signature)
+					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_wanted_message.criminal]!")
 		src.access_news_network()
@@ -2012,7 +2012,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.admin_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])
