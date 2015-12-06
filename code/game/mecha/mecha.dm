@@ -1033,7 +1033,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	if (usr.stat || !ishuman(usr))
 		return
@@ -1591,7 +1591,7 @@
 		return
 	if(href_list["close"])
 		return
-	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])

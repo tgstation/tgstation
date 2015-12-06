@@ -501,7 +501,7 @@
 	set name = "Eject Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -513,13 +513,13 @@
 	set name = "Enter Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)) || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious() || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	if(src.occupant)
 		to_chat(usr, "<span class='notice'><B>The sleeper is already occupied!</B></span>")
 		return
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

@@ -220,7 +220,7 @@ var/list/mass_drivers = list()
 	set name = "Rotate Frame"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious() || usr.restrained())
 		return
 
 	src.dir = turn(src.dir, -90)

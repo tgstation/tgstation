@@ -70,7 +70,7 @@
 		block=CHAMELEONBLOCK
 
 	OnMobLife(var/mob/M)
-		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
+		if((world.time - M.last_movement) >= 30 && !M.isUnconscious() && M.canmove && !M.restrained())
 			M.alphas["chameleon_stealth"] = max(M.alphas["chameleon_stealth"] - 25, 0)
 		else
 			M.alphas["chameleon_stealth"] = round(255 * 0.80)
@@ -450,7 +450,7 @@
 			if(target.restrained())//Why being pulled while cuffed prevents you from moving
 				for(var/mob/M in range(target, 1))
 					if(M.pulling == target)
-						if(!M.restrained() && M.stat == 0 && M.canmove && usr.Adjacent(M))
+						if(!M.restrained() && !usr.isUnconscious() && M.canmove && usr.Adjacent(M))
 							failed_leap = 1
 						else
 							M.stop_pulling()

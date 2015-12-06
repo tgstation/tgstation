@@ -1055,7 +1055,10 @@
 			M.take_organ_damage(min(15, volume * 2))
 
 /datum/reagent/sacid/reaction_obj(var/obj/O, var/volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
+
+	..()
+
+	if((istype(O, /obj/item) || istype(O, /obj/effect/glowshroom)) && prob(10))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -1133,7 +1136,9 @@
 				M.take_organ_damage(min(15, volume * 4))
 
 /datum/reagent/pacid/reaction_obj(var/obj/O, var/volume)
-	src = null
+
+	..()
+
 	if((istype(O, /obj/item) || istype(O, /obj/effect/glowshroom)))
 		if(!O.unacidable) // This should NEVER be left to random chance
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
@@ -3335,7 +3340,7 @@
 	adj_sleepy = -3
 	adj_dizzy = -1
 	adj_drowsy = -3
-	
+
 /datum/reagent/drink/kahlua
 	name = "Kahlua"
 	id = "kahlua"

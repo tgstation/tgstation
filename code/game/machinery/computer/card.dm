@@ -78,7 +78,7 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH))	return
+	if(!usr || usr.isUnconscious() || usr.lying)	return
 
 	if(!usr.dexterity_check())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
