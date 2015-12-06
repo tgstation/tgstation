@@ -50,7 +50,7 @@
 		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay-450)/600)] minutes, actual meteors in [round((meteordelay+meteorannouncedelay-450)/600)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive and supplies will be dispatched in the Bar.")
 
 	spawn(rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 	spawn(meteorannouncedelay)
 		if(prob(70)) //Slighty off-scale

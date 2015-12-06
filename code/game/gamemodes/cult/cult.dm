@@ -91,6 +91,9 @@
 
 	var/list/cultists_possible = get_players_for_role(ROLE_CULTIST)
 	for(var/datum/mind/player in cultists_possible)
+		if(mixed && (player in ticker.mode.modePlayer))
+			cultists_possible -= player
+			continue
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
 				cultists_possible -= player
@@ -102,14 +105,16 @@
 		cultists_possible -= cultist
 		cult += cultist
 
-	if(cult.len <= 0)
+	. = cult.len <= 0
+	if(.)
 		log_admin("Failed to set-up a round of cult. Couldn't pick any players to be starting cultists.")
 		message_admins("Failed to set-up a round of cult. Couldn't pick any players to be starting cultists.")
 	else
 		log_admin("Starting a round of cult with [cult.len] starting cultists.")
 		message_admins("Starting a round of cult with [cult.len] starting cultists.")
+		//if(mixed) ticker.mode.modePlayer |= cult
 
-	return (cult.len > 0)
+	return !.
 
 /datum/game_mode/cult/proc/blood_check()
 	max_spilled_blood = (max(bloody_floors.len,max_spilled_blood))
@@ -261,7 +266,7 @@
 
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
-			send_intercept()
+			if(!mixed) send_intercept()
 	..()
 
 /datum/game_mode/cult/proc/pick_objective()

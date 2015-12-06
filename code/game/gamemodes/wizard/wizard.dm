@@ -35,7 +35,7 @@
 	var/datum/mind/wizard
 	while(possible_wizards.len)
 		wizard = pick(possible_wizards)
-		if(wizard.special_role)
+		if(wizard.special_role || (mixed && (wizard in ticker.mode.modePlayer)))
 			possible_wizards -= wizard
 			wizard = null
 			continue
@@ -75,7 +75,7 @@
 	update_all_wizard_icons()
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
-			send_intercept()
+			if(!mixed) send_intercept()
 	..()
 	return
 

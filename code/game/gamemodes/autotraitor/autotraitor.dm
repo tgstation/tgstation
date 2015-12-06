@@ -22,6 +22,9 @@
 	possible_traitors = get_players_for_role(ROLE_TRAITOR)
 
 	for(var/datum/mind/player in possible_traitors)
+		if(mixed && (player in ticker.mode.modePlayer))
+			possible_traitors -= player
+			continue
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job) //Players with a job that is in the restricted job list can't turn into traitors!
 				possible_traitors -= player
@@ -66,7 +69,7 @@
 			continue
 		if(istype(traitor))
 			traitor.special_role = "traitor"
-
+	//if(mixed)ticker.mode.modePlayer |= traitors //merge into master antag list
 	log_admin("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
 	message_admins("Starting a round of AutoTraitor with [traitors.len] starting traitors.")
 
