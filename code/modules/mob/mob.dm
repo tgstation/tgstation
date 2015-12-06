@@ -371,10 +371,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
 	if(N.chained)
 		if(narsimage)
-			qdel(narsimage)
-			narsimage = null
-			qdel(narglow)
-			narglow = null
+			del(narsimage)
+			del(narglow)
 		return
 
 	//No need to make an exception for mechas, as they get deleted as soon as they get in view of narnar
@@ -441,10 +439,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 		to_chat(src, narglow)
 	else
 		if(narsimage)
-			qdel(narsimage)
-			narsimage = null
-			qdel(narglow)
-			narglow = null
+			del(narsimage)
+			del(narglow)
 
 /mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
 	var/turf/T_mob = get_turf(src)
@@ -462,8 +458,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		to_chat(src, riftimage)
 	else
 		if(riftimage)
-			qdel(riftimage)
-			riftimage = null
+			del(riftimage)
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)

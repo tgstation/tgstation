@@ -215,7 +215,6 @@
 
 			if (href_list["del_all2"])
 				for(var/datum/data/record/R in data_core.medical)
-					//R = null
 					qdel(R)
 					R = null
 					//Foreach goto(494)
@@ -382,7 +381,6 @@
 
 			if (href_list["del_r2"])
 				if (src.active2)
-					//src.active2 = null
 					qdel(src.active2)
 					src.active2 = null
 

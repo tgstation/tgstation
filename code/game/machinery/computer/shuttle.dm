@@ -46,7 +46,7 @@
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
-						qdel(src.authorized)
+						del(src.authorized)
 						src.authorized = list(  )
 
 				if("Repeal")

@@ -836,7 +836,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.contents = contents.Copy()
 			contents.len = 0
 			component_parts.len = 0
-			f(src)
+			qdel(src)
 	return
 
 /obj/machinery/hydroponics/togglePanelOpen(var/obj/toggleitem, mob/user)

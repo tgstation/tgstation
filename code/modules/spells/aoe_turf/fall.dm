@@ -190,8 +190,7 @@
 	if((!T || isnull(T)) && fallimage)
 		animate(fallimage, transform = fallimage.transform / 50, time = 2)
 		sleep(2)
-		qdel(fallimage)
-		fallimage = null
+		del(fallimage)
 		return
 	else if(T && T_mob && (T.z == T_mob.z) && (get_dist(T,T_mob) <= 15))// &&!(T in view(T_mob)))
 		var/matrix/original
