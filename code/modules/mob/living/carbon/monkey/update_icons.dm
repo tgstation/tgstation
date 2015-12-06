@@ -158,8 +158,7 @@
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)
-		qdel(target_locked)
-		target_locked = null
+		del(target_locked)
 	if (!targeted_by)
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
