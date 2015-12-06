@@ -60,6 +60,9 @@
 /datum/spacevine_mutation/proc/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	return
 
+/datum/spacevine_mutation/proc/on_explosion(severity, target, obj/effect/spacevine/holder)
+	return
+
 
 /datum/spacevine_mutation/space_covering
 	name = "space protective"
@@ -165,11 +168,16 @@
 	quality = NEGATIVE
 	severity = 2
 
+/datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/effect/spacevine/holder)
+	if(explosion_severity < 3)
+		qdel(src)
+	else
+		. = 1
+		spawn(5)
+			qdel(src)
+
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
-	var/turf/T = holder.loc
-	src = T
-	spawn(5)
-		explosion(T, 0, 0, severity, 0, 0)
+	explosion(holder.loc, 0, 0, severity, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -197,7 +205,7 @@
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
 	target.ex_act(severity)
-	for(var/atom/A in target)
+	for(var/atom/A in target.contents + target)
 		if(!istype(A, /obj/effect))
 			A.ex_act(severity)  //To not be the same as self-eating vine
 
@@ -585,19 +593,11 @@
 */
 
 /obj/effect/spacevine/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if (prob(90))
-				qdel(src)
-				return
-		if(3)
-			if (prob(50))
-				qdel(src)
-				return
-	return
+	var/i
+	for(var/datum/spacevine_mutation/SM in mutations)
+		i += SM.on_explosion(severity, target, src)
+	if(!i && prob(100/severity))
+		qdel(src)
 
 /obj/effect/spacevine/temperature_expose(null, temp, volume)
 	var/override = 0
