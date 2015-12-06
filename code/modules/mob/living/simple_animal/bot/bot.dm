@@ -763,7 +763,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(hacked) //Manually emagged by a human - access denied to all.
 			return 1
-		else if(!issilicon(user)) //Bot is hacked, so only silicons are allowed access.
+		else if(!issilicon(user) || IsAGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return 1
 	else
 		return 0
