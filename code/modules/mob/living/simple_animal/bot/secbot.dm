@@ -106,8 +106,8 @@ Auto Patrol: []"},
 	return	dat
 
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
-
-	..()
+	if(..())
+		return 1
 
 	switch(href_list["operation"])
 		if("idcheck")
@@ -126,16 +126,24 @@ Auto Patrol: []"},
 			declare_arrests = !declare_arrests
 			update_controls()
 
+/mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
+	threatlevel = H.assess_threat(src)
+	threatlevel += 6
+	if(threatlevel >= 4)
+		target = H
+		mode = BOT_HUNT
+
+/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == "harm")
+		retaliate(H)
+	return ..()
+
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
 		return
 	if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
-		threatlevel = user.assess_threat(src)
-		threatlevel += 6
-		if(threatlevel >= 4)
-			target = user
-			mode = BOT_HUNT
+		retaliate(user)
 
 /mob/living/simple_animal/bot/secbot/Emag(mob/user)
 	..()
@@ -152,11 +160,7 @@ Auto Patrol: []"},
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if (!Proj.nodamage && Proj.damage < src.health)
-				threatlevel = Proj.firer.assess_threat(src)
-				threatlevel += 6
-				if(threatlevel >= 4)
-					target = Proj.firer
-					mode = BOT_HUNT
+				retaliate(Proj.firer)
 	..()
 
 
