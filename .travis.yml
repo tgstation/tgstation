@@ -13,9 +13,11 @@ env:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install libc6:i386 libgcc1:i386 libstdc++6:i386 -qq
+  - sudo apt-get install libc6:i386 libgcc1:i386 libstdc++6:i386 python python-pip -qq
 
 install:
+  - pip install --user PyYaml -q
+  - pip install --user beautifulsoup4 -q
   - curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
   - unzip byond.zip
   - cd byond
@@ -23,6 +25,7 @@ install:
   - cd ..
 
 script:
+  - python tools/ss13_genchangelog.py html/changelog.html html/changelogs --dry-run
   - bash dm.sh -M${DM_MAPFILE} vgstation13.dme
 
 notifications:
