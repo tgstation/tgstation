@@ -87,20 +87,20 @@ emp_act
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
 	if(l_hand)
-		block_chance_modifier += l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) //So armour piercing blades can still be parried by other blades, for example
-		if(l_hand.hit_reaction(src, attack_text, block_chance_modifier))
+		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+		if(l_hand.hit_reaction(src, attack_text, final_block_chance))
 			return 1
 	if(r_hand)
-		block_chance_modifier += r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100))
-		if(r_hand.hit_reaction(src, attack_text, block_chance_modifier))
+		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
+		if(r_hand.hit_reaction(src, attack_text, final_block_chance))
 			return 1
 	if(wear_suit)
-		block_chance_modifier += wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100))
-		if(wear_suit.hit_reaction(src, attack_text, block_chance_modifier))
+		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance))
 			return 1
 	if(w_uniform)
-		block_chance_modifier += w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100))
-		if(w_uniform.hit_reaction(src, attack_text, block_chance_modifier))
+		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance))
 			return 1
 	return 0
 
