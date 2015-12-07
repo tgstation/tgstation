@@ -944,7 +944,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			final_x = T.x + rough_x
 			final_y = T.y + rough_y
 			final_z = T.z
-		else	
+		else
 			final_x = AM.x + rough_x
 			final_y = AM.y + rough_y
 			final_z = AM.z
@@ -1359,3 +1359,21 @@ B --><-- A
         if(location == src)
                 return 1
         return 0
+
+
+
+/proc/get_random_points_from(atom/A, amount_of_points = 1, range = 5, orange = 0)
+	if(!A)
+		return list()
+
+	var/list/range_turfs = ultra_range(range,A,orange)
+	. = list()
+
+	while(amount_of_points)
+		for(var/turf/T in range_turfs-.)
+			if(!amount_of_points)
+				break
+			if(get_dist(A,T) >= range-1) //get edge turfs
+				if(prob(3)) //try to space out the turfs
+					amount_of_points--
+					. += T
