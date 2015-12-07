@@ -2246,8 +2246,8 @@ datum
 			name = "Long Island Iced Tea"
 			id = "longislandicedtea"
 			result = "longislandicedtea"
-			required_reagents = list("vodka" = 1, "gin" = 1, "tequila" = 1, "cubalibre" = 1)
-			result_amount = 4
+			required_reagents = list("vodka" = 1, "gin" = 1, "tequila" = 1, "cubalibre" = 1, "ice" = 1)
+			result_amount = 5
 
 		threemileisland
 			name = "Three Mile Island Iced Tea"
