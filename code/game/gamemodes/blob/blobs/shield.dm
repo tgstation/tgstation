@@ -22,7 +22,7 @@
 	return
 
 /obj/effect/blob/shield/CanAtmosPass(turf/T)
-	return gc_destroyed
+	return 0
 
 /obj/effect/blob/shield/BlockSuperconductivity()
 	return 1
