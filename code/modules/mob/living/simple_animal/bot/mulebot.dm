@@ -199,7 +199,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 		dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-		if(locked && !ai && !IsAGhost(user))
+		if(locked && !ai && !IsAdminGhost(user))
 			dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
 		else
 			dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
@@ -245,7 +245,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		return
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)) || IsAGhost(usr))
+	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		switch(href_list["op"])
 
 			if("lock", "unlock")

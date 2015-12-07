@@ -994,7 +994,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1134,7 +1134,7 @@ Handheld fire alarm frame, for placing on walls
 	desc = "Cuban Pete is in the house!"
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)

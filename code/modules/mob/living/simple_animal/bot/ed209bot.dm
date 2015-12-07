@@ -103,7 +103,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
 "<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user)|| IsAGhost(user))
+	if(!locked || issilicon(user)|| IsAdminGhost(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Arrest Unidentifiable Persons: []<BR>

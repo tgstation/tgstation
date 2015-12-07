@@ -94,7 +94,7 @@
 	if(istype(M, /mob/living/silicon))
 		//AI can do whatever he wants
 		return 1
-	if(IsAGhost(M))
+	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
 	else if(istype(M, /mob/living/carbon/human))

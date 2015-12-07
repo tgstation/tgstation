@@ -2,7 +2,6 @@
 	..()
 
 	if(check_rights(R_ADMIN, 0))
-		stat = 0
 		has_unlimited_silicon_privilege = 1
 
 

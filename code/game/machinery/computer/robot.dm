@@ -117,9 +117,9 @@
 			usr << "<span class='danger'>Access Denied.</span>"
 
 	else if (href_list["magbot"])
-		if(issilicon(usr) && is_special_character(usr))
+		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && R.connected_ai == usr && !R.scrambledcodes && can_control(usr, R))
+			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				R.SetEmagged(1)
 				if(R.mind.special_role)
