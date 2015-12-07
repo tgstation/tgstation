@@ -150,7 +150,18 @@
 			waste = W
 			return
 		else
-			to_chat(user, "<span class='notice'>\The [src] has both a supply box and a waste box. Remove one first if you want to insert a new one.</span>")
+			var/obj/item/weapon/storage/box/lights/lsource = W
+			if(!lsource.contents.len)
+				to_chat(user, "<span class='notice'>\The [src] has both a supply box and a waste box and this box is empty. Remove one first if you want to insert a new one or use a light box with lights in it to insert them.</span>")
+				return
+			var/hasinserted = 0
+			for(var/obj/item/weapon/light/L in lsource)
+				if(insert_if_possible(L))
+					hasinserted = 1
+			if(hasinserted)
+				to_chat(user, "<span class='notice'>\The [src] accepts the lights in \the [lsource].</span>")
+			else
+				to_chat(user, "<span class='warning'>\The [src] cannot accept any of the lights in \the [lsource]!</span>")
 			return
 		
 
@@ -180,7 +191,7 @@
 			light_types[lightname] += L
 
 		var/list/light_type_cur
-		var/list/to_dump_5 = list()//I guess I could do this without this variable, but it would include more string concatenation, and nobody wants that.
+		var/list/to_dump_5 = list()//I guess I could do this without this variable, but it would involve more string concatenation, and nobody wants that.
 		var/list/to_dump_all = list() //This too
 	
 		for(var/T in light_types)
@@ -355,13 +366,21 @@
 		return
 	if(L.status == LIGHT_OK)
 		if(supply && supply.can_be_inserted(L, TRUE))
-			supply.handle_item_insertion(L, TRUE)
+			if(istype(L.loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/lsource = L.loc
+				lsource.remove_from_storage(L, supply)
+			else
+				supply.handle_item_insertion(L, TRUE)
 			return 1
 		else
 			return 0
 	else if(L.status == LIGHT_BROKEN || L.status == LIGHT_BURNED)
 		if(waste && waste.can_be_inserted(L, TRUE))
-			waste.handle_item_insertion(L, TRUE)
+			if(istype(L.loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/lsource = L.loc
+				lsource.remove_from_storage(L, waste)
+			else
+				waste.handle_item_insertion(L, TRUE)
 			return 1
 		else
 			return 0
