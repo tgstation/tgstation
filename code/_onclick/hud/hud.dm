@@ -239,7 +239,6 @@ var/datum/global_hud/global_hud = new()
 			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.healths				//As are the rest of these.
-//			mymob.client.screen += mymob.healthdoll
 			mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += lingchemdisplay
