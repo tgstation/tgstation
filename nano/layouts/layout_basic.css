@@ -1,15 +1,15 @@
 body {
-    background: #272727 url(uiBasicBackground.png) 50% 0 repeat-x;
+    background: #272727 url(background.png) 50% 0 repeat-x;
 }
 
-#uiContent {
+#content {
     clear: both;
     padding: 8px;
 }
 
-#uiLoadingNotice {
+#loading {
     position: relative;
-    background: url(uiNoticeBackground.jpg) 50% 50%;
+    background: url(background_notice.jpg) 50% 50%;
     color: #000000;
     font-size: 14px;
     font-style: italic;

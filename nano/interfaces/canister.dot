@@ -1,0 +1,77 @@
+{{? data.hasHoldingTank }}
+	<div class="noticePlaceholder">The regulator is connected to a tank.</div>
+{{??}}
+	<div class="notice">The regulator is not connected to a tank.</div>
+{{?}}	
+<h2>Canister</h2>
+<div class="item">
+	{{:helper.link('Relabel', 'pencil', {'relabel' : 1}, data.canLabel ? null : 'disabled')}}
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Pressure:
+	</div>
+	<div class="itemContent">
+		{{:data.tankPressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Port:
+	</div>
+	<div class="itemContent">
+		{{? data.portConnected}}
+			<span class="good">Connected</span>
+		{{??}}
+			<span class="bad">Disconnected</span>
+		{{?}}
+	</div>
+</div>
+<h2>Valve</h2>
+<div class="item">
+	<div class="itemLabel">
+		Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
+		{{:data.releasePressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Pressure Regulator:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Reset', 'refresh', {'release_p': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Min', 'minus', {'release_p': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Set', 'pencil', {'release_p': 'custom'}, null)}}
+		{{:helper.link('Max', 'plus', {'release_p': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+		<br class="clearBoth" />
+		{{:helper.link('Open', 'unlocked', {'toggle' : 1}, data.valveOpen ? 'selected' : null)}}
+		{{:helper.link('Close', 'locked', {'toggle' : 1}, data.valveOpen ? null : 'selected')}}
+	</div>
+</div>
+<h2>Holding Tank</h2>
+{{? data.hasHoldingTank}}
+	{{:helper.link('Eject', 'eject', {'remove_tank' : 1})}}
+	<div class="item">
+		<div class="itemLabel">
+			Label:
+		</div>
+		<div class="itemContent">
+			{{:data.holdingTank.name}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">
+			{{:data.holdingTank.tankPressure}} kPa
+		</div>
+	</div>
+{{??}}
+	<div class="item">
+		<span class="average">No Holding Tank</span>
+	</div>
+{{?}}

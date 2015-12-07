@@ -1,20 +1,13 @@
 body {
-    background: #272727 url(uiBackground.png) 50% 0 repeat-x;
+    background: #272727 url(background_nanotrasen.png) 50% 0 repeat-x;
 }
 
-#uiWrapper {
-    width: 100%;
-    height: 100%;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-#uiTitleWrapper {
+#title {
     position: relative;
     height: 30px;
 }
 
-#uiTitleText {
+#titletext {
     position: absolute;
     top: 6px;
     left: 44px;
@@ -24,22 +17,22 @@ body {
     font-size: 16px;
 }
 
-#uiTitle.icon {
+#title.icon {
     padding: 6px 8px 6px 42px;
     background-position: 2px 50%;
     background-repeat: no-repeat;
 }
 
-#uiTitleFluff {
+#titleicon {
     position: absolute;
     top: 4px;
     right: 12px;
     width: 42px;
     height: 24px;
-    background: url(uiTitleFluff.png) 50% 50% no-repeat;
+    background: url(logo_nanotrasen.png) 50% 50% no-repeat;
 }
 
-#uiStatusIcon {
+#statusicon {
     position: absolute;
     top: 4px;
     left: 12px;
@@ -47,76 +40,14 @@ body {
     height: 24px;
 }
 
-#uiMapWrapper {
+#content {
     clear: both;
     padding: 8px;
 }
 
-#uiMapHeader {
+#loading {
     position: relative;
-    clear: both;
-}
-
-#uiMapContainer {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    overflow: hidden;
-    border: 1px solid #40628a;
-    background: url(nanomapBackground.png);
-}
-
-#uiMap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -512px 0 0 -512px;
-    width: 256px;
-    height: 256px;
-    overflow: hidden;
-    zoom: 4;
-}
-
-#uiMapImage {
-    position: absolute;
-    bottom: 1px;
-    left: 1px;
-    width: 256px;
-    height: 256px;
-}
-
-#uiMapContent {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 256px;
-    height: 256px;
-}
-
-#uiMapFooter {
-    position: relative;
-    clear: both;
-}
-
-#uiContent {
-    clear: both;
-    padding: 8px;
-}
-
-#uiMapTooltip {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    border: 1px solid #40628a;
-    background-color: #272727;
-    padding: 8px;
-    display: none;
-    z-index: 9999;
-}
-
-#uiLoadingNotice {
-    position: relative;
-    background: url(uiNoticeBackground.jpg) 50% 50%;
+    background: url(background_notice.jpg) 50% 50%;
     color: #000000;
     font-size: 14px;
     font-style: italic;

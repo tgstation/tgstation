@@ -1,0 +1,174 @@
+<div class="notice">
+	{{? data.siliconUser}}
+		<div class="itemContentSmall">
+			Interface Lock:
+		</div>
+		<div class="itemContentFull">
+			{{:helper.link('Engaged', 'lock', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}
+			{{:helper.link('Disengaged', 'unlock', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
+		</div>
+		<div class="clearBoth"></div>
+	{{??}}
+		{{? data.locked}}
+			Swipe an ID card to unlock this interface.
+		{{??}}
+			Swipe an ID card to lock this interface.
+		{{?}}
+	{{?}}
+</div>
+<h2>Power Status</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Main Breaker:
+		</div>
+		<div class="itemContent">
+			{{? data.locked && !data.siliconUser}}
+				{{? data.isOperating}}
+					<span class='good'>On</span>
+				{{??}}
+					<span class='bad'>Off</span>
+				{{?}}
+			{{??}}
+				{{:helper.link('On', 'power-off', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}
+				{{:helper.link('Off', 'close', {'breaker' : 1}, data.isOperating ? null : 'selected')}}
+			{{?}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			External Power:
+		</div>
+		<div class="itemContent">
+			{{? data.externalPower == 2}}
+				<span class='good'>Good</span>
+			{{?? data.externalPower == 1}}
+				<span class='average'>Low</span>
+			{{??}}
+				<span class='bad'>None</span>
+			{{?}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Power Cell:
+		</div>
+		{{? data.powerCellStatus != null}}
+			<div class="itemContent" style="width: 60px">		
+				{{:helper.round(data.powerCellStatus*10)/10}}%
+			</div>	
+			{{:helper.displayBar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
+		{{??}}
+			<div class="itemContent">
+				<span class='bad'>Power cell removed.</span>
+			</div>
+		{{?}}
+	</div>
+	{{? data.powerCellStatus != null}}
+		<div class="item">
+			<div class="itemLabel">
+				Charge Mode:
+			</div>
+			<div class="itemContent">
+				{{? data.locked && !data.siliconUser}}
+					{{? data.chargeMode}}
+						<span class='good'>Auto</span>
+					{{??}}
+						<span class='bad'>Off</span>
+					{{?}}				
+				{{??}}
+					{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
+					{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
+				{{?}}
+				&nbsp;
+				{{? data.chargingStatus > 1}}
+					[<span class='good'>Fully Charged</span>]
+				{{?? data.chargingStatus == 1}}
+					[<span class='average'>Charging</span>]
+				{{??}}
+					[<span class='bad'>Not Charging</span>]
+				{{?}}
+			</div>
+		</div>
+	{{?}}
+</div>
+<h2>Power Channels</h2>
+<div class="statusDisplay">
+	{{~ data.powerChannels :channel:i}}
+		<div class="item">
+			<div class="itemLabel">
+				{{:channel.title}}:
+			</div>
+			<div class="itemContent" style="width: 70px; text-align: right; margin-right: 10px">
+				{{:channel.powerLoad}} W
+			</div>
+			<div class="itemContent" style="width: 105px">
+				{{? channel.status <= 1}}
+					<span class='bad'>Off</span>
+				{{?? channel.status >= 2}}
+					<span class='good'>On</span>
+				{{?}}
+				&nbsp;
+				{{? channel.status == 1 || channel.status == 3}}
+					[Auto]
+				{{??}}
+					[Manual]
+				{{?}}
+			</div>
+			{{? !data.locked || data.siliconUser}}
+				<div class="itemContentFull">
+					{{:helper.link('Auto', 'refresh', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
+					{{:helper.link('On', 'power-off', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
+					{{:helper.link('Off', 'close', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
+				</div>
+			{{?}}
+		</div>
+	{{~}}
+	<div class="item" style="font-weight: bold">
+		<div class="itemLabel">
+			Total Load:
+		</div>
+		<div class="itemContent" style="width: 70px; text-align: right">
+			{{:data.totalLoad}} W
+		</div>
+	</div>
+</div>
+{{? data.siliconUser}}
+	<hr />
+	<h2>System Overrides</h2>
+	<div class="statusDisplay">
+		<div class="item">
+			{{:helper.link('Overload Lighting Circuit', 'lightbulb', {'overload' : 1})}}
+		</div>
+		<div class="item">
+			{{? data.malfStatus == 1}}
+				{{:helper.link('Override Programming', 'script', {'malfhack' : 1})}}
+			{{?? data.malfStatus == 2}}
+				{{:helper.link('Shunt Core Processes', 'arrowreturn-1-s', {'occupyapc' : 1})}}
+			{{?? data.malfStatus == 3}}
+				{{:helper.link('Return to Main Core', 'arrowreturn-1-w', {'deoccupyapc' : 1})}}
+			{{?? data.malfStatus == 4}}
+				{{:helper.link('Shunt Core Processes', 'arrowreturn-1-s', {'occupyapc' : 1}, 'linkOff')}}
+			{{?}}
+		</div>
+	</div>
+{{?}}
+<br />
+<div class="notice">
+	<div class="itemContentSmall">
+		Cover Lock:
+	</div>
+	<div class="itemContentFull">
+		{{? data.locked && !data.siliconUser}}
+			{{? data.coverLocked}}
+				<span class='good'>Engaged</span>
+			{{??}}
+				<span class='bad'>Disengaged</span>
+			{{?}}
+		{{??}}
+			{{:helper.link('Engaged', 'lock', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}
+			{{:helper.link('Disengaged', 'unlock', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
+		{{?}}
+	</div>
+	<div class="clearBoth"></div>
+</div>

@@ -1,0 +1,37 @@
+{{? data.maskConnected}}
+	<div class="noticePlaceholder">The regulator is connected to a mask.</div>
+{{??}}
+	<div class="notice">The regulator is not connected to a mask.</div>
+{{?}}	
+<div class="item">
+	<div class="itemLabel">
+		Tank Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.tankPressure, 0, 1013, (data.tankPressure > 200) ? 'good' : ((data.tankPressure > 100) ? 'average' : 'bad'))}}
+		{{:data.tankPressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
+		{{:data.releasePressure}} kPa
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Pressure Regulator:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Reset', 'refresh', {'dist_p': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Min', 'minus', {'dist_p': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+		{{:helper.link('Set', 'pencil', {'dist_p': 'custom'}, null)}}
+		{{:helper.link('Max', 'plus', {'dist_p': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+		<br class="clearBoth" />
+		{{:helper.link('Open', 'unlock', {'stat': 1}, (!data.maskConnected) ? 'disabled' : (data.valveOpen ? 'selected' : null))}}
+		{{:helper.link('Close', 'lock', {'stat': 1}, data.valveOpen ? null : 'selected')}}
+	</div>
+</div>

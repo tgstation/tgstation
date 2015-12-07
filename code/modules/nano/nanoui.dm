@@ -28,13 +28,10 @@
 	var/list/stylesheets = list() // The list of CSS stylesheets to apply to the NanoUI..
 	var/list/scripts = list() // The list of Javascript scripts to apply to the NanoUI.
 	var/templates[0] // The list of NanoUI templates available to the NanoUI.
-	var/layout_key = "default" // The layout_key used to load alternate layouts and CSS.
-	var/state_key = "default" // The state of the frontend.
+	var/layout = "default" // The layout used to load alternate layouts and CSS.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/auto_update_layout = 0 // Re-render the layout every update.
 	var/auto_update_content = 1 // Re-render the content every update.
-	var/show_map = 0 // Show the Map UI.
-	var/map_z_level = 1 // Map Z-level.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
 	var/datum/topic_state/state = null // Topic state used to determine status. Topic states are in interactions/.
@@ -96,30 +93,13 @@
   * Add the assets required by all NanoUIs.
  **/
 /datum/nanoui/proc/add_common_assets()
-	// Libraries: jQuery, jQuery-UI, and doT.
-	add_script("jquery.js")
-	add_script("jquery-ui.js")
-	add_script("doT.js")
-	// Nano Utility: Utility functions and sanity checks.
-	add_script("nano_utility.js") // The NanoUtility JS, this is used to store utility functions.
-	// Nano Template: Renders templates using doT.
-	add_script("nano_template.js")
-	// Nano State Manager: Handles server updates and passes them to the current state.
-	add_script("nano_state_manager.js")
-	// Nano State: Base state.
-	add_script("nano_state.js")
-	// Nano State/Default: State used by all NanoUIs by default.
-	add_script("nano_state_default.js")
-	// Nano Base Callbacks: Used to set up callbacks across all NanoUIs.
-	add_script("nano_base_callbacks.js")
-	// Nano Base Helpers: Template helpers common across all NanoUIs.
-	add_script("nano_base_helpers.js")
-	// CSS reset.
-	add_stylesheet("normalize.css")
-	// Common style elements.
-	add_stylesheet("shared.css")
-	// Icons.
-	add_stylesheet("icons.css")
+	add_script("nanoui.js")
+	add_script("nanoui.util.js")
+	add_script("nanoui.template.js")
+	add_script("nanoui.helpers.js")
+	add_script("nanoui.handlers.js")
+
+	add_stylesheet("nanoui.css")
 
  /**
   * private
@@ -190,12 +170,9 @@
 			"srcObject" = list(
 				"name" = src_object.name
 			),
-			"stateKey" = state_key,
 			"status" = status,
 			"autoUpdateLayout" = auto_update_layout,
 			"autoUpdateContent" = auto_update_content,
-			"showMap" = show_map,
-			"mapZLevel" = map_z_level,
 			"user" = list(
 				"name" = user.name
 			)
@@ -266,13 +243,13 @@
  /**
   * public
   *
-  * Set the layout key for this NanoUI.
-  * This loads two files during get_html(): 'layout_[layout_key].tmpl' and 'layout_[layout_key].css'.
+  * Set the layout for this NanoUI.
+  * This loads two files during get_html(): 'layout_[layout].dot' and 'layout_[layout].css'.
   *
   * required layout_key string The new layout key.
  **/
-/datum/nanoui/proc/set_layout_key(layout_key)
-	src.layout_key = lowertext(layout_key)
+/datum/nanoui/proc/set_layout(layout)
+	src.layout = lowertext(layout)
 
  /**
   * public
@@ -297,36 +274,6 @@
  /**
   * public
   *
-  * Set the state key used in the frontend.
-  *
-  * required state_key string The new state key..
- **/
-/datum/nanoui/proc/set_state_key(state_key)
-	src.state_key = state_key
-
- /**
-  * public
-  *
-  * Toggle showing the Map UI.
-  *
-  * required state bool Enable/disable the Map UI.
- **/
-/datum/nanoui/proc/set_show_map(state)
-	show_map = state
-
- /**
-  * public
-  *
-  * Set the map Z-level.
-  *
-  * required z int The new Z-level.
- **/
-/datum/nanoui/proc/set_map_z_level(z)
-	map_z_level = z
-
- /**
-  * public
-  *
   * Enable/disable legacy on_close logic.
   *
   * required state bool Enable/disable the logic.
@@ -343,8 +290,8 @@
  **/
 /datum/nanoui/proc/get_html()
 	// Add files based on the layout key.
-	add_stylesheet("layout_[layout_key].css")
-	add_template("layout", "layout_[layout_key].tmpl")
+	add_template("layout", "layout_[layout].dot")
+	add_stylesheet("layout_[layout].css")
 
 	// Generate <script> and <link> tags.
 	var/script_html = ""
@@ -370,23 +317,34 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="x-ua-compatible" content="IE=edge">
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		<script type='text/javascript'>
-			function receiveUpdateData(jsonString)
-			{
-				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
-				{
-					NanoStateManager.receiveUpdateData(jsonString);
+			function receiveUpdate(dataString) {
+				"use strict";
+				if (typeof nanoui !== 'undefined') {
+					nanoui.emit('serverUpdate', dataString);
 				}
-			}
+			};
 		</script>
+		<!--\[if IE 8]>
+		<script type='text/javascript' src='https//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.6/ie8.js'></script>
+		<!\[endif]-->
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dom4/1.5.2/dom4.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.min.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/eddy/0.7.0/eddy.dom.js'></script>
+		<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.min.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js'></script>
 		[script_html]
+		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css' />
+		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
 		[stylesheet_html]
 	</head>
-	<body scroll=auto data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
-		<div id="uiLayout"></div>
+	<body id='body' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
+		<div id='layout'></div>
 		<noscript>
-			<div id="uiNoScript">
+			<div id='noscript'>
 				<h1>Javascript Required</h1>
 				<hr />
 				<p>Javascript is required in order to use this NanoUI interface.</p>
@@ -467,8 +425,8 @@
 
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
-	// Send the new data to the recieveUpdateData() Javascript function.
-	user << output(list2params(list(list2json_usecache(send_data))),"[window_id].browser:receiveUpdateData")
+	// Send the new data to the recieveUpdate() Javascript function.
+	user << output(list2params(list(list2json_usecache(send_data))),"[window_id].browser:receiveUpdate")
 
  /**
   * private
@@ -484,16 +442,7 @@
 
 	var/update = src_object.Topic(href, href_list, 0, state) // Call Topic() on the src_object.
 
-	// Code to toggle/update the Map UI.
-	var/map_update = 0
-	if(href_list["showMap"])
-		set_show_map(text2num(href_list["showMap"]))
-		map_update = 1
-	if(href_list["mapZLevel"])
-		set_map_z_level(text2num(href_list["mapZLevel"]))
-		map_update = 1
-
-	if ((src_object && update) || map_update)
+	if (src_object && update)
 		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.
 
  /**

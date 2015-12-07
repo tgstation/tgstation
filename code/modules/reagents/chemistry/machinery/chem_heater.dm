@@ -106,7 +106,7 @@
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 400)
+		ui = new(user, src, ui_key, "chem_heater.dot", name, 350, 400)
 		ui.open()
 
 /obj/machinery/chem_heater/get_ui_data()
