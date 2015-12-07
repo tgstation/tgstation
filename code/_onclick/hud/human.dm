@@ -40,7 +40,7 @@
 	icon_state = "power_display"
 
 
-/datum/hud/proc/human_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/proc/human_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight_sel.dmi')
 	adding = list()
 	other = list()
 	hotkeybuttons = list()	//These can be disabled for hotkey users

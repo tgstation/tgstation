@@ -1,4 +1,4 @@
-/datum/hud/proc/monkey_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/proc/monkey_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight_sel.dmi')
 	adding = list()
 	other = list()
 
