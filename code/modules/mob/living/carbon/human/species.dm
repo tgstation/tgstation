@@ -1005,8 +1005,8 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-	if(user != H && H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
-		return 0
+		if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
+			return 0
 
 	if(I.attack_verb && I.attack_verb.len)
 		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
