@@ -327,7 +327,7 @@
 							ae.loc = src.loc
 
 						qdel(src)
-				return
+			return
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.

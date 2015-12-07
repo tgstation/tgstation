@@ -467,10 +467,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		bloody_hands_mob = null
 
 /obj/item/singularity_pull(S, current_size)
-	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
-		if(current_size >= STAGE_FOUR)
-			throw_at(S,14,3, spin=0)
-		else ..()
+	if(current_size >= STAGE_FOUR)
+		throw_at_fast(S,14,3, spin=0)
+	else ..()
 
 /obj/item/acid_act(acidpwr, acid_volume)
 	. = 1

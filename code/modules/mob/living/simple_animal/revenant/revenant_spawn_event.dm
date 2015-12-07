@@ -4,7 +4,7 @@
 	name = "Spawn Revenant"
 	typepath = /datum/round_event/revenant
 	weight = 7
-	max_occurrences = 3
+	max_occurrences = 1
 	earliest_start = 6000 //Meant to mix things up early-game.
 
 
