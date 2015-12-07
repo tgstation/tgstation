@@ -14,7 +14,6 @@ var/datum/controller/failsafe/Failsafe
 	var/processing_interval = 100
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 0
-	var/list/defcon_pretty = list(5, 4, 3, 2, 1)
 
 	// Track the MC iteration to make sure its still on track.
 	var/master_iteration = 0
