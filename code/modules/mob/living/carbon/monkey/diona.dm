@@ -21,7 +21,7 @@
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 
 	//Let people pick the little buggers up.
-	if((M.a_intent == I_HELP) && (isturf(src.loc)) && (M.get_active_hand() == null)) //Unless their location isn't a turf!
+	if((M.a_intent == I_HELP) && !(locked_to) && (isturf(src.loc)) && (M.get_active_hand() == null)) //Unless their location isn't a turf!
 		scoop_up(M)
 
 	..()
