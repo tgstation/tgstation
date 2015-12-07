@@ -423,8 +423,3 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(check_rights(R_ADMIN, 0))
 		return 1
 	return
-
-/mob/dead/observer/IsAdvancedToolUser()
-	if(check_rights(R_ADMIN, 0))
-		return 1
-	return
