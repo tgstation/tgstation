@@ -14,8 +14,9 @@
 	air_update_turf(1)
 
 /obj/effect/blob/shield/Destroy()
+	var/turf/T = get_turf(src)
 	spawn(1)
-		loc.air_update_turf(1)
+		T.air_update_turf(1)
 	..()
 
 /obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
