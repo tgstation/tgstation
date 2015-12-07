@@ -290,6 +290,7 @@
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
+	var/convdir = 0 			// lock to one direction. -1 = reverse, 0 = not locked, 1 = forward
 	var/operated = 1			// true if just operated
 
 	var/id_tag = "" 			// must match conveyor IDs to control them
@@ -300,26 +301,41 @@
 
 	anchored = 1
 
+/obj/machinery/conveyor_switch/oneway  // Kept in for mapping legacy because I am too lazy to actually fix the maps.
+
 /obj/machinery/conveyor_switch/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 	if(src == signal.source) return
 
 	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
-	switch(signal.data["command"])
-		if("forward")
-			position = 1
-			last_pos = 0
-		if("reverse")
-			position = -1
-			last_pos = 0
-		if("stop")
-			last_pos = position
-			position = 0
-		else
-			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
-			return
+	if(!convdir)
+		switch(signal.data["command"])
+			if("forward")
+				position = 1
+				last_pos = 0
+			if("reverse")
+				position = -1
+				last_pos = 0
+			if("stop")
+				last_pos = position
+				position = 0
+			else
+				testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+				return
+	else
+		switch(signal.data["command"])
+			if("forward")
+				if(convdir==1)
+					position = 1
+			if("reverse")
+				if(convdir==-1)
+					position = -1
+			if("stop")
+				position = 0
+			else
+				testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+				return
 	update()
-
 
 /obj/machinery/conveyor_switch/New()
 	..()
@@ -355,19 +371,27 @@
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
 		to_chat(usr, "<span class='warning'>Nope.</span>")
 		return 0
-	if(position == 0)
-		if(last_pos < 0)
-			position = 1
-			last_pos = 0
-			send_command("forward")
+	if(!convdir)
+		if(position == 0)
+			if(last_pos < 0)
+				position = 1
+				last_pos = 0
+				send_command("forward")
+			else
+				position = -1
+				last_pos = 0
+				send_command("reverse")
 		else
-			position = -1
-			last_pos = 0
-			send_command("reverse")
+			last_pos = position
+			position = 0
+			send_command("stop")
 	else
-		last_pos = position
-		position = 0
-		send_command("stop")
+		if(position == 0)
+			position = convdir
+			send_command(convdir==1?"forward":"reverse")
+		else
+			position = 0
+			send_command("stop")
 
 	update()
 
@@ -389,33 +413,14 @@
 		return .
 	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>Deconstructing \the [src]...</span>")
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		if(do_after(user, src,50))
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You disassemble \the [src].</span>")
 			var/turf/T=get_turf(src)
 			new /obj/item/device/assembly/signaler(T)
 			new /obj/item/stack/rods(T,1)
 			qdel(src)
 		return 1
-
-/obj/machinery/conveyor_switch/oneway
-	var/convdir = 1 //Set to 1 or -1 depending on which way you want the conveyor to go. (In other words keep at 1 and set the proper dir on the belts.)
-	desc = "A conveyor control switch. It appears to only go in one direction."
-
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
-	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
-		to_chat(usr, "<span class='warning'>Nope.</span>")
-		return 0
-	if(position == 0)
-		position = convdir
-		send_command(convdir==1?"forward":"reverse")
-	else
-		position = 0
-		send_command("stop")
-
-	update()
-
 
 /obj/machinery/conveyor_switch/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	var/dis_id_tag="-----"
@@ -425,24 +430,17 @@
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
-		</ul>
-	"}
+			<li><b>Restrict Pulling: </b>
+				[convdir == -1 ? "<b>&larr;</b>" : {"<a href="?src=\ref[src];setconvdir=-1">&larr;</a>"}]
+				[convdir ==  0 ? "<b>No</b>" 	 : {"<a href="?src=\ref[src];setconvdir= 0">No</a>"}]
+				[convdir ==  1 ? "<b>&rarr;</b>" : {"<a href="?src=\ref[src];setconvdir= 1">&rarr;</a>"}]
+			</li>
+		</ul>"}
 
-/obj/machinery/conveyor_switch/oneway/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
-	if(src == signal.source) return
-
-	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
-	switch(signal.data["command"])
-		if("forward")
-			if(convdir==1)
-				position = 1
-		if("reverse")
-			if(convdir==-1)
-				position = -1
-		if("stop")
-			position = 0
-		else
-			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
-			return
-	update()
+/obj/machinery/conveyor_switch/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+	. = ..()
+	if(.) return
+	if("setconvdir" in href_list)
+		convdir = text2num(href_list["setconvdir"])
+		updateConfig()
+		return MT_UPDATE
