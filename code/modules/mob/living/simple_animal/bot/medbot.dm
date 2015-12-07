@@ -157,7 +157,8 @@
 	return dat
 
 /mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	..()
+	if(..())
+		return 1
 
 	if(href_list["adj_threshold"])
 		var/adjust_num = text2num(href_list["adj_threshold"])
