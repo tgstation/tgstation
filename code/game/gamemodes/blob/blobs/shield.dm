@@ -9,17 +9,20 @@
 	point_return = 2
 
 
-/obj/effect/blob/shield/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
+/obj/effect/blob/shield/New()
+	..()
+	air_update_turf(1)
+
+/obj/effect/blob/shield/Destroy()
+	spawn(1)
+		loc.air_update_turf(1)
+	..()
 
 /obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/effect/blob/shield/CanAtmosPass(turf/T)
-	return 0
+	return gc_destroyed
 
 /obj/effect/blob/shield/BlockSuperconductivity()
 	return 1

@@ -8,9 +8,6 @@
 	point_return = 15
 	var/resource_delay = 0
 
-/obj/effect/blob/resource/update_icon()
-	if(health <= 0)
-		qdel(src)
 
 /obj/effect/blob/resource/PulseAnimation(activate = 0)
 	if(activate)
