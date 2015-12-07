@@ -289,9 +289,8 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
-	var/oneway = 0				// only allow one direction
 	var/last_pos = -1			// last direction setting
-	var/convdir = 1 			// if the switch is one direction only, this sets which direction it's locked to
+	var/convdir = 0 			// lock to one direction. -1 = reverse, 0 = not locked, 1 = forward
 	var/operated = 1			// true if just operated
 
 	var/id_tag = "" 			// must match conveyor IDs to control them
@@ -302,42 +301,40 @@
 
 	anchored = 1
 
-/obj/machinery/conveyor_switch/oneway  // Kept in for mapping legacy
-	oneway = 1
+/obj/machinery/conveyor_switch/oneway  // Kept in for mapping legacy because I am too lazy to actually fix the maps.
 
 /obj/machinery/conveyor_switch/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 	if(src == signal.source) return
 
 	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
-	switch(oneway)
-		if(0)
-			switch(signal.data["command"])
-				if("forward")
+	if(!convdir)
+		switch(signal.data["command"])
+			if("forward")
+				position = 1
+				last_pos = 0
+			if("reverse")
+				position = -1
+				last_pos = 0
+			if("stop")
+				last_pos = position
+				position = 0
+			else
+				testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+				return
+	else
+		switch(signal.data["command"])
+			if("forward")
+				if(convdir==1)
 					position = 1
-					last_pos = 0
-				if("reverse")
+			if("reverse")
+				if(convdir==-1)
 					position = -1
-					last_pos = 0
-				if("stop")
-					last_pos = position
-					position = 0
-				else
-					testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
-					return
-		if(1)
-			switch(signal.data["command"])
-				if("forward")
-					if(convdir==1)
-						position = 1
-				if("reverse")
-					if(convdir==-1)
-						position = -1
-				if("stop")
-					position = 0
-				else
-					testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
-					return
+			if("stop")
+				position = 0
+			else
+				testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+				return
 	update()
 
 /obj/machinery/conveyor_switch/New()
@@ -374,28 +371,27 @@
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
 		to_chat(usr, "<span class='warning'>Nope.</span>")
 		return 0
-	switch(oneway)
-		if(0)
-			if(position == 0)
-				if(last_pos < 0)
-					position = 1
-					last_pos = 0
-					send_command("forward")
-				else
-					position = -1
-					last_pos = 0
-					send_command("reverse")
+	if(!convdir)
+		if(position == 0)
+			if(last_pos < 0)
+				position = 1
+				last_pos = 0
+				send_command("forward")
 			else
-				last_pos = position
-				position = 0
-				send_command("stop")
-		if(1)
-			if(position == 0)
-				position = convdir
-				send_command(convdir==1?"forward":"reverse")
-			else
-				position = 0
-				send_command("stop")
+				position = -1
+				last_pos = 0
+				send_command("reverse")
+		else
+			last_pos = position
+			position = 0
+			send_command("stop")
+	else
+		if(position == 0)
+			position = convdir
+			send_command(convdir==1?"forward":"reverse")
+		else
+			position = 0
+			send_command("stop")
 
 	update()
 
@@ -435,25 +431,16 @@
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
 			<li><b>Restrict Pulling: </b>
-				[src.oneway && src.convdir == -1 ? "<b>&larr;</b>" : {"<a href="?src=\ref[src];toggleoneway=-1">&larr;</a>"}]
-				[!src.oneway ? "<b>No</b>" : {"<a href="?src=\ref[src];toggleoneway=0">No</a>"}]
-				[src.oneway && src.convdir == 1 ? "<b>&rarr;</b>" : {"<a href="?src=\ref[src];toggleoneway=1">&rarr;</a>"}]
+				[convdir == -1 ? "<b>&larr;</b>" : {"<a href="?src=\ref[src];setconvdir=-1">&larr;</a>"}]
+				[convdir ==  0 ? "<b>No</b>" 	 : {"<a href="?src=\ref[src];setconvdir= 0">No</a>"}]
+				[convdir ==  1 ? "<b>&rarr;</b>" : {"<a href="?src=\ref[src];setconvdir= 1">&rarr;</a>"}]
 			</li>
 		</ul>"}
 
 /obj/machinery/conveyor_switch/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
 	. = ..()
-	if(.) return .
-	if("toggleoneway" in href_list)
-		var/newdir = text2num(href_list["toggleoneway"])
-		switch(newdir)
-			if(-1)
-				oneway = 1
-				convdir = -1
-			if(0)
-				oneway = 0
-			if(1)
-				oneway = 1
-				convdir = 1
+	if(.) return
+	if("setconvdir" in href_list)
+		convdir = text2num(href_list["setconvdir"])
 		updateConfig()
 		return MT_UPDATE
