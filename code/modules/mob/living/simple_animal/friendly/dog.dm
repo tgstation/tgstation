@@ -239,7 +239,7 @@
 					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
 					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
-					/obj/item/clothing/head/hopcap, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
+					/obj/item/clothing/head/hopcap, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad, /obj/item/clothing/suit/ianshirt)
 				valid = 1
 
 	if(valid)
@@ -374,6 +374,12 @@
 		if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
 			name = "Trooper [real_name]"
 			desc = "That's not red paint. That's real corgi blood."
+
+		if(/obj/item/clothing/suit/ianshirt)
+			name = "Ian?"
+			desc = "You're not sure if he's gone avant garde or just gotten it stuck on his head."
+			emote_see = list("seems confused", "shakes the shirt around fruitlessly", "drools all over the shirt")
+			emote_hear = list("gives a muffled yap", "gives a muffled whine")
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Ian
