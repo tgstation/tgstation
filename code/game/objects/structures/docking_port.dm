@@ -5,7 +5,7 @@ var/global/list/all_docking_ports = list()
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "docking_shuttle"
 	dir = NORTH
-
+	flags = INVULNERABLE //prevents ZAS airflow and probably 1 or 2 other things
 	density = 0
 	anchored = 1
 	invisibility = 60 //Only ghosts can see
@@ -30,7 +30,13 @@ var/global/list/all_docking_ports = list()
 		if(src == S.destination_port) S.destination_port = null
 
 //just in case
-/obj/structure/docking_port/singuloCanEat()
+/obj/structure/docking_port/singuloCanEat() //This proc does nothing so remember NOT to use this
+	return //we are eternal
+
+/obj/structure/docking_port/singularity_pull()
+	return //we are eternal
+
+/obj/structure/docking_port/singularity_act()
 	return //we are eternal
 
 /obj/structure/docking_port/ex_act()
