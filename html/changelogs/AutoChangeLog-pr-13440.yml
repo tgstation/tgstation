@@ -1,0 +1,6 @@
+author: octareenroon91
+delete-after: True
+changes: 
+  - rscadd: "Wallets now use the access of all IDs stored inside them."
+  - rscadd: "As the accesses of all IDs are merged, two IDs in a wallet may grant access to a door that neither one alone would open."
+  - bugfix: "Wallets used to be useless for access if the first ID card put into it was taken out, until another ID card was put back in.  That should not happen anymore."
