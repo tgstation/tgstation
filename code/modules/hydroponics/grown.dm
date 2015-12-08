@@ -1229,7 +1229,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	if(!reagents.total_volume)
 		var/batteries_recharged = 0
 		for(var/obj/item/weapon/stock_parts/cell/C in usr.GetAllContents())
-			var/newcharge = (potency/100)*C.maxcharge
+			var/newcharge = (potency*0.01)*C.maxcharge
 			if(C.charge < newcharge)
 				C.charge = newcharge
 				if(isobj(C.loc))
