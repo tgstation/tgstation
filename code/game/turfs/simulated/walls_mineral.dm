@@ -173,4 +173,4 @@
 	mineral = "snow"
 	hardness = 80
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	canSmoothWith = list(/turf/simulated/wall/mineral/snow)
+	canSmoothWith = null

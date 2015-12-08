@@ -3,16 +3,17 @@
 /area/awaymission/snowdin
 	name = "\improper Snowdin Tundra Plains"
 	icon_state = "away"
+	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
 	name = "\improper Snowdin Outpost"
-	icon_state = "away1"
-	luminosity = 1
+	requires_power = 1
 
 /area/awaymission/snowdin/igloo
 	name = "\improper Snowdin Igloos"
 	icon_state = "away2"
-	luminosity = 1
 
 /area/awaymission/snowdin/cave
 	name = "\improper Snowdin Caves"
@@ -21,17 +22,17 @@
 /area/awaymission/snowdin/base
 	name = "\improper Snowdin Main Base"
 	icon_state = "away3"
-	luminosity = 1
+	requires_power = 1
 
 /area/awaymission/snowdin/dungeon1
 	name = "\improper Snowdin Depths"
 	icon_state = "away2"
-	luminosity = 1
+	luminosity = 0
 
 /area/awaymission/snowdin/sekret
 	name = "\improper Snowdin Operations"
-	luminosity = 1
 	icon_state = "away3"
+	requires_power = 1
 
 //notes for lore or treasure hints wow//--
 
@@ -87,54 +88,81 @@ obj/item/weapon/paper/snowdin/syndienotice
 /obj/effect/spawner/lootdrop/dungeonlite
 	name = "dungeon lite"
 	lootdoubles = 1
-	lootcount = 5
-	loot = list(/obj/item/weapon/melee/classic_baton = 8,
+	lootcount = 1
+	loot = list(/obj/item/weapon/melee/classic_baton = 11,
 				/obj/item/weapon/melee/classic_baton/telescopic = 12,
-				/obj/item/weapon/spellbook/oneuse/smoke = 4,
-				/obj/item/weapon/spellbook/oneuse/blind = 3,
-				)
+				/obj/item/weapon/spellbook/oneuse/smoke = 10,
+				/obj/item/weapon/spellbook/oneuse/blind = 10,
+				/obj/item/weapon/storage/firstaid/regular = 45,
+				/obj/item/weapon/storage/firstaid/toxin = 35,
+				/obj/item/weapon/storage/firstaid/brute = 27,
+				/obj/item/weapon/storage/firstaid/fire = 27,
+				/obj/item/weapon/storage/toolbox/syndicate = 12,
+				/obj/item/weapon/c4 = 7,
+				/obj/item/weapon/grenade/clusterbuster/smoke = 15,
+				/obj/item/clothing/under/chameleon = 13,
+				/obj/item/clothing/shoes/sneakers/syndigaloshes = 10,
+				/obj/item/borg/upgrade/ddrill = 3,
+				/obj/item/borg/upgrade/soh = 3)
 
 /obj/effect/spawner/lootdrop/dungeonmid
 	name = "dungeon mid"
 	lootdoubles = 0
-	lootcount = 3
+	lootcount = 1
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
-				/obj/item/weapon/storage/firstaid/tactical = 12,
+				/obj/item/weapon/storage/firstaid/tactical = 35,
 				/obj/item/weapon/teleportation_scroll/apprentice = 4,
 				/obj/item/weapon/shield/energy = 6,
-				/obj/item/weapon/shield/riot/tele = 8,
-				/obj/item/weapon/dnainjector/lasereyesmut = 9,
+				/obj/item/weapon/shield/riot/tele = 12,
+				/obj/item/weapon/dnainjector/lasereyesmut = 7,
 				/obj/item/weapon/gun/magic/wand/fireball/innert = 3,
-				/obj/item/weapon/pneumatic_cannon = 5,
-				/obj/item/weapon/melee/energy/sword = 5,
-				/obj/item/weapon/spellbook/oneuse/knock = 3,
-				/obj/item/weapon/spellbook/oneuse/summonitem = 6,
-				/obj/item/weapon/spellbook/oneuse/forcewall = 2)
+				/obj/item/weapon/pneumatic_cannon = 15,
+				/obj/item/weapon/melee/energy/sword = 7,
+				/obj/item/weapon/spellbook/oneuse/knock = 15,
+				/obj/item/weapon/spellbook/oneuse/summonitem = 20,
+				/obj/item/weapon/spellbook/oneuse/forcewall = 17,
+				/obj/item/weapon/storage/backpack/holding = 12,
+				/obj/item/weapon/grenade/spawnergrenade/manhacks = 6,
+				/obj/item/weapon/grenade/spawnergrenade/spesscarp = 7,
+				/obj/item/weapon/grenade/clusterbuster/inferno = 3,
+				/obj/item/stack/sheet/mineral/diamond{amount = 15} = 3,
+				/obj/item/stack/sheet/mineral/uranium{amount = 15} = 3,
+				/obj/item/stack/sheet/mineral/plasma{amount = 15} = 3,
+				/obj/item/stack/sheet/mineral/gold{amount = 15} = 3,
+				/obj/item/weapon/spellbook/oneuse/barnyard = 4,
+				/obj/item/weapon/pickaxe/drill/diamonddrill = 3,
+				/obj/item/borg/upgrade/vtec = 3,
+				/obj/item/borg/upgrade/disablercooler = 3)
 
 
 /obj/effect/spawner/lootdrop/dungeonheavy
 	name = "dungeon heavy"
 	lootdoubles = 0
-	lootcount = 2
+	lootcount = 1
 
-	loot = list(/obj/item/weapon/twohanded/singularityhammer = 7,
-				/obj/item/weapon/twohanded/mjollnir = 5,
-				/obj/item/weapon/twohanded/fireaxe = 12,
-				/obj/item/organ/internal/brain/alien = 8,
-				/obj/item/weapon/twohanded/dualsaber = 6,
-				/obj/item/organ/internal/heart/demon = 4,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 6,
-				/obj/item/weapon/teleportation_scroll = 3,
-				/obj/item/weapon/dice/d20/fate = 1,
-				/obj/item/weapon/gun/magic/wand/resurrection/innert = 5,
+	loot = list(/obj/item/weapon/twohanded/singularityhammer = 20,
+				/obj/item/weapon/twohanded/mjollnir = 15,
+				/obj/item/weapon/twohanded/fireaxe = 30,
+				/obj/item/organ/internal/brain/alien = 23,
+				/obj/item/weapon/twohanded/dualsaber = 14,
+				/obj/item/organ/internal/heart/demon = 7,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
+				/obj/item/weapon/teleportation_scroll = 5,
+				/obj/item/weapon/dice/d20/fate = 4,
+				/obj/item/weapon/gun/magic/wand/resurrection/innert = 15,
+				/obj/item/weapon/gun/magic/wand/resurrection = 10,
 				/obj/item/device/uplink/old = 2,
-				/obj/item/weapon/spellbook/oneuse/charge = 7,
-				)
+				/obj/item/weapon/spellbook/oneuse/charge = 12,
+				/obj/item/weapon/grenade/clusterbuster/spawner_manhacks = 15,
+				/obj/item/weapon/spellbook/oneuse/fireball = 10,
+				/obj/item/weapon/pickaxe/drill/jackhammer = 35,
+				/obj/item/borg/upgrade/syndicate = 13,
+				/obj/item/borg/upgrade/selfrepair = 17)
 
 /obj/effect/spawner/lootdrop/dungeonmisc
 	name = "dungeon misc"
-	lootdoubles = 1
-	lootcount = 3
+	lootdoubles = 2
+	lootcount = 1
 
 	loot = list(/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
 				/obj/item/toy/snowball = 15,
@@ -148,8 +176,8 @@ obj/item/weapon/paper/snowdin/syndienotice
 	name = "insulated tactical turtleneck"
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection"
 	armor = list(melee = 20, bullet = 10, laser = 0,energy = 5, bomb = 0, bio = 0, rad = 0)
+	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
 /obj/item/clothing/shoes/combat/coldres
 	name = "insulated combat boots"
 	desc = "High speed, low drag combat boots, now with an added layer of insulation."
@@ -175,19 +203,15 @@ obj/item/weapon/paper/snowdin/syndienotice
 /obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate/coldres
-	corpsesuit = /obj/item/clothing/suit/armor/vest
 	corpseshoes = /obj/item/clothing/shoes/combat/coldres
-	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseradio = /obj/item/device/radio/headset/syndicate/alt
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
 	corpsepocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
-	corpseid = 1
-	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	corpsepocket2 = /obj/item/weapon/card/id/syndicate
+	corpseid = 0
 
 /obj/effect/landmark/corpse/syndicatesoldier/coldres/alive
 	name = "sleeper"
+	mobname = "Syndicate Snow Operative"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
@@ -198,3 +222,26 @@ obj/item/weapon/paper/snowdin/syndienotice
 
 /obj/effect/landmark/corpse/syndicatesoldier/coldres/alive/female
 	mobgender = FEMALE
+
+//mobs//--
+
+/mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
+	name = "giant ice spider"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = 1500
+	color = rgb(114,228,250)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
+	name = "giant ice spider"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = 1500
+	color = rgb(114,228,250)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
+	name = "giant ice spider"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = 1500
+	color = rgb(114,228,250)
