@@ -309,10 +309,9 @@
 						var/obj/item/weapon/melee/defibrillator/D = O
 						D.charges = initial(D.charges)
 					//Janitor
-					if(istype(O, /obj/item/device/lightreplacer))
-						var/obj/item/device/lightreplacer/LR = O
+					if(istype(O, /obj/item/device/lightreplacer/borg))
+						var/obj/item/device/lightreplacer/borg/LR = O
 						LR.Charge(R)
-
 				if(R)
 					if(R.module)
 						R.module.respawn_consumable(R)
