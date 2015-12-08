@@ -370,3 +370,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		return
 
+/proc/IsAdminGhost(var/mob/user)
+	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer))
+		return 1
+	else
+		return 0

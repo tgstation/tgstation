@@ -25,7 +25,7 @@
 /atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, \
 								force_open = 0, datum/nano_ui/master_ui = null, \
 								datum/topic_state/state = default_state)
-	return // Not implemented.
+	return -1 // Sorta implemented.
 
  /**
   * public
