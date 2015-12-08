@@ -126,6 +126,7 @@
 	var/turf/T = loc
 	if(istype(T))
 		T.lighting_overlay = null
+	..()
 
 // Variety of overrides so the overlays don't get affected by weird things.
 /atom/movable/lighting_overlay/singuloCanEat()
