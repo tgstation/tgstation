@@ -132,6 +132,15 @@
 	if(!delay_ready_dna)
 		dna.ready_dna(src)
 
+	if(hardcore_mode_on)
+		spawn(2 SECONDS)
+			//Hardcore mode stuff
+			//Warn the player that not eating will lead to his death
+			if(eligible_for_hardcore_mode(src))
+				to_chat(src, "<h5><span class='notice'>Hardcode mode is enabled!</span></h5>")
+				to_chat(src, "<b>You must eat to survive. Starvation for extended periods of time will kill you!</b>")
+				to_chat(src, "<b>Keep an eye out on the hunger indicator on the right of your screen; it will start flashing red and black when you're close to starvation.</b>")
+
 /mob/living/carbon/human/player_panel_controls()
 	var/html=""
 

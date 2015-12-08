@@ -1343,3 +1343,21 @@ var/proccalls = 1
 #define MODE_CHANGELING "changeling"
 #define MODE_CULTCHAT "cultchat"
 #define MODE_ANCIENT "ancientchat"
+
+//Hardcore mode stuff
+
+#define STARVATION_MIN 60 //If you have less nutrition than this value, the hunger indicator starts flashing
+
+#define STARVATION_NOTICE 45 //If you have more nutrition than this value, you get an occasional message reminding you that you're going to starve soon
+
+#define STARVATION_WEAKNESS 20 //Otherwise, if you have more nutrition than this value, you occasionally become weak and receive minor damage
+
+#define STARVATION_NEARDEATH 5 //Otherwise, if you have more nutrition than this value, you have seizures and occasionally receive damage
+
+//If you have less nutrition than STARVATION_NEARDEATH, you start getting damage
+
+#define STARVATION_OXY_DAMAGE 2.5
+#define STARVATION_TOX_DAMAGE 2.5
+#define STARVATION_BRAIN_DAMAGE 2.5
+
+#define STARVATION_OXY_HEAL_RATE 1 //While starving, THIS much oxygen damage is restored per life tick (instead of the default 5)

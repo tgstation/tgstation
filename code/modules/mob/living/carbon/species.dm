@@ -225,7 +225,14 @@ var/global/list/whitelisted_species = list("Human")
 
 	else								// We're in safe limits
 		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
+
+		var/oxy_restored = 5
+
+		if(hardcore_mode_on && eligible_for_hardcore_mode(H)) //HARDCORE MODE stuff
+			if(H.nutrition < STARVATION_MIN) //Starvation makes oxygen damage heal at a slower rate!
+				oxy_restored = STARVATION_OXY_HEAL_RATE //Defined as 1
+
+		H.adjustOxyLoss(-oxy_restored)
 		oxygen_used = breath.oxygen/6
 		H.oxygen_alert = 0
 

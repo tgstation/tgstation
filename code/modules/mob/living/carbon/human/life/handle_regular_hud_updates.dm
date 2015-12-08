@@ -195,6 +195,10 @@
 				if(150 to 250)					nutrition_icon.icon_state = "nutrition3"
 				else							nutrition_icon.icon_state = "nutrition4"
 
+			if(ticker && ticker.hardcore_mode) //Hardcore mode: flashing nutrition indicator when starving!
+				if(nutrition < STARVATION_MIN)
+					nutrition_icon.icon_state = "nutrition5"
+
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
 
