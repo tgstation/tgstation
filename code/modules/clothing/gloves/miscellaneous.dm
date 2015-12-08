@@ -112,3 +112,27 @@
 	name = "Doomguy's gloves"
 	icon_state = "doom"
 	item_state = "doom"
+
+/obj/item/clothing/gloves/knuckles
+	desc = "A pair of classic metal knuckles that are designed to increase tissue damage and bone fractures when punching."
+	name = "brass knuckles"
+	icon_state = "knuckles"
+	item_state = "knuckles"
+
+	attack_verb = list("punched")
+	bonus_knockout = 2 //Slight knockout chance increase.
+	damage_added = 3 //Add 3 damage to unarmed attacks when worn
+	force = 5 //Deal 5 damage if hit with this item in hand
+
+/obj/item/clothing/gloves/knuckles/dexterity_check()
+	return 0 //Wearing these knuckles makes you less dexterious (so, for example, you can't use computers)
+
+/obj/item/clothing/gloves/knuckles/spiked
+	name = "spiked knuckles"
+	desc = "A pair of metal knuckles embedded with dull, but nonetheless painful spikes."
+	icon_state = "knuckles_spiked"
+	item_state = "knuckles_spiked"
+
+	bonus_knockout = 3
+	damage_added = 5
+	force = 7
