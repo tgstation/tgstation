@@ -412,4 +412,4 @@
 "hV" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel,/area/awaymission/BMPship/Aft)
 "hW" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/plasteel,/area/awaymission/BMPship/Aft)
 "hX" = (/obj/structure/mirror{pixel_y = 28},/turf/simulated/floor/plasteel{icon_state = "cafeteria"; dir = 2},/area/awaymission/BMPship/Aft)
-"hY" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plasteel{icon_state = "cafeteria"; dir = 2},/area/awaymission/BMPship/Af
+"hY" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plasteel{icon_state = "cafeteria"; dir = 2},/area/awaymission/BMPship/Aft)
