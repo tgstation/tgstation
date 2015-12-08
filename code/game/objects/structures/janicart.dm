@@ -326,8 +326,8 @@
 	name = "atv"
 	desc = "An all-terrain vehicle built. The wheels have a special grip to help move on ice and in thick snow."
 	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "All-terrain vehicle"
-	callme = "atv"
+	icon_state = "atv"
+	callme = "All-terrain vehicle"
 	keytype = /obj/item/key
 	var/image/atvcover = null
 
