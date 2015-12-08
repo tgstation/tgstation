@@ -418,6 +418,7 @@
 	health = 0
 	icon_state = icon_dead
 	stat = DEAD
+	lying = 1
 	density = 0
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
