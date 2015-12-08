@@ -26,7 +26,8 @@
 
 	if(is_freq_listening(signal))
 		if(change_frequency)
-			signal.frequency = change_frequency
+			if(!(signal.frequency == 1213))
+				signal.frequency = change_frequency
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
