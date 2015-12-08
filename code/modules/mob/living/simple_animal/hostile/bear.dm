@@ -47,14 +47,6 @@
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space. "
 
-/mob/living/simple_animal/hostile/bear/Move()
-	..()
-	if(stat != DEAD)
-		if(loc && istype(loc,/turf/space))
-			icon_state = "bear"
-		else
-			icon_state = "bearfloor"
-
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 

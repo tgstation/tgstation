@@ -31,7 +31,7 @@
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
 	walltype = "iced"
-	canSmoothWith = list(/turf/simulated/wall/ice)
+	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 

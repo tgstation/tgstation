@@ -32,6 +32,8 @@
 	layer = MOB_LAYER - 0.1
 	var/remains = /obj/effect/decal/remains/human
 	var/loot
+	var/loot2
+	var/loot3
 	var/deathmessage = "The skeleton collaspes into a pile of bones!"
 
 
@@ -41,6 +43,10 @@
 		new remains (src.loc)
 	if(loot)
 		new loot (src.loc)
+	if(loot2)
+		new loot2 (src.loc)
+	if(loot3)
+		new loot3 (src.loc)
 	visible_message("<span class='danger'>[deathmessage]</span>")
 	qdel(src)
 	return
@@ -58,9 +64,9 @@
 	melee_damage_lower = 17
 	melee_damage_upper = 20
 	deathmessage = "The skeleton collaspes into a pile of bones, its gear falling to the floor!"
-	loot = list(/obj/item/clothing/suit/hooded/wintercoat,
-				/obj/item/clothing/shoes/winterboots,
-				/obj/item/weapon/twohanded/spear)
+	loot = /obj/item/clothing/suit/hooded/wintercoat
+	loot2 = /obj/item/clothing/shoes/winterboots
+	loot3 = /obj/item/weapon/twohanded/spear
 
 
 /mob/living/simple_animal/hostile/skeleton/templar
@@ -80,11 +86,9 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	deathmessage = "The templar knight collaspes into a pile of bones, its gear clanging as it hits the ground!"
-	loot = list(/obj/item/clothing/head/helmet/knight/templar,
-				/obj/item/clothing/shoes/plate,
-				/obj/item/clothing/suit/armor/riot/knight/templar,
-				/obj/item/clothing/gloves/plate,
-				/obj/item/weapon/claymore/hog{name = "holy sword"})
+	loot = /obj/item/clothing/head/helmet/knight/templar
+	loot2 = /obj/item/clothing/suit/armor/riot/knight/templar
+	loot3 = /obj/item/weapon/claymore/hog{name = "holy sword"}
 
 /mob/living/simple_animal/hostile/skeleton/templar/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
@@ -98,7 +102,7 @@
 /mob/living/simple_animal/hostile/skeleton/ice
 	name = "ice skeleton"
 	desc = "A reanimated skeleton protected by a thick sheet of natural ice armor. Looks slow, though."
-	speed = 3
+	speed = 5
 	maxHealth = 75
 	health = 75
 	color = rgb(114,228,250)
