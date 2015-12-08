@@ -38,10 +38,8 @@
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		equip_wizard(wizard.current)
 		forge_wizard_objectives(wizard)
-		if(use_huds)
-			update_wiz_icons_added(wizard)
-		name_wizard(wizard.current)
 		greet_wizard(wizard)
+		name_wizard(wizard.current)
 	..()
 	return
 
@@ -113,6 +111,8 @@
 
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	if(use_huds)
+		update_wiz_icons_added(wizard)
 	if (you_are)
 		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
