@@ -37,11 +37,11 @@
 		stagedamage++
 		affected_mob.adjustToxLoss(stage*3) //should, normally, do about 45 toxin damage.
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
+	if(prob(45))
+		affected_mob.adjustStaminaLoss(stage*2)
 	..() //So we don't increase a stage before applying the stage damage.
 	switch(stage)
 		if(2)
-			if(prob(45))
-				affected_mob.adjustStaminaLoss(4)
 			if(prob(5))
 				affected_mob.emote("pale")
 		if(3)
