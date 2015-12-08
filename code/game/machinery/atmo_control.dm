@@ -64,9 +64,9 @@
 
 
 /obj/machinery/air_sensor/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/initialize()
 	set_frequency(frequency)
@@ -74,13 +74,13 @@
 /obj/machinery/air_sensor/New()
 	..()
 	SSair.atmos_machinery += src
-	if(radio_controller)
+	if(SSradio)
 		set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -102,7 +102,7 @@
 /obj/machinery/computer/general_air_control/New()
 	..()
 
-	if(radio_controller)
+	if(SSradio)
 		set_frequency(frequency)
 
 /obj/machinery/computer/general_air_control/attack_hand(mob/user)
@@ -178,14 +178,14 @@
 	return output
 
 /obj/machinery/computer/general_air_control/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/computer/general_air_control/initialize()
 	set_frequency(frequency)
@@ -222,8 +222,8 @@
 
 /obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)    //This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 	var/list/IO = list()
-	var/datum/radio_frequency/air_freq = radio_controller.return_frequency(1443)
-	var/datum/radio_frequency/gas_freq = radio_controller.return_frequency(1441)
+	var/datum/radio_frequency/air_freq = SSradio.return_frequency(1443)
+	var/datum/radio_frequency/gas_freq = SSradio.return_frequency(1441)
 	var/list/devices = air_freq.devices["_default"]
 	devices |= gas_freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
