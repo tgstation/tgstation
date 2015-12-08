@@ -1,0 +1,67 @@
+// main: nanoui.less
+
+@import "nanoui.config.less";
+
+// Links (and their various states.)
+.link(@color) {
+    &.active { .linkState(@color, @h: true); } // Links that are active have a hover highlight.
+    &.inactive { .linkState(@color); } // Links that are not clickable do not have a hover highlight.
+    &.pending { .linkState(@color, @p: true) } // Links that are pending darken.
+}
+.linkState(@color, @h: false, @p: false) {
+    &:hover when (@h = true) {
+        background: lighten(@color, @hover);
+    }
+}
+.linkState(@color, @h: false, @p: false) when (@p = true) {
+    background: darken(@color, @pending);
+}
+.linkState(@color, @h: false, @p: false) when (@p = false) {
+    background: @color;
+}
+
+// Colored Elements
+.color(@color) { // Explort a given color as a class.
+    &.@{color} {
+        color: @@color;
+    }
+}
+
+span {
+    .color(normal);
+    .color(good);
+    .color(average);
+    .color(bad);
+    .color(label);
+    .color(highlight);
+    .color(dark);
+}
+
+
+// Styled Elements
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+.fontReset {
+    color: @text;
+    font-size: @font-size;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+// General Helpers
+.hidden { display: none; }
+
+.clearBoth { clear: both; }
+.clearLeft { clear: left; }
+.clearRight { clear: right; }
+
+.floatNone { float: none; }
+.floatLeft { float: left; }
+.floatRight { float: right; }
+
+.alignTop { vertical-align: top; }
+.alignBottom { vertical-align: bottom; }
+.alignLeft { text-align: left; }
+.alignCenter { text-align: center; }
+.alignRight { text-align: right; }

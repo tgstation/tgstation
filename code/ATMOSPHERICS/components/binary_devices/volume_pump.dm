@@ -105,7 +105,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_pump.dot", name, 400, 100)
+		ui = new(user, src, ui_key, "atmos_pump", name, 400, 100)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/get_ui_data()

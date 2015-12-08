@@ -9,6 +9,10 @@
   * modified by neersighted
  **/
 
+// Debug Things
+#define USE_MIN 0
+#define USE_LESS 0
+
  /**
   * NanoUI datum:
   *
@@ -93,13 +97,13 @@
   * Add the assets required by all NanoUIs.
  **/
 /datum/nanoui/proc/add_common_assets()
-	add_script("nanoui.js")
-	add_script("nanoui.util.js")
-	add_script("nanoui.template.js")
-	add_script("nanoui.helpers.js")
-	add_script("nanoui.handlers.js")
+	add_script("nanoui")
+	add_script("nanoui.util")
+	add_script("nanoui.template")
+	add_script("nanoui.helpers")
+	add_script("nanoui.handlers")
 
-	add_stylesheet("nanoui.css")
+	add_stylesheet("nanoui")
 
  /**
   * private
@@ -209,13 +213,14 @@
  /**
   * public
   *
-  * Add a stylesheet to the NanoUI.
+  * Add a template to the NanoUI.
   * This must be called before the NanoUI is opened.
   *
-  * required file string The path of the stylesheet file to add.
+  * required key string The key used to reference this file in the frontend.
+  * required file string The path of the template file to add.
  **/
-/datum/nanoui/proc/add_stylesheet(file)
-	stylesheets.Add(file)
+/datum/nanoui/proc/add_template(key, file)
+	templates[key] = "[file].dot"
 
  /**
   * public
@@ -226,25 +231,27 @@
   * required file string The path of the script file to add.
  **/
 /datum/nanoui/proc/add_script(file)
-	scripts.Add(file)
+	scripts.Add("[file].js")
 
  /**
   * public
   *
-  * Add a template to the NanoUI.
+  * Add a stylesheet to the NanoUI.
   * This must be called before the NanoUI is opened.
   *
-  * required key string The key used to reference this file in the frontend.
-  * required file string The path of the template file to add.
+  * required file string The path of the stylesheet file to add.
  **/
-/datum/nanoui/proc/add_template(key, filename)
-	templates[key] = filename
+/datum/nanoui/proc/add_stylesheet(file)
+	if(USE_LESS)
+		stylesheets.Add("[file].less")
+	else
+		stylesheets.Add("[file].css")
 
  /**
   * public
   *
   * Set the layout for this NanoUI.
-  * This loads two files during get_html(): 'layout_[layout].dot' and 'layout_[layout].css'.
+  * This loads custom layout styles and templates for this NanoUI.
   *
   * required layout_key string The new layout key.
  **/
@@ -290,8 +297,18 @@
  **/
 /datum/nanoui/proc/get_html()
 	// Add files based on the layout key.
-	add_template("layout", "layout_[layout].dot")
-	add_stylesheet("layout_[layout].css")
+	add_template("layout", "layout_[layout]")
+	add_stylesheet("layout_[layout]")
+
+	// Some string hacks for .less/.min.js.
+	var/less = ""
+	var/less_html = ""
+	var/min = ""
+	if(USE_LESS)
+		less = "/less"
+		less_html = "<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.[min]js'></script>"
+	if(USE_MIN)
+		min = "min."
 
 	// Generate <script> and <link> tags.
 	var/script_html = ""
@@ -299,7 +316,7 @@
 		script_html += "<script type='text/javascript' src='[script]'></script>"
 	var/stylesheet_html = ""
 	for (var/stylesheet in stylesheets)
-		stylesheet_html += "<link rel='stylesheet' type='text/css' href='[stylesheet]' />"
+		stylesheet_html += "<link rel='stylesheet[less]' type='text/css' href='[stylesheet]' />"
 
 	// Generate template JSON.
 	var/template_data_json = "{}"
@@ -326,20 +343,21 @@
 				}
 			};
 		</script>
+		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.[min]css' />
+		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.[min]css' />
+		[stylesheet_html]
 		<!--\[if IE 8]>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.[min]js'></script>
 		<script type='text/javascript' src='https//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.6/ie8.js'></script>
 		<!\[endif]-->
 		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dom4/1.5.2/dom4.js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.min.js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.[min]js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.[min]js'></script>
 		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/eddy/0.7.0/eddy.dom.js'></script>
-		<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.min.js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js'></script>
+		<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.[min]js'></script>
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.[min]js'></script>
+		[less_html]
 		[script_html]
-		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css' />
-		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
-		[stylesheet_html]
 	</head>
 	<body id='body' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
 		<div id='layout'></div>

@@ -227,6 +227,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/nanoui
 	var/list/common = list()
+	var/list/uncommon = list()
 
 	var/list/common_dirs = list(
 		"nano/styles/",
@@ -252,9 +253,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
-					register_asset(filename, fcopy_rsc(path + filename))
+					uncommon[filename] = fcopy_rsc(path + filename)
+					register_asset(filename, uncommon[filename])
 
 /datum/asset/nanoui/send(client, uncommon)
+	if(isnull(uncommon))
+		uncommon = src.uncommon
 	if(!islist(uncommon))
 		uncommon = list(uncommon)
 

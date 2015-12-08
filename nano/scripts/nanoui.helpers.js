@@ -1,32 +1,32 @@
-/*jslint browser devel this*/
-/*global nanoui*/
-
 nanoui.helpers = (function (nanoui) {
     "use strict";
     var helpers = {};
 
 
     helpers.link = function (text, icon, parameters, status, elementClass, elementId) {
-        var iconHtml = "";
-        var iconClass = "noIcon";
-        if (icon !== "undefined" && icon) {
-            iconHtml = '<i class="pendingIcon fa fa-fw fa-spinner fa-pulse"></i><i class="fa fa-fw fa-' + icon + '"></i>';
-            iconClass = "hasIcon";
+        var context = {};
+
+        context.text = text || "";
+        context.icon = "";
+        context.parameters = nanoui.util.href(parameters);
+        context.status = status || "";
+        context.elementClass = elementClass || "normal";
+        context.elementId = elementId || "";
+
+        if (nanoui.util.yes(icon)) {
+            context.icon = nanoui.util.format("<i class='pending fa fa-fw fa-spinner fa-pulse'></i><i class='main fa fa-fw fa-#{icon}'></i>", {icon: icon});
+            context.elementClass += ' iconed';
         }
-        if (elementClass === "undefined" || !elementClass) {
-            elementClass = "link";
+
+        if (nanoui.util.yes(status)) {
+            return nanoui.util.format("<div unselectable='on' id='#{elementId}' class='link inactive #{status} #{elementClass}'>#{icon}#{text}</div>", context);
         }
-        var elementIdHtml = "";
-        if (elementId !== "undefined" && elementId) {
-            elementIdHtml = 'id="' + elementId + '"';
-        }
-        if (status !== "undefined" && status) {
-            return '<div unselectable="on" class="link ' + iconClass + ' ' + elementClass + ' ' + status + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
-        }
-        return '<div unselectable="on" class="linkActive ' + iconClass + ' ' + elementClass + '" data-href="' + nanoui.util.href(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
+        return nanoui.util.format("<div unselectable='on' id='#{elementId}' class='link active #{elementClass}' data-href='#{parameters}'>#{icon}#{text}</div>", context);
     };
 
-    helpers.displayBar = function (value, rangeMin, rangeMax, styleClass, showText) {
+    helpers.bar = function (value, rangeMin, rangeMax, styleClass, barText) {
+        var context = {};
+
         if (rangeMin < rangeMax) {
             if (value < rangeMin) {
                 value = rangeMin;
@@ -40,22 +40,21 @@ nanoui.helpers = (function (nanoui) {
                 value = rangeMax;
             }
         }
-        if (styleClass === "undefined" || !styleClass) {
-            styleClass = "";
-        }
-        if (showText === "undefined" || !showText) {
-            showText = "";
-        }
-        var percentage = Math.round((value - rangeMin) / (rangeMax - rangeMin) * 100);
-        return '<div class="displayBar ' + styleClass + '"><div class="displayBarFill ' + styleClass + '" style="width: ' + percentage + '%;"></div><div class="displayBarText ' + styleClass + '">' + showText + '</div></div>';
+
+        context.styleClass = styleClass || "";
+        context.barText = barText || "";
+        context.percentage = Math.round((value - rangeMin) / (rangeMax - rangeMin) * 100);
+
+        return nanoui.util.format("<div class='bar'><div class='barFill #{styleClass}' style='width: #{percentage}%;'></div><div class='barText #{styleClass}'>#{barText}</div></div>", context);
     };
 
     helpers.round = function (number) {
         return Math.round(number);
     };
 
-    helpers.fixed = function (number) {
-        return Math.round(number * 10) / 10;
+    helpers.fixed = function (number, decimals) {
+        if (nanoui.util.no(decimals)) { decimals = 1; }
+        return Number(Math.round(number + 'e'+decimals) + 'e-'+decimals);
     };
 
     helpers.floor = function (number) {

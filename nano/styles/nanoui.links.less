@@ -1,0 +1,43 @@
+// main: nanoui.less
+
+@import "nanoui.config.less";
+@import "nanoui.util.less";
+
+
+// Basic Link (Button) Element
+.link {
+    height: 16px;
+    min-width: 16px; // So buttons are square at the smallest size.
+    display: inline-block;
+
+    // Reset font settings.
+    &:extend(.fontReset);
+
+    margin: 2px;
+    padding: 0 4px;
+    border: 1px solid @link-border;
+
+	cursor: default;
+
+	&.iconed { padding: 0px 4px 4px 0px; }
+    i { margin: 4px 2px 0 2px; }
+    i.main { display: inline-block; }
+    i.pending { display: none; }
+    &.pending {
+        i.main { display: none; }
+        i.pending { display: inline-block; }
+    }
+
+    // Genearte link states.
+    &.normal { .link(@normal); }
+    &.selected { .link(@selected); }
+    &.caution { .link(@caution); }
+	&.danger { .link(@danger); }
+	&.disabled { .link(@disabled); }
+
+    &[disabled] {
+        pointer-events: none;
+        background-color: @disabled !important;
+        border-color: @link-border-dark !important;
+    }
+}

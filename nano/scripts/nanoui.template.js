@@ -1,6 +1,3 @@
-/*jslint browser devel this*/
-/*global nanoui*/
-
 nanoui.template = (function (nanoui, doT) {
     "use strict";
     var template = {};

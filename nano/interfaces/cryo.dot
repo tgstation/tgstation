@@ -43,9 +43,9 @@
 			</div>
 			<div class="itemContent">
 				{{? data.occupant.health >= 0}}
-					{{:helper.displayBar(data.occupant.health, 0, data.occupant.maxHealth, 'good')}}
+					{{:helper.bar(data.occupant.health, 0, data.occupant.maxHealth, 'good')}}
 				{{??}}
-					{{:helper.displayBar(data.occupant.health, 0, data.occupant.minHealth, 'average')}}
+					{{:helper.bar(data.occupant.health, 0, data.occupant.minHealth, 'average')}}
 				{{?}}
 				{{:helper.round(data.occupant.health)}}
 			</div>
@@ -55,7 +55,7 @@
 				Brute:
 			</div>
 			<div class="itemContent">
-				{{:helper.displayBar(data.occupant.bruteLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{:helper.bar(data.occupant.bruteLoss, 0, data.occupant.maxHealth, 'bad')}}
 				{{:helper.round(data.occupant.bruteLoss)}}
 			</div>
 		</div>
@@ -64,7 +64,7 @@
 				Respiratory:
 			</div>
 			<div class="itemContent">
-				{{:helper.displayBar(data.occupant.oxyLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{:helper.bar(data.occupant.oxyLoss, 0, data.occupant.maxHealth, 'bad')}}
 				{{:helper.round(data.occupant.oxyLoss)}}
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 				Toxin:
 			</div>
 			<div class="itemContent">
-				{{:helper.displayBar(data.occupant.toxLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{:helper.bar(data.occupant.toxLoss, 0, data.occupant.maxHealth, 'bad')}}
 				{{:helper.round(data.occupant.toxLoss)}}
 			</div>
 		</div>
@@ -82,7 +82,7 @@
 				Burn:
 			</div>
 			<div class="itemContent">
-				{{:helper.displayBar(data.occupant.fireLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{:helper.bar(data.occupant.fireLoss, 0, data.occupant.maxHealth, 'bad')}}
 				{{:helper.round(data.occupant.fireLoss)}}
 			</div>
 		</div>
@@ -138,7 +138,7 @@
 			Contents:
 		</div>
 		<div class="itemContent">
-			{{? data.isBeakerLoaded}}		
+			{{? data.isBeakerLoaded}}
 				{{? data.beakerContents.length}}
 					{{~ data.beakerContents :reagent:i}}
 						<span class="highlight">{{:reagent.volume}} units of {{:reagent.name}}</span><br />

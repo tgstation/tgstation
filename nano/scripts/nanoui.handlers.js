@@ -1,6 +1,3 @@
-/*jslint browser devel this*/
-/*global nanoui*/
-
 nanoui.handlers = (function (nanoui) {
     "use strict";
 
@@ -24,26 +21,19 @@ nanoui.handlers = (function (nanoui) {
     };
 
     var updateLinks = function (data) {
-        var activeLinks = document.queryAll('.linkActive');
-        var pendingLinks = document.queryAll('.linkPending');
+        var links = document.queryAll('.link');
+        var pendingLinks = document.queryAll('.link.pending');
 
-        switch (data.config.status) {
-        case 2:
-            activeLinks.forEach(function (element) {
-                element.classList.remove('inactive');
+        if (data.config.status === 2) {
+            links.forEach(function (element) {
+                element.removeAttribute('disabled');
             });
             pendingLinks.forEach(function (element) {
-                element.classList.remove('linkPending');
+                element.classList.remove('pending');
             });
-            break;
-        case 1:
-            activeLinks.forEach(function (element) {
-                element.classList.add('inactive');
-            });
-            break;
-        default:
-            activeLinks.forEach(function (element) {
-                element.classList.add('inactive');
+        } else {
+            links.forEach(function (element) {
+                element.setAttribute('disabled', 'true');
             });
         }
     };
@@ -55,14 +45,15 @@ nanoui.handlers = (function (nanoui) {
             var href = this.data('href');
             if (href !== null) {
                 if (data.config.status === 2) {
-                    this.classList.add('linkPending');
+                    this.classList.remove('active');
+                    this.classList.add('pending');
                 }
 
                 location.href = href;
             }
         };
 
-        document.queryAll('.linkActive').forEach(function (element) {
+        document.queryAll('.link.active').forEach(function (element) {
             element.on('click', onClick);
         });
     };

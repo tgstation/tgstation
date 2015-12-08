@@ -5,7 +5,7 @@
 			Energy:
 		</div>
 		<div class="itemContent">
-			{{:helper.displayBar(data.energy, 0, data.maxEnergy, 'good')}}
+			{{:helper.bar(data.energy, 0, data.maxEnergy, 'good')}}
 			{{:data.energy}} Units
 		</div>
 	</div>

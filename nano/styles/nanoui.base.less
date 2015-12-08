@@ -1,0 +1,52 @@
+// main: nanoui.less
+
+@import "nanoui.config.less";
+
+body {
+    padding: 0;
+    margin: 0;
+
+    font-family: @font;
+    font-size: @font-size;
+    line-height: 170%;
+    color: @text;
+
+    background: @background;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 6px 0 6px 0;
+    clear: both;
+}
+h1 { font-size: @font-size + 6px; }
+h2 { font-size: @font-size + 4px; }
+h3 { font-size: @font-size + 2px; }
+
+hr {
+    background-color: @normal;
+    height: 1px;
+    border: none;
+}
+
+ul {
+    padding: 4px 0 0 10px;
+    margin: 0;
+    list-style-type: none;
+
+    li {
+        padding: 0 0 2px 0;
+    }
+}
+
+noscript {
+    margin: 33% auto;
+    width: 50%;
+    height: 33%;
+
+    background: #ffffff;
+    border: 2px solid #ff0000;
+    z-index: 9999;
+    padding: 0px 10px;
+    text-align: center;
+}

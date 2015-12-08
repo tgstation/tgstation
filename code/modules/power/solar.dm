@@ -372,7 +372,7 @@
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "solar_control.dot", name, 490, 395)
+		ui = new(user, src, ui_key, "solar_control", name, 490, 395)
 		ui.open()
 
 /obj/machinery/power/solar_control/get_ui_data()

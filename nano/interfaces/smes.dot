@@ -5,7 +5,7 @@
 			Stored Energy:
 		</div>
 		<div class="itemContent">
-			{{:helper.displayBar(data.capacityPercent, 0, 100, data.capacityPercent >= 50 ? 'good' : data.capacityPercent >= 15 ? 'average' : 'bad')}}
+			{{:helper.bar(data.capacityPercent, 0, 100, data.capacityPercent >= 50 ? 'good' : data.capacityPercent >= 15 ? 'average' : 'bad')}}
 			<div class="statusValue">
 				{{:helper.round(data.capacityPercent)}}%
 			</div>
@@ -36,14 +36,14 @@
 			Input Setting:
 		</div>
 		<div class="itemContent">
-			{{:helper.displayBar(data.inputLevel, 0, data.inputLevelMax)}}
+			{{:helper.bar(data.inputLevel, 0, data.inputLevelMax)}}
 			&nbsp;{{:data.inputLevel}} W
 			<br class="clearBoth" />
-			{{:helper.link('', 'seek-start', {'set_input_level': '0'}, data.inputLevel ? null : 'selected')}}
-			{{:helper.link('', 'triangle-1-w', {'set_input_level': 'minus'}, data.inputLevel ? null : 'disabled')}}
+			{{:helper.link('', 'fast-backward', {'set_input_level': '0'}, data.inputLevel ? null : 'selected')}}
+			{{:helper.link('', 'backward', {'set_input_level': 'minus'}, data.inputLevel ? null : 'disabled')}}
 			{{:helper.link('Set', 'pencil', {'set_input_level': 'custom'}, null)}}
-			{{:helper.link('', 'triangle-1-e', {'set_input_level': 'plus'}, data.inputLevel == data.inputLevelMax ? 'disabled' : null)}}
-			{{:helper.link('', 'seek-end', {'set_input_level': 'max'}, data.inputLevel == data.inputLevelMax ? 'selected' : null)}}
+			{{:helper.link('', 'forward', {'set_input_level': 'plus'}, data.inputLevel == data.inputLevelMax ? 'disabled' : null)}}
+			{{:helper.link('', 'fast-forward', {'set_input_level': 'max'}, data.inputLevel == data.inputLevelMax ? 'selected' : null)}}
 		</div>
 	</div>
 	<div class="item">
@@ -62,7 +62,7 @@
 			Charge Mode:
 		</div>
 		<div class="itemContent">
-			{{:helper.link('On', 'power', {'output_attempt': 1}, data.outputAttempt ? 'selected' : null)}}
+			{{:helper.link('On', 'power-off', {'output_attempt': 1}, data.outputAttempt ? 'selected' : null)}}
 			{{:helper.link('Off', 'close', {'output_attempt': 0}, data.outputAttempt ? null : 'selected')}}
 			&nbsp;
 			{{? data.outputting}}
@@ -79,14 +79,14 @@
 			Output Setting:
 		</div>
 		<div class="itemContent">
-			{{:helper.displayBar(data.outputLevel, 0, data.outputLevelMax)}}
+			{{:helper.bar(data.outputLevel, 0, data.outputLevelMax)}}
 			&nbsp;{{:data.outputLevel}} W
 			<br class="clearBoth" />
-			{{:helper.link('', 'seek-start', {'set_output_level': '0'}, data.outputLevel ? null : 'selected')}}
-			{{:helper.link('', 'triangle-1-w', {'set_output_level': 'minus'}, data.outputLevel ? null : 'disabled')}}
+			{{:helper.link('', 'fast-backward', {'set_output_level': '0'}, data.outputLevel ? null : 'selected')}}
+			{{:helper.link('', 'backward', {'set_output_level': 'minus'}, data.outputLevel ? null : 'disabled')}}
 			{{:helper.link('Set', 'pencil', {'set_output_level': 'custom'}, null)}}
-			{{:helper.link('', 'triangle-1-e', {'set_output_level': 'plus'}, data.outputLevel == data.outputLevelMax ? 'disabled' : null)}}
-			{{:helper.link('', 'seek-end', {'set_output_level': 'max'}, data.outputLevel == data.outputLevelMax ? 'selected' : null)}}
+			{{:helper.link('', 'forward', {'set_output_level': 'plus'}, data.outputLevel == data.outputLevelMax ? 'disabled' : null)}}
+			{{:helper.link('', 'fast-forward', {'set_output_level': 'max'}, data.outputLevel == data.outputLevelMax ? 'selected' : null)}}
 		</div>
 	</div>
 	<div class="item">

@@ -54,10 +54,10 @@
 			Power Cell:
 		</div>
 		{{? data.powerCellStatus != null}}
-			<div class="itemContent" style="width: 60px">		
+			{{:helper.bar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
+			<div class="itemContent" style="width: 60px">
 				{{:helper.round(data.powerCellStatus*10)/10}}%
-			</div>	
-			{{:helper.displayBar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad')}}
+			</div>
 		{{??}}
 			<div class="itemContent">
 				<span class='bad'>Power cell removed.</span>
@@ -72,21 +72,21 @@
 			<div class="itemContent">
 				{{? data.locked && !data.siliconUser}}
 					{{? data.chargeMode}}
-						<span class='good'>Auto</span>
+						<span class='bold good'>Auto</span>
 					{{??}}
-						<span class='bad'>Off</span>
-					{{?}}				
+						<span class='bold bad'>Off</span>
+					{{?}}
 				{{??}}
 					{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
 					{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
 				{{?}}
 				&nbsp;
 				{{? data.chargingStatus > 1}}
-					[<span class='good'>Fully Charged</span>]
+					[<span class='bold good'>Fully Charged</span>]
 				{{?? data.chargingStatus == 1}}
-					[<span class='average'>Charging</span>]
+					[<span class='bold average'>Charging</span>]
 				{{??}}
-					[<span class='bad'>Not Charging</span>]
+					[<span class='bold bad'>Not Charging</span>]
 				{{?}}
 			</div>
 		</div>
@@ -104,9 +104,9 @@
 			</div>
 			<div class="itemContent" style="width: 105px">
 				{{? channel.status <= 1}}
-					<span class='bad'>Off</span>
+					<span class='bold bad'>Off</span>
 				{{?? channel.status >= 2}}
-					<span class='good'>On</span>
+					<span class='bold good'>On</span>
 				{{?}}
 				&nbsp;
 				{{? channel.status == 1 || channel.status == 3}}

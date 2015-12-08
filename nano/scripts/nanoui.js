@@ -1,6 +1,3 @@
-/*jslint browser devel this*/
-/*global nanoui*/
-
 var nanoui = (function () {
     "use strict";
     var nanoui = {};
@@ -18,7 +15,7 @@ var nanoui = (function () {
         if (!_initialized) {
             data = _initialData;
         }
-    
+
         nanoui.emit('beforeRender', data);
         try {
 			if (!_layoutRendered || data.config.autoUpdateLayout) {
@@ -56,7 +53,7 @@ var nanoui = (function () {
         if (_initialized) {
             nanoui.emit('render', _data);
 		}
-        
+
         nanoui.emit('updateReceived');
     };
 

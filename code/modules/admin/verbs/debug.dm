@@ -791,3 +791,6 @@ var/global/list/g_fancy_list_of_types = null
 
 	// Clear the user's cache so they get resent.
 	usr.client.cache = list()
+
+	// Send the assets.
+	assets.send(usr.client)

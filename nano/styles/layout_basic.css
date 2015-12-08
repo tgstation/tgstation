@@ -1,0 +1,7 @@
+body {
+  background: #272727 url(background.png) 50% 0 repeat-x;
+}
+#content {
+  clear: both;
+  padding: 8px;
+}

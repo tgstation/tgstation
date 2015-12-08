@@ -1,0 +1,47 @@
+// out: layout_default.css
+
+@import "nanoui.config.less";
+
+body {
+    background: @background url(background_nanotrasen.png) 50% 0 repeat-x;
+}
+
+#title {
+    position: relative;
+    height: 30px;
+}
+
+#statusicon {
+    position: absolute;
+    top: 4px;
+    left: 12px;
+}
+
+#titletext {
+    position: absolute;
+    top: 6px;
+    left: 44px;
+    width: 66%;
+    overflow: hidden;
+    color: #E9C183;
+    font-size: 16px;
+}
+
+#titlelogo {
+    position: absolute;
+    top: 4px;
+    right: 12px;
+
+    width: 42px;
+    height: 24px;
+    background: url(logo_nanotrasen.png) 50% 50% no-repeat;
+}
+
+#content {
+    padding: 8px;
+    &:extend(.clearBoth);
+}
+
+#loading {
+    &:extend(.notice);
+}

@@ -2,13 +2,13 @@
 	<div class="noticePlaceholder">The regulator is connected to a mask.</div>
 {{??}}
 	<div class="notice">The regulator is not connected to a mask.</div>
-{{?}}	
+{{?}}
 <div class="item">
 	<div class="itemLabel">
 		Tank Pressure:
 	</div>
 	<div class="itemContent">
-		{{:helper.displayBar(data.tankPressure, 0, 1013, (data.tankPressure > 200) ? 'good' : ((data.tankPressure > 100) ? 'average' : 'bad'))}}
+		{{:helper.bar(data.tankPressure, 0, 1013, (data.tankPressure > 200) ? 'good' : ((data.tankPressure > 100) ? 'average' : 'bad'))}}
 		{{:data.tankPressure}} kPa
 	</div>
 </div>
@@ -17,7 +17,7 @@
 		Release Pressure:
 	</div>
 	<div class="itemContent">
-		{{:helper.displayBar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
+		{{:helper.bar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure)}}
 		{{:data.releasePressure}} kPa
 	</div>
 </div>
