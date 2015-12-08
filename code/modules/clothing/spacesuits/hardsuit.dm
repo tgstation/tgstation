@@ -486,13 +486,14 @@
 ///////////////Capture the Flag////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf
-	name "red shielded hardsuit"
+	name = "red shielded hardsuit"
 	desc = "Standard issue hardsuit for playing capture the flag."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
@@ -501,3 +502,4 @@
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
