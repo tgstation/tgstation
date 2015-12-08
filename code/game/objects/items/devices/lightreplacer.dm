@@ -541,7 +541,7 @@
 		if(cardboard_stor <= 0)
 			if(usr) to_chat(usr, "<span class='warning'>\The [src] is out of cardboard!</span>")
 			return 1
-		switch[href_list["fold"]]
+		switch(href_list["fold"])
 			if("supply")
 				if(!supply) //Topic is technically asynchronous, I believe, so this sanity is a good idea
 					supply = new(src)
