@@ -1,5 +1,0 @@
-author: Exxion
-delete-after: True
-changes:
-  - rscadd: Light replacer has been completely overhauled. It now actually contains storage for lights and storage for waste lights, which it automatically picks up. It can be loaded the same way as before or by removing its box and replacing that. It ONLY accepts light bulb/tube boxes. The rest should be self-explanatory from its menu (accessed by clicking it in your hand).
-  - tweak: The material costs of most types of lights have been changed slightly. Standard tubes are the same, bulbs are half as much, and the HE variants require three times more glass (but not iron) than their standard counterparts. Also, the large tube and fire bulb were adjusted, but you almost never see them anyway. Even the most expensive light is still a small fraction of a sheet of each, though.
