@@ -224,8 +224,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 var/global/list/datum/stack_recipe/cardboard_recipes = list (
 	new/datum/stack_recipe("box",				/obj/item/weapon/storage/box							),
 	new/datum/stack_recipe("large box",			/obj/item/weapon/storage/box/large,					4	),
-	new/datum/stack_recipe("light tubes box",	/obj/item/weapon/storage/box/lights/tubes				),
-	new/datum/stack_recipe("light bulbs box",	/obj/item/weapon/storage/box/lights/bulbs				),
+	new/datum/stack_recipe("lights box",		/obj/item/weapon/storage/box/lights						),
 	new/datum/stack_recipe("mouse traps box",	/obj/item/weapon/storage/box/mousetraps					),
 	new/datum/stack_recipe("candle box",		/obj/item/weapon/storage/fancy/candle_box/empty			),
 	new/datum/stack_recipe("crayon box",		/obj/item/weapon/storage/fancy/crayons/empty			),

@@ -59,6 +59,8 @@
 	var/glass_stor_max = 5 * CC_PER_SHEET_GLASS //Max glass it can hold
 	var/prod_quality = 30 //Starting switchcount for lights this builds out of glass
 	var/prod_eff = 10 //How many times more glass it uses to build lights than would an autolathe
+	var/cardboard_stor //How many sheets of cardboard it contains for quick-assembling boxes
+	var/cardboard_stor_max = 5
 	var/emagged = 0
 	var/light_types_glass = list() //An associative list with the starting glass amount for each type of light that is fabricated.
 								   //Populated with a new entry each time a new type of light is made by the replacer for the first time in a given round.
@@ -69,6 +71,7 @@
 	glass_stor_max = 10 * CC_PER_SHEET_GLASS //Twice the capacity of the standard version. It also starts full, but this is done in New().
 	prod_quality = 0 //Just as good as lights from a box/autolathe
 	prod_eff = 5 //Half the glass per light as the standard version
+	cardboard_stor_max = 0 //No removing or building new boxes for borgs.
 	var/recycle_eff_broken = 0.5 //Proportion of glass returned by the built-in recycler.
 	var/recycle_eff_burned = 0.9 //Proportion of glass returned by the built-in recycler.
 	var/recycle_eff_ok = 1       //Proportion of glass returned by the built-in recycler. Note that this does not allow infinite fabrication and recycling due to production losses.
@@ -77,6 +80,7 @@
 /obj/item/device/lightreplacer/loaded/New() //Contains only a waste box. Exists mainly just as a parent of the other loaded ones, but I guess you can use it.
 	..()
 	waste = new(src)
+	cardboard_stor = cardboard_stor_max //Might as well.
 
 /obj/item/device/lightreplacer/loaded/mixed/New() //Contains a box of normal mixed lights plus a waste box.
 	..()
@@ -163,7 +167,14 @@
 			else
 				to_chat(user, "<span class='warning'>\The [src] cannot accept any of the lights in \the [lsource]!</span>")
 			return
-		
+
+	if(istype(W, /obj/item/stack/sheet/cardboard))
+		if(cardboard_stor >= cardboard_stor_max)
+			to_chat(user, "<span class='warning'>\The [src] cannot hold any more cardboard!</span>")
+			return
+		cardboard_stor++
+		to_chat(user, "<span class='notice'>You insert a cardboard sheet into /the [src].</span>")
+		return
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	var/dat = {"<TITLE>Light Replacer Interface</TITLE>
@@ -204,7 +215,7 @@
 		dat += "<br><b><a href='?src=\ref[src];eject=supply'>Eject Supply Container</a></b>"
 
 	else
-		dat += "<h3>No supply container inserted</h3>"
+		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a>"
 
 	if(supply || waste)
 		dat += "<a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
@@ -216,7 +227,7 @@
 		<b><a href='?src=\ref[src];eject=waste'>Eject Waste Container</a></b>
 		"}
 	else
-		dat += "<br><br><br><h3>No waste container inserted</h3>"
+		dat += "<br><br><br><h3>No waste container inserted</h3><br><a href='?src=\ref[src];fold=waste'>Construct Waste Box</a>"
 
 	var/datum/browser/popup = new(user, "lightreplacer", "", nref = src)
 	popup.set_content(dat)
@@ -525,6 +536,28 @@
 		supply = swapholder
 		if(usr) attack_self(usr)
 		return 1
+
+	if(href_list["fold"])
+		if(cardboard_stor <= 0)
+			if(usr) to_chat(usr, "<span class='warning'>\The [src] is out of cardboard!</span>")
+			return 1
+		switch[href_list["fold"]]
+			if("supply")
+				if(!supply) //Topic is technically asynchronous, I believe, so this sanity is a good idea
+					supply = new(src)
+					cardboard_stor--
+					if(usr)
+						to_chat(usr, "<span class='notice'>\The [src] constructs a new supply container.</span>")
+						attack_hand(usr)
+					return 1
+			if("waste")
+				if(!waste) //Topic is technically asynchronous, I believe, so this sanity is a good idea
+					waste = new(src)
+					cardboard_stor--
+					if(usr)
+						to_chat(usr, "<span class='notice'>\The [src] constructs a new waste container.</span>")
+						attack_hand(usr)
+					return 1
 
 /obj/item/device/lightreplacer/borg/Topic(href, href_list)
 	if(..()) return 1
