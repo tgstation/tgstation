@@ -303,6 +303,7 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	gender = PLURAL
 
 /turf/simulated/floor/plating/snow/concrete
 	name = "concrete"
