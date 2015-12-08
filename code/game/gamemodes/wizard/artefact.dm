@@ -599,3 +599,72 @@ var/global/list/multiverse = list()
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
+
+
+/obj/item/clothing/suit/wizrobe/magusred/fate
+	name = "armour of fate"
+	desc = "Feeling lucky?"
+
+
+/obj/item/clothing/suit/wizrobe/magusred/fate/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	var/fate = rand(1, 20)
+	owner.visible_message("<span class='notice'>[attack_text] triggers the armour of fate! It rolls a [fate]!</span>")
+	switch(fate)
+		if(1)
+			owner.gib()
+		if(2)
+			owner.death()
+		if(3)
+			owner.adjustBruteLoss(30)
+			return 0
+		if(4)
+			for(var/mob/living/L in range(6, owner))
+				if(!owner)
+					L.revive()
+			return 0
+		if(5)
+			for(var/obj/item/W in owner)
+				if(!owner.unEquip(W))
+					qdel(W)
+					owner.regenerate_icons()
+			return 0
+		if(6)
+			return 0
+
+		if(7)
+			return 0
+		if(8)
+			return 0
+		if(9)
+			return 0
+		if(10)
+			return 0
+		if(11)
+			return 0
+		if(12)
+			return 0
+		if(13)
+			return 0
+		if(14)
+			return 0
+		if(15)
+			return 0
+		if(16)
+			return 0
+		if(17)
+			return 0
+
+		if(18)
+			owner.revive()
+			return 1
+
+		if(19)
+			for(var/mob/living/L in range(6, owner))
+				if(!owner)
+					L.death()
+					return 1
+		if(20)
+			for(var/mob/living/L in range(6, owner))
+				if(!owner)
+					L.gib()
+			return 1
