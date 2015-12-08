@@ -332,7 +332,7 @@
 //wedding stuff
 
 /obj/item/clothing/under/wedding/bride_orange
-	name = "white wedding dress"
+	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	_color = "bride_orange"
@@ -360,7 +360,7 @@
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_white
-	name = "orange wedding dress"
+	name = "white wedding dress"
 	desc = "A white wedding gown made from the finest silk."
 	icon_state = "bride_white"
 	_color = "bride_white"
