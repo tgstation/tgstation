@@ -179,7 +179,7 @@
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	var/dat = {"<TITLE>Light Replacer Interface</TITLE>
 
-	Glass storage: [glass_stor]/[glass_stor_max]<br>"}
+	Glass storage: [glass_stor]/[glass_stor_max]<br>Cardboard Sheets: [cardboard_stor]/[cardboard_stor_max]<br>"}
 
 	if(supply)
 		dat += {"<a href='?src=\ref[src];build=tube'>Fabricate Tube</a>
