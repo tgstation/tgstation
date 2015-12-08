@@ -1,0 +1,8 @@
+author: Joan
+delete-after: True
+changes: 
+  - experiment: "Revenants can no longer move through walls and windows while revealed, though they can move through tables, plastic flaps, mobs, and other similarly thin objects."
+  - tweak: "Defile now reveals for 4 seconds, from 8."
+  - tweak: "Overload lights now reveals for 10 seconds, from 8."
+  - tweak: "Blight now reveals for 6 seconds, from 8."
+  - rscadd: "Blight has a higher chance of applying stamina damage to the infected."
