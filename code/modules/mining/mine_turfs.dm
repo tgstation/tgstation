@@ -655,6 +655,9 @@ var/global/list/rockTurfEdgeCache
 	smooth = SMOOTH_TRUE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+	var/drop_x = 1
+	var/drop_y = 1
+	var/drop_z = 1
 
 
 /turf/simulated/chasm/Entered(atom/movable/AM)
@@ -665,16 +668,20 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/chasm/proc/drop(atom/movable/AM)
 	visible_message("[AM] falls into [src]!")
-	if(z+1 > world.maxz)
-		qdel(AM)
-	else
-		AM.Move(locate(src.x, src.y, src.z+1))
-		AM.visible_message("[AM] falls from above!")
-		if(istype(AM, /mob/living))
-			var/mob/living/L = AM
-			L.adjustBruteLoss(30)
+	AM.Move(locate(drop_x, drop_y, drop_z))
+	AM.visible_message("[AM] falls from above!")
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.adjustBruteLoss(30)
 
 
+
+/turf/simulated/chasm/straight_down/New()
+	..()
+	drop_x = x
+	drop_y = y
+	if(z+1 <= world.maxz)
+		drop_z = z+1
 
 
 #undef NORTH_EDGING
