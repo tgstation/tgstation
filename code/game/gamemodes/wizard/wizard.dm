@@ -38,10 +38,10 @@
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		equip_wizard(wizard.current)
 		forge_wizard_objectives(wizard)
-		name_wizard(wizard.current)
-		greet_wizard(wizard)
 		if(use_huds)
 			update_wiz_icons_added(wizard)
+		name_wizard(wizard.current)
+		greet_wizard(wizard)
 	..()
 	return
 
@@ -276,7 +276,6 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
-
 
 /datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
