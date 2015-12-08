@@ -217,7 +217,7 @@
 		dat += "<br><b><a href='?src=\ref[src];eject=supply'>Eject Supply Container</a></b>"
 
 	else
-		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a>"
+		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a><br><br>"
 
 	if(supply || waste)
 		dat += "<a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
