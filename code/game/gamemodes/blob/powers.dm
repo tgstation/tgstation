@@ -205,7 +205,7 @@
 	qdel(N)
 	if(ticker && ticker.mode.name == "blob")
 		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount = initial(BL.blobwincount) * 2
+		BL.blobwincount += initial(BL.blobwincount) //Increase the victory condition by the set amount
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
