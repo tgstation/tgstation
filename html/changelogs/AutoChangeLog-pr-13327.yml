@@ -1,7 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "The blocking system has been completely overhauled. Any held item, exosuit, or jumpsuit can now have a chance to block, or a custom on hit effect. Different shields can now have different block chances."
-  - rscadd: "The clowns jumpsuit now honks when you beat the owner."
-  - rscadd: "There is a new (admin only for now) suit of reactive armour that ignites attackers instead of warping you."
-  - rscadd: "Shields will no longer block hugs. Give peace a chance."

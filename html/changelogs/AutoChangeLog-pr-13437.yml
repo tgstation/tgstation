@@ -1,5 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - tweak: "MC tab reworked, more items made available."
-  - rscadd: "Admins can now click entries in the MC tab to debug."
