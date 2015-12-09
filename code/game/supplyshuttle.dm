@@ -522,6 +522,7 @@ var/list/mechtoys = list(
 		O.orderedby = idname
 		O.account = account
 		supply_shuttle.requestlist += O
+		stat_collection.crates_ordered++
 
 
 		// AUTOFIXED BY fix_string_idiocy.py

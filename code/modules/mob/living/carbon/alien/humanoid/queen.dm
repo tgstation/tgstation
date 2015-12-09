@@ -74,6 +74,7 @@
 	if(powerc(75, 1))//Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
 		visible_message("<span class='alien'>[src] has laid an egg!</span>")
+		stat_collection.xeno.eggs_laid++
 		new /obj/effect/alien/egg(loc)
 	return
 

@@ -388,6 +388,8 @@ var/nanocoins_lastchange = 0
 
 var/minimapinit = 0
 
+var/datum/stat_collector/stat_collection = new
+
 //Hardcore mode
 //When enabled, starvation kills
 var/global/hardcore_mode = 0

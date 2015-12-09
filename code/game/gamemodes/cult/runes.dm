@@ -156,6 +156,7 @@
 	else
 		new /obj/item/weapon/tome(usr.loc)
 	qdel(src)
+	stat_collection.cult.tomes_created++
 	return
 
 /////////////////////////////////////////THIRD RUNE
@@ -197,6 +198,7 @@
 			to_chat(M, "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>")
 			M.add_language("Cult")
 			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.loc.x];Y=[M.loc.y];Z=[M.loc.z]'>([M.loc.x], [M.loc.y], [M.loc.z])</a>")
+			stat_collection.cult.converted++
 			if(M.client)
 				spawn(600)
 					if(M && !M.client)

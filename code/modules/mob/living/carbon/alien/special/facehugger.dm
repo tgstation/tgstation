@@ -140,6 +140,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		var/obj/item/mouth_protection = H.get_body_part_coverage(MOUTH)
 		if(mouth_protection && mouth_protection != H.wear_mask) //can't be protected with your own mask, has to be a hat
 			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection] !</span>")
+			stat_collection.xeno.proper_head_protection++
 			Die()
 			return 0
 
@@ -182,6 +183,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		target.status_flags |= XENO_HOST
 
 		target.visible_message("<span class='danger'>\The [src] falls limp after violating [target]'s face !</span>")
+		stat_collection.xeno.faces_hugged++
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
