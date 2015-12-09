@@ -1,0 +1,7 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Singularity Beacons now have an internal battery. It will last one minute, which allows you to either set up a quick beacon without wires, or continue dragging when the Singularity knocks out the powernet
+  - rscadd: The Singularity Beacon now glows red when on. This means it will be far less concealable in darkness, and shouldn't be adjacent to a wall (due to the way lighting works)
+  - tweak: Singularity Beacons now needs to be wrenched down instead of screwed down. Cable is connected on hand interaction (interact again to turn on and off) and disconnected by wrenching or unwrenching
+  - tweak: Singularity Beacons now need 500 W/s to run, and actually drain that amount from the grid
