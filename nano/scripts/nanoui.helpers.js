@@ -3,15 +3,14 @@ nanoui.helpers = (function (nanoui) {
     var helpers = {};
 
 
-    helpers.link = function (text, icon, parameters, status, elementClass, elementId) {
+    helpers.link = function (text, icon, parameters, status, elementClass) {
         var context = {};
 
         context.text = text || "";
         context.icon = "";
         context.parameters = nanoui.util.href(parameters);
-        context.status = status || "";
-        context.elementClass = elementClass || "normal";
-        context.elementId = elementId || "";
+        context.status = status;
+        context.elementClass = elementClass || "";
 
         if (nanoui.util.yes(icon)) {
             context.icon = nanoui.util.format("<i class='pending fa fa-fw fa-spinner fa-pulse'></i><i class='main fa fa-fw fa-#{icon}'></i>", {icon: icon});
@@ -19,9 +18,9 @@ nanoui.helpers = (function (nanoui) {
         }
 
         if (nanoui.util.yes(status)) {
-            return nanoui.util.format("<div unselectable='on' id='#{elementId}' class='link inactive #{status} #{elementClass}'>#{icon}#{text}</div>", context);
+            return nanoui.util.format("<div unselectable='on' class='link inactive #{status} #{elementClass}'>#{icon}#{text}</div>", context);
         }
-        return nanoui.util.format("<div unselectable='on' id='#{elementId}' class='link active #{elementClass}' data-href='#{parameters}'>#{icon}#{text}</div>", context);
+        return nanoui.util.format("<div unselectable='on' class='link active #{elementClass}' data-href='#{parameters}'>#{icon}#{text}</div>", context);
     };
 
     helpers.bar = function (value, rangeMin, rangeMax, styleClass, barText) {

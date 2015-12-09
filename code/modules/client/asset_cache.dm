@@ -226,41 +226,21 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		hi.registerResources()
 
 /datum/asset/nanoui
-	var/list/common = list()
-	var/list/uncommon = list()
+	var/list/assets = list()
 
-	var/list/common_dirs = list(
-		"nano/styles/",
-		"nano/scripts/",
-		"nano/images/",
-		"nano/layouts/"
-	)
-	var/list/uncommon_dirs = list(
-		"nano/interfaces/"
+	var/list/asset_dirs = list(
+		"nano/compiled/"
 	)
 
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.
-	for (var/path in common_dirs)
+	for (var/path in asset_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
-					common[filename] = fcopy_rsc(path + filename)
-					register_asset(filename, common[filename])
-	for (var/path in uncommon_dirs)
-		var/list/filenames = flist(path)
-		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
-				if(fexists(path + filename))
-					uncommon[filename] = fcopy_rsc(path + filename)
-					register_asset(filename, uncommon[filename])
+					assets[filename] = fcopy_rsc(path + filename)
+					register_asset(filename, assets[filename])
 
-/datum/asset/nanoui/send(client, uncommon)
-	if(isnull(uncommon))
-		uncommon = src.uncommon
-	if(!islist(uncommon))
-		uncommon = list(uncommon)
-
-	send_asset_list(client, uncommon)
-	send_asset_list(client, common)
+/datum/asset/nanoui/send(client)
+	send_asset_list(client, assets)

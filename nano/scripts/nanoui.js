@@ -1,4 +1,4 @@
-var nanoui = (function () {
+var nanoui = (function (templates) {
     "use strict";
     var nanoui = {};
 
@@ -19,12 +19,12 @@ var nanoui = (function () {
         nanoui.emit('beforeRender', data);
         try {
 			if (!_layoutRendered || data.config.autoUpdateLayout) {
-				document.query('#layout').innerHTML = nanoui.template.template('layout', data);
+				document.query('#layout').innerHTML = templates[data.config.templates.layout](data.data, data.config, nanoui.helpers);
 				_layoutRendered = true;
 				nanoui.emit('layoutRendered');
 			}
 			if (!_contentRendered || data.config.autoUpdateContent) {
-				document.query('#content').innerHTML = nanoui.template.template('main', data);
+				document.query('#content').innerHTML = templates[data.config.templates.content](data.data, data.config, nanoui.helpers);
 				_contentRendered = true;
 				nanoui.emit('contentRendered');
 			}
@@ -84,11 +84,11 @@ var nanoui = (function () {
 
 
     document.when('ready', init);
-    nanoui.on('compiled', render);
+    nanoui.on('lateInit', render);
     nanoui.on('serverUpdate', serverUpdate);
 
 	nanoui.on('render', render);
     nanoui.on('update', update);
 
     return nanoui;
-}());
+}(TMPL));

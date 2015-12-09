@@ -1,0 +1,9 @@
+<div id='title' unselectable='on'>
+	<div id='statusicon' class='good' unselectable="on"></div>
+	<div id='titletext' unselectable='on'>{{=config.title}}</div>
+	<div id='titlelogo' unselectable='on'></div>
+</div>
+
+<div id='content' unselectable='on'>
+	<div id='loading'>Initiating...</div>
+</div>

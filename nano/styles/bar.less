@@ -1,0 +1,43 @@
+@import "config";
+@import "util";
+
+
+.bar {
+    position: relative;
+    width: 236px;
+    height: 16px;
+    border: 1px solid #666666;
+    float: left;
+    margin: 0 5px 0 0;
+    overflow: hidden;
+    background: black;
+    box-sizing: border-box;
+    .barText {
+        position: absolute;
+        top: -2px;
+        left: 5px;
+        width: 100%;
+        height: 100%;
+        color: white;
+        font-weight: normal;
+    }
+    .barFill {
+        width: 0;
+        height: 100%;
+        background: #40628a;
+        overflow: hidden;
+        float: left;
+        &.good {
+            background: #4f7529;
+        }
+        &.average {
+            background: #cd6500;
+        }
+        &.bad {
+            background: #ea0000;
+        }
+        &.highlight {
+            background: #8BA5C4;
+        }
+    }
+}

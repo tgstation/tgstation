@@ -26,14 +26,16 @@ nanoui.handlers = (function (nanoui) {
 
         if (data.config.status === 2) {
             links.forEach(function (element) {
-                element.removeAttribute('disabled');
+                element.classList.remove('disabled');
             });
             pendingLinks.forEach(function (element) {
                 element.classList.remove('pending');
             });
         } else {
             links.forEach(function (element) {
-                element.setAttribute('disabled', 'true');
+                element.classList.remove('active');
+                element.classList.remove('pending');
+                element.classList.add('disabled');
             });
         }
     };
@@ -45,7 +47,6 @@ nanoui.handlers = (function (nanoui) {
             var href = this.data('href');
             if (href !== null) {
                 if (data.config.status === 2) {
-                    this.classList.remove('active');
                     this.classList.add('pending');
                 }
 

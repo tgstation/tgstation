@@ -9,10 +9,6 @@
   * modified by neersighted
  **/
 
-// Debug Things
-#define USE_MIN 0
-#define USE_LESS 0
-
  /**
   * NanoUI datum:
   *
@@ -29,10 +25,8 @@
 	var/on_close_logic = 1 // Enable legacy onclose() logic.
 	var/atom/ref = null // An extra ref to use when the window is closed.
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // Extra options to winset().
-	var/list/stylesheets = list() // The list of CSS stylesheets to apply to the NanoUI..
-	var/list/scripts = list() // The list of Javascript scripts to apply to the NanoUI.
-	var/templates[0] // The list of NanoUI templates available to the NanoUI.
-	var/layout = "default" // The layout used to load alternate layouts and CSS.
+	var/layout = "nanotrasen" // The layout to be used for this UI.
+	var/template // The template to be used for this UI.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/auto_update_layout = 0 // Re-render the layout every update.
 	var/auto_update_content = 1 // Re-render the content every update.
@@ -69,7 +63,7 @@
 	src.ui_key = ui_key
 	src.window_id = "[ui_key]\ref[src_object]"
 
-	add_template("main", template)
+	set_template(template)
 
 	if (title)
 		src.title = sanitize(title)
@@ -86,24 +80,8 @@
 		master_ui.children += src
 	src.state = state
 
-	add_common_assets()
-
 	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
-	assets.send(user, template)
-
- /**
-  * private
-  *
-  * Add the assets required by all NanoUIs.
- **/
-/datum/nanoui/proc/add_common_assets()
-	add_script("nanoui")
-	add_script("nanoui.util")
-	add_script("nanoui.template")
-	add_script("nanoui.helpers")
-	add_script("nanoui.handlers")
-
-	add_stylesheet("nanoui")
+	assets.send(user)
 
  /**
   * private
@@ -177,6 +155,10 @@
 			"status" = status,
 			"autoUpdateLayout" = auto_update_layout,
 			"autoUpdateContent" = auto_update_content,
+			"templates" = list(
+				"layout" = "_[layout]",
+				"content" = "[template]"
+			),
 			"user" = list(
 				"name" = user.name
 			)
@@ -213,50 +195,23 @@
  /**
   * public
   *
-  * Add a template to the NanoUI.
-  * This must be called before the NanoUI is opened.
-  *
-  * required key string The key used to reference this file in the frontend.
-  * required file string The path of the template file to add.
- **/
-/datum/nanoui/proc/add_template(key, file)
-	templates[key] = "[file].dot"
-
- /**
-  * public
-  *
-  * Add a script to the NanoUI.
-  * This must be called before the NanoUI is opened.
-  *
-  * required file string The path of the script file to add.
- **/
-/datum/nanoui/proc/add_script(file)
-	scripts.Add("[file].js")
-
- /**
-  * public
-  *
-  * Add a stylesheet to the NanoUI.
-  * This must be called before the NanoUI is opened.
-  *
-  * required file string The path of the stylesheet file to add.
- **/
-/datum/nanoui/proc/add_stylesheet(file)
-	if(USE_LESS)
-		stylesheets.Add("[file].less")
-	else
-		stylesheets.Add("[file].css")
-
- /**
-  * public
-  *
   * Set the layout for this NanoUI.
   * This loads custom layout styles and templates for this NanoUI.
   *
-  * required layout_key string The new layout key.
+  * required layout string The new UI layout.
  **/
 /datum/nanoui/proc/set_layout(layout)
 	src.layout = lowertext(layout)
+
+ /**
+  * public
+  *
+  * Set the template for this NanoUI.
+  *
+  * required template string The new UI template.
+ **/
+/datum/nanoui/proc/set_template(template)
+	src.template = lowertext(template)
 
  /**
   * public
@@ -296,32 +251,31 @@
   * return string NanoUI HTML output.
  **/
 /datum/nanoui/proc/get_html()
-	// Add files based on the layout key.
-	add_template("layout", "layout_[layout]")
-	add_stylesheet("layout_[layout]")
-
-	// Some string hacks for .less/.min.js.
-	var/less = ""
-	var/less_html = ""
-	var/min = ""
-	if(USE_LESS)
-		less = "/less"
-		less_html = "<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.[min]js'></script>"
-	if(USE_MIN)
-		min = "min."
-
 	// Generate <script> and <link> tags.
-	var/script_html = ""
-	for (var/script in scripts)
-		script_html += "<script type='text/javascript' src='[script]'></script>"
-	var/stylesheet_html = ""
-	for (var/stylesheet in stylesheets)
-		stylesheet_html += "<link rel='stylesheet[less]' type='text/css' href='[stylesheet]' />"
+	var/script_html = {"
+<!--\[if IE 8]>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'></script>
+<script type='text/javascript' src='https//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.6/ie8.js'></script>
+<!\[endif]-->
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dom4/1.5.2/dom4.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/eddy/0.7.0/eddy.dom.js'></script>
+<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js'></script>
+<script type='text/javascript' src='templates.min.js'></script>
+<script type='text/javascript' src='nanoui.min.js'></script>
+	"}
+	var/stylesheet_html = {"
+<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css' />
+<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
+<link rel='stylesheet' type='text/css' href='_[layout].css' />
+	"}
 
 	// Generate template JSON.
 	var/template_data_json = "{}"
-	if (templates.len > 0)
-		template_data_json = list2json(templates)
+//	if (templates.len > 0)
+//		template_data_json = list2json(templates)
 
 	// Generate data JSON.
 	var/list/send_data = get_send_data(initial_data)
@@ -330,6 +284,7 @@
 	// Generate URL parameters JSON.
 	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
+	// Generate the HTML document.
 	return {"
 <!DOCTYPE html>
 <html>
@@ -343,20 +298,7 @@
 				}
 			};
 		</script>
-		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.[min]css' />
-		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.[min]css' />
 		[stylesheet_html]
-		<!--\[if IE 8]>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.[min]js'></script>
-		<script type='text/javascript' src='https//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.6/ie8.js'></script>
-		<!\[endif]-->
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dom4/1.5.2/dom4.js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.[min]js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.[min]js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/eddy/0.7.0/eddy.dom.js'></script>
-		<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.[min]js'></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.[min]js'></script>
-		[less_html]
 		[script_html]
 	</head>
 	<body id='body' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
@@ -411,7 +353,7 @@
  **/
 /datum/nanoui/proc/reinitialize(template, list/data)
 	if(template)
-		add_template("main", template) // Replace the 'main' template.
+		src.template = template // Set a new template.
 	if(data)
 		set_initial_data(data) // Replace the initial_data.
 	open()

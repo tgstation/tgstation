@@ -1,0 +1,19 @@
+@import "config";
+@import "common";
+@import "util";
+@import "link";
+@import "machines";
+@import "bar";
+
+body {
+    background: @background url(background.png) 50% 0 repeat-x;
+}
+
+#content {
+    clear: both;
+    padding: 8px;
+}
+
+#loading {
+    &:extend(.notice);
+}

@@ -1,0 +1,80 @@
+<h2>Status</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Generated Power:
+		</div>
+		<div class="itemContent">
+			{{=data.generated}} W
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Orientation:
+		</div>
+		<div class="itemContent">
+			{{=data.angle}}&deg ({{=data.direction}})
+			{{=helper.link('15&deg', 'minus', {'rate_control': '1', 'cdir': '-15'})}}
+			{{=helper.link('1&deg', 'minus', {'rate_control': '1', 'cdir': '-1'})}}
+			{{=helper.link('1&deg', 'plus', {'rate_control': '1', 'cdir': '1'})}}
+			{{=helper.link('15&deg', 'plus', {'rate_control': '1', 'cdir': '15'})}}
+		</div>
+	</div>
+</div>
+<h2>Tracking</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class='itemLabel'>
+			Tracker Mode:
+		</div>
+		<div class="itemContent">
+			{{=helper.link('Off', 'close', {'track': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
+			{{=helper.link('Timed', 'clock', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
+			{{? data.connected_tracker}}
+				{{=helper.link('Auto', 'signal-diag', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
+			{{??}}
+				{{=helper.link('Auto', 'signal-diag', null, 'disabled')}}
+			{{?}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Tracking Rate:
+		</div>
+		<div class="itemContent">
+			{{=data.tracking_rate}} deg/h ({{=data.rotating_way}})
+			{{=helper.link('180&deg', 'minus', {'rate_control': '1', 'tdir': '-180'})}}
+			{{=helper.link('30&deg', 'minus', {'rate_control': '1', 'tdir': '-30'})}}
+			{{=helper.link('1&deg', 'minus', { 'rate_control': '1', 'tdir': '-1'})}}
+			{{=helper.link('1&deg', 'plus', { 'rate_control': '1', 'tdir': '1'})}}
+			{{=helper.link('30&deg', 'plus', { 'rate_control': '1', 'tdir': '30'})}}
+			{{=helper.link('180&deg', 'plus', { 'rate_control': '1', 'tdir': '180'})}}
+		</div>
+	</div>
+</div>
+<h2>Devices</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Solar Tracker:
+		</div>
+		<div class="itemContent">
+			{{? data.connected_tracker}}
+				<span class="good">Found</span>
+			{{??}}
+				<span class="bad">Not Found</span>
+			{{?}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Solars Panels:
+		</div>
+		<div class="itemContent">
+			<span class="{{=data.connected_panels ? 'good' : 'bad'}}">{{=data.connected_panels}} Connected</span>
+		</div>
+	</div>
+	<div class="item">
+		{{=helper.link('', 'refresh', {'search_connected': '1'})}}
+	</div>
+</div>

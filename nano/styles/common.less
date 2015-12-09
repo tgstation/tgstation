@@ -1,0 +1,70 @@
+@import "config";
+@import "util";
+
+
+body {
+    padding: 0;
+    margin: 0;
+
+    font-family: @font;
+    font-size: @font-size;
+    line-height: 170%;
+    color: @text;
+
+    background: @background;
+}
+
+h1 {
+    font-size: @font-size + 6px;
+    margin: 0;
+    padding: 6px 0 6px 0;
+    clear: both;
+}
+h2 {
+    font-size: @font-size + 4px;
+    margin: 0;
+    padding: 6px 0 6px 0;
+    clear: both;}
+h3 {
+    font-size: @font-size + 2px;
+    margin: 0;
+    padding: 6px 0 6px 0;
+    clear: both;
+}
+
+hr {
+    background-color: @normal;
+    height: 1px;
+    border: none;
+}
+
+ul {
+    padding: 4px 0 0 10px;
+    margin: 0;
+    list-style-type: none;
+
+    li {
+        padding: 0 0 2px 0;
+    }
+}
+
+noscript {
+    margin: 33% auto;
+    width: 50%;
+    height: 33%;
+
+    background: #ffffff;
+    border: 2px solid #ff0000;
+    z-index: 9999;
+    padding: 0 10px;
+    text-align: center;
+}
+
+#statusicon {
+    width: 24px;
+    height: 24px;
+    background: url(statusicon.png) no-repeat;
+    &.good { background-position: 0 0; }
+    &.average { background-position: 0 -24px; }
+    &.bad { background-position: 0 -48px; }
+}

@@ -1,0 +1,154 @@
+<h2>Occupant</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Occupant:
+		</div>
+		<div class="itemContent">
+			{{? data.hasOccupant}}
+				{{=data.occupant.name}}
+			{{??}}
+				<span class="average">No Occupant</span>
+			{{?}}
+		</div>
+	</div>
+	{{? data.hasOccupant}}
+		<div class="item">
+			<div class="itemLabel">
+				State:
+			</div>
+			<div class="itemContent">
+				{{? data.occupant.stat == 0}}
+					<span class="good">Conscious</span>
+				{{?? data.occupant.stat == 1}}
+					<span class="average">Unconscious</span>
+				{{??}}
+					<span class="bad">Dead</span>
+				{{?}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Temperature:
+			</div>
+			<div class="itemContent">
+				{{=helper.round(data.occupant.bodyTemperature)}} K
+			</div>
+		</div>
+	{{?}}
+	{{? data.occupant.stat < 2}}
+		<div class="item">
+			<div class="itemLabel">
+				Health:
+			</div>
+			<div class="itemContent">
+				{{? data.occupant.health >= 0}}
+					{{=helper.bar(data.occupant.health, 0, data.occupant.maxHealth, 'good')}}
+				{{??}}
+					{{=helper.bar(data.occupant.health, 0, data.occupant.minHealth, 'average')}}
+				{{?}}
+				{{=helper.round(data.occupant.health)}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Brute:
+			</div>
+			<div class="itemContent">
+				{{=helper.bar(data.occupant.bruteLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{=helper.round(data.occupant.bruteLoss)}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Respiratory:
+			</div>
+			<div class="itemContent">
+				{{=helper.bar(data.occupant.oxyLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{=helper.round(data.occupant.oxyLoss)}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Toxin:
+			</div>
+			<div class="itemContent">
+				{{=helper.bar(data.occupant.toxLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{=helper.round(data.occupant.toxLoss)}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Burn:
+			</div>
+			<div class="itemContent">
+				{{=helper.bar(data.occupant.fireLoss, 0, data.occupant.maxHealth, 'bad')}}
+				{{=helper.round(data.occupant.fireLoss)}}
+			</div>
+		</div>
+	{{?}}
+</div>
+<h2>Cell</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			Power:
+		</div>
+		<div class="itemContent">
+			{{=helper.link('On', 'power', {'switchOn': 1}, data.isOperating ? 'selected' : null)}}
+			{{=helper.link('Off', 'close', {'switchOff': 1}, data.isOperating ? null : 'selected')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Temperature:
+		</div>
+		<div class="itemContent">
+			<span class="{{=data.cellTemperatureStatus}}">{{=data.cellTemperature}} K</span>
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Door:
+		</div>
+		<div class="itemContent">
+			{{=helper.link('Open', 'unlocked', {'openCell' : 1}, data.isOpen ? 'disabled' : null)}}
+			{{=helper.link('Close', 'locked', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Eject:
+		</div>
+		<div class="itemContent">
+			{{=helper.link('Auto', 'eject', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
+			{{=helper.link('Manual', 'pin-s', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
+		</div>
+	</div>
+</div>
+<h2>Beaker</h2>
+<div class="statusDisplay">
+	<div class="item">
+		<div class="itemLabel">
+			{{=helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Contents:
+		</div>
+		<div class="itemContent">
+			{{? data.isBeakerLoaded}}
+				{{? data.beakerContents.length}}
+					{{~ data.beakerContents :reagent:i}}
+						<span class="highlight">{{=reagent.volume}} units of {{=reagent.name}}</span><br />
+					{{~}}
+				{{??}}
+					<span class="bad">Beaker Empty</span>
+				{{?}}
+			{{??}}
+				<span class="average">No Beaker Loaded</span>
+			{{?}}
+		</div>
+	</div>
+</div>

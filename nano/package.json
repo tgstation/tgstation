@@ -1,0 +1,19 @@
+{
+  "name": "nanoui",
+  "version": "0.3.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.1.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-dot": "git+ssh://git@github.com/neersighted/grunt-dot.git",
+    "grunt-lesslint": "^2.0.0",
+    "grunt-newer": "^1.1.1",
+    "less-plugin-autoprefix": "^1.5.1",
+    "less-plugin-clean-css": "^1.5.1"
+  }
+}

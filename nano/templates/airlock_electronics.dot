@@ -1,0 +1,26 @@
+<div class="statusDisplay">
+	<div class="item">
+			{{=helper.link(data.oneAccess ? 'One Required' : 'All Required', data.oneAccess ? 'unlock' : 'lock', {'access': 'one'})}}
+			{{=helper.link('Reset', 'refresh', {'access': 'clear'})}}
+	</div>
+	<div class="item">
+		<table class="fixed">
+			<tr>
+				{{~ data.regions :region:i}}
+					<td>
+						<span class="highlight"><b>{{=region.name}}</b></span>
+					</td>
+				{{~}}
+			</tr>
+			<tr>
+				{{~ data.regions :region:i}}
+					<td class="alignTop">
+						{{~ region.accesses :access:j}}
+							{{=helper.link(access.name, access.req ? 'check-square-o' : 'square-o', {'access': access.id}, null, access.req ? 'selected' : null)}}<br class="clearBoth" />
+						{{~}}
+					</td>
+				{{~}}
+			</tr>
+		</table>
+	</div>
+</div>
