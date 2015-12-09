@@ -156,6 +156,7 @@
 	r_hand = null
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
+	backpack_contents = list(/obj/item/weapon/storage/box/survival = 1)
 
 /obj/item/weapon/dice/d20/fate
 	name = "Dice of Fate"

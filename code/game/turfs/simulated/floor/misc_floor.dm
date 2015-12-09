@@ -69,6 +69,7 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
+	slowdown = -0.3
 
 /turf/simulated/floor/noslip/MakeSlippery()
 	return

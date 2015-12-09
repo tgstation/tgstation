@@ -9,6 +9,7 @@
 	var/obj/item/weapon/electronics/airlock/board
 	var/device_type = null
 	var/id = null
+	var/initialized = 0
 
 	anchored = 1
 	use_power = 1
@@ -24,7 +25,8 @@
 		panel_open = 1
 		update_icon()
 
-	if(id && !built && !device && device_type)
+	
+	if(!built && !device && device_type)
 		device = new device_type(src)
 
 	src.check_access(null)
@@ -36,10 +38,6 @@
 		else
 			board.one_access = 1
 			board.accesses = req_one_access
-
-	if(id && istype(device, /obj/item/device/assembly/control))
-		var/obj/item/device/assembly/control/A = device
-		A.id = id
 
 
 /obj/machinery/button/update_icon()
@@ -114,7 +112,15 @@
 	if(!panel_open)
 		return attack_hand(user)
 
+/obj/machinery/button/proc/setup_device()
+	if(id && istype(device, /obj/item/device/assembly/control))
+		var/obj/item/device/assembly/control/A = device
+		A.id = id
+	initialized = 1
+
 /obj/machinery/button/attack_hand(mob/user)
+	if(!initialized)
+		setup_device()
 	src.add_fingerprint(user)
 	if(panel_open)
 		if(device || board)
@@ -162,7 +168,6 @@
 	update_icon()
 
 
-
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
@@ -170,6 +175,7 @@
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
 /obj/machinery/button/door/New(loc, ndir = 0, built = 0)
+	..()
 	if(id && !built && !device)
 		if(normaldoorcontrol)
 			var/obj/item/device/assembly/control/airlock/A = new(src)
@@ -177,7 +183,6 @@
 			A.specialfunctions = specialfunctions
 		else
 			device = new /obj/item/device/assembly/control(src)
-	..()
 
 
 /obj/machinery/button/massdriver

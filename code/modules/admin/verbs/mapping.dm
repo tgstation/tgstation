@@ -58,7 +58,7 @@ var/intercom_range_display_status = 0
 	set category = "Mapping"
 	set name = "Camera Report"
 
-	if(!master_controller)
+	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
 		return 0
 

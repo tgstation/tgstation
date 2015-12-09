@@ -130,7 +130,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -157,7 +157,8 @@
 	return dat
 
 /mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	..()
+	if(..())
+		return 1
 
 	if(href_list["adj_threshold"])
 		var/adjust_num = text2num(href_list["adj_threshold"])

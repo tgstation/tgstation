@@ -286,12 +286,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "tactical armor crate"
 
 /datum/supply_packs/security/armory/laserarmor
-	name = "Ablative Armor Crate"
+	name = "Reflector Vest Crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof)		// Only two vests to keep costs down for balance
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/plasma
-	containername = "ablative armor crate"
+	containername = "reflector vest crate"
 
 /////// Weapons: Specialist
 

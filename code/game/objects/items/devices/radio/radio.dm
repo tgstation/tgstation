@@ -50,7 +50,7 @@
 		wires.CutWireIndex(WIRE_TRANSMIT)
 	secure_radio_connections = new
 	..()
-	if(radio_controller)
+	if(SSradio)
 		initialize()
 
 
@@ -176,10 +176,10 @@
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if (usr.stat || !on)
+	if ((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
-	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if (!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
@@ -248,7 +248,7 @@
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
 
-		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
+		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.
 	var/freq
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -587,7 +587,7 @@
 
 
 			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 

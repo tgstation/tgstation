@@ -59,6 +59,9 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/rank/clown/hit_reaction()
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	return 0
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."

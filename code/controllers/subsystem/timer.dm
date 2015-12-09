@@ -62,8 +62,8 @@ var/datum/subsystem/timer/SStimer
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
 	event.hash = list2text(args)
-	if (args.len > 3)
-		event.argList = args.Copy(4)
+	if (args.len > 4)
+		event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
 	if(unique)

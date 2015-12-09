@@ -2,7 +2,7 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	wait = 20
+	priority = 20
 
 	var/askDelay = 600
 

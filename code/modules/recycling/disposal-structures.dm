@@ -278,9 +278,7 @@
 			for(var/atom/movable/AM in H)
 				AM.loc = T
 				AM.pipe_eject(direction)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 10, 1)
+				AM.throw_at_fast(target, 10, 1)
 
 	else	// no specified direction, so throw in random direction
 
@@ -291,9 +289,7 @@
 
 				AM.loc = T
 				AM.pipe_eject(0)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+				AM.throw_at_fast(target, 5, 1)
 	H.vent_gas(T)
 	qdel(H)
 	return
@@ -800,9 +796,7 @@
 		for(var/atom/movable/AM in H)
 			AM.loc = src.loc
 			AM.pipe_eject(dir)
-			spawn(5)
-				if(AM)
-					AM.throw_at(target, eject_range, 1)
+			AM.throw_at_fast(target, eject_range, 1)
 		H.vent_gas(src.loc)
 		qdel(H)
 	return

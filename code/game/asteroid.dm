@@ -36,6 +36,10 @@ var/global/max_secret_rooms = 6
 
 //////////////
 
+/proc/make_mining_asteroid_secrets()
+	for(1 to max_secret_rooms)
+		make_mining_asteroid_secret()
+
 /proc/make_mining_asteroid_secret()
 	var/valid = 0
 	var/turf/T = null
