@@ -1,4 +1,4 @@
-//I will need to recode parts of this but I am way too tired atm
+//I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -11,10 +11,11 @@
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
-	var/health_regen = 2
+	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/health_timestamp = 0
-	var/brute_resist = 2
-	var/fire_resist = 1
+	var/brute_resist = 2 //divides brute damage by this
+	var/fire_resist = 1 //divides burn damage by this
+	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
 /obj/effect/blob/New(loc)
@@ -26,18 +27,26 @@
 	src.update_icon()
 	..(loc)
 	ConsumeTile()
+	if(atmosblock)
+		air_update_turf(1)
 	return
 
 /obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
-/obj/effect/blob/update_icon() //Blobs use update icon for health checks
+/obj/effect/blob/proc/check_health()
 	if(health <= 0)
 		qdel(src)
 		return
 	return
 
+/obj/effect/blob/update_icon() //Used for normal blobs, to update icon when weakened.
+	return
+
 /obj/effect/blob/Destroy()
+	if(atmosblock)
+		atmosblock = 0
+		air_update_turf(1)
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
 		blobs_legit -= src
@@ -45,6 +54,12 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
+
+/obj/effect/blob/CanAtmosPass(turf/T)
+	return !atmosblock
+
+/obj/effect/blob/BlockSuperconductivity()
+	return atmosblock
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -205,15 +220,17 @@
 	return
 
 /obj/effect/blob/proc/take_damage(damage, damage_type)
-	if(!damage || damage_type == STAMINA) // Avoid divide by zero errors
+	if(!damage) // Avoid divide by zero errors
 		return
-	switch(damage_type)
+	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
 			damage /= max(brute_resist, 1)
+			health -= damage
 		if(BURN)
 			damage /= max(fire_resist, 1)
-	health -= damage
+			health -= damage
 	update_icon()
+	check_health()
 
 /obj/effect/blob/proc/change_to(type, controller)
 	if(!ispath(type))
@@ -252,7 +269,6 @@
 	brute_resist = 4
 
 /obj/effect/blob/normal/update_icon()
-	..()
 	if(health <= 10)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
