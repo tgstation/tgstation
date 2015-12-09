@@ -26,7 +26,7 @@
 
 	if(is_freq_listening(signal))
 		if(change_frequency)
-			if(!(signal.frequency == 1213))
+			if(signal.frequency != SYND_FREQ)
 				signal.frequency = change_frequency
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
