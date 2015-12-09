@@ -144,3 +144,61 @@ effective or pretty fucking useless.
 	attack_self(usr)
 	add_fingerprint(usr)
 	return
+
+/obj/item/device/shadowcloak
+	name = "cloaker belt"
+	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	slot_flags = SLOT_BELT
+	attack_verb = list("whipped", "lashed", "disciplined")
+
+	var/mob/living/carbon/human/user = null
+	var/charge = 300
+	var/max_charge = 300
+	var/on = 0
+	action_button_name = "Toggle Cloaker"
+
+/obj/item/device/shadowcloak/ui_action_click()
+	if(usr.get_item_by_slot(slot_belt) == src)
+		if(!on)
+			Activate(usr)
+		else
+			Deactivate()
+	return
+
+/obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
+	if(!user)
+		return
+	user << "<span class='notice'>You activate [src].</span>"
+	src.user = user
+	SSobj.processing |= src
+	on = 1
+	return
+
+/obj/item/device/shadowcloak/proc/Deactivate()
+	user << "<span class='notice'>You deactivate [src].</span>"
+	SSobj.processing.Remove(src)
+	if(user)
+		user.alpha = initial(user.alpha)
+	on = 0
+	user = null
+	return
+
+/obj/item/device/shadowcloak/dropped(mob/user)
+	if(user && user.get_item_by_slot(slot_belt) == src)
+		Deactivate()
+	return
+
+/obj/item/device/shadowcloak/process()
+	if(user.get_item_by_slot(slot_belt) != src)
+		Deactivate()
+		return
+	var/turf/simulated/T = get_turf(src)
+	if(on)
+		if(!T.lighting_object || T.get_lumcount() < 3) 
+			charge = max(0,charge - 25)//Quick decrease in light
+		else
+			charge = min(max_charge,charge + 50) //Charge in the dark
+		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
