@@ -487,8 +487,7 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
     . = list()
     if(!isinhands)
-        . += image(icon = 'effects.dmi',icon_state = "[SHIELD_STATE]")
-
+        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[SHIELD_STATE]")
 
 
 ///////////////Capture the Flag////////////////////
