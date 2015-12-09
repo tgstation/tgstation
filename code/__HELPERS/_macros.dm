@@ -155,5 +155,5 @@
 
 //HARDCORE MODE STUFF (mainly hunger)
 
-#define hardcore_mode_on ((ticker) && (ticker.hardcore_mode))
+#define hardcore_mode_on (hardcore_mode)//((ticker) && (ticker.hardcore_mode))
 #define eligible_for_hardcore_mode(M) (M.ckey && M.client)
