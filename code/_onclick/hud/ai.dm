@@ -123,6 +123,15 @@
 	using.layer = 20
 	adding += using
 
+//Radio Configuration
+	using = getFromPool(/obj/screen)
+	using.name = "Configure Radio"
+	using.icon = 'icons/mob/screen_ai.dmi'
+	using.icon_state = "change_radio"
+	using.screen_loc = ui_ai_config_radio
+	using.layer = 20
+	adding += using
+
 	mymob.flash = getFromPool(/obj/screen)
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"

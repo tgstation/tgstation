@@ -541,6 +541,11 @@
 				var/mob/living/silicon/ai/AI = usr
 				AI.aicamera.viewpictures()
 
+		if("Configure Radio")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.radio_interact()
+
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return

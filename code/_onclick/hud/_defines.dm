@@ -153,6 +153,7 @@
 #define ui_ai_pda_log "SOUTH:6,WEST+10:16"
 #define ui_ai_take_picture "SOUTH:6,WEST+11:16"
 #define ui_ai_view_images "SOUTH:6,WEST+12:16"
+#define ui_ai_config_radio "SOUTH:6,WEST+13:16"
 
 //Adminbus HUD
 #define ui_adminbus_bg "1:0,1:0"

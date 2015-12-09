@@ -89,6 +89,9 @@ var/list/ai_list = list()
 	density = 1
 	loc = loc
 
+	radio = new /obj/item/device/radio/borg/ai(src)
+	radio.recalculateChannels()
+
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
 	proc_holder_list = new()
@@ -134,6 +137,13 @@ var/list/ai_list = list()
 	ai_list += src
 	..()
 	return
+
+/mob/living/silicon/ai/verb/radio_interact()
+	set category = "AI Commands"
+	set name = "Radio Configuration"
+	if(stat || aiRestorePowerRoutine) return
+	radio.recalculateChannels()
+	radio.attack_self(usr)
 
 /mob/living/silicon/ai/verb/rename_photo() //This is horrible but will do for now
 	set category = "AI Commands"
