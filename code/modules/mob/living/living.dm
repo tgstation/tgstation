@@ -188,12 +188,15 @@ Sorry Giacom. Please don't be mad :(
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
+		var/list/limbs = list()
+		limbs = get_limbs()
+		var/divided_damage = (burn_amount)/(limbs.len)
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/obj/item/organ/limb/affecting in H.organs)
-			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.update_damage_overlays(0)
+		for(var/datum/organ/limb/LI in limbs)
+			if(LI.exists())
+				var/obj/item/organ/limb/affecting = LI.organitem
+				if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, better yet...rewrite this entire proc ~Carn
+					H.update_damage_overlays(0)
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -364,7 +367,7 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter:zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/obj/item/organ/limb/def_zone = ran_zone(t)
+	var/def_zone = ran_zone(t)
 	return def_zone
 
 //damage/heal the mob ears and adjust the deaf amount

@@ -6,10 +6,8 @@
 	icon_state = "aliend_s"
 
 
-/mob/living/carbon/alien/humanoid/drone/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
+/mob/living/carbon/alien/humanoid/drone/New(loc, var/datum/organsystem/alienlarva/oldorgans)
+	organsystem = new/datum/organsystem/humanoid/alien/drone(src, oldorgans)
 
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()
@@ -28,13 +26,13 @@
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	var/no_queen = 1
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(!Q.key || !Q.getorgan(/obj/item/organ/internal/brain))
+		if(!Q.key || !Q.exists("brain"))
 			continue
 		no_queen = 0
 	if(no_queen)
 		user << "<span class='noticealien'>You begin to evolve!</span>"
 		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
-		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (user.loc)
+		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (user.loc, user.organsystem)
 		user.mind.transfer_to(new_xeno)
 		qdel(user)
 		return 1

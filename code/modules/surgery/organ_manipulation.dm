@@ -17,9 +17,6 @@
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
 
-
-
-
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
@@ -28,6 +25,7 @@
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
 	var/obj/item/organ/internal/I = null
+	var/datum/organ/internal/OR = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
@@ -51,10 +49,10 @@
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	I = null
-	if(isorgan(tool))
+	if(isinternalorgan(tool))
 		current_type = "insert"
 		I = tool
-		if(target_zone != I.zone || target.getorganslot(I.slot))
+		if(!target.has_organ_slot(target_zone, I.hardpoint))
 			user << "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 
@@ -63,22 +61,23 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/organs = target.getorganszone(target_zone)
+		var/list/organs = target.get_internal_organs(target_zone)
 		if(!organs.len)
 			user << "<span class='notice'>There are no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 		else
-			for(var/obj/item/organ/internal/O in organs)
-				O.on_find(user)
-				organs -= O
-				organs[O.name] = O
+			for(var/datum/organ/internal/O in organs)
+				if(O.exists())
+					var/obj/item/organ/internal/OI = O.organitem
+					OI.on_find(user)
+					organs -= O
+					organs[OI.name] = O
 
-			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
-			if(I && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
-				I = organs[I]
-				if(!I) return -1
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
+			var/organname = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
+			OR = organs[organname]
+			if(OR && OR.exists() && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
+				user.visible_message("[user] begins to extract [organname] from [target]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [organname] from [target]'s [parse_zone(target_zone)]...</span>")
 			else
 				return -1
 
@@ -90,21 +89,28 @@
 	if(current_type == "mend")
 		user.visible_message("[user] mend the incision in [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
+		if(target_zone == "eyes")
+			target.eye_blurry = 35	//this will fix itself slowly.
 		return 1
 	else if(current_type == "insert")
 		I = tool
 		user.drop_item()
-		I.Insert(target)
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		if(I.Insert(target))
+			user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		else
+			return -1
 
 	else if(current_type == "extract")
-		if(I && I.owner == target)
-			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
+		if(OR && OR.owner == target)
+			I = OR.dismember(ORGAN_REMOVED)
+			if(I.name == parse_zone(target_zone))	//To prevent things like "extracts eyes from target's eyes!
+				user.visible_message("[user] successfully extracts [I.name] from [target]!",
+				"<span class='notice'>You successfully extract [I.name] from [target].</span>")
+			else
+				user.visible_message("[user] successfully extracts [I.name] from [target]'s [parse_zone(target_zone)]!",
+					"<span class='notice'>You successfully extract [I.name] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
-			I.Remove(target)
-			I.loc = get_turf(target)
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")

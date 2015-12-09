@@ -18,30 +18,28 @@
 	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
 	//initialise organs
-	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
-					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
-	for(var/obj/item/organ/limb/O in organs)
-		O.owner = src
+
+	/*organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/arm/l_arm,
+	/obj/item/organ/limb/arm/r_arm, /obj/item/organ/limb/leg/r_leg, /obj/item/organ/limb/leg/l_leg)*/
+
+	organsystem = new/datum/organsystem/humanoid/monkey(src)
+
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
 	randomize_human(src)
 
-
-
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
-	internal_organs += new /obj/item/organ/butt //Could be argued to not actually be an internal organ
-
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
 	make_blood()
+
+	set_skin_tone(skin_tone)	//So DNA gets it set properly
 
 	..()
 	var/mob/M = src
 	faction |= "\ref[M]"
 	regenerate_icons()
+
+	update_body_parts()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -54,9 +52,9 @@
 	add_to_all_data_huds()
 
 /mob/living/carbon/human/Destroy()
-	for(var/atom/movable/organelle in organs)
-		qdel(organelle)
-	organs = list()
+	qdel(organsystem)
+/*	for(var/atom/movable/organelle in organs)
+		qdel(organelle)*/
 	return ..()
 
 /mob/living/carbon/human/Stat()
@@ -152,20 +150,35 @@
 				Paralyse(10)
 
 	var/update = 0
-	for(var/obj/item/organ/limb/temp in organs)
-		switch(temp.name)
-			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
-			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+	for(var/datum/organ/limb/limbdata in get_limbs())
+		var/probability = 0
+		if(limbdata.name == "head")
+			probability = b_loss/20	//Gotta make that instakill rare. Still 25% with the most severe explosion and bomb armor
+		else
+			probability = b_loss/3		//100% with the most severe explosion, might need tweaking
+		if(probability && prob(probability))
+			var/obj/item/organ/limb/O = limbdata.dismember(ORGAN_DESTROYED)
+			if(O)
+				O.streak()
+				visible_message("<span class='danger'>[src]'s [O.name] goes flying off!</span>", "<span class='userdanger'>Your [O.name] goes flying off!</span>")
+				var/turf/location = src.loc
+				if(istype(location, /turf/simulated))
+					location.add_blood_floor(src)
+		if(limbdata.exists())
+			var/obj/item/organ/limb/temp = limbdata.organitem
+			switch(temp.name)
+				if("head")
+					update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+				if("chest")
+					update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				if("l_arm")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("r_arm")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("l_leg")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				if("r_leg")
+					update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	update_damage_overlays(0)
 
 	..()
@@ -174,8 +187,8 @@
 	if(stat == DEAD)	return
 	show_message("<span class='userdanger'> The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	dam_zone = ran_zone(dam_zone)
+	apply_damage(5, BRUTE, dam_zone, run_armor_check(dam_zone, "melee"))
 	return
 
 /mob/living/carbon/human/show_inv(mob/user)
@@ -287,14 +300,14 @@
 			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
+			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L]!</span>","<span class='notice'>You attempt to remove [I] from your [L], it will take [time_taken/10] seconds.</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = usr))
 				L.embedded_objects -= I
 				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
-				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L.getDisplayName()]!</span>","<span class='userdanger'>You successfully remove [I] from your [L.getDisplayName()]!</span>")
+				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L]!</span>","<span class='userdanger'>You successfully remove [I] from your [L]!</span>")
 			return
 
 		if(href_list["item"])
@@ -385,34 +398,38 @@
 							var/status = ""
 							if(getBruteLoss())
 								usr << "<b>Physical trauma analysis:</b>"
-								for(var/obj/item/organ/limb/org in organs)
-									var/brutedamage = org.brute_dam
-									if(brutedamage > 0)
-										status = "received minor physical injuries."
-										span = "notice"
-									if(brutedamage > 20)
-										status = "been seriously damaged."
-										span = "danger"
-									if(brutedamage > 40)
-										status = "sustained major trauma!"
-										span = "userdanger"
-									if(brutedamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+								for(var/datum/organ/limb/LI in get_limbs())
+									if(LI.exists())
+										var/obj/item/organ/limb/org = LI.organitem
+										var/brutedamage = org.brute_dam
+										if(brutedamage > 0)
+											status = "received minor physical injuries."
+											span = "notice"
+										if(brutedamage > 20)
+											status = "been seriously damaged."
+											span = "danger"
+										if(brutedamage > 40)
+											status = "sustained major trauma!"
+											span = "userdanger"
+										if(brutedamage)
+											usr << "<span class='[span]'>The [org] appears to have [status]</span>"
 							if(getFireLoss())
 								usr << "<b>Analysis of skin burns:</b>"
-								for(var/obj/item/organ/limb/org in organs)
-									var/burndamage = org.burn_dam
-									if(burndamage > 0)
-										status = "signs of minor burns."
-										span = "notice"
-									if(burndamage > 20)
-										status = "serious burns."
-										span = "danger"
-									if(burndamage > 40)
-										status = "major burns!"
-										span = "userdanger"
-									if(burndamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+								for(var/datum/organ/limb/LI in get_limbs())
+									if(LI.exists())
+										var/obj/item/organ/limb/org = LI.organitem
+										var/burndamage = org.burn_dam
+										if(burndamage > 0)
+											status = "signs of minor burns."
+											span = "notice"
+										if(burndamage > 20)
+											status = "serious burns."
+											span = "danger"
+										if(burndamage > 40)
+											status = "major burns!"
+											span = "userdanger"
+										if(burndamage)
+											usr << "<span class='[span]'>The [org] appears to have [status]</span>"
 							if(getOxyLoss())
 								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
 							if(getToxLoss() > 20)
@@ -698,37 +715,45 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in H.organs)
-				var/status = ""
-				var/brutedamage = org.brute_dam
-				var/burndamage = org.burn_dam
-				if(hallucination)
-					if(prob(30))
-						brutedamage += rand(30,40)
-					if(prob(30))
-						burndamage += rand(30,40)
+			for(var/datum/organ/limb/limbdata in get_limbs())
+				if(limbdata.exists())
+					var/obj/item/organ/limb/org = limbdata.organitem
+					var/status = ""
+					var/brutedamage = org.brute_dam
+					var/burndamage = org.burn_dam
+					if(hallucination)
+						if(prob(30))
+							brutedamage += rand(30,40)
+						if(prob(30))
+							burndamage += rand(30,40)
+					if(brutedamage > 0)
+						status = "bruised"
+					if(brutedamage > 20)
+						status = "battered"
+					if(brutedamage > 40)
+						status = "mangled"
+					if(brutedamage > 0 && burndamage > 0)
+						status += " and "
+					if(burndamage > 40)
+						status += "peeling away"
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "battered"
-				if(brutedamage > 40)
-					status = "mangled"
-				if(brutedamage > 0 && burndamage > 0)
-					status += " and "
-				if(burndamage > 40)
-					status += "peeling away"
+					else if(burndamage > 10)
+						status += "blistered"
+					else if(burndamage > 0)
+						status += "numb"
+					if(status == "")
+						status = "OK"
+					src << "\t [status == "OK" ? "\blue" : "\red"] Your [org] is [status]."
 
-				else if(burndamage > 10)
-					status += "blistered"
-				else if(burndamage > 0)
-					status += "numb"
-				if(status == "")
-					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [org.getDisplayName()] is [status]."
-
-				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+					for(var/obj/item/I in org.embedded_objects)
+						src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org]!</a>"
+				else
+					if(limbdata.status & ORGAN_DESTROYED)
+						src << "\t \red Your [limbdata.getDisplayName()] is missing and the wound bleeds terribly!"
+					else if(limbdata.status & ORGAN_NOBLEED)
+						src << "\t \red Your [limbdata.getDisplayName()] is missing and the wound hurts!"
+					else if(limbdata.status & ORGAN_REMOVED)
+						src << "\t You don't have \a [limbdata.getDisplayName()]."
 
 			if(H.blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
@@ -796,3 +821,11 @@
 		..(I, cuff_break = 1)
 	else
 		..()
+
+
+/mob/living/carbon/human/proc/set_skin_tone(var/newskintone)
+	src.skin_tone = newskintone
+	if(dna.species.use_skintones)	//Can be removed if you want ligger-niggers from antivitiligo etc.
+		hardset_dna(src, null, null, null, null, null, skintone2hex(newskintone))
+		return 1
+	return 0

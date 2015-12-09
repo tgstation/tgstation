@@ -388,6 +388,8 @@
 
 	new_character.key = key		//Manually transfer the key to log them in
 
+	new_character.set_skin_tone(new_character.skin_tone)	//Let's see if this fixes it
+
 	new_character.regenerate_icons()
 
 	return new_character

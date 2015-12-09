@@ -477,12 +477,13 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 // Try to reset everything, also while handling invalid host/host_brain states.
 /mob/living/simple_animal/borer/proc/detach()
+/*
 	if(host)
 		if(istype(host,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = host
-	//		var/datum/organ/limb/head = H.get_organ("head")
+			var/datum/organ/limb/head = H.get_organ("head")
 			H.internal_organs -= src
-
+*/
 	src.loc = get_turf(src)
 	controlling = 0
 
@@ -577,10 +578,12 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	src.host = M
 	src.loc = M
 
+/*
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-	//	var/datum/organ/limb/head = H.get_organ("head")
+		var/datum/organ/limb/head = H.get_organ("head")
 		H.internal_organs += src
+*/
 
 	host_brain.name = M.name
 	host_brain.real_name = M.real_name

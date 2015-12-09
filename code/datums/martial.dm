@@ -46,8 +46,9 @@
 			D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>")
 			return 0
 
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/zone = ran_zone(A.zone_sel.selecting)
+	zone = check_zone(zone)
+	var/armor_block = D.run_armor_check(zone, "melee")
 
 	if(A.dna)
 		playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -57,7 +58,7 @@
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
 
-	D.apply_damage(damage, BRUTE, affecting, armor_block)
+	D.apply_damage(damage, BRUTE, zone, armor_block)
 	if((D.stat != DEAD) && damage >= 9)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
@@ -111,9 +112,9 @@
 			D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
 			return 0
 
-
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/zone = ran_zone(A.zone_sel.selecting)
+	zone = check_zone(zone)
+	var/armor_block = D.run_armor_check(zone, "melee")
 
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
 
@@ -121,7 +122,7 @@
 	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, STAMINA, zone, armor_block)
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
@@ -179,9 +180,10 @@
 	D.grabbedby(A,1)
 	D.visible_message("<span class='danger'>[A] holds [D] down!</span>", \
 								"<span class='userdanger'>[A] holds [D] down!</span>")
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
-	var/armor_block = D.run_armor_check(affecting, "melee")
-	D.apply_damage(10, STAMINA, affecting, armor_block)
+	var/zone = ran_zone(A.zone_sel.selecting)
+	zone = check_zone(zone)
+	var/armor_block = D.run_armor_check(zone, "melee")
+	D.apply_damage(10, STAMINA, zone, armor_block)
 	return 1
 
 #define TORNADO_COMBO "HHD"
@@ -235,11 +237,9 @@
 	A.say("PLASMA FIST!")
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
-	var/obj/item/organ/internal/brain/B = D.getorgan(/obj/item/organ/internal/brain)
+	var/datum/organ/internal/brain/B = D.get_organ("brain")
 	if(B)
-		B.loc = get_turf(D)
-		B.transfer_identity(D)
-		D.internal_organs -= B
+		B.dismember(ORGAN_REMOVED)
 	D.gib()
 	return
 

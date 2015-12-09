@@ -70,6 +70,12 @@
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 
+	//This code checks if the mob's active hand actually exists. |- Ricotez
+	if(!active_hand_exists())
+		changeNext_move(CLICK_CD_MELEE) //I dont'really see much reason to use any other timing.
+		NoHandClickOn(A)
+		return
+
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
@@ -164,6 +170,18 @@
 	Not currently used by anything but could easily be.
 */
 /mob/proc/RestrainedClickOn(var/atom/A)
+	return
+
+/*
+	NoHand ClickOn
+
+	Used when you are clicking with a hand you don't have.
+*/
+/mob/proc/NoHandClickOn(var/atom/A)
+	if(hand)
+		client << "You cannot use your left hand!"
+	else
+		client << "You cannot use your right hand!"
 	return
 
 /*

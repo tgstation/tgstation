@@ -142,7 +142,7 @@
 				var/new_s_tone = input(user, "What are we again?", "Race change")  as null|anything in skin_tones
 
 				if(new_s_tone)
-					H.skin_tone = new_s_tone
+					H.set_skin_tone(new_s_tone)
 
 			if(MUTCOLORS in H.dna.species.specflags)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
@@ -154,6 +154,9 @@
 
 					else
 						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
+
+			if(H.organsystem && H.dna)
+				H.organsystem.set_dna(H.dna)
 
 			H.regenerate_icons()
 

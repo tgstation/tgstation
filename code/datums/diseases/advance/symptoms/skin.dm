@@ -34,7 +34,7 @@ BONUS
 				return
 			switch(A.stage)
 				if(5)
-					H.skin_tone = "albino"
+					H.set_skin_tone("albino")
 					H.update_body(0)
 				else
 					H.visible_message("<span class='warning'>[H] looks a bit pale...</span>", "<span class='notice'>You look a bit pale...</span>")

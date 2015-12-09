@@ -16,12 +16,8 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
+	organsystem = new/datum/organsystem/humanoid/monkey(src)
 
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
 	gender = pick(MALE, FEMALE)
 
 	..()

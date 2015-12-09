@@ -86,6 +86,8 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
+	dismember_class = new/datum/dismember_class/low/
+
 
 /obj/item/weapon/surgical_drapes
 	name = "surgical drapes"

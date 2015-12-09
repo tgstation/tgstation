@@ -108,19 +108,23 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		//Bleeding out
 		blood_max = 0
-		for(var/obj/item/organ/limb/org in organs)
-			var/brutedamage = org.brute_dam
+		for(var/datum/organ/limb/LI in get_limbs())
+			if(LI.exists())
+				var/obj/item/organ/limb/org = LI.organitem
+				var/brutedamage = org.brute_dam
 
-			//We want an accurate reading of .len
-			listclearnulls(org.embedded_objects)
-			blood_max += 0.5*org.embedded_objects.len
+				//We want an accurate reading of .len
+				listclearnulls(org.embedded_objects)
+				blood_max += 0.5*org.embedded_objects.len
 
-			if(brutedamage > 30)
-				blood_max += 0.5
-			if(brutedamage > 50)
-				blood_max += 1
-			if(brutedamage > 70)
-				blood_max += 2
+				if(brutedamage > 30)
+					blood_max += 0.5
+				if(brutedamage > 50)
+					blood_max += 1
+				if(brutedamage > 70)
+					blood_max += 2
+			else if (LI && LI.status == ORGAN_DESTROYED)
+				blood_max += 4	//Removed limbs bleed REALLY bad. Might want to nerf later
 		if(bleedsuppress)
 			blood_max = 0
 		drip(blood_max)

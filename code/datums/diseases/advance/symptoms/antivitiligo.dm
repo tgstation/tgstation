@@ -31,7 +31,7 @@ BONUS
                                 return
                         switch(A.stage)
                                 if(5)
-                                        H.skin_tone = "african1"
+                                        H.set_skin_tone("african1")
                                         H.update_body(0)
                                 else
                                         H.visible_message("<span class='warning'>[H] looks a bit black.</span>", "<span class='notice'>You suddenly crave Fried Chicken.</span>")

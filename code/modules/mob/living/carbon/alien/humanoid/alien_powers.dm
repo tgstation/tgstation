@@ -27,10 +27,13 @@ Doesn't work on other aliens/AI.*/
 		return 1
 
 	var/mob/living/carbon/C = owner
-	if(target.loc && !(target.loc in C.internal_organs))
-		return 1
 
-	return 0
+	if(target.loc && isinternalorgan(target.loc))
+		var/obj/item/organ/internal/ORG = target.loc
+		if(ORG.organdatum == C.get_organ(ORG.hardpoint))
+			return 0
+
+	return 1
 
 
 /obj/effect/proc_holder/alien
@@ -127,7 +130,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+		if(A.exists("plasmavessel"))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
@@ -270,35 +273,43 @@ Doesn't work on other aliens/AI.*/
 	desc = "Toggles Night Vision"
 	plasma_cost = 0
 	has_action = 0 // Has dedicated GUI button already
+	var/active = 1
 
-/obj/effect/proc_holder/alien/nightvisiontoggle/fire(mob/living/carbon/alien/user)
-	if(!user.nightvision)
+/obj/effect/proc_holder/alien/nightvisiontoggle/fire(mob/living/carbon/user)
+	if(!active)
 		user.see_in_dark = 8
 		user.see_invisible = SEE_INVISIBLE_MINIMUM
-		user.nightvision = 1
-		user.hud_used.nightvisionicon.icon_state = "nightvision1"
-	else if(user.nightvision == 1)
+		active = 1
+		if(isalien(user))
+			user.hud_used.nightvisionicon.icon_state = "nightvision1"
+	else
 		user.see_in_dark = 4
 		user.see_invisible = 45
-		user.nightvision = 0
-		user.hud_used.nightvisionicon.icon_state = "nightvision0"
+		active = 0
+		if(isalien(user))
+			user.hud_used.nightvisionicon.icon_state = "nightvision0"
 
 	return 1
 
-
+/obj/effect/proc_holder/alien/nightvisiontoggle/on_lose()
+	var/obj/item/organ/internal/eyes/alien/EY = loc
+	if(EY.owner && active)
+		fire(EY.owner)
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(!vessel) return 0
-	return vessel.storedPlasma
+	var/datum/organ/internal/alien/plasmavessel/OR = get_organ("plasmavessel")
+	if(OR && OR.exists())
+		var/obj/item/organ/internal/alien/plasmavessel/vessel = OR.organitem
+		return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(!vessel) return 0
-	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
-	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
-	return 1
+	var/datum/organ/internal/alien/plasmavessel/OR = get_organ("plasmavessel")
+	if(OR && OR.exists())
+		var/obj/item/organ/internal/alien/plasmavessel/vessel = OR.organitem
+		vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
+		vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+		return 1
 
 /mob/living/carbon/alien/adjustPlasma(amount)
 	. = ..()

@@ -84,7 +84,7 @@
 	progress++
 	if(progress >= time_to_live)
 		Pop()
-		Remove(owner)
+		organdatum.dismember(ORGAN_REMOVED)
 		qdel(src)
 
 /obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()

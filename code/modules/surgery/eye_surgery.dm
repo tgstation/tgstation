@@ -1,10 +1,11 @@
+//I really want to make eye damage stored in an eye organ
+
 /datum/surgery/eye_surgery
 	name = "eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("eyes")
 	requires_organic_bodypart = 0
-
 
 //fix eyes
 /datum/surgery_step/fix_eyes
@@ -24,7 +25,8 @@
 	return 1
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	var/datum/organ/internal/brain/B = target.get_organ("brain")
+	if(B && B.exists())
 		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
 		target.adjustBrainLoss(100)
 	else

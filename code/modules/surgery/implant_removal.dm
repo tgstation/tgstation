@@ -5,8 +5,6 @@
 	possible_locs = list("chest")
 	requires_organic_bodypart = 0
 
-
-
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"

@@ -1,5 +1,6 @@
 /obj/item/organ/internal/body_egg
 	name = "body egg"
+	hardpoint = "egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
 	origin_tech = "biotech=5"
@@ -15,7 +16,7 @@
 		src.Insert(loc)
 	return ..()
 
-/obj/item/organ/internal/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/body_egg/on_insertion()
 	..()
 	owner.status_flags |= XENO_HOST
 	SSobj.processing |= src
@@ -34,9 +35,9 @@
 
 /obj/item/organ/internal/body_egg/process()
 	if(!owner)	return
-	if(!(src in owner.internal_organs))
-		Remove(owner)
-		return
+/*	if(!(src in owner.internal_organs))	//Should be handled elsewhere. SHOULD
+		organdatum.dismember(ORGAN_REMOVED)
+		return*/
 	egg_process()
 
 /obj/item/organ/internal/body_egg/proc/egg_process()

@@ -6,11 +6,10 @@
 	icon_state = "aliens_s"
 
 
-/mob/living/carbon/alien/humanoid/sentinel/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
-	..()
+/mob/living/carbon/alien/humanoid/sentinel/New(loc, var/datum/organsystem/alienlarva/oldorgans)
+	organsystem = new/datum/organsystem/humanoid/alien/sentinel(src, oldorgans)
+
+	..(loc)
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
 	if (healths)

@@ -27,6 +27,7 @@
 	var/force_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
+	var/wielded_dismember_class = new /datum/dismember_class/cant_dismember
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
 	if(!wielded || !user) return
@@ -44,12 +45,16 @@
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 	if(O && istype(O))
 		O.unwield()
+	dismember_class = new /datum/dismember_class/cant_dismember
 	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded) return
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		return
+	if(!user.active_hand_exists(1))	//Checks for inactive hand, 1 means inverted
+		user << "<span class='warning'>You need don't have an other hand!</span>"
 		return
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need your other hand to be empty</span>"
@@ -65,6 +70,7 @@
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on the [name]"
 	user.put_in_inactive_hand(O)
+	dismember_class = wielded_dismember_class
 	return
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
@@ -156,6 +162,8 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+	wielded_dismember_class = new /datum/dismember_class/medium
+
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
@@ -198,6 +206,8 @@
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
+
+	wielded_dismember_class = new /datum/dismember_class/high/nobleed
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	item_color = pick("red", "blue", "green", "purple")
@@ -318,6 +328,8 @@
 	var/wield_cooldown = 0
 	var/max_fuel = 40
 //	bleedcap = 0 //You can bleed anytime bby
+
+	wielded_dismember_class = new/datum/dismember_class/high/
 
 /obj/item/weapon/twohanded/chainsaw/New()
 	..()

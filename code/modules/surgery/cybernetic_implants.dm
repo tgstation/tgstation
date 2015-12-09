@@ -1,24 +1,23 @@
-#define MAX_BRAIN_IMPLANT	2
-#define MAX_CHEST_IMPLANT	3
+//Handled in organ_manipulation.dm
 
 /datum/surgery_step/organ/internal/cyberimp/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/cyberimp/implant, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to implant [target] with [implant].</span>")
 
 //[[[[EYES]]]]
-/datum/surgery/organ/internal/cyberimp/eyes
+/datum/surgery/organ/internal/eyes/cyberimp
 	name = "eye cybernetic implant"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/organ/internal/cyberimp/eyes, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/organ/internal/eyes/cyberimp, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	possible_locs = list("eyes")
 
-/datum/surgery_step/organ/internal/cyberimp/eyes
+/datum/surgery_step/organ/internal/eyes/cyberimp
 	name = "insert eye cybernetic implant"
-	implements = list(/obj/item/organ/internal/cyberimp/eyes = 100)
+	implements = list(/obj/item/organ/internal/eyes/cyberimp = 100)
 	time = 32
 
-/datum/surgery_step/organ/internal/cyberimp/eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/cyberimp/eyes/implant, datum/surgery/surgery)
+/datum/surgery_step/organ/internal/eyes/cyberimp/success(mob/user, mob/living/carbon/target, target_zone, obj/item/organ/internal/eyes/cyberimp/implant, datum/surgery/surgery)
 	if(implant)
 		var/full = 0
-		if(locate(/obj/item/organ/internal/cyberimp/eyes,target.internal_organs))
+		if(locate(/obj/item/organ/internal/eyes/cyberimp,target.internal_organs))
 			full = 1
 		insert(user,target,implant,target_zone,full)
 		return 1
@@ -81,4 +80,3 @@
 		user.visible_message("<span class='notice'>[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!</span>")
 		user.drop_item()
 		implant.Insert(target)
-

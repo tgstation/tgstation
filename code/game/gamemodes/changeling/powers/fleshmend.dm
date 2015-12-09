@@ -14,6 +14,11 @@
 			var/mob/living/carbon/human/H = user
 			H.restore_blood()
 			H.remove_all_embedded_objects()
+			for(var/organname in H.organsystem.organlist)
+				var/datum/organ/organdata = H.organsystem.organlist[organname]
+				if(!organdata.exists())
+					user << "<span class='notice'>We regrow our [organdata.name]</span>"
+					organdata.regenerate_organitem() //We regenerate lost organs.
 
 		for(var/i = 0, i<10,i++)
 			user.adjustBruteLoss(-10)

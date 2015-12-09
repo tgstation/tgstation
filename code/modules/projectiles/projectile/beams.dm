@@ -28,6 +28,8 @@
 	icon_state = "heavylaser"
 	damage = 50
 
+	dismember_class = new/datum/dismember_class/low/nobleed/
+
 /obj/item/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"

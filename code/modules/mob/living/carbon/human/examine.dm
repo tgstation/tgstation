@@ -7,6 +7,7 @@
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_His = "Its"
 	var/t_his = "its"
 	var/t_him = "it"
 	var/t_has = "has"
@@ -16,6 +17,7 @@
 
 	if( slot_w_uniform in obscured && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
+		t_His = "Their"
 		t_his = "their"
 		t_him = "them"
 		t_has = "have"
@@ -26,10 +28,12 @@
 		switch(gender)
 			if(MALE)
 				t_He = "He"
+				t_His = "His"
 				t_his = "his"
 				t_him = "him"
 			if(FEMALE)
 				t_He = "She"
+				t_His = "Her"
 				t_his = "her"
 				t_him = "her"
 
@@ -55,6 +59,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
+	else if(!exists("head"))
+		msg += "<span class='warning'>[t_His] head is missing!</span>\n"
 
 	//suit/armor
 	if(wear_suit)
@@ -83,6 +89,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
+	else if(!exists("l_arm"))
+		msg += "<span class='warning'>[t_His] left arm is missing!</span>\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -90,6 +98,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
+	else if(!exists("r_arm"))
+		msg += "<span class='warning'>[t_His] right arm is missing!</span>\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
@@ -122,6 +132,12 @@
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
+
+	if(!exists("l_leg"))
+		msg += "<span class='warning'>[t_His] left leg is missing!</span>\n"
+
+	if(!exists("r_leg"))
+		msg += "<span class='warning'>[t_His] right leg is missing!</span>\n"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))
@@ -173,7 +189,7 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(getorgan(/obj/item/organ/internal/brain))//Only perform these checks if there is no brain
+		if(exists("brain"))//Only perform these checks if there is a brain
 			if(suiciding)
 				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
@@ -217,9 +233,11 @@
 			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
 
 
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L.getDisplayName()]!</B>\n"
+	for(var/datum/organ/limb/LI in get_limbs())
+		if(LI.exists())
+			var/obj/item/organ/limb/L = LI.organitem
+			for(var/obj/item/I in L.embedded_objects)
+				msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [L]!</B>\n"
 
 
 	if(fire_stacks > 0)
@@ -252,7 +270,7 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(getorgan(/obj/item/organ/internal/brain))
+		if(exists("brain"))
 			if(istype(src,/mob/living/carbon/human/interactive))
 				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)
@@ -266,8 +284,11 @@
 
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/internal/cyberimp/eyes/hud)
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
+		var/datum/organ/internal/eyes/EY= H.get_organ("eyes")
+		var/obj/item/organ/internal/eyes/cyberimp/hud/CIH = null
+		if(EY && EY.exists())
+			CIH = EY.organitem
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || (CIH && istype(CIH, /obj/item/organ/internal/eyes/cyberimp/hud)))
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
@@ -275,10 +296,11 @@
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/eyes/cyberimp/hud/medical))
 					var/implant_detect
-					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+					for(var/datum/organ/internal/cyberimp/CI in get_all_internal_organs())
+						if(CI.exists())
+							implant_detect += "[name] is modified with a [CI.organitem.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect
@@ -292,7 +314,7 @@
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
 
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/security))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/internal/eyes/cyberimp/hud/security))
 					if(!user.stat && user != src)
 					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"

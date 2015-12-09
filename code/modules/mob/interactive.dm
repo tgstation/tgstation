@@ -82,7 +82,7 @@
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
 	underwear = random_underwear(gender)
-	skin_tone = random_skin_tone()
+	set_skin_tone(random_skin_tone())
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
@@ -129,39 +129,39 @@
 	src.equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_sel = new /obj/screen/zone_sel()
 	zone_sel.selecting = "chest"
-	if(prob(10)) //my x is augmented
+/*	if(prob(10)) //my x is augmented	//Disabled this shite for now
 		//arms
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
-			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
+			var/obj/item/organ/limb/arm/r_arm/R = locate(/obj/item/organ/limb/arm/r_arm) in organs
 			del(R)
-			organs += new /obj/item/organ/limb/robot/r_arm
+			organs += new /obj/item/organ/limb/arm/r_arm/
 		else
-			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
+			var/obj/item/organ/limb/arm/l_arm/L = locate(/obj/item/organ/limb/arm/l_arm) in organs
 			del(L)
-			organs += new /obj/item/organ/limb/robot/l_arm
+			organs += new /obj/item/organ/limb/arm/l_arm/robot
 		//legs
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
-			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
+			var/obj/item/organ/limb/leg/r_leg/R = locate(/obj/item/organ/limb/leg/r_leg) in organs
 			del(R)
-			organs += new /obj/item/organ/limb/robot/r_leg
+			organs += new /obj/item/organ/limb/leg/r_leg/robot
 		else
-			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
+			var/obj/item/organ/limb/leg/l_leg/L = locate(/obj/item/organ/limb/leg/l_leg) in organs
 			del(L)
-			organs += new /obj/item/organ/limb/robot/l_leg
+			organs += new /obj/item/organ/limb/leg/l_leg/robot
 		//chest and head
 		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
 			del(R)
-			organs += new /obj/item/organ/limb/robot/chest
+			organs += new /obj/item/organ/limb/chest/robot
 		else
 			var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
 			del(L)
-			organs += new /obj/item/organ/limb/robot/head
+			organs += new /obj/item/organ/limb/head/robot
 		for(var/obj/item/organ/limb/LIMB in organs)
-			LIMB.owner = src
+			LIMB.owner = src*/
 	update_icons()
 	update_damage_overlays(0)
-	update_augments()
+	update_body_parts()
 
 	hand = 0
 

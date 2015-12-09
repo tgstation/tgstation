@@ -1,3 +1,12 @@
+/mob/living/carbon/New()
+	if(organsystem)
+		organsystem.set_owner(src)
+		for(var/datum/organ/internal/OR in get_all_internal_organs())
+			if(OR.exists())
+				var/obj/item/organ/internal/OI = OR.organitem
+				OI.on_insertion()
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -13,8 +22,7 @@
 	med_hud_set_status()
 
 /mob/living/carbon/Destroy()
-	for(var/atom/movable/guts in internal_organs)
-		qdel(guts)
+	qdel(organsystem)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
@@ -73,6 +81,12 @@
 			stomach_contents.Remove(M)
 		M.loc = loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+	if(organsystem)
+		for(var/datum/organ/limb/limbdata in get_limbs())
+			if(limbdata.name != "head")	//Since gibbing usually destroys the brain
+				var/obj/item/organ/limb/O = limbdata.dismember(ORGAN_DESTROYED)
+				if(O)
+					O.streak()
 	. = ..()
 
 
@@ -278,9 +292,11 @@
 		item.throw_at(target, item.throw_range, item.throw_speed)
 
 /mob/living/carbon/can_use_hands()
-	if(handcuffed)
-		return 0
 	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
+		return 0
+	if(handcuffed)
+		if(organsystem)
+			return (exists("l_arm") && exists("r_arm")) //Handcuffs only work if you have 2 hands.
 		return 0
 	return 1
 
@@ -612,13 +628,16 @@ var/const/GALOSHES_DONT_HELP = 8
 
 
 /mob/living/carbon/emp_act(severity)
-	for(var/obj/item/organ/internal/O in internal_organs)
-		O.emp_act(severity)
+	for(var/datum/organ/internal/O in get_all_internal_organs())
+		if(O.exists())
+			O.organitem.emp_act(severity)
 	..()
 
 /mob/living/carbon/check_eye_prot()
 	var/number = ..()
-	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+	var/datum/organ/internal/eyes/EY = get_organ("eyes")
+	if(EY && EY.exists())
+		var/obj/item/organ/internal/eyes/EFP = EY.organitem
 		number += EFP.flash_protect
 	return number
 
@@ -676,7 +695,8 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		var/datum/organ/internal/alien/plasmavessel/vessel = get_organ("plasmavessel")
+		if(vessel && vessel.exists())
+			var/obj/item/organ/internal/alien/plasmavessel/PV = vessel.organitem
+			stat(null, "Plasma Stored: [PV.storedPlasma]/[PV.max_plasma]")
 	add_abilities_to_panel()

@@ -8,16 +8,18 @@
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(var/mob/user)
 	var/datum/mind/M = user.mind
-	var/list/organs = user.getorganszone("head", 1)
+	var/list/organs = user.get_internal_organs("head")
+	var/list/organitems
 
-	for(var/obj/item/organ/internal/I in organs)
-		I.Remove(user, 1)
+	for(var/datum/organ/internal/I in organs)
+		organitems += I.organitem
+		I.dismember(ORGAN_DESTROYED)
 
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	var/turf = get_turf(user)
 	spawn(5) // So it's not killed in explosion
 		var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
-		for(var/obj/item/organ/internal/I in organs)
+		for(var/obj/item/organ/internal/I in organitems)
 			I.loc = crab
 		crab.origin = M
 		if(M)

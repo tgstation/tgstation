@@ -355,17 +355,19 @@
 			. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
-			if(prob(I.embedded_pain_chance))
-				L.take_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
+	for(var/datum/organ/limb/organdata in get_limbs())
+		if(organdata.exists())
+			var/obj/item/organ/limb/L = organdata.organitem
+			for(var/obj/item/I in L.embedded_objects)
+				if(prob(I.embedded_pain_chance))
+					L.take_damage(I.w_class*I.embedded_pain_multiplier)
+					src << "<span class='userdanger'>\the [I] embedded in your [L] hurts!</span>"
 
-			if(prob(I.embedded_fall_chance))
-				L.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
-				L.embedded_objects -= I
-				I.loc = get_turf(src)
-				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
+				if(prob(I.embedded_fall_chance))
+					L.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
+					L.embedded_objects -= I
+					I.loc = get_turf(src)
+					visible_message("<span class='danger'>\the [I] falls out of [name]'s [L]!</span>","<span class='userdanger'>\the [I] falls out of your [L]!</span>")
 
 /mob/living/carbon/human/handle_heart()
 	if(!heart_attack)
@@ -405,7 +407,7 @@
 		ghost << "<span class='ghostalert'>Your feel a fire burning in your body. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 		ghost << 'sound/effects/genetics.ogg'
 		revivalnotification = 1
-	if(!get_ghost() && getorgan(/obj/item/organ/internal/brain))
+	if(!get_ghost() && exists("brain"))
 		revivalnotification = 0
 		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
 		bodytemperature = temperature
@@ -422,7 +424,7 @@
 		stat = UNCONSCIOUS
 		if(disabilities & HUSK)
 			disabilities &= ~HUSK
-		update_base_icon_state()
+		//update_base_icon_state()
 		dead_mob_list -= src
 		living_mob_list |= list(src)
 		emote("gasp")
