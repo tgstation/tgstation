@@ -254,9 +254,11 @@
 	if(!active)
 		active = 1
 		process()
+		processing_objects += src
 		to_chat(usr,"<span class='notice'>You activate the pinpointer</span>")
 	else
 		active = 0
+		processing_objects -= src
 		icon_state = "pinoff"
 		to_chat(usr,"<span class='notice'>You deactivate the pinpointer</span>")
 
