@@ -14,6 +14,8 @@
 	speed = 0
 	maxHealth = 80
 	health = 80
+	stat_attack = 1
+	robust_searching = 1
 
 	harm_intent_damage = 10
 	melee_damage_lower = 15
