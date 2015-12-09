@@ -35,10 +35,11 @@
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(num_stored_bags < 10)
+			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
 			qdel(W)
 			W = null
 			num_stored_bags += 1
-			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
+			return 1
 		else
 			to_chat(user, "<span class='warning'>The core sampler can not fit any more bags!</span>")
 	else
