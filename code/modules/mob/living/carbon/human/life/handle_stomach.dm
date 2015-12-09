@@ -72,8 +72,8 @@
 
 					visible_message("<span class='danger'>\The [src] starts having a seizure!</span>", \
 							"<span class='warning'>You have a seizure!</span>")
-					Paralyse(2.5)
-					Jitter(250)
+					Paralyse(5)
+					Jitter(500)
 					adjustOxyLoss(rand(1,25))
 					eye_blurry += 20
 
