@@ -1,19 +1,30 @@
 {
   "name": "nanoui",
-  "version": "0.3.0",
+  "private": true,
+  "dependencies": {
+    "autoprefixer": "^6.1.2",
+    "coffeelint-stylish": "^0.1.2",
+    "cssnano": "^3.4.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-dot-precompiler": "git+https://github.com/kentliau/gulp-dot-precompiler.git",
+    "gulp-header": "^1.7.1",
+    "gulp-if": "^2.0.0",
+    "gulp-jsbeautifier": "^1.0.1",
+    "gulp-less": "^3.0.5",
+    "gulp-postcss": "^6.0.1",
+    "gulp-replace": "^0.5.4",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "main-bower-files": "^2.9.0",
+    "merge-stream": "^1.0.0",
+    "postcss-clearfix": "^0.2.0",
+    "postcss-url": "^5.0.2"
+  },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-concurrent": "^2.1.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-imagemin": "^1.0.0",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-contrib-less": "^1.1.0",
-    "grunt-contrib-uglify": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-dot": "git+ssh://git@github.com/neersighted/grunt-dot.git",
-    "grunt-lesslint": "^2.0.0",
-    "grunt-newer": "^1.1.1",
-    "less-plugin-autoprefix": "^1.5.1",
-    "less-plugin-clean-css": "^1.5.1"
+    "gulp-csscomb": "^3.0.6",
+    "gulp-filter": "^3.0.1"
   }
 }

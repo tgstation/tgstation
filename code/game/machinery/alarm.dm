@@ -80,12 +80,13 @@
 
 	// breathable air according to human/Life()
 	var/list/TLV = list(
-		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
-		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
+		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
+		"temperature"    = new/datum/tlv(T0C,T0C+10,T0C+40,T0C+66), // K
 	)
 
 /*
@@ -96,22 +97,24 @@
 /obj/machinery/alarm/server
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1, -1,-1,-1), /* kpa */
-		"temperature"    = new/datum/tlv(-1, -1,-1,-1), // K
+		"oxygen"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1,-1,-1,-1), /* kpa */
+		"temperature"    = new/datum/tlv(-1,-1,-1,-1), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room
 	TLV = list(
-		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
-		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
+		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
+		"temperature"    = new/datum/tlv(200,210,273.15,283.15), // K
 	)
 
 //all air alarms in area are connected via magic
@@ -253,7 +256,7 @@
 	if(!location)
 		return
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
+	var/total = environment.oxygen + environment.nitrogen + environment.carbon_dioxide + environment.toxins
 
 	var/list/environment_data = list()
 	data["atmos_alarm"] = alarm_area.atmosalm
@@ -272,9 +275,13 @@
 		var/oxygen_danger = cur_tlv.get_danger_level(environment.oxygen*partial_pressure)
 		environment_data += list(list("name" = "Oxygen", "value" = environment.oxygen / total * 100, "unit" = "%", "danger_level" = oxygen_danger))
 
+		cur_tlv = TLV["nitrogen"]
+		var/nitrogen_danger = cur_tlv.get_danger_level(environment.nitrogen*partial_pressure)
+		environment_data += list(list("name" = "Nitrogen", "value" = environment.nitrogen / total * 100, "unit" = "%", "danger_level" = nitrogen_danger))
+
 		cur_tlv = TLV["carbon dioxide"]
 		var/carbon_dioxide_danger = cur_tlv.get_danger_level(environment.carbon_dioxide*partial_pressure)
-		environment_data += list(list("name" = "Carbon dioxide", "value" = environment.carbon_dioxide / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
+		environment_data += list(list("name" = "Carbon Dioxide", "value" = environment.carbon_dioxide / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
 
 		cur_tlv = TLV["plasma"]
 		var/plasma_danger = cur_tlv.get_danger_level(environment.toxins*partial_pressure)
@@ -290,6 +297,7 @@
 		cur_tlv = TLV["temperature"]
 		var/temperature_danger = cur_tlv.get_danger_level(environment.temperature)
 		environment_data += list(list("name" = "Temperature", "value" = environment.temperature, "unit" = "K ([round(environment.temperature - T0C, 0.1)]C)", "danger_level" = temperature_danger))
+
 		data["environment_data"] = environment_data
 
 /obj/machinery/alarm/proc/populate_controls(list/data)
@@ -312,7 +320,7 @@
 						"incheck"	= info["checks"]&2,
 						"direction"	= info["direction"],
 						"external"	= info["external"],
-						"default"	= (info["external"] == ONE_ATMOSPHERE)
+						"extdefault"= (info["external"] == ONE_ATMOSPHERE)
 					))
 		if(AALARM_SCREEN_SCRUB)
 			data["scrubbers"] = list()

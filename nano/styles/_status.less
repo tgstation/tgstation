@@ -1,0 +1,12 @@
+@import "_config";
+@import "_util";
+
+
+.statusicon {
+    width: 24px;
+    height: 24px;
+    background-image: url('statusicon.png');
+    &.good { background-position: 0 0; }
+    &.average { background-position: 0 -24px; }
+    &.bad { background-position: 0 -48px; }
+}

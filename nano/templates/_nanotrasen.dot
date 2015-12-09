@@ -1,9 +1,9 @@
-<div id='title' unselectable='on'>
-	<div id='statusicon' class='good' unselectable="on"></div>
-	<div id='titletext' unselectable='on'>{{=config.title}}</div>
-	<div id='titlelogo' unselectable='on'></div>
-</div>
+<header role='titlebar' unselectable='on'>
+	<div class='statusicon good' unselectable="on"></div>
+	<div class='title' unselectable='on'>{{=config.title}}</div>
+	<div class='logo' unselectable='on'></div>
+</header>
 
-<div id='content' unselectable='on'>
-	<div id='loading'>Initiating...</div>
+<div id='content' class='content' unselectable='on'>
+	<div class='loading'>Initiating...</div>
 </div>

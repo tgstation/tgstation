@@ -1,0 +1,45 @@
+@import "_config";
+@import "_util";
+@import "_document";
+@import "_common";
+@import "_interface";
+@import "_link";
+@import "_bar";
+@import "_status";
+
+
+body {
+    background: @background url('background_nanotrasen.png') 50% 0 repeat-x;
+}
+
+header[role="titlebar"] {
+    position: relative;
+    height: 30px;
+
+    .statusicon {
+        position: absolute;
+        top: 4px;
+        left: 12px;
+    }
+
+    .title {
+        position: absolute;
+        top: 6px;
+        left: 44px;
+        height: 24px;
+        width: 66%;
+
+        color: @title;
+        font-size: 16px;
+    }
+
+    .logo {
+        position: absolute;
+        top: 4px;
+        right: 12px;
+
+        width: 42px;
+        height: 24px;
+        background: url('logo_nanotrasen.png') 50% 50% no-repeat;
+    }
+}

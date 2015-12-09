@@ -1,0 +1,53 @@
+@import "_config";
+@import "_util";
+
+
+.active(@color) {
+    background-color: @color;
+    &:hover {
+        background-color: lighten(@color, @hover);
+    }
+}
+
+
+// Basic Link (Button) Element
+.link {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 22px;
+    margin: 1px;
+    padding: 2px 3px;
+    white-space: nowrap;
+
+    border: 1px solid @border;
+
+	cursor: default; // This is a 'button,' not a link.
+    .fontReset; // Reset font settings.
+
+    // Tweak spacing to fit icons.
+    .iconed { padding-left: 3px; }
+    i { margin-right: 3px; }
+    // Swap icons when state goes to pending.
+    i.main { display: inline-block; }
+    i.pending { display: none; }
+    &.pending {
+        i.main { display: none; }
+        i.pending { display: inline-block; }
+    }
+
+    // Link colors:
+    background-color: @normal;
+    &.active {
+        .active(@normal);
+        &.selected { .active(@selected); }
+        &.caution { .active(@caution); }
+    	&.danger { .active(@danger); }
+    }
+    &.inactive {
+        background-color: @disabled;
+        &.selected { background-color: @selected; }
+        &.caution { background-color: @caution; }
+    	&.danger { background-color: @danger; }
+    }
+    &.disabled { background-color: @disabled; }
+}

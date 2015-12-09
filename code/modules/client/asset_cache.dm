@@ -219,28 +219,21 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
+/datum/asset/simple/nanoui
+	assets = list(
+		"app.js"					= 'nano/assets/app.js',
+		"lib.js"					= 'nano/assets/lib.js',
+		"templates.js"				= 'nano/assets/templates.js',
+		"generic.css"				= 'nano/assets/generic.css',
+		"lib.css"					= 'nano/assets/lib.css',
+		"nanotrasen.css"			= 'nano/assets/nanotrasen.css',
+		"fontawesome-webfont.eot"	= 'nano/assets/fontawesome-webfont.eot',
+		"fontawesome-webfont.woff"	= 'nano/assets/fontawesome-webfont.woff',
+		"fontawesome-webfont.woff2"	= 'nano/assets/fontawesome-webfont.woff2'
+	)
+
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()
 	for(var/path in typesof(/datum/html_interface))
 		var/datum/html_interface/hi = new path()
 		hi.registerResources()
-
-/datum/asset/nanoui
-	var/list/assets = list()
-
-	var/list/asset_dirs = list(
-		"nano/compiled/"
-	)
-
-/datum/asset/nanoui/register()
-	// Crawl the directories to find files.
-	for (var/path in asset_dirs)
-		var/list/filenames = flist(path)
-		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
-				if(fexists(path + filename))
-					assets[filename] = fcopy_rsc(path + filename)
-					register_asset(filename, assets[filename])
-
-/datum/asset/nanoui/send(client)
-	send_asset_list(client, assets)

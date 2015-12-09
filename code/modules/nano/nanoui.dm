@@ -80,7 +80,7 @@
 		master_ui.children += src
 	src.state = state
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/nanoui)
 	assets.send(user)
 
  /**
@@ -253,29 +253,14 @@
 /datum/nanoui/proc/get_html()
 	// Generate <script> and <link> tags.
 	var/script_html = {"
-<!--\[if IE 8]>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'></script>
-<script type='text/javascript' src='https//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.6/ie8.js'></script>
-<!\[endif]-->
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dom4/1.5.2/dom4.js'></script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.3.1/es5-shim.min.js'></script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/eddy/0.7.0/eddy.dom.js'></script>
-<script type='text/javascript' src='https://cdn.rawgit.com/Mikhus/jsurl/master/url.min.js'></script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js'></script>
-<script type='text/javascript' src='templates.min.js'></script>
-<script type='text/javascript' src='nanoui.min.js'></script>
+<script type='text/javascript' src='lib.js'></script>
+<script type='text/javascript' src='app.js'></script>
+<script type='text/javascript' src='templates.js'></script>
 	"}
 	var/stylesheet_html = {"
-<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css' />
-<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
-<link rel='stylesheet' type='text/css' href='_[layout].css' />
+<link rel='stylesheet' type='text/css' href='lib.css' />
+<link rel='stylesheet' type='text/css' href='[layout].css' />
 	"}
-
-	// Generate template JSON.
-	var/template_data_json = "{}"
-//	if (templates.len > 0)
-//		template_data_json = list2json(templates)
 
 	// Generate data JSON.
 	var/list/send_data = get_send_data(initial_data)
@@ -292,24 +277,21 @@
 		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		<script type='text/javascript'>
 			function receiveUpdate(dataString) {
-				"use strict";
-				if (typeof nanoui !== 'undefined') {
-					nanoui.emit('serverUpdate', dataString);
+				if (typeof NanoBus !== 'undefined') {
+					NanoBus.emit('serverUpdate', dataString);
 				}
 			};
 		</script>
 		[stylesheet_html]
 		[script_html]
 	</head>
-	<body id='body' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]' data-url-parameters='[url_parameters_json]'>
+	<body>
+		<div id='data' data-initial='[initial_data_json]' data-url-parameters='[url_parameters_json]'></div>
 		<div id='layout'></div>
 		<noscript>
-			<div id='noscript'>
-				<h1>Javascript Required</h1>
-				<hr />
-				<p>Javascript is required in order to use this NanoUI interface.</p>
-				<p>Please enable Javascript in Internet Explorer, and restart your game.</p>
-			</div>
+			<h1>Javascript Required</h1>
+			<p>Javascript is required in order to use this NanoUI interface.</p>
+			<p>Please enable Javascript in Internet Explorer, and restart your game.</p>
 		</noscript>
 	</body>
 </html>

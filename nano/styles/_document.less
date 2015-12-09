@@ -1,0 +1,33 @@
+@import "_config";
+@import "_util";
+
+
+body {
+    padding: 0;
+    margin: 0;
+
+    font-family: @font;
+    font-size: @fontsize;
+    color: @text;
+
+    background: @background;
+}
+
+h1 {
+    font-size: @fontsize + 6px;
+    margin: 0;
+    padding: 6px 0;
+}
+h2 {
+    &:extend(h1);
+    font-size: @fontsize + 4px;
+}
+h3 {
+    &:extend(h1);
+    font-size: @fontsize + 2px;
+}
+
+hr {
+    background-color: @rule;
+    border: none;
+}
