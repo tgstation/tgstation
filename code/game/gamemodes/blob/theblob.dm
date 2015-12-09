@@ -2,7 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
-	luminosity = 3
+	luminosity = 1
 	desc = "A thick wall of writhing tendrils."
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
@@ -25,11 +25,16 @@
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
-	for(var/atom/A in loc)
-		A.blob_act()
+	ConsumeTile()
 	return
 
 /obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
+	return
+
+/obj/effect/blob/update_icon() //Blobs use update icon for health checks
+	if(health <= 0)
+		qdel(src)
+		return
 	return
 
 /obj/effect/blob/Destroy()
@@ -61,6 +66,10 @@
 /obj/effect/blob/proc/Life()
 	return
 
+/obj/effect/blob/proc/ConsumeTile()
+	for(var/atom/A in loc)
+		A.blob_act()
+
 /obj/effect/blob/proc/PulseAnimation()
 	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
 		flick("[icon_state]_glow", src)
@@ -86,7 +95,7 @@
 	set background = BACKGROUND_ENABLED
 
 	PulseAnimation()
-
+	ConsumeTile()
 	RegenHealth()
 
 	if(run_action())//If we can do something here then we dont need to pulse more
@@ -168,11 +177,6 @@
 	take_damage(Proj.damage, Proj.damage_type)
 	return 0
 
-/obj/effect/blob/Crossed(mob/living/L)
-	..()
-	L.blob_act()
-
-
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -188,7 +192,7 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, BRUTE)
+	take_damage(damage, M.melee_damage_type)
 	return
 
 /obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -248,9 +252,8 @@
 	brute_resist = 4
 
 /obj/effect/blob/normal/update_icon()
-	if(health <= 0)
-		qdel(src)
-	else if(health <= 10)
+	..()
+	if(health <= 10)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
@@ -260,17 +263,3 @@
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
 		brute_resist = 4
-
-/* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
-
-var/datum/blob_colour/B = new()
-
-/datum/blob_colour/New()
-	..()
-	var/icon/I = 'icons/mob/blob.dmi'
-	I += rgb(35, 35, 0)
-	if(isfile("icons/mob/blob_result.dmi"))
-		fdel("icons/mob/blob_result.dmi")
-	fcopy(I, "icons/mob/blob_result.dmi")
-
-*/
