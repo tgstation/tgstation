@@ -1,3 +1,7 @@
+#define SINGLE "single"
+#define VERTICAL "vertical"
+#define HORIZONTAL "horizontal"
+
 //Barricades/cover
 
 /obj/structure/barricade
@@ -124,29 +128,32 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	var/mode = "single"
+	var/mode = SINGLE
 
-/obj/item/weapon/grenade/barrier/AltClick()
+/obj/item/weapon/grenade/barrier/AltClick(mob/user)
 	..()
 	switch(mode)
-		if("single")
-			mode = "vertical"
-		if("vertical")
-			mode = "horizantal"
-		if("horizantal")
-			mode = "single"
+		if(SINGLE)
+			mode = VERTICAL
+		if(VERTICAL)
+			mode = HORIZONTAL
+		if(HORIZONTAL)
+			mode = SINGLE
 
-	if(ismob(loc))
-		var/mob/M = loc
-		M << "[src] is now in [mode] mode."
+	user << "[src] is now in [mode] mode."
 
 /obj/item/weapon/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
-		if("vertical")
+		if(VERTICAL)
 			new /obj/structure/barricade/security(get_step(src, NORTH))
 			new /obj/structure/barricade/security(get_step(src, SOUTH))
-		if("horizantal")
+		if(HORIZONTAL)
 			new /obj/structure/barricade/security(get_step(src, EAST))
 			new /obj/structure/barricade/security(get_step(src, WEST))
 	qdel(src)
+
+
+#undef SINGLE
+#undef VERTICAL
+#undef HORIZONTAL
