@@ -241,12 +241,12 @@
 	return
 
 /obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
+	status = !status
 	if(can_use())
 		cameranet.addCamera(src)
 	else
 		SetLuminosity(0)
 		cameranet.removeCamera(src)
-	status = !status
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(!status)

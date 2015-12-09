@@ -60,7 +60,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
@@ -93,9 +93,9 @@
 
 
 /obj/attack_ghost(mob/user)
+	if(ui_interact(user) != -1)
+		return
 	..()
-	ui_interact(user)
-
 /obj/proc/interact(mob/user)
 	return
 

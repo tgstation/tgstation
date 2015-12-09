@@ -721,6 +721,8 @@
 
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
+	if (IsAdminGhost(user))
+		return 1
 	if (user.stat)
 		user << "<span class='warning'>You must be conscious to use [src]!</span>"
 		return 0

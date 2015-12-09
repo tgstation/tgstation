@@ -225,7 +225,7 @@ Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user)|| IsAdminGhost(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"))
 	return dat

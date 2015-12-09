@@ -640,6 +640,50 @@ var/global/list/rockTurfEdgeCache
 		t.updateMineralOverlays()
 
 
+
+
+
+
+
+
+//////////////CHASM//////////////////
+
+/turf/simulated/chasm
+	name = "chasm"
+	desc = "Watch your step."
+	baseturf = /turf/simulated/chasm
+	smooth = SMOOTH_TRUE
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
+	var/drop_x = 1
+	var/drop_y = 1
+	var/drop_z = 1
+
+
+/turf/simulated/chasm/Entered(atom/movable/AM)
+	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
+		return
+	drop(AM)
+
+
+/turf/simulated/chasm/proc/drop(atom/movable/AM)
+	visible_message("[AM] falls into [src]!")
+	AM.Move(locate(drop_x, drop_y, drop_z))
+	AM.visible_message("[AM] falls from above!")
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.adjustBruteLoss(30)
+
+
+
+/turf/simulated/chasm/straight_down/New()
+	..()
+	drop_x = x
+	drop_y = y
+	if(z+1 <= world.maxz)
+		drop_z = z+1
+
+
 #undef NORTH_EDGING
 #undef SOUTH_EDGING
 #undef EAST_EDGING

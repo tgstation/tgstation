@@ -60,7 +60,7 @@
 /proc/smooth_icon(atom/A)
 	if(qdeleted(A))
 		return
-	spawn(0) //don't remove this, otherwise smoothing breaks
+	spawn(1) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
 
