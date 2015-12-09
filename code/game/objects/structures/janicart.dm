@@ -293,6 +293,8 @@
 				buckled_mob.pixel_x = -12
 				buckled_mob.pixel_y = 7
 
+//keys+attachables//
+
 /obj/item/key
 	name = "key"
 	desc = "A small grey key."
@@ -314,6 +316,8 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
 
+//secway//
+
 /obj/structure/bed/chair/janicart/secway
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
@@ -322,9 +326,16 @@
 	callme = "secway"
 	keytype = /obj/item/key/security
 
+/obj/structure/bed/chair/janicart/secway/update_mob()
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		buckled_mob.pixel_y = 4
+
+//atv//
+
 /obj/structure/bed/chair/janicart/atv
 	name = "atv"
-	desc = "An all-terrain vehicle built. The wheels have a special grip to help move on ice and in thick snow."
+	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "atv"
 	callme = "All-terrain vehicle"
@@ -334,10 +345,9 @@
 /obj/structure/bed/chair/janicart/atv/New()
 	atvcover = image("icons/obj/vehicles.dmi", "atvcover")
 	atvcover.layer = MOB_LAYER + 0.1
-
 	return ..()
 
-/obj/structure/bed/chair/janicart/atv/post_buckle_mob(mob/living/M)
+obj/structure/bed/chair/janicart/atv/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
 		overlays += atvcover
 	else
@@ -361,8 +371,3 @@
 			buckled_mob.buckled = src //Restoring
 
 	update_mob()
-
-/obj/structure/bed/chair/janicart/secway/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		buckled_mob.pixel_y = 4

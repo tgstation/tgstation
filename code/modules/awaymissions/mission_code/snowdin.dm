@@ -48,6 +48,11 @@
 	info = {"Holy shit, what a rush! Those Nanotrasen bastards didn't even know what hit 'em! All five of us dropped in right on the captain, didn't even have time to yell! We were in and out with that disk in mere minutes!
 	Crew didn't even know what was happening till the delta alert went down and by then were were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
 
+/obj/item/weapon/paper/crumpled/snowdin/keys
+	name = "scribbled note"
+	info = {"As a notice for anyone looking to borrow an ATV, some asshat lost the key set for all the vehicles. Nobody has yet to actually come forward about the potential where-abouts, either due to embarrassment or fear of
+	reprecussions. I hope they enjoy walking through that shit snow during the next shipment because I sure as hell ain't."}
+
 /obj/item/weapon/paper/snowdin/snowdinlog
 	name = "Activity Log"
 	info = {"<b><center>ACTIVITY LOG</b></center><br><br><b>June 3rd</b><br>We've moved to the main base in the valley finally, apparently establishing a listening system on a planet
@@ -77,11 +82,27 @@ obj/item/weapon/paper/snowdin/secnotice
 	 disciplined properly if found slacking. Food hording is heavily discouraged as all outposts will be sharing from the same shipment every 2-3 months. Hording of supplies
 	 should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to central and dealt with swiftly. You're here to secure and protect
 	 Nanotrasen assets, not be a police officer. Do what you must, but make sure its not messy."}
+
 obj/item/weapon/paper/snowdin/syndienotice
 	name = "Assignment Notice"
 	info = {"You've been assigned as an agent to listen in on Nanotrasen activities from passing ships and nearby stations. The outpost you've been assigned to is under lays of solid
 	ice and we've supplied you with a scrambler to help avoid Nanotrasen discovery, as they've recently built a listening post of their own aboveground. Get aquainted with your new
 	crewmates, because you're gonna be here for awhile. Enjoy the free syndicakes."}
+
+obj/item/weapon/paper/crumpled/snowdin/syndielava
+	name = "scribbled note"
+	info = {"Some cracks in the ice nearby have exposed some sort of hidden magma stream under all this shit ice. I don't know whats worse at this point honestly; freezing to death or
+	burning alive."}
+
+obj/item/weapon/paper/crumpled/snowdin/lootstructures
+	name = "scribbled note"
+	info = {"From what we've seen so far, theres a ton of iced over ruins down here in the caves. We sent a few men out to check things out and they never came back, so we decided to
+	border up majority of the ruins. We've heard some weird shit coming out of these caves and I'm not gonna find out the hard way myself."}
+
+obj/item/weapon/paper/crumpled/snowdin/shovel
+	name = "shoveling duties"
+	info = {"Snow piles up bad here all-year round, even worse during the winter months. Keeping a constant rotation of shoveling that shit out of the way of the airlocks and keeping the paths decently clear
+	is a good step towards not getting stuck walking through knee-deep snow."}
 
 //lootspawners//--
 
@@ -125,14 +146,14 @@ obj/item/weapon/paper/snowdin/syndienotice
 				/obj/item/weapon/grenade/spawnergrenade/manhacks = 6,
 				/obj/item/weapon/grenade/spawnergrenade/spesscarp = 7,
 				/obj/item/weapon/grenade/clusterbuster/inferno = 3,
-				/obj/item/stack/sheet/mineral/diamond{amount = 15} = 3,
-				/obj/item/stack/sheet/mineral/uranium{amount = 15} = 3,
-				/obj/item/stack/sheet/mineral/plasma{amount = 15} = 3,
-				/obj/item/stack/sheet/mineral/gold{amount = 15} = 3,
+				/obj/item/stack/sheet/mineral/diamond{amount = 15} = 10,
+				/obj/item/stack/sheet/mineral/uranium{amount = 15} = 10,
+				/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
+				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/weapon/spellbook/oneuse/barnyard = 4,
-				/obj/item/weapon/pickaxe/drill/diamonddrill = 3,
-				/obj/item/borg/upgrade/vtec = 3,
-				/obj/item/borg/upgrade/disablercooler = 3)
+				/obj/item/weapon/pickaxe/drill/diamonddrill = 6,
+				/obj/item/borg/upgrade/vtec = 7,
+				/obj/item/borg/upgrade/disablercooler = 7)
 
 
 /obj/effect/spawner/lootdrop/dungeonheavy
@@ -142,8 +163,8 @@ obj/item/weapon/paper/snowdin/syndienotice
 
 	loot = list(/obj/item/weapon/twohanded/singularityhammer = 20,
 				/obj/item/weapon/twohanded/mjollnir = 15,
-				/obj/item/weapon/twohanded/fireaxe = 30,
-				/obj/item/organ/internal/brain/alien = 23,
+				/obj/item/weapon/twohanded/fireaxe = 25,
+				/obj/item/organ/internal/brain/alien = 21,
 				/obj/item/weapon/twohanded/dualsaber = 14,
 				/obj/item/organ/internal/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
@@ -244,4 +265,14 @@ obj/item/weapon/paper/snowdin/syndienotice
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
+	color = rgb(114,228,250)
+
+//objs//--
+
+/obj/structure/flora/rock/icy
+	name = "icy rock"
+	color = rgb(114,228,250)
+
+/obj/structure/flora/rock/pile/icy
+	name = "icey rocks"
 	color = rgb(114,228,250)
