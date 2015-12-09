@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Security barricades now block gunfire 80% of the time while deployed."
-  - rscadd: "Standing adjacent to barricades will allow you to shoot over them."

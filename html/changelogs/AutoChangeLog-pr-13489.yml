@@ -1,4 +1,0 @@
-author: ktccd
-delete-after: True
-changes: 
-  - bugfix: "Blobs now require the correct amount of blobs to win that scales depending on number of blobs, instead of a set value of 700."

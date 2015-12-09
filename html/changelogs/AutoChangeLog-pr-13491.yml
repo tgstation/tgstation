@@ -1,5 +1,0 @@
-author: GunHog
-delete-after: True
-changes: 
-  - rscadd: "Ghosts may now use Diagnostic HUD."
-  - tweak: "Feedback added for which HUD is active."
