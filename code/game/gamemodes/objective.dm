@@ -1,7 +1,4 @@
-#define ABSTRACT_OBJECTIVES	 //better way of doing this? var on datum/objective?
-var/list/types_of_objectives =  - ABSTRACT_OBJECTIVES
-
-/datum/objective
+/datum/objective/
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
@@ -11,8 +8,7 @@ var/list/types_of_objectives =  - ABSTRACT_OBJECTIVES
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 	var/required_role = null			//If the objective can only be done by a certain role, such as absorb for changelings.
 	var/randomgen = 1					//Whether the objective can be generated randomly.
-	var/error_text = ""					//If the objective is impossible on creation (e.g. destroy the AI with no AIs on board)
-										//this text can be displayed. Useful for admin objective editing in mind/Topic().
+	var/error_text = ""					//Displayed to admins if the objective fails to initialize properly when editing or adding
 
 /proc/generate_objectives(var/datum/mind/M, var/objectives_made = 2, var/has_escape = TRUE)
 	var/list/objective_types = (typesof(/datum/objective/default) - /datum/objective/default)
@@ -35,11 +31,14 @@ var/list/types_of_objectives =  - ABSTRACT_OBJECTIVES
 			add_objective(M, holder_obj)
 
 
-/proc/add_objective(var/datum/mind/M, var/obj_path, var/announce_new_objectives = 0, var/replace_if_impossible = 1, var/text)
-	var/datum/objective/objective = new obj_path(text)
+/proc/add_objective(var/datum/mind/M, var/obj_path, var/announce_new_objectives = 0, var/replace_if_impossible = 1, var/admin=0)
+	var/datum/objective/objective = new obj_path()
 	objective.owner = M
 	M.objectives += objective
-	objective.find_target()
+	if(admin && check_rights(R_ADMIN))
+		objective.find_target_admin()
+	else
+		objective.find_target()
 
 	if(!objective.extra_prep())
 		if(replace_if_impossible)
@@ -77,14 +76,22 @@ var/list/types_of_objectives =  - ABSTRACT_OBJECTIVES
 /datum/objective/proc/get_target()
 	return target
 
-/datum/objective/proc/find_target()
+/datum/objective/proc/find_possible_targets()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in ticker.minds)
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
+	return possible_targets
+
+/datum/objective/proc/find_target()
+	var/list/possible_targets = find_possible_targets()
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
 	update_explanation_text()
+	return target
+
+/datum/objective/proc/find_target_admin()
+	target = input("Select target:", "Objective target") as null|anything in find_possible_targets()
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
@@ -452,12 +459,18 @@ var/global/list/possible_items = list()
 	if(!possible_items.len)//Only need to fill the list when it's needed.
 		init_subtypes(/datum/objective_item/steal,possible_items)
 
+/datum/objective/default/steal/find_possible_targets()
+	var/list/approved_targets = list()
+	if(check_rights(R_ADMIN))
+		approved_targets += select_target()
+	else
+		for(var/datum/objective_item/possible_item in possible_items)
+			if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
+				approved_targets += possible_item
+	return approved_targets
+
 /datum/objective/default/steal/find_target()
-	var/approved_targets = list()
-	for(var/datum/objective_item/possible_item in possible_items)
-		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
-			approved_targets += possible_item
-	return set_target(safepick(approved_targets))
+	return set_target(safepick(find_possible_targets()))
 
 /datum/objective/default/steal/proc/set_target(datum/objective_item/item)
 	if(item)
@@ -475,24 +488,27 @@ var/global/list/possible_items = list()
 /datum/objective/default/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
-	if (!new_target) return
+	if (!new_target)
+		return
 
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target) return
+		if (!custom_target)
+			return
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
-		if (!custom_name) return
+		if (!custom_name)
+			return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
 
-	else
-		set_target(new_target)
 	return steal_target
 
 /datum/objective/default/steal/check_completion()
-	if(!steal_target)	return 1
-	if(!isliving(owner.current))	return 0
+	if(!steal_target)
+		return 1
+	if(!isliving(owner.current))
+		return 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
 	for(var/obj/I in all_items) //Check for items
@@ -699,7 +715,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/default/destroy/extra_prep()
 	if(!target)
-			return 0
+		return 0
 	return 1
 
 /datum/objective/summon_guns
