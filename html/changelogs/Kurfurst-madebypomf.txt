@@ -1,0 +1,5 @@
+author: Kurfurst
+delete-after: True
+changes:
+  - rscadd: Added a built in radio to the AI that has a captain level encryption key.
+
