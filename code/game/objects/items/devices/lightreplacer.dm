@@ -172,14 +172,16 @@
 		if(cardboard_stor >= cardboard_stor_max)
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more cardboard!</span>")
 			return
+		var/obj/item/stack/sheet/cardboard/C = W
 		cardboard_stor++
-		to_chat(user, "<span class='notice'>You insert a cardboard sheet into /the [src].</span>")
+		C.use(1)
+		to_chat(user, "<span class='notice'>You insert a cardboard sheet into \the [src].</span>")
 		return
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	var/dat = {"<TITLE>Light Replacer Interface</TITLE>
 
-	Glass storage: [glass_stor]/[glass_stor_max]<br>"}
+	Glass storage: [glass_stor]/[glass_stor_max]<br>Cardboard Sheets: [cardboard_stor]/[cardboard_stor_max]<br>"}
 
 	if(supply)
 		dat += {"<a href='?src=\ref[src];build=tube'>Fabricate Tube</a>
@@ -215,7 +217,7 @@
 		dat += "<br><b><a href='?src=\ref[src];eject=supply'>Eject Supply Container</a></b>"
 
 	else
-		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a>"
+		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a><br><br>"
 
 	if(supply || waste)
 		dat += "<a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
@@ -270,10 +272,12 @@
 			light_types[lightname] += L
 
 		var/list/light_type_cur
-		var/list/to_dump_5 = list()//I guess I could do this without this variable, but it would include more string concatenation, and nobody wants that.
-		var/list/to_dump_all = list() //This too
+		var/list/to_dump_5//I guess I could do this without this variable, but it would include more string concatenation, and nobody wants that.
+		var/list/to_dump_all //This too
 	
 		for(var/T in light_types)
+			to_dump_5 = list()
+			to_dump_all = list()
 			light_type_cur = light_types[T] //The way you'd expect to be the good way to do this doesn't work. This is dumb, but necessary.
 			for(var/light_to_ref in light_type_cur)
 				to_dump_all += "\ref[light_to_ref]"
@@ -548,7 +552,7 @@
 					cardboard_stor--
 					if(usr)
 						to_chat(usr, "<span class='notice'>\The [src] constructs a new supply container.</span>")
-						attack_hand(usr)
+						attack_self(usr)
 					return 1
 			if("waste")
 				if(!waste) //Topic is technically asynchronous, I believe, so this sanity is a good idea
@@ -556,7 +560,7 @@
 					cardboard_stor--
 					if(usr)
 						to_chat(usr, "<span class='notice'>\The [src] constructs a new waste container.</span>")
-						attack_hand(usr)
+						attack_self(usr)
 					return 1
 
 /obj/item/device/lightreplacer/borg/Topic(href, href_list)
