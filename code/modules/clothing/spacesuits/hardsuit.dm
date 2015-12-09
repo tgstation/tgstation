@@ -428,3 +428,102 @@
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
+
+
+
+/////////////SHIELDED//////////////////////////////////
+
+/obj/item/clothing/suit/space/hardsuit/shielded
+	name = "shielded hardsuit"
+	desc = "A hardsuit with built in energy shielding. Will rapidly recharge when not under fire."
+	icon_state = "hardsuit-hos"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
+	var/current_charges = 3
+	var/max_charges = 3 //How many charges total the shielding has
+	var/recharge_delay = 200 //How long after we've been shot before we can start recharging. 20 seconds here
+	var/recharge_cooldown = 0 //Time since we've last been shot
+	var/recharge_rate = 1 //How quickly the shield recharges once it starts charging
+	var/SHIELD_STATE = "shield-old"
+	var/SHIELD_ON = "shield-old"
+
+/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(current_charges > 0)
+		var/datum/effect_system/spark_spread/s = new
+		s.set_up(2, 1, src)
+		s.start()
+		owner.visible_message("The [attack_text] sparks harmlessly off [owner]'s shields!")
+		current_charges--
+		recharge_cooldown = world.time + recharge_delay
+		if(current_charges <= 0)
+			owner.visible_message("[owner]'s shield overloads!")
+			SHIELD_STATE = "broken"
+			owner.update_inv_wear_suit()
+		return 1
+	return 0
+
+
+
+/obj/item/clothing/suit/space/hardsuit/shielded/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/clothing/suit/space/hardsuit/shielded/process()
+	if(world.time > recharge_cooldown && current_charges < max_charges)
+		current_charges = Clamp((current_charges + recharge_rate), 0, max_charges)
+		playsound(loc, 'sound/magic/Charge.ogg', 50, 1)
+		if(current_charges == max_charges)
+			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+		SHIELD_STATE = "[SHIELD_ON]"
+		if(istype(loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/C = loc
+			C.update_inv_wear_suit()
+
+
+
+/obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
+    . = list()
+    if(!isinhands)
+        . += image(icon = 'effects.dmi',icon_state = "[SHIELD_STATE]")
+
+
+
+///////////////Capture the Flag////////////////////
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf
+	name = "red shielded hardsuit"
+	desc = "Standard issue hardsuit for playing capture the flag."
+	icon_state = "hardsuit0-ert_security"
+	item_state = "hardsuit0-ert_security"
+	item_color = "ert_security"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/ctf
+	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	name = "blue shielded hardsuit"
+	desc = "Standard issue hardsuit for playing capture the flag."
+	icon_state = "ert_command"
+	item_state = "ert_command"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/ctf/blue
+	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
+
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/ctf
+	name = "shielded hardsuit helmet"
+	desc = "Standard issue hardsuit helmet for playing capture the flag."
+	icon_state = "hardsuit0-ert_security"
+	item_state = "hardsuit0-ert_security"
+	item_color = "ert_security"
+	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/ctf/blue
+	name = "shielded hardsuit helmet"
+	desc = "Standard issue hardsuit helmet for playing capture the flag."
+	icon_state = "hardsuit0-ert_commander"
+	item_state = "hardsuit0-ert_commander"
+	item_color = "ert_commander"
