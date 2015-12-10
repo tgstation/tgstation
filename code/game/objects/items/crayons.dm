@@ -147,7 +147,12 @@
 				C.update_body()
 				uses = max(0,uses-10) // this precludes unlimited uses. TODO: make a use() for crayons.
 			
-			if( istype(target, /obj/item/device/flashlight) || istype(target, /obj/machinery/light) )
+			var/list/paintable_lights = list( /obj/item/device/flashlight ,
+				/obj/machinery/light,
+				/obj/item/clothing/head/helmet/space/hardsuit ,
+				/obj/item/clothing/head/hardhat )
+			
+			if( is_type_in_list( target, paintable_lights ) )
 				user << "<span class='notice'>You begin to color \the [target]...</span>"
 				if(do_after(user, 20, target = target))
 					user.visible_message("<span class='danger'>[user] paints [target] a different color with [src]! </span>")
