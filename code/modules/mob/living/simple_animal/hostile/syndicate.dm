@@ -12,6 +12,7 @@
 	response_harm = "hits"
 	speed = 0
 	stat_attack = 1
+	robust_searching = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
