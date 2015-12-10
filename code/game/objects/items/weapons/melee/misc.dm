@@ -14,6 +14,7 @@
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/slash.ogg' //pls replace
+	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -138,6 +139,7 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
+	origin_tech = "combat=5;materials=3"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
