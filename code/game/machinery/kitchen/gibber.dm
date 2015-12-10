@@ -215,8 +215,10 @@ obj/machinery/gibber/New()
 /obj/machinery/gibber/proc/go_out()
 	if (!src.occupant)
 		return
-	for(var/obj/O in src)
-		O.loc = src.loc
+	for (var/atom/movable/x in src.contents)
+		if(x in component_parts)
+			continue
+		x.forceMove(src.loc)
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -361,4 +363,3 @@ obj/machinery/gibber/New()
 				O.New(Tx,i)
 		src.operating = 0
 		update_icon()
-

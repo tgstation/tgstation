@@ -42,7 +42,7 @@
 	if(!istype(target))
 		return
 	if(target.abiotic())
-		occupant_message("<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
+		occupant_message("<span class='notice'><B>Subject cannot have abiotic items on.</B></span>") //Leaving this one in for balance concerns
 	if(target.locked_to)
 		occupant_message("[target] will not fit into the sleeper because they are buckled to [target.locked_to].")
 		return
@@ -93,6 +93,9 @@
 	occupant = null
 	pr_mech_sleeper.stop()
 	set_ready_state(1)
+
+	chassis.empty_bad_contents()
+	
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
