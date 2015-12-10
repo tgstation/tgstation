@@ -15,7 +15,7 @@
 			continue
 		var/quality = rand(-5,5)
 		if(quality > 0)
-			I.name = "[pick(prefixespositive)] [I.name] of [pick(suffixes)] plus [quality]"
+			I.name = "[pick(prefixespositive)] [I.name] of [pick(suffixes)] +[quality]"
 		else if(quality < 0)
 			I.name = "[pick(prefixesnegative)] [I.name] of [pick(suffixes)] [quality]"
 		else

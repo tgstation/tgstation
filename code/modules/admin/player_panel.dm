@@ -431,6 +431,18 @@
 					dat += "<tr><td><i>Wizard not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.apprentices.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Apprentice</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/apprentice in ticker.mode.apprentices)
+				var/mob/M = apprentice.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><i>Apprentice not found!</i></td></tr>"
+			dat += "</table>"
+
 		if(ticker.mode.cult.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.cult)
