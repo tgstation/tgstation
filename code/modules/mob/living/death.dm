@@ -35,6 +35,12 @@
 	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
+	if(client && ismob(lastattacker)) //If they were murdered, increase the murderer's client kill count! We CoD now.
+		var/mob/M = lastattacker
+		if(M.client)
+			M.client.murders++ //Your LOVE increased.
+	if(client)
+		total_deaths++
 	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
 
