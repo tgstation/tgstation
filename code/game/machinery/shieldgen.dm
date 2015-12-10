@@ -502,7 +502,7 @@
 		needs_power = 1
 	for(var/mob/living/L in get_turf(src.loc))
 		visible_message("<span class='danger'>The [src] is suddenly occupying the same space as [L]'s organs!</span>")
-		L.adjustBruteLoss(1000)
+		L.gib()
 
 /obj/machinery/shieldwall/attack_hand(mob/user)
 	return
