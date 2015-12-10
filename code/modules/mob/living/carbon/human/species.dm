@@ -86,6 +86,14 @@
 	// PROCS //
 	///////////
 
+
+
+//Called when admins use the Set Species verb, let's species
+//do some init stuff on the mob that got SS'd if necessary
+/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
+	return
+
+
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
