@@ -139,7 +139,7 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
-	origin_tech = "combat=5;materials=3"
+	origin_tech = "combat=5;materials=6"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()

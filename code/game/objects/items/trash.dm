@@ -40,6 +40,7 @@
 /obj/item/trash/plate
 	name = "plate"
 	icon_state = "plate"
+	burn_state = -1 //Not Burnable
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
