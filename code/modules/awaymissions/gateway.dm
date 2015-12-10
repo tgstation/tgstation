@@ -238,10 +238,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		var/mob/living/L = M
 		for(var/obj/item/weapon/implant/exile/E in L)//Checking that there is an exile implant in the contents
 			if(E.imp_in == L)//Checking that it's actually implanted vs just in their pocket
-				L << "\black The station gate has detected your exile implant and is blocking your entry."
+				L << "The station gate has detected your exile implant and is blocking your entry."
 				return
 		if(L.mind && L.mind.exiled)
-			L << "\black The station gate is blocking your entry!"
+			L << "The station gate is blocking your entry!"
 			return
 	M.loc = get_step(stationgate.loc, SOUTH)
 	M.dir = SOUTH
