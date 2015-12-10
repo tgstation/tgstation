@@ -862,9 +862,9 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			if(H.l_hand && !istype(H.l_hand, /obj/item/clothing))
+			if(H.l_hand)
 				. += H.l_hand.slowdown
-			if(H.r_hand && !istype(H.r_hand, /obj/item/clothing))
+			if(H.r_hand)
 				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))
