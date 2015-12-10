@@ -1148,8 +1148,8 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut)
-	return !density || (check_access(ID) && !locked)
+//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
 	for (var/obj/A in contents)
