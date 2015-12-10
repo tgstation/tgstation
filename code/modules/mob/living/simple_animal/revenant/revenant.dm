@@ -42,6 +42,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 0
 	unique_name = 1
+	gateway_leave = 0
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.

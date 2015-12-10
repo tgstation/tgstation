@@ -132,9 +132,18 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
-	if(!ready)		return
-	if(!active)		return
-	if(!awaygate)	return
+	if(!ready)
+		return
+	if(!active)
+		return
+	if(!awaygate)
+		return
+
+	if(isliving(M))
+		var/mob/living/L = M
+		if(!L.gateway_leave) //sorry, but you aren't getting out this way.
+			L << "<span class='warning'>The portal flickers as you attempt to move through it, preventing you from leaving this place.</span>"
+			return
 
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
@@ -151,7 +160,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
-		user << "\black The gate is already calibrated, there is no work for you to do here."
+		user << "<span class='notice'>The gate is already calibrated, there is no work for you to do here.</span>"
 		return
 
 /////////////////////////////////////Away////////////////////////
@@ -200,8 +209,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
-	if(!ready)			return
-	if(linked.len != 8)	return
+	if(!ready)
+		return
+	if(linked.len != 8)
+		return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
