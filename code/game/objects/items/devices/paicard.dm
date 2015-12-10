@@ -128,7 +128,8 @@
 			if(10) src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/alertUpdate()
-	audible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
+	world << "damn you its broken"
+	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/device/paicard/emp_act(severity)
 	if(pai)
