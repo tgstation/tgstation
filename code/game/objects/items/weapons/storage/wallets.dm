@@ -4,7 +4,6 @@
 	storage_slots = 4
 	icon_state = "wallet"
 	w_class = 2
-	burn_state = 0 //Burnable
 	can_hold = list(
 		/obj/item/weapon/spacecash,
 		/obj/item/weapon/card,
@@ -90,6 +89,8 @@
 	var/item2_type
 	if(prob(50))
 		item2_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+	else if(prob(50))
+		item2_type = /obj/item/weapon/pen/fourcolor
 	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
 
 	spawn(2)
