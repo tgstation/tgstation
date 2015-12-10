@@ -111,15 +111,10 @@
 
 /obj/machinery/dna_scannernew/proc/eject_occupant(var/exit = loc)
 	src.go_out(exit)
-	for(var/obj/O in src)
-		if(!istype(O,/obj/item/weapon/circuitboard/clonescanner) && \
-		   !istype(O,/obj/item/weapon/stock_parts) && \
-		   !istype(O,/obj/item/stack/cable_coil) && \
-		   O != beaker)
-			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components and beaker)
+
 	if(!occupant)
 		for(var/mob/M in src)//Failsafe so you can get mobs out
-			M.loc = get_turf(src)
+			M.forceMove(get_turf(src))
 
 /obj/machinery/dna_scannernew/verb/move_inside()
 	set src in oview(1)
@@ -138,9 +133,9 @@
 	if (src.occupant)
 		to_chat(usr, "<span class='notice'> <B>The scanner is already occupied!</B></span>")
 		return
-	if (usr.abiotic())
+	/*if (usr.abiotic())
 		to_chat(usr, "<span class='notice'> <B>Subject cannot have abiotic items on.</B></span>")
-		return
+		return*/
 	usr.stop_pulling()
 	usr.loc = src
 	usr.reset_view()
@@ -179,9 +174,9 @@
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
-	if(L.abiotic())
+	/*if(L.abiotic())
 		to_chat(user, "<span class='danger'>Subject cannot have abiotic items on.</span>")
-		return
+		return*/
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
 			to_chat(usr, "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head.")
@@ -241,9 +236,9 @@
 		if (src.occupant)
 			to_chat(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
-		if (G.affecting.abiotic())
+		/*if (G.affecting.abiotic())
 			to_chat(user, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
-			return
+			return*/
 		if(G.affecting.locked_to)
 			return
 		put_in(G.affecting)
@@ -283,6 +278,11 @@
 	occupant.reset_view()
 	occupant = null
 	icon_state = "scanner_0"
+
+	for (var/atom/movable/x in src.contents)//Ejects items that manage to get in there (exluding the components and beaker)
+		if((x in component_parts) || (x == src.beaker))
+			continue
+		x.forceMove(src.loc)
 
 	for(dir in cardinal)
 		var/obj/machinery/computer/cloning/C = locate(/obj/machinery/computer/cloning) in get_step(src, dir)
@@ -325,8 +325,6 @@
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
 		qdel(src)
 
 /obj/machinery/computer/scan_consolenew

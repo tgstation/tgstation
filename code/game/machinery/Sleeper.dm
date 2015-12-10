@@ -260,9 +260,9 @@
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
-	if(L.abiotic())
+	/*if(L.abiotic())
 		to_chat(user, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
-		return
+		return*/
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
 			to_chat(usr, "[L.name] will not fit into the sleeper because they have a slime latched onto their head.")
@@ -449,8 +449,10 @@
 /obj/machinery/sleeper/proc/go_out(var/exit = src.loc)
 	if(!occupant)
 		return 0
-	for(var/obj/O in src)
-		O.loc = src.loc
+	for (var/atom/movable/x in src.contents)
+		if(x in component_parts)
+			continue
+		x.forceMove(src.loc)
 	occupant.forceMove(exit)
 	occupant.reset_view()
 	occupant = null

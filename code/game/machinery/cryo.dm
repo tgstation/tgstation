@@ -92,9 +92,9 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
-	if(L.abiotic())
+	/*if(L.abiotic())
 		to_chat(user, "<span class='danger'>Subject cannot have abiotic items on.</span>")
-		return
+		return*/
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
 			to_chat(usr, "[L.name] will not fit into the cryo cell because they have a slime latched onto their head.")
@@ -422,8 +422,10 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 /obj/machinery/atmospherics/unary/cryo_cell/proc/go_out(var/exit = src.loc)
 	if(!(occupant))
 		return 0
-	//for(var/obj/O in src)
-	//	O.loc = loc
+	for (var/atom/movable/x in src.contents)
+		if((x in component_parts) || (x == src.beaker))
+			continue
+		x.forceMove(src.loc)
 	if(exit == loc)
 		occupant.forceMove(get_step(loc, SOUTH))	//this doesn't account for walls or anything, but i don't forsee that being a problem.
 	else
@@ -442,9 +444,9 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if (occupant)
 		to_chat(usr, "<span class='danger'>The cryo cell is already occupied!</span>")
 		return
-	if (M.abiotic())
+	/*if (M.abiotic())
 		to_chat(usr, "<span class='warning'>Subject may not have abiotic items on.</span>")
-		return
+		return*/
 	if(M.locked_to)
 		M.locked_to.unlock_atom(M)
 	if(!node)

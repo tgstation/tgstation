@@ -115,9 +115,9 @@
 	var/mob/living/L = O
 	if(!istype(L) || L.locked_to)
 		return
-	if(L.abiotic())
+	/*if(L.abiotic())
 		to_chat(user, "<span class='notice'>Subject cannot have abiotic items on.</span>")
-		return
+		return*/
 	for(var/mob/living/carbon/slime/M in range(1, L))
 		if(M.Victim == L)
 			to_chat(usr, "<span class='notice'>[L] will not fit into \the [src] because they have a slime latched onto their head.</span>")
@@ -194,9 +194,9 @@
 	if(src.occupant)
 		to_chat(usr, "<span class='notice'>\The [src] is already occupied!</span>")
 		return
-	if(usr.abiotic())
+	/*if(usr.abiotic())
 		to_chat(usr, "<span class='notice'>Subject cannot have abiotic items on.</span>")
-		return
+		return*/
 	if(usr.locked_to)
 		return
 	usr.pulling = null
@@ -214,8 +214,10 @@
 /obj/machinery/bodyscanner/proc/go_out(var/exit = loc)
 	if(!src.occupant)
 		return
-	for(var/obj/O in src)
-		O.loc = src.loc
+	for (var/atom/movable/x in src.contents)
+		if(x in component_parts)
+			continue
+		x.forceMove(src.loc)
 
 	src.occupant.forceMove(exit)
 	src.occupant.reset_view()
@@ -261,16 +263,14 @@
 
 	G.affecting.unlock_from()
 
-	if(G.affecting.abiotic())
+	/*if(G.affecting.abiotic())
 		to_chat(user, "<span class='notice'>Subject cannot have abiotic items on.</span>")
-		return
+		return*/
 	var/mob/M = G.affecting
 	M.loc = src
 	M.reset_view()
 	src.occupant = M
 	update_icon()
-	for(var/obj/O in src)
-		O.forceMove(loc)
 	src.add_fingerprint(user)
 	qdel(G)
 	if(!(stat & (BROKEN|NOPOWER)))
