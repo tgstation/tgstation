@@ -117,7 +117,7 @@
 	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
-	wizmind.exiled = TRUE
+	wizmind.gate_restriction = AWAY_GATE
 	ticker.mode.wizards |= wizmind
 
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)

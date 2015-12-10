@@ -572,6 +572,7 @@
 		revvie.key = O.key
 		revvie.mind.assigned_role = "revenant"
 		revvie.mind.special_role = "Revenant"
+		revvie.mind.gate_restriction = BOTH_GATES
 		return 1
 	else
 		return

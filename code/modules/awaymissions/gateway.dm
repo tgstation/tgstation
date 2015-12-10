@@ -132,9 +132,17 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
-	if(!ready)		return
-	if(!active)		return
-	if(!awaygate)	return
+	if(!ready)
+		return
+	if(!active)
+		return
+	if(!awaygate)
+		return
+	if(istype(M, /mob/living))
+		var/mob/living/L = M
+		if(L.mind && L.mind.gate_restriction == STATION_GATE || L.mind.gate_restriction == BOTH_GATES)
+			L << "The other gate is blocking your entry!"
+			return
 
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
@@ -240,7 +248,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 			if(E.imp_in == L)//Checking that it's actually implanted vs just in their pocket
 				L << "The station gate has detected your exile implant and is blocking your entry."
 				return
-		if(L.mind && L.mind.exiled)
+		if(L.mind && L.mind.gate_restriction == AWAY_GATE || L.mind.gate_restriction == BOTH_GATES)
 			L << "The station gate is blocking your entry!"
 			return
 	M.loc = get_step(stationgate.loc, SOUTH)

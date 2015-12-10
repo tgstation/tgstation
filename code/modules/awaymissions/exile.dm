@@ -25,7 +25,7 @@
 /obj/item/weapon/implant/exile/implant(mob/target)
 	if(..())
 		if(target.mind)
-			target.mind.exiled = TRUE
+			target.mind.gate_restriction = AWAY_GATE
 
 /obj/item/weapon/implantcase/exile
 	name = "implant case - 'Exile'"
