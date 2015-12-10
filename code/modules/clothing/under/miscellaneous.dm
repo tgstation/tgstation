@@ -80,6 +80,10 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/sexyclown/hit_reaction()
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	return 0
+
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
