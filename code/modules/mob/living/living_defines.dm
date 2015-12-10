@@ -54,3 +54,5 @@
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
 	var/list/butcher_results = null
+
+	var/gateway_leave = 1 //if a mob can leave the station through the gateway, allowed by default
