@@ -205,12 +205,12 @@
 		consume_turf(target)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_turf(turf/T)
-	if(istype(T, /turf/space))	return //Can't void the void, baby!
+	if(istype(T, T.baseturf))	return //Can't void the void, baby!
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>\The [T] smacks into \the [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	T.ChangeTurf(/turf/space)
+	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
 
 /obj/item/weapon/melee/supermatter_sword/add_blood()
