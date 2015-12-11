@@ -77,9 +77,10 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsShield()
+/obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
 	DeactivateStealth()
 	return 0
+
 /obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
 	return 0
@@ -574,11 +575,12 @@ Congratulations! You are now trained for xenobiology research!"}
 
 // Operating Table / Beds / Lockers
 
-/obj/structure/optable/abductor
+/obj/structure/table/optable/abductor
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
+	deconstructable = 0
 
 /obj/structure/bed/abductor
 	name = "resting contraption"

@@ -24,7 +24,7 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
-	var/list/all_jobs = typesof(/datum/job)
+	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
 		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
 		return 0
@@ -81,7 +81,7 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
-		if(flag && (!player.client.prefs.be_special & flag))
+		if(flag && (!(flag in player.client.prefs.be_special)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
 		if(player.mind && job.title in player.mind.restricted_roles)
@@ -202,7 +202,6 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
-	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(ticker)
@@ -343,12 +342,28 @@ var/datum/subsystem/job/SSjob
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
-			if(sloc.name != rank)	continue
-			if(locate(/mob/living) in sloc.loc)	continue
+			if(sloc.name != rank)
+				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
+				continue
+			if(locate(/mob/living) in sloc.loc)
+				continue
 			S = sloc
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+			world.log << "Couldn't find a round start spawn point for [rank]"
 			S = pick(latejoin)
+		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
+			world.log << "Couldn't find a round start latejoin spawn point."
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						S = T
+						continue
 		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
 			H.loc = S.loc
 
@@ -374,16 +389,22 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/proc/setup_officer_positions()
-	var/officer_positions = 5 //Number of open security officer positions at round start
+	var/datum/job/J = SSjob.GetJob("Security Officer")
+	if(!J)
+		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
 
 	if(config.security_scaling_coeff > 0)
-		officer_positions = min(12, max(5, round(unassigned.len/config.security_scaling_coeff))) //Scale between 5 and 12 officers
-		var/datum/job/J = SSjob.GetJob("Security Officer")
-		if(J  || J.spawn_positions > 0)
+		if(J.spawn_positions > 0)
+			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len/config.security_scaling_coeff))) //Scale between configured minimum and 12 officers
 			Debug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
-	for(var/i=officer_positions-5, i>0, i--) //Spawn some extra eqipment lockers if we have more than 5 officers
+
+	//Spawn some extra eqipment lockers if we have more than 5 officers
+	var/equip_needed = J.total_positions
+	if(equip_needed < 0) // -1: infinite available slots
+		equip_needed = 12
+	for(var/i=equip_needed-5, i>0, i--)
 		if(secequipment.len)
 			var/spawnloc = secequipment[1]
 			new /obj/structure/closet/secure_closet/security(spawnloc)
@@ -397,8 +418,8 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/J in occupations)
 		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
 		var/datum/regex/results = regex_find(jobstext, regex)
-		J.total_positions = results.str(2)
-		J.spawn_positions = results.str(3)
+		J.total_positions = text2num(results.str(2))
+		J.spawn_positions = text2num(results.str(3))
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

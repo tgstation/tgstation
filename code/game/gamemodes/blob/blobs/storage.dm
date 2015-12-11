@@ -5,17 +5,20 @@
 	desc = "A huge, smooth mass supported by tendrils."
 	health = 60
 	maxhealth = 60
+	point_return = -1
+	var/point_bonus = 50 //How much the overmind's point cap increases from storage blobs
+
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)
-		overmind.max_blob_points -= 50
-		qdel(src)
+		overmind.max_blob_points -= point_bonus
+		..()
 
 /obj/effect/blob/storage/PulseAnimation(activate = 0)
 	if(activate)
 		..()
 	return
 
-/obj/effect/blob/storage/proc/update_max_blob_points(new_point_increase)
+/obj/effect/blob/storage/creation_action()
 	if(overmind)
-		overmind.max_blob_points += new_point_increase
+		overmind.max_blob_points += point_bonus

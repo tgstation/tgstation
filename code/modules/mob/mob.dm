@@ -10,9 +10,6 @@
 	ghostize()
 	return ..()
 
-/mob/proc/sac_act(obj/effect/rune/R, mob/victim)
-	return
-
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
@@ -24,7 +21,7 @@ var/next_mob_id = 0
 	prepare_huds()
 	..()
 
-/mob/proc/prepare_huds()
+/atom/proc/prepare_huds()
 	for(var/hud in hud_possible)
 		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
 
@@ -182,6 +179,7 @@ var/next_mob_id = 0
 	return 0
 
 /mob/proc/Life()
+	set waitfor = 0
 	return
 
 /mob/proc/get_item_by_slot(slot_id)
@@ -325,17 +323,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<HR>
-	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand&&!(l_hand.flags&ABSTRACT)) 	? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand&&!(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
-	onclose(user, "mob\ref[src]")
+	return
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
@@ -549,55 +537,7 @@ var/list/slot_equipment_priority = list( \
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortNames(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -668,9 +608,6 @@ var/list/slot_equipment_priority = list( \
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
 
-/mob/proc/can_use_hands()
-	return
-
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
@@ -714,18 +651,25 @@ var/list/slot_equipment_priority = list( \
 
 	if(client && client.holder)
 		if(statpanel("MC"))
-			stat("Location:","([x], [y], [z])")
-			stat("CPU:","[world.cpu]")
-			stat("Instances:","[world.contents.len]")
-
-			if(master_controller)
-				stat("MasterController:","[round(master_controller.cost,0.001)]ds (Interval:[master_controller.processing_interval] | Iteration:[master_controller.iteration])")
-				stat("Subsystem cost per second:","[round(master_controller.SSCostPerSecond,0.001)]ds")
-				for(var/datum/subsystem/SS in master_controller.subsystems)
-					if(SS.can_fire)
-						SS.stat_entry()
+			stat("Location:", "([x], [y], [z])")
+			stat("CPU:", "[world.cpu]")
+			stat("Instances:", "[world.contents.len]")
+			config.stat_entry()
+			stat(null)
+			if(Master)
+				Master.stat_entry()
 			else
-				stat("MasterController:","ERROR")
+				stat("Master Controller:", "ERROR")
+			if(Failsafe)
+				Failsafe.stat_entry()
+			else
+				stat("Failsafe Controller:", "ERROR")
+			if(Master)
+				stat("Subsystems:", "[round(Master.subsystem_cost, 0.001)]ds")
+				stat(null)
+				for(var/datum/subsystem/SS in Master.subsystems)
+					SS.stat_entry()
+			cameranet.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -949,10 +893,10 @@ var/list/slot_equipment_priority = list( \
 					return G
 				break
 
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg')
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound)
+		ghost.notify_cloning(message, sound, source)
 		return ghost
 
 
@@ -1020,3 +964,27 @@ var/list/slot_equipment_priority = list( \
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
 	return 1
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	if(stat == DEAD) //Ghosts and such can always see reagents
+		return 1
+	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
+		return 1
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.head && istype(H.head, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.head
+			if(CL.scan_reagents)
+				return 1
+		if(H.wear_mask && H.wear_mask.scan_reagents)
+			return 1
+		if(H.glasses && istype(H.glasses, /obj/item/clothing))
+			var/obj/item/clothing/CL = H.glasses
+			if(CL.scan_reagents)
+				return 1
+	return 0
+
+//Can the mob use Topic to interact with machines
+/mob/proc/canUseTopic()
+	return

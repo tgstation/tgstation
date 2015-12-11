@@ -49,9 +49,9 @@ MASS SPECTROMETER
 
 			if(O.level != 1)
 				continue
-			
+
 			var/mob/living/L = locate() in O
-			
+
 			if(O.invisibility == 101)
 				O.invisibility = 0
 				if(L)
@@ -377,6 +377,7 @@ MASS SPECTROMETER
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
+	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=1"
@@ -416,4 +417,4 @@ MASS SPECTROMETER
 			user.show_message("Genetic destability: [T.mutation_chance] % chance of mutation on splitting", 1)
 	if (T.cores > 1)
 		user.show_message("Anomalious slime core amount detected", 1)
-	user.show_message("Growth progress: [T.amount_grown]/10", 1)
+	user.show_message("Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]", 1)

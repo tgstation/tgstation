@@ -58,13 +58,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
-	/client/proc/cmd_admin_local_narrate,	//sends text to all mobs within view of atmo
+	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/toggle_antag_hud 	/*toggle display of the admin antag hud*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
-	/client/proc/jobbans,
-	/client/proc/unjobban_panel,
 	/client/proc/DB_ban_panel,
 	/client/proc/stickybanpanel
 	)
@@ -119,7 +118,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/cmd_debug_make_powernets,
-	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
@@ -136,7 +134,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/populate_world,
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
-	/client/proc/create_outfits
+	/client/proc/create_outfits,
+	/client/proc/debug_huds
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -203,7 +202,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
-	/client/proc/debug_controller,
 	/client/proc/startSinglo,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
@@ -214,7 +212,9 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
-	/client/proc/cmd_display_del_log
+	/client/proc/cmd_display_del_log,
+	/client/proc/toggle_antag_hud,
+	/client/proc/debug_huds
 	)
 
 /client/proc/add_admin_verbs()
@@ -273,6 +273,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin,
+		/client/proc/reload_nanoui_resources
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)
@@ -365,17 +366,6 @@ var/list/admin_verbs_hideable = list(
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/jobbans()
-	set name = "Display Job bans"
-	set category = "Admin"
-	if(holder)
-		if(config.ban_legacy_system)
-			holder.Jobbans()
-		else
-			holder.DB_ban_panel()
-	feedback_add_details("admin_verb","VJB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/unban_panel()
@@ -576,7 +566,7 @@ var/list/admin_verbs_hideable = list(
 		var/list/Lines = file2list("config/admins.txt")
 		for(var/line in Lines)
 			var/list/splitline = text2list(line, " = ")
-			if(lowertext(splitline[1]) == ckey)
+			if(ckey(splitline[1]) == ckey)
 				if(splitline.len >= 2)
 					rank = ckeyEx(splitline[2])
 				break

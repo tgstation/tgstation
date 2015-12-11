@@ -39,22 +39,25 @@
 	//Prepare our med HUD...
 	..()
 	//...and display it.
-	for(var/datum/atom_hud/data/medical/hud in huds)
+	for(var/datum/atom_hud/data/human/medical/hud in huds)
 		hud.add_to_hud(src)
 
 /mob/living/carbon/monkey/movement_delay()
-	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("morphine")) return -1
+		if(reagents.has_reagent("morphine"))
+			return -1
 
-		if(reagents.has_reagent("nuka_cola")) return -1
+		if(reagents.has_reagent("nuka_cola"))
+			return -1
 
+	. = ..()
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+	if(health_deficiency >= 45)
+		. += (health_deficiency / 25)
 
 	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+		. += (283.222 - bodytemperature) / 10 * 1.75
+	return . + config.monkey_delay
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
@@ -233,7 +236,7 @@
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/monkey/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
+/mob/living/carbon/monkey/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 	var/threatcount = 0

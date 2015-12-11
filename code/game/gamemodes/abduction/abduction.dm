@@ -6,7 +6,7 @@
 /datum/game_mode/abduction
 	name = "abduction"
 	config_tag = "abduction"
-	antag_flag = BE_ABDUCTOR
+	antag_flag = ROLE_ABDUCTOR
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
@@ -357,7 +357,7 @@
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()
-	var/list/jobs = SSjob.occupations
+	var/list/jobs = SSjob.occupations.Copy()
 	for(var/datum/job/J in jobs)
 		if(J.current_positions < 1)
 			jobs -= J

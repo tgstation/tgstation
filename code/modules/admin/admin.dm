@@ -47,6 +47,15 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
+	if(jobban_isbanned(M, "OOC"))
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'>OOCBan</A> | "
+	if(jobban_isbanned(M, "emote"))
+		body+= "<A href='?_src_=holder;jobban3=emote;jobban4=\ref[M]'><font color=red>EmoteBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=emote;jobban4=\ref[M]'>Emoteban</A> | "
+
 	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
 	if(M.client)
 		if(M.client.check_watchlist(M.client.ckey))
@@ -192,7 +201,7 @@ var/global/floorIsLava = 0
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>"
-			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admincaster_signature]</FONT></A>"
+			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
 		if(1)
 			dat+= "Station Feed Channels<HR>"
 			if( isemptylist(news_network.network_channels) )
@@ -208,13 +217,13 @@ var/global/floorIsLava = 0
 		if(2)
 			dat+="Creating new Feed Channel..."
 			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<B><A href='?src=\ref[src];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(3)
 			dat+="Creating new Feed Message..."
 			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
-			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
+			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(4)
@@ -330,7 +339,7 @@ var/global/floorIsLava = 0
 			if(wanted_already)
 				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
-				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
+				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 			if(wanted_already)
 				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
@@ -370,19 +379,6 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
-
-
-/datum/admins/proc/Jobbans()
-	if(!check_rights(R_BAN))	return
-
-	var/dat = "<B>Job Bans!</B><HR><table>"
-	for(var/t in jobban_keylist)
-		var/r = t
-		if( findtext(r,"##") )
-			r = copytext( r, 1, findtext(r,"##") )//removes the description
-		dat += text("<tr><td>[t] (<A href='?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
-	dat += "</table>"
-	usr << browse(dat, "window=ban;size=400x400")
 
 /datum/admins/proc/Game()
 	if(!check_rights(0))	return
@@ -685,14 +681,6 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/unjobban_panel()
-	set name = "Unjobban Panel"
-	set category = "Admin"
-	if (src.holder)
-		src.holder.unjobbanpanel()
-	feedback_add_details("admin_verb","UJBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0

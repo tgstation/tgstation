@@ -17,6 +17,7 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
+	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -219,8 +220,6 @@ BLIND     // can't see anything
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
 
-
-
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -254,7 +253,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -498,10 +497,12 @@ BLIND     // can't see anything
 		usr.update_inv_glasses()
 	if(istype(src, /obj/item/clothing/mask))
 		usr.update_inv_wear_mask()
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.head_update(src) //updates based on the HIDE_ flags and fixes the sec hud
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
 	return 0
-

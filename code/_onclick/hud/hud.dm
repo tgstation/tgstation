@@ -97,9 +97,16 @@ var/datum/global_hud/global_hud = new()
 
 	var/obj/screen/lingchemdisplay
 	var/obj/screen/lingstingdisplay
+
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
+
 	var/obj/screen/alien_plasma_display
+
+	var/obj/screen/deity_health_display
+	var/obj/screen/deity_power_display
+	var/obj/screen/deity_follower_display
+
 	var/obj/screen/nightvisionicon
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object
@@ -199,7 +206,12 @@ var/datum/global_hud/global_hud = new()
 		drone_hud(ui_style)
 	else if(isswarmer(mymob))
 		swarmer_hud()
-
+	else if(is_handofgod_god(mymob))
+		hoggod_hud()
+	else if(isguardian(mymob))
+		guardian_hud()
+	else if(isovermind(mymob))
+		blob_hud()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)

@@ -113,9 +113,9 @@
 /obj/item/projectile/energy/declone
 	name = "radiation beam"
 	icon_state = "declone"
-	nodamage = 1
+	damage = 20
 	damage_type = CLONE
-	irradiate = 40
+	irradiate = 10
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"

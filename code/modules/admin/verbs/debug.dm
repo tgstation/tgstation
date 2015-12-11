@@ -199,7 +199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -215,7 +215,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -232,7 +232,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 
@@ -280,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -297,7 +297,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -419,7 +419,7 @@ var/list/TYPES_SHORTCUTS = list(
 var/global/list/g_fancy_list_of_types = null
 /proc/get_fancy_list_of_types()
 	if (isnull(g_fancy_list_of_types)) //init
-		var/list/temp = sortList(typesof(/atom) - typesof(/area) - /atom - /atom/movable)
+		var/list/temp = sortList(subtypesof(/atom) - typesof(/area) - /atom/movable)
 		g_fancy_list_of_types = new(temp.len)
 		for(var/type in temp)
 			var/typename = "[type]"
@@ -474,7 +474,7 @@ var/global/list/g_fancy_list_of_types = null
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if (istype(M, /mob/living/carbon/human))
@@ -627,7 +627,7 @@ var/global/list/g_fancy_list_of_types = null
 
 
 	var/list/outfits = list("Naked","Custom","As Job...")
-	var/list/paths = typesof(/datum/outfit) - /datum/outfit - typesof(/datum/outfit/job)
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
@@ -768,3 +768,26 @@ var/global/list/g_fancy_list_of_types = null
 		dat += "[path]<BR>"
 
 	usr << browse(dat, "window=dellog")
+
+/client/proc/debug_huds(i as num)
+	set category = "Debug"
+	set name = "Debug HUDs"
+	set desc = "Debug the data or antag HUDs"
+
+	if(!holder)	return
+	debug_variables(huds[i])
+
+/client/proc/reload_nanoui_resources()
+	set category = "Debug"
+	set name = "Reload NanoUI Resources"
+	set desc = "Force the client to redownload NanoUI Resources"
+
+	// Close open NanoUIs.
+	SSnano.close_user_uis(usr)
+
+	// Re-load the assets.
+	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
+	assets.register()
+
+	// Clear the user's cache so they get resent.
+	usr.client.cache = list()

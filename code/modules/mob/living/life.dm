@@ -156,7 +156,7 @@
 	if(I.action_button_name)
 		if(!I.action)
 			if(istype(I, /obj/item/organ/internal))
-				I.action = new/datum/action/organ_action
+				I.action = new/datum/action/item_action/organ_action
 			else if(I.action_button_is_hands_free)
 				I.action = new/datum/action/item_action/hands_free
 			else
@@ -217,7 +217,7 @@
 			if (!( machine.check_eye(src) ))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!remote_view && !client.adminobs)
 				reset_view(null)
 
 /mob/living/proc/update_sight()

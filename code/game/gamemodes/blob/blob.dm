@@ -1,15 +1,16 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 //Few global vars to track the blob
-var/list/blobs = list()
+var/list/blobs = list() //complete list of all blobs made.
 var/list/blob_cores = list()
 var/list/blob_nodes = list()
+var/list/blobs_legit = list() //used for win-score calculations, contains only blobs counted for win condition
 
 
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
-	antag_flag = BE_BLOB
+	antag_flag = ROLE_BLOB
 
 	required_players = 30
 	required_enemies = 1
@@ -52,7 +53,7 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/get_blob_candidates()
 	var/list/candidates = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (player.client.prefs.be_special & BE_BLOB))
+		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (ROLE_BLOB in player.client.prefs.be_special))
 			if(age_check(player.client))
 				candidates += player
 	return candidates

@@ -158,10 +158,10 @@
 		terminal.dismantle(user)
 
 	//crowbarring it !
-	default_deconstruction_crowbar(I)
-	message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("[src] has been deconstructed by [key_name(user)]")
-	investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+	if(default_deconstruction_crowbar(I))
+		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("[src] has been deconstructed by [key_name(user)]")
+		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -313,24 +313,22 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-
-/obj/machinery/power/smes/attack_ai(mob/user)
-	if(stat & BROKEN) return
-	ui_interact(user)
-
-
 /obj/machinery/power/smes/attack_hand(mob/user)
+	if (!user)
+		return
 	add_fingerprint(user)
-	if(stat & BROKEN) return
+	interact(user)
+
+/obj/machinery/power/smes/interact(mob/user)
+	if (stat & BROKEN)
+		return
 	ui_interact(user)
 
-
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!user)
-		return
-
-	// update the ui if it exists, create a new one if it doesn't
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "smes.tmpl", "SMES - [name]", 350, 560, 1)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "smes.tmpl", name, 500, 400)
+		ui.open()
 
 /obj/machinery/power/smes/get_ui_data()
 	var/list/data = list(
@@ -353,13 +351,10 @@
 	return data
 
 /obj/machinery/power/smes/Topic(href, href_list)
-//	world << "[href] ; [href_list[href]]"
-
 	if(..())
 		return
 
-
-	else if( href_list["input_attempt"] )
+	if( href_list["input_attempt"] )
 		input_attempt = text2num(href_list["input_attempt"])
 		if(!input_attempt)
 			inputting = 0

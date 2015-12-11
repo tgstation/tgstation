@@ -66,7 +66,7 @@ Contents:
 
 	//Research Init
 	stored_research = new()
-	for(var/T in typesof(/datum/tech) - /datum/tech)//Store up on research.
+	for(var/T in subtypesof(/datum/tech))//Store up on research.
 		stored_research += new T(src)
 
 	//Reagent Init

@@ -88,7 +88,7 @@
 	//this is here because this has no client/prefs/brain whatever.
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
-	var/list/jobs = SSjob.occupations
+	var/list/jobs = SSjob.occupations.Copy()
 	for(var/datum/job/J in jobs)
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
@@ -182,7 +182,7 @@
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
 
-	SSbp.insertBot(src)
+	SSnpc.insertBot(src)
 
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)

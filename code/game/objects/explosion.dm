@@ -134,12 +134,11 @@
 
 			var/throw_dir = get_dir(epicenter,T)
 			for(var/obj/item/I in T)
-				spawn(0) //Simultaneously not one at a time
-					if(I && !I.anchored)
-						var/throw_range = rand(throw_dist, max_range)
-						var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-						I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-						I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
+				if(I && !I.anchored)
+					var/throw_range = rand(throw_dist, max_range)
+					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+					I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
+					I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
 
 
 		var/took = (world.timeofday-start)/10
@@ -147,11 +146,10 @@
 		if(Debug2)	world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 		//Machines which report explosions.
-		for(var/i,i<=doppler_arrays.len,i++)
-			var/obj/machinery/doppler_array/Array = doppler_arrays[i]
-			if(Array)
-				Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
-
+		for(var/array in doppler_arrays)
+			var/obj/machinery/doppler_array/A = array
+			A.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
+			
 	return 1
 
 

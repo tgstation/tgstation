@@ -114,6 +114,22 @@
 	var/on = 1
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
+	var/see_ghosts = 0 //for the spoop of it
+
+
+/obj/item/device/camera/CheckParts()
+	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
+	if(C)
+		pictures_max = C.pictures_max
+		pictures_left = C.pictures_left
+		visible_message("[C] has been imbued with godlike power!")
+		qdel(C)
+
+
+/obj/item/device/camera/spooky
+	name = "camera obscura"
+	desc = "A polaroid camera, some say it can see ghosts!"
+	see_ghosts = 1
 
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
@@ -163,7 +179,14 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility) continue
+			if(A.invisibility)
+				if(see_ghosts)
+					if(istype(A, /mob/dead/observer))
+						var/mob/dead/observer/O = A
+						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
+							continue
+				else
+					continue
 			atoms.Add(A)
 
 	var/list/sorted = list()
@@ -202,21 +225,37 @@
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
-	for(var/mob/living/A in the_turf)
-		if(A.invisibility) continue
-		var/holding = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
+	for(var/mob/M in the_turf)
+		if(M.invisibility)
+			if(see_ghosts && istype(M,/mob/dead/observer))
+				var/mob/dead/observer/O = M
+				if(O.orbiting)
+					continue
+				if(!mob_detail)
+					mob_detail = "You can see a g-g-g-g-ghooooost! "
 				else
-					holding = "They are holding \a [A.r_hand]"
+					mob_detail += "You can also see a g-g-g-g-ghooooost!"
+			else
+				continue
 
-		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
-		else
-			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+		var/holding = null
+
+		if(istype(M, /mob/living))
+			var/mob/living/L = M
+			if(L.l_hand || L.r_hand)
+				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
+				if(L.r_hand)
+					if(holding)
+						holding += " and \a [L.r_hand]"
+					else
+						holding = "They are holding \a [L.r_hand]"
+
+			if(!mob_detail)
+				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
+			else
+				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+
+
 	return mob_detail
 
 
@@ -377,7 +416,13 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc))
+		return
+	if(user.Adjacent(target))
+		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
+		if(is_type_in_list(target, bad_targets))
+			return
+
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)

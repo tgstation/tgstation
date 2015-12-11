@@ -572,7 +572,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		minor_announce(input)
+		minor_announce(input,"[user.name] Announces:")
 		ai_message_cooldown = 1
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
@@ -588,7 +588,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 

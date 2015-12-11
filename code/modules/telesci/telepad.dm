@@ -14,8 +14,8 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
@@ -86,7 +86,7 @@
 	desc = "Use to warp in a cargo telepad."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
-	item_state = "signaler"
+	item_state = "beacon"
 	origin_tech = "bluespace=3"
 
 /obj/item/device/telepad_beacon/attack_self(mob/user)

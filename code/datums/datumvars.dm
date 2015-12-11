@@ -1,5 +1,8 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+datum/proc/on_varedit(modified_var) //called whenever a var is edited
+	return
+
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
@@ -411,7 +414,7 @@ body
 
 	else if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(!istype(DAT, /datum))
+		if(!DAT) //can't be an istype() because /client etc aren't datums
 			return
 		src.debug_variables(DAT)
 
@@ -837,7 +840,10 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
+				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
+				H.dna.species.admin_set_species(H,old_species)
+
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))	return
@@ -854,14 +860,14 @@ body
 			if(H.dna.species.id == "human")
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
-					H << "You suddenly feel valid."
+					H << "Something is nya~t right."
 					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 					H.dna.features["tail_human"] = "Cat"
 					H.dna.features["ears"] = "Cat"
 				else
 					usr << "Removed [H] from purrbation."
-					H << "You suddenly don't feel valid anymore."
+					H << "You are no longer a cat."
 					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 					H.dna.features["tail_human"] = "None"

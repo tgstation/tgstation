@@ -1,0 +1,75 @@
+<h2>Status</h2>
+<div class="statusDisplay">
+    <div class="item">
+        <div class="itemLabel">
+            Power:
+        </div>
+        <div class="itemContent">
+            {{:helper.link('On',  'power', {'power': 1}, !data.on ? null : 'selected')}}
+            {{:helper.link('Off', 'close', {'power': 0},  data.on ? null : 'selected')}}
+        </div>
+    </div>
+    <div class="item">
+        <div class="itemLabel">
+            Stored Energy:
+        </div>
+        <div class="itemContent">
+            {{if data.hasPowercell}}
+                {{:helper.displayBar(data.powerLevel, 0, 100, 'good')}}&nbsp;{{:data.powerLevel}}%
+                {{if data.open}}
+                    <br />
+                    {{:helper.link('Eject', 'eject', {'cellremove' : 1}, null)}}
+                {{/if}}
+            {{else}}
+                No power cell loaded
+                {{if data.open}}
+                    {{:helper.link('Install', 'eject', {'cellinstall' : 1}, null )}}
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+<h2>Thermostat</h2>
+<div class="statusDisplay">
+    <div class="item">
+        <div class="itemLabel">
+            Current Temp:
+        </div>
+        <div class="itemContent">
+            {{:data.currentTemp}}&deg;C
+        </div>
+    </div>
+    <div class="item">
+        <div class="itemLabel">
+            Target Temp:
+        </div>
+        <div class="itemContent">
+            {{:data.targetTemp}}&deg;C
+            {{if data.open}}
+                <br />
+                {{:helper.link('',    'seek-prev',    {'temp': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+                {{:helper.link('',    'triangle-1-w', {'temp':  -5}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+                {{:helper.link('Set', 'pencil',       {'temp': 'custom'}, null)}}
+                {{:helper.link('',    'triangle-1-e', {'temp':   5}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+                {{:helper.link('',    'seek-next',    {'temp':  20}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+            {{/if}}
+        </div>
+    </div>
+    <div class="item">
+        <div class="itemLabel">
+            Operational Mode:
+        </div>
+        <div class="itemContent">
+            {{if data.open}}
+                {{:helper.link('Heat', 'arrowthick-1-n',   {'mode' : 'heat'}, data.mode != "heat" ? null : 'selected')}}
+                {{:helper.link('Cool', 'arrowthick-1-s',   {'mode' : 'cool'}, data.mode != "cool" ? null : 'selected')}}
+                {{:helper.link('Auto', 'arrowthick-2-n-s', {'mode' : 'auto'}, (data.mode == "heat" || data.mode == "cool") ? null : 'selected')}}
+            {{else}}
+                {{if data.mode == "heat"}}Heat
+                {{else data.mode == "cool"}}Cool
+                {{else}}Auto{{/if}}
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -52,13 +52,6 @@
 			bumpopen(M)
 		return
 
-	if(istype(AM, /obj/machinery/bot))
-		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard) || emergency == 1)
-			if(density)
-				open()
-		return
-
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
@@ -194,7 +187,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 

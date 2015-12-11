@@ -16,7 +16,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -27,7 +27,7 @@
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -36,7 +36,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -160,10 +160,7 @@
 				if(!user.drop_item())
 					return
 
-				ticker.mode.remove_cultist(M.brainmob.mind, 1)
-				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
-
+				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
 				M.loc = src
 				brain = M
 				user << "<span class='notice'>Added a brain.</span>"

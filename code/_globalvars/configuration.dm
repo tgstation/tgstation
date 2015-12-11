@@ -34,21 +34,3 @@ var/MAX_EX_LIGHT_RANGE = 14
 var/MAX_EX_FLASH_RANGE = 14
 var/MAX_EX_FLAME_RANGE = 14
 
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Alien Lifeform" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Blob" = BE_BLOB,
-	"Ninja" = BE_NINJA,
-	"Monkey" = BE_MONKEY,
-	"Gang" = BE_GANG,
-	"Abductor" = BE_ABDUCTOR,
-	"Revenant" = BE_REVENANT,
-	"Shadowling" = BE_SHADOWLING
-	)

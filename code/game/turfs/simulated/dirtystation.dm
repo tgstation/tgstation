@@ -78,7 +78,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet) || istype(A, /area/crew_quarters/bar))
+	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)

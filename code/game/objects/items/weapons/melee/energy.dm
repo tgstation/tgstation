@@ -50,17 +50,21 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
+	sharpness = IS_SHARP
+	embed_chance = 75
+	embedded_impact_pain_multiplier = 10
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/New()
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/melee/energy/sword/IsShield()
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
-		return 1
+		return ..()
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
@@ -72,6 +76,7 @@
 		force = force_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
+		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
@@ -85,6 +90,7 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
+		throw_speed = initial(throw_speed)
 		if(attack_verb_on.len)
 			attack_verb = list()
 		icon_state = initial(icon_state)
@@ -131,7 +137,7 @@
 	icon_state = "esaw_0"
 	item_color = null
 
-/obj/item/weapon/melee/energy/sword/cyborg/saw/IsShield()
+/obj/item/weapon/melee/energy/sword/cyborg/saw/hit_reaction()
 	return 0
 
 /obj/item/weapon/melee/energy/sword/saber

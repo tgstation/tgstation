@@ -68,6 +68,7 @@
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/updating = 0 //portable camera camerachunk update
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -124,7 +125,8 @@
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	toner = 40
+	toner = tonermax
+	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -427,7 +429,7 @@
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
 				user << "<span class='notice'>You start fixing youself...</span>"
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 50/W.toolspeed, target = src))
 					return
 
 			adjustBruteLoss(-30)
@@ -480,6 +482,7 @@
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
 		update_icons()
+		diag_hud_set_borgcell()
 
 	else if (wires.IsInteractionTool(W))
 		if (wiresexposed)
@@ -507,7 +510,7 @@
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
-			if(do_after(user, 50, target = src) && !cell)
+			if(do_after(user, 50/W.toolspeed, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
@@ -570,7 +573,7 @@
 		else
 			if(!user.drop_item())
 				return
-			toner = 40
+			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
@@ -711,6 +714,7 @@
 			user << "<span class='notice'>You remove \the [cell].</span>"
 			cell = null
 			update_icons()
+			diag_hud_set_borgcell()
 
 	if(!opened)
 		if(..()) // hulk attack
@@ -1156,3 +1160,10 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	return 1

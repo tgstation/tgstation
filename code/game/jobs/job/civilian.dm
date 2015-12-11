@@ -31,12 +31,20 @@ Clown
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
 
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	H.fully_replace_character_name(H.real_name, pick(clown_names))
 
-/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H.back, 50)
 
 	H.dna.add_mutation(CLOWNMUT)
@@ -76,8 +84,12 @@ Mime
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
 
-/datum/outfit/job/mime/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
@@ -144,8 +156,12 @@ Lawyer
 	l_hand = /obj/item/weapon/storage/briefcase
 	l_pocket = /obj/item/device/laser_pointer
 
-/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/datum/job/lawyer/J = SSjob.GetJob(H.job)
 	J.lawyers++
 	if(J.lawyers>1)

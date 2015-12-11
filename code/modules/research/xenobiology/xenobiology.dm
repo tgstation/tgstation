@@ -162,6 +162,7 @@
 	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
+	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
@@ -172,11 +173,17 @@
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
 		return..()
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != sentience_type)
+		user << "<span class='warning'>The potion won't work on [M].</span>"
+		return ..()
+
+
 
 	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
 	being_used = 1
 
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
 
 	shuffle(candidates)
 
@@ -297,7 +304,53 @@
 	M.mutator_used = TRUE
 	qdel(src)
 
+/obj/item/slimepotion/speed
+	name = "slime speed potion"
+	desc = "A potent chemical mix that will remove the slowdown from any item."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
 
+/obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
+	..()
+	if(!istype(C))
+		user << "<span class='warning'>The potion can only be used on items!</span>"
+		return
+	if(C.slowdown <= 0)
+		user << "<span class='warning'>The [C] can't be made any faster!</span>"
+		return..()
+	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
+	C.color = "#FF0000"
+	C.slowdown = 0
+	qdel(src)
+
+
+/obj/item/slimepotion/fireproof
+	name = "slime chill potion"
+	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle17"
+	var/uses = 3
+
+/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
+	..()
+	if(!uses)
+		qdel(src)
+		return
+	if(!istype(C))
+		user << "<span class='warning'>The potion can only be used on clothing!</span>"
+		return
+	if(C.max_heat_protection_temperature == FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+		user << "<span class='warning'>The [C] is already fireproof!</span>"
+		return..()
+	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
+	C.name = "fireproofed [C.name]"
+	C.color = "#000080"
+	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	C.heat_protection = C.body_parts_covered
+	C.burn_state = -1
+	uses --
+	if(!uses)
+		qdel(src)
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -376,8 +429,12 @@
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -388,8 +445,12 @@
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if (O.orbiting)
+			continue
 		ghost = O
 		break
 	if(!ghost)
@@ -424,6 +485,7 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
+	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
@@ -470,7 +532,7 @@
 
 
 /obj/effect/timestop/wizard
-	duration = 90
+	duration = 100
 
 
 /obj/item/stack/tile/bluespace
@@ -517,3 +579,18 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/obj/item/areaeditor/blueprints/slime
+	name = "cerulean prints"
+	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	color = "#2956B2"
+
+/obj/item/areaeditor/blueprints/slime/edit_area()
+	var/success = ..()
+	var/area/A = get_area(src)
+	if(success)
+		for(var/turf/T in A)
+			T.color = "#2956B2"
+		qdel(src)
+

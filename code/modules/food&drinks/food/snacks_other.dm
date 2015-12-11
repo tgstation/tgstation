@@ -172,6 +172,15 @@
 	list_reagents = list("nutriment" = 3, "cocoa" = 1)
 	filling_color = "#A0522D"
 
+/obj/item/weapon/reagent_containers/food/snacks/fudgedice
+	name = "fudge dice"
+	desc = "A little cube of chocolate that tends to have a less intense taste if you eat too many at once."
+	icon_state = "chocodice"
+	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
+	list_reagents = list("nutriment" = 3, "cocoa" = 1)
+	filling_color = "#A0522D"
+	trash = /obj/item/weapon/dice/fudge
+
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
 	desc = "A festive chocolate orange"

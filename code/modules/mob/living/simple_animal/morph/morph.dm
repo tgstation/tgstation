@@ -37,11 +37,11 @@
 	var/morph_time = 0
 
 	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
-							You may take the form of anything nearby by middle-clicking it. This process will alert any nearby \
+							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
 							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
 							You can attack any item or dead creature to consume it - creatures will fully restore your health. \
-							Finally, you can restore yourself to your original form while morphed by middle-clicking yourself.</b>"
+							Finally, you can restore yourself to your original form while morphed by shift-clicking yourself.</b>"
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
@@ -129,6 +129,11 @@
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
+	if(gibbed)
+		for(var/atom/movable/AM in src)
+			AM.loc = loc
+			if(prob(90))
+				step(AM, pick(alldirs))
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
@@ -171,24 +176,6 @@
 			return
 	target.attack_animal(src)
 
-/mob/living/simple_animal/hostile/morph/harvest(mob/living/user)
-	if(qdeleted(src))
-		return
-	if(contents.len)
-		var/amount = min(contents.len, 10)
-		for(var/atom/movable/AM in src)
-			if(amount)
-				amount--
-				AM.loc = loc
-				if(prob(90))
-					spawn(3)
-						step(AM, pick(alldirs))
-			else
-				break
-		visible_message("<span class='notice'>[user] [contents.len?"extracts some of":"empties"] the content of [src].</span>")
-	else
-		..()
-
 /mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
 	return
 
@@ -206,7 +193,7 @@
 /datum/round_event/morph/proc/get_morph(end_if_fail = 0)
 	key_of_morph = null
 	if(!key_of_morph)
-		var/list/candidates = get_candidates(BE_ALIEN)
+		var/list/candidates = get_candidates(ROLE_ALIEN)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0

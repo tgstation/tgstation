@@ -118,6 +118,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
+	item_state = "pizzabox"
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid
 	var/obj/item/weapon/reagent_containers/food/snacks/pizza/pizza // Content pizza

@@ -433,6 +433,22 @@
 	gib(src)
 
 
+/mob/proc/become_god(var/side_colour)
+	var/mob/camera/god/G = new /mob/camera/god(loc)
+	G.side = side_colour
+	if(mind)
+		mind.transfer_to(G)
+	else
+		G.key = key
+
+	G.job = "Deity"
+	G.rename_self("deity", 0)
+	G.update_icons()
+
+	. = G
+	qdel(src)
+
+
 
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
@@ -520,7 +536,7 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/construct))
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
 		return 0 //Verbs do not appear for players.
 
 //Good mobs!

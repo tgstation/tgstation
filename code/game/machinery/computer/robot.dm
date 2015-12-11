@@ -60,7 +60,7 @@
 		else
 			dat += " Independent from AI |"
 		if (istype(user, /mob/living/silicon))
-			if(issilicon(user) && is_special_character(user) && !R.emagged)
+			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(usr)) && !R.emagged)
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -106,7 +106,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>)!</span>")
+					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.lockcharge)
 					R << "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>"
@@ -117,9 +117,9 @@
 			usr << "<span class='danger'>Access Denied.</span>"
 
 	else if (href_list["magbot"])
-		if(issilicon(usr) && is_special_character(usr))
+		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && R.connected_ai == usr && !R.scrambledcodes && can_control(usr, R))
+			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				R.SetEmagged(1)
 				if(R.mind.special_role)

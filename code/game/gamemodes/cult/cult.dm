@@ -41,9 +41,9 @@
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
 			if(clear || !ishuman(user))
-				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+				M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 			else //Emergency comms
-				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+				M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
@@ -51,7 +51,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	antag_flag = BE_CULTIST
+	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 20
@@ -76,12 +76,11 @@
 
 
 /datum/game_mode/cult/pre_setup()
+	cult_objectives += "sacrifice"
 	if(prob(50))
 		cult_objectives += "survive"
-		cult_objectives += "sacrifice"
 	else
 		cult_objectives += "eldergod"
-		cult_objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -184,9 +183,12 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
+		cult_mind.current.faction |= "cult"
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
+		if(jobban_isbanned(cult_mind.current, ROLE_CULTIST))
+			replace_jobbaned_player(cult_mind.current, ROLE_CULTIST, ROLE_CULTIST)
 		return 1
 
 
@@ -199,6 +201,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		cult_mind.current.faction -= "cult"
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
 		cult_mind.current.Paralyse(5)
 		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"

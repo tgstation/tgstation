@@ -23,9 +23,14 @@ Chaplain
 
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
+	backpack_contents = list(/obj/item/device/camera/spooky = 1)
 
-/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H)
+
+/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 	var/new_religion = "Christianity"
