@@ -173,9 +173,7 @@
 		return 1
 
 /obj/proc/burn()
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = src.loc
-		Item.fire_act() //Set them on fire, too
+	empty_object_contents(1, src.loc)
 	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
 	SSobj.burning -= src
@@ -186,3 +184,11 @@
 		burn_state = 0
 		overlays -= fire_overlay
 		SSobj.burning -= src
+
+
+
+/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
+	for(var/obj/item/Item in contents) //Empty out the contents
+		Item.loc = new_loc
+		if(burn)
+			Item.fire_act() //Set them on fire, too
