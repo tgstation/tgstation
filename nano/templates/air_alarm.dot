@@ -70,7 +70,9 @@
 	{{?}}
 	{{? data.dangerous}}
 		<hr />
-		<section class="item"><span class='bad bold'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span></section>
+		<section>
+			<span class='bad bold'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>
+		</section>
 	{{?}}
 </article>
 {{? (!data.locked || data.siliconUser)}}

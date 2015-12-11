@@ -1,39 +1,37 @@
 @Helpers =
-  link: (text = "", icon = "", parameters = {}, \
-  status = "", elementClass = "") ->
+  link: (text = "", icon = "", parameters = {}, status = "", class = "") ->
     parameters = window.Util.href(parameters)
 
     if !!icon
       icon = "<i class='pending fa fa-fw \
       fa-spinner fa-pulse'></i><i class='main fa fa-fw fa-#{icon}'></i>"
-      elementClass += " iconed"
+      class += " iconed"
 
     if !!status
       "<div unselectable='on' class='link inactive \
-        #{status} #{elementClass}'>#{icon}#{text}</div>"
+        #{status} #{class}'>#{icon}#{text}</div>"
     else
       "<div unselectable='on' class='link active \
-        #{elementClass}' data-href='#{parameters}'>#{icon}#{text}</div>"
+        #{class}' data-href='#{parameters}'>#{icon}#{text}</div>"
 
 
-  bar: (value = 0, rangeMin = 0, rangeMax = 100,
-  styleClass = "", barText = "") ->
-    if rangeMin < rangeMax
-      if value < rangeMin
-        value = rangeMin
-      else if value > rangeMax
-        value = rangeMax
+  bar: (value = 0, min = 0, max = 100, class = "", text = "") ->
+    if min < max
+      if value < min
+        value = min
+      else if value > max
+        value = max
     else
-      if value > rangeMin
-        value = rangeMin
-      else if value < rangeMax
-        value = rangeMax
+      if value > min
+        value = min
+      else if value < max
+        value = max
 
-    percentage = Math.round((value - rangeMin) / (rangeMax - rangeMin) * 100)
+    percentage = Math.round((value - min) / (max - min) * 100)
 
     "<div class='bar'> \
-    <span class='barFill #{styleClass}' style='width: #{percentage}%;'></span> \
-    <span class='barText #{styleClass}'>#{barText}</span> \
+    <span class='barFill #{class}' style='width: #{percentage}%;'></span> \
+    <span class='barText #{class}'>#{text}</span> \
     </div>"
 
 
