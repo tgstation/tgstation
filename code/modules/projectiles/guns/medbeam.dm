@@ -94,9 +94,9 @@
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
 				return 0
-		for(var/obj/effect/overlay/beam/O in turf)// Don't cross the str-beams!
-			if(O.BeamSource!=user)
-				explosion(O.loc,0,3,5,8)
+		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
+			if(B.owner != current_beam)
+				explosion(B.loc,0,3,5,8)
 				qdel(dummy)
 				return 0
 	qdel(dummy)
@@ -112,3 +112,6 @@
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_relase(var/mob/living/target)
 	return
+
+/obj/effect/ebeam/medical
+	name = "medical beam"

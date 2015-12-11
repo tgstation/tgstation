@@ -104,7 +104,8 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/weapon/gun/energy/gun=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat=1)
+		/obj/item/weapon/reagent_containers/hypospray/combat=1,\
+		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
