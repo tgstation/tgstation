@@ -6,6 +6,8 @@
 	health = 200
 	maxhealth = 200
 	point_return = 25
+	atmosblock = 1
+
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
@@ -33,9 +35,3 @@
 	pulseLoop(5)
 	health = min(initial(health), health + 1)
 	color = null
-
-/obj/effect/blob/node/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return

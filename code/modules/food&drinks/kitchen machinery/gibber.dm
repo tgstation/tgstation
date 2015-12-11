@@ -207,7 +207,7 @@
 			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
-			meatslab.throw_at(pick(nearby_turfs),i,3)
+			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in viewers(gibturf))

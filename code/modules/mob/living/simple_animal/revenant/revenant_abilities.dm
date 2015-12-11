@@ -89,6 +89,7 @@
 	charge_max = 200
 	range = 5
 	stun = 30
+	reveal = 100
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 18
@@ -128,6 +129,7 @@
 	charge_max = 150
 	range = 3
 	stun = 10
+	reveal = 40
 	unlock_amount = 75
 	cast_amount = 30
 	action_icon_state = "defile"
@@ -215,6 +217,7 @@
 	desc = "Causes nearby living things to waste away."
 	charge_max = 200
 	range = 3
+	reveal = 60
 	cast_amount = 50
 	unlock_amount = 200
 	action_icon_state = "blight"

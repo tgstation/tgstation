@@ -199,7 +199,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 		dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-		if(locked && !ai)
+		if(locked && !ai && !IsAdminGhost(user))
 			dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
 		else
 			dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
@@ -245,7 +245,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		return
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)))
+	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		switch(href_list["op"])
 
 			if("lock", "unlock")
@@ -515,7 +515,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 	if(refresh) update_controls()
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
-
 	if(!on)
 		return
 
@@ -582,13 +581,13 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							buzz(SIGH)
-
-							spawn(2)
-								calc_path(next)
+							mode = BOT_WAIT_FOR_NAV
+							blockcount = 0
+							spawn(20)
+								calc_path(avoid=next)
 								if(path.len > 0)
 									buzz(DELIGHT)
 								mode = BOT_BLOCKED
-							mode = BOT_WAIT_FOR_NAV
 							return
 						return
 				else
@@ -621,7 +620,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
 	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
-
 
 // sets the current destination
 // signals all beacons matching the delivery code

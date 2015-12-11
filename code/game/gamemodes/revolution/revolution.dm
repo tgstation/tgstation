@@ -78,7 +78,6 @@
 		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		//	Removing revolutionary uplinks.	-Pete
 			equip_revolutionary(rev_mind.current)
-			update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -108,6 +107,7 @@
 
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
+	update_rev_icons_added(rev_mind)
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
 	for(var/datum/objective/objective in rev_mind.objectives)

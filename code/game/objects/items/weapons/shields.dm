@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	block_chance = 50
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -17,8 +18,6 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/IsShield()
-	return 1
 
 /obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/melee/baton))
@@ -49,8 +48,10 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/shield/energy/IsShield()
-	return (active)
+/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(active)
+		return ..()
+	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()
 	return (active)
@@ -91,8 +92,10 @@
 	w_class = 3
 	var/active = 0
 
-/obj/item/weapon/shield/riot/tele/IsShield()
-	return (active)
+/obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(active)
+		return ..()
+	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active

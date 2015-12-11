@@ -120,7 +120,7 @@ Actual Adjacent procs :
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		var/list/L = call(cur.source,adjacent)(atom,id, simulated_only)
 		for(var/turf/T in L)
-			if(T == exclude || T in closed)
+			if(T == exclude || (T in closed))
 				continue
 
 			var/newg = cur.g + call(cur.source,dist)(T)

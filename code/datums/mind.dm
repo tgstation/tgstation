@@ -364,7 +364,7 @@
 		if (ticker.mode.config_tag=="wizard")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in ticker.mode.wizards)
+		if ((src in ticker.mode.wizards) || (src in ticker.mode.apprentices))
 			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
 			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
 			if (objectives.len==0)
@@ -1797,7 +1797,7 @@
 	mind.assigned_role = "Shade"
 	mind.special_role = "Shade"
 
-/mob/living/simple_animal/construct/mind_initialize()
+/mob/living/simple_animal/hostile/construct/mind_initialize()
 	..()
 	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"

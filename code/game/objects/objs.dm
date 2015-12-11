@@ -60,7 +60,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
@@ -93,9 +93,9 @@
 
 
 /obj/attack_ghost(mob/user)
+	if(ui_interact(user) != -1)
+		return
 	..()
-	ui_interact(user)
-
 /obj/proc/interact(mob/user)
 	return
 
@@ -173,9 +173,7 @@
 		return 1
 
 /obj/proc/burn()
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = src.loc
-		Item.fire_act() //Set them on fire, too
+	empty_object_contents(1, src.loc)
 	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
 	SSobj.burning -= src
@@ -186,3 +184,11 @@
 		burn_state = 0
 		overlays -= fire_overlay
 		SSobj.burning -= src
+
+
+
+/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
+	for(var/obj/item/Item in contents) //Empty out the contents
+		Item.loc = new_loc
+		if(burn)
+			Item.fire_act() //Set them on fire, too

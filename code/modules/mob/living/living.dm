@@ -766,7 +766,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/narsie_act()
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	spawn_dust()
 	gib()
 	return

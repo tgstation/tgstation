@@ -17,8 +17,8 @@
 	level = 1
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
@@ -79,10 +79,10 @@
 	flick("inje_inject", src)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency)
+		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)

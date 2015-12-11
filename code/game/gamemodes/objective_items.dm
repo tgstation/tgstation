@@ -59,8 +59,8 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/ablative
-	name = "an ablative armor vest"
+/datum/objective_item/steal/reflector
+	name = "a reflector vest"
 	targetitem = /obj/item/clothing/suit/armor/laserproof
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")

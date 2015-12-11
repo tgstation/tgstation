@@ -92,6 +92,15 @@
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = M:mind
+	new_objective:target = usr:mind
+	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
+	M.mind.objectives += new_objective
+	ticker.mode.apprentices += M.mind
+	M.mind.special_role = "apprentice"
+	ticker.mode.update_wiz_icons_added(M.mind)
+	M << sound('sound/effects/magic.ogg')
 	var/newname = copytext(sanitize(input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
 		newname = randomname
@@ -99,15 +108,6 @@
 	M.real_name = newname
 	M.name = newname
 	M.dna.update_dna_identity()
-	var/datum/objective/protect/new_objective = new /datum/objective/protect
-	new_objective.owner = M:mind
-	new_objective:target = usr:mind
-	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
-	M.mind.objectives += new_objective
-	ticker.mode.traitors += M.mind
-	M.mind.special_role = "apprentice"
-	ticker.mode.update_wiz_icons_added(M.mind)
-	M << sound('sound/effects/magic.ogg')
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)

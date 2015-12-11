@@ -308,6 +308,8 @@
 	flavour_text = "You are a Nanotrasen Commander!"
 
 /obj/effect/landmark/corpse/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
 	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No")
 		return
