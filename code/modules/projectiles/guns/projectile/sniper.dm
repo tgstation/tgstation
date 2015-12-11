@@ -9,6 +9,9 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	origin_tech = "combat=8"
+	can_unsuppress = 1
+	can_suppress = 1
+	w_class = 3
 	var/zoomed = FALSE
 	var/zoom_amt = 7
 	var/datum/action/sniper_zoom/azoom
