@@ -36,6 +36,8 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	if(selfcharge)
+		SSobj.processing |= src
 	update_icon()
 	return
 
