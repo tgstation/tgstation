@@ -121,6 +121,7 @@
 							z.set_up(4, 0, M)
 							z.start()
 							playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+						L.broken()
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
