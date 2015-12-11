@@ -154,6 +154,9 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		user << "\black The gate is already calibrated, there is no work for you to do here."
 		return
 
+/obj/machinery/gateway/centerstation/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
+
 /////////////////////////////////////Away////////////////////////
 
 
@@ -252,3 +255,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 			user << "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
 			calibrated = 1
 			return
+
+
+/obj/machinery/gateway/centeraway/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
