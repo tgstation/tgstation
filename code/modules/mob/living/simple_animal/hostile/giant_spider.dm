@@ -163,8 +163,8 @@
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/effect/spider/stickyweb(T)
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
@@ -221,9 +221,9 @@
 						break
 					if(large_cocoon)
 						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-			cocoon_target = null
-			busy = 0
-			stop_automated_movement = 0
+		cocoon_target = null
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
@@ -250,9 +250,10 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
+					C.faction = faction
 					fed--
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
