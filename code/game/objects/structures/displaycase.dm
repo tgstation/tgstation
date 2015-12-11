@@ -5,6 +5,12 @@
 	var/obj/item/weapon/circuitboard/airlock/circuit=null
 	var/state=0
 
+/obj/structure/displaycase_frame/Destroy()
+	..()
+	if(circuit)
+		qdel(circuit)
+		circuit = null
+
 /obj/structure/displaycase_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/pstate=state
 	var/turf/T=get_turf(src)
@@ -67,8 +73,14 @@
 	var/locked = 0
 	var/ue=null
 	var/image/occupant_overlay=null
-
 	var/obj/item/weapon/circuitboard/airlock/circuit
+
+/obj/structure/displaycase/Destroy()
+	..()
+	if(circuit)
+		qdel(circuit)
+		circuit = null
+	dump()
 
 /obj/structure/displaycase/captains_laser/New()
 	..()

@@ -198,6 +198,11 @@ obj/item/device/mmi/Destroy()
 	radio = new(src)//Spawns a radio inside the MMI.
 	radio.broadcasting = 0//So it's broadcasting from the start.
 
+/obj/item/device/mmi/radio_enabled/Destroy()
+	..()
+	qdel(radio)
+	radio = null
+
 /obj/item/device/mmi/radio_enabled/verb/Toggle_Broadcasting()
 	set name = "Toggle Broadcasting"
 	set desc = "Toggle broadcasting channel on or off."

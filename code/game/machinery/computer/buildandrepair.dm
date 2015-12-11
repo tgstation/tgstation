@@ -10,6 +10,11 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 //	weight = 1.0E8
 
+/obj/structure/computerframe/Destroy()
+	..()
+	qdel(circuit)
+	circuit = null
+
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0

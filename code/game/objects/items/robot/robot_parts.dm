@@ -78,6 +78,21 @@
 	..()
 	src.updateicon()
 
+/obj/item/robot_parts/robot_suit/Destroy()
+	..()
+	qdel(l_arm)
+	l_arm = null
+	qdel(r_arm)
+	r_arm = null
+	qdel(l_leg)
+	l_leg = null
+	qdel(r_leg)
+	r_leg = null
+	qdel(chest)
+	chest = null
+	qdel(head)
+	head = null
+
 /obj/item/robot_parts/robot_suit/proc/updateicon()
 	src.overlays.len = 0
 	if(src.l_arm)
