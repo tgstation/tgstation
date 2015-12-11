@@ -41,7 +41,10 @@
 	//		null if object handles breathing logic for lifeform
 	//		datum/air_group to tell lifeform to process using that breath return
 	//DEFAULT: Take air from turf to give to have mob process
-
+	if(istype(loc,/obj/))
+		var/obj/loc_as_obj = loc
+		. = loc_as_obj.handle_internal_lifeform(lifeform_inside_me, breath_request)
+		return
 	if(breath_request>0)
 		var/datum/gas_mixture/environment = return_air()
 		var/breath_percentage = BREATH_VOLUME / environment.return_volume()
