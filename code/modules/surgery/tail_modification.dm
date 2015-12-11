@@ -4,7 +4,7 @@
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("groin")
 
-/datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/tail_removal/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(("tail_lizard" in L.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in L.dna.species.mutant_bodyparts))
 		return 1
@@ -12,7 +12,7 @@
 
 /datum/surgery_step/sever_tail
 	name = "sever tail"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/hatchet = 40, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 75, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/hatchet = 40, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/sever_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -27,6 +27,7 @@
 		L.dna.species.mutant_bodyparts -= "waggingtail_lizard"
 	if("spines" in L.dna.features)
 		L.dna.features -= "spines"
-	new /obj/item/organ/severedtail(src)
+	var/obj/item/organ/severedtail/S = new(get_turf(target))
+	S.color = "#[L.dna.features["mcolor"]]"
 	L.update_body()
 	return 1
