@@ -1,26 +1,28 @@
 class @Handlers
-  constructor: (@bus) ->
+  constructor: (@bus, @fragment = document) ->
     @bus.on "rendered", @updateStatus
     @bus.on "rendered", @updateLinks
     @bus.on "rendered", @attachHandlers
     @bus.on "error",    @error
 
-  updateStatus: (data) ->
-    statusicons = document.queryAll(".statusicon")
+  updateStatus: (data) =>
+    statusicons = @fragment.queryAll(".statusicon")
     statusicons.forEach (statusicon) ->
+      statusicon.className = "statusicon fa fa-eye fa-2x"
       switch data.config.status
         when 2
-          statusicon.className = "statusicon good"
+          klass = "good"
         when 1
-          statusicon.className = "statusicon average"
+          klass = "average"
         else
-          statusicon.className = "statusicon bad"
+          klass = "bad"
+      statusicon.classList.add klass
       return
     return
 
 
-  updateLinks: (data) ->
-    links = document.queryAll(".link")
+  updateLinks: (data) =>
+    links = @fragment.queryAll(".link")
     if data.config.status isnt 2
       links.forEach (element) ->
         element.className = "link disabled"
@@ -28,7 +30,7 @@ class @Handlers
     return
 
 
-  attachHandlers: (data) ->
+  attachHandlers: (data) =>
     onClick = (event) ->
       href = @data("href")
       if href? and data.config.status is 2
@@ -36,13 +38,13 @@ class @Handlers
         location.href = href
       return
 
-    document.queryAll(".link").forEach (element) ->
+    @fragment.queryAll(".link").forEach (element) ->
       element.on "click", onClick
       return
     return
 
 
   error: (message) ->
-    url = Util.href(nanoui_error: message)
+    url = util.href(nanoui_error: message)
     location.href = url
     return

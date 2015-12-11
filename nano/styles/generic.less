@@ -1,11 +1,8 @@
 @import "_config";
-@import "_util";
-@import "_document";
-@import "_common";
-@import "_link";
-@import "_bar";
 
 
 body {
-    background: @background url('background.png') 50% 0 repeat-x;
+    background: linear-gradient(to bottom,
+        @background-start 0%,
+        @background-end 100%);
 }

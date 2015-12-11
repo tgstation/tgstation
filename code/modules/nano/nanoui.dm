@@ -259,6 +259,7 @@
 	"}
 	var/stylesheet_html = {"
 <link rel='stylesheet' type='text/css' href='lib.css' />
+<link rel='stylesheet' type='text/css' href='common.css' />
 <link rel='stylesheet' type='text/css' href='[layout].css' />
 	"}
 

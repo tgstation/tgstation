@@ -3,13 +3,14 @@ min = require("gulp-util").env.min
 
 # Project Paths
 paths =
-  scripts: ["scripts/*.coffee"]
-  styles:  ["styles/*.less"]
-  templates: ["templates/*.dot"]
-  build: "assets"
+  images:    "images/"
+  scripts:   "scripts/*.coffee"
+  styles:    "styles/*.less"
+  templates: "templates/*.dot"
+  build:     "assets"
 
 # doT Settings
-dotSettings =
+dotOpts =
   evaluate:      /\{\{([\s\S]+?)\}\}/g,
   interpolate:   /\{\{=([\s\S]+?)\}\}/g,
   encode:        /\{\{!([\s\S]+?)\}\}/g,
@@ -22,10 +23,26 @@ dotSettings =
   append:        true,
   selfcontained: true
 
+# LESS Settings
+lessOpts =
+  paths: [paths.images]
+
+# Autoprefixer Settings
+autoOpts =
+    browsers: [
+        "last 2 versions",
+        "> 5%",
+        "ie >= 8"
+    ]
+
 # CSSNano Settings
 nanoOpts =
   discardComments:
     removeAll: true
+
+# Filter Settings
+filterOpts =
+    oldIE: true
 
 
 ### Gulp ###
@@ -36,6 +53,7 @@ bower      = require "main-bower-files"
 coffee     = require "gulp-coffee"
 concat     = require "gulp-concat"
 csscomb    = require "gulp-csscomb"
+cssnano    = require "gulp-cssnano"
 del        = require "del"
 dot        = require "gulp-dot-precompiler"
 header     = require "gulp-header"
@@ -51,8 +69,11 @@ uglify     = require "gulp-uglify"
 
 autoprefixer = require "autoprefixer"
 clearfix     = require "postcss-clearfix"
-cssnano      = require "cssnano"
-url          = require "postcss-url"
+filters      = require "pleeease-filters"
+gradient     = require "postcss-filter-gradient"
+opacity      = require "postcss-opacity"
+pseudo       = require "postcss-pseudoelements"
+rgba         = require "postcss-color-rgba-fallback"
 
 
 ### Tasks ###
@@ -88,25 +109,30 @@ gulp.task "styles", ->
   lib = gulp.src bower "**/*.css"
     .pipe replace("../fonts/", "")
     .pipe concat("lib.css")
-    .pipe gulpif(min, postcss([cssnano(nanoOpts)]), csscomb())
+    .pipe gulpif(min, cssnano(nanoOpts), csscomb())
     .pipe gulp.dest paths.build
 
   nanoui = gulp.src paths.styles
     .pipe filter(["*.less", "!_*.less"])
-    .pipe less()
+    .pipe less(lessOpts)
     .pipe postcss([
-      url({url: "inline" }),
-      autoprefixer({ browsers: ["last 2 versions", "> 5%", "ie <= 8"] }),
+      autoprefixer(autoOpts),
+      filters(filterOpts)
+      pseudo,
+      rgba,
+      gradient,
+      opacity,
       clearfix
     ])
-    .pipe gulpif(min, postcss([cssnano(nanoOpts)]), csscomb())
+    .pipe gulpif(min, cssnano(nanoOpts), csscomb())
     .pipe gulp.dest paths.build
 
   merge lib, nanoui
 
 gulp.task "templates", ->
   gulp.src paths.templates
-    .pipe dot({dictionary: "TMPL", templateSettings: dotSettings})
+    .pipe dot({dictionary: "TMPL", templateSettings: dotOpts})
     .pipe concat("templates.js")
     .pipe header("window.TMPL = {};\n")
-  .pipe gulp.dest paths.build
+    .pipe gulpif(min, uglify(), jsbeautify())
+    .pipe gulp.dest paths.build

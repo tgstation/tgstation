@@ -96,14 +96,12 @@
 					{{=helper.link('Panic Siphon', 'close', {'mode': 1}, null, 'danger')}}
 				{{?}}
 			</section>
-			<br />
 			<section class="button">
 				{{=helper.link('Vent Controls', 'sign-out', {'screen': 2})}}
 			</section>
 			<section class="button">
 				{{=helper.link('Scrubber Controls', 'filter', {'screen': 3})}}
 			</section>
-			<br />
 			<section class="button">
 				{{=helper.link('Set Environmental Mode', 'cog', {'screen': 4})}}
 			</section>
@@ -229,7 +227,7 @@
 	{{?? data.screen == 5}}
 		<article class="display">
 			<header><h2>Alarm Thresholds</h2></header>
-			<table class="fixed">
+			<table>
 				<thead>
 					<tr>
 						<th></th>

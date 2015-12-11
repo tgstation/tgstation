@@ -1,26 +1,33 @@
-<div class="statusDisplay">
-	<div class="item">
-			{{=helper.link(data.oneAccess ? 'One Required' : 'All Required', data.oneAccess ? 'unlock' : 'lock', {'access': 'one'})}}
-			{{=helper.link('Reset', 'refresh', {'access': 'clear'})}}
-	</div>
-	<div class="item">
-		<table class="fixed">
+<article class="display">
+	<section>
+		{{? data.oneAccess}}
+			{{=helper.link('One Required', 'unlock', {'access': 'one'})}}
+		{{??}}
+			{{=helper.link('All Required', 'lock', {'access': 'one'})}}
+		{{?}}
+		{{=helper.link('Reset', 'refresh', {'access': 'clear'})}}
+	<section>
+	<table class="grow">
+		<thead>
+			<tr>
+				{{~ data.regions :region:i}}
+					<th>
+						<span class="highlight bold">{{=region.name}}</span>
+					</th>
+				{{~}}
+			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				{{~ data.regions :region:i}}
 					<td>
-						<span class="highlight"><b>{{=region.name}}</b></span>
-					</td>
-				{{~}}
-			</tr>
-			<tr>
-				{{~ data.regions :region:i}}
-					<td class="alignTop">
 						{{~ region.accesses :access:j}}
-							{{=helper.link(access.name, access.req ? 'check-square-o' : 'square-o', {'access': access.id}, null, access.req ? 'selected' : null)}}<br class="clearBoth" />
+							{{=helper.link(access.name, access.req ? 'check-square-o' : 'square-o', {'access': access.id}, null, access.req ? 'selected' : null)}}
+							<br />
 						{{~}}
 					</td>
 				{{~}}
 			</tr>
-		</table>
-	</div>
-</div>
+		</tbody>
+	</table>
+</article>

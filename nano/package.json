@@ -9,7 +9,10 @@
     "gulp": "^3.9.0",
     "gulp-coffee": "^2.3.1",
     "gulp-concat": "^2.6.0",
+    "gulp-csscomb": "^3.0.6",
+    "gulp-cssnano": "^2.0.0",
     "gulp-dot-precompiler": "git+https://github.com/kentliau/gulp-dot-precompiler.git",
+    "gulp-filter": "^3.0.1",
     "gulp-header": "^1.7.1",
     "gulp-if": "^2.0.0",
     "gulp-jsbeautifier": "^1.0.1",
@@ -20,11 +23,11 @@
     "gulp-util": "^3.0.7",
     "main-bower-files": "^2.9.0",
     "merge-stream": "^1.0.0",
+    "pleeease-filters": "^2.0.0",
     "postcss-clearfix": "^0.2.0",
-    "postcss-url": "^5.0.2"
-  },
-  "devDependencies": {
-    "gulp-csscomb": "^3.0.6",
-    "gulp-filter": "^3.0.1"
+    "postcss-color-rgba-fallback": "^2.0.0",
+    "postcss-filter-gradient": "^0.1.1",
+    "postcss-opacity": "^3.0.0",
+    "postcss-pseudoelements": "^3.0.0"
   }
 }

@@ -1,4 +1,7 @@
-@Util =
+class @Util
+  constructor: (@bus, @fragment = document) ->
+    @urlParameters = JSON.parse @fragment.query("#data").data "url-parameters"
+
   extend: (first, second) ->
     Object.keys(second).forEach (key) ->
       secondVal = second[key]
@@ -12,10 +15,8 @@
     first
 
 
-  href: (parameters) ->
-    baseParameters = JSON.parse(document.query("#data").data("url-parameters"))
-
+  href: (parameters) =>
     url = new Url("byond://")
-    @extend url.query, @extend(parameters, baseParameters)
+    @extend url.query, @extend(parameters, @urlParameters)
 
     url

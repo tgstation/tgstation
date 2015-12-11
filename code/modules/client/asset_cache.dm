@@ -221,11 +221,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/simple/nanoui
 	assets = list(
-		"app.js"					= 'nano/assets/app.js',
 		"lib.js"					= 'nano/assets/lib.js',
+		"app.js"					= 'nano/assets/app.js',
 		"templates.js"				= 'nano/assets/templates.js',
-		"generic.css"				= 'nano/assets/generic.css',
 		"lib.css"					= 'nano/assets/lib.css',
+		"common.css"				= 'nano/assets/common.css',
+		"generic.css"				= 'nano/assets/generic.css',
 		"nanotrasen.css"			= 'nano/assets/nanotrasen.css',
 		"fontawesome-webfont.eot"	= 'nano/assets/fontawesome-webfont.eot',
 		"fontawesome-webfont.woff"	= 'nano/assets/fontawesome-webfont.woff',

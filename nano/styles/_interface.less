@@ -9,10 +9,8 @@ article.display {
     padding: 4px;
     margin: 6px 2px;
 
-    border: 2px solid @border;
+    background-color: rgba(0, 0, 0, 0.33); // Transparent background.
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-
-    background-color: rgba(0, 0, 0, 0.4); // Transparent background.
 
     header {
         padding-left: 4px;
@@ -59,12 +57,22 @@ article.display {
     }
 
     table {
+        width: auto;
+
         border-collapse: collapse;
     }
 
+    table.grow {
+        width: 100%;
+    }
+
     th {
-        padding: 2px 12px 4px 0;
+        vertical-align: top;
+        padding: 4px 16px 4px 0;
         text-align: left;
+
+        .fontReset;
+        color: @label;
     }
 
     td {
@@ -77,12 +85,11 @@ article.notice {
     &:extend(article.display all);
     margin: 8px 2px;
 
-    border: none;
     box-shadow: none;
 
     .label, span {
         color: @textinverse;
-        font-weight: bolder;
+        font-weight: bold;
         font-style: italic;
     }
 

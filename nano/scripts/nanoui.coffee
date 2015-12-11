@@ -1,5 +1,5 @@
 class @NanoUI
-  constructor: (@bus) ->
+  constructor: (@bus, @fragment = document) ->
     @bus.on "serverUpdate", @serverUpdate
     @bus.on "update",       @update
     @bus.on "render",       @render
@@ -10,7 +10,7 @@ class @NanoUI
     @contentRendered = false
 
     @data = {}
-    @initialData = JSON.parse document.query("#data").data("initial")
+    @initialData = JSON.parse @fragment.query("#data").data "initial"
 
     unless @initialData? or
     not ("data" of @initialData or "config" of @initalData)
@@ -49,17 +49,17 @@ class @NanoUI
 
     try
       if not @layoutRendered or data.config.autoUpdateLayout
-        layout = document.query("#layout")
+        layout = @fragment.query("#layout")
         layout.innerHTML = TMPL[data.config.templates.layout]\
-          (data.data, data.config, Helpers)
+          (data.data, data.config, helpers)
 
         @layoutRendered = true
         @bus.emit "layoutRendered"
 
       if not @contentRendered or data.config.autoUpdateContent
-        content = document.query("#content")
+        content = @fragment.query("#content")
         content.innerHTML = TMPL[data.config.templates.content]\
-          (data.data, data.config, Helpers)
+          (data.data, data.config, helpers)
 
         @contentRendered = true
         @bus.emit "contentRendered"

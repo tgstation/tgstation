@@ -92,44 +92,42 @@
 </article>
 <article class="display">
 	<header><h2>Power Channels</h2></header>
-	{{~ data.powerChannels :channel:i}}
-		<section>
-			<span class="label">
-				{{=channel.title}}:
-			</span>
-			<div class="content" style="width: 70px; margin-right: 10px">
-				{{=channel.powerLoad}} W
-			</div>
-			<div class="content" style="width: 105px">
-				{{? channel.status <= 1}}
-					<span class='bold bad'>Off</span>
-				{{?? channel.status >= 2}}
-					<span class='bold good'>On</span>
-				{{?}}
-				&nbsp;
-				{{? channel.status == 1 || channel.status == 3}}
-					[Auto]
-				{{??}}
-					[Manual]
-				{{?}}
-			</div>
-			{{? !data.locked || data.siliconUser}}
-				<div class="content" style="width: auto;">
-					{{=helper.link('Auto', 'refresh', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
-					{{=helper.link('On', 'power-off', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
-					{{=helper.link('Off', 'close', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
-				</div>
-			{{?}}
-		</div>
-	{{~}}
-	<section>
-		<span class="label bold">
-			Total Load:
-		</span>
-		<div class="content bold">
-			{{=data.totalLoad}} W
-		</div>
-	</section>
+	<table class="grow">
+		{{~ data.powerChannels :channel:i}}
+			<tr>
+				<th>{{=channel.title}}:</th>
+				<td>{{=channel.powerLoad}} W</td>
+				<td>
+					{{? channel.status <= 1}}
+						<span class='bold bad'>Off</span>
+					{{?? channel.status >= 2}}
+						<span class='bold good'>On</span>
+					{{?}}
+				</td>
+				<td>
+					{{? channel.status == 1 || channel.status == 3}}
+						[Auto]
+					{{??}}
+						[Manual]
+					{{?}}
+				</td>
+				<td class="floatRight">
+					{{? !data.locked || data.siliconUser}}
+						{{=helper.link('Auto', 'refresh', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
+						{{=helper.link('On', 'power-off', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
+						{{=helper.link('Off', 'close', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
+					{{?}}
+				</td>
+			</tr>
+		{{~}}
+		<tr>
+			<th>Total Load:</th>
+			<td class="bold">{{=data.totalLoad}} W</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
 </article>
 {{? data.siliconUser}}
 	<article class="display">
@@ -158,9 +156,9 @@
 		<div class="content">
 			{{? data.locked && !data.siliconUser}}
 				{{? data.coverLocked}}
-					Engaged
+					<span>Engaged</span>
 				{{??}}
-					Disengaged
+					<span>Disengaged</span>
 				{{?}}
 			{{??}}
 				{{=helper.link('Engaged', 'lock', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}
