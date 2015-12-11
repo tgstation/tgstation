@@ -163,6 +163,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	name = "???"
 	id = "shadow"
 	darksight = 8
+	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
