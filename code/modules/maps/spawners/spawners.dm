@@ -769,7 +769,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groansbanned,
+		/obj/item/weapon/reagent_containers/food/drinks/groansbanned,
 		)
 
 /obj/map/spawner/space/russian

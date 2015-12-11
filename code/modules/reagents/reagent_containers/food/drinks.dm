@@ -387,11 +387,11 @@
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groans
+/obj/item/weapon/reagent_containers/food/drinks/groans
 	name = "Groans Soda"
 	desc = "Groans Soda: We'll make you groan."
 	icon_state = "groans"
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groans/New()
+/obj/item/weapon/reagent_containers/food/drinks/groans/New()
 	..()
 	switch(pick(1,2,3,4,5))
 		if(1)
@@ -483,11 +483,11 @@
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groansbanned
+/obj/item/weapon/reagent_containers/food/drinks/groansbanned
 	name = "Groans: Banned Edition"
 	desc = "Banned literally everywhere."
 	icon_state = "groansevil"
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groansbanned/New()
+/obj/item/weapon/reagent_containers/food/drinks/groansbanned/New()
 	..()
 	switch(pick(1,2,3,4,5))
 		if(1)
@@ -528,7 +528,7 @@
 /obj/item/weapon/groans/attack_self(mob/user as mob)
 	to_chat(user, "Now spawning groans.")
 	var/turf/T = get_turf(user.loc)
-	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/groans/A = new /obj/item/weapon/reagent_containers/food/drinks/soda_cans/groans(T)
+	var/obj/item/weapon/reagent_containers/food/drinks/groans/A = new /obj/item/weapon/reagent_containers/food/drinks/groans(T)
 	A.desc += " It also smells like a toddler." //This is required
 
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot
