@@ -25,16 +25,24 @@
 	azoom.rifle = src
 
 /obj/item/weapon/gun/projectile/sniper_rifle/dropped(mob/living/user)
+	zoom(user,FALSE)
 	azoom.Remove(user)
 
 /obj/item/weapon/gun/projectile/sniper_rifle/pickup(mob/living/user)
 	azoom.Grant(user)
 
-/obj/item/weapon/gun/projectile/sniper_rifle/proc/zoom(mob/living/user)
+/obj/item/weapon/gun/projectile/sniper_rifle/proc/zoom(mob/living/user, forced_zoom)
 	if(!user || !user.client)
 		return
 
-	zoomed = !zoomed
+	switch(forced_zoom)
+		if(FALSE)
+			zoomed = FALSE
+		if(TRUE)
+			zoomed = TRUE
+		else
+			zoomed = !zoomed
+
 	if(zoomed)
 		var/_x = 0
 		var/_y = 0
@@ -54,23 +62,26 @@
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 
-/obj/item/weapon/gun/projectile/sniper_rifle/can_shoot()
-	if(..())
-		if(zoomed)
-			return 1
-	return 0
-
 
 
 
 /datum/action/sniper_zoom
 	name = "Zoom Sniper Rifle"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/projectile/sniper_rifle/rifle = null
 
 /datum/action/sniper_zoom/Trigger()
 	rifle.zoom(owner)
+
+/datum/action/sniper_zoom/IsAvailable()
+	. = ..()
+	if(!. && rifle)
+		rifle.zoom(owner, FALSE)
+
+/datum/action/sniper_zoom/Remove(mob/living/L)
+	rifle.zoom(L, FALSE)
+	..()
 
 
 
