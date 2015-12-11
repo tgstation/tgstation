@@ -296,6 +296,14 @@
 	origin_tech = "magnets=3;materials=3;bluespace=2"
 	materials = list(MAT_METAL=50)
 
+/obj/item/weapon/mineralpack //Makes testing even less of a pain by not having to spawn minerals beforehand!
+	name = "mineral pack"
+	icon = 'icons/obj/stock_parts.dmi'
+	icon_state = "matter_bin"
+	desc = "A debug item containing every mineral. Deconstruct or recycle it."
+	materials = list(MAT_METAL=50000, MAT_GLASS=50000, MAT_SILVER=50000, MAT_GOLD=50000, MAT_DIAMOND=50000, MAT_PLASMA=50000, MAT_URANIUM=50000, MAT_BANANIUM=50000)
+	origin_tech = "materials=1;"
+
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'
