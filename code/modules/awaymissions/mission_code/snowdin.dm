@@ -18,6 +18,7 @@
 /area/awaymission/snowdin/cave
 	name = "\improper Snowdin Caves"
 	icon_state = "away2"
+	luminosity = 0
 
 /area/awaymission/snowdin/base
 	name = "\improper Snowdin Main Base"
@@ -106,10 +107,14 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 
 //lootspawners//--
 
-/obj/effect/spawner/lootdrop/dungeonlite
-	name = "dungeon lite"
-	lootdoubles = 1
+/obj/effect/spawner/lootdrop/snowdin
+	name = "why are you using this dummy"
+	lootdoubles = 0
 	lootcount = 1
+	loot = list(/obj/item/weapon/bikehorn = 100)
+
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite
+	name = "dungeon lite"
 	loot = list(/obj/item/weapon/melee/classic_baton = 11,
 				/obj/item/weapon/melee/classic_baton/telescopic = 12,
 				/obj/item/weapon/spellbook/oneuse/smoke = 10,
@@ -126,10 +131,8 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 
-/obj/effect/spawner/lootdrop/dungeonmid
+/obj/effect/spawner/lootdrop/snowdin/dungeonmid
 	name = "dungeon mid"
-	lootdoubles = 0
-	lootcount = 1
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
 				/obj/item/weapon/storage/firstaid/tactical = 35,
 				/obj/item/weapon/teleportation_scroll/apprentice = 4,
@@ -156,16 +159,13 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 
-/obj/effect/spawner/lootdrop/dungeonheavy
+/obj/effect/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
-	lootdoubles = 0
-	lootcount = 1
-
-	loot = list(/obj/item/weapon/twohanded/singularityhammer = 20,
-				/obj/item/weapon/twohanded/mjollnir = 15,
+	loot = list(/obj/item/weapon/twohanded/singularityhammer = 25,
+				/obj/item/weapon/twohanded/mjollnir = 10,
 				/obj/item/weapon/twohanded/fireaxe = 25,
-				/obj/item/organ/internal/brain/alien = 21,
-				/obj/item/weapon/twohanded/dualsaber = 14,
+				/obj/item/organ/internal/brain/alien = 17,
+				/obj/item/weapon/twohanded/dualsaber = 15,
 				/obj/item/organ/internal/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
 				/obj/item/weapon/teleportation_scroll = 5,
@@ -176,11 +176,11 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/spellbook/oneuse/charge = 12,
 				/obj/item/weapon/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/weapon/spellbook/oneuse/fireball = 10,
-				/obj/item/weapon/pickaxe/drill/jackhammer = 35,
+				/obj/item/weapon/pickaxe/drill/jackhammer = 30,
 				/obj/item/borg/upgrade/syndicate = 13,
 				/obj/item/borg/upgrade/selfrepair = 17)
 
-/obj/effect/spawner/lootdrop/dungeonmisc
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc
 	name = "dungeon misc"
 	lootdoubles = 2
 	lootcount = 1
@@ -192,6 +192,8 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				)
 
 //special items//--
+
+/obj/item/clothing/belt/
 
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
@@ -276,3 +278,4 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 /obj/structure/flora/rock/pile/icy
 	name = "icey rocks"
 	color = rgb(114,228,250)
+
