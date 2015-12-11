@@ -181,7 +181,7 @@
 
 	if(organsystem && tr_flags & TR_KEEPORGANS)	//Moving the organsystem
 		O.organsystem = organsystem
-		O.organsystem.set_dna(dna)
+		O.organsystem.set_dna(O.dna)
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
