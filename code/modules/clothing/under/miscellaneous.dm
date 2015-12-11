@@ -71,18 +71,13 @@
 	item_state = "p_suit"
 	item_color = "psyche"
 
-/obj/item/clothing/under/sexyclown
+/obj/item/clothing/under/rank/clown/sexy
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	item_color = "sexyclown"
-	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
-
-/obj/item/clothing/under/sexyclown/hit_reaction()
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
-	return 0
 
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
