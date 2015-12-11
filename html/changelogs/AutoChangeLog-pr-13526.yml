@@ -1,0 +1,4 @@
+author: Lo6a4evskiy
+delete-after: True
+changes: 
+  - bugfix: "Ninja drains power properly, no more infinite stealth."
