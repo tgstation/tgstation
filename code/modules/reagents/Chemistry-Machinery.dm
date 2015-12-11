@@ -1717,7 +1717,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	/datum/chemical_reaction/ammonia, /datum/chemical_reaction/diethylamine, /datum/chemical_reaction/space_cleaner,
 	/datum/chemical_reaction/plantbgone, /datum/chemical_reaction/doctor_delight, /datum/chemical_reaction/neurotoxin,
 	/datum/chemical_reaction/toxins_special, /datum/chemical_reaction/goldschlager, /datum/chemical_reaction/patron,
-	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce)
+	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce, /datum/chemical_reaction/silicate) //I give this code eight goofballs out of ten, with one being the least goofball and ten being the most goofball-like in quality
 
 
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
@@ -1726,6 +1726,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if(istype(B))
 				beakers -= B
 				user.put_in_hands(B)
+	to_chat(user, "<span class='notice'>You remove the containers from the electrolyzer.</span>")
 
 /obj/item/weapon/electrolyzer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iswirecutter(W))
