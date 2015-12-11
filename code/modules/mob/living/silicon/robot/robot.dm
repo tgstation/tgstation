@@ -125,7 +125,7 @@
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	toner = 40
+	toner = tonermax
 	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -429,7 +429,7 @@
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
 				user << "<span class='notice'>You start fixing youself...</span>"
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 50/W.toolspeed, target = src))
 					return
 
 			adjustBruteLoss(-30)
@@ -510,7 +510,7 @@
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
-			if(do_after(user, 50, target = src) && !cell)
+			if(do_after(user, 50/W.toolspeed, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
@@ -573,7 +573,7 @@
 		else
 			if(!user.drop_item())
 				return
-			toner = 40
+			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 

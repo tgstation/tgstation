@@ -94,6 +94,9 @@
 	if(istype(M, /mob/living/silicon))
 		//AI can do whatever he wants
 		return 1
+	if(IsAdminGhost(M))
+		//Access can't stop the abuse
+		return 1
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works

@@ -69,9 +69,9 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/blob_act()
-	if(prob(75) && fireaxe)
+	if(fireaxe)
 		fireaxe.loc = src.loc
-		qdel(src)
+	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
 	if(open || glass_hp <= 0)

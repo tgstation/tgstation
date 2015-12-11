@@ -51,6 +51,9 @@
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
 
+/turf/simulated/floor/plating/snow/cold
+	temperature = 220 //Enough to deal cold damage on breathing. TODO : Make these points defines
+
 /turf/simulated/floor/plating/snow/gravsnow
 	icon_state = "gravsnow"
 
@@ -66,6 +69,7 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
+	slowdown = -0.3
 
 /turf/simulated/floor/noslip/MakeSlippery()
 	return

@@ -146,8 +146,8 @@
 		src.initialize()
 
 /obj/machinery/alarm/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()
@@ -169,40 +169,26 @@
 	return 0
 
 /obj/machinery/alarm/attack_hand(mob/user)
-	if (..())
+	if (..() || !user) return
+	if (buildstage != 2) return
+
+	interact(user)
+
+/obj/machinery/alarm/interact(mob/user)
+	if (user.has_unlimited_silicon_privilege && src.aidisabled)
+		user << "AI control for this Air Alarm interface has been disabled."
 		return
 
-	if (buildstage != 2)
-		return
-
-	user.set_machine(src)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=air_alarm")
-			user << browse(null, "window=AAlarmwires")
-			return
-
-
-		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
-			user << "AI control for this Air Alarm interface has been disabled."
-			user << browse(null, "window=air_alarm")
-			return
-
-	if(!shorted)
+	if(panel_open && !istype(user, /mob/living/silicon/ai))
+		wires.Interact(user)
+	else if (!shorted)
 		ui_interact(user)
 
-	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
-		wires.Interact(user)
-
-	return
-
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 1)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 480, 625)
+		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)
 	var/data = list()
@@ -241,9 +227,9 @@
 		send_signal(id_tag, list("status") )
 
 /obj/machinery/alarm/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
@@ -398,16 +384,11 @@
 	if (buildstage != 2)
 		return
 
-	usr.set_machine(src)
-
 	if (locked && !usr.has_unlimited_silicon_privilege)
 		return
 
-	if ( (get_dist(src, usr) > 1 ))
-		if (!istype(usr, /mob/living/silicon))
-			usr.unset_machine()
-			usr << browse(null, "window=air_alarm")
-			return
+	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
+		return
 
 	if(href_list["toggleaccess"])
 		if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
@@ -464,35 +445,23 @@
 				else
 					newval = round(newval,0.01)
 					tlv.vars[varname] = newval
-				spawn(1)
-					src.updateUsrDialog()
 
 	if(href_list["screen"])
 		screen = text2num(href_list["screen"])
-		spawn(1)
-			src.updateUsrDialog()
-
 
 	if(href_list["atmos_alarm"])
 		if (alarm_area.atmosalert(2,src))
 			post_alert(2)
-		spawn(1)
-			src.updateUsrDialog()
 		update_icon()
+
 	if(href_list["atmos_reset"])
 		if (alarm_area.atmosalert(0,src))
 			post_alert(0)
-		spawn(1)
-			src.updateUsrDialog()
 		update_icon()
 
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
 		apply_mode()
-		spawn(5)
-			src.updateUsrDialog()
-
-	return
 
 /obj/machinery/alarm/proc/apply_mode()
 	switch(mode)
@@ -683,7 +652,7 @@
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
 	if(!frequency) return
 
@@ -749,7 +718,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if (do_after(user, 20, target = src))
+				if (do_after(user, 20/W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/electronics/airalarm( src.loc )
@@ -971,7 +940,7 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20, target = src))
+					if(do_after(user, 20/W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
@@ -1025,7 +994,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1165,7 +1134,7 @@ Handheld fire alarm frame, for placing on walls
 	desc = "Cuban Pete is in the house!"
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)

@@ -115,13 +115,16 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+/obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
 	var/mob/user = loc
-	if(!istype(user)) return 0
+	if(!istype(user))
+		return 0
 	var/obj/item/I = user.get_active_hand()
-	if(I == src) I = user.get_inactive_hand()
-	if(!I) return 0
-	return I.IsShield()
+	if(I == src)
+		I = user.get_inactive_hand()
+	if(!I)
+		return 0
+	return I.hit_reaction()
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -177,17 +180,15 @@
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		qdel(A)
+			W.spawnfragments() // this will qdel and spawn shards
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			G.health = -6
+			G.destroyed += prob(25) // If this is set, healthcheck will completely remove the grille
+			G.healthcheck()
 
 
 /*
@@ -211,6 +212,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -242,11 +244,10 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/IsShield()
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(wielded)
-		return 1
-	else
-		return 0
+		return ..()
+	return 0
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)

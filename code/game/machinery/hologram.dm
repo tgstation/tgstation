@@ -71,7 +71,10 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user)
+	interact(user)
+
+/obj/machinery/hologram/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
 	if(user.stat || stat & (NOPOWER|BROKEN))
@@ -108,7 +111,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	else if(href_list["mainmenu"])
 		temp = ""
 
-	updateUsrDialog()
+	updateDialog()
 	add_fingerprint(usr)
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
@@ -228,10 +231,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(3)
 			if (prob(5))
 				qdel(src)
-	return
-
-/obj/machinery/hologram/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/hologram/holopad/Destroy()

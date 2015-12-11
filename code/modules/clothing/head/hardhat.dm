@@ -11,30 +11,35 @@
 	action_button_name = "Toggle Helmet Light"
 	burn_state = -1 //Won't burn in fires
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardhat[on]_[item_color]"
-		item_state = "hardhat[on]_[item_color]"
-		user.update_inv_head()	//so our mob-overlays update
+/obj/item/clothing/head/hardhat/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "hardhat[on]_[item_color]"
+	item_state = "hardhat[on]_[item_color]"
+	user.update_inv_head()	//so our mob-overlays update
 
-		if(on)	user.AddLuminosity(brightness_on)
-		else	user.AddLuminosity(-brightness_on)
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
 
-	pickup(mob/user)
-		if(on)
-			user.AddLuminosity(brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
+/obj/item/clothing/head/hardhat/pickup(mob/user)
+	if(on)
+		user.AddLuminosity(brightness_on)
+		SetLuminosity(0)
 
-	dropped(mob/user)
-		if(on)
-			user.AddLuminosity(-brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+/obj/item/clothing/head/hardhat/dropped(mob/user)
+	if(on)
+		user.AddLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
+	user.AddLuminosity(brightness_on)
+
+/obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
+	user.AddLuminosity(-brightness_on)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

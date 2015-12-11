@@ -50,6 +50,7 @@
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
 	var/punchmod = 0	// adds to the punch damage
+	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -84,6 +85,14 @@
 	///////////
 	// PROCS //
 	///////////
+
+
+
+//Called when admins use the Set Species verb, let's species
+//do some init stuff on the mob that got SS'd if necessary
+/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
+	return
+
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
@@ -883,7 +892,7 @@
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && H.check_shields(0, M.name))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
@@ -1004,8 +1013,8 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-	if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
-		return 0
+		if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
+			return 0
 
 	if(I.attack_verb && I.attack_verb.len)
 		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \

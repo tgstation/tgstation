@@ -182,7 +182,7 @@
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
 
-	SSbp.insertBot(src)
+	SSnpc.insertBot(src)
 
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)

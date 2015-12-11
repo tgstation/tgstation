@@ -10,6 +10,10 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
+	var/icon_idle = "revenant_idle"
+	var/icon_reveal = "revenant_revealed"
+	var/icon_stun = "revenant_stun"
+	var/icon_drain = "revenant_draining"
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -23,7 +27,7 @@
 	response_disarm = "swings at"
 	response_harm   = "punches through"
 	unsuitable_atmos_damage = 0
-	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -34,6 +38,9 @@
 	density = 0
 	flying = 1
 	anchored = 1
+	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	speed = 0
 	unique_name = 1
 
 	var/essence = 75 //The resource, and health, of revenants.
@@ -59,6 +66,7 @@
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = 0
+		incorporeal_move = 3
 		invisibility = INVISIBILITY_REVENANT
 		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
 	if(unstun_time && world.time >= unstun_time)
@@ -78,6 +86,7 @@
 		return
 	revealed = 1
 	invisibility = 0
+	incorporeal_move = 0
 	if(!unreveal_time)
 		src << "<span class='revendanger'>You have been revealed!</span>"
 		unreveal_time = world.time + time
@@ -102,15 +111,21 @@
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
-		if(draining)
-			icon_state = "revenant_draining"
-			return
 		if(notransform)
-			icon_state = "revenant_stun"
-			return
-		icon_state = "revenant_revealed"
-		return
-	icon_state = "revenant_idle"
+			if(draining)
+				icon_state = icon_drain
+			else
+				icon_state = icon_stun
+		else
+			icon_state = icon_reveal
+	else
+		icon_state = icon_idle
+	if(ghostimage)
+		ghostimage.icon_state = src.icon_state
+		updateallghostimages()
+
+/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
+	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -120,6 +135,9 @@
 
 /mob/living/simple_animal/revenant/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/simple_animal/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/simple_animal/revenant/adjustBruteLoss(amount)
 	if(!revealed)
@@ -217,6 +235,9 @@
 
 
 /mob/living/simple_animal/revenant/say(message)
+	if(!message)
+		return
+	log_say("[key_name(src)] : [message]")
 	for(var/mob/M in mob_list)
 		if (istype(M, /mob/new_player))
 			continue
@@ -235,11 +256,11 @@
 
 /mob/living/simple_animal/revenant/New()
 	..()
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
-	
+
 	spawn(5)
 		if(src.mind)
 			src.mind.remove_all_antag()
@@ -414,7 +435,7 @@
 		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(inert || !src)
+	if(gc_destroyed || !src || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")

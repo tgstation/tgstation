@@ -17,6 +17,7 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
 			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
 
@@ -88,6 +89,7 @@
 	charge_max = 200
 	range = 5
 	stun = 30
+	reveal = 100
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 18
@@ -127,6 +129,7 @@
 	charge_max = 150
 	range = 3
 	stun = 10
+	reveal = 40
 	unlock_amount = 75
 	cast_amount = 30
 	action_icon_state = "defile"
@@ -180,7 +183,7 @@
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			spawn(0)
-				for(var/obj/machinery/bot/bot in T.contents)
+				for(var/mob/living/simple_animal/bot/bot in T.contents)
 					if(!bot.emagged)
 						PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
 						bot.locked = 0
@@ -193,7 +196,7 @@
 					PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
 					human.emp_act(1)
 				for(var/obj/thing in T.contents)
-					if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes) || istype(thing, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
+					if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 						continue
 					if(prob(20))
 						if(prob(50))
@@ -214,6 +217,7 @@
 	desc = "Causes nearby living things to waste away."
 	charge_max = 200
 	range = 3
+	reveal = 60
 	cast_amount = 50
 	unlock_amount = 200
 	action_icon_state = "blight"

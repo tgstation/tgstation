@@ -19,6 +19,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -160,6 +161,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
+	icon_alert = "pda-r-library"
 	default_cartridge = /obj/item/weapon/cartridge/librarian
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
@@ -233,14 +235,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
 
-/obj/item/device/pda/proc/can_use(mob/user)
-	if(user && ismob(user))
-		if(user.incapacitated())
-			return 0
-		if(loc == user)
-			return 1
-	return 0
-
 /obj/item/device/pda/GetAccess()
 	if(id)
 		return id.GetAccess()
@@ -252,12 +246,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && can_use(M))
+	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
 	return
 
-//NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
+	assets.send(user)
 
 	user.set_machine(src)
 
@@ -382,7 +377,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
 				dat += "<ul>"
-
 				var/count = 0
 
 				if (!toff)
@@ -400,6 +394,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "</ul>"
 				if (count == 0)
 					dat += "None detected.<br>"
+				else if(cartridge && cartridge.spam_enabled)
+					dat += "<a href='byond://?src=\ref[src];choice=MessageAll'>Send To All</a>"
 
 			if(21)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
@@ -450,9 +446,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 
-	if(can_use(U)) //Why reinvent the wheel? There's a proc that does exactly that.
+	if(usr.canUseTopic(src))
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -586,6 +581,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				src.create_message(U, P)
 
+			if("MessageAll")
+				src.send_to_all(U)
+
 			if("Send Honk")//Honk virus
 				if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
@@ -710,37 +708,94 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 	if (!in_range(src, U) && loc != U)
 		return
-	if(!can_use(U))
+	if(!U.canUseTopic(src))
 		return
 	if(emped)
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
+/obj/item/device/pda/proc/send_message(mob/living/user = usr,list/obj/item/device/pda/targets)
+	var/message = msg_input(user)
 
-	var/t = msg_input(U)
-
-	if (!t)
+	if(!message || !targets.len)
+		return
+	
+	if(last_text && world.time < last_text + 5)
 		return
 
-	if (last_text && world.time < last_text + 5)
-		return
+	var/multiple = targets.len > 1
 
-	if (!istype(P) || P.toff || qdeleted(P))
-		return
+	var/datum/data_pda_msg/last_sucessful_msg
+	for(var/obj/item/device/pda/P in targets)
+		if(P == src)
+			continue
+		var/obj/machinery/message_server/MS = null
+		MS = can_send(P)
+		if(MS)
+			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
+			if(msg)
+				last_sucessful_msg = msg
+			if(!multiple)
+				show_to_sender(msg)
+			P.show_recieved_message(msg,src)
+			if(!multiple)
+				show_to_ghosts(msg)
+				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+		else
+			if(!multiple)
+				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
+				return
+	photo = null
+	
+	if(multiple)
+		show_to_sender(last_sucessful_msg,1)
+		show_to_ghosts(last_sucessful_msg,1)
+		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
 
-	last_text = world.time
+/obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
+	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+
+/obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
+	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+
+	if (!silent)
+		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+		audible_message("\icon[src] *[ttone]*", null, 3)
+	//Search for holder of the PDA.
+	var/mob/living/L = null
+	if(loc && isliving(loc))
+		L = loc
+	//Maybe they are a pAI!
+	else
+		L = get(src, /mob/living/silicon)
+
+	if(L)
+		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
+
+	overlays.Cut()
+	overlays += image(icon, icon_alert)
+
+/obj/item/device/pda/proc/show_to_ghosts(datum/data_pda_msg/msg,multiple = 0)
+	for(var/mob/M in player_list)
+		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+			M.show_message("<span class='game say'>PDA Message - <span class='name'>[msg.sender]</span> -> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
+
+/obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
+	if(!P || qdeleted(P) || P.toff)
+		return null
+
 	var/obj/machinery/message_server/useMS = null
 	if(message_servers)
 		for (var/obj/machinery/message_server/MS in message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
+				break
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || !U) //in case the PDA or mob gets destroyed during telecomms_process()
-		return
+	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+		return null
 
 	var/useTC = 0
 	if(signal)
@@ -749,44 +804,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/turf/pos = get_turf(P)
 			if(pos.z in signal.data["level"])
 				useTC = 2
-				//Let's make this barely readable
-				if(signal.data["compression"] > 0)
-					t = Gibberish(t, signal.data["compression"] + 50)
 
-	if(useMS && useTC) // only send the message if it's stable
-		if(useTC != 2) // Does our recipient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recipient."
-			return
-		var/msg_ref = useMS.send_pda_message("[P.owner]","[owner]","[t]",photo)
-		var/photo_ref = ""
-		if(photo)
-			photo_ref = "<a href='byond://?src=\ref[msg_ref];photo=1'>(Photo)</a>"
-		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t][photo_ref]<br>"
-		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t][photo_ref]<br>"
-		for(var/mob/M in player_list)
-			if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t][photo_ref]</span></span>")
-
-		if (!P.silent)
-			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-			P.audible_message("\icon[P] *[P.ttone]*", null, 3)
-		//Search for holder of the PDA.
-		var/mob/living/L = null
-		if(P.loc && isliving(P.loc))
-			L = P.loc
-		//Maybe they are a pAI!
-		else
-			L = get(P, /mob/living/silicon)
-
-		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\"[photo_ref] (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-
-		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		photo = null
-		P.overlays.Cut()
-		P.overlays += image('icons/obj/pda.dmi', "pda-r")
+	if(useTC == 2)
+		return useMS
 	else
-		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
+		return null 
+
+
+/obj/item/device/pda/proc/send_to_all(mob/living/U = usr)
+	send_message(U,get_viewable_pdas())
+
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
+	send_message(U,list(P))
 
 /obj/item/device/pda/AltClick()
 	..()
@@ -794,13 +823,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(issilicon(usr))
 		return
 
-	if(can_use(usr))
+	if(usr.canUseTopic(src))
 		if(id)
 			remove_id()
 		else
 			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
-	else
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -810,14 +837,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(issilicon(usr))
 		return
 
-	if ( can_use(usr) )
+	if (usr.canUseTopic(src))
 		if(id)
 			remove_id()
 		else
 			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
-	else
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
-
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
@@ -827,7 +851,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(issilicon(usr))
 		return
 
-	if ( can_use(usr) )
+	if (usr.canUseTopic(src))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
 			if (istype(loc, /mob))
@@ -839,8 +863,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			O.loc = get_turf(src)
 		else
 			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
-	else
-		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -889,11 +911,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
-				if( can_use(user) )//If they can still act.
-					if(!id_check(user, 2))
-						return
-					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
-					updateSelfDialog()//Update self dialog on success.
+				if(!id_check(user, 2))
+					return
+				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)

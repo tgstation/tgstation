@@ -8,7 +8,7 @@
 	canSmoothWith = null
 
 /turf/simulated/wall/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
 /turf/simulated/wall/cult/break_wall()
@@ -55,7 +55,7 @@
 //won't get an underlay of the destination turf on shuttle move
 /turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
 	if(T.type != type)
-		T = new type(T)
+		T.ChangeTurf(type)
 		if(underlays.len)
 			T.underlays = underlays
 	if(T.icon_state != icon_state)

@@ -260,9 +260,6 @@
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
 			if(!F)
-				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-					return
 				if(!user.unEquip(A))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
@@ -276,9 +273,6 @@
 
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
-			if(user.l_hand != src && user.r_hand != src)
-				user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-				return
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null

@@ -84,7 +84,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
-	if(CanHug(AM))
+	if(CanHug(AM) && Adjacent(AM))
 		return Attach(AM)
 	return 0
 
@@ -230,7 +230,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 1
 
 	var/mob/living/carbon/C = M
-	if(ishuman(C))
+	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
 			return 0

@@ -58,7 +58,9 @@
 		/obj/item/clothing/suit/jacket/leather/overcoat,
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red)
+		/obj/item/clothing/suit/poncho/red,
+		/obj/item/clothing/suit/snowman,
+		/obj/item/clothing/head/snowman)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.

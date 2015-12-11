@@ -82,41 +82,25 @@ emp_act
 //End Here
 
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
-	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
+	var/block_chance_modifier = 30*thrown_proj - round(damage / 3) //thrown things are easier to block
 	if(AM)
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
-	var/blocker
-	if(l_hand)
-		if(l_hand.IsShield())
-			block_chance -= Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100) //So armour piercing blades can still be parried by other blades, for example
-			if(prob(block_chance))
-				blocker = l_hand
-	if(r_hand)
-		if(r_hand.IsShield())
-			block_chance -= Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)
-			if(prob(block_chance))
-				blocker = r_hand
-	if(blocker)
-		visible_message("<span class='danger'>[src] blocks [attack_text] with [blocker]!</span>", \
-						"<span class='userdanger'>[src] blocks [attack_text] with [blocker]!</span>")
-		return 1
+	if(l_hand && !istype(l_hand, /obj/item/clothing))
+		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+		if(l_hand.hit_reaction(src, attack_text, final_block_chance))
+			return 1
+	if(r_hand && !istype(r_hand, /obj/item/clothing))
+		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
+		if(r_hand.hit_reaction(src, attack_text, final_block_chance))
+			return 1
 	if(wear_suit)
-		if(wear_suit.IsShield() && (prob(50)))
-			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
-							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = new/list()
-			for(var/turf/T in orange(6, src))
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6, src))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			if(buckled)
-				buckled.unbuckle_mob()
-			forceMove(picked)
+		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance))
+			return 1
+	if(w_uniform)
+		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance))
 			return 1
 	return 0
 

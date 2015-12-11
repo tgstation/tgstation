@@ -26,7 +26,11 @@
 	electronics = null
 	return ..()
 
-
+/obj/machinery/door/window/update_icon()
+	if(density)
+		icon_state = base_state
+	else
+		icon_state = "[src.base_state]open"
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
@@ -40,13 +44,7 @@
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
-		var/obj/machinery/bot/bot = AM
-		if(istype(bot))
-			if(src.check_access(bot.botcard))
-				open_and_close()
-			else
-				flick("[src.base_state]deny", src)
-		else if(istype(AM, /obj/mecha))
+		if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
@@ -89,7 +87,7 @@
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir)
-	return !density || (dir != to_dir) || check_access(ID)
+	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -153,14 +151,15 @@
 /obj/machinery/door/window/proc/take_damage(damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		var/debris = list(
-			new /obj/item/weapon/shard(src.loc),
-			new /obj/item/weapon/shard(src.loc),
-			new /obj/item/stack/rods(src.loc, 2),
-			new /obj/item/stack/cable_coil(src.loc, 2)
-			)
-		for(var/obj/fragment in debris)
-			transfer_fingerprints_to(fragment)
+		if(!(flags&NODECONSTRUCT))
+			var/debris = list(
+				new /obj/item/weapon/shard(src.loc),
+				new /obj/item/weapon/shard(src.loc),
+				new /obj/item/stack/rods(src.loc, 2),
+				new /obj/item/stack/cable_coil(src.loc, 2)
+				)
+			for(var/obj/fragment in debris)
+				transfer_fingerprints_to(fragment)
 		src.density = 0
 		qdel(src)
 		return
@@ -271,62 +270,63 @@
 
 	add_fingerprint(user)
 
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(src.density || src.operating)
-			user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
+	if(!(flags&NODECONSTRUCT))
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(src.density || src.operating)
+				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
+				return
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.p_open = !( src.p_open )
+			user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
 			return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		src.p_open = !( src.p_open )
-		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
-		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
-		if(p_open && !src.density && !src.operating)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			user.visible_message("[user] removes the electronics from the [src.name].", \
-								 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
-			if(do_after(user,40, target = src))
-				if(src.p_open && !src.density && !src.operating && src.loc)
-					var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
-					switch(base_state)
-						if("left")
-							WA.facing = "l"
-						if("right")
-							WA.facing = "r"
-						if("leftsecure")
-							WA.facing = "l"
-							WA.secure = 1
-						if("rightsecure")
-							WA.facing = "r"
-							WA.secure = 1
-					WA.anchored = 1
-					WA.state= "02"
-					WA.dir = src.dir
-					WA.ini_dir = src.dir
-					WA.update_icon()
-					WA.created_name = src.name
+		if(istype(I, /obj/item/weapon/crowbar))
+			if(p_open && !src.density && !src.operating)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+				user.visible_message("[user] removes the electronics from the [src.name].", \
+									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
+				if(do_after(user,40/I.toolspeed, target = src))
+					if(src.p_open && !src.density && !src.operating && src.loc)
+						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+						switch(base_state)
+							if("left")
+								WA.facing = "l"
+							if("right")
+								WA.facing = "r"
+							if("leftsecure")
+								WA.facing = "l"
+								WA.secure = 1
+							if("rightsecure")
+								WA.facing = "r"
+								WA.secure = 1
+						WA.anchored = 1
+						WA.state= "02"
+						WA.dir = src.dir
+						WA.ini_dir = src.dir
+						WA.update_icon()
+						WA.created_name = src.name
 
-					if(emagged)
-						user << "<span class='warning'>You discard the damaged electronics.</span>"
-						qdel(src)
-						return
+						if(emagged)
+							user << "<span class='warning'>You discard the damaged electronics.</span>"
+							qdel(src)
+							return
 
-					user << "<span class='notice'>You remove the airlock electronics.</span>"
+						user << "<span class='notice'>You remove the airlock electronics.</span>"
 
-					var/obj/item/weapon/electronics/airlock/ae
-					if(!electronics)
-						ae = new/obj/item/weapon/electronics/airlock( src.loc )
-						if(req_one_access)
-							ae.use_one_access = 1
-							ae.conf_access = src.req_one_access
+						var/obj/item/weapon/electronics/airlock/ae
+						if(!electronics)
+							ae = new/obj/item/weapon/electronics/airlock( src.loc )
+							if(req_one_access)
+								ae.one_access = 1
+								ae.accesses = src.req_one_access
+							else
+								ae.accesses = src.req_access
 						else
-							ae.conf_access = src.req_access
-					else
-						ae = electronics
-						electronics = null
-						ae.loc = src.loc
+							ae = electronics
+							electronics = null
+							ae.loc = src.loc
 
-					qdel(src)
+						qdel(src)
 			return
 
 

@@ -134,11 +134,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	action_button_name = "Toggle Armor"
 	unacidable = 1
+	hit_reaction_chance = 50
 
-/obj/item/clothing/suit/armor/reactive/IsShield()
-	if(active)
-		return 1
-	return 0
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	src.active = !( src.active )
@@ -159,6 +156,46 @@
 	src.item_state = "reactiveoff"
 	..()
 
+/obj/item/clothing/suit/armor/reactive/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		var/mob/living/carbon/human/H = owner
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(6, H))
+			if(T.density)
+				continue
+			if(T.x>world.maxx-6 || T.x<6)
+				continue
+			if(T.y>world.maxy-6 || T.y<6)
+				continue
+			turfs += T
+		if(!turfs.len)
+			turfs += pick(/turf in orange(6, src))
+			var/turf/picked = pick(turfs)
+			if(!isturf(picked))
+				return
+			if(H.buckled)
+				H.buckled.unbuckle_mob()
+			H.forceMove(picked)
+		return 1
+	return 0
+
+/obj/item/clothing/suit/armor/reactive/fire
+	name = "reactive incendiary armor"
+
+
+/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
+		for(var/mob/living/carbon/C in range(6, owner))
+			if(C != owner)
+				C.fire_stacks += 8
+				C.IgniteMob()
+		owner.fire_stacks = -20
+		return 1
+	return 0
 
 //All of the armor below is mostly unused
 
@@ -208,3 +245,28 @@
 	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
+
+
+/obj/item/clothing/suit/armor/riot/knight
+	name = "plate armour"
+	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
+	icon_state = "knight_green"
+	item_state = "knight_green"
+
+/obj/item/clothing/suit/armor/riot/knight/yellow
+	icon_state = "knight_yellow"
+	item_state = "knight_yellow"
+
+/obj/item/clothing/suit/armor/riot/knight/blue
+	icon_state = "knight_blue"
+	item_state = "knight_blue"
+
+/obj/item/clothing/suit/armor/riot/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
+
+/obj/item/clothing/suit/armor/riot/knight/templar
+	name = "crusader armour"
+	desc = "God wills it!"
+	icon_state = "knight_templar"
+	item_state = "knight_templar"

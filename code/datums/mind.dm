@@ -1694,6 +1694,12 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
+/mob/new_player/sync_mind()
+	return
+
+/mob/dead/observer/sync_mind()
+	return
+
 //Initialisation procs
 /mob/proc/mind_initialize()
 	if(mind)
@@ -1791,7 +1797,7 @@
 	mind.assigned_role = "Shade"
 	mind.special_role = "Shade"
 
-/mob/living/simple_animal/construct/mind_initialize()
+/mob/living/simple_animal/hostile/construct/mind_initialize()
 	..()
 	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"

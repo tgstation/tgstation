@@ -11,8 +11,8 @@
 	var/sound1 = "sound/weapons/ZapBang.ogg"
 	var/sound2 = "sound/weapons/ZapBang.ogg"
 
-/obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets)
-	playsound(get_turf(usr), sound1, 50,1)
+/obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets,mob/user = usr)
+	playsound(get_turf(user), sound1, 50,1)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))
@@ -41,4 +41,4 @@
 			if(target.buckled_mob)
 				target.unbuckle_mob(force=1)
 			target.loc = picked
-			playsound(get_turf(usr), sound2, 50,1)
+			playsound(get_turf(user), sound2, 50,1)

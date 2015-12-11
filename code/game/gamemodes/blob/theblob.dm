@@ -2,7 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
-	luminosity = 3
+	luminosity = 1
 	desc = "A thick wall of writhing tendrils."
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
@@ -17,29 +17,40 @@
 	var/fire_resist = 1
 	var/mob/camera/blob/overmind
 
-
 /obj/effect/blob/New(loc)
-	blobs += src
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		blobs_legit += src
+	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
-	for(var/atom/A in loc)
-		A.blob_act()
+	ConsumeTile()
 	return
 
 /obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
+/obj/effect/blob/update_icon() //Blobs use update icon for health checks
+	if(health <= 0)
+		qdel(src)
+		return
+	return
+
 /obj/effect/blob/Destroy()
-	blobs -= src
-	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
+		blobs_legit -= src
+	blobs -= src //It's still removed from the normal list
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)	return 1
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSBLOB))
+		return 1
 	return 0
 
 
@@ -54,6 +65,10 @@
 
 /obj/effect/blob/proc/Life()
 	return
+
+/obj/effect/blob/proc/ConsumeTile()
+	for(var/atom/A in loc)
+		A.blob_act()
 
 /obj/effect/blob/proc/PulseAnimation()
 	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
@@ -80,7 +95,7 @@
 	set background = BACKGROUND_ENABLED
 
 	PulseAnimation()
-
+	ConsumeTile()
 	RegenHealth()
 
 	if(run_action())//If we can do something here then we dont need to pulse more
@@ -93,7 +108,8 @@
 	var/list/dirs = list(1,2,4,8)
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
-		if(!dirs.len)	break
+		if(!dirs.len)
+			break
 		var/dirn = pick(dirs)
 		dirs.Remove(dirn)
 		var/turf/T = get_step(src, dirn)
@@ -120,27 +136,36 @@
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
-			if(!(locate(/obj/effect/blob) in T))	break
-			else	T = null
-
-	if(!T)	return 0
-	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+			if(!(locate(/obj/effect/blob) in T))
+				break
+			else
+				T = null
+	if(!T)
+		return 0
+	var/Blob_spawnable = 1
 	if(istype(T, /turf/space) && prob(65))
-		B.health = 0
-	B.color = a_color
-	B.density = 1
-	if(T.Enter(B,src))//Attempt to move into the tile
-		B.density = initial(B.density)
-		B.loc = T
-		B.update_icon()
-	else
-		T.blob_act()//If we cant move in hit the turf
-		B.loc = null //So we don't play the splat sound, see Destroy()
-		qdel(B)
-
-	for(var/atom/A in T)//Hit everything in the turf
-		A.blob_act()
+		Blob_spawnable = 0
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+	for(var/atom/A in T)
+		if(A.density) //Unless density is 0, don't spawn a blob
+			Blob_spawnable = 0
+		A.blob_act() //Hit everything
+	if(T.density) //Check for walls and such dense turfs
+		Blob_spawnable = 0
+		T.blob_act() //Hit the turf
+	if(Blob_spawnable)
+		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+		B.color = a_color
+		B.density = 1
+		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+			B.density = initial(B.density)
+			B.loc = T
+			B.update_icon()
+		else
+			T.blob_act() //If we cant move in hit the turf
+			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
 	return 1
+
 
 /obj/effect/blob/ex_act(severity, target)
 	..()
@@ -151,11 +176,6 @@
 	..()
 	take_damage(Proj.damage, Proj.damage_type)
 	return 0
-
-/obj/effect/blob/Crossed(mob/living/L)
-	..()
-	L.blob_act()
-
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -172,7 +192,7 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, BRUTE)
+	take_damage(damage, M.melee_damage_type)
 	return
 
 /obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -232,9 +252,8 @@
 	brute_resist = 4
 
 /obj/effect/blob/normal/update_icon()
-	if(health <= 0)
-		qdel(src)
-	else if(health <= 10)
+	..()
+	if(health <= 10)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
@@ -244,17 +263,3 @@
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
 		brute_resist = 4
-
-/* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
-
-var/datum/blob_colour/B = new()
-
-/datum/blob_colour/New()
-	..()
-	var/icon/I = 'icons/mob/blob.dmi'
-	I += rgb(35, 35, 0)
-	if(isfile("icons/mob/blob_result.dmi"))
-		fdel("icons/mob/blob_result.dmi")
-	fcopy(I, "icons/mob/blob_result.dmi")
-
-*/

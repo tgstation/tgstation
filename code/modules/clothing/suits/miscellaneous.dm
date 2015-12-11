@@ -165,6 +165,14 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/snowman
+	name = "snowman outfit"
+	desc = "Two white spheres covered in white glitter. 'Tis the season."
+	icon_state = "snowman"
+	item_state = "snowman"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
 /obj/item/clothing/suit/poncho
 	name = "poncho"
 	desc = "Your classic, non-racist poncho."

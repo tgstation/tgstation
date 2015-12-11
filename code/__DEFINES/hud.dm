@@ -13,6 +13,7 @@
 #define DIAG_HUD		"9" // Silicon health bar
 #define DIAG_BATT_HUD	"10"// Borg/Mech power meter
 #define DIAG_MECH_HUD	"11"// Mech health bar
+#define DIAG_BOT_HUD	"12"// Bot HUDs
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"12"
 

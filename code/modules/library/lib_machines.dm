@@ -173,7 +173,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
-	var/list/libcomp_menu = list("")
+	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives 
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
@@ -265,7 +265,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 				dat += libcomp_menu[Clamp(page,1,libcomp_menu.len)]
-				dat += "<tr><td><A href='?src=\ref[src];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=\ref[src];page=[(min(1,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
+				dat += "<tr><td><A href='?src=\ref[src];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=\ref[src];page=[(min(libcomp_menu.len,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
 				dat += "</table>"
 			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(5)
@@ -316,7 +316,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
 		return
-	if(href_list["page"] && screenstate == 4 && isnum(href_list["page"]))
+	if(href_list["page"] && screenstate == 4)
 		page = text2num(href_list["page"])
 	if(href_list["switchscreen"])
 		switch(href_list["switchscreen"])

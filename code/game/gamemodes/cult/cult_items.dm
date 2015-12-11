@@ -16,7 +16,7 @@
 	if(!iscultist(user))
 		user.Weaken(5)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
-							 "<span class='cult'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
+							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='cult'>\"I wouldn't advise that.\"</span>"
+		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
 		user.Dizzy(120)
 

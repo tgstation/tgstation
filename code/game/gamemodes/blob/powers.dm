@@ -205,7 +205,7 @@
 	qdel(N)
 	if(ticker && ticker.mode.name == "blob")
 		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount = initial(BL.blobwincount) * 2
+		BL.blobwincount += initial(BL.blobwincount) //Increase the victory condition by the set amount
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
@@ -217,7 +217,8 @@
 	else
 		usr << "You broadcast with your minions, <B>[speak_text]</B>"
 	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
-		blob_minion.say(speak_text)
+		if(blob_minion.stat == CONSCIOUS)
+			blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"

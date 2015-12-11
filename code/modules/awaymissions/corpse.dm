@@ -6,7 +6,7 @@
 
 /obj/effect/landmark/corpse
 	name = "Unknown"
-	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
+	var/mobname = "default"  //Use for the ghost spawner variant, so they don't come out named "sleeper"
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
 	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
@@ -45,7 +45,10 @@
 
 /obj/effect/landmark/corpse/proc/createCorpse(death, ckey) //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.real_name = src.name
+	if(mobname != "default")
+		M.real_name = mobname
+	else
+		M.real_name = src.name
 	M.gender = src.mobgender
 	if(mob_species)
 		M.set_species(mob_species)
@@ -257,7 +260,7 @@
 
 /obj/effect/landmark/corpse/plasmaman
 	mob_species = "plasmaman"
-	corpsehelmet = /obj/item/clothing/head/helmet/plasmaman
+	corpsehelmet = /obj/item/clothing/head/helmet/space/plasmaman
 	corpseuniform = /obj/item/clothing/under/plasmaman
 	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
 	corpsemask = /obj/item/clothing/mask/breath
@@ -295,13 +298,45 @@
 /obj/effect/landmark/corpse/commander/alive
 	death = FALSE
 	roundstart = FALSE
+	mobname = "Nanotrasen Commander"
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
 
 /obj/effect/landmark/corpse/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
 	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No")
 		return
 	createCorpse(death = src.death, ckey = user.ckey)
+
+/////////////////Spooky Undead//////////////////////
+
+/obj/effect/landmark/corpse/skeleton
+	name = "skeletal remains"
+	mobname = "skeleton"
+	mob_species = "skeleton"
+	mobgender = NEUTER
+
+
+/obj/effect/landmark/corpse/skeleton/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
+
+/obj/effect/landmark/corpse/zombie
+	name = "rotting corpse"
+	mobname = "zombie"
+	mob_species = "zombie"
+
+/obj/effect/landmark/corpse/zombie/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."

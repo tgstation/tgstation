@@ -38,7 +38,7 @@
 	languages = DRONE
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
-	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) // 0 to receive that damage type, 1 to ignore
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter")
@@ -72,7 +72,7 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, "drone_storage_slot")
+		equip_to_slot_or_del(I, slot_drone_storage)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
