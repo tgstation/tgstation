@@ -225,7 +225,10 @@
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
-		msg += "[t_He] [t_is] severely malnourished.\n"
+		if(hardcore_mode_on && eligible_for_hardcore_mode(src))
+			msg += "<span class='danger'>[t_He] [t_is] severely malnourished.</span>\n"
+		else
+			msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
 		if(user.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"

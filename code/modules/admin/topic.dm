@@ -2986,6 +2986,21 @@
 				var/emag = input("Emag the turret?") in list("Yes", "No")
 				if(emag=="Yes")
 					Turret.emag(usr)
+			if("hardcore_mode")
+				var/choice = input("Are you sure you want to [ticker.hardcore_mode ? "disable" : "enable"] hardcore mode? Starvation will [ticker.hardcore_mode ? "no longer":""]slowly kill player-controlled humans.", "Admin Abuse") in list("Yes", "No!")
+
+				if(choice == "Yes")
+					if(!hardcore_mode_on)
+						log_admin("[key_name(usr)] has ENABLED hardcore mode!")
+						hardcore_mode = 1
+						to_chat(world, "<h5><span class='danger'>Hardcore mode has been enabled</span></h5>")
+						to_chat(world, "<span class='info'>Not eating for a prolonged period of time will slowly kill player-controlled characters (braindead and catatonic characters are not affected).</span>")
+						to_chat(world, "<span class='info'>If your hunger indicator starts flashing red and black, your character is starving and may die soon!</span>")
+					else
+						log_admin("[key_name(usr)] has DISABLED hardcore mode!")
+						hardcore_mode = 0
+						to_chat(world, "<h5><span class='danger'>Hardcore mode has been disabled</span></h5>")
+						to_chat(world, "<span class='info'>Starvation will no longer kill player-controlled characters.</span>")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)

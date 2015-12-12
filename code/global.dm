@@ -387,3 +387,7 @@ var/nanocoins_rates = 1
 var/nanocoins_lastchange = 0
 
 var/minimapinit = 0
+
+//Hardcore mode
+//When enabled, starvation kills
+var/global/hardcore_mode = 0

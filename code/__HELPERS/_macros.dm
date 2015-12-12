@@ -152,3 +152,8 @@
 	dview_mob.loc = center; \
 	dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, dview_mob))
+
+//HARDCORE MODE STUFF (mainly hunger)
+
+#define hardcore_mode_on (hardcore_mode)//((ticker) && (ticker.hardcore_mode))
+#define eligible_for_hardcore_mode(M) (M.ckey && M.client)

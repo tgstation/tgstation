@@ -179,8 +179,14 @@ Subject's pulse: ??? BPM"})
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
 	message += ("<br>[OX] | [TX] | [BU] | [BR]")
+
 	if(M.reagents.total_volume)
 		message += "<br><span class='warning'>Warning: Unknown substance detected in subject's blood.</span>"
+	if(hardcore_mode_on && ishuman(M) && eligible_for_hardcore_mode(M))
+		var/mob/living/carbon/human/H = M
+		if(H.nutrition < STARVATION_MIN)
+			message += "<br><span class='danger'>Warning: Severe lack of essential nutriments detected in subject's blood.</span>"
+
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
