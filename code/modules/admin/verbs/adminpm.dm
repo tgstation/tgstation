@@ -115,8 +115,8 @@
 	if(C.prefs.special_popup)
 		C << output(recieve_message, "window1.msay_output")
 		if(!C.holder) //Force normal players to see the admin message when it gets sent to them
-			winset(src,"rpane.special_button","is-checked=true")
-			winset(src, null, "rpanewindow.left=window1")
+			winset(C, "rpane.special_button", "is-checked=true")
+			winset(C, null, "rpanewindow.left=window1")
 	else
 		to_chat(C, recieve_message)
 	if(src.prefs.special_popup)
