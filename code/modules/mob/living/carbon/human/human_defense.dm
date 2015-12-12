@@ -1,7 +1,3 @@
-#define MELEE_ATTACK 1
-#define PROJECTILE_ATTACK 2
-#define THROWN_PROJECTILE_ATTACK 3
-
 /mob/living/carbon/human/getarmor(def_zone, type)
 	var/armorval = 0
 	var/organnum = 0
