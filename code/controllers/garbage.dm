@@ -6,13 +6,20 @@
 var/list/gc_hard_del_types = new
 var/datum/garbage_collector/garbageCollector
 var/soft_dels = 0
-/client/verb/gc_dump_hdl()
+
+/client/proc/gc_dump_hdl()
 	set name = "(GC) Hard Del List"
-	set desc = "List types that are hard del()'d by the GC."
+	set desc = "List types that fail to soft del and are hard del()'d by the GC."
 	set category = "Debug"
 
-	for(var/A in gc_hard_del_types)
-		to_chat(usr, "[A] = [gc_hard_del_types[A]]")
+	var/list/L = list()
+	L += "<b>Garbage Collector Forced Deletions in this round</b><br>"
+	for(var/A in ghdel_profiling)
+		L += "<br>[A] = [gc_hard_del_types[A]]"
+	if(L.len == 1)
+		to_chat(usr, "No garbage collector deletions this round")
+		return
+	usr << browse(list2text(L),"window=harddellogs")
 
 /datum/garbage_collector
 	var/list/queue = new

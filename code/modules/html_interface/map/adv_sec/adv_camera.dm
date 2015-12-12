@@ -30,9 +30,11 @@
 	return 1
 
 var/global/datum/interactive_map/camera/adv_camera = new
+/*
 /client/verb/lookatdatum()
 	set category = "Debug"
 	debug_variables(adv_camera)
+*/
 
 /datum/interactive_map/camera
 	var/list/zlevel_data

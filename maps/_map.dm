@@ -146,7 +146,7 @@ proc/get_base_turf(var/z)
 	var/datum/zLevel/L = map.zLevels[z]
 	return L.base_turf
 
-/client/verb/set_base_turf()
+/client/proc/set_base_turf()
 
 
 	set category = "Debug"

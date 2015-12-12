@@ -16,11 +16,11 @@
 //Call these procs to dump your world to a series of image files (!!)
 //NOTE: Does not explicitly support non 32x32 icons or stuff with large pixel_* values, so don't blame me if it doesn't work perfectly
 
-/mob/verb/nanomapgen_DumpImage()
-	set category = "Server"
+/client/proc/nanomapgen_DumpImage()
+	set category = "Mapping"
 	set name = "Generate NanoUI Map"
 
-	if(!src.client.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(alert("Sure you want to do this? It will cause a lot of lag", "generate maps", "Yes", "No") == "No")
@@ -30,11 +30,11 @@
 	var/turf/T = get_turf(src)
 	nanomapgen_DumpTile(1,1, T.z)
 
-/mob/verb/nanomapgen_DumpImageAll()
-	set category = "Server"
+/client/proc/nanomapgen_DumpImageAll()
+	set category = "Mapping"
 	set name = "Generate all NanoUI Maps"
 
-	if(!src.client.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(alert("Sure you want to do this? It will cause a lot of lag", "generate maps", "Yes", "No") == "No")
@@ -44,7 +44,7 @@
 	//var/turf/T = get_turf(src)
 	nanomapgen_DumpTile(allz = 1)
 
-/mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
+/client/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
 
 
 	if(currentZ == 2)
