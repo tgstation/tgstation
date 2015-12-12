@@ -26,7 +26,7 @@
 	containertype = /obj/structure/largecrate
 	containername = "carbon dioxide canister crate"
 
-
+/*	Made pointless because hydroponics is less fucking ghetto
 /obj/machinery/hydroponics/unattached
 	anchored = 0
 
@@ -36,3 +36,4 @@
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "hydroponics tray crate"
+*/
