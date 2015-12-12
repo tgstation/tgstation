@@ -39,7 +39,7 @@
 	var/subjectjob = null
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
-	name = "raw chicken"
+	name = "chicken meat"
 	desc = "This better be delicious."
 	icon_state = "raw_chicken"
 

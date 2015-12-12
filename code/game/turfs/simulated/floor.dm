@@ -94,7 +94,7 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 /turf/simulated/floor/blob_act()
 	return
 
-turf/simulated/floor/proc/update_icon()
+turf/simulated/floor/update_icon()
 	overlays -= floor_overlay
 
 	if(lava)

@@ -141,7 +141,7 @@
 				else if(istype(AM, R.result_type))
 					to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 					return
-		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
+		if (R.on_floor && (istype(usr.loc, /turf/space)))
 			to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 			return
 		if (R.time)

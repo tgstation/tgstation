@@ -133,6 +133,17 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
+
+/obj/effect/decal/cleanable/campfire
+	name = "burnt out campfire"
+	icon_state = "campfire"
+	desc = "This burnt-out campfire reminds you of someone."
+	anchored = 1
+	density = 0
+	layer = 2
+	icon = 'icons/obj/atmos.dmi'
+	icon_state = "campfire_burnt"
+
 /obj/effect/decal/cleanable/clay_fragments
 	name = "clay fragments"
 	desc = "pieces from a broken clay pot"
@@ -155,6 +166,8 @@
 	icon_state = "tile_soot"
 	anchored = 1
 	layer=2
+
+
 
 /obj/effect/decal/cleanable/soot/New()
 	..()

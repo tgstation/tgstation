@@ -162,7 +162,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 			anchored = 0
 			step_towards(src, S)
 	else step_towards(src, S)
-	
+
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 
@@ -186,7 +186,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 
 /obj/proc/clone(var/obj/O)
 	return 0
-	
+
 /obj/proc/linkMenu(var/obj/O)
 	var/dat=""
 	if(canLink(O, list()))
@@ -263,7 +263,7 @@ a {
 	user.set_machine(src)
 	onclose(user, "mtcomputer")
 
-/obj/proc/update_icon()
+/obj/update_icon()
 	return
 
 /mob/proc/unset_machine()

@@ -80,6 +80,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		)),
 	null,
 	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1),
+	new/datum/stack_recipe("stove", /obj/machinery/space_heater/campfire/stove, 5, time = 25, one_per_turf = 1, on_floor = 1),
 	)
 
 /obj/item/stack/sheet/metal
@@ -189,6 +190,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("bowl",				/obj/item/trash/bowl,					1													),
 	new/datum/stack_recipe("notice board",		/obj/structure/noticeboard,				2,		time = 15,	one_per_turf = 1,	on_floor = 1),
 	new/datum/stack_recipe("blank canvas",		/obj/item/mounted/frame/painting/blank,	2,		time = 15									),
+	new/datum/stack_recipe("campfire",			/obj/machinery/space_heater/campfire,	4,		time = 35,	one_per_turf = 1,	on_floor = 1),
+	new/datum/stack_recipe("spit",				/obj/machinery/cooking/grill/spit,		1,		time = 10,	one_per_turf = 1,	on_floor = 1),
 	)
 
 /obj/item/stack/sheet/wood

@@ -437,10 +437,12 @@ var/global/ingredientLimit = 10
 	. = ..()
 	if((. == "valid") && (!foodNesting))
 		if(findtext(I.name,"fried")) . = "It's already deep-fried."
+		else if(findtext(I.name,"rotisserie")) . = "It's already rotisseried"
 		else if(findtext(I.name,"grilled")) . = "It's already grilled."
 	return
 
 /obj/machinery/cooking/grill/cook()
+	var/foodname = "rotisserie [src.ingredient.name]"
 	src.active = 1
 	src.icon_state = src.icon_state_on
 	src.ingredient.pixel_y += 5
@@ -452,7 +454,10 @@ var/global/ingredientLimit = 10
 			src.ingredient.color = "#A34719"
 			if (cook_after(src.cookTime/3, 14))
 				src.makeFood()
-				playsound(get_turf(src),src.cookSound,100,1)
+				if(use_power)
+					playsound(get_turf(src),src.cookSound,100,1)
+				else
+					src.visible_message("<span class='notice'>\the [foodname] looks ready to eat!</span>")
 	src.icon_state = initial(src.icon_state)
 	src.active = 0
 	return
@@ -465,7 +470,8 @@ var/global/ingredientLimit = 10
 		F.reagents.add_reagent("nutriment",10)
 		F.reagents.trans_to(src.ingredient,src.ingredient.reagents.total_volume)
 	src.ingredient.mouse_opacity = 1
-	src.ingredient.name = "grilled [src.ingredient.name]"
+	if(!(findtext(src.ingredient.name,"rotisserie")))
+		src.ingredient.name = "grilled [src.ingredient.name]"
 	src.ingredient.loc = src.loc
 
 	if(istype(src.ingredient, /obj/item/weapon/holder))
@@ -477,3 +483,44 @@ var/global/ingredientLimit = 10
 
 	src.ingredient = null
 	return
+
+/obj/machinery/cooking/grill/spit
+	name = "spit"
+	desc = "the prime in clown cooking technology."
+	density = 0
+	icon_state = "spit"
+	icon_state_on = "spit"
+	use_power = 0
+	cooks_in_reagents = 0
+	machine_flags = null
+
+/obj/machinery/cooking/grill/spit/cook()
+	src.ingredient.pixel_y += 7
+	..()
+/obj/machinery/cooking/grill/spit/makeFood()
+	src.ingredient.name = "rotisserie [src.ingredient.name]"
+	..()
+
+/obj/machinery/cooking/grill/spit/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/weapon/crowbar) && do_after(user,src,10))
+		user.visible_message("<span class='notice'>[user] dissassembles the [src].</span>", "<span class='notice'>You dissassemble \the [src].</span>")
+		if(src.ingredient)
+			ingredient.loc = src.loc
+			src.ingredient = null
+		new /obj/item/stack/sheet/wood(user.loc)
+		qdel(src)
+	else ..()
+
+/obj/machinery/cooking/grill/spit/validateIngredient()
+	. = ..()
+	if(. == "valid")
+		var/turf/turfunder = loc
+		var/campfirefound = 0
+		for(var/obj/machinery/M in turfunder.contents)
+			if(istype(M,/obj/machinery/space_heater/campfire))
+				campfirefound = 1
+				var/obj/machinery/space_heater/campfire/campfire = M
+				if(!campfire.on)
+					. = "The campfire isn't lit."
+		if(!campfirefound)
+			. = "There's no campfire to cook on!"
