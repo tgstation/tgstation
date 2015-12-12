@@ -13,7 +13,11 @@
 	src.say(message)
 
 /obj/item/device/assembly/speaker/attack_self(mob/user as mob)
-	message = sanitize(input(user,"Enter new message for the [src]","NanoSpeaker Settings",message))
+	var/new_msg = sanitize(input(user,"Enter new message for the [src]","NanoSpeaker Settings",message))
+	if(!Adjacent(user)) return
+
+	message = new_msg
+
 	var/datum/language/language
 	if(user.stat == DEAD) //ENGAGE SPOOKS!
 		language = all_languages["Spooky"]
@@ -27,6 +31,11 @@
 			name = "[real_name] ([new_name])"
 		else
 			name = real_name
+
+/obj/item/device/assembly/speaker/say(message, var/datum/language/speaking, var/atom/movable/radio=src)
+	if(istype(loc, /obj/item/device/assembly_frame)) //When put in assembly frames, the speakers can't be heard.
+		var/obj/item/device/assembly_frame/F = loc //This is a workaround
+		F.say(message, speaking, radio)
 
 /obj/item/device/assembly/speaker/can_speak()
 	return 1

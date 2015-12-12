@@ -1,5 +1,7 @@
 /obj/item/device/assembly/signaler
 	name = "remote signaling device"
+	short_name = "signaler"
+
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
 	item_state = "signaler"

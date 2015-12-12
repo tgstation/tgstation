@@ -1,18 +1,20 @@
 /var/global/list/prox_sensor_ignored_types = list \
 (
 	/obj/effect/beam,
-	/mob/dead/observer	
+	/mob/dead/observer
 )
 
 /obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
+	short_name = "prox sensor"
+
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
 	starting_materials = list(MAT_IRON = 800, MAT_GLASS = 200)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
-	wires = WIRE_PULSE
+	wires = WIRE_PULSE | WIRE_RECEIVE
 
 	flags = FPRINT | PROXMOVE
 

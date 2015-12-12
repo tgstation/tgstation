@@ -2,6 +2,8 @@
 
 /obj/item/device/assembly/infra
 	name = "infrared emitter"
+	short_name = "IR emitter"
+
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
 	starting_materials = list(MAT_IRON = 1000, MAT_GLASS = 500)

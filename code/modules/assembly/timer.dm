@@ -6,12 +6,14 @@
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
-	wires = WIRE_PULSE
+	wires = WIRE_PULSE | WIRE_RECEIVE
 
 	secured = 0
 
 	var/timing = 0
 	var/time = 10
+
+	var/default_time = 10
 
 /obj/item/device/assembly/timer/activate()
 	if(!..())	return 0//Cooldown check
@@ -47,7 +49,7 @@
 	if(timing && time <= 0)
 		timing = 0
 		timer_end()
-		time = 10
+		time = default_time
 	return
 
 
@@ -72,6 +74,7 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\assembly\timer.dm:80: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	dat += "<BR><BR><A href='?src=\ref[src];set_default_time=1'>After countdown, reset time to [(default_time - default_time%60)/60]:[(default_time % 60)]</A>"
 	dat += {"<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 		<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"}
 	// END AUTOFIX
@@ -102,6 +105,9 @@
 	if(href_list["close"])
 		usr << browse(null, "window=timer")
 		return
+
+	if(href_list["set_default_time"])
+		default_time = time
 
 	if(usr)
 		attack_self(usr)
