@@ -56,6 +56,7 @@
 		return
 	target.force 		+= 1
 	target.throwforce	+= 1
-	target.armor		+= 1
+	for(var/armor_value in target.armor)
+		armor_value	+= 1
 	user << "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>"
 	qdel(src)
