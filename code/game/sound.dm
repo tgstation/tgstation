@@ -122,7 +122,7 @@ var/const/SURROUND_CAP = 7
 
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	to_chat(src, S)
+	src << S
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
