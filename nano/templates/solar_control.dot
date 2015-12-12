@@ -1,80 +1,85 @@
-<h2>Status</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Generated Power:
+<article class="display">
+	<header><h2>Status</h2></header>
+	<section>
+		<span class="label">Generated Power:</span>
+		<div class="content">
+			<span>{{=data.generated}} W</span>
 		</div>
-		<div class="itemContent">
-			{{=data.generated}} W
+	</section>
+	<section>
+		<span class="label">Orientation:</span>
+		<div class="content">
+			<span>{{=data.angle}}&deg; ({{=data.direction}})</span>
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Orientation:
+	</section>
+	<section>
+		<span class="label">Adjust:</span>
+		<div class="content">
+			{{=helper.link('15&deg;', 'step-backward', {'rate_control': '1', 'cdir': '-15'})}}
+			{{=helper.link('1&deg;', 'backward', {'rate_control': '1', 'cdir': '-1'})}}
+			{{=helper.link('1&deg;', 'forward', {'rate_control': '1', 'cdir': '1'})}}
+			{{=helper.link('15&deg;', 'step-forward', {'rate_control': '1', 'cdir': '15'})}}
 		</div>
-		<div class="itemContent">
-			{{=data.angle}}&deg ({{=data.direction}})
-			{{=helper.link('15&deg', 'minus', {'rate_control': '1', 'cdir': '-15'})}}
-			{{=helper.link('1&deg', 'minus', {'rate_control': '1', 'cdir': '-1'})}}
-			{{=helper.link('1&deg', 'plus', {'rate_control': '1', 'cdir': '1'})}}
-			{{=helper.link('15&deg', 'plus', {'rate_control': '1', 'cdir': '15'})}}
-		</div>
-	</div>
-</div>
-<h2>Tracking</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class='itemLabel'>
-			Tracker Mode:
-		</div>
-		<div class="itemContent">
+	</section>
+</article>
+<article class="display">
+	<header><h2>Tracking</h2></header>
+	<section>
+		<span class="label">Tracker Mode:</span>
+		<div class="content">
 			{{=helper.link('Off', 'close', {'track': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
-			{{=helper.link('Timed', 'clock', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
+			{{=helper.link('Timed', 'clock-o', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
 			{{? data.connected_tracker}}
-				{{=helper.link('Auto', 'signal-diag', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
+				{{=helper.link('Auto', 'refresh', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
 			{{??}}
-				{{=helper.link('Auto', 'signal-diag', null, 'disabled')}}
+				{{=helper.link('Auto', 'refresh', null, 'disabled')}}
 			{{?}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Tracking Rate:
+	</section>
+	<section>
+		<span class="label">Tracking Rate:</span>
+		<div class="content">
+			<span>{{=data.tracking_rate}} deg/h ({{=data.rotating_way}})</span>
 		</div>
-		<div class="itemContent">
-			{{=data.tracking_rate}} deg/h ({{=data.rotating_way}})
-			{{=helper.link('180&deg', 'minus', {'rate_control': '1', 'tdir': '-180'})}}
-			{{=helper.link('30&deg', 'minus', {'rate_control': '1', 'tdir': '-30'})}}
-			{{=helper.link('1&deg', 'minus', { 'rate_control': '1', 'tdir': '-1'})}}
-			{{=helper.link('1&deg', 'plus', { 'rate_control': '1', 'tdir': '1'})}}
-			{{=helper.link('30&deg', 'plus', { 'rate_control': '1', 'tdir': '30'})}}
-			{{=helper.link('180&deg', 'plus', { 'rate_control': '1', 'tdir': '180'})}}
+	</section>
+	<section>
+		<span class="label">Adjust:</span>
+		<div class="content">
+			{{=helper.link('180&deg;', 'fast-backward', {'rate_control': '1', 'tdir': '-180'})}}
+			{{=helper.link('30&deg;', 'step-backward', {'rate_control': '1', 'tdir': '-30'})}}
+			{{=helper.link('1&deg;', 'backward', { 'rate_control': '1', 'tdir': '-1'})}}
+			{{=helper.link('1&deg;', 'forward', { 'rate_control': '1', 'tdir': '1'})}}
+			{{=helper.link('30&deg;', 'step-forward', { 'rate_control': '1', 'tdir': '30'})}}
+			{{=helper.link('180&deg;', 'fast-forward', { 'rate_control': '1', 'tdir': '180'})}}
 		</div>
-	</div>
-</div>
-<h2>Devices</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
+	</section>
+</article>
+<article class="display">
+	<header><h2>Devices</h2></header>
+	<section>
+		<span class="label">Search:</span>
+		<div class="content">
+			{{=helper.link('Refresh', 'refresh', {'search_connected': '1'})}}
+		</div>
+	</section>
+	<section>
+		<span class="label">
 			Solar Tracker:
-		</div>
-		<div class="itemContent">
+		</span>
+		<div class="content">
 			{{? data.connected_tracker}}
 				<span class="good">Found</span>
 			{{??}}
 				<span class="bad">Not Found</span>
 			{{?}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
+	</section>
+	<section>
+		<span class="label">
 			Solars Panels:
-		</div>
-		<div class="itemContent">
+		</span>
+		<div class="content">
 			<span class="{{=data.connected_panels ? 'good' : 'bad'}}">{{=data.connected_panels}} Connected</span>
 		</div>
 	</div>
-	<div class="item">
-		{{=helper.link('', 'refresh', {'search_connected': '1'})}}
-	</div>
-</div>
+</article>

@@ -1,76 +1,79 @@
-<h2>Status</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Power:
-		</div>
-		<div class="itemContent">
-			{{=helper.link('On',  'power', {'power': 1}, !data.on ? null : 'selected')}}
+<article class="display">
+	<header><h2>Status</h2></header>
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
+			{{=helper.link('On',  'power-off', {'power': 1}, !data.on ? null : 'selected')}}
 			{{=helper.link('Off', 'close', {'power': 0},  data.on ? null : 'selected')}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Stored Energy:
-		</div>
-		<div class="itemContent">
+	</section>
+	<section>
+		<span class="label">Stored Energy:</span>
+		<div class="content">
 			{{? data.hasPowercell}}
-				{{=helper.bar(data.powerLevel, 0, 100, 'good')}}&nbsp;{{=data.powerLevel}}%
-				{{? data.open}}
-					<br />
-					{{=helper.link('Eject', 'eject', {'cellremove' : 1}, null)}}
-				{{?}}
+				{{=helper.bar(data.powerLevel, 0, 100, 'good', data.powerLevel + '%')}}
 			{{??}}
-				No power cell loaded.
-				{{? data.open}}
-					{{=helper.link('Install', 'eject', {'cellinstall' : 1}, null )}}
+				<span class="bad">No power cell loaded.</span>
+			{{?}}
+		</div>
+	</section>
+	{{? data.open}}
+		<section>
+			<span class="label">Cell:</span>
+			<div class="content">
+				{{? data.hasPowercell}}
+					{{=helper.link('Eject', 'eject', {'cellremove': 1})}}
+				{{??}}
+					{{=helper.link('Install', 'eject', {'cellinstall': 1})}}
 				{{?}}
-			{{?}}
+			</div>
+		</section>
+	{{?}}
+</article>
+<article class="display">
+	<header><h2>Thermostat</h2></header>
+	<section>
+		<span class="label">Current Temp:</span>
+		<div class="content">
+			<span>{{=data.currentTemp}}&deg;C</span>
 		</div>
-	</div>
-</div>
-
-<h2>Thermostat</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Current Temp:
+	</section>
+	<section>
+		<span class="label">Target Temp:</span>
+		<div class="content">
+			<span>{{=data.targetTemp}}&deg;C</span>
 		</div>
-		<div class="itemContent">
-			{{=data.currentTemp}}&deg;C
-		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Target Temp:
-		</div>
-		<div class="itemContent">
-			{{=data.targetTemp}}&deg;C
-			{{? data.open}}
-				<br />
-				{{=helper.link('',	'seek-prev',	{'temp': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
-				{{=helper.link('',	'triangle-1-w', {'temp':  -5}, data.targetTemp > data.minTemp ? null : 'disabled')}}
-				{{=helper.link('Set', 'pencil',	   {'temp': 'custom'}, null)}}
-				{{=helper.link('',	'triangle-1-e', {'temp':   5}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
-				{{=helper.link('',	'seek-next',	{'temp':  20}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
-			{{?}}
-		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
+	</section>
+	{{? data.open}}
+		<section>
+			<span class="label">Adjustment:</span>
+			<div class="content">
+				{{=helper.link('', 'fast-backward', {'temp': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+				{{=helper.link('', 'backward', {'temp': -5}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+				{{=helper.link('Set', 'pencil', {'temp': 'custom'}, null)}}
+				{{=helper.link('', 'forward', {'temp': 5}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+				{{=helper.link('', 'fast-forward', {'temp': 20}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+			</div>
+		</section>
+	{{?}}
+	<section>
+		<span class="label">
 			Operational Mode:
-		</div>
-		<div class="itemContent">
+		</span>
+		<div class="content">
 			{{? data.open}}
-				{{=helper.link('Heat', 'arrowthick-1-n',   {'mode' : 'heat'}, data.mode != "heat" ? null : 'selected')}}
-				{{=helper.link('Cool', 'arrowthick-1-s',   {'mode' : 'cool'}, data.mode != "cool" ? null : 'selected')}}
-				{{=helper.link('Auto', 'arrowthick-2-n-s', {'mode' : 'auto'}, (data.mode == "heat" || data.mode == "cool") ? null : 'selected')}}
+				{{=helper.link('Heat', 'long-arrow-up', {'mode': 'heat'}, data.mode != "heat" ? null : 'selected')}}
+				{{=helper.link('Cool', 'long-arrow-down', {'mode': 'cool'}, data.mode != "cool" ? null : 'selected')}}
+				{{=helper.link('Auto', 'arrows-v', {'mode': 'auto'}, (data.mode == "heat" || data.mode == "cool") ? null : 'selected')}}
 			{{??}}
-				{{? data.mode == "heat"}}Heat
-				{{?? data.mode == "cool"}}Cool
-				{{??}}Auto
+				{{? data.mode == "heat"}}
+					<span class="bad">Heat</span>
+				{{?? data.mode == "cool"}}
+					<span class="highlight">Cool</span>
+				{{??}}
+					<span class="good">Auto</span>
 				{{?}}
 			{{?}}
 		</div>
-	</div>
-</div>
+	</section>
+</article>

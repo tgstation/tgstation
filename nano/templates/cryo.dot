@@ -1,23 +1,19 @@
-<h2>Occupant</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Occupant:
-		</div>
-		<div class="itemContent">
+<article class="display">
+	<header><h2>Occupant</h2></header>
+	<section>
+		<span class="label">Occupant:</span>
+		<div class="content">
 			{{? data.hasOccupant}}
-				{{=data.occupant.name}}
+				<span>{{=data.occupant.name}}</span>
 			{{??}}
 				<span class="average">No Occupant</span>
 			{{?}}
 		</div>
-	</div>
+	</section>
 	{{? data.hasOccupant}}
-		<div class="item">
-			<div class="itemLabel">
-				State:
-			</div>
-			<div class="itemContent">
+		<section>
+			<span class="label">State:</span>
+			<div class="content">
 				{{? data.occupant.stat == 0}}
 					<span class="good">Conscious</span>
 				{{?? data.occupant.stat == 1}}
@@ -26,118 +22,85 @@
 					<span class="bad">Dead</span>
 				{{?}}
 			</div>
-		</div>
-		<div class="item">
-			<div class="itemLabel">
-				Temperature:
-			</div>
-			<div class="itemContent">
+		</section>
+		<section>
+			<span class="label">Temperature:</span>
+			<div class="content">
 				{{=helper.round(data.occupant.bodyTemperature)}} K
 			</div>
-		</div>
+		</section>
 	{{?}}
 	{{? data.occupant.stat < 2}}
-		<div class="item">
-			<div class="itemLabel">
-				Health:
+		<section>
+			<span class="label">Health:</span>
+			<div class="content">
+				{{=helper.bar(data.occupant.health, data.occupant.minHealth, data.occupant.Maxhealth, data.occupant.health >= 0 ? 'good' : 'average', helper.round(data.occupant.health))}}
 			</div>
-			<div class="itemContent">
-				{{? data.occupant.health >= 0}}
-					{{=helper.bar(data.occupant.health, 0, data.occupant.maxHealth, 'good')}}
-				{{??}}
-					{{=helper.bar(data.occupant.health, 0, data.occupant.minHealth, 'average')}}
-				{{?}}
-				{{=helper.round(data.occupant.health)}}
+		</section>
+		<section>
+			<span class="label">Brute:</span>
+			<div class="content">
+				{{=helper.bar(data.occupant.bruteLoss, 0, data.occupant.maxHealth, 'bad', helper.round(data.occupant.bruteLoss))}}
 			</div>
-		</div>
-		<div class="item">
-			<div class="itemLabel">
-				Brute:
+		</section>
+		<section>
+			<span class="label">Respiratory:</span>
+			<div class="content">
+				{{=helper.bar(data.occupant.oxyLoss, 0, data.occupant.maxHealth, 'bad', helper.round(data.occupant.oxyLoss))}}
 			</div>
-			<div class="itemContent">
-				{{=helper.bar(data.occupant.bruteLoss, 0, data.occupant.maxHealth, 'bad')}}
-				{{=helper.round(data.occupant.bruteLoss)}}
+		</section>
+		<section>
+			<span class="label">Toxin:</span>
+			<div class="content">
+				{{=helper.bar(data.occupant.toxLoss, 0, data.occupant.maxHealth, 'bad', helper.round(data.occupant.toxLoss))}}
 			</div>
-		</div>
-		<div class="item">
-			<div class="itemLabel">
-				Respiratory:
+		<section>
+		<section>
+			<span class="label">Burn:</span>
+			<div class="content">
+				{{=helper.bar(data.occupant.fireLoss, 0, data.occupant.maxHealth, 'bad', helper.round(data.occupant.fireLoss))}}
 			</div>
-			<div class="itemContent">
-				{{=helper.bar(data.occupant.oxyLoss, 0, data.occupant.maxHealth, 'bad')}}
-				{{=helper.round(data.occupant.oxyLoss)}}
-			</div>
-		</div>
-		<div class="item">
-			<div class="itemLabel">
-				Toxin:
-			</div>
-			<div class="itemContent">
-				{{=helper.bar(data.occupant.toxLoss, 0, data.occupant.maxHealth, 'bad')}}
-				{{=helper.round(data.occupant.toxLoss)}}
-			</div>
-		</div>
-		<div class="item">
-			<div class="itemLabel">
-				Burn:
-			</div>
-			<div class="itemContent">
-				{{=helper.bar(data.occupant.fireLoss, 0, data.occupant.maxHealth, 'bad')}}
-				{{=helper.round(data.occupant.fireLoss)}}
-			</div>
-		</div>
+		</section>
 	{{?}}
-</div>
-<h2>Cell</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Power:
-		</div>
-		<div class="itemContent">
-			{{=helper.link('On', 'power', {'switchOn': 1}, data.isOperating ? 'selected' : null)}}
+</article>
+<article class="display">
+	<header><h2>Cell</h2></header>
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
+			{{=helper.link('On', 'power-off', {'switchOn': 1}, data.isOperating ? 'selected' : null)}}
 			{{=helper.link('Off', 'close', {'switchOff': 1}, data.isOperating ? null : 'selected')}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Temperature:
-		</div>
-		<div class="itemContent">
+	</section>
+	<section>
+		<span class="label">Temperature:</span>
+		<div class="content">
 			<span class="{{=data.cellTemperatureStatus}}">{{=data.cellTemperature}} K</span>
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Door:
+	</section>
+	<section>
+		<span class="label">Door:</span>
+		<div class="content">
+			{{=helper.link('Open', 'unlock', {'openCell' : 1}, data.isOpen ? 'disabled' : null)}}
+			{{=helper.link('Close', 'lock', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
 		</div>
-		<div class="itemContent">
-			{{=helper.link('Open', 'unlocked', {'openCell' : 1}, data.isOpen ? 'disabled' : null)}}
-			{{=helper.link('Close', 'locked', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
+	</section>
+	<section>
+		<span class="label">Eject:</span>
+		<div class="content">
+			{{=helper.link('Auto', 'sign-out', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
+			{{=helper.link('Manual', 'sign-in', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Eject:
-		</div>
-		<div class="itemContent">
-			{{=helper.link('Auto', 'eject', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
-			{{=helper.link('Manual', 'pin-s', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
-		</div>
-	</div>
-</div>
-<h2>Beaker</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			{{=helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
-		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Contents:
-		</div>
-		<div class="itemContent">
+	</section>
+</article>
+<article class="display">
+	<header><h2>Beaker</h2></header>
+	<section>
+		{{=helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	</section>
+	<section>
+		<span class="label">Contents:</span>
+		<div class="content">
 			{{? data.isBeakerLoaded}}
 				{{? data.beakerContents.length}}
 					{{~ data.beakerContents :reagent:i}}
@@ -150,5 +113,5 @@
 				<span class="average">No Beaker Loaded</span>
 			{{?}}
 		</div>
-	</div>
-</div>
+	</section>
+</display>

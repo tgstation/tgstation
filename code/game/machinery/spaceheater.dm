@@ -159,7 +159,7 @@
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "space_heater", name, 490, 350, state = physical_state)
+		ui = new(user, src, ui_key, "space_heater", name, 490, 340, state = physical_state)
 		ui.open()
 
 /obj/machinery/space_heater/Topic(href, href_list)
@@ -173,11 +173,9 @@
 		mode = HEATER_MODE_STANDBY
 		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 		update_icon()
-		SSnano.update_uis(src)
 
 	else if(href_list["mode"])
 		setMode = href_list["mode"]
-		SSnano.update_uis(src)
 
 	else if(href_list["temp"] && panel_open)
 		var/value
@@ -192,7 +190,6 @@
 		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
 		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
-		SSnano.update_uis(src)
 
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)
@@ -204,7 +201,6 @@
 			cell.add_fingerprint(usr)
 			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
 			cell = null
-			SSnano.update_uis(src)
 
 	else if(href_list["cellinstall"] && panel_open)
 		if(!cell)
@@ -217,7 +213,8 @@
 				C.add_fingerprint(usr)
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
-				SSnano.update_uis(src)
+
+	SSnano.update_uis(src)
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))

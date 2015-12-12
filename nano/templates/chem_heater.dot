@@ -1,34 +1,26 @@
-<h2>Status</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			Power:
-		</div>
-		<div class="itemContent">
+<article class="display">
+	<header><h2>Status</h2></header>
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
 			{{=helper.link(data.isActive ? 'On' : 'Off', data.isActive ? 'power' : 'close', {'toggle_on' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
 		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Target:
-		</div>
-		<div class="itemContent">
+	</section>
+	<section>
+		<span class="label">Target:</span>
+		<div class="content">
 			{{=helper.link(data.targetTemp + 'K', 'pencil', {'adjust_temperature' : 'input'})}}
 		</div>
-	</div>
-</div>
-<h2>Beaker</h2>
-<div class="statusDisplay">
-	<div class="item">
-		<div class="itemLabel">
-			{{=helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
-		</div>
-	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Contents:
-		</div>
-		<div class="itemContent" style="min-height: 175px;">
+	</section>
+</article>
+<article class="display">
+	<header><h2>Beaker</h2></header>
+	<section>
+		{{=helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	</section>
+	<section>
+		<span class="label">Contents:</div>
+		<div class="content">
 			{{? data.isBeakerLoaded}}
 				Temperature: {{=data.currentTemp}}K<br />
 				{{? data.beakerContents.length}}
@@ -42,5 +34,5 @@
 				<span class="average">No Beaker Loaded</span>
 			{{?}}
 		</div>
-	</div>
+	</section>
 </div>

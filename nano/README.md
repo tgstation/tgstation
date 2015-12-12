@@ -12,6 +12,8 @@
 				- [Bar](#bar)
 			- [doT](#dot)
 			- [Styling](#styling)
+	- [Contributing](#contributing)
+
 <!-- /TOC -->
 
 # NanoUI
@@ -338,3 +340,38 @@ Here's an example of UI styling from Air Alarms:
     		</section>
     	{{?}}
     </article>
+
+## Contributing
+
+There are a few gotchas when it comes to writing for NanoUI. In order to
+simplify server code and make the UI more responsive, we precompile all
+templates to Javascript. In addition, Coffeescript and LESS are used to make
+development easier, and also need to be precompiled. Precompiling CSS also
+allows us to add fallbacks for old versions of Internet Explorer.
+
+To compile NanoUI (which you will need to do after adding or updating a
+template), first install [Node.js](https://nodejs.org).
+
+Next, you will need to install packages used by NanoUI:
+
+    cd nanoui/
+    npm install -g gulp bower
+    npm install
+    bower install
+
+Finally, to compile NanoUI, run Gulp:
+
+    gulp
+
+Every time you make an update, you will need to recompile. Before comitting,
+make sure you minimize the files with Gulp:
+
+    gulp --min
+
+If you would like to view your changes without restarting, run Gulp reload:
+
+    gulp reload
+
+Finally, if you want to auto-compile and reload on save, run Gulp watch:
+
+    gulp watch

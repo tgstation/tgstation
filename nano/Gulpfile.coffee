@@ -1,13 +1,26 @@
 ### Settings ###
-min = require("gulp-util").env.min
+util = require("gulp-util")
+s =
+  min: util.env.min
+  colorblind: util.env.colorblind
 
 # Project Paths
-paths =
-  images:    "images/"
-  scripts:   "scripts/*.coffee"
-  styles:    "styles/*.less"
-  templates: "templates/*.dot"
-  build:     "assets"
+input =
+  fonts:     "**/*.{eot,woff2}"
+  images:    "images"
+  scripts:   "scripts"
+  styles:    "styles"
+  templates: "templates"
+
+output =
+  dir: "assets"
+  scripts:
+    lib: "nanoui.lib.js"
+    main: "nanoui.main.js"
+  styles:
+    lib: "nanoui.lib.css"
+    prefix: "nanoui."
+  templates: "nanoui.templates.js"
 
 # doT Settings
 dotOpts =
@@ -23,116 +36,92 @@ dotOpts =
   append:        true,
   selfcontained: true
 
-# LESS Settings
-lessOpts =
-  paths: [paths.images]
+### Pacakages ###
+bower         = require "main-bower-files"
+child_process = require "child_process"
+del           = require "del"
+gulp          = require "gulp"
+merge         = require "merge-stream"
 
-# Autoprefixer Settings
-autoOpts =
-    browsers: [
-        "last 2 versions",
-        "> 5%",
-        "ie >= 8"
-    ]
+### Plugins ###
+g = require("gulp-load-plugins")({replaceString: /^gulp(-|\.)|-/g})
+p =
+  autoprefixer: require "autoprefixer"
+  colorblind:   require "postcss-colorblind"
+  fontweights:  require "postcss-font-weights"
+  gradient:     require "postcss-filter-gradient"
+  opacity:      require "postcss-opacity"
+  plsfilters:   require "pleeease-filters"
+  rgba:         require "postcss-color-rgba-fallback"
 
-# CSSNano Settings
-nanoOpts =
-  discardComments:
-    removeAll: true
+### Helpers ###
 
-# Filter Settings
-filterOpts =
-    oldIE: true
-
-
-### Gulp ###
-gulp       = require "gulp"
-gulpif     = require "gulp-if"
-jsbeautify = require "gulp-jsbeautifier"
-bower      = require "main-bower-files"
-coffee     = require "gulp-coffee"
-concat     = require "gulp-concat"
-csscomb    = require "gulp-csscomb"
-cssnano    = require "gulp-cssnano"
-del        = require "del"
-dot        = require "gulp-dot-precompiler"
-header     = require "gulp-header"
-filter     = require "gulp-filter"
-gutil      = require "gulp-util"
-less       = require "gulp-less"
-merge      = require "merge-stream"
-postcss    = require "gulp-postcss"
-replace    = require "gulp-replace"
-uglify     = require "gulp-uglify"
-
-### PostCSS ###
-
-autoprefixer = require "autoprefixer"
-clearfix     = require "postcss-clearfix"
-filters      = require "pleeease-filters"
-gradient     = require "postcss-filter-gradient"
-opacity      = require "postcss-opacity"
-pseudo       = require "postcss-pseudoelements"
-rgba         = require "postcss-color-rgba-fallback"
-
+glob = (path) ->
+  "#{path}/*"
 
 ### Tasks ###
 gulp.task "default", ["fonts", "scripts", "styles", "templates"]
 
 gulp.task "clean", ->
-  del "#{paths.build}/*"
+  del glob output.dir
 
 gulp.task "watch", ->
-  gulp.watch paths.scripts, ["scripts"]
-  gulp.watch paths.styles, ["styles"]
-  gulp.watch paths.templates, ["templates"]
+  gulp.watch [glob input.images], ["reload"]
+  gulp.watch [glob input.scripts], ["reload"]
+  gulp.watch [glob input.styles], ["reload"]
+  gulp.watch [glob input.templates], ["reload"]
 
-gulp.task "fonts", ->
-  gulp.src bower "**/*.{eot,woff{,2}}"
-    .pipe gulp.dest paths.build
+gulp.task "reload", ["default"], ->
+  child_process.exec "reload.bat", (err, stdout, stderr) ->
+    return console.log err if err
 
-gulp.task "scripts", ->
+gulp.task "fonts", ["clean"], ->
+  gulp.src bower input.fonts
+    .pipe gulp.dest output.dir
+
+gulp.task "scripts", ["clean"], ->
   lib = gulp.src bower "**/*.js"
-    .pipe concat("lib.js")
-    .pipe gulpif(min, uglify(), jsbeautify())
-    .pipe gulp.dest paths.build
+    .pipe g.concat(output.scripts.lib)
+    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
+    .pipe gulp.dest output.dir
 
-  nanoui = gulp.src paths.scripts
-    .pipe coffee()
-    .pipe concat("app.js")
-    .pipe gulpif(min, uglify(), jsbeautify())
-    .pipe gulp.dest paths.build
+  main = gulp.src glob input.scripts
+    .pipe g.coffee()
+    .pipe g.concat(output.scripts.main)
+    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
+    .pipe gulp.dest output.dir
 
-  merge lib, nanoui
+  merge lib, main
 
-gulp.task "styles", ->
+gulp.task "styles", ["clean"], ->
   lib = gulp.src bower "**/*.css"
-    .pipe replace("../fonts/", "")
-    .pipe concat("lib.css")
-    .pipe gulpif(min, cssnano(nanoOpts), csscomb())
-    .pipe gulp.dest paths.build
+    .pipe g.replace("../fonts/", "")
+    .pipe g.concat(output.styles.lib)
+    .pipe g.if(s.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
+    .pipe gulp.dest output.dir
 
-  nanoui = gulp.src paths.styles
-    .pipe filter(["*.less", "!_*.less"])
-    .pipe less(lessOpts)
-    .pipe postcss([
-      autoprefixer(autoOpts),
-      filters(filterOpts)
-      pseudo,
-      rgba,
-      gradient,
-      opacity,
-      clearfix
+  main = gulp.src glob input.styles
+    .pipe g.filter(["*.less", "!_*.less"])
+    .pipe g.less({paths: [input.images]})
+    .pipe g.postcss([
+      p.autoprefixer({browsers: ["last 2 versions", "ie >= 8"]}),
+      p.plsfilters({oldIE: true}),
+      p.rgba({oldie: true}),
+      p.opacity,
+      p.gradient,
+      p.fontweights
     ])
-    .pipe gulpif(min, cssnano(nanoOpts), csscomb())
-    .pipe gulp.dest paths.build
+    .pipe g.if(s.colorblind, g.postcss([p.colorblind]))
+    .pipe g.if(s.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
+    .pipe g.rename({prefix: output.styles.prefix})
+    .pipe gulp.dest output.dir
 
-  merge lib, nanoui
+  merge lib, main
 
-gulp.task "templates", ->
-  gulp.src paths.templates
-    .pipe dot({dictionary: "TMPL", templateSettings: dotOpts})
-    .pipe concat("templates.js")
-    .pipe header("window.TMPL = {};\n")
-    .pipe gulpif(min, uglify(), jsbeautify())
-    .pipe gulp.dest paths.build
+gulp.task "templates", ["clean"], ->
+  gulp.src glob input.templates
+    .pipe g.dotprecompiler({dictionary: "TMPL", templateSettings: dotOpts})
+    .pipe g.concat(output.templates)
+    .pipe g.header("window.TMPL = {};\n")
+    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
+    .pipe gulp.dest output.dir

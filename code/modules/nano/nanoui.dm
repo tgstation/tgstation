@@ -253,14 +253,14 @@
 /datum/nanoui/proc/get_html()
 	// Generate <script> and <link> tags.
 	var/script_html = {"
-<script type='text/javascript' src='lib.js'></script>
-<script type='text/javascript' src='app.js'></script>
-<script type='text/javascript' src='templates.js'></script>
+<script type='text/javascript' src='nanoui.lib.js'></script>
+<script type='text/javascript' src='nanoui.main.js'></script>
+<script type='text/javascript' src='nanoui.templates.js'></script>
 	"}
 	var/stylesheet_html = {"
-<link rel='stylesheet' type='text/css' href='lib.css' />
-<link rel='stylesheet' type='text/css' href='common.css' />
-<link rel='stylesheet' type='text/css' href='[layout].css' />
+<link rel='stylesheet' type='text/css' href='nanoui.lib.css' />
+<link rel='stylesheet' type='text/css' href='nanoui.common.css' />
+<link rel='stylesheet' type='text/css' href='nanoui.[layout].css' />
 	"}
 
 	// Generate data JSON.

@@ -21,17 +21,7 @@ article.display {
 
     section {
         width: 100%;
-        padding: 2px 0;
-    }
-
-    section.text {
-        &:extend(section);
-        padding: 5px 0;
-    }
-
-    section.button {
-        &:extend(section);
-        padding-bottom: 0;
+        padding: 3px 0;
     }
 
     .cell {
@@ -44,6 +34,7 @@ article.display {
         width: 33%;
 
         color: @label;
+        vertical-align: top;
     }
 
     .content {
@@ -54,6 +45,10 @@ article.display {
     .line {
         .cell;
         width: 100%;
+    }
+
+    .buttoninfo {
+        margin-left: 5px;
     }
 
     table {

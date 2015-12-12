@@ -1,6 +1,6 @@
-<header role='titlebar' unselectable='on'>
+<header class='titlebar' unselectable='on'>
+	<span class='title' unselectable='on'>{{=config.title}}</span>
 	<i class='statusicon' unselectable="on"></i>
-	<div class='title' unselectable='on'>{{=config.title}}</div>
 </header>
 
 <div id='content' class='content' unselectable='on'>

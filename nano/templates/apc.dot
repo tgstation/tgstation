@@ -1,9 +1,7 @@
 <article class="notice">
 	{{? data.siliconUser}}
 		<section>
-			<span class="label">
-				Interface Lock:
-			</span>
+			<span class="label">Interface Lock:</span>
 			<div class="content">
 				{{=helper.link('Engaged', 'lock', {'toggleaccess': 1}, data.locked ? 'selected' : null)}}
 				{{=helper.link('Disengaged', 'unlock', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
@@ -20,15 +18,13 @@
 <article class="display">
 	<header><h2>Power Status</h2></header>
 	<section>
-		<span class="label">
-			Main Breaker:
-		</span>
+		<span class="label">Main Breaker:</span>
 		<div class="content">
 			{{? data.locked && !data.siliconUser}}
 				{{? data.isOperating}}
-					<span class='good'>On</span>
+					<span class="good">On</span>
 				{{??}}
-					<span class='bad'>Off</span>
+					<span class="bad">Off</span>
 				{{?}}
 			{{??}}
 				{{=helper.link('On', 'power-off', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}
@@ -37,42 +33,36 @@
 		</div>
 	</section>
 	<section>
-		<span class="label">
-			External Power:
-		</span>
+		<span class="label">External Power:</span>
 		<div class="content">
 			{{? data.externalPower == 2}}
-				<span class='good'>Good</span>
+				<span class="good">Good</span>
 			{{?? data.externalPower == 1}}
-				<span class='average'>Low</span>
+				<span class="average">Low</span>
 			{{??}}
-				<span class='bad'>None</span>
+				<span class="bad">None</span>
 			{{?}}
 		</div>
 	</section>
 	<section>
-		<span class="label">
-			Power Cell:
-		</span>
+		<span class="label">Power Cell:</span>
 		<div class="content">
 			{{? data.powerCellStatus != null}}
-				{{=helper.bar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? 'good' : data.powerCellStatus >= 25 ? 'average' : 'bad', helper.fixed(data.powerCellStatus) + "%")}}
+				{{=helper.bar(data.powerCellStatus, 0, 100, data.powerCellStatus >= 50 ? "good" : data.powerCellStatus >= 25 ? "average" : "bad", helper.fixed(data.powerCellStatus) + "%")}}
 			{{??}}
-				<span class='bad'>Power cell removed.</span>
+				<span class="bad">Power cell removed.</span>
 			{{?}}
 		</div>
 	</section>
 	{{? data.powerCellStatus != null}}
 		<section>
-			<span class="label">
-				Charge Mode:
-			</span>
+			<span class="label">Charge Mode:</span>
 			<div class="content">
 				{{? data.locked && !data.siliconUser}}
 					{{? data.chargeMode}}
-						<span class='bold good'>Auto</span>
+						<span class="good">Auto</span>
 					{{??}}
-						<span class='bold bad'>Off</span>
+						<span class="bad">Off</span>
 					{{?}}
 				{{??}}
 					{{=helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
@@ -80,11 +70,11 @@
 				{{?}}
 				&nbsp;
 				{{? data.chargingStatus > 1}}
-					[<span class='bold good'>Fully Charged</span>]
+					[<span class="good">Fully Charged</span>]
 				{{?? data.chargingStatus == 1}}
-					[<span class='bold average'>Charging</span>]
+					[<span class="average">Charging</span>]
 				{{??}}
-					[<span class='bold bad'>Not Charging</span>]
+					[<span class="bad">Not Charging</span>]
 				{{?}}
 			</div>
 		</section>
@@ -99,9 +89,9 @@
 				<td>{{=channel.powerLoad}} W</td>
 				<td>
 					{{? channel.status <= 1}}
-						<span class='bold bad'>Off</span>
+						<span class="bad">Off</span>
 					{{?? channel.status >= 2}}
-						<span class='bold good'>On</span>
+						<span class="good">On</span>
 					{{?}}
 				</td>
 				<td>
@@ -150,9 +140,7 @@
 {{?}}
 <article class="notice">
 	<section>
-		<span class="label">
-			Cover Lock:
-		</span>
+		<span class="label">Cover Lock:</span>
 		<div class="content">
 			{{? data.locked && !data.siliconUser}}
 				{{? data.coverLocked}}

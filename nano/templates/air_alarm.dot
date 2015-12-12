@@ -1,9 +1,7 @@
 <article class="notice">
 	{{? data.siliconUser}}
 		<section>
-			<span class="label">
-				Interface Lock:
-			</span>
+			<span class="label">Interface Lock:</span>
 			<div class="content">
 				{{=helper.link('Engaged', 'lock', {'toggleaccess': 1}, data.locked ? 'selected' : null)}}
 				{{=helper.link('Disengaged', 'unlock', {'toggleaccess': 1}, data.locked ? null : 'selected')}}
@@ -21,57 +19,53 @@
 	<header><h2>Air Status</h2></header>
 	{{? data.environment_data}}
 		{{~ data.environment_data:info:i}}
-			<section class="text">
-				<span class="label">
-					{{=info.name}}:
-				</span>
+			<section>
+				<span class="label">{{=info.name}}:</span>
 				<div class="content">
 					{{? info.danger_level == 2}}
-						<span class='bad'>
+						<span class="bad">
 					{{?? info.danger_level == 1}}
-						<span class='average'>
+						<span class="average">
 					{{??}}
-						<span class='good'>
+						<span class="good">
 					{{?}}
 					{{=helper.fixed(info.value, 2)}}{{=info.unit}}</span>
 				</div>
 			</section>
 		{{~}}
-		<section class="text">
-			<span class="label">
-				Local Status:
-			</span>
+		<section>
+			<span class="label">Local Status:</span>
 			<div class="content">
 				{{? data.danger_level == 2}}
-					<span class='bad bold'>Danger (Internals Required)</span>
+					<span class="bad bold">Danger (Internals Required)</span>
 				{{?? data.danger_level == 1}}
-					<span class='average bold'>Caution</span>
+					<span class="average bold">Caution</span>
 				{{??}}
-					<span class='good'>Optimal</span>
+					<span class="good">Optimal</span>
 				{{?}}
 			</div>
 		</section>
-		<section class="text">
-			<span class="label">
-				Area Status:
-			</span>
+		<section>
+			<span class="label">Area Status:</span>
 			<div class="content">
 				{{? data.atmos_alarm}}
-					<span class='bad bold'>Atmosphere Alarm</span>
+					<span class="bad bold">Atmosphere Alarm</span>
 				{{?? data.fire_alarm}}
-					<span class='bad bold'>Fire Alarm</span>
+					<span class="bad bold">Fire Alarm</span>
 				{{??}}
-					<span class='good'>Nominal</span>
+					<span class="good">Nominal</span>
 				{{?}}
 			</div>
 		</section>
 	{{??}}
-		<section><span class='bad bold'>Warning: Cannot obtain air sample for analysis.</span></section>
+		<section>
+			<span class="bad bold">Warning: Cannot obtain air sample for analysis.</span>
+		</section>
 	{{?}}
 	{{? data.dangerous}}
 		<hr />
 		<section>
-			<span class='bad bold'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>
+			<span class="bad bold">Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>
 		</section>
 	{{?}}
 </article>
@@ -114,9 +108,7 @@
 			<article class="display">
 				<header><h3>{{=vent.long_name}}</h3></header>
 				<section>
-					<span class="label">
-						Power:
-					</span>
+					<span class="label">Power:</span>
 					<div class="content">
 						{{? vent.power}}
 							{{=helper.link('On', 'power-off', {'id_tag': vent.id_tag, 'command': 'power', 'val': 0}, null, null)}}
@@ -126,9 +118,7 @@
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Mode:
-					</span>
+					<span class="label">Mode:</span>
 					<div class="content">
 						{{? vent.direction == "release"}}
 							<span class="good">Pressurizing</span>
@@ -138,18 +128,14 @@
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Pressure Checks:
-					</span>
+					<span class="label">Pressure Checks:</span>
 					<div class="content">
 						{{=helper.link('Internal', 'sign-in', {'id_tag': vent.id_tag, 'command': 'incheck', 'val': vent.checks}, null, vent.incheck ? 'selected' : null)}}
 						{{=helper.link('External', 'sign-out', {'id_tag': vent.id_tag, 'command': 'excheck', 'val': vent.checks}, null, vent.excheck ? 'selected' : null)}}
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Set Pressure:
-					</span>
+					<span class="label">Set Pressure:</span>
 					<div class="content">
 						{{=helper.link(helper.fixed(vent.external), 'pencil', {'id_tag': vent.id_tag, 'command': 'set_external_pressure'})}}
 						{{=helper.link('Reset', 'refresh', { 'id_tag': vent.id_tag, 'command': 'reset_external_pressure'}, vent.extdefault ? 'disabled' : null)}}
@@ -158,16 +144,14 @@
 			</article>
 		{{~}}
 		{{? !data.vents.length}}
-			No vents connected.
+			<span class="bad">No vents connected.</span>
 		{{?}}
 	{{?? data.screen == 3}}
 		{{~ data.scrubbers:scrubber:i}}
 			<article class="display">
 				<header><h3>{{=scrubber.long_name}}</h3></header>
 				<section>
-					<span class="label">
-						Power:
-					</span>
+					<span class="label">Power:</span>
 					<div class="content">
 						{{? scrubber.power}}
 							{{=helper.link('On', 'power-off', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 0}, null, null)}}
@@ -177,9 +161,7 @@
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Mode:
-					</span>
+					<span class="label">Mode:</span>
 					<div class="content">
 						{{? scrubber.scrubbing}}
 							{{=helper.link('Scrubbing', 'filter', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 0}, null, null)}}
@@ -189,9 +171,7 @@
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Range:
-					</span>
+					<span class="label">Range:</span>
 					<div class="content">
 						{{? scrubber.widenet}}
 							{{=helper.link('Extended', 'expand', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 0}, null, 'caution')}}
@@ -201,9 +181,7 @@
 					</div>
 				</section>
 				<section>
-					<span class="label">
-						Filters:
-					</span>
+					<span class="label">Filters:</span>
 					<div class="content">
 						{{=helper.link("CO2", scrubber.filter_co2 ? 'check-square-o' : 'square-o', {'id_tag': scrubber.id_tag, 'command': "co2_scrub", 'val': scrubber.filter_co2 ? 0 : 1}, null, scrubber.filter_co2 ? 'selected' : null)}}
 						{{=helper.link("N2O", scrubber.filter_n2o ? 'check-square-o' : 'square-o', {'id_tag': scrubber.id_tag, 'command': "n2o_scrub", 'val': scrubber.filter_n2o ? 0 : 1}, null, scrubber.filter_n2o ? 'selected' : null)}}
@@ -213,7 +191,7 @@
 			</article>
 		{{~}}
 		{{? !data.scrubbers.length}}
-			No scrubbers connected.
+			<span class="bad">No scrubbers connected.</span>
 		{{?}}
 	{{?? data.screen == 4}}
 		<article class="display">
@@ -231,10 +209,10 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th><span class='bad'>min2</span></th>
-						<th><span class='average'>min1</span></th>
-						<th><span class='average'>max1</span></th>
-						<th><span class='bad'>max2</span></th>
+						<th><span class="bad">min2</span></th>
+						<th><span class="average">min1</span></th>
+						<th><span class="average">max1</span></th>
+						<th><span class="bad">max2</span></th>
 					</tr>
 				</thead>
 				<tbody>

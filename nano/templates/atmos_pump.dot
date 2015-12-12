@@ -1,31 +1,27 @@
-<div class="item">
-	<div class="itemLabel">
-		Power:
-	</div>
-	<div class="itemContent">
-		{{=helper.link(data.on? 'On' : 'Off', data.on? 'power' : 'close', {'power' : 1})}}
-	</div>
-</div>
-{{? data.max_rate}}
-	<div class="item">
-		<div class="itemLabel">
-			Transfer Rate:
+<article class="display">
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
+			{{=helper.link(data.on? 'On' : 'Off', data.on? 'power' : 'close', {'power' : 1})}}
 		</div>
-		<div class="itemContent">
-			{{=helper.link('Set', 'pencil', {'set_transfer_rate' : 'set'})}}
-			{{=helper.link('Max', 'plus', {'set_transfer_rate' : 'max'}, data.transfer_rate == data.max_rate ? 'disabled' : null)}}
-			{{=data.transfer_rate}} L/s
-		</div>
-	</div>
-{{??}}
-	<div class="item">
-		<div class="itemLabel">
-			Output Pressure:
-		</div>
-		<div class="itemContent">
-			{{=helper.link('Set', 'pencil', {'set_press' : 'set'})}}
-			{{=helper.link('Max', 'plus', {'set_press' : 'max'}, data.set_pressure == data.max_pressure ? 'disabled' : null)}}
-			{{=data.set_pressure}} kPa
-		</div>
-	</div>
-{{?}}
+	</section>
+	{{? data.max_rate}}
+		<section>
+			<span class="label">Transfer Rate:</span>
+			<div class="content">
+				{{=helper.link('Set', 'pencil', {'set_transfer_rate' : 'set'})}}
+				{{=helper.link('Max', 'plus', {'set_transfer_rate' : 'max'}, data.transfer_rate == data.max_rate ? 'disabled' : null)}}
+				{{=data.transfer_rate}} L/s
+			</div>
+		</section>
+	{{??}}
+		<section>
+			<span class="label">Output Pressure:</span>
+			<div class="content">
+				{{=helper.link('Set', 'pencil', {'set_press' : 'set'})}}
+				{{=helper.link('Max', 'plus', {'set_press' : 'max'}, data.set_pressure == data.max_pressure ? 'disabled' : null)}}
+				{{=data.set_pressure}} kPa
+			</div>
+		</section>
+	{{?}}
+</article>
