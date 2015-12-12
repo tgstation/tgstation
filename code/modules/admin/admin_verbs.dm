@@ -12,6 +12,7 @@ var/list/admin_verbs_default = list(
 //	/client/proc/deadchat				/*toggles deadchat on/off*/
 	)
 var/list/admin_verbs_admin = list(
+	/client/proc/set_base_turf,
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
@@ -144,6 +145,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/dump_chemreactions,
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/gc_dump_hdl,
 	/client/proc/getSchedulerContext,
 	/client/proc/cmd_admin_list_open_jobs,
 	/proc/getbrokeninhands,
@@ -271,7 +273,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/enable_debug_verbs,
 	/client/proc/mob_list,
 	/proc/possess,
-	/proc/release
+	/proc/release,
+	/client/proc/gc_dump_hdl
 	)
 var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
@@ -320,6 +323,7 @@ var/list/admin_verbs_mod = list(
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
+		admin_verbs_mod,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
 		/client/proc/pdiff,
@@ -343,6 +347,8 @@ var/list/admin_verbs_mod = list(
 		/client/proc/splash,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin,
+		/client/proc/nanomapgen_DumpImage,
+		/client/proc/nanomapgen_DumpImageAll
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -959,17 +965,17 @@ var/list/admin_verbs_mod = list(
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner", null) as null|anything in player_list
 	if(!winner)	return
-	
+
 	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement", null) as null|text
 	if(!name) return
-	
+
 	var/desc = input("What description will you give it?", "Achievement Description", "You Win", null) as null|text
 	if(!desc) return
-	
+
 	if(istype(winner, /mob/living))
 		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm", "Cancel")
 		if(achoice == "Cancel") return
-		
+
 	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)", "Last Question", "No!","Yes!")
 
 	if(achoice == "Confirm")
