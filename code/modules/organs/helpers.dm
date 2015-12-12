@@ -45,7 +45,7 @@ mob/proc/exists(var/organname)
 				return returnorg
 			var/obj/item/organ/OI = PO.organitem
 			for(var/organname in OI.suborgans)
-				if(!organname == "eyes")
+				if(organname != "eyes")
 					var/datum/organ/RO = OI.suborgans[organname]
 					if(RO.exists() && istype(RO, /datum/organ/internal))	//Only internal organs, not limbs etc.
 						returnorg += RO
