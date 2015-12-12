@@ -224,6 +224,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
 #define HEAR		16
+#define HEAR_ALWAYS 32 // Assign a virtualhearer to the mob even when no client is controlling it.
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 

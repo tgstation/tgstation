@@ -34,6 +34,7 @@
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
+	flags = HEAR | PROXMOVE | HEAR_ALWAYS
 
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
@@ -113,6 +114,30 @@
 			  /mob/living/simple_animal/parrot/proc/toggle_mode)
 
 
+/mob/living/simple_animal/parrot/examine(mob/user)
+	if(stat == DEAD)
+		desc = pick("It's just resting.", \
+			"It's stunned.", \
+			"Probably tired and shagged out after a long squawk.", \
+			"It's pining for the fjords.", \
+			"It just prefers kippin' on it's back.", \
+			"That parrot is definitely deceased.", \
+			"You know a dead parrot when you see one, and you're looking at one right now.", \
+			"It's dead, that's what's wrong with it.", \
+			"It's bleeding demised.", \
+			"It's passed on.", \
+			"This parrot is no more.", \
+			"It has ceased to be.", \
+			"It's expired and gone to meet it's maker.", \
+			"This is a late parrot.", \
+			"It's a stiff.", \
+			"Bereft of life, it rests in peace.", \
+			"It's run down the courtain and joined the choir invisible.", \
+			"This is an ex-parrot.")
+	else
+		desc = initial(desc)
+	..()
+
 /mob/living/simple_animal/parrot/Die()
 	if(held_item)
 		held_item.loc = src.loc
@@ -125,7 +150,6 @@
 	if(statpanel("Status"))
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
-
 
 /mob/living/simple_animal/parrot/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(speech.speaker && speech.speaker != src && prob(20)) //Don't imitate outselves
