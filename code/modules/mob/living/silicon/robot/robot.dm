@@ -1167,3 +1167,7 @@
 	if(be_close && !in_range(M, src))
 		return
 	return 1
+
+
+/mob/living/silicon/robot/syndicate/binarycheck()
+	return 0
