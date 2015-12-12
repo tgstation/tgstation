@@ -1,0 +1,9 @@
+author: Asd396
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added three new internal organs: liver, kidneys and lungs. Sprites are shamelessly stolen from lifeweb leaks."
+  - rcsadd: "Alcohol poisoning can cause cirrhosis."
+  - rcsadd: "Nicotine addiction can cause smoker's cough."
+  - rcsadd: "Excessive toxin damage causes kidney failure."

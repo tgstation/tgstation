@@ -95,19 +95,27 @@
 		..(O)
 
 		organlist["heart"]					= new/datum/organ/internal/heart(coreitem, new/obj/item/organ/internal/heart())
-		organlist["cyberimp_chest"] 		= new/datum/organ/internal/cyberimp/chest(coreitem, null)
+		organlist["lungs"]					= new/datum/organ/internal/lungs(coreitem, new/obj/item/organ/internal/lungs())
 
 		var/datum/organ/limb/head/H = get_organ("head")
 		var/obj/item/organ/limb/head/head = H.organitem
 		organlist["eyes"]	= new/datum/organ/internal/eyes(head, new/obj/item/organ/internal/eyes())
 		organlist["brain"]	= new/datum/organ/internal/brain(head, new/obj/item/organ/internal/brain())
-		organlist["cyberimp_brain"]		= new/datum/organ/internal/cyberimp/brain(head, null)
 
 		var/datum/organ/abstract/groin/G = organlist["groin"]
 		var/obj/item/organ/abstract/groin 	= G.organitem
 		organlist["butt"]					= new/datum/organ/butt(groin, new/obj/item/organ/butt())
 		organlist["appendix"]				= new/datum/organ/internal/appendix(groin, new/obj/item/organ/internal/appendix())
+		organlist["liver"]					= new/datum/organ/internal/liver(groin, new/obj/item/organ/internal/liver())
+		organlist["kidneys"]				= new/datum/organ/internal/kidneys(groin, new/obj/item/organ/internal/kidneys())
 
+
+
+		//Augs
+		organlist["cyberimp_chest"] 		= new/datum/organ/internal/cyberimp/chest(coreitem, null)
+		organlist["cyberimp_brain"]		= new/datum/organ/internal/cyberimp/brain(head, null)
+
+		//Alium shit
 		organlist["egg"]	= new/datum/organ/internal/body_egg/(coreitem, null)
 
 		var/datum/organ/abstract/M = get_organ("mouth")

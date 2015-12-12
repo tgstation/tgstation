@@ -13,6 +13,8 @@
 /datum/reagent/toxin/on_mob_life(var/mob/living/M as mob)
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM)
+		if((M.getToxLoss() >= 50) && !(/datum/disease/kidney_failure/ in M.viruses))
+			M.ForceContractDisease(new /datum/disease/kidney_failure)
 	..()
 	return
 

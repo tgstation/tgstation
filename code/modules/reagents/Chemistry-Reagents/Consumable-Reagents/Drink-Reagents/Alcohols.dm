@@ -32,6 +32,8 @@
 		M.confused += 3
 	if(current_cycle >= boozepwr*10 && prob(33))
 		M.adjustToxLoss(2)
+		if(prob(20) && !(/datum/disease/cirrhosis/ in M.viruses))	//So about 6% chance total
+			M.ForceContractDisease(new /datum/disease/cirrhosis)
 	..()
 	return
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)

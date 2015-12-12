@@ -62,6 +62,11 @@
 	M.adjustStaminaLoss(-0.5*REM)
 	..()
 
+//Smoking is bad mmkay
+/datum/reagent/drug/nicotine/addiction_act_stage1(var/mob/living/M as mob)
+	if(prob(5) && !(/datum/disease/emphysema/ in M.viruses))	//Probability might need adjustment
+		M.ForceContractDisease(new /datum/disease/emphysema)
+
 /datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
