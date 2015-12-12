@@ -198,6 +198,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	store_position()
 	on_uattack = new("owner"=src)
 
+	if(flags & HEAR_ALWAYS)
+		getFromPool(/mob/virtualhearer, src)
+
 /mob/proc/is_muzzled()
 	return 0
 

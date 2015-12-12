@@ -3,9 +3,10 @@
 		var/obj/location = loc
 		location.on_log()
 
-	for(var/mob/virtualhearer/VH in virtualhearers)
-		if(VH.attached == src)
-			returnToPool(VH)
+	if(!(flags & HEAR_ALWAYS))
+		for(var/mob/virtualhearer/VH in virtualhearers)
+			if(VH.attached == src)
+				returnToPool(VH)
 
 	nanomanager.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
 

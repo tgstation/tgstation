@@ -51,7 +51,7 @@
 
 	reset_view()
 
-	if(flags & HEAR)
+	if(flags & HEAR && !(flags & HEAR_ALWAYS)) //Mobs with HEAR_ALWAYS will already have a virtualhearer
 		getFromPool(/mob/virtualhearer, src)
 
 	//Clear ability list and update from mob.
