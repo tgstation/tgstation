@@ -6108,7 +6108,7 @@
 "cnx" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/atmos)
 "cny" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/turf/simulated/floor/plasteel,/area/atmos)
 "cnz" = (/obj/item/clothing/shoes/sneakers/black{dir = 1},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
-"cnA" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/item/clothing/under/sexyclown,/obj/item/clothing/under/sexymime,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
+"cnA" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/item/clothing/under/rank/clown/sexy,/obj/item/clothing/under/sexymime,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "cnB" = (/obj/structure/grille,/obj/machinery/door/poddoor/preopen{id = "Xenolab"; name = "Test Chamber Containment Door"},/obj/structure/cable/pink{d2 = 2; icon_state = "0-2"},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 5},/area/toxins/xenobiology)
 "cnC" = (/obj/structure/table/reinforced,/obj/machinery/computer/security/telescreen{dir = 4; name = "Test Chamber Monitor"; network = list("Xeno"); pixel_y = 2},/turf/simulated/floor/plasteel{dir = 8; icon_state = "warnwhite"},/area/toxins/xenobiology)
 "cnD" = (/obj/structure/cable/pink{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/xenobiology)

@@ -225,7 +225,7 @@
 
 /obj/effect/landmark/costume/sexyclown/New()
 	new /obj/item/clothing/mask/gas/sexyclown(src.loc)
-	new /obj/item/clothing/under/sexyclown(src.loc)
+	new /obj/item/clothing/under/rank/clown/sexy(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/sexymime/New()
