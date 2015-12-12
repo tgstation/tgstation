@@ -6,17 +6,55 @@
 	var/zone ="error"
 	var/slot = "error"
 	var/vital = 0
-
 	var/organ_action_name = null
+
+	var/dysfunctional = 0	//Inflamed appendix, kidney or liver failure, etc.
+	var/base_icon_state
+	var/damstring = "damaged"
+	var/diseasetype
+	var/curedbyremoval = 0
 
 /obj/item/organ/internal/Remove()
 	if(organ_action_name)
 		action_button_name = null
+	update_icon()
+
+	if(curedbyremoval)
+		for(var/datum/disease/A in owner.viruses)
+			if(istype(A, diseasetype))
+				A.cure()
+				dysfunctional = 1
+	else if(diseasetype)	//Basically if you remove a healthy organ you will have the same symptoms as if it was dysfunctional
+		for(var/datum/disease/A in owner.viruses)
+			if(istype(A, diseasetype))
+				return
+		owner.AddDisease(new diseasetype)
+	..()
 
 /obj/item/organ/internal/on_insertion(special = 0)
 	if(organ_action_name)
 		action_button_name = organ_action_name
+	update_icon()
+
+	if(dysfunctional)
+		for(var/datum/disease/A in owner.viruses)
+			if(istype(A, diseasetype))
+				return
+		owner.AddDisease(new diseasetype)
+	else	//Healthy organ transplant cures liver and kidney failure
+		for(var/datum/disease/A in owner.viruses)
+			if(istype(A, diseasetype))
+				A.cure()
 	return
+
+/obj/item/organ/internal/update_icon()
+	if(base_icon_state)	//We don't need to do this for organs that don't update
+		if(dysfunctional)
+			icon_state = "[base_icon_state]_dam"
+			name = "[damstring] [hardpoint]"	//[hardpoint] is a bit kludge-y but I don't want to have each organ to have four of the exact same string
+		else
+			icon_state = "[base_icon_state]"
+			name = "[hardpoint]"
 
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
@@ -102,31 +140,56 @@
 	hardpoint = "appendix"
 	icon_state = "appendix"
 	desc = "The greyshirt of organs."
-	var/inflamed = 0
 
-/obj/item/organ/internal/appendix/update_icon()
-	if(inflamed)
-		icon_state = "appendixinflamed"
-		name = "inflamed appendix"
-	else
-		icon_state = "appendix"
-		name = "appendix"
-
-/obj/item/organ/internal/appendix/Remove(special = 0)
-	if(owner)
-		for(var/datum/disease/appendicitis/A in owner.viruses)
-			A.cure()
-			inflamed = 1
-	update_icon()
-	..()
-
-/obj/item/organ/internal/appendix/on_insertion()
-	if(inflamed)
-		owner.AddDisease(new /datum/disease/appendicitis)
-	return
+	base_icon_state = "appendix"
+	damstring = "inflamed"
+	diseasetype = /datum/disease/appendicitis
+	curedbyremoval = 1
 
 /obj/item/organ/internal/appendix/prepare_eat()
 	var/obj/S = ..()
-	if(inflamed)
+	if(dysfunctional)
 		S.reagents.add_reagent("????", 5)
 	return S
+
+// New internal organs
+// Thanks Randy
+
+
+
+/obj/item/organ/internal/liver
+	name = "liver"
+	hardpoint = "liver"
+	icon_state = "liver"
+	base_icon_state = "liver"
+	desc = "Liver let die."
+	diseasetype = /datum/disease/cirrhosis
+
+
+
+/obj/item/organ/internal/kidneys
+	name = "kidneys"
+	hardpoint = "kidneys"
+	icon_state = "kidneys"
+	base_icon_state = "kidneys"
+	desc = "I couldn't think of a witty pun here."
+	diseasetype = /datum/disease/kidney_failure
+
+
+
+/obj/item/organ/internal/lungs
+	name = "lungs"
+	hardpoint = "lungs"
+	base_icon_state = "lungs"
+	desc = "I couldn't think of a witty pun here."
+	diseasetype = /datum/disease/emphysema	//Smoker's lung
+	curedbyremoval = 1
+
+
+/*
+/obj/item/organ/internal/stomach
+	name = "stomach"
+	hardpoint = "stomach"
+	base_icon_state = "stomach"
+	desc = "I couldn't think of a witty pun here."
+*/

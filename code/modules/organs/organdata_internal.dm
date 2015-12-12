@@ -35,6 +35,19 @@
 	name = "appendix"
 	organitem_type = /obj/item/organ/internal/appendix
 
+/datum/organ/internal/liver
+	name = "liver"
+	organitem_type = /obj/item/organ/internal/liver
+
+/datum/organ/internal/kidneys
+	name = "kidneys"
+	organitem_type = /obj/item/organ/internal/kidneys
+
+/datum/organ/internal/lungs
+	name = "lungs"
+	organitem_type = /obj/item/organ/internal/lungs
+	vital = 1
+
 /datum/organ/internal/eyes
 	name = "eyes"
 
