@@ -1915,19 +1915,19 @@ datum
 			required_reagents = list("water" = 5, "coco" = 1)
 			result_amount = 5
 
-		coffee
+		/*coffee
 			name = "Coffee"
 			id = "coffee"
 			result = "coffee"
 			required_reagents = list("coffeepowder" = 1, "water" = 5)
-			result_amount = 5
+			result_amount = 5*/
 
-		tea
+		/*tea
 			name = "Tea"
 			id = "tea"
 			result = "tea"
 			required_reagents = list("teapowder" = 1, "water" = 5)
-			result_amount = 5
+			result_amount = 5*/
 
 		soysauce
 			name = "Soy Sauce"
@@ -2033,7 +2033,7 @@ datum
 			result = "arnoldpalmer"
 			required_reagents = list("lemonade" = 1, "icetea" = 1)
 			result_amount = 2
-			
+
 		icecoffee
 			name = "Iced Coffee"
 			id = "icecoffee"
