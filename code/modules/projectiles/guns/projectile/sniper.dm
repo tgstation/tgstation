@@ -12,9 +12,9 @@
 	can_unsuppress = 1
 	can_suppress = 1
 	w_class = 3
-	var/zoomed = FALSE
-	var/zoom_amt = 7
-	var/datum/action/sniper_zoom/azoom
+	zoomable = TRUE
+	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+
 
 /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
@@ -22,69 +22,6 @@
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=8;syndicate=4"
 
-/obj/item/weapon/gun/projectile/sniper_rifle/New()
-	..()
-	azoom = new()
-	azoom.rifle = src
-
-/obj/item/weapon/gun/projectile/sniper_rifle/dropped(mob/living/user)
-	zoom(user,FALSE)
-	azoom.Remove(user)
-
-/obj/item/weapon/gun/projectile/sniper_rifle/pickup(mob/living/user)
-	azoom.Grant(user)
-
-/obj/item/weapon/gun/projectile/sniper_rifle/proc/zoom(mob/living/user, forced_zoom)
-	if(!user || !user.client)
-		return
-
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
-
-	if(zoomed)
-		var/_x = 0
-		var/_y = 0
-		switch(user.dir)
-			if(NORTH)
-				_y = zoom_amt
-			if(EAST)
-				_x = zoom_amt
-			if(SOUTH)
-				_y = -zoom_amt
-			if(WEST)
-				_x = -zoom_amt
-
-		user.client.pixel_x = world.icon_size*_x
-		user.client.pixel_y = world.icon_size*_y
-	else
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
-
-
-
-
-/datum/action/sniper_zoom
-	name = "Zoom Sniper Rifle"
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
-	button_icon_state = "sniper_zoom"
-	var/obj/item/weapon/gun/projectile/sniper_rifle/rifle = null
-
-/datum/action/sniper_zoom/Trigger()
-	rifle.zoom(owner)
-
-/datum/action/sniper_zoom/IsAvailable()
-	. = ..()
-	if(!. && rifle)
-		rifle.zoom(owner, FALSE)
-
-/datum/action/sniper_zoom/Remove(mob/living/L)
-	rifle.zoom(L, FALSE)
-	..()
 
 
 
