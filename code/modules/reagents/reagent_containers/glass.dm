@@ -282,3 +282,38 @@
 		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
+	if(reagents.total_volume)
+		if(src != M.get_active_hand())
+			M << "<span class='warning'>You are not holding anything to equip!</span>"
+			return 0
+
+		if(M.s_active && M.s_active.can_be_inserted(src,1))	 //if storage active insert there
+			M.s_active.handle_item_insertion(src)
+			return 1
+
+		if(istype(M, /mob/living/simple_animal/drone))
+			var/mob/living/simple_animal/drone/D = M
+			var/obj/item/weapon/storage/T = D.internal_storage
+			if (!T)
+				if (D.equip_to_slot_if_possible(src, slot_drone_storage, 0, 1, 1))
+					return 1
+			else if (istype(T) && T.can_be_inserted(src,1)) //If carrying storage item like toolbox
+				T.handle_item_insertion(src)
+				return 1
+
+		var/obj/item/weapon/storage/S = M.get_inactive_hand()
+		if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
+			S.handle_item_insertion(src)
+			return 1
+
+		S = M.get_item_by_slot(slot_back)	//else we put in backpack
+		if(istype(S) && S.can_be_inserted(src,1))
+			S.handle_item_insertion(src)
+			playsound(src.loc, "rustle", 50, 1, -5)
+			return 1
+
+		M << "<span class='warning'>You are unable to equip that!</span>"
+		return 0
+	else return ..()
