@@ -1697,28 +1697,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	force = 2.0
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/)
-	var/list/allowed_reactions = list(/datum/chemical_reaction/water, /datum/chemical_reaction/creatine,
-	/datum/chemical_reaction/discount, /datum/chemical_reaction/peptobismol, /datum/chemical_reaction/phalanximine,
-	/datum/chemical_reaction/stoxin, /datum/chemical_reaction/sterilizine, /datum/chemical_reaction/inaprovaline,
-	/datum/chemical_reaction/anti_toxin, /datum/chemical_reaction/mutagen, /datum/chemical_reaction/tramadol,
-	/datum/chemical_reaction/oxycodone, /datum/chemical_reaction/sacid, /datum/chemical_reaction/thermite,
-	/datum/chemical_reaction/lexorin, /datum/chemical_reaction/space_drugs, /datum/chemical_reaction/lube,
-	/datum/chemical_reaction/pacid, /datum/chemical_reaction/synaptizine, /datum/chemical_reaction/hyronalin,
-	/datum/chemical_reaction/arithrazine, /datum/chemical_reaction/impedrezene, /datum/chemical_reaction/kelotane,
-	/datum/chemical_reaction/virus_food, /datum/chemical_reaction/leporazine, /datum/chemical_reaction/cryptobiolin,
-	/datum/chemical_reaction/tricordrazine, /datum/chemical_reaction/alkysine, /datum/chemical_reaction/dexalin,
-	/datum/chemical_reaction/dermaline, /datum/chemical_reaction/dexalinp, /datum/chemical_reaction/bicaridine,
-	/datum/chemical_reaction/hyperzine, /datum/chemical_reaction/ryetalyn, /datum/chemical_reaction/cryoxadone,
-	/datum/chemical_reaction/clonexadone, /datum/chemical_reaction/spaceacillin, /datum/chemical_reaction/imidazoline,
-	/datum/chemical_reaction/inacusiate, /datum/chemical_reaction/ethylredoxrazine, /datum/chemical_reaction/glycerol,
-	/datum/chemical_reaction/sodiumchloride, /datum/chemical_reaction/chloralhydrate, /datum/chemical_reaction/zombiepowder,
-	/datum/chemical_reaction/rezadone, /datum/chemical_reaction/mindbreaker, /datum/chemical_reaction/lipozine,
-	/datum/chemical_reaction/condensedcapsaicin, /datum/chemical_reaction/surfactant, /datum/chemical_reaction/foaming_agent,
-	/datum/chemical_reaction/ammonia, /datum/chemical_reaction/diethylamine, /datum/chemical_reaction/space_cleaner,
-	/datum/chemical_reaction/plantbgone, /datum/chemical_reaction/doctor_delight, /datum/chemical_reaction/neurotoxin,
-	/datum/chemical_reaction/toxins_special, /datum/chemical_reaction/goldschlager, /datum/chemical_reaction/patron,
-	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce, /datum/chemical_reaction/silicate) //I give this code eight goofballs out of ten, with one being the least goofball and ten being the most goofball-like in quality
-
 
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
 	if(beakers.len)
@@ -1784,7 +1762,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			to_chat(user, "<span class='warning'>There must be both an empty and active beaker.</span>")
 			return
 		var/datum/reagent/target = active.reagents.reagent_list[1] //Should only have one thing anyway
-		for(var/R in allowed_reactions)
+		for(var/R in typesof(/datum/chemical_reaction/))
 			var/datum/chemical_reaction/check = new R
 			if(check.id == target.id)
 				unreaction = check
