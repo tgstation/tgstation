@@ -77,7 +77,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenâ€™d not thy breath.\""
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#D4B2C9"
@@ -285,7 +285,7 @@
 	..()
 	if(W.is_sharp() >= 1)
 		user.visible_message("<span class='notice'>[user] carves a face into \the [src] with \the [W]!</span>", "<span class='notice'>You carve a face into \the [src] with \the [W]!</span>")
-		new /obj/item/clothing/head/pumpkinhead(src.loc) //Don't move it
+		new /obj/item/clothing/head/pumpkinhead(get_turf(src)) //Don't move it
 		qdel(src)
 		return
 
