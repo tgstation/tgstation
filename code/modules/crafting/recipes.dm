@@ -85,7 +85,7 @@
 	name = "Tail Club"
 	result = /obj/item/weapon/tailclub
 	reqs = list(/obj/item/organ/severedtail = 1,
-	            /obj/item/stack/rods = 1)
+	            /obj/item/stack/sheet/metal = 1)
 	time = 80
 	category = CAT_WEAPON
 
@@ -288,4 +288,4 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 20
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	reqs = list(/obj/item/organ/severedtail = 1)

@@ -34,6 +34,7 @@
 		L.dna.features -= "spines"
 	var/obj/item/organ/severedtail/S = new(get_turf(target))
 	S.color = "#[L.dna.features["mcolor"]]"
+	S.markings = "[L.dna.features["tail"]]"
 	L.update_body()
 	return 1
 
@@ -61,10 +62,11 @@
 
 /datum/surgery_step/attach_tail/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target
-	user.visible_message("[user] gives [L] a tail!", "<span class='notice'>You give [L] a tail. It adjusts to [L]'s melanin.</span>")
+	user.visible_message("[user] gives [L] a tail!", "<span class='notice'>You give [L] a tail. It adjusts to [L]'s melanin.</span>") // fluff for color
 	if(!(L.dna.features["mcolor"]))
 		L.dna.features["mcolor"] = tool.color
-	L.dna.features["tail_lizard"] = "Smooth"
+	var/obj/item/organ/severedtail/T = tool
+	L.dna.features["tail_lizard"] = T.markings
 	L.dna.species.mutant_bodyparts += "tail_lizard"
 	qdel(tool)
 	L.update_body()
