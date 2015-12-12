@@ -286,8 +286,8 @@
 		L = null
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0)
-	if (!N)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0, var/allow = 1)
+	if (!N || !allow)
 		return
 
 #ifdef ENABLE_TRI_LEVEL
