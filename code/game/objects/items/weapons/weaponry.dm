@@ -143,6 +143,7 @@
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
+	materials = list(MAT_METAL=500, MAT_GLASS=500)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -246,6 +247,7 @@
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/staff/stick
 	name = "stick"

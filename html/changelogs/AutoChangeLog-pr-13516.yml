@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "The blob Split Consciousness ability now requires a node under the overmind's selector, instead of picking the oldest living node to spawn a core on."

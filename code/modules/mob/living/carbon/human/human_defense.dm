@@ -82,7 +82,7 @@ emp_act
 //End Here
 
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
-	var/block_chance_modifier = 30*thrown_proj - round(damage / 3) //thrown things are easier to block
+	var/block_chance_modifier = round(damage / -3) //thrown things are easier to block
 	if(AM)
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
