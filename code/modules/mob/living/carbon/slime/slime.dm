@@ -70,6 +70,13 @@
 	update_icon = 0
 	nutrition = 800 // 1200 = max
 
+/mob/living/carbon/slime/Destroy()
+	..()
+	Friends = null
+	FriendsWeight = null
+	Victim = null
+	Target = null
+
 
 /mob/living/carbon/slime/New()
 	var/datum/reagents/R = new/datum/reagents(100)
