@@ -380,9 +380,9 @@
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
-				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 

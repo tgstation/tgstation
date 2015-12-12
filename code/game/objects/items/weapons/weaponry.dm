@@ -285,3 +285,20 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
+
+/obj/item/weapon/tailclub
+	name = "tail club"
+	desc = "For the beating to death of lizards with their own tails."
+	icon_state = "tailclub"
+	force = 14
+	throwforce = 1 // why are you throwing a club do you even weapon
+	throw_speed = 1
+	throw_range = 1
+	attack_verb = list("clubbed", "bludgeoned")
+
+/obj/item/weapon/melee/chainofcommand/tailwhip
+	name = "liz o' nine tails"
+	desc = "A whip fashioned from the severed tails of lizards."
+	icon_state = "tailwhip"
+	origin_tech = "combat=1"
+	needs_permit = 0

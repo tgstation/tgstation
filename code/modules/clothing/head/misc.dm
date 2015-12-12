@@ -105,7 +105,7 @@
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
-	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
+	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 
 /obj/item/clothing/head/flatcap
@@ -241,3 +241,8 @@
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
 	icon_state = "rice_hat"
+
+/obj/item/clothing/head/lizard
+	name = "lizardskin cloche hat"
+	desc = "How many lizards died to make this hat? Not enough."
+	icon_state = "lizard"
