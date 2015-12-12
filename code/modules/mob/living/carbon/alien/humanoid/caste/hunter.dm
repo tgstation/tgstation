@@ -63,14 +63,12 @@
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
-		return
-	if(lying)
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
