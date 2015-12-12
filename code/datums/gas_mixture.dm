@@ -120,6 +120,32 @@ What are the archived variables for?
 					temperature -= (reaction_rate*20000)/heat_capacity()
 
 					reacting = 1
+		if(thermal_energy > PLASMA_BINDING_ENERGY)
+			if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+				//world << "pre [temperature, [toxins], [carbon_dioxide]
+				var/old_heat_capacity = heat_capacity()
+				var/carbon_efficency = min(toxins/carbon_dioxide,MAX_CARBON_EFFICENCY)
+				var/reaction_energy = thermal_energy()
+				var/moles_impurities = total_moles()-(plasma+carbon_dioxide)
+
+				var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_effiency)*(temperature/PLASMA_BINDING_ENERGY)
+				var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
+				var/oxygen_added+=carbon_catalyzed
+				var/nitrogen_added+=plasma_fused-oxygen_added
+
+				reaction_energy += ((carbon_efficency*plasma)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY)
+				plasma-=plasma_fused
+				carbon-=carbon_catalyzed
+				oxygen+=oxygen_added
+				nitrogen+=nitrogen_added
+			if(reaction_energy > 0)
+				reacting = 1
+				var/new_heat_capacity = heat_capacity()
+				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+					temperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
+					//world << "post [temperature], [toxins], [carbon_dioxide]
+
+
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
