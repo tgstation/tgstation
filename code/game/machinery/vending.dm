@@ -2152,14 +2152,14 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/drinks/groans = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 10,
-		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/mannsdrink = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 10,
 		)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/drinks/groans = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 30,
-		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/mannsdrink = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 50,
 		/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 50,
 		)

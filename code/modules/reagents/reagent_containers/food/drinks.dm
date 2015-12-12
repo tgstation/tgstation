@@ -509,11 +509,11 @@
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/mannsdrink
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/mannsdrink
 	name = "Mann's Drink"
 	desc = "The only thing a <B>REAL MAN</B> needs."
 	icon_state = "mannsdrink"
-/obj/item/weapon/reagent_containers/food/drinks/mannsdrink/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/mannsdrink/New()
 	..()
 	reagents.add_reagent("discount", 30)
 	reagents.add_reagent("water", 20)
