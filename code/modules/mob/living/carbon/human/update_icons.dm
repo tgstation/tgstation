@@ -563,10 +563,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_r_hand()
 		return
 
-	if(!exists("r_arm"))
-		if(hud_used)
-			var/obj/screen/inventory/R = hud_used.adding[3]
+	if(hud_used)
+		var/obj/screen/inventory/R = hud_used.adding[3]
+		if(!exists("r_arm"))
 			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
+		else
+			R.overlays = null
 
 
 	if(r_hand)
@@ -589,10 +591,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_l_hand()
 		return
 
-	if(!exists("l_arm"))
-		if(hud_used)
-			var/obj/screen/inventory/L = hud_used.adding[4]
+	if(hud_used)
+		var/obj/screen/inventory/L = hud_used.adding[4]
+		if(!exists("l_arm"))
 			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="x")
+		else
+			L.overlays = null
 
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
