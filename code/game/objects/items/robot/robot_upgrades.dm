@@ -127,13 +127,13 @@
 		usr << "This cyborg has had its disabler removed!"
 		return 0
 
-	if(T.recharge_time <= 2)
+	if(T.charge_delay <= 2)
 		R << "Maximum cooling achieved for this hardpoint!"
 		usr << "There's no room for another cooling unit!"
 		return 0
 
 	else
-		T.recharge_time = max(2 , T.recharge_time - 4)
+		T.charge_delay = max(2 , T.charge_delay - 4)
 
 	return 1
 

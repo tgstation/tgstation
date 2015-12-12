@@ -146,11 +146,10 @@
 		if(Debug2)	world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 		//Machines which report explosions.
-		for(var/i,i<=doppler_arrays.len,i++)
-			var/obj/machinery/doppler_array/Array = doppler_arrays[i]
-			if(Array)
-				Array.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
-
+		for(var/array in doppler_arrays)
+			var/obj/machinery/doppler_array/A = array
+			A.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
+			
 	return 1
 
 

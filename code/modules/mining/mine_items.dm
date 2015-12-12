@@ -175,8 +175,8 @@
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "pill3"
-	icon = 'icons/obj/chemical.dmi'
+	icon_state = "capsule"
+	icon = 'icons/obj/mining.dmi'
 	w_class = 1
 	var/used = FALSE
 
