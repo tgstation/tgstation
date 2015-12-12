@@ -22,7 +22,6 @@
 	med_hud_set_status()
 
 /mob/living/carbon/Destroy()
-	qdel(organsystem)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()

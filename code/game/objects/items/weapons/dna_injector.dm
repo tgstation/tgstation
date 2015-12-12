@@ -40,7 +40,7 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				updateappearance(M)
 
-		if(M.organsystem)
+		if(M && M.organsystem)
 			M.organsystem.set_dna(M.dna)
 
 		log_attack(log_msg)

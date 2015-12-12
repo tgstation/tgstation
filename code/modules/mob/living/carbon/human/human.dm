@@ -52,7 +52,6 @@
 	add_to_all_data_huds()
 
 /mob/living/carbon/human/Destroy()
-	qdel(organsystem)
 /*	for(var/atom/movable/organelle in organs)
 		qdel(organelle)*/
 	return ..()
