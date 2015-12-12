@@ -114,6 +114,9 @@
 	recieve_message = "\[[time_stamp()]] <font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, C.holder ? 1 : 0)]</b>: [msg]</font>"
 	if(C.prefs.special_popup)
 		C << output(recieve_message, "window1.msay_output")
+		if(!C.holder) //Force normal players to see the admin message when it gets sent to them
+			winset(src,"rpane.special_button","is-checked=true")
+			winset(src, null, "rpanewindow.left=window1")
 	else
 		to_chat(C, recieve_message)
 	if(src.prefs.special_popup)
