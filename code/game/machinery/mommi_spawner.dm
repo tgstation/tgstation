@@ -137,6 +137,10 @@
 			return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
+	// In case some asshole tries to makeMoMMI without checking.
+	if(jobban_isbanned(user, "MoMMI"))
+		to_chat(user, "<span class='warning'>\The [src] lets out an annoyed buzz.</span>")
+		return TRUE
 	var/turf/T = get_turf(src)
 
 	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi/soviet(T)
