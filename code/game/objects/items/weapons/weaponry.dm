@@ -165,6 +165,7 @@
 	force = 3
 	w_class = 2
 	throwforce = 5
+	slowdown = -0.2
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
