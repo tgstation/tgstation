@@ -17,9 +17,8 @@
 	var/deconverted = 0
 
 /datum/stat_blob/cult/doPostRoundChecks()
-	narsie_summoned = ticker.mode.eldergod ? 1 : 0 // redundant as fuck
 	for(var/datum/mind/M in ticker.minds)
-		if(M.active && istype(M.current, /mob/living/carbon))
+		if(M.active && istype(M.current, /mob/living/carbon) && M.special_role == "Cultist")
 			surviving_cultists++
 
 /datum/stat_blob/cult/writeStats(file)

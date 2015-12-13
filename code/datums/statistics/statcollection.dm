@@ -21,7 +21,8 @@
 #define STAT_OUTPUT_DIR "data/statfiles/"
 
 /datum/stat_collector
-	var/enabled = 1 // unused
+	// UNUSED
+	// var/enabled = 1
 	var/human_death_stats = list()
 	var/death_stats = list()
 	var/explosion_stats = list()
@@ -112,6 +113,7 @@
 
 /datum/stat_collector/proc/add_death_stat(var/mob/M)
 	//if(istype(M, /mob/living/carbon/human)) return 0
+	if(ticker.current_state != GAME_STATE_PLAYING) return 0 // We don't care about pre-round or post-round deaths.
 	var/datum/stat/death_stat/d = new
 	d.time_of_death = M.timeofdeath
 	d.last_attacked_by = M.LAssailant
@@ -179,7 +181,7 @@
 
 // This guy writes the first line(s) of the stat file! Woo!
 /datum/stat_collector/proc/Write_Header(statfile)
-	statfile << "STATLOG_START|[STAT_OUTPUT_VERSION]|[map.nameLong]|[round_start_time]"
+	statfile << "STATLOG_START|[STAT_OUTPUT_VERSION]|[map.nameLong]|[num2text(round_start_time, 30)]|[num2text(world.realtime, 30)]"
 	statfile << "MASTERMODE|[master_mode]" // sekrit, or whatever else was decided as the 'actual' mode on round start.
 	if(istype(ticker.mode, /datum/game_mode/mixed))
 		var/datum/game_mode/mixed/mixy = ticker.mode
@@ -213,7 +215,7 @@
 	statfile << "NUKED|[nuked]"
 
 	for(var/datum/stat/death_stat/D in death_stats)
-		statfile << "MOB_DEATH|[D.mob_typepath]|[D.special_role]|[D.time_of_death]|[D.last_attacked_by]|[D.death_x]|[D.death_y]|[D.death_z]|[D.key]|[D.realname]"
+		statfile << "MOB_DEATH|[D.mob_typepath]|[D.special_role]|[num2text(D.time_of_death, 30)]|[D.last_attacked_by]|[D.death_x]|[D.death_y]|[D.death_z]|[D.key]|[D.realname]"
 	for(var/datum/stat/explosion_stat/E in explosion_stats)
 		statfile << "EXPLOSION|[E.epicenter_x]|[E.epicenter_y]|[E.epicenter_z]|[E.devastation_range]|[E.heavy_impact_range]|[E.light_impact_range]|[E.max_range]"
 	for(var/datum/stat/uplink_purchase_stat/U in uplink_purchases)
