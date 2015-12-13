@@ -56,7 +56,6 @@
 
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
@@ -64,7 +63,8 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
-				S.give_glass()
+				S.give_glass(stat & BROKEN)
+
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			qdel(src)
@@ -78,7 +78,7 @@
 /obj/machinery/power/solar/proc/healthcheck()
 	if (src.health <= 0)
 		if(!(stat & BROKEN))
-			broken()
+			set_broken()
 		else
 			new /obj/item/weapon/shard(src.loc)
 			new /obj/item/weapon/shard(src.loc)
@@ -129,7 +129,7 @@
 		else //if we're no longer on the same powernet, remove from control computer
 			unset_control()
 
-/obj/machinery/power/solar/proc/broken()
+/obj/machinery/power/solar/proc/set_broken()
 	. = (!(stat & BROKEN))
 	stat |= BROKEN
 	unset_control()
@@ -142,11 +142,11 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50) && broken())
-					new /obj/item/weapon/shard(src.loc)
+				if(prob(50))
+					set_broken()
 			if(3)
-				if(prob(25) && broken())
-					new /obj/item/weapon/shard(src.loc)
+				if(prob(25))
+					set_broken()
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -201,15 +201,17 @@
 		..()
 
 // Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass()
-	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(src.loc)
+/obj/item/solar_assembly/proc/give_glass(device_broken)
+	if(device_broken)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	else if(glass_type)
+		var/obj/item/stack/sheet/S = new glass_type(loc)
 		S.amount = 2
-		glass_type = null
+	glass_type = null
 
 
 /obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/wrench) && isturf(loc))
 		if(isinspace())
 			user << "<span class='warning'>You can't secure [src] here.</span>"
@@ -484,7 +486,7 @@
 	update_icon()
 
 
-/obj/machinery/power/solar_control/proc/broken()
+/obj/machinery/power/solar_control/proc/set_broken()
 	stat |= BROKEN
 	update_icon()
 
@@ -495,14 +497,14 @@
 		switch(severity)
 			if(2)
 				if(prob(50))
-					broken()
+					set_broken()
 			if(3)
 				if(prob(25))
-					broken()
+					set_broken()
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))
-		broken()
+		set_broken()
 		src.density = 0
 
 
