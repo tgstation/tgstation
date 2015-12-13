@@ -634,7 +634,7 @@ var/list/uplink_items = list()
 	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, such as AI units and cyborgs, over their private binary channel. Caution should \
 	be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/device/encryptionkey/binary
-	cost = 0
+	cost = 5
 	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -642,7 +642,7 @@ var/list/uplink_items = list()
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels as well as talk on an encrypted Syndicate channel with other agents that have the same \
 	key."
 	item = /obj/item/device/encryptionkey/syndicate
-	cost = 2 //Nowhere near as useful as the Binary Key!
+	cost = 0 //JOHN CENAAAAAAAAAAAA
 	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector
