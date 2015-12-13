@@ -142,28 +142,26 @@
 		return 1
 	return 0
 
-/obj/item/weapon/gun/lawgiver/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(speaker == src)
-		return
-	if(speaker == loc && !radio_freq && dna_profile)
+/obj/item/weapon/gun/lawgiver/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.speaker == loc && !speech.frequency && dna_profile)
 		var/mob/living/carbon/human/H = loc
 		if(dna_profile == H.dna.unique_enzymes)
 			recoil = 0
-			if((findtext(message, "stun")) || (findtext(message, "taser")))
+			if((findtext(speech.message, "stun")) || (findtext(speech.message, "taser")))
 				firing_mode = STUN
 				fire_sound = 'sound/weapons/Taser.ogg'
 				projectile_type = "/obj/item/projectile/energy/electrode"
 				fire_delay = 0
 				sleep(3)
 				say("STUN")
-			else if((findtext(message, "laser")) || (findtext(message, "lethal")) || (findtext(message, "beam")))
+			else if((findtext(speech.message, "laser")) || (findtext(speech.message, "lethal")) || (findtext(speech.message, "beam")))
 				firing_mode = LASER
 				fire_sound = 'sound/weapons/lasercannonfire.ogg'
 				projectile_type = "/obj/item/projectile/beam/heavylaser"
 				fire_delay = 5
 				sleep(3)
 				say("LASER")
-			else if((findtext(message, "rapid")) || (findtext(message, "automatic")))
+			else if((findtext(speech.message, "rapid")) || (findtext(speech.message, "automatic")))
 				firing_mode = RAPID
 				fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 				projectile_type = "/obj/item/projectile/bullet/midbullet/lawgiver"
@@ -172,7 +170,7 @@
 				recoil = 1
 				sleep(3)
 				say("RAPID FIRE")
-			else if((findtext(message, "flare")) || (findtext(message, "incendiary")))
+			else if((findtext(speech.message, "flare")) || (findtext(speech.message, "incendiary")))
 				firing_mode = FLARE
 				fire_sound = 'sound/weapons/shotgun.ogg'
 				projectile_type = "/obj/item/projectile/flare"
@@ -180,7 +178,7 @@
 				recoil = 1
 				sleep(3)
 				say("FLARE")
-			else if((findtext(message, "hi ex")) || (findtext(message, "hi-ex")) || (findtext(message, "explosive")) || (findtext(message, "rocket")))
+			else if((findtext(speech.message, "hi ex")) || (findtext(speech.message, "hi-ex")) || (findtext(speech.message, "explosive")) || (findtext(speech.message, "rocket")))
 				firing_mode = HI_EX
 				fire_sound = 'sound/weapons/elecfire.ogg'
 				projectile_type = "/obj/item/projectile/bullet/gyro"
@@ -214,6 +212,7 @@
 		rapidFire(target, user, params, reflex, struggle)
 		return
 
+	//Christ Almighty is there no OOP way to do this?
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!")
