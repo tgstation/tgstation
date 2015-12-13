@@ -63,7 +63,11 @@
 #define MIN_PLASMA_DAMAGE					1
 #define MAX_PLASMA_DAMAGE					10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
-
+	//Plasma fusion properties
+#define PLASMA_BINDING_ENERGY				300000
+#define MAX_CARBON_EFFICENCY				8
+#define PLASMA_FUSED_COEFFICENT				0.08
+#define CARBON_CATALYST_COEFFICENT			0.01
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
