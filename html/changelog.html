@@ -80,6 +80,30 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.12.13</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">Massive rework to Botany mutations and Botany in general. PLEASE remember to use the in-game reporter for any bugs/issues you encounter! The changes here are not final and feedback is appreciated.</li>
+				<li class="spellcheck">This changelog is a very simplified version, it does not cover all the changes. To see the full changelog, check out the PR in Github: https://github.com/d3athrow/vgstation13/pull/6734</li>
+				<li class="rscadd">Added 6 new plant traits, as well as many new non-stat mutations. A few plant traits that could previously only be obtained through Cargo exotic seeds can now also be obtained through mutations.</li>
+				<li class="experiment">Some mutations will have effect on the grown fruit and require special handling. If you see a mutant banana lying around on the hallway, you may want to examine it before touching it.</li>
+				<li class="tweak">Botany stat mutations will no longer give random stat penalties. All stat-related changes from mutations are now strictly positive.</li>
+				<li class="rscadd">For stat-increasing mutations, the strength of the mutation will be directly proportional to the amount of mutage used. Example: 10u mutagen will improve a stat twice as much as 5u would. Mutations are now 100% guaranteed for any amount of mutagen, just that small amounts will give weak mutations.</li>
+				<li class="rscadd">New mutation system adds a bit of depth to mutagen usage: Using more than 10-ish units of mutagen at a time will give you potentially dangerous effects.</li>
+				<li class="tweak">As you improve your plants, they will start to build up resistance to small mutagen doses. Past a certain point, you may experience diminishing returns from mutations, and you may want to use bigger dosage (though be wary of the potential for dangerous results!)</li>
+				<li class="experiment">Adult plants WILL NO LONGER MUTATE SPECIES. To cause species mutations, you need to add mutagen to a young plant (less than 60ish seconds of life). For a better explanation, see the full changelog.</li>
+				<li class="tweak">Robust Harvest no longer temporarily increases yield. Now gradually improves your plant's potency stat, with a couple subtle downsides. Diethylamine now makes your plant grow faster, as well as gradually increase it's lifespan an endurance. Clonexadone massively heals plants on trays, as well as induce rapid reverse aging.</li>
+				<li class="rscadd">Floral Somatorays now work 100% of the time. You can now right-click them to change the strength of the ensuing mutation when set to "Induce Mutations" (X mutation strength is equivalent to X units of mutagen). Now sometimes give a free yield-increasing mutation when under "Induce Mutations" mode.</li>
+				<li class="rscadd">Hydroponics Trays will now change their name to match the plant growing in them. You can now label trays by right-clicking them.</li>
+				<li class="tweak">Improper plant conditions (not enough water/nutriment/light etc) will now slightly slow your plant's growth.</li>
+				<li class="tweak">A few changes to Exotic Seeds to make them slightly healthier and slightly more fun.</li>
+				<li class="tweak">Spreading plants (i.e. Kudzu) will no longer leave an empty tray when planted. Now require being fully mature before spawning vines. You can prevent vines from spawning by keeping the plant fed: Kudzu won't try to spread unless it has less than 80% nutriment and water.</li>
+				<li class="tweak">Plant-b-Gone used as a spray now targets space vines in a 3x3 area around itself. Scythes now have a 1 second cooldown when used. Added a Heavy-Duty Pneumatic Scythe, can be attached to Ripleys. Some strains of Kuzdu can become resistant to certain types of damage through mutations.</li>
+				<li class="rscadd">Xenobotany gene injector now has two modes: Splice and Purge. Added two more Xenobotany genes, and modified existing ones somewhat.</li>
+				<li class="tweak">Condensed Capsaicin now requires Capsaicin and Ethanol to produce.</li>
+				<li class="tweak">IV Drips now give their increased transfer speed to any container that has only blood inside, rather than only IV bags.</li>
+			</ul>
+
 			<h2 class="date">2015.12.12</h2>
 			<h3 class="author">9600bauds updated:</h3>
 			<ul class="changes bgimages16">
@@ -1937,19 +1961,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="tweak">Suit storage icons now properly work</li>
 				<li class="tweak">You can now properly reach the maintenace panel on suit storage units</li>
 				<li class="tweak">You can now repair suit storage units with a solder</li>
-			</ul>
-
-			<h2 class="date">2015.06.24</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Vending machines articles can now be given a "category". Items of the same category will show together in the vending machine's menu.</li>
-				<li class="rscadd">Contraband and premium items will still appear at the bottom of the window, in their own category.</li>
-				<li class="rscadd">Added categories for most seeds. Categories are made from a culinary standpoint, thus tomatoes and pumpkins are among vegetables.</li>
-				<li class="rscadd">YOU CAN FINALLY ADD SEEDS TO THE MEGASEED VENDOR, WOO!! You can load a bunch of them at once by using a plant bag.</li>
-			</ul>
-			<h3 class="author">PJB3005 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Boosted the R-UST gyrotron damage, to make them charge the R-UST field faster.</li>
 			</ul>
 		</div>
 		<!--
