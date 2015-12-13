@@ -21,7 +21,7 @@
 				O.vars[V] = original.vars[V]
 
 	if(istype(O))
-		O.burn_state = -1 // holoitems do not burn
+		O.burn_state = FIRE_PROOF // holoitems do not burn
 		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
