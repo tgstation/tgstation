@@ -215,12 +215,14 @@
 			if(!anchored)
 				if(S.amount < 2)
 					return
+				var/F = text2path("/obj/structure/falsewall/[M]")
+				if(!ispath(F))
+					return
 				var/pdiff = performWallPressureCheck(src.loc)
 				if(!pdiff)
 					S.use(2)
 					user.visible_message("<span class='warning'>[user] creates a false wall!</span>", \
 					"<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
-					var/F = text2path("/obj/structure/falsewall/[M]")
 					var/obj/structure/falsewall/FW = new F (src.loc)
 					FW.add_hiddenprint(user)
 					FW.add_fingerprint(user)
@@ -233,6 +235,9 @@
 			else
 				if(S.amount < 2)
 					return ..()
+				var/wallpath = text2path("/turf/simulated/wall/mineral/[M]")
+				if(!ispath(wallpath))
+					return ..()
 				user.visible_message("<span class='notice'>[user] starts installing plating to \the [src]</span>", \
 				"<span class='notice'>You start installing plating to \the [src]</span>")
 				if(do_after(user, src,40))
@@ -242,7 +247,7 @@
 					user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src]</span>", \
 					"<span class='notice'>You finish installing plating to \the [src]</span>")
 					var/turf/Tsrc = get_turf(src)
-					var/turf/simulated/wall/mineral/X = Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
+					var/turf/simulated/wall/mineral/X = Tsrc.ChangeTurf(wallpath)
 					if(X)
 						X.add_hiddenprint(user)
 						X.add_fingerprint(user)
