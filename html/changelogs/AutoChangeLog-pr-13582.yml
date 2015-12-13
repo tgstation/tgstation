@@ -1,0 +1,6 @@
+author: Incoming5643
+delete-after: True
+changes: 
+  - rscadd: "The summon events... event \"RPG loot\" now allows for items to have bonuses of up to +15!"
+  - rscadd: "The \"RPG loot\" event now also improves the damage reduction of armor!"
+  - rscadd: "<s>Check out the item mall for new item fortification scrolls!</s>"
