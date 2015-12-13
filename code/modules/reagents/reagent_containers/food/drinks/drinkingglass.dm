@@ -460,7 +460,7 @@
 				if("arnoldpalmer")
 					icon_state = "arnoldpalmer"
 					name = "Arnold Palmer"
-					desc = "Known as half and half to some.  A mix of ice tea and lemonade"					
+					desc = "Known as half and half to some.  A mix of ice tea and lemonade"
 				if("milkshake")
 					icon_state = "milkshake"
 					name = "milkshake"
@@ -477,6 +477,10 @@
 					icon_state = "rewriter"
 					name = "\improper Rewriter"
 					desc = "The secert of the sanctuary of the Libarian..."
+				if("pinacolada")
+					icon_state = "pinacolada"
+					name = "\improper Pina Colada"
+					desc = "If you like this and getting caught in the rain, come with me and escape."
 				else
 					icon_state ="glass_colour"
 					get_reagent_name(src)

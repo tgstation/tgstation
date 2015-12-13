@@ -1,0 +1,21 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Getmore foods are now valued at price = 66% * nutrition value (e.g. SOS Jerky has 6u nutriment, so it costs $60). Syndiecakes remain free.
+ - tweak: Dan foods are valued at 16.5% * nutrition value. Overall, they became cheaper.
+ - tweak: Bustanuts remain free, but no longer contain nutriment. A good source of salt and hardcores.
+ - tweak: Ramen costs much less than its nutrition value ($15) but has limited stock. Dan ramen is less filling but proportionally cheaper ($2)
+ - tweak: Cargo Pizza now costs $15 per pizza, so a full pack of five costs $75. (Together, they will provide 150-250 nutriment, a value of ~$2000)
+ - rscadd: You can now hack Discount Dan machines to buy antitox pills.
+ - tweak: Flour sacks by default now contain 50u flour.
+ - rscadd: The food processor can butcher toxic meats to carefully remove the toxin sacs.
+ - rscadd: New items containing poison within poisonous meats. Butcher them out!
+ - tweak: Removed bonus poison from cooked poisonous dishes. Meaning if you butcher out the poison from the components, the final result will not be toxic.
+ - tweak: Most carp dishes now include pheromones as a bonus
+ - rscadd: Added a new alcoholic beverage- Pina Colada
+ - rscadd: Added several new food items- Rice ball, Risotto, Sushi, Chicken Tendies, Coleslaw, Honey Flan
+ - rscadd: Firing a pneumatic cannon loaded with food at a person will cause them to take a bite if it hits.
+ - rscadd: Tea purchased at a machine now comes in one of several thrilling varieties.
+ - rscadd: Hacking a Boozeomat will now unlock coffee and mug options.
+ - rscadd: The reagent scanner now also tells the exact number of units of each component. Scan your food and find out what's worth cooking!
+ - tweak: Removed Vending Delay from the Boozeomat, as it was intended for machines with an animated vending sprite.

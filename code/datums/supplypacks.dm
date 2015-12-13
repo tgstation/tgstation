@@ -680,7 +680,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat/imitation,
 					/obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken,
 					/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
-					/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+					/obj/item/weapon/reagent_containers/food/snacks/meat/spiderleg,
 					/obj/item/weapon/reagent_containers/food/snacks/spidereggs)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure
@@ -716,7 +716,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
 	name = "Surprise pack of five pizzas"
-	cost = 15
+	cost = 75
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Pizza crate"
 	group = "Hospitality"

@@ -989,8 +989,9 @@ var/global/num_vending_terminals = 1
 		)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/tea = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/coffee = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/mug = 10
 		)
-	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
@@ -1059,13 +1060,13 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6,
 		)
 	prices = list(
-		/obj/item/weapon/reagent_containers/food/snacks/candy = 20,
-		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 30,
-		/obj/item/weapon/reagent_containers/food/snacks/chips = 25,
-		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30,
-		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 20,
-		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 30,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25,
+		/obj/item/weapon/reagent_containers/food/snacks/candy = 13,
+		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 15,
+		/obj/item/weapon/reagent_containers/food/snacks/chips = 30,
+		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 40,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 60,
+		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 12,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 40,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0,
 		)
 
@@ -1571,7 +1572,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/condiment/peppermill = 5,
 		/obj/item/weapon/reagent_containers/food/condiment/saltshaker	= 5,
 		/obj/item/weapon/reagent_containers/food/condiment/vinegar = 5,
-		/obj/item/weapon/storage/bag/food = 5,
+		/obj/item/weapon/storage/bag/food = 5
 		)
 	contraband = list(
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
@@ -2131,13 +2132,17 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/pie/discount = 6,
 		)
+	contraband = list(
+		/obj/item/weapon/reagent_containers/pill/antitox = 10
+		)
 	prices = list(
-		/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/danitos = 15,
-		/obj/item/weapon/reagent_containers/food/snacks/discountburger = 20,
-		/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 8,
+		/obj/item/weapon/reagent_containers/food/snacks/danitos = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/discountburger = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/pie/discount = 10
+		/obj/item/weapon/reagent_containers/food/snacks/pie/discount = 8,
+		/obj/item/weapon/reagent_containers/pill/antitox = 10
 		)
 
 	pack = /obj/structure/vendomatpack/discount
