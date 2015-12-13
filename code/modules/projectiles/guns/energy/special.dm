@@ -51,32 +51,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
-	var/charge_tick = 0
 	ammo_x_offset = 1
-
-/obj/item/weapon/gun/energy/floragun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/floragun/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-
-/obj/item/weapon/gun/energy/floragun/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
-
-/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
-	select_fire(user)
-	update_icon()
-	return
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -87,28 +63,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
-	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
-
-/obj/item/weapon/gun/energy/meteorgun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/meteorgun/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/meteorgun/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-
-/obj/item/weapon/gun/energy/meteorgun/update_icon()
-	return
-
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -119,7 +74,6 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = 1
-
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
@@ -146,18 +100,16 @@
 	name = "super-kinetic accelerator"
 	desc = "An upgraded, superior version of the proto-kinetic accelerator."
 	icon_state = "kineticgun_u"
-	item_state = "kineticgun_u"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
-	overheat_time = 14
+	overheat_time = 15
 	origin_tech = "combat=3;powerstorage=2"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	name = "hyper-kinetic accelerator"
 	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
 	icon_state = "kineticgun_h"
-	item_state = "kineticgun_h"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
-	overheat_time = 12
+	overheat_time = 14
 	origin_tech = "combat=4;powerstorage=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
@@ -274,9 +226,6 @@
 	item_state = icon_state
 	return
 
-/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
@@ -316,35 +265,16 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
-	var/charge_tick = 0
-	var/recharge_time = 5
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/printer/New()
+/obj/item/weapon/gun/energy/printer/emp_act()
+	return
+
+/obj/item/weapon/gun/energy/printer/newshot()
 	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/printer/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/printer/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//...to recharge the shot
-
-	return 1
+	robocharge()
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"
@@ -354,8 +284,3 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
-
-/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user)
-	select_fire(user)
-	update_icon()
-	return

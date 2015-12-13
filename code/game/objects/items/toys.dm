@@ -1220,7 +1220,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-
+	burn_state = 0 // Burnable
 
 
 /*
