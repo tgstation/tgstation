@@ -317,7 +317,7 @@
 /obj/effect/landmark/corpse/skeleton
 	name = "skeletal remains"
 	mobname = "skeleton"
-	mob_species = /datum/species/skeleton //why doesnt this use the species' id?
+	mob_species = /datum/species/skeleton
 	mobgender = NEUTER
 
 
