@@ -213,6 +213,7 @@
 	cur_turf = locate(start_turf.x+1, start_turf.y, start_turf.z)
 	new /obj/structure/table/wood(cur_turf)
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
+	new /obj/item/weapon/storage/box/donkpockets(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
 	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
@@ -226,8 +227,7 @@
 	S.dir = 4
 
 	cur_turf = locate(start_turf.x-1, start_turf.y, start_turf.z)
-	new /obj/structure/table/wood(cur_turf)
-	new /obj/item/weapon/storage/box/donkpockets(cur_turf)
+	new /obj/machinery/portable_atmospherics/canister/air(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y+1, start_turf.z)
 	new /obj/structure/table/wood(cur_turf)
@@ -237,7 +237,7 @@
 
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	threshhold.ChangeTurf(/turf/simulated/floor/wood)
-	threshhold.blocks_air = 1 //So the air doesn't leak out
+	threshhold.blocks_air = 0 //So the air leaks out
 	threshhold.oxygen = 21
 	threshhold.temperature = 293.15
 	threshhold.nitrogen = 82
