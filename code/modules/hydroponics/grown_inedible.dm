@@ -20,11 +20,11 @@
 	spawn(1)
 		// Fill the object up with the appropriate reagents.
 		if(!isnull(plantname))
-			var/datum/seed/S = seed_types[plantname]
+			var/datum/seed/S = plant_controller.seeds[plantname]
 			if(!S || !S.chems)
 				return
 
-			potency = S.potency
+			potency = round(S.potency)
 
 			for(var/rid in S.chems)
 				var/list/reagent_data = S.chems[rid]
@@ -87,8 +87,9 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
-	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower! </font><font color='yellow'><b>FLOWER POWER<b></font>")
 	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
+	//Uh... Doesn't this cancel the rest of attack()?
 
 /obj/item/weapon/grown/novaflower
 	plantname = "novaflowers"
@@ -99,6 +100,7 @@
 	damtype = "fire"
 	force = 0
 	flags = 0
+	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -111,6 +113,16 @@
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("capsaicin", round(potency, 1))
 		force = round((5 + potency / 5), 1)
+
+/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(!..()) return
+	if(istype(M, /mob/living))
+		to_chat(M, "<span class='warning'>You are heated by the warmth of the of the [name]!</span>")
+		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
+/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
+	if(!user.gloves)
+		to_chat(user, "<span class='warning'>The [name] burns your bare hand!</span>")
+		user.adjustFireLoss(rand(1,5))
 
 /obj/item/weapon/grown/nettle // -- Skie
 	plantname = "nettle"
@@ -132,7 +144,7 @@
 	spawn(5)
 		force = round((5+potency/5), 1)
 
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob) //todo this
 	if(istype(user))
 		if(!user.gloves)
 			to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")

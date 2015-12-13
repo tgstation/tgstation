@@ -6,40 +6,24 @@
  */
 
 /*
- * Banana Peals
+ * Banana Peels
  */
 /obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if(!M.walking()) return
-
-		if (M.CheckSlip() < 1)
-			return
-
-		M.stop_pulling()
-		M.simple_message("<span class='notice'> You slipped on the [name]!</span>",
-			"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
-		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(2)
-		M.Weaken(2)
+		var/mob/living/carbon/M = AM
+		if (M.Slip(2, 2, 1))
+			M.simple_message("<span class='notice'>You slipped on the [name]!</span>",
+				"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
 
 /*
  * Soap
  */
 /obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if(!M.walking()) return
-
-		if (M.CheckSlip() < 1)
-			return
-
-		M.stop_pulling()
-		M.simple_message("<span class='notice'> You slipped on the [name]!</span>",
-			"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
-		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(3)
-		M.Weaken(2)
+		var/mob/living/carbon/M = AM
+		if (M.Slip(3, 2, 1))
+			M.simple_message("<span class='notice'>You slipped on the [name]!</span>",
+				"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob)
 	//I couldn't feasibly fix the overlay bugs caused by cleaning items we are wearing.

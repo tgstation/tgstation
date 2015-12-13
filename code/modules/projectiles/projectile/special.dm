@@ -130,19 +130,20 @@
 	damage_type = TOX
 	nodamage = 1
 	flag = "energy"
+	var/mutstrength = 10
 
 /obj/item/projectile/energy/floramut/on_hit(var/atom/target, var/blocked = 0)
 	var/mob/living/M = target
 //	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
-		if((H.species.flags & IS_PLANT) && (M.nutrition < 500))
-			if(prob(15))
+		if((H.species.flags & IS_PLANT))
+			if(prob(mutstrength*2))
 				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Weaken(5)
 				for (var/mob/V in viewers(src))
 					V.show_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='warning'>You hear the crunching of leaves.</span>", 2)
-			if(prob(35))
+			if(prob(mutstrength*3))
 			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
 			//		V.show_message("<span class='warning'>[M] is mutated by the radiation beam.</span>", 3, "<span class='warning'>You hear the snapping of twigs.</span>", 2)
 				if(prob(80))
@@ -152,16 +153,22 @@
 					randmutg(M)
 					domutcheck(M,null)
 			else
-				M.adjustFireLoss(rand(5,15))
+				M.adjustFireLoss(rand(mutstrength/3, mutstrength))
 				M.show_message("<span class='warning'>The radiation beam singes you!</span>")
 			//	for (var/mob/V in viewers(src))
 			//		V.show_message("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)
+		else
+			M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else if(istype(target, /mob/living/carbon/))
 	//	for (var/mob/V in viewers(src))
 	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
 		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1
+
+/obj/item/projectile/energy/floramut/emag
+	name = "gamma somatoray"
+	icon_state = "energy"
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -178,6 +185,8 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags & IS_PLANT) && (M.nutrition < 500))
 			M.nutrition += 30
+		else
+			M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else if (istype(target, /mob/living/carbon/))
 		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else

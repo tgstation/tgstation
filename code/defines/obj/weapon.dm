@@ -446,7 +446,7 @@
 	if(armed && isliving(AM) && isturf(src.loc))
 		var/mob/living/L = AM
 
-		if(L.walking()) //Flying mobs can't get caught in beartraps! Note that this also prevents lying mobs from triggering traps
+		if(L.on_foot()) //Flying mobs can't get caught in beartraps! Note that this also prevents lying mobs from triggering traps
 			if(IED && isturf(src.loc))
 				IED.active = 1
 				IED.overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
@@ -785,63 +785,6 @@
 	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "biotech=2"
-
-/obj/item/weapon/hatchet
-	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "hatchet"
-	flags = FPRINT
-	siemens_coefficient = 1
-	force = 12.0
-	w_class = 2.0
-	throwforce = 15.0
-	throw_speed = 4
-	throw_range = 4
-	sharpness = 1.2
-	starting_materials = list(MAT_IRON = 15000)
-	w_type = RECYK_METAL
-	melt_temperature=MELTPOINT_STEEL
-	origin_tech = "materials=2;combat=1"
-	attack_verb = list("chopped", "torn", "cut")
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/obj/item/weapon/hatchet/unathiknife
-	name = "duelling knife"
-	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "unathiknife"
-	attack_verb = list("ripped", "torn", "cut")
-	sharpness = 1.35
-
-/obj/item/weapon/scythe
-	icon_state = "scythe0"
-	name = "scythe"
-	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	force = 13.0
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 3
-	w_class = 4.0
-	sharpness = 1.0
-	starting_materials = list(MAT_IRON = 15000)
-	w_type = RECYK_METAL
-	flags = FPRINT
-	slot_flags = SLOT_BACK
-	origin_tech = "materials=2;combat=2"
-	attack_verb = list("chopped", "sliced", "cut", "reaped")
-
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
-	if(istype(A, /obj/effect/plantsegment))
-		for(var/obj/effect/plantsegment/B in orange(A,1))
-			if(prob(80))
-				qdel (B)
-				B = null
-		qdel (A)
-		A = null
 
 /*
 /obj/item/weapon/cigarpacket

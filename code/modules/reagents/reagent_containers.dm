@@ -34,7 +34,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 // this prevented pills, food, and other things from being picked up by bags.
 // possibly intentional, but removing it allows us to not duplicate functionality.
-// -Sayu (storage conslidation)
+// -Sayu (storage consolidation)
 /*
 /obj/item/weapon/reagent_containers/attackby(obj/item/I as obj, mob/user as mob)
 	return

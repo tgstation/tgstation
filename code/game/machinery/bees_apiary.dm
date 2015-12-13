@@ -216,10 +216,10 @@
 				if(H.nutrilevel < 10)
 					H.nutrilevel++
 
-				if(mut < H.mutation_mod - 1)
+				/*if(mut < H.mutation_mod - 1)
 					mut = H.mutation_mod - 1
 				else if(mut > H.mutation_mod - 1)
-					H.mutation_mod = mut
+					H.mutation_mod = mut*/
 
 				//flowers give us pollen (nutrients)
 /* - All plants should be giving nutrients to the hive.
@@ -228,7 +228,7 @@
 					H.nutrilevel++
 */
 				//have a few beneficial effects on nearby plants
-/* - beneficial effects are now applied directly by bees themselves
+/* - beneficial effects are now applied directly by bees themselves (bees.dm, hydro_tray_process.dm)
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))

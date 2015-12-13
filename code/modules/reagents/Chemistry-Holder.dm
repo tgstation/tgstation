@@ -476,7 +476,7 @@ datum
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume)
-					amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+					amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldn't happen. Will happen.
 
 				for (var/datum/reagent/R in reagent_list)
 					if (R.id == reagent)

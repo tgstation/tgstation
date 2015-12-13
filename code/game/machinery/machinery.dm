@@ -459,27 +459,39 @@ Class Procs:
 	M.set_build_state(2)
 	M.state = 1
 
+/obj/machinery/proc/spillContents(var/destroy_chance = 0)
+	for(var/obj/I in component_parts)
+		if(prob(destroy_chance))
+			qdel(I)
+		else
+			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
+				reagents.trans_to(I, reagents.total_volume)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.forceMove(src.loc)
+	for(var/atom/movable/I in src) //remove any stuff loaded, like for fridges
+		if(!prob(destroy_chance) && machine_flags &EJECTNOTDEL)
+			I.forceMove(src.loc)
+		else
+			qdel(I)
+
 /obj/machinery/proc/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
 							"You begin to pry out the circuitboard from \the [src]...")
 	if(do_after(user, src, 40))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		dropFrame()
-		for(var/obj/I in component_parts)
-			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
-				reagents.trans_to(I, reagents.total_volume)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
-			I.loc = src.loc
-		for(var/obj/I in src) //remove any stuff loaded, like for fridges
-			if(machine_flags &EJECTNOTDEL)
-				I.loc = src.loc
-			else
-				qdel(I)
+		spillContents()
 		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
 								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
 		return 1
 	return -1
+
+//just something silly to delete the machine while still leaving something behind
+/obj/machinery/proc/smashDestroy(var/destroy_chance = 50)
+	getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
+	spillContents(destroy_chance)
+	qdel(src)
 
 /obj/machinery/proc/togglePanelOpen(var/obj/toggleitem, var/mob/user)
 	panel_open = !panel_open

@@ -79,10 +79,10 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		var/datum/seed/new_seed_type
 		if(istype(O, /obj/item/weapon/grown))
 			var/obj/item/weapon/grown/F = O
-			new_seed_type = seed_types[F.plantname]
+			new_seed_type = plant_controller.seeds[F.plantname]
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-			new_seed_type = seed_types[F.plantname]
+			new_seed_type = plant_controller.seeds[F.plantname]
 
 		if(new_seed_type)
 			to_chat(user, "<span class='notice'>You extract some seeds from [O].</span>")
@@ -118,26 +118,15 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	..()
 
 	return
-//Code shamelessly ported over from tgstation's github repo, PR #2973, credit to Kelenius for the original code
-datum/seed_pile
-	var/name = ""
-	var/lifespan = 0	//Saved stats
-	var/endurance = 0
-	var/maturation = 0
-	var/production = 0
-	var/yield = 0
-	var/potency = 0
-	var/amount = 0
 
-datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
-	src.name = name
-	src.lifespan = life
-	src.endurance = endur
-	src.maturation = matur
-	src.production = prod
-	src.yield = yie
-	src.potency = poten
-	src.amount = am
+//Code shamelessly ported over and adapted from tgstation's github repo, PR #2973, credit to Kelenius for the original code
+datum/seed_pile //Maybe there's a better way to do this.
+	var/datum/seed/seed
+	var/amount
+
+datum/seed_pile/New(var/seed, var/amount = 1)
+	src.seed = seed
+	src.amount = amount
 
 /obj/machinery/seed_extractor/attack_hand(mob/user as mob)
 	interact(user)
@@ -148,21 +137,51 @@ obj/machinery/seed_extractor/interact(mob/user as mob)
 
 	user.set_machine(src)
 
-	var/dat = "<b>Stored seeds:</b><br>"
+	var/dat = list()
+
+	dat += "<b>Stored seeds:</b><br>"
 
 	if (contents.len == 0)
 		dat += "<font color='red'>No seeds in storage!</font>"
 	else
-		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
-		for (var/datum/seed_pile/O in piles)
-			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
-			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
-			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=1'>Vend</a>"
-			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=5'>5x</a>"
-			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=[O.amount]'>All</a>"
-			dat += "([O.amount] left)</td></tr>"
+		dat += "<table cellpadding='3' style='text-align:center;'><tr><td width=300>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td width=180>Stock</td><td width=250>Notes (Mouseover for Info)</td></tr>"
+		for (var/datum/seed_pile/P in piles)
+			dat += "<tr><td width=300>[P.seed.display_name][P.seed.roundstart ? "":" (#[P.seed.uid])"]</td><td>[P.seed.lifespan]</td><td>[P.seed.endurance]</td><td>[P.seed.maturation]</td>"
+			dat += "<td>[P.seed.production]</td><td>[P.seed.yield]</td><td>[P.seed.potency]</td><td width=180>"
+			dat += "<a href='byond://?src=\ref[src];seed=[P.seed.name];amt=1'>Vend</a>"
+			dat += "<a href='byond://?src=\ref[src];seed=[P.seed.name];amt=5'>5x</a>"
+			dat += "<a href='byond://?src=\ref[src];seed=[P.seed.name];amt=[P.amount]'>All</a>"
+			dat += "([P.amount] left)</td><td width=250> "
+			if(P.seed.biolum && P.seed.biolum_colour)
+				dat += "<span title=\"This plant is bioluminescent.\" color=[P.seed.biolum_colour]>LUM </span>"
+			switch(P.seed.spread)
+				if(1)
+					dat += "<span title=\"This plant is capable of growing beyond the confines of a tray.\">CREEP </span>"
+				if(2)
+					dat += "<span title=\"This plant is a robust and vigorous vine that will spread rapidly.\">VINE </span>"
+			switch(P.seed.carnivorous)
+				if(1)
+					dat += "<span title=\"This plant is carnivorous and will eat tray pests for sustenance.\">CARN </span>"
+				if(2)
+					dat += "<span title=\"This plant is carnivorous and poses a significant threat to living things around it.\">HCARN </span>"
+			switch(P.seed.juicy)
+				if(1)
+					dat += "<span title=\"This plant's fruit is soft-skinned and abudantly juicy\">SPLAT</span>"
+				if(2)
+					dat += "<span title=\"This plant's fruit is excesively soft and juicy.\">SLIP </span>"
+			if(P.seed.immutable > 0)    dat += "<span title=\"This plant does not possess genetics that are alterable.\">NOMUT </span>"
+			if(P.seed.parasite)   		dat += "<span title=\"This plant is capable of parisitizing and gaining sustenance from tray weeds.\">PARA </span>"
+			if(P.seed.hematophage)  	dat += "<span title=\"This plant is a highly specialized hematophage that will only draw nutrients from blood.\">BLOOD </span>"
+			if(P.seed.alter_temp)   	dat += "<span title=\"This plant will gradually alter the local room temperature to match it's ideal habitat.\">TEMP </span>"
+			if(P.seed.exude_gasses.len) dat += "<span title=\"This plant will exude gas into the environment.\">GAS </span>"
+			if(P.seed.thorny)    		dat += "<span title=\"This plant posesses a cover of sharp thorns.\">THORN </span>"
+			if(P.seed.stinging)			dat += "<span title=\"This plant posesses a cover of fine stingers capable of releasing chemicals on touch.\">STING </span>"
+			if(P.seed.ligneous)   		dat += "<span title=\"This is a ligneous plant with strong and robust stems.\">WOOD </span>"
+			if(P.seed.teleporting) 		dat += "<span title=\"This plant posesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions.\">TELE </span>"
+			dat += "</td>"
 		dat += "</table>"
-	var/datum/browser/popup = new(user, "seed_ext", name, 725, 400)
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "seed_ext", name, 1000, 400)
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -172,29 +191,23 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 		return
 	usr.set_machine(src)
 
-	href_list["li"] = text2num(href_list["li"])
-	href_list["en"] = text2num(href_list["en"])
-	href_list["ma"] = text2num(href_list["ma"])
-	href_list["pr"] = text2num(href_list["pr"])
-	href_list["yi"] = text2num(href_list["yi"])
-	href_list["pot"] = text2num(href_list["pot"])
 	var/amt = text2num(href_list["amt"])
+	var/datum/seed/S = plant_controller.seeds[href_list["seed"]]
 
-	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
-		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency)
-			if(N.amount <= 0)
+	for(var/datum/seed_pile/P in piles)
+		if(P.seed == S)
+			if(P.amount <= 0)
 				return
-			N.amount = max(N.amount - amt, 0)
-			if (N.amount <= 0)
-				piles -= N
-				qdel(N)
-				N = null
+			P.amount -= amt
+			if (P.amount <= 0)
+				piles -= P
+				qdel(P)
 			break
 
-	for (var/obj/T in contents)//Now we find the seed we need to vend
-		var/obj/item/seeds/O = T
-		if (O.seed.display_name == href_list["name"] && O.seed.lifespan == href_list["li"] && O.seed.endurance == href_list["en"] && O.seed.maturation == href_list["ma"] && O.seed.production == href_list["pr"] && O.seed.yield == href_list["yi"] && O.seed.potency == href_list["pot"]) //Boy this sure is a long line, let's have this comment stretch it out even more!
-			O.loc = src.loc
+	for (var/obj/item/seeds/O in contents) //Now we find the seed we need to vend
+		//if (O.seed.display_name == href_list["name"] && O.seed.lifespan == href_list["li"] && O.seed.endurance == href_list["en"] && O.seed.maturation == href_list["ma"] && O.seed.production == href_list["pr"] && O.seed.yield == href_list["yi"] && O.seed.potency == href_list["pot"] && href_list["biolum_colour"] == O.seed.biolum_colour && href_list["gasexude"] == O.seed.exude_gasses.len && O.seed.spread == href_list["spread"] && O.seed.alter_temp == href_list["alter_temp"] && O.seed.carnivorous == href_list["carnivorous"] && O.seed.parasite == href_list["parasite"] && O.seed.hematophage == href_list["hematophage"] && O.seed.thorny == href_list["thorny"] && O.seed.stinging == href_list["stinging"] && O.seed.ligneous == href_list["ligneous"] && O.seed.teleporting == href_list["teleporting"] && O.seed.juicy == href_list["juicy"]) //If the spaghetti above wasn't proof enough, the length of of this line alone should tell you that something is probably very very wrong here and this whole fucking file probably shouldn't work the way it does. What it SHOULD do is just store the seed datum itself and check the stored seed's seed datum, which would be infinitely simpler. However, since no other machines use or are dependent on this shitcode, and due to the fact that seed datums will likely not be re-structured much if at all in the future, to that I say fuck it, it just werks. Sincerely, please don't git blame me I only intended well, oh god don't take my pomfcoins way no i didn't even come up with this system originally i just ported it and lazily expanded it please okay there I made it not shit chickenman no
+		if(O.seed == S)
+			O.forceMove(src.loc)
 			amt--
 			if (amt <= 0) break
 
@@ -206,15 +219,13 @@ obj/machinery/seed_extractor/proc/moveToStorage(var/obj/item/seeds/O as obj)
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
-	O.loc = src
+	O.forceMove(src)
 
-	for (var/datum/seed_pile/N in piles)
-		if (O.seed.display_name == N.name && O.seed.lifespan == N.lifespan && O.seed.endurance == N.endurance && O.seed.maturation == N.maturation && O.seed.production == N.production && O.seed.yield == N.yield && O.seed.potency == N.potency)
-			++N.amount
+	for(var/datum/seed_pile/P in piles)
+		if(P.seed == O.seed)
+			P.amount++
 			return
-
-	piles += new /datum/seed_pile(O.seed.display_name, O.seed.lifespan, O.seed.endurance, O.seed.maturation, O.seed.production, O.seed.yield, O.seed.potency)
-	return
+	piles += new /datum/seed_pile(O.seed)
 
 obj/machinery/seed_extractor/proc/hasSpaceCheck(mob/user as mob)
 	if(contents.len >= MAX_N_OF_ITEMS)

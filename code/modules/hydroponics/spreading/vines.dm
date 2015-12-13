@@ -152,7 +152,7 @@
 				if(seed.carnivorous == 2)
 					to_chat(V, "<span class='danger'>\The [src] pierces your flesh greedily!</span>")
 
-					var/damage = rand(round(seed.potency/2),seed.potency)
+					var/damage = rand(round(seed.potency/2),round(seed.potency))
 					if(!istype(H))
 						H.adjustBruteLoss(damage)
 						return
@@ -288,7 +288,7 @@
 		die()
 		return
 
-	var/light_available = T.get_lumcount(0.5) * 10
+	var/light_available = T.get_lumcount() * 10
 
 	if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
 		die()
@@ -312,6 +312,11 @@
 /obj/effect/plant_controller/creeper
 	collapse_limit = 6
 	slowdown_limit = 3
+	limited_growth = 1
+
+/obj/effect/plant_controller/tiny
+	collapse_limit = 1
+	slowdown_limit = 1
 	limited_growth = 1
 
 /obj/effect/plant_controller/New()
@@ -353,16 +358,16 @@
 		return
 
 	// Check if we're too big for our own good.
-	if(vines.len >= (seed ? seed.potency * collapse_limit : 250) && !reached_collapse_size)
+	if(vines.len >= (seed ? round(seed.potency) * collapse_limit : 250) && !reached_collapse_size)
 		reached_collapse_size = 1
-	if(vines.len >= (seed ? seed.potency * slowdown_limit : 30) && !reached_slowdown_size )
+	if(vines.len >= (seed ? round(seed.potency) * slowdown_limit : 30) && !reached_slowdown_size )
 		reached_slowdown_size = 1
 
 	var/length = 0
 	if(reached_collapse_size)
 		length = 0
 	else if(reached_slowdown_size)
-		if(prob(seed ? seed.potency : 25))
+		if(prob(seed ? round(seed.potency) : 25))
 			length = 1
 		else
 			length = 0
@@ -387,7 +392,7 @@
 		if(SV.energy < 2) //If tile isn't fully grown
 			var/chance
 			if(seed)
-				chance = limited_growth ? round(seed.potency/2,1) : seed.potency
+				chance = limited_growth ? round(seed.potency/2,1) : round(seed.potency)
 			else
 				chance = 20
 

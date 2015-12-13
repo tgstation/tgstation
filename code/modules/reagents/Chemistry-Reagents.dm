@@ -22,6 +22,7 @@
 	var/nutriment_factor = 0
 	var/sport = 1 //High sport helps you show off on a treadmill. Multiplicative
 	var/custom_metabolism = REAGENTS_METABOLISM
+	var/custom_plant_metabolism = HYDRO_SPEED_MULTIPLIER
 	var/overdose = 0
 	var/overdose_dam = 1
 	//var/list/viruses = list()
@@ -94,6 +95,16 @@
 		M.adjustToxLoss(overdose_dam)
 
 	holder.remove_reagent(src.id, custom_metabolism) //Trigger metabolism
+
+/datum/reagent/proc/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
+	if(!holder)
+		return
+	if(!T)
+		T = holder.my_atom //Try to find the mob through the holder
+	if(!istype(T)) //Still can't find it, abort
+		return
+
+	holder.remove_reagent(src.id, custom_plant_metabolism)
 
 /datum/reagent/proc/on_move(var/mob/M)
 	return
@@ -1060,13 +1071,14 @@
 
 	if(..()) return 1
 
-	if((istype(O, /obj/item) || istype(O, /obj/effect/glowshroom)) && prob(10))
-		if(!O.unacidable)
-			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-			I.desc = "Looks like this was \an [O] some time ago."
-			O.visible_message("<span class='warning'>\The [O] melts.</span>")
-			qdel(O)
-			O = null
+	if(O.unacidable)
+		return
+
+	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
+		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+		I.desc = "Looks like this was \an [O] some time ago."
+		O.visible_message("<span class='warning'>\The [O] melts.</span>")
+		qdel(O)
 
 /datum/reagent/pacid
 	name = "Polytrinic acid"
@@ -1143,13 +1155,19 @@
 
 	if(..()) return 1
 
-	if((istype(O, /obj/item) || istype(O, /obj/effect/glowshroom)))
-		if(!O.unacidable) // This should NEVER be left to random chance
-			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-			I.desc = "Looks like this was \an [O] some time ago."
-			O.visible_message("<span class='warning'>\The [O] melts.</span>")
-			qdel(O)
-			O = null
+	if(O.unacidable)
+		return
+
+	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)))
+		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+		I.desc = "Looks like this was \an [O] some time ago."
+		O.visible_message("<span class='warning'>\The [O] melts.</span>")
+		qdel(O)
+	else if(istype(O,/obj/effect/plantsegment))
+		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+		I.desc = "Looks like these were some [O.name] some time ago."
+		var/obj/effect/plantsegment/K = O
+		K.die_off()
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -1509,24 +1527,31 @@
 		M.clean_blood()
 
 //Reagents used for plant fertilizers.
-/datum/reagent/toxin/fertilizer
+//WHY, just WHY, were fertilizers declared as a child of toxin and later snowflaked to work differently in the hydrotray's process_reagents()?
+
+/datum/reagent/fertilizer
 	name = "fertilizer"
 	id = "fertilizer"
 	description = "A chemical mix good for growing plants with."
 	reagent_state = LIQUID
-	color = "#664330" //rgb: 102, 67, 48
+	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/toxin/fertilizer/eznutrient
+/datum/reagent/fertilizer/eznutrient
 	name = "EZ Nutrient"
 	id = "eznutrient"
+	color = "#A4AF1C" // rgb: 164, 175, 28
 
-/datum/reagent/toxin/fertilizer/left4zed
+/datum/reagent/fertilizer/left4zed
 	name = "Left-4-Zed"
 	id = "left4zed"
+	description = "A cocktail of mutagenic compounds, which cause plant life to become highly unstable."
+	color = "#5B406C" // rgb: 91, 64, 108
 
-/datum/reagent/toxin/fertilizer/robustharvest
+/datum/reagent/fertilizer/robustharvest
 	name = "Robust Harvest"
 	id = "robustharvest"
+	description = "Plant-enhancing hormones, good for increasing potency."
+	color = "#3E901C" // rgb: 62, 144, 28
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -1557,23 +1582,27 @@
 		var/obj/effect/alien/weeds/alien_weeds = O
 		alien_weeds.health -= rand(15, 35) //Kills alien weeds pretty fast
 		alien_weeds.healthcheck()
-	else if(istype(O, /obj/effect/glowshroom)) //Even a small amount is enough to kill it
+	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-		O = null
-	else if(istype(O,/obj/effect/plantsegment))
-		if(prob(50))
-			qdel(O) //Kills kudzu too.
-	else if(istype(O, /obj/machinery/portable_atmospherics/hydroponics))
+	else if(istype(O,/obj/effect/plantsegment)) //Kills kudzu too.
+		var/obj/effect/plantsegment/K = O
+		var/dmg = 200
+		if(K.seed) dmg -= K.seed.toxins_tolerance*20
+		for(var/obj/effect/plantsegment/KV in orange(O,1))
+			KV.health -= dmg*0.4
+			KV.check_health()
+			plant_controller.add_plant(KV)
+		K.health -= dmg
+		K.check_health()
+		plant_controller.add_plant(K)
+	else if(istype(O,/obj/machinery/portable_atmospherics/hydroponics))
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = O
 		if(tray.seed)
-			tray.health -= rand(30, 50)
-			if(tray.pestlevel > 0)
-				tray.pestlevel -= 2
-			if(tray.weedlevel > 0)
-				tray.weedlevel -= 3
-			tray.toxins += 4
-			tray.check_level_sanity()
-			tray.update_icon()
+			tray.health -= rand(30,50)
+		tray.pestlevel -= 2
+		tray.weedlevel -= 3
+		tray.toxins += 15
+		tray.check_level_sanity()
 
 /datum/reagent/toxin/plantbgone/reaction_mob(var/mob/living/M, var/method = TOUCH, var/volume)
 
@@ -1585,7 +1614,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.dna)
-				if(H.species.flags & IS_PLANT) //Plantmen take a LOT of damage
+				if(H.species.flags & IS_PLANT) //Plantmen take a LOT of damage //aren't they toxin-proof anyways?
 					H.adjustToxLoss(10 * REM)
 
 /datum/reagent/plasma

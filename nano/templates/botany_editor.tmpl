@@ -1,8 +1,14 @@
-<!-- 
+<!--
 Title: Bioballistic Delivery System UI
 Used In File(s): \code\modules\hydroponics\seed_machines.dm
  -->
- 
+
+<!--
+ #define GENEGUN_MODE_SPLICE 1
+ #define GENEGUN_MODE_PURGE 2
+ //Thanks, nanoUI!
+ -->
+
 {{if data.activity}}
 	Scanning...
 {{else}}
@@ -49,6 +55,19 @@ Used In File(s): \code\modules\hydroponics\seed_machines.dm
 				{{:helper.link('Apply Gene Mods', 'gear', {'apply_gene' : 1}, null)}}
 			{{/if}}
 			{{:helper.link('Eject Target', 'circle-arrow-e', {'eject_packet' : 1}, null)}}
+		</div>
+		<br>
+		<div class = "item">
+			<div class = "itemLabel" style = "width:36%">
+				Payload Delivery Method:
+			</div>
+			<div class = "itemContentSmall">
+				{{if data.mode == 1}}
+					{{:helper.link('SPLICE', 'shuffle', {'toggle_mode' : 1}, null)}}
+				{{else}}
+					{{:helper.link('PURGE', 'arrowstop-1-s', {'toggle_mode' : 1}, null)}}
+				{{/if}}
+			</div>
 		</div>
 	{{else}}
 		<div class="notice">No target seed packet loaded</div>

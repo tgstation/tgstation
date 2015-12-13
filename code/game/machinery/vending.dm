@@ -1459,6 +1459,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/glass/fertilizer/rh = 15,
 		/obj/item/weapon/plantspray/pests = 20,
 		/obj/item/weapon/reagent_containers/syringe = 5,
+		/obj/item/weapon/reagent_containers/dropper = 2,
 		/obj/item/weapon/storage/bag/plants = 5,
 		)
 	contraband = list(

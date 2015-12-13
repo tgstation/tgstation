@@ -3619,17 +3619,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/slider/slippery/Crossed(atom/movable/O) //exactly the same as soap
 	if (istype(O, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = O
-
-		if (H.CheckSlip() < 1)
-			return
-
-		H.stop_pulling()
-		to_chat(H, "<SPAN CLASS='notice'>You slipped on the [name]!</SPAN>")
-		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-		H.Stun(3)
-		H.Weaken(2)
-
-
+		if (H.Slip(3, 2, 1))
+			H.simple_message("<span class='notice'>You slipped on the [name]!</span>",
+				"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
 
 ////////////////SLIDERS END////////////////
 

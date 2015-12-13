@@ -214,9 +214,7 @@
 
 		if(H.mind && H.mind.assigned_role != "Clown")
 			if( ( H.mind.assigned_role == "Mime" ) )
-				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-				H.Stun(3)
-				H.Weaken(2)
+				H.Slip(3, 2, 1)
 
 			return
 

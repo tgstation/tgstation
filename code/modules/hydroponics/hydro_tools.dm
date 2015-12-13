@@ -17,9 +17,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
-
-/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user as mob)
-	return 0
+	var/form_title //Descriptive title of the last plant scanned, example: mutant watermelon (#81)
+	var/last_data  //Stores the entire last scan, for printing purposes.
+	var/tmp/last_print = 0 //When was the last printing, works as a cooldown to prevent paperspam
 
 /obj/item/device/analyzer/plant_analyzer/afterattack(obj/target, mob/user, flag)
 	if(!flag) return
@@ -31,13 +31,13 @@
 	else if(istype(target,/obj/item/weapon/reagent_containers/food/snacks/grown))
 
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = target
-		grown_seed = seed_types[G.plantname]
+		grown_seed = plant_controller.seeds[G.plantname]
 		grown_reagents = G.reagents
 
 	else if(istype(target,/obj/item/weapon/grown))
 
 		var/obj/item/weapon/grown/G = target
-		grown_seed = seed_types[G.plantname]
+		grown_seed = plant_controller.seeds[G.plantname]
 		grown_reagents = G.reagents
 
 	else if(istype(target,/obj/item/seeds))
@@ -51,12 +51,20 @@
 		grown_seed = H.seed
 		grown_reagents = H.reagents
 
+	else if(istype(target,/obj/effect/plantsegment))
+
+		var/obj/effect/plantsegment/K = target
+		grown_seed = K.seed
+
 	if(!grown_seed)
-		to_chat(user, "<span class='warning'>[src] can tell you nothing about [target].</span>")
+		to_chat(user, "<span class='warning'>\icon[src] [src] can tell you nothing about [target].</span>")
 		return
 
-	var/dat = "<h3>Plant data for [target]</h3>"
+	form_title = "[grown_seed.seed_name] (#[grown_seed.uid])"
 	user.visible_message("<span class='notice'>[user] runs the scanner over [target].</span>")
+
+	var/dat = list()
+	dat += "<h3>Plant data for [form_title]</h3>"
 
 	dat += "<h2>General Data</h2>"
 
@@ -86,27 +94,29 @@
 	else if(grown_seed.immutable > 0)
 		dat += "This plant does not possess genetics that are alterable.<br>"
 
+	if(grown_seed.mutants && grown_seed.mutants.len)
+		dat += "It exhibits a high degree of potential subspecies mutations.<br>"
+
 	if(grown_seed.products && grown_seed.products.len)
 		dat += "The mature plant will produce [grown_seed.products.len == 1 ? "fruit" : "[grown_seed.products.len] varieties of fruit"].<br>"
 
-	if(grown_seed.requires_nutrients)
-		if(grown_seed.nutrient_consumption < 0.15)
-			dat += "It consumes a small amount of nutrient fluid.<br>"
-		else if(grown_seed.nutrient_consumption > 0.4)
-			dat += "It requires a heavy supply of nutrient fluid.<br>"
-		else
-			dat += "It requires a supply of nutrient fluid.<br>"
+	if(grown_seed.nutrient_consumption == 0)
+		dat += "It does not require nutrient fluid to subsist.<br>"
+	else if(grown_seed.nutrient_consumption < 0.15)
+		dat += "It consumes a small amount of nutrient fluid.<br>"
+	else if(grown_seed.nutrient_consumption > 0.25)
+		dat += "It requires a heavy supply of nutrient fluid.<br>"
+	else
+		dat += "It requires a moderate supply of nutrient fluid.<br>"
 
-	if(grown_seed.requires_water)
-		if(grown_seed.water_consumption < 1)
-			dat += "It requires very little water.<br>"
-		else if(grown_seed.water_consumption > 5)
-			dat += "It requires a large amount of water.<br>"
-		else
-			dat += "It requires a stable supply of water.<br>"
-
-	if(grown_seed.mutants && grown_seed.mutants.len)
-		dat += "It exhibits a high degree of potential subspecies shift.<br>"
+	if(grown_seed.water_consumption == 0)
+		dat += "It does not require water to subsist.<br>"
+	else if(grown_seed.water_consumption < 1)
+		dat += "It requires very little water.<br>"
+	else if(grown_seed.water_consumption > 5)
+		dat += "It requires a large amount of water.<br>"
+	else
+		dat += "It requires a stable supply of water.<br>"
 
 	dat += "It thrives in a temperature of [grown_seed.ideal_heat] Kelvin."
 
@@ -115,31 +125,38 @@
 	if(grown_seed.highkpa_tolerance > 220)
 		dat += "<br>It is well adapted to high pressure levels."
 
-	if(grown_seed.heat_tolerance > 30)
+	if(grown_seed.heat_tolerance > 50)
 		dat += "<br>It is well adapted to a range of temperatures."
 	else if(grown_seed.heat_tolerance < 10)
 		dat += "<br>It is very sensitive to temperature shifts."
 
 	dat += "<br>It thrives in a light level of [grown_seed.ideal_light] lumen[grown_seed.ideal_light == 1 ? "" : "s"]."
 
-	if(grown_seed.light_tolerance > 10)
+	if(grown_seed.consume_gasses)
+		for(var/gas in grown_seed.consume_gasses)
+			dat += "<br>It will consume [gas] from the environment."
+	if(grown_seed.exude_gasses)
+		for(var/gas in grown_seed.exude_gasses)
+			dat += "<br>It will exude [gas] into the environment."
+
+	if(grown_seed.light_tolerance > 7)
 		dat += "<br>It is well adapted to a range of light levels."
 	else if(grown_seed.light_tolerance < 3)
 		dat += "<br>It is very sensitive to light level shifts."
 
 	if(grown_seed.toxins_tolerance < 3)
 		dat += "<br>It is highly sensitive to toxins."
-	else if(grown_seed.toxins_tolerance > 6)
+	else if(grown_seed.toxins_tolerance > 7)
 		dat += "<br>It is remarkably resistant to toxins."
 
 	if(grown_seed.pest_tolerance < 3)
 		dat += "<br>It is highly sensitive to pests."
-	else if(grown_seed.pest_tolerance > 6)
+	else if(grown_seed.pest_tolerance > 7)
 		dat += "<br>It is remarkably resistant to pests."
 
 	if(grown_seed.weed_tolerance < 3)
 		dat += "<br>It is highly sensitive to weeds."
-	else if(grown_seed.weed_tolerance > 6)
+	else if(grown_seed.weed_tolerance > 7)
 		dat += "<br>It is remarkably resistant to weeds."
 
 	switch(grown_seed.spread)
@@ -148,33 +165,88 @@
 		if(2)
 			dat += "<br>It is a robust and vigorous vine that will spread rapidly."
 
+	if(grown_seed.hematophage)
+		dat += "<br>It is a highly specialized hematophage that will only draw nutrients from blood."
+
 	switch(grown_seed.carnivorous)
 		if(1)
-			dat += "<br>It is carniovorous and will eat tray pests for sustenance."
+			dat += "<br>It is carnivorous and will eat tray pests for sustenance."
 		if(2)
 			dat	+= "<br>It is carnivorous and poses a significant threat to living things around it."
 
 	if(grown_seed.parasite)
 		dat += "<br>It is capable of parisitizing and gaining sustenance from tray weeds."
+
 	if(grown_seed.alter_temp)
-		dat += "<br>It will periodically alter the local temperature by [grown_seed.alter_temp] degrees Kelvin."
+		dat += "<br>It will gradually alter the local room temperature to match it's ideal habitat."
 
-	if(grown_seed.consume_gasses)
-		for(var/gas in grown_seed.consume_gasses)
-			dat += "<br>It will remove [gas] from the environment."
+	if(grown_seed.ligneous)
+		dat += "<br>It is a ligneous plant with strong and robust stems."
 
-	if(grown_seed.exude_gasses)
-		for(var/gas in grown_seed.exude_gasses)
-			dat += "<br>It will release [gas] into the environment."
+	if(grown_seed.thorny)
+		dat += "<br>It posesses a cover of sharp thorns."
+
+	if(grown_seed.stinging)
+		dat += "<br>It posesses a cover of fine stingers capable of releasing chemicals on touch."
+
+	if(grown_seed.teleporting)
+		dat += "<br>It posesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions."
+
+	switch(grown_seed.juicy)
+		if(1)
+			dat += "<br>It's fruit is soft-skinned and abudantly juicy."
+		if(2)
+			dat	+= "<br>It's fruit is excesively soft and juicy."
 
 	if(grown_seed.biolum)
 		dat += "<br>It is [grown_seed.biolum_colour ? "<font color='[grown_seed.biolum_colour]'>bio-luminescent</font>" : "bio-luminescent"]."
-	if(grown_seed.flowers)
-		dat += "<br>It has [grown_seed.flower_colour ? "<font color='[grown_seed.flower_colour]'>flowers</font>" : "flowers"]."
 
 	if(dat)
-		user << browse(dat,"window=plant_analyzer")
+		dat = list2text(dat)
+		last_data = dat
+		dat += "<br><br>\[<a href='?src=\ref[src];print=1'>print report</a>\] \[<a href='?src=\ref[src];clear=1'>clear</a>\]"
+		user << browse(dat,"window=plant_analyzer_\ref[src];size=400x500")
+	return
 
+/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user as mob)
+	if(last_data)
+		user << browse(last_data,"window=plant_analyzer_\ref[src];size=400x500")
+	else
+		to_chat(user, "<span class='notice'>\icon[src] No plant scan data in memory.</span>")
+	return 0
+
+/obj/item/device/analyzer/plant_analyzer/proc/print_report_verb()
+	set name = "Print Plant Report"
+	set category = "Object"
+	set src in usr
+
+	if (!usr || usr.isUnconscious() || usr.restrained() || !Adjacent(usr)) return
+	print_report(usr)
+
+/obj/item/device/analyzer/plant_analyzer/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["print"])
+		print_report(usr)
+	if(href_list["clear"])
+		last_data = ""
+		usr << browse(null, "window=plant_analyzer")
+
+
+/obj/item/device/analyzer/plant_analyzer/proc/print_report(var/mob/living/user) //full credits to Zuhayr
+	if(!last_data)
+		to_chat(user, "<span class='warning'>\icon[src] There is no plant scan data to print.</span>")
+		return
+	if (world.time < last_print + 4 SECONDS)
+		to_chat(user, "<span class='warning'>\icon[src] \The [src] is not yet ready to print again.</span>")
+		return
+	last_print = world.time
+	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+	P.name = "paper - [form_title]"
+	P.info = "[last_data]"
+	if(istype(user,/mob/living/carbon/human))
+		user.put_in_hands(P)
+	user.visible_message("<span class='notice'>\The [src] spits out a piece of paper.</span>")
 	return
 
 // *************************************
@@ -337,7 +409,7 @@
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
-	sharpness = 1.5
+	sharpness = 1.2
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
@@ -347,7 +419,7 @@
 
 //If it's a hatchet it goes here. I guess
 /obj/item/weapon/hatchet/unathiknife
-	name = "duelling knife"
+	name = "dueling knife"
 	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "unathiknife"
@@ -361,6 +433,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 3
+	sharpness = 1.0
 	w_class = 4.0
 	flags = FPRINT
 	slot_flags = SLOT_BACK
@@ -369,15 +442,24 @@
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/effect/plantsegment))
+	if(istype(A, /obj/effect/plantsegment) || istype(A, /turf/simulated/floor))
+		for(var/obj/effect/plantsegment/B in range(user,1))
+			B.take_damage(src)
+		user.delayNextAttack(10)
+		/*var/olddir = user.dir
+		spawn for(var/i=-2, i<=2, i++) //hheeeehehe i'm so dumb
+			user.dir = turn(olddir, 45*i)
+			sleep(2)*/
+	/*if(istype(A, /obj/effect/plantsegment))
 		for(var/obj/effect/plantsegment/B in orange(A,1))
-			if(prob(80))
-				qdel(B)
-		qdel(A)
+			if(prob(B.seed.ligneous ? 10 : 80))
+				B.die_off()
+		var/obj/effect/plantsegment/K = A
+		K.die_off()
 	if(istype(A, /turf/simulated/floor))
 		for(var/obj/effect/plantsegment/B in orange(A,1))
-			if(prob(80))
-				qdel(B)
+			if(prob(B.seed.ligneous ? 10 : 80))
+				B.die_off()*/
 
 /obj/item/claypot
 	name = "clay pot"

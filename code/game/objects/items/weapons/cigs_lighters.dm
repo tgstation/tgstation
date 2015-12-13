@@ -719,6 +719,6 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		if(!fuel)
 			lit = 0
 			update_brightness()
-			visible_message("<span class='warning'>Without warning \the [src] suddenly shuts off</span>")
+			visible_message("<span class='warning'>Without warning, \the [src] suddenly shuts off.</span>")
 			fueltime = null
 	return
