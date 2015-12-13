@@ -24,6 +24,8 @@
 	var/timing = 0
 	var/time = 10
 
+	var/default_time = 10
+
 	var/range = 2
 
 /obj/item/device/assembly/prox_sensor/activate()
@@ -78,7 +80,7 @@
 	if(timing && time <= 0)
 		timing = 0
 		toggle_scan()
-		time = 10
+		time = default_time
 	return
 
 /obj/item/device/assembly/prox_sensor/dropped()
@@ -126,6 +128,7 @@
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\assembly\\\proximity.dm:125: dat += "<BR><A href='?src=\ref[src];scanning=1'>[scanning?"Armed":"Unarmed"]</A> (Movement sensor active when armed!)"
 	dat += {"<BR><A href='?src=\ref[src];scanning=1'>[scanning?"Armed":"Unarmed"]</A> (Movement sensor active when armed!)
+		<BR><BR><A href='?src=\ref[src];set_default_time=1'>After countdown, reset time to [(default_time - default_time%60)/60]:[(default_time % 60)]</A>
 		<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 		<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"}
 	// END AUTOFIX
@@ -159,6 +162,9 @@
 		var/r = text2num(href_list["range"])
 		range += r
 		range = min(max(range, 1), 5)
+
+	if(href_list["set_default_time"])
+		default_time = time
 
 	if(href_list["close"])
 		usr << browse(null, "window=prox")

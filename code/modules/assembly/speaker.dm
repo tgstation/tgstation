@@ -36,6 +36,8 @@
 	if(istype(loc, /obj/item/device/assembly_frame)) //When put in assembly frames, the speakers can't be heard.
 		var/obj/item/device/assembly_frame/F = loc //This is a workaround
 		F.say(message, speaking, radio)
+	else
+		return ..()
 
 /obj/item/device/assembly/speaker/can_speak()
 	return 1

@@ -3,6 +3,7 @@
 	desc = "A large metal box with a frame inside, designed to store and link tiny assemblies like timers and signalers. There is a display with an interface for connecting assemblies together."
 
 	icon_state = "assembly_box"
+	origin_tech = "programming=3;engineering=3;magnets=3"
 
 	var/list/obj/item/device/assembly/assemblies = list()
 
@@ -114,18 +115,21 @@
 			else
 				active_connections |= choice
 
-			usr << "<span class='info'>You connect \the [AS] to \the [choice].</span>"
-			src.updateUsrDialog()
+			to_chat(usr, "<span class='info'>You connect \the [AS] to \the [choice].</span>")
 
-	if(href_list["eject"])
+			if(usr)
+				attack_self(usr)
+
+	if(href_list["eject"]) //Eject AS from the frame
 		if(!istype(AS))
 			return
 
 		if(!assemblies.Find(AS))
 			return
 
-		assemblies.Remove(AS)
-		connections.Remove(AS)
+		if(AS.loc != src)
+			to_chat(usr, "<span class='warning'>A pink light flashes on \the [src], indicating an error.</span>")
+			return
 
 		for(var/A in connections) //Remove all references to this assembly in this board
 			var/list/L = connections[A]
@@ -134,10 +138,13 @@
 			if(!L.len) //If list of A's connections is empty
 				connections.Remove(A) //Remove A from the list of assemblies with connections
 
+		assemblies.Remove(AS)
+		connections.Remove(AS)
+
 		AS.holder = null
 		AS.forceMove(get_turf(src))
 
-		usr << "<span class='info'>You remove \the [AS] from \the [src].</span>"
+		to_chat(usr, "<span class='info'>You remove \the [AS] from \the [src].</span>")
 
 	if(href_list["interact"])
 		if(!istype(AS))
@@ -148,7 +155,7 @@
 
 		AS.attack_self(usr)
 
-	if(href_list["disconnect"])
+	if(href_list["disconnect"]) //Remove link from AS to specified assembly
 		var/obj/item/device/assembly/disconnected = locate(href_list["disconnect_which"]) //Find assembly to disconnect from AS
 
 		if(!istype(AS))
@@ -172,7 +179,7 @@
 		L.Remove(disconnected) //Remove the disconnected assembly from that list
 
 		if(!L.len) //If AS isn't connected to anything, remove AS from the list of assemblies with connections
-			assemblies.Remove(AS)
+			connections.Remove(AS)
 
 	if(href_list["help"])
 		//Here comes the fluff
@@ -181,7 +188,6 @@
 			sleep(5)
 			to_chat(usr, "----------------------------------")
 			to_chat(usr, "<span class='info'><h5>AdCo. Assembly Frame MK II</h5></span>")
-			to_chat(usr, "<span class='info'>HELP FILE TRANSLATED BY: Huang Lee-Zhong Chuan (2mb799-FireGoliath2-a23vbm)</span>")
 			to_chat(usr, "----------------------------------")
 			sleep(5)
 			to_chat(usr, "<span class='info'>To connect a device to the assembly frame, insert it into any of the numbered sockets inside.</span>")
@@ -191,7 +197,8 @@
 
 		return
 
-	src.updateUsrDialog()
+	if(usr)
+		attack_self(usr)
 
 /obj/item/device/assembly_frame/proc/receive_pulse(var/obj/item/device/assembly/from)
 	if(!assemblies.Find(from)) return
@@ -213,3 +220,4 @@
 			assemblies.Add(AS)
 	if(istype(W, /obj/item/device/assembly_holder))
 		to_chat(user, "<span class='notice'>\The [W] is too big for any of the sockets here. Try taking it apart.")
+

@@ -1,0 +1,10 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: Added \"assembly frames\", items that allow creating more advanced things with assemblies like timers, signallers and speakers. They can hold any amount of assemblies inside, and the assemblies inside can be connected together. There is no limit on the amount of assemblies or connections that can be in an assembly frame.
+  - rscadd: Assembly frames can be found in vendomats (costing one coin), or created with protolathes.
+  - rscadd: Added addition circuits. Useless without an assembly frame, whenever they receive a signal their internal counter is increased by 1. Whenever their counter reaches a specified value, it resets and the assembly emits a pulse. They can be produced by autolathes.
+  - tweak: Timers and proximity sensors now start or stop countdown when pulsed.
+  - tweak: It's now possible to set \"default time\" on timers and proximity sensors. When their timers finish counting down, the time remaining is reset to the default time.

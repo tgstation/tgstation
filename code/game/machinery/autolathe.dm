@@ -62,6 +62,7 @@
 		new /obj/item/device/assembly/voice(), \
 		new /obj/item/device/assembly/prox_sensor(), \
 		new /obj/item/device/assembly/speaker(), \
+		new /obj/item/device/assembly/addition(), \
 		),
 		"Stock_Parts"=list(
 		new /obj/item/weapon/stock_parts/console_screen(), \
