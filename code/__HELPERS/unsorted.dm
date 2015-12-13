@@ -1067,8 +1067,23 @@ proc/get_mob_with_client_list()
 	while(loc)
 		if(istype(loc, type))
 			return loc
-		loc = loc.loc
+		loc = loc.loc //<wwjnc> WE ARE THE KNIGHTS WHO SAY LOC
 	return null
+
+/proc/find_holder(atom/O) //aka get_just_before_turf
+	while(O)
+		if(isturf(O.loc))
+			return O
+		O = O.loc
+	return null
+
+/proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
+	var/atom/location = reference.loc //ie /mob to find the first mob holding it
+	while(!istype(location,/turf) && !istype(location,null))
+		if(istype(location,typepath))
+			return location
+		location = location.loc
+	return 0
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
@@ -1192,14 +1207,6 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 /proc/has_edge(obj/O as obj)
 	if (!O) return 0
 	if(O.edge) return 1
-	return 0
-
-proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
-	var/atom/location = reference.loc //ie /mob to find the first mob holding it
-	while(!istype(location,/turf) && !istype(location,null))
-		if(istype(location,typepath))
-			return location
-		location = location.loc
 	return 0
 
 /proc/get_distant_turf(var/turf/T,var/direction,var/distance)
