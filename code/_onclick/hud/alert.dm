@@ -97,7 +97,7 @@
 /obj/screen/alert/oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and gas mask in it."
+The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = "oxy"
 
 /obj/screen/alert/too_much_oxy
