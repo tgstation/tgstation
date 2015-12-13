@@ -870,6 +870,10 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
+			if(H.l_hand)
+				. += H.l_hand.slowdown
+			if(H.r_hand)
+				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))
 				. += 1.5
