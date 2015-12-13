@@ -3,7 +3,6 @@
 #define GC_FORCE_DEL_PER_TICK 60
 //#define GC_DEBUG
 
-var/list/gc_hard_del_types = new
 var/datum/garbage_collector/garbageCollector
 var/soft_dels = 0
 
@@ -15,7 +14,7 @@ var/soft_dels = 0
 	var/list/L = list()
 	L += "<b>Garbage Collector Forced Deletions in this round</b><br>"
 	for(var/A in ghdel_profiling)
-		L += "<br>[A] = [gc_hard_del_types[A]]"
+		L += "<br>[A] = [ghdel_profiling[A]]"
 	if(L.len == 1)
 		to_chat(usr, "No garbage collector deletions this round")
 		return
