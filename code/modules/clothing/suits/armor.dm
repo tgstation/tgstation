@@ -187,6 +187,8 @@
 
 
 /obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
 	if(prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -196,6 +198,32 @@
 		owner.fire_stacks = -20
 		return 1
 	return 0
+
+
+
+
+
+
+/obj/item/clothing/suit/armor/reactive/stealth
+	name = "reactive stealth armor"
+
+/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
+		E.Copy_Parent(owner, 50)
+		E.GiveTarget(owner) //so it starts running right away
+		E.Goto(owner, E.move_to_delay, E.minimum_distance)
+		owner.alpha = 0
+		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
+		spawn(40)
+			owner.alpha = initial(owner.alpha)
+		return 1
+
+
+
+
 
 //All of the armor below is mostly unused
 
