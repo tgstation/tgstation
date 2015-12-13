@@ -202,6 +202,7 @@
 
 		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
+		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
 		t = replacetext(t, "\[small\]", "")
@@ -209,7 +210,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[CRAYON_FONT]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<font face=\"[CRAYON_FONT]\" color=[C.paint_color]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
