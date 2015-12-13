@@ -404,6 +404,7 @@
 		update_icon()
 
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 		if(armed && IED)
 			message_admins("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")

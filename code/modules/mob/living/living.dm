@@ -877,7 +877,7 @@ Thanks.
 					SC.locked = 0
 					SC.welded = 0
 					L.visible_message("<span class='danger'>[L] successfully breaks out of [SC]!</span>",
-									  "<span class='notice'>You successful break out!</span>")
+									  "<span class='notice'>You successfully break out!</span>")
 					if(istype(SC.loc, /obj/item/delivery/large)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
 						var/obj/item/delivery/large/BD = SC.loc
 						BD.attack_hand(usr)
@@ -977,7 +977,7 @@ Thanks.
 						if(!CM.legcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
-										   "<span class='notice'>You successful remove [HC].</span>")
+										   "<span class='notice'>You successfully remove [HC].</span>")
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
