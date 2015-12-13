@@ -582,7 +582,7 @@
 
 		linked_area.contents.Add(new_turf)
 		new_turf.change_area(old_area,linked_area)
-		new_turf.ChangeTurf(old_turf.type)
+		new_turf.ChangeTurf(old_turf.type, allow = 1)
 		new_turfs[C] = new_turf
 
 		//***Remove old turf from shuttle's area****
@@ -667,7 +667,7 @@
 
 		if(D && istype(D)) replacing_turf_type = D.base_turf_type
 
-		old_turf.ChangeTurf(replacing_turf_type)
+		old_turf.ChangeTurf(replacing_turf_type, allow = 1)
 
 		if(D && istype(D))
 			if(D.base_turf_icon)
