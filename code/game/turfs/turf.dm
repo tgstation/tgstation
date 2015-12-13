@@ -336,8 +336,6 @@
 			F.floor_tile = null
 		F = null
 
-	var/atom/movable/overlay/transfer_animation = c_animation
-
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
@@ -359,10 +357,6 @@
 		if(air_master)
 			air_master.mark_for_update(src)
 
-		if(transfer_animation)
-			W.c_animation = transfer_animation
-			transfer_animation.master = W
-
 		W.levelupdate()
 
 		. = W
@@ -380,10 +374,6 @@
 
 		if(air_master)
 			air_master.mark_for_update(src)
-
-		if(transfer_animation)
-			W.c_animation = c_animation
-			transfer_animation.master = W
 
 		W.levelupdate()
 

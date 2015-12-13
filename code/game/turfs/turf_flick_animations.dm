@@ -2,22 +2,23 @@
 	if(!c_animation)//spamming turf animations can have unintended effects, such as the overlays never disapearing. hence this check.
 		if(anim_sound)
 			playsound(src, anim_sound, 50, 1)
-		c_animation = getFromPool(/atom/movable/overlay, src)
-		c_animation.name = "turf_animation"
-		c_animation.density = 0
-		c_animation.anchored = 1
-		c_animation.icon = anim_icon
-		c_animation.icon_state = anim_state
-		c_animation.layer = anim_layer
-		c_animation.master = src
-		c_animation.pixel_x = anim_x
-		c_animation.pixel_y = anim_y
+		var/atom/movable/overlay/animation = getFromPool(/atom/movable/overlay, src)
+		animation.name = "turf_animation"
+		animation.density = 0
+		animation.anchored = 1
+		animation.icon = anim_icon
+		animation.icon_state = anim_state
+		animation.layer = anim_layer
+		animation.master = src
+		animation.pixel_x = anim_x
+		animation.pixel_y = anim_y
+		c_animation = animation
 		if(anim_color)
-			c_animation.color = anim_color
-		flick("turf_animation",c_animation)
+			animation.color = anim_color
+		flick("turf_animation",animation)
 		spawn(10)
-			if(c_animation)
-				returnToPool(c_animation)
+			returnToPool(animation)
+			if(c_animation == animation) //Turf may have changed into another form by this time
 				c_animation = null
 
 //Requires either a target/location or both
