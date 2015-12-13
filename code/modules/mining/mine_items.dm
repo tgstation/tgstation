@@ -237,7 +237,7 @@
 
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	threshhold.ChangeTurf(/turf/simulated/floor/wood)
-	threshhold.blocks_air = 1 //So the air doesn't leak out
+	threshhold.blocks_air = 0 //So the air doesn't leak out
 	threshhold.oxygen = 21
 	threshhold.temperature = 293.15
 	threshhold.nitrogen = 82
