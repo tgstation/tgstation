@@ -1234,6 +1234,7 @@
 	icon_state = "nuketoy"
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
+	var/toysound = 'sound/machines/click.ogg'
 
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
@@ -1242,7 +1243,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo
 	name = "Chief Medical Officer action figure"
@@ -1268,6 +1269,7 @@
 	name = "Cyborg action figure"
 	icon_state = "borg"
 	toysay = "I. LIVE. AGAIN."
+	toysound = 'sound/voice/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
 	name = "Botanist action figure"
@@ -1308,6 +1310,7 @@
 	name = "Clown action figure"
 	icon_state = "clown"
 	toysay = "Honk!"
+	toysound = 'sound/items/bikehorn.ogg'
 
 /obj/item/toy/figure/ian
 	name = "Ian action figure"
@@ -1373,6 +1376,7 @@
 	name = "Mime action figure"
 	icon_state = "mime"
 	toysay = "..."
+	toysound = null
 
 /obj/item/toy/figure/miner
 	name = "Shaft Miner action figure"
@@ -1388,6 +1392,7 @@
 	name = "Wizard action figure"
 	icon_state = "wizard"
 	toysay = "Ei Nath!"
+	toysound = 'sound/magic/Disintegrate.ogg'
 
 /obj/item/toy/figure/rd
 	name = "Research Director action figure"
@@ -1398,11 +1403,13 @@
 	name = "Roboticist action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
+	toysound = 'sound/mecha/mechstep.ogg'
 
 /obj/item/toy/figure/scientist
 	name = "Scientist action figure"
 	icon_state = "scientist"
 	toysay = "For science!"
+	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie
 	name = "Nuclear Operative action figure"
@@ -1413,6 +1420,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
+	toysound = 'sound/voice/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"
