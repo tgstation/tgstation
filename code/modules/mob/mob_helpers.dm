@@ -310,6 +310,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("wizard")
 				if(M.mind in ticker.mode.wizards)
 					return 2
+			if("apprentice")
+				if(M.mind in ticker.mode.apprentices)
+					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
@@ -370,3 +373,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		return
 
+/proc/IsAdminGhost(var/mob/user)
+	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer))
+		return 1
+	else
+		return 0

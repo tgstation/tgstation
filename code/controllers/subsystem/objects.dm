@@ -1,6 +1,7 @@
 var/datum/subsystem/objects/SSobj
 
 /datum/proc/process()
+	set waitfor = 0
 	SSobj.processing.Remove(src)
 	return 0
 

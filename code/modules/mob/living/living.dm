@@ -160,9 +160,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(AM.Adjacent(src))
+	if(pulling == AM)
+		stop_pulling()
+	else if(AM.Adjacent(src))
 		src.start_pulling(AM)
-	return
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
@@ -765,7 +766,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/narsie_act()
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	spawn_dust()
 	gib()
 	return

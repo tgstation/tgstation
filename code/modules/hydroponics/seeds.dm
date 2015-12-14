@@ -757,6 +757,25 @@
 	growthstages = 4
 	plant_type = 2
 	rarity = 20
+	mutatelist = list(/obj/item/seeds/glowcap)
+
+/obj/item/seeds/glowcap
+	name = "pack of glowcap mycelium"
+	desc = "This mycelium -powers- into mushrooms!"
+	icon_state = "mycelium-glowcap"
+	species = "glowcap"
+	plantname = "Glowcaps"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	lifespan = 120 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3 //-> spread
+	potency = 30 //-> brightness
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+	rarity = 20
 
 /obj/item/seeds/plumpmycelium
 	name = "pack of plump-helmet mycelium"

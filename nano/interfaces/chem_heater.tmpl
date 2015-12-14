@@ -19,7 +19,11 @@
 </div>
 <h2>Beaker</h2>
 <div class="statusDisplay">
-	{{:helper.link('Eject Beaker', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	<div class="item">
+		<div class="itemLabel">
+			{{:helper.link('Eject', 'eject', {'eject_beaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
 	<div class="item">
 		<div class="itemLabel">
 			Contents:
@@ -28,7 +32,7 @@
 			{{if data.isBeakerLoaded}}
 				<b>Temperature: {{:data.currentTemp}}K</b><br />
 				{{for data.beakerContents}}
-					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}

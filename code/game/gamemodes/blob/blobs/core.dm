@@ -7,10 +7,12 @@
 	maxhealth = 400
 	explosion_block = 6
 	point_return = -1
+	atmosblock = 1
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/is_offspring = null
+
 
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
 	blob_cores += src
@@ -24,7 +26,6 @@
 		is_offspring = 1
 	point_rate = new_rate
 	..(loc, h)
-
 
 /obj/effect/blob/core/adjustcolors(a_color)
 	overlays.Cut()
@@ -50,14 +51,10 @@
 /obj/effect/blob/core/ex_act(severity, target)
 	return
 
-/obj/effect/blob/core/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	// update_icon is called when health changes so... call update_health in the overmind
-	if(overmind)
+/obj/effect/blob/core/check_health()
+	..()
+	if(overmind) //we should have an overmind, but...
 		overmind.update_health()
-	return
 
 /obj/effect/blob/core/RegenHealth()
 	return // Don't regen, we handle it in Life()
@@ -118,4 +115,3 @@
 				B.verbs -= /mob/camera/blob/verb/split_consciousness
 		return 1
 	return 0
-

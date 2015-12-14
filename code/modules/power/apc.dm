@@ -631,7 +631,7 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "apc.tmpl", name, 515, 550)
+		ui = new(user, src, ui_key, "apc.tmpl", name, 550, 550)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)
@@ -721,6 +721,8 @@
 
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
+	if (IsAdminGhost(user))
+		return 1
 	if (user.stat)
 		user << "<span class='warning'>You must be conscious to use [src]!</span>"
 		return 0
@@ -1135,9 +1137,13 @@
 	lighting = 0
 	equipment = 0
 	environ = 0
+	update_icon()
+	update()
 	spawn(600)
 		equipment = 3
 		environ = 3
+		update_icon()
+		update()
 	..()
 
 /obj/machinery/power/apc/ex_act(severity, target)

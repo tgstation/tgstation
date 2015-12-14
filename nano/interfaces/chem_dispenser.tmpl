@@ -14,11 +14,9 @@
 			Amount:
 		</div>
 		<div class="itemContent">
-			{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
-			{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
-			{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
-			{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
-			{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50) ? 'selected' : null)}}
+			{{for data.beakerTransferAmounts :amount:i}}
+				{{:helper.link(amount, 'plus', {'amount': amount}, (data.amount == amount) ? 'selected' : null)}}
+			{{/for}}
 		</div>
 	</div>
 </div>
@@ -34,7 +32,16 @@
 </div>
 <h2>Beaker</h2>
 <div class="statusDisplay">
-	{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	<div class="item">
+		<div class="itemLabel">
+			{{:helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+		<div class="itemContent">
+			{{for data.beakerTransferAmounts :amount:i}}
+				{{:helper.link(amount, 'minus', {'remove': amount})}}
+			{{/for}}
+		</div>
+	</div>
 	<div class="item">
 		<div class="itemLabel">
 			Contents:
@@ -43,7 +50,7 @@
 			{{if data.isBeakerLoaded}}
 				<b>Volume: {{:data.beakerCurrentVolume}}/{{:data.beakerMaxVolume}} Units</b><br />
 				{{for data.beakerContents}}
-					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}

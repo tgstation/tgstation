@@ -182,7 +182,7 @@
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..(damage)
-	if(!ckey && !stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -217,6 +217,17 @@
 /mob/living/simple_animal/hostile/death(gibbed)
 	LoseTarget()
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/proc/summon_backup(distance)
+	do_alert_animation(src)
+	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
+	for(var/mob/living/simple_animal/hostile/M in oview(distance, src))
+		var/list/L = M.faction&faction
+		if(L.len)
+			if(M.AIStatus == AI_OFF)
+				return
+			else
+				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 

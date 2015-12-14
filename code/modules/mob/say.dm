@@ -44,7 +44,7 @@
 
 	for(var/mob/M in player_list)
 		var/adminoverride = 0
-		if(M.client || M.client.holder || (M.client.prefs.chat_toggles & CHAT_DEAD))
+		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
 		if(istype(M, /mob/new_player) && !adminoverride)
 			continue

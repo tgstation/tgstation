@@ -29,7 +29,6 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 3
-	amt_dam_fire = 10
 	sound = "sound/magic/MM_Hit.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -334,7 +333,7 @@
 				var/mob/living/M = AM
 				M.Weaken(2)
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
-			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!

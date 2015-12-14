@@ -402,9 +402,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	H.add_hud_to(src)
 	data_hud_seen = hud_index
 
-/mob/dead/observer/verb/toggle_ghost_med_sec_hud()
-	set name = "Toggle Sec/Med HUD"
-	set desc = "Toggles whether you see medical/security HUDs"
+/mob/dead/observer/verb/toggle_ghost_med_sec_diag_hud()
+	set name = "Toggle Sec/Med/Diag HUD"
+	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
 	set category = "Ghost"
 
 	if(data_hud_seen) //remove old huds
@@ -414,11 +414,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	switch(data_hud_seen) //give new huds
 		if(0)
 			show_me_the_hud(DATA_HUD_SECURITY_BASIC)
+			src << "<span class='notice'>Security HUD set.</span>"
 		if(DATA_HUD_SECURITY_BASIC)
 			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
+			src << "<span class='notice'>Medical HUD set.</span>"
 		if(DATA_HUD_MEDICAL_ADVANCED)
+			show_me_the_hud(DATA_HUD_DIAGNOSTIC)
+			src << "<span class='notice'>Diagnostic HUD set.</span>"
+		if(DATA_HUD_DIAGNOSTIC)
 			data_hud_seen = 0
+			src << "<span class='notice'>HUDs disabled.</span>"
 
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))
-		return
+		return 1
+	return

@@ -130,7 +130,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -157,7 +157,8 @@
 	return dat
 
 /mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	..()
+	if(..())
+		return 1
 
 	if(href_list["adj_threshold"])
 		var/adjust_num = text2num(href_list["adj_threshold"])
@@ -447,6 +448,9 @@
 		bot_reset()
 		return
 	else
+		if(!emagged && check_overdose(patient,reagent_id,injection_amount))
+			soft_reset()
+			return
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
@@ -469,6 +473,13 @@
 
 	reagent_id = null
 	return
+
+/mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
+	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
+	if(current_volume + injection_amount > R.overdose_threshold)
+		return 1
+	return 0
 
 /mob/living/simple_animal/bot/medbot/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag == "taser")

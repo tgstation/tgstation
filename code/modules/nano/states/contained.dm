@@ -1,7 +1,7 @@
  /**
   * NanoUI State: contained_state
   *
-  * Checks that the user is an admin, end-of-story.
+  * Checks that the user is inside the src_object.
  **/
 
 /var/global/datum/topic_state/contained_state/contained_state = new()

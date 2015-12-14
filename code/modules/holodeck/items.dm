@@ -31,9 +31,9 @@
 	New()
 		item_color = "red"
 
-/obj/item/weapon/holo/esword/IsShield()
+/obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
-		return 1
+		return ..()
 	return 0
 
 /obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
@@ -213,8 +213,9 @@
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/holo/W in currentarea)
-		qdel(W)
+	for(var/obj/structure/window/W in currentarea)
+		if(W.flags&NODECONSTRUCT) // Just in case: only holo-windows
+			qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"

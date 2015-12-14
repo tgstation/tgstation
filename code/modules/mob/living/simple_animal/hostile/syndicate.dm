@@ -12,6 +12,7 @@
 	response_harm = "hits"
 	speed = 0
 	stat_attack = 1
+	robust_searching = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -101,6 +102,16 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return
 
+
+/mob/living/simple_animal/hostile/syndicate/civilian
+	minimum_distance = 10
+	retreat_distance = 10
+	environment_smash = 0
+
+/mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
+	..()
+	summon_backup(15)
+	say("GUARDS!!")
 
 
 /mob/living/simple_animal/hostile/viscerator

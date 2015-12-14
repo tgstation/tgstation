@@ -9,8 +9,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	clothes_req = 0
 	action_icon_state = "hatch"
 
-/obj/effect/proc_holder/spell/self/shadowling_hatch/cast(mob/living/carbon/human/H,mob/user = usr)
+/obj/effect/proc_holder/spell/self/shadowling_hatch/cast(list/targets,mob/user = usr)
 	if(user.stat || !ishuman(user) || !user || !is_shadow(user)) return
+	var/mob/living/carbon/human/H = user
 	var/hatch_or_no = alert(H,"Are you sure you want to hatch? You cannot undo this!",,"Yes","No")
 	switch(hatch_or_no)
 		if("No")
@@ -109,7 +110,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	clothes_req = 0
 	action_icon_state = "ascend"
 
-/obj/effect/proc_holder/spell/self/shadowling_ascend/cast(mob/living/carbon/human/H,mob/user = usr)
+/obj/effect/proc_holder/spell/self/shadowling_ascend/cast(list/targets,mob/user = usr)
+	var/mob/living/carbon/human/H = user
 	if(!shadowling_check(H))
 		return
 	var/hatch_or_no = alert(H,"It is time to ascend. Are you sure about this?",,"Yes","No")

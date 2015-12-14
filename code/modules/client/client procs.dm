@@ -179,7 +179,7 @@ var/next_external_rsc = 0
 
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
-		
+
 	sync_client_with_db()
 
 	send_resources()
@@ -328,4 +328,4 @@ var/next_external_rsc = 0
 		)
 	spawn (10)
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, asset_cache, register_asset = FALSE)
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

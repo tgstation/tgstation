@@ -453,14 +453,16 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.Parent_Turret = src	//assign the cover its Parent_Turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN) && !always_up)
-		//if the turret has no power or is broken, make the turret pop down if it hasn't already
-		popDown()
+	if(stat & (NOPOWER|BROKEN))
+		if(!always_up)
+			//if the turret has no power or is broken, make the turret pop down if it hasn't already
+			popDown()
 		return
 
-	if(!on && !always_up)
-		//if the turret is off, make it pop down
-		popDown()
+	if(!on)
+		if(!always_up)
+			//if the turret is off, make it pop down
+			popDown()
 		return
 
 	var/list/targets = list()			//list of primary targets
@@ -1070,14 +1072,14 @@
 			src.attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock)
+	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
 		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
-		if ( !issilicon(user) )
+		if ( !(issilicon(user) || IsAdminGhost(user)) )
 			user << "<span class='notice'>You are too far away.</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -1093,10 +1095,10 @@
 	var/area/area = loc
 	var/t = ""
 
-	if(src.locked && (!istype(user, /mob/living/silicon)))
+	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if (!istype(user, /mob/living/silicon))
+		if (!istype(user, /mob/living/silicon) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
@@ -1112,7 +1114,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!istype(usr, /mob/living/silicon))
+		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

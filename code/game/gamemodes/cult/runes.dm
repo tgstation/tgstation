@@ -106,7 +106,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(iscultist(L))
 				var/mob/living/carbon/human/H = L
 				if(!istype(H))
-					if(istype(L, /mob/living/simple_animal/construct))
+					if(istype(L, /mob/living/simple_animal/hostile/construct))
 						if(invocation)
 							L.say(invocation)
 						cultists_in_range++

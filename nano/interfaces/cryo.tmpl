@@ -23,7 +23,7 @@
 				{{else data.occupant.stat == 1}}
 					<span class="average">Unconscious</span>
 				{{else}}
-					<span class="bad">DEAD</span>
+					<span class="bad">Dead</span>
 				{{/if}}
 			</div>
 		</div>
@@ -116,10 +116,23 @@
 			{{:helper.link('Close', 'locked', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
 		</div>
 	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Eject:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Auto', 'eject', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
+			{{:helper.link('Manual', 'pin-s', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
+		</div>
+	</div>
 </div>
 <h2>Beaker</h2>
 <div class="statusDisplay">
-	{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	<div class="item">
+		<div class="itemLabel">
+			{{:helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</div>
 	<div class="item">
 		<div class="itemLabel">
 			Contents:
@@ -127,7 +140,7 @@
 		<div class="itemContent">
 			{{if data.isBeakerLoaded}}		
 				{{for data.beakerContents}}
-					<span class="good">{{:value.volume}} units of {{:value.name}}</span><br />
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br />
 				{{empty}}
 					<span class="bad">Beaker Empty</span>
 				{{/for}}

@@ -12,6 +12,9 @@
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
+/mob/living/carbon/alien/humanoid/royal/can_inject()
+	return 0
+
 /mob/living/carbon/alien/humanoid/royal/queen
 	name = "alien queen"
 	caste = "q"
