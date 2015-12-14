@@ -2,17 +2,18 @@ class @Handlers
   constructor: (@bus, @fragment = document) ->
     @bus.on "rendered", @updateStatus
     @bus.on "rendered", @updateLinks
-    @bus.on "rendered", @attachHandlers
-    @bus.on "error",    @error
+    @bus.on "rendered", @handleLinks
+    @bus.on "rendered", @handleClose
+    @bus.on "rendered", @handleMini
 
   updateStatus: (data) =>
-    statusicons = @fragment.queryAll(".statusicon")
+    statusicons = @fragment.queryAll ".statusicon"
     statusicons.forEach (statusicon) ->
-      statusicon.className = "statusicon fa fa-eye fa-2x"
+      statusicon.className = statusicon.className.replace /good|bad|average/g, ""
       switch data.config.status
-        when 2
+        when NANO.INTERACTIVE
           klass = "good"
-        when 1
+        when NANO.UPDATE
           klass = "average"
         else
           klass = "bad"
@@ -22,29 +23,43 @@ class @Handlers
 
 
   updateLinks: (data) =>
-    links = @fragment.queryAll(".link")
-    if data.config.status isnt 2
+    links = @fragment.queryAll ".link"
+    if data.config.status isnt NANO.INTERACTIVE
       links.forEach (element) ->
         element.className = "link disabled"
         return
     return
 
 
-  attachHandlers: (data) =>
+  handleLinks: (data) =>
     onClick = (event) ->
-      href = @data("href")
-      if href? and data.config.status is 2
+      action = @data "action"
+      params = JSON.parse @data "params"
+
+      if action? and params? and data.config.status is NANO.INTERACTIVE
         @classList.add "pending"
-        location.href = href
+        nanoui.bycall action, params
       return
 
-    @fragment.queryAll(".link").forEach (element) ->
-      element.on "click", onClick
+    @fragment.queryAll(".link.active").forEach (link) ->
+      link.on "click", onClick
       return
     return
 
+  handleClose: (data) ->
+    onClick = (event) -> nanoui.close()
 
-  error: (message) ->
-    url = util.href(nanoui_error: message)
-    location.href = url
+    closers = document.queryAll ".close"
+    closers.forEach (closer) ->
+      closer.on "click", onClick
+      return
+    return
+
+  handleMini: (data) ->
+    onClick = (event) -> nanoui.winset "is-minimized", "true"
+
+    minimizers = document.queryAll ".minimize"
+    minimizers.forEach (minimizer) ->
+      minimizer.on "click", onClick
+      return
     return

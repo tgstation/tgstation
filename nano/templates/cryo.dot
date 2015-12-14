@@ -30,7 +30,7 @@
 			</div>
 		</section>
 	{{?}}
-	{{? data.occupant.stat < 2}}
+	{{? data.hasOccupant && data.occupant.stat < 2}}
 		<section>
 			<span class="label">Health:</span>
 			<div class="content">
@@ -68,8 +68,11 @@
 	<section>
 		<span class="label">Power:</span>
 		<div class="content">
-			{{=helper.link('On', 'power-off', {'switchOn': 1}, data.isOperating ? 'selected' : null)}}
-			{{=helper.link('Off', 'close', {'switchOff': 1}, data.isOperating ? null : 'selected')}}
+			{{? data.isOperating}}
+				{{=helper.link('On', 'power-off', 'off')}}
+			{{??}}
+				{{=helper.link('Off', 'close', 'on')}}
+			{{?}}
 		</div>
 	</section>
 	<section>
@@ -81,22 +84,23 @@
 	<section>
 		<span class="label">Door:</span>
 		<div class="content">
-			{{=helper.link('Open', 'unlock', {'openCell' : 1}, data.isOpen ? 'disabled' : null)}}
-			{{=helper.link('Close', 'lock', {'closeCell' : 1}, data.isOpen ? null : 'disabled')}}
-		</div>
-	</section>
-	<section>
-		<span class="label">Eject:</span>
-		<div class="content">
-			{{=helper.link('Auto', 'sign-out', {'autoEject' : 1}, data.autoEject ? 'selected' : null)}}
-			{{=helper.link('Manual', 'sign-in', {'autoEject' : 0}, data.autoEject ? null : 'selected')}}
+			{{? data.isOpen}}
+				{{=helper.link('Open', 'unlock', 'close')}}
+			{{??}}
+				{{=helper.link('Closed', 'lock', 'open')}}
+			{{?}}
+			{{? data.autoEject}}
+				{{=helper.link('Auto', 'sign-out', 'autoeject')}}
+			{{??}}
+				{{=helper.link('Manual', 'sign-in', 'autoeject')}}
+			{{?}}
 		</div>
 	</section>
 </article>
 <article class="display">
 	<header><h2>Beaker</h2></header>
 	<section>
-		{{=helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+		{{=helper.link('Eject', 'eject', 'ejectbeaker', null, data.isBeakerLoaded ? null : 'disabled')}}
 	</section>
 	<section>
 		<span class="label">Contents:</span>

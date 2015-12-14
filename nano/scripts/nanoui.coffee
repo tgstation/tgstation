@@ -70,5 +70,30 @@ class @NanoUI
       return
 
     @bus.emit "rendered", data
-    @initialized = true unless @initialized
+    unless @initialized
+      @initialized = true
+      @bus.emit "initialized"
     return
+
+  bycall: (action, params = {}) =>
+    params.src = @data.config.ref
+    params.nano = action
+
+    location.href = util.href null, params
+
+  close: (params = {}) =>
+    params.command = "nanoclose #{@data.config.ref}"
+
+    @winset "is-visible", "false"
+    location.href = util.href "winset", params
+
+  winset: (key, value, params = {}) =>
+    params["#{@data.config.window.ref}.#{key}"] = value
+
+    location.href = util.href "winset", params
+
+  setPos: (x, y) ->
+    @winset "pos", "#{x},#{y}"
+
+  setSize: (w, h) ->
+    @winset "size", "#{w},#{h}"

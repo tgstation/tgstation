@@ -441,34 +441,35 @@
 	if(..())
 		return
 
-	if(href_list["rate_control"])
-		if(href_list["cdir"])
-			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
-			src.targetdir = src.cdir
-			if(track == 2) //manual update, so losing auto-tracking
-				track = 0
-			spawn(1)
-				set_panels(cdir)
-		if(href_list["tdir"])
-			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-
-	if(href_list["track"])
-		track = text2num(href_list["track"])
-		if(track == 2)
-			if(connected_tracker)
+	switch(href_list["nano"])
+		if("control")
+			if(href_list["cdir"])
+				src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+				src.targetdir = src.cdir
+				if(track == 2) //manual update, so losing auto-tracking
+					track = 0
+				spawn(1)
+					set_panels(cdir)
+			if(href_list["tdir"])
+				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
+				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
+		if("tracking")
+			track = text2num(href_list["mode"])
+			if(track == 2)
+				if(connected_tracker)
+					connected_tracker.set_angle(SSsun.angle)
+					set_panels(cdir)
+			else if (track == 1) //begin manual tracking
+				src.targetdir = src.cdir
+				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
+				set_panels(targetdir)
+		if("refresh")
+			search_for_connected()
+			if(connected_tracker && track == 2)
 				connected_tracker.set_angle(SSsun.angle)
-				set_panels(cdir)
-		else if (track == 1) //begin manual tracking
-			src.targetdir = src.cdir
-			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-			set_panels(targetdir)
+			set_panels(cdir)
+	return 1
 
-	if(href_list["search_connected"])
-		search_for_connected()
-		if(connected_tracker && track == 2)
-			connected_tracker.set_angle(SSsun.angle)
-		set_panels(cdir)
 
 //rotates the panel to the passed angle
 /obj/machinery/power/solar_control/proc/set_panels(cdir)

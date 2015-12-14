@@ -81,22 +81,15 @@
 	if(..())
 		return
 
-	if(href_list["toggle_on"])
-		on = !on
-
-	if(href_list["adjust_temperature"])
-		var/val = href_list["adjust_temperature"]
-		if(isnum(val))
-			desired_temp = Clamp(desired_temp+val, 0, 1000)
-		else if(val == "input")
+	switch(href_list["nano"])
+		if("power")
+			on = !on
+		if("temperature")
 			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
-		else
-			return
-
-	if(href_list["eject_beaker"])
-		eject_beaker()
-
+		if("eject")
+			eject_beaker()
 	add_fingerprint(usr)
+	return 1
 
 /obj/machinery/chem_heater/interact(mob/user)
 	if(stat & BROKEN)

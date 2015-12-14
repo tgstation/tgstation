@@ -8,7 +8,7 @@
 <article class="display">
 	<header><h2>Canister</h2></header>
 	<section>
-		{{=helper.link('Relabel', 'pencil', {'relabel' : 1}, data.canLabel ? null : 'disabled')}}
+		{{=helper.link('Relabel', 'pencil', 'relabel', null, data.canLabel ? null : 'disabled')}}
 	</section>
 	<section>
 		<span class="label">Pressure:</span>
@@ -40,17 +40,17 @@
 	<section>
 		<div class="label">Pressure Regulator:</div>
 		<div class="content">
-			{{=helper.link('Reset', 'refresh', {'release_p': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
-			{{=helper.link('Min', 'minus', {'release_p': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			{{=helper.link('Set', 'pencil', {'release_p': 'custom'}, null)}}
-			{{=helper.link('Max', 'plus', {'release_p': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Reset', 'refresh', 'pressure', {'set': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Min', 'minus', 'pressure', {'set': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Set', 'pencil', 'pressure', {'set': 'custom'}, null)}}
+			{{=helper.link('Max', 'plus', 'pressure', {'set': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
 		</div>
 	</section>
 	<section>
 		<div class="label">Valve:</div>
 		<div class="content">
-			{{=helper.link('Open', 'unlock', {'toggle' : 1}, data.valveOpen ? 'selected' : null)}}
-			{{=helper.link('Close', 'lock', {'toggle' : 1}, data.valveOpen ? null : 'selected')}}
+			{{=helper.link('Open', 'unlock', 'valve', null, data.valveOpen ? 'selected' : null)}}
+			{{=helper.link('Close', 'lock', 'valve', null, data.valveOpen ? null : 'selected')}}
 		</div>
 	</section>
 </article>
@@ -58,7 +58,7 @@
 	<header><h2>Holding Tank</h2></header>
 	{{? data.hasHoldingTank}}
 		<section>
-			{{=helper.link('Eject', 'eject', {'remove_tank' : 1})}}
+			{{=helper.link('Eject', 'eject', 'eject')}}
 		</section>
 		<section>
 			<span class="label">Label:</span>

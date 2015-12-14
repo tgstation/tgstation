@@ -29,12 +29,15 @@
       }
     },
     "font-awesome": {
-      "main": ["css/font-awesome.css", "fonts/*"]
+      "main": [
+        "css/font-awesome.css",
+        "fonts/*"
+      ]
     },
     "jsurl": {
-        "dependencies": {
-          "es5-shim": "*"
-        }
+      "dependencies": {
+        "es5-shim": "*"
+      }
     }
   }
 }

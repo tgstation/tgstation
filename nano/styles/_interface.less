@@ -32,9 +32,9 @@ article.display {
     .label {
         .cell;
         width: 33%;
+        vertical-align: top;
 
         color: @label;
-        vertical-align: top;
     }
 
     .content {
@@ -73,6 +73,7 @@ article.display {
     td {
         &:extend(th);
         padding: 2px 2px 0 0;
+        vertical-align: top;
     }
 }
 
@@ -83,6 +84,8 @@ article.notice {
     box-shadow: none;
 
     .label, span {
+        vertical-align: middle;
+
         color: @textinverse;
         font-weight: bold;
         font-style: italic;

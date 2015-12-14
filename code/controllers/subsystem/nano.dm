@@ -2,7 +2,7 @@ var/datum/subsystem/nano/SSnano
 
 /datum/subsystem/nano
 	name = "NanoUI"
-	wait = 5
+	wait = 10
 	priority = 16
 	display = 6
 

@@ -3,8 +3,8 @@
 	<section>
 		<span class="label">Power:</span>
 		<div class="content">
-			{{=helper.link('On',  'power-off', {'power': 1}, !data.on ? null : 'selected')}}
-			{{=helper.link('Off', 'close', {'power': 0},  data.on ? null : 'selected')}}
+			{{=helper.link('On',  'power-off', 'power', null, data.on ? 'selected' : null)}}
+			{{=helper.link('Off', 'close', 'power', null,  data.on ? null : 'selected')}}
 		</div>
 	</section>
 	<section>
@@ -22,9 +22,9 @@
 			<span class="label">Cell:</span>
 			<div class="content">
 				{{? data.hasPowercell}}
-					{{=helper.link('Eject', 'eject', {'cellremove': 1})}}
+					{{=helper.link('Eject', 'eject', 'ejectcell')}}
 				{{??}}
-					{{=helper.link('Install', 'eject', {'cellinstall': 1})}}
+					{{=helper.link('Install', 'eject', 'installcell')}}
 				{{?}}
 			</div>
 		</section>
@@ -48,11 +48,11 @@
 		<section>
 			<span class="label">Adjustment:</span>
 			<div class="content">
-				{{=helper.link('', 'fast-backward', {'temp': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
-				{{=helper.link('', 'backward', {'temp': -5}, data.targetTemp > data.minTemp ? null : 'disabled')}}
-				{{=helper.link('Set', 'pencil', {'temp': 'custom'}, null)}}
-				{{=helper.link('', 'forward', {'temp': 5}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
-				{{=helper.link('', 'fast-forward', {'temp': 20}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+				{{=helper.link('', 'fast-backward', 'temp', {'set': -20}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+				{{=helper.link('', 'backward', 'temp', {'set': -5}, data.targetTemp > data.minTemp ? null : 'disabled')}}
+				{{=helper.link('Set', 'pencil', 'temp', {'set': 'custom'}, null)}}
+				{{=helper.link('', 'forward', 'temp', {'set': 5}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
+				{{=helper.link('', 'fast-forward', 'temp', {'set': 20}, data.targetTemp < data.maxTemp ? null : 'disabled')}}
 			</div>
 		</section>
 	{{?}}
@@ -62,9 +62,9 @@
 		</span>
 		<div class="content">
 			{{? data.open}}
-				{{=helper.link('Heat', 'long-arrow-up', {'mode': 'heat'}, data.mode != "heat" ? null : 'selected')}}
-				{{=helper.link('Cool', 'long-arrow-down', {'mode': 'cool'}, data.mode != "cool" ? null : 'selected')}}
-				{{=helper.link('Auto', 'arrows-v', {'mode': 'auto'}, (data.mode == "heat" || data.mode == "cool") ? null : 'selected')}}
+				{{=helper.link('Heat', 'long-arrow-up', 'mode', {'mode': 'heat'}, data.mode != "heat" ? null : 'selected')}}
+				{{=helper.link('Cool', 'long-arrow-down', 'mode', {'mode': 'cool'}, data.mode != "cool" ? null : 'selected')}}
+				{{=helper.link('Auto', 'arrows-v', 'mode', {'mode': 'auto'}, (data.mode == "heat" || data.mode == "cool") ? null : 'selected')}}
 			{{??}}
 				{{? data.mode == "heat"}}
 					<span class="bad">Heat</span>

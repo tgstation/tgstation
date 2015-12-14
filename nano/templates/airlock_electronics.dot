@@ -1,11 +1,11 @@
 <article class="display">
 	<section>
 		{{? data.oneAccess}}
-			{{=helper.link('One Required', 'unlock', {'access': 'one'})}}
+			{{=helper.link('One Required', 'unlock', 'one_access')}}
 		{{??}}
-			{{=helper.link('All Required', 'lock', {'access': 'one'})}}
+			{{=helper.link('All Required', 'lock', 'one_access')}}
 		{{?}}
-		{{=helper.link('Reset', 'refresh', {'access': 'clear'})}}
+		{{=helper.link('Clear', 'refresh', 'clear')}}
 	<section>
 	<table class="grow">
 		<thead>
@@ -22,7 +22,7 @@
 				{{~ data.regions :region:i}}
 					<td>
 						{{~ region.accesses :access:j}}
-							{{=helper.link(access.name, access.req ? 'check-square-o' : 'square-o', {'access': access.id}, null, access.req ? 'selected' : null)}}
+							{{=helper.link(access.name, access.req ? 'check-square-o' : 'square-o', 'set', {'access': access.id}, null, access.req ? 'selected' : null)}}
 							<br />
 						{{~}}
 					</td>

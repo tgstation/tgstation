@@ -163,58 +163,53 @@
 		ui.open()
 
 /obj/machinery/space_heater/Topic(href, href_list)
-	if((stat & BROKEN) || ..())
+	if(stat & BROKEN || ..())
 		return
 
-	add_fingerprint(usr)
+	switch(href_list["nano"])
+		if("power")
+			on = !on
+			mode = HEATER_MODE_STANDBY
+			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+			update_icon()
+		if("mode")
+			setMode = href_list["mode"]
+		if("temp")
+			if(panel_open)
+				var/value
+				if(href_list["set"] == "custom")
+					value = input("Please input the target temperature", name) as num|null
+					if(isnull(value))
+						return
+					value += T0C
+				else
+					value = targetTemperature + text2num(href_list["set"])
 
-	if(href_list["power"])
-		on = !!text2num(href_list["power"])
-		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-		update_icon()
-
-	else if(href_list["mode"])
-		setMode = href_list["mode"]
-
-	else if(href_list["temp"] && panel_open)
-		var/value
-		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value))
-				return
-			value += T0C
-		else
-			value = targetTemperature + text2num(href_list["temp"])
-
-		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
-
-	else if(href_list["cellremove"] && panel_open)
-		if(cell)
-			if(usr.get_active_hand())
-				usr << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
-				return
-			cell.updateicon()
-			usr.put_in_hands(cell)
-			cell.add_fingerprint(usr)
-			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
-			cell = null
-
-	else if(href_list["cellinstall"] && panel_open)
-		if(!cell)
-			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-			if(istype(C))
-				if(!usr.drop_item())
+				var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
+				var/maxTemp = settableTemperatureMedian + settableTemperatureRange
+				targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+		if("ejectcell")
+			if(panel_open && cell)
+				if(usr.get_active_hand())
+					usr << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
 					return
-				cell = C
-				C.loc = src
-				C.add_fingerprint(usr)
-
-				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
-
-	SSnano.update_uis(src)
+				cell.updateicon()
+				usr.put_in_hands(cell)
+				cell.add_fingerprint(usr)
+				usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
+				cell = null
+		if("installcell")
+			if(panel_open && !cell)
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+				if(istype(C))
+					if(!usr.drop_item())
+						return
+					cell = C
+					C.loc = src
+					C.add_fingerprint(usr)
+					usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
+	add_fingerprint(usr)
+	return 1
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))

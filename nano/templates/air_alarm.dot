@@ -3,8 +3,8 @@
 		<section>
 			<span class="label">Interface Lock:</span>
 			<div class="content">
-				{{=helper.link('Engaged', 'lock', {'toggleaccess': 1}, data.locked ? 'selected' : null)}}
-				{{=helper.link('Disengaged', 'unlock', {'toggleaccess': 1}, data.locked ? null : 'selected')}}
+				{{=helper.link('Engaged', 'lock', 'toggleaccess', null, data.locked ? 'selected' : null)}}
+				{{=helper.link('Disengaged', 'unlock', 'toggleaccess', null, data.locked ? null : 'selected')}}
 			</div>
 		</section>
 	{{??}}
@@ -71,36 +71,36 @@
 </article>
 {{? (!data.locked || data.siliconUser)}}
 	{{? data.screen != 1}}
-		{{=helper.link('Back', 'arrow-left', {'screen': 1})}}
+		{{=helper.link('Back', 'arrow-left', 'screen', {'screen': 1})}}
 	{{?}}
 	{{? data.screen == 1}}
 		<article class="display">
 			<header><h2>Air Controls</h2></header>
 			<section class="button">
 				{{? !data.atmos_alarm}}
-					{{=helper.link('Area Atmospheric Alarm', 'hand-stop-o', {'atmos_alarm': 1})}}
+					{{=helper.link('Area Atmospheric Alarm', 'hand-stop-o', 'alarm')}}
 				{{??}}
-					{{=helper.link('Area Atmospheric Alarm', 'close', {'atmos_reset': 1}, null, 'caution')}}
+					{{=helper.link('Area Atmospheric Alarm', 'close', 'reset', null, null, 'caution')}}
 				{{?}}
 			</section>
 			<section class="button">
 				{{? data.mode != 3}}
-					{{=helper.link('Panic Siphon', 'exclamation', {'mode': 3})}}
+					{{=helper.link('Panic Siphon', 'exclamation', 'mode', {'mode': 3})}}
 				{{??}}
-					{{=helper.link('Panic Siphon', 'close', {'mode': 1}, null, 'danger')}}
+					{{=helper.link('Panic Siphon', 'close', 'mode', {'mode': 1}, null, 'danger')}}
 				{{?}}
 			</section>
 			<section class="button">
-				{{=helper.link('Vent Controls', 'sign-out', {'screen': 2})}}
+				{{=helper.link('Vent Controls', 'sign-out', 'screen', {'screen': 2})}}
 			</section>
 			<section class="button">
-				{{=helper.link('Scrubber Controls', 'filter', {'screen': 3})}}
+				{{=helper.link('Scrubber Controls', 'filter', 'screen', {'screen': 3})}}
 			</section>
 			<section class="button">
-				{{=helper.link('Set Environmental Mode', 'cog', {'screen': 4})}}
+				{{=helper.link('Set Environmental Mode', 'cog', 'screen', {'screen': 4})}}
 			</section>
 			<section class="button">
-				{{=helper.link('Set Alarm Threshold', 'bar-chart', {'screen': 5})}}
+				{{=helper.link('Set Alarm Threshold', 'bar-chart', 'screen', {'screen': 5})}}
 			</section>
 		</article>
 	{{?? data.screen == 2}}
@@ -111,9 +111,9 @@
 					<span class="label">Power:</span>
 					<div class="content">
 						{{? vent.power}}
-							{{=helper.link('On', 'power-off', {'id_tag': vent.id_tag, 'command': 'power', 'val': 0}, null, null)}}
+							{{=helper.link('On', 'power-off', 'adjust', {'id_tag': vent.id_tag, 'command': 'power', 'val': 0}, null, null)}}
 						{{??}}
-							{{=helper.link('Off', 'close', {'id_tag': vent.id_tag, 'command': 'power', 'val': 1}, null, 'danger')}}
+							{{=helper.link('Off', 'close', 'adjust', {'id_tag': vent.id_tag, 'command': 'power', 'val': 1}, null, 'danger')}}
 						{{?}}
 					</div>
 				</section>
@@ -130,15 +130,15 @@
 				<section>
 					<span class="label">Pressure Checks:</span>
 					<div class="content">
-						{{=helper.link('Internal', 'sign-in', {'id_tag': vent.id_tag, 'command': 'incheck', 'val': vent.checks}, null, vent.incheck ? 'selected' : null)}}
-						{{=helper.link('External', 'sign-out', {'id_tag': vent.id_tag, 'command': 'excheck', 'val': vent.checks}, null, vent.excheck ? 'selected' : null)}}
+						{{=helper.link('Internal', 'sign-in', 'adjust', {'id_tag': vent.id_tag, 'command': 'incheck', 'val': vent.checks}, null, vent.incheck ? 'selected' : null)}}
+						{{=helper.link('External', 'sign-out', 'adjust', {'id_tag': vent.id_tag, 'command': 'excheck', 'val': vent.checks}, null, vent.excheck ? 'selected' : null)}}
 					</div>
 				</section>
 				<section>
 					<span class="label">Set Pressure:</span>
 					<div class="content">
-						{{=helper.link(helper.fixed(vent.external), 'pencil', {'id_tag': vent.id_tag, 'command': 'set_external_pressure'})}}
-						{{=helper.link('Reset', 'refresh', { 'id_tag': vent.id_tag, 'command': 'reset_external_pressure'}, vent.extdefault ? 'disabled' : null)}}
+						{{=helper.link(helper.fixed(vent.external), 'pencil', 'adjust', {'id_tag': vent.id_tag, 'command': 'set_external_pressure'})}}
+						{{=helper.link('Reset', 'refresh', 'adjust', {'id_tag': vent.id_tag, 'command': 'reset_external_pressure'}, vent.extdefault ? 'disabled' : null)}}
 					</div>
 				</section>
 			</article>
@@ -154,9 +154,9 @@
 					<span class="label">Power:</span>
 					<div class="content">
 						{{? scrubber.power}}
-							{{=helper.link('On', 'power-off', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 0}, null, null)}}
+							{{=helper.link('On', 'power-off', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 0}, null, null)}}
 						{{??}}
-							{{=helper.link('Off', 'close', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 1}, null, 'danger')}}
+							{{=helper.link('Off', 'close', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'power', 'val': 1}, null, 'danger')}}
 						{{?}}
 					</div>
 				</section>
@@ -164,9 +164,9 @@
 					<span class="label">Mode:</span>
 					<div class="content">
 						{{? scrubber.scrubbing}}
-							{{=helper.link('Scrubbing', 'filter', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 0}, null, null)}}
+							{{=helper.link('Scrubbing', 'filter', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 0}, null, null)}}
 						{{??}}
-							{{=helper.link('Siphoning', 'sign-in', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 1}, null, 'danger')}}
+							{{=helper.link('Siphoning', 'sign-in', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'scrubbing', 'val': 1}, null, 'danger')}}
 						{{?}}
 					</div>
 				</section>
@@ -174,18 +174,18 @@
 					<span class="label">Range:</span>
 					<div class="content">
 						{{? scrubber.widenet}}
-							{{=helper.link('Extended', 'expand', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 0}, null, 'caution')}}
+							{{=helper.link('Extended', 'expand', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 0}, null, 'caution')}}
 						{{??}}
-							{{=helper.link('Normal', 'compress', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 1}, null, null)}}
+							{{=helper.link('Normal', 'compress', 'adjust', {'id_tag': scrubber.id_tag, 'command': 'widenet', 'val': 1}, null, null)}}
 						{{?}}
 					</div>
 				</section>
 				<section>
 					<span class="label">Filters:</span>
 					<div class="content">
-						{{=helper.link("CO2", scrubber.filter_co2 ? 'check-square-o' : 'square-o', {'id_tag': scrubber.id_tag, 'command': "co2_scrub", 'val': scrubber.filter_co2 ? 0 : 1}, null, scrubber.filter_co2 ? 'selected' : null)}}
-						{{=helper.link("N2O", scrubber.filter_n2o ? 'check-square-o' : 'square-o', {'id_tag': scrubber.id_tag, 'command': "n2o_scrub", 'val': scrubber.filter_n2o ? 0 : 1}, null, scrubber.filter_n2o ? 'selected' : null)}}
-						{{=helper.link("Plasma", scrubber.filter_toxins ? 'check-square-o' : 'square-o', {'id_tag': scrubber.id_tag, 'command': "tox_scrub", 'val': scrubber.filter_toxins ? 0 : 1}, null, scrubber.filter_toxins ? 'selected' : null)}}
+						{{=helper.link("CO2", scrubber.filter_co2 ? 'check-square-o' : 'square-o', 'adjust', {'id_tag': scrubber.id_tag, 'command': "co2_scrub", 'val': scrubber.filter_co2 ? 0 : 1}, null, scrubber.filter_co2 ? 'selected' : null)}}
+						{{=helper.link("N2O", scrubber.filter_n2o ? 'check-square-o' : 'square-o', 'adjust', {'id_tag': scrubber.id_tag, 'command': "n2o_scrub", 'val': scrubber.filter_n2o ? 0 : 1}, null, scrubber.filter_n2o ? 'selected' : null)}}
+						{{=helper.link("Plasma", scrubber.filter_toxins ? 'check-square-o' : 'square-o', 'adjust', {'id_tag': scrubber.id_tag, 'command': "tox_scrub", 'val': scrubber.filter_toxins ? 0 : 1}, null, scrubber.filter_toxins ? 'selected' : null)}}
 					</div>
 				</section>
 			</article>
@@ -198,7 +198,7 @@
 			<header><h2>Environmental Modes</h2></header>
 			{{~ data.modes:mode:i}}
 				<section class="button">
-					{{=helper.link(mode.name, mode.selected ? 'check-square-o' : 'square-o', {'mode': mode.mode}, null, mode.selected ? (mode.danger ? 'danger' : 'selected') : null)}}
+					{{=helper.link(mode.name, mode.selected ? 'check-square-o' : 'square-o', 'mode', {'mode': mode.mode}, null, mode.selected ? (mode.danger ? 'danger' : 'selected') : null)}}
 				</section>
 			{{~}}
 		</display>
@@ -221,7 +221,7 @@
 							<th>{{=threshold.name}}</th>
 							{{~ threshold.settings:setting:j}}
 								<td>
-									{{=helper.link(setting.selected >= 0 ? helper.round(setting.selected*100)/100 : "Off", null, {'command': 'set_threshold', 'env': setting.env, 'var': setting.val})}}
+									{{=helper.link(setting.selected >= 0 ? helper.round(setting.selected*100)/100 : "Off", null, 'adjust', {'command': 'set_threshold', 'env': setting.env, 'var': setting.val})}}
 								</td>
 							{{~}}
 						</tr>

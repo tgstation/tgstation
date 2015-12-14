@@ -3,8 +3,8 @@
 		<section>
 			<span class="label">Interface Lock:</span>
 			<div class="content">
-				{{=helper.link('Engaged', 'lock', {'toggleaccess': 1}, data.locked ? 'selected' : null)}}
-				{{=helper.link('Disengaged', 'unlock', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
+				{{=helper.link('Engaged', 'lock', 'toggleaccess', null, data.locked ? 'selected' : null)}}
+				{{=helper.link('Disengaged', 'unlock', 'toggleaccess', null, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
 			</div>
 		</section>
 	{{??}}
@@ -27,8 +27,8 @@
 					<span class="bad">Off</span>
 				{{?}}
 			{{??}}
-				{{=helper.link('On', 'power-off', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}
-				{{=helper.link('Off', 'close', {'breaker' : 1}, data.isOperating ? null : 'selected')}}
+				{{=helper.link('On', 'power-off', 'breaker', null, data.isOperating ? 'selected' : null)}}
+				{{=helper.link('Off', 'close', 'breaker', null, data.isOperating ? null : 'selected')}}
 			{{?}}
 		</div>
 	</section>
@@ -65,8 +65,8 @@
 						<span class="bad">Off</span>
 					{{?}}
 				{{??}}
-					{{=helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}
-					{{=helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
+					{{=helper.link('Auto', 'refresh', 'chargemode', null, data.chargeMode ? 'selected' : null)}}
+					{{=helper.link('Off', 'close', 'chargemode', null, data.chargeMode ? null : 'selected')}}
 				{{?}}
 				&nbsp;
 				{{? data.chargingStatus > 1}}
@@ -103,9 +103,9 @@
 				</td>
 				<td class="floatRight">
 					{{? !data.locked || data.siliconUser}}
-						{{=helper.link('Auto', 'refresh', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
-						{{=helper.link('On', 'power-off', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
-						{{=helper.link('Off', 'close', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
+						{{=helper.link('Auto', 'refresh', 'channel', channel.topicParams.auto, (channel.status == 1 || channel.status == 3) ? 'selected' : null)}}
+						{{=helper.link('On', 'power-off', 'channel', channel.topicParams.on, (channel.status == 2) ? 'selected' : null)}}
+						{{=helper.link('Off', 'close', 'channel', channel.topicParams.off, (channel.status == 0) ? 'selected' : null)}}
 					{{?}}
 				</td>
 			</tr>
@@ -123,17 +123,17 @@
 	<article class="display">
 		<header><h2>System Overrides</h2></header>
 		<section>
-			{{=helper.link('Overload Lighting Circuit', 'lightbulb-o', {'overload' : 1})}}
+			{{=helper.link('Overload Lighting Circuit', 'lightbulb-o', 'overload')}}
 		</section>
 		<section>
 			{{? data.malfStatus == 1}}
-				{{=helper.link('Override Programming', 'terminal', {'malfhack' : 1})}}
+				{{=helper.link('Override Programming', 'terminal', 'hack')}}
 			{{?? data.malfStatus == 2}}
-				{{=helper.link('Shunt Core Processes', 'caret-square-o-down', {'occupyapc' : 1})}}
+				{{=helper.link('Shunt Core Processes', 'caret-square-o-down', 'occupy')}}
 			{{?? data.malfStatus == 3}}
-				{{=helper.link('Return to Main Core', 'carat-square-o-left', {'deoccupyapc' : 1})}}
+				{{=helper.link('Return to Main Core', 'carat-square-o-left', 'deoccupy')}}
 			{{?? data.malfStatus == 4}}
-				{{=helper.link('Shunt Core Processes', 'caret-square-o-down', {'occupyapc' : 1}, 'linkOff')}}
+				{{=helper.link('Shunt Core Processes', 'caret-square-o-down')}}
 			{{?}}
 		</section>
 	</article>
@@ -149,8 +149,8 @@
 					<span>Disengaged</span>
 				{{?}}
 			{{??}}
-				{{=helper.link('Engaged', 'lock', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}
-				{{=helper.link('Disengaged', 'unlock', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
+				{{=helper.link('Engaged', 'lock', 'lock', null, data.coverLocked ? 'selected' : null)}}
+				{{=helper.link('Disengaged', 'unlock', 'lock', null, data.coverLocked ? null : 'selected')}}
 			{{?}}
 		</div>
 	</section>

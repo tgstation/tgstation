@@ -15,10 +15,10 @@
 	<section>
 		<span class="label">Adjust:</span>
 		<div class="content">
-			{{=helper.link('15&deg;', 'step-backward', {'rate_control': '1', 'cdir': '-15'})}}
-			{{=helper.link('1&deg;', 'backward', {'rate_control': '1', 'cdir': '-1'})}}
-			{{=helper.link('1&deg;', 'forward', {'rate_control': '1', 'cdir': '1'})}}
-			{{=helper.link('15&deg;', 'step-forward', {'rate_control': '1', 'cdir': '15'})}}
+			{{=helper.link('15&deg;', 'step-backward', 'control', {'cdir': '-15'})}}
+			{{=helper.link('1&deg;', 'backward', 'control', {'cdir': '-1'})}}
+			{{=helper.link('1&deg;', 'forward', 'control', {'cdir': '1'})}}
+			{{=helper.link('15&deg;', 'step-forward', 'control', {'cdir': '15'})}}
 		</div>
 	</section>
 </article>
@@ -27,12 +27,12 @@
 	<section>
 		<span class="label">Tracker Mode:</span>
 		<div class="content">
-			{{=helper.link('Off', 'close', {'track': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
-			{{=helper.link('Timed', 'clock-o', {'track': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
+			{{=helper.link('Off', 'close', 'tracking', {'mode': '0'}, (data.tracking_state == 0) ? 'selected' : '')}}
+			{{=helper.link('Timed', 'clock-o', 'tracking', {'mode': '1'}, (data.tracking_state == 1) ? 'selected' : '')}}
 			{{? data.connected_tracker}}
-				{{=helper.link('Auto', 'refresh', {'track': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
+				{{=helper.link('Auto', 'refresh', 'tracking', {'mode': '2'}, (data.tracking_state == 2) ? 'selected' : '')}}
 			{{??}}
-				{{=helper.link('Auto', 'refresh', null, 'disabled')}}
+				{{=helper.link('Auto', 'refresh', null, null, 'disabled')}}
 			{{?}}
 		</div>
 	</section>
@@ -45,12 +45,12 @@
 	<section>
 		<span class="label">Adjust:</span>
 		<div class="content">
-			{{=helper.link('180&deg;', 'fast-backward', {'rate_control': '1', 'tdir': '-180'})}}
-			{{=helper.link('30&deg;', 'step-backward', {'rate_control': '1', 'tdir': '-30'})}}
-			{{=helper.link('1&deg;', 'backward', { 'rate_control': '1', 'tdir': '-1'})}}
-			{{=helper.link('1&deg;', 'forward', { 'rate_control': '1', 'tdir': '1'})}}
-			{{=helper.link('30&deg;', 'step-forward', { 'rate_control': '1', 'tdir': '30'})}}
-			{{=helper.link('180&deg;', 'fast-forward', { 'rate_control': '1', 'tdir': '180'})}}
+			{{=helper.link('180&deg;', 'fast-backward', 'control', {'tdir': '-180'})}}
+			{{=helper.link('30&deg;', 'step-backward', 'control', {'tdir': '-30'})}}
+			{{=helper.link('1&deg;', 'backward', 'control', {'tdir': '-1'})}}
+			{{=helper.link('1&deg;', 'forward', 'control', {'tdir': '1'})}}
+			{{=helper.link('30&deg;', 'step-forward', 'control', {'tdir': '30'})}}
+			{{=helper.link('180&deg;', 'fast-forward', 'control', {'tdir': '180'})}}
 		</div>
 	</section>
 </article>
@@ -59,7 +59,7 @@
 	<section>
 		<span class="label">Search:</span>
 		<div class="content">
-			{{=helper.link('Refresh', 'refresh', {'search_connected': '1'})}}
+			{{=helper.link('Refresh', 'refresh', 'refresh')}}
 		</div>
 	</section>
 	<section>

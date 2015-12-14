@@ -149,18 +149,26 @@
 /datum/nanoui/proc/get_config_data()
 	var/list/config_data = list(
 			"title" = title,
-			"srcObject" = list(
-				"name" = src_object.name
-			),
 			"status" = status,
 			"autoUpdateLayout" = auto_update_layout,
 			"autoUpdateContent" = auto_update_content,
+			"ref" = "\ref[src]",
+			"window" = list(
+				"width" = width,
+				"height" = height,
+				"ref" =	window_id
+			),
+			"user" = list(
+				"name" = user.name,
+				"ref" = "\ref[user]"
+			),
+			"srcObject" = list(
+				"name" = src_object.name,
+				"ref" = "\ref[src_object]"
+			),
 			"templates" = list(
 				"layout" = "_[layout]",
 				"content" = "[template]"
-			),
-			"user" = list(
-				"name" = user.name
 			)
 		)
 	return config_data
@@ -263,12 +271,9 @@
 <link rel='stylesheet' type='text/css' href='nanoui.[layout].css' />
 	"}
 
-	// Generate data JSON.
+	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
 	var/initial_data_json = replacetext(replacetext(list2json_usecache(send_data), "&#34;", "&amp;#34;"), "'", "&#39;")
-
-	// Generate URL parameters JSON.
-	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
 	// Generate the HTML document.
 	return {"
@@ -287,7 +292,7 @@
 		[script_html]
 	</head>
 	<body>
-		<div id='data' data-initial='[initial_data_json]' data-url-parameters='[url_parameters_json]'></div>
+		<div id='data' data-initial='[initial_data_json]'></div>
 		<div id='layout'></div>
 		<noscript>
 			<h1>Javascript Required</h1>
@@ -369,7 +374,7 @@
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(list2params(list(list2json_usecache(send_data))),"[window_id].browser:receiveUpdate")
+	user << output(list2params(list(list2json_usecache(send_data))), "[window_id].browser:receiveUpdate")
 
  /**
   * private

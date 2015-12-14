@@ -144,28 +144,29 @@ Passive gate is similar to the regular pump except:
 	return
 
 
-
 /obj/machinery/atmospherics/components/binary/passive_gate/attack_hand(mob/user)
 	if(..() || !user)
 		return
-	add_fingerprint(usr)
 	interact(user)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Topic(href, href_list)
 	if(..())
 		return
-	if(href_list["power"])
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	if(href_list["set_press"])
-		switch(href_list["set_press"])
-			if ("max")
-				target_pressure = MAX_OUTPUT_PRESSURE
-			if ("set")
-				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 
+	switch(href_list["nano"])
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(href_list["set"])
+				if ("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if ("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+	add_fingerprint(usr)
 	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/components/binary/passive_gate/power_change()
 	..()

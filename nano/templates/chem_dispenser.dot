@@ -10,7 +10,7 @@
 		<span class="label">Amount:</span>
 		<div class="content">
 			{{~ data.beakerTransferAmounts :amount:i}}
-				{{=helper.link(amount, 'plus', {'amount': amount}, (data.amount == amount) ? 'selected' : null)}}
+				{{=helper.link(amount, 'plus', 'amount', {'set': amount}, (data.amount == amount) ? 'selected' : null)}}
 			{{~}}
 		</div>
 	</section>
@@ -19,7 +19,7 @@
 	<header><h2>Dispense</h2></header>
 	<section>
 		{{~ data.chemicals :chem:i}}
-			{{=helper.link(chem.title, 'tint', chem.commands, null, 'gridable')}}
+			{{=helper.link(chem.title, 'tint', 'dispense', chem.commands, null, 'gridable')}}
 		{{~}}
 	</div>
 </section>
@@ -27,11 +27,11 @@
 	<header><h2>Beaker</h2></header>
 	<section>
 		<div class="label">
-			{{=helper.link('Eject', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+			{{=helper.link('Eject', 'eject', 'eject', null, data.isBeakerLoaded ? null : 'disabled')}}
 		</div>
 		<div class="content">
 			{{~ data.beakerTransferAmounts :amount:i}}
-				{{=helper.link(amount, 'minus', {'remove': amount})}}
+				{{=helper.link(amount, 'minus', 'remove', {'amount': amount})}}
 			{{~}}
 		</div>
 	</section>

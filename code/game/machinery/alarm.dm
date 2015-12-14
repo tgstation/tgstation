@@ -357,10 +357,11 @@
 			var/list/thresholds = list()
 
 			var/list/gas_names = list(
-				"oxygen"         = "O<sub>2</sub>",
-				"carbon dioxide" = "CO<sub>2</sub>",
-				"plasma"         = "Toxin",
-				"other"          = "Other")
+				"oxygen"        	= "O<sub>2</sub>",
+				"nitrogen"			= "N<sub>2</sub>",
+				"carbon dioxide"	= "CO<sub>2</sub>",
+				"plasma"        	= "Toxin",
+				"other"         	= "Other")
 			for (var/g in gas_names)
 				thresholds += list(list("name" = gas_names[g], "settings" = list()))
 				selected = TLV[g]
@@ -399,78 +400,65 @@
 	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
 		return
 
-	if(href_list["toggleaccess"])
-		if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
-			locked = !locked
-
-	if(href_list["command"])
-		var/device_id = href_list["id_tag"]
-		switch(href_list["command"])
-			if("set_external_pressure")
-				var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
-				if(isnum(input_pressure))
-					send_signal(device_id, list(href_list["command"] = input_pressure))
-				return 1
-
-			if("reset_external_pressure")
-				send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
-				return 1
-			if(
-				"power",
-				"adjust_external_pressure",
-				"co2_scrub",
-				"tox_scrub",
-				"n2o_scrub",
-				"widenet",
-				"scrubbing"
-			)
-				send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
-				spawn(3)
-					src.updateUsrDialog()
-
-			if ("excheck")
-				send_signal(device_id, list ("checks" = text2num(href_list["val"])^1))
-
-			if ("incheck")
-				send_signal(device_id, list ("checks" = text2num(href_list["val"])^2))
-
-			//if("adjust_threshold") //was a good idea but required very wide window
-			if("set_threshold")
-				var/env = href_list["env"]
-				var/varname = href_list["var"]
-				var/datum/tlv/tlv = TLV[env]
-				var/newval = input("Enter [varname] for [env]", "Alarm triggers", tlv.vars[varname]) as num|null
-
-				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
-					return
-				if (newval<0)
-					tlv.vars[varname] = -1
-				else if (env=="temperature" && newval>5000)
-					tlv.vars[varname] = 5000
-				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-					tlv.vars[varname] = 50*ONE_ATMOSPHERE
-				else if (env!="temperature" && env!="pressure" && newval>200)
-					tlv.vars[varname] = 200
-				else
-					newval = round(newval,0.01)
-					tlv.vars[varname] = newval
-
-	if(href_list["screen"])
-		screen = text2num(href_list["screen"])
-
-	if(href_list["atmos_alarm"])
-		if (alarm_area.atmosalert(2,src))
-			post_alert(2)
-		update_icon()
-
-	if(href_list["atmos_reset"])
-		if (alarm_area.atmosalert(0,src))
-			post_alert(0)
-		update_icon()
-
-	if(href_list["mode"])
-		mode = text2num(href_list["mode"])
-		apply_mode()
+	switch(href_list["nano"])
+		if("toggleaccess")
+			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+				locked = !locked
+		if("adjust")
+			var/device_id = href_list["id_tag"]
+			switch(href_list["command"])
+				if("set_external_pressure")
+					var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
+					if(isnum(input_pressure))
+						send_signal(device_id, list(href_list["command"] = input_pressure))
+				if("reset_external_pressure")
+					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
+				if(
+					"power",
+					"adjust_external_pressure",
+					"co2_scrub",
+					"tox_scrub",
+					"n2o_scrub",
+					"widenet",
+					"scrubbing"
+				)
+					send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+				if ("excheck")
+					send_signal(device_id, list ("checks" = text2num(href_list["val"])^1))
+				if ("incheck")
+					send_signal(device_id, list ("checks" = text2num(href_list["val"])^2))
+				if("set_threshold")
+					var/env = href_list["env"]
+					var/varname = href_list["var"]
+					var/datum/tlv/tlv = TLV[env]
+					var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
+					if (isnull(newval))
+						return
+					if (newval<0)
+						tlv.vars[varname] = -1
+					else if (env=="temperature" && newval>5000)
+						tlv.vars[varname] = 5000
+					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+						tlv.vars[varname] = 50*ONE_ATMOSPHERE
+					else if (env!="temperature" && env!="pressure" && newval>200)
+						tlv.vars[varname] = 200
+					else
+						newval = round(newval,0.01)
+						tlv.vars[varname] = newval
+		if("screen")
+			screen = text2num(href_list["screen"])
+		if("mode")
+			mode = text2num(href_list["mode"])
+			apply_mode()
+		if("alarm")
+			if (alarm_area.atmosalert(2, src))
+				post_alert(2)
+			update_icon()
+		if("reset")
+			if (alarm_area.atmosalert(0, src))
+				post_alert(0)
+			update_icon()
+	return 1
 
 /obj/machinery/alarm/proc/apply_mode()
 	switch(mode)

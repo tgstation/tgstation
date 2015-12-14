@@ -21,17 +21,17 @@
 	<section>
 		<span class="label">Pressure Regulator:</span>
 		<div class="content">
-			{{=helper.link('Reset', 'refresh', {'dist_p': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
-			{{=helper.link('Min', 'minus', {'dist_p': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
-			{{=helper.link('Set', 'pencil', {'dist_p': 'custom'}, null)}}
-			{{=helper.link('Max', 'plus', {'dist_p': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Reset', 'refresh', 'pressure', {'set': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Min', 'minus', 'pressure', {'set': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Set', 'pencil', 'pressure', {'set': 'custom'}, null)}}
+			{{=helper.link('Max', 'plus', 'pressure', {'set': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
 		</div>
 	</section>
 	<section>
 		<span class="label">Valve:</span>
 		<div class="content">
-			{{=helper.link('Open', 'unlock', {'stat': 1}, data.maskConnected ? (data.valveOpen ? 'selected' : null) : 'disabled')}}
-			{{=helper.link('Close', 'lock', {'stat': 1}, data.valveOpen ? null : 'selected')}}
+			{{=helper.link('Open', 'unlock', 'valve', null, data.maskConnected ? (data.valveOpen ? 'selected' : null) : 'disabled')}}
+			{{=helper.link('Close', 'lock', 'valuve', null, data.valveOpen ? null : 'selected')}}
 		</div>
 	</section>
 </article>

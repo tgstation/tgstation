@@ -161,38 +161,37 @@
 	if (..())
 		return
 
-	if (href_list["dist_p"])
-		if (href_list["dist_p"] == "custom")
-			var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
-			if(isnum(custom))
-				href_list["dist_p"] = custom
-				.()
-		else if (href_list["dist_p"] == "reset")
-			distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "min")
-			distribute_pressure = TANK_MIN_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "max")
-			distribute_pressure = TANK_MAX_RELEASE_PRESSURE
-		else
-			distribute_pressure = text2num(href_list["dist_p"])
-		distribute_pressure = min(max(round(distribute_pressure), TANK_MIN_RELEASE_PRESSURE), TANK_MAX_RELEASE_PRESSURE)
-	if (href_list["stat"])
-		if(istype(loc,/mob/living/carbon))
-			var/mob/living/carbon/location = loc
-			if(location.internal == src)
-				location.internal = null
-				location.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
-				if (location.internals)
+	switch(href_list["nano"])
+		if("pressure")
+			switch(href_list["set"])
+				if("custom")
+					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
+					if(isnum(custom))
+						distribute_pressure = custom
+				if("reset")
+					distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				if("min")
+					distribute_pressure = TANK_MIN_RELEASE_PRESSURE
+				if("max")
+					distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+			distribute_pressure = Clamp(round(distribute_pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+		if("valve")
+			if(istype(loc,/mob/living/carbon))
+				var/mob/living/carbon/location = loc
+				if(location.internal == src)
+					location.internal = null
 					location.internals.icon_state = "internal0"
-			else
-				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-					location.internal = src
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
+					usr << "<span class='notice'>You close the tank release valve.</span>"
 					if (location.internals)
-						location.internals.icon_state = "internal1"
+						location.internals.icon_state = "internal0"
 				else
-					usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
+					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+						location.internal = src
+						usr << "<span class='notice'>You open \the [src] valve.</span>"
+						if (location.internals)
+							location.internals.icon_state = "internal1"
+					else
+						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)

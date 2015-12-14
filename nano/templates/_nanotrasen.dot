@@ -1,6 +1,8 @@
 <header class='titlebar' unselectable='on'>
+	<i class='statusicon fa fa-eye fa-2x' unselectable="on"></i>
 	<span class='title' unselectable='on'>{{=config.title}}</span>
-	<i class='statusicon' unselectable="on"></i>
+	<i class='titlebutton minimize fa fa-minus fa-2x' unselectable="on"></i>
+	<i class='titlebutton close fa fa-close fa-2x' unselectable="on"></i>
 </header>
 
 <div id='content' class='content' unselectable='on'>

@@ -147,29 +147,32 @@ Thus, the two variables affect pump operation are set in New():
 	spawn(2)
 		broadcast_status()
 	update_icon()
+	return
 
 
 /obj/machinery/atmospherics/components/binary/volume_pump/attack_hand(mob/user)
-	if(..() | !user)
+	if(..() || !user)
 		return
 	interact(user)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Topic(href,href_list)
 	if(..())
 		return
-	if(href_list["power"])
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	if(href_list["set_transfer_rate"])
-		switch(href_list["set_transfer_rate"])
-			if ("max")
-				transfer_rate = MAX_TRANSFER_RATE
-			if ("set")
-				transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
-		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 
+	switch(href_list["nano"])
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("transfer")
+			switch(href_list["set"])
+				if ("max")
+					transfer_rate = MAX_TRANSFER_RATE
+				if ("custom")
+					transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
+			investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	add_fingerprint(usr)
 	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/components/binary/volume_pump/power_change()
 	..()

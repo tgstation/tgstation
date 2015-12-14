@@ -44,15 +44,16 @@
 	if(..())
 		return
 
-	if(href_list["access"])
-		if(href_list["access"] == "clear")
+	switch(href_list["nano"])
+		if("clear")
 			accesses = list()
 			one_access = 0
-		else if(href_list["access"] == "one")
+		if("one_access")
 			one_access = !one_access
-		else
+		if("set")
 			var/access = text2num(href_list["access"])
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
+	return 1

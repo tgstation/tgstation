@@ -1,8 +1,6 @@
-class @Helpers
-  constructor: (@bus, @fragment = document) ->
-
-  link: (text = "", icon = "", parameters = {}, status = "", klass = "") ->
-    parameters = util.href(parameters)
+@helpers =
+  link: (text = "", icon = "", action = "", params = {}, status = "", klass = "") ->
+    params = JSON.stringify params
 
     if !!icon
       icon = "<i class='pending fa fa-fw \
@@ -14,7 +12,7 @@ class @Helpers
         #{status} #{klass}'>#{icon}#{text}</div>"
     else
       "<div unselectable='on' class='link active \
-        #{klass}' data-href='#{parameters}'>#{icon}#{text}</div>"
+        #{klass}' data-action='#{action}' data-params='#{params}'>#{icon}#{text}</div>"
 
 
   bar: (value = 0, min = 0, max = 100, klass = "", text = "") ->
