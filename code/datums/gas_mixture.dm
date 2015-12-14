@@ -120,6 +120,7 @@ What are the archived variables for?
 					temperature -= (reaction_rate*20000)/heat_capacity()
 
 					reacting = 1
+/*
 	if(thermal_energy() > PLASMA_BINDING_ENERGY)
 		if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
 			//world << "pre [temperature, [toxins], [carbon_dioxide]
@@ -143,7 +144,7 @@ What are the archived variables for?
 				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 					temperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
 				//world << "post [temperature], [toxins], [carbon_dioxide]
-
+	*/
 
 
 	fuel_burnt = 0
