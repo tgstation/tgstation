@@ -249,7 +249,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
 	item = /obj/item/weapon/antag_spawner/borg_tele
-	cost = 50
+	cost = 80
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
