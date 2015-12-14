@@ -145,7 +145,7 @@
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
 
 //CPU lag shit
-#define calculateticks(x)	x / world.tick_lag // Converts your ticks to proper tenths.
+#define calculateticks(x)	x * world.tick_lag // Converts your ticks to proper tenths.
 #define tcheck(CPU,TOSLEEP)	if(world.cpu > CPU) sleep(calculateticks(TOSLEEP)) //Shorthand of checking and then sleeping a process based on world CPU
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
