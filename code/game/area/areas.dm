@@ -553,7 +553,7 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 					undlay.overlays = B.overlays
 					var/prevtype = B.type
 
-					var/turf/X = B.ChangeTurf(T.type)
+					var/turf/X = B.ChangeTurf(T.type, allow = 1)
 					for(var/key in T.vars)
 						if(key in ignored_keys) continue
 						if(istype(T.vars[key],/list))
@@ -635,14 +635,14 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 					toupdate += X
 
 					if(turftoleave)
-						fromupdate += T.ChangeTurf(turftoleave)
+						fromupdate += T.ChangeTurf(turftoleave, allow = 1)
 					else
 						if(ispath(AA.type, /area/syndicate_station/start))
-							T.ChangeTurf(/turf/unsimulated/floor)
+							T.ChangeTurf(/turf/unsimulated/floor, allow = 1)
 							T.icon = 'icons/turf/snow.dmi'
 							T.icon_state = "snow"
 						else
-							T.ChangeTurf(get_base_turf(T.z))
+							T.ChangeTurf(get_base_turf(T.z), allow = 1)
 							if(istype(T, /turf/space))
 								switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
 									if("Hell Rising")
