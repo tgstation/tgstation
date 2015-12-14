@@ -224,6 +224,10 @@
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
 						if(W.reagents.has_reagent("water"))
+							if(istype(atm,/obj/machinery/space_heater/campfire))
+								var/obj/machinery/space_heater/campfire/campfire = atm
+								campfire.cell.charge = 0
+								campfire.process()
 							if(isliving(atm)) // For extinguishing mobs on fire
 								var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
 								M.ExtinguishMob()

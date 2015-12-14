@@ -139,6 +139,10 @@
 	..()
 	icon_state = "tree_[rand(1, 6)]"
 
+/obj/structure/flora/tree_stump
+	name = "tree stump"
+	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon_state = "pine_stump"
 
 //grass
 /obj/structure/flora/grass

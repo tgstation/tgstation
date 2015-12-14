@@ -47,7 +47,7 @@
 		return //Fuck off
 	..()
 
-/turf/simulated/wall/r_wall/proc/update_icon()
+/turf/simulated/wall/r_wall/update_icon()
 	if(!d_state) //Are we under construction or deconstruction ?
 		relativewall() //Well isn't that odd, let's pass this to smoothwall.dm
 		relativewall_neighbours() //Let's make sure the other walls know about this travesty
