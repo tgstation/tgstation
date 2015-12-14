@@ -60,7 +60,7 @@
 /proc/smooth_icon(atom/A)
 	if(qdeleted(A))
 		return
-	spawn(1) //don't remove this, otherwise smoothing breaks
+	spawn(0) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
 
@@ -134,7 +134,8 @@
 	return "4-[sdir]"
 
 /proc/smooth_icon_neighbors(atom/A)
-	for(var/atom/T in orange(1,A))
+	for(var/V in orange(1,A))
+		var/atom/T = V
 		if(T.smooth)
 			smooth_icon(T)
 
@@ -189,3 +190,28 @@
 			return SOUTH_EAST
 		if(SOUTHWEST)
 			return SOUTH_WEST
+
+//Icon smoothing helpers
+/proc/smooth_zlevel(var/zlevel)
+	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+	for(var/V in away_turfs)
+		var/turf/T = V
+		if(T.smooth)
+			smooth_icon(T)
+		for(var/R in T)
+			var/atom/A = R
+			if(A.smooth)
+				smooth_icon(A)
+
+/mob/proc/resmooth(times=1)
+	var/list/L = block(locate(1, 1, z), locate(world.maxx, world.maxy, z))
+	while(times)
+		for(var/V in L)
+			var/turf/T = V
+			if(T.smooth)
+				smooth_icon(T)
+			for(var/R in T)
+				var/atom/A = R
+				if(A.smooth)
+					smooth_icon(A)
+		times--
