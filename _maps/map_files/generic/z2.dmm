@@ -395,7 +395,7 @@
 "hE" = (/obj/structure/flora/tree/pine,/turf/simulated/floor/plating/snow,/area/syndicate_mothership)
 "hF" = (/obj/structure/flora/grass/both,/turf/simulated/floor/plating/snow,/area/syndicate_mothership)
 "hG" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/centcom/supply)
-"hH" = (/obj/structure/cult/tome{step_y = 1},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
+"hH" = (/obj/structure/cult/tome,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "hI" = (/turf/simulated/floor/plasteel,/area/centcom/supply)
 "hJ" = (/turf/simulated/floor/plasteel/warning{dir = 8},/area/centcom/supply)
 "hK" = (/turf/simulated/floor/plasteel/green/corner{dir = 1},/area/centcom/control)
