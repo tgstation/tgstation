@@ -61,6 +61,12 @@
 /obj/item/device/assembly/proc/describe()									// Called by grenades to describe the state of the trigger (time left, etc)
 	return "The trigger assembly looks broken!"
 
+/obj/item/device/assembly/proc/send_pulses_to_list(var/list/L) //Send pulse to all assemblies in list.
+	if(!L || !L.len) return
+
+	for(var/obj/item/device/assembly/A in L)
+		A.pulsed()
+
 /obj/item/device/assembly/process_cooldown()
 	cooldown--
 	if(cooldown <= 0)	return 0

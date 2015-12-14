@@ -10,12 +10,12 @@
 	var/list/connections = list() //Assembly associated with the assembly it's connected to
 
 /obj/item/device/assembly_frame/Destroy()
-	connections.len = 0
+	connections = null
 
 	for(var/atom/movable/A in contents)
 		A.forceMove(get_turf(src))
 
-	assemblies.len = 0
+	assemblies = null
 
 	..()
 
@@ -206,8 +206,9 @@
 
 	var/list/connected_to_source = connections[from]
 
-	for(var/obj/item/device/assembly/A in connected_to_source)
-		A.pulsed()
+	from.send_pulses_to_list(connected_to_source)
+
+
 
 /obj/item/device/assembly_frame/attackby(obj/item/W, mob/user)
 	..()
