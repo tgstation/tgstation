@@ -186,6 +186,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj in L)
 			if(istype(obj, /obj/effect/landmark/spacepod/random))
 				qdel(obj)
+		stat_collection.death_stats = list() // Get rid of the corpses that spawn on startup.
 		to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 //		to_chat(world, sound('sound/AI/welcome.ogg'))// Skie //Out with the old, in with the new. - N3X15
 
@@ -222,6 +223,8 @@ var/global/datum/controller/gameticker/ticker
 	if(config.sql_enabled)
 		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
+
+	stat_collection.round_start_time = world.realtime
 
 	return 1
 

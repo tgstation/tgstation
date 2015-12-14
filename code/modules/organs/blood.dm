@@ -162,6 +162,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	vessel.remove_reagent("blood",amt)
 	blood_splatter(src,src)
+	stat_collection.blood_spilled += amt
 
 /****************************************************
 				BLOOD TRANSFERS

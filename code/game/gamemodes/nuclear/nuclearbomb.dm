@@ -309,6 +309,7 @@ var/bomb_set
 
 			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 															//kinda shit but I couldn't  get permission to do what I wanted to do.
+			stat_collection.nuked++
 
 			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 				to_chat(world, "<B>Resetting in 30 seconds!</B>")

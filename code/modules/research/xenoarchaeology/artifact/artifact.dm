@@ -10,6 +10,8 @@
 /datum/artifact_find/New()
 	artifact_detect_range = rand(5,300)
 
+	stat_collection.artifacts_discovered++
+
 	artifact_id = "[pick("kappa","sigma","antaeres","beta","omicron","iota","epsilon","omega","gamma","delta","tau","alpha")]-[rand(100,999)]"
 
 	artifact_find_type = pick(\

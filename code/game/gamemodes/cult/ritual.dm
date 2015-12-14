@@ -82,6 +82,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		if(AI.client)
 			AI.client.images += blood_image
 	rune_list.Add(src)
+	stat_collection.cult.runes_written++
 
 /obj/effect/rune/Destroy()
 	if(istype(ajourn))
@@ -110,6 +111,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	else if(istype(I, /obj/item/weapon/nullrod))
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
+		stat_collection.cult.runes_nulled++
 		return
 	return
 
@@ -185,6 +187,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 
 /obj/effect/rune/proc/fizzle()
+	stat_collection.cult.runes_fumbled++
 	if(istype(src,/obj/effect/rune))
 		usr.say(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
 	else

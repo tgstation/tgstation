@@ -210,6 +210,8 @@
 #include "code\datums\research\research_tree.dm"
 #include "code\datums\research\unlockable.dm"
 #include "code\datums\saycode\speech.dm"
+#include "code\datums\statistics\stat_blob.dm"
+#include "code\datums\statistics\statcollection.dm"
 #include "code\datums\wires\airlock.dm"
 #include "code\datums\wires\alarm.dm"
 #include "code\datums\wires\apc.dm"

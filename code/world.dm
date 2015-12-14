@@ -143,6 +143,8 @@ var/savefile/panicfile
 		setup_species()
 		setup_shuttles()
 
+		stat_collection.artifacts_discovered = 0 // Because artifacts during generation get counted otherwise!
+
 	for(var/plugin_type in typesof(/plugin))
 		var/plugin/P = new plugin_type()
 		plugins[P.name] = P

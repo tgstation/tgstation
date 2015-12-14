@@ -38,6 +38,7 @@
 
 	living_mob_list -= src
 	dead_mob_list += src
+	stat_collection.add_death_stat(src)
 	for(var/obj/item/I in src)
 		I.OnMobDeath(src)
 	return ..(gibbed)
