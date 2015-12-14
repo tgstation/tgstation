@@ -6,7 +6,7 @@
 	icon_keyboard = "syndie_key"
 	req_access = list(access_syndicate)
 	shuttleId = "syndicate"
-	possible_destinations = "syndicate_away;syndicate_z5;syndicate_z3;syndicate_z4;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
+	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	var/challenge = FALSE
 
 /obj/machinery/computer/shuttle/syndicate/recall
