@@ -224,7 +224,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
-		for(var/mob/living/carbon/human/M in view(6, owner))
+		for(var/mob/living/M in view(6, owner))
 			if(M == owner)
 				continue
 			owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
