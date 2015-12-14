@@ -1477,6 +1477,7 @@
 #include "code\modules\projectiles\guns\projectile\launchers.dm"
 #include "code\modules\projectiles\guns\projectile\pistol.dm"
 #include "code\modules\projectiles\guns\projectile\revolver.dm"
+#include "code\modules\projectiles\guns\projectile\saw.dm"
 #include "code\modules\projectiles\guns\projectile\shotgun.dm"
 #include "code\modules\projectiles\guns\projectile\sniper.dm"
 #include "code\modules\projectiles\guns\projectile\toy.dm"
