@@ -8,6 +8,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	a_intent = "harm"
+	attacktext = "gores"
 	maxHealth = 100
 	health = 100
 	speed = 0
@@ -52,7 +53,7 @@
 		var/mob/living/L = target
 		var/mob/living/simple_animal/hostile/illusion/M = new(loc)
 		M.faction = faction
-		M.Copy_Parent(parent_mob, life_span/2, melee_damage_upper, multiply_chance/2)
+		M.Copy_Parent(parent_mob, life_span, health/2, melee_damage_upper, multiply_chance/2)
 		M.GiveTarget(L)
 
 ///////Actual Types/////////
