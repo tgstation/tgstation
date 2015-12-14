@@ -135,66 +135,6 @@
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW"
-	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
-	icon_state = "l6closed100"
-	item_state = "l6closedmag"
-	w_class = 5
-	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	var/cover_open = 0
-	can_suppress = 0
-	burst_size = 5
-	fire_delay = 3
-	pin = /obj/item/device/firing_pin/implant/pindicate
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
-	pin = /obj/item/device/firing_pin
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	cover_open = !cover_open
-	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
-	update_icon()
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(cover_open)
-		user << "<span class='warning'>[src]'s cover is open! Close it before firing!</span>"
-	else
-		..()
-		update_icon()
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
-		..()
-	else if(cover_open && magazine)
-		//drop the mag
-		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine = null
-		update_icon()
-		user << "<span class='notice'>You remove the magazine from [src].</span>"
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
-	if(!cover_open)
-		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
-		return
-	..()
-
 /obj/item/weapon/gun/projectile/automatic/m90
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."

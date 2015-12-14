@@ -212,12 +212,6 @@
 	reagents.add_reagent("coniine", 6)
 	reagents.add_reagent("sodium_thiopental", 6)
 
-/obj/item/ammo_casing/a762
-	desc = "A 7.62mm bullet casing."
-	icon_state = "762-casing"
-	caliber = "a762"
-	projectile_type = /obj/item/projectile/bullet
-
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
 	caliber = "a556"
