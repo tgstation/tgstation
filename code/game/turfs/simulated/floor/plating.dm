@@ -208,8 +208,8 @@
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				return
-			if(O.burn_state == -1)
-				O.burn_state = 0 //Even fireproof things burn up in lava
+			if(O.burn_state == FIRE_PROOF)
+				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
 			O.fire_act()
 		else if (istype(AM, /mob/living))
 			var/mob/living/L = AM
