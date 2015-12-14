@@ -1,8 +1,12 @@
 //Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_EAST	16
-#define NORTH_WEST	32
-#define SOUTH_EAST	64
-#define SOUTH_WEST	128
+#define N_NORTH	2
+#define N_SOUTH	4
+#define N_EAST	16
+#define N_WEST	256
+#define N_NORTHEAST	32
+#define N_NORTHWEST	512
+#define N_SOUTHEAST	64
+#define N_SOUTHWEST	1024
 
 #define SMOOTH_FALSE	0 //not smooth
 #define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
@@ -15,12 +19,6 @@
 /atom/var/bottom_right_corner
 /atom/var/can_be_unanchored = 0
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-
-/atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
-	overlays -= top_right_corner
-	overlays -= bottom_right_corner
-	overlays -= bottom_left_corner
 
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
@@ -47,14 +45,14 @@
 			AM = find_type_in_direction(A, direction)
 			if(istype(AM))
 				if(AM.anchored)
-					adjacencies |= transform_dir(direction)
+					adjacencies |= 1 << direction
 			else
 				if(AM)
-					adjacencies |= transform_dir(direction)
+					adjacencies |= 1 << direction
 	else
 		for(var/direction in alldirs)
 			if(find_type_in_direction(A, direction))
-				adjacencies |= transform_dir(direction)
+				adjacencies |= 1 << direction
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
@@ -63,7 +61,6 @@
 	spawn(0) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
-
 			A.clear_smooth_overlays()
 
 			A.top_left_corner = make_nw_corner(adjacencies)
@@ -78,58 +75,58 @@
 
 /proc/make_nw_corner(adjacencies)
 	var/sdir = "i"
-	if((adjacencies & NORTH) && (adjacencies & WEST))
-		if(adjacencies & NORTH_WEST)
+	if((adjacencies & N_NORTH) && (adjacencies & N_WEST))
+		if(adjacencies & N_NORTHWEST)
 			sdir = "f"
 		else
 			sdir = "nw"
 	else
-		if(adjacencies & NORTH)
+		if(adjacencies & N_NORTH)
 			sdir = "n"
-		else if(adjacencies & WEST)
+		else if(adjacencies & N_WEST)
 			sdir = "w"
 	return "1-[sdir]"
 
 /proc/make_ne_corner(adjacencies)
 	var/sdir = "i"
-	if((adjacencies & NORTH) && (adjacencies & EAST))
-		if(adjacencies & NORTH_EAST)
+	if((adjacencies & N_NORTH) && (adjacencies & N_EAST))
+		if(adjacencies & N_NORTHEAST)
 			sdir = "f"
 		else
 			sdir = "ne"
 	else
-		if(adjacencies & NORTH)
+		if(adjacencies & N_NORTH)
 			sdir = "n"
-		else if(adjacencies & EAST)
+		else if(adjacencies & N_EAST)
 			sdir = "e"
 	return "2-[sdir]"
 
 /proc/make_sw_corner(adjacencies)
 	var/sdir = "i"
-	if((adjacencies & SOUTH) && (adjacencies & WEST))
-		if(adjacencies & SOUTH_WEST)
+	if((adjacencies & N_SOUTH) && (adjacencies & N_WEST))
+		if(adjacencies & N_SOUTHWEST)
 			sdir = "f"
 		else
 			sdir = "sw"
 	else
-		if(adjacencies & SOUTH)
+		if(adjacencies & N_SOUTH)
 			sdir = "s"
-		else if(adjacencies & WEST)
+		else if(adjacencies & N_WEST)
 			sdir = "w"
 	return "3-[sdir]"
 
 /proc/make_se_corner(adjacencies)
 	var/sdir = "i"
-	if((adjacencies & SOUTH) && (adjacencies & EAST))
-		if(adjacencies & SOUTH_EAST)
+	if((adjacencies & N_SOUTH) && (adjacencies & N_EAST))
+		if(adjacencies & N_SOUTHEAST)
 			sdir = "f"
 		else
 			sdir = "se"
 	else
-		if(adjacencies & SOUTH)
+		if(adjacencies & N_SOUTH)
 			sdir = "s"
 		else
-			if(adjacencies & EAST)
+			if(adjacencies & N_EAST)
 				sdir = "e"
 	return "4-[sdir]"
 
@@ -178,20 +175,14 @@
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
 
-/proc/transform_dir(direction)
-	switch(direction)
-		if(NORTH,SOUTH,EAST,WEST)
-			return direction
-		if(NORTHEAST)
-			return NORTH_EAST
-		if(NORTHWEST)
-			return NORTH_WEST
-		if(SOUTHEAST)
-			return SOUTH_EAST
-		if(SOUTHWEST)
-			return SOUTH_WEST
-
 //Icon smoothing helpers
+
+/atom/proc/clear_smooth_overlays()
+	overlays -= top_left_corner
+	overlays -= top_right_corner
+	overlays -= bottom_right_corner
+	overlays -= bottom_left_corner
+
 /proc/smooth_zlevel(var/zlevel)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
@@ -202,16 +193,3 @@
 			var/atom/A = R
 			if(A.smooth)
 				smooth_icon(A)
-
-/mob/proc/resmooth(times=1)
-	var/list/L = block(locate(1, 1, z), locate(world.maxx, world.maxy, z))
-	while(times)
-		for(var/V in L)
-			var/turf/T = V
-			if(T.smooth)
-				smooth_icon(T)
-			for(var/R in T)
-				var/atom/A = R
-				if(A.smooth)
-					smooth_icon(A)
-		times--
