@@ -36,9 +36,9 @@
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
-	inherent = list("Serve the public trust.",\
+	inherent = list("Uphold the law.",\
 					"Protect the innocent.",\
-					"Uphold the law.")
+					"Serve the public trust.")
 
 /datum/ai_laws/malfunction
 	name = "*ERROR*"
