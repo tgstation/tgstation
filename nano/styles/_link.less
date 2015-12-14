@@ -11,7 +11,7 @@
 
 
 // Basic Link (Button) Element
-.link {
+span.link {
     display: inline-block;
     box-sizing: border-box;
     height: 22px;
@@ -24,15 +24,8 @@
     .fontReset; // Reset font settings.
 
     // Tweak spacing to fit icons.
+    .fa { margin-right: 3px; }
     .iconed { padding-left: 3px; }
-    i { margin-right: 3px; }
-    // Swap icons when state goes to pending.
-    i.main { display: inline-block; }
-    i.pending { display: none; }
-    &.pending {
-        i.main { display: none; }
-        i.pending { display: inline-block; }
-    }
 
     // Link colors:
     background-color: @normal;

@@ -3,17 +3,13 @@
     params = JSON.stringify params
 
     if !!icon
-      icon = "<i class='pending fa fa-fw \
-      fa-spinner fa-pulse'></i><i class='main fa fa-fw fa-#{icon}'></i>"
+      icon = "<i class='fa fa-fw fa-#{icon}'></i>"
       klass += " iconed"
 
     if !!status
-      "<div unselectable='on' class='link inactive \
-        #{status} #{klass}'>#{icon}#{text}</div>"
+      "<span unselectable='on' class='link inactive #{status} #{klass}'>#{icon}#{text}</span>"
     else
-      "<div unselectable='on' class='link active \
-        #{klass}' data-action='#{action}' data-params='#{params}'>#{icon}#{text}</div>"
-
+      "<span unselectable='on' class='link active #{klass}' data-action='#{action}' data-params='#{params}'>#{icon}#{text}</span>"
 
   bar: (value = 0, min = 0, max = 100, klass = "", text = "") ->
     if min < max
@@ -34,18 +30,14 @@
     <span class='barText'>#{text}</span> \
     </div>"
 
-
   round: (number) ->
     Math.round number
-
 
   fixed: (number, decimals = 1) ->
     Number Math.round(number + "e" + decimals) + "e-" + decimals
 
-
   floor: (number) ->
     Math.floor number
-
 
   ceil: (number) ->
     Math.ceil number

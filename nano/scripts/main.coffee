@@ -3,6 +3,7 @@ document.when "ready", =>
 
   @nanoui = new @NanoUI coderbus, document
   @handlers = new @Handlers coderbus, document
+  @nanowindow = new @Window coderbus, document
 
   coderbus.emit "memes"
 

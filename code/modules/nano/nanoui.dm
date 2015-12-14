@@ -22,14 +22,19 @@
 	var/window_id // The window_id for browse() and onclose().
 	var/width = 0 // The window width.
 	var/height = 0 // The window height
-	var/on_close_logic = 1 // Enable legacy onclose() logic.
-	var/atom/ref = null // An extra ref to use when the window is closed.
-	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // Extra options to winset().
-	var/layout = "nanotrasen" // The layout to be used for this UI.
+	var/window_options = list( // Extra options to winset().
+	  "focus" = 0,
+	  "titlebar" = 1,
+	  "can_resize" = 1,
+	  "can_minimize" = 1,
+	  "can_maximize" = 0,
+	  "can_close" = 1,
+	  "auto_format" = 0
+	)
+	var/atom/ref = null // An extra ref to call when the window is closed.
+	var/layout = "generic" // The layout to be used for this UI.
 	var/template // The template to be used for this UI.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
-	var/auto_update_layout = 0 // Re-render the layout every update.
-	var/auto_update_content = 1 // Re-render the content every update.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
 	var/datum/topic_state/state = null // Topic state used to determine status. Topic states are in interactions/.
@@ -61,7 +66,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = "[ui_key]\ref[src_object]"
+	src.window_id = "\ref[src_object]:[ui_key]"
 
 	set_template(template)
 
@@ -89,17 +94,17 @@
   * Set the status/visibility of the NanoUI.
   *
   * required state int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
-  * optional push_update bool Push an update to the UI (an update is always sent for NANO_DISABLED).
+  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
  **/
-/datum/nanoui/proc/set_status(state, push_update = 0)
+/datum/nanoui/proc/set_status(state, push = 0)
 	if (state != status) // Only update if status has changed.
 		if (status == NANO_DISABLED)
 			status = state
-			if (push_update)
+			if (push)
 				update()
 		else
 			status = state
-			if (push_update || status == 0) // Force an update if NANO_DISABLED.
+			if (push || status == 0) // Force an update if NANO_DISABLED.
 				push_data(null, 1)
 
  /**
@@ -107,14 +112,14 @@
   *
   * Update the status/visibility of the NanoUI for its user.
   *
-  * optional push_update bool Push an update to the UI (an update is always sent for NANO_DISABLED).
+  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
  **/
-/datum/nanoui/proc/update_status(push_update = 0)
+/datum/nanoui/proc/update_status(push = 0)
 	var/new_status = src_object.CanUseTopic(user, state)
 	if(master_ui)
 		new_status = min(new_status, master_ui.status)
 
-	set_status(new_status, push_update)
+	set_status(new_status, push)
 	if(new_status == NANO_CLOSE)
 		close()
 
@@ -150,8 +155,6 @@
 	var/list/config_data = list(
 			"title" = title,
 			"status" = status,
-			"autoUpdateLayout" = auto_update_layout,
-			"autoUpdateContent" = auto_update_content,
 			"ref" = "\ref[src]",
 			"window" = list(
 				"width" = width,
@@ -160,6 +163,7 @@
 			),
 			"user" = list(
 				"name" = user.name,
+				"fancy" = user.client.prefs.nanoui_fancy,
 				"ref" = "\ref[user]"
 			),
 			"srcObject" = list(
@@ -195,9 +199,9 @@
   *
   * Sets the browse() window options for this NanoUI.
   *
-  * required window_options string The window options to set.
+  * required window_options list The window options to set.
  **/
-/datum/nanoui/proc/set_window_options(window_options)
+/datum/nanoui/proc/set_window_options(list/window_options)
 	src.window_options = window_options
 
  /**
@@ -222,36 +226,6 @@
 	src.template = lowertext(template)
 
  /**
-  * public
-  *
-  * Enable/disable auto-updating of the NanoUI layout.
-  *
-  * required state bool Enable/disable auto-updating of the layout.
- **/
-/datum/nanoui/proc/set_auto_update_layout(state)
-	auto_update_layout = state
-
- /**
-  * public
-  *
-  * Enable/disable auto-updating of the NanoUI content.
-  *
-  * required state bool Enable/disable auto-updating of the content.
- **/
-/datum/nanoui/proc/set_auto_update_content(state)
-	auto_update_content = state
-
- /**
-  * public
-  *
-  * Enable/disable legacy on_close logic.
-  *
-  * required state bool Enable/disable the logic.
- **/
-/datum/nanoui/proc/use_on_close_logic(state)
-	on_close_logic = state
-
- /**
   * private
   *
   * Generate HTML for this NanoUI.
@@ -273,7 +247,7 @@
 
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(replacetext(list2json_usecache(send_data), "&#34;", "&amp;#34;"), "'", "&#39;")
+	var/initial_data_json = replacetext(list2json_usecache(send_data), "'", "\\'")
 
 	// Generate the HTML document.
 	return {"
@@ -321,11 +295,11 @@
 	var/window_size = ""
 	if (width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
-	update_status(push_update = 0) // Update the window state.
+	update_status(push = 0) // Update the window state.
 	if (status == NANO_CLOSE)
 		return // Bail if we should close.
 
-	user << browse(get_html(), "window=[window_id];[window_size][window_options]") // Open the window.
+	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
 	winset(user, "mapwindow.map", "focus=true") // Return keyboard focus to map.
 	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
 	SSnano.ui_opened(src) // Call the opened handler.
@@ -364,11 +338,11 @@
   * Push data to an already open NanoUI.
   *
   * required data list The data to send.
-  * optional force_push bool If the update should be sent regardless of state.
+  * optional force bool If the update should be sent regardless of state.
  **/
-/datum/nanoui/proc/push_data(data, force_push = 0)
-	update_status(push_update = 0) // Update the window state.
-	if (status == NANO_DISABLED && !force_push)
+/datum/nanoui/proc/push_data(data, force = 0)
+	update_status(push = 0) // Update the window state.
+	if (status == NANO_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	var/list/send_data = get_send_data(data) // Get the data to send.
@@ -384,7 +358,7 @@
   * If the src_object's Topic() returns 1, update all UIs attacked to it.
  **/
 /datum/nanoui/Topic(href, href_list)
-	update_status(push_update = 0) // Update the window state.
+	update_status(push = 0) // Update the window state.
 	if (status != NANO_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
@@ -409,7 +383,7 @@
 	if (status && (update || auto_update))
 		update() // Update the UI if the status and update settings allow it.
 	else
-		update_status(push_update = 1) // Otherwise only update status.
+		update_status(push = 1) // Otherwise only update status.
 
  /**
   * private

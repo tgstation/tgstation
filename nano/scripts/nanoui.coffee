@@ -6,29 +6,22 @@ class @NanoUI
     @bus.on "memes",        @render
 
     @initialized = false
-    @layoutRendered = false
-    @contentRendered = false
 
     @data = {}
     @initialData = JSON.parse @fragment.query("#data").data "initial"
 
     unless @initialData? or
     not ("data" of @initialData or "config" of @initalData)
-      @bus.emit "error", "Initial data did not load correctly."
-      return
-
+      @error "Initial data did not load correctly."
 
   serverUpdate: (dataString) =>
     try
       data = JSON.parse(dataString)
     catch error
-      NanoBus.emit "error", \
-        "#{error.fileName}:#{error.lineNumber} #{error.message}"
-      return
+      @error error
 
     @bus.emit "update", data
     return
-
 
   update: (data) =>
     unless data.data?
@@ -43,57 +36,49 @@ class @NanoUI
     @bus.emit "updated"
     return
 
-
   render: (data) =>
     data = @initialData unless @initialized
 
     try
-      if not @layoutRendered or data.config.autoUpdateLayout
+      if not @initialized
         layout = @fragment.query("#layout")
         layout.innerHTML = TMPL[data.config.templates.layout]\
           (data.data, data.config, helpers)
 
-        @layoutRendered = true
-        @bus.emit "layoutRendered"
-
-      if not @contentRendered or data.config.autoUpdateContent
-        content = @fragment.query("#content")
-        content.innerHTML = TMPL[data.config.templates.content]\
-          (data.data, data.config, helpers)
-
-        @contentRendered = true
-        @bus.emit "contentRendered"
+      content = @fragment.query("#content")
+      content.innerHTML = TMPL[data.config.templates.content]\
+        (data.data, data.config, helpers)
 
     catch error
-      @bus.emit "error", \
-        "#{error.fileName}:#{error.lineNumber} #{error.message}"
+      @error error
       return
 
     @bus.emit "rendered", data
-    unless @initialized
+    if not @initialized
       @initialized = true
-      @bus.emit "initialized"
-    return
+      @data = @initialData
+      @bus.emit "initialized", data
 
   bycall: (action, params = {}) =>
     params.src = @data.config.ref
     params.nano = action
+    location.href = util.href null, params
 
+  error: (error, params = {}) ->
+    if error instanceof Error
+      error = "#{error.fileName}:#{error.lineNumber} #{error.message}"
+    params.nano_error = error
+    location.href = util.href null, params
+
+  log: (message, params = {}) ->
+    params.nano_log = message
     location.href = util.href null, params
 
   close: (params = {}) =>
     params.command = "nanoclose #{@data.config.ref}"
-
     @winset "is-visible", "false"
     location.href = util.href "winset", params
 
   winset: (key, value, params = {}) =>
     params["#{@data.config.window.ref}.#{key}"] = value
-
     location.href = util.href "winset", params
-
-  setPos: (x, y) ->
-    @winset "pos", "#{x},#{y}"
-
-  setSize: (w, h) ->
-    @winset "size", "#{w},#{h}"

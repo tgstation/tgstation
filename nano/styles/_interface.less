@@ -24,7 +24,7 @@ article.display {
         padding: 3px 0;
     }
 
-    .cell {
+    .cell() {
         display: inline-block;
         margin: 0;
     }
@@ -32,7 +32,6 @@ article.display {
     .label {
         .cell;
         width: 33%;
-        vertical-align: top;
 
         color: @label;
     }
@@ -83,12 +82,12 @@ article.notice {
 
     box-shadow: none;
 
-    .label, span {
-        vertical-align: middle;
+    color: @textinverse;
+    font-weight: bold;
+    font-style: italic;
 
-        color: @textinverse;
-        font-weight: bold;
-        font-style: italic;
+    .label {
+      color: @textinverse;
     }
 
     .noticeStripes;

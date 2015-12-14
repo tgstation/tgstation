@@ -81,6 +81,5 @@
 			var/href = "close=1"
 			src.Topic(href, params2list(href), ui.ref)
 		// Otherwise, if we use the legacy logic, unset the mob's machine.
-		else if (ui.on_close_logic)
-			if(src && src.mob)
-				src.mob.unset_machine()
+		else if(src && src.mob)
+			src.mob.unset_machine()

@@ -7,8 +7,6 @@
         util.extend first[key], secondVal
       else
         first[key] = secondVal
-      return
-
     first
 
   href: (url = "", params = {}) ->
