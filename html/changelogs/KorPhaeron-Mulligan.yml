@@ -1,0 +1,7 @@
+author: Kor
+
+delete-after: True
+
+changes: 
+  - rscadd: "Traitors can now buy a Mulligan for 4 telecrystals, a syringe that completely randomizes your name and appearance."
+  - rscadd: "The spy bundle now includes a switchblade and Mulligan."
