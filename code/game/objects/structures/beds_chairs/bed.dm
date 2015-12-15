@@ -15,7 +15,7 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
@@ -86,7 +86,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 	foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)

@@ -304,3 +304,9 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
 #define SENTIENCE_OTHER 3
+
+//Fire stuff, for burn_state
+#define LAVA_PROOF -2
+#define FIRE_PROOF -1
+#define FLAMMABLE 0
+#define ON_FIRE 1

@@ -85,7 +85,7 @@
 	icon_state = "bronze"
 	item_color = "bronze"
 	materials = list(MAT_METAL=1000)
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)

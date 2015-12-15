@@ -9,7 +9,7 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	var/burn_state = -1 // -1=fireproof | 0=will burn in fires | 1=currently on fire
+	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
 	var/burn_world_time //What world time the object will burn up completely
 
@@ -165,7 +165,7 @@
 
 /obj/fire_act(global_overlay=1)
 	if(!burn_state)
-		burn_state = 1
+		burn_state = ON_FIRE
 		SSobj.burning += src
 		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
@@ -180,8 +180,8 @@
 	qdel(src)
 
 /obj/proc/extinguish()
-	if(burn_state == 1)
-		burn_state = 0
+	if(burn_state == ON_FIRE)
+		burn_state = FLAMMABLE
 		overlays -= fire_overlay
 		SSobj.burning -= src
 

@@ -7,7 +7,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	put_on_delay = 40
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -46,7 +46,7 @@
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 70
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -119,7 +119,7 @@
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 //Reactive armor
@@ -187,6 +187,8 @@
 
 
 /obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
 	if(prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -196,6 +198,32 @@
 		owner.fire_stacks = -20
 		return 1
 	return 0
+
+
+
+
+
+
+/obj/item/clothing/suit/armor/reactive/stealth
+	name = "reactive stealth armor"
+
+/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
+		E.Copy_Parent(owner, 50)
+		E.GiveTarget(owner) //so it starts running right away
+		E.Goto(owner, E.move_to_delay, E.minimum_distance)
+		owner.alpha = 0
+		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
+		spawn(40)
+			owner.alpha = initial(owner.alpha)
+		return 1
+
+
+
+
 
 //All of the armor below is mostly unused
 
