@@ -205,7 +205,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_hand(mob/user)
 	if (!user) return
 
-	if(burn_state == FLAMMABLE)
+	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
