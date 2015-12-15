@@ -167,14 +167,13 @@
 /datum/organ/proc/prepare_organitem_for_removal()
 	if(isorgan(organitem))
 		var/obj/item/organ/OI = organitem
-		OI.set_owner(null)			//We recursively nullify the owner (and with that, the organsystem) of this organ and all its suborgans.
-		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 
-//Removing the suborgans from the organsystem. Do note that this assumes a simple system with only one layer of suborgans beneath each removed organ,
-//eg. heads have eyes, brains and neural augments but none of those have suborgans. Chest is an exception, but you should NEVER remove the core of an organsystem
+		//Removing the suborgans from the organsystem recursively
 		for(var/i in OI.suborgans)
 			owner.organsystem.remove_organ(i)
 
+		OI.set_owner(null)			//We recursively nullify the owner (and with that, the organsystem) of this organ and all its suborgans.
+		OI.organdatum = null			//We also nullify the organdatum, we're no longer a part of it.
 	var/obj/item/O = organitem	//We save the organ to a separate var...
 	organitem = null					//...so we can delete its reference here.
 	return O							//We return the organ so we can finish whatever we were doing with it.

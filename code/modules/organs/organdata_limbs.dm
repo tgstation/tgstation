@@ -1,5 +1,4 @@
 // These only serve to represent the groin and mouth target zones
-
 /datum/organ/abstract/
 
 /datum/organ/abstract/remove(var/dism_type, var/newloc)

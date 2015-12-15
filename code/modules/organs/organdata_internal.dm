@@ -8,8 +8,7 @@
 	organitem_type = /obj/item
 
 /datum/organ/internal
-	var/vital = 0	//Whether this organ is vital. Doesn't do anything right now, if it stays that way this can be removed. |- Ricotez
-
+	var/vital = 0	//Whether this organ is vital. Kills you when removed
 
 /datum/organ/internal/dismember(var/dism_type, var/special = 0)
 	return remove(dism_type, owner.loc, special)

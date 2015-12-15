@@ -175,8 +175,7 @@
 			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
-	var/datum/organ/brain = H.get_organ("brain")
-	if(!brain.exists())
+	if(!H.exists("brain"))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
 	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
