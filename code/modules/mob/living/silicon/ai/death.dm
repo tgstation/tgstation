@@ -5,7 +5,10 @@
 		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
 	stat = DEAD
 
-
+	if(nuking)
+		SSshuttle.emergencyNoEscape = 0
+		set_security_level("red")
+		nuking = 0
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
 	else

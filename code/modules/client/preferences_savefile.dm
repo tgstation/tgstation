@@ -68,7 +68,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					if(8)
 						be_special += ROLE_WIZARD
 					if(16)
-						be_special += ROLE_MALF
+						be_special += ROLE_REVENANT
 					if(32)
 						be_special += ROLE_REV
 					if(64)
@@ -89,8 +89,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_SHADOWLING
 					if(16384)
 						be_special += ROLE_ABDUCTOR
-					if(32768)
-						be_special += ROLE_REVENANT
 
 
 /datum/preferences/proc/update_preferences(current_version)
