@@ -550,7 +550,7 @@
 	set category = "Malfunction"
 	set name = "Nuke Station"
 
-	for(var/turf/simulated/floor/bluegrid/T in orange(5, AI))
+	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
 		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
 
 	src << "<span class='notice'>Nuclear device armed.</span>"

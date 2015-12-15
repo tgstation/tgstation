@@ -138,7 +138,7 @@
 	apcs_list -= src
 
 	if(malfai && operating)
-		malfai.processing_time -= 10
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
@@ -682,7 +682,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if (is_special_character(malfai) && istype(user, /mob/living/silicon/ai))
+	if (is_special_character(user) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
 			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC
@@ -1161,7 +1161,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.processing_time -= 10
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = 0
 	if(occupier)
