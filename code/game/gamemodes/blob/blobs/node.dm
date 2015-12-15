@@ -24,7 +24,6 @@
 	src.overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_node_overlay")
 	src.overlays += C
-	return
 
 /obj/effect/blob/node/PulseAnimation()
 	return

@@ -14,7 +14,6 @@
 	var/mob/camera/blob/overmind = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
-	..()
 	if(overmind)
 		color = overmind.blob_reagent_datum.color
 
@@ -59,7 +58,6 @@
 	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
-
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -155,9 +153,6 @@
 	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
-	return
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

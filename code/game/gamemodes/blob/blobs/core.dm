@@ -36,7 +36,6 @@
 	overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
 	overlays += C
-	return
 
 /obj/effect/blob/core/PulseAnimation()
 	return
@@ -79,16 +78,12 @@
 			continue
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
-			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield)
-			if(overmind)
-				N.overmind = overmind
-			N.update_icon()
+			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield, overmind)
 	color = null
 	..()
 
 
 /obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
-
 	if(overmind_get_delay > world.time && !override_delay)
 		return
 
