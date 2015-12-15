@@ -66,7 +66,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = "\ref[src_object]:[ui_key]"
+	src.window_id = "\ref[src_object]-[ui_key]"
 
 	set_template(template)
 
@@ -88,40 +88,6 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/nanoui)
 	assets.send(user)
 
- /**
-  * private
-  *
-  * Set the status/visibility of the NanoUI.
-  *
-  * required state int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
-  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
- **/
-/datum/nanoui/proc/set_status(state, push = 0)
-	if (state != status) // Only update if status has changed.
-		if (status == NANO_DISABLED)
-			status = state
-			if (push)
-				update()
-		else
-			status = state
-			if (push || status == 0) // Force an update if NANO_DISABLED.
-				push_data(null, 1)
-
- /**
-  * private
-  *
-  * Update the status/visibility of the NanoUI for its user.
-  *
-  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
- **/
-/datum/nanoui/proc/update_status(push = 0)
-	var/new_status = src_object.CanUseTopic(user, state)
-	if(master_ui)
-		new_status = min(new_status, master_ui.status)
-
-	set_status(new_status, push)
-	if(new_status == NANO_CLOSE)
-		close()
 
  /**
   * public
@@ -373,14 +339,14 @@
   * Update the NanoUI. Only updates the contents/layout if update is true,
   * otherwise only updates the status.
   *
-  * optional update bool If the UI should be updated (or just the status).
+  * optional force bool If the UI should be forced to update.
  **/
-/datum/nanoui/process(update = 0)
+/datum/nanoui/process(force = 0)
 	if (!src_object || !user) // If the object or user died (or something else), abort.
 		close()
 		return
 
-	if (status && (update || auto_update))
+	if (status && (force || auto_update))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.
@@ -395,3 +361,38 @@
  **/
 /datum/nanoui/proc/update(force_open = 0)
 	src_object.ui_interact(user, ui_key, src, force_open, master_ui, state)
+
+ /**
+  * private
+  *
+  * Set the status/visibility of the NanoUI.
+  *
+  * required state int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
+  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
+ **/
+/datum/nanoui/proc/set_status(state, push = 0)
+	if (state != status) // Only update if status has changed.
+		if (status == NANO_DISABLED)
+			status = state
+			if (push)
+				update()
+		else
+			status = state
+			if (push || status == 0) // Force an update if NANO_DISABLED.
+				push_data(null, 1)
+
+ /**
+  * private
+  *
+  * Update the status/visibility of the NanoUI for its user.
+  *
+  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
+ **/
+/datum/nanoui/proc/update_status(push = 0)
+	var/new_status = src_object.CanUseTopic(user, state)
+	if(master_ui)
+		new_status = min(new_status, master_ui.status)
+
+	set_status(new_status, push)
+	if(new_status == NANO_CLOSE)
+		close()
