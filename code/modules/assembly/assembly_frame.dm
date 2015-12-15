@@ -219,6 +219,11 @@
 		if(user.drop_item(AS, src))
 			AS.holder = src
 			assemblies.Add(AS)
-	if(istype(W, /obj/item/device/assembly_holder))
+
+		if(!AS.secured)
+			AS.secured = 1 //Unsecured assemblies don't work, this is here to make life much easier!
+
+	else if(istype(W, /obj/item/device/assembly_holder))
 		to_chat(user, "<span class='notice'>\The [W] is too big for any of the sockets here. Try taking it apart.")
+		return
 

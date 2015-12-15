@@ -181,6 +181,9 @@
 		new /obj/item/device/device_analyser(src)
 		new /obj/item/weapon/soap/nanotrasen(src)
 		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/device/assembly_frame(src)
+		new /obj/item/device/assembly_frame(src)
+
 		if(prob(50))
 			new /obj/item/clothing/head/welding(src)
 		else
