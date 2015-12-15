@@ -2,11 +2,11 @@
 
 # dmm map merger hook
 # needs additional setup, see tools/mapmerge/install.txt
-*.dmm merge=merge-dmm
+*.dmm merge=merge-dmm binary
 
 # dmi icon merger hook
 # needs additional setup, see tools/dmitool/merging.txt
-*.dmi merge=merge-dmi
+*.dmi merge=merge-dmi binary
 
 # force changelog merging to use union
 html/changelog.html merge=union
