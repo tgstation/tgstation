@@ -161,14 +161,15 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, blob_reagent_datum.color)
+	OB.expand(T, 0, src)
 	for(var/mob/living/L in T)
 		if("blob" in L.faction) //no friendly fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
 		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
 		blob_reagent_datum.send_message(L)
-	OB.color = blob_reagent_datum.color
+	OB.overmind = src
+	OB.update_icon()
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
@@ -209,13 +210,13 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces. This action is free."
-	var/speak_text = input(usr, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
 	if(!speak_text)
 		return
 	else
-		usr << "You broadcast with your minions, <B>[speak_text]</B>"
-	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
-		if(blob_minion.stat == CONSCIOUS)
+		src << "You broadcast with your minions, <B>[speak_text]</B>"
+	for(var/mob/living/simple_animal/hostile/blob/blob_minion in blob_mobs)
+		if(blob_minion.stat == CONSCIOUS && blob_minion.overmind == src)
 			blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
@@ -227,9 +228,9 @@
 	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new B
 	for(var/obj/effect/blob/BL in blobs)
-		BL.adjustcolors(blob_reagent_datum.color)
+		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
-		BLO.adjustcolors(blob_reagent_datum.color)
+		BLO.update_icons()
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 

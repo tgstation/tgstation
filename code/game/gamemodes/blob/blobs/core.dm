@@ -17,25 +17,30 @@
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
 	blob_cores += src
 	SSobj.processing |= src
-	adjustcolors(color) //so it atleast appears
+	update_icon() //so it atleast appears
 	if(!overmind)
 		create_overmind(new_overmind)
 	if(overmind)
-		adjustcolors(overmind.blob_reagent_datum.color)
+		update_icon()
 	if(offspring)
 		is_offspring = 1
 	point_rate = new_rate
 	..(loc, h)
 
-/obj/effect/blob/core/adjustcolors(a_color)
+/obj/effect/blob/core/update_icon()
 	overlays.Cut()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
-	I.color = a_color
+	if(overmind)
+		I.color = overmind.blob_reagent_datum.color
 	overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
 	overlays += C
+	return
 
+/obj/effect/blob/core/PulseAnimation()
+	update_icon()
+	return
 
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
@@ -69,7 +74,7 @@
 	health = min(maxhealth, health+health_regen)
 	if(overmind)
 		overmind.update_health()
-	pulseLoop(0)
+	Pulse_Area(overmind, 12, 4, 3)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
@@ -77,7 +82,8 @@
 		if(B)
 			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield)
 			if(overmind)
-				N.color = overmind.blob_reagent_datum.color
+				N.overmind = overmind
+			N.update_icon()
 	color = null
 	..()
 

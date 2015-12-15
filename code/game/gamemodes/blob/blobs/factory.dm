@@ -33,6 +33,7 @@
 	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
 	BS.color = color
 	BS.overmind = overmind
-	overmind.blob_mobs.Add(BS)
+	if(overmind)
+		overmind.blob_mobs.Add(BS)
 	return 0
 
