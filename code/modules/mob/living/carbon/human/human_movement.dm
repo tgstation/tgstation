@@ -8,15 +8,14 @@
 	//This part is based on Baycode. |- Ricotez
 
 //If we're riding in a wheelchair, we need to only check our hands.
-/*
-	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
-	. += get_penalty_for_limb(/datum/organ/limb/arm/l_arm)
-	. += get_penalty_for_limb(/datum/organ/limb/arm/r_arm)
-	*/
+
+	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
+		. += get_penalty_for_limb("l_arm")
+		. += get_penalty_for_limb("r_arm")
 //If we're not, we need to check our legs.
-	//else
-	. += get_penalty_for_limb("l_leg")
-	. += get_penalty_for_limb("r_leg")
+	else
+		. += get_penalty_for_limb("l_leg")
+		. += get_penalty_for_limb("r_leg")
 
 mob/living/carbon/human/proc/get_penalty_for_limb(limb)
 	var/datum/organ/limb/E = organsystem.get_organ(limb)
