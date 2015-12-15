@@ -37,7 +37,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(get_turf(user))
 	U.hidden_uplink.uplink_owner= "[user.key]"
-	U.hidden_uplink.uses = 200
+	U.hidden_uplink.uses = 280
 	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Maybe we can have a special set of items for the challenge uplink eventually
 	qdel(src)
 
