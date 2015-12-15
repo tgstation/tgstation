@@ -168,8 +168,6 @@
 		var/mob_protection = L.get_permeability_protection()
 		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
 		blob_reagent_datum.send_message(L)
-	OB.overmind = src
-	OB.update_icon()
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"

@@ -39,7 +39,6 @@
 	return
 
 /obj/effect/blob/core/PulseAnimation()
-	update_icon()
 	return
 
 /obj/effect/blob/core/Destroy()
