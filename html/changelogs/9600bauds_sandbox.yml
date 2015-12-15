@@ -32,4 +32,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - tweak: "Fixed the \"Space Travel Gear\" button in the Sandbox menu giving you empty jetpacks, and upgraded the spacesuit that you get from said button to a NASA voidsuit.
+  - tweak: "Fixed the \"Space Travel Gear\" button in the Sandbox menu giving you empty jetpacks, and upgraded the spacesuit that you get from said button to a NASA voidsuit."
