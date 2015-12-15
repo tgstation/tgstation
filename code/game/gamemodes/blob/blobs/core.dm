@@ -78,7 +78,7 @@
 			continue
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
-			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield, overmind)
+			B.change_to(/obj/effect/blob/shield, overmind)
 	color = null
 	..()
 

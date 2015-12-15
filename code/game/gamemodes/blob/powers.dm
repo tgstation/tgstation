@@ -60,7 +60,7 @@
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
-	set desc = "Create a resource tower which will generate points for you."
+	set desc = "Create a resource tower which will generate resources for you."
 	createSpecial(40, /obj/effect/blob/resource, 4)
 
 /mob/camera/blob/verb/create_node()
@@ -137,7 +137,7 @@
 		return
 	if(B.point_return)
 		add_points(B.point_return)
-		src << "<span class='notice'>Gained [B.point_return] resources from removing the [B].</span>"
+		src << "<span class='notice'>Gained [B.point_return] resources from removing \the [B].</span>"
 	qdel(B)
 
 /mob/camera/blob/verb/expand_blob_power()
@@ -214,7 +214,7 @@
 	else
 		src << "You broadcast with your minions, <B>[speak_text]</B>"
 	for(var/mob/living/simple_animal/hostile/blob/blob_minion in blob_mobs)
-		if(blob_minion.stat == CONSCIOUS && blob_minion.overmind == src)
+		if(blob_minion.overmind == src && blob_minion.stat == CONSCIOUS)
 			blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
@@ -236,9 +236,9 @@
 	set category = "Blob"
 	set name = "*Blob Help*"
 	set desc = "Help on how to blob."
+	src << "<b>As the overmind, you can control the blob!</b>"
 	src << "Your blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
-	src << "<b>As the overmind, you can control the blob!</b>"
 	src << "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>"
 	src << "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions."
 	src << "<b>You can upgrade normal blobs into the following types of blob:</b>"
