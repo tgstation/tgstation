@@ -15,7 +15,6 @@
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
 		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>

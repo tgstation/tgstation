@@ -813,9 +813,6 @@ var/list/ai_list = list()
 		if(!mind)
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
-		if (mind.special_role == "malfunction") //AI MALF!!
-			user << "<span class='boldannounce'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
-			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		aiRestorePowerRoutine = 0//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!

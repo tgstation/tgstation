@@ -589,7 +589,7 @@
 			var/ai_is_antag = 0
 			if(connected_ai && connected_ai.mind)
 				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+					ai_is_antag = (connected_ai.mind.special_role == "traitor")
 			if(ai_is_antag)
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
