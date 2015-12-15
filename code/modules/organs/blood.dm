@@ -1,9 +1,12 @@
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
+#define BLOODLOSS_SPEED_MULTIPLIER 0.75
+
 //Blood levels
 var/const/BLOOD_VOLUME_MAX = 560
 var/const/BLOOD_VOLUME_SAFE = 501
+var/const/BLOOD_VOLUME_WARN = 392
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
@@ -89,32 +92,41 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					//update_body()
 					var/word = pick("dizzy","woosey","faint")
 					to_chat(src, "<span class='danger'>You feel [word].</span>")
-				if(prob(1))
-					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "<span class='danger'>You feel [word].</span>")
+				if(blood_volume > BLOOD_VOLUME_WARN)
+					if(prob(1))
+						var/word = pick("dizzy","woosey","faint")
+						to_chat(src, "<span class='danger'>You feel [word].</span>")
+				else
+					if(prob(3))
+						var/word = pick("dizzy","woosey","faint")
+						to_chat(src, "<span class='danger'>You very [word].</span>")
 				if(oxyloss < 20)
 					oxyloss += 2
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					//update_body()
-				eye_blurry += 6
-				if(oxyloss < 50)
-					oxyloss += 5
+				eye_blurry = max(eye_blurry,2)
+				if(oxyloss < 40)
+					oxyloss += 3
 				oxyloss += 3
 				if(prob(15))
-					Paralyse(rand(1,3))
+					Paralyse(1)
 					var/word = pick("dizzy","woosey","faint")
 					to_chat(src, "<span class='danger'>You feel extremely [word].</span>")
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				if(!pale)
 					pale = 1
 					//update_body()
+				eye_blurry = max(eye_blurry,4)
+				if(oxyloss < 60)
+					oxyloss += 5
 				oxyloss += 5
 				toxloss += 1
 				if(prob(15))
+					Paralyse(rand(1,3))
 					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "<span class='danger'>You feel extremely [word].</span>")
+					to_chat(src, "<span class='danger'>You feel deathly [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				// Kill then pretty fast, but don't overdo it
 				// I SAID DON'T OVERDO IT
@@ -147,7 +159,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED) && !temp.amputated)
 				blood_max += 20 //Yer missing a fucking limb.
 			if (temp.open)
-				blood_max += 2  //Yer stomach is cut open
+				blood_max += 2 //Yer stomach is cut open
+			blood_max = blood_max * BLOODLOSS_SPEED_MULTIPLIER
+			if(lying)
+				blood_max = blood_max * 0.7
+			/*if(reagents.has_reagent("inaprovaline"))
+				blood_max = blood_max * 0.7*/
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
