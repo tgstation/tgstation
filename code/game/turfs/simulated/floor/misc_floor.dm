@@ -118,7 +118,7 @@
 	icon_state = "ice"
 	baseturf = /turf/simulated/floor/plating/snow
 	slowdown = 1
-	wet = 3
+	wet = TURF_WET_ICE
 
 /turf/simulated/floor/plating/ice/break_tile()
 	return

@@ -355,7 +355,7 @@
 
 /obj/structure/statue/snow
 	hardness = 0.5
-	mineralType = "sandstone"
+	mineralType = "snow"
 
 /obj/structure/statue/snow/snowman
 	name = "snowman"

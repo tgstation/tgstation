@@ -193,8 +193,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 
 //special items//--
 
-/obj/item/clothing/belt/
-
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection"
@@ -206,12 +204,12 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	desc = "High speed, low drag combat boots, now with an added layer of insulation."
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
-/obj/item/weapon/gun/magic/wand/fireball/innert
+/obj/item/weapon/gun/magic/wand/fireball/inert
 	name = "weakened wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames. The years of the cold have weakened the magic inside the wand."
 	max_charges = 4
 
-/obj/item/weapon/gun/magic/wand/resurrection/innert
+/obj/item/weapon/gun/magic/wand/resurrection/inert
 	name = "weakened wand of healing"
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
