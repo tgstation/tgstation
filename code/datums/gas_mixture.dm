@@ -121,7 +121,7 @@ What are the archived variables for?
 
 					reacting = 1
 	if(thermal_energy() > PLASMA_BINDING_ENERGY)
-		if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+		if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY && (toxins+carbon_dioxide)/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
 			//world << "pre [temperature, [toxins], [carbon_dioxide]
 			var/old_heat_capacity = heat_capacity()
 			var/carbon_efficency = min(toxins/carbon_dioxide,MAX_CARBON_EFFICENCY)
@@ -133,15 +133,16 @@ What are the archived variables for?
 			var/nitrogen_added = plasma_fused-oxygen_added
 
 			reaction_energy += ((carbon_efficency*toxins)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY)
-			toxins-=plasma_fused
-			carbon_dioxide-=carbon_catalyzed
+			toxins = max(toxins-plasma_fused,0)
+			carbon_dioxide = max(carbon_dioxide-carbon_catalyzed,0)
 			oxygen+=oxygen_added
 			nitrogen+=nitrogen_added
 			if(reaction_energy > 0)
 				reacting = 1
 				var/new_heat_capacity = heat_capacity()
 				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-					temperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
+					var/newtemperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
+					temperature=max(newtemperature,TCMB)//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [toxins], [carbon_dioxide]
 
 
