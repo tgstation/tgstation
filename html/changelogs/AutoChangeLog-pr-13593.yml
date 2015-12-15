@@ -1,5 +1,0 @@
-author: as334
-delete-after: True
-changes: 
-  - rscadd: "New research has shown that when when plasma reaches a high enough temperature in the presence of a carbon catalyst, it undergoes a violent and powerful fusion reaction."
-  - rscadd: "Adds a new gas reaction, fusion. Heat up plasma and carbon dioxide in order to produce large amounts of energy and heat."
