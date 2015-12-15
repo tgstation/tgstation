@@ -213,7 +213,7 @@
 
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(list2json_usecache(send_data), "'", "\\'")
+	var/initial_data_json = replacetext(writeJson(send_data), "'", "\\'")
 
 	// Generate the HTML document.
 	return {"
@@ -314,7 +314,7 @@
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(list2params(list(list2json_usecache(send_data))), "[window_id].browser:receiveUpdate")
+	user << output(list2params(list(writeJson(send_data))), "[window_id].browser:receiveUpdate")
 
  /**
   * private
