@@ -8,3 +8,6 @@
 
 # force changelog merging to use union
 html/changelog.html merge=union
+
+#leave line endings to git
+text=auto
