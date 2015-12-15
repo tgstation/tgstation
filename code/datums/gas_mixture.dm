@@ -141,8 +141,8 @@ What are the archived variables for?
 				reacting = 1
 				var/new_heat_capacity = heat_capacity()
 				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-					var/newtemperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
-					temperature=max(newtemperature,TCMB)//Prevents whatever mechanism is causing it to hit negative temperatures.
+					temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
+					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [toxins], [carbon_dioxide]
 
 
