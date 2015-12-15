@@ -130,17 +130,18 @@ datum/hSB
 						return
 				if("hsbsuit")
 					var/mob/living/carbon/human/P = usr
+					//There really should be a drop_old_and_equip_to_slot() proc.
 					if(P.wear_suit)
 						P.wear_suit.loc = P.loc
 						P.wear_suit.layer = initial(P.wear_suit.layer)
 						P.wear_suit = null
-					P.wear_suit = new/obj/item/clothing/suit/space(P)
+					P.wear_suit = new/obj/item/clothing/suit/space/nasavoid(P)
 					P.wear_suit.layer = 20
 					if(P.head)
 						P.head.loc = P.loc
 						P.head.layer = initial(P.head.layer)
 						P.head = null
-					P.head = new/obj/item/clothing/head/helmet/space(P)
+					P.head = new/obj/item/clothing/head/helmet/space/nasavoid(P)
 					P.head.layer = 20
 					if(P.wear_mask)
 						P.wear_mask.loc = P.loc
@@ -152,9 +153,10 @@ datum/hSB
 						P.back.loc = P.loc
 						P.back.layer = initial(P.back.layer)
 						P.back = null
-					P.back = new/obj/item/weapon/tank/jetpack(P)
+					P.back = new/obj/item/weapon/tank/jetpack/void(P)
 					P.back.layer = 20
-					P.internal = P.back
+
+					P.regenerate_icons()
 				if("hsbmetal")
 					var/obj/item/stack/sheet/hsb = getFromPool(/obj/item/stack/sheet/metal,get_turf(usr))
 					hsb.amount = 50
