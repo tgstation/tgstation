@@ -347,8 +347,8 @@
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
-
-		T0.copyTurf(T1)
+		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
+			T0.copyTurf(T1)
 		areaInstance.contents += T1
 
 		//copy over air
