@@ -13,6 +13,7 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
+	exo_grip = 1
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
@@ -65,22 +66,35 @@
 
 /obj/item/projectile/bullet/saw
 	damage = 35
-	armour_penetration = 10
+	armour_penetration = 5
 
 /obj/item/projectile/bullet/saw/bleeding
 	damage = 15
+	armour_penetration = 0
 
 /obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0, hit_zone)
 	if((blocked != 100) && istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
-		H.drip(100)
+		H.drip(25)
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 45
+	armour_penetration = 0
 
 /obj/item/projectile/bullet/saw/ap
-	damage = 25
+	damage = 30
 	armour_penetration = 35
+
+/obj/item/projectile/bullet/saw/incen
+	damage = 10
+	armour_penetration = 0
+
+/obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
 
 
 //magazines//
@@ -109,6 +123,11 @@
 	origin_tech = "combat=4"
 	ammo_type = /obj/item/ammo_casing/a762/ap
 
+/obj/item/ammo_box/magazine/m762/incen
+	name = "box magazine (Incendiary 7.62mm)"
+	origin_tech = "combat=4"
+	ammo_type = /obj/item/ammo_casing/a762/incen
+
 /obj/item/ammo_box/magazine/m762/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
@@ -136,5 +155,9 @@
 /obj/item/ammo_casing/a762/ap
 	desc = "A 7.62mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
 	projectile_type = /obj/item/projectile/bullet/saw/ap
+
+/obj/item/ammo_casing/a762/incen
+	desc = "A 7.62mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
+	projectile_type = /obj/item/projectile/bullet/saw/incen
 
 
