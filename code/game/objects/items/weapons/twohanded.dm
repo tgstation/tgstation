@@ -389,13 +389,13 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
-	var/mob/living/spear_owner
+	var/list/spear_owners = list()
 
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
-	if(spear_owner != user)
-		user.faction = "greytide([rand(1, 1000)])"
-		spear_owner = user
+	if(!(user in spear_owners))
+		user.faction += "greytide([rand(1, 1000)])"
+		spear_owners += user
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
 		if(!L.stat && prob(50))
@@ -403,9 +403,6 @@
 			M.faction = user.faction
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
-
-
-/obj/item/weapon/twohanded/spear/AltClick()
 
 
 // CHAINSAW
