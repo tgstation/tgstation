@@ -101,7 +101,7 @@
 	return
 
 /turf/simulated/floor/plating/snow/gravsnow
-	icon_state = "gravsnow"
+	icon_state = "snow_dug"
 	dug = 1
 	slowdown = 0
 
