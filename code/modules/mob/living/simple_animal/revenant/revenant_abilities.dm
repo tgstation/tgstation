@@ -89,10 +89,9 @@
 	charge_max = 200
 	range = 5
 	stun = 30
-	reveal = 100
 	cast_amount = 40
 	var/shock_range = 2
-	var/shock_damage = 18
+	var/shock_damage = 20
 	action_icon_state = "overload_lights"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -217,7 +216,7 @@
 	desc = "Causes nearby living things to waste away."
 	charge_max = 200
 	range = 3
-	reveal = 60
+	reveal = 50
 	cast_amount = 50
 	unlock_amount = 200
 	action_icon_state = "blight"
