@@ -1,0 +1,7 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - tweak: "Restores the ability to bolt and unbolt operating airlocks."
+
