@@ -8,3 +8,9 @@
 
 # force changelog merging to use union
 html/changelog.html merge=union
+
+#git should handle text as it sees fit
+* text=auto
+#skip icon and map files
+*.dmm binary
+*.dmi binary
