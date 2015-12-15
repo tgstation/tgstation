@@ -1000,7 +1000,7 @@ About the new airlock wires panel:
 		return 0
 	operating = 1
 
-	do_animate("opening")
+	update_icon(AIRLOCK_OPENING)
 	src.SetOpacity(0)
 	sleep(5)
 	src.density = 0
@@ -1054,7 +1054,7 @@ About the new airlock wires panel:
 	if(!safe)
 		crush()
 	sleep(9)
-	update_icon()
+	update_icon(AIRLOCK_CLOSED)
 	if(visible && !glass)
 		SetOpacity(1)
 	operating = 0
@@ -1062,6 +1062,7 @@ About the new airlock wires panel:
 	update_freelook_sight()
 	if(safe)
 		if(locate(/mob/living) in get_turf(src))
+			sleep(1)
 			open()
 	return 1
 
