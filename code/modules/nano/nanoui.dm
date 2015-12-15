@@ -206,6 +206,7 @@
 <script type='text/javascript' src='nanoui.templates.js'></script>
 	"}
 	var/stylesheet_html = {"
+<link rel="stylesheet" type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css'>
 <link rel='stylesheet' type='text/css' href='nanoui.lib.css' />
 <link rel='stylesheet' type='text/css' href='nanoui.common.css' />
 <link rel='stylesheet' type='text/css' href='nanoui.[layout].css' />
@@ -233,7 +234,11 @@
 	</head>
 	<body>
 		<div id='data' data-initial='[initial_data_json]'></div>
-		<div id='layout'></div>
+		<div id='layout'>
+			<div class='hexdots-loader' style='position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);'>
+				Sending Resources...
+			</div>
+		</div>
 		<noscript>
 			<h1>Javascript Required</h1>
 			<p>Javascript is required in order to use this NanoUI interface.</p>
