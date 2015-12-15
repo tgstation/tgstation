@@ -41,20 +41,27 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/j = 0, j < num_traitors, j++)
+
+	var/j = 0
+	while(j < num_traitors)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
+		if(traitor.special_role)
+			antag_candidates.Remove(traitor)
+			continue
 		traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
+		j++
 
 
 	if(traitors.len < required_enemies)
 		return 0
 	return 1
+
 
 
 /datum/game_mode/traitor/post_setup()
