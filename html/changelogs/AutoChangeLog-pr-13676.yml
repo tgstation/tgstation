@@ -1,0 +1,5 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Shuttles will no longer drag random tiles of space with them. This means you can be thrown out of partially destroyed escape shuttles very easily."
+  - rscadd: "The people and objects on destroyed tiles won't be along for the ride when the shuttle moves either."
