@@ -222,7 +222,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 		if(istype(mob,/mob/dead/observer))
 			mob.icon_state = new_form
 
-var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON)
+var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
 
 /client/verb/pick_ghost_orbit()
 	set name = "Choose Ghost Orbit"

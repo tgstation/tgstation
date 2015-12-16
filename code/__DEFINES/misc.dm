@@ -317,3 +317,4 @@ var/list/bloody_footprints_cache = list()
 #define GHOST_ORBIT_TRIANGLE	"triangle"
 #define GHOST_ORBIT_HEXAGON		"hexagon"
 #define GHOST_ORBIT_SQUARE		"square"
+#define GHOST_ORBIT_PENTAGON	"pentagon"
