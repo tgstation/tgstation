@@ -65,7 +65,7 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
-	var/player_minimum = FALSE //If 1 or higher, will check that there are enough people online before adding the item to the uplink
+	var/player_minimum = 0 //If 1 or higher, will check that there are enough people online before adding the item to the uplink
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
