@@ -183,13 +183,10 @@
 		if (!M.stuttering) M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
-			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
-			ticker.mode.remove_cultist(M.mind)
+		if((is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
