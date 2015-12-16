@@ -80,6 +80,24 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.12.16</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Fixed the "Space Travel Gear" button in the Sandbox menu giving you empty jetpacks, and upgraded the spacesuit that you get from said button to a NASA voidsuit.</li>
+				<li class="tweak">You will now see speech bubbles from people who are speaking inside mechs, lockers, and generally everything.</li>
+			</ul>
+			<h3 class="author">Unid updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added \"assembly frames\", items that allow creating more advanced things with assemblies like timers, signallers and speakers. They can hold any amount of assemblies inside, and the assemblies inside can be connected together.</li>
+				<li class="rscadd">Assembly frames can be found in vendomats (costing one coin), or created with protolathes. Each mechanic's locker starts with two assembly frames.</li>
+				<li class="rscadd">Added addition circuit assemblies. Whenever they receive a pulse their internal counter is increased by 1. Whenever their counter reaches a specified value, it resets and the assembly emits a pulse.</li>
+				<li class="rscadd">Added randomizer circuit assemblies. When pulsed, they randomly select a specified amount of assemblies connected to them, and emit a pulse to them.</li>
+				<li class="rscadd">Added comparison circuit assemblies. When pulsed, they check the first assembly connected to them. If the condition is true, they emit a pulse to the second connected assembly, otherwise they emit a pulse to the third connected assembly.</li>
+				<li class="rscadd">All of the new assemblies can be made with autolathes.</li>
+				<li class="tweak">Timers and proximity sensors now start or stop countdown when pulsed.</li>
+				<li class="tweak">It's now possible to set \"default time\" on timers and proximity sensors. When their timers finish counting down, the time remaining is reset to the default time.</li>
+			</ul>
+
 			<h2 class="date">2015.12.14</h2>
 			<h3 class="author">DrCelt updated:</h3>
 			<ul class="changes bgimages16">
@@ -1949,43 +1967,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixed Box's ore smelter.</li>
-			</ul>
-
-			<h2 class="date">2015.07.05</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Bloody Floors are now automatically counted if the round is cult, no longer only if the current objective is bloodspill. (blood splatters being cleaned always decreased the counter, which caused the round end report to almost always show something among the lines of "18 tiles out of 100 covered, SUCCESS!!")</li>
-				<li class="tweak">The Round End Information will now indicate what was the peak number of bloody floors during the round, instead of the number of bloody floors at round end.</li>
-				<li class="tweak">bloodspill now requires the cultists to cover a random number of tiles in blood, minimum being 100, maximum being 101 + (number of players X 3)</li>
-				<li class="experiment">Admins now get notified if a player disconnects/ghosts right after being converted.</li>
-				<li class="rscadd">The Summon Cultist rune will give its user the list of all the current living and conscious (non-braindead/catatonic) cultists if used without 3 cultists around it.</li>
-				<li class="tweak">The Free Cultist rune will now only list cultists that are currently restrained.</li>
-				<li class="rscadd">The Free Cultist rune will give its user the list of all the currently restrained culists if used without 3 cultists around it.</li>
-				<li class="rscadd">The target of the Free Cultist rune now gets notified that they got freed from their restraints.</li>
-				<li class="rscadd">Just like cultists, observers can now examine a rune to learn which spell it procs. So deadchat can laugh at bad cultists trying to summon Nar-Sie around a convert rune.</li>
-			</ul>
-			<h3 class="author">Dylanstrategie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">New base_turf system that allows custom tiles to be set to replace turfs instead of space. Please, please report any serious oddities with turfs that should be replaced to space (do mind that the admins now have a verb to change base_turf during the round from space to something like grass or live supermatter)</li>
-			</ul>
-			<h3 class="author">Intigracy updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed vampire enthrall not working correctly</li>
-			</ul>
-			<h3 class="author">PJB3005 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Bluespace crystals no longer work on centcomm.</li>
-				<li class="bugfix">Fixes the AAC vent mode control automation.</li>
-				<li class="bugfix">Fixed ghosts being able to fuck with the AAC.</li>
-				<li class="tweak">Makes the code that changes the charge meter on an energy weapon round up below 50% and down above 50%.</li>
-				<li class="rscadd">The teleporter now has a nicer UI for selecting the destination.</li>
-				<li class="rscadd">On top of that, you can see the current destination in the UI or by examining it.</li>
-				<li class="bugfix">Dissasembling a windoor now drops the correct materials.</li>
-			</ul>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added wheelchairs to the game. Two can be found in medbay, more can be ordered from cargo.</li>
-				<li class="rscadd">Characters missing both of their feet now spawn with a wheelchair.</li>
 			</ul>
 		</div>
 		<!--
