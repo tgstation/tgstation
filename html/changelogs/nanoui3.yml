@@ -1,0 +1,12 @@
+author: neersighted
+delete-after: True
+changes:
+  - experiment: NanoUI 3.0
+  - experiment: Completely rewrite NanoUI frontend; rework backend.
+  - tweak: Re-design NanoUI interface to be much more attractive.
+  - tweak: Reduce NanoUI LOC count/resource size.
+  - tweak: Reduce NanoUI tickrate; make UIs update properly.
+  - rscadd: Add chromeless NanoUI mode.
+  - rscadd: NanoUI's chromeless mode can be toggled with the 'Fancy NanoUI' preference.
+  - bugfix: Allow NanoUI to work on IE8-IE11, and Edge.
+  - bugfix: Close holes that allow NanoUI href spoofing.
