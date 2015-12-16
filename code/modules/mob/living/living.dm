@@ -776,6 +776,7 @@ Sorry Giacom. Please don't be mad :(
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
+	alpha = initial(alpha) //Break invisibility before the animation starts
 	if(end_pixel_y)
 		final_pixel_y = end_pixel_y
 
@@ -792,6 +793,7 @@ Sorry Giacom. Please don't be mad :(
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+
 
 
 /mob/living/do_attack_animation(atom/A)
