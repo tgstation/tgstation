@@ -166,11 +166,11 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("open")
 			open_machine()
 		if("close")
@@ -186,7 +186,6 @@
 			if(beaker)
 				beaker.loc = get_step(loc, SOUTH)
 				beaker = null
-	add_fingerprint(usr)
 	update_icon()
 	return 1
 

@@ -721,22 +721,8 @@
 
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if (IsAdminGhost(user))
+	if(IsAdminGhost(user))
 		return 1
-	if (user.stat)
-		user << "<span class='warning'>You must be conscious to use [src]!</span>"
-		return 0
-	if(!user.client)
-		return 0
-	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
-		return 0
-	if(user.restrained())
-		user << "<span class='warning'>You must have free hands to use [src].</span>"
-		return 0
-	if(user.lying)
-		user << "<span class='warning'>You must stand to use [src]!</span>"
-		return 0
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
@@ -754,24 +740,16 @@
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
-
-	var/mob/living/carbon/human/H = user
-	if (istype(H))
-		if(H.getBrainLoss() >= 60)
-			H.visible_message("[H] stares cluelessly at [src] and drools.")
-			return 0
-		else if(prob(H.getBrainLoss()))
-			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
-			return 0
 	return 1
 
-/obj/machinery/power/apc/Topic(href, href_list)
+/obj/machinery/power/apc/ui_act(action, params)
 	if(..())
 		return
+
 	if(!can_use(usr, 1))
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("lock")
 			coverlocked = !coverlocked
 		if ("breaker")
@@ -782,18 +760,18 @@
 				charging = 0
 				update_icon()
 		if("channel")
-			if (href_list["eqp"])
-				var/val = text2num(href_list["eqp"])
+			if (params["eqp"])
+				var/val = text2num(params["eqp"])
 				equipment = setsubsystem(val)
 				update_icon()
 				update()
-			else if (href_list["lgt"])
-				var/val = text2num(href_list["lgt"])
+			else if (params["lgt"])
+				var/val = text2num(params["lgt"])
 				lighting = setsubsystem(val)
 				update_icon()
 				update()
-			else if (href_list["env"])
-				var/val = text2num(href_list["env"])
+			else if (params["env"])
+				var/val = text2num(params["env"])
 				environ = setsubsystem(val)
 				update_icon()
 				update()

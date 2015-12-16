@@ -155,22 +155,21 @@ Thus, the two variables affect pump operation are set in New():
 		return
 	interact(user)
 
-/obj/machinery/atmospherics/components/binary/volume_pump/Topic(href,href_list)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("transfer")
-			switch(href_list["set"])
+			switch(params)
 				if ("max")
 					transfer_rate = MAX_TRANSFER_RATE
 				if ("custom")
 					transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
 			investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
-	add_fingerprint(usr)
 	update_icon()
 	return 1
 

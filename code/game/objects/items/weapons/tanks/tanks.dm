@@ -157,13 +157,13 @@
 				data["maskConnected"] = 1
 	return data
 
-/obj/item/weapon/tank/Topic(href, href_list)
+/obj/item/weapon/tank/ui_act(action, params)
 	if (..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("pressure")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("custom")
 					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
 					if(isnum(custom))

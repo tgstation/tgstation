@@ -173,6 +173,19 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 
+/datum/asset/simple/nanoui
+	assets = list(
+		"nanoui.lib.js"				= 'nano/assets/nanoui.lib.js',
+		"nanoui.main.js"			= 'nano/assets/nanoui.main.js',
+		"nanoui.templates.js"		= 'nano/assets/nanoui.templates.js',
+		"nanoui.lib.css"			= 'nano/assets/nanoui.lib.css',
+		"nanoui.common.css"			= 'nano/assets/nanoui.common.css',
+		"nanoui.generic.css"		= 'nano/assets/nanoui.generic.css',
+		"nanoui.nanotrasen.css"		= 'nano/assets/nanoui.nanotrasen.css',
+		"fontawesome-webfont.eot"	= 'nano/assets/fontawesome-webfont.eot',
+		"fontawesome-webfont.woff2"	= 'nano/assets/fontawesome-webfont.woff2'
+	)
+
 /datum/asset/simple/pda
 	assets = list(
 		"pda_atmos.png"			= 'icons/pda_icons/pda_atmos.png',
@@ -219,18 +232,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
-/datum/asset/simple/nanoui
-	assets = list(
-		"nanoui.lib.js"				= 'nano/assets/nanoui.lib.js',
-		"nanoui.main.js"			= 'nano/assets/nanoui.main.js',
-		"nanoui.templates.js"		= 'nano/assets/nanoui.templates.js',
-		"nanoui.lib.css"			= 'nano/assets/nanoui.lib.css',
-		"nanoui.common.css"			= 'nano/assets/nanoui.common.css',
-		"nanoui.generic.css"		= 'nano/assets/nanoui.generic.css',
-		"nanoui.nanotrasen.css"		= 'nano/assets/nanoui.nanotrasen.css',
-		"fontawesome-webfont.eot"	= 'nano/assets/fontawesome-webfont.eot',
-		"fontawesome-webfont.woff2"	= 'nano/assets/fontawesome-webfont.woff2'
-	)
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()

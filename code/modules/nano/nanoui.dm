@@ -214,7 +214,7 @@
 
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(writeJson(send_data), "'", "\\'")
+	var/initial_data_json = replacetext(JSON.stringify(send_data), "'", "\\'")
 
 	// Generate the HTML document.
 	return {"
@@ -318,7 +318,7 @@
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(list2params(list(writeJson(send_data))), "[window_id].browser:receiveUpdate")
+	user << output(list2params(list(JSON.stringify(send_data))), "[window_id].browser:receiveUpdate")
 
  /**
   * private
@@ -332,7 +332,10 @@
 	if (status != NANO_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
-	var/update = src_object.Topic(href, href_list, 0, state) // Call Topic() on the src_object.
+	var/action = href_list["nano"] // Pull the action out.
+	href_list -= "nano"
+
+	var/update = src_object.ui_act(action, href_list, state) // Call Topic() on the src_object.
 
 	if (src_object && update)
 		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.

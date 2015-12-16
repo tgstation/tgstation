@@ -147,31 +147,30 @@
 	data["node2_concentration"] = round(node2_concentration*100)
 	return data
 
-/obj/machinery/atmospherics/components/trinary/mixer/Topic(href,href_list)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("max")
 					target_pressure = MAX_OUTPUT_PRESSURE
 				if("custom")
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("node1")
-			var/value = text2num(href_list["concentration"])
+			var/value = text2num(params["concentration"])
 			src.node1_concentration = max(0, min(1, src.node1_concentration + value))
 			src.node2_concentration = max(0, min(1, src.node2_concentration - value))
 			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
 		if("node2")
-			var/value = text2num(href_list["concentration"])
+			var/value = text2num(params["concentration"])
 			src.node2_concentration = max(0, min(1, src.node2_concentration + value))
 			src.node1_concentration = max(0, min(1, src.node1_concentration - value))
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
-	add_fingerprint(usr)
 	update_icon()
 	return 1

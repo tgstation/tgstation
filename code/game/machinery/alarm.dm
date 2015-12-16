@@ -387,7 +387,7 @@
 
 			data["thresholds"] = thresholds
 
-/obj/machinery/alarm/Topic(href, href_list)
+/obj/machinery/alarm/ui_act(action, params)
 	if(..())
 		return
 
@@ -400,17 +400,17 @@
 	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("toggleaccess")
 			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 				locked = !locked
 		if("adjust")
-			var/device_id = href_list["id_tag"]
-			switch(href_list["command"])
+			var/device_id = params["id_tag"]
+			switch(params["command"])
 				if("set_external_pressure")
 					var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
 					if(isnum(input_pressure))
-						send_signal(device_id, list(href_list["command"] = input_pressure))
+						send_signal(device_id, list(params["command"] = input_pressure))
 				if("reset_external_pressure")
 					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
 				if(
@@ -422,14 +422,14 @@
 					"widenet",
 					"scrubbing"
 				)
-					send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+					send_signal(device_id, list (params["command"] = text2num(params["val"])))
 				if ("excheck")
-					send_signal(device_id, list ("checks" = text2num(href_list["val"])^1))
+					send_signal(device_id, list ("checks" = text2num(params["val"])^1))
 				if ("incheck")
-					send_signal(device_id, list ("checks" = text2num(href_list["val"])^2))
+					send_signal(device_id, list ("checks" = text2num(params["val"])^2))
 				if("set_threshold")
-					var/env = href_list["env"]
-					var/varname = href_list["var"]
+					var/env = params["env"]
+					var/varname = params["var"]
 					var/datum/tlv/tlv = TLV[env]
 					var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
 					if (isnull(newval))
@@ -446,16 +446,16 @@
 						newval = round(newval,0.01)
 						tlv.vars[varname] = newval
 		if("screen")
-			screen = text2num(href_list["screen"])
+			screen = text2num(params["screen"])
 		if("mode")
-			mode = text2num(href_list["mode"])
+			mode = text2num(params["mode"])
 			apply_mode()
 		if("alarm")
-			if (alarm_area.atmosalert(2, src))
+			if(alarm_area.atmosalert(2, src))
 				post_alert(2)
 			update_icon()
 		if("reset")
-			if (alarm_area.atmosalert(0, src))
+			if(alarm_area.atmosalert(0, src))
 				post_alert(0)
 			update_icon()
 	return 1

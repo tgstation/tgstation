@@ -437,24 +437,24 @@
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
-/obj/machinery/power/solar_control/Topic(href, href_list)
+/obj/machinery/power/solar_control/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("control")
-			if(href_list["cdir"])
-				src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			if(params["cdir"])
+				src.cdir = dd_range(0,359,(360+src.cdir+text2num(params["cdir"]))%360)
 				src.targetdir = src.cdir
 				if(track == 2) //manual update, so losing auto-tracking
 					track = 0
 				spawn(1)
 					set_panels(cdir)
-			if(href_list["tdir"])
-				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
+			if(params["tdir"])
+				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(params["tdir"]))
 				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
 		if("tracking")
-			track = text2num(href_list["mode"])
+			track = text2num(params["mode"])
 			if(track == 2)
 				if(connected_tracker)
 					connected_tracker.set_angle(SSsun.angle)

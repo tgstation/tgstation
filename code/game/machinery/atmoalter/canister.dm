@@ -298,11 +298,11 @@ update_flag
 		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
 	return data
 
-/obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("relabel")
 			if (can_label)
 				var/list/colors = list(\
@@ -320,7 +320,7 @@ update_flag
 					src.icon_state = colors[label]
 					src.name = "canister: [label]"
 		if("pressure")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("custom")
 					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
 					if(custom)

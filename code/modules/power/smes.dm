@@ -350,11 +350,11 @@
 	)
 	return data
 
-/obj/machinery/power/smes/Topic(href, href_list)
+/obj/machinery/power/smes/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(usr.ckey)
@@ -364,7 +364,7 @@
 			log_smes(usr.ckey)
 			update_icon()
 		if("input")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 					if(custom)
@@ -380,7 +380,7 @@
 			input_level = Clamp(input_level, 0, input_level_max)
 			log_smes(usr.ckey)
 		if("output")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 					if(custom)

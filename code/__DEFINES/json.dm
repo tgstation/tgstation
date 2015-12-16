@@ -1,1 +1,0 @@
-#define writeJson(value) list2text(_jsonHelper.WriteValue(list(), (value)))

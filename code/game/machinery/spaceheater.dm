@@ -162,28 +162,28 @@
 		ui = new(user, src, ui_key, "space_heater", name, 490, 340, state = physical_state)
 		ui.open()
 
-/obj/machinery/space_heater/Topic(href, href_list)
-	if(stat & BROKEN || ..())
+/obj/machinery/space_heater/ui_act(action, params)
+	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on = !on
 			mode = HEATER_MODE_STANDBY
 			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
 		if("mode")
-			setMode = href_list["mode"]
+			setMode = params["mode"]
 		if("temp")
 			if(panel_open)
 				var/value
-				if(href_list["set"] == "custom")
+				if(params["set"] == "custom")
 					value = input("Please input the target temperature", name) as num|null
 					if(isnull(value))
 						return
 					value += T0C
 				else
-					value = targetTemperature + text2num(href_list["set"])
+					value = targetTemperature + text2num(params["set"])
 
 				var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 				var/maxTemp = settableTemperatureMedian + settableTemperatureRange

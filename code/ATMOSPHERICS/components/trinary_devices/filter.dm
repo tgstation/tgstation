@@ -182,23 +182,23 @@ Filter types:
 	data["filter_type"] = filter_type
 	return data
 
-/obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list)
+/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on=!on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
-			switch(href_list["set"])
+			switch(params["set"])
 				if("max")
 					target_pressure = MAX_OUTPUT_PRESSURE
 				if("custom")
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("filter")
-			src.filter_type = text2num(href_list["mode"])
+			src.filter_type = text2num(params["mode"])
 			var/filtering_name = "nothing"
 			switch(filter_type)
 				if(FILTER_PLASMA)
@@ -212,6 +212,5 @@ Filter types:
 				if(FILTER_NITROUSOXIDE)
 					filtering_name = "nitrous oxide"
 			investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
-	add_fingerprint(usr)
 	update_icon()
 	return 1

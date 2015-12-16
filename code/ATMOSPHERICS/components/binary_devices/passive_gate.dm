@@ -149,22 +149,21 @@ Passive gate is similar to the regular pump except:
 		return
 	interact(user)
 
-/obj/machinery/atmospherics/components/binary/passive_gate/Topic(href, href_list)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
-			switch(href_list["set"])
+			switch(params["set"])
 				if ("max")
 					target_pressure = MAX_OUTPUT_PRESSURE
 				if ("custom")
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	add_fingerprint(usr)
 	update_icon()
 	return 1
 

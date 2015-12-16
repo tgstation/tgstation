@@ -40,18 +40,18 @@
 
 	return data
 
-/obj/item/weapon/electronics/airlock/Topic(href, href_list)
+/obj/item/weapon/electronics/airlock/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("clear")
 			accesses = list()
 			one_access = 0
 		if("one_access")
 			one_access = !one_access
 		if("set")
-			var/access = text2num(href_list["access"])
+			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else

@@ -77,18 +77,17 @@
 		return
 	interact(user)
 
-/obj/machinery/chem_heater/Topic(href, href_list)
+/obj/machinery/chem_heater/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("power")
 			on = !on
 		if("temperature")
 			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
 		if("eject")
 			eject_beaker()
-	add_fingerprint(usr)
 	return 1
 
 /obj/machinery/chem_heater/interact(mob/user)

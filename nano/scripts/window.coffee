@@ -12,6 +12,9 @@ class @Window
       @attachDrag()
       @attachResize()
 
+    @bus.on "rendered", @updateStatus
+    @bus.on "rendered", @updateLinks
+    @bus.on "rendered", @attachLinks
     @fragment.on "keydown", @focusMap # If we get input, return focus.
 
   setPos: (x, y) ->
@@ -86,3 +89,32 @@ class @Window
 
     @xResize = event.screenX
     @yResize = event.screenY
+
+  updateStatus: (data) =>
+    statusicons = @fragment.queryAll ".statusicon"
+    statusicons.forEach (statusicon) ->
+      statusicon.className = statusicon.className.replace /good|bad|average/g, ""
+      switch data.config.status
+        when NANO.INTERACTIVE
+          klass = "good"
+        when NANO.UPDATE
+          klass = "average"
+        else
+          klass = "bad"
+      statusicon.classList.add klass
+
+  updateLinks: (data) =>
+    links = @fragment.queryAll ".link"
+    if data.config.status isnt NANO.INTERACTIVE
+      links.forEach (element) ->
+        element.className = "link disabled"
+
+  attachLinks: (data) =>
+    onClick = ->
+      action = @data "action"
+      params = JSON.parse @data "params"
+      if action? and params? and data.config.status is NANO.INTERACTIVE
+        nanoui.act action, params
+
+    @fragment.queryAll(".link.active").forEach (link) ->
+      link.on "click", onClick

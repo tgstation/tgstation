@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	use_power = 1
 	idle_power_usage = 40
+	interact_offline = 1
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -122,27 +123,27 @@
 	data["chemicals"] = chemicals
 	return data
 
-/obj/machinery/chem_dispenser/Topic(href, href_list)
+/obj/machinery/chem_dispenser/ui_act(action, params)
 	if(..())
 		return
 
-	switch(href_list["nano"])
+	switch(action)
 		if("amount")
-			amount = round(text2num(href_list["set"]), 5) // round to nearest 5
+			amount = round(text2num(params["set"]), 5) // round to nearest 5
 			if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
 				amount = 0
 			if (amount > 100)
 				amount = 100
 		if("dispense")
-			if(beaker && dispensable_reagents.Find(href_list["reagent"]))
+			if(beaker && dispensable_reagents.Find(params["reagent"]))
 				var/datum/reagents/R = beaker.reagents
 				var/space = R.maximum_volume - R.total_volume
 
-				R.add_reagent(href_list["reagent"], min(amount, energy * 10, space))
+				R.add_reagent(params["reagent"], min(amount, energy * 10, space))
 				energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 		if("remove")
 			if(beaker)
-				var/amount = text2num(href_list["amount"])
+				var/amount = text2num(params["amount"])
 				if(isnum(amount) && (amount > 0) && (amount in beaker.possible_transfer_amounts))
 					beaker.reagents.remove_all(amount)
 		if("eject")
@@ -150,7 +151,6 @@
 				beaker.loc = loc
 				beaker = null
 				overlays.Cut()
-	add_fingerprint(usr)
 	return 1
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)

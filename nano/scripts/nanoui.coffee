@@ -59,7 +59,7 @@ class @NanoUI
       @data = @initialData
       @bus.emit "initialized", data
 
-  bycall: (action, params = {}) =>
+  act: (action, params = {}) =>
     params.src = @data.config.ref
     params.nano = action
     location.href = util.href null, params
