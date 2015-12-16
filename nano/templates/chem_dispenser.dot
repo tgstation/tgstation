@@ -21,8 +21,8 @@
 		{{~ data.chemicals :chem:i}}
 			{{=helper.link(chem.title, 'tint', 'dispense', chem.commands, null, 'gridable')}}
 		{{~}}
-	</div>
-</section>
+	</section>
+</article>
 <article class="display">
 	<header><h2>Beaker</h2></header>
 	<section>
