@@ -1,0 +1,5 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Security barricades are now deployed via grenade. You can no longer move them after they've been deployed, you must destroy them."
+  - rscadd: "You can now shoot through wooden barricades while adjacent, while any other gunfire has a 50% chance of being blocked."
