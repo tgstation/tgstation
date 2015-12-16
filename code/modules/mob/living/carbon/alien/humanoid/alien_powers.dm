@@ -237,17 +237,30 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_resin"
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
+	var/mob/living/carbon/alien/alien = user
+	if(alien.using_resin)
+		user << "<span class='danger'>You already have some resin ready to vomit.</span>"
+		return 0
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
+
+	alien.using_resin = 1
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) return 0
+	if(!choice)
+		alien.using_resin = 0
+		return 0
+
+	if(!cost_check(1,user))
+		alien.using_resin = 0
+		return 0
 
 	user << "<span class='notice'>You shape a [choice].</span>"
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
 	new choice(user.loc)
+	alien.using_resin = 0
 	return 1
 
 /obj/effect/proc_holder/alien/regurgitate
