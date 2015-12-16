@@ -60,4 +60,4 @@
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
 	var/loc = pick(L)
-	explosion(loc,2,5,11)*
+	explosion(loc,2,5,11)*/
