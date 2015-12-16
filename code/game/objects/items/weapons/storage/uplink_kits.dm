@@ -12,7 +12,7 @@
 			new /obj/item/device/multitool/ai_detect(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
-			new /obj/item/weapon/switchblade
+			new /obj/item/weapon/switchblade(src)
 			return
 
 		if("stealth")
