@@ -27,7 +27,7 @@
 	if(active)
 		qdel(current_beam)
 		active = 0
-		on_beam_relase(current_target)
+		on_beam_release(current_target)
 	current_target = null
 
 /obj/item/weapon/gun/medbeam/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
@@ -110,7 +110,7 @@
 	target.adjustFireLoss(-4)
 	return 
 
-/obj/item/weapon/gun/medbeam/proc/on_beam_relase(var/mob/living/target)
+/obj/item/weapon/gun/medbeam/proc/on_beam_release(var/mob/living/target)
 	return
 
 /obj/effect/ebeam/medical
