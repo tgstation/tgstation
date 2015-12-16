@@ -1,0 +1,43 @@
+{
+  "name": "nanoui",
+  "private": true,
+  "dependencies": {
+    "DOM4": "dom4#~1.5.2",
+    "eddy-js": "~0.7.0",
+    "es5-shim": "~4.3.1",
+    "font-awesome": "~4.5.0",
+    "IE8": "ie8#~2.9.10",
+    "html5shiv": "~3.7.3",
+    "json3": "~3.3.2",
+    "jsurl": "*",
+    "normalize-css": "normalize.css#~3.0.3"
+  },
+  "overrides": {
+    "IE8": {
+      "main": "build/ie8.max.js"
+    },
+    "DOM4": {
+      "dependencies": {
+        "IE8": "*"
+      }
+    },
+    "eddy-js": {
+      "main": "build/eddy.dom.max.js",
+      "dependencies": {
+        "IE8": "*",
+        "DOM4": "*"
+      }
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css",
+        "fonts/*"
+      ]
+    },
+    "jsurl": {
+      "dependencies": {
+        "es5-shim": "*"
+      }
+    }
+  }
+}

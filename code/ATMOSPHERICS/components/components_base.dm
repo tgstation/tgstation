@@ -137,10 +137,6 @@ Pipenet stuff; housekeeping
 		T.assume_air(to_release)
 		air_update_turf(1)
 
-/*
-I think this is NanoUI?
-*/
-
 /obj/machinery/atmospherics/components/proc/safe_input(var/title, var/text, var/default_set)
 	var/new_value = input(usr,text,title,default_set) as num
 	if(usr.canUseTopic(src))
