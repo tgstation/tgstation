@@ -71,22 +71,22 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
-	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":â" = "Service",     "#â" = "Service",       ".â" = "Service",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  ":Ãª" = "right ear",	"#Ãª" = "right ear",		".Ãª" = "right ear",
+	  ":Ã¤" = "left ear",	"#Ã¤" = "left ear",		".Ã¤" = "left ear",
+	  ":Ã¸" = "intercom",	"#Ã¸" = "intercom",		".Ã¸" = "intercom",
+	  ":Ã°" = "department",	"#Ã°" = "department",	".Ã°" = "department",
+	  ":Ã±" = "Command",		"#Ã±" = "Command",		".Ã±" = "Command",
+	  ":Ã²" = "Science",		"#Ã²" = "Science",		".Ã²" = "Science",
+	  ":Ã¼" = "Medical",		"#Ã¼" = "Medical",		".Ã¼" = "Medical",
+	  ":Ã³" = "Engineering",	"#Ã³" = "Engineering",	".Ã³" = "Engineering",
+	  ":Ã»" = "Security",	"#Ã»" = "Security",		".Ã»" = "Security",
+	  ":Ã¶" = "whisper",		"#Ã¶" = "whisper",		".Ã¶" = "whisper",
+	  ":Ã¨" = "binary",		"#Ã¨" = "binary",		".Ã¨" = "binary",
+	  ":Ã´" = "alientalk",	"#Ã´" = "alientalk",		".Ã´" = "alientalk",
+	  ":Ã¥" = "Syndicate",	"#Ã¥" = "Syndicate",		".Ã¥" = "Syndicate",
+	  ":Ã©" = "Supply",		"#Ã©" = "Supply",		".Ã©" = "Supply",
+	  ":Ã¢" = "Service",     "#Ã¢" = "Service",       ".Ã¢" = "Service",
+	  ":Ã¯" = "changeling",	"#Ã¯" = "changeling",	".Ã¯" = "changeling"
 )
 
 /mob/living/proc/get_default_language()
@@ -406,7 +406,7 @@ var/list/department_radio_keys = list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		flick_overlay(image('icons/mob/talk.dmi', find_holder(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)
@@ -416,4 +416,3 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
