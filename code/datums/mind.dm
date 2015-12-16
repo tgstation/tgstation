@@ -1,3 +1,9 @@
+#define NO_RESTRICTION 1
+#define STATION_GATE 2
+#define AWAY_GATE 3
+#define BOTH_GATES 4
+
+
 /*	Note from Carnie:
 		The way datum/mind stuff works has been changed a lot.
 		Minds now represent IC characters rather than following a client around constantly.
@@ -55,6 +61,7 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
+	var/gate_restriction = NO_RESTRICTION //If they are allowed to use the gateway to return from away missions
 
 /datum/mind/New(var/key)
 	src.key = key

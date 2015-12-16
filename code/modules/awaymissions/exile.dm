@@ -21,6 +21,12 @@
 	imp = new /obj/item/weapon/implant/exile( src )
 	..()
 
+
+/obj/item/weapon/implant/exile/implant(mob/target)
+	if(..())
+		if(target.mind)
+			target.mind.gate_restriction = AWAY_GATE
+
 /obj/item/weapon/implantcase/exile
 	name = "implant case - 'Exile'"
 	desc = "A glass case containing an exile implant."

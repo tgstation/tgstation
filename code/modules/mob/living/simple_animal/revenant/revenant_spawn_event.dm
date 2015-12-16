@@ -54,6 +54,7 @@
 	player_mind.transfer_to(revvie)
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
+	player_mind.gate_restriction = BOTH_GATES
 	ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been made into a revenant by an event.")
 	log_game("[key_of_revenant] was spawned as a revenant by an event.")
