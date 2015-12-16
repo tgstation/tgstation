@@ -250,3 +250,21 @@
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
+
+/datum/action/innate/blob_burst
+	name = "Burst"
+	button_icon_state = "blob"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/blob_burst/CheckRemoval()
+	if(ticker.mode.name != "blob" || !ishuman(owner))
+		return 1
+	var/datum/game_mode/blob/B = ticker.mode
+	if(!owner.mind || !(owner.mind in B.infected_crew))
+		return 1
+	return 0
+
+/datum/action/innate/blob_burst/Activate()
+	var/datum/game_mode/blob/B = ticker.mode
+	B.burst_blob(owner.mind)
+	Remove(owner)
