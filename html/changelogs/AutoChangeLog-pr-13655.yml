@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Revenant Overload Lights reveal time lowered from 10 seconds to 8 seconds, shock damage increased from 18 to 20."
+  - tweak: "Revenant Blight reveal time lowered from 6 seconds to 5 seconds."
