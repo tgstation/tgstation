@@ -1148,7 +1148,7 @@ obj/item/weapon/circuitboard/rdserver
 	frame_desc = "Requires 1 manipulator, 2 scanning modules, 2 micro-lasers, 1 matter bin, and 2 console screens."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 2,
 							"/obj/item/weapon/stock_parts/matter_bin" = 1)
@@ -1161,7 +1161,7 @@ obj/item/weapon/circuitboard/rdserver
 	frame_desc = "Requires 1 manipulator, 2 scanning modules, 2 micro-lasers, and 1 console screen."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,)
 /*
