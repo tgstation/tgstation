@@ -177,8 +177,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	assets = list(
 		"nanoui.js"					= 'nano/assets/nanoui.js',
 		"nanoui.css"				= 'nano/assets/nanoui.css',
-		"fontawesome-webfont.eot"	= 'nano/assets/fontawesome-webfont.eot',
-		"fontawesome-webfont.woff2"	= 'nano/assets/fontawesome-webfont.woff2'
 	)
 
 /datum/asset/simple/pda

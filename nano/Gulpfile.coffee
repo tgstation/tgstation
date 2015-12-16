@@ -7,7 +7,6 @@ f =
 
 # Project Paths
 input =
-  fonts:     "**/*.{eot,woff2}"
   images:    "images"
   scripts:   "scripts"
   styles:    "styles"
@@ -56,7 +55,7 @@ glob = (path) ->
   "#{path}/*"
 
 ### Tasks ###
-gulp.task "default", ["fonts", "js", "css"]
+gulp.task "default", ["js", "css"]
 
 
 gulp.task "clean", ->
@@ -73,11 +72,6 @@ gulp.task "watch", ->
 gulp.task "reload", ["default"], ->
   child_process.exec "reload.bat", (err, stdout, stderr) ->
     return console.log err if err
-
-
-gulp.task "fonts", ["clean"], ->
-  gulp.src bower input.fonts
-    .pipe gulp.dest output.dir
 
 
 gulp.task "js", ["clean"], ->
@@ -104,7 +98,6 @@ gulp.task "js", ["clean"], ->
 gulp.task "css", ["clean"], ->
   lib = gulp.src bower "**/*.css"
     .pipe g.if(f.sourcemaps, g.sourcemaps.init())
-    .pipe g.replace("../fonts/", "")
 
   main = gulp.src glob input.styles
     .pipe g.filter(["*.less", "!_*.less"])

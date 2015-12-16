@@ -204,8 +204,9 @@
 <script type='text/javascript' src='nanoui.js'></script>
 	"}
 	var/stylesheet_html = {"
-<link rel="stylesheet" type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css'>
+<link rel='stylesheet' type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css' />
 <link rel='stylesheet' type='text/css' href='nanoui.css' />
+<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
 	"}
 
 	// Generate JSON.
