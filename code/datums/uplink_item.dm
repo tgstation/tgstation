@@ -44,7 +44,7 @@ var/list/uplink_items = list()
 					continue
 				if(gamemode_override && (gamemode_override in I.excludefrom))
 					continue
-			if(I.player_minimum && I.player_minimum < joined_player_list.len)
+			if(I.player_minimum && I.player_minimum > joined_player_list.len)
 				continue
 			if(!filtered_uplink_items[I.category])
 				filtered_uplink_items[I.category] = list()
