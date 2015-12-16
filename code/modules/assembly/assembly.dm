@@ -1,5 +1,7 @@
 /obj/item/device/assembly
 	name = "assembly"
+	var/short_name //Short name of the assembly. If the name is "remote signalling device", short_name must be something like "signaler"
+
 	desc = "A small electronic device that should never exist."
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
@@ -25,6 +27,12 @@
 	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
+
+/obj/item/device/assembly/New()
+	..()
+
+	if(!short_name)
+		short_name = name
 
 /obj/item/device/assembly/proc/activate()									//What the device does when turned on
 	return
@@ -53,6 +61,12 @@
 /obj/item/device/assembly/proc/describe()									// Called by grenades to describe the state of the trigger (time left, etc)
 	return "The trigger assembly looks broken!"
 
+/obj/item/device/assembly/proc/send_pulses_to_list(var/list/L) //Send pulse to all assemblies in list.
+	if(!L || !L.len) return
+
+	for(var/obj/item/device/assembly/A in L)
+		A.pulsed()
+
 /obj/item/device/assembly/process_cooldown()
 	cooldown--
 	if(cooldown <= 0)	return 0
@@ -80,10 +94,15 @@
 
 
 /obj/item/device/assembly/pulse(var/radio = 0)
-	if(holder && (wires & WIRE_PULSE))
-		holder.process_activation(src, 1, 0)
-	if(holder && (wires & WIRE_PULSE_SPECIAL))
-		holder.process_activation(src, 0, 1)
+	if(istype(holder))
+		if(holder && (wires & WIRE_PULSE))
+			holder.process_activation(src, 1, 0)
+		if(holder && (wires & WIRE_PULSE_SPECIAL))
+			holder.process_activation(src, 0, 1)
+	else if(istype(holder, /obj/item/device/assembly_frame))
+		var/obj/item/device/assembly_frame/AB = holder
+
+		AB.receive_pulse(src)
 
 	if(istype(loc,/obj/item/weapon/grenade)) // This is a hack.  Todo: Manage this better -Sayu
 		var/obj/item/weapon/grenade/G = loc

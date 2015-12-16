@@ -122,3 +122,13 @@
 	materials = list(MAT_IRON = 700, MAT_GLASS = 50, MAT_SILVER = 50)
 	build_path = /obj/item/device/silicate_sprayer/advanced/empty
 	category = "Engineering"
+
+/datum/design/assembly_frame
+	name = "Assembly Frame"
+	desc = "A frame used to store and connect assemblies together."
+	id = "assembly_frame"
+	req_tech = list("engineering" = 4, "powerstorage" = 3, "programming" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 6000, MAT_GLASS = 3500, MAT_PLASTIC = 1000)
+	category = "Engineering"
+	build_path = /obj/item/device/assembly_frame

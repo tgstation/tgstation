@@ -432,7 +432,7 @@ var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious tria
 				if(GENEGUN_MODE_SPLICE)
 					production 			= round(mix(gene.values[1], production,	rand(40, 60)/100), 0.1)
 					maturation 			= round(mix(gene.values[2], maturation,	rand(40, 60)/100), 0.1)
-					spread 				= max(gene.values[2], spread)
+					spread 				= max(gene.values[3], spread)
 					harvest_repeat 		= max(gene.values[4], harvest_repeat)
 					yield				= round(mix(gene.values[5], yield,		rand(40, 60)/100), 0.1)
 

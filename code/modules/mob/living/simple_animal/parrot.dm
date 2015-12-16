@@ -94,6 +94,27 @@
 	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
 
+	var/times_examined_while_dead = 0
+	var/list/dead_lines = list("That parrot is definitely deceased.", \
+		"You know a dead parrot when you see one, and you're looking at one right now.", \
+		"It's dead, that's what's wrong with it.", \
+		"It's bleeding demised.", \
+		"It's passed on.", \
+		"This parrot is no more.", \
+		"It has ceased to be.", \
+		"It's expired and gone to meet its maker.", \
+		"This is a late parrot.", \
+		"It's a stiff.", \
+		"Bereft of life, it rests in peace.", \
+		"It's run down the curtain and joined the choir invisible.", \
+		"This is an ex-parrot.")
+	var/list/not_dead_lines = list("It's just resting.", \
+		"It's stunned.", \
+		"Just tired and shagged out after a long squawk.", \
+		"It's pining for the fjords.", \
+		"It just prefers kippin' on it's back.", \
+		"It's a beautiful bird, lovely plumage, innit?")
+
 
 /mob/living/simple_animal/parrot/New()
 	..()
@@ -116,26 +137,15 @@
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	if(stat == DEAD)
-		desc = pick("It's just resting.", \
-			"It's stunned.", \
-			"Probably tired and shagged out after a long squawk.", \
-			"It's pining for the fjords.", \
-			"It just prefers kippin' on it's back.", \
-			"That parrot is definitely deceased.", \
-			"You know a dead parrot when you see one, and you're looking at one right now.", \
-			"It's dead, that's what's wrong with it.", \
-			"It's bleeding demised.", \
-			"It's passed on.", \
-			"This parrot is no more.", \
-			"It has ceased to be.", \
-			"It's expired and gone to meet it's maker.", \
-			"This is a late parrot.", \
-			"It's a stiff.", \
-			"Bereft of life, it rests in peace.", \
-			"It's run down the courtain and joined the choir invisible.", \
-			"This is an ex-parrot.")
+		if(times_examined_while_dead < dead_lines.len)
+			times_examined_while_dead++
+			desc = dead_lines[times_examined_while_dead]
+		else
+			desc = pick(not_dead_lines)
 	else
 		desc = initial(desc)
+		if(times_examined_while_dead)
+			times_examined_while_dead = 0
 	..()
 
 /mob/living/simple_animal/parrot/Die()
