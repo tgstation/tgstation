@@ -14,6 +14,7 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/storage_blobs = 0
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
@@ -29,7 +30,7 @@
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
-		blob_core.adjustcolors(blob_reagent_datum.color)
+		blob_core.update_icon()
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -90,7 +91,7 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))

@@ -216,3 +216,7 @@
 			else
 				target.see_invisible = SEE_INVISIBLE_LIVING
 				name = "Toggle Nightvision \[OFF]"
+
+
+/mob/living/simple_animal/hostile/statue/sentience_act()
+	faction -= "neutral"

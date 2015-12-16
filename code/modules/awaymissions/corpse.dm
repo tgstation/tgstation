@@ -8,7 +8,7 @@
 	name = "Unknown"
 	var/mobname = "default"  //Use for the ghost spawner variant, so they don't come out named "sleeper"
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
-	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -262,7 +262,7 @@
 
 
 /obj/effect/landmark/corpse/plasmaman
-	mob_species = "plasmaman"
+	mob_species = /datum/species/plasmaman
 	corpsehelmet = /obj/item/clothing/head/helmet/space/plasmaman
 	corpseuniform = /obj/item/clothing/under/plasmaman
 	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
@@ -320,7 +320,7 @@
 /obj/effect/landmark/corpse/skeleton
 	name = "skeletal remains"
 	mobname = "skeleton"
-	mob_species = "skeleton"
+	mob_species = /datum/species/skeleton
 	mobgender = NEUTER
 
 
@@ -335,7 +335,7 @@
 /obj/effect/landmark/corpse/zombie
 	name = "rotting corpse"
 	mobname = "zombie"
-	mob_species = "zombie"
+	mob_species = /datum/species/zombie
 
 /obj/effect/landmark/corpse/zombie/alive
 	death = FALSE

@@ -3,9 +3,6 @@
 	density = 0
 
 	name = "gas mixer"
-
-	req_access = list(access_atmospherics)
-
 	can_unwrench = 1
 
 	var/on = 0
@@ -135,7 +132,7 @@
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_mixer.tmpl", name, 400, 145)
+		ui = new(user, src, ui_key, "atmos_mixer", name, 450, 175)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
@@ -147,29 +144,30 @@
 	data["node2_concentration"] = round(node2_concentration*100)
 	return data
 
-/obj/machinery/atmospherics/components/trinary/mixer/Topic(href,href_list)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["power"])
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	if(href_list["set_press"])
-		switch(href_list["set_press"])
-			if ("max")
-				target_pressure = MAX_OUTPUT_PRESSURE
-			if ("set")
-				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	if(href_list["node1_c"])
-		var/value = text2num(href_list["node1_c"])
-		src.node1_concentration = max(0, min(1, src.node1_concentration + value))
-		src.node2_concentration = max(0, min(1, src.node2_concentration - value))
-		investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
-	if(href_list["node2_c"])
-		var/value = text2num(href_list["node2_c"])
-		src.node2_concentration = max(0, min(1, src.node2_concentration + value))
-		src.node1_concentration = max(0, min(1, src.node1_concentration - value))
-		investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
 
-	add_fingerprint(usr)
+	switch(action)
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(params["set"])
+				if("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+		if("node1")
+			var/value = text2num(params["concentration"])
+			src.node1_concentration = max(0, min(1, src.node1_concentration + value))
+			src.node2_concentration = max(0, min(1, src.node2_concentration - value))
+			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
+		if("node2")
+			var/value = text2num(params["concentration"])
+			src.node2_concentration = max(0, min(1, src.node2_concentration + value))
+			src.node1_concentration = max(0, min(1, src.node1_concentration - value))
+			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
 	update_icon()
+	return 1

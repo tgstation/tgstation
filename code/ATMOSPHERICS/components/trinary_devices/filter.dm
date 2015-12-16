@@ -11,12 +11,9 @@
 
 	name = "gas filter"
 
-	req_access = list(access_atmospherics)
-
 	can_unwrench = 1
 
 	var/on = 0
-	var/temp = null
 
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -172,7 +169,7 @@ Filter types:
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_filter.tmpl", name, 400, 120)
+		ui = new(user, src, ui_key, "atmos_filter", name, 450, 145)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/get_ui_data()
@@ -183,36 +180,35 @@ Filter types:
 	data["filter_type"] = filter_type
 	return data
 
-/obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list)
+/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["filterset"])
-		src.filter_type = text2num(href_list["filterset"])
-		var/filtering_name = "nothing"
-		switch(filter_type)
-			if(FILTER_PLASMA)
-				filtering_name = "plasma"
-			if(FILTER_OXYGEN)
-				filtering_name = "oxygen"
-			if(FILTER_NITROGEN)
-				filtering_name = "nitrogen"
-			if(FILTER_CARBONDIOXIDE)
-				filtering_name = "carbon dioxide"
-			if(FILTER_NITROUSOXIDE)
-				filtering_name = "nitrous oxide"
-		investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
-	if (href_list["temp"])
-		src.temp = null
-	if(href_list["set_press"])
-		switch(href_list["set_press"])
-			if ("max")
-				target_pressure = MAX_OUTPUT_PRESSURE
-			if ("set")
-				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	if(href_list["power"])
-		on=!on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 
-	add_fingerprint(usr)
+	switch(action)
+		if("power")
+			on=!on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(params["set"])
+				if("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+		if("filter")
+			src.filter_type = text2num(params["mode"])
+			var/filtering_name = "nothing"
+			switch(filter_type)
+				if(FILTER_PLASMA)
+					filtering_name = "plasma"
+				if(FILTER_OXYGEN)
+					filtering_name = "oxygen"
+				if(FILTER_NITROGEN)
+					filtering_name = "nitrogen"
+				if(FILTER_CARBONDIOXIDE)
+					filtering_name = "carbon dioxide"
+				if(FILTER_NITROUSOXIDE)
+					filtering_name = "nitrous oxide"
+			investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
 	update_icon()
+	return 1
