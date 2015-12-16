@@ -60,7 +60,6 @@
 
 /turf/simulated/floor/plating/snow/gravsnow
 	icon_state = "snow_dug"
-	dug = 1
 	slowdown = 0
 
 /turf/simulated/floor/plating/snow/gravsnow/corner
