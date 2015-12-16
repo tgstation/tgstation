@@ -614,29 +614,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return assembled
 
-
-/atom/proc/GetTypeInAllContents(typepath)
-	var/list/processing_list = list(src)
-	var/list/processed = list()
-
-	var/atom/found = null
-
-	while(processing_list.len && found==null)
-		var/atom/A = processing_list[1]
-		if(istype(A, typepath))
-			found = A
-
-		processing_list -= A
-
-		for(var/atom/a in A)
-			if(!(a in processed))
-				processing_list |= a
-
-		processed |= A
-
-	return found
-
-
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
