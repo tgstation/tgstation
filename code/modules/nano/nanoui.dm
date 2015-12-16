@@ -201,14 +201,11 @@
 /datum/nanoui/proc/get_html()
 	// Generate <script> and <link> tags.
 	var/script_html = {"
-<script type='text/javascript' src='nanoui.lib.js'></script>
-<script type='text/javascript' src='nanoui.main.js'></script>
-<script type='text/javascript' src='nanoui.templates.js'></script>
+<script type='text/javascript' src='nanoui.js'></script>
 	"}
 	var/stylesheet_html = {"
 <link rel="stylesheet" type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css'>
-<link rel='stylesheet' type='text/css' href='nanoui.lib.css' />
-<link rel='stylesheet' type='text/css' href='nanoui.main.css' />
+<link rel='stylesheet' type='text/css' href='nanoui.css' />
 	"}
 
 	// Generate JSON.

@@ -1,8 +1,9 @@
 ### Settings ###
 util = require("gulp-util")
-s =
-  min: util.env.min
-  colorblind: util.env.colorblind
+f =
+  colorblind: util.env.colorblind || util.env.c
+  min: util.env.min || util.env.m
+  sourcemaps: util.env.sourcemaps || util.env.s
 
 # Project Paths
 input =
@@ -14,13 +15,8 @@ input =
 
 output =
   dir: "assets"
-  scripts:
-    lib: "nanoui.lib.js"
-    main: "nanoui.main.js"
-  styles:
-    lib: "nanoui.lib.css"
-    prefix: "nanoui."
-  templates: "nanoui.templates.js"
+  js: "nanoui.js"
+  css: "nanoui.css"
 
 # doT Settings
 dotOpts =
@@ -41,7 +37,7 @@ bower         = require "main-bower-files"
 child_process = require "child_process"
 del           = require "del"
 gulp          = require "gulp"
-merge         = require "merge-stream"
+merge         = require "merge2"
 
 ### Plugins ###
 g = require("gulp-load-plugins")({replaceString: /^gulp(-|\.)|-/g})
@@ -60,10 +56,12 @@ glob = (path) ->
   "#{path}/*"
 
 ### Tasks ###
-gulp.task "default", ["fonts", "scripts", "styles", "templates"]
+gulp.task "default", ["fonts", "js", "css"]
+
 
 gulp.task "clean", ->
   del glob output.dir
+
 
 gulp.task "watch", ->
   gulp.watch [glob input.images], ["reload"]
@@ -71,37 +69,46 @@ gulp.task "watch", ->
   gulp.watch [glob input.styles], ["reload"]
   gulp.watch [glob input.templates], ["reload"]
 
+
 gulp.task "reload", ["default"], ->
   child_process.exec "reload.bat", (err, stdout, stderr) ->
     return console.log err if err
+
 
 gulp.task "fonts", ["clean"], ->
   gulp.src bower input.fonts
     .pipe gulp.dest output.dir
 
-gulp.task "scripts", ["clean"], ->
+
+gulp.task "js", ["clean"], ->
   lib = gulp.src bower "**/*.js"
-    .pipe g.concat(output.scripts.lib)
-    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
-    .pipe gulp.dest output.dir
+    .pipe g.if(f.sourcemaps, g.sourcemaps.init())
 
   main = gulp.src glob input.scripts
+    .pipe g.if(f.sourcemaps, g.sourcemaps.init())
     .pipe g.coffee()
-    .pipe g.concat(output.scripts.main)
-    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
+
+  templates = gulp.src glob input.templates
+    .pipe g.dotprecompiler({dictionary: "TMPL", templateSettings: dotOpts})
+    .pipe g.concat("templates")
+    .pipe g.header("window.TMPL = {};\n")
+
+  combined = merge lib, main, templates
+  combined
+    .pipe g.concat(output.js)
+    .pipe g.if(f.min, g.uglify(), g.jsbeautifier())
+    .pipe g.if(f.sourcemaps, g.sourcemaps.write())
     .pipe gulp.dest output.dir
 
-  merge lib, main
 
-gulp.task "styles", ["clean"], ->
+gulp.task "css", ["clean"], ->
   lib = gulp.src bower "**/*.css"
+    .pipe g.if(f.sourcemaps, g.sourcemaps.init())
     .pipe g.replace("../fonts/", "")
-    .pipe g.concat(output.styles.lib)
-    .pipe g.if(s.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
-    .pipe gulp.dest output.dir
 
   main = gulp.src glob input.styles
     .pipe g.filter(["*.less", "!_*.less"])
+    .pipe g.if(f.sourcemaps, g.sourcemaps.init())
     .pipe g.less({paths: [input.images]})
     .pipe g.postcss([
       p.autoprefixer({browsers: ["last 2 versions", "ie >= 8"]}),
@@ -111,17 +118,11 @@ gulp.task "styles", ["clean"], ->
       p.gradient,
       p.fontweights
     ])
-    .pipe g.if(s.colorblind, g.postcss([p.colorblind]))
-    .pipe g.if(s.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
-    .pipe g.rename({prefix: output.styles.prefix})
-    .pipe gulp.dest output.dir
+    .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
 
-  merge lib, main
-
-gulp.task "templates", ["clean"], ->
-  gulp.src glob input.templates
-    .pipe g.dotprecompiler({dictionary: "TMPL", templateSettings: dotOpts})
-    .pipe g.concat(output.templates)
-    .pipe g.header("window.TMPL = {};\n")
-    .pipe g.if(s.min, g.uglify(), g.jsbeautifier())
+  combined = merge lib, main
+  combined
+    .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
+    .pipe g.concat(output.css)
+    .pipe g.if(f.sourcemaps, g.sourcemaps.write())
     .pipe gulp.dest output.dir
