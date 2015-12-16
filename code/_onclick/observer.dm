@@ -20,7 +20,7 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if((ismob(A) && A != src) || istype(A,/obj/singularity))
+	if(istype(A, /atom/movable))
 		ManualFollow(A)
 
 	// Otherwise jump
