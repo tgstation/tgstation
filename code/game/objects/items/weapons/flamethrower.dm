@@ -226,3 +226,4 @@
 		var/target_turf = get_turf(owner)
 		ignite_turf(target_turf, 100)
 		qdel(ptank)
+		return 1 //It hit the flamethrower, not them

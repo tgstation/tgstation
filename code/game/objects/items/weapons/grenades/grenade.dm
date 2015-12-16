@@ -116,3 +116,4 @@
 	if(damage && attack_type == PROJECTILE_ATTACK && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
+		return 1 //It hit the grenade, not them
