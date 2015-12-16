@@ -153,18 +153,17 @@
 		return
 	if(istype(I, /obj/item/stack/sheet/wood) && ((on)||(nocell == 2)))
 		var/woodnumber = input(user, "You may insert a maximum of four planks.", "How much wood would you like to add to \the [src]?", 0) as num
-		woodnumber = min(woodnumber,4)
+		woodnumber = Clamp(woodnumber,0,4)
 		var/obj/item/stack/sheet/wood/woody = I
-		woodnumber = min(woodnumber,woody.amount)
-		woody.amount -= woodnumber
+		woody.use(woodnumber)
 		user.visible_message("<span class='notice'>[user] adds some wood to \the [src].</span>", "<span class='notice'>You add some wood to \the [src].</span>")
 		cell.charge = min(cell.charge+woodnumber*250,cell.maxcharge)
 		update_icon()
 	if(on && istype(I,/obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/fag = I
-		fag.light("[user] lights \the [fag] using \the [src]'s flames.")
+		fag.light("<span class='notice'>[user] lights \the [fag] using \the [src]'s flames.</span>")
 
-/obj/machinery/space_heater/campfire/proc/light(var/flavourtext = "[usr] lights \the [src].")
+/obj/machinery/space_heater/campfire/proc/light(var/flavourtext = "<span class='notice'>[usr] lights \the [src].</span>")
 	if(on)
 		return
 	var/turf/T = get_turf(src)
