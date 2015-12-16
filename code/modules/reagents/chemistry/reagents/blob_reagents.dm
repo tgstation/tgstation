@@ -1,5 +1,4 @@
 // These can only be applied by blobs. They are what blobs are made out of.
-// The 4 damage
 /datum/reagent/blob
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
@@ -9,7 +8,17 @@
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection)
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
-/datum/reagent/blob/ripping_tendrils //does brute and a little stamina damage
+/datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
+	return
+
+/datum/reagent/blob/proc/death_reaction(obj/effect/blob/B) //when a blob dies, do this
+	return
+
+/datum/reagent/blob/proc/expand_reaction(obj/effect/blob/B, turf/T) //when the blob expands, do this
+	return
+
+//does brute and a little stamina damage
+/datum/reagent/blob/ripping_tendrils
 	name = "Ripping Tendrils"
 	id = "ripping_tendrils"
 	description = "will do medium brute and stamina damage."
@@ -19,11 +28,30 @@
 /datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
-	M.adjustStaminaLoss(0.4*reac_volume)
+	M.adjustStaminaLoss(0.6*reac_volume)
 	if(iscarbon(M))
 		M.emote("scream")
 
-/datum/reagent/blob/boiling_oil //sets you on fire, does burn damage
+//does low burn and a lot of stamina damage, reacts to stamina damage
+/datum/reagent/blob/energized_fibers
+	name = "Energized Fibers"
+	id = "energized_fibers"
+	description = "will do low burn, high stamina damage, and react to stamina damage."
+	color = "#FFDC73"
+	message_living = ", and you feel a strong tingling sensation"
+
+/datum/reagent/blob/energized_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, BURN)
+	M.adjustStaminaLoss(0.8*reac_volume)
+
+/datum/reagent/blob/energized_fibers/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(damage_type == STAMINA)
+		B.visible_message("<span class='warning'><b>The blob abruptly regenerates!</b></span>")
+		B.health = B.maxhealth //stop disabling the blob!
+
+//sets you on fire, does burn damage
+/datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
 	description = "will cause medium burn damage and set targets on fire."
@@ -39,24 +67,42 @@
 	if(iscarbon(M))
 		M.emote("scream")
 
-/datum/reagent/blob/envenomed_filaments //toxin, hallucination, and some bonus spore toxin
+//toxin, hallucination, and some bonus spore toxin
+/datum/reagent/blob/hallucinogenic_nectar
+	name = "Hallucinogenic Nectar"
+	id = "hallucinogenic_nectar"
+	description = "will cause low toxin damage, vivid hallucinations, and inject targets with toxins."
+	color = "#CD7794"
+	message_living = ", and you feel really good"
+
+/datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, TOX)
+	M.hallucination += 0.6*reac_volume
+	M.druggy += 0.6*reac_volume
+	if(M.reagents)
+		M.reagents.add_reagent("spore", 0.2*reac_volume)
+
+//toxin, stamina, and some bonus spore toxin
+/datum/reagent/blob/envenomed_filaments
 	name = "Envenomed Filaments"
 	id = "envenomed_filaments"
-	description = "will cause medium toxin damage, hallucinations, and inject targets with toxins."
+	description = "will cause medium toxin damage, stamina damage, and inject targets with toxins."
 	color = "#9ACD32"
 	message_living = ", and you feel sick and nauseated"
 
 /datum/reagent/blob/envenomed_filaments/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, TOX)
-	M.hallucination += 0.6*reac_volume
+	M.adjustStaminaLoss(0.4*reac_volume)
 	if(M.reagents)
-		M.reagents.add_reagent("spore", 0.4*reac_volume)
+		M.reagents.add_reagent("spore", 0.2*reac_volume)
 
-/datum/reagent/blob/lexorin_jelly //does tons of oxygen damage and a little brute
+//does tons of oxygen damage and a little brute
+/datum/reagent/blob/lexorin_jelly
 	name = "Lexorin Jelly"
 	id = "lexorin_jelly"
-	description = "will cause low brute damage, high oxygen damage and cause targets to be unable to breathe."
+	description = "will cause low brute damage, high oxygen damage, and cause targets to be unable to breathe."
 	color = "#00FFC5"
 	message_living = ", and your lungs feel heavy and weak"
 
@@ -66,22 +112,30 @@
 	M.apply_damage(1*reac_volume, OXY)
 	M.losebreath += round(0.3*reac_volume)
 
-/datum/reagent/blob/kinetic //does semi-random brute damage
-	name = "Kinetic Gelatin"
-	id = "kinetic"
-	description = "will do high brute damage."
+//does semi-random brute damage and reacts to brute damage
+/datum/reagent/blob/reactive
+	name = "Reactive Gelatin"
+	id = "reactive_gelatin"
+	description = "will do high brute damage and react to brute damage."
 	color = "#FFA500"
 	message = "The blob pummels you"
 
-/datum/reagent/blob/kinetic/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/blob/reactive/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
-	var/damage = rand(10, 35)/25
+	var/damage = rand(10, 20)/25
 	M.apply_damage(damage*reac_volume, BRUTE)
 
-/datum/reagent/blob/cryogenic_liquid //does low burn damage and stamina damage and cools targets down
+/datum/reagent/blob/reactive/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(damage && damage_type == BRUTE && original_health - damage > 0 && isliving(cause)) //is there any damage, is it brute, will we be alive, and is the cause a mob?
+		B.visible_message("<span class='warning'><b>The blob retaliates, lashing out!</b></span>")
+		for(var/atom/A in range(1, B))
+			A.blob_act()
+
+//does low burn damage and stamina damage and cools targets down
+/datum/reagent/blob/cryogenic_liquid
 	name = "Cryogenic Liquid"
 	id = "cryogenic_liquid"
-	description = "will cause low burn, stamina damage, and cause targets to freeze."
+	description = "will cause low burn damage, stamina damage, and cause targets to freeze."
 	color = "#8BA6E9"
 	message = "The blob splashes you with an icy liquid"
 	message_living = ", and you feel cold and tired"
@@ -93,7 +147,37 @@
 	if(M.reagents)
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 
-/datum/reagent/blob/dark_matter //does brute damage and throws or pulls nearby objects at the target
+//does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
+/datum/reagent/blob/pressurized_slime
+	name = "Pressurized Slime"
+	id = "pressurized_slime"
+	description = "will cause low brute damage, oxygen damage, stamina damage, and wet tiles when damaged or killed."
+	color = "#AAAABB"
+	message = "The blob splashes into you"
+	message_living = ", and you gasp for breath"
+
+/datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(0.4*reac_volume, OXY)
+	M.adjustStaminaLoss(0.4*reac_volume)
+	var/turf/simulated/T = get_turf(M)
+	if(istype(T, /turf/simulated))
+		T.MakeSlippery(TURF_WET_WATER)
+
+/datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	for(var/turf/simulated/T in range(1, B))
+		if(prob(damage))
+			T.MakeSlippery(TURF_WET_WATER)
+
+/datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B)
+	B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
+	for(var/turf/simulated/T in range(1, B))
+		if(prob(90))
+			T.MakeSlippery(TURF_WET_WATER)
+
+//does brute damage and throws or pulls nearby objects at the target
+/datum/reagent/blob/dark_matter
 	name = "Dark Matter"
 	id = "dark_matter"
 	description = "will do medium brute damage and pull nearby objects and enemies at the target."
@@ -105,12 +189,13 @@
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
-/datum/reagent/blob/b_sorium //does brute damage and throws or pushes nearby objects away from the target
+//does brute damage and throws or pushes nearby objects away from the target
+/datum/reagent/blob/b_sorium
 	name = "Sorium"
 	id = "b_sorium"
 	description = "will do medium brute damage and throw nearby objects and enemies away from the target."
 	color = "#808000"
-	message = "The blob slams into you, and sends you flying"
+	message = "The blob slams into you and sends you flying"
 
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reagent_vortex(M, 1, reac_volume)
