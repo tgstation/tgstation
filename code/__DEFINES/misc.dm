@@ -310,3 +310,10 @@ var/list/bloody_footprints_cache = list()
 #define FIRE_PROOF -1
 #define FLAMMABLE 0
 #define ON_FIRE 1
+
+
+//Ghost orbit types:
+#define GHOST_ORBIT_CIRCLE		"circle"
+#define GHOST_ORBIT_TRIANGLE	"triangle"
+#define GHOST_ORBIT_HEXAGON		"hexagon"
+#define GHOST_ORBIT_SQUARE		"square"

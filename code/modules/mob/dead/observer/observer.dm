@@ -24,6 +24,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/seedarkness = 1
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -225,7 +226,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
-	orbit(target,orbitsize,0)
+	var/rot_seg
+
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
+
+	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
 	..()
