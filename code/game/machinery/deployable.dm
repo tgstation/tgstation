@@ -2,6 +2,10 @@
 #define VERTICAL "vertical"
 #define HORIZONTAL "horizontal"
 
+#define METAL 1
+#define WOOD 2
+#define SAND 3
+
 //Barricades/cover
 
 /obj/structure/barricade
@@ -13,6 +17,7 @@
 	var/maxhealth = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/ranged_damage_modifier = 1 //Multiply for ranged damage
+	var/material = METAL
 	var/debris_type
 
 
@@ -22,7 +27,7 @@
 		if(message)
 			visible_message(message)
 		else
-			visible_message("<span class='warning'>The [src] is smashed apart!</span>")
+			visible_message("<span class='warning'>\The [src] is smashed apart!</span>")
 		if(leave_debris && debris_type)
 			new debris_type(get_turf(src), 3)
 		qdel(src)
@@ -38,7 +43,7 @@
 	take_damage(M.melee_damage_upper)
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help" && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(health < maxhealth)
 			if(WT.remove_fuel(0,user))
@@ -58,18 +63,18 @@
 	if(P)
 		..()
 		take_damage(P.damage*ranged_damage_modifier)
-		visible_message("<span class='warning'>The [src] is hit by [P]!</span>")
+		visible_message("<span class='warning'>\The [src] is hit by [P]!</span>")
 
 /obj/structure/barricade/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			visible_message("<span class='warning'>The [src] is blown apart!</span>")
+			visible_message("<span class='warning'>\The [src] is blown apart!</span>")
 			qdel(src)
 		if(2)
-			take_damage(25, message = "<span class='warning'>The [src] is blown apart!</span>")
+			take_damage(25, message = "<span class='warning'>\The [src] is blown apart!</span>")
 
 /obj/structure/barricade/blob_act()
-	take_damage(25, leave_debris = 0, message = "<span class='warning'>The blob eats through the [src]!</span>")
+	take_damage(25, leave_debris = 0, message = "<span class='warning'>The blob eats through \the [src]!</span>")
 
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
@@ -98,6 +103,7 @@
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
+	material = WOOD
 
 
 /obj/structure/barricade/security
@@ -128,10 +134,13 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	item_state = "flashbang"
+	action_button_name = "Toggle Barrier Spread"
 	var/mode = SINGLE
 
 /obj/item/weapon/grenade/barrier/AltClick(mob/user)
-	..()
+	toggle_mode(user)
+
+/obj/item/weapon/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)
 		if(SINGLE)
 			mode = VERTICAL
@@ -146,14 +155,31 @@
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)
-			new /obj/structure/barricade/security(get_step(src, NORTH))
-			new /obj/structure/barricade/security(get_step(src, SOUTH))
+			var/target_turf = get_step(src, NORTH)
+			if(!(is_blocked_turf(target_turf)))
+				new /obj/structure/barricade/security(target_turf)
+
+			var/target_turf2 = get_step(src, SOUTH)
+			if(!(is_blocked_turf(target_turf2)))
+				new /obj/structure/barricade/security(target_turf2)
 		if(HORIZONTAL)
-			new /obj/structure/barricade/security(get_step(src, EAST))
-			new /obj/structure/barricade/security(get_step(src, WEST))
+			var/target_turf = get_step(src, EAST)
+			if(!(is_blocked_turf(target_turf)))
+				new /obj/structure/barricade/security(target_turf)
+
+			var/target_turf2 = get_step(src, WEST)
+			if(!(is_blocked_turf(target_turf2)))
+				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
+
+/obj/item/weapon/grenade/barrier/ui_action_click()
+	toggle_mode(usr)
 
 
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL
+
+#undef METAL
+#undef WOOD
+#undef SAND
