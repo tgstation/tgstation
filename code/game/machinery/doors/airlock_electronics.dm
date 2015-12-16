@@ -16,7 +16,7 @@
 /obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
 	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "airlock_electronics.tmpl", name, 975, 415, state = hands_state)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 415, state = hands_state)
 		ui.open()
 
 /obj/item/weapon/electronics/airlock/get_ui_data()
@@ -40,19 +40,20 @@
 
 	return data
 
-/obj/item/weapon/electronics/airlock/Topic(href, href_list)
+/obj/item/weapon/electronics/airlock/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["access"])
-		if(href_list["access"] == "clear")
+	switch(action)
+		if("clear")
 			accesses = list()
 			one_access = 0
-		else if(href_list["access"] == "one")
+		if("one_access")
 			one_access = !one_access
-		else
-			var/access = text2num(href_list["access"])
+		if("set")
+			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
+	return 1

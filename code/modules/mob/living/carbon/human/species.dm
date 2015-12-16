@@ -684,9 +684,6 @@
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
 
-		if(H.seer)
-			H.see_invisible = SEE_INVISIBLE_OBSERVER
-
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
 				var/obj/item/clothing/glasses/G = H.glasses

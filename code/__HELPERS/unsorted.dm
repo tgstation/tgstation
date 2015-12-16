@@ -369,13 +369,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0)
+/proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
 	for(var/mob/M in mobs)
+		if(skip_mindless && (!M.mind && !M.ckey))
+			if(!isbot(M))
+				continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -610,29 +613,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		assembled |= A
 
 	return assembled
-
-
-/atom/proc/GetTypeInAllContents(typepath)
-	var/list/processing_list = list(src)
-	var/list/processed = list()
-
-	var/atom/found = null
-
-	while(processing_list.len && found==null)
-		var/atom/A = processing_list[1]
-		if(istype(A, typepath))
-			found = A
-
-		processing_list -= A
-
-		for(var/atom/a in A)
-			if(!(a in processed))
-				processing_list |= a
-
-		processed |= A
-
-	return found
-
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -944,7 +924,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			final_x = T.x + rough_x
 			final_y = T.y + rough_y
 			final_z = T.z
-		else	
+		else
 			final_x = AM.x + rough_x
 			final_y = AM.y + rough_y
 			final_z = AM.z
@@ -1353,9 +1333,9 @@ B --><-- A
 	return L
 
 /atom/proc/contains(var/atom/location)
-        if(!location)
-                return 0
-        for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
-        if(location == src)
-                return 1
-        return 0
+	if(!location)
+		return 0
+	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+		if(location == src)
+			return 1
+		return 0

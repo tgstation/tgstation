@@ -22,6 +22,14 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
+	// NanoUI
+	if(href_list["nano_error"])
+		src << href_list["nano_error"]
+		throw EXCEPTION("NanoUI: [href_list["nano_error"]]")
+	if(href_list["nano_log"])
+		src << href_list["nano_log"]
+		return
+	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
 		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])

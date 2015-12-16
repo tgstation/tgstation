@@ -235,7 +235,7 @@
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
-				if(prob(20))
+				if(i == 8)
 					user.emote("flip")
 				sleep(1)
 

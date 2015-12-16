@@ -113,7 +113,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo.tmpl", name, 520, 560, state = notcontained_state)
+		ui = new(user, src, ui_key, "cryo", name, 520, 600, state = notcontained_state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -166,33 +166,28 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["switchOn"])
-		if(!state_open)
-			on = 1
-
-	if(href_list["switchOff"])
-		on = 0
-
-	if(href_list["autoEject"])
-		autoEject = !autoEject
-
-	if(href_list["openCell"])
-		open_machine()
-
-	if(href_list["closeCell"])
-		close_machine()
-
-	if(href_list["ejectBeaker"])
-		if(beaker)
-			beaker.loc = get_step(loc, SOUTH)
-			beaker = null
-
-	add_fingerprint(usr)
+	switch(action)
+		if("open")
+			open_machine()
+		if("close")
+			close_machine()
+		if("autoeject")
+			autoEject = !autoEject
+		if("on")
+			if(!state_open)
+				on = 1
+		if("off")
+			on = 0
+		if("ejectbeaker")
+			if(beaker)
+				beaker.loc = get_step(loc, SOUTH)
+				beaker = null
 	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))

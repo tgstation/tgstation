@@ -28,8 +28,11 @@
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
-		return..()
+		return ..()
 	add_logs(user, M, "captured [M.name]'s soul", src)
+
+	if(iscultist(user) && M && M.mind)
+		new /obj/item/summoning_orb(get_turf(M))
 
 	transfer_soul("VICTIM", M, user)
 	return
@@ -104,7 +107,7 @@
 /obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user).
 	switch(choice)
 		if("FORCE")
-			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return 0
 			if(contents.len)
 				return 0
@@ -120,12 +123,6 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
-				if(iscultist(user))
-					user << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
-				else
-					user << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
-				return 0
 			if(imprinted != "empty")
 				user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 			else
@@ -200,7 +197,7 @@
 	if(stoner && iswizard(stoner))
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	else if(stoner && iscultist(stoner))
-		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them summon the Geometer at all costs.</B>"
 	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 

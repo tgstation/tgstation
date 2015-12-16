@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "If the station is destroyed in a nuclear blast, any surviving traitors will complete their \"escape alive\" objective regardless of their location."
