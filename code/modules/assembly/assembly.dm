@@ -94,15 +94,15 @@
 
 
 /obj/item/device/assembly/pulse(var/radio = 0)
-	if(istype(holder))
+	if(istype(holder, /obj/item/device/assembly_frame))
+		var/obj/item/device/assembly_frame/AB = holder
+
+		AB.receive_pulse(src)
+	else
 		if(holder && (wires & WIRE_PULSE))
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
 			holder.process_activation(src, 0, 1)
-	else if(istype(holder, /obj/item/device/assembly_frame))
-		var/obj/item/device/assembly_frame/AB = holder
-
-		AB.receive_pulse(src)
 
 	if(istype(loc,/obj/item/weapon/grenade)) // This is a hack.  Todo: Manage this better -Sayu
 		var/obj/item/weapon/grenade/G = loc
