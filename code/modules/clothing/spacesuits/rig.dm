@@ -247,6 +247,20 @@
 	siemens_coefficient = 0.7
 	pressure_resistance = 40 * ONE_ATMOSPHERE
 
+	// stormtroopers
+
+/obj/item/clothing/head/helmet/space/rig/security/stormtrooper
+	icon_state = "rig-storm"
+	_color = "rig-storm"
+	name = "stormtrooper helmet"
+	desc = "Now even more vulnerable to teddy bears!"
+	no_light = 1
+
+/obj/item/clothing/suit/space/rig/security/stormtrooper
+	icon_state = "rig-storm"
+	name = "stormtrooper hardsuit"
+	desc = "Even with the finest vision enhancement tech, you still can't hit shit."
+
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
 	desc = "A special helmet designed for work in hazardous low pressure environments. Has reduced radiation shielding to allow for greater mobility."

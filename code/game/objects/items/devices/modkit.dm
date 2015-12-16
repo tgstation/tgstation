@@ -61,6 +61,25 @@
 	if(!has_parts)
 		qdel(src)
 
+/obj/item/device/modkit/storm_rig
+	name = "stormtrooper hardsuit modification kit"
+
+/obj/item/device/modkit/storm_rig/New()
+	..()
+	parts = new/list(3)
+	original = new/list(3)
+	finished = new/list(3)
+
+	parts[1] =	1
+	original[1] = /obj/item/clothing/head/helmet/space/rig/security
+	finished[1] = /obj/item/clothing/head/helmet/space/rig/security/stormtrooper
+	parts[2] =	1
+	original[2] = /obj/item/clothing/suit/space/rig/security
+	finished[2] = /obj/item/clothing/suit/space/rig/security/stormtrooper
+	parts[3] =	3
+	original[3] = /obj/item/weapon/gun/energy/laser
+	finished[3] = /obj/item/weapon/gun/energy/laser/blaster
+
 // /vg/: Old atmos hardsuit.
 /obj/item/device/modkit/gold_rig
 	name = "gold atmos hardsuit modification kit"
@@ -77,6 +96,7 @@
 	parts[2] =	1
 	original[2] = /obj/item/clothing/suit/space/rig/atmos
 	finished[2] = /obj/item/clothing/suit/space/rig/atmos/gold
+
 
 /* /vg/ - Not needed
 /obj/item/device/modkit/tajaran

@@ -44,6 +44,21 @@
 /obj/item/weapon/gun/energy/laser/admin/update_icon()
 	return
 
+/obj/item/weapon/gun/energy/laser/blaster
+	name = "blaster rifle"
+	desc = "An E-11 blaster rifle, made by BlasTech on the cheap."
+	icon_state = "blaster"
+	fire_sound = "sound/weapons/blaster-storm.ogg"
+
+/obj/item/weapon/gun/energy/laser/blaster/New()
+	..()
+	if(prob(50))
+		charge_cost = 0
+		projectile_type = /obj/item/projectile/beam/practice/stormtrooper
+		desc = "Don't expect to hit anything with this."
+
+/obj/item/weapon/gun/energy/laser/blaster/update_icon()
+
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"

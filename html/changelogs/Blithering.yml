@@ -1,0 +1,5 @@
+author: Blithering
+delete-after: True
+changes: 
+  - imageadd: Added a stormtrooper outfit & blaster
+  - rscadd: Added a security-to-stormtrooper modifier which turns lasers & sec hardsuits into their stormtrooper equivalent. 
