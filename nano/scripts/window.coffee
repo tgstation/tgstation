@@ -30,8 +30,8 @@ class @Window
     nanoui.winset "titlebar", 0
     nanoui.winset "can-resize", 0
     fancy = @fragment.queryAll ".fancy"
-    fancy.forEach (element) ->
-      element.style.display = 'inherit'
+    fancy.forEach (chrome) ->
+      chrome.classList.remove "fancy"
 
   calcOffset: =>
     @xOriginal = window.screenLeft
@@ -83,8 +83,8 @@ class @Window
     @xResize = event.screenX unless @xResize?
     @yResize = event.screenY unless @yResize?
 
-    x = Math.max(150, (event.screenX - @xResize) + window.innerWidth)
-    y = Math.max(150, (event.screenY - @yResize) + window.innerHeight)
+    x = Math.max(250, (event.screenX - @xResize) + window.innerWidth)
+    y = Math.max(250, (event.screenY - @yResize) + window.innerHeight)
     @setSize x, y
 
     @xResize = event.screenX
