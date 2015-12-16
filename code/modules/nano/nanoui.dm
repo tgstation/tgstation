@@ -32,7 +32,7 @@
 	  "auto_format" = 0
 	)
 	var/atom/ref = null // An extra ref to call when the window is closed.
-	var/layout = "generic" // The layout to be used for this UI.
+	var/layout = "nanotrasen" // The layout to be used for this UI.
 	var/template // The template to be used for this UI.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
@@ -271,7 +271,6 @@
 		return // Bail if we should close.
 
 	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	winset(user, "mapwindow.map", "focus=true") // Return keyboard focus to map.
 	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
 	SSnano.ui_opened(src) // Call the opened handler.
 

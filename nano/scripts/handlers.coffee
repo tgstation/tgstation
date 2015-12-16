@@ -2,7 +2,7 @@ class @Handlers
   constructor: (@bus, @fragment = document) ->
     @bus.on "rendered", @updateStatus
     @bus.on "rendered", @updateLinks
-    @bus.on "rendered", @handleLinks
+    @bus.on "rendered", @attachLinks
 
   updateStatus: (data) =>
     statusicons = @fragment.queryAll ".statusicon"
@@ -23,11 +23,10 @@ class @Handlers
       links.forEach (element) ->
         element.className = "link disabled"
 
-  handleLinks: (data) =>
-    onClick = (event) ->
+  attachLinks: (data) =>
+    onClick = ->
       action = @data "action"
       params = JSON.parse @data "params"
-
       if action? and params? and data.config.status is NANO.INTERACTIVE
         nanoui.bycall action, params
 

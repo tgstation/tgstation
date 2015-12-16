@@ -3,19 +3,25 @@ class @Window
     @dragging = false
     @resizing = false
 
-    @bus.on "initialized", (data) =>
-      return unless data.config.user.fancy
+    @bus.once "initialized", (data) =>
+      setTimeout @focusMap, 100 # Return focus once we're set up.
+      return unless data.config.user.fancy # Bail here if we're not to go chromeless.
       @fancyChrome()
       @calcOffset()
       @attachButtons()
       @attachDrag()
       @attachResize()
 
+    @fragment.on "keydown", @focusMap # If we get input, return focus.
+
   setPos: (x, y) ->
     nanoui.winset "pos", "#{x},#{y}"
 
   setSize: (w, h) ->
     nanoui.winset "size", "#{w},#{h}"
+
+  focusMap: ->
+    nanoui.winset "focus", 1, "mapwindow.map"
 
   fancyChrome: =>
     nanoui.winset "titlebar", 0

@@ -64,21 +64,25 @@ class @NanoUI
     params.nano = action
     location.href = util.href null, params
 
-  error: (error, params = {}) ->
-    if error instanceof Error
-      error = "#{error.fileName}:#{error.lineNumber} #{error.message}"
-    params.nano_error = error
+  error: (error) ->
+    error = "#{error.fileName}:#{error.lineNumber} #{error.message}" if error instanceof Error
+    params =
+      nano_error: error
     location.href = util.href null, params
 
-  log: (message, params = {}) ->
-    params.nano_log = message
+  log: (message) ->
+    params =
+      nano_log: message
     location.href = util.href null, params
 
-  close: (params = {}) =>
-    params.command = "nanoclose #{@data.config.ref}"
+  close: =>
+    params =
+      command: "nanoclose #{@data.config.ref}"
     @winset "is-visible", "false"
     location.href = util.href "winset", params
 
-  winset: (key, value, params = {}) =>
-    params["#{@data.config.window.ref}.#{key}"] = value
+  winset: (key, value, window) =>
+    window = @data.config.window.ref unless window?
+    params =
+      "#{window}.#{key}": value
     location.href = util.href "winset", params
