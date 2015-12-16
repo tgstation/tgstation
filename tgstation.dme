@@ -1462,6 +1462,7 @@
 #include "code\modules\projectiles\guns\energy.dm"
 #include "code\modules\projectiles\guns\grenade_launcher.dm"
 #include "code\modules\projectiles\guns\magic.dm"
+#include "code\modules\projectiles\guns\medbeam.dm"
 #include "code\modules\projectiles\guns\projectile.dm"
 #include "code\modules\projectiles\guns\syringe_gun.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
