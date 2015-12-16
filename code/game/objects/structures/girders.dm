@@ -131,6 +131,8 @@
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
+				if(state) //We are trying to finish a reinforced girder with regular metal
+					return
 				if(!anchored)
 					if(S.amount < 2)
 						return
