@@ -60,7 +60,3 @@
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
 	smooth_icon_neighbors(src)
-
-turf/simulated/MakeSlippery()
-	if(TURF_WET_ICE)
-		wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
