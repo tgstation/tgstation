@@ -345,7 +345,7 @@
 	. = LIGHTING_CAP
 	var/area/A = src.loc
 	if(IS_DYNAMIC_LIGHTING(A))
-		light_amount = src.lighting_lumcount
+		. = src.lighting_lumcount
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
