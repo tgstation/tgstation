@@ -158,6 +158,7 @@ effective or pretty fucking useless.
 	var/charge = 300
 	var/max_charge = 300
 	var/on = 0
+	var/old_alpha = 0
 	action_button_name = "Toggle Cloaker"
 
 /obj/item/device/shadowcloak/ui_action_click()
@@ -174,22 +175,20 @@ effective or pretty fucking useless.
 	user << "<span class='notice'>You activate [src].</span>"
 	src.user = user
 	SSobj.processing |= src
+	old_alpha = user.alpha
 	on = 1
-	return
 
 /obj/item/device/shadowcloak/proc/Deactivate()
 	user << "<span class='notice'>You deactivate [src].</span>"
 	SSobj.processing.Remove(src)
 	if(user)
-		user.alpha = initial(user.alpha)
+		user.alpha = old_alpha
 	on = 0
 	user = null
-	return
 
 /obj/item/device/shadowcloak/dropped(mob/user)
-	if(user && user.get_item_by_slot(slot_belt) == src)
+	if(user && user.get_item_by_slot(slot_belt) != src)
 		Deactivate()
-	return
 
 /obj/item/device/shadowcloak/process()
 	if(user.get_item_by_slot(slot_belt) != src)
@@ -197,7 +196,8 @@ effective or pretty fucking useless.
 		return
 	var/turf/simulated/T = get_turf(src)
 	if(on)
-		if(!T.lighting_object || T.get_lumcount() < 3) 
+		var/lumcount = T.get_lumcount()
+		if(lumcount > 3)
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
