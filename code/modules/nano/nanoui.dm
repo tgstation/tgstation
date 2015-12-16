@@ -208,8 +208,7 @@
 	var/stylesheet_html = {"
 <link rel="stylesheet" type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css'>
 <link rel='stylesheet' type='text/css' href='nanoui.lib.css' />
-<link rel='stylesheet' type='text/css' href='nanoui.common.css' />
-<link rel='stylesheet' type='text/css' href='nanoui.[layout].css' />
+<link rel='stylesheet' type='text/css' href='nanoui.main.css' />
 	"}
 
 	// Generate JSON.
@@ -232,7 +231,7 @@
 		[stylesheet_html]
 		[script_html]
 	</head>
-	<body>
+	<body class='[layout]'>
 		<div id='data' data-initial='[initial_data_json]'></div>
 		<div id='layout'>
 			<div class='hexdots-loader' style='position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);'>
