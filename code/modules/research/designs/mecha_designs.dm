@@ -417,4 +417,4 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/syringe_gun
 	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
 	construction_time = 200
- 	category = list("Exosuit Equipment")
+	category = list("Exosuit Equipment")
