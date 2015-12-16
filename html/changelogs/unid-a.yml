@@ -1,0 +1,13 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: Added \"assembly frames\", items that allow creating more advanced things with assemblies like timers, signallers and speakers. They can hold any amount of assemblies inside, and the assemblies inside can be connected together.
+  - rscadd: Assembly frames can be found in vendomats (costing one coin), or created with protolathes. Each mechanic's locker starts with two assembly frames.
+  - rscadd: Added addition circuit assemblies. Whenever they receive a pulse their internal counter is increased by 1. Whenever their counter reaches a specified value, it resets and the assembly emits a pulse.
+  - rscadd: Added randomizer circuit assemblies. When pulsed, they randomly select a specified amount of assemblies connected to them, and emit a pulse to them.
+  - rscadd: Added comparison circuit assemblies. When pulsed, they check the first assembly connected to them. If the condition is true, they emit a pulse to the second connected assembly, otherwise they emit a pulse to the third connected assembly.
+  - rscadd: All of the new assemblies can be made with autolathes.
+  - tweak: Timers and proximity sensors now start or stop countdown when pulsed.
+  - tweak: It's now possible to set \"default time\" on timers and proximity sensors. When their timers finish counting down, the time remaining is reset to the default time.

@@ -1012,6 +1012,9 @@ var/global/num_vending_terminals = 1
 		/obj/item/device/flashlight = 5,
 		/obj/item/device/assembly/timer = 2,
 		)
+	premium = list(
+		/obj/item/device/assembly_frame = 1,
+		)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	pack = /obj/structure/vendomatpack/assist
 
