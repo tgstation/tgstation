@@ -44,6 +44,8 @@ var/list/uplink_items = list()
 					continue
 				if(gamemode_override && (gamemode_override in I.excludefrom))
 					continue
+			if(I.player_minimum && I.player_minimum < joined_player_list.len)
+				continue
 			if(!filtered_uplink_items[I.category])
 				filtered_uplink_items[I.category] = list()
 			filtered_uplink_items[category] += I
@@ -63,6 +65,7 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
+	var/player_minimum = FALSE //If 1 or higher, will check that there are enough people online before adding the item to the uplink
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -250,6 +253,7 @@ var/list/uplink_items = list()
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 50
+	player_minimum = 35
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -264,6 +268,7 @@ var/list/uplink_items = list()
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	player_minimum = 30
 	cost = 12
 
 /datum/uplink_item/dangerous/sniper
@@ -751,6 +756,7 @@ var/list/uplink_items = list()
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical cocktail which has a mild healing effect along with removing all stuns and increasing movement speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	player_minimum = 30
 	cost = 8
 
 /datum/uplink_item/implants/storage
