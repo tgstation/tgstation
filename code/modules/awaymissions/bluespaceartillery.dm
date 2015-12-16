@@ -1,6 +1,6 @@
 
 /obj/machinery/artillerycontrol
-	var/reload = 180
+	var/reload = 60
 	name = "bluespace artillery control"
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
@@ -8,7 +8,7 @@
 	anchored = 1
 
 /obj/machinery/artillerycontrol/process()
-	if(src.reload<180)
+	if(src.reload<60)
 		src.reload++
 
 /obj/structure/artilleryplaceholder
@@ -24,7 +24,7 @@
 	user.set_machine(src)
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 	dat += "Locked on<BR>"
-	dat += "<B>Charge progress: [reload]/180:</B><BR>"
+	dat += "<B>Charge progress: [reload]/60:</B><BR>"
 	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
 	user << browse(dat, "window=scroll")
@@ -38,7 +38,7 @@
 	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 	if (usr.stat || usr.restrained()) return
-	if(src.reload < 180) return
+	if(src.reload < 60) return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
 		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
