@@ -377,7 +377,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M))
+			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
 		var/name = M.name
 		if (name in names)
