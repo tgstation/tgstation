@@ -1,0 +1,12 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "New blob chemicals:"
+  - rscadd: "Pressurized Slime, which is grey, does low brute, oxygen, and stamina damage, but releases water when damaged or destroyed."
+  - rscadd: "Energized Fibers, which is light yellow, does low burn damage, high stamina damage, and heals if hit with stamina damage."
+  - rscadd: "Hallucinogenic Nectar, which is pink, does low toxin damage, causes vivid hallucinations, and does some bonus toxin damage over time."
+  - tweak: "Replaces Kinetic Gelatin with Reactive Gelatin, which does less brute damage, but if hit with brute damage in melee, damages all nearby objects."
+  - wip: "Changes three of the old blob chemicals:"
+  - tweak: "Ripping Tendrils does slightly more stamina damage"
+  - tweak: "Envenomed Filaments no longer causes hallucinations, but does some stamina damage in addition to toxin damage over time."
+  - tweak: "Cryogenic Liquid will freeze targets more effectively."
