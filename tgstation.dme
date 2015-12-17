@@ -914,6 +914,7 @@
 #include "code\modules\awaymissions\maploader\writer.dm"
 #include "code\modules\awaymissions\mission_code\Academy.dm"
 #include "code\modules\awaymissions\mission_code\blackmarketpackers.dm"
+#include "code\modules\awaymissions\mission_code\capture_the_flag.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
