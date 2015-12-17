@@ -138,9 +138,7 @@
 	apcs_list -= src
 
 	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
@@ -684,7 +682,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
+	if (is_special_character(user) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
 			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC
@@ -800,9 +798,7 @@
 						malfai.malfhack = null
 						malfai.malfhacking = 0
 						locked = 1
-						if (ticker.mode.config_tag == "malfunction")
-							if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-								ticker.mode:apcs++
+						malfai.malf_picker.processing_time += 10
 						if(usr:parent)
 							src.malfai = usr:parent
 						else
@@ -848,7 +844,6 @@
 	if(malf.parent)
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 		for(var/obj/item/weapon/pinpointer/point in world)
@@ -866,8 +861,7 @@
 		qdel(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
-				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
-					var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
+				for(var/mob/living/silicon/ai/A in living_mob_list)
 					if(A.stat != DEAD)
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
@@ -1136,9 +1130,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = 0
 	if(occupier)
