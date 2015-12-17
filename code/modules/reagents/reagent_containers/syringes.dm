@@ -181,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = round(reagents.total_volume,5)
+	var/rounded_vol = Clamp(round(reagents.total_volume,5), 0, 15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
