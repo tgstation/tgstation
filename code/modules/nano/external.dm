@@ -30,6 +30,20 @@
  /**
   * public
   *
+  * Called on a NanoUI when the UI receieves a href.
+  * Think of this as Topic().
+  *
+  * required action string The action/button that has been invoked by the user.
+  * required params list A list of parameters attached to the button.
+  *
+  * return bool If the UI should be updated or not.
+ **/
+/atom/movable/proc/ui_act(action, list/params)
+	return // Not implemented.
+
+ /**
+  * public
+  *
   * Data to be sent to the NanoUI.
   * This must be implemented for a NanoUI to work.
   *
@@ -81,6 +95,5 @@
 			var/href = "close=1"
 			src.Topic(href, params2list(href), ui.ref)
 		// Otherwise, if we use the legacy logic, unset the mob's machine.
-		else if (ui.on_close_logic)
-			if(src && src.mob)
-				src.mob.unset_machine()
+		else if(src && src.mob)
+			src.mob.unset_machine()

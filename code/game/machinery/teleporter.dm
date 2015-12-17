@@ -287,6 +287,8 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
+	if(z == ZLEVEL_CENTCOM)
+		M << "You can't use this here."
 	if(power_station && power_station.engaged && !panel_open)
 		teleport(M)
 		use_power(5000)

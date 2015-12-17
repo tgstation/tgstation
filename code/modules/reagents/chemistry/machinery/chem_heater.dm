@@ -77,26 +77,18 @@
 		return
 	interact(user)
 
-/obj/machinery/chem_heater/Topic(href, href_list)
+/obj/machinery/chem_heater/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["toggle_on"])
-		on = !on
-
-	if(href_list["adjust_temperature"])
-		var/val = href_list["adjust_temperature"]
-		if(isnum(val))
-			desired_temp = Clamp(desired_temp+val, 0, 1000)
-		else if(val == "input")
+	switch(action)
+		if("power")
+			on = !on
+		if("temperature")
 			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
-		else
-			return
-
-	if(href_list["eject_beaker"])
-		eject_beaker()
-
-	add_fingerprint(usr)
+		if("eject")
+			eject_beaker()
+	return 1
 
 /obj/machinery/chem_heater/interact(mob/user)
 	if(stat & BROKEN)
@@ -106,7 +98,7 @@
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater.tmpl", name, 350, 400)
+		ui = new(user, src, ui_key, "chem_heater", name, 350, 400)
 		ui.open()
 
 /obj/machinery/chem_heater/get_ui_data()
