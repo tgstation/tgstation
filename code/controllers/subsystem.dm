@@ -76,7 +76,7 @@
 /datum/subsystem/proc/Recover()
 
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
-/datum/subsytem/on_varedit(editedvar)
-	if (edited_var == can_fire && can_fire)
+/datum/subsystem/on_varedit(editedvar)
+	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
 	
