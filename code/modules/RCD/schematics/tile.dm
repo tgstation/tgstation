@@ -90,6 +90,7 @@ s
 		return "maybe you're using it on the wrong floor type?"
 
 	var/nname = ""
+	var/thisdir = selected_dir
 
 	switch(selection.ftype)
 		if(PAINT_FLOOR)			nname = "floor"				//restoring the name of our new tile, usually if you place a floor tile on a plating it's still called "plating" for now
@@ -97,13 +98,14 @@ s
 		if(PAINT_PLATING)   	nname = "plating"
 
 	to_chat(user, "Painting floor...")
-	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
+	//playsound(get_turf(master), 'sound/AI/animes.ogg', 50, 1)
+	playsound(get_turf(master), 'sound/effects/spray3.ogg', 15, 1)
 	if(!do_after(user, A, 20))
 		return 1
 
-	playsound(get_turf(master), 'sound/effects/extinguish.ogg', 25, 1)
+	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 
-	selection.apply(A, nname, dir = selected_dir)
+	selection.apply(A, nname, dir = thisdir)
 
 //Gets the list of paint info datums.
 /datum/rcd_schematic/tile/proc/get_our_list()
