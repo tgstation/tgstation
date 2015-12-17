@@ -372,10 +372,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/securitybarriers
 	name = "Security Barriers Crate"
-	contains = list(/obj/machinery/deployable/barrier,
-					/obj/machinery/deployable/barrier,
-					/obj/machinery/deployable/barrier,
-					/obj/machinery/deployable/barrier)
+	contains = list(/obj/item/weapon/grenade/barrier,
+					/obj/item/weapon/grenade/barrier,
+					/obj/item/weapon/grenade/barrier,
+					/obj/item/weapon/grenade/barrier)
 	cost = 20
 	containername = "security barriers crate"
 

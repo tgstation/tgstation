@@ -122,7 +122,7 @@
 
 /datum/reagent/blob/reactive/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
-	var/damage = rand(10, 20)/25
+	var/damage = rand(10, 25)/25
 	M.apply_damage(damage*reac_volume, BRUTE)
 
 /datum/reagent/blob/reactive/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -146,6 +146,7 @@
 	M.adjustStaminaLoss(0.4*reac_volume)
 	if(M.reagents)
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
+		M.reagents.add_reagent("ice", 0.4*reac_volume)
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime

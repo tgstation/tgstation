@@ -209,6 +209,13 @@ Class Procs:
 	add_fingerprint(usr)
 	return 0
 
+/obj/machinery/ui_act(action, params)
+	..()
+	if(!can_be_used_by(usr))
+		return 1
+	add_fingerprint(usr)
+	return 0
+
 /obj/machinery/proc/can_be_used_by(mob/user)
 	if(!interact_offline && stat & (NOPOWER|BROKEN))
 		return 0
