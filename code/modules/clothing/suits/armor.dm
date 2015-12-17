@@ -200,10 +200,6 @@
 	return 0
 
 
-
-
-
-
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
 
@@ -221,10 +217,21 @@
 			owner.alpha = initial(owner.alpha)
 		return 1
 
+/obj/item/clothing/suit/armor/reactive/tesla
+	name = "reactive tesla armor"
 
-
-
-
+/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
+		for(var/mob/living/M in view(6, owner))
+			if(M == owner)
+				continue
+			owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+			M.adjustFireLoss(25)
+			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		return 1
 //All of the armor below is mostly unused
 
 
