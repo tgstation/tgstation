@@ -3880,3 +3880,32 @@
 	var/list/possible_reagents=list("zombiepowder"=5, "mindbreaker"=5, "pacid"=5, "hyperzine"=5, "chloralhydrate"=5, "tricordazine"=5, "doctorsdelight"=5, "mutationtoxin"=5, "mercury"=5, "anti_toxin"=5, "space_drugs"=5, "holywater"=5,  "ryetalyn"=5, "cryptobiolin"=5, "dexalinp"=5, "hamserum"=1)
 	var/reagent=pick(possible_reagents)
 	reagents.add_reagent(reagent, possible_reagents[reagent])
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin
+	name = "\improper Choco-Coin"
+	desc = "A thin wafer of milky, chocolatey, melt-in-your-mouth goodness. That alone is already worth a hoard."
+	food_flags = FOOD_SWEET
+	icon_state = "chococoin_unwrapped"
+	bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped
+	desc = "Still covered in golden foil wrapper."
+	icon_state = "chococoin_wrapped"
+	wrapped = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/New()
+	..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("coco", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/attack_self(mob/user)
+	if(wrapped)
+		Unwrap(user)
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/proc/Unwrap(mob/user)
+	icon_state = "chococoin_unwrapped"
+	to_chat(user, "<span class='notice'>You remove the golden foil from \the [src].</span>")
+	wrapped = 0

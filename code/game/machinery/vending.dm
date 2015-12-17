@@ -362,7 +362,7 @@ var/global/num_vending_terminals = 1
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(premium.len > 0 && is_type_in_list(W, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin)))
+	else if(premium.len > 0 && is_type_in_list(W, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/chococoin)))
 		if (isnull(coin))
 			user.drop_item(W, src)
 			coin = W
@@ -370,7 +370,9 @@ var/global/num_vending_terminals = 1
 			src.updateUsrDialog()
 		else
 			to_chat(user, "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>")
-
+		return
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin))
+		to_chat(user, "<span class='rose'>That coin is smudgy and oddly soft, you don't think that would work.</span>")
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
@@ -1071,6 +1073,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 10,
 		)
 	contraband = list(
@@ -1084,6 +1087,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 60,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 12,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 40,
+		/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped = 75,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0,
 		)
 

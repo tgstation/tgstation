@@ -11,7 +11,7 @@
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/gashapon/attackby(var/obj/O as obj, var/mob/user as mob)
-	if (is_type_in_list(O, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin)))
+	if (is_type_in_list(O, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/chococoin)))
 		user.drop_item(O, src)
 		user.visible_message("<span class='notice'>[user] puts a coin into [src] and turns the knob.</span>", "<span class='notice'>You put a coin into [src] and turn the knob.</span>")
 		src.visible_message("<span class='notice'>[src] clicks softly.</span>")
@@ -21,6 +21,9 @@
 		b.icon_state = "capsule[rand(1,12)]"
 		qdel(O)
 		O = null
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin))
+		to_chat(user, "<span class='rose'>That coin is smudgy and oddly soft, you don't think that would work.</span>")
+		return
 	else
 		return ..()
 

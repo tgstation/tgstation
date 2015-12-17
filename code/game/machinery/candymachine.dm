@@ -15,7 +15,7 @@
 /obj/machinery/sweet/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (stat & (NOPOWER|BROKEN))
 		return ..()
-	if (is_type_in_list(O, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin)))
+	if (is_type_in_list(O, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/chococoin)))
 		if(emagged == 1)
 			user.drop_item(O, src)
 			user.visible_message("<span class='notice'>[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.</span>")
@@ -32,6 +32,9 @@
 			src.visible_message("<span class='notice'>[src] dispenses a sweet!</span>")
 			new /obj/item/weapon/reagent_containers/food/snacks/sweet(src.loc)
 			qdel(O)
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin))
+		to_chat(user, "<span class='rose'>That coin is smudgy and oddly soft, you don't think that would work.</span>")
+		return
 	else
 		return ..()
 
