@@ -728,7 +728,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targetting Device"
-	desc = "Use to select the landing zone of your assault pod."
+	desc = "Use to select the landing zone of your assault pod. WARNING: ASSAULT PODS ARE A ONE WAY TRIP. THERE IS NO WARRANTY EXPRESS OR IMPLIED FOR FORGOTTEN NUCLEAR DEVICES OR SHUTTLES."
 	item = /obj/item/device/assault_pod
 	cost = 30
 	gamemodes = list(/datum/game_mode/nuclear)
