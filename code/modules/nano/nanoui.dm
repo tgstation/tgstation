@@ -88,77 +88,60 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/nanoui)
 	assets.send(user)
 
+ /**
+  * public
+  *
+  * Open this NanoUI (and initialize it with data).
+  *
+  * optional data list The data to intialize the UI with.
+ **/
+/datum/nanoui/proc/open(list/data = null)
+	if(!user.client)
+		return // Bail if there is no client.
+	if (status == NANO_CLOSE)
+		return // Bail if we should close.
+
+	if (!initial_data)
+		if (!data) // If we don't have initial_data and data was not passed, get data from the src_object.
+			data = src_object.get_ui_data(user)
+		set_initial_data(data) // Otherwise use the passed data.
+
+	var/window_size = ""
+	if (width && height) // If we have a width and height, use them.
+		window_size = "size=[width]x[height];"
+	update_status(push = 0) // Update the window state.
+
+	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
+	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
+	SSnano.on_open(src)
 
  /**
   * public
   *
-  * Enable/disable auto-updating of the NanoUI.
+  * Reinitialize the NanoUI.
+  * (Possibly with a new template and/or data).
   *
-  * required state bool Enable/disable auto-updating.
+  * optional template string The filename of the new template.
+  * optional data list The new initial data.
  **/
-/datum/nanoui/proc/set_auto_update(state = 1)
-	auto_update = state
+/datum/nanoui/proc/reinitialize(template, list/data)
+	if(template)
+		set_template(template) // Set a new template.
+	if(data)
+		set_initial_data(data) // Replace the initial_data.
+	open()
 
  /**
-  * private
+  * public
   *
-  * Set the data to initialize the NanoUI with.
-  * The datastructure cannot be changed by subsequent updates.
-  *
-  * optional data list The data/datastructure to initialize the NanoUI with.
+  * Close the NanoUI, and all its children.
  **/
-/datum/nanoui/proc/set_initial_data(list/data)
-	initial_data = data
-
- /**
-  * private
-  *
-  * Get the config data/datastructure to initialize the NanoUI with.
-  *
-  * return list The config data.
- **/
-/datum/nanoui/proc/get_config_data()
-	var/list/config_data = list(
-			"title" = title,
-			"status" = status,
-			"ref" = "\ref[src]",
-			"window" = list(
-				"width" = width,
-				"height" = height,
-				"ref" =	window_id
-			),
-			"user" = list(
-				"name" = user.name,
-				"fancy" = user.client.prefs.nanoui_fancy,
-				"ref" = "\ref[user]"
-			),
-			"srcObject" = list(
-				"name" = src_object.name,
-				"ref" = "\ref[src_object]"
-			),
-			"templates" = list(
-				"layout" = "_[layout]",
-				"content" = "[template]"
-			)
-		)
-	return config_data
-
- /**
-  * private
-  *
-  * Package the data to send to the UI.
-  * This is the (regular) data and config data, bundled together.
-  *
-  * return list The packaged data.
- **/
-/datum/nanoui/proc/get_send_data(list/data)
-	var/list/send_data = list()
-
-	send_data["config"] = get_config_data()
-	if (!isnull(data))
-		send_data["data"] = data
-
-	return send_data
+/datum/nanoui/proc/close()
+	set_auto_update(0) // Disable auto-updates.
+	user << browse(null, "window=[window_id]") // Close the window.
+	SSnano.on_close(src)
+	for(var/datum/nanoui/child in children) // Loop through and close all children.
+		child.close()
 
  /**
   * public
@@ -190,6 +173,27 @@
  **/
 /datum/nanoui/proc/set_template(template)
 	src.template = lowertext(template)
+
+ /**
+  * public
+  *
+  * Enable/disable auto-updating of the NanoUI.
+  *
+  * required state bool Enable/disable auto-updating.
+ **/
+/datum/nanoui/proc/set_auto_update(state = 1)
+	auto_update = state
+
+ /**
+  * private
+  *
+  * Set the data to initialize the NanoUI with.
+  * The datastructure cannot be changed by subsequent updates.
+  *
+  * optional data list The data/datastructure to initialize the NanoUI with.
+ **/
+/datum/nanoui/proc/set_initial_data(list/data)
+	initial_data = data
 
  /**
   * private
@@ -246,76 +250,54 @@
 	"}
 
  /**
-  * public
+  * private
   *
-  * Open this NanoUI (and initialize it with data).
+  * Get the config data/datastructure to initialize the NanoUI with.
   *
-  * optional data list The data to intialize the UI with.
+  * return list The config data.
  **/
-/datum/nanoui/proc/open(list/data = null)
-	if(!user.client) return
-
-	if (!initial_data)
-		if (!data) // If we don't have initial_data and data was not passed, get data from the src_object.
-			data = src_object.get_ui_data(user)
-		set_initial_data(data) // Otherwise use the passed data.
-
-	var/window_size = ""
-	if (width && height) // If we have a width and height, use them.
-		window_size = "size=[width]x[height];"
-	update_status(push = 0) // Update the window state.
-	if (status == NANO_CLOSE)
-		return // Bail if we should close.
-
-	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
-	SSnano.ui_opened(src) // Call the opened handler.
-
- /**
-  * public
-  *
-  * Reinitialize the NanoUI.
-  * (Possibly with a new template and/or data).
-  *
-  * optional template string The filename of the new template.
-  * optional data list The new initial data.
- **/
-/datum/nanoui/proc/reinitialize(template, list/data)
-	if(template)
-		src.template = template // Set a new template.
-	if(data)
-		set_initial_data(data) // Replace the initial_data.
-	open()
-
- /**
-  * public
-  *
-  * Close the NanoUI, and all its children.
- **/
-/datum/nanoui/proc/close()
-	set_auto_update(0) // Disable auto-updates.
-	user << browse(null, "window=[window_id]") // Close the window.
-	SSnano.ui_closed(src) // Call the closed handler.
-	for(var/datum/nanoui/child in children) // Loop through and close all children.
-		child.close()
+/datum/nanoui/proc/get_config_data()
+	var/list/config_data = list(
+			"title" = title,
+			"status" = status,
+			"ref" = "\ref[src]",
+			"window" = list(
+				"width" = width,
+				"height" = height,
+				"ref" =	window_id
+			),
+			"user" = list(
+				"name" = user.name,
+				"fancy" = user.client.prefs.nanoui_fancy,
+				"ref" = "\ref[user]"
+			),
+			"srcObject" = list(
+				"name" = src_object.name,
+				"ref" = "\ref[src_object]"
+			),
+			"templates" = list(
+				"layout" = "_[layout]",
+				"content" = "[template]"
+			)
+		)
+	return config_data
 
  /**
   * private
   *
-  * Push data to an already open NanoUI.
+  * Package the data to send to the UI.
+  * This is the (regular) data and config data, bundled together.
   *
-  * required data list The data to send.
-  * optional force bool If the update should be sent regardless of state.
+  * return list The packaged data.
  **/
-/datum/nanoui/proc/push_data(data, force = 0)
-	update_status(push = 0) // Update the window state.
-	if (status == NANO_DISABLED && !force)
-		return // Cannot update UI, we have no visibility.
+/datum/nanoui/proc/get_send_data(list/data)
+	var/list/send_data = list()
 
-	var/list/send_data = get_send_data(data) // Get the data to send.
+	send_data["config"] = get_config_data()
+	if (!isnull(data))
+		send_data["data"] = data
 
-	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(list2params(list(JSON.stringify(send_data))), "[window_id].browser:receiveUpdate")
+	return send_data
 
  /**
   * private
@@ -358,6 +340,25 @@
  /**
   * private
   *
+  * Push data to an already open NanoUI.
+  *
+  * required data list The data to send.
+  * optional force bool If the update should be sent regardless of state.
+ **/
+/datum/nanoui/proc/push_data(data, force = 0)
+	update_status(push = 0) // Update the window state.
+	if (status == NANO_DISABLED && !force)
+		return // Cannot update UI, we have no visibility.
+
+	var/list/send_data = get_send_data(data) // Get the data to send.
+
+	// Send the new data to the recieveUpdate() Javascript function.
+	user << output(list2params(list(JSON.stringify(send_data))), "[window_id].browser:receiveUpdate")
+
+
+ /**
+  * private
+  *
   * Updates the UI by interacting with the src_object again, which will hopefully
   * call try_ui_update on it.
   *
@@ -365,6 +366,22 @@
  **/
 /datum/nanoui/proc/update(force_open = 0)
 	src_object.ui_interact(user, ui_key, src, force_open, master_ui, state)
+
+ /**
+  * private
+  *
+  * Update the status/visibility of the NanoUI for its user.
+  *
+  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
+ **/
+/datum/nanoui/proc/update_status(push = 0)
+	var/new_status = src_object.nano_state(user, state)
+	if(master_ui)
+		new_status = min(new_status, master_ui.status)
+
+	set_status(new_status, push)
+	if(new_status == NANO_CLOSE)
+		close()
 
  /**
   * private
@@ -384,19 +401,3 @@
 			status = state
 			if (push || status == 0) // Force an update if NANO_DISABLED.
 				push_data(null, 1)
-
- /**
-  * private
-  *
-  * Update the status/visibility of the NanoUI for its user.
-  *
-  * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
- **/
-/datum/nanoui/proc/update_status(push = 0)
-	var/new_status = src_object.CanUseTopic(user, state)
-	if(master_ui)
-		new_status = min(new_status, master_ui.status)
-
-	set_status(new_status, push)
-	if(new_status == NANO_CLOSE)
-		close()

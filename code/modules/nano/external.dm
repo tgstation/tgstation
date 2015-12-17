@@ -30,6 +30,20 @@
  /**
   * public
   *
+  * Data to be sent to the NanoUI.
+  * This must be implemented for a NanoUI to work.
+  *
+  * required user mob The mob interacting with the NanoUI.
+  *
+  * return list Data to be sent to the NanoUI.
+ **/
+/atom/movable/proc/get_ui_data(mob/user)
+	return list() // Not implemented.
+
+
+ /**
+  * public
+  *
   * Called on a NanoUI when the UI receieves a href.
   * Think of this as Topic().
   *
@@ -41,18 +55,6 @@
 /atom/movable/proc/ui_act(action, list/params)
 	return // Not implemented.
 
- /**
-  * public
-  *
-  * Data to be sent to the NanoUI.
-  * This must be implemented for a NanoUI to work.
-  *
-  * required user mob The mob interacting with the NanoUI.
-  *
-  * return list Data to be sent to the NanoUI.
- **/
-/atom/movable/proc/get_ui_data(mob/user)
-	return list() // Not implemented.
 
  /**
   * private
@@ -67,7 +69,6 @@
   * global
   *
   * Used to track NanoUIs for a mob.
-  *
  **/
 /mob/var/list/open_uis = list()
 
