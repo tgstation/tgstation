@@ -34,14 +34,32 @@
 	origin_tech = "materials=1"
 	material=MAT_GLASS
 	melt_temperature = MELTPOINT_GLASS
+	throw_range = 1 //It just scatters to the ground as soon as you throw it.
 
-	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
-		var/location = get_turf(user)
-		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
-			new /obj/item/stack/sheet/mineral/sandstone(location)
-			qdel(sandToConvert)
-		new /obj/item/stack/sheet/mineral/sandstone(location)
+/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+	//Intentionally not calling ..()
+	if(isturf(hit_atom))
+		new/obj/effect/decal/cleanable/scattered_sand(hit_atom)
 		qdel(src)
+	else if(ishuman(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		if (H.check_body_part_coverage(EYES))
+			to_chat(H, "<span class='warning'>Your eyewear protects you from \the [src]!</span>")
+		else
+			H.visible_message("<span class='warning'>[H] is blinded by the [src]!</span>", \
+				"<span class='warning'>\The [src] flies into your eyes!</span>")
+			H.eye_blurry = max(H.eye_blurry, rand(3,8))
+			H.eye_blind = max(H.eye_blind, rand(1,3))
+			H.drop_hands(get_turf(H))
+		log_attack("<font color='red'>[hit_atom] ([H ? H.ckey : "what"]) was pocketsanded by ([src.fingerprintslast])</font>")
+
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+	var/location = get_turf(user)
+	for(var/obj/item/weapon/ore/glass/sandToConvert in location)
+		new /obj/item/stack/sheet/mineral/sandstone(location)
+		qdel(sandToConvert)
+	new /obj/item/stack/sheet/mineral/sandstone(location)
+	qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
