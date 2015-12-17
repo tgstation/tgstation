@@ -150,7 +150,9 @@
 	if(!(user.mind in ticker.mode.syndicates))
 		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
 		return 0
-
+	if(user.z != ZLEVEL_CENTCOM)
+		user << "<span class='warning'>[src] is out of range! It can only be used at your base!</span>"
+		return
 	if(spawn_type == BORG_TELE)
 		borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 		if(!borg_to_spawn)
