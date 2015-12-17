@@ -456,11 +456,11 @@
 		owner.visible_message("The [attack_text] sparks harmlessly off [owner]'s shields!")
 		current_charges--
 		recharge_cooldown = world.time + recharge_delay
+		SSobj.processing |= src
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
-			SSobj.processing |= src
 		return 1
 	return 0
 
