@@ -553,6 +553,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
+	
+/datum/uplink_item/stealthy_tools/mulligan
+	name = "Mulligan"
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
+	item = /obj/item/weapon/reagent_containers/syringe/mulligan
+	cost = 4
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 // DEVICE AND TOOLS
 
