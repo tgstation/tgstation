@@ -14,6 +14,7 @@
 		"/obj/item/stack/medical",
 		"/obj/item/toy/crayon",
 		"/obj/item/weapon/coin",
+		"/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin",
 		"/obj/item/weapon/dice",
 		"/obj/item/weapon/disk",
 		"/obj/item/weapon/implanter",
