@@ -158,7 +158,7 @@
   *
   * required ui datum/nanoui The UI to be added.
  **/
-/datum/subsystem/nano/proc/ui_opened(datum/nanoui/ui)
+/datum/subsystem/nano/proc/on_open(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		open_uis[src_object_key] = list(ui.ui_key = list()) // Make a list for the ui_key and src_object.
@@ -180,7 +180,7 @@
   *
   * return bool If the UI was removed or not.
  **/
-/datum/subsystem/nano/proc/ui_closed(datum/nanoui/ui)
+/datum/subsystem/nano/proc/on_close(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // It wasn't open.
@@ -203,7 +203,7 @@
   *
   * return int The number of NanoUIs closed.
  **/
-/datum/subsystem/nano/proc/user_logout(mob/user)
+/datum/subsystem/nano/proc/on_logout(mob/user)
 	return close_user_uis(user)
 
  /**
@@ -216,7 +216,7 @@
   *
   * return bool If the NanoUIs were transferred.
  **/
-/datum/subsystem/nano/proc/user_transferred(mob/oldMob, mob/newMob)
+/datum/subsystem/nano/proc/on_transfer(mob/oldMob, mob/newMob)
 	if (!oldMob || isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
 		return 0 // The old mob had no open NanoUIs.
 

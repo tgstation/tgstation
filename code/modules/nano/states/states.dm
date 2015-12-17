@@ -14,7 +14,7 @@
   *
   * return NANO_state The state of the UI.
  **/
-/atom/proc/CanUseTopic(mob/user, datum/topic_state/state)
+/atom/proc/nano_state(mob/user, datum/topic_state/state)
 	var/src_object = nano_host()
 	return state.can_use_topic(src_object, user) // Check if the state allows interaction.
 

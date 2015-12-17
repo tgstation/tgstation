@@ -42,12 +42,10 @@ class @NanoUI
     try
       if not @initialized
         layout = @fragment.query("#layout")
-        layout.innerHTML = TMPL[data.config.templates.layout]\
-          (data.data, data.config, helpers)
+        layout.innerHTML = TMPL[data.config.templates.layout](data.data, data.config, helpers)
 
       content = @fragment.query("#content")
-      content.innerHTML = TMPL[data.config.templates.content]\
-        (data.data, data.config, helpers)
+      content.innerHTML = TMPL[data.config.templates.content](data.data, data.config, helpers)
 
     catch error
       @error error

@@ -201,7 +201,7 @@
 					{{=helper.link(mode.name, mode.selected ? 'check-square-o' : 'square-o', 'mode', {'mode': mode.mode}, null, mode.selected ? (mode.danger ? 'danger' : 'selected') : null)}}
 				</section>
 			{{~}}
-		</display>
+		</article>
 	{{?? data.screen == 5}}
 		<article class="display">
 			<header><h2>Alarm Thresholds</h2></header>
