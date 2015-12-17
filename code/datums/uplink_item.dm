@@ -264,7 +264,7 @@ var/list/uplink_items = list()
 	name = "Reinforcements"
 	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals to arm them as well."
 	item = /obj/item/weapon/antag_spawner/borg_tele/operative
-	cost = 30
+	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
