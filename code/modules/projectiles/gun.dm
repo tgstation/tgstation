@@ -61,12 +61,6 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
-	//exo-grip
-	var/exo_grip = 0				//if the gun has an exo-grip installed on the handle. allows the user to toggle nodrop on said weapon.
-	var/gripped = 1
-	var/datum/action/toggle_grip/agrip
-
-
 
 /obj/item/weapon/gun/New()
 	..()
@@ -498,42 +492,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-
-//exo-grip//
-
-/datum/action/toggle_grip
-	name = "Toggle Exo-Grip"
-	button_icon_state = "sniper_zoom"
-	var/obj/item/weapon/gun/gun = null
-
-/datum/action/toggle_grip/Trigger()
-	gun.grip(owner)
-
-/datum/action/toggle_grip/IsAvailable()
-	. = ..()
-	if(!. && gun)
-		gun.grip(owner, FALSE)
-
-/datum/action/toggle_grip/Remove(mob/living/L)
-	gun.grip(L, FALSE)
-	..()
-
-/obj/item/weapon/gun/proc/grip()
-	var/mob/living/carbon/human/user = usr
-	gripped = !gripped
-	if(!gripped)
-		src.flags -= NODROP
-		user << "<span class='notice'>You feel the weapon's grip on your wrist weaken as you disable the exo-grip.</span>"
-	else
-		src.flags += NODROP
-		user << "<span class='notice'>The handle of the weapon grips your wrist tightly as you enable the exo-grip.</span>"
-
-
-/obj/item/weapon/gun/proc/build_grip()
-	if(agrip)
-		return
-
-	if(exo_grip)
-		agrip = new()
-		agrip.gun = src
-

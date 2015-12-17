@@ -148,14 +148,14 @@ var/list/uplink_items = list()
 	surplus = 50
 
 /datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	item = /obj/itemdweapon/gun/projectile/automatic/m90/unrestricted
 	gamemodes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 30
+	cost = 23
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -360,7 +360,7 @@ var/list/uplink_items = list()
 	name = "Box Magazine - 7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 7
+	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 

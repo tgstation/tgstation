@@ -13,7 +13,6 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
-	exo_grip = 1
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
@@ -86,7 +85,7 @@
 	armour_penetration = 35
 
 /obj/item/projectile/bullet/saw/incen
-	damage = 10
+	damage = 5
 	armour_penetration = 0
 
 /obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
