@@ -32,4 +32,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: RPDs will now create pipes in the layer that the RPD was set to when the pipe started building, rather than when it finishes. This means you can effectively place multiple pipes in different layers at the same time.
+  - rscadd: RPDs will now create pipes in the layer and the direction that the RPD was set to when the pipe started building, rather than when it finishes. This means you can effectively place multiple pipes in different layers and different directions at the same time.

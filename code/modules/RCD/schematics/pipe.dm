@@ -336,12 +336,13 @@
 	to_chat(user, "Building Pipes ...")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	var/thislayer = layer
+	var/thisdir = selected_dir
 	if(!do_after(user, A, 20))
 		return 1
 
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
-	var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A, pipe_id, selected_dir)
+	var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A, pipe_id, thisdir)
 	P.setPipingLayer(thislayer)
 	P.update()
 	P.add_fingerprint(user)
