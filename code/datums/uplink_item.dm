@@ -266,6 +266,14 @@ var/list/uplink_items = list()
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	cost = 12
 
+/datum/uplink_item/dangerous/shielded_hardsuit
+	name = "Shielded Hardsuit"
+	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
+
+
 // AMMUNITION
 
 /datum/uplink_item/ammo
