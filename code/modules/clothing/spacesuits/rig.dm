@@ -250,8 +250,8 @@
 	// stormtroopers
 
 /obj/item/clothing/head/helmet/space/rig/security/stormtrooper
-	icon_state = "rig-storm"
-	_color = "rig-storm"
+	icon_state = "rig0-storm"
+	_color = "storm"
 	name = "stormtrooper helmet"
 	desc = "Now even more vulnerable to teddy bears!"
 	no_light = 1
