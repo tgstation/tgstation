@@ -33,9 +33,6 @@
 		return
 
 	pickup(user)
-	for(var/mob/M in player_list)
-		if (M.z == src.z)
-			M << "<span class='userdanger'>/The [src] has been taken!</span>"
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
