@@ -282,7 +282,14 @@ obj/item/ammo_box/magazine/tommygunm45
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
 
-
+/obj/item/ammo_box/magazine/m762dmr
+	name = "marksman rounds (7.62)"
+	icon_state = "m762dmr"
+	origin_tech = "combat=4;syndicate=2"
+	ammo_type = /obj/item/ammo_casing/a762
+	caliber = "a762"
+	max_ammo = 10
+	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g slugs)"
@@ -361,3 +368,4 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/toy/m762/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
+

@@ -274,6 +274,13 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 25
 
+/datum/uplink_item/dangerous/marksman
+	name = "Designated Marksman Rifle"
+	desc = "Semi-automatic rifle designated for marksmen. For multiple anti-personnel purposes."
+	item = /obj/item/weapon/gun/projectile/marksman_rifle/syndicate
+	cost = 14
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 25
 
 // AMMUNITION
 
@@ -389,7 +396,12 @@ var/list/uplink_items = list()
 	desc = "A 5-round magazine of haemorrhage ammo designed for use in the syndicate sniper rifle, causes heavy bleeding in the target."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
 
-
+/datum/uplink_item/ammo/dmr
+	name = "Marksman rifle - 7.62mm"
+	desc = "An additional 10-round 7.62mm magazine for use with the syndicate marksman rifle."
+	item = /obj/item/ammo_box/magazine/m762dmr
+	cost = 4 //you're buying the magazine thats why it costs premium
+	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY WEAPONS
 
