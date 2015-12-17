@@ -376,6 +376,7 @@
 	desc = "A bright-colored plastic clock, commemorating 20 years of Nanotrasen's Plasma division. Comes with permanent snooze button, just twist the valve!"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "valve"
+	var/image/rendered
 
 /obj/item/toy/bomb/New()
 	..()
@@ -384,6 +385,7 @@
 	J.Shift(WEST, 13)
 	underlays += J
 	overlays += "device"
+	rendered = getFlatIcon(src)
 
 /obj/item/toy/bomb/examine(mob/user)
 	..()
@@ -391,7 +393,7 @@
 
 /obj/item/toy/bomb/attack_self(mob/user)
 	var/turf/T = get_turf(src)
-	T.visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+	T.visible_message("\icon[rendered]*beep* *beep*", "*beep* *beep*")
 
 /*
  * Crayons
