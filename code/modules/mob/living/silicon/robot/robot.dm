@@ -320,15 +320,6 @@
 /mob/living/silicon/robot/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/malfai in malf.malf_ai)
-				if(connected_ai)
-					if((connected_ai.mind == malfai) && (malf.apcs > 0))
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
-				else if(malf.malf_mode_declared && (malf.apcs > 0))
-					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 		if(cell)
 			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
 		else
@@ -598,7 +589,7 @@
 			var/ai_is_antag = 0
 			if(connected_ai && connected_ai.mind)
 				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+					ai_is_antag = (connected_ai.mind.special_role == "traitor")
 			if(ai_is_antag)
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
