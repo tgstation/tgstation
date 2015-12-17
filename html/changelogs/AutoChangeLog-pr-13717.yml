@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Adds hardsuits with built in energy shielding. CTF and security versions are admin only."
-  - rscadd: "Nuclear operatives can buy a shielded hardsuit for 30tc."
