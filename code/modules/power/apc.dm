@@ -138,9 +138,7 @@
 	apcs_list -= src
 
 	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
@@ -631,7 +629,7 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "apc", name, 550, 550)
+		ui = new(user, src, ui_key, "apc.tmpl", name, 550, 550)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)
@@ -684,7 +682,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
+	if (is_special_character(user) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
 			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC
@@ -721,8 +719,22 @@
 
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if(IsAdminGhost(user))
+	if (IsAdminGhost(user))
 		return 1
+	if (user.stat)
+		user << "<span class='warning'>You must be conscious to use [src]!</span>"
+		return 0
+	if(!user.client)
+		return 0
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		return 0
+	if(user.restrained())
+		user << "<span class='warning'>You must have free hands to use [src].</span>"
+		return 0
+	if(user.lying)
+		user << "<span class='warning'>You must stand to use [src]!</span>"
+		return 0
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
@@ -740,81 +752,96 @@
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
+
+	var/mob/living/carbon/human/H = user
+	if (istype(H))
+		if(H.getBrainLoss() >= 60)
+			H.visible_message("[H] stares cluelessly at [src] and drools.")
+			return 0
+		else if(prob(H.getBrainLoss()))
+			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
+			return 0
 	return 1
 
-/obj/machinery/power/apc/ui_act(action, params)
+/obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return
-
 	if(!can_use(usr, 1))
 		return
 
-	switch(action)
-		if("lock")
-			coverlocked = !coverlocked
-		if ("breaker")
-			toggle_breaker()
-		if("chargemode")
-			chargemode = !chargemode
-			if(!chargemode)
-				charging = 0
-				update_icon()
-		if("channel")
-			if (params["eqp"])
-				var/val = text2num(params["eqp"])
-				equipment = setsubsystem(val)
-				update_icon()
-				update()
-			else if (params["lgt"])
-				var/val = text2num(params["lgt"])
-				lighting = setsubsystem(val)
-				update_icon()
-				update()
-			else if (params["env"])
-				var/val = text2num(params["env"])
-				environ = setsubsystem(val)
-				update_icon()
-				update()
-		if("toggleaccess")
-			if(usr.has_unlimited_silicon_privilege)
-				if(emagged || (stat & (BROKEN|MAINT)))
-					usr << "The APC does not respond to the command."
-				else
-					locked = !locked
+	if (href_list["lock"])
+		coverlocked = !coverlocked
+
+	else if (href_list["breaker"])
+		toggle_breaker()
+
+	else if (href_list["cmode"])
+		chargemode = !chargemode
+		if(!chargemode)
+			charging = 0
+			update_icon()
+
+	else if (href_list["eqp"])
+		var/val = text2num(href_list["eqp"])
+		equipment = setsubsystem(val)
+		update_icon()
+		update()
+
+	else if (href_list["lgt"])
+		var/val = text2num(href_list["lgt"])
+		lighting = setsubsystem(val)
+		update_icon()
+		update()
+
+	else if (href_list["env"])
+		var/val = text2num(href_list["env"])
+		environ = setsubsystem(val)
+		update_icon()
+		update()
+
+	else if (href_list["overload"])
+		if(usr.has_unlimited_silicon_privilege)
+			src.overload_lighting()
+
+	else if (href_list["malfhack"])
+		var/mob/living/silicon/ai/malfai = usr
+		if(is_special_character(malfai))
+			if (malfai.malfhacking)
+				malfai << "You are already hacking an APC."
+				return 1
+			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+			malfai.malfhack = src
+			malfai.malfhacking = 1
+			sleep(600)
+			if(src)
+				if (!src.aidisabled)
+					malfai.malfhack = null
+					malfai.malfhacking = 0
+					locked = 1
+					malfai.processing_time += 10
+					if(usr:parent)
+						src.malfai = usr:parent
+					else
+						src.malfai = usr
+					malfai << "Hack complete. The APC is now under your exclusive control."
 					update_icon()
-		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
-				src.overload_lighting()
-		if("hack")
-			var/mob/living/silicon/ai/malfai = usr
-			if(get_malf_status(malfai)==1)
-				if (malfai.malfhacking)
-					malfai << "You are already hacking an APC."
-					return 1
-				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
-				malfai.malfhack = src
-				malfai.malfhacking = 1
-				sleep(600)
-				if(src)
-					if (!src.aidisabled)
-						malfai.malfhack = null
-						malfai.malfhacking = 0
-						locked = 1
-						if (ticker.mode.config_tag == "malfunction")
-							if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-								ticker.mode:apcs++
-						if(usr:parent)
-							src.malfai = usr:parent
-						else
-							src.malfai = usr
-						malfai << "Hack complete. The APC is now under your exclusive control."
-						update_icon()
-		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
-		if("deoccupy")
-			if(get_malf_status(usr))
-				malfvacate()
+
+	else if (href_list["occupyapc"])
+		if(get_malf_status(usr))
+			malfoccupy(usr)
+
+	else if (href_list["deoccupyapc"])
+		if(get_malf_status(usr))
+			malfvacate()
+
+	else if (href_list["toggleaccess"])
+		if(usr.has_unlimited_silicon_privilege)
+			if(emagged || (stat & (BROKEN|MAINT)))
+				usr << "The APC does not respond to the command."
+			else
+				locked = !locked
+				update_icon()
+
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -848,7 +875,6 @@
 	if(malf.parent)
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 		for(var/obj/item/weapon/pinpointer/point in world)
@@ -866,8 +892,7 @@
 		qdel(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
-				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
-					var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
+				for(var/mob/living/silicon/ai/A in living_mob_list)
 					if(A.stat != DEAD)
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
@@ -1136,9 +1161,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = 0
 	if(occupier)
