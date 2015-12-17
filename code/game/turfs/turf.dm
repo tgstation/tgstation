@@ -330,3 +330,15 @@
 	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
+
+/turf/indestructible/rock/snow
+	name = "mountainside"
+	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "snowrock"
+
+/turf/indestructible/rock/snow/ice
+	name = "iced rock"
+	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "icerock"

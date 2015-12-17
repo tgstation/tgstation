@@ -45,23 +45,43 @@
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
+	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	temperature = 180
+	baseturf = /turf/simulated/floor/plating/snow
+	slowdown = 2
 
-/turf/simulated/floor/plating/snow/ex_act(severity, target)
-	contents_explosion(severity, target)
+/turf/simulated/floor/plating/snow/break_tile()
+	return
 
-/turf/simulated/floor/plating/snow/cold
-	temperature = 220 //Enough to deal cold damage on breathing. TODO : Make these points defines
+/turf/simulated/floor/plating/snow/burn_tile()
+	return
 
 /turf/simulated/floor/plating/snow/gravsnow
-	icon_state = "gravsnow"
+	icon_state = "snow_dug"
+	slowdown = 0
 
 /turf/simulated/floor/plating/snow/gravsnow/corner
 	icon_state = "gravsnow_corner"
 
 /turf/simulated/floor/plating/snow/gravsnow/surround
 	icon_state = "gravsnow_surround"
+
+/turf/simulated/floor/plating/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "ice"
+	baseturf = /turf/simulated/floor/plating/snow
+	slowdown = 1
+	wet = TURF_WET_ICE
+
+/turf/simulated/floor/plating/ice/break_tile()
+	return
+
+/turf/simulated/floor/plating/snow/burn_tile()
+	return
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

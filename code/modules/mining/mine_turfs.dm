@@ -529,6 +529,22 @@ var/global/list/rockTurfEdgeCache
 	nitrogen = 0.01
 	temperature = TCMB
 
+/turf/simulated/floor/plating/asteroid/snow
+	name = "snow"
+	desc = "Looks cold."
+	icon = 'icons/turf/snow.dmi'
+	baseturf = /turf/simulated/floor/plating/asteroid/snow
+	icon_state = "snow"
+	icon_plating = "snow"
+	temperature = 180
+	slowdown = 2
+	environment_type = "snow"
+
+/turf/simulated/floor/plating/asteroid/snow/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/floor/plating/asteroid/New()
 	var/proper_name = name
 	..()
@@ -609,6 +625,7 @@ var/global/list/rockTurfEdgeCache
 	dug = 1
 	icon_plating = "[environment_type]_dug"
 	icon_state = "[environment_type]_dug"
+	slowdown = 0
 	return
 
 /turf/simulated/floor/plating/asteroid/singularity_act()
