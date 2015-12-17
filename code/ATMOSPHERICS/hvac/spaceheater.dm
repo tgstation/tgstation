@@ -335,23 +335,30 @@
 	light_range_on = 6
 	nocell = 2
 	density = 0
+	pixel_y = 30
 
 /obj/machinery/space_heater/campfire/stove/fireplace/attackby(obj/item/I, mob/user)
 	var/shoesfound = 0
-//	var/gunfound = 0
 	for(var/obj/W in contents)
 		if(istype(W,/obj/item/clothing/shoes))
 			shoesfound = 1
 //		if(istype(W,/obj/item/weapon/gun/projectile))
 //			gunfound = 1
 	if(istype(I,/obj/item/clothing/shoes) && !(shoesfound))
-		src.overlays += image(icon,"fireplace_stocking")
 		user.drop_item(I,src)
+		src.update_icon()
 //	else if(istype(I,/obj/item/weapon/gun/projectile) && !(gunfound))
+	else
+		..()
+
+/obj/machinery/space_heater/campfire/stove/fireplace/update_icon()
+	..()
+//	var/gunfound = 0
+	for(var/obj/W in contents)
+		if(istype(W,/obj/item/clothing/shoes))
+			src.overlays += image(icon,"fireplace_stocking")
 //		var/icon/img = image(I.icon,I.icon_state)
 //		img.Scale(12,12)
 //		//img.pixel_y += 12
 //		src.overlays += img
 //		user.drop_item(I,src)
-	else
-		..()
