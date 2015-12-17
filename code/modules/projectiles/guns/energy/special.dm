@@ -404,7 +404,7 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	power_supply.charge = min(power_supply.charge + 200,power_supply.maxcharge)
 	if(power_supply.charge >= power_supply.maxcharge)
 		playsound(get_turf(src), 'sound/machines/click.ogg', 25, 1)
-		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun.Looks like the Inner battery is fully charged now.</span>")
+		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun. Looks like the inner battery is fully charged now.</span>")
 	else
 		playsound(get_turf(src), 'sound/weapons/bison_reload.ogg', 25, 1)
 		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun.</span>")

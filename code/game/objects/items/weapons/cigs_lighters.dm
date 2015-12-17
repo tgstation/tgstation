@@ -168,7 +168,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 /obj/item/clothing/mask/cigarette/examine(mob/user)
 
 	..()
-	to_chat(user, "\The [src] is [lit ? "":"un"]lit")//Shared with all cigarette sub-types
+	to_chat(user, "\The [src] is [lit ? "":"un"]lit.")//Shared with all cigarette sub-types
 
 
 //Also updates the name, the damage and item_state for good measure

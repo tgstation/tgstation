@@ -117,11 +117,11 @@
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored) //Turning normal girder into disloged girder
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
-		user.visible_message("<span class='warning'>[user] starts dislodging \the [src]</span>", \
-		"<span class='notice'>You start dislodging \the [src]</span>")
+		user.visible_message("<span class='warning'>[user] starts dislodging \the [src].</span>", \
+		"<span class='notice'>You start dislodging \the [src].</span>")
 		if(do_after(user, src, 40))
-			user.visible_message("<span class='warning'>[user] dislodges \the [src]</span>", \
-			"<span class='notice'>You dislodge \the [src]</span>")
+			user.visible_message("<span class='warning'>[user] dislodges \the [src].</span>", \
+			"<span class='notice'>You dislodge \the [src].</span>")
 			add_hiddenprint(user)
 			add_fingerprint(user)
 			anchored = 0

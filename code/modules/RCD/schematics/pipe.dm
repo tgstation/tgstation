@@ -190,7 +190,7 @@
 	. = ..()
 	if(n_master) // So we don't do this in case we're created for asset registering.
 		selected_dir = get_base_dir()
-	
+
 /datum/rcd_schematic/pipe/proc/get_base_dir()
 	if(pipe_type == PIPE_BENT)
 		return NORTHEAST
@@ -354,7 +354,7 @@
 		layer = P.layer
 
 	return ..()
-	
+
 //Disposal piping.
 /datum/rcd_schematic/pipe/disposal
 	category		= "Disposal Pipes"
@@ -498,7 +498,7 @@ var/global/list/disposalpipeID2State = list(
 //DEVICES.
 
 /datum/rcd_schematic/pipe/connector
-	name		= "Connecter"
+	name		= "Connector"
 	category	= "Devices"
 
 	pipe_id		= PIPE_CONNECTOR
