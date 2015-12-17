@@ -21,7 +21,7 @@ var/datum/subsystem/nano/SSnano
 /datum/subsystem/nano/fire() // Process UIs.
 	for(var/thing in processing_uis)
 		var/datum/nanoui/ui = thing
-		if(ui && ui.user && ui.src_object)
+		if(ui && ui.src_object && ui.user)
 			ui.process()
 			continue
 		processing_uis.Remove(ui)

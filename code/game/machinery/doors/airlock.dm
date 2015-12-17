@@ -96,13 +96,13 @@ About the new airlock wires panel:
 // You can find code for the airlock wires in the wire datum folder.
 
 /obj/machinery/door/airlock/proc/bolt()
-	if(locked)
+	if(locked || operating)
 		return
 	locked = 1
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
-	if(!locked)
+	if(!locked || operating)
 		return
 	locked = 0
 	update_icon()
@@ -225,9 +225,7 @@ About the new airlock wires panel:
 	else
 		return 0
 
-/obj/machinery/door/airlock/update_icon(state=0, override=0)
-	if(operating && !override)
-		return
+/obj/machinery/door/airlock/update_icon(state=0)
 	switch(state)
 		if(0)
 			if(density)
@@ -1001,13 +999,14 @@ About the new airlock wires panel:
 	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
-	update_icon(AIRLOCK_OPENING, 1)
+
+	do_animate("opening")
 	src.SetOpacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = 2.7
-	update_icon(AIRLOCK_OPEN, 1)
+	update_icon()
 	SetOpacity(0)
 	operating = 0
 	air_update_turf(1)
@@ -1048,14 +1047,14 @@ About the new airlock wires panel:
 	if(density)
 		return 1
 	operating = 1
-	update_icon(AIRLOCK_CLOSING, 1)
+	update_icon(AIRLOCK_CLOSING)
 	src.layer = 3.1
 	sleep(5)
 	src.density = 1
 	if(!safe)
 		crush()
 	sleep(9)
-	update_icon(AIRLOCK_CLOSED, 1)
+	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
 	operating = 0
@@ -1063,7 +1062,6 @@ About the new airlock wires panel:
 	update_freelook_sight()
 	if(safe)
 		if(locate(/mob/living) in get_turf(src))
-			sleep(1)
 			open()
 	return 1
 
@@ -1150,8 +1148,8 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
-	return !density || (check_access(ID) && !locked && hasPower())
+//Airlock is passable if it is open (!density), bot has access, and is not bolted shut)
+	return !density || (check_access(ID) && !locked)
 
 /obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
 	for (var/obj/A in contents)

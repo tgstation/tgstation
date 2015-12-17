@@ -621,6 +621,14 @@ var/list/uplink_items = list()
 	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/shielded_hardsuit
+	name = "Shielded Hardsuit"
+	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
+
+
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "These goggles can be turned to resemble common eyewears throughout the station. \

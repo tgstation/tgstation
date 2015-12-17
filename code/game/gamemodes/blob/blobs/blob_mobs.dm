@@ -13,9 +13,9 @@
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
 
-/mob/living/simple_animal/hostile/blob/update_icons()
-	if(overmind)
-		color = overmind.blob_reagent_datum.color
+/mob/living/simple_animal/hostile/blob/proc/adjustcolors(a_color)
+	if(a_color)
+		color = a_color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
@@ -58,6 +58,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
+
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -120,8 +121,19 @@
 			M.loc = src.loc
 	return ..()
 
+
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	..()
+
+	if(overmind && overmind.blob_reagent_datum)
+		adjustcolors(overmind.blob_reagent_datum.color)
+	else
+		adjustcolors(color) //to ensure zombie/other overlays update
+
+
+/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(a_color)
+	color = a_color
+
 	if(is_zombie)
 		overlays.Cut()
 		overlays = human_overlays
@@ -153,6 +165,9 @@
 	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
+	return
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

@@ -222,7 +222,7 @@
 	throw_range = 5
 	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/santa
 	name = "santa hat"

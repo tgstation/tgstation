@@ -7,38 +7,34 @@
 	maxhealth = 400
 	explosion_block = 6
 	point_return = -1
-	atmosblock = 1
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/is_offspring = null
 
-
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
 	blob_cores += src
 	SSobj.processing |= src
-	update_icon() //so it atleast appears
+	adjustcolors(color) //so it atleast appears
 	if(!overmind)
 		create_overmind(new_overmind)
 	if(overmind)
-		update_icon()
+		adjustcolors(overmind.blob_reagent_datum.color)
 	if(offspring)
 		is_offspring = 1
 	point_rate = new_rate
 	..(loc, h)
 
-/obj/effect/blob/core/update_icon()
+
+/obj/effect/blob/core/adjustcolors(a_color)
 	overlays.Cut()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
-	if(overmind)
-		I.color = overmind.blob_reagent_datum.color
+	I.color = a_color
 	overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
 	overlays += C
 
-/obj/effect/blob/core/PulseAnimation()
-	return
 
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
@@ -54,10 +50,14 @@
 /obj/effect/blob/core/ex_act(severity, target)
 	return
 
-/obj/effect/blob/core/check_health()
-	..()
-	if(overmind) //we should have an overmind, but...
+/obj/effect/blob/core/update_icon()
+	if(health <= 0)
+		qdel(src)
+		return
+	// update_icon is called when health changes so... call update_health in the overmind
+	if(overmind)
 		overmind.update_health()
+	return
 
 /obj/effect/blob/core/RegenHealth()
 	return // Don't regen, we handle it in Life()
@@ -72,18 +72,21 @@
 	health = min(maxhealth, health+health_regen)
 	if(overmind)
 		overmind.update_health()
-	Pulse_Area(overmind, 12, 4, 3)
+	pulseLoop(0)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
-			B.change_to(/obj/effect/blob/shield, overmind)
+			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield)
+			if(overmind)
+				N.color = overmind.blob_reagent_datum.color
 	color = null
 	..()
 
 
 /obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
+
 	if(overmind_get_delay > world.time && !override_delay)
 		return
 
@@ -115,3 +118,4 @@
 				B.verbs -= /mob/camera/blob/verb/split_consciousness
 		return 1
 	return 0
+

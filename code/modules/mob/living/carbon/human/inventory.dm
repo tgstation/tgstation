@@ -278,7 +278,8 @@
 			Human.unEquip(src)
 
 		if(bomb)
-			empty_object_contents()
+			for(var/obj/item/Item in contents) //Empty out the contents
+				Item.loc = src.loc
 			spawn(1) //so the shreds aren't instantly deleted by the explosion
 				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
 				Shreds.desc = "The sad remains of what used to be [src.name]."

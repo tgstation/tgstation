@@ -10,6 +10,9 @@
 	var/max_spores = 3
 	var/spore_delay = 0
 
+/obj/effect/blob/factory/update_icon()
+	if(health <= 0)
+		qdel(src)
 
 /obj/effect/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
@@ -31,9 +34,8 @@
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation(1)
 	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
-	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		BS.overmind = overmind
-		BS.update_icons()
-		overmind.blob_mobs.Add(BS)
+	BS.color = color
+	BS.overmind = overmind
+	overmind.blob_mobs.Add(BS)
 	return 0
 

@@ -1,5 +1,5 @@
 /* Toys!
- * Contains
+ * ContainsL
  *		Balloons
  *		Fake singularity
  *		Toy gun
@@ -18,7 +18,6 @@
  *		Beach ball
  *		Toy xeno
  *      Kitty toys!
- *		Snowballs
  */
 
 
@@ -271,7 +270,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 
 
 /*
@@ -710,7 +709,7 @@
 
 
 /obj/item/toy/cards
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
@@ -954,8 +953,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.burn_state == FIRE_PROOF)
-		newobj.burn_state = FIRE_PROOF
+	if(sourceobj.burn_state == -1)
+		newobj.burn_state = -1
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -1071,7 +1070,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Not Burnable
 
 /*
  * Fake nuke
@@ -1131,7 +1130,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1168,26 +1167,6 @@
 
 	else
 		user << "<span class='alert'>Nothing happens.</span>"
-
-/*
- * Snowballs
- */
-
-/obj/item/toy/snowball
-	name = "snowball"
-	desc = "A compact ball of snow. Good for throwing at people."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "snowball"
-	throwforce = 12 //pelt your enemies to death with lumps of snow
-
-/obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
-
-/obj/item/toy/snowball/throw_impact(atom/hit_atom)
-	if(!..())
-		playsound(src, 'sound/effects/pop.ogg', 20, 1)
-		qdel(src)
 
 /*
  * Beach ball
@@ -1241,7 +1220,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	burn_state = FLAMMABLE
+
 
 
 /*
@@ -1255,7 +1234,6 @@
 	icon_state = "nuketoy"
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
-	var/toysound = 'sound/machines/click.ogg'
 
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
@@ -1264,7 +1242,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
-		playsound(user, toysound, 20, 1)
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
 
 /obj/item/toy/figure/cmo
 	name = "Chief Medical Officer action figure"
@@ -1290,7 +1268,6 @@
 	name = "Cyborg action figure"
 	icon_state = "borg"
 	toysay = "I. LIVE. AGAIN."
-	toysound = 'sound/voice/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
 	name = "Botanist action figure"
@@ -1331,7 +1308,6 @@
 	name = "Clown action figure"
 	icon_state = "clown"
 	toysay = "Honk!"
-	toysound = 'sound/items/bikehorn.ogg'
 
 /obj/item/toy/figure/ian
 	name = "Ian action figure"
@@ -1397,7 +1373,6 @@
 	name = "Mime action figure"
 	icon_state = "mime"
 	toysay = "..."
-	toysound = null
 
 /obj/item/toy/figure/miner
 	name = "Shaft Miner action figure"
@@ -1413,7 +1388,6 @@
 	name = "Wizard action figure"
 	icon_state = "wizard"
 	toysay = "Ei Nath!"
-	toysound = 'sound/magic/Disintegrate.ogg'
 
 /obj/item/toy/figure/rd
 	name = "Research Director action figure"
@@ -1424,13 +1398,11 @@
 	name = "Roboticist action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
-	toysound = 'sound/mecha/mechstep.ogg'
 
 /obj/item/toy/figure/scientist
 	name = "Scientist action figure"
 	icon_state = "scientist"
 	toysay = "For science!"
-	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie
 	name = "Nuclear Operative action figure"
@@ -1441,7 +1413,6 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"

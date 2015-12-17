@@ -86,14 +86,6 @@
 	// PROCS //
 	///////////
 
-
-
-//Called when admins use the Set Species verb, let's species
-//do some init stuff on the mob that got SS'd if necessary
-/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
-	return
-
-
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
@@ -684,6 +676,9 @@
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
 
+		if(H.seer)
+			H.see_invisible = SEE_INVISIBLE_OBSERVER
+
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
 				var/obj/item/clothing/glasses/G = H.glasses
@@ -867,10 +862,6 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			if(H.l_hand)
-				. += H.l_hand.slowdown
-			if(H.r_hand)
-				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))
 				. += 1.5

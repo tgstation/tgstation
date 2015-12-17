@@ -26,15 +26,6 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 
-/turf/simulated/wall/ice
-	icon = 'icons/turf/walls/icedmetal_wall.dmi'
-	icon_state = "iced"
-	desc = "A wall covered in a thick sheet of ice."
-	walltype = "iced"
-	canSmoothWith = null
-	hardness = 35
-	slicing_duration = 150 //welding through the ice+metal
-
 /turf/simulated/wall/rust
 	name = "rusted wall"
 	desc = "A rusted metal wall."
@@ -50,6 +41,8 @@
 	icon_state = "rrust"
 	walltype = "rrust"
 	hardness = 15
+
+
 
 /turf/simulated/wall/shuttle
 	name = "wall"

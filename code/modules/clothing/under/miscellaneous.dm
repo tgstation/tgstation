@@ -37,7 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -71,12 +71,13 @@
 	item_state = "p_suit"
 	item_color = "psyche"
 
-/obj/item/clothing/under/rank/clown/sexy
+/obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	item_color = "sexyclown"
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/vice
@@ -117,7 +118,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -134,7 +135,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -359,7 +360,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/sundress
 	name = "sundress"

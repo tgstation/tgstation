@@ -8,7 +8,7 @@
 	force = 10
 	throwforce = 0
 	w_class = 4
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	burntime = 20
 
 /obj/item/weapon/moneybag/attack_hand(mob/user)

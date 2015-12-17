@@ -272,7 +272,8 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
-		/client/proc/readmin
+		/client/proc/readmin,
+		/client/proc/reload_nanoui_resources
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)

@@ -73,7 +73,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = 3
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable, made of wood
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(!isturf(target))

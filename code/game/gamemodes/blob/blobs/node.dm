@@ -5,28 +5,21 @@
 	desc = "A large, pulsating yellow mass."
 	health = 200
 	maxhealth = 200
-	health_regen = 3
 	point_return = 25
-	atmosblock = 1
-
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
 	SSobj.processing |= src
 	..(loc, h)
 
-/obj/effect/blob/node/update_icon()
+/obj/effect/blob/node/adjustcolors(a_color)
 	overlays.Cut()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
-	if(overmind)
-		I.color = overmind.blob_reagent_datum.color
+	I.color = a_color
 	src.overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_node_overlay")
 	src.overlays += C
-
-/obj/effect/blob/node/PulseAnimation()
-	return
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -37,5 +30,12 @@
 	return ..()
 
 /obj/effect/blob/node/Life()
-	Pulse_Area(overmind, 10, 3, 2)
+	pulseLoop(5)
+	health = min(initial(health), health + 1)
 	color = null
+
+/obj/effect/blob/node/update_icon()
+	if(health <= 0)
+		qdel(src)
+		return
+	return

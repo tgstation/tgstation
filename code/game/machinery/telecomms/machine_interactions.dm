@@ -254,12 +254,9 @@
 				if(newfreq && canAccess(usr))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
-					if(newfreq == SYND_FREQ)
-						temp = "<font color = #FF0000>-% Error: Interference preventing filtering frequency: \"[newfreq] GHz\" %-</font color>"
-					else
-						if(!(newfreq in freq_listening) && newfreq < 10000)
-							freq_listening.Add(newfreq)
-							temp = "<font color = #666633>-% New frequency filter assigned: \"[newfreq] GHz\" %-</font color>"
+					if(!(newfreq in freq_listening) && newfreq < 10000)
+						freq_listening.Add(newfreq)
+						temp = "<font color = #666633>-% New frequency filter assigned: \"[newfreq] GHz\" %-</font color>"
 
 	if(href_list["delete"])
 

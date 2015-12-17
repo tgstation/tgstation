@@ -25,7 +25,7 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	burntime = 20
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()

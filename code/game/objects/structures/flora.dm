@@ -1,5 +1,5 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	burntime = 30
 
 //trees
@@ -221,7 +221,7 @@
 	icon_state = "rock1"
 	icon = 'icons/obj/flora/rocks.dmi'
 	anchored = 1
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Not Burnable
 
 /obj/structure/flora/rock/New()
 	..()

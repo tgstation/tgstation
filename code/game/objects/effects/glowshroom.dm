@@ -6,7 +6,7 @@
 	opacity = 0
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "glowshroom" //replaced in New
+	icon_state = "glowshroomf"
 	layer = 2.1
 	var/endurance = 30
 	var/potency = 30
@@ -16,10 +16,6 @@
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
-obj/effect/glowshroom/glowcap
-	name = "glowcap"
-	icon_state = "glowcap"
-
 /obj/effect/glowshroom/single
 	yield = 0
 
@@ -27,7 +23,6 @@ obj/effect/glowshroom/glowcap
 	..()
 	SetLuminosity(round(potency/10))
 	dir = CalcDir()
-	var/base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
 			if(NORTH)
@@ -38,9 +33,9 @@ obj/effect/glowshroom/glowcap
 				pixel_x = 32
 			if(WEST)
 				pixel_x = -32
-		icon_state = "[base_icon_state][rand(1,3)]"
+		icon_state = "glowshroom[rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = "[base_icon_state]f"
+		icon_state = "glowshroomf"
 
 	spawn(delay)
 		Spread()
@@ -76,13 +71,13 @@ obj/effect/glowshroom/glowcap
 			if(shroomCount >= placeCount)
 				continue
 
-			var/obj/effect/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
+			var/obj/effect/glowshroom/child = new /obj/effect/glowshroom(newLoc)//The baby mushrooms have different stats :3
 			child.potency = max(potency+rand(-3,6), 0)
 			child.yield = max(yield+rand(-1,2), 0)
 			child.delay = max(delay+rand(-30,60), 0)
 			child.endurance = max(endurance+rand(-3,6), 1)
 			child.generation = generation+1
-			child.desc = "This is a [child.generation]\th generation [child.name]!"//I added this for testing, but I figure I'll leave it in.
+			child.desc = "This is a [child.generation]\th generation glowshroom!"//I added this for testing, but I figure I'll leave it in.
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
 	set background = BACKGROUND_ENABLED

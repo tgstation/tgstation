@@ -2,7 +2,7 @@
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
-	burn_state = FLAMMABLE
+	burn_state = 0 //Burnable
 	burntime = 20
 
 /obj/structure/closet/acloset

@@ -9,7 +9,7 @@
 	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
 	action_button_name = "Toggle Helmet Light"
-	burn_state = FIRE_PROOF
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
 	if(!isturf(user.loc))

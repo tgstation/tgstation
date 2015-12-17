@@ -851,9 +851,11 @@
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
 		return
-	if(!Adjacent(M) && (M.loc != src))
+	if(!Adjacent(M))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
+		return
+	if(!isturf(M.loc) && M.loc != src)
 		return
 	return 1

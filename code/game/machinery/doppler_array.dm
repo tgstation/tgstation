@@ -68,7 +68,7 @@ var/list/doppler_arrays = list()
 		return
 
 	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(zone, epicenter)
+	var/direct = get_dir(epicenter, zone)
 
 	if(distance > max_dist)
 		return
