@@ -83,8 +83,8 @@ class @Window
     @xResize = event.screenX unless @xResize?
     @yResize = event.screenY unless @yResize?
 
-    x = (event.screenX - @xResize) + window.innerWidth
-    y = (event.screenY - @yResize) + window.innerHeight
+    x = Math.max(150, (event.screenX - @xResize) + window.innerWidth)
+    y = Math.max(150, (event.screenY - @yResize) + window.innerHeight)
     @setSize x, y
 
     @xResize = event.screenX

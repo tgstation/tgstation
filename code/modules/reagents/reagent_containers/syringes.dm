@@ -240,3 +240,10 @@
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
+
+/obj/item/weapon/reagent_containers/syringe/mulligan
+	name = "Mulligan"
+	desc = "A syringe used to completely change the users identity."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("mulligan" = 1)

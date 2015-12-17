@@ -1,0 +1,4 @@
+author: Swankcookie
+delete-after: True
+changes: 
+  - rscadd: "lanterns no longer turn into flashlights when you pick them up."

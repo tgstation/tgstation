@@ -1,4 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Hulks now lose hulk when going into crit, rather than at 25 health."
