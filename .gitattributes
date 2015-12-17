@@ -1,4 +1,6 @@
 * text=auto
+#convert to native on checkout and normalise on checkin
+*.dm text
 
 # dmm map merger hook
 # needs additional setup, see tools/mapmerge/install.txt
