@@ -18,6 +18,8 @@ env:
 
 cache:
   directories:
+    - nano/node_modules
+    - nano/bower_components
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
 
 
