@@ -374,7 +374,7 @@
 				to_chat(user, "<span class='notice'>You can't throw away something built into you.</span>")
 				return //Mommis cant give away their modules but can place other items
 		else
-			to_chat(user, "<span class='notice'> You're a robot. No.</span>")
+			to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 			return //Robots can't interact with storage items.
 
 
@@ -385,14 +385,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "<span class='warning'> The tray won't fit in [src].</span>")
+				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				to_chat(user, "<span class='warning'> God damnit!</span>")
+				to_chat(user, "<span class='warning'>God damnit!</span>")
 
 	return handle_item_insertion(W)
 

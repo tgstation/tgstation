@@ -51,13 +51,13 @@
 	if(!locked)
 		. = ..()
 	else
-		to_chat(user, "<span class='warning'>Its locked!</span>")
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	return
 
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		to_chat(user, "<span class='warning'>Its locked!</span>")
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	else
 		..()
 	return

@@ -101,7 +101,7 @@
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "intact"
 	name = "pipe"
-	desc = "A one meter section of regular pipe"
+	desc = "A one meter section of regular pipe."
 	volume = 70
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
@@ -435,7 +435,7 @@
 	icon_state = "map"
 	baseicon = "manifold"
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 	volume = 105
 	color = "#B4B4B4"
 	dir = SOUTH
@@ -656,7 +656,7 @@
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 	icon_state = "map_4way"
 	name = "4-way pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 	volume = 140
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH|EAST|WEST

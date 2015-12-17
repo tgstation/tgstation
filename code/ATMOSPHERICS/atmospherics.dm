@@ -254,7 +254,7 @@ Pipelines + Other Objects -> Pipe network
 				qdel(transit) //remove the carrier
 				transit = null
 		else
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's too exerted due to internal pressure.</span>")
 			return 1
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")

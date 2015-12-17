@@ -48,26 +48,26 @@
 
 	..()
 	if(!anchored)
-		to_chat(user, "It appears to be completely loose and movable")
+		to_chat(user, "It appears to be completely loose and movable.")
 	//switch most likely can't take inequalities, so here's that if block
 	if(health >= initial(health)) //Sanity
-		to_chat(user, "It's in perfect shape, not even a scratch")
+		to_chat(user, "It's in perfect shape, not even a scratch.")
 	else if(health >= 0.8*initial(health))
-		to_chat(user, "It has a few scratches and a small impact")
+		to_chat(user, "It has a few scratches and a small impact.")
 	else if(health >= 0.5*initial(health))
-		to_chat(user, "It has a few impacts and some cracks running from them")
+		to_chat(user, "It has a few impacts and some cracks running from them.")
 	else if(health >= 0.2*initial(health))
-		to_chat(user, "It's covered in impact marks and most of the outer sheet is crackled")
+		to_chat(user, "It's covered in impact marks and most of the outer sheet is crackled.")
 	else
-		to_chat(user, "It's completely crackled over multiple layers, it's a miracle it's even standing")
+		to_chat(user, "It's completely crackled over multiple layers, it's a miracle it's even standing.")
 	if(reinforced) //Normal windows can be loose or not, reinforced windows are more complex
 		switch(d_state)
 			if(WINDOWSECURE)
-				to_chat(user, "It is firmly secured")
+				to_chat(user, "It is firmly secured.")
 			if(WINDOWUNSECUREFRAME)
-				to_chat(user, "It appears it was unfastened from its frame")
+				to_chat(user, "It appears it was unfastened from its frame.")
 			if(WINDOWLOOSEFRAME)
-				to_chat(user, "It appears to be loose from its frame")
+				to_chat(user, "It appears to be loose from its frame.")
 
 //Allows us to quickly check if we should break the window, can handle not having an user
 /obj/structure/window/proc/healthcheck(var/mob/M, var/sound = 1)
@@ -299,7 +299,7 @@
 					update_nearby_tiles() //Needed if it's a full window, since unanchored windows don't link
 					update_nearby_icons()
 					update_icon()
-					//Përform pressure check since window no longer blocks air
+					//Perform pressure check since window no longer blocks air
 					var/pdiff = performWallPressureCheck(src.loc)
 					if(pdiff > 0)
 						message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")

@@ -502,7 +502,7 @@
 
 	//Check to see if we slipped
 	if(!ignore_slip && prob(Process_Spaceslipping(5)))
-		to_chat(src, "<span class='notice'> <B>You slipped!</B></span>")
+		to_chat(src, "<span class='notice'><B>You slipped!</B></span>")
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

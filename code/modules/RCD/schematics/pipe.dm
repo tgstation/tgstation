@@ -500,7 +500,7 @@ var/global/list/disposalpipeID2State = list(
 //DEVICES.
 
 /datum/rcd_schematic/pipe/connector
-	name		= "Connecter"
+	name		= "Connector"
 	category	= "Devices"
 
 	pipe_id		= PIPE_CONNECTOR
