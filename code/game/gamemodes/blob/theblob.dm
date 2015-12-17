@@ -229,7 +229,7 @@
 		else
 			damage = 0
 	if(overmind)
-		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, the cause, and the appendix of the attacker.
+		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	health -= damage
 	update_icon()
 	check_health()
