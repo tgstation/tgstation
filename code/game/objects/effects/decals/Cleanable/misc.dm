@@ -133,6 +133,15 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
+/obj/effect/decal/cleanable/scattered_sand
+	name = "scattered sand"
+	desc = "Now how are you gonna sweep it back up, smartass?"
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "sand"
+	gender = PLURAL
 
 /obj/effect/decal/cleanable/campfire
 	name = "burnt out campfire"
