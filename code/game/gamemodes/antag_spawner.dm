@@ -1,3 +1,6 @@
+#define BORG_TELE 1
+#define HUMAN_TELE 2
+
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
@@ -9,6 +12,9 @@
 
 /obj/item/weapon/antag_spawner/proc/equip_antag(mob/target)
 	return
+
+
+///////////WIZARD
 
 /obj/item/weapon/antag_spawner/contract
 	name = "contract"
@@ -119,6 +125,14 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
 
+
+
+
+
+
+///////////BORGS AND OPERATIVES
+
+
 /obj/item/weapon/antag_spawner/borg_tele
 	name = "syndicate cyborg teleporter"
 	desc = "A single-use teleporter designed to deploy a single Syndicate cyborg onto the field."
@@ -127,6 +141,7 @@
 	var/TC_cost = 0
 	var/borg_to_spawn
 	var/list/possible_types = list("Assault", "Medical")
+	var/spawn_type = BORG_TELE
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
@@ -135,35 +150,59 @@
 	if(!(user.mind in ticker.mode.syndicates))
 		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
 		return 0
-	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
-	if(!borg_to_spawn)
-		return
+
+	if(spawn_type == BORG_TELE)
+		borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
+		if(!borg_to_spawn)
+			return
 	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
+		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
+		S.set_up(4, 1, src)
+		S.start()
 	else
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
-	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
-		used = 0
-		return
-	var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
-	S.set_up(4, 1, src)
-	S.start()
-	var/mob/living/silicon/robot/R
-	switch(borg_to_spawn)
-		if("Medical")
-			R = new /mob/living/silicon/robot/syndicate/medical(T)
-		else
-			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
-	R.key = C.key
-	ticker.mode.syndicates += R.mind
-	ticker.mode.update_synd_icons_added(R.mind)
-	R.mind.special_role = "syndicate"
-	R.faction = list("syndicate")
+	switch(spawn_type)
+		if(BORG_TELE)
+			var/mob/living/silicon/robot/R
+			switch(borg_to_spawn)
+				if("Medical")
+					R = new /mob/living/silicon/robot/syndicate/medical(T)
+				else
+					R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+			R.key = C.key
+			ticker.mode.syndicates += R.mind
+			ticker.mode.update_synd_icons_added(R.mind)
+			R.mind.special_role = "syndicate"
+			R.faction = list("syndicate")
+		if(HUMAN_TELE)
+			var/nuke_code = "Ask your leader!"
+			var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+			C.prefs.copy_to(M)
+			M.key = C.key
+			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+			if(nuke)
+				nuke.r_code = nuke_code
+			M.mind.make_Nuke(T, nuke_code, 0, FALSE)
+
+
+/obj/item/weapon/antag_spawner/borg_tele/operative
+	name = "syndicate operative teleporter"
+	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "locator"
+	spawn_type = HUMAN_TELE
+
+
+
+
+
+///////////SLAUGHTER DEMON
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
@@ -212,3 +251,7 @@
 	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
 	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+
+
+#undef BORG_TELE
+#undef HUMAN_TELE

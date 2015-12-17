@@ -259,6 +259,15 @@ var/list/uplink_items = list()
 	if(istype(T))
 		T.TC_cost = cost
 
+
+/datum/uplink_item/dangerous/reinforcement
+	name = "Reinforcements"
+	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals to arm them as well."
+	item = /obj/item/weapon/antag_spawner/borg_tele/operative
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
