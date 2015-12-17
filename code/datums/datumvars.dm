@@ -243,6 +243,11 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+	if(istype(D, /atom/movable))
+		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+	else
+		var/atom/A = D
+		body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 
