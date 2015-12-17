@@ -190,7 +190,7 @@
 	. = ..()
 	if(n_master) // So we don't do this in case we're created for asset registering.
 		selected_dir = get_base_dir()
-	
+
 /datum/rcd_schematic/pipe/proc/get_base_dir()
 	if(pipe_type == PIPE_BENT)
 		return NORTHEAST
@@ -335,13 +335,15 @@
 /datum/rcd_schematic/pipe/attack(var/atom/A, var/mob/user)
 	to_chat(user, "Building Pipes ...")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
+	var/thislayer = layer
+	var/thisdir = selected_dir
 	if(!do_after(user, A, 20))
 		return 1
 
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
-	var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A, pipe_id, selected_dir)
-	P.setPipingLayer(layer)
+	var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A, pipe_id, thisdir)
+	P.setPipingLayer(thislayer)
 	P.update()
 	P.add_fingerprint(user)
 
@@ -354,7 +356,7 @@
 		layer = P.layer
 
 	return ..()
-	
+
 //Disposal piping.
 /datum/rcd_schematic/pipe/disposal
 	category		= "Disposal Pipes"
