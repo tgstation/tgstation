@@ -377,6 +377,34 @@
 		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
 
+
+//GREY TIDE
+
+/obj/item/weapon/twohanded/spear/grey_tide
+	icon_state = "spearglass0"
+	name = "\improper Grey Tide"
+	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
+	force_unwielded = 15
+	force_wielded = 25
+	throwforce = 20
+	throw_speed = 4
+	attack_verb = list("gored")
+	var/list/spear_owners = list()
+
+/obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+	..()
+	if(!(user in spear_owners))
+		user.faction += "greytide([rand(1, 1000)])"
+		spear_owners += user
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		if(!L.stat && prob(50))
+			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
+			M.faction = user.faction
+			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.GiveTarget(L)
+
+
 // CHAINSAW
 /obj/item/weapon/twohanded/required/chainsaw
 	name = "chainsaw"
