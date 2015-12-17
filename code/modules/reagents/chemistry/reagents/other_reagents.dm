@@ -376,6 +376,20 @@
 		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 	return 1
 
+/datum/reagent/mulligan
+	name = "Mulligan Toxin"
+	id = "mulligan"
+	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = INFINITY
+
+/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
+	..()
+	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	H.visible_message("<b>[H]</b> suddenly transforms!")
+	randomize_human(H)
+	return 1
+
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
