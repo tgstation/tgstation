@@ -264,7 +264,7 @@ var/list/uplink_items = list()
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
-	cost = 12
+	cost = 16
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
