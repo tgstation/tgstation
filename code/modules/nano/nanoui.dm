@@ -211,7 +211,7 @@
 
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(JSON.stringify(send_data), "'", "\\'")
+	var/initial_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
 
 	// Generate the HTML document.
 	return {"
