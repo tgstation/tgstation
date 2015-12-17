@@ -46,6 +46,7 @@
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
+	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -122,6 +123,9 @@
 		ticker.mode.traitors -= src
 		if(isAI(current))
 			var/mob/living/silicon/ai/A = current
+			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
+			A.malf_picker.remove_verbs(A)
+			qdel(A.malf_picker)
 			A.set_zeroth_law("")
 			A.show_laws()
 	special_role = null
@@ -146,7 +150,12 @@
 	if(src in ticker.mode.cult)
 		ticker.mode.cult -= src
 		ticker.mode.update_cult_icons_removed(src)
+		var/datum/game_mode/cult/cult = ticker.mode
+		if(istype(cult))
+			cult.memorize_cult_objectives(src)
 	special_role = null
+	remove_objectives()
+	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
 	if(src in ticker.mode.revolutionaries)
@@ -163,22 +172,6 @@
 /datum/mind/proc/remove_gang()
 		ticker.mode.remove_gangster(src,0,1,1)
 		remove_objectives()
-
-/datum/mind/proc/remove_malf()
-	if(src in ticker.mode.malf_ai)
-		ticker.mode.malf_ai -= src
-		var/mob/living/silicon/ai/A = current
-		A.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
-			/datum/game_mode/malfunction/proc/takeover,
-			/datum/game_mode/malfunction/proc/ai_win)
-		A.malf_picker.remove_verbs(A)
-		A.make_laws()
-		qdel(A.malf_picker)
-		A.show_laws()
-		A.icon_state = "ai"
-	special_role = null
-	remove_objectives()
-	remove_antag_equip()
 
 /datum/mind/proc/remove_hog_follower_prophet()
 	ticker.mode.red_deity_followers -= src
@@ -208,7 +201,6 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
-	remove_malf()
 	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -245,7 +237,6 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
-		"malfunction",
 	)
 	var/text = ""
 
@@ -336,8 +327,11 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.cult)
 			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br><a href='?src=\ref[src];cult=equip'>Equip</a>"
-
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+/*
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
+*/
 		else if(isloyal(current))
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 		else
@@ -547,14 +541,6 @@
 
 	if (istype(current, /mob/living/silicon))
 		text = "silicon"
-		if (ticker.mode.config_tag=="malfunction")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/silicon/ai))
-			if (src in ticker.mode.malf_ai)
-				text += "<b>MALF</b>|<a href='?src=\ref[src];silicon=unmalf'>not malf</a>"
-			else
-				text += "<a href='?src=\ref[src];silicon=malf'>malf</a>|<b>NOT MALF</b>"
 		var/mob/living/silicon/robot/robot = current
 		if (istype(robot) && robot.emagged)
 			text += "<br>Cyborg: Is emagged! <a href='?src=\ref[src];silicon=unemag'>Unemag!</a><br>0th law: [robot.laws.zeroth]"
@@ -565,13 +551,6 @@
 				if (R.emagged)
 					n_e_robots++
 			text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
-
-		if(current && current.client && (ROLE_MALF in current.client.prefs.be_special))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-
-		sections["malfunction"] = text
 
 	if (ticker.mode.config_tag == "traitorchan")
 		if (sections["traitor"])
@@ -999,9 +978,31 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("equip")
+			if("tome")
+				var/mob/living/carbon/human/H = current
+				if (istype(H))
+					var/obj/item/weapon/tome/T = new(H)
+
+					var/list/slots = list (
+						"backpack" = slot_in_backpack,
+						"left pocket" = slot_l_store,
+						"right pocket" = slot_r_store,
+						"left hand" = slot_l_hand,
+						"right hand" = slot_r_hand,
+					)
+					var/where = H.equip_in_one_of_slots(T, slots)
+					if (!where)
+						usr << "<span class='danger'>Spawning tome failed!</span>"
+					else
+						H << "A tome, a message from your new master, appears in your [where]."
+						if(where == "backpack")
+							var/obj/item/weapon/storage/B = H.back
+							B.orient2hud(H)
+							B.show_to(H)
+
+			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
-					usr << "<span class='danger'>equip_cultist() failed! [current]'s starting equipment will be incomplete.</span>"
+					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1237,17 +1238,6 @@
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
-			if("unmalf")
-				remove_malf()
-				current << "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>"
-				message_admins("[key_name_admin(usr)] has de-malf'ed [current].")
-				log_admin("[key_name(usr)] has de-malf'ed [current].")
-
-			if("malf")
-				make_AI_Malf()
-				message_admins("[key_name_admin(usr)] has malf'ed [current].")
-				log_admin("[key_name(usr)] has malf'ed [current].")
-
 			if("unemag")
 				var/mob/living/silicon/robot/R = current
 				if (istype(R))
@@ -1309,20 +1299,6 @@
 	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 	if(H)
 		qdel(H)
-
-
-/datum/mind/proc/make_AI_Malf()
-	if(!(src in ticker.mode.malf_ai))
-		ticker.mode.malf_ai += src
-
-		current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		current.verbs += /datum/game_mode/malfunction/proc/takeover
-		current:malf_picker = new /datum/module_picker
-		current:laws = new /datum/ai_laws/malfunction
-		current:show_laws()
-		current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
-		special_role = "malfunction"
-		current.icon_state = "ai-malf"
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in ticker.mode.traitors))
@@ -1399,8 +1375,34 @@
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-		current << "Your objective is to summon Nar-Sie by building and defending a suitable shell for the Geometer. Adequate supplies can be procured through human sacrifices."
-		ticker.mode.equip_cultist(current)
+		var/datum/game_mode/cult/cult = ticker.mode
+		if (istype(cult))
+			cult.memorize_cult_objectives(src)
+		else
+			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+			current << "<B>Objective #1</B>: [explanation]"
+			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
+			current << "The convert rune is join blood self"
+			current.memory += "The convert rune is join blood self<BR>"
+
+	var/mob/living/carbon/human/H = current
+	if (istype(H))
+		var/obj/item/weapon/tome/T = new(H)
+
+		var/list/slots = list (
+			"backpack" = slot_in_backpack,
+			"left pocket" = slot_l_store,
+			"right pocket" = slot_r_store,
+			"left hand" = slot_l_hand,
+			"right hand" = slot_r_hand,
+		)
+		var/where = H.equip_in_one_of_slots(T, slots)
+		if (!where)
+		else
+			H << "A tome, a message from your new master, appears in your [where]."
+
+	if (!ticker.mode.equip_cultist(current))
+		H << "Spawning an amulet from your Master failed."
 
 /datum/mind/proc/make_Rev()
 	if (ticker.mode.head_revolutionaries.len>0)
