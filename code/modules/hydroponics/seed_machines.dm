@@ -16,7 +16,7 @@
 /obj/item/weapon/disk/botany/attack_self(var/mob/user as mob)
 	if(genes.len)
 		var/choice = alert(user, "Are you sure you want to wipe the disk?", "Xenobotany Data", "No", "Yes")
-		if(src && user && genes && choice && choice == "Yes" && user.Adjacent(get_turf(src)))
+		if(src && user && genes && choice && choice == "Yes" && user.get_active_hand() == src)
 			to_chat(user, "You wipe the disk data.")
 			name = initial(name)
 			desc = initial(name)
@@ -39,7 +39,7 @@
 	anchored = 1
 	use_power = 1
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK | EJECTNOTDEL
 
 	var/obj/item/seeds/loaded_seed // Currently loaded seed packet.
 	var/obj/item/weapon/disk/botany/loaded_disk //Currently loaded data disk.
@@ -139,7 +139,6 @@
 		/obj/item/weapon/circuitboard/botany_centrifuge,
 		/obj/item/weapon/stock_parts/scanning_module,
 		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,
@@ -292,7 +291,6 @@
 		/obj/item/weapon/circuitboard/botany_bioballistic,
 		/obj/item/weapon/stock_parts/scanning_module,
 		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,
