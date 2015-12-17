@@ -1018,6 +1018,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TRUELOCKS			128 //does it make a truly locked lockbox? If not set, the lockboxes made are unlockable by any crew with an ID
 #define IGNORE_MATS			256 //does it ignore material requirements for designs? - warning, can be OP
 #define IGNORE_CHEMS		512 //does it ignore chemical requirements for designs? - also super OP
+#define FAB_RECYCLER		1024//does it recycle materials from items? used for autolathe checks
 
 // Mecca scanner flags
 #define MECH_SCAN_FAIL		1 // Cannot be scanned at all.
