@@ -389,7 +389,11 @@ var/list/uplink_items = list()
 	desc = "A 5-round magazine of haemorrhage ammo designed for use in the syndicate sniper rifle, causes heavy bleeding in the target."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
 
-
+/datum/uplink_item/ammo/sniper/penetrator
+	name = "Sniper Magazine - Penetrator Rounds"
+	desc = "A 5-round magazine of penetrator ammo designed for use in the syndicate sniper rifle. Can pierce walls and multiple enemies."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	cost = 5
 
 // STEALTHY WEAPONS
 
@@ -571,6 +575,13 @@ var/list/uplink_items = list()
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, or emag, is a small card that unlocks hidden functions in electronic devices, subverts intended functions, and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
+	cost = 6
+	excludefrom = list(/datum/game_mode/gang)
+
+/datum/uplink_item/device_tools/sabotage
+	name = "Sabotage Sequencer"
+	desc = "The sabotage sequencer produces a powerful EMP on electronics it comes in contact with."
+	item = /obj/item/weapon/card/sabotage
 	cost = 6
 	excludefrom = list(/datum/game_mode/gang)
 

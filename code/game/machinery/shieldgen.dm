@@ -251,11 +251,6 @@
 	else
 		..()
 
-/obj/machinery/shieldgen/emag_act()
-	if(!malfunction)
-		malfunction = 1
-		update_icon()
-
 /obj/machinery/shieldgen/update_icon()
 	if(active)
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"

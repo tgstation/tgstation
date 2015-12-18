@@ -64,6 +64,22 @@
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
 
+/obj/item/weapon/card/sabotage
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "sabotage sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	origin_tech = "magnets=2;syndicate=2"
+	flags = NOBLUDGEON
+
+/obj/item/weapon/card/sabotage/attack()
+	return
+
+/obj/item/weapon/card/sabotage/afterattack(atom/target, mob/user, proximity)
+	var/atom/A = target
+	if(!proximity) return
+	A.emp_act(1)
+
 /obj/item/weapon/card/emag/attack()
 	return
 
