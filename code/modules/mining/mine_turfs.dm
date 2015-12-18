@@ -89,7 +89,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(turf/T)
+/turf/simulated/mineral/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random

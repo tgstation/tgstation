@@ -40,7 +40,7 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 
-			if(!istype(cur_turf, /turf/simulated/wall) //Rivers will flow around walls
+			if(!istype(cur_turf, /turf/simulated/wall)) //Rivers will flow around walls
 				var/turf/simulated/river_turf = new turf_type(cur_turf)
 				river_turf.Spread(30, 25)
 			else
