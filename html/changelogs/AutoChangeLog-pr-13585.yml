@@ -1,6 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Shooting someone who is holding a grenade has a chance to set the grenade off."
-  - rscadd: "Shooting someone who is holding a flamethrower has a chance to rupture the fuel tank."
-  - tweak: "Shields have a bonus against blocking thrown projectiles."

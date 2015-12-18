@@ -1,5 +1,0 @@
-author: Incoming5643
-delete-after: True
-changes: 
-  - rscadd: "Soon to be blobs in blob mode can now burst at their choosing. However they will still burst if they wait too long."
-  - rscadd: "Burst responsibly."
