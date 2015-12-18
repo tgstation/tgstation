@@ -848,9 +848,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	new trash(src.loc)
-	qdel(src)
+	if(isturf(hit_atom))
+		new/obj/effect/decal/cleanable/pie_smudge(src.loc)
+		if(trash) new trash(src.loc)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/empty //so the H.O.N.K. cream pie mortar can't generate free nutriment
 	trash = null
