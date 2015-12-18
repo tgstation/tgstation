@@ -79,6 +79,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
@@ -93,6 +94,7 @@
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
+			S.faction = faction
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -111,6 +113,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
@@ -197,6 +200,7 @@
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
+			S.faction = faction
 			if(player_spiders)
 				var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
 

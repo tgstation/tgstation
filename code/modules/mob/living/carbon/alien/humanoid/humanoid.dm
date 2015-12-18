@@ -32,7 +32,7 @@
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		adjustBruteLoss(14 + rand(1,9))
+		adjustBruteLoss(15)
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
 			Paralyse(1)

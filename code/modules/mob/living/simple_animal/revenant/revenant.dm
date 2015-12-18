@@ -24,7 +24,7 @@
 	see_in_dark = 8
 	languages = ALL
 	response_help   = "passes through"
-	response_disarm = "swings at"
+	response_disarm = "swings through"
 	response_harm   = "punches through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.

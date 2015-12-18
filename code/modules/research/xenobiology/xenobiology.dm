@@ -175,56 +175,28 @@
 		return..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		user << "<span class='warning'>The potion won't work on [M].</span>"
+		user << "<span class='warning'>The potion won't work on [SM].</span>"
 		return ..()
 
 
 
-	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
+	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
-
-	shuffle(candidates)
-
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		if(candidate in not_interested)
-			continue
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as [M.name]? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-				if("No")
-					if(!src)
-						return
-					not_interested += candidate
-
-	sleep(50)
-
-	if(!src)
-		return
-
-	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
-
-	if(consenting_candidates.len)
-		var/client/C = null
-		C = pick(consenting_candidates)
-		M.key = C.key
-		M.languages |= HUMAN
-		M.faction -= "neutral"
-		M << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
-		user << "<span class='notice'>[M] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/mob/dead/observer/theghost = null
+	if(candidates.len)
+		theghost = pick(candidates)
+		SM.key = theghost.key
+		SM.languages |= HUMAN
+		SM.faction = user.faction
+		SM.sentience_act()
+		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
-		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
+		user << "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
 
@@ -347,7 +319,7 @@
 	C.color = "#000080"
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
-	C.burn_state = -1
+	C.burn_state = FIRE_PROOF
 	uses --
 	if(!uses)
 		qdel(src)

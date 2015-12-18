@@ -7,6 +7,7 @@
 	var/blood_type
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
+	var/list/features_buffer = list() // A copy of features, used for cloning --
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations

@@ -369,13 +369,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0)
+/proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
 	for(var/mob/M in mobs)
+		if(skip_mindless && (!M.mind && !M.ckey))
+			if(!isbot(M) && !istype(M, /mob/camera/))
+				continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -610,29 +613,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		assembled |= A
 
 	return assembled
-
-
-/atom/proc/GetTypeInAllContents(typepath)
-	var/list/processing_list = list(src)
-	var/list/processed = list()
-
-	var/atom/found = null
-
-	while(processing_list.len && found==null)
-		var/atom/A = processing_list[1]
-		if(istype(A, typepath))
-			found = A
-
-		processing_list -= A
-
-		for(var/atom/a in A)
-			if(!(a in processed))
-				processing_list |= a
-
-		processed |= A
-
-	return found
-
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -944,7 +924,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			final_x = T.x + rough_x
 			final_y = T.y + rough_y
 			final_z = T.z
-		else	
+		else
 			final_x = AM.x + rough_x
 			final_y = AM.y + rough_y
 			final_z = AM.z
@@ -1212,51 +1192,56 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
-//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
-/atom/movable/var/orbitid = 0
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
+//A: atom to orbit
+//radius: range to orbit at, radius of the circle formed by orbiting
+//clockwise: whether you orbit clockwise or anti clockwise
+//rotation_speed: how fast to rotate
+//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
+//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
+//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
 	if(!istype(A))
 		return
-	orbitid++
-	var/myid = orbitid
-	if (orbiting)
-		stop_orbit()
-		//sadly this is the only way to ensure the original orbit proc stops
-		//and resets the atom's transform before we continue.
-		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
-		sleep(2.6+world.tick_lag)
-		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
-			return
-	orbiting = A
-	var/lastloc = loc
-	var/angle = 0
-	var/matrix/initial_transform = matrix(transform)
 
-	while(orbiting && orbiting.loc && orbitid == myid)
+	if(orbiting)
+		stop_orbit()
+		sleep(2.6+world.tick_lag) //the 2 second delay at the end of the existing orbit() call, plus some lag slack.
+
+	orbiting = A
+	var/matrix/initial_transform = matrix(transform)
+	var/lastloc = loc
+
+	//Head first!
+	if(pre_rotation)
+		var/matrix/M = matrix(transform)
+		var/pre_rot = 90
+		if(!clockwise)
+			pre_rot = -90
+		M.Turn(pre_rot)
+		transform = M
+
+	var/matrix/shift = matrix(transform)
+	shift.Translate(0,radius)
+	transform = shift
+
+	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+	while(orbiting && orbiting.loc)
 		var/targetloc = get_turf(orbiting)
-		if (!lockinorbit && loc != lastloc && loc != targetloc)
+		if(!lockinorbit && loc != lastloc && loc != targetloc)
 			break
 		loc = targetloc
 		lastloc = loc
-		angle += angle_increment
+		sleep(0.6)
 
-		var/matrix/shift = matrix(initial_transform)
-		shift.Translate(radius,0)
-		if(clockwise)
-			shift.Turn(angle)
-		else
-			shift.Turn(-angle)
-		animate(src, transform = shift, 2)
-		sleep(0.6) //the effect breaks above 0.6 delay
-	animate(src, transform = initial_transform, 2)
-	orbiting = null
+	animate(src,transform = initial_transform, time = 2) //2 second delay
+	SpinAnimation(0,0)
+
 
 
 /atom/movable/proc/stop_orbit()
-	if(orbiting)
-		loc = get_turf(orbiting)
-		orbiting = null
+	orbiting = null
 
 
 //Center's an image.
@@ -1353,9 +1338,9 @@ B --><-- A
 	return L
 
 /atom/proc/contains(var/atom/location)
-        if(!location)
-                return 0
-        for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
-        if(location == src)
-                return 1
-        return 0
+	if(!location)
+		return 0
+	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+		if(location == src)
+			return 1
+		return 0

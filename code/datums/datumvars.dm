@@ -1,5 +1,8 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+datum/proc/on_varedit(modified_var) //called whenever a var is edited
+	return
+
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
@@ -240,6 +243,12 @@
 	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+	if(istype(D, /atom/movable))
+		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+	else
+		var/atom/A = D
+		if(istype(A))
+			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 
@@ -837,7 +846,10 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
+				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
+				H.dna.species.admin_set_species(H,old_species)
+
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))	return

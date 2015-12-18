@@ -676,6 +676,8 @@
 	else
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	dna.species.mutant_bodyparts = dna.species.mutant_bodyparts_buffer.Copy()
+	dna.features = dna.features_buffer.Copy()
 	underwear = "Nude"
 	update_body()
 	update_hair()
@@ -851,11 +853,9 @@
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
 		return
-	if(!Adjacent(M))
+	if(!Adjacent(M) && (M.loc != src))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
-		return
-	if(!isturf(M.loc) && M.loc != src)
 		return
 	return 1

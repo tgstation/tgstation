@@ -27,9 +27,11 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
+	var/nanoui_fancy = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 
@@ -321,6 +323,7 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
+			dat += "<b>Fancy NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'>[(nanoui_fancy) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
@@ -344,6 +347,7 @@ var/list/preferences_datums = list()
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
+					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
 				var/p_map = preferred_map
@@ -732,6 +736,12 @@ var/list/preferences_datums = list()
 						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 						if(new_form)
 							ghost_form = new_form
+				if("ghostorbit")
+					if(unlock_content)
+						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
+						if(new_orbit)
+							ghost_orbit = new_orbit
+
 				if("name")
 					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
 					if(new_name)
@@ -1002,6 +1012,9 @@ var/list/preferences_datums = list()
 						else
 							UI_style = "Midnight"
 
+				if("nanoui")
+					nanoui_fancy = !nanoui_fancy
+
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP
 				if("announce_login")
@@ -1108,6 +1121,8 @@ var/list/preferences_datums = list()
 
 	character.dna.blood_type = blood_type
 	character.dna.features = features
+	character.dna.features_buffer = features.Copy()
+	character.dna.species.mutant_bodyparts_buffer = character.dna.species.mutant_bodyparts.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
 	if(pref_species != /datum/species/human && config.mutant_races)

@@ -104,7 +104,8 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)
-		burst_blob(blob)
+		if(blob.special_role != "Blob Overmind")
+			burst_blob(blob)
 
 /datum/game_mode/blob/proc/burst_blob(datum/mind/blob, warned=0)
 	var/client/blob_client = null
@@ -143,7 +144,8 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
-
+		var/datum/action/innate/blob_burst/B = new
+		B.Grant(blob.current)
 	SSshuttle.emergencyNoEscape = 1
 
 	// Disable the blob event for this round.

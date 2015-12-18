@@ -12,6 +12,7 @@
 	response_harm = "hits"
 	speed = 0
 	stat_attack = 1
+	robust_searching = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -84,7 +85,7 @@
 	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
-	casingtype = /obj/item/ammo_casing/c45
+	casingtype = /obj/item/ammo_casing/c45nostamina
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 
 	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted

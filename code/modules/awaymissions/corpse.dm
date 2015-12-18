@@ -8,7 +8,7 @@
 	name = "Unknown"
 	var/mobname = "default"  //Use for the ghost spawner variant, so they don't come out named "sleeper"
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
-	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -31,6 +31,7 @@
 	var/roundstart = TRUE
 	var/death = TRUE
 	var/flavour_text = "The mapper forgot to set this!"
+	var/faction = null
 	density = 1
 
 /obj/effect/landmark/corpse/initialize()
@@ -56,6 +57,8 @@
 		M.death(1) //Kills the new mob
 		if(src.corpsehusk)
 			M.Drain()
+	if(faction)
+		M.faction = list(src.faction)
 	M.adjustBruteLoss(src.corpsebrute)
 	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
@@ -259,7 +262,7 @@
 
 
 /obj/effect/landmark/corpse/plasmaman
-	mob_species = "plasmaman"
+	mob_species = /datum/species/plasmaman
 	corpsehelmet = /obj/item/clothing/head/helmet/space/plasmaman
 	corpseuniform = /obj/item/clothing/under/plasmaman
 	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
@@ -305,6 +308,8 @@
 	flavour_text = "You are a Nanotrasen Commander!"
 
 /obj/effect/landmark/corpse/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
 	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No")
 		return
@@ -315,7 +320,7 @@
 /obj/effect/landmark/corpse/skeleton
 	name = "skeletal remains"
 	mobname = "skeleton"
-	mob_species = "skeleton"
+	mob_species = /datum/species/skeleton
 	mobgender = NEUTER
 
 
@@ -330,7 +335,7 @@
 /obj/effect/landmark/corpse/zombie
 	name = "rotting corpse"
 	mobname = "zombie"
-	mob_species = "zombie"
+	mob_species = /datum/species/zombie
 
 /obj/effect/landmark/corpse/zombie/alive
 	death = FALSE

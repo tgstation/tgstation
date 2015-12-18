@@ -24,6 +24,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/seedarkness = 1
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -207,7 +208,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois()
+	var/list/mobs = getpois(skip_mindless=1)
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	ManualFollow(target)
@@ -225,7 +226,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
-	orbit(target,orbitsize,0)
+	var/rot_seg
+
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
+
+	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
 	..()
@@ -402,9 +417,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	H.add_hud_to(src)
 	data_hud_seen = hud_index
 
-/mob/dead/observer/verb/toggle_ghost_med_sec_hud()
-	set name = "Toggle Sec/Med HUD"
-	set desc = "Toggles whether you see medical/security HUDs"
+/mob/dead/observer/verb/toggle_ghost_med_sec_diag_hud()
+	set name = "Toggle Sec/Med/Diag HUD"
+	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
 	set category = "Ghost"
 
 	if(data_hud_seen) //remove old huds
@@ -414,10 +429,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	switch(data_hud_seen) //give new huds
 		if(0)
 			show_me_the_hud(DATA_HUD_SECURITY_BASIC)
+			src << "<span class='notice'>Security HUD set.</span>"
 		if(DATA_HUD_SECURITY_BASIC)
 			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
+			src << "<span class='notice'>Medical HUD set.</span>"
 		if(DATA_HUD_MEDICAL_ADVANCED)
+			show_me_the_hud(DATA_HUD_DIAGNOSTIC)
+			src << "<span class='notice'>Diagnostic HUD set.</span>"
+		if(DATA_HUD_DIAGNOSTIC)
 			data_hud_seen = 0
+			src << "<span class='notice'>HUDs disabled.</span>"
 
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))

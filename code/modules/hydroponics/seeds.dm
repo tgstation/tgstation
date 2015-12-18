@@ -7,7 +7,7 @@
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/plantname = "Plants"		//Name of plant when planted.
 	var/product						//A type path. The thing that is created when the plant is harvested.
 	var/species = ""				//Used to update icons. Should match the name in the sprites.
@@ -747,6 +747,25 @@
 	species = "glowshroom"
 	plantname = "Glowshrooms"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	lifespan = 120 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3 //-> spread
+	potency = 30 //-> brightness
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+	rarity = 20
+	mutatelist = list(/obj/item/seeds/glowcap)
+
+/obj/item/seeds/glowcap
+	name = "pack of glowcap mycelium"
+	desc = "This mycelium -powers- into mushrooms!"
+	icon_state = "mycelium-glowcap"
+	species = "glowcap"
+	plantname = "Glowcaps"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15

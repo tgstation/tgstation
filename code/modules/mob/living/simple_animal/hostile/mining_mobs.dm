@@ -146,6 +146,11 @@
 	var/ore_eaten = 1
 	var/chase_time = 100
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/New()
+	..()
+	ore_types_eaten += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+	ore_eaten = rand(1,3)
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
@@ -172,8 +177,8 @@
 		if(!(O.type in ore_types_eaten))
 			ore_types_eaten += O.type
 		qdel(O)
-	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
-		ore_eaten = 5
+	if(ore_eaten > 10)//Limit the scope of the reward you can get, or else things might get silly
+		ore_eaten = 10
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
@@ -275,10 +280,10 @@
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
-
-	owner.adjustBruteLoss(-1)
-	owner.adjustFireLoss(-1)
-	owner.adjustOxyLoss(-2)
+	if(owner)
+		owner.adjustBruteLoss(-1)
+		owner.adjustFireLoss(-1)
+		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood

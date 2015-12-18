@@ -235,6 +235,8 @@
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
+				if(i == 8)
+					user.emote("flip")
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
@@ -409,3 +411,26 @@
 	if(src == user.get_active_hand()) //update inhands
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
+
+
+//GREY TIDE
+/obj/item/weapon/twohanded/spear/grey_tide
+	icon_state = "spearglass0"
+	name = "\improper Grey Tide"
+	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
+	force_unwielded = 15
+	force_wielded = 25
+	throwforce = 20
+	throw_speed = 4
+	attack_verb = list("gored")
+
+/obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+	..()
+	user.faction |= "greytide(\ref[user])"
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		if(!L.stat && prob(50))
+			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
+			M.faction = user.faction.Copy()
+			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.GiveTarget(L)

@@ -82,9 +82,12 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	return 1
 
 /datum/species/lizard/handle_speech(message)
-	// jesus christ why
+
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "s", "sss")
+		message = regEx_replaceall(message, "(?<!s)s(?!s)", "sss") //(?<!s) Not s before. (?!s) not s after. That way it only triples a single s instead of double ss.
+		message = regEx_replaceall(message, "(?<!s)ss(?!s)", "ssss")
+		message = regEx_replaceall(message, "(?<!S)S(?!S)", "SSS")
+		message = regEx_replaceall(message, "(?<!S)SS(?!S)", "SSSS")
 
 	return message
 
@@ -163,6 +166,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	name = "???"
 	id = "shadow"
 	darksight = 8
+	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
@@ -527,3 +531,191 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return 1
 
+
+
+
+var/global/list/synth_flesh_disguises = list()
+
+/datum/species/synth
+	name = "Synth" //inherited from the real species, for health scanners and things
+	id = "synth"
+	say_mod = "beep boops" //inherited from a user's real species
+	sexes = 0
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //all of these + whatever we inherit from the real species
+	safe_oxygen_min = 0
+	safe_toxins_min = 0
+	safe_toxins_max = 0
+	safe_co2_max = 0
+	SA_para_min = 0
+	SA_sleep_min = 0
+	dangerous_existence = 1
+	need_nutrition = 0 //beep boop robots do not need sustinance
+	meat = null
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
+	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
+	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
+	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+
+
+/datum/species/synth/military
+	name = "Military Synth"
+	id = "military_synth"
+	armor = 25
+	punchmod = 10
+	disguise_fail_health = 50
+
+
+/datum/species/synth/admin_set_species(mob/living/carbon/human/H, old_species)
+	assume_disguise(old_species,H)
+
+
+/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "synthflesh")
+		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
+		handle_disguise(H) //and update flesh disguise
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+
+/datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
+	if(S && !istype(S, type))
+		name = S.name
+		say_mod = S.say_mod
+		specflags = initial_specflags.Copy()
+		specflags.Add(S.specflags)
+		attack_verb = S.attack_verb
+		attack_sound = S.attack_sound
+		miss_sound = S.miss_sound
+		meat = S.meat
+		mutant_bodyparts = S.mutant_bodyparts.Copy()
+		default_features = S.default_features.Copy()
+		nojumpsuit = S.nojumpsuit
+		no_equip = S.no_equip.Copy()
+		fake_species = new S.type
+	else
+		name = initial(name)
+		say_mod = initial(say_mod)
+		specflags = initial_specflags.Copy()
+		attack_verb = initial(attack_verb)
+		attack_sound = initial(attack_sound)
+		miss_sound = initial(miss_sound)
+		mutant_bodyparts = list()
+		default_features = list()
+		nojumpsuit = initial(nojumpsuit)
+		no_equip = list()
+		qdel(fake_species)
+		fake_species = null
+		meat = initial(meat)
+
+	build_disguise(H)
+	handle_disguise(H)
+
+
+/datum/species/synth/proc/build_disguise(mob/living/carbon/human/H)
+	var/base = ""
+	if(fake_species)
+		base = fake_species.update_base_icon_state(H)
+		if(synth_flesh_disguises[base])
+			damaged_synth_flesh = synth_flesh_disguises[base]
+		else
+			var/icon/base_flesh = icon(H.icon,"[base]_s")
+			var/icon/damage = icon(H.icon,"synthflesh_damage")
+			base_flesh.Blend(damage,ICON_MULTIPLY) //damage the skin
+			damaged_synth_flesh = image(icon = base_flesh, layer= -SPECIES_LAYER)
+			synth_flesh_disguises[base] = damaged_synth_flesh
+	else
+		damaged_synth_flesh = null
+
+
+/datum/species/synth/proc/handle_disguise(mob/living/carbon/human/H)
+	if(H)
+		H.updatehealth()
+		var/add_overlay = FALSE
+		if(H.health < disguise_fail_health)
+			//clear these out, they look weird
+			H.underwear = ""
+			H.undershirt = ""
+			H.socks = ""
+			add_overlay = TRUE
+		else
+			H.overlays -= damaged_synth_flesh
+			if(H.overlays_standing[SPECIES_LAYER] == damaged_synth_flesh)
+				H.overlays_standing[SPECIES_LAYER] = null
+
+		H.regenerate_icons()
+		if(add_overlay)
+			H.remove_overlay(SPECIES_LAYER)
+
+			//Copy and colour the image for coloured species
+			var/image/I = image(layer = -SPECIES_LAYER)
+			I.appearance = damaged_synth_flesh.appearance
+			if(MUTCOLORS in specflags)
+				I.color = "#[H.dna.features["mcolor"]]"
+			damaged_synth_flesh = I
+
+			H.overlays_standing[SPECIES_LAYER] = damaged_synth_flesh
+			H.apply_overlay(SPECIES_LAYER)
+
+
+
+/datum/species/synth/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	. = ..()
+	handle_disguise(H)
+
+
+//Proc redirects:
+//Passing procs onto the fake_species, to ensure we look as much like them as possible
+
+/datum/species/synth/update_base_icon_state(mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			return fake_species.update_base_icon_state(H)
+		else
+			return ..()
+	else
+		. = ..()
+
+/datum/species/synth/update_color(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.update_color(H, forced_colour)
+
+
+/datum/species/synth/handle_hair(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_hair(H, forced_colour)
+
+
+/datum/species/synth/handle_body(mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_body(H)
+
+
+/datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_body(H,forced_colour)
+
+
+/datum/species/synth/get_spans()
+	if(fake_species)
+		return fake_species.get_spans()
+	return list()
+
+
+/datum/species/synth/handle_speech(message, mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			return fake_species.handle_speech(message,H)
+		else
+			return ..()
+	else
+		return ..()
