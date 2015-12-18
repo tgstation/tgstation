@@ -676,6 +676,8 @@
 	else
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	dna.species.mutant_bodyparts = dna.species.mutant_bodyparts_buffer.Copy()
+	dna.features = dna.features_buffer.Copy()
 	underwear = "Nude"
 	update_body()
 	update_hair()

@@ -916,6 +916,7 @@
 #include "code\modules\awaymissions\mission_code\blackmarketpackers.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
+#include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
@@ -1446,6 +1447,7 @@
 #include "code\modules\procedural mapping\mapGeneratorModules\helpers.dm"
 #include "code\modules\procedural mapping\mapGeneratorModules\nature.dm"
 #include "code\modules\procedural mapping\mapGenerators\asteroid.dm"
+#include "code\modules\procedural mapping\mapGenerators\cellular.dm"
 #include "code\modules\procedural mapping\mapGenerators\nature.dm"
 #include "code\modules\procedural mapping\mapGenerators\shuttle.dm"
 #include "code\modules\procedural mapping\mapGenerators\syndicate.dm"
@@ -1573,6 +1575,7 @@
 #include "code\modules\surgery\remove_embedded_object.dm"
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\surgery\surgery_step.dm"
+#include "code\modules\surgery\tail_modification.dm"
 #include "code\modules\surgery\tools.dm"
 #include "code\modules\surgery\organs\augments_external.dm"
 #include "code\modules\surgery\organs\augments_eyes.dm"
@@ -1593,4 +1596,3 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 // END_INCLUDE
-

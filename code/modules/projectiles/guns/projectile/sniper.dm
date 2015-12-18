@@ -132,3 +132,25 @@
 		H.drip(100)
 
 	return ..()
+
+
+//penetrator ammo
+/obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	name = "sniper rounds (penetrator)"
+	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
+	ammo_type = /obj/item/ammo_casing/penetrator
+	max_ammo = 5
+
+/obj/item/ammo_casing/penetrator
+	desc = "A .50 caliber penetrator round casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
+	icon_state = ".50"
+
+/obj/item/projectile/bullet/sniper/penetrator
+	name = "penetrator round"
+	damage = 60
+	forcedodge = 1
+	stun = 0
+	weaken = 0
+	breakthings = FALSE

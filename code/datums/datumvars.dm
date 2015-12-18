@@ -247,7 +247,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
 	else
 		var/atom/A = D
-		body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
+		if(istype(A))
+			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 

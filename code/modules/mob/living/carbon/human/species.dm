@@ -42,6 +42,7 @@
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
+	var/list/mutant_bodyparts_buffer = list() // A copy of mutant_bodyparts() that allows cloned people to keep their snowflake bodyparts upon cloning, should they be changed
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
@@ -380,9 +381,9 @@
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
-				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
@@ -406,9 +407,9 @@
 
 			if(S.hasinner)
 				if(S.gender_specific)
-					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layer]"
 				else
-					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "m_[bodypart]inner_[S.icon_state]_[layer]"
 
 				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
