@@ -1,4 +1,4 @@
-/datum/disease/Tuberculosis
+/datum/disease/tuberculosis
 	name = "Fungal tuberculosis"
 	max_stages = 4
 	spread_text = "Airborne"
@@ -11,7 +11,7 @@
 	required_organs = list(/obj/item/organ/limb/head)
 	severity = DANGEROUS
 
-/datum/disease/Tuberculosis/stage_act() //it begins
+/datum/disease/tuberculosis/stage_act() //it begins
 	..()
 
 	switch(stage)
