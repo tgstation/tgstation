@@ -861,16 +861,6 @@ FIRE ALARM
 		overlays += "overlay_[A.fire ? "fire" : "clear"]"
 
 
-
-/obj/machinery/firealarm/emag_act(mob/user)
-	if(!emagged)
-		src.emagged = 1
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
-		return
-
-
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)

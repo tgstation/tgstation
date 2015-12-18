@@ -353,18 +353,6 @@
 		M << "\green That object is useless to you."
 	return
 
-
-/obj/machinery/porta_turret/emag_act(mob/user)
-	if(!emagged)
-		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
-		visible_message("[src] hums oddly...")
-		emagged = 1
-		active_state = "Laser"
-		controllock = 1
-		on = 0 //turns off the turret temporarily
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
-
 /obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
 	if(on)
 		if(!attacked && !emagged)
@@ -894,7 +882,7 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	return Parent_Turret.attack_ai(user)
 
 
@@ -945,15 +933,6 @@
 					sleep(30)
 					Parent_Turret.attacked = 0
 		..()
-
-/obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!Parent_Turret.emagged)
-		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
-		visible_message("[Parent_Turret] hums oddly...")
-		Parent_Turret.emagged = 1
-		Parent_Turret.on = 0
-		sleep(40)
-		Parent_Turret.on = 1
 
 /obj/machinery/porta_turret/stationary
 	emagged = 1
@@ -1021,7 +1000,7 @@
 			if(A.name == control_area)
 				control_area = A
 				break
-	
+
 	if(!control_area)
 		var/area/CA = get_area(src)
 		if(CA.master && CA.master != CA)

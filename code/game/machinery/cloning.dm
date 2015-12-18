@@ -269,13 +269,6 @@
 	else
 		..()
 
-/obj/machinery/clonepod/emag_act(mob/user)
-	if (isnull(src.occupant))
-		return
-	user << "<span class='notice'>You force an emergency ejection.</span>"
-	src.locked = 0
-	src.go_out()
-
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))

@@ -53,7 +53,6 @@
 
 	var/max_uses = 20
 	var/uses = 0
-	var/emagged = 0
 	var/failmsg = ""
 	// How much to increase per each glass?
 	var/increment = 5
@@ -125,10 +124,6 @@
 
 		user << "<span class='notice'>You fill \the [src] with lights from \the [S]. You have [uses] lights remaining.</span>"
 
-/obj/item/device/lightreplacer/emag_act()
-	if(!emagged)
-		Emag()
-
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.
 	if(isrobot(user))
@@ -139,9 +134,6 @@
 			return
 	*/
 	usr << "It has [uses] lights remaining."
-
-/obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
 
 
 /obj/item/device/lightreplacer/proc/Use(mob/user)
@@ -184,7 +176,6 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = emagged
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
@@ -201,14 +192,6 @@
 		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
 		return
 
-/obj/item/device/lightreplacer/proc/Emag()
-	emagged = !emagged
-	playsound(src.loc, "sparks", 100, 1)
-	if(emagged)
-		name = "shortcircuited [initial(name)]"
-	else
-		name = initial(name)
-	update_icon()
 
 //Can you use it?
 
