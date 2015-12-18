@@ -423,7 +423,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke
 	name = "Bio terror smoke grenade"
-	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, confusion, autism, and mutations to carbon based life forms."
+	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, blindness, confusion, autism, and mutations to carbon based life forms. Contains additional vore toxin"
 	stage = READY
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke/New()
@@ -431,9 +431,10 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("cryptobiolin", 150)
+	B1.reagents.add_reagent("cryptobiolin", 75)
 	B1.reagents.add_reagent("potassium", 50)
 	B1.reagents.add_reagent("mutetoxin", 50)
+	B1.reagents.add_reagent("spore", 75)
 	B1.reagents.add_reagent("itching_powder", 50)
 	B2.reagents.add_reagent("phosphorus", 50)
 	B2.reagents.add_reagent("sugar", 50)
