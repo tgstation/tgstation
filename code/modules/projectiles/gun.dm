@@ -346,6 +346,8 @@
 			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
+	if(agrip)
+		agrip.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	if(F)
@@ -355,6 +357,9 @@
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
+	if(agrip)
+		agrip.Remove(user)
+
 
 
 /obj/item/weapon/gun/attack_hand(mob/user)

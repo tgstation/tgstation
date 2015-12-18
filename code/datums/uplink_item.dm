@@ -148,7 +148,7 @@ var/list/uplink_items = list()
 	surplus = 50
 
 /datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	item = /obj/itemdweapon/gun/projectile/automatic/m90/unrestricted
 	gamemodes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
