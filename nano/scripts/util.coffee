@@ -10,6 +10,6 @@
     first
 
   href: (url = "", params = {}) ->
-    url = new Url("byond://#{url}")
-    util.extend url.query, params
-    url
+    "byond://#{url}?" + Object.keys(params).map (key) ->
+      "#{encodeURIComponent(key)}=#{encodeURIComponent(params[key])}"
+    .join("&")

@@ -215,7 +215,7 @@
 
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
+	var/send_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
 
 	// Generate the HTML document.
 	return {"
@@ -234,7 +234,7 @@
 		[script_html]
 	</head>
 	<body class='[layout]'>
-		<div id='data' data-initial='[initial_data_json]'></div>
+		<div id='data' data-initial='[send_data_json]'></div>
 		<div id='layout'>
 			<div class='hexdots-loader' style='position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);'>
 				Sending Resources...

@@ -8,7 +8,6 @@
     "IE8": "ie8#~2.9.10",
     "html5shiv": "~3.7.3",
     "json3": "~3.3.2",
-    "jsurl": "*",
     "normalize-css": "normalize.css#~3.0.3"
   },
   "overrides": {
@@ -25,11 +24,6 @@
       "dependencies": {
         "IE8": "*",
         "DOM4": "*"
-      }
-    },
-    "jsurl": {
-      "dependencies": {
-        "es5-shim": "*"
       }
     }
   }
