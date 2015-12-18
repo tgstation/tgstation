@@ -151,3 +151,8 @@ Helpers
 	for(DEVICE_TYPE_LOOP)
 		var/datum/pipeline/parent = PARENT_I
 		parent.update = 1
+
+/obj/machinery/atmospherics/components/returnPipenets()
+	. = list()
+	for(DEVICE_TYPE_LOOP)
+		. += returnPipenet(NODE_I)

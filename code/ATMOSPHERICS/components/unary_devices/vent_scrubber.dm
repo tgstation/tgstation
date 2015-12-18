@@ -304,11 +304,11 @@
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
 					welded = 1
-					update_icon()
 				else
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
-					update_icon()
+				update_icon()
+				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
 			return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
