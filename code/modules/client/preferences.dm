@@ -347,7 +347,7 @@ var/list/preferences_datums = list()
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_orbit]</a><br>"
+					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
 				var/p_map = preferred_map
