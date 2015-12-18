@@ -459,7 +459,7 @@
 
 /datum/module_picker
 	var/temp = null
-	var/processing_time = 100
+	var/processing_time = 50
 	var/list/possible_modules = list()
 
 /datum/module_picker/New()
@@ -534,3 +534,38 @@
 				temp = AM.description
 	src.use(usr)
 	return
+
+/datum/AI_Module/large/nuke_station
+	module_name = "Nuke Station"
+	mod_pick_name = "nukestation"
+	description = "Activate the stations onboard self destruct mechanism after a 400 second delay."
+	cost = 150
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/nuke_station
+
+/mob/living/silicon/ai/proc/nuke_station()
+	set category = "Malfunction"
+	set name = "Nuke Station"
+
+	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
+		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
+
+	src << "<span class='notice'>Nuclear device armed.</span>"
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
+	set_security_level("delta")
+	SSshuttle.emergencyNoEscape = 1
+	nuking = 1
+	sleep(5000)
+
+	if(!src || src.stat)
+		SSshuttle.emergencyNoEscape = 0
+		return
+
+	world << "<span class='boldannounce'>!@%(SELF-DESTRUCT!@(% IN!@!<<; 10</span>"
+	for (var/i=9 to 1 step -1)
+		sleep(10)
+		world << "<span class='boldannounce'>[i]</span>"
+	var/obj/machinery/nuclearbomb/N = new /obj/machinery/nuclearbomb(128,128,1) //Because the AI might be out of range of the station otherwise
+	N.safety = 0
+	N.explode()

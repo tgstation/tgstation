@@ -41,7 +41,6 @@ var/list/ai_list = list()
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
-	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
 	var/can_dominate_mechs = 0
@@ -66,6 +65,7 @@ var/list/ai_list = list()
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+	var/nuking = FALSE
 
 	var/mob/camera/aiEye/eyeobj = new()
 	var/sprint = 10
@@ -132,9 +132,8 @@ var/list/ai_list = list()
 			src << "Use say :b to speak to your cyborgs through binary."
 			src << "For department channels, use the following say commands:"
 			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-				show_laws()
-				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+			show_laws()
+			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 			job = "AI"
 	ai_list += src
@@ -233,12 +232,6 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/malfai in malf.malf_ai)
-				if ((mind == malfai) && (malf.apcs > 0))
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
-
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
 			stat(null, "Station Time: [worldtime2text()]")
@@ -818,9 +811,6 @@ var/list/ai_list = list()
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!mind)
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
-			return
-		if (mind.special_role == "malfunction") //AI MALF!!
-			user << "<span class='boldannounce'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		aiRestorePowerRoutine = 0//So the AI initially has power.

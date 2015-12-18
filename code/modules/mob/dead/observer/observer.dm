@@ -136,13 +136,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
-				//world << "DEBUG: ticker not null"
-				if(ticker.mode.name == "AI malfunction")
-					var/datum/game_mode/malfunction/malf = ticker.mode
-					//world << "DEBUG: malf mode ticker test"
-					if(malf.malf_mode_declared && (malf.apcs > 0))
-						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(isnum(G.dom_timer))
 						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
