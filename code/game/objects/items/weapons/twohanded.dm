@@ -246,8 +246,11 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(wielded)
+		if(attack_type == UNARMED_ATTACK)
+			owner.visible_message("[attack_text] thinks better of trying to grab [src] with their bare hands!")
+			return 1
 		return ..()
 	return 0
 

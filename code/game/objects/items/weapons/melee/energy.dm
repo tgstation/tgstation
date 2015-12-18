@@ -62,8 +62,11 @@
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(active)
+		if(attack_type == UNARMED_ATTACK)
+			owner.visible_message("[attack_text] thinks better of trying to grab [src] with their bare hands!")
+			return 1
 		return ..()
 	return 0
 
