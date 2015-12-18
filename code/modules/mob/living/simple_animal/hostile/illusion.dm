@@ -55,7 +55,7 @@
 		if(L.stat == DEAD)
 			return
 		var/mob/living/simple_animal/hostile/illusion/M = new(loc)
-		M.faction = faction
+		M.faction = faction.Copy()
 		M.Copy_Parent(parent_mob, life_span, health/2, melee_damage_upper, multiply_chance/2)
 		M.GiveTarget(L)
 

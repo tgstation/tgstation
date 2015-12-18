@@ -427,12 +427,11 @@
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
 	if(!(user in spear_owners))
-		user.faction += "greytide(\ref[user])"
-		spear_owners += user
+		user.faction |= "greytide(\ref[user])"
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
 		if(!L.stat && prob(50))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
-			M.faction = user.faction
+			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
