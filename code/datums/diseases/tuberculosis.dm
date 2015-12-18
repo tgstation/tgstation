@@ -59,6 +59,5 @@
 			if(prob(15))
 				affected_mob << "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>"
 				affected_mob.bodytemperature += 40
-
 	return
 	
