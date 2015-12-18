@@ -240,7 +240,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(!active)	
 		return
-	if(!stationgate || qdeleted(station))	
+	if(!stationgate || qdeleted(stationgate))	
 		return
 	if(istype(M, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
