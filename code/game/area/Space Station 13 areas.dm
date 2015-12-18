@@ -151,6 +151,9 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 
+/area/shuttle/assault_pod
+	name = "Steel Rain"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 

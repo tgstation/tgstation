@@ -894,7 +894,7 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	return Parent_Turret.attack_ai(user)
 
 
@@ -986,6 +986,11 @@
 		return 0
 	return 10
 
+/obj/machinery/porta_turret/syndicate/pod
+	health = 40
+	projectile = /obj/item/projectile/bullet/weakbullet3
+	eprojectile = /obj/item/projectile/bullet/weakbullet3
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////
@@ -1021,7 +1026,7 @@
 			if(A.name == control_area)
 				control_area = A
 				break
-	
+
 	if(!control_area)
 		var/area/CA = get_area(src)
 		if(CA.master && CA.master != CA)
