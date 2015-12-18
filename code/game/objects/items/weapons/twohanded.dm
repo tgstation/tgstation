@@ -427,7 +427,7 @@
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
 	if(!(user in spear_owners))
-		user.faction += "greytide([rand(1, 1000)])"
+		user.faction += "greytide(\ref[user])"
 		spear_owners += user
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
