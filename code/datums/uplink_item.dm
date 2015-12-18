@@ -219,6 +219,14 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 35
 
+/datum/uplink_item/dangerous/bioterrorsmoke
+	name = "Crowd control chemical smoke grenade"
+	desc = "A powerful chemical smoke grenade which creates a deadly smoke that will mute, confuse, mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists. Ensure suit is sealed before use."
+	item = /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	surplus = 35
+
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
 	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
