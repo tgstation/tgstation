@@ -266,3 +266,4 @@
 	new /obj/item/weapon/reagent_containers/syringe
 	new	/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
 	return
+	
