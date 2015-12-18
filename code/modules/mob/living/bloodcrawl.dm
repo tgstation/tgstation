@@ -1,6 +1,3 @@
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
-
 /obj/effect/dummy/slaughter //Can't use the wizard one, blocked by jaunt/slow
 	name = "water"
 	icon = 'icons/effects/effects.dmi'

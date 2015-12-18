@@ -30,7 +30,7 @@
 	melee_damage_upper = 30
 	see_in_dark = 8
 	var/boost = 0
-	bloodcrawl = 2 //For some reason, the define doesn't work here.
+	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/list/consumed_mobs = list()
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
