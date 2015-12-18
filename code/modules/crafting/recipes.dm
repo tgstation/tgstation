@@ -81,6 +81,22 @@
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
+/datum/table_recipe/tailclub
+	name = "Tail Club"
+	result = /obj/item/weapon/tailclub
+	reqs = list(/obj/item/organ/severedtail = 1,
+	            /obj/item/stack/sheet/metal = 1)
+	time = 80
+	category = CAT_WEAPON
+
+/datum/table_recipe/tailwhip
+	name = "Liz O' Nine Tails"
+	result = /obj/item/weapon/melee/chainofcommand/tailwhip
+	reqs = list(/obj/item/organ/severedtail = 1,
+	            /obj/item/stack/cable_coil = 1)
+	time = 80
+	category = CAT_WEAPON
+
 /datum/table_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
@@ -261,3 +277,15 @@
 				/datum/reagent/water/holywater = 10)
 	parts = list(/obj/item/device/camera = 1)
 	category = CAT_MISC
+
+/datum/table_recipe/lizardhat
+	name = "Lizard Cloche Hat"
+	result = /obj/item/clothing/head/lizard
+	time = 20
+	reqs = list(/obj/item/organ/severedtail = 1)
+
+/datum/table_recipe/lizardhat_alternate
+	name = "Lizard Cloche Hat"
+	result = /obj/item/clothing/head/lizard
+	time = 20
+	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
