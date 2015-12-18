@@ -111,7 +111,7 @@
 	max_w_class = 3
 	w_class = 1
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 ////////
 
@@ -289,7 +289,7 @@
 	max_w_class = 3
 	w_class = 4 //Bigger than a book because physics
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Trays - Agouri
@@ -359,7 +359,7 @@
 	w_class = 1
 	preposition = "in"
 	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -375,4 +375,4 @@
 	w_class = 1
 	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE

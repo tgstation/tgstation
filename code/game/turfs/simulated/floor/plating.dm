@@ -208,14 +208,15 @@
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				return
-			if(O.burn_state == -1)
-				O.burn_state = 0 //Even fireproof things burn up in lava
+			if(O.burn_state == FIRE_PROOF)
+				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
 			O.fire_act()
 		else if (istype(AM, /mob/living))
 			var/mob/living/L = AM
 			L.adjustFireLoss(20)
-			L.adjust_fire_stacks(20)
-			L.IgniteMob()
+			if(L) //mobs turning into object corpses could get deleted here.
+				L.adjust_fire_stacks(20)
+				L.IgniteMob()
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return

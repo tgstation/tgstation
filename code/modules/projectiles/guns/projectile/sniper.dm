@@ -1,9 +1,9 @@
 
 /obj/item/weapon/gun/projectile/sniper_rifle
 	name = "sniper rifle"
-	desc = "the kind of gun that will leave you crying for mummy before you even realise your leg's missing"
-	icon_state = "moistnugget"
-	item_state = "moistnugget"
+	desc = "The kind of gun that will leave you crying for mummy before you even realise your leg's missing"
+	icon_state = "sniper"
+	item_state = "sniper"
 	recoil = 2
 	heavy_weapon = 1
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
@@ -14,11 +14,19 @@
 	w_class = 3
 	zoomable = TRUE
 	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+	slot_flags = SLOT_BACK
+
+
+/obj/item/weapon/gun/projectile/sniper_rifle/update_icon()
+	if(magazine)
+		icon_state = "sniper-mag"
+	else
+		icon_state = "sniper"
 
 
 /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
-	desc = "syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
+	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=8;syndicate=4"
 
@@ -29,21 +37,29 @@
 //Normal Boolets
 /obj/item/ammo_box/magazine/sniper_rounds
 	name = "sniper rounds (.50)"
-	icon_state = ".50"
+	icon_state = ".50mag"
 	origin_tech = "combat=6;syndicate=2"
 	ammo_type = /obj/item/ammo_casing/point50
 	max_ammo = 6
 	caliber = ".50"
 
+/obj/item/ammo_box/magazine/sniper_rounds/update_icon()
+	if(ammo_count())
+		icon_state = "[initial(icon_state)]-ammo"
+	else
+		icon_state = "[initial(icon_state)]"
+
 /obj/item/ammo_casing/point50
 	desc = "A .50 bullet casing."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper
+	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper
 	damage = 70
 	stun = 5
 	weaken = 5
+	armour_penetration = 50
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0, hit_zone)
@@ -51,6 +67,8 @@
 		target.ex_act(rand(1,2))
 
 	return ..()
+
+
 
 
 //Sleepy ammo
@@ -67,8 +85,10 @@
 	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper/soporific
+	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper/soporific
+	armour_penetration = 0
 	nodamage = 1
 	stun = 0
 	weaken = 0
@@ -97,8 +117,10 @@
 	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper/haemorrhage
+	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper/haemorrhage
+	armour_penetration = 15
 	damage = 15
 	stun = 0
 	weaken = 0

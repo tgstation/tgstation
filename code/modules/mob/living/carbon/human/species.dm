@@ -684,9 +684,6 @@
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
 
-		if(H.seer)
-			H.see_invisible = SEE_INVISIBLE_OBSERVER
-
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
 				var/obj/item/clothing/glasses/G = H.glasses
@@ -1017,7 +1014,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	if(I.attack_verb && I.attack_verb.len)

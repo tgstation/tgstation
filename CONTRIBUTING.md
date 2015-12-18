@@ -12,6 +12,8 @@ But first we want to make it clear how you can contribute, if contributing is a 
 
 ##Getting Started
 
+####EOF settings of main repo are forbidden territory one must avoid wandering into
+
 At /tg/station we do not have a list of goals and features to add, we instead allow freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.

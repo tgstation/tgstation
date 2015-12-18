@@ -4,7 +4,7 @@
 	storage_slots = 4
 	icon_state = "wallet"
 	w_class = 2
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,
@@ -79,7 +79,7 @@
 	return front_id
 
 /obj/item/weapon/storage/wallet/GetAccess()
-	if(combined_access.len) 
+	if(combined_access.len)
 		return combined_access
 	else
 		return ..()

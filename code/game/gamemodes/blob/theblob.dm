@@ -12,11 +12,13 @@
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/health_timestamp = 0
-	var/brute_resist = 2 //divides brute damage by this
-	var/fire_resist = 1 //divides burn damage by this
+	var/health_timestamp = 0 //we got healed when?
+	var/pulse_timestamp = 0 //we got pulsed when?
+	var/brute_resist = 0.5 //multiplies brute damage by this
+	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
+
 
 /obj/effect/blob/New(loc)
 	var/area/Ablob = get_area(loc)
@@ -32,15 +34,6 @@
 	return
 
 /obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
-	return
-
-/obj/effect/blob/proc/check_health()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
-
-/obj/effect/blob/update_icon() //Used for normal blobs, to update icon when weakened.
 	return
 
 /obj/effect/blob/Destroy()
@@ -69,82 +62,80 @@
 	return 0
 
 
+/obj/effect/blob/proc/check_health()
+	if(health <= 0)
+		if(overmind)
+			overmind.blob_reagent_datum.death_reaction(src)
+		qdel(src) //we dead now
+		return
+	return
+
+/obj/effect/blob/update_icon() //Updates color based on overmind color if we have an overmind.
+	if(overmind)
+		color = overmind.blob_reagent_datum.color
+	else
+		color = null
+	return
+
+
 /obj/effect/blob/process()
 	Life()
 	return
 
-/obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
-	take_damage(damage, BURN)
-
 /obj/effect/blob/proc/Life()
 	return
+
+/obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+	src.Be_Pulsed()
+	if(claim_range)
+		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
+			B.update_icon()
+			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
+				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
+				B.update_icon()
+	if(pulse_range)
+		for(var/obj/effect/blob/B in orange(pulse_range, src))
+			B.Be_Pulsed()
+	if(expand_range)
+		src.expand()
+		for(var/obj/effect/blob/B in orange(expand_range, src))
+			if(prob(12))
+				B.expand()
+	return
+
+/obj/effect/blob/proc/Be_Pulsed()
+	if(pulse_timestamp <= world.time)
+		PulseAnimation()
+		ConsumeTile()
+		RegenHealth()
+		run_action()
+		pulse_timestamp = world.time + 10
+		return 1 //we did it, we were pulsed!
+	return 0 //oh no we failed
 
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act()
 
 /obj/effect/blob/proc/PulseAnimation()
-	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
-		flick("[icon_state]_glow", src)
+	flick("[icon_state]_glow", src)
 	return
 
-/obj/effect/blob/proc/RegenHealth()
-	// All blobs heal over time when pulsed, but it has a cool down
-	if(health_timestamp > world.time)
-		return 0
-	health = min(maxhealth, health+health_regen)
-	update_icon()
-	health_timestamp = world.time + 10 // 1 seconds
-
-/obj/effect/blob/proc/pulseLoop(num)
-	var/a_color
-	if(overmind)
-		a_color = overmind.blob_reagent_datum.color
-	for(var/i = 1; i < 8; i += i)
-		Pulse(num, i, a_color)
-
-/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0, a_color)//Todo: Fix spaceblob expand
-
-	set background = BACKGROUND_ENABLED
-
-	PulseAnimation()
-	ConsumeTile()
-	RegenHealth()
-
-	if(run_action())//If we can do something here then we dont need to pulse more
-		return
-
-	if(pulse > 30)
-		return//Inf loop check
-
-	//Looking for another blob to pulse
-	var/list/dirs = list(1,2,4,8)
-	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-	for(var/i = 1 to 4)
-		if(!dirs.len)
-			break
-		var/dirn = pick(dirs)
-		dirs.Remove(dirn)
-		var/turf/T = get_step(src, dirn)
-		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-		if(!B)
-			expand(T,1,a_color)//No blob here so try and expand
-			return
-		B.adjustcolors(a_color)
-
-		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
-		return
-	return
-
+/obj/effect/blob/proc/RegenHealth() //when pulsed, heal!
+	if(health_timestamp <= world.time)
+		health = min(maxhealth, health+health_regen)
+		update_icon()
+		health_timestamp = world.time + 10 //1 second between heals
+		return 1
+	return 0
 
 /obj/effect/blob/proc/run_action()
 	return 0
 
 
-/obj/effect/blob/proc/expand(turf/T = null, prob = 1, a_color)
-	if(prob && !prob(health))	return
+/obj/effect/blob/proc/expand(turf/T = null, prob = 1, controller = null)
+	if(prob && !prob(health))
+		return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -157,25 +148,30 @@
 				T = null
 	if(!T)
 		return 0
-	var/Blob_spawnable = 1
+	var/make_blob = 1 //can we make a blob?
 	if(istype(T, /turf/space) && prob(65))
-		Blob_spawnable = 0
+		make_blob = 0
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 	for(var/atom/A in T)
-		if(A.density) //Unless density is 0, don't spawn a blob
-			Blob_spawnable = 0
+		if(A.density)
+			make_blob = 0
 		A.blob_act() //Hit everything
 	if(T.density) //Check for walls and such dense turfs
-		Blob_spawnable = 0
+		make_blob = 0
 		T.blob_act() //Hit the turf
-	if(Blob_spawnable)
+	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
-		B.color = a_color
+		if(controller)
+			B.overmind = controller
+		else
+			B.overmind = overmind
 		B.density = 1
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
+			if(B.overmind)
+				B.overmind.blob_reagent_datum.expand_reaction(B, T)
 		else
 			T.blob_act() //If we cant move in hit the turf
 			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
@@ -185,11 +181,16 @@
 /obj/effect/blob/ex_act(severity, target)
 	..()
 	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE)
+	take_damage(damage, BRUTE, "explosion")
+
+/obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	..()
+	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
+	take_damage(damage, BURN, "fire")
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
-	take_damage(Proj.damage, Proj.damage_type)
+	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
@@ -199,7 +200,7 @@
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
 	if(W.damtype == BURN)
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	take_damage(W.force, W.damtype)
+	take_damage(W.force, W.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -207,7 +208,7 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, M.melee_damage_type)
+	take_damage(damage, M.melee_damage_type, M)
 	return
 
 /obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -216,19 +217,20 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
 	var/damage = rand(15, 30)
-	take_damage(damage, BRUTE)
+	take_damage(damage, BRUTE, M)
 	return
 
-/obj/effect/blob/proc/take_damage(damage, damage_type)
-	if(!damage) // Avoid divide by zero errors
-		return
+/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null)
 	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
-			damage /= max(brute_resist, 1)
-			health -= damage
+			damage = max(damage * brute_resist, 0)
 		if(BURN)
-			damage /= max(fire_resist, 1)
-			health -= damage
+			damage = max(damage * fire_resist, 0)
+		else
+			damage = 0
+	if(overmind)
+		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+	health -= damage
 	update_icon()
 	check_health()
 
@@ -240,14 +242,9 @@
 	if(controller)
 		B.overmind = controller
 	B.creation_action()
-	B.adjustcolors(color)
+	B.update_icon()
 	qdel(src)
 	return B
-
-/obj/effect/blob/proc/adjustcolors(a_color)
-	if(a_color)
-		color = a_color
-	return
 
 /obj/effect/blob/examine(mob/user)
 	..()
@@ -255,10 +252,9 @@
 	return
 
 /obj/effect/blob/proc/get_chem_name()
-	for(var/mob/camera/blob/B in mob_list)
-		if(lowertext(B.blob_reagent_datum.color) == lowertext(src.color)) // Goddamit why we use strings for these
-			return B.blob_reagent_datum.name
-	return "unknown"
+	if(overmind)
+		return overmind.blob_reagent_datum.name
+	return "an unknown variant"
 
 /obj/effect/blob/normal
 	icon_state = "blob"
@@ -266,16 +262,17 @@
 	health = 21
 	maxhealth = 25
 	health_regen = 1
-	brute_resist = 4
+	brute_resist = 0.25
 
 /obj/effect/blob/normal/update_icon()
+	..()
 	if(health <= 10)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
-		brute_resist = 2
+		brute_resist = 0.5
 	else
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
-		brute_resist = 4
+		brute_resist = 0.25

@@ -410,6 +410,7 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
 
 
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
@@ -573,6 +574,14 @@ var/list/uplink_items = list()
 	cost = 5
 	surplus = 90
 
+/datum/uplink_item/stealthy_tools/mulligan
+	name = "Mulligan"
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
+	item = /obj/item/weapon/reagent_containers/syringe/mulligan
+	cost = 4
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	surplus = 30
+
 // DEVICE AND TOOLS
 
 /datum/uplink_item/device_tools
@@ -630,7 +639,7 @@ var/list/uplink_items = list()
 	cost = 8
 	excludefrom = list(/datum/game_mode/gang)
 
-/datum/uplink_item/device_tools/hardsuit
+/datum/uplink_item/device_tools/elite_hardsuit
 	name = "Elite Syndicate Hardsuit"
 	desc = "The elite Syndicate hardsuit is worn by only the best nuclear agents. Features much better armoring and complete fireproofing, as well as a built in jetpack. \
 	When the built in helmet is deployed your identity will be protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit into combat mode \
@@ -638,6 +647,13 @@ var/list/uplink_items = list()
 	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/shielded_hardsuit
+	name = "Shielded Hardsuit"
+	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/thermal
@@ -745,6 +761,13 @@ var/list/uplink_items = list()
 	cost = 16
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 20
+
+/datum/uplink_item/device_tools/medgun
+	name = "Medbeam Gun"
+	desc = "Medical Beam Gun, useful in prolonged firefights."
+	item = /obj/item/weapon/gun/medbeam
+	cost = 15
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 // IMPLANTS

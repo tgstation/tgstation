@@ -21,3 +21,4 @@
 #_maps/RandomZLevels/moonoutpost19.dmm
 #_maps/RandomZLevels/undergroundoutpost45.dmm
 #_maps/RandomZLevels/caves.dmm
+#_maps/RandomZLevels/snowdin.dmm

@@ -103,7 +103,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/official = 0

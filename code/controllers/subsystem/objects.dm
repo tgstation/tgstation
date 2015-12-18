@@ -39,7 +39,7 @@ var/datum/subsystem/objects/SSobj
 			continue
 		SSobj.processing.Remove(thing)
 	for(var/obj/burningobj in SSobj.burning)
-		if(burningobj && (burningobj.burn_state == 1))
+		if(burningobj && (burningobj.burn_state == ON_FIRE))
 			if(burningobj.burn_world_time < world.time)
 				burningobj.burn()
 		else

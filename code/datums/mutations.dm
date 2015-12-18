@@ -137,11 +137,9 @@
 	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
-	if(owner.health < 25)
+	if(owner.health < 0)
 		on_losing(owner)
 		owner << "<span class='danger'>You suddenly feel very weak.</span>"
-		owner.Weaken(3)
-		owner.emote("collapse")
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
