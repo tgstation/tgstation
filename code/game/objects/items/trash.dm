@@ -77,7 +77,7 @@
 /obj/item/trash/pietin
 	name = "pie tin"
 	icon_state = "pietin"
-	autoignition_temperature = 0
+	autoignition_temperature = 0.1 //Honk
 	siemens_coefficient = 2 //Do not touch live wires
 	melt_temperature = MELTPOINT_SILICON //Not as high as steel
 
