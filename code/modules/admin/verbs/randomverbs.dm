@@ -28,9 +28,11 @@
 		src << "Only administrators may use this command."
 		return
 
+	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
+		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
 		return
 	if(usr)
 		if (usr.client)
