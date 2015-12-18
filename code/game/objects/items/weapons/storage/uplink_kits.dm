@@ -241,29 +241,29 @@
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
 
-/obj/item/weapon/storage/box/syndie_kit/Tuberculosisgrenade
+/obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"
 
-/obj/item/weapon/storage/box/virus_kit/Tuberculosisgrenade/New()
+/obj/item/weapon/storage/box/virus_kit/tuberculosisgrenade/New()
 	..()
 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
 	new /obj/item/weapon/reagent_containers/syringe
-	new	/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
+	new	/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
 	return
 
-/obj/item/weapon/storage/box/syndie_kit/Tuberculosiskit
+/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
 	name = "boxed virus kit"
 
-/obj/item/weapon/storage/box/virus_kit/Tuberculosiskit/New()
+/obj/item/weapon/storage/box/virus_kit/tuberculosiskit/New()
 	..()
-	new /obj/item/weapon/reagent_containers/glass/bottle/Tuberculosis
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
 	new /obj/item/weapon/reagent_containers/syringe
-	new	/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
+	new	/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
 	return
 	
