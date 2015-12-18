@@ -119,4 +119,4 @@
 	icon_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 30
-	list_reagents = list("Atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
