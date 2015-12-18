@@ -309,3 +309,4 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("Atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+	
