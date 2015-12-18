@@ -1113,6 +1113,8 @@ var/list/preferences_datums = list()
 
 	character.dna.blood_type = blood_type
 	character.dna.features = features
+	character.dna.features_buffer = features.Copy()
+	character.dna.species.mutant_bodyparts_buffer = character.dna.species.mutant_bodyparts.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
 	if(pref_species != /datum/species/human && config.mutant_races)

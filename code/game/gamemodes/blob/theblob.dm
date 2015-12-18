@@ -14,8 +14,8 @@
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/health_timestamp = 0 //we got healed when?
 	var/pulse_timestamp = 0 //we got pulsed when?
-	var/brute_resist = 2 //divides brute damage by this
-	var/fire_resist = 1 //divides burn damage by this
+	var/brute_resist = 0.5 //multiplies brute damage by this
+	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
@@ -64,6 +64,8 @@
 
 /obj/effect/blob/proc/check_health()
 	if(health <= 0)
+		if(overmind)
+			overmind.blob_reagent_datum.death_reaction(src)
 		qdel(src) //we dead now
 		return
 	return
@@ -79,11 +81,6 @@
 /obj/effect/blob/process()
 	Life()
 	return
-
-/obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
-	take_damage(damage, BURN)
 
 /obj/effect/blob/proc/Life()
 	return
@@ -173,6 +170,8 @@
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
+			if(B.overmind)
+				B.overmind.blob_reagent_datum.expand_reaction(B, T)
 		else
 			T.blob_act() //If we cant move in hit the turf
 			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
@@ -182,11 +181,16 @@
 /obj/effect/blob/ex_act(severity, target)
 	..()
 	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE)
+	take_damage(damage, BRUTE, "explosion")
+
+/obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	..()
+	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
+	take_damage(damage, BURN, "fire")
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
-	take_damage(Proj.damage, Proj.damage_type)
+	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
@@ -196,7 +200,7 @@
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
 	if(W.damtype == BURN)
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	take_damage(W.force, W.damtype)
+	take_damage(W.force, W.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -204,7 +208,7 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, M.melee_damage_type)
+	take_damage(damage, M.melee_damage_type, M)
 	return
 
 /obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -213,19 +217,20 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
 	var/damage = rand(15, 30)
-	take_damage(damage, BRUTE)
+	take_damage(damage, BRUTE, M)
 	return
 
-/obj/effect/blob/proc/take_damage(damage, damage_type)
-	if(!damage) // Avoid divide by zero errors
-		return
+/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null)
 	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
-			damage /= max(brute_resist, 1)
-			health -= damage
+			damage = max(damage * brute_resist, 0)
 		if(BURN)
-			damage /= max(fire_resist, 1)
-			health -= damage
+			damage = max(damage * fire_resist, 0)
+		else
+			damage = 0
+	if(overmind)
+		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+	health -= damage
 	update_icon()
 	check_health()
 
@@ -257,7 +262,7 @@
 	health = 21
 	maxhealth = 25
 	health_regen = 1
-	brute_resist = 4
+	brute_resist = 0.25
 
 /obj/effect/blob/normal/update_icon()
 	..()
@@ -265,9 +270,9 @@
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
-		brute_resist = 2
+		brute_resist = 0.5
 	else
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
-		brute_resist = 4
+		brute_resist = 0.25
