@@ -30,6 +30,10 @@
 	damage = 17
 	armour_penetration = 10
 
+/obj/item/projectile/bullet/dapbullet
+	damage = 15
+	armour_penetration = 8
+
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 15

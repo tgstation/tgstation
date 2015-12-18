@@ -161,6 +161,14 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/pdwdap
+	name = "PDW magazine (5.8x21mm DAP)"
+	icon_state = "58dap"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c58x21mmdap
+	caliber = "58dap"
+	max_ammo = 15
+
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
 	icon_state = "45-8"

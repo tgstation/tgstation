@@ -295,3 +295,19 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
+
+/obj/item/weapon/gun/projectile/automatic/pdw
+	name = "Personal defense weapon"
+	desc = "A small, Personal defense weapon. Uses 5.8x22mm Domestic Armour Piercing rounds. Has a threaded barrel for suppressors."
+	icon_state = "pdw"
+	w_class = 3
+	origin_tech = "combat=4;materials=2;syndicate=4"
+	mag_type = /obj/item/ammo_box/magazine/pdwdap
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	can_suppress = 1
+	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/pdw/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
+	return
