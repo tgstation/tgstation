@@ -423,7 +423,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke
 	name = "Bio terror smoke grenade"
-	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, confusion, mutism, and mutations to carbon based life forms."
+	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, confusion, autism, and mutations to carbon based life forms."
 	stage = READY
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke/New()
