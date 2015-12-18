@@ -233,6 +233,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			rot_seg = 3
 		if(GHOST_ORBIT_SQUARE)
 			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
 		if(GHOST_ORBIT_HEXAGON)
 			rot_seg = 6
 		else //Circular
