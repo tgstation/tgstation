@@ -304,7 +304,7 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/tuberculosis
 
-/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
+/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
 	name = "BVAK bottle"
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
