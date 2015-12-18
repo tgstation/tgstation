@@ -228,6 +228,14 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 0
 
+/datum/uplink_item/stealthy_weapons/operator_virus_grenade
+	name = "Fungal Tuberculosis grenade"
+	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) autoinjectors for rapid application on upto two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/Tuberculosisgrenade
+	cost = 12
+	surplus = 35
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
@@ -437,6 +445,13 @@ var/list/uplink_items = list()
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
+	surplus = 50
+
+/datum/uplink_item/stealthy_weapons/traitor_virus_kit
+	name = "Virus Kit"
+	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) autoinjector for rapid application on upto two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/Tuberculosiskit
+	cost = 9
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/dart_pistol

@@ -240,3 +240,29 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
+
+/obj/item/weapon/storage/box/syndie_kit/Tuberculosisgrenade
+	name = "boxed virus grenade kit"
+
+/obj/item/weapon/storage/box/virus_kit/Tuberculosisgrenade/New()
+	..()
+	new /obj/item/weapon/grenade/chem_grenade/tuberculosis
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/syringe
+	new	/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/Tuberculosiskit
+	name = "boxed virus kit"
+
+/obj/item/weapon/storage/box/virus_kit/Tuberculosiskit/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/Tuberculosis
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/Tuberculosiscure
+	new /obj/item/weapon/reagent_containers/syringe
+	new	/obj/item/weapon/reagent_containers/glass/bottle/Tuberculosiscure
+	return
