@@ -916,10 +916,7 @@
 #include "code\modules\awaymissions\mission_code\blackmarketpackers.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
-<<<<<<< HEAD
-=======
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
->>>>>>> d25cafc363aae2bdb7e9064ec604a6722cc854c8
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
