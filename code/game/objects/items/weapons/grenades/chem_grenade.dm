@@ -432,13 +432,12 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
 	B1.reagents.add_reagent("cryptobiolin", 75)
-	B1.reagents.add_reagent("potassium", 50)
+	B1.reagents.add_reagent("water", 50)
 	B1.reagents.add_reagent("mutetoxin", 50)
 	B1.reagents.add_reagent("spore", 75)
 	B1.reagents.add_reagent("itching_powder", 50)
-	B2.reagents.add_reagent("phosphorus", 50)
-	B2.reagents.add_reagent("sugar", 50)
-	B2.reagents.add_reagent("mutagen", 200)
+	B2.reagents.add_reagent("fluorosurfactant", 150)
+	B2.reagents.add_reagent("mutagen", 150)
 	beakers += B1
 	beakers += B2
 
