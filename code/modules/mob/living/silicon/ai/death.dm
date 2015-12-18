@@ -22,6 +22,10 @@
 
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	if(nuking)
+		SSshuttle.emergencyNoEscape = 0
+		set_security_level("red")
+		nuking = 0
 
 	if(explosive)
 		spawn(10)
