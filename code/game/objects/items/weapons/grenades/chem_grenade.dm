@@ -426,7 +426,7 @@
 	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, confusion, mutism, and mutations to carbon based life forms."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/bioterrorsmokel/New()
+/obj/item/weapon/grenade/chem_grenade/bioterrorsmoke/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
