@@ -1192,51 +1192,56 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
-//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
-/atom/movable/var/orbitid = 0
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
+//A: atom to orbit
+//radius: range to orbit at, radius of the circle formed by orbiting
+//clockwise: whether you orbit clockwise or anti clockwise
+//rotation_speed: how fast to rotate
+//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
+//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
+//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
 	if(!istype(A))
 		return
-	orbitid++
-	var/myid = orbitid
-	if (orbiting)
-		stop_orbit()
-		//sadly this is the only way to ensure the original orbit proc stops
-		//and resets the atom's transform before we continue.
-		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
-		sleep(2.6+world.tick_lag)
-		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
-			return
-	orbiting = A
-	var/lastloc = loc
-	var/angle = 0
-	var/matrix/initial_transform = matrix(transform)
 
-	while(orbiting && orbiting.loc && orbitid == myid)
+	if(orbiting)
+		stop_orbit()
+		sleep(2.6+world.tick_lag) //the 2 second delay at the end of the existing orbit() call, plus some lag slack.
+
+	orbiting = A
+	var/matrix/initial_transform = matrix(transform)
+	var/lastloc = loc
+
+	//Head first!
+	if(pre_rotation)
+		var/matrix/M = matrix(transform)
+		var/pre_rot = 90
+		if(!clockwise)
+			pre_rot = -90
+		M.Turn(pre_rot)
+		transform = M
+
+	var/matrix/shift = matrix(transform)
+	shift.Translate(0,radius)
+	transform = shift
+
+	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+	while(orbiting && orbiting.loc)
 		var/targetloc = get_turf(orbiting)
-		if (!lockinorbit && loc != lastloc && loc != targetloc)
+		if(!lockinorbit && loc != lastloc && loc != targetloc)
 			break
 		loc = targetloc
 		lastloc = loc
-		angle += angle_increment
+		sleep(0.6)
 
-		var/matrix/shift = matrix(initial_transform)
-		shift.Translate(radius,0)
-		if(clockwise)
-			shift.Turn(angle)
-		else
-			shift.Turn(-angle)
-		animate(src, transform = shift, 2)
-		sleep(0.6) //the effect breaks above 0.6 delay
-	animate(src, transform = initial_transform, 2)
-	orbiting = null
+	animate(src,transform = initial_transform, time = 2) //2 second delay
+	SpinAnimation(0,0)
+
 
 
 /atom/movable/proc/stop_orbit()
-	if(orbiting)
-		loc = get_turf(orbiting)
-		orbiting = null
+	orbiting = null
 
 
 //Center's an image.
