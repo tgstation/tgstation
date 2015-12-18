@@ -423,11 +423,10 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
-	var/list/spear_owners = list()
+
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
-	if(!(user in spear_owners))
-		user.faction |= "greytide(\ref[user])"
+	user.faction |= "greytide(\ref[user])"
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
 		if(!L.stat && prob(50))
