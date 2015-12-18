@@ -14,13 +14,16 @@
 		num_spawned++
 
 	//make some randomly pathing rivers
-	for(var/obj/effect/landmark/river_waypoint/W in river_nodes)
+	for(var/A in river_nodes)
+		var/obj/effect/landmark/river_waypoint/W = A
 		if (W.z != target_z || W.connected)
 			continue
 		W.connected = 1
-		var/turf/cur_turf = new turf_type(get_turf(W))
-		var/turf/target_turf = get_turf(pick(river_nodes))
-
+		var/turf/cur_turf = get_turf(W)
+		cur_turf.ChangeTurf(turf_type)
+		var/turf/target_turf = get_turf(pick(river_nodes - W))
+		if(!target_turf)
+			break
 		var/detouring = 0
 		var/cur_dir = get_dir(cur_turf, target_turf)
 		while(cur_turf != target_turf)
@@ -40,8 +43,9 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 
-			if(!istype(cur_turf, /turf/simulated/wall) //Rivers will flow around walls
-				var/turf/simulated/river_turf = new turf_type(cur_turf)
+			if(!istype(cur_turf, /turf/simulated/wall)) //Rivers will flow around walls
+				var/turf/simulated/river_turf = cur_turf
+				river_turf.ChangeTurf(turf_type)
 				river_turf.Spread(30, 25)
 			else
 				detouring = 0
@@ -50,7 +54,8 @@
 				continue
 
 
-
+	for(var/WP in river_nodes)
+		qdel(WP)
 
 
 /obj/effect/landmark/river_waypoint
@@ -65,7 +70,9 @@
 
 	for(var/turf/simulated/F in orange(1, src))
 
-		var/turf/L = new src.type(F)
+		var/turf/L = F
+
+		L.ChangeTurf(src.type)
 
 		if(L && prob(probability))
 			L.Spread(probability - prob_loss)
