@@ -92,6 +92,7 @@ gulp.task "js", ["clean"], ->
     .pipe g.concat(output.js)
     .pipe g.if(f.min, g.uglify(), g.jsbeautifier())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
+    .pipe g.size()
     .pipe gulp.dest output.dir
 
 
@@ -118,4 +119,5 @@ gulp.task "css", ["clean"], ->
     .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.concat(output.css)
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
+    .pipe g.size()
     .pipe gulp.dest output.dir
