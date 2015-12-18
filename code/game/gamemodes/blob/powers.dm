@@ -60,7 +60,7 @@
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
-	set desc = "Create a resource tower which will generate points for you."
+	set desc = "Create a resource tower which will generate resources for you."
 	createSpecial(40, /obj/effect/blob/resource, 4)
 
 /mob/camera/blob/verb/create_node()
@@ -137,7 +137,7 @@
 		return
 	if(B.point_return)
 		add_points(B.point_return)
-		src << "<span class='notice'>Gained [B.point_return] resources from removing the [B].</span>"
+		src << "<span class='notice'>Gained [B.point_return] resources from removing \the [B].</span>"
 	qdel(B)
 
 /mob/camera/blob/verb/expand_blob_power()
@@ -161,14 +161,13 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, blob_reagent_datum.color)
+	OB.expand(T, 0, src)
 	for(var/mob/living/L in T)
 		if("blob" in L.faction) //no friendly fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
 		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
 		blob_reagent_datum.send_message(L)
-	OB.color = blob_reagent_datum.color
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
@@ -191,18 +190,16 @@
 	set category = "Blob"
 	set name = "Split consciousness (100) (One use)"
 	set desc = "Expend resources to attempt to produce another sentient overmind"
-	if(!blob_nodes || !blob_nodes.len)
-		src << "<span class='warning'>A node is required to produce another overmind.</span>"
-		return
-	var/obj/effect/blob/node/N = locate(/obj/effect/blob) in blob_nodes
-	if(!N)
-		src << "<span class='warning'>A node is required to produce another overmind.</span>"
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	if(!B)
+		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
 	if(!can_buy(100))
 		return
 	verbs -= /mob/camera/blob/verb/split_consciousness
-	new /obj/effect/blob/core/ (get_turf(N), 200, null, blob_core.point_rate, "offspring")
-	qdel(N)
+	new/obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, 1)
+	qdel(B)
 	if(ticker && ticker.mode.name == "blob")
 		var/datum/game_mode/blob/BL = ticker.mode
 		BL.blobwincount += initial(BL.blobwincount) //Increase the victory condition by the set amount
@@ -211,13 +208,13 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces. This action is free."
-	var/speak_text = input(usr, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
 	if(!speak_text)
 		return
 	else
-		usr << "You broadcast with your minions, <B>[speak_text]</B>"
-	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
-		if(blob_minion.stat == CONSCIOUS)
+		src << "You broadcast with your minions, <B>[speak_text]</B>"
+	for(var/mob/living/simple_animal/hostile/blob/blob_minion in blob_mobs)
+		if(blob_minion.overmind == src && blob_minion.stat == CONSCIOUS)
 			blob_minion.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
@@ -229,9 +226,9 @@
 	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new B
 	for(var/obj/effect/blob/BL in blobs)
-		BL.adjustcolors(blob_reagent_datum.color)
+		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
-		BLO.adjustcolors(blob_reagent_datum.color)
+		BLO.update_icons()
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
@@ -239,9 +236,9 @@
 	set category = "Blob"
 	set name = "*Blob Help*"
 	set desc = "Help on how to blob."
+	src << "<b>As the overmind, you can control the blob!</b>"
 	src << "Your blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
-	src << "<b>As the overmind, you can control the blob!</b>"
 	src << "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>"
 	src << "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions."
 	src << "<b>You can upgrade normal blobs into the following types of blob:</b>"
@@ -252,3 +249,21 @@
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
+
+/datum/action/innate/blob_burst
+	name = "Burst"
+	button_icon_state = "blob"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/blob_burst/CheckRemoval()
+	if(ticker.mode.name != "blob" || !ishuman(owner))
+		return 1
+	var/datum/game_mode/blob/B = ticker.mode
+	if(!owner.mind || !(owner.mind in B.infected_crew))
+		return 1
+	return 0
+
+/datum/action/innate/blob_burst/Activate()
+	var/datum/game_mode/blob/B = ticker.mode
+	B.burst_blob(owner.mind)
+	Remove(owner)

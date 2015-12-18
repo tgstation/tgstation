@@ -4,7 +4,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
 	item_state = "pizzabox"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/timer = 10 //Adjustable timer
 	var/timer_set = 0
 	var/primed = 0

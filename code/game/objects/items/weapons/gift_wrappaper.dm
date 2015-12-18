@@ -13,7 +13,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftcrate3"
 	item_state = "gift1"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/a_gift/New()
 	..()
@@ -63,7 +63,7 @@
 		/obj/item/clothing/head/snowman)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
-	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
+	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
 
 	var/gift_type = pick(gift_type_list)
 
@@ -88,7 +88,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/stack/wrapping_paper/attack_self(mob/user)
 	user << "<span class='warning'>You need to use it on a package that has already been wrapped!</span>"

@@ -61,7 +61,7 @@
 	return
 
 /obj/singularity/narsie/proc/godsmack(atom/A)
-	if(istype(A,/obj/))
+	if(isobj(A))
 		var/obj/O = A
 		O.ex_act(1)
 		if(O) qdel(O)

@@ -8,7 +8,6 @@
 		light_range = heavy_range
 
 	var/light_severity = severity * 0.5
-	var/bother_admins = 0
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)
 		if(distance < 0)
@@ -22,14 +21,9 @@
 				T.rad_act(light_severity)
 		else if(distance <= light_range)
 			T.rad_act(light_severity)
-		if(isliving(T))
-			bother_admins = 1
 
 	if(log)
 		log_game("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] ")
-		if(bother_admins)
-			message_admins("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>(JMP)</a>")
-
 	return 1
 
 /atom/proc/rad_act(var/severity)

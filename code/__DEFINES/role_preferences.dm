@@ -44,6 +44,7 @@ var/global/list/special_roles = list(
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_GANG = /datum/game_mode/gang,
 	ROLE_SHADOWLING = /datum/game_mode/shadowling,
+	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
 	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,

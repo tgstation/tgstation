@@ -170,7 +170,7 @@ var/datum/subsystem/minimap/SSminimap
 		text2file(hash, hash_path)
 
 /datum/subsystem/minimap/proc/getMinimapFile(zlevel)
-	return "data/minimaps/map_[zlevel]"
+	return "data/minimaps/[MAP_NAME]_[zlevel]"
 
 /datum/subsystem/minimap/proc/sendMinimaps(client/client)
 	for (var/z = 1 to world.maxz)

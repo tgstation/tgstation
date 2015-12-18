@@ -56,7 +56,6 @@
 
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
@@ -64,7 +63,8 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
-				S.give_glass()
+				S.give_glass(stat & BROKEN)
+
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			qdel(src)
@@ -78,7 +78,7 @@
 /obj/machinery/power/solar/proc/healthcheck()
 	if (src.health <= 0)
 		if(!(stat & BROKEN))
-			broken()
+			set_broken()
 		else
 			new /obj/item/weapon/shard(src.loc)
 			new /obj/item/weapon/shard(src.loc)
@@ -129,7 +129,7 @@
 		else //if we're no longer on the same powernet, remove from control computer
 			unset_control()
 
-/obj/machinery/power/solar/proc/broken()
+/obj/machinery/power/solar/proc/set_broken()
 	. = (!(stat & BROKEN))
 	stat |= BROKEN
 	unset_control()
@@ -142,11 +142,11 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50) && broken())
-					new /obj/item/weapon/shard(src.loc)
+				if(prob(50))
+					set_broken()
 			if(3)
-				if(prob(25) && broken())
-					new /obj/item/weapon/shard(src.loc)
+				if(prob(25))
+					set_broken()
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -201,15 +201,17 @@
 		..()
 
 // Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass()
-	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(src.loc)
+/obj/item/solar_assembly/proc/give_glass(device_broken)
+	if(device_broken)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	else if(glass_type)
+		var/obj/item/stack/sheet/S = new glass_type(loc)
 		S.amount = 2
-		glass_type = null
+	glass_type = null
 
 
 /obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/wrench) && isturf(loc))
 		if(isinspace())
 			user << "<span class='warning'>You can't secure [src] here.</span>"
@@ -370,7 +372,7 @@
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 395)
+		ui = new(user, src, ui_key, "solar_control", name, 515, 425)
 		ui.open()
 
 /obj/machinery/power/solar_control/get_ui_data()
@@ -435,38 +437,39 @@
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
-/obj/machinery/power/solar_control/Topic(href, href_list)
+/obj/machinery/power/solar_control/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["rate_control"])
-		if(href_list["cdir"])
-			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
-			src.targetdir = src.cdir
-			if(track == 2) //manual update, so losing auto-tracking
-				track = 0
-			spawn(1)
-				set_panels(cdir)
-		if(href_list["tdir"])
-			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-
-	if(href_list["track"])
-		track = text2num(href_list["track"])
-		if(track == 2)
-			if(connected_tracker)
+	switch(action)
+		if("control")
+			if(params["cdir"])
+				src.cdir = dd_range(0,359,(360+src.cdir+text2num(params["cdir"]))%360)
+				src.targetdir = src.cdir
+				if(track == 2) //manual update, so losing auto-tracking
+					track = 0
+				spawn(1)
+					set_panels(cdir)
+			if(params["tdir"])
+				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(params["tdir"]))
+				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
+		if("tracking")
+			track = text2num(params["mode"])
+			if(track == 2)
+				if(connected_tracker)
+					connected_tracker.set_angle(SSsun.angle)
+					set_panels(cdir)
+			else if (track == 1) //begin manual tracking
+				src.targetdir = src.cdir
+				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
+				set_panels(targetdir)
+		if("refresh")
+			search_for_connected()
+			if(connected_tracker && track == 2)
 				connected_tracker.set_angle(SSsun.angle)
-				set_panels(cdir)
-		else if (track == 1) //begin manual tracking
-			src.targetdir = src.cdir
-			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-			set_panels(targetdir)
+			set_panels(cdir)
+	return 1
 
-	if(href_list["search_connected"])
-		search_for_connected()
-		if(connected_tracker && track == 2)
-			connected_tracker.set_angle(SSsun.angle)
-		set_panels(cdir)
 
 //rotates the panel to the passed angle
 /obj/machinery/power/solar_control/proc/set_panels(cdir)
@@ -484,7 +487,7 @@
 	update_icon()
 
 
-/obj/machinery/power/solar_control/proc/broken()
+/obj/machinery/power/solar_control/proc/set_broken()
 	stat |= BROKEN
 	update_icon()
 
@@ -495,14 +498,14 @@
 		switch(severity)
 			if(2)
 				if(prob(50))
-					broken()
+					set_broken()
 			if(3)
 				if(prob(25))
-					broken()
+					set_broken()
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))
-		broken()
+		set_broken()
 		src.density = 0
 
 

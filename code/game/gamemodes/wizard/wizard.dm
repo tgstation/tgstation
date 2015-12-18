@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
+	var/list/datum/mind/apprentices = list()
 
 /datum/game_mode/wizard
 	name = "wizard"

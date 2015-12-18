@@ -1,0 +1,4 @@
+author: neersighted
+delete-after: True
+changes: 
+  - tweak: "NanoUI should now load much faster, as the filesize and file count have been reduced"
