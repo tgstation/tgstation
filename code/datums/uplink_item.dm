@@ -219,10 +219,10 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 35
 
-/datum/uplink_item/dangerous/bioterrorsmoke
-	name = "Crowd control chemical smoke grenade"
-	desc = "A powerful chemical smoke grenade which creates a deadly smoke that will mute, blind, confuse, mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists using additional spore toxin. Ensure suit is sealed before use."
-	item = /obj/item/weapon/grenade/chem_grenade/bioterrorsmoke
+/datum/uplink_item/dangerous/bioterrorfoam
+	name = "Crowd control chemical foam grenade"
+	desc = "A powerful chemical foam grenade which creates a deadly torrent of foam that will mute, blind, confuse, mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists using additional spore toxin. Ensure suit is sealed before use."
+	item = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
 	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 35
