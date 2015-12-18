@@ -1,5 +1,5 @@
 /datum/disease/Tuberculosis
-	name = "Fungal Tuberculosis"
+	name = "Fungal tuberculosis"
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "Spaceacillin & salbutamol"
