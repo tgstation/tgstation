@@ -61,3 +61,4 @@
 				affected_mob.bodytemperature += 40
 
 	return
+	
