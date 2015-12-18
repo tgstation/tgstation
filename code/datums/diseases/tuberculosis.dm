@@ -26,7 +26,6 @@
 				affected_mob.adjustOxyLoss(5)
 				affected_mob.emote("gasp")
 			if(prob(5))
-				/datum/symptom/vomit/proc/Vomit(mob/living/carbon/M)
 				affected_mob.vomit(20)
 		if(3)
 			if(prob(2))
@@ -50,7 +49,6 @@
 				affected_mob << "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>"
 				affected_mob.confused = min(100, M.confused + 8)
 			if(prob(15)
-				/datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
 				affected_mob.vomit(0, 1)
 			if(prob(3))
 				affected_mob << "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>"
