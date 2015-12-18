@@ -16,7 +16,7 @@ class @NanoUI
 
   serverUpdate: (dataString) =>
     try
-      data = JSON.parse(dataString)
+      data = JSON.parse(dataString.replace /ÿ/g, "")
     catch error
       @error error
 
@@ -41,6 +41,7 @@ class @NanoUI
 
     try
       if not @initialized
+        @fragment.query("body").classList.add data.config.layout
         layout = @fragment.query("#layout")
         layout.innerHTML = TMPL[data.config.templates.layout](data.data, data.config, helpers)
 
@@ -62,16 +63,8 @@ class @NanoUI
     params.nano = action
     location.href = util.href null, params
 
-  error: (error) ->
-    error = "#{error.fileName}:#{error.lineNumber} #{error.message}" if error instanceof Error
-    params =
-      nano_error: error
-    location.href = util.href null, params
-
-  log: (message) ->
-    params =
-      nano_log: message
-    location.href = util.href null, params
+  error: (error, params = {}) ->
+    @act {nano_error: error}
 
   close: =>
     params =

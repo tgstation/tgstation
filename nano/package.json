@@ -13,6 +13,7 @@
     "gulp-dot-precompiler": "git+https://github.com/kentliau/gulp-dot-precompiler.git",
     "gulp-filter": "^3.0.1",
     "gulp-header": "^1.7.1",
+    "gulp-htmlmin": "^1.3.0",
     "gulp-if": "^2.0.0",
     "gulp-jsbeautifier": "^1.0.1",
     "gulp-less": "^3.0.5",

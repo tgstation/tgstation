@@ -7,6 +7,7 @@ f =
 
 # Project Paths
 input =
+  html:      "html"
   images:    "images"
   scripts:   "scripts"
   styles:    "styles"
@@ -55,7 +56,7 @@ glob = (path) ->
   "#{path}/*"
 
 ### Tasks ###
-gulp.task "default", ["js", "css"]
+gulp.task "default", ["html", "js", "css"]
 
 
 gulp.task "clean", ->
@@ -63,6 +64,7 @@ gulp.task "clean", ->
 
 
 gulp.task "watch", ->
+  gulp.watch [input.html], ["reload"]
   gulp.watch [glob input.images], ["reload"]
   gulp.watch [glob input.scripts], ["reload"]
   gulp.watch [glob input.styles], ["reload"]
@@ -72,6 +74,13 @@ gulp.task "watch", ->
 gulp.task "reload", ["default"], ->
   child_process.exec "reload.bat", (err, stdout, stderr) ->
     return console.log err if err
+
+
+gulp.task "html", ["clean"], ->
+  gulp.src glob input.html
+    .pipe g.if(f.min, g.htmlmin({collapseWhitespace: true, minifyJS: true, minifyCSS: true}))
+    .pipe g.size()
+    .pipe gulp.dest output.dir
 
 
 gulp.task "js", ["clean"], ->

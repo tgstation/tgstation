@@ -203,51 +203,15 @@
   * return string NanoUI HTML output.
  **/
 /datum/nanoui/proc/get_html()
-	// Generate <script> and <link> tags.
-	var/script_html = {"
-<script type='text/javascript' src='nanoui.js'></script>
-	"}
-	var/stylesheet_html = {"
-<link rel='stylesheet' type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css' />
-<link rel='stylesheet' type='text/css' href='nanoui.css' />
-<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
-	"}
-
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
 	var/send_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
 
-	// Generate the HTML document.
-	return {"
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-		<script type='text/javascript'>
-			function receiveUpdate(dataString) {
-				if (typeof NanoBus !== 'undefined') {
-					NanoBus.emit('serverUpdate', dataString);
-				}
-			};
-		</script>
-		[stylesheet_html]
-		[script_html]
-	</head>
-	<body class='[layout]'>
-		<div id='data' data-initial='[send_data_json]'></div>
-		<div id='layout'>
-			<div class='hexdots-loader' style='position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);'>
-				Sending Resources...
-			</div>
-		</div>
-		<noscript>
-			<h1>Javascript Required</h1>
-			<p>Javascript is required in order to use this NanoUI interface.</p>
-			<p>Please enable Javascript in Internet Explorer, and restart your game.</p>
-		</noscript>
-	</body>
-</html>
-	"}
+	// Read the HTML from disk.
+	var/html = file2text('nano/assets/nanoui.html')
+	// Populate it.
+	html = replacetext(html, "!!data!!", send_data_json)
+	return html
 
  /**
   * private
@@ -260,6 +224,7 @@
 	var/list/config_data = list(
 			"title" = title,
 			"status" = status,
+			"layout" = layout,
 			"ref" = "\ref[src]",
 			"window" = list(
 				"width" = width,
