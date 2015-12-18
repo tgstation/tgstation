@@ -98,8 +98,8 @@
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
 	if(blobber)
 		qdel(B)
-	blobber.color = blob_reagent_datum.color
 	blobber.overmind = src
+	blobber.update_icons()
 	blob_mobs.Add(blobber)
 
 /mob/camera/blob/verb/relocate_core()

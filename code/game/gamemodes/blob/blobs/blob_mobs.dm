@@ -144,7 +144,7 @@
 	maxHealth = 240
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attacktext = "hits"
+	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	speak_emote = list("gurgles")
 	minbodytemp = 0
@@ -153,6 +153,25 @@
 	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
+	if(isliving(target))
+		if(overmind)
+			var/mob/living/L = target
+			var/mob_protection = L.get_permeability_protection()
+			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+	..()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
+	..()
+	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
+		melee_damage_lower = 4
+		melee_damage_upper = 4
+		attacktext = overmind.blob_reagent_datum.blobbernaut_message
+	else
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+		attacktext = initial(attacktext)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)
