@@ -311,3 +311,4 @@
 	..()
 	icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
 	return
+	
