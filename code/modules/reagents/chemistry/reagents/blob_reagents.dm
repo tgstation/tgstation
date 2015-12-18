@@ -23,7 +23,7 @@
 	name = "Ripping Tendrils"
 	id = "ripping_tendrils"
 	description = "will do medium brute and stamina damage."
-	color = "#7F0000"
+	color = "#890000"
 	blobbernaut_message = "rips"
 	message_living = ", and you feel your skin ripping and tearing off"
 
@@ -109,7 +109,7 @@
 	name = "Lexorin Jelly"
 	id = "lexorin_jelly"
 	description = "will cause low brute damage, high oxygen damage, and cause targets to be unable to breathe."
-	color = "#00FFC5"
+	color = "#00E5B1"
 	message_living = ", and your lungs feel heavy and weak"
 
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
