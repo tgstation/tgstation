@@ -25,13 +25,13 @@
 	return locate(/obj/structure/lattice) in contents
 
 
-/turf/space/canBuildLattice()
-	if(!(locate(/obj/structure/lattice) in contents))
+/turf/space/canBuildLattice(var/material)
+	if(!(locate(/obj/structure/lattice) in contents) && !(istype(material,/obj/item/stack/sheet/wood)))
 		return 1
 	return BUILD_FAILURE
 
-/turf/space/canBuildPlating()
-	if((locate(/obj/structure/lattice) in contents))
+/turf/space/canBuildPlating(var/material)
+	if((locate(/obj/structure/lattice) in contents) && !(istype(material,/obj/item/stack/tile/wood)))
 		return 1
 	return BUILD_FAILURE
 

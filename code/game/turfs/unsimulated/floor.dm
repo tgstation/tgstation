@@ -94,6 +94,18 @@
 			if(snowballs <= 0)
 				src.ChangeTurf(/turf/unsimulated/floor/snow/undersnow)
 
+/turf/unsimulated/floor/snow/undersnow/canBuildCatwalk()
+	return BUILD_FAILURE
+
+/turf/unsimulated/floor/snow/undersnow/canBuildLattice()
+	if(!(locate(/obj/structure/lattice) in contents))
+		return BUILD_SUCCESS
+	return BUILD_FAILURE
+
+/turf/unsimulated/floor/snow/undersnow/canBuildPlating()
+	if(locate(/obj/structure/lattice) in contents)
+		return BUILD_SUCCESS
+	return BUILD_FAILURE
 
 /turf/unsimulated/floor/snow/attack_hand(mob/user as mob)
 	if(snowballs >= 0)

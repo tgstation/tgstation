@@ -192,6 +192,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("blank canvas",		/obj/item/mounted/frame/painting/blank,	2,		time = 15									),
 	new/datum/stack_recipe("campfire",			/obj/machinery/space_heater/campfire,	4,		time = 35,	one_per_turf = 1,	on_floor = 1),
 	new/datum/stack_recipe("spit",				/obj/machinery/cooking/grill/spit,		1,		time = 10,	one_per_turf = 1,	on_floor = 1),
+	new/datum/stack_recipe("wall girders",		/obj/structure/girder/wood,				2, 		time = 50, 	one_per_turf = 1, 	on_floor = 1),
 	)
 
 /obj/item/stack/sheet/wood
@@ -203,6 +204,18 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	autoignition_temperature=AUTOIGNITION_WOOD
 	sheettype = "wood"
 	w_type = RECYK_WOOD
+
+/obj/item/stack/sheet/wood/afterattack(atom/Target, mob/user, adjacent, params)
+	..()
+	if(adjacent)
+		if(isturf(Target) || istype(Target, /obj/structure/lattice))
+			var/turf/T = get_turf(Target)
+			if(T.canBuildLattice(src))
+				to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
+				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+				new /obj/structure/lattice/wood(T)
+				src.use(1)
+				return
 
 /obj/item/stack/sheet/wood/cultify()
 	return
