@@ -289,7 +289,7 @@
 	else
 		icon_state_string += "_s"
 
-	if(!config || (config && !config.mutant_colors))
+	if(!use_skintones && (!config || (config && !config.mutant_colors)))	//Human "mutant color" skintone was being set null here
 		H.dna.mutant_color = default_color
 
 	for(var/layer in relevent_layers)
