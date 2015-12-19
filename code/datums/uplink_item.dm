@@ -260,7 +260,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-	
+
 /datum/uplink_item/dangerous/reinforcement/spawn_item()
 	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))
@@ -422,6 +422,12 @@ var/list/uplink_items = list()
 	desc = "A 5-round magazine of penetrator ammo designed for use in the syndicate sniper rifle. Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	cost = 5
+
+/datum/uplink_item/ammo/sniper/accelerator
+	name = "Sniper Magazine - Accelerator Rounds"
+	desc = "A 5-round magazine of penetrator ammo designed for use in the syndicate sniper rifle. The shot is weak at close range, but gains more power the farther it flies."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	cost = 4
 
 // STEALTHY WEAPONS
 
