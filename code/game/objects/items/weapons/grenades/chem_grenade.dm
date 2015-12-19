@@ -422,8 +422,8 @@
 	beakers += B2
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
-	name = "Bio terror smoke grenade"
-	desc = "Tiger Cooperative chemical smoke grenade. Causes temporary irration, blindness, confusion, autism, and mutations to carbon based life forms. Contains additional spore toxin"
+	name = "Bio terror foam grenade"
+	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, autism, and mutations to carbon based life forms. Contains additional spore toxin"
 	stage = READY
 
 /obj/item/weapon/grenade/chem_grenade/bioterrorfoam/New()
