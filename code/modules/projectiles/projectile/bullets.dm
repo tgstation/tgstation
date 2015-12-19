@@ -31,8 +31,8 @@
 	armour_penetration = 10
 
 /obj/item/projectile/bullet/dapbullet
-	damage = 15
-	armour_penetration = 8
+	damage = 45
+	armour_penetration = -15 //what are you gonna do? shoot at me? buddy i got armour
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
