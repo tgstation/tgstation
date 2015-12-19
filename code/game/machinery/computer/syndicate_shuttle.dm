@@ -21,4 +21,21 @@
 			return 0
 	..()
 
+/obj/machinery/computer/shuttle/syndicate/drop_pod
+	name = "syndicate assault pod control"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	req_access = list(access_syndicate)
+	shuttleId = "steel_rain"
+	possible_destinations = null
+
+/obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
+	if(href_list["move"])
+		if(z != ZLEVEL_CENTCOM)
+			usr << "<span class='warning'>Pods are one way!</span>"
+			return 0
+	..()
+
+
+
 #undef SYNDICATE_CHALLENGE_TIMER
