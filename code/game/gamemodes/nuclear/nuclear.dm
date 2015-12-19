@@ -160,8 +160,11 @@
 	return 1337 // WHY??? -- Doohl
 
 
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	synd_mob.equipOutfit(/datum/outfit/syndicate)
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	if(telecrystals)
+		synd_mob.equipOutfit(/datum/outfit/syndicate)
+	else
+		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
 
@@ -305,16 +308,21 @@
 
 	var/tc = 20
 
+/datum/outfit/syndicate/no_crystals
+	tc = 0
+
+
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(SYND_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
-	U.hidden_uplink.uplink_owner="[H.key]"
-	U.hidden_uplink.uses = tc
-	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
-	H.equip_to_slot_or_del(U, slot_in_backpack)
+	if(tc)
+		var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
+		U.hidden_uplink.uplink_owner="[H.key]"
+		U.hidden_uplink.uses = tc
+		U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
+		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
 	W.implant(H)
