@@ -357,12 +357,14 @@
 		azoom.Remove(user)
 
 
-
-/obj/item/weapon/gun/attack_hand(mob/user)
+/obj/item/weapon/gun/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-		return
-	..()
+
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
