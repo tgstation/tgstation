@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Nuke ops can now purchase additional team members for 25 telecrystals. They don't come with any gear other than a pistol however, so remember to save some points for them."
