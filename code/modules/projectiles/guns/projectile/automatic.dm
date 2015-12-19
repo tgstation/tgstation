@@ -311,7 +311,3 @@
 	..()
 	icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
 	return
-<<<<<<< HEAD
-=======
-	
->>>>>>> 0923fbf2a8449c5a5066934915c330b8e3f5281c
