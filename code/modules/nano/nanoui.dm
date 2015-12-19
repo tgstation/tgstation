@@ -207,11 +207,9 @@
 	var/list/send_data = get_send_data(initial_data)
 	var/send_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
 
-	// Read the HTML from disk.
-	var/html = file2text('nano/assets/nanoui.html')
 	// Populate it.
-	html = replacetext(html, "!!data!!", send_data_json)
-	return html
+	var/send_html = replacetext(SSnano.html, "!!data!!", send_data_json)
+	return send_html
 
  /**
   * private

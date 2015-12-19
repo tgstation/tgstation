@@ -16,7 +16,7 @@ class @NanoUI
 
   serverUpdate: (dataString) =>
     try
-      data = JSON.parse(dataString.replace /ÿ/g, "")
+      data = JSON.parse dataString.replace /ÿ/g, ""
     catch error
       @error error
 
