@@ -469,3 +469,4 @@
 	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
+	
