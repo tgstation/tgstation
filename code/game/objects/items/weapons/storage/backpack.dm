@@ -418,7 +418,7 @@
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/m556(src)
 	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/ammo_box/a40mm(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	return
 
@@ -441,7 +441,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/ammo_box/a40mm(src)
 	new /obj/item/weapon/gun/projectile/automatic/m90(src)
 	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
 	return
