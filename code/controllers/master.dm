@@ -8,6 +8,8 @@
   * All core systems are subsystems.
   * They are process()'d by this Master Controller.
  **/
+#define SPACE_LEVELS_TO_SEED 2
+#define RUINS_PER_LEVEL 3
 
 var/global/datum/controller/master/Master = new()
 
@@ -72,6 +74,14 @@ var/global/datum/controller/master/Master = new()
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
+	//Seed ruins in space
+	/*
+	var/space_to_seed = SPACE_LEVELS_TO_SEED //Maybe this should be a config option?
+	while(space_to_seed)
+		var/target_z = pick(ZLEVEL_SPACEMAX, ZLEVEL_ABANDONNEDTSAT, ZLEVEL_STATION, ZLEVEL_DEEPSPACE)
+		seedRuins(RUINS_PER_LEVEL, target_z) //As well as this
+		space_to_seed--
+	*/
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate asteroid.
@@ -196,3 +206,7 @@ var/global/datum/controller/master/Master = new()
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	stat("Master Controller:", statclick.update("[round(Master.cost, 0.001)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
+
+
+#undef SPACE_LEVELS_TO_SEED
+#undef RUINS_PER_LEVEL

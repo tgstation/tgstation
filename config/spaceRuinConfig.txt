@@ -1,0 +1,6 @@
+#List the potential random ruins here. This file is for small things that would appear in space, like an asteroid or broken escape pod.
+#Maps must be the full path to them
+#Ruins should be 40x40 at max. Anymore than that will break the game.
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+#_maps/RandomRuins/SpaceRuins/way_home.dmm
