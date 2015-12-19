@@ -52,26 +52,22 @@
 	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
-			up = !up
-			if(up)
-				flags &= ~(visor_flags)
-				flags_inv &= ~(visor_flags_inv)
-				flags_cover &= 0
-				icon_state = "[initial(icon_state)]up"
-				usr << "[alt_toggle_message] \the [src]"
-				usr.update_inv_head()
-				if(active_sound)
-					while(up)
-						playsound(src.loc, "[active_sound]", 100, 0, 4)
-						sleep(15)
-			else
-				flags |= (visor_flags)
-				flags_inv |= (visor_flags_inv)
-				flags_cover = initial(flags_cover)
-				icon_state = initial(icon_state)
-				usr << "[toggle_message] \the [src]."
-				usr.update_inv_head()
+			up ^= 1
+			flags ^= visor_flags
+			flags_inv ^= visor_flags_inv
+			flags_cover ^= initial(flags_cover)
+			icon_state = "[initial(icon_state)][up ? "up" : ""]"
+			usr << "[up ? alt_toggle_message : toggle_message] \the [src]"
 
+			usr.update_inv_head()
+			if(istype(usr, /mob/living/carbon))
+				var/mob/living/carbon/C = usr
+				C.head_update(src, forced = 1)
+
+			if(active_sound)
+				while(up)
+					playsound(src.loc, "[active_sound]", 100, 0, 4)
+					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
