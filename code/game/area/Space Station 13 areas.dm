@@ -1175,7 +1175,7 @@ var/list/teleportlocs = list()
 	icon_state = "eva"
 
 /area/ai_monitored/storage/secure
-	name = "Secure Storage"
+	name = "AI Satellite Storage"
 	icon_state = "storage"
 
 /area/ai_monitored/storage/emergency
