@@ -162,7 +162,7 @@ var/list/uplink_items = list()
 	surplus = 50
 
 /datum/uplink_item/dangerous/shotgun
-	name = "C-20r Submachine Gun"
+	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum fed shotgun. Compatiable with all 12 gauge rounds. Designed for close quarter combat use."
 	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	cost = 8
