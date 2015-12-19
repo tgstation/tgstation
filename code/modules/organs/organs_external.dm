@@ -41,7 +41,10 @@
 	if(counterpart)
 		var/datum/organ/limb/OR = owner.get_organ(counterpart)
 		if(OR && OR.exists())
-			return	//No need to remove items if the other arm/leg is left
+			if(isorgan(OR.organitem))
+				var/obj/item/organ/OI = OR.organitem
+				if(OI.organtype != ORGAN_WEAPON)
+					return	//No need to remove items if the other arm/leg is left
 
 	for(var/itemname in dependant_items)
 		var/obj/item/itemtoremove = owner.get_item_by_slot(itemname)

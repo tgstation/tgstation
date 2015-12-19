@@ -8,9 +8,10 @@
 #define ORGAN_DESTROYED	8	//Organ was forcefully removed and the wound is open.
 #define ORGAN_NOBLEED	16	//Organ was forcefully removed, but the wound is not bleeding right now.
 //0 = Organ is a default organ.
-#define ORGAN_ORGANIC	0 //Or you could just use 0.
+#define ORGAN_ORGANIC	0	//Or you could just use 0.
 #define ORGAN_ROBOTIC	1
-#define ORGAN_ALIEN		2 //For future purposes.
+#define ORGAN_ALIEN		2	 //For future purposes.
+#define ORGAN_WEAPON	3
 
 #define MAX_BRAIN_IMPLANT	2
 #define MAX_CHEST_IMPLANT	3

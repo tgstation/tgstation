@@ -85,6 +85,7 @@
 
 /obj/item/weapon/
 	var/datum/dismember_class/dismember_class = new/datum/dismember_class/cant_dismember/
+	var/augmenttype = null	//The type of item this weapon becomes when implanted into someone
 
 /obj/item/projectile/
 	var/datum/dismember_class/dismember_class = new/datum/dismember_class/cant_dismember/

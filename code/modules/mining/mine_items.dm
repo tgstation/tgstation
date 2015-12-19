@@ -60,6 +60,8 @@
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	var/excavation_amount = 100
 
+	augmenttype = /obj/item/weapon/pickaxe/mounted/
+
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
 
@@ -71,6 +73,8 @@
 	origin_tech = "materials=4;engineering=3"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 
+	augmenttype = /obj/item/weapon/pickaxe/diamond/mounted
+
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
@@ -81,8 +85,18 @@
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
 
+	augmenttype = null	//Else it's inherited from pickaxe
 
+//Clearly this whore must die. Need better inhands!
+/obj/item/weapon/pickaxe/mounted
+	name = "mounted pickaxe"
+	desc = "A pickaxe that has replaced your arm"
+	flags = CONDUCT | ABSTRACT
 
+/obj/item/weapon/pickaxe/diamond/mounted
+	name = "mounted diamond pickaxe"
+	desc = "A diamond pickaxe that has replaced your arm"
+	flags = CONDUCT | ABSTRACT
 
 /obj/item/weapon/pickaxe/drill/examine(mob/user)
 	..()

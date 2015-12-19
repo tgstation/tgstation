@@ -1375,6 +1375,7 @@
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_teleporting.dm"
 #include "code\modules\organs\augments_internal.dm"
 #include "code\modules\organs\augments_limbs.dm"
+#include "code\modules\organs\augments_weapons.dm"
 #include "code\modules\organs\dismemberment.dm"
 #include "code\modules\organs\helpers.dm"
 #include "code\modules\organs\organdata.dm"
