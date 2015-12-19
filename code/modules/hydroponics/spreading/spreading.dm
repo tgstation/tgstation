@@ -162,6 +162,7 @@
 	else
 		..()
 		take_damage(W)
+		user.delayNextAttack(10)
 
 /obj/effect/plantsegment/proc/take_damage(var/obj/item/weapon/W)
 	if(!W.force) return 0
