@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: True
+changes: 
+- rscadd: Emotes can now be seen inside objects, thanks saycode optimizations!
+- bugfix: Hologram pads will also be able to see emotes for the AI now
