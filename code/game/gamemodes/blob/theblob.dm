@@ -62,10 +62,10 @@
 	return 0
 
 
-/obj/effect/blob/proc/check_health()
+/obj/effect/blob/proc/check_health(cause)
 	if(health <= 0)
 		if(overmind)
-			overmind.blob_reagent_datum.death_reaction(src)
+			overmind.blob_reagent_datum.death_reaction(src, cause)
 		qdel(src) //we dead now
 		return
 	return
@@ -181,12 +181,12 @@
 /obj/effect/blob/ex_act(severity, target)
 	..()
 	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE, "explosion")
+	take_damage(damage, BRUTE)
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
-	take_damage(damage, BURN, "fire")
+	take_damage(damage, BURN)
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
@@ -232,7 +232,7 @@
 		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	health -= damage
 	update_icon()
-	check_health()
+	check_health(cause)
 
 /obj/effect/blob/proc/change_to(type, controller)
 	if(!ispath(type))

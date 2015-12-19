@@ -2,6 +2,7 @@
 /datum/reagent/blob
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
+	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
@@ -11,7 +12,7 @@
 /datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
 	return
 
-/datum/reagent/blob/proc/death_reaction(obj/effect/blob/B) //when a blob dies, do this
+/datum/reagent/blob/proc/death_reaction(obj/effect/blob/B, cause) //when a blob dies, do this
 	return
 
 /datum/reagent/blob/proc/expand_reaction(obj/effect/blob/B, turf/T) //when the blob expands, do this
@@ -22,7 +23,8 @@
 	name = "Ripping Tendrils"
 	id = "ripping_tendrils"
 	description = "will do medium brute and stamina damage."
-	color = "#7F0000"
+	color = "#890000"
+	blobbernaut_message = "rips"
 	message_living = ", and you feel your skin ripping and tearing off"
 
 /datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -38,6 +40,7 @@
 	id = "energized_fibers"
 	description = "will do low burn, high stamina damage, and react to stamina damage."
 	color = "#FFDC73"
+	blobbernaut_message = "shocks"
 	message_living = ", and you feel a strong tingling sensation"
 
 /datum/reagent/blob/energized_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -56,6 +59,7 @@
 	id = "boiling_oil"
 	description = "will cause medium burn damage and set targets on fire."
 	color = "#B68D00"
+	blobbernaut_message = "splashes"
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
 
@@ -73,6 +77,8 @@
 	id = "hallucinogenic_nectar"
 	description = "will cause low toxin damage, vivid hallucinations, and inject targets with toxins."
 	color = "#CD7794"
+	blobbernaut_message = "splashes"
+	message = "The blob splashes you with sticky nectar"
 	message_living = ", and you feel really good"
 
 /datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -103,14 +109,14 @@
 	name = "Lexorin Jelly"
 	id = "lexorin_jelly"
 	description = "will cause low brute damage, high oxygen damage, and cause targets to be unable to breathe."
-	color = "#00FFC5"
+	color = "#00E5B1"
 	message_living = ", and your lungs feel heavy and weak"
 
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	M.apply_damage(0.4*reac_volume, BRUTE)
-	M.apply_damage(1*reac_volume, OXY)
-	M.losebreath += round(0.3*reac_volume)
+	M.apply_damage(0.6*reac_volume, OXY)
+	M.losebreath += round(0.2*reac_volume)
 
 //does semi-random brute damage and reacts to brute damage
 /datum/reagent/blob/reactive
@@ -118,6 +124,7 @@
 	id = "reactive_gelatin"
 	description = "will do high brute damage and react to brute damage."
 	color = "#FFA500"
+	blobbernaut_message = "pummels"
 	message = "The blob pummels you"
 
 /datum/reagent/blob/reactive/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -137,6 +144,7 @@
 	id = "cryogenic_liquid"
 	description = "will cause low burn damage, stamina damage, and cause targets to freeze."
 	color = "#8BA6E9"
+	blobbernaut_message = "splashes"
 	message = "The blob splashes you with an icy liquid"
 	message_living = ", and you feel cold and tired"
 
@@ -154,6 +162,7 @@
 	id = "pressurized_slime"
 	description = "will cause low brute damage, oxygen damage, stamina damage, and wet tiles when damaged or killed."
 	color = "#AAAABB"
+	blobbernaut_message = "emits slime at"
 	message = "The blob splashes into you"
 	message_living = ", and you gasp for breath"
 
@@ -171,8 +180,9 @@
 		if(prob(damage))
 			T.MakeSlippery(TURF_WET_WATER)
 
-/datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B)
-	B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
+/datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
+	if(!isnull(cause))
+		B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
 	for(var/turf/simulated/T in range(1, B))
 		if(prob(90))
 			T.MakeSlippery(TURF_WET_WATER)
