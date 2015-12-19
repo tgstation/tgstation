@@ -180,8 +180,12 @@
 	w_class = 1
 	var/used = FALSE
 
-/obj/item/weapon/survivalcapsule/attack_self()
+/obj/item/weapon/survivalcapsule/attack_self(mob/living/user)
 	if(used == FALSE)
+		var/turf/T = get_turf(src)
+		if(istype(T.loc,/area/shuttle))
+			user << "<span class='notice'>You realize you're an idiot for trying to detonate this on a shuttle."
+			return
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
