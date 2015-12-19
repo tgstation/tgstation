@@ -15,7 +15,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 	if(awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	if(potentialRandomZlevels.len)
+	if(potentialRandomZlevels && potentialRandomZlevels.len)
 		world << "<span class='boldannounce'>Loading away mission...</span>"
 
 		var/map = pick(potentialRandomZlevels)
