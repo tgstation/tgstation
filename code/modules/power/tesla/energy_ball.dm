@@ -16,7 +16,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/disposalpipe)
 
 /obj/singularity/energy_ball
-	name = "Energy Ball"
+	name = "energy eall"
+	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	pixel_x = -32
@@ -76,18 +77,18 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 
 /obj/singularity/energy_ball/Bump(atom/A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		C.dust()
-	return
+	dust_mobs(A)
 
 /obj/singularity/energy_ball/Bumped(atom/A)
+	dust_mobs(A)
+
+/obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(istype(A, /mob/living/carbon))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
 
-proc/get_closest_atom(var/type, var/list, var/source)
+/proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
 	for(var/A in list)
@@ -103,7 +104,7 @@ proc/get_closest_atom(var/type, var/list, var/source)
 				closest_atom = A
 	return closest_atom
 
-proc/tesla_zap(var/atom/source, var/zap_range = 3, var/power)
+/proc/tesla_zap(var/atom/source, zap_range = 3, power)
 	if(power < 1000)
 		return
 	var/list/tesla_coils = list()

@@ -1,5 +1,5 @@
 /obj/machinery/power/tesla_coil
-	name = "Tesla Coil"
+	name = "tesla coil"
 	desc = "For the union!"
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "coil"
