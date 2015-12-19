@@ -10,7 +10,7 @@ Attach to transfer valve and open. BOOM.
 
 */
 /atom
-	var/autoignition_temperature = 0 // In Kelvin.  0 = Not flammable. Setting this too low causes lighters/lit welders to ignite the object.
+	var/autoignition_temperature = 0 // In Kelvin.  0 = Not flammable
 	var/on_fire=0
 	var/fire_fuel=0 // Do NOT rely on this.  getFireFuel may be overridden.
 	var/fire_dmi = 'icons/effects/fire.dmi'
@@ -358,8 +358,8 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		if(!oxygen/* || A.autoignition_temperature > temperature*/)
 			A.extinguish()
 			continue
-		if(!A.autoignition_temperature)
-			continue // Don't fuck with things that don't burn.
+//		if(!A.autoignition_temperature)
+//			continue // Don't fuck with things that don't burn.
 		if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= A.volatility)
 			still_burning=1
 		else if(A.on_fire)
@@ -387,7 +387,7 @@ datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 
 	if(objects && istype(T))
 		for(var/atom/A in T)
-			if(!A || !oxygen || (A.autoignition_temperature <= 0) && (A.autoignition_temperature > temperature)) continue
+			if(!A || !oxygen || A.autoignition_temperature > temperature) continue
 			if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= A.volatility)
 				return 1
 
