@@ -33,29 +33,18 @@
 /obj/item/weapon/gun/medbeam/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
 
-	if(!isliving(target))
-		return
 	if(current_target)
 		LoseTarget()
+	if(!isliving(target))
+		return
 
 	current_target = target
 	active = 1
-	current_beam = new(user,current_target,time=6000)
+	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
 	spawn(0)
 		current_beam.Start()
 
 	feedback_add_details("gun_fired","[src.type]")
-
-/obj/item/weapon/gun/medbeam/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == user)	
-		return
-
-	if(!current_target && isliving(target))
-		current_target = target
-		active = 1
-		current_beam = new(user,current_target,time=6000)
-		spawn(0)
-			current_beam.Start()
 
 /obj/item/weapon/gun/medbeam/process()
 	var/mob/living/carbon/human/H = loc
