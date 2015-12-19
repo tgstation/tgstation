@@ -40,7 +40,7 @@ obj/item/proc/get_clamped_volume()
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-	handle_attack(src, M, user, def_zone)
+	return handle_attack(src, M, user, def_zone)
 
 // Making this into a helper proc because of inheritance wonkyness making children of reagent_containers being nigh impossible to attack with.
 /obj/item/proc/handle_attack(obj/item/I, mob/living/M as mob, mob/living/user as mob, def_zone)
