@@ -34,7 +34,7 @@
 	var/target_area
 	target_area = input("Area to land", "Select a Landing Zone", target_area) in teleportlocs
 	if(!src || qdeleted(src))
-    		return
+		return
 	var/area/picked_area = teleportlocs[target_area]
 
 	var/turf/T = pick(get_area_turfs(picked_area))
