@@ -342,18 +342,24 @@ var/global/obj/screen/fuckstat/FUCK = new
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 /atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
-	for(var/mob/M in viewers(src))
-		var/hallucination = M.hallucinating()
-		var/msg = message
-		var/msg2 = blind_message
+	if(world.time>resethearers) sethearing()
+	for(var/mob/virtualhearer/hearer in viewers(src))
+		if(istype(hearer.attached, /mob))
+			var/mob/M = hearer.attached
+			var/hallucination = M.hallucinating()
+			var/msg = message
+			var/msg2 = blind_message
 
-		if(hallucination)
-			if(drugged_message)
-				msg = drugged_message
-			if(blind_drugged_message)
-				msg2 = blind_drugged_message
-		M.show_message( msg, 1, msg2, 2)
-
+			if(hallucination)
+				if(drugged_message)
+					msg = drugged_message
+				if(blind_drugged_message)
+					msg2 = blind_drugged_message
+			M.show_message( msg, 1, msg2, 2)
+		else if(istype(hearer.attached, /obj/machinery/hologram/holopad))
+			var/obj/machinery/hologram/holopad/holo = hearer.attached
+			if(holo.master)
+				holo.master.show_message( message, 1, blind_message, 2)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
