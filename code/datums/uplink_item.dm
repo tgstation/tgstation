@@ -255,7 +255,7 @@ var/list/uplink_items = list()
 
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
-	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
+	var/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/T = ..()
 	if(istype(T))
 		T.TC_cost = cost
 
@@ -267,6 +267,12 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
+	
+/datum/uplink_item/dangerous/reinforcement/spawn_item()
+	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
+	if(istype(T))
+		T.TC_cost = cost
+
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
