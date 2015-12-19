@@ -388,3 +388,84 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
+	desc = "A large dufflebag, packed to the brim with C20r magazines."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	return
+
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
+	desc = "A large dufflebag, packed to the brim with C20r, C90gl, and sniper ammunition."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
+	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/suppressor/specialoffer(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle
+	desc = "A large dufflebag containing a C90gl, a magazine, and a stimpack."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/weapon/gun/projectile/automatic/m90(src)
+	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
+	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/storage/firstaid/tactical(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	return
