@@ -264,3 +264,15 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	if(istype(mob,/mob/dead/observer))
 		mob.hud_used.ghost_hud()
+
+/client/verb/toggle_inquisition() // warning: unexpected inquisition
+	set name = "Toggle Inquisitiveness"
+	set desc = "Sets whether your ghost examines everything on click by default"
+	set category = "Preferences"
+
+	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
+	prefs.save_preferences()
+	if(prefs.inquisitive_ghost)
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
+	else
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"
