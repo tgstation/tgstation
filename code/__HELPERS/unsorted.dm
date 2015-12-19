@@ -1227,6 +1227,9 @@ B --><-- A
 	transform = shift
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+	
+	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
+	transform = initial_transform
 	while(orbiting && orbiting.loc)
 		var/targetloc = get_turf(orbiting)
 		if(!lockinorbit && loc != lastloc && loc != targetloc)
@@ -1236,7 +1239,6 @@ B --><-- A
 		sleep(0.6)
 	
 	orbiting = null
-	animate(src,transform = initial_transform, time = 2) //2 second delay
 	SpinAnimation(0,0)
 
 
