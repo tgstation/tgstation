@@ -706,14 +706,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/Topic(href, href_list)
 	//No ..() to prevent strip panel showing up - Todo: make that saner
-	if(topic_denied(usr))
-		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
-		return 1
-	add_fingerprint(usr)
 	if(href_list["close"])// HUE HUE
 		if(usr in users)
 			users.Remove(usr)
 		return 1
+	
+	if(topic_denied(usr))
+		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
+		return 1
+	add_fingerprint(usr)
+	
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -757,6 +759,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		qdel(src)
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
+	if(!Adjacent(user) && !issilicon(user))
+		return 1
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
