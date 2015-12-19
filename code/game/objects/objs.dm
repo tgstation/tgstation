@@ -12,7 +12,7 @@
 	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
 	var/burn_world_time //What world time the object will burn up completely
-
+	var/being_shocked = 0
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
@@ -185,10 +185,15 @@
 		overlays -= fire_overlay
 		SSobj.burning -= src
 
-
-
 /obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
 	for(var/obj/item/Item in contents) //Empty out the contents
 		Item.loc = new_loc
 		if(burn)
 			Item.fire_act() //Set them on fire, too
+
+/obj/proc/tesla_act(var/power)
+	being_shocked = 1
+	var/power_bounced = power / 2
+	tesla_zap(src, 5, power_bounced)
+	spawn(10)
+		being_shocked = 0

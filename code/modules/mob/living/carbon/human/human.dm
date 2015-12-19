@@ -279,8 +279,19 @@
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0)
-	if(!safety)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
+	if(tesla_shock)
+		var/total_coeff = 1
+		if(gloves)
+			var/obj/item/clothing/gloves/G = gloves
+			if(G.siemens_coefficient <= 0)
+				total_coeff -= 0.5
+		if(wear_suit)
+			var/obj/item/clothing/suit/S = wear_suit
+			if(S.siemens_coefficient <= 0)
+				total_coeff = 0
+		siemens_coeff = total_coeff
+	else if(!safety)
 		var/gloves_siemens_coeff = 1
 		var/species_siemens_coeff = 1
 		if(gloves)
