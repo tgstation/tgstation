@@ -31,7 +31,7 @@
 	armour_penetration = 10
 
 /obj/item/projectile/bullet/dapbullet
-	damage = 24
+	damage = 45
 	armour_penetration = -15
 
 /obj/item/projectile/bullet/pellet
