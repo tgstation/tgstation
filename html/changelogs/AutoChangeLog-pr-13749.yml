@@ -1,0 +1,6 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Reduces Lexorin Jelly's oxygen damage significantly."
+  - experiment: "Blobbernaut chemical application on attack is back, but much less absurd this time; blobbernauts with an overmind will do 70% of the normal chem damage(plus 4) and attack at a much slower rate than the blob itself can."
+  - wip: "As an example, a blobbernaut with the Ripping Tendrils chemical would do 14.5 brute and 10.5 stamina damage per hit."
