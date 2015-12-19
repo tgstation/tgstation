@@ -70,11 +70,6 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 
 /proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = potentialSpaceRuins)
-//	var/list/turfs = get_area_turfs(whitelist, z_level)
-
-/*	if(!turfs.len)
-		return
-*/
 	if(ruin_number > potentialRuins.len)
 		ruin_number = potentialRuins.len //To avoid someone doing something dumb and entering an infinite loop
 
