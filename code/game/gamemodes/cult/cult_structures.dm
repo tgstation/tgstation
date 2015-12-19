@@ -6,6 +6,7 @@
 	pixel_x = -16
 	pixel_y = -16
 	density = 1
+	layer = 4.5
 	anchored = 0
 	var/maxhealth = 200
 	var/health = 200
@@ -70,7 +71,9 @@
 //this stuff is mostly copy-pasted from gang dominators, with some changes
 /obj/structure/constructshell/large/proc/start_takeover()
 	anchored = 1
-	animate(black_overlay, alpha = 255, 5, -1)
+	overlays -= black_overlay
+	icon_state = "shell_narsie_active"
+	flick("shell_narsie_activation", src)
 	set_security_level("delta")
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
@@ -141,6 +144,8 @@
 	spawn(40)
 		new /obj/singularity/narsie/large(target_turf) //Causes Nar-Sie to spawn even if the rune has been removed
 		cult_mode.eldergod = 1
+		if(src)
+			qdel(src)
 
 
 /obj/structure/cult
