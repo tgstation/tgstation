@@ -1234,7 +1234,8 @@ B --><-- A
 		loc = targetloc
 		lastloc = loc
 		sleep(0.6)
-
+	
+	orbiting = null
 	animate(src,transform = initial_transform, time = 2) //2 second delay
 	SpinAnimation(0,0)
 
