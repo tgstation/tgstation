@@ -661,17 +661,17 @@
 "mK" = (/obj/machinery/vending/magivend,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
 "mL" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
 "mM" = (/obj/structure/bed/chair/wood/normal{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mN" = (/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"mO" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
+"mN" = (/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mO" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
 "mP" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
 "mQ" = (/obj/structure/ladder/unbreakable/rune{id = "academy_storage"},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
 "mR" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mS" = (/obj/structure/ladder/unbreakable/rune{id = "academy_coldroom"},/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"mT" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"mU" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"mV" = (/obj/structure/rack,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
+"mS" = (/obj/structure/ladder/unbreakable/rune{id = "academy_coldroom"},/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mT" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mU" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mV" = (/obj/item/clothing/gloves/combat,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
 "mW" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 4},/area/awaymission/academy/headmaster)
-"mX" = (/mob/living/simple_animal/hostile/bear,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
+"mX" = (/obj/item/clothing/under/syndicate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
 "mY" = (/turf/simulated/mineral/random,/area/space)
 "mZ" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/awaymission/academy/headmaster)
 "na" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/awaymission/academy/headmaster)
@@ -683,10 +683,10 @@
 "ng" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 8},/area/awaymission/academy/academyengine)
 "nh" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/awaymission/academy/academyengine)
 "ni" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 4},/area/awaymission/academy/academyengine)
-"nj" = (/obj/item/clothing/gloves/combat,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"nk" = (/obj/item/clothing/under/syndicate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"nl" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
-"nm" = (/obj/item/clothing/mask/gas/syndicate,/turf/simulated/floor/plating/snow/cold,/area/awaymission/academy/academycellar)
+"nj" = (/obj/structure/rack,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nk" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nl" = (/obj/item/clothing/mask/gas/syndicate,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nm" = (/mob/living/simple_animal/hostile/bear,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaG
@@ -803,11 +803,11 @@ aaaaaaaaaaaaaaaaaGaGaGaGaGaGmDmDmDmDmDmDaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaGaGaGmDmDmDmDmDmDmNmNmOmOmDaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajSkfmGkfmPmFkfjSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGmcmwmQmqmqmqmqmqmqmcmcmcmcmcngnhnhnhnhnimcaGaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaGaGmDmDmNmNmNmNmNmNmNmOmOmDmDmDaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajSkfmFmGkfmGkfjSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGmcmwmqmqmqmRmqmqmqmcaGaGaGaGaaaaaaaaaaaaaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaGmDmNmNmSmNmNmNmTmNmOmOmDmDmDmDmDmDaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajSjSjSjSjSjSjSjSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGmcmcmcmcmcmcmcmcmcmcaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaGmDmNmNmNmNmUmNmNmNmNmDmDmDmNnjnkmDmDmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGaGaGaGaGaGaGaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaGmDmVmNmTmUmNmUmNmNmNmDmDmNmNnlnmmNmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaGmDmVmNmNmNmUmNmNmNmDmDmDmNmNmNmNmXmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaGmDmVmUmNmNmTmNmNmNmDmDmDmNmXmNmNmNmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaGmDmDmNmNmNmNmNmUmNmNmNmNmNmNmUmNmXmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaGmDmNmNmNmNmUmNmNmNmNmDmDmDmNmVmXmDmDmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGaGaGaGaGaGaGaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaGmDnjmNmTmUmNmUmNmNmNmDmDmNmNnknlmNmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaGmDnjmNmNmNmUmNmNmNmDmDmDmNmNmNmNnmmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaGmDnjmUmNmNmTmNmNmNmDmDmDmNnmmNmNmNmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaGmDmDmNmNmNmNmNmUmNmNmNmNmNmNmUmNnmmNmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaGmDmDmDmNmNmNmNmNmNmNmNmNmNmTmNmNmDmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaGaGmDmDmDmDmNmNmNmNmDmDmDmDmDmDmDaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaGaGaGmDmDmDmDmDmDmYaGaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
