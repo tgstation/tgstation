@@ -160,7 +160,7 @@
 //Accelerator ammo
 
 /obj/item/ammo_box/magazine/sniper_rounds/accelerator
-	name = "sniper rounds (penetrator)"
+	name = "sniper rounds (accelerator)"
 	desc = "An advanced round which gains more power the farther it flies."
 	ammo_type = /obj/item/ammo_casing/accelerator
 	max_ammo = 5
