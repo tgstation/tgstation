@@ -1,0 +1,5 @@
+author: incoming5643
+delete-after: True
+changes: 
+  - bugfix: "the terror of double tailed lizards and featureless clones should now be over"
+  - rscdel: "the emote *stopwag no longer works, just *wag again to stop instead"
