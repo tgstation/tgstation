@@ -1293,6 +1293,7 @@
 #include "code\modules\mob\living\simple_animal\bot_swarm\swarmer_event.dm"
 #include "code\modules\mob\living\simple_animal\friendly\butterfly.dm"
 #include "code\modules\mob\living\simple_animal\friendly\cat.dm"
+#include "code\modules\mob\living\simple_animal\friendly\cockroach.dm"
 #include "code\modules\mob\living\simple_animal\friendly\crab.dm"
 #include "code\modules\mob\living\simple_animal\friendly\dog.dm"
 #include "code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
