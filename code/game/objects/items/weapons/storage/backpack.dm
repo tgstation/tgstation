@@ -497,7 +497,3 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
 	return
-
-=======
-	
->>>>>>> 29ffdd90aa08a526adbb839c41dbb958225e5bf8
