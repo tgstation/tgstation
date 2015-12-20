@@ -3,7 +3,6 @@
 /obj/item/proc/is_valid_augment()
 	return 0
 /obj/item/weapon/is_valid_augment()
-	world << "[augmenttype]"
 	if(augmenttype)
 		return 1
 	else
