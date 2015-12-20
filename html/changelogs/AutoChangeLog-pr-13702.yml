@@ -1,5 +1,0 @@
-author: Remie
-delete-after: True
-changes: 
-  - rscadd: "Byond members can now choose how their ghost orbits things, their choices are: Circle, Triangle, Square, Pentagon and Hexagon!"
-  - tweak: "orbit() should be much cheaper for clients now, allowing those of you with potato PCs to survive mega ghost swirling better."

@@ -1,7 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Fixes ghost orbit breaking ghost floating"
-  - bugfix: "Fixes orbiting ever breaking golem spawning"
-  - bugfix: "Fixes orbiting ever preventing that ghost from showing up in pictures taken by ghost cameras
-resdel: Fixes being able to break your ghost sprite by multiple quick consecutive orbits (FINAL SOLUTION, PROVE ME WRONG YOU CAN'T)"

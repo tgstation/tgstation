@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Nuke Ops now have an assault pod. A 30tc targeting device will allow you to select any area on the station as its landing zone. The pod is one way, so don't forget your nuke."
-  - rscdel: "The teleporter board is no longer available for purchase in the uplink."
