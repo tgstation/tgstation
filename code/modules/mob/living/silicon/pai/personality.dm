@@ -17,12 +17,12 @@
 	var/savefile/F = new /savefile(src.savefile_path(user))
 
 
-	to_chat(F["name"], src.name)
-	to_chat(F["description"], src.description)
-	to_chat(F["role"], src.role)
-	to_chat(F["comments"], src.comments)
+	F["name"]        << src.name
+	F["description"] << src.description
+	F["role"]        << src.role
+	F["comments"]    << src.comments
 
-	F["version"] << 1
+	F["version"]     << 1
 
 	return 1
 

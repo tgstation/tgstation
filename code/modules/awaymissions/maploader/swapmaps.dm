@@ -219,11 +219,11 @@ swapmap
 		areas-=defarea
 		InitializeSwapMaps()
 		locked=1
-		to_chat(S["id"], id)
-		to_chat(S["z"], z2-z1+1)
-		to_chat(S["y"], y2-y1+1)
-		to_chat(S["x"], x2-x1+1)
-		to_chat(S["areas"], areas)
+		S["id"]    << id
+		S["z"]     << z2 - z1 + 1
+		S["y"]     << y2 - y1 + 1
+		S["x"]     << x2 - x1 + 1
+		S["areas"] << areas
 		for(n in 1 to areas.len) areas[areas[n]]=n
 		var/oldcd=S.cd
 		for(z=z1,z<=z2,++z)
@@ -233,7 +233,7 @@ swapmap
 				for(x=x1,x<=x2,++x)
 					S.cd="[x-x1+1]"
 					var/turf/T=locate(x,y,z)
-					to_chat(S["type"], T.type)
+					S["type"] << T.type
 					if(T.loc!=defarea) S["AREA"] << areas[T.loc]
 					T.Write(S)
 					S.cd=".."
@@ -382,7 +382,7 @@ swapmap
 	proc/Save()
 		if(id==src) return 0
 		var/savefile/S=mode?(new):new("map_[id].sav")
-		to_chat(S, src)
+		S << src
 		while(locked) sleep(1)
 		if(mode)
 			fdel("map_[id].txt")
