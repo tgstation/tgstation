@@ -426,9 +426,13 @@
 
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
+	if(!proximity)
+		return
 	user.faction |= "greytide(\ref[user])"
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
+		if(istype (L, /mob/living/simple_animal/hostile/illusion))
+			return
 		if(!L.stat && prob(50))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
