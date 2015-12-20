@@ -1223,9 +1223,9 @@ B --><-- A
 		lastloc = loc
 		sleep(0.6)
 	
-	if (orbiting == A)
+	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
-	SpinAnimation(0,0)
+		SpinAnimation(0,0)
 
 
 
