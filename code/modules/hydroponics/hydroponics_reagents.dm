@@ -33,7 +33,6 @@
 		reagents.update_total()
 
 	check_level_sanity()
-	update_icon()
 
 
 /*
