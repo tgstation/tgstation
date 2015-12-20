@@ -23,6 +23,18 @@
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
+	if(nuking)
+		set_security_level("red")
+		nuking = 0
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+
+	if(doomsday_device)
+		doomsday_device.timing = 0
+		qdel(doomsday_device)
 	if(explosive)
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)

@@ -550,7 +550,7 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Except through death.
+			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
 				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
 				return
 			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
