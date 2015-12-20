@@ -41,7 +41,10 @@
 	if(counterpart)
 		var/datum/organ/limb/OR = owner.get_organ(counterpart)
 		if(OR && OR.exists())
-			return	//No need to remove items if the other arm/leg is left
+			if(isorgan(OR.organitem))
+				var/obj/item/organ/OI = OR.organitem
+				if(OI.organtype != ORGAN_WEAPON)
+					return	//No need to remove items if the other arm/leg is left
 
 	for(var/itemname in dependant_items)
 		var/obj/item/itemtoremove = owner.get_item_by_slot(itemname)
@@ -65,7 +68,6 @@
 	max_damage = 200
 	body_part = HEAD
 	dependant_items = list(slot_ears, slot_glasses, slot_head, slot_wear_mask)
-//	var/mob/living/carbon/brain/brainmob = null //We're not using this until someone is beheaded.
 
 /obj/item/organ/limb/head/create_suborgan_slots()
 	new/datum/organ/internal/brain(src, null)
@@ -92,12 +94,10 @@
 	if(B.exists())
 		var/obj/item/organ/internal/brain/brain = getsuborgan("brain")
 		brain.loc = src
-		brain.transfer_identity(owner)
 
 /obj/item/organ/limb/head/Remove(special = 0)
 	..(special)
-	if(!special)
-		transfer_identity()
+	transfer_identity()
 	src.name = "[owner]'s head"
 
 /**

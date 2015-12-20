@@ -45,9 +45,13 @@
 /datum/organsystem/proc/add_organ(var/datum/organ/O)
 	var/obj/item/organ/P = O.parent
 	var/datum/organ/newparent = organlist[P.hardpoint]
-	if(newparent && newparent.exists())	//If the organlist contains the organ's parent...
-		organlist[O.name] = O	//We insert the new organ datum
-		O.set_owner(owner)		//We need to do this here because set_owner is called for the parent before inserting all the suborgans
+	if(newparent && newparent.exists())		//If the organlist contains the organ's parent...
+		organlist[O.name] = O				//We insert the new organ datum
+		O.set_owner(owner)					//We need to do this here because set_owner is called for the parent before inserting all the suborgans
+		if(isorgan(O.organitem))
+			var/obj/item/organ/OI = O.organitem
+			OI.on_insertion()
+			OI.add_suborgans()		//Time for recursion
 		return 1
 	else return 0
 
@@ -56,6 +60,7 @@
 		var/datum/organ/OR = get_organ(list_name)
 		var/obj/item/organ/OI = OR.organitem
 		if(isorgan(OI))
+			OI.Remove()
 			for(var/i in OI.suborgans)
 				remove_organ(i)	//RECURSION
 		return organlist.Remove(list_name)

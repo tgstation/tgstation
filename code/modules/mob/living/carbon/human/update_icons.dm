@@ -701,7 +701,10 @@ var/global/list/limb_icon_cache = list()
 	var/obj/item/organ/limb/LI = null
 	if(isorgan(affecting.organitem))	//Should always be true!
 		LI = affecting.organitem
-	else return -1
+	else
+		return -1
+	if(LI.organtype == ORGAN_WEAPON)	//The item handles drawing
+		return 0
 
 	var/image/I
 	var/should_draw_gender = FALSE

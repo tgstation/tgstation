@@ -330,6 +330,7 @@
 //	bleedcap = 0 //You can bleed anytime bby
 
 	wielded_dismember_class = new/datum/dismember_class/high/
+	augmenttype = /obj/item/weapon/mounted_chainsaw/
 
 /obj/item/weapon/twohanded/chainsaw/New()
 	..()
@@ -417,3 +418,15 @@
 			return
 		wield_cooldown = world.time
 	..(user)
+
+/obj/item/weapon/mounted_chainsaw
+	icon_state = "chainsaw1"
+	item_state = "mounted_chainsaw"	//#niggered from /tg/
+	name = "mounted chainsaw"
+	desc = "A chainsaw that has replaced your arm."
+	force = 21
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = "sound/weapons/chainsawhit.ogg"
+
+	flags = ABSTRACT
+	dismember_class = new /datum/dismember_class/medium/

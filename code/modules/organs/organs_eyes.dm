@@ -17,7 +17,6 @@
 
 /obj/item/organ/internal/eyes/Remove(special = 0)
 	owner.regenerate_icons()
-	owner.handle_vision()
 
 /obj/item/organ/internal/eyes/proc/get_img()
 	var/state = "eyes"

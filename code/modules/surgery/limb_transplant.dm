@@ -1,4 +1,4 @@
-/////AUGMENTATION SURGERIES////// This one will only be used for head and chest (due to the way organsystem works,  you can't just remove and replace them)
+//Augment surgeries for replacable limbs. Also ghetto augments like chainsaw arms!
 
 //SURGERY STEPS
 
@@ -7,19 +7,31 @@
 
 /datum/surgery_step/add_limb
 	name = "add limb"
-	implements = list(/obj/item/robot_parts = 100, /obj/item/organ/limb = 100)
+	implements = list(/obj/item/robot_parts = 100, /obj/item/organ/limb = 100, /obj/item/weapon = 100)
 	time = 32
 	var/datum/organ/limb/L = null // L because "limb"
 	var/obj/item/organ/limb/LI = null	//This'll be the tool
+	var/success = 0
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = target.get_organ(target_zone)
 	if(istype(tool, /obj/item/organ/limb))
 		LI = tool
-	if(!L.exists() && (( LI && L.name == LI.hardpoint) || L.name == tool.icon_state))	//Borg limbs just happen to have the same strings as limb hardpoints
+	if(check_validity(tool, target_zone))
 		user.visible_message("[user] begins to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to place [tool] in [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		success = 1
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		success = 0
+
+/datum/surgery_step/add_limb/proc/check_validity(var/obj/item/tool, var/target_zone)
+	if(!L.exists())
+		if((LI && L.name == LI.hardpoint) || L.name == tool.icon_state) //Borg limbs' icon states just happen to have the same strings as limb hardpoints
+			return 1
+		if (target_zone == "r_arm" || "target_zone" == "l_arm")
+			return(tool.is_valid_augment())	//For chainsaw arms and the like
+	return 0
+
 
 //ACTUAL SURGERIES
 
@@ -37,13 +49,13 @@
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!L.exists())
+	if(!L.exists() && success)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			user.drop_item()
 			if(LI)
 				LI.Insert(H)
-			else	//Robotic limb, time for SNOWFLAKE CODE
+			else if (istype(tool, /obj/item/robot_parts/))	//Robotic limb, time for SNOWFLAKE CODE
 				var/obj/item/organ/limb/RL = null
 				switch(target_zone)
 					if("r_leg")
@@ -60,10 +72,22 @@
 				if(!RL.Insert(H))
 					return -1
 				qdel(tool)
+			else if (tool.is_valid_augment())	//We're a ghetto aug
+				var/obj/item/weapon/W = tool
+				var/obj/item/weapon/ghettoaug = new W.augmenttype
+				var/obj/item/organ/limb/newlimb = null
+				switch(target_zone)
+					if("r_arm")
+						newlimb = new /obj/item/organ/limb/arm/r_arm/weapon(ghettoaug)
+					if("l_arm")
+						newlimb = new /obj/item/organ/limb/arm/l_arm/weapon(ghettoaug)
+				if(!newlimb.Insert(H))
+					return -1
+				qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_body_parts() //Gives them the Cyber limb overlay
 			user.visible_message("[user] successfully transplants [tool] to [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully transplant [tool] to [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
-	else
-		user << "<span class='warning'>[target] has no room for a [parse_zone(target_zone)] there!</span>"
+			return 1
+	user << "<span class='warning'>[target] has no room for a [tool] there!</span>"
 	return 1
