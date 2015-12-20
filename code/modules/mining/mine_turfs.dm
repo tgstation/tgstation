@@ -460,6 +460,20 @@ var/global/list/rockTurfEdgeCache
 	N.fullUpdateMineralOverlays()
 	return
 
+/turf/simulated/mineral/attack_hand(mob/living/user)
+	if(check_affinity(user.mind, AFFINITY_EARTH) && user.a_intent == "help")
+		user.visible_message("<span class='notice'>[user] places their hands on [src]...</span>", \
+							"<span class='notice'>You place your hands on [src]...</span>")
+		if(!do_after(user, 20, target = src))
+			return 0
+		user << "<span class='notice'>You turn the rock to dust.</span>"
+		visible_message("<span class='warning'>[src] crumbles to dust!</span>")
+		if(prob(25) && mineralType) //25% chance to gain an extra piece of ore
+			new mineralType(src)
+		gets_drilled()
+		return 1
+	..()
+
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
 		gets_drilled()
