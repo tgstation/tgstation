@@ -238,7 +238,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
-	flags = NOSHIELD
+	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	burn_state = FLAMMABLE
 
@@ -260,7 +260,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
-	flags = NOSHIELD
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
