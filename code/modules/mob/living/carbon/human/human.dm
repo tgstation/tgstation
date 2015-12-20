@@ -289,7 +289,7 @@
 		if(wear_suit)
 			var/obj/item/clothing/suit/S = wear_suit
 			if(S.siemens_coefficient <= 0)
-				total_coeff = 0
+				total_coeff -= 0.95
 		siemens_coeff = total_coeff
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
@@ -305,7 +305,7 @@
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
 

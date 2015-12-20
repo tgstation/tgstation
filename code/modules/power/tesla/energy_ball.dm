@@ -60,10 +60,10 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	for(var/i = 0, i < move_amount, i++)
-	var/move_dir = pick(alldirs)
-	var/turf/T = get_step(src,move_dir)
-	if(can_move(T))
-		loc = get_step(src,move_dir)
+		var/move_dir = pick(alldirs)
+		var/turf/T = get_step(src,move_dir)
+		if(can_move(T))
+			loc = get_step(src,move_dir)
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= 300)
