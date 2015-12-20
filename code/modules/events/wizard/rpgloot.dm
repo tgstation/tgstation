@@ -25,8 +25,9 @@
 
 		I.force 		= max(0,I.force + quality)
 		I.throwforce	= max(0,I.throwforce + quality)
-		for(var/armor_value in I.armor)
-			armor_value	+= quality
+		var/protections = list("melee", "bullet", "laser", "energy", "bomb", "bio", "rad")
+		for(var/i = 1,i<=I.armor.len,i++)
+			I.armor[protections[i]] += quality
 
 		if(istype(I,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = I
@@ -56,7 +57,8 @@
 		return
 	target.force 		+= 1
 	target.throwforce	+= 1
-	for(var/armor_value in target.armor)
-		armor_value	+= 1
+	var/protections = list("melee", "bullet", "laser", "energy", "bomb", "bio", "rad")
+	for(var/i = 1,i<=target.armor.len,i++)
+		target.armor[protections[i]] += 1
 	user << "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>"
 	qdel(src)
