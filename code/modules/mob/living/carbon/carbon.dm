@@ -98,11 +98,11 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if(!tesla_act || (tesla_act && siemens_coeff > 0.5)
+	if(!tesla_act || (tesla_act && siemens_coeff > 0.5))
 		Stun(2)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if(!tesla_act || (tesla_act && siemens_coeff > 0.5)
+		if(!tesla_act || (tesla_act && siemens_coeff > 0.5))
 			Stun(3)
 			Weaken(3)
 	if(override)
