@@ -36,7 +36,7 @@
 /obj/item/weapon/gun/magic/can_shoot()
 	return charges
 
-/obj/item/weapon/gun/magic/proc/newshot()
+/obj/item/weapon/gun/magic/newshot()
 	if (charges && chambered)
 		chambered.newshot()
 	return
