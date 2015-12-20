@@ -278,7 +278,7 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	flags = ABSTRACT | NODROP
+	flags = NODROP
 	w_class = 5.0
 	force = 21
 	throwforce = 0
@@ -287,6 +287,10 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
+
+/obj/item/weapon/mounted_chainsaw/dropped()
+	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
+	qdel(src)
 
 /obj/item/weapon/tailclub
 	name = "tail club"
