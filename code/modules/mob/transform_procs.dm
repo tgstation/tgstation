@@ -151,16 +151,15 @@
 		O.equip_to_appropriate_slot(C)
 	qdel(animation)
 
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-
 	if(dna)
+		O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 		dna.transfer_identity(O)
 		O.update_icons()
 		if(tr_flags & TR_KEEPSE)
 			O.dna.struc_enzymes = dna.struc_enzymes
 			domutcheck(O)
 
-	if(!dna.species)
+	if(!dna || !dna.species)
 		hardset_dna(O, null, null, null, null, /datum/species/human)
 	else
 		hardset_dna(O, null, null, null, null, dna.species.type)
