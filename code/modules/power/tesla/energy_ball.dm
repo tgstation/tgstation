@@ -52,6 +52,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		energy = 0 // ensure we dont have miniballs of miniballs
 	return
 
+/obj/singularity/energy_ball/examine(mob/user)
+	..()
+	if(orbiting_balls.len)
+		user << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	for(var/i = 0, i < move_amount, i++)
@@ -65,14 +70,14 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		energy = 0
 		var/obj/singularity/energy_ball/EB = new(loc)
 		orbiting_balls.Add(EB)
-		EB.transform *= 0.5
+		EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
 		EB.is_orbiting = 1
 		var/icon/I = icon(icon,icon_state,dir)
 
-		var/orbitsize = (I.Width()+I.Height())*0.5
+		var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
 		orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 		spawn(1)
-			EB.orbit(src,orbitsize,0)
+			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
 
 
 
