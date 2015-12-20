@@ -113,3 +113,6 @@
 		attack_self(usr)
 
 	return
+
+/obj/item/device/assembly/timer/get_value()
+	return time

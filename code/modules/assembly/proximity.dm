@@ -174,3 +174,6 @@
 		attack_self(usr)
 
 	return
+
+/obj/item/device/assembly/prox_sensor/get_value()
+	return time

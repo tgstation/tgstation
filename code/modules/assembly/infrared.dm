@@ -162,7 +162,8 @@
 	dir = turn(dir, 90)
 	return
 
-
+/obj/item/device/assembly/infra/get_value()
+	return on
 
 /***************************IBeam*********************************/
 

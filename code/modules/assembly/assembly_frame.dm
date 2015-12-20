@@ -19,6 +19,48 @@
 
 	..()
 
+/obj/item/device/assembly_frame/proc/get_assembly_href(var/obj/item/device/assembly/A)
+	var/txt_eject_button = "<a href='?src=\ref[src];eject=1;assembly=\ref[A]'>\[X\]</a>"
+
+	var/txt_assembly_number = "([assemblies.Find(A)])"
+
+	var/txt_assembly = "<a href='?src=\ref[src];interact=1;assembly=\ref[A]'><b>[A]</b></a>"
+
+	var/txt_connections
+	if(!connections.Find(A))
+		txt_connections = "<small>(<a href='?src=\ref[src];connect=1;assembly=\ref[A]'>connect</a>)</small>"
+	else
+		txt_connections = "<small> sending signals to: "
+
+		var/list/list_of_connections = connections[A]
+
+		if(list_of_connections.len)
+
+			if(istype(A, /obj/item/device/assembly/comparison)) //Comparison circuit: slightly modify the interface
+				for(var/i = 1 to list_of_connections.len)
+					var/obj/item/device/assembly/C = list_of_connections[i]
+
+					switch(i)
+						if(1) //First connected assembly - its value is checked by the circuit
+							txt_connections = "<small> condition: "
+						if(2) //Second connected assembly - if condition is true, this is pulsed
+							txt_connections += "on <b>true</b>: "
+						if(3) //Third connected assembly - if condition is false, this is pulsed
+							txt_connections += "on <b>false</b>: "
+
+					txt_connections += "[i]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
+
+			else
+
+				for(var/obj/item/device/assembly/C in list_of_connections)
+					txt_connections += "[assemblies.Find(C)]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
+
+			txt_connections += "<a href='?src=\ref[src];connect=1;assembly=\ref[A]'><b>add more</b></a></small>"
+
+	return "[txt_eject_button] [txt_assembly_number] [txt_assembly] [txt_connections]"
+
+///////
+
 /obj/item/device/assembly_frame/attack_self(mob/user)
 	var/dat = "<h4>AdCo. Assembly Frame MK II <small>\[<a href='?src=\ref[src];help=1'>?</a>\]</small></h4><br>"
 
@@ -26,34 +68,8 @@
 		dat += "<p>No assemblies found!</p>"
 	else
 		for(var/obj/item/device/assembly/A in assemblies)
-			var/txt_eject_button = "<a href='?src=\ref[src];eject=1;assembly=\ref[A]'>\[X\]</a>"
 
-			var/txt_assembly_number = "([assemblies.Find(A)])"
-
-			var/txt_assembly = "<a href='?src=\ref[src];interact=1;assembly=\ref[A]'><b>[A]</b></a>"
-
-			var/txt_connections
-			if(!connections.Find(A))
-				txt_connections = "<small>(<a href='?src=\ref[src];connect=1;assembly=\ref[A]'>connect</a>)</small>"
-			else
-				txt_connections = "<small> sending signals to: "
-
-				var/list/list_of_connections = connections[A]
-
-				if(list_of_connections.len)
-
-					for(var/obj/item/device/assembly/C in list_of_connections)
-						txt_connections += "[assemblies.Find(C)]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
-
-						//proximity sensor with number 2 labeled as "scanner" will look like this
-
-						//  2-prox sensor (scanner)
-
-					txt_connections += "<a href='?src=\ref[src];connect=1;assembly=\ref[A]'><b>add more</b></a></small>"
-
-			var/txt = "[txt_eject_button] [txt_assembly_number] [txt_assembly] [txt_connections]"
-
-			dat += "<p>[txt]</p>"
+			dat += "<p>[get_assembly_href(A)]</p>"
 
 			//Example result:
 
@@ -110,10 +126,21 @@
 
 			if(!choice) return
 
+			///////////////Don't do infinite loops kids/////
+			if(istype(choice, /obj/item/device/assembly/math) && istype(AS, /obj/item/device/assembly/math)) //Both assemblies are math circuits
+				var/list/choices_connections = connections[choice]
+				if(choices_connections && (AS in choices_connections)) //If the other assembly is connected to us (and right now we're trying to connect ourselves to it, creating an infinite loop of math)
+					to_chat(usr, "<span class='info'>SYSTEM ERROR: Infinite loop detected, operation aborted.</span>")
+					return
+
+			////////////////////////////////////////////////
+
 			if(!active_connections) //If there ISN'T a list with connections
 				connections[AS] = list(choice) //Make a new one
 			else
 				active_connections |= choice
+
+			AS.connected(choice, in_frame = 1)
 
 			to_chat(usr, "<span class='info'>You connect \the [AS] to \the [choice].</span>")
 
@@ -134,6 +161,9 @@
 		for(var/A in connections) //Remove all references to this assembly in this board
 			var/list/L = connections[A]
 			L.Remove(AS)
+
+			var/obj/item/device/assembly/disconnected_from = A
+			disconnected_from.disconnected(AS, in_frame = 1)
 
 			if(!L.len) //If list of A's connections is empty
 				connections.Remove(A) //Remove A from the list of assemblies with connections
@@ -177,6 +207,7 @@
 			return
 
 		L.Remove(disconnected) //Remove the disconnected assembly from that list
+		AS.disconnected(disconnected, in_frame = 1)
 
 		if(!L.len) //If AS isn't connected to anything, remove AS from the list of assemblies with connections
 			connections.Remove(AS)

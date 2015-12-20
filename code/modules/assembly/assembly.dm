@@ -67,6 +67,15 @@
 	for(var/obj/item/device/assembly/A in L)
 		A.pulsed()
 
+/obj/item/device/assembly/proc/get_value() //The assembly's value (to be used with various circuits)
+	return
+
+/obj/item/device/assembly/proc/connected(var/obj/item/device/assembly/A, in_frame = 0)
+	return
+
+/obj/item/device/assembly/proc/disconnected(var/obj/item/device/assembly/A, in_frame = 0)
+	return
+
 /obj/item/device/assembly/process_cooldown()
 	cooldown--
 	if(cooldown <= 0)	return 0
