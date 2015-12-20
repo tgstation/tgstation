@@ -209,28 +209,33 @@
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 		M.reagents.add_reagent("ice", 0.4*reac_volume)
 
-//does brute or burn damage and bonus damage for each nearby blob
+//does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh
 	name = "Synchronous Mesh"
 	id = "synchronous_mesh"
-	description = "will do brute or burn damage and bonus brute or burn damage for each nearby blob."
+	description = "will do brute damage for each nearby blob and spread damage between nearby blobs."
 	color = "#65ADA2"
 	blobbernaut_message = "synchronously strikes"
 	message = "The blobs strike you"
 
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
-	switch(rand(1, 2))
-		if(1)
-			M.apply_damage(0.6*reac_volume, BRUTE)
-		if(2)
-			M.apply_damage(0.6*reac_volume, BURN)
-	for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.4*reac_volume
-		switch(rand(1, 2))
-			if(1)
-				M.apply_damage(0.1*reac_volume, BRUTE)
-			if(2)
-				M.apply_damage(0.1*reac_volume, BURN)
+	M.apply_damage(0.4*reac_volume, BRUTE)
+	for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.2*reac_volume
+		M.apply_damage(0.1*reac_volume, BRUTE)
+
+/datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
+		var/damagesplit = 0.8 //maximum split is 7.2, reducing the damage each blob takes to 14% but doing that damage to 9 blobs
+		for(var/obj/effect/blob/C in orange(1, B))
+			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum) //if it doesn't have the same chemical, don't split damage to it
+				damagesplit += 0.8
+		for(var/obj/effect/blob/C in orange(1, B))
+			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum && !istype(C, /obj/effect/blob/core)) //only hurt blobs that have the same overmind chemical and aren't cores
+				C.take_damage(damage/damagesplit, damage_type)
+		return damage/damagesplit
+	else
+		return damage*1.25
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
