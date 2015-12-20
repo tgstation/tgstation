@@ -255,6 +255,15 @@
 	basic_hit(A,D)
 	return 1
 
+/mob/living/carbon/human/proc/plasma_fist_help()
+	set name = "Recall Teachings"
+	set desc = "Remember the martial techniques of the Plasma Fist."
+	set category = "Plasma Fist"
+
+	usr << "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
+	usr << "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back."
+	usr << "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them."
+	usr << "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body."
 
 //Used by the gang of the same name. Uses combos. Basic attacks bypass armor and never miss
 #define WRIST_WRENCH_COMBO "DD"
@@ -442,10 +451,24 @@
 		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
 		F.teach(H)
 		H << "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>"
+		user.verbs += /mob/living/carbon/human/proc/plasma_fist_help
 		used = 1
 		desc = "It's completely blank."
 		name = "empty scroll"
 		icon_state = "blankscroll"
+
+
+/mob/living/carbon/human/proc/sleeping_carp_help()
+	set name = "Recall Teachings"
+	set desc = "Remember the martial techniques of the Sleeping Carp clan."
+	set category = "Sleeping Carp"
+
+	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
+	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
+	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
+	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
+	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
+	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
 
 /obj/item/weapon/sleeping_carp_scroll
 	name = "mysterious scroll"
