@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Clicking the (F) follow link for AI speech will now make you orbit their camera eye."
