@@ -283,7 +283,7 @@ var/list/uplink_items = list()
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler/loaded
-	cost = 120
+	cost = 140
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
