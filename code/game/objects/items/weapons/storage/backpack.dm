@@ -418,7 +418,7 @@
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/m556(src)
 	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/ammo_box/a40mm(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	return
 
@@ -441,7 +441,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/magazine/a40mm(src)
+	new /obj/item/ammo_box/a40mm(src)
 	new /obj/item/weapon/gun/projectile/automatic/m90(src)
 	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
 	return
@@ -469,6 +469,7 @@
 	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
+<<<<<<< HEAD
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
 	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
@@ -497,3 +498,6 @@
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
 	return
 
+=======
+	
+>>>>>>> 29ffdd90aa08a526adbb839c41dbb958225e5bf8
