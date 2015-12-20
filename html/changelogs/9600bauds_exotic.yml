@@ -32,7 +32,7 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Updated the exotic seed random reagents to have weighted randomness.
-  - tweak: Advanced slime mutation toxin is no longer obtainable through exotic seeds. Slime mutation toxin and slime jelly are now less common.
-  - tweak: Added Methylin, Dexalin Plus, Carp Pheromones and nothing as possible exotic seed reagents, with the latter three being uncommon.
+  - rscadd: Updated the exotic seed random reagents to have weighted randomness for some reagents.
+  - tweak: Advanced slime mutation toxin is now very rare in exotic seeds. Slime mutation toxin and slime jelly are now less common, as well.
+  - tweak: Added Methylin, Dexalin Plus, Carp Pheromones, Mint and nothing as possible exotic seed reagents.
   - tweak: Un-snowflaked Ambrosia Cruciatus. This means that it's now possible to splice Spiritbreaker into other plants through Xenobotany, however, exotic seeds that produce Cruciatus leaves won't have Spiritbreaker anymore.

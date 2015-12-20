@@ -247,7 +247,7 @@
 
 /datum/reagent/cryoxadone/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
 	..()
-	T.toxins += -3
+	T.toxins -= 3
 	if(T.seed && !T.dead)
 		T.health += 3
 
