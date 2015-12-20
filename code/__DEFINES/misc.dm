@@ -318,3 +318,7 @@ var/list/bloody_footprints_cache = list()
 #define GHOST_ORBIT_HEXAGON		"hexagon"
 #define GHOST_ORBIT_SQUARE		"square"
 #define GHOST_ORBIT_PENTAGON	"pentagon"
+
+//Bloodcrawling
+#define BLOODCRAWL 1
+#define BLOODCRAWL_EAT 2
