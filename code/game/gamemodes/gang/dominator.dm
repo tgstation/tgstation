@@ -12,6 +12,9 @@
 	var/operating = 0	//-1=broken, 0=standby, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
 
+/obj/machinery/dominator/tesla_act()
+	qdel(src)
+
 /obj/machinery/dominator/New()
 	..()
 	SetLuminosity(2)

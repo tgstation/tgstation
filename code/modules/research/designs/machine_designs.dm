@@ -452,3 +452,23 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
 	category = list ("Misc. Machinery")
+
+/datum/design/tesla_coil
+	name = "Machine Design (Tesla Coil Board)"
+	desc = "The circuit board for a tesla coil."
+	id = "tesla_coil"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/tesla_coil
+	category = list ("Misc. Machinery")
+
+/datum/design/grounding_rod
+	name = "Machine Design (Grounding Rod Board)"
+	desc = "The circuit board for a grounding rod."
+	id = "grounding_rod"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grounding_rod
+	category = list ("Misc. Machinery")
