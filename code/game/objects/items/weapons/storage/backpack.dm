@@ -113,6 +113,10 @@
 	max_w_class = 3
 	max_combined_w_class = 60
 
+/obj/item/weapon/storage/santabag/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
+	return (OXYLOSS)
+
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
