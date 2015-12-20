@@ -66,6 +66,7 @@ var/list/ai_list = list()
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
+	var/obj/machinery/doomsday_device/doomsday_device
 
 	var/mob/camera/aiEye/eyeobj = new()
 	var/sprint = 10

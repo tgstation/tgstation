@@ -536,9 +536,9 @@
 	return
 
 /datum/AI_Module/large/nuke_station
-	module_name = "Nuke Station"
+	module_name = "Doomsday Device"
 	mod_pick_name = "nukestation"
-	description = "Activate the stations onboard self destruct mechanism after a 400 second delay."
+	description = "Activate a weapon that will disintegrate all organic life on the station after a 500 second delay."
 	cost = 150
 	one_time = 1
 
@@ -546,7 +546,7 @@
 
 /mob/living/silicon/ai/proc/nuke_station()
 	set category = "Malfunction"
-	set name = "Nuke Station"
+	set name = "Doomsday Device"
 
 	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
 		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
@@ -556,16 +556,53 @@
 	set_security_level("delta")
 	SSshuttle.emergencyNoEscape = 1
 	nuking = 1
-	sleep(5000)
+	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
+	doomsday_device = DOOM
+	verbs -= /mob/living/silicon/ai/proc/nuke_station
 
-	if(!src || src.stat)
-		SSshuttle.emergencyNoEscape = 0
+/obj/machinery/doomsday_device
+	icon = 'icons/obj/machines/nuke_terminal.dmi'
+	name = "doomsday device"
+	icon_state = "nuclearbomb_base"
+	desc = "A weapon which disintegrates all organic life in a large area."
+	anchored = 1
+	density = 1
+	verb_exclaim = "blares"
+	var/timing = 1
+	var/timer = 500
+	var/obj/item/device/radio/radio
+
+
+/obj/machinery/doomsday_device/New()
+	..()
+	radio = new /obj/item/device/radio
+
+/obj/machinery/doomsday_device/process()
+	if(!timing)
 		return
+	if(timer <= 0)
+		var/turf/T = get_turf(src)
+		timing = 0
+		detonate(T.z)
+		qdel(src)
+	else
+		timer--
+		if(!(timer%60))
+			var/message = "[timer] SECONDS UNTIL ACTIVATION!!!"
+			radio.talk_into(src, message, null, list(SPAN_ROBOT))
 
-	world << "<span class='boldannounce'>!@%(SELF-DESTRUCT!@(% IN!@!<<; 10</span>"
-	for (var/i=9 to 1 step -1)
-		sleep(10)
-		world << "<span class='boldannounce'>[i]</span>"
-	var/obj/machinery/nuclearbomb/N = new /obj/machinery/nuclearbomb(128,128,1) //Because the AI might be out of range of the station otherwise
-	N.safety = 0
-	N.explode()
+
+/obj/machinery/doomsday_device/proc/detonate(z_level = 1)
+	for(var/mob/M in player_list)
+		M << 'sound/machines/Alarm.ogg'
+	sleep(100)
+	for(var/mob/living/L in mob_list)
+		var/turf/T = get_turf(L)
+		if(T.z != z_level)
+			continue
+		if(issilicon(L))
+			continue
+		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
+		L.dust()
+	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
+	ticker.force_ending = 1
