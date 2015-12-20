@@ -138,7 +138,7 @@ Implant Specifics:<BR>"}
 /obj/item/weapon/implant/explosive/activate()
 	if(malfunction == MALFUNCTION_PERMANENT)
 		return
-	if(istype(imp_in, /mob/))
+	if(iscarbon(imp_in))
 		var/mob/M = imp_in
 
 		message_admins("Explosive implant triggered in [M] ([M.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>) ")
@@ -184,7 +184,7 @@ Implant Specifics:<BR>"}
 	return 0
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
-	if(ishuman(imp_in) && part)
+	if(iscarbon(imp_in))
 		imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
@@ -277,8 +277,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/loyalty/implanted(mob/M)
-	if(!istype(M, /mob/living/carbon/human))	return 0
-	var/mob/living/carbon/human/H = M
+	if(!iscarbon(M))	return 0
+	var/mob/living/carbon/H = M
 	if(H.mind in ticker.mode.head_revolutionaries)
 		H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 		return 0
@@ -308,15 +308,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/traitor/implanted(mob/M, mob/user)
 	var/list/implanters
 	var/ref = "\ref[user.mind]"
-	if(!ishuman(M)) return 0
+	if(!iscarbon(M)) return 0
 	if(!M.mind) return 0
-	var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/H = M
 	if(M == user)
 		to_chat(user, "<span class='notice'>You feel quite stupid for doing that.</span>")
 		if(isliving(user))
 			user:brainloss += 10
 		return
-	if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
+	if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/loyalty) in H.contents)
 		H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 		return 0
 	else if(H.mind in ticker.mode.traitors)

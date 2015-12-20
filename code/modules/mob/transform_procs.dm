@@ -1,6 +1,7 @@
 /mob/living/carbon/human/proc/monkeyize()
 	if (monkeyizing)
 		return
+
 	for(var/obj/item/W in src)
 		if (W==w_uniform) // will be torn
 			continue
@@ -9,7 +10,7 @@
 
 	monkeyizing = 1
 	canmove = 0
-	stunned = 1
+	delayNextAttack(50)
 	icon = null
 	invisibility = 101
 
@@ -56,6 +57,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
@@ -97,6 +99,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	return ..()
 
 /mob/proc/AIize()
@@ -174,6 +177,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -219,6 +223,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -266,6 +271,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -297,6 +303,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -333,6 +340,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
@@ -364,6 +372,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 
 	for(var/t in organs)
 		qdel(t)
