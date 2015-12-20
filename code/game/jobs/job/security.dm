@@ -228,25 +228,25 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		switch(department)
 			if("supply")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_mining)
+				dep_access = list(access_mailsorting, access_cargo, access_mining, access_mineral_storeroom)
 				destination = /area/security/checkpoint/supply
 				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/cargo
 			if("engineering")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
-				dep_access = list(access_construction, access_engine)
+				dep_access = list(access_maint_tunnels, access_engine, access_construction, access_atmospherics)
 				destination = /area/security/checkpoint/engineering
 				spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/engine
 			if("medical")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
-				dep_access = list(access_medical)
+				dep_access = list(access_medical, access_morgue, access_genetics, access_surgery)
 				destination = /area/security/checkpoint/medical
 				spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
 				tie =  /obj/item/clothing/tie/armband/medblue
 			if("science")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
-				dep_access = list(access_research)
+				dep_access = list(access_research, access_tox, access_xenobiology)
 				destination = /area/security/checkpoint/science
 				spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/science

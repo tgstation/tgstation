@@ -288,3 +288,19 @@
 	new /obj/item/weapon/storage/box/lethalshot(src)
 	new /obj/item/weapon/storage/box/lethalshot(src)
 	new /obj/item/weapon/storage/box/lethalshot(src)
+	
+/obj/structure/closet/secure_closet/lowsec
+	name = "emergency security supplies"
+	req_access = list(access_security)
+	icon_state = "tac"
+	
+/obj/structure/closet/secure_closet/lowsec/New()
+	..()
+	new /obj/item/weapon/implant/adrenalin(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd(src)
+	new /obj/item/weapon/card/id/lowpop_sec(src)
+	
