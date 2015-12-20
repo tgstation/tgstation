@@ -880,6 +880,7 @@
 #include "code\modules\admin\verbs\getlogs.dm"
 #include "code\modules\admin\verbs\machine_upgrade.dm"
 #include "code\modules\admin\verbs\manipulate_organs.dm"
+#include "code\modules\admin\verbs\map_template_loadverb.dm"
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\maprotation.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"
