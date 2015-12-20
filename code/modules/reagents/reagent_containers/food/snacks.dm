@@ -35,7 +35,13 @@
 		user.visible_message("<span class='notice'>[user] finishes eating \the [src].</span>", \
 		"<span class='notice'>You finish eating \the [src].</span>")
 		score["foodeaten"]++ //For post-round score
-		user.drop_from_inventory(src) //Drop our item before we delete it
+
+		//Drop our item before we delete it, to clear any references of ourselves in people's hands or whatever.
+		if(loc == user)
+			user.drop_from_inventory(src)
+		else if(ismob(loc))
+			var/mob/holder = loc
+			holder.drop_from_inventory(src)
 
 		if(trash) //Do we have somehing defined as trash for our snack item ?
 			//Note : This makes sense in some way, or at least this works, just don't mess with it
@@ -139,7 +145,7 @@
 			playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				reagents.reaction(target, INGEST)
-				spawn(5)
+				spawn(5) //WHY IS THIS SPAWN() HERE
 					if(reagents.total_volume > bitesize)
 						/*
 						 * I totally cannot understand what this code supposed to do.
@@ -153,6 +159,7 @@
 					bitecount++
 					On_Consume(target)
 			return 1
+
 	return 0
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
