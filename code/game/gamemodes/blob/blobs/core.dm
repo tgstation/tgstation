@@ -79,7 +79,6 @@
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
 			B.change_to(/obj/effect/blob/shield, overmind)
-	..()
 
 
 /obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
@@ -106,6 +105,7 @@
 		B.key = C.key
 		B.blob_core = src
 		src.overmind = B
+		update_icon()
 		if(B.mind && !B.mind.special_role)
 			B.mind.special_role = "Blob Overmind"
 		if(is_offspring)

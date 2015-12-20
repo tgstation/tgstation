@@ -10,7 +10,7 @@
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
 /datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
-	return
+	return damage
 
 /datum/reagent/blob/proc/death_reaction(obj/effect/blob/B, cause) //when a blob dies, do this
 	return
@@ -34,6 +34,57 @@
 	if(iscarbon(M))
 		M.emote("scream")
 
+//does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
+/datum/reagent/blob/sporing_pods
+	name = "Sporing Pods"
+	id = "sporing_pods"
+	description = "will do low toxin damage and produce fragile spores when killed or on expanding."
+	color = "#E88D5D"
+	message_living = ", and you feel sick"
+
+/datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, TOX)
+
+/datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(!isnull(cause) && damage < 20 && original_health - damage <= 0 && prob(50)) //if the cause isn't fire or a bomb, the damage is less than 20, we're going to die from that damage, 50% chance of a shitty spore.
+		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
+		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
+		BS.overmind = B.overmind
+		BS.update_icons()
+		B.overmind.blob_mobs.Add(BS)
+	return ..()
+
+/datum/reagent/blob/sporing_pods/expand_reaction(obj/effect/blob/B, turf/T)
+	if(prob(10))
+		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
+		BS.overmind = B.overmind
+		BS.update_icons()
+		B.overmind.blob_mobs.Add(BS)
+
+//does brute damage but can replicate when damaged and has a chance of expanding again
+/datum/reagent/blob/replicating_foam
+	name = "Replicating Foam"
+	id = "replicating_foam"
+	description = "will do medium brute damage and replicate when damaged."
+	color = "#7B5A57"
+
+/datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+
+/datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(damage > 0 && original_health - damage > 0 && prob(100 - damage))
+		var/obj/effect/blob/newB = B.expand()
+		if(newB)
+			newB.health = original_health - damage
+			newB.check_health(cause)
+			newB.update_icon()
+	return ..()
+
+/datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, turf/T)
+	B.expand() //do it again!
+
 //does low burn and a lot of stamina damage, reacts to stamina damage
 /datum/reagent/blob/energized_fibers
 	name = "Energized Fibers"
@@ -52,6 +103,7 @@
 	if(damage_type == STAMINA)
 		B.visible_message("<span class='warning'><b>The blob abruptly regenerates!</b></span>")
 		B.health = B.maxhealth //stop disabling the blob!
+	return ..()
 
 //sets you on fire, does burn damage
 /datum/reagent/blob/boiling_oil
@@ -64,8 +116,8 @@
 	message_living = ", and you feel your skin char and melt"
 
 /datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	M.adjust_fire_stacks(round(reac_volume/12))
 	reac_volume = ..()
+	M.adjust_fire_stacks(round(reac_volume/12))
 	M.apply_damage(0.6*reac_volume, BURN)
 	M.IgniteMob()
 	if(iscarbon(M))
@@ -137,12 +189,13 @@
 		B.visible_message("<span class='warning'><b>The blob retaliates, lashing out!</b></span>")
 		for(var/atom/A in range(1, B))
 			A.blob_act()
+	return ..()
 
 //does low burn damage and stamina damage and cools targets down
 /datum/reagent/blob/cryogenic_liquid
 	name = "Cryogenic Liquid"
 	id = "cryogenic_liquid"
-	description = "will cause low burn damage, stamina damage, and cause targets to freeze."
+	description = "will do low burn damage, stamina damage, and cause targets to freeze."
 	color = "#8BA6E9"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with an icy liquid"
@@ -156,11 +209,34 @@
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 		M.reagents.add_reagent("ice", 0.4*reac_volume)
 
+//does brute or burn damage and bonus damage for each nearby blob
+/datum/reagent/blob/synchronous_mesh
+	name = "Synchronous Mesh"
+	id = "synchronous_mesh"
+	description = "will do brute or burn damage and bonus brute or burn damage for each nearby blob."
+	color = "#65ADA2"
+	blobbernaut_message = "synchronously strikes"
+	message = "The blobs strike you"
+
+/datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	switch(rand(1, 2))
+		if(1)
+			M.apply_damage(0.6*reac_volume, BRUTE)
+		if(2)
+			M.apply_damage(0.6*reac_volume, BURN)
+	for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.4*reac_volume
+		switch(rand(1, 2))
+			if(1)
+				M.apply_damage(0.1*reac_volume, BRUTE)
+			if(2)
+				M.apply_damage(0.1*reac_volume, BURN)
+
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
 	name = "Pressurized Slime"
 	id = "pressurized_slime"
-	description = "will cause low brute damage, oxygen damage, stamina damage, and wet tiles when damaged or killed."
+	description = "will do low brute damage, oxygen damage, stamina damage, and wet tiles when damaged or killed."
 	color = "#AAAABB"
 	blobbernaut_message = "emits slime at"
 	message = "The blob splashes into you"
@@ -179,6 +255,7 @@
 	for(var/turf/simulated/T in range(1, B))
 		if(prob(damage))
 			T.MakeSlippery(TURF_WET_WATER)
+	return ..()
 
 /datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
