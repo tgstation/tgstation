@@ -418,6 +418,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
+		user.do_attack_animation(M)
 	else
 		user.visible_message( \
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
