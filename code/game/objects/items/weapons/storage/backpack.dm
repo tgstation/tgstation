@@ -469,3 +469,31 @@
 	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/storage/firstaid/tactical(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
+	desc = "A large dufflebag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
+	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
+	new /obj/item/weapon/gun/syringe/syndicate(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
+	new /obj/item/weapon/storage/box/syringes(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
+	return
+

@@ -143,6 +143,20 @@ var/list/uplink_items = list()
 	cost = 15//normal price 20 THATS A FREE MAGBOOT AND a box OF RIOT DART LMG
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/specoffer/sniper
+	name = "Sniper bundle"
+	desc = "Contains a collapsed sniper rifle in an expensive carrying case, a hollowpoint haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
+	item = /obj/item/weapon/storage/briefcase/sniperbundle
+	cost = 20//26 normal cost. suppressor is excluded from price.
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/chemical
+	name = "Tiger Cooperation Chemical Bioterror bundle"
+	desc = "Contains Bioterror spray, Bioterror grenade, chemicals, syringe gun, box of syringes, Donksoft assault rifle, and some darts. Warning: Seal suit and equip internals before use."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
+	cost = 30 //normal price 42 biggest saving here
+	gamemodes = list(/datum/game_mode/nuclear)
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -162,7 +176,7 @@ var/list/uplink_items = list()
 	surplus = 50
 
 /datum/uplink_item/dangerous/shotgun
-	name = "C-20r Submachine Gun"
+	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum fed shotgun. Compatiable with all 12 gauge rounds. Designed for close quarter combat use."
 	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	cost = 8
