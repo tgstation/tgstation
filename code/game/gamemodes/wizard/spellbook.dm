@@ -259,6 +259,7 @@
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	log_name = "SA"
 	category = "Assistance"
+	cost = 3
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
