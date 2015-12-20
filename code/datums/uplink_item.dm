@@ -537,7 +537,6 @@ var/list/uplink_items = list()
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. They do not work on heavily lubricated surfaces."
 	item = /obj/item/clothing/shoes/sneakers/syndigaloshes
 	cost = 2
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Tactical No-Slip Brown Shoes"
