@@ -471,27 +471,19 @@ BLIND     // can't see anything
 			H.update_inv_w_uniform()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(can_use(usr))
-		if(up)
-			up = !up
-			flags |= (visor_flags)
-			flags_inv |= (visor_flags_inv)
-			flags_cover = initial(flags_cover)
-			icon_state = initial(icon_state)
-			usr << "<span class='notice'>You pull \the [src] down.</span>"
-			flash_protect = initial(flash_protect)
-			tint = initial(tint)
-		else
-			up = !up
-			flags &= ~(visor_flags)
-			flags_inv &= ~(visor_flags_inv)
-			flags_cover &= 0
-			icon_state = "[initial(icon_state)]up"
-			usr << "<span class='notice'>You push \the [src] up.</span>"
-			flash_protect = 0
-			tint = 0
+	if(!can_use(usr))
+		return
 
-	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+	up ^= 1
+	flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	flags_cover ^= initial(flags_cover)
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	usr << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+	flash_protect ^= initial(flash_protect)
+	tint ^= initial(tint)
+
+	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update //this is awful
 		usr.update_inv_head()
 	if(istype(src, /obj/item/clothing/glasses))
 		usr.update_inv_glasses()
@@ -499,7 +491,7 @@ BLIND     // can't see anything
 		usr.update_inv_wear_mask()
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
-		C.head_update(src) //updates based on the HIDE_ flags and fixes the sec hud
+		C.head_update(src, forced = 1)
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

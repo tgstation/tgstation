@@ -216,6 +216,9 @@
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	toggle_hardsuit_mode(user)
 	user.update_inv_head()
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/C = user
+		C.head_update(src, forced = 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
