@@ -219,6 +219,14 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 35
 
+/datum/uplink_item/dangerous/bioterrorfoam
+	name = "Crowd control chemical foam grenade"
+	desc = "A powerful chemical foam grenade which creates a deadly torrent of foam that will mute, blind, confuse, mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists using additional spore toxin. Ensure suit is sealed before use."
+	item = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 35
+
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
 	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
@@ -260,7 +268,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-	
+
 /datum/uplink_item/dangerous/reinforcement/spawn_item()
 	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))
