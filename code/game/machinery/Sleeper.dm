@@ -306,11 +306,9 @@
 		return
 	if(!Adjacent(over_location))
 		return
-		
 	var/mob/user = usr
-	if (user.stunned || user.paralysis || user.resting) // If you're too disabled to put someone into it, you're too disabled to pull someone out of it.
-		return
-		
+	if(user.restrained() || user.isUnconscious() || user.stunned || user.paralysis || user.resting) // If you're too disabled to put someone into it, you're too disabled to pull someone out of it.
+		return	
 	if(!(occupant == usr) && (!Adjacent(usr) || !usr.Adjacent(over_location)))
 		return
 	for(var/atom/movable/A in over_location.contents)
