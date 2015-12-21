@@ -122,9 +122,9 @@ var/list/uplink_items = list()
 	cost = 14//normal price 16
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/specoffer/c90gl
-	name = "C90gl bundle"
-	desc = "Premium offer. Pick up the C90gl with a magazine, some grenades, and a pack of cigarettes for a premium discount."
+/datum/uplink_item/specoffer/m90gl
+	name = "M90gl bundle"
+	desc = "Premium offer. Pick up the M90gl with a magazine, some grenades, and a pack of cigarettes for a premium discount."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle
 	cost = 15//normal price 18
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -430,7 +430,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo/fireteam
 	name = "Ammo Duffelbag - Fireteam Ammo Grab Bag"
-	desc = "A duffelbag filled with ammo to kit out a fireteam, contains four C20r magazines, two C90gl magazines, a box of 40mm grenades, and sniper ammunition at a discounted price." //C90gl ammo bag is too imba. fuck that.
+	desc = "A duffelbag filled with ammo to kit out a fireteam, contains four C20r magazines, two M90gl magazines, a box of 40mm grenades, and sniper ammunition at a discounted price." //M90gl ammo bag is too imba. fuck that.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
 	cost = 24//you get 4 grenades for free. Normal price 29
 	gamemodes = list(/datum/game_mode/nuclear)

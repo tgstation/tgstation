@@ -407,7 +407,7 @@
 
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	desc = "A large dufflebag, packed to the brim with C20r, C90gl, and sniper ammunition."
+	desc = "A large dufflebag, packed to the brim with C20r, M90gl, and sniper ammunition."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
 	..()
@@ -434,10 +434,10 @@
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle
-	desc = "A large dufflebag containing a C90gl, a magazine, and a stimpack."
+/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
+	desc = "A large dufflebag containing a M90gl, a magazine, and a stimpack."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle/New()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m556(src)
