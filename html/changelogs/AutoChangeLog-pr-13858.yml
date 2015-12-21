@@ -1,0 +1,8 @@
+author: Joan
+delete-after: True
+changes: 
+  - wip: "Adds three new blob chemicals:"
+  - rscadd: "Replicating Foam, which is brown, does brute damage, has bonus expansion, and has a chance to expand when damaged."
+  - rscadd: "Sporing Pods, which is light orange, does low toxin damage, and has a chance to produce weak spores when expanding or killed."
+  - rscadd: "Synchronous Mesh, which is teal, does brute damage and bonus damage for each blob tile near the target, and splits damage taken between nearby blobs."
+  - experiment: "Synchronous Mesh blobs take 25% more damage, to compensate for the spread damage."
