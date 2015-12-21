@@ -7,7 +7,6 @@ env:
     - BYOND_MAJOR="509"
     - BYOND_MINOR="1310"
     matrix:
-    - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
 
