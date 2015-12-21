@@ -63,6 +63,7 @@
 
 
 /obj/effect/blob/proc/check_health(cause)
+	health = Clamp(health, 0, maxhealth)
 	if(health <= 0)
 		if(overmind)
 			overmind.blob_reagent_datum.death_reaction(src, cause)
@@ -172,10 +173,12 @@
 			B.update_icon()
 			if(B.overmind)
 				B.overmind.blob_reagent_datum.expand_reaction(B, T)
+			return B
 		else
 			T.blob_act() //If we cant move in hit the turf
 			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
-	return 1
+			return null
+	return null
 
 
 /obj/effect/blob/ex_act(severity, target)
@@ -226,10 +229,12 @@
 			damage = max(damage * brute_resist, 0)
 		if(BURN)
 			damage = max(damage * fire_resist, 0)
+		if(CLONE) //this is basically a marker for 'don't modify the damage'
+
 		else
 			damage = 0
 	if(overmind)
-		overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+		damage = overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	health -= damage
 	update_icon()
 	check_health(cause)
