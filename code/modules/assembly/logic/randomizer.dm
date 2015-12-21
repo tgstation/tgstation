@@ -14,11 +14,13 @@
 
 	wires = WIRE_PULSE | WIRE_RECEIVE
 
+	connection_text = "connected to"
+
 	var/output_number = 1 //How many assemblies are randomly chosen
 	var/last_value = 0
 
 	accessible_values = list("Generated number" = "last_value;number",\
-		"Output number" = "output_number;number")
+		"Upper limit" = "output_number;number")
 
 /obj/item/device/assembly/randomizer/activate() //Simple stuff - when pulsed, emit a pulse. The assembly frame will handle the next part
 	if(!..()) return 0

@@ -64,6 +64,9 @@
 		new /obj/item/device/assembly/speaker(), \
 		new /obj/item/device/assembly/addition(), \
 		new /obj/item/device/assembly/comparison(), \
+		new /obj/item/device/assembly/randomizer(), \
+		new /obj/item/device/assembly/read_write(), \
+		new /obj/item/device/assembly/math(), \
 		),
 		"Stock_Parts"=list(
 		new /obj/item/weapon/stock_parts/console_screen(), \

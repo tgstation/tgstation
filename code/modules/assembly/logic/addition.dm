@@ -28,9 +28,6 @@
 
 	src.updateUsrDialog()
 
-/obj/item/device/assembly/addition/get_value()
-	return pulse_counter
-
 #define add_counter_href(amount) "<a href='?src=\ref[src];add_counter=[amount]'>"
 #define sub_counter_href(amount) "<a href='?src=\ref[src];sub_counter=[amount]'>"
 

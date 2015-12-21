@@ -31,6 +31,8 @@
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
+	var/connection_text = "sending signals to" //For assembly frames
+
 	var/list/accessible_values = list()
 
 	// List of variables that can be READ / WRITTEN TO by other assemblies.
@@ -92,24 +94,33 @@
 
 	return vars[var_to_grab]
 
-/obj/item/device/assembly/proc/set_value(var/value, var/new_value) //Set the assembly's value. var_to_change = variable's name, new_value = new value
+/obj/item/device/assembly/proc/write_to_value(var/value, var/new_value) //Attempt to write to assembly's value. This handles value's type (num/text), whether writing is possible, etc.
 	if(!value in accessible_values) return
 
 	var/list/L = params2list(accessible_values[value])
 
-	if((L[VALUE_VARIABLE_TYPE] == "number") && !isnum(new_value)) return //Attempted to write a non-number to a number variable
+	if(L[VALUE_VARIABLE_TYPE] == "number")
+		if(!isnum(new_value)) //Attempted to write a non-number to a number var - abort!
+			return
+	else
+		if(!istext(new_value))  //Attempted to write a non-string to a string var - convert the non-string into a string and continue
+			new_value = "[new_value]"
+
 	//text values can accept either numbers or text, so don't check for that
 
 	var/var_to_change = L[VALUE_VARIABLE_NAME]
 
-	vars[var_to_change] = new_value
+	set_value(var_to_change, new_value)
 
 	return
 
-/obj/item/device/assembly/proc/connected(var/obj/item/device/assembly/A, in_frame = 0)
+/obj/item/device/assembly/proc/set_value(var/var_name, var/new_value) //Actually change the assembly's var. No sanity or anything
+	vars[var_name] = new_value
+
+/obj/item/device/assembly/proc/connected(var/obj/item/device/assembly/A, in_frame = 0) //Called when assembly is connected to another assembly. in_frame is 1 if the connection occured in an assembly frame
 	return
 
-/obj/item/device/assembly/proc/disconnected(var/obj/item/device/assembly/A, in_frame = 0)
+/obj/item/device/assembly/proc/disconnected(var/obj/item/device/assembly/A, in_frame = 0) //Called when assembly is disconnected from another assembly
 	return
 
 /obj/item/device/assembly/process_cooldown()
@@ -127,6 +138,10 @@
 		else if(A.a_right == src)
 			A.a_right = null
 		src.holder = null
+	else if(istype(src.loc, /obj/item/device/assembly_frame))
+		var/obj/item/device/assembly_frame/AF = src.loc
+
+		AF.eject_assembly(src)
 
 	..()
 

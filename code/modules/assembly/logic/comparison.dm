@@ -3,6 +3,8 @@
 //
 // * get pulse: check condition. If true, send pulse to all outputs
 
+var/global/list/comparison_circuit_operations = list("EQUAL TO", "LESS THAN", "MORE THAN", "LESS THAN OR EQUAL TO", "MORE THAN OR EQUAL TO", "NOT EQUAL TO")
+
 /obj/item/device/assembly/comparison
 	name = "comparison circuit"
 
@@ -14,6 +16,8 @@
 	origin_tech = "programming=1"
 
 	wires = WIRE_PULSE | WIRE_RECEIVE
+
+	connection_text = "connected to"
 
 	var/obj/item/device/assembly/check_this = 1 //Either an assembly, or a constant
 	var/checked_value_1 //If check_this is an assembly, this var contains the value that is used
@@ -29,6 +33,7 @@
 
 	var/list/device_pool = list() //List of all connected devices
 
+	accessible_values = list("Operation" = "check_type;text")
 
 /obj/item/device/assembly/comparison/activate()
 	if(!..()) return 0
@@ -36,13 +41,13 @@
 	var/value_1 = 0
 	if(isnum(check_this))
 		value_1 = check_this
-	else
+	else if(check_this)
 		value_1 = check_this.get_value(checked_value_1)
 
 	var/value_2 = 0
 	if(isnum(check_against))
 		value_2 = check_against
-	else
+	else if(check_this)
 		value_2 = check_this.get_value(checked_value_2)
 
 	var/result = 0
@@ -53,7 +58,7 @@
 		if("MORE THAN") result = (value_1 > value_2)
 		if("LESS THAN OR EQUAL TO") result = (value_1 <= value_2)
 		if("MORE THAN OR EQUAL TO") result = (value_1 >= value_2)
-		if("NOT_EQUAL_TO") result = (value_1 != value_2)
+		if("NOT EQUAL TO") result = (value_1 != value_2)
 
 	switch(result)
 		if(0)
@@ -109,7 +114,7 @@
 	if(..()) return
 
 	if(href_list["change_check_type"])
-		var/choice = input(usr, "Select a new check type for \the [src].", "\The [src]") as null|anything in list("EQUAL TO", "LESS THAN", "MORE THAN", "LESS THAN OR EQUAL TO", "MORE THAN OR EQUAL TO", "NOT EQUAL TO")
+		var/choice = input(usr, "Select a new check type for \the [src].", "\The [src]") as null|anything in comparison_circuit_operations
 
 		if(isnull(choice)) return
 		if(..()) return
@@ -246,7 +251,12 @@
 	if(usr)
 		attack_self(usr)
 
+/obj/item/device/assembly/comparison/set_value(var_name, new_value)
+	if(var_name == "check_type")
+		if(!comparison_circuit_operations.Find(new_value)) //Not a valid operation
+			return
 
+	return ..(var_name, new_value)
 
 /obj/item/device/assembly/comparison/connected(var/obj/item/device/assembly/A, in_frame)
 	..()
@@ -258,7 +268,7 @@
 
 	//Remove all references and make the disconnected assembly unavailable
 	device_pool.Remove(A)
-	if(check_this == A) check_this = null
-	if(check_against == A) check_against = null
+	if(check_this == A) check_this = 1
+	if(check_against == A) check_against = 1
 	if(pulse_if_true == A) pulse_if_true = null
 	if(pulse_if_false == A) pulse_if_false = null

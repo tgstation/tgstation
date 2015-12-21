@@ -7,9 +7,15 @@
 
 	var/list/obj/item/device/assembly/assemblies = list()
 
-	var/list/connections = list() //Assembly associated with the assembly it's connected to
+	var/list/connections = list() //Assembly associated with the list of assemblies it's connected to
 
 /obj/item/device/assembly_frame/Destroy()
+	for(var/obj/item/device/assembly/AS in connections)
+		var/list/L = connections[AS]
+
+		for(var/DC in L)
+			AS.disconnected(DC, in_frame = 1)
+
 	connections = null
 
 	for(var/atom/movable/A in contents)
@@ -30,10 +36,7 @@
 	if(!connections.Find(A))
 		txt_connections = "<small>(<a href='?src=\ref[src];connect=1;assembly=\ref[A]'>connect</a>)</small>"
 	else
-		txt_connections = "<small> sending signals to: "
-
-		if(istype(A, /obj/item/device/assembly/math) || istype(A, /obj/item/device/assembly/comparison))
-			txt_connections = "<small> connected to: "
+		txt_connections = "<small> [A.connection_text]: "
 
 		var/list/list_of_connections = connections[A]
 
@@ -145,21 +148,7 @@
 			to_chat(usr, "<span class='warning'>A pink light flashes on \the [src], indicating an error.</span>")
 			return
 
-		for(var/A in connections) //Remove all references to this assembly in this board
-			var/list/L = connections[A]
-			L.Remove(AS)
-
-			var/obj/item/device/assembly/disconnected_from = A
-			disconnected_from.disconnected(AS, in_frame = 1)
-
-			if(!L.len) //If list of A's connections is empty
-				connections.Remove(A) //Remove A from the list of assemblies with connections
-
-		assemblies.Remove(AS)
-		connections.Remove(AS)
-
-		AS.holder = null
-		AS.forceMove(get_turf(src))
+		eject_assembly(AS)
 
 		to_chat(usr, "<span class='info'>You remove \the [AS] from \the [src].</span>")
 
@@ -254,9 +243,26 @@
 			assemblies.Add(AS)
 
 		if(!AS.secured)
-			AS.secured = 1 //Unsecured assemblies don't work, this is here to make life much easier!
+			AS.toggle_secure() //Make it secured
 
 	else if(istype(W, /obj/item/device/assembly_holder))
 		to_chat(user, "<span class='notice'>\The [W] is too big for any of the sockets here. Try taking it apart.")
 		return
 
+
+/obj/item/device/assembly_frame/proc/eject_assembly(obj/item/device/assembly/AS) //Disconnect an assembly from everything, then remove it
+	for(var/A in connections) //Remove all references to this assembly in this board
+		var/list/L = connections[A]
+		L.Remove(AS)
+
+		var/obj/item/device/assembly/disconnected_from = A
+		disconnected_from.disconnected(AS, in_frame = 1)
+
+		if(!L.len) //If list of A's connections is empty
+			connections.Remove(A) //Remove A from the list of assemblies with connections
+
+	assemblies.Remove(AS)
+	connections.Remove(AS)
+
+	AS.holder = null
+	AS.forceMove(get_turf(src))

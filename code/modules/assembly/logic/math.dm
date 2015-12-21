@@ -9,7 +9,7 @@
 
 // * get_value(): returns result of the calculation
 
-var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "POWER", "AVERAGE", "MIN", "MAX", "SIN", "COS", "ASIN", "ACOS", "TG", "COTG")
+var/global/list/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "POWER", "MOD", "AVERAGE", "MIN", "MAX", "SIN", "COS", "ASIN", "ACOS", "TG", "COTG")
 
 #define VALUE(a) (isnum(a) ? a : a.get_value(values[a]))
 
@@ -23,12 +23,14 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 
 	origin_tech = "programming=2"
 
-	//wires = WIRE_PULSE | WIRE_RECEIVE
+	connection_text = "connected to"
 
 	var/list/obj/item/device/assembly/values = list() //List of constants (numbers) or variables (assemblies). All assemblies in this list have a string associated with them, which tells this circuit which of the assembly's values to use
 	var/operation = "ADD"
 
-	accessible_values = list("Result" = "null;number") //Allow devices to read this circiut's result. First parameter (variable name, which is "null" here) isn't important - the functions are overwritten
+	accessible_values = list("Result" = "null;number",\
+		"Operation" = "operation;text") //Allow devices to read this circiut's result. First parameter (variable name, which is "null" here) isn't important - the functions are overwritten
+
 
 /obj/item/device/assembly/math/interact(mob/user as mob)
 	var/dat = ""
@@ -58,6 +60,8 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 		if("MULTIPLY")	operation_sign = "*"
 		if("DIVIDE")	operation_sign = "/"
 		if("POWER")		operation_sign = "^"
+
+		if("MOD")		operation_sign = "MOD"
 
 	if(operation in list("SIN","COS","ASIN","ACOS","TG","COTG"))
 		last_written_value = 1 //Only the first value is processed when using the functions above
@@ -164,8 +168,11 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 
 				attack_self(usr)
 
-/obj/item/device/assembly/math/get_value() //Overwrite, since the result is dynamic and not stored in any of our variables
+/obj/item/device/assembly/math/get_value(value)
 	if(!values.len) return 0
+
+	if(value != "Result")
+		return ..(value)
 
 	if(values.len == 1)
 		var/obj/item/device/assembly/a = values[1]
@@ -250,11 +257,21 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 								return 0
 
 						. = . ** number
+					if("MOD")
+						. %= number
 
 	. = round(. , 0.00001) //Round to 5 decimal places (prevent shit like cos(90) = 6.12323e-017)
 
-/obj/item/device/assembly/math/set_value() //Can't write values
-	return
+/obj/item/device/assembly/math/write_to_value(value, new_value)
+	if(value == "Result") //Can't write to result
+		return
+	else if(value == "Operation") //Modifying operation
+		new_value = uppertext(new_value)
+
+		if(!math_circuit_operations_list.Find(new_value)) //Not a valid operation
+			new_value = "ADD"
+
+	return ..(value, new_value)
 
 /obj/item/device/assembly/math/connected(var/obj/item/device/assembly/A, in_frame)
 	..()

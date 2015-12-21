@@ -270,3 +270,11 @@
 	if(istype(W, /obj/item/device/multitool))
 		interact(user, null)
 		return
+
+/obj/item/device/assembly/signaler/set_value(var/var_name, var/new_value)
+	if(var_name == "frequency")
+		new_value = sanitize_frequency(new_value)
+	else if(var_name == "code")
+		new_value = Clamp(new_value, 1, 100)
+
+	return ..(var_name, new_value)

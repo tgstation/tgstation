@@ -936,6 +936,7 @@
 #include "code\modules\assembly\logic\comparison.dm"
 #include "code\modules\assembly\logic\math.dm"
 #include "code\modules\assembly\logic\randomizer.dm"
+#include "code\modules\assembly\logic\write.dm"
 #include "code\modules\atmos_automation\console.dm"
 #include "code\modules\atmos_automation\statements.dm"
 #include "code\modules\atmos_automation\implementation\digital_valves.dm"
