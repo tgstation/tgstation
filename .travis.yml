@@ -35,8 +35,5 @@ before_script:
 script:
   - shopt -s globstar
   - (! grep 'step_[xy]' _maps/**/*.dmm)
-  - md5sum -c - <<< "29d5a6e23d172846354505e60ecfe7e7 *html/changelogs/example.yml"
-  - tools/check_filedirs.sh tgstation.dme
-  - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
   - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
   - bash dm.sh -M${DM_MAPFILE} tgstation.dme
