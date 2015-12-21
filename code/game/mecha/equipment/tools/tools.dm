@@ -250,8 +250,8 @@
 			occupant_message("<font color='red'><b>You smash apart \the [target]!</b></font>")
 			log_message("Destroyed [target].")
 			var/obj/machinery/portable_atmospherics/hydroponics/tray = target
-			tray.smashDestroy(50) //Just to really drive it home
 			playsound(target, 'sound/mecha/mechsmash.ogg', 50, 1)
+			tray.smashDestroy(50) //Just to really drive it home
 	else if(istype(target, /obj/effect/plantsegment) || istype(target, /obj/effect/alien/weeds) || istype(target, /obj/effect/biomass)|| istype(target, /turf/simulated/floor))
 		set_ready_state(0)
 		var/olddir = chassis.dir

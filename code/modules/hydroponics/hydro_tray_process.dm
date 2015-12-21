@@ -7,6 +7,7 @@
 	if(force_update)
 		force_update = 0
 	else if(world.time < (lastcycle + cycledelay))
+		if(update_icon_after_process) update_icon()
 		return
 	lastcycle = world.time
 
@@ -21,6 +22,7 @@
 	// This process is up here because it still happens even when the tray is empty.
 	if(waterlevel > 10 && nutrilevel > 2 && prob(isnull(seed) ? 5 : (1/(1+bees)))) //I hate whoever wrote this check
 		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER * weed_coefficient
+		if(draw_warnings) update_icon_after_process = 1
 
 	// There's a chance for a weed explosion to happen if the weeds take over.
 	// Plants that are themselves weeds (weed_tolerance > 8) are unaffected.
@@ -31,13 +33,14 @@
 	// If there is no seed data (and hence nothing planted),
 	// or the plant is dead, process nothing further.
 	if(!seed || dead)
-		if(draw_warnings) update_icon() //Harvesting would fail to set alert icons properly.
+		if(update_icon_after_process) update_icon() //Harvesting would fail to set alert icons properly.
 		return
 
 	// On each tick, there's a chance the pest population will increase.
 	// This process is under the !seed check because it only happens when a live plant is in the tray.
 	if(prob(1/(1+bees)))
 		pestlevel += 0.5 * HYDRO_SPEED_MULTIPLIER
+		if(draw_warnings) update_icon_after_process = 1
 
 	//Bees will attempt to aid the plant's longevity and make it fruit faster.
 	if(bees && age >= seed.maturation && prob(50))
@@ -51,6 +54,7 @@
 		skip_aging--
 	else
 		if(prob(80)) age += 1 * HYDRO_SPEED_MULTIPLIER
+		update_icon_after_process = 1
 
 	//Highly mutable plants have a chance of mutating every tick.
 	if(seed.immutable == -1)
@@ -59,8 +63,10 @@
 	// Maintain tray nutrient and water levels.
 	if(seed.nutrient_consumption > 0 && nutrilevel > 0 && prob(25))
 		nutrilevel -= max(0,seed.nutrient_consumption * HYDRO_SPEED_MULTIPLIER)
+		if(draw_warnings) update_icon_after_process = 1
 	if(seed.water_consumption > 0 && waterlevel > 0  && prob(25))
 		waterlevel -= max(0,seed.water_consumption * HYDRO_SPEED_MULTIPLIER)
+		if(draw_warnings) update_icon_after_process = 1
 
 	var/healthmod = rand(1,3) * HYDRO_SPEED_MULTIPLIER
 
@@ -72,12 +78,14 @@
 		else
 			affect_growth(-1)
 			health -= healthmod
+		if(draw_warnings) update_icon_after_process = 1
 	if(prob(35))
 		if(waterlevel < 10)
 			health += healthmod
 		else
 			affect_growth(-1)
 			health -= healthmod
+		if(draw_warnings) update_icon_after_process = 1
 
 	// Check that pressure, heat and light are all within bounds.
 	// First, handle an open system or an unconnected closed system.
@@ -128,18 +136,21 @@
 
 		if(missing_gas > 0)
 			health -= missing_gas * HYDRO_SPEED_MULTIPLIER
+			if(draw_warnings) update_icon_after_process = 1
 
 	// Process it.
 	var/pressure = environment.return_pressure()
 	if(pressure < seed.lowkpa_tolerance || pressure > seed.highkpa_tolerance)
 		health -= healthmod
 		improper_kpa = 1
+		if(draw_warnings) update_icon_after_process = 1
 	else
 		improper_kpa = 0
 
 	if(abs(environment.temperature - seed.ideal_heat) > seed.heat_tolerance)
 		health -= healthmod
 		improper_heat = 1
+		if(draw_warnings) update_icon_after_process = 1
 	else
 		improper_heat = 0
 
@@ -174,6 +185,7 @@
 		health -= healthmod
 		if(prob(35)) affect_growth(-1)
 		improper_light = 1
+		if(draw_warnings) update_icon_after_process = 1
 	else
 		improper_light = 0
 
@@ -187,6 +199,7 @@
 		if(BEE && BEE.parent)
 			var/obj/machinery/apiary/A = BEE.parent
 			A.toxic = Clamp(A.toxic + toxin_uptake/2, 0, 25) //gotta be careful where you let your bees hang around
+		if(draw_warnings) update_icon_after_process = 1
 
 	// Check for pests and weeds.
 	// Some carnivorous plants happily eat pests.
@@ -196,6 +209,7 @@
 			pestlevel -= HYDRO_SPEED_MULTIPLIER
 		else if (pestlevel >= seed.pest_tolerance)
 			health -= HYDRO_SPEED_MULTIPLIER
+		if(draw_warnings) update_icon_after_process = 1
 
 	// Some plants thrive and live off of weeds.
 	if(weedlevel > 0)
@@ -204,11 +218,13 @@
 			weedlevel -= HYDRO_SPEED_MULTIPLIER
 		else if (weedlevel >= seed.weed_tolerance)
 			health -= HYDRO_SPEED_MULTIPLIER
+		if(draw_warnings) update_icon_after_process = 1
 
 	// Handle life and death.
 	// If the plant is too old, it loses health fast.
 	if(age > seed.lifespan)
 		health -= (rand(3,5) * HYDRO_SPEED_MULTIPLIER)/(1+bees)
+		if(draw_warnings) update_icon_after_process = 1
 	// If the plant's age is negative, let's revert it into a seed packet, for funsies
 	else if(age < 0)
 		seed.spawn_seed_packet(get_turf(src))
@@ -241,8 +257,8 @@
 						msg_admin_attack("space vines ([seed.display_name]) have spread out of a tray. <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>")
 
 	check_level_sanity()
-	update_icon()
-	return
+	if(update_icon_after_process)
+		update_icon()
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/check_health()
 	if(health <= 0)
@@ -273,6 +289,8 @@
 
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
+	update_icon_after_process = 0
+
 	overlays.len = 0
 
 	update_name() //fuck it i'll make it not happen constantly later

@@ -10,6 +10,7 @@
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	var/draw_warnings = 1 // Set to 0 to stop it from drawing the alert lights.
+	var/tmp/update_icon_after_process = 0 // Will try to only call update_icon() when necessary.
 
 	// Plant maintenance vars.
 	var/waterlevel = 100       // Water (max 100)
@@ -106,6 +107,7 @@
 	// When the plant dies, weeds thrive and pests die off.
 	weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
 	pestlevel = 0
+	update_icon()
 
 //Calls necessary sanity when a plant is removed from the tray.
 /obj/machinery/portable_atmospherics/hydroponics/proc/remove_plant()
@@ -121,6 +123,7 @@
 	improper_kpa = 0
 	improper_heat = 0
 	set_light(0)
+	update_icon()
 
 //Harvests the product of a plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/harvest(var/mob/user)
