@@ -36,6 +36,10 @@
 		qdel(air_contents)
 		air_contents = null
 
+	if(istype(loc, /obj/machinery/portable_atmospherics))
+		var/obj/machinery/portable_atmospherics/holder = loc
+		holder.holding = null
+
 	processing_objects.Remove(src)
 
 	..()
@@ -255,6 +259,7 @@
 			TV.child_ruptured(src, range)
 
 		qdel(src)
+
 		return
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -265,7 +270,9 @@
 				return
 			T.assume_air(air_contents)
 			playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
+
 			qdel(src)
+
 			return
 		else
 			integrity--
