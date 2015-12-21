@@ -181,6 +181,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_orbit"]		>> ghost_orbit
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
+	S["ghost_hud"]			>> ghost_hud
+	S["inquisitive_ghost"]	>> inquisitive_ghost
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -220,6 +222,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_orbit"]		<< ghost_orbit
 	S["preferred_map"]		<< preferred_map
 	S["ignoring"]			<< ignoring
+	S["ghost_hud"]			<< ghost_hud
+	S["inquisitive_ghost"]	<< inquisitive_ghost
 
 	return 1
 

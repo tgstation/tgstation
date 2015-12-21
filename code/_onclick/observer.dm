@@ -1,15 +1,3 @@
-/client/var/inquisitive_ghost = 1
-/mob/dead/observer/verb/toggle_inquisition() // warning: unexpected inquisition
-	set name = "Toggle Inquisitiveness"
-	set desc = "Sets whether your ghost examines everything on click by default"
-	set category = "Ghost"
-	if(!client) return
-	client.inquisitive_ghost = !client.inquisitive_ghost
-	if(client.inquisitive_ghost)
-		src << "<span class='notice'>You will now examine everything you click on.</span>"
-	else
-		src << "<span class='notice'>You will no longer examine things you click on.</span>"
-
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -57,7 +45,7 @@
 	if(user.client)
 		if(check_rights(R_ADMIN, 0))
 			attack_ai(user)
-		if(user.client.inquisitive_ghost)
+		if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
 	return
 

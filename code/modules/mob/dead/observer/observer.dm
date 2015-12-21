@@ -398,13 +398,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/mind_initialize()
 	return
 
-/mob/dead/observer/verb/toggle_ghosthud()
-	set name = "Toggle Ghost HUD"
-	set desc = "Toggles your ghost's on-screen HUD"
-	set category = "Ghost"
-	ghost_hud_enabled = !ghost_hud_enabled
-	hud_used.ghost_hud()
-
 /mob/dead/observer/proc/show_me_the_hud(hud_index)
 	var/datum/atom_hud/H = huds[hud_index]
 	H.add_hud_to(src)

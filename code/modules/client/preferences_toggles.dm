@@ -253,3 +253,26 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
 	prefs.current_tab = 1
 	prefs.ShowChoices(usr)
+
+/client/verb/toggle_ghost_hud_pref()
+	set name = "Toggle Ghost HUD"
+	set category = "Preferences"
+	set desc = "Hide/Show Ghost HUD"
+	
+	prefs.ghost_hud = !prefs.ghost_hud
+	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
+	prefs.save_preferences()
+	if(istype(mob,/mob/dead/observer))
+		mob.hud_used.ghost_hud()
+
+/client/verb/toggle_inquisition() // warning: unexpected inquisition
+	set name = "Toggle Inquisitiveness"
+	set desc = "Sets whether your ghost examines everything on click by default"
+	set category = "Preferences"
+
+	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
+	prefs.save_preferences()
+	if(prefs.inquisitive_ghost)
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
+	else
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"
