@@ -71,7 +71,7 @@ In short:
 
 /datum/universal_state/hell/proc/AreaSet()
 	for(var/area/A in areas)
-		if(!istype(A,/area) || A.name=="Space")
+		if(!istype(A,/area) || isspace(A))
 			continue
 
 		// No cheating~

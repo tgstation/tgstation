@@ -187,7 +187,7 @@
 //////////////////////////////////////////////
 
 /area/proc/firealert()
-	if(name == "Space") //no fire alarms in space
+	if(isspace(src)) //no fire alarms in space
 		return
 	if( !fire )
 		fire = 1
@@ -225,24 +225,24 @@
 		UpdateFirelocks()
 
 /area/proc/radiation_alert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(!radalert)
 		radalert = 1
 		updateicon()
 	return
 
 /area/proc/reset_radiation_alert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(radalert)
 		radalert = 0
 		updateicon()
 	return
 
 /area/proc/readyalert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(!eject)
 		eject = 1
 		updateicon()
@@ -255,8 +255,8 @@
 	return
 
 /area/proc/partyalert()
-	if(name == "Space") //no parties in space!!!
-		return
+	if(isspace(src)) return
+
 	if (!( party ))
 		party = 1
 		updateicon()

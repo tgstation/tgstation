@@ -482,7 +482,7 @@
 
 	for(var/turf/T in range(centerloc,repair_range))
 		if(istype(T, /turf/space/))
-			if(T.loc.name == "Space")
+			if(isspace(T.loc))
 				continue
 			var/obj/item/stack/tile/plasteel/P = new /obj/item/stack/tile/plasteel
 			P.build(T)

@@ -50,7 +50,7 @@
 	for(var/obj/item/bluespace_beacon/B in beacons)
 		if(B.id == src.id)
 			var/area/AR = get_area(B)
-			if(AR.type != /area)
+			if(!isspace(AR))
 				if(!conflict)
 					to_chat(usr, "One or more beacons are conflicting with another area. The area will not be created, and conflicting beacons will be marked as such.")
 					conflict = 1

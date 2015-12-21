@@ -139,7 +139,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	if(!isarea(areaMaster) || areaMaster.type == /area)
+	if(!isarea(areaMaster) || isspace(areaMaster))
 		say("Unable to process synchronization")
 		return
 

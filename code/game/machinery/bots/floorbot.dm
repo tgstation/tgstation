@@ -366,7 +366,7 @@ var/global/list/floorbot_targets=list()
 				return 1
 		if(!src.have_target())
 			for (var/turf/space/D in shitICanSee)
-				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space") && !(D in floorbot_targets))
+				if(!(D in floorbottargets) && D != src.oldtarget && !isspace(D.loc) && !(D in floorbot_targets))
 					src.oldtarget = D
 					src.target = D
 					floorbot_targets += D
@@ -404,7 +404,7 @@ var/global/list/floorbot_targets=list()
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
 	if(istype(target, /turf/space/))
-		if(target.loc.name == "Space")
+		if(isspace(target.loc))
 			return
 	else if(!istype(target, /turf/simulated/floor))
 		return
