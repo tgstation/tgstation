@@ -25,7 +25,7 @@
 /obj/item/device/device_analyser/attack_self()
 	..()
 	loadone = !loadone
-	to_chat(usr, "<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>")
+	to_chat(usr, "<span class='notice'>You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>")
 
 /obj/item/device/device_analyser/preattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
 	/*if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
@@ -110,4 +110,3 @@
 		if((techlist && techlist["syndicate"]) || (O.mech_flags & MECH_SCAN_ILLEGAL))
 			return -1 //special negative return case
 	return 1
-

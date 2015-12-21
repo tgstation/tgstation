@@ -20,7 +20,7 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
+		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers.", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30)

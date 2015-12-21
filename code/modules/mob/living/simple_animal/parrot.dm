@@ -106,13 +106,13 @@
 		"This is a late parrot.", \
 		"It's a stiff.", \
 		"Bereft of life, it rests in peace.", \
-		"It's run down the curtain and joined the choir invisible.", \
+		"It's rung down the curtain and joined the choir invisible.", \
 		"This is an ex-parrot.")
 	var/list/not_dead_lines = list("It's just resting.", \
 		"It's stunned.", \
-		"Just tired and shagged out after a long squawk.", \
-		"It's pining for the fjords.", \
-		"It just prefers kippin' on it's back.", \
+		"It's just tired and shagged out after a long squawk.", \
+		"It's prolly pining for the fjords.", \
+		"It prefers kippin' on it's back.", \
 		"It's a beautiful bird, lovely plumage, innit?")
 
 
