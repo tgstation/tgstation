@@ -1,6 +1,6 @@
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 0
-#define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
+#define TANK_DEFAULT_RELEASE_PRESSURE 16
 
 /obj/item/weapon/tank
 	name = "tank"
@@ -17,7 +17,7 @@
 	throw_range = 4
 
 	var/datum/gas_mixture/air_contents = null
-	var/distribute_pressure = ONE_ATMOSPHERE
+	var/distribute_pressure = 16
 	var/integrity = 3
 	var/volume = 70
 
