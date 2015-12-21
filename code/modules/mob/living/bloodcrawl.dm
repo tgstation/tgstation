@@ -80,15 +80,8 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 				src.adjustFireLoss(-1000)
 				src.adjustOxyLoss(-1000)
 				src.adjustToxLoss(-1000)
-				if(istype(src, /mob/living/simple_animal/slaughter))
-					var/mob/living/simple_animal/slaughter/S = src
-					kidnapped << "<span class='userdanger'>You feel teeth sink into your flesh, and the--</span>"
-					kidnapped.adjustBruteLoss(1000)
-					kidnapped.loc = src
-					S.consumed_mobs.Add(kidnapped)
-				else
-					kidnapped.ghostize()
-					qdel(kidnapped)
+				kidnapped.ghostize()
+				qdel(kidnapped)
 			else
 				src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
 		src.notransform = 0
