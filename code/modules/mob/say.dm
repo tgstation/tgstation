@@ -26,6 +26,8 @@
 
 	if(!usr.stat && (usr.status_flags & FAKEDEATH))
 		to_chat(usr, "<span class='danger'>Doing this will give us away!</span>")
+		return
+
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if(usr.stat == DEAD)

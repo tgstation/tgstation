@@ -1223,7 +1223,7 @@
 		return
 	usr.delayNextMove(20)
 
-	if(usr.stat == 1 || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		to_chat(usr, "You are unconcious and cannot do that!")
 		return
 
@@ -1334,7 +1334,7 @@
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr) || (usr.status_flags & FAKEDEATH)) return
+	if(usr.isUnconscious() || usr.restrained() || !isliving(usr)) return
 
 	if(usr == src)
 		self = 1

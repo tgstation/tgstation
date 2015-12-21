@@ -13,7 +13,7 @@
 	uid = ++global_uid
 	areas |= src
 
-	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
+	if(isspace(src))	// override defaults for space. TODO: make space areas of type /area/space rather than /area
 		requires_power = 1
 		always_unpowered = 1
 		lighting_use_dynamic = 0
@@ -390,7 +390,7 @@
 					sound = pick('sound/ambience/ambicha1.ogg', 'sound/ambience/ambicha2.ogg', 'sound/ambience/ambicha3.ogg', 'sound/ambience/ambicha4.ogg')
 				else if(istype(src, /area/medical/morgue))
 					sound = pick('sound/ambience/ambimo1.ogg', 'sound/ambience/ambimo2.ogg', 'sound/music/main.ogg')
-				else if(type == /area)
+				else if(isspace(src))
 					sound = pick('sound/ambience/ambispace.ogg', 'sound/music/space.ogg', 'sound/music/main.ogg', 'sound/music/traitor.ogg', 'sound/ambience/spookyspace1.ogg', 'sound/ambience/spookyspace2.ogg')
 				else if(istype(src, /area/engineering))
 					sound = pick('sound/ambience/ambisin1.ogg', 'sound/ambience/ambisin2.ogg', 'sound/ambience/ambisin3.ogg', 'sound/ambience/ambisin4.ogg')

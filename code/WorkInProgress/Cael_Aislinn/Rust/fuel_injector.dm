@@ -256,7 +256,7 @@
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious() || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)
@@ -266,7 +266,7 @@
 	set name = "Rotate Generator (Counter-clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious() || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)

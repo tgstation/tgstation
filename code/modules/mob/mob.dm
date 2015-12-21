@@ -897,7 +897,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || usr.stat || (usr.status_flags & FAKEDEATH) || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || usr.isUnconscious() || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
 
 	if(istype(A, /obj/effect/decal/point))
@@ -1444,7 +1444,7 @@ var/list/slot_equipment_priority = list( \
 		lying = locked_to.locked_should_lie
 
 
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
+	else if( isUnconscious() || weakened || paralysis || resting || sleeping )
 		stop_pulling()
 		lying = 1
 		canmove = 0

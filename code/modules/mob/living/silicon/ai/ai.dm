@@ -623,7 +623,7 @@ var/list/ai_list = list()
 	src.cameraFollow = null
 	var/cameralist[0]
 
-	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
+	if(usr.isDead())
 		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
@@ -667,7 +667,7 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 	set name = "AI Status"
 
-	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
+	if(usr.isDead())
 		to_chat(usr, "You cannot change your emotional status because you are dead!")
 		return
 

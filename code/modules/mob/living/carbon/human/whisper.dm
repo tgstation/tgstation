@@ -8,7 +8,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(stat == DEAD || status_flags & FAKEDEATH)
+	if(isDead())
 		return
 
 	var/datum/speech/speech = create_speech(message)
