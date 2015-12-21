@@ -1201,6 +1201,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	access = access_tox_storage
 	group = "Science"
 
+/datum/supply_packs/borer
+	name = "Borer Egg Crate"
+	contains = list (/obj/item/weapon/reagent_containers/food/snacks/borer_egg)
+	cost = 100
+	containertype = /obj/structure/closet/crate/secure/scisec
+	containername = "Borer egg crate"
+	access = access_xenobiology
+	group = "Science"
+
 //////HYDROPONICS//////
 
 /datum/supply_packs/monkey
