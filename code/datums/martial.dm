@@ -471,19 +471,6 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
-
-/mob/living/carbon/human/proc/sleeping_carp_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Sleeping Carp clan."
-	set category = "Sleeping Carp"
-
-	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
-	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
-	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
-	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
-	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
-	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
-
 /obj/item/weapon/sleeping_carp_scroll
 	name = "mysterious scroll"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
