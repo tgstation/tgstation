@@ -3650,7 +3650,7 @@
 				H.adjustToxLoss(5)
 			else if(istype(L))
 				L.take_damage(0.05, 0.5)
-			H.adjustToxLoss(0.1)
+			H.adjustToxLoss(0.5)
 
 /datum/reagent/ethanol/reaction_obj(var/obj/O, var/volume)
 
@@ -3710,6 +3710,7 @@
 	dizzy_adj = 5
 	slur_start = 25
 	confused_start = 100
+	pass_out = 350
 
 //Copy paste from LSD... shoot me
 /datum/reagent/ethanol/absinthe/on_mob_life(var/mob/living/M)
@@ -3718,8 +3719,6 @@
 
 	data++
 	M.hallucination += 5
-	if(volume > REAGENTS_OVERDOSE)
-		M.adjustToxLoss(1)
 
 /datum/reagent/ethanol/rum
 	name = "Rum"
@@ -3842,15 +3841,13 @@
 	id = "rum"
 	description = "Popular with the sailors. Not very popular with everyone else."
 	color = "#664300" //rgb: 102, 67, 0
+	pass_out = 350
 
 /datum/reagent/ethanol/deadrum/on_mob_life(var/mob/living/M)
 
 	if(..()) return 1
 
 	M.dizziness += 5
-
-	if(volume > REAGENTS_OVERDOSE)
-		M.adjustToxLoss(1)
 
 /datum/reagent/ethanol/deadrum/vodka
 	name = "Vodka"
