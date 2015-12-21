@@ -450,9 +450,9 @@ var/global/list/possible_items = list()
 
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, steal_target))
-			if(targetinfo && targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 				return 1
-			else //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 				return 1
 
 		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
