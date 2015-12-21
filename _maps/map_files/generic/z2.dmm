@@ -543,7 +543,7 @@
 "kw" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows"; dir = 9},/area/syndicate_mothership)
 "kx" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/syndicate_mothership)
 "ky" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
-"kz" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
+"kz" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "kA" = (/obj/machinery/computer/telecrystals/uplinker,/turf/unsimulated/floor{tag = "icon-podhatch (WEST)"; icon_state = "podhatch"; dir = 8},/area/syndicate_mothership)
 "kB" = (/obj/machinery/door/airlock/centcom{name = "briefing room"; opacity = 1; req_access_txt = "103"},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/ferry)
 "kC" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/centcom/ferry)
