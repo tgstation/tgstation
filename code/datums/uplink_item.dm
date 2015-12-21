@@ -109,6 +109,54 @@ var/list/uplink_items = list()
 //
 */
 
+//Operator special offers
+
+/datum/uplink_item/specoffer
+	category = "Special offer roles"
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/c20r
+	name = "C20r bundle"
+	desc = "The classic C20r, with two magazines, at discount price. Contains free surplus suppressor."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
+	cost = 14//normal price 16
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/m90gl
+	name = "M90gl bundle"
+	desc = "Premium offer. Pick up the M90gl with a magazine, some grenades, and a pack of cigarettes for a premium discount."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
+	cost = 15//normal price 18
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/bulldog
+	name = "Bulldog bundle"
+	desc = "Optimised for people that want to get up close and personal. Contains the popular Bulldog shotgun, a two drums of ammunition, and an elite hardsuit."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
+	cost = 16//normal price 20 THATS TWO FREE DRUMS
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/medical
+	name = "Medical bundle"
+	desc = "Support your fellow operatives with this medical bundle. Contains a Donksoft machine gun, a box of ammo, and a pair of magboots to rescue your friends in no-gravity environments."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	cost = 15//normal price 20 THATS A FREE MAGBOOT AND a box OF RIOT DART LMG
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/sniper
+	name = "Sniper bundle"
+	desc = "Contains a collapsed sniper rifle in an expensive carrying case, a hollowpoint haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
+	item = /obj/item/weapon/storage/briefcase/sniperbundle
+	cost = 20//26 normal cost. suppressor is excluded from price.
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/chemical
+	name = "Tiger Cooperation Chemical Bioterror bundle"
+	desc = "Contains Bioterror spray, Bioterror grenade, chemicals, syringe gun, box of syringes, Donksoft assault rifle, and some darts. Warning: Seal suit and equip internals before use."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
+	cost = 30 //normal price 42 biggest saving here
+	gamemodes = list(/datum/game_mode/nuclear)
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -127,11 +175,19 @@ var/list/uplink_items = list()
 	cost = 13
 	surplus = 50
 
+/datum/uplink_item/dangerous/shotgun
+	name = "Bulldog Shotgun"
+	desc = "A fully-loaded semi-automatic drum fed shotgun. Compatiable with all 12 gauge rounds. Designed for close quarter combat use."
+	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 40
+
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 14
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
@@ -143,7 +199,7 @@ var/list/uplink_items = list()
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
 	item = /obj/item/weapon/gun/projectile/automatic/m90
-	cost = 18
+	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
 
@@ -199,7 +255,7 @@ var/list/uplink_items = list()
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
-	cost = 8
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -207,7 +263,7 @@ var/list/uplink_items = list()
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
-	cost = 12
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -215,7 +271,7 @@ var/list/uplink_items = list()
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 8
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 35
 
@@ -241,7 +297,7 @@ var/list/uplink_items = list()
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 90
+	cost = 80
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -257,7 +313,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
 	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
-	cost = 50
+	cost = 80
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -313,14 +369,22 @@ var/list/uplink_items = list()
 	name = "SMG Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
-	cost = 2
+	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+
+/datum/uplink_item/ammo/smgammo
+	name = "Ammo Duffelbag - C20r Ammo Grab Bag"
+	desc = "A duffelbag filled with C20r to kit out an entire team, at a discounted price."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
+	cost = 20 //get about 2 mags for free this shit is imba as fuck Normal price 27
+	gamemodes = list(/datum/game_mode/nuclear)
+
 
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
-	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
+	cost = 12 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullslug
@@ -362,14 +426,21 @@ var/list/uplink_items = list()
 	name = "Toploader Magazine - 5.56"
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
-	cost = 2
+	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
 	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
-	cost = 4
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/fireteam
+	name = "Ammo Duffelbag - Fireteam Ammo Grab Bag"
+	desc = "A duffelbag filled with ammo to kit out a fireteam, contains four C20r magazines, two M90gl magazines, a box of 40mm grenades, and sniper ammunition at a discounted price." //M90gl ammo bag is too imba. fuck that.
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
+	cost = 24//you get 4 grenades for free. Normal price 29
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun

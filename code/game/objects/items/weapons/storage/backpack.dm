@@ -392,3 +392,111 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
+	desc = "A large dufflebag, packed to the brim with C20r magazines."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	return
+
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
+	desc = "A large dufflebag, packed to the brim with C20r, M90gl, and sniper ammunition."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/a40mm(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
+	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/suppressor/specialoffer(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
+	desc = "A large dufflebag containing a M90gl, a magazine, and a stimpack."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m556(src)
+	new /obj/item/ammo_box/a40mm(src)
+	new /obj/item/weapon/gun/projectile/automatic/m90(src)
+	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
+	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/storage/firstaid/tactical(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/storage/firstaid/tactical(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
+	desc = "A large dufflebag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
+	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
+	new /obj/item/weapon/gun/syringe/syndicate(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
+	new /obj/item/weapon/storage/box/syringes(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
+	return
