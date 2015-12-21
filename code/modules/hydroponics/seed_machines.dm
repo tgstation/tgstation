@@ -208,7 +208,6 @@
 		visible_message("\icon[src] [src] beeps and spits out [loaded_seed].")
 
 		loaded_seed = null
-		nanomanager.update_uis(src)
 
 	if(href_list["eject_disk"])
 		if(!loaded_disk) return
@@ -216,7 +215,6 @@
 		visible_message("\icon[src] [src] beeps and spits out [loaded_disk].")
 
 		loaded_disk = null
-		nanomanager.update_uis(src)
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
@@ -235,7 +233,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		if(loaded_seed && loaded_seed.seed)
 			genetics = loaded_seed.seed
@@ -250,7 +247,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		var/datum/plantgene/P = genetics.get_gene(href_list["get_gene"])
 		if(!P) return
@@ -274,8 +270,7 @@
 		if(!genetics) return
 		genetics = null
 		degradation = 0
-		nanomanager.update_uis(src)
-	return
+	return 1
 
 // Fires an extracted trait into another packet of seeds with a chance
 // of destroying it based on the size/complexity of the plasmid.
@@ -348,7 +343,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		if(!isnull(plant_controller.seeds[loaded_seed.seed.name]))
 			loaded_seed.seed = loaded_seed.seed.diverge(1)
@@ -369,7 +363,7 @@
 				mode = GENEGUN_MODE_PURGE
 			if(GENEGUN_MODE_PURGE)
 				mode = GENEGUN_MODE_SPLICE
-		nanomanager.update_uis(src)
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
+	return 1

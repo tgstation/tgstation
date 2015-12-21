@@ -205,3 +205,4 @@
 		volume_rate = Clamp(volume_rate+diff, minrate, maxrate)
 
 	src.add_fingerprint(usr)
+	return 1

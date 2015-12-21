@@ -154,3 +154,4 @@
 		update_icon()
 
 	src.add_fingerprint(usr)
+	return 1
