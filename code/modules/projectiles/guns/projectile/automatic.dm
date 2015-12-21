@@ -118,9 +118,7 @@
 	fire_delay = 2
 	can_suppress = 0
 	burst_size = 0
-
-/obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
-	return
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
 	..()
