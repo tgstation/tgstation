@@ -125,7 +125,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/specoffer/m90gl
 	name = "M90gl bundle"
 	desc = "Premium offer. Pick up the M90gl with a magazine, some grenades, and a pack of cigarettes for a premium discount."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c90glbundle
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
 	cost = 15//normal price 18
 	gamemodes = list(/datum/game_mode/nuclear)
 
