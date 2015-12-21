@@ -142,6 +142,12 @@
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
 
+/obj/item/ammo_casing/shotgun/doorslug
+	name = "breaching slug"
+	desc = "A modified shotgun shell which fires a massive non-neutonian fluid projectile when fired. Extremely useful for breaching doors. Not useful for breaching rigcages."
+	icon_state = "mshell"
+	projectile_type = /obj/item/projectile/bullet/doorslug
+
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
 	desc = "A delicate device which can be loaded into a shotgun. The primer acts as a button which triggers the gain medium and fires a powerful \
