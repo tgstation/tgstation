@@ -553,12 +553,18 @@
 						dat += "<tr><td><i>Abductee not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/blob))
-			var/datum/game_mode/blob/mode = ticker.mode
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
+		var/list/blob_minds = list()
+		for(var/mob/camera/blob/B in mob_list)
+			blob_minds |= B.mind
 
-			for(var/datum/mind/blob in mode.infected_crew)
+		if(istype(ticker.mode, /datum/game_mode/blob) || blob_minds.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
+			if(istype(ticker.mode,/datum/game_mode/blob))
+				var/datum/game_mode/blob/mode = ticker.mode
+				blob_minds |= mode.infected_crew
+				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
+
+			for(var/datum/mind/blob in blob_minds)
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -566,6 +572,7 @@
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
+
 
 		if(istype(ticker.mode, /datum/game_mode/monkey))
 			var/datum/game_mode/monkey/mode = ticker.mode
