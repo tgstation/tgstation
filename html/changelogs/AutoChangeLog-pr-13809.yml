@@ -1,0 +1,4 @@
+author: AnturK
+delete-after: True
+changes: 
+  - tweak: "Ghost HUD and Ghost Inquisitiveness  toggles are now persistent between rounds."
