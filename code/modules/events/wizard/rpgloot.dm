@@ -56,7 +56,6 @@
 		return
 	target.force 		+= 1
 	target.throwforce	+= 1
-	var/protections = list("melee", "bullet", "laser", "energy", "bomb", "bio", "rad")
 	for(var/value in target.armor)
 		target.armor[value] += 1
 	user << "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>"
