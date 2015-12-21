@@ -158,6 +158,21 @@
 		if(!can_trigger_gun(L))
 			return
 
+	//DUAL WIELDING
+	var/obj/item/weapon/gun/off_hand
+	if(ishuman(user) && user.a_intent == "harm")
+		var/mob/living/carbon/human/H = user
+		if(H.r_hand == src && istype(H.l_hand, /obj/item/weapon/gun))
+			off_hand = H.l_hand
+
+		else if(H.l_hand == src && istype(H.r_hand, /obj/item/weapon/gun))
+			off_hand = H.r_hand
+
+	if(off_hand && off_hand.can_trigger_gun(user))
+		spawn(1)
+			off_hand.newshot()
+			off_hand.process_fire(target,user,1,params)
+
 	process_fire(target,user,1,params)
 
 
@@ -198,6 +213,8 @@
 		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
+obj/item/weapon/gun/proc/newshot()
+	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
