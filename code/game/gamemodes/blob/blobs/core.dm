@@ -79,6 +79,7 @@
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
 			B.change_to(/obj/effect/blob/shield, overmind)
+	..()
 
 
 /obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
