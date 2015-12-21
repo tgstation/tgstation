@@ -260,7 +260,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-	
+
 /datum/uplink_item/dangerous/reinforcement/spawn_item()
 	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))
@@ -649,7 +649,7 @@ var/list/uplink_items = list()
 	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	excludefrom = list(/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/elite_hardsuit
 	name = "Elite Syndicate Hardsuit"
