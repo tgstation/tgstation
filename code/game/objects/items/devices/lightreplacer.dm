@@ -204,11 +204,13 @@
 			light_types[lightname] += L
 
 		var/list/light_type_cur
-		var/list/to_dump_5 = list()//I guess I could do this without this variable, but it would involve more string concatenation, and nobody wants that.
-		var/list/to_dump_all = list() //This too
+		var/list/to_dump_5  //I guess I could do this without this variable, but it would involve more string concatenation, and nobody wants that.
+		var/list/to_dump_all//This too
 	
 		for(var/T in light_types)
 			light_type_cur = light_types[T] //The way you'd expect to be the good way to do this doesn't work. This is dumb, but necessary.
+			to_dump_5 = list()
+			to_dump_all = list()
 			for(var/light_to_ref in light_type_cur)
 				to_dump_all += "\ref[light_to_ref]"
 			to_dump_5 = to_dump_all.Copy(1, min(6, to_dump_all.len + 1))
@@ -217,10 +219,10 @@
 		dat += "<br><b><a href='?src=\ref[src];eject=supply'>Eject Supply Container</a></b>"
 
 	else
-		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a><br><br>"
+		dat += "<h3>No supply container inserted</h3><br><a href='?src=\ref[src];fold=supply'>Construct Supply Box</a>"
 
 	if(supply || waste)
-		dat += "<a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
+		dat += "<br><br><a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
 
 	if(waste)
 		dat += {"<br><br><br><h3>Waste Container:</h3>
@@ -288,7 +290,7 @@
 		dat += "<h3>No supply container inserted. This should be impossible. Please ahelp this.</h3>"
 
 	if(supply || waste)
-		dat += "<a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
+		dat += "<br><br><a href='?src=\ref[src];swap=1'>Swap Supply and Waste Containers</a>"
 
 	if(waste)
 		dat += {"<br><br><br><h3>Waste Container:</h3>
