@@ -168,6 +168,8 @@
 	set name = "Reset Guardian Player (One Use)"
 	set category = "Guardian"
 	set desc = "Re-rolls which ghost will control your Guardian. One use."
+
+	src.verbs -= /mob/living/proc/guardian_reset
 	for(var/mob/living/simple_animal/hostile/guardian/G in mob_list)
 		if(G.summoner == src)
 			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [G.real_name]?", "pAI", null, FALSE, 100)
@@ -177,11 +179,11 @@
 				G << "Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."
 				src << "Your guardian has been successfully reset."
 				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
-				G.ghostize()
+				G.ghostize(0)
 				G.key = new_stand.key
-				src.verbs -= /mob/living/proc/guardian_reset
 			else
 				src << "There were no ghosts willing to take control. Looks like you're stuck with your Guardian for now."
+				verbs += /mob/living/proc/guardian_reset
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
