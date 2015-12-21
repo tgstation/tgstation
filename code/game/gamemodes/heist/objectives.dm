@@ -90,11 +90,11 @@
 	areas = list(/area/shuttle/vox/station)
 
 /datum/theft_objective/number/heist/check_completion()
-	var/list/search
+	var/list/search = list()
 	var/found = 0
 	for(var/A in areas)
 		var/area/B = locate(A)
-		search += B.search_contents_for(/atom, typepath)
+		search += recursive_type_check(B, typepath)
 	for(var/C in search)
 		found++
 	return (found >= required_amount)
@@ -112,13 +112,15 @@
 							/obj/structure/particle_accelerator/particle_emitter/left, \
 							/obj/structure/particle_accelerator/particle_emitter/right, \
 							/obj/structure/particle_accelerator/power_box,)
-	var/list/search
+	var/list/search = list()
 	for(var/A in areas)
 		var/area/B = locate(A)
-		search += B.search_contents_for(/atom, contents)
+		search += recursive_type_check(B, /obj/structure/particle_accelerator)
 	for(var/C in contents)
-		if(!is_type_in_list(C, search))
-			return FALSE
+		for(var/atom/A in search)
+			if(istype(A,C)) //Does search contain this part type
+				continue
+			return FALSE //It didn't, fail the object
 	return TRUE
 
 /datum/theft_objective/number/heist/singulogen
@@ -166,12 +168,15 @@
 
 /datum/theft_objective/number/salvage/check_completion()
 	var/found_amount = 0
-	var/list/search
+	var/list/search = list()
 	for(var/A in areas)
 		var/area/B = locate(A)
-		search += B.search_contents_for(typepath)
-	for(var/obj/item/stack/A in search)
-		found_amount += A.amount
+		search += recursive_type_check(B,typepath)
+	if(istype(typepath,/obj/item/stack))
+		for(var/obj/item/stack/A in search)
+			found_amount += A.amount
+	else
+		found_amount = search.len
 	return (found_amount >= required_amount)
 
 /datum/theft_objective/number/salvage/metal

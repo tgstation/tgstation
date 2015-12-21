@@ -313,6 +313,7 @@
 	if(destination_port)
 		if(move_to_dock(destination_port))
 			current_port = destination_port //Only change our location if we successfully moved to destination
+			after_flight() //Shake the shuttle, weaken unbuckled mobs, etc.
 
 		destination_port = null
 
@@ -381,8 +382,6 @@
 
 				moved_shuttles |= S
 				S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
-
-		after_flight() //Shake the shuttle, weaken unbuckled mobs, etc.
 
 		return 1
 

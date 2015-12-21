@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: True
+changes: 
+- bugfix: Heist works now, the objectives and not ending immediately upon sending the shuttle

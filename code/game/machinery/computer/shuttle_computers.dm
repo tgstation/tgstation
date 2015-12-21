@@ -148,7 +148,7 @@
 			return
 
 		//Send a message to the shuttle to move
-		shuttle.travel_to(selected_port, src)
+		shuttle.travel_to(selected_port, src, usr)
 
 		selected_port = null
 		src.updateUsrDialog()
