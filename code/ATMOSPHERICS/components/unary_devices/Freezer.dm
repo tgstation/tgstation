@@ -107,7 +107,7 @@
 			src.current_temperature = min(T20C, src.current_temperature+amount)
 		else
 			src.current_temperature = max(min_temperature, src.current_temperature+amount)
-		active_power_usage = (current_heat_capacity * (T20C - current_temperature) / 100) + idle_power_usage
+		active_power_usage = (current_heat_capacity * (T20C - current_temperature) / 400) + idle_power_usage
 	src.updateUsrDialog()
 
 /obj/machinery/atmospherics/components/unary/cold_sink/freezer/process()
@@ -236,7 +236,7 @@
 			src.current_temperature = min((max_temperature), src.current_temperature+amount)
 		else
 			src.current_temperature = max(T20C, src.current_temperature+amount)
-		active_power_usage = (current_heat_capacity * (current_temperature - T20C) / 100) + idle_power_usage
+		active_power_usage = (current_heat_capacity * (current_temperature - T20C) / 600) + idle_power_usage
 	src.updateUsrDialog()
 	src.add_fingerprint(usr)
 	return
