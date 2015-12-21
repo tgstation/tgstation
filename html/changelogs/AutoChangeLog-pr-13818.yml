@@ -1,5 +1,0 @@
-author: LanCartwright
-delete-after: True
-changes: 
-  - tweak: "The TC costs for nuke ops have been rebalanced. Guns, viscerators and mechs are cheaper, ammo and borgs are more expensive."
-  - rscadd: "Most guns can now be bought in bundles, together with some ammo and freebies for a special discount."
