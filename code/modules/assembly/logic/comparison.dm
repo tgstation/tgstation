@@ -15,21 +15,85 @@
 
 	wires = WIRE_PULSE | WIRE_RECEIVE
 
+	var/obj/item/device/assembly/check_this = 1 //Either an assembly, or a constant
+	var/checked_value_1 //If check_this is an assembly, this var contains the value that is used
+
 	var/check_type = "EQUAL TO"
-	var/check_against = 1
+
+	var/obj/item/device/assembly/check_against = 1 //Either an assembly, or a constant
+	var/checked_value_2 //If check_against is an assembly, this var contains the value that is used
+
+	var/obj/item/device/assembly/pulse_if_true = null
+
+	var/obj/item/device/assembly/pulse_if_false = null
+
+	var/list/device_pool = list() //List of all connected devices
+
 
 /obj/item/device/assembly/comparison/activate()
 	if(!..()) return 0
 
-	pulse() //
+	var/value_1 = 0
+	if(isnum(check_this))
+		value_1 = check_this
+	else
+		value_1 = check_this.get_value(checked_value_1)
+
+	var/value_2 = 0
+	if(isnum(check_against))
+		value_2 = check_against
+	else
+		value_2 = check_this.get_value(checked_value_2)
+
+	var/result = 0
+
+	switch(check_type)
+		if("EQUAL TO") result = (value_1 == value_2)
+		if("LESS THAN") result = (value_1 < value_2)
+		if("MORE THAN") result = (value_1 > value_2)
+		if("LESS THAN OR EQUAL TO") result = (value_1 <= value_2)
+		if("MORE THAN OR EQUAL TO") result = (value_1 >= value_2)
+		if("NOT_EQUAL_TO") result = (value_1 != value_2)
+
+	switch(result)
+		if(0)
+			if(pulse_if_false)
+				pulse_if_false.pulsed()
+		else
+			if(pulse_if_true)
+				pulse_if_true.pulsed()
+
+
 
 /obj/item/device/assembly/comparison/interact(mob/user as mob)
 	var/dat = ""
 
-	dat += "<tt>Comparison circuit</tt> <small>\[<a href='?src=\ref[src];help=1'>?</a>\]</small><BR><BR>"
+	dat += "CONDITON:<br>"
 
-	dat += {"CONDITON:<br>
-	<b>VALUE</b> is <b><a href='?src=\ref[src];change_check_type=1'>[check_type]</a></b> <b><a href='?src=\ref[src];change_check_value=1'>[check_against]</a></b><BR>"}
+	dat += "<a href='?src=\ref[src];change_check_this=1'>[check_this]</a>"
+
+	if(!isnum(check_this))
+		dat += " ([checked_value_1])"
+
+	dat += " is <a href='?src=\ref[src];change_check_type=1'>[check_type]</a> "
+
+	dat += "<a href='?src=\ref[src];change_check_against=1'>[check_against]</a>"
+
+	if(!isnum(check_against))
+		dat += " ([checked_value_2])"
+
+	dat += "<BR>"
+
+	dat += "IF <b>TRUE</b>: <a href='?src=\ref[src];change_pulse_if_true=1'>[pulse_if_true ? "pulse [pulse_if_true]" : "do nothing"]</a><BR>"
+	dat += "IF <b>FALSE</b>: <a href='?src=\ref[src];change_pulse_if_false=1'>[pulse_if_false ? "pulse [pulse_if_false]" : "do nothing"]</a><BR><hr>"
+
+	dat += "Connected devices: "
+
+	if(device_pool.len)
+
+		for(var/i = 1 to device_pool.len)
+			dat += "[device_pool[i]]"
+			if(i != device_pool.len) dat += ", " //If not last item in the list, add a comma
 
 	var/datum/browser/popup = new(user, "circuit2", "[src]", 500, 300, src)
 	popup.set_content(dat)
@@ -39,83 +103,162 @@
 
 	return
 
+
+
 /obj/item/device/assembly/comparison/Topic(href, href_list)
 	if(..()) return
 
-	if(href_list["help"])
-		to_chat(usr, "<span class='info'>List of compactible assemblies:</span>")
-		to_chat(usr, {"
-	<span class='info'>Addition circuit: VALUE = counter's value<BR>
-	Randomizer circuit: VALUE = last generated number<BR>
-	Math circuit: VALUE = result of the specified math operation<BR>
-	Proximity sensor: VALUE = remaining time (in seconds)<BR>
-	Timer: VALUE = remaining time (in seconds)<BR>
-
-	The first connected assembly is checked. If the condition is true, the second connected assembly is pulsed. Otherwise, the third connected assembly is pulsed. At least two assemblies must be connected for this circuit to work; third one is optional and any assembly beyond the third is redundant."})
-		return
-
 	if(href_list["change_check_type"])
-		var/choice = input(usr, "Select a new check type for \the [src].", "[src]") as null|anything in list("EQUAL TO", "LESS THAN", "MORE THAN", "LESS THAN OR EQUAL TO", "MORE THAN OR EQUAL TO", "NOT EQUAL TO")
+		var/choice = input(usr, "Select a new check type for \the [src].", "\The [src]") as null|anything in list("EQUAL TO", "LESS THAN", "MORE THAN", "LESS THAN OR EQUAL TO", "MORE THAN OR EQUAL TO", "NOT EQUAL TO")
 
-		if(!choice) choice = 0
-		if(!Adjacent(usr)) return
-		var/mob/living/L = usr
-		if(L && L.isUnconscious()) return
+		if(isnull(choice)) return
+		if(..()) return
 
 		to_chat(usr, "<span class='info'>You change the check from [check_type] to [choice].</span>")
 
 		check_type = choice
 
-	if(href_list["change_check_value"])
-		var/choice = input(usr, "Select a new check value for \the [src].", "[src]") as null|num
+	//Trigger warning: horrible code below
+
+	if(href_list["change_check_this"])
+		var/choice = input(usr, "Select a new checked value #1 for \the [src].", "\The [src]") as null|anything in (device_pool + "Constant number") //Select an assembly, or "Constant number"
+
+		if(isnull(choice)) return
+		if(..()) return
+
+		if(choice == "Constant number") //Selected "Constant number" - ask the user to specify a number
+			var/new_num = input(usr, "Please type in a number that will be used as value #1.", "\The [src]") as null|num
+
+			if(isnull(new_num)) return
+			if(..()) return
+
+			check_this = new_num
+
+			to_chat(usr, "<span class='info'>Value #1 set to be [check_against]</span>")
+		else //Selected an assembly - ask the user to select a value
+			var/obj/item/device/assembly/A = choice
+			if(!istype(A)) return
+
+			if(!A.accessible_values || !A.accessible_values.len) //No accessible values
+				to_chat(usr, "<span class='info'>\The [A] has no accessible values.")
+				return
+
+			var/new_value = input(usr, "Select which of \the [A]'s values is used as \the [src]'s value #1.", "\The [src]") as null|anything in A.accessible_values
+
+			if(isnull(new_value)) return
+			if(..()) return
+
+			//Check if the selected value is a number
+
+			var/new_values_params = A.accessible_values[new_value]
+			var/list/L = params2list(new_values_params)
+			if(L[VALUE_VARIABLE_TYPE] != "number")
+				to_chat(usr, "<span class='info'>Only numbers may be used in \the [src].</span>")
+				return
+
+			//Just some more sanity
+			if(!device_pool.Find(choice)) return
+
+			//Finally we're here
+
+			check_this = choice
+			checked_value_1 = new_value
+
+			to_chat(usr, "<span class='info'>Value #1 set to be [check_this] - [checked_value_1]</span>")
+
+	if(href_list["change_check_against"]) //Copy of the above, with some slight tweaks
+		var/choice = input(usr, "Select a new checked value #2 for \the [src].", "\The [src]") as null|anything in (device_pool + "Constant number") //Select an assembly, or "Constant number"
+
+		if(isnull(choice)) return
+		if(..()) return
+
+		if(choice == "Constant number") //Selected "Constant number" - ask the user to specify a number
+			var/new_num = input(usr, "Please type in a number that will be used as value #2.", "\The [src]") as null|num
+
+			if(isnull(new_num)) return
+			if(..()) return
+
+			check_against = new_num
+
+			to_chat(usr, "<span class='info'>Value #2 set to be [check_against]</span>")
+		else //Selected an assembly - ask the user to select a value
+			var/obj/item/device/assembly/A = choice
+			if(!istype(A)) return
+
+			if(!A.accessible_values || !A.accessible_values.len) //No accessible values
+				to_chat(usr, "<span class='info'>\The [A] has no accessible values.")
+				return
+
+			var/new_value = input(usr, "Select which of \the [A]'s values is used as \the [src]'s value #2.", "\The [src]") as null|anything in A.accessible_values
+
+			if(isnull(new_value)) return
+			if(..()) return
+
+			//Check if the selected value is a number
+
+			var/new_values_params = A.accessible_values[new_value]
+			var/list/L = params2list(new_values_params)
+			if(L[VALUE_VARIABLE_TYPE] != "number")
+				to_chat(usr, "<span class='info'>Only numbers may be used in \the [src].</span>")
+				return
+
+			//Just some more sanity
+			if(!device_pool.Find(choice)) return
+
+			//Finally we're here
+
+			check_against = choice
+			checked_value_2 = new_value
+
+			to_chat(usr, "<span class='info'>Value #2 set to be [check_against] - [checked_value_2]</span>")
+
+	if(href_list["change_pulse_if_true"])
+		var/choice = input(usr, "Select an assembly that will be pulsed if the condition is true.", "\The [src]") as null|anything in (device_pool + "Nothing")
 
 		if(!choice) return
-		if(!Adjacent(usr)) return
-		var/mob/living/L = usr
-		if(L && L.isUnconscious()) return
+		if(..()) return
 
-		to_chat(usr, "<span class='info'>You change the check value from [check_against] to [choice].</span>")
+		if(choice == "Nothing")
+			pulse_if_true = null
+		else
+			if(!device_pool.Find(choice)) return
 
-		check_against = choice
+			pulse_if_true = choice
+
+		to_chat(usr, "<span class='info'>If the condition is true, [pulse_if_true ? pulse_if_true : "nothing"] will be pulsed.</span>")
+
+	if(href_list["change_pulse_if_false"])
+		var/choice = input(usr, "Select an assembly that will be pulsed if the condition is false.", "\The [src]") as null|anything in (device_pool + "Nothing")
+
+		if(!choice) return
+		if(..()) return
+
+		if(choice == "Nothing")
+			pulse_if_false = null
+		else
+			if(!device_pool.Find(choice)) return
+
+			pulse_if_false = choice
+
+		to_chat(usr, "<span class='info'>If the condition is false, [pulse_if_false ? pulse_if_false : "nothing"] will be pulsed.</span>")
+
 
 	if(usr)
 		attack_self(usr)
 
-/obj/item/device/assembly/comparison/send_pulses_to_list(var/list/L) //The assembly frame will give us a list of devices to forward a pulse to.
-	if(!L) return
 
-	if(L.len < 2) return //If there's only ONE assembly in the list, don't bother at all.
 
-	var/obj/item/device/assembly/check = L[1] //First assembly is checked for condition
+/obj/item/device/assembly/comparison/connected(var/obj/item/device/assembly/A, in_frame)
+	..()
 
-	var/obj/item/device/assembly/on_true = L[2] //Second assembly is pulsed if condition = true
+	device_pool |= A //Make the connected assembly available
 
-	var/obj/item/device/assembly/on_false //Third assembly is optional, and is pulsed if condition = false
-	if(L.len >= 3)
-		on_false = L[3]
+/obj/item/device/assembly/comparison/disconnected(var/obj/item/device/assembly/A, in_frame)
+	..()
 
-	if(try_condition(check))
-		on_true.pulsed()
-	else if(on_false)
-		on_false.pulsed()
-
-/obj/item/device/assembly/comparison/proc/try_condition(var/obj/item/device/assembly/A)
-	if(!A) return 0
-
-	var/value_to_check = A.get_value()
-
-	switch(check_type)
-		if("EQUAL TO")
-			return (value_to_check == check_against)
-		if("LESS THAN")
-			return (value_to_check < check_against)
-		if("MORE THAN")
-			return (value_to_check > check_against)
-		if("LESS THAN OR EQUAL TO")
-			return (value_to_check <= check_against)
-		if("MORE THAN OR EQUAL TO")
-			return (value_to_check >= check_against)
-		if("NOT EQUAL TO")
-			return (value_to_check != check_against)
-		else
-			return 0
+	//Remove all references and make the disconnected assembly unavailable
+	device_pool.Remove(A)
+	if(check_this == A) check_this = null
+	if(check_against == A) check_against = null
+	if(pulse_if_true == A) pulse_if_true = null
+	if(pulse_if_false == A) pulse_if_false = null

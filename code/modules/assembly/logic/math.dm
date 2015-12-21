@@ -11,7 +11,7 @@
 
 var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "POWER", "AVERAGE", "MIN", "MAX", "SIN", "COS", "ASIN", "ACOS", "TG", "COTG")
 
-#define VALUE(a) (isnum(a) ? a : a.get_value())
+#define VALUE(a) (isnum(a) ? a : a.get_value(values[a]))
 
 /obj/item/device/assembly/math
 	name = "math circuit"
@@ -25,8 +25,10 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 
 	//wires = WIRE_PULSE | WIRE_RECEIVE
 
-	var/list/obj/item/device/assembly/values = list()
+	var/list/obj/item/device/assembly/values = list() //List of constants (numbers) or variables (assemblies). All assemblies in this list have a string associated with them, which tells this circuit which of the assembly's values to use
 	var/operation = "ADD"
+
+	accessible_values = list("Result" = "null;number") //Allow devices to read this circiut's result. First parameter (variable name, which is "null" here) isn't important - the functions are overwritten
 
 /obj/item/device/assembly/math/interact(mob/user as mob)
 	var/dat = ""
@@ -64,7 +66,12 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 		for(var/i = 1 to last_written_value)
 			var/A = values[i]
 
-			dat += "<a href='?src=\ref[src];change_value=[i]'><b>[A]</b></a>"
+			dat += "<a href='?src=\ref[src];change_value=[i]'><b>[A]"
+
+			if(!isnum(A)) //Variable (assembly) - write which of the assembly's value is used in the calculation (its time, frequency or whatever)
+				dat += " ([values[A]])"
+
+			dat += "</b></a>"
 
 			if(i < last_written_value)
 				dat += operation_sign //If we're writing the last value, skip the sign (to avoid the extra sign at the end, like VALUE == 6 + 12 + 51 +)
@@ -124,6 +131,7 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 		var/changed_value = values[id]
 
 		if(isnum(changed_value)) //Constant
+
 			spawn()
 				var/choice = input(usr, "Please enter the constant ([changed_value])'s new value. Leave blank to delete the constant from \the [src]'s memory.", "\The [src]", changed_value) as null|num
 
@@ -140,7 +148,23 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 
 				attack_self(usr)
 
-/obj/item/device/assembly/math/get_value()
+		else //Assembly (variable)
+
+			spawn()
+				var/obj/item/device/assembly/AS = changed_value
+
+				var/choice = input(usr, "Please select which of \the [changed_value]'s values is used in calculations (current: [values[changed_value]]).", "\The [src]") as null|anything in AS.accessible_values
+
+				if(isnull(choice)) return
+				if(!values.Find(changed_value)) return
+				if(..()) return
+
+				to_chat(usr, "<span class='info'>Changed \the [changed_value]'s used value to [choice].</span>")
+				values[changed_value] = choice
+
+				attack_self(usr)
+
+/obj/item/device/assembly/math/get_value() //Overwrite, since the result is dynamic and not stored in any of our variables
 	if(!values.len) return 0
 
 	if(values.len == 1)
@@ -229,6 +253,9 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 
 	. = round(. , 0.00001) //Round to 5 decimal places (prevent shit like cos(90) = 6.12323e-017)
 
+/obj/item/device/assembly/math/set_value() //Can't write values
+	return
+
 /obj/item/device/assembly/math/connected(var/obj/item/device/assembly/A, in_frame)
 	..()
 
@@ -238,8 +265,19 @@ var/global/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY", "D
 		if(src in M.values)
 			return //No infinite loops
 
-	values |= A
+	for(var/test_value in A.accessible_values) //Check all accessible values
+		var/parameters = A.accessible_values[test_value] //First, grab their parameters
+
+		if(parameters)
+			var/list/L = params2list(parameters) //Turn them into a list and check the second value (the one that determines whether the value is number or text).
+
+			if(L[VALUE_VARIABLE_TYPE] == "number")
+				values[A] = test_value //Finally, if the added assembly HAS a numeric value that we can use, add the assembly to the list (and use the found numeric value)
+				return
+
 
 /obj/item/device/assembly/math/disconnected(var/obj/item/device/assembly/A, in_frame)
 	..()
 	values.Remove(A)
+
+#undef VALUE

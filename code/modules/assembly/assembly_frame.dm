@@ -20,7 +20,7 @@
 	..()
 
 /obj/item/device/assembly_frame/proc/get_assembly_href(var/obj/item/device/assembly/A)
-	var/txt_eject_button = "<a href='?src=\ref[src];eject=1;assembly=\ref[A]'>\[X\]</a>"
+	var/txt_buttons = "<a href='?src=\ref[src];eject=1;assembly=\ref[A]'>\[X\]</a><a href='?src=\ref[src];pulse=1;assembly=\ref[A]'>\[P\]</a>"
 
 	var/txt_assembly_number = "([assemblies.Find(A)])"
 
@@ -32,32 +32,18 @@
 	else
 		txt_connections = "<small> sending signals to: "
 
+		if(istype(A, /obj/item/device/assembly/math) || istype(A, /obj/item/device/assembly/comparison))
+			txt_connections = "<small> connected to: "
+
 		var/list/list_of_connections = connections[A]
 
 		if(list_of_connections.len)
-
-			if(istype(A, /obj/item/device/assembly/comparison)) //Comparison circuit: slightly modify the interface
-				for(var/i = 1 to list_of_connections.len)
-					var/obj/item/device/assembly/C = list_of_connections[i]
-
-					switch(i)
-						if(1) //First connected assembly - its value is checked by the circuit
-							txt_connections = "<small> condition: "
-						if(2) //Second connected assembly - if condition is true, this is pulsed
-							txt_connections += "on <b>true</b>: "
-						if(3) //Third connected assembly - if condition is false, this is pulsed
-							txt_connections += "on <b>false</b>: "
-
-					txt_connections += "[i]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
-
-			else
-
-				for(var/obj/item/device/assembly/C in list_of_connections)
-					txt_connections += "[assemblies.Find(C)]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
+			for(var/obj/item/device/assembly/C in list_of_connections)
+				txt_connections += "[assemblies.Find(C)]-<a href='?src=\ref[src];disconnect=1;assembly=\ref[A];disconnect_which=\ref[C]'><b>[C.short_name][C.labeled]</b></a>, "
 
 			txt_connections += "<a href='?src=\ref[src];connect=1;assembly=\ref[A]'><b>add more</b></a></small>"
 
-	return "[txt_eject_button] [txt_assembly_number] [txt_assembly] [txt_connections]"
+	return "[txt_buttons] [txt_assembly_number] [txt_assembly] [txt_connections]"
 
 ///////
 
@@ -73,12 +59,13 @@
 
 			//Example result:
 
-			//[X] (1) remote signalling device sending signals to: 2-speaker (alert), 3-timer (countdown), add more
-			//[X] (2) speaker (alert) (connect)
-			//[X] (3) timer (countdown) sending signals to: 4-signaler (radio alert), add more
-			//[X] (4) signaler (radio alert) (connect)
+			//[X][P] (1) remote signalling device sending signals to: 2-speaker (alert), 3-timer (countdown), add more
+			//[X][P] (2) speaker (alert) (connect)
+			//[X][P] (3) timer (countdown) sending signals to: 4-signaler (radio alert), add more
+			//[X][P] (4) signaler (radio alert) (connect)
 
 			//Clicking on [X] ejects the assembly
+			//Clicking on [P] pulses the assembly
 			//Clicking on the assembly's name allows you to change its settings (or otherwise interact with it
 			//Clicking on (connect) or "add more" allows you to select an assembly to connect to
 			//Clicking on any assembly after "sending signals to" will remove the connection
@@ -176,6 +163,19 @@
 
 		to_chat(usr, "<span class='info'>You remove \the [AS] from \the [src].</span>")
 
+	if(href_list["pulse"])
+		if(!istype(AS))
+			return
+
+		if(!assemblies.Find(AS))
+			return
+
+		if(AS.loc != src)
+			to_chat(usr, "<span class='warning'>A green light flashes on \the [src], indicating an error.</span>")
+			return
+
+		AS.pulsed()
+
 	if(href_list["interact"])
 		if(!istype(AS))
 			return
@@ -225,6 +225,8 @@
 			to_chat(usr, "<span class='info'>The device list on the monitor displays all connected devices along with their number. To the right of each device is a list of other devices that are connected to it.</span>")
 			to_chat(usr, "<span class='info'>To make device A send signals to device B, first ensure that both devices are connected to the assembly frame. Then press the \"connect\" button next to device A on the monitor, and select device B. Any signals emitted by device A will now be received by device B (but not vice versa).")
 			to_chat(usr, "<span class='info'>To stop device A from receiving device B's signals, find device B in the device list. To the right of device B is a list of other devices that are connected to it. Find device A in that list and select it. Device A will no longer receive signals from device B.")
+			to_chat(usr, "<span class='info'>To pulse a device, press the \[P\] button next to it.")
+			to_chat(usr, "<span class='info'>To eject a device, press the \[X\] button next to it.")
 
 		return
 

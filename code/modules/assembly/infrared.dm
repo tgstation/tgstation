@@ -17,6 +17,12 @@
 	var/on = 0
 	var/visible = 0
 	var/obj/effect/beam/infrared/beam = null
+
+	accessible_values = list(
+		"Visible" = "visible;number",\
+		"On" = "on;number"
+	)
+
 	New() del(src)
 
 
@@ -161,9 +167,6 @@
 
 	dir = turn(dir, 90)
 	return
-
-/obj/item/device/assembly/infra/get_value()
-	return on
 
 /***************************IBeam*********************************/
 

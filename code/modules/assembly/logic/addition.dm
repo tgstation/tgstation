@@ -1,8 +1,6 @@
 //////////////////////////Addition circuit////////////////////////
 // * When pulsed, increase counter by 1. When counter reaches a specified value, reset it to 0 and emit a pulse.
 
-// * get_value: returns counter
-
 /obj/item/device/assembly/addition
 	name = "addition circuit"
 
@@ -17,6 +15,9 @@
 
 	var/pulse_counter = 0
 	var/limit = 1 //When the pulse counter reaches this value, emit a signal.
+
+	accessible_values = list("Counter" = "pulse_counter;number",\
+		"Limit" = "limit;number")
 
 /obj/item/device/assembly/addition/activate()
 	if(!..()) return 0

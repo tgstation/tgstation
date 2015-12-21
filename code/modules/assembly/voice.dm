@@ -9,6 +9,9 @@
 	var/listening = 0
 	var/recorded = "" //the activation message
 
+	accessible_values = list("Recording activation message" = "listening;number",\
+		"Activation message" = "recorded;text")
+
 /obj/item/device/assembly/voice/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(!speech.speaker || speech.speaker == src)
 		return

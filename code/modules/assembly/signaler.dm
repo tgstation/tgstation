@@ -19,6 +19,9 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
+	accessible_values = list("Code (1 to 100)" = "code;number",\
+		"Frequency" = "frequency;number")
+
 /obj/item/device/assembly/signaler/New()
 	..()
 	spawn(40)//delay so the radio_controller has time to initialize
@@ -120,6 +123,9 @@
 
 /obj/item/device/assembly/signaler/proc/signal()
 	if(!radio_connection) return
+
+	if(!(frequency in (MINIMUM_FREQUENCY to MAXIMUM_FREQUENCY))) return
+	if(!code in (1 to 100)) return
 
 	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src

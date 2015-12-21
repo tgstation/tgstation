@@ -1,8 +1,6 @@
 //////////////////////////Random number generator circuit////////////////////////
 // * When pulsed, randomly picks n assemblies connected to it and sends a pulse to them. Also generates a random number from 0 to n.
 
-// * get_value: returns last generated number
-
 /obj/item/device/assembly/randomizer
 	name = "randomizer circuit"
 	short_name = "randomizer"
@@ -18,6 +16,9 @@
 
 	var/output_number = 1 //How many assemblies are randomly chosen
 	var/last_value = 0
+
+	accessible_values = list("Generated number" = "last_value;number",\
+		"Output number" = "output_number;number")
 
 /obj/item/device/assembly/randomizer/activate() //Simple stuff - when pulsed, emit a pulse. The assembly frame will handle the next part
 	if(!..()) return 0
@@ -46,6 +47,3 @@
 		A.pulsed()
 
 		if(!AS.len) break
-
-/obj/item/device/assembly/randomizer/get_value()
-	return last_value

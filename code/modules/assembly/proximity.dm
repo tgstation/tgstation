@@ -28,6 +28,12 @@
 
 	var/range = 2
 
+	accessible_values = list("Scanning" = "scanning;number",\
+		"Scan range" = "range;number",\
+		"Remaining time" = "time;number",\
+		"Default time" = "default_time;number",\
+		"Timing" = "timing;number")
+
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
 	timing = !timing
@@ -174,6 +180,3 @@
 		attack_self(usr)
 
 	return
-
-/obj/item/device/assembly/prox_sensor/get_value()
-	return time

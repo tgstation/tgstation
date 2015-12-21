@@ -15,6 +15,10 @@
 
 	var/default_time = 10
 
+	accessible_values = list("Remaining time" = "time;number",\
+		"Default time" = "default_time;number",\
+		"Timing" = "timing;number")
+
 /obj/item/device/assembly/timer/activate()
 	if(!..())	return 0//Cooldown check
 
@@ -113,6 +117,3 @@
 		attack_self(usr)
 
 	return
-
-/obj/item/device/assembly/timer/get_value()
-	return time

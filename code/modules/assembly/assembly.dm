@@ -1,3 +1,6 @@
+#define VALUE_VARIABLE_NAME 1 //See var/list/accessible_values below!
+#define VALUE_VARIABLE_TYPE 2
+
 /obj/item/device/assembly
 	name = "assembly"
 	var/short_name //Short name of the assembly. If the name is "remote signalling device", short_name must be something like "signaler"
@@ -27,6 +30,20 @@
 	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
+
+	var/list/accessible_values = list()
+
+	// List of variables that can be READ / WRITTEN TO by other assemblies.
+		// Format of the list:
+		//
+		// accessible_values = list("Time" = "time;number",\
+		//	"Frequency" = "freq;number",\
+		//	"Code" = "code;number")
+		//
+		// "Time" - name of this value. Can be anything
+		// "time;number" - parameters. Convert this to a list using params2list, and access them by doing either list[VALUE_VARIABLE_NAME] or list[VALUE_VARIABLE_TYPE]
+
+		//The example above allows any assembly (connected to an assembly frame) to access this assembly's time, frequency and code, e.g. a math circuit can READ this assembly's time, multiply it by 90 and SET this assembly's time to the result
 
 /obj/item/device/assembly/New()
 	..()
@@ -67,7 +84,26 @@
 	for(var/obj/item/device/assembly/A in L)
 		A.pulsed()
 
-/obj/item/device/assembly/proc/get_value() //The assembly's value (to be used with various circuits)
+/obj/item/device/assembly/proc/get_value(var/value) //Get the assembly's value (to be used with various circuits). value = an element from the accessible_values list!
+	if(!value in accessible_values) return
+
+	var/list/L = params2list(accessible_values[value])
+	var/var_to_grab = L[VALUE_VARIABLE_NAME]
+
+	return vars[var_to_grab]
+
+/obj/item/device/assembly/proc/set_value(var/value, var/new_value) //Set the assembly's value. var_to_change = variable's name, new_value = new value
+	if(!value in accessible_values) return
+
+	var/list/L = params2list(accessible_values[value])
+
+	if((L[VALUE_VARIABLE_TYPE] == "number") && !isnum(new_value)) return //Attempted to write a non-number to a number variable
+	//text values can accept either numbers or text, so don't check for that
+
+	var/var_to_change = L[VALUE_VARIABLE_NAME]
+
+	vars[var_to_change] = new_value
+
 	return
 
 /obj/item/device/assembly/proc/connected(var/obj/item/device/assembly/A, in_frame = 0)
