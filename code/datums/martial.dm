@@ -68,12 +68,14 @@
 			base = H.martial_art.base
 		else
 			H.martial_art.base = src //temporary styles have priority
+			+= /mob/living/carbon/human/proc/martial_art_help
 			return
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
+		-= /mob/living/carbon/human/proc/martial_art_help
 	H.martial_art = base
 
 /datum/martial_art/boxing
