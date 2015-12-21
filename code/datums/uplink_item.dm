@@ -629,6 +629,7 @@ var/list/uplink_items = list()
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces, but the manufacturer guarantees they're somehow better than the normal ones."
 	cost = 4 //but they aren't
 	gamemodes = list(/datum/game_mode/nuclear)
+	excludefrom = list()
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
