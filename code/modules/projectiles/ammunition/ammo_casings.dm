@@ -144,8 +144,8 @@
 
 /obj/item/ammo_casing/shotgun/doorslug
 	name = "breaching slug"
-	desc = "A modified shotgun shell which fires a massive non-neutonian fluid projectile when fired. Extremely useful for breaching doors. Not useful for breaching rigcages."
-	icon_state = "mshell"
+	desc = "A modified shotgun shell which fires a massive non-Newtonian fluid projectile when fired. Extremely useful for breaching doors. Not useful for breaching ribcages."
+	icon_state = "dshell"
 	projectile_type = /obj/item/projectile/bullet/doorslug
 
 /obj/item/ammo_casing/shotgun/pulseslug

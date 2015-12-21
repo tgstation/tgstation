@@ -698,3 +698,18 @@
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
+
+/obj/item/weapon/storage/box/doorshot
+	name = "box of door breaching shotgun slugs"
+	desc = "A box full of less-than-lethal door breaching rounds, designed for riot shotguns."
+	icon_state = "doorshot_box"
+
+/obj/item/weapon/storage/box/doorshot/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)
+	new /obj/item/ammo_casing/shotgun/doorslug(src)

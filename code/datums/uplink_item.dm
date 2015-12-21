@@ -260,7 +260,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-	
+
 /datum/uplink_item/dangerous/reinforcement/spawn_item()
 	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))
@@ -341,6 +341,13 @@ var/list/uplink_items = list()
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. I'm a fire starter, twisted fire starter!"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/bulldoor
+	name = "Drum Magazine - 12g Door breaching slugs"
+	desc = "An unique 8-round magazine for use in the Bulldog shotgun. Uses less-than-lethal non-Newtonian fluids to breach doors."
+	item = /obj/item/ammo_box/magazine/m12g/doorslug
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bioterror
