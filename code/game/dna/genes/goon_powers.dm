@@ -575,7 +575,7 @@
 /spell/targeted/empath
 	name = "Read Mind"
 	desc = "Read the minds of others for information."
-	panel = "Mutant Abilities"
+	panel = "Mutant Powers"
 
 	range = 7
 	max_targets = 1
