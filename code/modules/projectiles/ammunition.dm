@@ -57,6 +57,7 @@
 	var/ammo_to_load = 0
 	if(starting_ammo > -1 && starting_ammo < max_ammo)
 		ammo_to_load = starting_ammo
+		update_icon()
 	else
 		ammo_to_load = max_ammo
 	for(var/i = 1, i <= ammo_to_load, i++)
@@ -192,5 +193,6 @@
 		else
 			update_icon()
 		return b
+
 /obj/item/ammo_storage/proc/ammo_count()
 	return stored_ammo.len
