@@ -175,6 +175,16 @@
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
 
+/mob/living/carbon/human/proc/wrestling_help()
+	set name = "Recall Teachings"
+	set desc = "Remember how to wrestle."
+	set category = "Wrestling"
+
+	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
+	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
+	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
+	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone.
+
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
 #define PLASMA_COMBO "HDDDH"
@@ -426,6 +436,8 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
+		user.verbs += /mob/living/carbon/human/proc/wrestling_help
+		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wresting tab.</span>"
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
@@ -434,6 +446,8 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_belt) == src)
 		style.remove(H)
+		user.verbs -= /mob/living/carbon/human/proc/wrestling_help
+		user << "<span class='sciradio'>You no longer have an urge to flex your muscles.</span>"
 	return
 
 /obj/item/weapon/plasma_fist_scroll
