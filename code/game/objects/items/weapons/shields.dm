@@ -54,8 +54,6 @@
 	var/active = 0
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active)
-		return ..()
 	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()
