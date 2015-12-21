@@ -1,6 +1,6 @@
 "aa" = (/turf/indestructible/rock,/area/space)
 "ab" = (/turf/space,/area/space)
-"ac" = (/turf/simulated/mineral,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 3"})
+"ac" = (/turf/simulated/mineral/volcanic,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 3"})
 "ad" = (/turf/simulated/floor/plating/lava/smooth{baseturf = /turf/simulated/floor/plating/lava/smooth; desc = "Looks hot."; luminosity = 5; name = "lava"; nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 4"})
 "ae" = (/turf/simulated/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 3"})
 "af" = (/obj/item/weapon/greentext,/turf/simulated/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 3"})
@@ -86,8 +86,8 @@
 "bH" = (/obj/effect/decal/remains/human,/obj/item/clothing/under/patriotsuit,/turf/simulated/floor/plating/asteroid/basalt/lava{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 4"})
 "bI" = (/obj/item/weapon/bedsheet/patriot,/turf/simulated/floor/plating/asteroid/basalt/lava{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 4"})
 "bJ" = (/turf/simulated/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
-"bK" = (/turf/simulated/mineral,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
-"bL" = (/turf/simulated/mineral,/area/awaymission/BMPship)
+"bK" = (/turf/simulated/mineral/volcanic,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
+"bL" = (/turf/simulated/mineral/volcanic,/area/awaymission/BMPship)
 "bM" = (/turf/simulated/floor/plating/lava/smooth{baseturf = /turf/simulated/floor/plating/lava/smooth; desc = "Looks hot."; luminosity = 5; name = "lava"; nitrogen = 23; oxygen = 14},/area/awaymission/BMPship)
 "bN" = (/turf/simulated/mineral/random/high_chance,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
 "bO" = (/turf/simulated/floor/plating/lava/smooth{baseturf = /turf/simulated/floor/plating/lava/smooth; desc = "Looks hot."; luminosity = 5; name = "lava"; nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
@@ -616,3 +616,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

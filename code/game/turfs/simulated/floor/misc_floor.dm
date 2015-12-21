@@ -43,45 +43,37 @@
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
 
-/turf/simulated/floor/plating/snow
-	name = "snow"
-	desc = "Looks cold."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "snow"
-	temperature = 180
-	baseturf = /turf/simulated/floor/plating/snow
-	slowdown = 2
-
-/turf/simulated/floor/plating/snow/break_tile()
+/turf/simulated/floor/plating/ironsand/burn_tile()
 	return
-
-/turf/simulated/floor/plating/snow/burn_tile()
-	return
-
-/turf/simulated/floor/plating/snow/gravsnow
-	icon_state = "snow_dug"
-	slowdown = 0
-
-/turf/simulated/floor/plating/snow/gravsnow/corner
-	icon_state = "gravsnow_corner"
-
-/turf/simulated/floor/plating/snow/gravsnow/surround
-	icon_state = "gravsnow_surround"
 
 /turf/simulated/floor/plating/ice
 	name = "ice sheet"
 	desc = "A sheet of solid ice. Looks slippery."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "ice"
-	baseturf = /turf/simulated/floor/plating/snow
+	temperature = 180
+	baseturf = /turf/simulated/floor/plating/ice
 	slowdown = 1
 	wet = TURF_WET_ICE
+
+/turf/simulated/floor/plating/ice/colder
+	temperature = 140
 
 /turf/simulated/floor/plating/ice/break_tile()
 	return
 
-/turf/simulated/floor/plating/snow/burn_tile()
+/turf/simulated/floor/plating/ice/burn_tile()
 	return
+
+/turf/simulated/floor/plating/snowed
+	name = "snowed-over plating"
+	desc = "A section of plating covered in a light layer of snow."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snowplating"
+	temperature = 180
+
+/turf/simulated/floor/plating/snowed/colder
+	temperature = 140
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
