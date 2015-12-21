@@ -183,7 +183,7 @@
 	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
 	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
 	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
-	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone.
+	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone."
 
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
