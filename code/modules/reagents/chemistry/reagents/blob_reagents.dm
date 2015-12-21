@@ -225,6 +225,8 @@
 		M.apply_damage(0.1*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(istype(cause, /obj/effect/blob)) //if a blob is doing it, that means we're splitting the damage, so don't modify it.
+		return ..()
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
 		var/damagesplit = 0.8 //maximum split is 7.2, reducing the damage each blob takes to 14% but doing that damage to 9 blobs
 		for(var/obj/effect/blob/C in orange(1, B))
@@ -232,7 +234,7 @@
 				damagesplit += 0.8
 		for(var/obj/effect/blob/C in orange(1, B))
 			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum && !istype(C, /obj/effect/blob/core)) //only hurt blobs that have the same overmind chemical and aren't cores
-				C.take_damage(damage/damagesplit, damage_type)
+				C.take_damage(damage/damagesplit, CLONE, B)
 		return damage/damagesplit
 	else
 		return damage*1.25

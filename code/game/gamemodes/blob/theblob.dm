@@ -229,6 +229,8 @@
 			damage = max(damage * brute_resist, 0)
 		if(BURN)
 			damage = max(damage * fire_resist, 0)
+		if(CLONE) //this is basically a marker for 'don't modify the damage'
+
 		else
 			damage = 0
 	if(overmind)
