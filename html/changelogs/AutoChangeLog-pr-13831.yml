@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "You can now dual wield guns. Firing a gun will automatically fire the gun held in your off hand if you are on harm intent."
