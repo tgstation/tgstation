@@ -31,8 +31,9 @@
 				to_chat(user, "<span class='notice'>You squirt the solution onto the [target]!</span>")
 				update_icon()
 		return
-
+	var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
 	if(reagents.total_volume)
+		
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
@@ -85,15 +86,7 @@
 		// /vg/: Logging transfers of bad things
 		if(istype(target))
 			if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-				var/list/badshit=list()
-				for(var/bad_reagent in reagents_to_log)
-					if(reagents.has_reagent(bad_reagent))
-						badshit += reagents_to_log[bad_reagent]
-				if(badshit.len)
-					var/hl="<span class='danger'>([english_list(badshit)])</span>"
-					message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
-
+				log_reagents(user, src, target, trans, bad_reagents)
 	else
 
 		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
@@ -105,6 +98,8 @@
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
+			log_reagents(user, src, target, trans, bad_reagents)
 
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
 
