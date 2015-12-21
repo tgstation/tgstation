@@ -120,6 +120,8 @@
 
 	if(user.a_intent != "harm")
 		if(status)
+			if(shield_check(L))
+				return //So we don't go run an additonal shieldcheck afterwards, it's been blocked, all done.
 			if(baton_stun(L, user))
 				user.do_attack_animation(L)
 				return
@@ -127,9 +129,18 @@
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
+			if(shield_check(L))
+				return
 			baton_stun(L, user)
 		..()
 
+
+/obj/item/weapon/melee/baton/proc/shield_check(mob/target) //We run the shield check here since the baton stun happens before actual shield checks
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.check_shields(force, "\the [src]", null, MELEE_ATTACK, src.armour_penetration))
+			return 1
+	return 0
 
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
 	if(isrobot(loc))
