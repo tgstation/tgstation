@@ -84,22 +84,32 @@
 			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
 
 	//left hand
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
+	if(!exists("l_arm"))
+		msg += "<span class='warning'>[t_His] left arm is missing!</span>\n"
+	else if(l_hand)
+		if(l_hand.flags & ABSTRACT)
+			var/datum/organ/limb/left = get_organ("l_arm")
+			var/obj/item/organ/limb/leftarm = left.organitem
+			if (leftarm.organtype == ORGAN_WEAPON)
+				msg += "[t_his] left arm has been replaced by \icon[l_hand] \a [l_hand].\n"
+		else if(l_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
-	else if(!exists("l_arm"))
-		msg += "<span class='warning'>[t_His] left arm is missing!</span>\n"
 
 	//right hand
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
+	if(!exists("r_arm"))
+		msg += "<span class='warning'>[t_His] right arm is missing!</span>\n"
+	else if(r_hand)
+		if(r_hand.flags & ABSTRACT)
+			var/datum/organ/limb/right = get_organ("r_arm")
+			var/obj/item/organ/limb/rightarm = right.organitem
+			if (rightarm.organtype == ORGAN_WEAPON)
+				msg += "[t_his] right arm has been replaced by \icon[r_hand] \a [r_hand].\n"
+		else if(r_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
-	else if(!exists("r_arm"))
-		msg += "<span class='warning'>[t_His] right arm is missing!</span>\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))

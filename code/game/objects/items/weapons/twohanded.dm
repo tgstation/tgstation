@@ -426,6 +426,5 @@
 	force = 21
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
-
-	flags = ABSTRACT
+	augmenttype = /obj/item/weapon/twohanded/chainsaw/
 	dismember_class = new /datum/dismember_class/medium/

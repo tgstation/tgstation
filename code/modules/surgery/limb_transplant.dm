@@ -28,7 +28,7 @@
 	if(!L.exists())
 		if((LI && L.name == LI.hardpoint) || L.name == tool.icon_state) //Borg limbs' icon states just happen to have the same strings as limb hardpoints
 			return 1
-		if (target_zone == "r_arm" || "target_zone" == "l_arm")
+		if (target_zone == "r_arm" || target_zone == "l_arm")
 			return(tool.is_valid_augment())	//For chainsaw arms and the like
 	return 0
 
@@ -59,15 +59,15 @@
 				var/obj/item/organ/limb/RL = null
 				switch(target_zone)
 					if("r_leg")
-						RL = new /obj/item/organ/limb/leg/r_leg/robot(src)
+						RL = new /obj/item/organ/limb/leg/r_leg/robot()
 					if("l_leg")
-						RL = new /obj/item/organ/limb/leg/l_leg/robot(src)
+						RL = new /obj/item/organ/limb/leg/l_leg/robot()
 					if("r_arm")
-						RL = new /obj/item/organ/limb/arm/r_arm/robot(src)
+						RL = new /obj/item/organ/limb/arm/r_arm/robot()
 					if("l_arm")
-						RL = new /obj/item/organ/limb/arm/l_arm/robot(src)
+						RL = new /obj/item/organ/limb/arm/l_arm/robot()
 					if("head")
-						RL = new /obj/item/organ/limb/head/robot(src)
+						RL = new /obj/item/organ/limb/head/robot()
 						RL.create_suborgan_slots()
 				if(!RL.Insert(H))
 					return -1

@@ -323,6 +323,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(!(exists("l_arm") && exists("r_arm")))
 			return
 
+		var/datum/organ/limb/left = get_organ("l_arm")
+		var/datum/organ/limb/right = get_organ("r_arm")
+		var/obj/item/organ/larm = left.organitem
+		var/obj/item/organ/rarm = right.organitem
+		if(larm.organtype == ORGAN_WEAPON || rarm.organtype == ORGAN_WEAPON)
+			return
+
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
 
