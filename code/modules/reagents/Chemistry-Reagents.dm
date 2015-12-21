@@ -3687,6 +3687,7 @@
 	description = "A superb and well-aged single-malt whiskey. Damn."
 	color = "#664300" //rgb: 102, 67, 0
 	dizzy_adj = 4
+	pass_out = 225
 
 /datum/reagent/ethanol/specialwhiskey
 	name = "Special Blend Whiskey"
@@ -3694,6 +3695,7 @@
 	description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
 	color = "#664300" //rgb: 102, 67, 0
 	slur_start = 30
+	pass_out = 225
 
 /datum/reagent/ethanol/gin
 	name = "Gin"
@@ -3701,6 +3703,7 @@
 	description = "It's gin. In space. I say, good sir."
 	color = "#664300" //rgb: 102, 67, 0
 	dizzy_adj = 3
+	pass_out = 260
 
 /datum/reagent/ethanol/absinthe
 	name = "Absinthe"
@@ -3710,7 +3713,7 @@
 	dizzy_adj = 5
 	slur_start = 25
 	confused_start = 100
-	pass_out = 350
+	pass_out = 175
 
 //Copy paste from LSD... shoot me
 /datum/reagent/ethanol/absinthe/on_mob_life(var/mob/living/M)
@@ -3725,6 +3728,7 @@
 	id = "rum"
 	description = "Yohoho and all that."
 	color = "#664300" //rgb: 102, 67, 0
+	pass_out = 250
 
 /datum/reagent/ethanol/tequila
 	name = "Tequila"
@@ -3841,7 +3845,7 @@
 	id = "rum"
 	description = "Popular with the sailors. Not very popular with everyone else."
 	color = "#664300" //rgb: 102, 67, 0
-	pass_out = 350
+	pass_out = 325
 
 /datum/reagent/ethanol/deadrum/on_mob_life(var/mob/living/M)
 
@@ -3899,6 +3903,7 @@
 	slurr_adj = 5
 	slur_start = 35
 	confused_start = 90
+	pass_out = 250
 
 /datum/reagent/ethanol/deadrum/ale
 	name = "Ale"
