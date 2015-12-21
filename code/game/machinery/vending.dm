@@ -547,14 +547,17 @@ var/global/num_vending_terminals = 1
 /obj/machinery/vending/attack_hand(mob/living/user as mob)
 	if(user.a_intent == "hurt" && istype(user, /mob/living/carbon/)) //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
-		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
-								"<span class='danger'>You kick the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
 		src.shake(1, 3) //1 means x movement, 3 means intensity
 		src.health -= 4
-
-		if(prob(70))
-			user.apply_damage(rand(2,4), BRUTE, "r_leg")
+		if (!Adjacent(user) && (M_TK in usr.mutations))
+			to_chat(user, "<span class='danger'>You slam the [src] with your mind.</span>")
+			src.visible_message("<span class='danger'>[src] dents slightly as if struck.</span>")
+		else
+			user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>", "<span class='danger'>You kick the [src].</span>")
+			if(prob(70))
+				user.apply_damage(rand(2,4), BRUTE, "r_leg")
+				
 		if(src.health <= 0)
 			stat |= BROKEN
 			src.update_vicon()
