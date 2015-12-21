@@ -4,7 +4,7 @@
 //		REMEMBER TO USE \improper		  //
 //	ONLY IF NAME IS CAPITALIZED AND 	  //
 //ACTUALLY NOT PROPER; FAILURE TO DO THIS //
-//	RESULT IN MESSAGES LIKE "The The 	  //
+// WILL RESULT IN MESSAGES LIKE "The The  //
 //	Periodic Table has been hit..."		  //
 //	PLEASE REMEMBER THAT AND THANKS.	  //
 //			HAVE A NICE DAY!			  //
