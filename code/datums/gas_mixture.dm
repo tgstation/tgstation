@@ -11,8 +11,8 @@ What are the archived variables for?
 	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-
+#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 /datum/gas
 	var/moles = 0
 	var/specific_heat = 0
@@ -120,7 +120,7 @@ What are the archived variables for?
 					temperature -= (reaction_rate*20000)/heat_capacity()
 
 					reacting = 1
-	if(thermal_energy() > PLASMA_BINDING_ENERGY)
+	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
 		if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY && (toxins+carbon_dioxide)/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
 			//world << "pre [temperature, [toxins], [carbon_dioxide]
 			var/old_heat_capacity = heat_capacity()
@@ -130,7 +130,7 @@ What are the archived variables for?
 			var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 			var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 			var/oxygen_added = carbon_catalyzed
-			var/nitrogen_added = plasma_fused-oxygen_added
+			var/nitrogen_added = (plasma_fused-oxygen_added)-(thermal_energy()/PLASMA_BINDING_ENERGY)
 
 			reaction_energy += ((carbon_efficency*toxins)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY)
 			toxins = max(toxins-plasma_fused,0)
