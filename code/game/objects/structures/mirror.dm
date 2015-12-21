@@ -164,6 +164,8 @@
 
 			H.real_name = newname
 			H.name = newname
+			if(H.dna)
+				H.dna.real_name = newname
 			if(H.mind)
 				H.mind.name = newname
 
