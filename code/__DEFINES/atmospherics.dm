@@ -64,8 +64,8 @@
 #define MAX_PLASMA_DAMAGE					10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
 	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				30000000
-#define MAX_CARBON_EFFICENCY				8
+#define PLASMA_BINDING_ENERGY				3000000
+#define MAX_CARBON_EFFICENCY				9
 #define PLASMA_FUSED_COEFFICENT				0.08
 #define CARBON_CATALYST_COEFFICENT			0.01
 #define FUSION_PURITY_THRESHOLD				0.9
