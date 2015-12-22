@@ -129,7 +129,7 @@
 #define QUATERNARY	4
 
 // this is the standard for loop used by all sorts of atmos machinery procs
-#define DEVICE_TYPE_LOOP	var/I = 1; I <= device_type; I++
+#define DEVICE_TYPE_LOOP	var/I in 1 to device_type
 
 // defines for the various machinery lists
 // NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
