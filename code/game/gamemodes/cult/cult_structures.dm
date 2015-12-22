@@ -145,8 +145,7 @@
 	if(M.stat != DEAD)
 		if(M.monkeyizing)
 			return
-		if(M.has_brain_worms())
-			return //Borer stuff - RR
+
 
 		if(iscultist(M)) return
 		if(!ishuman(M) && !isrobot(M)) return
@@ -156,6 +155,10 @@
 		M.icon = null
 		M.overlays.len = 0
 		M.invisibility = 101
+
+		if(iscarbon(M))
+			var/mob/living/carbon/I = M
+			I.dropBorers()//drop because new mob is simple_animal
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M

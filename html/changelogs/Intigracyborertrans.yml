@@ -1,0 +1,7 @@
+author: Intigracy
+
+delete-after: True
+
+changes: 
+  - bugfix: Borers now transfer when their host is transformed. Depending on the new mob they become, you might be dropped. For admin transformations you always get dropped.
+  - tweak: Mobs with borers in them are no longer immune to the staff of change.

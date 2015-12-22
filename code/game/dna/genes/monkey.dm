@@ -15,7 +15,6 @@
 		return
 	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1
-
 	if(!connected)
 		M.monkeyizing = 1
 		M.canmove = 0
@@ -39,6 +38,7 @@
 	else
 		for(var/obj/item/W in (H.contents))
 			H.drop_from_inventory(W)
+		H.dropBorers(1)
 		H.gib() //Trying to change the species of a creature with no primitive var set is messy.
 		return
 
@@ -64,6 +64,7 @@
 
 	for(var/obj/item/W in (H.contents))
 		H.drop_from_inventory(W)
+	H.transferBorers(O)
 
 	if (connected) //inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected
@@ -94,7 +95,6 @@
 		return
 	var/mob/living/carbon/monkey/Mo = M
 	Mo.monkeyizing = 1
-
 	if(!connected)
 		M.monkeyizing = 1
 		M.canmove = 0
@@ -145,6 +145,7 @@
 
 	for(var/obj/item/W in (Mo.contents))
 		Mo.drop_from_inventory(W)
+	Mo.transferBorers(O)
 	if (connected) //inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected
 		O.loc = C

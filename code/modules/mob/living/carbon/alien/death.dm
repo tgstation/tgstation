@@ -18,6 +18,8 @@
 	icon = null
 	invisibility = 101
 
+	dropBorers(1)
+
 	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-a", sleeptime = 15)
 	new /obj/effect/decal/remains/xeno(loc)
 	dead_mob_list -= src

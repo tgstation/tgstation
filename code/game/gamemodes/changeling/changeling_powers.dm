@@ -355,9 +355,6 @@
 	var/datum/changeling/changeling = changeling_power(1,0,0, deny_horror=1)
 	if(!changeling)	return
 
-	if(src.has_brain_worms())
-		to_chat(src, "<span class='warning'>We cannot perform this ability at the present time!</span>")
-		return
 	var/mob/living/carbon/human/C = src
 
 	if(!istype(C) || !C.species.primitive)
@@ -391,6 +388,7 @@
 	O.dna = C.dna.Clone()
 	C.dna = null
 	C.transferImplantsTo(O)
+	C.transferBorers(O)
 
 	for(var/obj/item/W in C)
 		C.drop_from_inventory(W)
@@ -463,13 +461,13 @@
 	else
 		O.setGender(MALE)
 	C.transferImplantsTo(O)
+	C.transferBorers(O)
 	O.dna = C.dna.Clone()
 	C.dna = null
 	O.real_name = chosen_dna.real_name
 
 	for(var/obj/item/W in src)
 		C.drop_from_inventory(W)
-
 	for(var/obj/T in C)
 		qdel(T)
 
