@@ -2,7 +2,9 @@
  * Contains:
  *		Fork
  *		Kitchen knives
+ *		Ritual Knife
  *		Butcher's cleaver
+ *		Combat Knife
  *		Rolling Pins
  */
 
@@ -85,6 +87,17 @@
 	throwforce = 8
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 3
+
+/obj/item/weapon/kitchen/knife/combat
+	name = "combat knife"
+	icon_state = "buckknife"
+	item_state = "knife"
+	desc = "A military combat utility survival knife.."
+	force = 20
+	throwforce = 20
+	origin_tech = "materials=2;combat=4"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
+
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"

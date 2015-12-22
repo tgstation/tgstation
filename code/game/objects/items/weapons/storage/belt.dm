@@ -100,6 +100,7 @@
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/weapon/kitchen/knife/combat,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic
 		)
@@ -145,6 +146,14 @@
 	icon_state = "militarybelt"
 	item_state = "military"
 
+/obj/item/weapon/storage/belt/military/assault
+	name = "assault belt"
+	desc = "A tactical assault belt."
+	icon_state = "militarybelt"
+	item_state = "military"
+	storage_slots = 6
+
+
 /obj/item/weapon/storage/belt/wands
 	name = "wand belt"
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
@@ -189,7 +198,7 @@
 	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
-	storage_slots = 6
+	storage_slots = 8
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)
