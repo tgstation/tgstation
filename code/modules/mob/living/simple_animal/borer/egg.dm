@@ -72,7 +72,9 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/process()
-	var/turf/location = get_turf(src)
+	var/tmp/turf/location = get_turf(src)
+	if(location == null)
+		return
 	var/datum/gas_mixture/environment = location.return_air()
 	//testing("[type]/PROCESS() - plasma: [environment.toxins]")
 	var/meets_conditions=1
