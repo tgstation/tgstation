@@ -79,6 +79,11 @@
 	orient2hud(user)
 	show_to(user)
 
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
+	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
+		user.Move(get_turf(power_station.teleporter_console.target))
+	return
+
 // -------------------------------------------
 // This was supposed to be used by adminghosts
 // I think it is a *terrible* idea
