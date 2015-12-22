@@ -103,7 +103,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 	// every time. You'll have to modify this code to generate a unique hash for your object.
 	// Don't forget to modify the minimap generation code to use a default icon (or skip generation altogether).
 	for (var/turf/tile in tiles)
-		if      (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/unsimulated/mineral) || (tile.loc.name == "Space" && istype(tile, /turf/unsimulated/floor/asteroid)))
+		if      (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/unsimulated/mineral) || (isspace(tile.loc) && istype(tile, /turf/unsimulated/floor/asteroid)))
 			temp = "/area/asteroid"
 		else if (istype(tile.loc, /area/mine) && istype(tile, /turf/unsimulated/floor/asteroid))
 			temp = "/area/mine/explored"
@@ -166,7 +166,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 
 		for (var/turf/tile in tiles)
 			if (tile.loc.type != /area/start && (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile) || (locate(/obj/structure/transit_tube) in tile)) && !istype(tile, /turf/space/transit))
-				if (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/unsimulated/mineral) || (tile.loc.name == "Space" && istype(tile, /turf/unsimulated/floor/asteroid)))
+				if (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/unsimulated/mineral) || (isspace(tile.loc) && istype(tile, /turf/unsimulated/floor/asteroid)))
 					new_icon = 'icons/turf/walls.dmi'
 					new_icon_state = "rock"
 					new_dir = 2

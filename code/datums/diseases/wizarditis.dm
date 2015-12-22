@@ -93,7 +93,7 @@ STI KALY - blind
 /datum/disease/wizarditis/proc/teleport()
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
-		if(theareas.Find(AR) || AR.name == "Space") continue
+		if(theareas.Find(AR) || isspace(AR)) continue
 		theareas += AR
 
 	if(!theareas)

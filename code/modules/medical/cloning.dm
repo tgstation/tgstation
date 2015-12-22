@@ -387,7 +387,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious())
 		return
 	src.go_out()
 	add_fingerprint(usr)

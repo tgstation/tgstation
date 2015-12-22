@@ -59,7 +59,7 @@
 		return
 
 	if(!config.ghost_interaction && !blessed)
-		if(usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		if(usr.isUnconscious() || usr.restrained())
 			return
 
 	spin()

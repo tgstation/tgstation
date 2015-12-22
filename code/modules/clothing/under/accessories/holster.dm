@@ -66,7 +66,7 @@
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
+	if(usr.isUnconscious()) return
 
 	var/obj/item/clothing/accessory/holster/H = null
 	if (istype(src, /obj/item/clothing/accessory/holster))

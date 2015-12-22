@@ -1049,9 +1049,7 @@ Thanks.
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
-	if(src.stat || !src.canmove || src.restrained())
-		return 0
-	if(src.status_flags & FAKEDEATH)
+	if(src.isUnconscious() || !src.canmove || src.restrained())
 		return 0
 	if(!..())
 		return 0
@@ -1214,7 +1212,7 @@ default behaviour is:
 	if(!istype(user))
 		return
 
-	if(user.stat || user.restrained() || (usr.status_flags & FAKEDEATH))
+	if(user.isUnconscious() || user.restrained())
 		return
 
 	if(being_butchered)

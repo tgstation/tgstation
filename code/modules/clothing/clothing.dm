@@ -172,7 +172,7 @@ BLIND     // can't see anything
 	if(ignore_flip)
 		return
 	else
-		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		if(!usr.canmove || usr.isUnconscious() || usr.restrained())
 			return
 		if(!can_flip)
 			to_chat(usr, "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place.")
@@ -432,7 +432,7 @@ BLIND     // can't see anything
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
+	if(usr.isUnconscious()) return
 
 	if(!accessories.len) return
 	var/obj/item/clothing/accessory/A

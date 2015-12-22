@@ -207,9 +207,9 @@
 	if(M_DWARF in mutations)
 		msg += "[t_He] [t_is] a short, sturdy creature fond of drink and industry.\n"
 
-	if (src.stat || (status_flags & FAKEDEATH))
+	if (isUnconscious())
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
-		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
+		if((isDead() || src.health < config.health_threshold_crit) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && user.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(user.loc, null))
