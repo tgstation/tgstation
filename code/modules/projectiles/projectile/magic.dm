@@ -158,7 +158,8 @@
 						if("drone")
 							new_mob = new /mob/living/simple_animal/drone(M.loc)
 							var/mob/living/simple_animal/drone/D = new_mob
-							D.update_drone_hack()
+							spawn(50) //this should give us time for the rest of the proc to finish so a mob will be in the drone
+								D.update_drone_hack()
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
