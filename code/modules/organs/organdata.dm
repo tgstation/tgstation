@@ -212,3 +212,11 @@
 		if("cyberimp_chest")	return "chest cybernetic implant"
 		if("cyberimp_brain")	return "brain cybernetic implant"
 		else			return name
+
+/datum/organ/proc/getStatusString()
+	switch(status)
+		if(ORGAN_REMOVED)	return "removed"
+		if(ORGAN_SPLINTED)	return "splinted"
+		if(ORGAN_BROKEN)	return "broken"
+		if(ORGAN_DESTROYED)	return "destroyed"
+		if(ORGAN_NOBLEED)	return "cauterized"
