@@ -184,6 +184,8 @@
 			else
 				new_slime.key = src.key
 			new_slime.languages = languages.Copy()
+			transferImplantsTo(new_slime)
+
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
 			qdel(src)
 		else
@@ -230,6 +232,7 @@
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
+			transferImplantsTo(new_slime)
 
 			to_chat(new_slime, "<B>You are now a slime!</B>")
 			qdel(src)

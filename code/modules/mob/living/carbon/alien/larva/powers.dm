@@ -46,6 +46,7 @@
 		for(var/datum/language/L in languages)
 			new_xeno.add_language(L.name)
 		if(mind)	mind.transfer_to(new_xeno)
+		transferImplantsTo(new_xeno)
 		qdel(src)
 		playsound(get_turf(src), 'sound/effects/evolve.ogg', 40, 1)
 		return
