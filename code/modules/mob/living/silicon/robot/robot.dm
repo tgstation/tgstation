@@ -1158,3 +1158,15 @@
 	if(be_close && !in_range(M, src))
 		return
 	return 1
+
+/mob/living/silicon/robot/updatehealth()
+	..()
+	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
+		if(uneq_module(module_state_3))
+			src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
+		if(health < 0)
+			if(uneq_module(module_state_2))
+				src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
+			if(health < -maxHealth*0.5)
+				if(uneq_module(module_state_1))
+					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
