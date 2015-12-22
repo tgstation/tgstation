@@ -11,7 +11,7 @@
 #define NODROP			2		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8		// mask allows internals
-#define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.		// weapon not affected by shield
+#define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
