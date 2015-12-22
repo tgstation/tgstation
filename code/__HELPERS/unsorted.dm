@@ -809,7 +809,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/area/N in world)
 		if(istype(N, areatype))
 			for(var/turf/T in N)
-				if(target_z == T.z || target_z == 0)
+				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
 

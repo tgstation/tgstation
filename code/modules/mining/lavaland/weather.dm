@@ -1,10 +1,10 @@
-var/global/activeWeather = FALSE
+var/global/datum/weather/activeWeather
 
 /datum/weather
 	var/name = "storm"
 	var/start_up_time = 300 //30 seconds
 	var/start_up_message = "The wind begins to pick up."
-	var/duration = 1200 //2 minutes
+	var/duration = 120 //2 minutes
 	var/duration_message = "A storm has started!"
 	var/wind_down = 300 // 30 seconds
 	var/wind_down_message = "The storm is passing."
@@ -18,11 +18,10 @@ var/global/activeWeather = FALSE
 	var/purely_aesthetic = FALSE //If we just want gentle rain that doesn't hurt people
 
 
-
 /datum/weather/proc/weather_start_up()
 	if(activeWeather)
 		return
-	activeWeather = TRUE
+	activeWeather = src
 	for(var/turf/T in get_area_turfs(area_type, target_z))
 		if(exclude_walls && T.density == 1)
 			continue
@@ -41,23 +40,21 @@ var/global/activeWeather = FALSE
 	for(var/turf/T in get_area_turfs(area_type, target_z))
 		if(exclude_walls && T.density == 1)
 			continue
-		T.overlays -= "lava"
+		T.overlays -= "[duration_overlay]"
 		T.overlays += "[duration_overlay]"
-		T.weather = TRUE
+		T.weather = src
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
 			M << "[duration_message]"
 	if(purely_aesthetic)
 		sleep(duration*10)
-		weather_wind_down()
-		return
-
-	//Storm effects
-	for(var/i = i, i < duration, i++)
-		for(var/mob/living/L in living_mob_list)	.
-			var/turf/Z = get_turf(L)
-			if(Z.weather)
-				storm_act(L)
+	else  //Storm effects
+		for(var/i in 1 to duration-1)
+			for(var/mob/living/L in living_mob_list)	.
+				var/turf/Z = get_turf(L)
+				if(Z.weather == src)
+					storm_act(L)
+					sleep(10)
 
 	weather_wind_down()
 
@@ -66,9 +63,9 @@ var/global/activeWeather = FALSE
 	for(var/turf/T in get_area_turfs(area_type, target_z))
 		if(exclude_walls && T.density == 1)
 			continue
-		T.overlays -= "lava"
+		T.overlays -= "[duration_overlay]"
 		T.overlays += "[start_up_overlay]"
-		T.weather = TRUE
+		T.weather = src
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
 			M << "[wind_down_message]"
@@ -79,8 +76,8 @@ var/global/activeWeather = FALSE
 		if(exclude_walls && T.density == 1)
 			continue
 		T.overlays -= start_up_overlay
-		T.weather = FALSE
-	activeWeather = FALSE
+		T.weather = null
+	activeWeather = null
 
 
 /datum/weather/proc/storm_act(mob/living/L)

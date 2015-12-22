@@ -2,8 +2,8 @@
 	name = "floor is lava"
 	start_up_time = 30 //3 seconds
 	start_up_message = "The ground begins to bubble."
-	duration = 600 //1 minute
-	duration_message = "A storm has started!"
+	duration = 60 //1 minute
+	duration_message = "The floor is lava!"
 	wind_down = 30// 3 seconds
 	wind_down_message = "The ground begins to cool."
 
