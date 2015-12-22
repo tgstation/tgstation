@@ -126,6 +126,10 @@
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
+	var/obj/item/device/radio/headset/syndicate/alt/A = locate() in synd_mind.current
+	if(A)
+		A.command = TRUE
+
 	if (nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"

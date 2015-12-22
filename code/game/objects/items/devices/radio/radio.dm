@@ -40,6 +40,8 @@
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
+	var/command = FALSE //If we are speaking into a command headset, our text is LARGE
+
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
@@ -232,6 +234,9 @@
 
 	if(!M.IsVocal())
 		return
+
+	if(command)
+		spans |= SPAN_COMMAND
 
 	/* Quick introduction:
 		This new radio system uses a very robust FTL signaling technology unoriginally
