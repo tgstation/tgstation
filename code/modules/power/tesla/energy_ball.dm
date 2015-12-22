@@ -71,7 +71,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		energy -= 300
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 5)
 		spawn(100)
-			var/obj/singularity/energy_ball/EB = PoolOrNew(/obj/singularity/energy_ball, loc)
+			var/obj/singularity/energy_ball/EB = new(loc)
 			orbiting_balls.Add(EB)
 			EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
 			EB.is_orbiting = 1
