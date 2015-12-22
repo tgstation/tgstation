@@ -619,7 +619,7 @@ body
 				theghost = pick(candidates)
 				M << "Your mob has been taken over by a ghost!"
 				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize()
+				M.ghostize(0)
 				M.key = theghost.key
 			else
 				M << "There were no ghosts willing to take control."
