@@ -1,7 +1,9 @@
 /*
 	This is /tg/'s 'newer' lighting system. It's basically a combination of Forum_Account's and ShadowDarke's
 	respective lighting libraries heavily modified by Carnwennan for /tg/station with further edits by
-	MrPerson. Credits, where due, to them.
+	MrPerson and MrStonedOne. Credits, where due, to them. Also big shoutout to Tobba for implementing Goonstation's
+	lighting system which we now copy. Dunno how someone comes up with that kind of stuff without an example.
+	I know I couldn't.
 
 	Originally, like all other lighting libraries on BYOND, we used areas to render different hard-coded light levels.
 	The idea was that this was cheaper than using objects. Well as it turns out, the cost of the system is primarily from the
@@ -22,18 +24,16 @@
 	Known Issues/TODO:
 		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point) -probably trivial now
 		No directional lighting support. (prototype looked ugly)
-		Allow lights to be weaker than 'cap' radius
 		Colored lights
+		Normalize lumcounts to be from 0 to 1 instead of 0 to 10 so LIGHTING_CALC is unnecessary
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
 #define LIGHTING_LAYER 15									//Drawing layer for lighting
-#define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
-#define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
+#define LIGHTING_CAP 10										//The lumcount level at which we're fully lit.
+#define LIGHTING_CALC(value) (value/LIGHTING_CAP)
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
-#define LIGHTING_ICON_STATE "white"
-#define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
-#define LIGHTING_DARKEST_VISIBLE_ALPHA 250					//Anything darker than this is so dark, we'll just consider the whole tile unlit
+#define LIGHTING_ICON_STATE "lighting_corners"
 #define LIGHTING_LUM_FOR_FULL_BRIGHT 6						//Anything who's lum is lower then this starts off less bright.
 #define LIGHTING_MIN_RADIUS 4								//Lowest radius a light source can effect.
 
@@ -43,7 +43,8 @@
 	var/luminosity = 0
 	var/cap = 0
 	var/changed = 0
-	var/list/effect = list()
+	var/list/turfs_effect = list()
+	var/list/turfs_direction = list()
 	var/__x = 0		//x coordinate at last update
 	var/__y = 0		//y coordinate at last update
 
@@ -72,7 +73,9 @@
 		return
 
 	radius = max(LIGHTING_MIN_RADIUS, new_luminosity)
+	radius = owner.get_light_range(radius)
 	luminosity = new_luminosity
+	owner.luminosity = radius
 	if (new_cap != null)
 		cap = new_cap
 
@@ -94,70 +97,125 @@
 
 //Tell the lighting subsystem to check() next fire
 /datum/light_source/proc/changed()
-	if(owner)
-		__x = owner.x
-		__y = owner.y
 	if(!changed)
 		changed = 1
 		SSlighting.changed_lights |= src
 
 //Remove current effect
 /datum/light_source/proc/remove_effect().
-	for(var/turf/T in effect)
-		T.update_lumcount(-effect[T])
+	for(var/turf/T in turfs_effect)
+		T.update_lumcount(-turfs_effect[T], turfs_direction[T])
+		T.affecting_lights -= src
 
-		if(T.affecting_lights && T.affecting_lights.len)
-			T.affecting_lights -= src
+		for(var/thing in RANGE_TURFS(1, T))
+			var/turf/neighbor = thing
+			if(neighbor == T)
+				continue
+			if(!neighbor.lighting_changed)
+				neighbor.update_lumcount(0, 0)
 
-	effect.Cut()
+	turfs_effect.Cut()
+	turfs_direction.Cut()
 
 //Apply a new effect.
 /datum/light_source/proc/add_effect()
+	__x = owner.x
+	__y = owner.y
 	// only do this if the light is turned on and is on the map
 	if(!owner || !owner.loc)
 		return 0
-	var/range = owner.get_light_range(radius)
-	if(range <= 0 || luminosity <= 0)
-		owner.luminosity = 0
+	if(radius <= 0 || luminosity <= 0)
 		return 0
 
-	effect = list()
 	var/turf/To = get_turf(owner)
-
 
 	for(var/atom/movable/AM in To)
 		if(AM == owner)
 			continue
 		if(AM.opacity)
-			range = 0
-			break
-	
-	owner.luminosity = range
-	if (!range)
-		return 0
+			return 0
+
 	var/center_strength = 0
 	if (cap <= 0)
 		center_strength = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*(luminosity)
 	else
 		center_strength = cap
 
-	for(var/turf/T in view(range+1, To))
-
+	for(var/turf/T in view(radius+1, To))
+		//This will fuck up for turfs on the edge of the map. Would rather no op than throw exceptions
+		if(T.x == 1 || T.x == world.maxx || T.y == 1 || T.y == world.maxy)
+			continue
 #ifdef LIGHTING_CIRCULAR
 		var/distance = cheap_hypotenuse(T.x, T.y, __x, __y)
 #else
 		var/distance = max(abs(T,x - __x), abs(T.y - __y))
 #endif
+		var/delta_lumcount = Clamp(center_strength * (radius - distance) / radius, 0, LIGHTING_CAP)
 
-		var/delta_lumcount = Clamp(center_strength * (range - distance) / range, 0, LIGHTING_CAP)
+		if(delta_lumcount <= 0)
+			continue
 
-		if(delta_lumcount > 0)
-			effect[T] = delta_lumcount
-			T.update_lumcount(delta_lumcount)
+		var/list/neighbors = RANGE_TURFS(1, T)
+		var/directions = N_NORTHWEST|N_NORTHEAST|N_SOUTHEAST|N_SOUTHWEST
 
-			if(!T.affecting_lights)
-				T.affecting_lights = list()
-			T.affecting_lights |= src
+		for(var/thing in neighbors)
+			var/turf/neighbor = thing
+			if(neighbor == T)
+				continue
+			if(!neighbor.lighting_changed)
+				neighbor.update_lumcount(0, 0)
+
+		if(T.opacity) //sorry for this but I'm looking for cheap, not good
+			var/turf/neighbor
+			switch(get_dir(T, To))
+				if(NORTH)
+					directions = N_NORTHWEST|N_NORTHEAST
+				if(EAST)
+					directions = N_NORTHEAST|N_SOUTHEAST
+				if(SOUTH)
+					directions = N_SOUTHEAST|N_SOUTHWEST
+				if(WEST)
+					directions = N_SOUTHWEST|N_NORTHWEST
+				if(NORTHWEST)
+					directions = N_NORTHWEST
+					neighbor = neighbors[8] //magic numbers, make them defines later
+					if(!neighbor.opacity)
+						directions |= N_NORTHEAST
+					neighbor = neighbors[4]
+					if(!neighbor.opacity)
+						directions |= N_SOUTHWEST
+				if(NORTHEAST)
+					directions = N_NORTHEAST
+					neighbor = neighbors[8]
+					if(!neighbor.opacity)
+						directions |= N_NORTHWEST
+					neighbor = neighbors[6]
+					if(!neighbor.opacity)
+						directions |= N_SOUTHEAST
+				if(SOUTHEAST)
+					directions = N_SOUTHEAST
+					neighbor = neighbors[2]
+					if(!neighbor.opacity)
+						directions |= N_SOUTHWEST
+					neighbor = neighbors[6]
+					if(!neighbor.opacity)
+						directions |= N_NORTHEAST
+				if(SOUTHWEST)
+					directions = N_SOUTHWEST
+					neighbor = neighbors[2]
+					if(!neighbor.opacity)
+						directions |= N_SOUTHEAST
+					neighbor = neighbors[4]
+					if(!neighbor.opacity)
+						directions |= N_NORTHWEST
+
+		turfs_effect[T] = delta_lumcount
+		turfs_direction[T] = directions
+		T.update_lumcount(delta_lumcount, directions)
+
+		if(!T.affecting_lights)
+			T.affecting_lights = list()
+		T.affecting_lights |= src
 
 	return 1
 
@@ -240,7 +298,6 @@
 	mouse_opacity = 0
 	blend_mode = BLEND_OVERLAY
 	invisibility = INVISIBILITY_LIGHTING
-	color = "#000"
 	luminosity = 0
 	infra_luminosity = 1
 	anchored = 1
@@ -256,6 +313,7 @@
 	var/lighting_changed = 0
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
+	var/list/lit_corners = list("NORTHWEST"=0,"NORTHEAST"=0,"SOUTHEAST"=0,"SOUTHWEST"=0)
 
 /turf/ChangeTurf(path)
 	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
@@ -271,6 +329,7 @@
 	var/oldbaseturf = baseturf
 
 	var/list/our_lights //reset affecting_lights if needed
+	var/list/our_lit_corners = lit_corners.Copy()
 	if(opacity != initial(path:opacity) && old_lumcount)
 		UpdateAffectingLights()
 
@@ -280,9 +339,9 @@
 	. = ..() //At this point the turf has changed
 
 	affecting_lights = our_lights
+	lit_corners = our_lit_corners
 
-	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
-	update_lumcount(old_lumcount)
+	lighting_lumcount += old_lumcount
 	baseturf = oldbaseturf
 	lighting_object = locate() in src
 	init_lighting()
@@ -290,14 +349,20 @@
 	for(var/turf/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-/turf/proc/update_lumcount(amount)
+/turf/proc/update_lumcount(amount, dirs)
+	if(dirs)
+		if(dirs & N_NORTHWEST)
+			lit_corners["NORTHWEST"] += amount
+		if(dirs & N_NORTHEAST)
+			lit_corners["NORTHEAST"] += amount
+		if(dirs & N_SOUTHEAST)
+			lit_corners["SOUTHEAST"] += amount
+		if(dirs & N_SOUTHWEST)
+			lit_corners["SOUTHWEST"] += amount
 	lighting_lumcount += amount
 	if(!lighting_changed)
 		SSlighting.changed_turfs += src
 		lighting_changed = 1
-
-/turf/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
-	lighting_lumcount += amount
 
 /turf/proc/init_lighting()
 	var/area/A = loc
@@ -309,6 +374,7 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
+		lighting_object.alpha = 255
 		redraw_lighting(1)
 
 /turf/space/init_lighting()
@@ -316,30 +382,40 @@
 	if(config.starlight)
 		update_starlight()
 
+#define MEAN4(val1, val2, val3, val4) ((val1+val2+val3+val4)/4)
+
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
-		var/newalpha
-		if(lighting_lumcount <= 0)
-			newalpha = 255
+		var/list/neighbors = RANGE_TURFS(1, src)
+		var/turf/N = neighbors[8]
+		var/turf/E = neighbors[6]
+		var/turf/S = neighbors[2]
+		var/turf/W = neighbors[4]
+		var/turf/NW = neighbors[7]
+		var/turf/NE = neighbors[9]
+		var/turf/SE = neighbors[3]
+		var/turf/SW = neighbors[1]
+
+		var/list/Nlights = N.lit_corners; var/list/Elights = E.lit_corners
+		var/list/Slights = S.lit_corners; var/list/Wlights = W.lit_corners
+		var/list/mylights = lit_corners
+
+		var/list/color_matrix = list(
+0,0,0,-LIGHTING_CALC(MEAN4(mylights["NORTHWEST"],Nlights["SOUTHWEST"],Wlights["NORTHEAST"],NW.lit_corners["SOUTHEAST"])),
+0,0,0,-LIGHTING_CALC(MEAN4(mylights["NORTHEAST"],Nlights["SOUTHEAST"],Elights["NORTHWEST"],NE.lit_corners["SOUTHWEST"])),
+0,0,0,-LIGHTING_CALC(MEAN4(mylights["SOUTHEAST"],Slights["NORTHEAST"],Elights["SOUTHWEST"],SE.lit_corners["NORTHWEST"])),
+0,0,0,-LIGHTING_CALC(MEAN4(mylights["SOUTHWEST"],Slights["NORTHWEST"],Wlights["SOUTHEAST"],SW.lit_corners["NORTHEAST"])),
+0,0,0,1
+		)
+
+		if(instantly)
+			lighting_object.color = color_matrix
 		else
-			lighting_object.luminosity = 1
-			if(lighting_lumcount < LIGHTING_CAP)
-				var/num = Clamp(lighting_lumcount * LIGHTING_CAP_FRAC, 0, 255)
-				newalpha = 255-num
-			else //if(lighting_lumcount >= LIGHTING_CAP)
-				newalpha = 0
-		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
-			newalpha = 255
-		if(lighting_object.alpha != newalpha)
-			if(instantly)
-				lighting_object.alpha = newalpha
-			else
-				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
-			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
-				luminosity = 0
-				lighting_object.luminosity = 0
+			animate(lighting_object, color = color_matrix, time = SSlighting.wait)
 
 	lighting_changed = 0
+
+#undef MEAN4
 
 /turf/proc/get_lumcount()
 	. = LIGHTING_CAP
@@ -361,16 +437,14 @@
 	luminosity = 0
 	for(var/turf/T in src.contents)
 		T.init_lighting()
-		T.update_lumcount(0)
+		T.update_lumcount(0, 0)
 
-#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
+#undef LIGHTING_LAYER
+#undef LIGHTING_CAP
+#undef LIGHTING_CALC
 #undef LIGHTING_ICON
 #undef LIGHTING_ICON_STATE
-#undef LIGHTING_TIME
-#undef LIGHTING_CAP
-#undef LIGHTING_CAP_FRAC
-#undef LIGHTING_DARKEST_VISIBLE_ALPHA
 #undef LIGHTING_LUM_FOR_FULL_BRIGHT
 #undef LIGHTING_MIN_RADIUS
 
