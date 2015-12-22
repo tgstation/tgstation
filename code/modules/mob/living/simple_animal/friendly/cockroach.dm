@@ -38,14 +38,14 @@
 			var/mob/living/A = AM
 			if(A.mob_size > MOB_SIZE_TINY)
 				if(prob(squish_chance))
-					A.visible_message("[A] squashed \the [name].", "<span class='notice'>You squashed \the [name].</span>")
+					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
 					death()
 				else
-					visible_message("\The [name] avoids getting crushed.")
+					visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
 	else
 		if(isobj(AM))
 			if(istype(AM,/obj/structure))
-				visible_message("As \the [AM] moved over \the [name], it was crushed.")
+				visible_message("<span class='notice'>As \the [AM] moved over \the [name], it was crushed.</span>")
 				death()
 
 /mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
