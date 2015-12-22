@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Cayenne will no longer be targeted by the syndicate turrets."
