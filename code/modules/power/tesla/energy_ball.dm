@@ -16,7 +16,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/disposalpipe)
 
 /obj/singularity/energy_ball
-	name = "energy eall"
+	name = "energy ball"
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
@@ -43,6 +43,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		move_the_basket_ball(amount_to_move)
 		pixel_x = 0
 		pixel_y = 0
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 		pixel_x = -32
 		pixel_y = -32
@@ -68,16 +69,18 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= 300)
 		energy = 0
-		var/obj/singularity/energy_ball/EB = new(loc)
-		orbiting_balls.Add(EB)
-		EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
-		EB.is_orbiting = 1
-		var/icon/I = icon(icon,icon_state,dir)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 5)
+		spawn(100)
+			var/obj/singularity/energy_ball/EB = PoolOrNew(/obj/singularity/energy_ball, loc)
+			orbiting_balls.Add(EB)
+			EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
+			EB.is_orbiting = 1
+			var/icon/I = icon(icon,icon_state,dir)
 
-		var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
-		orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
-		spawn(1)
-			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
+			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
+			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+			spawn(1)
+				EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
 
 
 
