@@ -1120,7 +1120,7 @@ var/list/preferences_datums = list()
 	character.backbag = backbag
 
 	character.dna.blood_type = blood_type
-	character.dna.features = features
+	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
 	if(pref_species != /datum/species/human && config.mutant_races)
