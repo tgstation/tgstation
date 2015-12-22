@@ -149,8 +149,8 @@
 			if(16) face = "pai-nose"
 			if(17) face = "pai-kawaii"
 			if(18) face = "pai-cry"
-		src.overlays.len += "[face]"
-		pai.overlays.len += "[face]"//we also update the mob's overlay so it appears properly on the scoreboard.
+		src.overlays += "[face]"
+		pai.overlays += "[face]"//we also update the mob's overlay so it appears properly on the scoreboard.
 
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf(src.loc)
