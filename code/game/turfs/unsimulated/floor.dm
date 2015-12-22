@@ -50,13 +50,17 @@
 /turf/unsimulated/floor/snow/New()
 	..()
 	icon_state = "snow[rand(0,6)]"
+	relativewall_neighbours()
+	snowballs = rand(30,50)
+	src.update_icon()
+	if(prob(5))
+		new/obj/structure/flora/tree/pine(src)
+
+/turf/unsimulated/floor/snow/relativewall_neighbours()
 	for(var/direction in alldirs)
 		var/turf/adj_tile = get_step(src, direction)
 		if(istype(adj_tile,/turf/unsimulated/floor/snow))
 			adj_tile.update_icon()
-	snowballs = rand(30,50)
-	src.update_icon()
-
 
 /turf/unsimulated/floor/snow/undersnow/New()
 	..()
@@ -80,6 +84,7 @@
 		overlays += dirtlayers["snow[junction]"]
 	else overlays += dirtlayers["snow0"]
 
+
 /turf/unsimulated/floor/snow/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(snowballs >= 0)
@@ -98,17 +103,32 @@
 	return BUILD_FAILURE
 
 /turf/unsimulated/floor/snow/undersnow/canBuildLattice()
-	if(!(locate(/obj/structure/lattice) in contents))
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if(!(locate(/obj/structure/lattice) in contents))
 		return BUILD_SUCCESS
 	return BUILD_FAILURE
 
 /turf/unsimulated/floor/snow/undersnow/canBuildPlating()
-	if(locate(/obj/structure/lattice) in contents)
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if(locate(/obj/structure/lattice) in contents)
 		return BUILD_SUCCESS
 	return BUILD_FAILURE
 
+/turf/unsimulated/floor/snow/ChangeTurf()
+	..()
+	for(var/direction in alldirs)
+		var/turf/adj_tile = get_step(src, direction)
+		if(istype(adj_tile,/turf/unsimulated/floor/snow))
+			adj_tile.update_icon()
+
 /turf/unsimulated/floor/snow/attack_hand(mob/user as mob)
-	if(snowballs >= 0)
+	if(snowballs > 0)
 		user.delayNextAttack(15)
 		if(do_after(user,src,15))
 			snowballs -= 1
@@ -116,6 +136,7 @@
 			user.put_in_hands(snowball)
 			if(snowballs <= 0)
 				src.ChangeTurf(/turf/unsimulated/floor/snow/undersnow)
+				src.relativewall_neighbours()
 	..()
 
 /turf/unsimulated/floor/snow/Entered(mob/user)
@@ -153,9 +174,11 @@
 		dirtlayers["snow0"] = image('icons/turf/newsnow.dmi',"snowpath-circle")
 		dirtlayers["snow3"] = image('icons/turf/newsnow.dmi',"snowpath",dir = 1)
 		dirtlayers["snow12"] = image('icons/turf/newsnow.dmi',"snowpath",dir = 8)
+	var/lightson = 0
 	for(var/direction in alldirs)
 		if(!istype(get_step(src, direction),/turf/unsimulated/floor/snow))
-			set_light(5, 1)
+			if(istype(get_step(src, direction),/turf/simulated/floor))
+				lightson = 1
 		//	var/turf/tilebehind = get_step(tile, tile_dir)
 		//	if(tilebehind.temperature > 273.15)
 			src.overlays += dirtlayers["side[direction]"]
@@ -190,8 +213,10 @@
 			snow2.pixel_x = 0
 			snow1.pixel_y = 0
 			snow2.pixel_y = 0
-		else
-			set_light(0,0)
+	if(lightson)
+		set_light(5, 0.5)
+	else
+		set_light(0,0)
 	overlays += snowlayers["1"]
 	overlays += snowlayers["2"]
 
