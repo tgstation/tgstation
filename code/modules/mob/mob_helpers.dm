@@ -187,26 +187,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	set waitfor = 0
-	if(!M || !M.client || M.shakecamera)
+	if(!M || !M.client || duration <= 0)
 		return
-	M.shakecamera = 1
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = (strength+1)*world.icon_size
-	var/min = 0-((strength+1)*world.icon_size)
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
 
-	for(var/i=0, i<duration, i++)
-		var/newx = rand(min,max)
-		var/newy = rand(min,max)
+	for(var/i in 0 to duration-1)
 		if (i == 0)
-			animate(C, pixel_x=newx, pixel_y=newy, 1, 1, ELASTIC_EASING)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 		else
-			animate(pixel_x=newx, pixel_y=newy, 1, 1, ELASTIC_EASING)
-		sleep 1
-	animate(C, pixel_x=oldx, pixel_y=oldy, 1, 1, ELASTIC_EASING)
-	M.shakecamera = 0
+			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+	animate(pixel_x=oldx, pixel_y=oldy, time=1)
+
 
 
 /proc/findname(msg)
