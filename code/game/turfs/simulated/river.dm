@@ -19,8 +19,9 @@
 			continue
 		W.connected = 1
 		var/turf/cur_turf = new turf_type(get_turf(W))
-		var/turf/target_turf = get_turf(pick(river_nodes))
-
+		var/turf/target_turf = get_turf(pick(river_nodes - W))
+		if(!target_turf)
+			break
 		var/detouring = 0
 		var/cur_dir = get_dir(cur_turf, target_turf)
 		while(cur_turf != target_turf)
@@ -50,7 +51,8 @@
 				continue
 
 
-
+	for(var/obj/effect/landmark/river_waypoint/WP in river_nodes)
+		qdel(WP)
 
 
 /obj/effect/landmark/river_waypoint
