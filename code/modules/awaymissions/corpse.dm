@@ -270,7 +270,7 @@
 
 
 
-/////////////////Officers//////////////////////
+/////////////////Officers+Nanotrasen Security//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
 	name = "Bridge Officer"
@@ -297,6 +297,21 @@
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"
+
+/obj/effect/landmark/corpse/nanotrasensoldier
+	name = "Nanotrasen Private Security Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/sechailer/swat
+	corpsehelmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	corpseback = /obj/item/weapon/storage/backpack/security
+	corpseid = 1
+	corpseidjob = "Private Security Force"
+	corpseidaccess = "Security Officer"
+
 
 /obj/effect/landmark/corpse/commander/alive
 	death = FALSE
