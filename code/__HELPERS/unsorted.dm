@@ -797,8 +797,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype)
-	if(!areatype) return null
+/proc/get_area_turfs(areatype, target_z = 0)
+	if(!areatype)
+		return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
 		var/area/areatemp = areatype
@@ -807,7 +808,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = new/list()
 	for(var/area/N in world)
 		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+			for(var/turf/T in N)
+				if(target_z == T.z || target_z == 0)
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -825,8 +828,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			for(var/atom/A in N)
 				atoms += A
 	return atoms
-
-
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -1212,7 +1213,7 @@ B --><-- A
 	transform = shift
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-	
+
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	transform = initial_transform
 	while(orbiting && orbiting == A && A.loc)
@@ -1222,7 +1223,7 @@ B --><-- A
 		loc = targetloc
 		lastloc = loc
 		sleep(0.6)
-	
+
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
 		SpinAnimation(0,0)

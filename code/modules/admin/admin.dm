@@ -1,7 +1,5 @@
 
 var/global/BSACooldown = 0
-var/global/floorIsLava = 0
-
 
 ////////////////////////////////
 /proc/message_admins(msg)

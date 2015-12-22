@@ -131,7 +131,7 @@
 		if(AM.opacity)
 			range = 0
 			break
-	
+
 	owner.luminosity = range
 	if (!range)
 		return 0
@@ -269,6 +269,7 @@
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/oldbaseturf = baseturf
+	var/oldweather = weather
 
 	var/list/our_lights //reset affecting_lights if needed
 	if(opacity != initial(path:opacity) && old_lumcount)
@@ -284,6 +285,7 @@
 	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
 	update_lumcount(old_lumcount)
 	baseturf = oldbaseturf
+	weather = oldweather
 	lighting_object = locate() in src
 	init_lighting()
 

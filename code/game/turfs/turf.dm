@@ -27,6 +27,7 @@
 	flags = 0
 
 	var/image/obscured	//camerachunks
+	var/weather = FALSE //Is there active weather on this turf?
 
 /turf/New()
 	..()
