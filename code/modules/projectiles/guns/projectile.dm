@@ -138,7 +138,7 @@
 		var/obj/item/ammo_storage/AS = A
 		var/success_load = AS.LoadInto(AS, src)
 		if(success_load)
-			to_chat(user, "<span class='notice'>You successfully fill the [src] with [success_load] shell\s from the [AS]</span>")
+			to_chat(user, "<span class='notice'>You successfully fill the [src] with [success_load] shell\s from the [AS].</span>")
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		//message_admins("Loading the [src], with [AC], [AC.caliber] and [caliber.len]") //Enable this for testing
