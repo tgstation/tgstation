@@ -332,7 +332,17 @@
 		adjustBruteLoss(1)
 
 /mob/living/carbon/human/proc/handle_affinity()
+
+	////////////////////
+	// Earth Affinity //
+	////////////////////
+
+	//All effects from possessing the affinity.
 	if(check_affinity(mind, AFFINITY_EARTH))
+		//Become more sturdy. You can take more punishment before going down - 25 more max health.
+		if(maxHealth == initial(maxHealth))
+			maxHealth = initial(maxHealth) + 25
+
 		//Feed nearby crops and make them stronger. Can potentailly result in the stats of the plant going higher than normally available.
 		for(var/obj/machinery/hydroponics/H in range(3, src))
 			if(prob(5))
@@ -353,17 +363,21 @@
 		total_body_damage += getBruteLoss()
 		total_body_damage += getFireLoss()
 		if(total_body_damage > 150 && dna.species.id != "pod" && prob(5))
-			visible_message("<span class='warning'>Vines and grass slowly begin to crawl over [src]'s flesh!</span>", \
-							"<span class='userdanger'>Vines and plants slowly begin to replace your skin.</span>")
+			visible_message("<span class='warning'>Vines and grass slowly begin to crawl over [src]'s flesh!</span>")
+			src << "<span class='userdanger'>Vines and plants slowly begin to replace your skin.</span>"
 			spawn(300) //30 second wait.
 				if(total_body_damage > 150 && stat != DEAD && dna.species.id != "pod") //Checks if they're a podperson again, because the transformation proc might occur more than once.
-					visible_message("<span class='warning'>[src]'s skin disappears beneath a layer of growth.</span>", \
-									"<span class='userdanger'>Your skin has been completely replaced with organic matter.</span>")
+					visible_message("<span class='warning'>[src]'s skin disappears beneath a layer of growth.</span>")
+					src << "<span class='userdanger'>Your skin has been completely replaced with organic matter.</span>"
 					set_species(/datum/species/pod)
 					PoolOrNew(/obj/effect/overlay/temp/overgrowth, get_turf(src))
 				else
 					if(dna.species.id != "pod")
-						visible_message("<span class='warning'>The growths covering [src] silently recede.</span>", \
-										"<span class='userdanger'>The growth recedes. You are still whole.</span>")
+						visible_message("<span class='warning'>The growths covering [src] silently recede.</span>")
+						src << "<span class='userdanger'>The growth recedes. You are still whole.</span>"
+	//Effects reversed when affinity is removed.
+	else
+		if(maxHealth != initial(maxHealth))
+			maxHealth = initial(maxHealth)
 
 #undef HUMAN_MAX_OXYLOSS

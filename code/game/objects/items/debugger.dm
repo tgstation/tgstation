@@ -14,26 +14,23 @@
 /obj/item/debugger/attack_self(mob/living/M)
 	debug(M)
 	if(delete_after_use)
-		M << "<span class='notice'>Its purpose fulfilled, [src] dematerializes.</span>"
 		M.drop_item()
 		qdel(src)
 
 //Used to call the debugger's effects.
 /obj/item/debugger/proc/debug(var/mob/living/L)
-	L << "<span class='notice'>You activate the debugger. Nothing happens.</span>"
 
 /obj/item/debugger/witch
 	name = "witch debugger"
 
 /obj/item/debugger/witch/debug(mob/living/L)
-	L << "<span class='notice'>You activate the debugger. You become a [L.gender == MALE ? "warlock" : "witch"]. Neat.</span>"
 	make_witch(L.mind)
 
-/obj/item/debugger/witch/affinity
-	name = "affinity debugger"
+/obj/item/debugger/affinity
+	name = "affinity cycler"
 	delete_after_use = FALSE
 
-/obj/item/debugger/witch/affinity/debug(mob/living/L)
+/obj/item/debugger/affinity/debug(mob/living/L)
 	var/datum/witch/W = L.mind.witch
 	if(!W)
 		L << "<span class='warning'>You aren't a witch!</span>"
@@ -52,8 +49,8 @@
 			W.affinity = AFFINITY_AIR
 			L << "<span class='notice'>Affinity set to AIR</span>"
 		if(AFFINITY_AIR)
-			W.affinity = AFFINITY_MAGIC
-			L << "<span class='notice'>Affinity set to MAGIC</span>"
-		if(AFFINITY_MAGIC)
+			W.affinity = AFFINITY_ETHER
+			L << "<span class='notice'>Affinity set to ETHER</span>"
+		if(AFFINITY_ETHER)
 			W.affinity = AFFINITY_EARTH
 			L << "<span class='notice'>Affinity set to EARTH</span>"

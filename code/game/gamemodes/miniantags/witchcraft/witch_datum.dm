@@ -4,7 +4,7 @@
 #define AFFINITY_FIRE 2
 #define AFFINITY_WATER 3
 #define AFFINITY_AIR 4
-#define AFFINITY_MAGIC 5
+#define AFFINITY_ETHER 5
 
 var/list/witches = list() //All witches in the game
 
@@ -18,4 +18,4 @@ var/list/witches = list() //All witches in the game
 
 /datum/witch/Destroy()
 	witches.Remove(src)
-	..()
+	. = ..()
