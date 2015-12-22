@@ -394,6 +394,9 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	..()
