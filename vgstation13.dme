@@ -1374,6 +1374,7 @@
 #include "code\modules\mob\living\simple_animal\constructs.dm"
 #include "code\modules\mob\living\simple_animal\parrot.dm"
 #include "code\modules\mob\living\simple_animal\puddi.dm"
+#include "code\modules\mob\living\simple_animal\roach.dm"
 #include "code\modules\mob\living\simple_animal\shade.dm"
 #include "code\modules\mob\living\simple_animal\simple_animal.dm"
 #include "code\modules\mob\living\simple_animal\vox.dm"

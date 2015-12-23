@@ -190,3 +190,13 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "lspaceclutter"
+
+/obj/effect/decal/cleanable/cockroach_remains
+	name = "cockroach remains"
+	desc = "A disgusting mess."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "cockroach_dead1"
+
+/obj/effect/decal/cleanable/cockroach_remains/New()
+	..()
+	icon_state = "cockroach_dead[rand(1,2)]"
