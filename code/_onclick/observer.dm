@@ -43,7 +43,7 @@
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user)
 	if(user.client)
-		if(check_rights(R_ADMIN, 0))
+		if(check_rights(R_ADMIN, 0) && user.client.AI_Interact)
 			attack_ai(user)
 		if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
