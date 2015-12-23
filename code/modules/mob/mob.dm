@@ -23,6 +23,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	unset_machine()
 	if(mind && mind.current == src)
 		mind.current = null
+	spellremove(src)
 	if(client)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			returnToPool(spell_master)
@@ -50,7 +51,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 	hud_used = null
 	for(var/obj/leftovers in src)
 		qdel(leftovers)
-	spellremove(src)
 	if(on_uattack)
 		on_uattack.holder = null
 		on_uattack = null
