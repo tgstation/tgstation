@@ -185,6 +185,11 @@ var/next_external_rsc = 0
 
 		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
 
+	if (ckey == pkpenguin321)
+		src << "If you are reading this you have been memed"
+		del(src)
+		return 0
+
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
