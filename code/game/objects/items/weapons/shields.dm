@@ -8,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
@@ -46,7 +46,6 @@
 	item_state = "buckler"
 	materials = list()
 	slot_flags = null
-	force = 15
 	burn_state = FLAMMABLE
 
 /obj/item/weapon/shield/energy
