@@ -328,7 +328,7 @@
 			var/atom/movable/AM = A
 			if(AM == buckled) //Kind of unnecessary but let's just be sure
 				continue
-			if(AM.density)
+			if(!AM.CanPass(src))
 				if(AM.anchored)
 					return 1
 				if(pulling == AM)
