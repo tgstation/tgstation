@@ -322,7 +322,10 @@ var/next_external_rsc = 0
 // See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
 /client/Stat()
 	. = ..()
-	sleep(1)
+	if (holder)
+		sleep(1)
+	else
+		sleep(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
