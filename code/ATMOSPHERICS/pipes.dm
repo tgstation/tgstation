@@ -94,6 +94,7 @@
 			qdel(M)
 	if(air_temporary && loc)
 		loc.assume_air(air_temporary)
+		air_temporary = null
 
 	..()
 
