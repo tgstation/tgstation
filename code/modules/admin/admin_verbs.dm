@@ -591,8 +591,8 @@ var/list/admin_verbs_hideable = list(
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]
 		D.associate(C)
-		message_admins("[src] re-adminned themselves.")
-		log_admin("[src] re-adminned themselves.")
+		message_admins("[ckey] re-adminned themselves.")
+		log_admin("[ckey] re-adminned themselves.")
 		deadmins -= ckey
 		feedback_add_details("admin_verb","RAS")
 		return
