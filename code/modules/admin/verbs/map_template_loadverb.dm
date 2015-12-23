@@ -39,7 +39,7 @@ var/global/list/map_template_uploads = list()
 	var/map = input(usr, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
 	if(!map)
 		return
-	if(!findtext("[map]",".dmm"))
+	if(copytext("[map]",-4) != ".dmm")
 		usr << "Bad map file: [map]"
 		return
 
