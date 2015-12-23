@@ -160,7 +160,7 @@
 
 	//DUAL WIELDING
 	var/obj/item/weapon/gun/off_hand
-	if(ishuman(user) && user.a_intent == "harm")
+	if(ishuman(user) && user.can_dual_wield && user.a_intent == "harm")
 		var/mob/living/carbon/human/H = user
 		if(H.r_hand == src && istype(H.l_hand, /obj/item/weapon/gun))
 			off_hand = H.l_hand
