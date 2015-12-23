@@ -5,6 +5,7 @@
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
+	maxbodytemp = INFINITY
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
