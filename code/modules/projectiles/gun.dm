@@ -158,21 +158,6 @@
 		if(!can_trigger_gun(L))
 			return
 
-	//DUAL WIELDING
-	var/obj/item/weapon/gun/off_hand
-	if(ishuman(user) && user.a_intent == "harm")
-		var/mob/living/carbon/human/H = user
-		if(H.r_hand == src && istype(H.l_hand, /obj/item/weapon/gun))
-			off_hand = H.l_hand
-
-		else if(H.l_hand == src && istype(H.r_hand, /obj/item/weapon/gun))
-			off_hand = H.r_hand
-
-	if(off_hand && off_hand.can_trigger_gun(user))
-		spawn(1)
-			off_hand.newshot()
-			off_hand.process_fire(target,user,1,params)
-
 	process_fire(target,user,1,params)
 
 
