@@ -68,6 +68,12 @@
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
+/obj/item/ammo_casing/c58x21mmdap
+	desc = "A 5.8x21mm bullet casing."
+	icon_state = "dap-casing"
+	caliber = "58dap"
+	projectile_type = /obj/item/projectile/bullet/dapbullet
+
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
 	desc = "A 12 gauge lead slug."
