@@ -135,7 +135,9 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
-	/client/proc/debug_huds
+	/client/proc/debug_huds,
+	/client/proc/map_template_load,
+	/client/proc/map_template_upload
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

@@ -227,11 +227,11 @@ swapmap
 		S["areas"] << areas
 		for(n in 1 to areas.len) areas[areas[n]]=n
 		var/oldcd=S.cd
-		for(z=z1,z<=z2,++z)
+		for(z in z1 to z2)
 			S.cd="[z-z1+1]"
-			for(y=y1,y<=y2,++y)
+			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
-				for(x=x1,x<=x2,++x)
+				for(x in x1 to x2)
 					S.cd="[x-x1+1]"
 					var/turf/T=locate(x,y,z)
 					S["type"] << T.type
@@ -270,11 +270,11 @@ swapmap
 		locked=1
 		AllocateSwapMap()	// adjust x1,y1,z1 - x2,y2,z2 coords
 		var/oldcd=S.cd
-		for(z=z1,z<=z2,++z)
+		for(z in z1 to z2)
 			S.cd="[z-z1+1]"
-			for(y=y1,y<=y2,++y)
+			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
-				for(x=x1,x<=x2,++x)
+				for(x in x1 to x2)
 					S.cd="[x-x1+1]"
 					var/tp
 					S["type"]>>tp
