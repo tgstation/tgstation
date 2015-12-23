@@ -46,7 +46,7 @@
 		return
 
 	// The AI can interact with anything it can see nearby, or with cameras.
-	if ((get_dist(src, src_object) <= src.client.view) || ((get_dist(eyeobj, src_object) <= src.client.view) && cameranet.checkTurfVis(get_turf_pixel(src_object))))
+	if ((get_dist(src, src_object) <= src.client.view) || cameranet.checkTurfVis(get_turf_pixel(src_object)))
 		return NANO_INTERACTIVE
 	return NANO_CLOSE
 
