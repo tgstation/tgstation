@@ -1,28 +1,36 @@
 # vgstation
 
-[Website](http://ss13.pomf.se) - [Code](http://gitlab.com/vgstation/vgstation/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
+[Website](http://ss13.pomf.se) - [Code](http://gitlab.com/vgstation/vgstation/)
+
+[IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation), embedded link below
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.rizon.net/vgstation.png)](https://kiwiirc.com/client/irc.rizon.net/?nick=Newcomer|?&theme=basic#vgstation)
 
 ---
 
 ### GETTING THE CODE
-The simplest way to obtain the code is using the gitlab .zip feature.
+The simplest but least useful way to obtain the code is using the gitlab .zip feature. You can click [here](https://gitlab.com/vgstation/vgstation/repository/archive.zip?ref=Bleeding-Edge) to get the latest stable code as a .zip file, then unzip it to wherever you want.
 
-Click [here](https://gitlab.com/vgstation/vgstation/repository/archive.zip?ref=Bleeding-Edge) to get the latest stable code as a .zip file, then unzip it to wherever you want.
 
-The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
+The more complicated but infinitely more useful way is to use a 'git' client.  
 
-    git clone https://gitlab.com/vgstation/vgstation.git
+We recommend and support our users using the smartgit client, obtainable at [smartgit](http://www.syntevo.com/smartgit/). After installing it, create a new file folder where you want to host the code, right click on that folder and click on "Open in Smartgit".  
 
-(Hint: hold down ctrl and press insert to paste into git bash)
+When that opens, click repository at the top left and choose 'clone'. You can either use the link for the main repository https://github.com/d3athrow/vgstation13.git, or https://github.com/USERNAME/REPONAME.git to clone your own fork after you have forked with github. 
 
-This will take a while to download, but it provides an easier method for updating.
+#### Updating the Code
+
+After you have cloned, make sure you have a remote to the main repository and your own forked repository by making a remote using the links above. By right clicking on your remote to this repo you can 'pull' the most recent version of the code from the main repository.
+
+You can then create new branches of code directly from our Bleeding-Edge branch on your computer. 
+
+Warning: If you checkout different branches or update the code while Dream Maker is open, this can cause problems when someone adds/removes files or when one of the files changed is currently open.
 
 #### Branches
 
 Keep in mind that we have multiple branches for various purposes.
 
-* *master* - "stable" code, it was used on the main server until we realized we like living on the edge  :sunglasses:.
-* *Bleeding-Edge* - The latest unstable code.  _Please do any development against this branch!_
+* *master* - "stable" but ancient code, it was used on the main server until we realized we like living on the edge  :sunglasses:.
+* *Bleeding-Edge* - The latest code, this code is run on the main server.  _Please do any development against this branch!_
 
 ### INSTALLATION
 
@@ -49,23 +57,6 @@ You'll also want to edit admins.txt to remove the default admins and add your ow
 where the BYOND key must be in lowercase and the admin rank must be properly capitalized.  There are a bunch more admin ranks, but these two should be enough for most servers, assuming you have trustworthy admins.
 
 Finally, to start the server, run Dream Daemon and enter the path to your compiled vgstation13.dmb file.  Make sure to set the port to the one you  specified in the config.txt, and set the Security box to 'Trusted'.  Then press GO and the server should start up and be ready to join.
-
----
-
-### UPDATING
-
-To update an existing installation, first back up your /config and /data folders
-as these store your server configuration, player preferences and banlist.
-
-If you used the zip method, you'll need to download the zip file again and unzip it somewhere else, and then copy the /config and /data folders over.
-
-If you used the git method, you simply need to type this in to git bash:
-
-    git pull
-
-When this completes, copy over your /data and /config folders again, just in case.
-
-When you have done this, you'll need to recompile the code, but then it should work fine.
 
 ---
 
