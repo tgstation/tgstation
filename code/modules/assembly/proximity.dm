@@ -1,7 +1,6 @@
 /var/global/list/prox_sensor_ignored_types = list \
 (
-	/obj/effect/beam,
-	/mob/dead/observer
+	/obj/effect/beam
 )
 
 /obj/item/device/assembly/prox_sensor
