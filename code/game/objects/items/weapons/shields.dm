@@ -47,7 +47,7 @@
 	materials = list()
 	slot_flags = null
 	force = 15
-
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
