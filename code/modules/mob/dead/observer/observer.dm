@@ -13,6 +13,7 @@
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	flags = HEAR
 	invisibility = INVISIBILITY_OBSERVER
 	universal_understand = 1
 	universal_speak = 1
