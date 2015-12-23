@@ -53,3 +53,5 @@
 	var/name_override //For temporary visible name changes
 
 	var/heart_attack = 0
+
+	var/can_dual_wield = FALSE
