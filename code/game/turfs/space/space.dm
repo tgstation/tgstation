@@ -45,6 +45,9 @@
 
 // Ported from unstable r355
 
+/turf/space/Entered(atom/movable/A as mob|obj)
+	..()
+	inertial_drift(A)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x

@@ -208,7 +208,7 @@
 					Obj.HasProximity(A, 1)
 	// THIS IS NOW TRANSIT STUFF
 	if ((!(A) || src != A.loc))	return
-	inertial_drift(A)
+//	inertial_drift(A) - this is odd, it should be called above.
 
 	if(ticker && ticker.mode)
 
