@@ -165,6 +165,9 @@ proc/get_base_turf(var/z)
 		var/new_base_path = input("Please select a turf path (cancel to reset to /turf/space).") as null|anything in typesof(/turf)
 		if(!new_base_path)
 			new_base_path = /turf/space //Only hardcode in the whole thing, feel free to change this if somewhere in the distant future spess is deprecated
+		for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+			if(D.z == choice)
+				D.base_turf_type = new_base_path
 		var/datum/zLevel/L = map.zLevels[choice]
 		L.base_turf = new_base_path
 		feedback_add_details("admin_verb", "BTC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

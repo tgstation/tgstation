@@ -211,11 +211,10 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 		if(isturf(Target) || istype(Target, /obj/structure/lattice))
 			var/turf/T = get_turf(Target)
 			if(T.canBuildLattice(src))
-				to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
-				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-				new /obj/structure/lattice/wood(T)
-				src.use(1)
-				return
+				if(src.use(1))
+					to_chat(user, "<span class='notice'>Constructing some foundations ...</span>")
+					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+					new /obj/structure/lattice/wood(T)
 
 /obj/item/stack/sheet/wood/cultify()
 	return
