@@ -198,7 +198,6 @@
 	item_state = "sword0"
 	var/active = 0
 	w_class = 2
-	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 

@@ -32,7 +32,8 @@
 	throw_range = 5
 	w_class = 3
 	w_class_on = 5
-	flags = CONDUCT | NOSHIELD
+	flags = CONDUCT
+	armour_penetration = 100
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
@@ -53,7 +54,7 @@
 	sharpness = IS_SHARP
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
-	flags = NOSHIELD
+	armour_penetration = 50
 	origin_tech = "magnets=3;syndicate=4"
 	block_chance = 50
 	var/hacked = 0
@@ -210,7 +211,6 @@
 	throw_speed = 3
 	throw_range = 1
 	w_class = 4//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD
 	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
