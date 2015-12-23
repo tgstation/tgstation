@@ -161,6 +161,12 @@
 	icon_state = "redband"
 	item_color = "redband"
 
+/obj/item/clothing/tie/armband/nazi
+	name = "nazi armband"
+	desc = "An official armband of the national socialist party."
+	icon_state = "naziband"
+	item_color = "naziband"
+
 /obj/item/clothing/tie/armband/deputy
 	name = "security deputy armband"
 	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
