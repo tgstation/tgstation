@@ -122,14 +122,6 @@
 		return BUILD_SUCCESS
 	return BUILD_FAILURE
 
-/turf/unsimulated/floor/snow/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0, var/allow = 0)
-	..(N, tell_universe, force_lighting_update, 1) // yeah you're allowed FOR NOW.
-	if(!allow) // Only shuttles use allow = 1 and we don't want it to update with shuttles
-		for(var/direction in alldirs)
-			var/turf/adj_tile = get_step(src, direction)
-			if(istype(adj_tile,/turf/unsimulated/floor/snow))
-				adj_tile.update_icon()
-
 /turf/unsimulated/floor/snow/attack_hand(mob/user as mob)
 	if(snowballs > 0)
 		user.delayNextAttack(15)
