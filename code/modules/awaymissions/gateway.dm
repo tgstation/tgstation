@@ -131,7 +131,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM as mob|obj)
 	if(!ready)		
 		return
 	if(!active)		
@@ -140,14 +140,18 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 
 	if(awaygate.calibrated)
-		M.loc = get_step(awaygate.loc, SOUTH)
-		M.dir = SOUTH
+		AM.loc = get_step(awaygate.loc, SOUTH)
+		AM.dir = SOUTH
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client)
+				client.move_delay = world.time + 5
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			M.loc = dest.loc
-			M.dir = SOUTH
+			AM.loc = dest.loc
+			AM.dir = SOUTH
 			use_power(5000)
 		return
 
@@ -235,20 +239,24 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	toggleoff()
 
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM as mob|obj)
 	if(!ready)	
 		return
 	if(!active)	
 		return
 	if(!stationgate || qdeleted(stationgate))	
 		return
-	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				M << "\black The station gate has detected your exile implant and is blocking your entry."
+	if(istype(AM, /mob/living/carbon))
+		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
+			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
+				AM << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
-	M.loc = get_step(stationgate.loc, SOUTH)
-	M.dir = SOUTH
+	AM.loc = get_step(stationgate.loc, SOUTH)
+	AM.dir = SOUTH
+	if (ismob(AM))
+		var/mob/M = AM
+		if (M.client)
+			client.move_delay = world.time + 5
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
