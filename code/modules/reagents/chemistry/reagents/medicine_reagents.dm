@@ -390,21 +390,23 @@
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
-	description = "Very slowly restores low bruising. Primarily used as an ingredient in other medicines. Overdose causes slight bruising."
+	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising.""
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
+
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(-0.25*REM)
+	if(M.getBruteLoss() > 50)
+		M.adjustBruteLoss(-4*REM) //Twice as effective as styptic powder for severe bruising
+	else
+		M.adjustBruteLoss(-0.5*REM) //But only a quarter as effective for more minor ones
 	..()
 	return
-
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(0.5*REM)
+	if(M.getBruteLoss()) //It only makes existing bruises worse
+		M.adjustBruteLoss(4.5*REM) // it's going to be healing either 4 or 0.5
 	..()
 	return
 
