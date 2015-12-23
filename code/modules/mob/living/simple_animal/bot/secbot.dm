@@ -37,6 +37,13 @@
 	weaponscheck = 0
 	auto_patrol = 1
 
+/mob/living/simple_animal/bot/secbot/beepsky/explode()
+	var/turf/Tsec = get_turf(src)
+	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
+	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/G = new(Tsec)
+	G.list_reagents = list("whiskey" = 50)
+	..()
+
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
