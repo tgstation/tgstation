@@ -47,7 +47,8 @@
 	// left by bullets that went all the way through
 	var/bullet_marks = 0
 	penetration_dampening = 10
-
+	// if STANDING     ON THE EDGE        OF THE z-level will transition you to another
+	var/can_border_transition = 0
 /*
  * Technically obsoleted by base_turf
 	//For building on the asteroid.
@@ -207,9 +208,10 @@
 				if ((A && Obj) && Obj.flags & PROXMOVE)
 					Obj.HasProximity(A, 1)
 	// THIS IS NOW TRANSIT STUFF
-	if ((!(A) || src != A.loc))	return
-//	inertial_drift(A) - this is odd, it should be called above.
-
+	if ((!(A) || src != A.loc))
+		return
+	if (!(src.can_border_transition))
+		return
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!

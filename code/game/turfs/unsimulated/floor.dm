@@ -45,7 +45,9 @@
 	var/global/list/snowlayers = list()
 	var/global/list/dirtlayers = list()
 	light_color = "#e5ffff"
-
+	can_border_transition = 1
+	dynamic_lighting = 0
+	luminosity = 1
 
 /turf/unsimulated/floor/snow/New()
 	..()
@@ -120,12 +122,13 @@
 		return BUILD_SUCCESS
 	return BUILD_FAILURE
 
-/turf/unsimulated/floor/snow/ChangeTurf()
-	..()
-	for(var/direction in alldirs)
-		var/turf/adj_tile = get_step(src, direction)
-		if(istype(adj_tile,/turf/unsimulated/floor/snow))
-			adj_tile.update_icon()
+/turf/unsimulated/floor/snow/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0, var/allow = 0)
+	..(N, tell_universe, force_lighting_update, 1) // yeah you're allowed FOR NOW.
+	if(!allow) // Only shuttles use allow = 1 and we don't want it to update with shuttles
+		for(var/direction in alldirs)
+			var/turf/adj_tile = get_step(src, direction)
+			if(istype(adj_tile,/turf/unsimulated/floor/snow))
+				adj_tile.update_icon()
 
 /turf/unsimulated/floor/snow/attack_hand(mob/user as mob)
 	if(snowballs > 0)
