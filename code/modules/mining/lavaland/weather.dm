@@ -92,7 +92,6 @@ var/global/datum/weather/activeWeather
 			N.layer = overlay_layer
 			N.icon = 'icons/effects/weather_effects.dmi'
 			N.invisibility = 0
-			N.opacity = 1
 			switch(stage)
 				if(STARTUP_STAGE)
 					N.icon_state = start_up_overlay
