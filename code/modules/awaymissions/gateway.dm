@@ -145,7 +145,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		if (ismob(AM))
 			var/mob/M = AM
 			if (M.client)
-				client.move_delay = world.time + 5
+				M.client.move_delay = max(world.time + 5, M.client.move_delay)
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
@@ -256,7 +256,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client)
-			client.move_delay = world.time + 5
+			M.client.move_delay = max(world.time + 5, M.client.move_delay)
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
