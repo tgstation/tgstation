@@ -581,6 +581,7 @@ var/global/list/synth_flesh_disguises = list()
 	if(S && !istype(S, type))
 		name = S.name
 		say_mod = S.say_mod
+		sexes = S.sexes
 		specflags = initial_specflags.Copy()
 		specflags.Add(S.specflags)
 		attack_verb = S.attack_verb
