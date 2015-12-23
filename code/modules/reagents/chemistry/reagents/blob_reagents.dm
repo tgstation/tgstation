@@ -338,12 +338,12 @@
 							X.throw_at(pull, distance, 1)
 					else
 						if(setting_type)
-							for(var/i = 0, i < moving_power, i++)
+							for(var/i in 0 to moving_power-1)
 								sleep(2)
 								if(!step_away(X, pull))
 									break
 						else
-							for(var/i = 0, i < moving_power, i++)
+							for(var/i in 0 to moving_power-1)
 								sleep(2)
 								if(!step_towards(X, pull))
 									break
