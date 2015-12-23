@@ -11,15 +11,12 @@
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
 	var/resource_delay = 0
 	var/point_rate = 2
-	var/is_offspring = 0
 
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
+/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
 	blob_cores += src
 	SSobj.processing |= src
 	update_icon() //so it atleast appears
-	if(offspring)
-		is_offspring = 1
 	if(!overmind)
 		create_overmind(new_overmind)
 	if(overmind)
@@ -109,7 +106,5 @@
 		update_icon()
 		if(B.mind && !B.mind.special_role)
 			B.mind.special_role = "Blob Overmind"
-		if(is_offspring)
-			B.verbs -= /mob/camera/blob/verb/split_consciousness
 		return 1
 	return 0

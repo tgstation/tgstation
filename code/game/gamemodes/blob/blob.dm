@@ -12,7 +12,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	config_tag = "blob"
 	antag_flag = ROLE_BLOB
 
-	required_players = 30
+	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -22,7 +22,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/burst = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 30
+	var/players_per_core = 20
 	var/blob_point_rate = 3
 
 	var/blobwincount = 350

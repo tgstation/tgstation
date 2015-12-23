@@ -186,24 +186,6 @@
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
-/mob/camera/blob/verb/split_consciousness()
-	set category = "Blob"
-	set name = "Split consciousness (100) (One use)"
-	set desc = "Expend resources to attempt to produce another sentient overmind"
-	var/turf/T = get_turf(src)
-	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
-	if(!B)
-		src << "<span class='warning'>You must be on a blob node!</span>"
-		return
-	if(!can_buy(100))
-		return
-	verbs -= /mob/camera/blob/verb/split_consciousness
-	new/obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, 1)
-	qdel(B)
-	if(ticker && ticker.mode.name == "blob")
-		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount += initial(BL.blobwincount) //Increase the victory condition by the set amount
-
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
 	set name = "Blob Broadcast"
