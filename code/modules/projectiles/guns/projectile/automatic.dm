@@ -48,7 +48,7 @@
 			chamber_round()
 			A.update_icon()
 			update_icon()
-			user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME I'M RELOADING!!!", "OUT OF AMMO!!!", "RELOADING!!!"))
+			user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 			return 1
 
 /obj/item/weapon/gun/projectile/automatic/ui_action_click()
