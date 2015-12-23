@@ -220,3 +220,9 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
+
+/mob/proc/restrained()
+	. == ..()
+	if(can_be_seen(loc))
+		return 1
+	return .
