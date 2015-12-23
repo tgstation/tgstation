@@ -123,9 +123,8 @@
 
 /datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
-	if(M)
-		M.adjust_fire_stacks(round(reac_volume/12))
-		M.IgniteMob()
+	M.adjust_fire_stacks(round(reac_volume/12))
+	M.IgniteMob()
 	if(M)
 		M.apply_damage(0.6*reac_volume, BURN)
 	if(iscarbon(M))
@@ -143,13 +142,12 @@
 
 /datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
+	M.hallucination += 0.6*reac_volume
+	M.druggy += 0.6*reac_volume
+	if(M.reagents)
+		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	if(M)
 		M.apply_damage(0.4*reac_volume, TOX)
-	if(M)
-		M.hallucination += 0.6*reac_volume
-		M.druggy += 0.6*reac_volume
-		if(M.reagents)
-			M.reagents.add_reagent("spore", 0.2*reac_volume)
 
 //toxin, stamina, and some bonus spore toxin
 /datum/reagent/blob/envenomed_filaments
@@ -161,12 +159,12 @@
 
 /datum/reagent/blob/envenomed_filaments/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
+	if(M.reagents)
+		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	if(M)
 		M.apply_damage(0.6*reac_volume, TOX)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
-	if(M && M.reagents)
-		M.reagents.add_reagent("spore", 0.2*reac_volume)
 
 //does tons of oxygen damage and a little brute
 /datum/reagent/blob/lexorin_jelly
@@ -178,12 +176,11 @@
 
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
+	M.losebreath += round(0.2*reac_volume)
 	if(M)
 		M.apply_damage(0.4*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
-	if(M)
-		M.losebreath += round(0.2*reac_volume)
 
 //does semi-random brute damage and reacts to brute damage
 /datum/reagent/blob/reactive
@@ -219,13 +216,13 @@
 
 /datum/reagent/blob/cryogenic_liquid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
+	if(M.reagents)
+		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
+		M.reagents.add_reagent("ice", 0.4*reac_volume)
 	if(M)
 		M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
-	if(M && M.reagents)
-		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
-		M.reagents.add_reagent("ice", 0.4*reac_volume)
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh
@@ -270,16 +267,15 @@
 
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
+	var/turf/simulated/T = get_turf(M)
+	if(istype(T, /turf/simulated))
+		T.MakeSlippery(TURF_WET_WATER)
 	if(M)
 		M.apply_damage(0.4*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
-	if(M)
-		var/turf/simulated/T = get_turf(M)
-		if(istype(T, /turf/simulated))
-			T.MakeSlippery(TURF_WET_WATER)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	for(var/turf/simulated/T in range(1, B))
