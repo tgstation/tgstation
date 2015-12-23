@@ -99,10 +99,12 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	poi_list |= src
 
 	return
 
 /obj/mecha/Destroy()
+	poi_list.Remove(src)
 	go_out()
 	for(var/mob/M in src) //Let's just be ultra sure
 		if(isAI(M))
