@@ -741,7 +741,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			bottlesprite = href_list["bottle_sprite"]
 		*/
 
-	return
+	return 1
 
 /obj/machinery/chem_master/proc/detach()
 	if(beaker)

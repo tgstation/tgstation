@@ -175,6 +175,7 @@
 			src.holding.loc = src.loc
 			src.holding = null
 		INVOKE_EVENT(on_destroyed, list())
+		nanomanager.update_uis(src)
 		return 1
 	else
 		return 1
@@ -210,6 +211,7 @@
 			else
 				loc.assume_air(removed)
 			src.update_icon()
+		nanomanager.update_uis(src)
 
 	if(air_contents.return_pressure() < 1)
 		can_label = 1
@@ -218,6 +220,8 @@
 
 	if(air_contents.temperature > PLASMA_FLASHPOINT)
 		air_contents.zburn()
+		nanomanager.update_uis(src)
+
 	return
 
 /obj/machinery/portable_atmospherics/canister/return_air()
@@ -334,7 +338,7 @@
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 	. = ..()//Sanity
