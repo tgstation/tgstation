@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
 	desc = "Delivers medical nanites in a focused beam."
+	origin_tech = "combat=6;materials=7;powerstorage=8;programming=7;biotech6"//The ultimate within medical design
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
@@ -58,7 +59,7 @@
 
 	if(world.time <= last_check+check_delay)
 		return
-	
+
 	last_check = world.time
 
 	if(get_dist(H,current_target)>max_range || !los_check(H,current_target))
@@ -97,7 +98,7 @@
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
-	return 
+	return
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_release(var/mob/living/target)
 	return
