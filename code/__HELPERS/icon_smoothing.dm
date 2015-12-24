@@ -61,80 +61,78 @@
 	spawn(0) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
-			A.clear_smooth_overlays()
 
-			A.top_left_corner = make_nw_corner(adjacencies)
-			A.top_right_corner = make_ne_corner(adjacencies)
-			A.bottom_left_corner = make_sw_corner(adjacencies)
-			A.bottom_right_corner = make_se_corner(adjacencies)
+			//NW CORNER
+			var/nw = "1-i"
+			if((adjacencies & N_NORTH) && (adjacencies & N_WEST))
+				if(adjacencies & N_NORTHWEST)
+					nw = "1-f"
+				else
+					nw = "1-nw"
+			else
+				if(adjacencies & N_NORTH)
+					nw = "1-n"
+				else if(adjacencies & N_WEST)
+					nw = "1-w"
 
-			A.overlays += A.top_left_corner
-			A.overlays += A.top_right_corner
-			A.overlays += A.bottom_right_corner
-			A.overlays += A.bottom_left_corner
+			//NE CORNER
+			var/ne = "2-i"
+			if((adjacencies & N_NORTH) && (adjacencies & N_EAST))
+				if(adjacencies & N_NORTHEAST)
+					ne = "2-f"
+				else
+					ne = "2-ne"
+			else
+				if(adjacencies & N_NORTH)
+					ne = "2-n"
+				else if(adjacencies & N_EAST)
+					ne = "2-e"
 
-/proc/make_nw_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & N_NORTH) && (adjacencies & N_WEST))
-		if(adjacencies & N_NORTHWEST)
-			sdir = "f"
-		else
-			sdir = "nw"
-	else
-		if(adjacencies & N_NORTH)
-			sdir = "n"
-		else if(adjacencies & N_WEST)
-			sdir = "w"
-	return "1-[sdir]"
+			//SW CORNER
+			var/sw = "3-i"
+			if((adjacencies & N_SOUTH) && (adjacencies & N_WEST))
+				if(adjacencies & N_SOUTHWEST)
+					sw = "3-f"
+				else
+					sw = "3-sw"
+			else
+				if(adjacencies & N_SOUTH)
+					sw = "3-s"
+				else if(adjacencies & N_WEST)
+					sw = "3-w"
 
-/proc/make_ne_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & N_NORTH) && (adjacencies & N_EAST))
-		if(adjacencies & N_NORTHEAST)
-			sdir = "f"
-		else
-			sdir = "ne"
-	else
-		if(adjacencies & N_NORTH)
-			sdir = "n"
-		else if(adjacencies & N_EAST)
-			sdir = "e"
-	return "2-[sdir]"
+			//SE CORNER
+			var/se = "4-i"
+			if((adjacencies & N_SOUTH) && (adjacencies & N_EAST))
+				if(adjacencies & N_SOUTHEAST)
+					se = "4-f"
+				else
+					se = "4-se"
+			else
+				if(adjacencies & N_SOUTH)
+					se = "4-s"
+				else if(adjacencies & N_EAST)
+					se = "4-e"
 
-/proc/make_sw_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & N_SOUTH) && (adjacencies & N_WEST))
-		if(adjacencies & N_SOUTHWEST)
-			sdir = "f"
-		else
-			sdir = "sw"
-	else
-		if(adjacencies & N_SOUTH)
-			sdir = "s"
-		else if(adjacencies & N_WEST)
-			sdir = "w"
-	return "3-[sdir]"
+			if(A.top_left_corner != nw)
+				A.overlays -= A.top_left_corner
+				A.top_left_corner = nw
+				A.overlays += nw
 
-/proc/make_se_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & N_SOUTH) && (adjacencies & N_EAST))
-		if(adjacencies & N_SOUTHEAST)
-			sdir = "f"
-		else
-			sdir = "se"
-	else
-		if(adjacencies & N_SOUTH)
-			sdir = "s"
-		else
-			if(adjacencies & N_EAST)
-				sdir = "e"
-	return "4-[sdir]"
+			if(A.top_right_corner != ne)
+				A.overlays -= A.top_right_corner
+				A.top_right_corner = ne
+				A.overlays += ne
 
-/proc/smooth_icon_neighbors(atom/A)
-	for(var/V in orange(1,A))
-		var/atom/T = V
-		if(T.smooth)
-			smooth_icon(T)
+			if(A.bottom_right_corner != sw)
+				A.overlays -= A.bottom_right_corner
+				A.bottom_right_corner = sw
+				A.overlays += sw
+
+			if(A.bottom_left_corner != se)
+				A.overlays -= A.bottom_left_corner
+				A.bottom_left_corner = se
+				A.overlays += se
 
 /proc/find_type_in_direction(atom/source, direction, range=1)
 	var/x_offset = 0
@@ -177,11 +175,11 @@
 
 //Icon smoothing helpers
 
-/atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
-	overlays -= top_right_corner
-	overlays -= bottom_right_corner
-	overlays -= bottom_left_corner
+/proc/smooth_icon_neighbors(atom/A)
+	for(var/V in orange(1,A))
+		var/atom/T = V
+		if(T.smooth)
+			smooth_icon(T)
 
 /proc/smooth_zlevel(var/zlevel)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
@@ -193,3 +191,9 @@
 			var/atom/A = R
 			if(A.smooth)
 				smooth_icon(A)
+
+/atom/proc/clear_smooth_overlays()
+	overlays -= top_left_corner
+	overlays -= top_right_corner
+	overlays -= bottom_right_corner
+	overlays -= bottom_left_corner
