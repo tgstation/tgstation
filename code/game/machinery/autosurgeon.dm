@@ -279,7 +279,7 @@
 			locktime = SURGERYTIME_MEDIUM
 		if("sex change")
 			locktime = SURGERYTIME_MEDIUM
-	locktime *= 3 - max(2, efficiency/2)	//Actual time taken is 1-2.5 times the defined time, depending on efficiency
+	locktime *= 3 - min(2, efficiency/2)	//Actual time taken is 1-2.5 times the defined time, depending on efficiency
 	if(locktime)
 		say("Initiating [surgeryname]. Auto-Doc locked for patient safety.")
 		spawn(locktime)
