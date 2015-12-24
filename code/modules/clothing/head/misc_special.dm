@@ -69,12 +69,14 @@
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
 	force = 15
+	throwforce = 15
 	damtype = BURN
 	SSobj.processing |= src
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
 	force = 0
+	throwforce = 0
 	damtype = BRUTE
 	SSobj.processing -= src
 
