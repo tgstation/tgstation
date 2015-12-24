@@ -555,7 +555,9 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
 	item_color = "syndi"
-	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
@@ -567,4 +569,6 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
-	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT

@@ -713,7 +713,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
-	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector for rapid healing, a medical HUD for quick identification of injured personnel, \
+	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector for rapid healing, a night vision medical HUD for quick identification of injured personnel, \
 	and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 9
@@ -725,7 +725,7 @@ var/list/uplink_items = list()
 	desc = "The red and black syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
-	excludefrom = list(/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/hardsuit
 	name = "Blood-Red Hardsuit"
@@ -735,7 +735,16 @@ var/list/uplink_items = list()
 	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	excludefrom = list(/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+
+/datum/uplink_item/device_tools/hardsuit/nuke
+	name = "Additional Blood-Red Hardsuit"
+	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack that runs off standard atmospheric tanks. \
+	When the built in helmet is deployed your identity will be protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit into combat mode \
+	will allow you all the mobility of a loose fitting uniform without sacrificing armoring. Additionally the suit is collapsible, small enough to fit within a backpack. \
+	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
+	cost = 4
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/elite_hardsuit
 	name = "Elite Syndicate Hardsuit"
@@ -744,7 +753,7 @@ var/list/uplink_items = list()
 	will allow you all the mobility of a loose fitting uniform without sacrificing armoring. Additionally the suit is collapsible, small enough to fit within a backpack. \
 	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	cost = 8
+	cost = 6//seriously for 8 tc you can buy god damn adrenals
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/shielded_hardsuit
