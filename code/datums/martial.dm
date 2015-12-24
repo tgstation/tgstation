@@ -6,7 +6,7 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
-	var/help_verb/base
+    var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -62,6 +62,8 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+    if(help_verb)
+        H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
 	if(H.martial_art && H.martial_art.temporary)
@@ -76,6 +78,8 @@
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
+	if(help_verb)
+        H.verbs -= help_verb
 
 /datum/martial_art/boxing
 	name = "Boxing"
@@ -126,6 +130,12 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
+    help_verb = /mob/living/carbon/human/proc/wrestling_help
+
+//	combo refence since wrestling uses a different format to sleeping carp and plasma fist.
+//	Clinch "G"
+//	Suplex "GD"
+//	Advanced grab "G"
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.grabbedby(A,1)
@@ -176,10 +186,11 @@
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
 
-	var/help_verb/wrestling
+ /mob/living/carbon/human/proc/wrestling_help()
 	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
+
 	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
 	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
 	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
@@ -191,6 +202,8 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+    help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
@@ -265,7 +278,7 @@
 	basic_hit(A,D)
 	return 1
 
-	var/help_verb/plasma_fist
+ /mob/living/carbon/human/proc/plasma_fist_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
@@ -284,6 +297,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+    help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -393,7 +407,7 @@
 		return 1
 	return ..()
 
-	var/help_verb/base/sleeping_carp
+ /mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
@@ -437,7 +451,6 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-		user.verbs +=help_verb/wrestling
 		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wresting tab.</span>"
 	return
 
@@ -447,7 +460,6 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_belt) == src)
 		style.remove(H)
-		user.verbs -=help_verb/wrestling
 		user << "<span class='sciradio'>You no longer have an urge to flex your muscles.</span>"
 	return
 
@@ -466,7 +478,6 @@
 		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
 		F.teach(H)
 		H << "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>"
-		user.verbs += help_verb/plasma_fist
 		used = 1
 		desc = "It's completely blank."
 		name = "empty scroll"
@@ -486,7 +497,6 @@
 		return 0
 	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	user.verbs += help_verb/sleeping_carp
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
 	user.drop_item()
