@@ -50,18 +50,30 @@
 	response_harm   = "hits"
 
 /mob/living/simple_animal/hostile/bear/panda
-		name = "Space Panda"
-		desc = "Endangered even in space. A lack of bamboo has driven them somewhat mad."
-		icon_state = "panda"
-		icon_living = "panda"
-		icon_dead = "panda_dead"
-		icon_gib = "brownbear_gib"
-		default_icon_floor = "panda"
-		default_icon_space = "panda"
-		maxHealth = 50
-		health = 50
-		melee_damage_lower=10
-		melee_damage_upper=35
+	name = "space panda"
+	desc = "Endangered even in space. A lack of bamboo has driven them somewhat mad."
+	icon_state = "panda"
+	icon_living = "panda"
+	icon_dead = "panda_dead"
+	default_icon_floor = "panda"
+	default_icon_space = "panda"
+	maxHealth = 50
+	health = 50
+	melee_damage_lower=10
+	melee_damage_upper=35
+
+/mob/living/simple_animal/hostile/bear/polarbear
+	name = "space polar bear"
+	desc = "You would think that space would be considered cold enough for regular space bears, well these are adapted for colder climates"
+	icon_state = "polarbear"
+	icon_living = "polarbear"
+	icon_dead = "polarbear_dead"
+	default_icon_floor = "polarbear"
+	default_icon_space = "polarbear"
+	maxHealth = 75
+	health = 75
+	melee_damage_lower=10
+	melee_damage_upper=40
 
 /mob/living/simple_animal/hostile/bear/Move()
 	..()
