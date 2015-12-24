@@ -131,7 +131,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM as mob|obj)
+/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
 	if(!ready)		
 		return
 	if(!active)		
@@ -239,7 +239,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	toggleoff()
 
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM as mob|obj)
+/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
 	if(!ready)	
 		return
 	if(!active)	
