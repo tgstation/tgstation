@@ -35,7 +35,7 @@
 	var/time = 40
 /datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
 	if (src.output && loc && processor)
-		for(var/i in 1 to (C+processor.rating_amount-1))
+		for(var/i = 0, i < processor.rating_amount, i++)
 			new src.output(loc)
 	if (what)
 		qdel(what) // Note to self: Make this safer
@@ -86,7 +86,7 @@
 		S.loc = loc
 		S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 		return
-	for(var/i = 1, i < C + processor.rating_amount, i++)
+	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
 		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
