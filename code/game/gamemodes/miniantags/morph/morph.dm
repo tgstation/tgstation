@@ -80,8 +80,8 @@
 	transform = matrix()
 	pixel_y = 0
 	pixel_x = 0
-visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \	
-"<span class='notice'>You twist your body and assume the form of [target].</span>")
+	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
+					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	//Morphed is weaker
 	melee_damage_lower = 5
 	melee_damage_upper = 5
