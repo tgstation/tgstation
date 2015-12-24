@@ -673,7 +673,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(numticks == 0)
 		return 0
 	var/user_loc = user.loc
+	user.last_move = null
 	var/target_loc = target.loc
+	target.last_move = null
 	var/holding = user.get_active_hand()
 	var/timefraction = round(time/numticks)
 	var/image/progbar
@@ -686,7 +688,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(!user || !target)
 			continue_looping = 0
 
-		if (continue_looping && !uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
+		if (continue_looping && !uninterruptible && (user.loc != user_loc || user.last_move != null || target.loc != target_loc || target.last_move != null || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
 			continue_looping = 0
 
 		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
@@ -722,11 +724,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/atom/Tloc = null
 	if(target)
 		Tloc = target.loc
-
+	var/atom/movable/AMtarget
+	if(istype(target,/atom/movable))
+		AMtarget = target
+		AMtarget.last_move = null
 	var/delayfraction = round(delay/numticks)
 
 	var/atom/Uloc = user.loc
-
+	user.last_move = null
 	var/holding = user.get_active_hand()
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
@@ -741,10 +746,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			assign_progress_bar(user, progbar)
 
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
+		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc) || (user.last_move != null))
 			continue_looping = 0
 
-		if(continue_looping && Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
+		if(continue_looping && Tloc && (!target || Tloc != target.loc || (AMtarget && AMtarget.last_move != null))) //Tloc not set when we don't want to track target
 			continue_looping = 0
 
 		if(continue_looping && needhand)
