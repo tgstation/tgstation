@@ -202,9 +202,9 @@
 	oldorgan.owner = null
 	return oldorgan							//We return the organ so we can finish whatever we were doing with it.
 
+//I really ought to make this a var for organs
 /datum/organ/proc/getDisplayName()
 	switch(name)
-		if("eyes")				return "eyes"
 		if("l_leg")				return "left leg"
 		if("r_leg")				return "right leg"
 		if("l_arm")				return "left arm"
