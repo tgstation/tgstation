@@ -37,6 +37,7 @@
 		if(istype(AM, mag_type))
 			if(magazine)
 				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
+				user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()
 				magazine = null
