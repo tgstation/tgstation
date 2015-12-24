@@ -186,7 +186,7 @@
 		ui = new(user, src, ui_key, "botany_isolator.tmpl", "Lysis-isolation Centrifuge UI", 470, 450)
 		ui.set_initial_data(data)
 		ui.open()
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/botany/Topic(href, href_list)
 
@@ -331,7 +331,7 @@
 		ui = new(user, src, ui_key, "botany_editor.tmpl", "Bioballistic Delivery UI", 470, 450)
 		ui.set_initial_data(data)
 		ui.open()
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/botany/editor/Topic(href, href_list)
 

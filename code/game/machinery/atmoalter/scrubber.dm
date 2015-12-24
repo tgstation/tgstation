@@ -22,6 +22,7 @@
 		on = !on
 		update_icon()
 
+	nanomanager.update_uis(src)
 	..(severity)
 
 /obj/machinery/portable_atmospherics/scrubber/huge
@@ -143,7 +144,8 @@
 			else
 				loc.assume_air(removed)
 		//src.update_icon()
-	src.updateDialog()
+		nanomanager.update_uis(src)
+	//src.updateDialog()
 	return
 
 /obj/machinery/portable_atmospherics/scrubber/return_air()
@@ -184,7 +186,7 @@
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/portable_atmospherics/scrubber/Topic(href, href_list)
 	. = ..()
