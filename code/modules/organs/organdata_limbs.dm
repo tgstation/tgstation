@@ -42,7 +42,7 @@
 	if(oldorgan)
 		if(owner && owner.organsystem.coreitem == oldorgan)
 			owner.organsystem.coreitem = organitem
-		qdel(neworgan)	//dont' want any extra chests around. They're pointless anyway due to being core items that can't be placed anywhere
+		qdel(oldorgan)	//dont' want any extra chests around. They're pointless anyway due to being core items that can't be placed anywhere
 
 /datum/organ/limb/head
 	name = "head"

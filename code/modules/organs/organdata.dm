@@ -75,7 +75,6 @@
 /datum/organ/proc/set_organitem(var/obj/item/organ/O) //Sets this organ's organitem, but only if it does not already have an organitem.
 	if(O && !organitem && istype(O, organitem_type))	//Verify that O is not null, that there is not already an organ and that O is of the right type.
 		organitem = O
-		organitem.loc = owner
 		if(isorgan(organitem))
 			var/obj/item/organ/OI = organitem
 			status = OI.status
@@ -213,3 +212,11 @@
 		if("cyberimp_chest")	return "chest cybernetic implant"
 		if("cyberimp_brain")	return "brain cybernetic implant"
 		else			return name
+
+/datum/organ/proc/getStatusString()
+	switch(status)
+		if(ORGAN_REMOVED)	return "removed"
+		if(ORGAN_SPLINTED)	return "splinted"
+		if(ORGAN_BROKEN)	return "broken"
+		if(ORGAN_DESTROYED)	return "destroyed"
+		if(ORGAN_NOBLEED)	return "cauterized"

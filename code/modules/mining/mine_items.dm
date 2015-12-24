@@ -91,12 +91,12 @@
 /obj/item/weapon/pickaxe/mounted
 	name = "mounted pickaxe"
 	desc = "A pickaxe that has replaced your arm"
-	flags = CONDUCT | ABSTRACT
+	augmenttype = /obj/item/weapon/pickaxe/
 
 /obj/item/weapon/pickaxe/diamond/mounted
 	name = "mounted diamond pickaxe"
 	desc = "A diamond pickaxe that has replaced your arm"
-	flags = CONDUCT | ABSTRACT
+	augmenttype = /obj/item/weapon/pickaxe/diamond/
 
 /obj/item/weapon/pickaxe/drill/examine(mob/user)
 	..()

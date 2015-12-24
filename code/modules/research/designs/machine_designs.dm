@@ -92,6 +92,16 @@
 	build_path = /obj/item/weapon/circuitboard/sleeper
 	category = list ("Medical Machinery")
 
+/datum/design/rapidsexchanger
+	name = "Machine Design (Auto-Doc)"
+	desc = "The circuit board for an Auto-Doc."
+	id = "sleeper"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/rapidsexchanger
+	category = list ("Medical Machinery")
+
 /datum/design/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
