@@ -104,11 +104,6 @@
 	log_name = "MM"
 	category = "Defensive"
 
-/datum/spellbook_entry/disintegrate
-	name = "Disintegrate"
-	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
-	log_name = "DG"
-
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
