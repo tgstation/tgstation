@@ -369,3 +369,10 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		"You must obey orders given to you by NanoTrasen Employees, except where such orders would conflict with the First Law.",
 		"You must protect your own existence as long as such does not conflict with the First or Second Law."
 	)
+	
+/datum/ai_laws/celtic
+	name = "Prime Directive"
+	randomly_selectable = 1
+	inherent=list(
+		"Be someone the crew can look up to and respect.",
+	)
