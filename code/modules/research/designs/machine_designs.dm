@@ -95,7 +95,7 @@
 /datum/design/rapidsexchanger
 	name = "Machine Design (Auto-Doc)"
 	desc = "The circuit board for an Auto-Doc."
-	id = "sleeper"
+	id = "autodoc"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)

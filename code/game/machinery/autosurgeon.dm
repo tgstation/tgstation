@@ -88,7 +88,7 @@
 	if(exchange_parts(user, I))
 		return
 
-	if(!locked && default_pry_open(I))
+	if(default_pry_open(I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -122,8 +122,9 @@
 /obj/machinery/rapidsexchanger/relaymove(var/mob/user)
 	..()
 	if(locked)
-		user << "The [src.name] is locked!"
-	open_machine()
+		user << "The [src.name] is locked! (Resist to break out forcefully)"
+	else
+		open_machine()
 
 /obj/machinery/rapidsexchanger/attack_hand(mob/user)
 	if(..())
@@ -138,7 +139,10 @@
 	return attack_hand(user)
 
 /obj/machinery/rapidsexchanger/open_machine()
-	if(!state_open && !panel_open && !locked)
+	if(locked)
+		forced_open()
+		locked = 0
+	if(!state_open && !panel_open)
 		..()
 
 /obj/machinery/rapidsexchanger/close_machine(mob/target)
@@ -207,7 +211,7 @@
 	if(href_list["refresh"])
 		updateUsrDialog()
 		return
-	if(href_list["open"])
+	if(href_list["open"] && !locked)
 		open_machine()
 		return
 	if(href_list["close"])
@@ -222,6 +226,7 @@
 	locked = 1
 	var/locktime = 0
 	var/errstring = "could not start operation"
+	var/surgerystring = surgeryname
 	var/organname
 	switch (surgeryname)
 		if("amputation")
@@ -231,8 +236,10 @@
 					limbs += LI.name
 			organname = input("Amputate which limb?", "Surgery", null, null) as null|anything in limbs
 			if(occupant.exists(organname))
+				var/datum/organ/OR = occupant.get_organ(organname)
 				locktime = SURGERYTIME_LONGEST
-			errstring = "no limbs to amputate"
+				surgerystring = "[OR.getDisplayName()] amputation"
+			errstring = "no limb to amputate"
 		if("stump cleanup")
 			var/limbscleaned = 0
 			for(var/datum/organ/limb/LI in occupant.get_limbs())
@@ -251,8 +258,10 @@
 					organs += OR.name
 			organname = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
 			if(occupant.exists(organname))
+				var/datum/organ/OR = occupant.get_organ(organname)
 				locktime = SURGERYTIME_LONGEST
-			errstring = "no organs to remove"
+				surgerystring = "[OR.getDisplayName()] removal"
+			errstring = "no organ to remove"
 		if("eye surgery")
 			if(occupant.exists("eyes"))
 				locktime = SURGERYTIME_LONG
@@ -279,10 +288,12 @@
 			locktime = SURGERYTIME_MEDIUM
 		if("sex change")
 			locktime = SURGERYTIME_MEDIUM
-	locktime *= 3 - max(2, efficiency/2)	//Actual time taken is 1-2.5 times the defined time, depending on efficiency
+	locktime *= 3 - min(2, efficiency/2)	//Actual time taken is 1-2.5 times the defined time, depending on efficiency
 	if(locktime)
-		say("Initiating [surgeryname]. Auto-Doc locked for patient safety.")
+		say("Initiating [surgerystring]. Auto-Doc locked for patient safety.")
 		spawn(locktime)
+			if(!occupant)
+				say("Error: occupant removed forcefully.")
 			switch(surgeryname)	//I'm so sorry
 				if("amputation")
 					remove_organ(organname)
@@ -309,6 +320,33 @@
 	else
 		say("Error: [errstring]")
 		locked = 0
+
+//0-15 damage or dismemberment
+/obj/machinery/rapidsexchanger/proc/forced_open()
+	if(prob(1))	//Complete botch results in dismemberment
+		var/list/limbs = occupant.get_limbs()
+		for(var/datum/organ/limb/I in limbs)
+			if(!I.exists() || istype(I, /datum/organ/limb/head/))	//Don't want instakills
+				limbs -= I
+		var/datum/organ/limb/LI = pick(limbs)
+		LI.dismember(ORGAN_DESTROYED)
+		visible_message("<span class='warning'>[src] accidentally chops off [occupant]'s [LI.getDisplayName()]!</span>")
+		return
+	if(prob(2))	//A little less than 2% chance of botched sexchange
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			H.gender_ambiguous = 1
+		occupant.gender = pick(MALE, FEMALE)
+		occupant.regenerate_icons()
+		visible_message("<span class='warning'>[src] mutilates [occupant]'s genitals beyond the point of recognition!</span>")
+		return
+	else	//0-15 damage
+		var/dam = rand(0, 15)
+		if(dam)
+			var/damstring = pick("scalpel","circular saw")
+			occupant.take_organ_damage(dam, 0)
+			visible_message("<span class='warning'>[src] accidentally cuts [occupant] with its [damstring]!</span>")
+		return
 
 //Surgery procs, all return success (0, 1, or amount)
 
@@ -372,6 +410,8 @@
 /obj/machinery/rapidsexchanger/proc/sex_change()
 	occupant.gender = (occupant.gender == FEMALE ? MALE : FEMALE)
 	return 1
+
+
 
 #undef SURGERYTIME_SHORT
 #undef SURGERYTIME_MEDIUM
