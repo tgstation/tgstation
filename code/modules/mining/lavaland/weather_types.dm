@@ -51,7 +51,6 @@
 
 /datum/weather/ash_storm/false_alarm //No storm, just light ember fall
 	purely_aesthetic = TRUE
-	duration_message = "An ash storm has started! Get inside!"
 	duration_overlay = "light_ash"
 	duration_message = "Looks like the storm just missed the mining area. False alarm."
 	wind_down_message = "The ash fall starts to trail off."
