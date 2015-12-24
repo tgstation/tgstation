@@ -132,9 +132,9 @@
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
-	if(!try_use_flash())
+	if(!try_use_flash() || !loc)
 		return 0
-	for(var/mob/living/carbon/M in viewers(3, null))
+	for(var/mob/living/carbon/M in viewers(3, loc))
 		flash_carbon(M, null, 10, 0)
 	burn_out()
 	..()
