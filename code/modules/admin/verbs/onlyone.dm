@@ -25,6 +25,8 @@
 			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 			obj_count++
 
+		if(H.z != ZLEVEL_STATION || H.isinspace()) //We put them on the arrivals shuttle so they don't straight up die
+			H.loc = pick(latejoin)
 		for (var/obj/item/I in H)
 			if (istype(I, /obj/item/weapon/implant))
 				continue
