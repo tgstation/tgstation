@@ -193,6 +193,7 @@ var/list/world_uplinks = list()
 /obj/item/device/radio/uplink/New()
 	hidden_uplink = new(src)
 	icon_state = "radio"
+	hidden_uplink.uses = 30
 
 /obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
@@ -212,6 +213,3 @@ var/list/world_uplinks = list()
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20
-
-
-
