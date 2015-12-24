@@ -40,6 +40,7 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
+		W.pickup(src)
 		return 1
 	return 0
 
@@ -59,6 +60,7 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
+		W.pickup(src)
 		return 1
 	return 0
 
