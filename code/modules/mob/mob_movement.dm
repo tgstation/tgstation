@@ -147,11 +147,10 @@
 
 	//We are now going to move
 	moving = 1
-	move_delay = mob.movement_delay() + world.time
+	move_delay = world.time
 
 	//Something with pulling things
 	if(locate(/obj/item/weapon/grab, mob))
-		move_delay = max(move_delay, world.time + 7)
 		var/list/L = mob.ret_grab()
 		if(istype(L, /list))
 			if(L.len == 2)
