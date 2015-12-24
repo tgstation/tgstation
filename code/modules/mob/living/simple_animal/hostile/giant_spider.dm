@@ -250,7 +250,7 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
-					C.faction = faction
+					C.faction = faction.Copy()
 					fed--
 		busy = 0
 		stop_automated_movement = 0
