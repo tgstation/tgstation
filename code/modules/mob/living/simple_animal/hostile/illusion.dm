@@ -33,6 +33,8 @@
 	melee_damage_upper = damage
 	multiply_chance = replicate
 	faction -= "neutral"
+	transform = matrix()
+	pixel_y = 0
 
 
 /mob/living/simple_animal/hostile/illusion/death()
