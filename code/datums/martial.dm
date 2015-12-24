@@ -6,7 +6,7 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
-    var/help_verb = null
+	var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -62,8 +62,8 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
-    if(help_verb)
-        H.verbs += help_verb
+	if(help_verb)
+		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
 	if(H.martial_art && H.martial_art.temporary)
@@ -79,7 +79,7 @@
 		return
 	H.martial_art = base
 	if(help_verb)
-        H.verbs -= help_verb
+		H.verbs -= help_verb
 
 /datum/martial_art/boxing
 	name = "Boxing"
@@ -130,7 +130,7 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
-    help_verb = /mob/living/carbon/human/proc/wrestling_help
+	help_verb = /mob/living/carbon/human/proc/wrestling_help
 
 //	combo refence since wrestling uses a different format to sleeping carp and plasma fist.
 //	Clinch "G"
@@ -202,7 +202,7 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
-    help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -278,7 +278,7 @@
 	basic_hit(A,D)
 	return 1
 
- /mob/living/carbon/human/proc/plasma_fist_help()
+/mob/living/carbon/human/proc/plasma_fist_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
@@ -297,7 +297,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
-    help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -407,7 +407,7 @@
 		return 1
 	return ..()
 
- /mob/living/carbon/human/proc/sleeping_carp_help()
+/mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
