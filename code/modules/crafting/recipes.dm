@@ -294,6 +294,6 @@
 	name = "Door breaching slug"
 	result = /obj/item/ammo_casing/shotgun/doorslug
 	time = 20
-	reqs = list(/obj/item/ammo_casing/shotgun = 1,
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/consumable/flour = 10,//lmao you're firing dough
 				/datum/reagent/water = 10)
