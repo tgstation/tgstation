@@ -27,12 +27,7 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/mimic/death()
-	..(1)
-	visible_message("[src] stops moving!")
-	ghostize()
-	qdel(src)
+	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate

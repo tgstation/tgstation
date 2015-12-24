@@ -16,6 +16,7 @@
 	var/life_span = INFINITY //how long until they despawn
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
+	del_on_death = 1
 
 
 /mob/living/simple_animal/hostile/illusion/Life()
@@ -35,11 +36,9 @@
 	faction -= "neutral"
 
 
-/mob/living/simple_animal/hostile/illusion/death()
+/mob/living/simple_animal/hostile/illusion/New()
 	..()
-	visible_message("<span class='warning'>[src] vanishes in a puff of smoke! It was a fake!</span>")
-	qdel(src)
-
+	deathmessage = "[src] vanishes into thin air! It was a fake!"
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)
