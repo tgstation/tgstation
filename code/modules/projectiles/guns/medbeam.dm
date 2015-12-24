@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
 	desc = "Delivers medical nanites in a focused beam."
-	origin_tech = "combat=5;materials=6;powerstorage=7;programming=6;biotech=5"//The ultimate within medical design
+	origin_tech = "combat=5;materials=6;powerstorage=7;programming=5;biotech=5"//The ultimate within medical design
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
