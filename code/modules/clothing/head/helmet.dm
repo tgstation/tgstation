@@ -198,3 +198,31 @@
 	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEHAIR
 	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/knight
+	name = "medieval helmet"
+	desc = "A classic metal helmet."
+	icon_state = "knight_green"
+	item_state = "knight_green"
+	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags = FPRINT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/knight/blue
+	icon_state = "knight_blue"
+	item_state = "knight_blue"
+
+/obj/item/clothing/head/helmet/knight/yellow
+	icon_state = "knight_yellow"
+	item_state = "knight_yellow"
+
+/obj/item/clothing/head/helmet/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
+
+/obj/item/clothing/head/helmet/knight/templar
+	name = "crusader helmet"
+	desc = "Deus Vult."
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
