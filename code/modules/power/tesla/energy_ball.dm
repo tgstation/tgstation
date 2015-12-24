@@ -66,7 +66,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			loc = get_step(src,move_dir)
 
 /obj/singularity/energy_ball/proc/handle_energy()
-	if(energy >= 300)
+	if(energy >= 300 && orbiting_balls.len < 25)
 		energy = 0
 		var/obj/singularity/energy_ball/EB = new(loc)
 		orbiting_balls.Add(EB)
