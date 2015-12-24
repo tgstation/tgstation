@@ -204,7 +204,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	item_state = "knight_green"
-	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 20, bullet = 5, laser = 2,energy = 2, bomb = 2, bio = 2, rad = 0)
 	flags = FPRINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 1

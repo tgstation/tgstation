@@ -530,10 +530,10 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/security/armory/knight //why seperate them
  	name = "Knight Armor Crate"
- 	contains = list(/obj/item/clothing/suit/armor/riot/knight,
- 					/obj/item/clothing/suit/armor/riot/knight/red,
- 					/obj/item/clothing/suit/armor/riot/knight/yellow,
- 					/obj/item/clothing/suit/armor/riot/knight/blue,
+ 	contains = list(/obj/item/clothing/suit/armor/knight,
+ 					/obj/item/clothing/suit/armor/knight/red,
+ 					/obj/item/clothing/suit/armor/knight/yellow,
+ 					/obj/item/clothing/suit/armor/knight/blue,
  					/obj/item/clothing/head/helmet/knight,
  					/obj/item/clothing/head/helmet/knight/red,
  					/obj/item/clothing/head/helmet/knight/yellow,

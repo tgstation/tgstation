@@ -2220,11 +2220,11 @@ var/global/num_vending_terminals = 1
 		/obj/item/clothing/under/sl_suit = 2,
 		/obj/item/weapon/storage/backpack/cultpack = 2,
 		/obj/item/weapon/storage/fancy/candle_box = 5,
-		/obj/item/clothing/head/helmet/knight/templar = 2,
-		/obj/item/clothing/suit/armor/riot/knight/templar = 5,
 		)
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
+		/obj/item/clothing/head/helmet/knight/templar = 2,
+ 		/obj/item/clothing/suit/armor/knight/templar = 5,
 		)
 	req_access_txt = "22"
 
