@@ -45,7 +45,7 @@
 			Draw()
 		sleep(sleep_time)
 
-	qdel(src)
+	PlaceInPool(src)
 
 
 /datum/beam/proc/End()
@@ -54,7 +54,7 @@
 
 /datum/beam/proc/Reset()
 	for(var/obj/effect/ebeam/B in elements)
-		qdel(B)
+		PlaceInPool(B)
 
 
 /datum/beam/Destroy()
@@ -77,7 +77,7 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
-		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
+		var/obj/effect/ebeam/X = PoolOrNew(beam_type, origin_oldloc)
 		X.owner = src
 		elements |= X
 
