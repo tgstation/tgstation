@@ -146,6 +146,17 @@ proc/get_base_turf(var/z)
 	var/datum/zLevel/L = map.zLevels[z]
 	return L.base_turf
 
+proc/change_base_turf(var/choice,var/new_base_path,var/update_old_base = 0)
+	if(update_old_base)
+		for(var/turf/T in turfs)
+			if(T.type == get_base_turf(choice) && T.z == choice)
+				T.ChangeTurf(new_base_path)
+	var/datum/zLevel/L = map.zLevels[choice]
+	L.base_turf = new_base_path
+	for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+		if(D.z == choice)
+			D.base_turf_type = new_base_path
+
 /client/proc/set_base_turf()
 
 
@@ -154,22 +165,20 @@ proc/get_base_turf(var/z)
 	set desc = "Set the base turf for a z-level. Defaults to space, does not replace existing tiles."
 
 	if(check_rights(R_DEBUG, 0))
-
 		if(!holder)
 			return
-
 		var/choice = input("Which Z-level do you wish to set the base turf for?") as null|num
 		if(!choice)
 			return
-
 		var/new_base_path = input("Please select a turf path (cancel to reset to /turf/space).") as null|anything in typesof(/turf)
 		if(!new_base_path)
 			new_base_path = /turf/space //Only hardcode in the whole thing, feel free to change this if somewhere in the distant future spess is deprecated
-		for(var/obj/structure/docking_port/destination/D in all_docking_ports)
-			if(D.z == choice)
-				D.base_turf_type = new_base_path
-		var/datum/zLevel/L = map.zLevels[choice]
-		L.base_turf = new_base_path
+		var/update_old_base = alert(src, "Do you wish to update the old base? This will LAG.", "Update old turfs?", "Yes", "No")
+		update_old_base = update_old_base == "No" ? 0 : 1
+		if(update_old_base)
+			message_admins("[key_name_admin(usr)] is replacing the old base turf on Z level [choice] with [get_base_turf(choice)]. This is likely to lag.")
+			log_admin("[key_name_admin(usr)] has replaced the old base turf on Z level [choice] with [get_base_turf(choice)].")
+		change_base_turf(choice,new_base_path,update_old_base)
 		feedback_add_details("admin_verb", "BTC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		message_admins("[key_name_admin(usr)] has set the base turf for Z-level [choice] to [get_base_turf(choice)]. This will affect all destroyed turfs from now on.")
 		log_admin("[key_name(usr)] has set the base turf for Z-level [choice] to [get_base_turf(choice)]. This will affect all destroyed turfs from now on.")

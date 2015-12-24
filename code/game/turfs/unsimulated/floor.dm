@@ -55,7 +55,7 @@
 	relativewall_neighbours()
 	snowballs = rand(30,50)
 	src.update_icon()
-	if(prob(5))
+	if(prob(5) && !(src.contents.len))
 		new/obj/structure/flora/tree/pine(src)
 
 /turf/unsimulated/floor/snow/relativewall_neighbours()
