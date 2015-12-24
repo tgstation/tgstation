@@ -131,8 +131,32 @@
 				if(!istype(obj,/obj/machinery/camera))
 					qdel(obj) //Clear objects
 
+			//doing it here so there's less objects
+			var/min_x = world.maxx
+			var/min_y = world.maxy
+			var/max_x = 0
+			var/max_y = 0
+			var/z = -1
+			//This is awful
+			for(var/turf/T in thunderdome.contents)
+				if(z < 0)
+					z = T.z
+				if(T.x < min_x)
+					min_x = T.x
+				if(T.y < min_y)
+					min_y = T.y
+				if(T.x > max_x)
+					max_x = T.x
+				if(T.y > max_y)
+					max_y = T.y
+
 			var/area/template = locate(/area/tdome/arena_source)
 			template.copy_contents_to(thunderdome)
+
+			
+			var/datum/mapGenerator/repressurize/G = new
+			G.defineRegion(locate(min_x,min_y,z),locate(max_x,max_y,z),1)
+			G.generate()
 
 		if("clear_virus")
 
