@@ -92,7 +92,7 @@
 	name = "combat knife"
 	icon_state = "buckknife"
 	item_state = "knife"
-	desc = "A military combat utility survival knife.."
+	desc = "A military combat utility survival knife."
 	force = 20
 	throwforce = 20
 	origin_tech = "materials=2;combat=4"
