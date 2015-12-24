@@ -42,7 +42,6 @@
 	if (is_component_functioning("power cell") && cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
 		else
 			if(src.module_state_1)
 				src.cell.use(3)
