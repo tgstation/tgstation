@@ -114,7 +114,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/roach
 	name = "cockroach meat"
-	desc = "A tiny, dead cockroach with most of the nasty parts cut off."
+	desc = "A cockroach's severed abdomen, small but nonetheless nutritious."
 	icon_state = "roachmeat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/mimic

@@ -18,9 +18,9 @@
 	maxHealth = 4
 	health = 4
 
-	response_help  = "pets"
-	response_disarm = "pokes"
-	response_harm   = "stomps on"
+	response_help  = "pets \the"
+	response_disarm = "pokes \the"
+	response_harm   = "stomps on \the"
 
 	density = 0
 
@@ -81,7 +81,7 @@
 /mob/living/simple_animal/cockroach/Crossed(mob/living/O)
 	if(src.size > O.size - 2) return //Human sized dudes can stomp default-sized cockroaches just fine. For bigger roaches you need bigger dudes
 	if(flying) return
-	if(O.a_intent == I_HELP) return
+	if(O.a_intent == I_HELP) return //Must be on harm intent to stomp
 	if(O.isUnconscious()) return
 
 	if(prob(15))
@@ -103,7 +103,7 @@
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while. turns_since_move is set to 0 immediately after this proc, so the spawn() is required.
 
-			if((last_laid_eggs + 30 SECONDS < world.time)) //Base cooldown is 30 seconds. The actual cooldown is actually slightly more than that
+			if((last_laid_eggs + 30 SECONDS < world.time)) //Always lay eggs under food
 				sleep(rand(1,5) SECONDS)
 
 				//And yeah, roaches can lay eggs on their own eggs. This is kinda intended
@@ -127,7 +127,7 @@
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while
 
-			if((last_laid_eggs + 30 SECONDS < world.time) && prob(25)) //25% chance of laying eggs
+			if((last_laid_eggs + 30 SECONDS < world.time) && prob(25)) //25% chance of laying eggs under the trash
 				sleep(rand(1,5) SECONDS)
 
 				lay_eggs()
@@ -186,9 +186,9 @@
 
 	turns_per_move = 1
 
-	response_help  = "attepts to pet"
-	response_disarm = "tries to catch"
-	response_harm   = "swats"
+	response_help  = "attempts to pet \the"
+	response_disarm = "tries to catch \the"
+	response_harm   = "swats \the"
 
 	layer = 4
 
