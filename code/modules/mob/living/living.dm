@@ -1339,3 +1339,7 @@ default behaviour is:
 		returnToPool(D)
 
 	return
+
+/mob/living/nuke_act() //Called when caught in a nuclear blast
+	health = 0
+	stat = DEAD

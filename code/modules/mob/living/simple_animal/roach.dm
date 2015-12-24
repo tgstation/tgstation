@@ -237,6 +237,9 @@
 	spawn(10 SECONDS)
 		stop_flying()
 
+/mob/living/simple_animal/cockroach/nuke_act()
+	return //Survive nuclear blasts
+
 /mob/living/simple_animal/cockroach/reagent_act(id, method, volume)
 	if(isDead()) return
 
