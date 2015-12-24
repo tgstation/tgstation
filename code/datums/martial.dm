@@ -6,6 +6,7 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
+	var/help_verb/base
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -68,14 +69,12 @@
 			base = H.martial_art.base
 		else
 			H.martial_art.base = src //temporary styles have priority
-			+= /mob/living/carbon/human/proc/martial_art_help
 			return
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
-		-= /mob/living/carbon/human/proc/martial_art_help
 	H.martial_art = base
 
 /datum/martial_art/boxing
@@ -177,11 +176,10 @@
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
 
-/mob/living/carbon/human/proc/wrestling_help()
+	var/help_verb/wrestling
 	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
-
 	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
 	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
 	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
@@ -267,7 +265,7 @@
 	basic_hit(A,D)
 	return 1
 
-/mob/living/carbon/human/proc/plasma_fist_help()
+	var/help_verb/plasma_fist
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
@@ -395,12 +393,13 @@
 		return 1
 	return ..()
 
-/mob/living/carbon/human/proc/sleeping_carp_help()
+	var/help_verb/base/sleeping_carp
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
+
 	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
 	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
 	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
@@ -438,7 +437,7 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-		user.verbs += /mob/living/carbon/human/proc/wrestling_help
+		user.verbs +=help_verb/wrestling
 		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wresting tab.</span>"
 	return
 
@@ -448,7 +447,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_belt) == src)
 		style.remove(H)
-		user.verbs -= /mob/living/carbon/human/proc/wrestling_help
+		user.verbs -=help_verb/wrestling
 		user << "<span class='sciradio'>You no longer have an urge to flex your muscles.</span>"
 	return
 
@@ -467,7 +466,7 @@
 		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
 		F.teach(H)
 		H << "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>"
-		user.verbs += /mob/living/carbon/human/proc/plasma_fist_help
+		user.verbs += help_verb/plasma_fist
 		used = 1
 		desc = "It's completely blank."
 		name = "empty scroll"
@@ -487,7 +486,7 @@
 		return 0
 	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
+	user.verbs += help_verb/sleeping_carp
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
 	user.drop_item()
