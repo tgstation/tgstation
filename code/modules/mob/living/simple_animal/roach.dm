@@ -44,6 +44,8 @@
 	size = SIZE_TINY
 	stop_automated_movement_when_pulled = 0
 
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/roach
+
 	var/last_laid_eggs = 0
 
 /mob/living/simple_animal/cockroach/New()

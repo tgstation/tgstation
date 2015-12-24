@@ -34,3 +34,4 @@ delete-after: True
 changes: 
   - rscadd: Added cockroaches that can spawn during the vermin infestation event. They are resilent, but weak to toxins (in form of smoke or sprays). They also lay eggs under food.
   - tweak: Animals are now slightly damaged by acid sprays or smoke.
+  - tweak: Tiny animals like mice and cockroaches no longer drop gibs when butchered.

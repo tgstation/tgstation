@@ -1313,7 +1313,10 @@ default behaviour is:
 	can_butcher = 0
 
 	if(istype(src, /mob/living/simple_animal)) //Animals can be butchered completely, humans - not so
-		gib(meat = 0) //"meat" argument only exists for mob/living/simple_animal/gib()
+		if(src.size > SIZE_TINY) //Tiny animals don't produce gibs
+			gib(meat = 0) //"meat" argument only exists for mob/living/simple_animal/gib()
+		else
+			qdel(src)
 
 /mob/living/proc/get_strength() //Returns a mob's strength. Isn't used in damage calculations, but rather in things like cutting down trees etc.
 	var/strength = 1.0
