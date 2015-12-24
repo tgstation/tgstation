@@ -79,6 +79,7 @@
 /mob/living/simple_animal/cockroach/Crossed(mob/living/O)
 	if(src.size > O.size - 2) return //Human sized dudes can stomp default-sized cockroaches just fine. For bigger roaches you need bigger dudes
 	if(flying) return
+	if(O.a_intent == I_HELP) return
 	if(O.isUnconscious()) return
 
 	if(prob(15))
