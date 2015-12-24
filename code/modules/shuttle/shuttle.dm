@@ -403,7 +403,6 @@
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
-		T1.weather = null
 
 		T0.ChangeTurf(turf_type)
 

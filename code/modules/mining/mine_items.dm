@@ -245,7 +245,6 @@
 	threshhold.toxins = 0
 	L.contents += threshhold
 	threshhold.overlays.Cut()
-	threshhold.weather = null
 
 	var/list/turfs = room["floors"]
 	for(var/turf/simulated/floor/A in turfs)
@@ -262,5 +261,4 @@
 		A.air.temperature = 293.15
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-		A.weather = null
 		L.contents += A

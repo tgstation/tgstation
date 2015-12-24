@@ -1,5 +1,3 @@
-var/global/datum/weather/activeWeather
-
 #define STARTUP_STAGE 1
 #define MAIN_STAGE 2
 #define WIND_DOWN_STAGE 3
@@ -26,16 +24,17 @@ var/global/datum/weather/activeWeather
 	var/duration_overlay = "lava"
 	var/overlay_layer = 10 //This is the default area layer, and above everything else. 2 is floors/below walls and mobs.
 	var/purely_aesthetic = FALSE //If we just want gentle rain that doesn't hurt people
+	var/list/impacted_areas = list()
 
 /datum/weather/proc/weather_start_up()
+	for(var/area/N in get_areas(area_type))
+		if(N.z == target_z)
+			impacted_areas += N
 	duration = rand(duration_lower,duration_upper)
-	if(activeWeather)
-		return
-	activeWeather = src
-	update_turfs()
+	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "[start_up_message]"
+			M << start_up_message
 
 	sleep(start_up_time)
 	stage = MAIN_STAGE
@@ -43,7 +42,7 @@ var/global/datum/weather/activeWeather
 
 
 /datum/weather/proc/weather_main()
-	update_turfs()
+	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
 			M << "[duration_message]"
@@ -52,8 +51,8 @@ var/global/datum/weather/activeWeather
 	else  //Storm effects
 		for(var/i in 1 to duration-1)
 			for(var/mob/living/L in living_mob_list)
-				var/turf/Z = get_turf(L)
-				if(Z.weather == src)
+				var/area/storm_area = get_area(L)
+				if(storm_area in impacted_areas)
 					storm_act(L)
 			sleep(10)
 
@@ -62,15 +61,15 @@ var/global/datum/weather/activeWeather
 
 
 /datum/weather/proc/weather_wind_down()
-	update_turfs()
+	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "[wind_down_message]"
+			M << wind_down_message
 
 	sleep(wind_down)
 
 	stage = END_STAGE
-	update_turfs()
+	update_areas()
 
 
 /datum/weather/proc/storm_act(mob/living/L)
@@ -78,33 +77,23 @@ var/global/datum/weather/activeWeather
 		L << "You're buffeted by the storm!"
 		L.adjustBruteLoss(1)
 
-/datum/weather/proc/update_turfs()
-	for(var/turf/T in get_area_turfs(area_type, target_z))
-		if(exclude_walls && T.density == 1)
-			continue
-		if(stage == END_STAGE)
-			T.weather = null
-		else
-			T.weather = src
+/datum/weather/proc/update_areas()
+	for(var/area/N in impacted_areas)
+		N.layer = overlay_layer
+		N.icon = 'icons/effects/weather_effects.dmi'
+		N.invisibility = 0
+		switch(stage)
+			if(STARTUP_STAGE)
+				N.icon_state = start_up_overlay
 
-	for(var/area/N in get_areas(area_type))
-		if(N.z == target_z)
-			N.layer = overlay_layer
-			N.icon = 'icons/effects/weather_effects.dmi'
-			N.invisibility = 0
-			switch(stage)
-				if(STARTUP_STAGE)
-					N.icon_state = start_up_overlay
+			if(MAIN_STAGE)
+				N.icon_state = duration_overlay
 
-				if(MAIN_STAGE)
-					N.icon_state = duration_overlay
+			if(WIND_DOWN_STAGE)
+				N.icon_state = start_up_overlay
 
-				if(WIND_DOWN_STAGE)
-					N.icon_state = start_up_overlay
-
-				if(END_STAGE)
-					N.icon_state = initial(N.icon_state)
-					N.layer = 10 //Just default back to normal area stuff since I assume setting a var is faster than initial
-					N.invisibility = 100
-					N.opacity = 0
-					activeWeather = null
+			if(END_STAGE)
+				N.icon_state = initial(N.icon_state)
+				N.layer = 10 //Just default back to normal area stuff since I assume setting a var is faster than initial
+				N.invisibility = 100
+				N.opacity = 0

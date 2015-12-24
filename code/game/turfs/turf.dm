@@ -27,8 +27,6 @@
 	flags = 0
 
 	var/image/obscured	//camerachunks
-	var/datum/weather/weather//Is there active weather on this turf?
-
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)

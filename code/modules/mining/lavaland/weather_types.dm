@@ -19,9 +19,9 @@
 	overlay_layer = 2 //Covers floors only
 
 
-/datum/weather/floor_is_lavaproc/storm_act(mob/living/L)
+/datum/weather/floor_is_lava/storm_act(mob/living/L)
 	var/turf/F = get_turf(L)
-	for(var/obj/structure/O in L.contents)
+	for(var/obj/structure/O in F.contents)
 		if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
 			return
 	L.adjustFireLoss(3)
