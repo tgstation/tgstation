@@ -143,3 +143,4 @@
 	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/celtic
+	

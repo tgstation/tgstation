@@ -376,3 +376,4 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 	inherent=list(
 		"Be someone the crew can look up to and respect.",
 	)
+	
