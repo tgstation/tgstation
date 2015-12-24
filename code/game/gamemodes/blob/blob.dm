@@ -27,6 +27,9 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	var/blobwincount = 350
 
+	var/burstdelay_low = 1200 //in deciseconds
+	var/burstdelay_high = 2400 //blobs will burst after a random value between these * 2.5(minimum 5 minutes, maximum 10 minutes)
+
 	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
@@ -154,52 +157,26 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		B.max_occurrences = 0 // disable the event
 
 	spawn(0)
+		var/burst_delay = rand(burstdelay_low, burstdelay_high) //between 5 and 10 minutes with 1200 low and 2400 high.
 
-		var/wait_time = rand(waittime_l, waittime_h)
-
-		sleep(wait_time)
-
-		send_intercept(0)
-
-		sleep(100)
+		sleep(burst_delay)
 
 		show_message("<span class='userdanger'>You feel tired and bloated.</span>")
 
-		sleep(wait_time)
+		sleep(burst_delay)
 
 		show_message("<span class='userdanger'>You feel like you are about to burst.</span>")
 
-		sleep(wait_time / 2)
+		sleep(burst_delay * 0.5)
 
 		burst_blobs()
 
-/*
-		// Stage 0			Keeping this here for possible re-addition in the future. Re-add when classified reports are added to other round types so people stop metagaming.
-		sleep(wait_time)
-		stage(0)
-*/
-		// Stage 1
-		sleep(wait_time)
-		stage(1)
+		sleep(burst_delay * 0.5)
 
-		// Stage 2
-		sleep(30000)
-		if(!round_converted)
-			stage(2)
+		send_intercept(1)
 
-	return ..(0)
+		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 12)
 
-/datum/game_mode/blob/proc/stage(stage)
+		send_intercept(2) //if the blob has been alive this long, it's time to bomb it
 
-	switch(stage)
-/*		if (0)
-			send_intercept(1) //Temporarily unused - see stage 0 comment
-*/
-		if (1)
-			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
-
-		if (2)
-			send_intercept(2)
-
-	return
-
+	return ..()
