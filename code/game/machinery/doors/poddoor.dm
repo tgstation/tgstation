@@ -115,3 +115,8 @@
 				s.set_up(2, 1, src)
 				s.start()
 
+/obj/machinery/door/poddoor/update_icon()
+	if(density)
+		icon_state = "closed"
+	else
+		icon_state = "open"
