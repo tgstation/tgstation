@@ -35,7 +35,7 @@
 	var/time = 40
 /datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
 	if (src.output && loc && processor)
-		for(var/i = 0, i < processor.rating_amount, i++)
+		for(var/i in 1 to (C+processor.rating_amount-1))
 			new src.output(loc)
 	if (what)
 		qdel(what) // Note to self: Make this safer
