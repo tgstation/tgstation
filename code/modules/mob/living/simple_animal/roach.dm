@@ -7,7 +7,7 @@
 
 	icon_state = "cockroach"
 	icon_living = "cockroach"
-	icon_dead = "mouse_gray_dead"
+	icon_dead = "cockroach_dead"
 
 	emote_hear = list("hisses")
 
@@ -18,9 +18,9 @@
 	maxHealth = 4
 	health = 4
 
-	response_help  = "pets the"
-	response_disarm = "pokes the"
-	response_harm   = "stomps on the"
+	response_help  = "pets"
+	response_disarm = "pokes"
+	response_harm   = "stomps on"
 
 	density = 0
 
@@ -51,18 +51,33 @@
 	maxHealth = rand(1,5)
 	health = maxHealth
 
-/mob/living/simple_animal/cockroach/Die()
-	var/obj/effect/decal/remains = new /obj/effect/decal/cleanable/cockroach_remains(src.loc)
-	remains.dir = src.dir
-	remains.pixel_x = src.pixel_x
-	remains.pixel_y = src.pixel_y
+/mob/living/simple_animal/cockroach/Die(var/gore = 1)
+	if(gore)
 
-	if(flying)
-		animate(remains, pixel_y = pixel_y - 8, 5, 1) //Fall down gracefully
+		var/obj/effect/decal/remains = new /obj/effect/decal/cleanable/cockroach_remains(src.loc)
+		remains.dir = src.dir
+		remains.pixel_x = src.pixel_x
+		remains.pixel_y = src.pixel_y
 
-	..()
+		if(flying)
+			animate(remains, pixel_y = pixel_y - 8, 5, 1) //Fall down gracefully
 
-	qdel(src)
+		playsound(get_turf(src), pick('sound/effects/gib1.ogg','sound/effects/gib2.ogg','sound/effects/gib3.ogg'), 40, 1) //Splat
+
+		..()
+
+		qdel(src)
+
+	else
+
+		return ..()
+
+/mob/living/simple_animal/cockroach/Crossed(mob/living/O)
+	if(src.size > O.size - 2) return //Human sized dudes can stomp default-sized cockroaches just fine. For bigger roaches you need bigger dudes
+	if(O.isUnconscious()) return
+
+	if(prob(15))
+		Die(gore = 1)
 
 /mob/living/simple_animal/cockroach/wander_move(turf/dest)
 	..()
@@ -146,9 +161,9 @@
 
 	turns_per_move = 1
 
-	response_help  = "attepts to pet the"
-	response_disarm = "tries to catch the"
-	response_harm   = "swats the"
+	response_help  = "attepts to pet"
+	response_disarm = "tries to catch"
+	response_harm   = "swats"
 
 
 	if(anim) animate(src, pixel_y = pixel_y + 8, 10, 1, ELASTIC_EASING)
@@ -167,8 +182,26 @@
 
 	if(anim) animate(src, pixel_y = pixel_y - 8, 5, 1, ELASTIC_EASING)
 
+/mob/living/simple_animal/cockroach/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/newspaper))
+		user.visible_message("<span class='danger'>[user] swats \the [src] with \the [W]!</span>", "<span class='danger'>You swat \the [src] with \the [W].</span>")
+		W.desc = "[initial(W.desc)] <span class='notice'>There is a splattered [src] on \the back.</span>"
+
+		adjustBruteLoss(5)
+	else
+		return ..()
+
 /mob/living/simple_animal/cockroach/ex_act()
 	start_flying()
 
 	spawn(10 SECONDS)
 		stop_flying()
+
+/mob/living/simple_animal/cockroach/reagent_act(id, method, volume)
+	if(isDead()) return
+
+	.=..()
+
+	switch(id)
+		if("toxin")
+			Die(gore = 0)

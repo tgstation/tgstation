@@ -65,6 +65,18 @@
 				if(M.reagents)
 					M.reagents.add_reagent(self.id, self.volume/2) //Hardcoded, transfer half of volume
 
+/datum/reagent/proc/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+
+	if(!holder)
+		return 1
+	if(!istype(M))
+		return 1
+
+	var/datum/reagent/self = src
+	src = null
+
+	M.reagent_act(self.id, method, volume)
+
 /datum/reagent/proc/reaction_obj(var/obj/O, var/volume)
 
 	if(!holder)
