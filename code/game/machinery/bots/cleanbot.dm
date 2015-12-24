@@ -29,7 +29,8 @@
 	var/screwloose = 0
 	var/oddbutton = 0
 	var/blood = 1
-	var/list/target_types = list()
+	var/crayon = 0
+	var/list/blacklisted_targets = list()
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
@@ -94,6 +95,7 @@ Maintenance panel is [src.open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked || issilicon(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Cleans Crayon: []<BR>"}, text("<A href='?src=\ref[src];operation=crayon'>[src.crayon ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.open && !src.locked)
@@ -119,7 +121,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			else
 				turn_on()
 		if("blood")
-			src.blood =!src.blood
+			src.blood = !src.blood
+			src.get_targets()
+			src.updateUsrDialog()
+		if("crayon")
+			src.crayon = !src.crayon
 			src.get_targets()
 			src.updateUsrDialog()
 		if("patrol")
@@ -185,13 +191,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.oldtarget = get_turf(gib)
 	if(!src.target || src.target == null)
 		for (var/turf/T in view(7,src))
-			for(var/targettype in src.target_types)
-				if(locate(targettype) in T.contents)
-					if(!T.targetted_by && T!=oldtarget && !istype(T,/turf/space))
+			if(target) break
+			if(istype(T,/turf/space)) continue
+			for(var/obj/effect/decal/cleanable/sickfilth in T.contents)
+				if(sickfilth && !(is_type_in_list(sickfilth, blacklisted_targets)))
+					if(!T.targetted_by && T!=oldtarget)
 						oldtarget = T								 // or if it is but the bot is gone.
 						target = T									 // and it's stuff we clean?  Clean it.
 						T.targetted_by = src	// Claim the messy tile we are targeting.
-						return
+						break
 
 	if(!src.target || src.target == null)
 		if(src.loc != src.oldloc)
@@ -287,36 +295,25 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
 
-/obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+/obj/machinery/bot/cleanbot/proc/get_targets() //This seems slightly wasteful, but it will only be called approximately once every six rounds so whatever
+	blacklisted_targets = list()
 
-	target_types += /obj/effect/decal/cleanable/blood/oil
-	target_types += /obj/effect/decal/cleanable/vomit
-	target_types += /obj/effect/decal/cleanable/crayon
-	target_types += /obj/effect/decal/cleanable/liquid_fuel
-	target_types += /obj/effect/decal/cleanable/mucus
-
-	if(src.blood)
-		target_types += /obj/effect/decal/cleanable/blood/
-		target_types += /obj/effect/decal/cleanable/blood/tracks
-		target_types += /obj/effect/decal/cleanable/blood/gibs/
-		target_types += /obj/effect/decal/cleanable/dirt
+	if(!src.blood)
+		blacklisted_targets += (/obj/effect/decal/cleanable/blood)
+	if(!src.crayon)
+		blacklisted_targets += (/obj/effect/decal/cleanable/crayon)
 
 /obj/machinery/bot/cleanbot/proc/clean(var/turf/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
-	visible_message("<span class='warning'>[src] begins to clean up the [target]</span>")
+	visible_message("<span class='warning'>[src] begins to clean up the [target].</span>")
 	cleaning = 1
-	var/cleantime = 20 // 50 // 5 seconds is too long.
-	var/list/cleansed=list()
-	for(var/obj/effect/decal/cleanable/C in target)
-		if(is_type_in_list(C.type,target_types))
-			cleantime += 5
-			cleansed += C
-	spawn(cleantime)
-		src.cleaning = 0
+	spawn(2 SECONDS)
 		for(var/obj/effect/decal/cleanable/C in target)
-			qdel(C)
+			if(!(is_type_in_list(C,blacklisted_targets)))
+				spawn(5)
+				qdel(C)
+		src.cleaning = 0
 		icon_state = "cleanbot[on]"
 		anchored = 0
 		target = null
