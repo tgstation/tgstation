@@ -459,6 +459,7 @@
 	unacidable = 1
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
+	var/list/stopped_atoms = list()
 	var/freezerange = 2
 	var/duration = 140
 	alpha = 125
@@ -473,34 +474,46 @@
 
 /obj/effect/timestop/proc/timestop()
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
-	while(loc)
-		if(duration)
-			for(var/mob/living/M in orange (freezerange, src.loc))
-				if(M in immune)
-					continue
-				M.stunned = 10
-				M.anchored = 1
-				if(istype(M, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.AIStatus = AI_OFF
-					H.LoseTarget()
-					continue
-			for(var/obj/item/projectile/P in orange (freezerange, src.loc))
-				P.paused = TRUE
-			duration --
-		else
-			for(var/mob/living/M in orange (freezerange+2, src.loc)) //longer range incase they lag out of it or something
-				M.stunned = 0
-				M.anchored = 0
-				if(istype(M, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.AIStatus = initial(H.AIStatus)
-					continue
-			for(var/obj/item/projectile/P in orange(freezerange+2, src.loc))
-				P.paused = FALSE
-			qdel(src)
-			return
+	for(var/i in 1 to duration-1)
+		for(var/mob/living/M in orange (freezerange, src.loc))
+			if(M in immune)
+				continue
+			M.stunned = 10
+			M.anchored = 1
+			if(istype(M, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/H = M
+				H.AIStatus = AI_OFF
+				H.LoseTarget()
+				continue
+			stopped_atoms |= M
+
+		for(var/obj/item/projectile/P in orange (freezerange, src.loc))
+			P.paused = TRUE
+			stopped_atoms |= P
+
+		for(var/mob/living/M in stopped_atoms)
+			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
+				unfreeze_mob(M)
+				stopped_atoms -= M
 		sleep(1)
+
+	//End
+	for(var/mob/living/M in stopped_atoms)
+		unfreeze_mob(M)
+
+	for(var/obj/item/projectile/P in stopped_atoms)
+		P.paused = FALSE
+		qdel(src)
+		return
+
+
+
+/obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
+	M.stunned = 0
+	M.anchored = 0
+	if(istype(M, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/H = M
+		H.AIStatus = initial(H.AIStatus)
 
 
 /obj/effect/timestop/wizard
