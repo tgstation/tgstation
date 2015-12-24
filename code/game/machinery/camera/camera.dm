@@ -69,6 +69,8 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	if(!status)
+		return
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
