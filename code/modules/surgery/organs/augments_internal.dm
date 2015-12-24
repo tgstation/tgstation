@@ -288,13 +288,18 @@
 	if(!owner)//ensure that it's in an owner, then...
 		return
 	if(overloaded == 0)//make sure this is the first time it's been EMPed, and...
+		if(out == 1)//check if he has the item out...
+			owner.unEquip(holder, 1)//if he does, take it away.
+			holder.loc = null
+			out = 0
+			owner.visible_message("<span class='notice'>[holder] forcibly retracts into your arm.</span>")
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]...</span>")
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
-		owner << "<span class='warning'>You feel an explosion erupt inside your chest. Is it hot in here?</span>"
+		owner << "<span class='warning'>You feel an explosion erupt inside you as your chest implant breaks. Is it hot in here?</span>"
 		owner.adjust_fire_stacks(20)
-		owner.IgniteMob()
+		owner.IgniteMob()//ignite the owner, and then...
 		owner.say("AUUUUUUUUUUUUUUUUUUGH!!")
-		owner.adjustFireLoss(10000)//kill the owner!
+		owner.adjustFireLoss(25)//severely injure him!
 		overloaded = 1//then make sure this can't happen again by breaking the implant.
 	else
 		return
