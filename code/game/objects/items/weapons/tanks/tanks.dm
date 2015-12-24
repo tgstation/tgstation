@@ -13,7 +13,7 @@
 	throw_range = 4
 
 	var/datum/gas_mixture/air_contents = null
-	var/distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
 
