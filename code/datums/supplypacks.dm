@@ -744,6 +744,26 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Bartending equipment"
 	group = "Hospitality"
 
+/datum/supply_packs/festive
+	name = "Festive supplies"
+	contains = list(/obj/item/stack/package_wrap/gift,
+					/obj/item/stack/package_wrap/gift,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/clothing/head/christmas/santahat/red,
+					/obj/item/clothing/head/christmas/santahat/green,
+					/obj/item/clothing/suit/jumper/christmas/red,
+					/obj/item/clothing/suit/jumper/christmas/green,
+					/obj/item/clothing/suit/jumper/christmas/blue)
+	cost = 30
+	containertype = /obj/structure/closet/crate
+	containername = "Festivus supplies"
+	group = "Hospitality"
+
 
 //////ENGINEERING//////
 
