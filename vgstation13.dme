@@ -1604,6 +1604,7 @@
 #include "code\modules\reagents\reagent_containers\food\snacks\grown.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\meat.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\snackbar.dm"
+#include "code\modules\reagents\reagent_containers\food\snacks\eggs\roach.dm"
 #include "code\modules\reagents\reagent_containers\glass\bottle.dm"
 #include "code\modules\reagents\reagent_containers\glass\bottle\robot.dm"
 #include "code\modules\reagents\reagents\vg.dm"

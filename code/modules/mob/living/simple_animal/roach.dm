@@ -36,11 +36,15 @@
 	min_n2 = 0
 	max_n2 = 0
 
+	layer = TURF_LAYER + 0.01
+
 	treadmill_speed = 0
 	turns_per_move = 2 //2 life ticks / move
 
 	size = SIZE_TINY
 	stop_automated_movement_when_pulled = 0
+
+	var/last_laid_eggs = 0
 
 /mob/living/simple_animal/cockroach/New()
 	..()
@@ -48,7 +52,7 @@
 	pixel_x = rand(-20, 20)
 	pixel_y = rand(-20, 20)
 
-	maxHealth = rand(1,5)
+	maxHealth = rand(1,6)
 	health = maxHealth
 
 /mob/living/simple_animal/cockroach/Die(var/gore = 1)
@@ -74,6 +78,7 @@
 
 /mob/living/simple_animal/cockroach/Crossed(mob/living/O)
 	if(src.size > O.size - 2) return //Human sized dudes can stomp default-sized cockroaches just fine. For bigger roaches you need bigger dudes
+	if(flying) return
 	if(O.isUnconscious()) return
 
 	if(prob(15))
@@ -87,11 +92,22 @@
 		//If there is food, climb on it (using pixel_x and pixel_y manipulation)
 		animate(src, pixel_x = F.pixel_x + rand(-4,4), pixel_y = F.pixel_y + rand(-4,4), rand(10,20), 1)
 
+		layer = F.layer + 0.01
+
 		if(flying)
 			stop_flying(anim = 0)
 
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while. turns_since_move is set to 0 immediately after this proc, so the spawn() is required.
+
+			if((last_laid_eggs + 30 SECONDS < world.time)) //Base cooldown is 30 seconds. The actual cooldown is actually slightly more than that
+				sleep(rand(1,5) SECONDS)
+
+				//And yeah, roaches can lay eggs on their own eggs. This is kinda intended
+				lay_eggs()
+
+				if(F && F.reagents)
+					F.reagents.add_reagent("toxin", rand(0.2,0.6)) //Add some toxin to the food
 
 		return //Don't do anything after that
 
@@ -107,6 +123,11 @@
 
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while
+
+			if((last_laid_eggs + 30 SECONDS < world.time) && prob(25)) //25% chance of laying eggs
+				sleep(rand(1,5) SECONDS)
+
+				lay_eggs()
 
 		return
 
@@ -131,7 +152,8 @@
 /mob/living/simple_animal/cockroach/Move()
 	..()
 
-	layer = initial(layer) //Since cucarachas can hide under trash (which modifies their layer), this is kinda necessary
+	if(!flying)
+		layer = initial(layer) //Since cucarachas can hide under trash (which modifies their layer), this is kinda necessary
 
 /mob/living/simple_animal/cockroach/adjustBruteLoss() //When receiving damage
 	..()
@@ -165,6 +187,7 @@
 	response_disarm = "tries to catch"
 	response_harm   = "swats"
 
+	layer = 4
 
 	if(anim) animate(src, pixel_y = pixel_y + 8, 10, 1, ELASTIC_EASING)
 
@@ -180,12 +203,26 @@
 	response_disarm = initial(response_disarm)
 	response_harm   = initial(response_harm)
 
+	layer = initial(layer)
+
 	if(anim) animate(src, pixel_y = pixel_y - 8, 5, 1, ELASTIC_EASING)
+
+/mob/living/simple_animal/cockroach/proc/lay_eggs()
+	var/obj/item/weapon/reagent_containers/food/snacks/roach_eggs/E = new(get_turf(src))
+
+	E.layer = src.layer //If we're hiding, the eggs are hidden too
+	E.pixel_x = src.pixel_x
+	E.pixel_y = src.pixel_y
+
+	if((animal_count[src.type] < ANIMAL_CHILD_CAP) && prob(75)) //Cap of 50 roaches. The chance of eggs actually being fertilized is very big, but in the end there won't be any roaches created over the cap of 50 (since the eggs check for the cap before hatching)
+		processing_objects.Add(E)
+
+	last_laid_eggs = world.time - (rand(1,15) SECONDS)
 
 /mob/living/simple_animal/cockroach/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/newspaper))
 		user.visible_message("<span class='danger'>[user] swats \the [src] with \the [W]!</span>", "<span class='danger'>You swat \the [src] with \the [W].</span>")
-		W.desc = "[initial(W.desc)] <span class='notice'>There is a splattered [src] on \the back.</span>"
+		W.desc = "[initial(W.desc)] <span class='notice'>There is a splattered [src] on the back.</span>"
 
 		adjustBruteLoss(5)
 	else
