@@ -39,3 +39,18 @@
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 	hud_state = "wiz_creature"
+
+/spell/aoe_turf/conjure/gingerbreadman
+	name = "Summon Gingerbread man"
+	desc = "What did the Gingerbread Man put on his bed? A cookie sheet!"
+
+	school = "conjuration"
+	charge_max = 1200
+	spell_flags = NEEDSCLOTHES
+	invocation = "What did the Gingerbread Man put on his bed? A cookie sheet!"
+	invocation_type = SpI_SHOUT
+	range = 1
+
+	summon_type = list(/mob/living/simple_animal/hostile/gingerbread)
+
+	hud_state = "gingerbreadman"

@@ -97,9 +97,20 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20
-	max_w_class = 3
+	storage_slots = 7
+	max_w_class = 4
 	max_combined_w_class = 400 // can store a ton of shit!
+
+/obj/item/weapon/storage/backpack/santabag/attack_hand(user)
+	if(contents.len < storage_slots)
+		var/empty_slots = Clamp((storage_slots - contents.len),0,storage_slots)
+		to_chat(user,"<span class='notice'>You look into the bag, and find it filled with [empty_slots] new presents!</span>")
+		for(var/i = 1,i <= empty_slots,i++)
+			var/gift = pick(/obj/item/weapon/winter_gift/cloth,/obj/item/weapon/winter_gift/regular,/obj/item/weapon/winter_gift/food)
+			if(prob(1))
+				gift = /obj/item/weapon/winter_gift/special
+			new gift(src)
+	. = ..()
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
