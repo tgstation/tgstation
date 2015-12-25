@@ -753,7 +753,7 @@
 	desc = "This is a plant containing various healing chemicals."
 	icon_state = "ambrosiavulgaris"
 	potency = 10
-	New()
+	/*New() //NO SNOWFLAKE ALLOWED
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1)
@@ -762,4 +762,4 @@
 			reagents.add_reagent("bicaridine", 1 + round(potency/10, 1))
 			reagents.add_reagent("toxin", 1 + round(potency/10, 1))
 			reagents.add_reagent("spiritbreaker", 10)
-			bitesize = 1+round(reagents.total_volume/2, 1)
+			bitesize = 1+round(reagents.total_volume/2, 1)*/
