@@ -363,22 +363,19 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			G.affecting = src
 			LAssailant = M
 
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='warning'>[] has grabbed [] passively!</span>", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		if(I_HURT, I_DISARM)
 			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("<span class='warning'>[M] [response_harm] [src]!</span>")
+
+			visible_message("<span class='warning'>[M] [response_harm] [src]!</span>")
 
 	return
 
 /mob/living/simple_animal/MouseDrop(mob/living/carbon/human/M)
 	if(M != usr)		return
 	if(!istype(M))		return
-	if(M.stat)			return
+	if(M.isUnconscious())return
 	if(M.restrained())	return
 	if(!Adjacent(M))	return
 
@@ -655,3 +652,14 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(issilicon(other))
 		return 1
 	return ..()
+
+/mob/living/simple_animal/proc/reagent_act(id, method, volume)
+	if(isDead()) return
+
+	switch(id)
+		if("sacid")
+			if(!supernatural)
+				adjustBruteLoss(volume * 0.25)
+		if("pacid")
+			if(!supernatural)
+				adjustBruteLoss(volume * 0.5)

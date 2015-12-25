@@ -14,6 +14,7 @@
 #define VERM_BATS    4
 #define VERM_BORERS  5
 #define VERM_MIMICS  6
+#define VERM_ROACHES 7
 
 /datum/event/infestation
 	announceWhen = 15
@@ -83,6 +84,10 @@
 			spawn_types = /mob/living/simple_animal/hostile/mimic/crate/item
 			vermstring = "mimics"
 			max_number = 1 //1 to 2
+		if(VERM_ROACHES)
+			spawn_types = /mob/living/simple_animal/cockroach
+			vermstring = "roaches"
+			max_number = 30 //Thanks obama
 
 	var/number = rand(2, max_number)
 

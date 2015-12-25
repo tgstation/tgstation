@@ -1765,5 +1765,8 @@ mob/proc/on_foot()
 /mob/proc/teleport_to(var/atom/A)
 	forceMove(get_turf(A))
 
+/mob/proc/nuke_act() //Called when caught in a nuclear blast
+	return
+
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING
