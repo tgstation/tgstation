@@ -237,7 +237,7 @@
 					/obj/item/clothing/head/nursehat, /obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate,
 					/obj/item/clothing/head/ushanka, /obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
-					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
+					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/wizard/santa,
 					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
 					/obj/item/clothing/head/hopcap, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad, /obj/item/clothing/mask/gas/clown_hat)
 				valid = 1
@@ -348,7 +348,7 @@
 			emote_hear = list("howls!","groans.")
 			desc = "Spooky!"
 
-		if(/obj/item/clothing/head/helmet/space/santahat)
+		if(/obj/item/clothing/head/wizard/santa)
 			name = "Santa's Corgi Helper"
 			emote_hear = list("barks Christmas songs.", "yaps merrily!")
 			emote_see = list("looks for presents.", "checks his list.")
