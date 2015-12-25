@@ -1,6 +1,6 @@
 #define WHITE_TEAM "White"
-#define RED_TEAM "Blue"
-#define BLUE_TEAM "Red"
+#define RED_TEAM "Red"
+#define BLUE_TEAM "Blue"
 #define CTF_RESPAWN_COOLDOWN 150 // 15 seconds
 #define FLAG_RETURN_TIME 200 // 20 seconds
 
@@ -22,7 +22,7 @@
 		src.loc = initial(src.loc)
 		for(var/mob/M in player_list)
 			if (M.z == src.z)
-				M << "<span class='userdanger'>/The [src] has been returned to base!</span>"
+				M << "<span class='userdanger'>\The [src] has been returned to base!</span>"
 		SSobj.processing.Remove(src)
 
 /obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
@@ -38,7 +38,7 @@
 		return
 	for(var/mob/M in player_list)
 		if (M.z == src.z)
-			M << "<span class='userdanger'>/The [src] has been taken!</span>"
+			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	SSobj.processing.Remove(src)
 
 /obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
@@ -46,7 +46,7 @@
 	SSobj.processing |= src
 	for(var/mob/M in player_list)
 		if (M.z == src.z)
-			M << "<span class='userdanger'>/The [src] has been dropped!</span>"
+			M << "<span class='userdanger'>\The [src] has been dropped!</span>"
 
 
 /obj/item/weapon/twohanded/required/ctf/red
@@ -54,6 +54,7 @@
 	icon_state = "banner-red"
 	item_state = "banner-red"
 	desc = "A red banner, used to play capture the flag."
+	team = RED_TEAM
 
 
 /obj/item/weapon/twohanded/required/ctf/blue
@@ -61,6 +62,7 @@
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
 	desc = "A blue banner, used to play capture the flag."
+	team = BLUE_TEAM
 
 
 
@@ -73,7 +75,7 @@
 	var/points = 0
 	var/points_to_win = 3
 	var/list/team_members = list()
-	var/ctf_enabled = FALSE
+	var/ctf_enabled = TRUE
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/red
@@ -87,17 +89,21 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		return
-	if(user.ckey in team_members)
-		if(user.timeofdeath + CTF_RESPAWN_COOLDOWN < world.time) //If we've been dead for at least 15 seconds)
-			spawn_team_member(user)
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
-		if(CTF.team_members.len > src.team_members.len)
-			user << "[src] has more team members than [CTF]. Try joining [CTF.team] to even things up."
-			return
 		if(user.ckey in CTF.team_members)
 			user << "No switching teams while the round is going!"
+		if(CTF.team_members.len < src.team_members.len)
+			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
+			return
+	if(user.ckey in team_members)
+		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN < world.time)
+			user << "It must be more than 15 seconds from your last death to respawn!"
+			return
+		var/client/new_team_member = user.client
+		spawn_team_member(new_team_member)
+		return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
 	spawn_team_member(new_team_member)
@@ -115,7 +121,11 @@
 		if(flag.team != src.team)
 			for(var/mob/M in player_list)
 				if (M.z == src.z)
-					M << "<span class='userdanger'>[user.real_name] has captured /the [src], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
+					user.unEquip(I)
+					I.loc = initial(I.loc)
+					M << "<span class='userdanger'>[user.real_name] has captured \the [src], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
+					points++
+
 		if(points == points_to_win)
 			victory()
 
@@ -137,7 +147,7 @@
 	force = 50
 
 /obj/item/weapon/gun/projectile/automatic/wt550/CTF
-	desc = "This looks like it could relaly hurt in melee."
+	desc = "This looks like it could really hurt in melee."
 	force = 50
 
 /datum/outfit/ctf
@@ -176,7 +186,7 @@
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
 	var/team = WHITE_TEAM
-	time_between_triggers = 0
+	time_between_triggers = 1
 	alpha = 255
 
 /obj/structure/divine/trap/examine(mob/user)
