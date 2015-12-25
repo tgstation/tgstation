@@ -4,8 +4,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <script type='text/javascript'>
       function receiveUpdate(dataString) {
-        if (typeof NanoBus !== 'undefined') {
-          NanoBus.emit('serverUpdate', dataString);
+        if (typeof nanoui !== 'undefined') {
+          nanoui.incoming.dispatch(dataString);
         }
       };
     </script>

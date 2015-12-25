@@ -96,7 +96,7 @@ gulp.task "js", ["clean"], ->
     .pipe g.concat("templates")
     .pipe g.header("window.TMPL = {};\n")
 
-  combined = merge lib, main, templates
+  combined = merge lib, templates, main
   combined
     .pipe g.concat(output.js)
     .pipe g.if(f.min, g.uglify(), g.jsbeautifier())

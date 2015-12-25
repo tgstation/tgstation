@@ -1,79 +1,97 @@
-class @NanoUI
-  constructor: (@bus, @fragment = document) ->
-    @bus.on "serverUpdate", @serverUpdate
-    @bus.on "update",       @update
-    @bus.on "render",       @render
-    @bus.on "memes",        @render
+class NanoUI
+  constructor: ->
+    @laidout = false
 
-    @initialized = false
+    @dragging = false
+    @resizing = false
 
-    @data = {}
-    @initialData = JSON.parse @fragment.query("#data").data "initial"
-
-    unless @initialData? or
-    not ("data" of @initialData or "config" of @initalData)
-      @error "Initial data did not load correctly."
-
-  serverUpdate: (dataString) =>
     try
-      data = JSON.parse dataString.replace /ÿ/g, ""
+      @data = JSON.parse document.query("#data").getAttribute "data-initial"
+      if not @data? or not ("data" of @data or "config" of @data)
+        @error "Initial data did not load correctly."
     catch error
       @error error
 
-    @bus.emit "update", data
-    return
+    @render @data
+    @chrome = new Chrome this, @data
 
-  update: (data) =>
-    unless data.data?
-      if @data.data?
-        data.data = @data.data
-      else
-        data.data = {}
+    @initialized.dispatch @data
+    @incoming.add @update
+  initialized: new MiniSignal
+  incoming: new MiniSignal
 
-    @data = data
+  update: (dataString) =>
+    try
+      @data = JSON.parse dataString
 
-    @bus.emit "render", @data if @initialized
-    @bus.emit "updated"
-    return
+      @render @data
+      @updated.dispatch @data
+    catch error
+      @error error
+  updated: new MiniSignal
 
   render: (data) =>
-    data = @initialData unless @initialized
-
     try
-      if not @initialized
-        @fragment.query("body").classList.add data.config.layout
-        layout = @fragment.query("#layout")
-        layout.innerHTML = TMPL[data.config.templates.layout](data.data, data.config, helpers)
+      if not @laidout
+        @laidout = true
+        document.query("body").classList.add data.config.layout
+        layout = TMPL[data.config.templates.layout](data.data, data.config, helpers)
+        document.query("#layout").innerHTML = layout
 
-      content = @fragment.query("#content")
-      content.innerHTML = TMPL[data.config.templates.content](data.data, data.config, helpers)
+      content = TMPL[data.config.templates.content](data.data, data.config, helpers)
+      document.query("#content").innerHTML = content
 
+      @rendered.dispatch @data
     catch error
       @error error
-      return
+  rendered: new MiniSignal
 
-    @bus.emit "rendered", data
-    if not @initialized
-      @initialized = true
-      @data = @initialData
-      @bus.emit "initialized", data
+
+  href: (params = {}, url = "") ->
+    "byond://#{url}?" + Object.keys(params).map (key) ->
+      "#{encodeURIComponent(key)}=#{encodeURIComponent(params[key])}"
+    .join("&")
 
   act: (action, params = {}) =>
     params.src = @data.config.ref
     params.nano = action
-    location.href = util.href null, params
-
-  error: (error, params = {}) ->
-    @act {nano_error: error}
-
-  close: =>
-    params =
-      command: "nanoclose #{@data.config.ref}"
-    @winset "is-visible", "false"
-    location.href = util.href "winset", params
+    location.href = @href params, null
+  error: (error) ->
+    location.href = @href {nano_error: error}, null
 
   winset: (key, value, window) =>
     window = @data.config.window.ref unless window?
-    params =
-      "#{window}.#{key}": value
-    location.href = util.href "winset", params
+    location.href = @href {"#{window}.#{key}": value}, "winset"
+  setPos: (x, y) =>
+    @winset "pos", "#{x},#{y}"
+  setSize: (w, h) =>
+    @winset "size", "#{w},#{h}"
+  focusMap: =>
+    @winset "focus", 1, "mapwindow.map"
+
+  close: =>
+    @winset "is-visible", "false"
+    location.href = @href {command: "nanoclose #{@data.config.ref}"}, "winset"
+  minimize: =>
+    @winset "is-minimized", "true"
+
+
+@nanoui = new NanoUI
+
+linkStatus = (data) ->
+  links = document.queryAll ".link"
+  if data.config.status isnt NANO.INTERACTIVE
+    links.forEach (element) ->
+      element.className = "link disabled"
+@nanoui.updated.add linkStatus
+
+handleLinks = (data) ->
+  onClick = ->
+    action = @getAttribute "data-action"
+    params = JSON.parse @getAttribute "data-params"
+    if action? and params? and data.config.status is NANO.INTERACTIVE
+      nanoui.act action, params
+
+  document.queryAll(".link.active").forEach (link) ->
+    link.addEventListener "click", onClick
+@nanoui.rendered.add handleLinks

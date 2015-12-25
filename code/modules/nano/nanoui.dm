@@ -205,7 +205,10 @@
 /datum/nanoui/proc/get_html()
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/send_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
+	var/send_data_json = JSON.stringify(send_data)
+	// Strip junk.
+	send_data_json = replacetext(send_data_json, "'", "&apos;")
+	send_data_json = replacetext(send_data_json, "ÿ", "")
 
 	// Populate it.
 	var/send_html = replacetext(SSnano.html, "!!data!!", send_data_json)
