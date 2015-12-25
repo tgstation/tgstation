@@ -183,7 +183,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but \he shakes it off!</span>"
+						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>"
 						if(!usr.drop_item())
 							usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 							return
@@ -260,7 +260,7 @@
 		if(user && !user.drop_item())
 			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
-		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but \he shakes it off!</span>"
+		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>"
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
