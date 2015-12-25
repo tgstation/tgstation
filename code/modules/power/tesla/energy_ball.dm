@@ -40,15 +40,16 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if(!is_orbiting)
 		handle_energy()
 		var/amount_to_move = 2 + orbiting_balls.len * 2
+		var/what_does_the_scouter_say_about_the_balls_power_level = (TESLA_DEFAULT_POWER + (TESLA_MINI_POWER * orbiting_balls.len))
 		move_the_basket_ball(amount_to_move)
 		pixel_x = 0
 		pixel_y = 0
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 5)
+		tesla_zap(src, 7, what_does_the_scouter_say_about_the_balls_power_level)
 		pixel_x = -32
 		pixel_y = -32
 		energy += rand(1,3) // ensure it generates energy without needing to be blasted by the PA too much due to its size, and that a tesla engine will always get bigger over time
 	else
-		tesla_zap(src, 7, TESLA_MINI_POWER)
 		energy = 0 // ensure we dont have miniballs of miniballs
 	return
 
@@ -67,17 +68,19 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= 300)
-		energy = 0
-		var/obj/singularity/energy_ball/EB = new(loc)
-		orbiting_balls.Add(EB)
-		EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
-		EB.is_orbiting = 1
-		var/icon/I = icon(icon,icon_state,dir)
+		energy -= 300
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 5)
+		spawn(100)
+			var/obj/singularity/energy_ball/EB = new(loc)
+			orbiting_balls.Add(EB)
+			EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
+			EB.is_orbiting = 1
+			var/icon/I = icon(icon,icon_state,dir)
 
-		var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
-		orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
-		spawn(1)
-			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
+			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
+			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+			spawn(1)
+				EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
 
 
 
@@ -110,7 +113,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
-	if(power < 1000)
+	if(power < 500)
 		return
 	var/list/tesla_coils = list()
 	var/list/grounding_rods = list()
@@ -176,6 +179,9 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			if(istype(L, /mob/living/silicon))
 				var/mob/living/silicon/S = L
 				S.emp_act(2)
+				tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further
+			else
+				tesla_zap(L, 5, power / 1.5)
 			return
 	if(!closest_atom)
 		closest_atom = get_closest_atom(/obj/machinery, potential_machine_zaps, source)
