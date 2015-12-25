@@ -29,7 +29,7 @@
 		set_security_level("red")
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult = ticker.mode
-		cult.large_shell_summoned = 0
+		cult.large_shell_reference = null
 	black_overlay = null
 	if(timer_id)
 		deltimer(timer_id)
@@ -49,6 +49,10 @@
 /obj/structure/constructshell/large/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/summoning_orb) && (orbs < orbs_needed))
 		if(!iscultist(user))
+			return
+		var/turf/T = get_turf(user)
+		if(T.z != ZLEVEL_STATION)
+			user << "<span class='cultlarge'>You shouldn't do this here. Go back.</span>"
 			return
 		visible_message("<span class='cult'>\The [src] glows.</span>")
 		orbs++
