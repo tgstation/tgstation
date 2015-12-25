@@ -6,6 +6,7 @@
 	desc = "A huge chunk of metal used to separate rooms."
 	anchored = 1
 	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	var/walltype = "metal"
 	var/opening = 0
@@ -59,7 +60,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		smooth_icon(src)
-		icon_state = ""
+		icon_state = "wall"
 	else
 		icon_state = "fwall_open"
 
