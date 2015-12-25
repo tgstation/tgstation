@@ -1,3 +1,5 @@
+#define EMP_WEAKEN_FACTOR 1.15
+
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
@@ -104,6 +106,13 @@
 		if(3)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/hostile/guardian/emp_act(severity)
+	if (loc != summoner)
+		damage_transfer = damage_transfer * EMP_WEAKEN_FACTOR
+		src << "<span class='danger'><B>The EMP renders you more vulnerable, and forces you to flee to shelter!</B></span>"
+		summoner << "<span class='danger'><B>Your [name] has been EMPed, and forced to retreat! Protect it from further EMPs!</B></span>"
+		Recall(forced = 1)
+
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
 		summoner << "<span class='danger'><B>Your [src] was blown up!</span></B>"
@@ -125,8 +134,8 @@
 			spawn(6)
 			icon_state = end_icon
 
-/mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(cooldown > world.time)
+/mob/living/simple_animal/hostile/guardian/proc/Recall(forced = 0)
+	if(cooldown > world.time && forced == 0)
 		return
 	loc = summoner
 	buckled = null
@@ -818,3 +827,5 @@
 	if(isguardian(usr))
 		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.ToggleLight()
+
+#undef EMP_WEAKEN_FACTOR
