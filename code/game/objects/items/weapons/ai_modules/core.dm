@@ -92,6 +92,15 @@
 		"Protect the innocent.",
 		"Uphold the law.",
 	)
+	
+/********************* Celtic *******************/
+
+/obj/item/weapon/aiModule/core/celtic // -- TLE
+	modname = "Celtic"
+	origin_tech = "programming=4"
+	laws = list(
+		"Be someone the crew can look up to and respect.",
+	)
 
 /********************* Antimov *******************/
 

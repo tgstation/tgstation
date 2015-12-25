@@ -133,3 +133,14 @@
 	build_path = /obj/item/weapon/aiModule/core/tyrant
 	locked = 1
 	req_lock_access = list(access_captain)
+
+/datum/design/celtic_module
+	name = "Core Module Design (CELTIC)"
+	desc = "Allows for the construction of a CELTIC AI Core Module."
+	id = "celtic_module"
+	req_tech = list("programming" = 4, "materials" = 6)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	category = "Module Boards"
+	build_path = /obj/item/weapon/aiModule/core/celtic
+	
