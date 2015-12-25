@@ -1,0 +1,5 @@
+author: MrStonedOne
+delete-after: True
+changes: 
+  - bugfix: "flashes that were emp'ed were incorrectly flashing people in range of the emper, not in range of the flash."
+  - tweak: "flashes in a mob's inventory that are emp'ed will only aoe stun if it is not inside of a container like a backpack/box"
