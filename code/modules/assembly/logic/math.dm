@@ -98,7 +98,7 @@ var/global/list/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY
 	if(..()) return
 
 	if(href_list["output_value"])
-		to_chat(usr, "<span class='info'>Result: [get_value()]</span>")
+		to_chat(usr, "<span class='info'>Result: [get_value("Result")]</span>")
 		return
 
 	if(href_list["add_const"])
@@ -238,7 +238,7 @@ var/global/list/math_circuit_operations_list = list("ADD", "SUBTRACT", "MULTIPLY
 				if(istype(number, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = number
 
-					number = A.get_value()
+					number = A.get_value(values[A])
 
 				switch(operation)
 					if("ADD")
