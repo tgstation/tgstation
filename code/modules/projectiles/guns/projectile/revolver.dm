@@ -152,7 +152,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/golden
 	name = "\improper Golden revolver"
-	desc = "Pop pop watching spacemen drop. This mess is ballin' but watch the kick. Uses .357 ammo."
+	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
 	recoil = 8
