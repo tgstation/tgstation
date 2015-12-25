@@ -40,8 +40,9 @@
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
-	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/G = new(Tsec)
-	G.list_reagents = list("whiskey" = 50)
+	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
+	S.list_reagents = list("whiskey" = 15)
+	S.on_reagent_change()
 	..()
 
 /mob/living/simple_animal/bot/secbot/pingsky
