@@ -15,12 +15,22 @@
 	slowdown = 2
 	throw_speed = 0
 	force = 200
+	anchored = TRUE
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
+	var/obj/effect/landmark/reset
+
+/obj/item/weapon/twohanded/required/ctf/New()
+	if(!reset)
+		reset = new /obj/effect/landmark(get_turf(src))
+
+/obj/item/weapon/twohanded/required/ctf/initialize()
+	if(!reset)
+		reset = new /obj/effect/landmark(get_turf(src))
 
 /obj/item/weapon/twohanded/required/ctf/process()
 	if(world.time > reset_cooldown)
-		src.loc = initial(src.loc)
+		src.loc = get_turf(src.reset)
 		for(var/mob/M in player_list)
 			if (M.z == src.z)
 				M << "<span class='userdanger'>\The [src] has been returned to base!</span>"
@@ -33,6 +43,7 @@
 		user << "You can't move your own flag!"
 		return
 
+	anchored = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
@@ -48,6 +59,7 @@
 	for(var/mob/M in player_list)
 		if (M.z == src.z)
 			M << "<span class='userdanger'>\The [src] has been dropped!</span>"
+	anchored = TRUE
 
 
 /obj/item/weapon/twohanded/required/ctf/red
@@ -80,10 +92,12 @@
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/red
+	name = "Red CTF Controller"
 	team = RED_TEAM
 	ctf_gear = /datum/outfit/ctf/red
 
 /obj/machinery/capture_the_flag/blue
+	name = "Blue CTF Controller"
 	team = BLUE_TEAM
 	ctf_gear = /datum/outfit/ctf/blue
 
@@ -99,7 +113,7 @@
 			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
 			return
 	if(user.ckey in team_members)
-		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN < world.time)
+		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
 			user << "It must be more than 15 seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
@@ -122,9 +136,9 @@
 		if(flag.team != src.team)
 			for(var/mob/M in player_list)
 				if (M.z == src.z)
-					user.unEquip(I)
-					I.loc = initial(I.loc)
-					M << "<span class='userdanger'>[user.real_name] has captured \the [src], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
+					user.unEquip(flag)
+					flag.loc = get_turf(flag.reset)
+					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
 					points++
 
 		if(points == points_to_win)
