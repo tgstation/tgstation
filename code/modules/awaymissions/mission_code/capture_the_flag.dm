@@ -14,6 +14,7 @@
 	desc = "A banner with Nanotrasen's logo on it."
 	slowdown = 2
 	throw_speed = 0
+	force = 200
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 
@@ -144,7 +145,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."
-	force = 50
+	force = 75
 
 /obj/item/weapon/gun/projectile/automatic/wt550/CTF
 	desc = "This looks like it could really hurt in melee."
