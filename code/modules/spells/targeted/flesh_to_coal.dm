@@ -50,7 +50,15 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem/coal(H), slot_wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem/coal(H), slot_gloves)
 		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(H), slot_head)
+		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		new_objective.owner = H.mind
+		new_objective.target = user.mind
+		new_objective.explanation_text = "Protect [user.real_name], the wizard."
+		H.mind.objectives += new_objective
+		ticker.mode.traitors += H.mind
+		H.mind.special_role = "apprentice"
 		to_chat(H, "You are a coal golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+
 		if(ticker.mode.name == "sandbox")
 			H.CanBuild()
 			to_chat(H, "Sandbox tab enabled.")
