@@ -1,0 +1,6 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Overmind-created blobbernauts are now player-controlled if possible."
+  - tweak: "Creating a blobbernaut no longer destroys the factory, instead doing heavy damage to it and preventing it from spawning spores for one minute."
+  - tweak: "You cannot spawn blobbernauts from overly damaged factories."
