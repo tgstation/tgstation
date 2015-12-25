@@ -101,25 +101,6 @@ Contains:
 	desc = "An old, NASA Centcom branch designed, dark red space suit."
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
-
-	//Space santa outfit suit
-/obj/item/clothing/head/helmet/space/santahat
-	name = "Santa's hat"
-	desc = "Ho ho ho. Merrry X-mas!"
-	icon_state = "santahat"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
-	flags_cover = HEADCOVERSEYES
-
-/obj/item/clothing/suit/space/santa
-	name = "Santa's suit"
-	desc = "Festive!"
-	icon_state = "santa"
-	item_state = "santa"
-	slowdown = 0
-	flags = STOPSPRESSUREDMAGE
-	allowed = list(/obj/item) //for stuffing exta special presents
-
-
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "pirate hat"
