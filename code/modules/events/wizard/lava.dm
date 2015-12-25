@@ -10,5 +10,5 @@
 	endWhen = 30 //half a minutes
 
 /datum/round_event/wizard/lava/start()
-	var/datum/weather/floor_is_lava/LAVA = /datum/weather/floor_is_lava
+	var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
 	LAVA.weather_start_up()
