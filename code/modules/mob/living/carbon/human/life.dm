@@ -46,6 +46,10 @@
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
+		//Witch affinities
+		handle_affinity()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -326,5 +330,54 @@
 			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
+
+/mob/living/carbon/human/proc/handle_affinity()
+
+	////////////////////
+	// Earth Affinity //
+	////////////////////
+
+	//All effects from possessing the affinity.
+	if(check_affinity(mind, AFFINITY_EARTH))
+		//Become more sturdy. You can take more punishment before going down - 25 more max health.
+		if(maxHealth == initial(maxHealth))
+			maxHealth = initial(maxHealth) + 25
+
+		//Feed nearby crops and make them stronger. Can potentailly result in the stats of the plant going higher than normally available.
+		for(var/obj/machinery/hydroponics/H in range(3, src))
+			if(prob(5))
+				H.nutrilevel += rand(1,10)
+				H.nutrilevel = Clamp(H.nutrilevel, 0, H.maxnutri)
+				if(H.myseed)
+					H.myseed.endurance += rand(1,10)
+					H.myseed.production += rand(1,10)
+					H.myseed.potency += rand(1,10)
+				PoolOrNew(/obj/effect/overlay/temp/overgrowth, get_turf(H))
+
+		//Slowly regenerate conventional wounds.
+		adjustBruteLoss(-0.5)
+		adjustFireLoss(-0.5)
+
+		//If gravely wounded, run a small chance check to morph into a plantperson.
+		var/total_body_damage = 0
+		total_body_damage += getBruteLoss()
+		total_body_damage += getFireLoss()
+		if(total_body_damage > 150 && dna.species.id != "pod" && prob(5))
+			visible_message("<span class='warning'>Vines and grass slowly begin to crawl over [src]'s flesh!</span>")
+			src << "<span class='userdanger'>Vines and plants slowly begin to replace your skin.</span>"
+			spawn(300) //30 second wait.
+				if(total_body_damage > 150 && stat != DEAD && dna.species.id != "pod") //Checks if they're a podperson again, because the transformation proc might occur more than once.
+					visible_message("<span class='warning'>[src]'s skin disappears beneath a layer of growth.</span>")
+					src << "<span class='userdanger'>Your skin has been completely replaced with organic matter.</span>"
+					set_species(/datum/species/pod)
+					PoolOrNew(/obj/effect/overlay/temp/overgrowth, get_turf(src))
+				else
+					if(dna.species.id != "pod")
+						visible_message("<span class='warning'>The growths covering [src] silently recede.</span>")
+						src << "<span class='userdanger'>The growth recedes. You are still whole.</span>"
+	//Effects reversed when affinity is removed.
+	else
+		if(maxHealth != initial(maxHealth))
+			maxHealth = initial(maxHealth)
 
 #undef HUMAN_MAX_OXYLOSS

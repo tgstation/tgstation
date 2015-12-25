@@ -78,6 +78,13 @@
 	randomdir = 0
 
 
+/obj/effect/overlay/temp/overgrowth //Green sparkles.
+	name = "overgrowth"
+	icon_state = "shieldsparkles"
+	layer = 5
+	color = "#48FF6C"
+
+
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'

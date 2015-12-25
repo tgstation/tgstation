@@ -413,7 +413,22 @@
 /obj/effect/spacevine/attack_hand(mob/user)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
-	user_unbuckle_mob(user, user)
+	if(!witch_absorb(user))
+		user_unbuckle_mob(user, user)
+
+/obj/effect/spacevine/proc/witch_absorb(var/mob/living/carbon/human/H)
+	if(!H || !istype(H))
+		return 0
+	if(!check_affinity(H.mind, AFFINITY_EARTH))
+		return 0
+	H.visible_message("<span class='warning'>[H] devours [src]!</span>", \
+					"<span class='danger'>You rip off and eat a clump of [name].</span>")
+	H.adjustBruteLoss(-2)
+	H.adjustFireLoss(-2)
+	H.nutrition += 2
+	playsound(H, 'sound/items/eatfood.ogg', 50, 1)
+	qdel(src)
+	return 1
 
 
 /obj/effect/spacevine/attack_paw(mob/living/user)
