@@ -16,7 +16,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/disposalpipe)
 
 /obj/singularity/energy_ball
-	name = "energy eall"
+	name = "energy ball"
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
