@@ -104,7 +104,7 @@
 
 		to_chat(user, "<span class='notice'>Assembling grille...</span>")
 
-		if(!do_after(user, src, 10))
+		if(!do_after(user, get_turf(src), 10))
 			return
 
 		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)
