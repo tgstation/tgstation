@@ -287,7 +287,10 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 					continue
 				else
 					break
-	H << "<b>You have been assigned to [department]!</b>"
+	if(department)
+		H << "<b>You have been assigned to [department]!</b>"
+	else
+		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
 
 /obj/item/device/radio/headset/headset_sec/department/New()
 	wires = new(src)
