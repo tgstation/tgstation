@@ -194,6 +194,10 @@
 
 /atom/proc/clear_smooth_overlays()
 	overlays -= top_left_corner
+	top_left_corner = null
 	overlays -= top_right_corner
+	top_right_corner = null
 	overlays -= bottom_right_corner
+	bottom_right_corner = null
 	overlays -= bottom_left_corner
+	bottom_left_corner = null
