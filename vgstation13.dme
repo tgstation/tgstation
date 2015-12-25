@@ -605,6 +605,7 @@
 #include "code\game\objects\items\devices\powersink.dm"
 #include "code\game\objects\items\devices\scanners.dm"
 #include "code\game\objects\items\devices\silicate sprayer.dm"
+#include "code\game\objects\items\devices\sound_synth.dm"
 #include "code\game\objects\items\devices\taperecorder.dm"
 #include "code\game\objects\items\devices\traitordevices.dm"
 #include "code\game\objects\items\devices\transfer_valve.dm"
