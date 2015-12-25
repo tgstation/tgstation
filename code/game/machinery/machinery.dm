@@ -379,14 +379,8 @@ Class Procs:
 			if(usr.z != 2)
 				to_chat(usr, "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>")
 				return 1
-		var/norange = 0
-		if(usr.mutations && usr.mutations.len)
-			if(M_TK in usr.mutations)
-				norange = 1
-
-		if(!norange)
-			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-				return 1
+		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+			return 1
 	else if(!custom_aghost_alerts)
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
