@@ -498,11 +498,8 @@
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
-	spawn(50)
-		if(holder && holder.my_atom)
-			explosion(get_turf(holder.my_atom), 1 ,3, 6)
+	var/obj/item/weapon/grenade/syndieminibomb/P = new /obj/item/weapon/grenade/syndieminibomb
+	P.loc = get_turf(holder.my_atom)
 
 //Light Pink
 /datum/chemical_reaction/slimepotion2
