@@ -266,43 +266,40 @@
 	var/overloaded = 0//is set to 1 when owner gets EMPed. if set to 1, implant doesn't work.
 
 /obj/item/organ/internal/cyberimp/chest/arm_mod/ui_action_click()
-	if(overloaded == 0)//ensure the implant isn't broken
-		if(out == 1)//check if the owner has the item out already
-			owner.unEquip(holder, 1)//if he does, take it away. then,
-			holder.loc = null//stash it in nullspace
-			out = 0//and set this to clarify the item isn't out.
-			owner.visible_message("<span class='notice'>You retract [holder].</span>")
-			playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
-		else//if he doesn't have the item out
-			if(owner.put_in_hands(holder))//put it in his hands.
-				out = 1
-				owner.visible_message("<span class='notice'>You extend [holder]!</span>")
-				playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
-			else//if this fails to put the item in his hands,
-				holder.loc = null//keep it in nullspace
-				owner.visible_message("<span class='warning'>You can't extend [holder] if you can't use your hands!</span>")
-	else//if it's broken, nothing happens
+	if(overloaded)//ensure the implant isn't broken
 		owner.visible_message("<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
+		return
+	if(out)//check if the owner has the item out already
+		owner.unEquip(holder, 1)//if he does, take it away. then,
+		holder.loc = null//stash it in nullspace
+		out = 0//and set this to clarify the item isn't out.
+		owner.visible_message("<span class='notice'>You retract [holder].</span>")
+		playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	else//if he doesn't have the item out
+		if(owner.put_in_hands(holder))//put it in his hands.
+			out = 1
+			owner.visible_message("<span class='notice'>You extend [holder]!</span>")
+			playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+		else//if this fails to put the item in his hands,
+			holder.loc = null//keep it in nullspace
+			owner.visible_message("<span class='warning'>You can't extend [holder] if you can't use your hands!</span>")
 
 /obj/item/organ/internal/cyberimp/chest/arm_mod/emp_act(severity)//if the implant gets EMPed...
-	if(!owner)//ensure that it's in an owner, then...
+	if(!owner || overloaded)//ensure that it's in an owner and that it's not already EMPed, then...
 		return
-	if(overloaded == 0)//make sure this is the first time it's been EMPed, and...
-		if(out == 1)//check if he has the item out...
-			owner.unEquip(holder, 1)//if he does, take it away.
-			holder.loc = null
-			out = 0
-			owner.visible_message("<span class='notice'>[holder] forcibly retracts into your arm.</span>")
-		owner.visible_message("<span class='danger'>A loud bang comes from [owner]...</span>")
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
-		owner << "<span class='warning'>You feel an explosion erupt inside you as your chest implant breaks. Is it hot in here?</span>"
-		owner.adjust_fire_stacks(20)
-		owner.IgniteMob()//ignite the owner, and then...
-		owner.say("AUUUUUUUUUUUUUUUUUUGH!!")
-		owner.adjustFireLoss(25)//severely injure him!
-		overloaded = 1//then make sure this can't happen again by breaking the implant.
-	else
-		return
+	if(out)//check if he has the item out...
+		owner.unEquip(holder, 1)//if he does, take it away.
+		holder.loc = null
+		out = 0
+		owner.visible_message("<span class='notice'>[holder] forcibly retracts into your arm.</span>")
+	owner.visible_message("<span class='danger'>A loud bang comes from [owner]...</span>")
+	playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
+	owner << "<span class='warning'>You feel an explosion erupt inside you as your chest implant breaks. Is it hot in here?</span>"
+	owner.adjust_fire_stacks(20)
+	owner.IgniteMob()//ignite the owner, as well as
+	owner.say("AUUUUUUUUUUUUUUUUUUGH!!")
+	owner.adjustFireLoss(25)//severely injure him!
+	overloaded = 1//then make sure this can't happen again by breaking the implant.
 
 /obj/item/organ/internal/cyberimp/chest/arm_mod/tase//mounted, self-charging taser!
 	name = "Arm-cannon taser implant"
