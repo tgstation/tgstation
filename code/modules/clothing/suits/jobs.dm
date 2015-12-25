@@ -24,8 +24,8 @@
 
 //Chaplain
 /obj/item/clothing/suit/hooded/chaplain_hoodie
-	name = "chaplain hoodie"
-	desc = "This suit says to you 'hush'!"
+	name = "armoured robes"
+	desc = "Highly melee resistant, for some reason."
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -33,13 +33,15 @@
 	hooded = 1
 	action_button_name = "Toggle Chaplain Hoodie"
 	hoodtype = /obj/item/clothing/head/chaplain_hood
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/chaplain_hood
-	name = "chaplain hood"
+	name = "armoured hood"
 	desc = "For protecting your identity when immolating demons."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
 	flags = NODROP
+	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 
 //Chaplain
 /obj/item/clothing/suit/nun
