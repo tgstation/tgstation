@@ -1788,7 +1788,7 @@
 #include "code\modules\spells\targeted\buttbots_revenge.dm"
 #include "code\modules\spells\targeted\disintegrate.dm"
 #include "code\modules\spells\targeted\ethereal_jaunt.dm"
-#include "code\modules\spells\targeted\flash_to_coal.dm"
+#include "code\modules\spells\targeted\flesh_to_coal.dm"
 #include "code\modules\spells\targeted\flesh_to_stone.dm"
 #include "code\modules\spells\targeted\genetic.dm"
 #include "code\modules\spells\targeted\harvest.dm"
