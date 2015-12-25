@@ -16,6 +16,7 @@
 	throw_speed = 0
 	throw_range = 1
 	force = 200
+	armour_penetration = 100
 	anchored = TRUE
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
@@ -126,11 +127,20 @@
 			user << "It must be more than 15 seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
+		dust_old(user)
 		spawn_team_member(new_team_member)
 		return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
+	dust_old(user)
 	spawn_team_member(new_team_member)
+
+/obj/machinery/capture_the_flag/proc/dust_old(mob/user)
+	if(user.mind && user.mind.current && user.mind.current.z == src.z)
+		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
+		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
+		user.mind.current.dust()
+
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
@@ -149,19 +159,19 @@
 			for(var/mob/M in player_list)
 				if(M.z == src.z)
 					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
-		if(points == points_to_win)
+		if(points >= points_to_win)
 			victory()
 
 
 
 /obj/machinery/capture_the_flag/proc/victory()
-	for(var/mob/M in player_list)
+	for(var/mob/M in mob_list)
 		if (M.z == src.z)
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			M.dust()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		if(ctf_enabled == TRUE)
+		if(CTF.ctf_enabled == TRUE)
 			CTF.points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
