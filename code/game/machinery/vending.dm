@@ -557,7 +557,7 @@ var/global/num_vending_terminals = 1
 			user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>", "<span class='danger'>You kick the [src].</span>")
 			if(prob(70))
 				user.apply_damage(rand(2,4), BRUTE, "r_leg")
-				
+
 		if(src.health <= 0)
 			stat |= BROKEN
 			src.update_vicon()
@@ -2223,6 +2223,8 @@ var/global/num_vending_terminals = 1
 		)
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
+		/obj/item/clothing/head/helmet/knight/templar = 2,
+ 		/obj/item/clothing/suit/armor/knight/templar = 5,
 		)
 	req_access_txt = "22"
 
