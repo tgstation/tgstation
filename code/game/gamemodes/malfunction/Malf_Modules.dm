@@ -111,7 +111,7 @@
 	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
-	cost = 50
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_turrets
@@ -298,7 +298,7 @@
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
-	cost = 15
+	cost = 20
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
@@ -327,7 +327,7 @@
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4
-	cost = 15
+	cost = 30
 
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
@@ -606,3 +606,22 @@
 				temp = AM.description
 	src.use(usr)
 	return
+
+
+/datum/AI_Module/large/eavesdrop
+	module_name = "Enhanced Surveillance"
+	mod_pick_name = "eavesdrop"
+	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/surveillance
+
+/mob/living/silicon/ai/proc/surveillance()
+	set category = "Malfunction"
+	set name = "Enhanced Surveillance"
+
+	if(eyeobj)
+		eyeobj.relay_speech = TRUE
+	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	verbs -= /mob/living/silicon/ai/proc/surveillance
