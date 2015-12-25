@@ -114,8 +114,8 @@
 				santa.facial_hair_color = "FFF"
 
 				santa.equip_to_slot_or_del(new /obj/item/clothing/under/color/red, slot_w_uniform)
-				santa.equip_to_slot_or_del(new /obj/item/clothing/suit/space/santa, slot_wear_suit)
-				santa.equip_to_slot_or_del(new /obj/item/clothing/head/santa, slot_head)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/santa/space, slot_wear_suit)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/santa/space, slot_head)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)

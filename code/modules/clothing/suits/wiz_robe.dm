@@ -50,6 +50,10 @@
 	icon_state = "santahat"
 	flags = BLOCKHAIR
 
+/obj/item/clothing/head/wizard/santa/space
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags_cover = HEADCOVERSEYES
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
@@ -108,6 +112,18 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	var/presents_left = 100
+
+/obj/item/clothing/suit/wizrobe/santa/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(presents_left)
+		owner.visible_message("<span class='danger'>\The [attack_text] knocks some toys out of [owner]!</span>")
+		var/obj/item/weapon/a_gift/gift = new /obj/item/weapon/a_gift(get_turf(owner))
+		gift.throw_at_fast(pick(oview(7,get_turf(owner))),10,1)
+		presents_left--
+
+/obj/item/clothing/suit/wizrobe/santa/space
+	flags = STOPSPRESSUREDMAGE
+	allowed = list(/obj/item) //for stuffing exta special presents
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
