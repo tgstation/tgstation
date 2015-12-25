@@ -162,7 +162,9 @@
 	..()
 
 	if(health > 0) //Still alive
-		start_flying()
+
+		if(!flying)
+			start_flying()
 
 		if(usr)
 			var/mob/user = usr
