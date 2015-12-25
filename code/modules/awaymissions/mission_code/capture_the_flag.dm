@@ -91,6 +91,12 @@
 	var/ctf_enabled = TRUE
 	var/ctf_gear = /datum/outfit/ctf
 
+/obj/machinery/capture_the_flag/New()
+	poi_list |= src
+
+/obj/machinery/capture_the_flag/Destroy()
+	poi_list.Remove(src)
+
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
 	team = RED_TEAM
@@ -103,6 +109,8 @@
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
+		return
+	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF == src || CTF.ctf_enabled == FALSE)
@@ -150,12 +158,15 @@
 	for(var/mob/M in player_list)
 		if (M.z == src.z)
 			M << "<span class='narsie'>[team] team wins!</span>"
+			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			M.dust()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		points = 0
-		ctf_enabled = FALSE
-		team_members = list()
-
+		if(ctf_enabled == TRUE)
+			CTF.points = 0
+			CTF.ctf_enabled = FALSE
+			CTF.team_members = list()
+			spawn(300)
+				CTF.ctf_enabled = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."
