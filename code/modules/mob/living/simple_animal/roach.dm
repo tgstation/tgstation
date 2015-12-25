@@ -18,9 +18,9 @@
 	maxHealth = 4
 	health = 4
 
-	response_help  = "pets \the"
-	response_disarm = "pokes \the"
-	response_harm   = "stomps on \the"
+	response_help  = "pets"
+	response_disarm = "pokes"
+	response_harm   = "stomps on"
 
 	density = 0
 
@@ -47,6 +47,11 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/roach
 
 	var/last_laid_eggs = 0
+
+	var/const/egg_laying_cooldown = 30 SECONDS
+	var/const/egg_laying_chance = 75
+
+	var/const/max_unhatchable_eggs_in_world = 30
 
 /mob/living/simple_animal/cockroach/New()
 	..()
@@ -79,6 +84,8 @@
 		return ..()
 
 /mob/living/simple_animal/cockroach/Crossed(mob/living/O)
+	if(!istype(O)) return
+
 	if(src.size > O.size - 2) return //Human sized dudes can stomp default-sized cockroaches just fine. For bigger roaches you need bigger dudes
 	if(flying) return
 	if(O.a_intent == I_HELP) return //Must be on harm intent to stomp
@@ -103,14 +110,14 @@
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while. turns_since_move is set to 0 immediately after this proc, so the spawn() is required.
 
-			if((last_laid_eggs + 30 SECONDS < world.time)) //Always lay eggs under food
+			if((last_laid_eggs + egg_laying_cooldown < world.time) && prob(egg_laying_chance)) //75% chance of laying eggs under food
 				sleep(rand(1,5) SECONDS)
 
 				//And yeah, roaches can lay eggs on their own eggs. This is kinda intended
-				lay_eggs()
 
 				if(F && F.reagents)
 					F.reagents.add_reagent("toxin", rand(0.2,0.6)) //Add some toxin to the food
+					lay_eggs()
 
 		return //Don't do anything after that
 
@@ -127,7 +134,7 @@
 		spawn()
 			turns_since_move -= rand(5,20) //Stay here for a while
 
-			if((last_laid_eggs + 30 SECONDS < world.time) && prob(25)) //25% chance of laying eggs under the trash
+			if((last_laid_eggs + egg_laying_cooldown < world.time) && prob(egg_laying_chance * 0.25)) //Chance of laying eggs under trash is 1/4 of normal
 				sleep(rand(1,5) SECONDS)
 
 				lay_eggs()
@@ -186,9 +193,9 @@
 
 	turns_per_move = 1
 
-	response_help  = "attempts to pet \the"
-	response_disarm = "tries to catch \the"
-	response_harm   = "swats \the"
+	response_help  = "attempts to pet"
+	response_disarm = "tries to catch"
+	response_harm   = "swats"
 
 	layer = 4
 
@@ -211,16 +218,23 @@
 	if(anim) animate(src, pixel_y = pixel_y - 8, 5, 1, ELASTIC_EASING)
 
 /mob/living/simple_animal/cockroach/proc/lay_eggs()
+	if((cockroach_egg_amount >= max_unhatchable_eggs_in_world) && (animal_count[src.type] >= ANIMAL_CHILD_CAP)) //If roaches can't breed anymore (too many of them), and there are more than 30 eggs in the world, don't create eggs
+		last_laid_eggs = world.time
+		return
+
 	var/obj/item/weapon/reagent_containers/food/snacks/roach_eggs/E = new(get_turf(src))
 
 	E.layer = src.layer //If we're hiding, the eggs are hidden too
 	E.pixel_x = src.pixel_x
 	E.pixel_y = src.pixel_y
 
-	if((animal_count[src.type] < ANIMAL_CHILD_CAP) && prob(75)) //Cap of 50 roaches. The chance of eggs actually being fertilized is very big, but in the end there won't be any roaches created over the cap of 50 (since the eggs check for the cap before hatching)
-		processing_objects.Add(E)
+	if((animal_count[src.type] < ANIMAL_CHILD_CAP))
+		last_laid_eggs = world.time //If the eggs can hatch, cooldown is 30 seconds
+		E.fertilize()
 
-	last_laid_eggs = world.time - (rand(1,15) SECONDS)
+	else
+
+		last_laid_eggs = world.time - 60 SECONDS //If roaches can't breed, they lay eggs slower.
 
 /mob/living/simple_animal/cockroach/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/newspaper))

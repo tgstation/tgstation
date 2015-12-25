@@ -259,7 +259,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	if(isturf(loc))
+	if(is_in_valid_nest(src)) //_macros.dm
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			hatch()
