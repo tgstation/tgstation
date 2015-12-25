@@ -157,3 +157,6 @@
 
 #define hardcore_mode_on (hardcore_mode)//((ticker) && (ticker.hardcore_mode))
 #define eligible_for_hardcore_mode(M) (M.ckey && M.client)
+
+//Helper macro for eggs, called in process() of all fertilized eggs. If it returns 0, the egg will no longer be able to hatch
+#define is_in_valid_nest(egg) (isturf(egg.loc))
