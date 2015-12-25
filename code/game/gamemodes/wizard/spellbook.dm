@@ -40,6 +40,7 @@
 			<HR>
 			<B>Memorize which spell:</B><BR>
 			<I>The number after the spell name is the cooldown time.</I><BR>
+			[(Holiday == "Christmas" && universe.name == "Normal") ? "<A href='byond://?src=\ref[src];spell_choice=becomesanta'>Become Santa Claus</A> (One time use, uses three points, global spell)<BR><I>Guess which station's on the naughty list?</I><BR>" : ""]
 			<A href='byond://?src=\ref[src];spell_choice=magicmissile'>Magic Missile</A> (10)<BR>
 			<I>This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fireball'>Fireball</A> (10)<BR>
@@ -184,6 +185,32 @@
 			*/
 				if(!already_knows)
 					switch(href_list["spell_choice"])
+						if("becomesanta")
+							var/obj/item/clothing/santahat = new /obj/item/clothing/head/helmet/space/santahat
+							santahat.canremove = 0
+							var/obj/item/clothing/santasuit = new /obj/item/clothing/suit/space/santa
+							santasuit.canremove = 0
+							var/obj/item/weapon/storage/backpack/santabag = new /obj/item/weapon/storage/backpack/santabag
+							santabag.canremove = 0
+							to_chat(world,'sound/misc/santa.ogg')
+							SetUniversalState(/datum/universal_state/christmas)
+							if(H.head)
+								H.drop_from_inventory(H.head)
+							H.equip_to_slot(santahat,slot_head)
+							if(H.back)
+								H.drop_from_inventory(H.back)
+							if(H.wear_suit)
+								H.drop_from_inventory(H.wear_suit)
+							H.equip_to_slot(santabag,slot_back)
+							H.equip_to_slot(santasuit,slot_wear_suit)
+							H.real_name = pick("Santa Claus","Jolly St. Nick","Sandy Claws","Sinterklaas","Father Christmas","Kris Kringle")
+							H.nutrition += 1000
+							temp = "Let's come to town."
+							uses -= 2
+							add_spell(new/spell/noclothes,H)
+							add_spell(new/spell/aoe_turf/conjure/snowmobile,H)
+							add_spell(new/spell/targeted/wrapping_paper,H)
+							add_spell(new/spell/aoe_turf/conjure/gingerbreadman,H)
 						if("noclothes")
 							feedback_add_details("wizard_spell_learned","NC")
 							add_spell(new/spell/noclothes,H)

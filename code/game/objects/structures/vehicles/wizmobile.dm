@@ -97,3 +97,8 @@
 		. = ..()
 	return
 */
+
+/obj/structure/bed/chair/vehicle/wizmobile/santa
+	name = "snowmobile"
+	desc = "After a complaint from space PETA, santa's been forced to take a less elegant ride."
+	icon_state = "snowmobile"
