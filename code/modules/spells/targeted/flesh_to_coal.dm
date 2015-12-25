@@ -42,6 +42,7 @@
 /spell/targeted/flesh_to_coal/cast(var/list/targets, mob/user)
 	..()
 	for(var/mob/living/carbon/human/H in targets)
+		H.drop_all()
 		H.dna.mutantrace = "coalgolem"
 		H.real_name = text("Coal Golem ([rand(1, 1000)])")
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/golem/coal(H), slot_w_uniform)
