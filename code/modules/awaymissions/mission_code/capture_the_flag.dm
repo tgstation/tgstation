@@ -12,7 +12,7 @@
 	icon_state = "banner"
 	item_state = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
-	slowdown = 1
+	slowdown = 2
 	throw_speed = 0
 	throw_range = 1
 	force = 200
@@ -51,7 +51,7 @@
 		dropped(user)
 		return
 	for(var/mob/M in player_list)
-		if (M.z == src.z)
+		if(M.z == user.z)
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	SSobj.processing.Remove(src)
 
@@ -200,9 +200,11 @@
 	r_hand = /obj/item/weapon/gun/projectile/automatic/wt550/CTF
 
 /datum/outfit/ctf/red
+	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 
 /datum/outfit/ctf/blue
+	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
