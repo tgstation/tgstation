@@ -12,8 +12,9 @@
 	icon_state = "banner"
 	item_state = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
-	slowdown = 2
+	slowdown = 1
 	throw_speed = 0
+	throw_range = 1
 	force = 200
 	anchored = TRUE
 	var/team = WHITE_TEAM
@@ -142,13 +143,12 @@
 	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
 		var/obj/item/weapon/twohanded/required/ctf/flag = I
 		if(flag.team != src.team)
+			user.unEquip(flag)
+			flag.loc = get_turf(flag.reset)
+			points++
 			for(var/mob/M in player_list)
-				if (M.z == src.z)
-					user.unEquip(flag)
-					flag.loc = get_turf(flag.reset)
+				if(M.z == src.z)
 					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
-					points++
-
 		if(points == points_to_win)
 			victory()
 
