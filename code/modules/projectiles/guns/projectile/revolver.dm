@@ -150,6 +150,13 @@
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
+/obj/item/weapon/gun/projectile/revolver/golden
+	name = "\improper Golden revolver"
+	desc = "Pop pop watching spacemen drop. This mess is ballin' but watch the kick. Uses .357 ammo."
+	icon_state = "goldrevolver"
+	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	recoil = 8
+	pin = /obj/item/device/firing_pin
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
