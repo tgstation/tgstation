@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread_text = "Contact"
 	spread_flags = CONTACT_GENERAL
-	cure_text = "Rest or an injection of ryetalyn"
+	cure_text = "Rest or an injection of mutadone"
 	cure_chance = 6
 	agent = ""
 	viable_mobtypes = list(/mob/living/carbon/human)
