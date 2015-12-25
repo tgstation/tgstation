@@ -659,7 +659,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	switch(id)
 		if("sacid")
 			if(!supernatural)
-				adjustBruteLoss(volume * 0.25)
+				adjustBruteLoss(volume * 0.5)
 		if("pacid")
 			if(!supernatural)
 				adjustBruteLoss(volume * 0.5)
