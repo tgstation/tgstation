@@ -92,8 +92,8 @@
 			return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
-		if(user.dna && user.dna.mutantrace == "adamantine")
-			to_chat(user, "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>")
+		if(user.dna && (user.dna.mutantrace == "adamantine" || user.dna.mutantrace=="coalgolem"))
+			to_chat(user, "<span class='warning'>Your fat fingers don't fit in the trigger guard!</span>")
 			return
 		var/datum/organ/external/a_hand = H.get_active_hand_organ()
 		if(!a_hand.can_use_advanced_tools())
