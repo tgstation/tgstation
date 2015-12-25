@@ -110,6 +110,10 @@
 	if(candidates.len) //if we got a candidate, they're a blobbernaut now.
 		C = pick(candidates)
 		blobber.key = C.key
+		blobber << 'sound/effects/blobattack.ogg'
+		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
