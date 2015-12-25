@@ -211,6 +211,7 @@
 							add_spell(new/spell/aoe_turf/conjure/snowmobile,H)
 							add_spell(new/spell/targeted/wrapping_paper,H)
 							add_spell(new/spell/aoe_turf/conjure/gingerbreadman,H)
+							add_spell(new/spell/targeted/flesh_to_coal,H)
 						if("noclothes")
 							feedback_add_details("wizard_spell_learned","NC")
 							add_spell(new/spell/noclothes,H)

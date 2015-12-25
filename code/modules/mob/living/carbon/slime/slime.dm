@@ -968,7 +968,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
-	desc = "a golem's thick outter shell"
+	desc = "a golem's thick outer shell"
 	icon_state = "golem"
 	item_state = "golem"
 	w_class = 4//bulky item
@@ -994,16 +994,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
-
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
 
 /obj/item/clothing/mask/gas/golem
 	name = "golem's face"
