@@ -34,6 +34,12 @@
 		update_canmove()
 		if(client) blind.layer = 0
 
+	if(istype(LAssailant, /mob/living))
+		var/mob/living/L = LAssailant
+		if(L.mind && LAssailant != src)
+			L.mind.kill_streak++
+			L.mind.kill_streak_act()
+
 	dna.species.spec_death(gibbed,src)
 
 	tod = worldtime2text()		//weasellos time of death patch

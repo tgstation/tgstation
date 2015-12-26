@@ -52,7 +52,7 @@
 					P.xo = new_x - curloc.x
 
 				return -1 // complete projectile permutation
-
+		LAssailant = P.firer
 		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
@@ -95,6 +95,7 @@
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
 
+	LAssailant = user
 	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
@@ -347,6 +348,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
+		LAssailant = I.thrownby
 	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
