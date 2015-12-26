@@ -28,7 +28,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/blobwincount = 350
 
 	var/burstdelay_low = 1200 //in deciseconds
-	var/burstdelay_high = 2400 //blobs will burst after a random value between these * 2.5(minimum 5 minutes, maximum 7 and a half minutes)
+	var/burstdelay_high = 1800 //blobs will burst after a random value between these * 2.5(minimum 5 minutes, maximum 7 and a half minutes)
 
 	var/list/infected_crew = list()
 
