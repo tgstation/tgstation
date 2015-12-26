@@ -13,6 +13,7 @@ var/list/admin_verbs_default = list(
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/set_base_turf,
+	/datum/admins/proc/delay,
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
@@ -128,7 +129,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/ToRban,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
-	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
