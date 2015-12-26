@@ -158,7 +158,7 @@
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+= text_wires()
 	if (command)
-		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold=1'>Disengaged</A>"]<BR>"
+		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold'>Disengaged</A>"]<BR>"
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -209,7 +209,7 @@
 			else
 				channels[chan_name] |= FREQ_LISTENING
 	else if (href_list["bold"])
-		use_command = text2num(href_list["bold"])
+		use_command = !use_command
 	if (!( master ))
 		if (istype(loc, /mob))
 			interact(loc)
