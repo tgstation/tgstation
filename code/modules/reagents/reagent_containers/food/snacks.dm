@@ -142,23 +142,24 @@
 				to_chat(user, "<span class='warning'>[target] doesn't seem to have a mouth. Awkward!</span>")
 				return
 
-		if(reagents)	//Handle ingestion of any reagents (Note : Foods always have reagents)
+		var/datum/reagents/reagentreference = reagents //Even when the object is qdeleted, the reagents exist until this ref gets removed
+		if(reagentreference)	//Handle ingestion of any reagents (Note : Foods always have reagents)
 			playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(reagents.total_volume)
-				reagents.reaction(target, INGEST)
+			if(reagentreference.total_volume)
+				reagentreference.reaction(target, INGEST)
 				spawn(5) //WHY IS THIS SPAWN() HERE
-					if(reagents.total_volume > bitesize)
+					if(reagentreference.total_volume > bitesize)
 						/*
 						 * I totally cannot understand what this code supposed to do.
 						 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
 						var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
 						reagents.trans_to(target, temp_bitesize)
 						*/
-						reagents.trans_to(target, bitesize)
+						reagentreference.trans_to(target, bitesize)
 					else
-						reagents.trans_to(target, reagents.total_volume)
-					bitecount++
-					On_Consume(target)
+						reagentreference.trans_to(target, reagents.total_volume)
+				bitecount++
+				On_Consume(target)
 			return 1
 
 	return 0
