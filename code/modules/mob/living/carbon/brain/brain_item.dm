@@ -121,3 +121,8 @@
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
 	origin_tech = "biotech=7"
+
+/obj/item/organ/internal/brain/synthetic
+	name = "positronic brain core"
+	desc = "An artifical positronic brain, calibrated to serve in an augmented human body."
+	icon_state = "brain-x"
