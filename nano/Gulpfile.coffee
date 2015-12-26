@@ -78,7 +78,7 @@ gulp.task "reload", ["default"], ->
 
 gulp.task "html", ["clean"], ->
   gulp.src glob input.html
-    .pipe g.if(f.min, g.htmlmin({collapseWhitespace: true, minifyJS: true, minifyCSS: true}))
+    .pipe g.if(f.min, g.htmlmin({collapseWhitespace: true, minifyJS: true, minifyCSS: true, quoteCharacter: "'"}))
     .pipe g.size()
     .pipe gulp.dest output.dir
 

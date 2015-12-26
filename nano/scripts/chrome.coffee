@@ -1,6 +1,8 @@
 class @Chrome
   constructor: (@nanoui, data) ->
+    @nanoui.updated.add @linkStatus
     @nanoui.updated.add @windowStatus
+    @nanoui.rendered.add @handleLinks
 
     return unless data.config.user.fancy
     @dragging = false
@@ -11,6 +13,12 @@ class @Chrome
     @handleButtons()
     @handleDrag()
     @handleResize()
+
+  linkStatus: (data) ->
+    links = document.queryAll ".link"
+    if data.config.status isnt NANO.INTERACTIVE
+      links.forEach (element) ->
+        element.className = "link disabled"
 
   windowStatus: (data) ->
     statusicons = document.queryAll ".statusicon"
@@ -24,6 +32,16 @@ class @Chrome
           klass = "bad"
       statusicon.classList.remove "good", "bad", "average"
       statusicon.classList.add klass
+
+  handleLinks: (data) ->
+    onClick = ->
+      action = @getAttribute "data-action"
+      params = JSON.parse @getAttribute "data-params"
+      if action? and params? and data.config.status is NANO.INTERACTIVE
+        nanoui.act action, params
+
+    document.queryAll(".link.active").forEach (link) ->
+      link.addEventListener "click", onClick
 
   switchChrome: ->
     @nanoui.winset "titlebar", 0

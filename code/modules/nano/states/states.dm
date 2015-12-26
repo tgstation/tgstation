@@ -16,6 +16,13 @@
  **/
 /atom/proc/nano_state(mob/user, datum/topic_state/state)
 	var/src_object = nano_host()
+
+	if(istype(user, /mob/dead/observer)) // Special-case ghosts.
+		if (check_rights_for(user.client, R_ADMIN))
+			return NANO_INTERACTIVE // Admins can interact anyway.
+		if(get_dist(src_object, src) > user.client.view)
+			return NANO_CLOSE // Keep ghosts from opening too many NanoUIs.
+		return NANO_UPDATE // Ghosts can only view.
 	return state.can_use_topic(src_object, user) // Check if the state allows interaction.
 
  /**
@@ -66,14 +73,6 @@
 	if (lockcharge) // Disable NanoUIs if the Borg is locked.
 		return NANO_DISABLED
 	return ..()
-
-/mob/dead/observer/shared_nano_interaction(atom/movable/src_object)
-	if (check_rights_for(client, R_ADMIN))
-		return NANO_INTERACTIVE // Admins can interact anyway.
-	if(!client || get_dist(src_object, src)	> client.view)
-		return NANO_CLOSE // Keep ghosts from opening too many NanoUIs.
-	return NANO_UPDATE // Ghosts can only view.
-
 
 /**
   * public

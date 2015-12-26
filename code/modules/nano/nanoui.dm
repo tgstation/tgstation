@@ -98,6 +98,8 @@
 /datum/nanoui/proc/open(list/data = null)
 	if(!user.client)
 		return // Bail if there is no client.
+
+	update_status(push = 0) // Update the window status.
 	if (status == NANO_CLOSE)
 		return // Bail if we should close.
 
@@ -109,7 +111,6 @@
 	var/window_size = ""
 	if (width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
-	update_status(push = 0) // Update the window state.
 
 	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
 	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
@@ -137,7 +138,6 @@
   * Close the NanoUI, and all its children.
  **/
 /datum/nanoui/proc/close()
-	set_auto_update(0) // Disable auto-updates.
 	user << browse(null, "window=[window_id]") // Close the window.
 	SSnano.on_close(src)
 	for(var/datum/nanoui/child in children) // Loop through and close all children.
@@ -313,7 +313,7 @@
  **/
 /datum/nanoui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
-	if (status == NANO_DISABLED && !force)
+	if(status == NANO_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	var/list/send_data = get_send_data(data) // Get the data to send.
@@ -345,25 +345,26 @@
 	if(master_ui)
 		new_status = min(new_status, master_ui.status)
 
-	set_status(new_status, push)
 	if(new_status == NANO_CLOSE)
 		close()
+	else
+		set_status(new_status, push)
 
  /**
   * private
   *
   * Set the status/visibility of the NanoUI.
   *
-  * required state int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
+  * required status int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
   * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
  **/
-/datum/nanoui/proc/set_status(state, push = 0)
-	if (state != status) // Only update if status has changed.
-		if (status == NANO_DISABLED)
-			status = state
-			if (push)
+/datum/nanoui/proc/set_status(status, push = 0)
+	if(src.status != status) // Only update if status has changed.
+		if(src.status == NANO_DISABLED)
+			src.status = status
+			if(push)
 				update()
 		else
-			status = state
-			if (push || status == 0) // Force an update if NANO_DISABLED.
-				push_data(null, 1)
+			src.status = status
+			if(status == NANO_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
+				push_data(null, force = 1)

@@ -12,9 +12,6 @@
 /mob/proc/default_can_use_topic(atom/movable/src_object)
 	return NANO_CLOSE // Don't allow interaction by default.
 
-/mob/dead/observer/default_can_use_topic(atom/movable/src_object)
-	return shared_nano_interaction(src_object)
-
 /mob/living/default_can_use_topic(atom/movable/src_object)
 	. = shared_nano_interaction(src_object)
 	if (. > NANO_CLOSE)

@@ -14,9 +14,6 @@
 /mob/proc/physical_can_use_topic(atom/movable/src_object)
 	return NANO_CLOSE
 
-/mob/dead/observer/physical_can_use_topic(atom/movable/src_object)
-	return default_can_use_topic(src_object)
-
 /mob/living/physical_can_use_topic(atom/movable/src_object)
 	return shared_living_nano_distance(src_object)
 

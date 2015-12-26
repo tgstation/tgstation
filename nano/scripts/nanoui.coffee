@@ -7,10 +7,10 @@ class NanoUI
 
     try
       @data = JSON.parse document.query("#data").getAttribute "data-initial"
-      if not @data? or not ("data" of @data or "config" of @data)
-        @error "Initial data did not load correctly."
     catch error
       @error error
+    if not (@data? and "data" of @data and "config" of @data)
+      @error "Initial data did not load correctly."
 
     @render @data
     @chrome = new Chrome this, @data
@@ -23,11 +23,10 @@ class NanoUI
   update: (dataString) =>
     try
       @data = JSON.parse dataString
-
-      @render @data
-      @updated.dispatch @data
     catch error
       @error error
+    @render @data
+    @updated.dispatch @data
   updated: new MiniSignal
 
   render: (data) =>
@@ -77,21 +76,3 @@ class NanoUI
 
 
 @nanoui = new NanoUI
-
-linkStatus = (data) ->
-  links = document.queryAll ".link"
-  if data.config.status isnt NANO.INTERACTIVE
-    links.forEach (element) ->
-      element.className = "link disabled"
-@nanoui.updated.add linkStatus
-
-handleLinks = (data) ->
-  onClick = ->
-    action = @getAttribute "data-action"
-    params = JSON.parse @getAttribute "data-params"
-    if action? and params? and data.config.status is NANO.INTERACTIVE
-      nanoui.act action, params
-
-  document.queryAll(".link.active").forEach (link) ->
-    link.addEventListener "click", onClick
-@nanoui.rendered.add handleLinks
