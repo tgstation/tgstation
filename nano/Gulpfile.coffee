@@ -56,34 +56,15 @@ glob = (path) ->
   "#{path}/*"
 
 ### Tasks ###
-gulp.task "default", ["html", "js", "css"]
-
-
-gulp.task "clean", ->
-  del glob output.dir
-
-
-gulp.task "watch", ->
-  gulp.watch [input.html], ["reload"]
-  gulp.watch [glob input.images], ["reload"]
-  gulp.watch [glob input.scripts], ["reload"]
-  gulp.watch [glob input.styles], ["reload"]
-  gulp.watch [glob input.templates], ["reload"]
-
-
-gulp.task "reload", ["default"], ->
-  child_process.exec "reload.bat", (err, stdout, stderr) ->
-    return console.log err if err
-
-
-gulp.task "html", ["clean"], ->
+html = ->
   gulp.src glob input.html
+    .pipe g.bytediff.start()
     .pipe g.if(f.min, g.htmlmin({collapseWhitespace: true, minifyJS: true, minifyCSS: true, quoteCharacter: "'"}))
-    .pipe g.size()
+    .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
 
 
-gulp.task "js", ["clean"], ->
+js = ->
   lib = gulp.src bower "**/*.js"
     .pipe g.if(f.sourcemaps, g.sourcemaps.init())
 
@@ -99,13 +80,14 @@ gulp.task "js", ["clean"], ->
   combined = merge lib, templates, main
   combined
     .pipe g.concat(output.js)
+    .pipe g.bytediff.start()
     .pipe g.if(f.min, g.uglify(), g.jsbeautifier())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
-    .pipe g.size()
+    .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
 
 
-gulp.task "css", ["clean"], ->
+css = ->
   lib = gulp.src bower "**/*.css"
     .pipe g.if(f.sourcemaps, g.sourcemaps.init())
 
@@ -125,8 +107,23 @@ gulp.task "css", ["clean"], ->
 
   combined = merge lib, main
   combined
-    .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.concat(output.css)
+    .pipe g.bytediff.start()
+    .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
-    .pipe g.size()
+    .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
+
+
+gulp.task "default", ["clean"], ->
+  all = merge js(), css(), html()
+  all.pipe g.size()
+
+gulp.task "reload", ["default"], ->
+  child_process.exec "reload.bat", (err, stdout, stderr) -> console.log err if err
+
+gulp.task "watch", ->
+  Object.keys(input).forEach (inp) ->
+    gulp.watch [glob input[inp]], ["reload"]
+
+gulp.task "clean", -> del glob output.dir
