@@ -75,13 +75,13 @@
 				M.visible_message(\
 					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
-					"You hear metal clanking")
+					"You hear metal clanking.")
 
 			else
 				M.visible_message(\
 					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
-					"You hear metal clanking")
+					"You hear metal clanking.")
 
 			M.Weaken(5)
 		else

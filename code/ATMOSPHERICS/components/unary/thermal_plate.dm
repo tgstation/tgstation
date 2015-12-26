@@ -10,7 +10,7 @@
 	level = 1
 
 	name = "Thermal Transfer Plate"
-	desc = "Transfers heat to and from an area"
+	desc = "Transfers heat to and from an area."
 
 /obj/machinery/atmospherics/unary/thermal_plate/process()
 	. = ..()

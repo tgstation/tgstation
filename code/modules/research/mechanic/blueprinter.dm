@@ -96,7 +96,7 @@
 	else
 		new/obj/item/research_blueprint(get_output(), design)
 		paper_loaded -= 1
-	src.visible_message("\icon [src]<span class='notice'>\The [src] beeps: Successfully printed the [design.name] design.</span>")
+	src.visible_message("\icon [src]<span class='notice'>\The [src] beeps: 'Successfully printed the [design.name] design'.</span>")
 	spawn(20)
 		overlays -= "[base_state]_ani"
 	return 1

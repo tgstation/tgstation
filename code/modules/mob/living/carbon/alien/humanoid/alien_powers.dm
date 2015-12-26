@@ -14,7 +14,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(src, "<span class='alien'>Not enough plasma stored.</span>")
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		to_chat(src, "<span class='alien'>Bad place for a garden !</span>")
+		to_chat(src, "<span class='alien'>Bad place for a garden!</span>")
 		return 0
 	else	return 1
 

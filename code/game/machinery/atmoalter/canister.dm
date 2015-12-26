@@ -253,7 +253,7 @@
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(iswelder(W) && src.destroyed)
 		if(weld(W, user))
-			to_chat(user, "<span class='notice'>You salvage whats left of \the [src]</span>")
+			to_chat(user, "<span class='notice'>You salvage what's left of \the [src].</span>")
 			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))//new /obj/item/stack/sheet/metal(src.loc)
 			M.amount = 3
 			qdel (src)

@@ -60,12 +60,12 @@
 		M.visible_message(\
 			"<span class='notice'>[M] was unbuckled by [user]!</span>",\
 			"You were unbuckled from \the [src] by [user].",\
-			"You hear metal clanking")
+			"You hear metal clanking.")
 	else
 		M.visible_message(\
 			"<span class='notice'>[M] unbuckled \himself!</span>",\
 			"You unbuckle yourself from \the [src].",\
-			"You hear metal clanking")
+			"You hear metal clanking.")
 
 	unlock_atom(M)
 
@@ -91,12 +91,12 @@
 		M.visible_message(\
 			"<span class='notice'>[M.name] buckles in!</span>",\
 			"You buckle yourself to [src].",\
-			"You hear metal clanking")
+			"You hear metal clanking.")
 	else
 		M.visible_message(\
 			"<span class='notice'>[M.name] is buckled in to [src] by [user.name]!</span>",\
 			"You are buckled in to [src] by [user.name].",\
-			"You hear metal clanking")
+			"You hear metal clanking.")
 
 	add_fingerprint(user)
 
