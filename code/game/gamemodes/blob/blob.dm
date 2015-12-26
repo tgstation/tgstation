@@ -28,7 +28,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/blobwincount = 350
 
 	var/burstdelay_low = 1200 //in deciseconds
-	var/burstdelay_high = 2400 //blobs will burst after a random value between these * 2.5(minimum 5 minutes, maximum 10 minutes)
+	var/burstdelay_high = 2400 //blobs will burst after a random value between these * 2.5(minimum 5 minutes, maximum 7 and a half minutes)
 
 	var/list/infected_crew = list()
 
@@ -157,7 +157,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		B.max_occurrences = 0 // disable the event
 
 	spawn(0)
-		var/burst_delay = rand(burstdelay_low, burstdelay_high) //between 5 and 10 minutes with 1200 low and 2400 high.
+		var/burst_delay = rand(burstdelay_low, burstdelay_high) //between 5 and 7 and a half minutes with 1200 low and 1800 high.
 
 		sleep(burst_delay)
 
@@ -175,7 +175,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 		send_intercept(1)
 
-		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 12)
+		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
 
 		send_intercept(2) //if the blob has been alive this long, it's time to bomb it
 
