@@ -3,8 +3,7 @@
 
 /obj/item/clothing/under/color/random/New()
 	..()
-	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)
-	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - excluded)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
@@ -16,7 +15,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

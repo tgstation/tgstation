@@ -38,6 +38,9 @@
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
 

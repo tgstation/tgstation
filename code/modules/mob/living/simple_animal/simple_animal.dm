@@ -45,7 +45,7 @@
 	var/melee_damage_upper = 0
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
-	var/list/ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 1, OXY = 0) //Set 0 to receive that damage type, 1 to ignore
+	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -66,6 +66,12 @@
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
 	var/mob/living/simple_animal/hostile/spawner/nest
+
+	var/sentience_type = SENTIENCE_ORGANIC // Sentience type, for slime potions
+
+	var/list/loot = list() //list of things spawned at mob's loc when it dies
+	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
+	var/deathmessage = ""
 
 /mob/living/simple_animal/New()
 	..()
@@ -271,20 +277,24 @@
 	return 0
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
-	if(!ignored_damage_types[BRUTE])
-		..()
+	if(damage_coeff[BRUTE])
+		..(amount*damage_coeff[BRUTE])
 
 /mob/living/simple_animal/adjustFireLoss(amount)
-	if(!ignored_damage_types[BURN])
-		adjustBruteLoss(amount)
+	if(damage_coeff[BURN])
+		adjustBruteLoss(amount*damage_coeff[BURN])
+
+/mob/living/simple_animal/adjustOxyLoss(amount)
+	if(damage_coeff[OXY])
+		adjustBruteLoss(amount*damage_coeff[OXY])
 
 /mob/living/simple_animal/adjustToxLoss(amount)
-	if(!ignored_damage_types[TOX])
-		..(amount)
+	if(damage_coeff[TOX])
+		..(amount*damage_coeff[TOX])
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
-	if(!ignored_damage_types[CLONE])
-		..(amount)
+	if(damage_coeff[CLONE])
+		..(amount*damage_coeff[CLONE])
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -356,7 +366,7 @@
 		return 1
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
-	if(damage <= force_threshold || ignored_damage_types[damagetype])
+	if(damage <= force_threshold || !damage_coeff[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
 		adjustBruteLoss(damage)
@@ -384,12 +394,24 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
-	health = 0
-	icon_state = icon_dead
-	stat = DEAD
-	density = 0
-	if(!gibbed)
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc)
+	if(deathmessage && !gibbed)
+		visible_message("<span class='danger'>[deathmessage]</span>")
+	else if(!del_on_death)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+	if(del_on_death)
+		ghostize()
+		qdel(src)
+	else
+		health = 0
+		icon_state = icon_dead
+		stat = DEAD
+		density = 0
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -507,3 +529,7 @@
 		nest.spawned_mobs -= src
 	nest = null
 	return ..()
+
+
+/mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
+	return

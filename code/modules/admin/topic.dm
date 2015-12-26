@@ -59,13 +59,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a cult.")
-			if("5")
-				if(src.makeMalfAImode())
-					message_admins("[key_name(usr)] caused an AI to malfunction.")
-					log_admin("[key_name(usr)] caused an AI to malfunction.")
-				else
-					message_admins("[key_name_admin(usr)] tried to cause an AI to malfunction. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to cause an AI to malfunction.")
 			if("6")
 				message_admins("[key_name(usr)] is creating a wizard...")
 				if(src.makeWizard())
@@ -400,9 +393,9 @@
 			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
 			if("parrot")			M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
 			if("polyparrot")		M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmored")	M.change_mob_type( /mob/living/simple_animal/construct/armored , null, null, delmob )
-			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
-			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
+			if("constructarmored")	M.change_mob_type( /mob/living/simple_animal/hostile/construct/armored , null, null, delmob )
+			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/hostile/construct/builder , null, null, delmob )
+			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
 
@@ -483,10 +476,6 @@
 
 		var/banreason = appearance_isbanned(M)
 		if(banreason)
-	/*		if(!config.ban_legacy_system)
-				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(M.ckey)
-				return	*/
 			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban")
@@ -895,9 +884,6 @@
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
-					if(config.ban_legacy_system)
-						usr << "<span class='danger'>Your server is using the legacy banning system, which does not support temporary job bans. Consider upgrading. Aborting ban.</span>"
-						return
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
@@ -912,7 +898,6 @@
 						feedback_inc("ban_job_tmp",1)
 						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
 						feedback_add_details("ban_job_tmp","- [job]")
-						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]") //Legacy banning does not support temporary jobbans.
 						if(!msg)
 							msg = job
 						else
@@ -934,7 +919,6 @@
 							feedback_inc("ban_job",1)
 							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
 							feedback_add_details("ban_job","- [job]")
-							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
 						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
@@ -950,10 +934,6 @@
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
-			if(!config.ban_legacy_system)
-				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(M.ckey)
-				return
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
@@ -962,10 +942,9 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_JOB_PERMA, job)
+						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						feedback_inc("ban_job_unban",1)
 						feedback_add_details("ban_job_unban","- [job]")
-						jobban_unban(M, job)
 						if(!msg)	msg = job
 						else		msg += ", [job]"
 					else
@@ -1033,21 +1012,6 @@
 			var/edit_log = query_noteedits.item[1]
 			usr << browse(edit_log,"window=noteedits")
 
-	else if(href_list["removejobban"])
-		if(!check_rights(R_BAN))	return
-
-		var/t = href_list["removejobban"]
-		if(t)
-			if((alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
-				log_admin("[key_name(usr)] removed [t]")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [t]</span>")
-				jobban_remove(t)
-				href_list["ban"] = 1 // lets it fall through and refresh
-				var/t_split = text2list(t, " - ")
-				var/key = t_split[1]
-				var/job = t_split[2]
-				DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
-
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))	return
 
@@ -1106,19 +1070,6 @@
 				//qdel(M)
 			if("Cancel")
 				return
-
-	else if(href_list["unjobbanf"])
-		if(!check_rights(R_BAN))	return
-
-		var/banfolder = href_list["unjobbanf"]
-		Banlist.cd = "/base/[banfolder]"
-		var/key = Banlist["key"]
-		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
-			if (RemoveBanjob(banfolder))
-				unjobbanpanel()
-			else
-				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
-				unjobbanpanel()
 
 	//Watchlist
 	else if(href_list["watchadd"])
@@ -1519,12 +1470,12 @@
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
 
-		var/mob/M = locate(href_list["adminplayerobservefollow"])
+		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
 		if(!isobserver(usr))	C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
-		A.ManualFollow(M)
+		A.ManualFollow(AM)
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
@@ -1902,7 +1853,7 @@
 		else
 			var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
-				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admincaster_signature, src.admincaster_feed_channel.locked, 1)
+				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
 				feedback_inc("newscaster_channels",1)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
@@ -1925,7 +1876,7 @@
 		if(src.admincaster_feed_message.returnBody(-1) =="" || src.admincaster_feed_message.returnBody(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
-			news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admincaster_signature, src.admincaster_feed_channel.channel_name, null, 1)
+			news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
 			feedback_inc("newscaster_stories",1)
 			src.admincaster_screen=4
 
@@ -1982,10 +1933,10 @@
 			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admincaster_signature, null, 1, 1)
+					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
 					src.admincaster_screen = 15
 				else
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admincaster_signature)
+					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_wanted_message.criminal]!")
 		src.access_news_network()
@@ -2054,7 +2005,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.admin_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])

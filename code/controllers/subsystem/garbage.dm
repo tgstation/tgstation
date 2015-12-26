@@ -2,13 +2,15 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector
 	name = "Garbage"
-	can_fire = 1
-	wait = 5
 	priority = -1
+	wait = 5
 	dynamic_wait = 1
 	dwait_upper = 50
 	dwait_delta = 10
 	dwait_buffer = 0
+	display = 2
+
+	can_fire = 1 // This needs to fire before round start.
 
 	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
 	var/max_run_time = 1		// how long, in deciseconds, can we run before waiting for the next tick
@@ -26,6 +28,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 								// the types are stored as strings
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
+
+#ifdef TESTING
+	var/list/qdel_list = list()	// list of all types that have been qdel()eted
+#endif
 
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
@@ -100,6 +106,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /proc/qdel(var/datum/A)
 	if (!A)
 		return
+#ifdef TESTING
+	SSgarbage.qdel_list += "[A.type]"
+#endif
 	if (!istype(A))
 		del(A)
 	else if (isnull(A.gc_destroyed))
@@ -223,4 +232,22 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	qdel(src)
 	if(!running_find_references)
 		find_references()
+
+/client/verb/show_qdeleted()
+	set category = "Debug"
+	set name = "Show qdel() Log"
+	set desc = "Render the qdel() log and display it"
+
+	var/dat = "<B>List of things that have been qdel()eted this round</B><BR><BR>"
+
+	var/tmplist = list()
+	for(var/elem in SSgarbage.qdel_list)
+		if(!(elem in tmplist))
+			tmplist[elem] = 0
+		tmplist[elem]++
+
+	for(var/path in tmplist)
+		dat += "[path] - [tmplist[path]] times<BR>"
+
+	usr << browse(dat, "window=qdeletedlog")
 #endif

@@ -38,6 +38,7 @@
 	languages = DRONE
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter")
@@ -71,7 +72,7 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, "drone_storage_slot")
+		equip_to_slot_or_del(I, slot_drone_storage)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)

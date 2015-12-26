@@ -21,6 +21,8 @@
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return
 	user << "The station AI is not to interact with these devices."
 	return
 

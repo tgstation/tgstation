@@ -65,9 +65,9 @@ var/hsboxspawn = 1
 			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
-			"Spawn Cleanbot"					= "hsbspawn&path=[/obj/machinery/bot/cleanbot]",
-			"Spawn Floorbot"					= "hsbspawn&path=[/obj/machinery/bot/floorbot]",
-			"Spawn Medbot"						= "hsbspawn&path=[/obj/machinery/bot/medbot]",
+			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
+			"Spawn Floorbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
+			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
 
 			"Canisters",
 			"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
@@ -230,7 +230,7 @@ var/hsboxspawn = 1
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/clothing) - /obj/item/clothing
+					var/list/all_items = subtypesof(/obj/item/clothing)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
@@ -244,7 +244,7 @@ var/hsboxspawn = 1
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/weapon/reagent_containers) - /obj/item/weapon/reagent_containers
+					var/list/all_items = subtypesof(/obj/item/weapon/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
@@ -258,7 +258,7 @@ var/hsboxspawn = 1
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/weapon/reagent_containers) - /obj/item
+					var/list/all_items = subtypesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/weapon/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 

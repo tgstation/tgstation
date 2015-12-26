@@ -300,6 +300,8 @@
 		return 0
 	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
+	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
+		return 1
 	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
@@ -448,9 +450,9 @@ var/global/list/possible_items = list()
 
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, steal_target))
-			if(targetinfo && targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 				return 1
-			else //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 				return 1
 
 		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
@@ -463,8 +465,9 @@ var/global/list/possible_items = list()
 		if(istype(owner.current, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = owner.current
 			var/list/slots = list ("backpack" = slot_in_backpack)
-			for(var/obj/item/I in targetinfo.special_equipment)
-				H.equip_in_one_of_slots(I, slots)
+			for(var/eq_path in targetinfo.special_equipment)
+				var/obj/O = new eq_path
+				H.equip_in_one_of_slots(O, slots)
 				H.update_icons()
 
 var/global/list/possible_items_special = list()

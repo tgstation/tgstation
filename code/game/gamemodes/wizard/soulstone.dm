@@ -28,8 +28,14 @@
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
-		return..()
+		return ..()
+	if(iscultist(M))
+		user << "<span class='cultlarge'>You shouldn't do that.</span>"
+		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
+
+	if(iscultist(user) && M && M.mind)
+		new /obj/item/summoning_orb(get_turf(M))
 
 	transfer_soul("VICTIM", M, user)
 	return
@@ -104,7 +110,7 @@
 /obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user).
 	switch(choice)
 		if("FORCE")
-			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return 0
 			if(contents.len)
 				return 0
@@ -120,12 +126,6 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
-				if(iscultist(user))
-					user << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
-				else
-					user << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
-				return 0
 			if(imprinted != "empty")
 				user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 			else
@@ -171,13 +171,13 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
 
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
-						makeNewConstruct(/mob/living/simple_animal/construct/builder, A, user)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
 				qdel(T)
 				qdel(src)
@@ -186,8 +186,8 @@
 	return
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0)
-	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
 	if(stoner && iscultist(stoner) || cultoverride)
@@ -200,7 +200,7 @@
 	if(stoner && iswizard(stoner))
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	else if(stoner && iscultist(stoner))
-		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them summon the Geometer at all costs.</B>"
 	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
@@ -238,7 +238,7 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/list/candidates = get_candidates(BE_CULTIST)
+	var/list/candidates = get_candidates(ROLE_CULTIST)
 
 	shuffle(candidates)
 

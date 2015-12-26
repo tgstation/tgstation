@@ -2,8 +2,8 @@
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_running"
-	icon_living = "alienh_running"
+	icon_state = "alienh_s"
+	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	response_help = "pokes"
@@ -29,7 +29,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

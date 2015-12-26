@@ -6,7 +6,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
@@ -146,17 +146,10 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		user.Paralyse(20)
 		return
 
-//	if(..() == BLOCKED)
-//		return
-
 	if (M.stat !=2)
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
 			user << "<span class='warning'>You can't heal yourself!</span>"
 			return
-		/*if((M.mind in ticker.mode.cult) && (prob(20)))
-			M << "\red The power of [src.deity_name] clears your mind of heresy!"
-			user << "\red You see how [M]'s eyes become clear, the cult no longer holds control over him!"
-			ticker.mode.remove_cultist(M.mind)*/
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			if(ishuman(M))

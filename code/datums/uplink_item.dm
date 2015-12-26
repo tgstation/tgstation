@@ -8,7 +8,7 @@ var/list/uplink_items = list()
 		// A keyed list, acting as categories, which are lists to the datum.
 
 		var/list/last = list()
-		for(var/item in typesof(/datum/uplink_item))
+		for(var/item in subtypesof(/datum/uplink_item))
 
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
@@ -31,7 +31,7 @@ var/list/uplink_items = list()
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
-	
+
 	for(var/category in uplink_items)
 		for(var/datum/uplink_item/I in uplink_items[category])
 			if(I.gamemodes.len)
@@ -109,6 +109,54 @@ var/list/uplink_items = list()
 //
 */
 
+//Operator special offers
+
+/datum/uplink_item/specoffer
+	category = "Special offer roles"
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/c20r
+	name = "C20r bundle"
+	desc = "The classic C20r, with two magazines, at discount price. Contains free surplus suppressor."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
+	cost = 14//normal price 16
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/m90gl
+	name = "M90gl bundle"
+	desc = "Premium offer. Pick up the M90gl with a magazine, some grenades, and a pack of cigarettes for a premium discount."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
+	cost = 15//normal price 18
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/bulldog
+	name = "Bulldog bundle"
+	desc = "Optimised for people that want to get up close and personal. Contains the popular Bulldog shotgun, a two drums of ammunition, and an elite hardsuit."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
+	cost = 16//normal price 20 THATS TWO FREE DRUMS
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/medical
+	name = "Medical bundle"
+	desc = "Support your fellow operatives with this medical bundle. Contains a Donksoft machine gun, a box of ammo, and a pair of magboots to rescue your friends in no-gravity environments."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
+	cost = 15//normal price 20 THATS A FREE MAGBOOT AND a box OF RIOT DART LMG
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/sniper
+	name = "Sniper bundle"
+	desc = "Contains a collapsed sniper rifle in an expensive carrying case, a hollowpoint haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
+	item = /obj/item/weapon/storage/briefcase/sniperbundle
+	cost = 20//26 normal cost. suppressor is excluded from price.
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/specoffer/chemical
+	name = "Tiger Cooperation Chemical Bioterror bundle"
+	desc = "Contains Bioterror spray, Bioterror grenade, chemicals, syringe gun, box of syringes, Donksoft assault rifle, and some darts. Warning: Seal suit and equip internals before use."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
+	cost = 30 //normal price 42 biggest saving here
+	gamemodes = list(/datum/game_mode/nuclear)
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -127,11 +175,19 @@ var/list/uplink_items = list()
 	cost = 13
 	surplus = 50
 
+/datum/uplink_item/dangerous/shotgun
+	name = "Bulldog Shotgun"
+	desc = "A fully-loaded semi-automatic drum fed shotgun. Compatiable with all 12 gauge rounds. Designed for close quarter combat use."
+	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 40
+
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 14
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
@@ -143,7 +199,7 @@ var/list/uplink_items = list()
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
 	item = /obj/item/weapon/gun/projectile/automatic/m90
-	cost = 18
+	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
 
@@ -155,7 +211,7 @@ var/list/uplink_items = list()
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 40
+	cost = 23
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -199,7 +255,7 @@ var/list/uplink_items = list()
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
-	cost = 8
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -207,7 +263,7 @@ var/list/uplink_items = list()
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
-	cost = 12
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -215,7 +271,15 @@ var/list/uplink_items = list()
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 8
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 35
+
+/datum/uplink_item/dangerous/bioterrorfoam
+	name = "Crowd control chemical foam grenade"
+	desc = "A powerful chemical foam grenade which creates a deadly torrent of foam that will mute, blind, confuse, mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists using additional spore toxin. Ensure suit is sealed before use."
+	item = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 35
 
@@ -233,7 +297,7 @@ var/list/uplink_items = list()
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 90
+	cost = 80
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -245,19 +309,27 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
-/datum/uplink_item/dangerous/syndieborg
+/datum/uplink_item/dangerous/reinforcement/syndieborg
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
-	item = /obj/item/weapon/antag_spawner/borg_tele
-	cost = 50
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
+	cost = 80
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
-//for refunding the syndieborg teleporter
-/datum/uplink_item/dangerous/syndieborg/spawn_item()
-	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
+/datum/uplink_item/dangerous/reinforcement
+	name = "Reinforcements"
+	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals to arm them as well."
+	item = /obj/item/weapon/antag_spawner/nuke_ops
+	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/dangerous/reinforcement/spawn_item()
+	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))
 		T.TC_cost = cost
+
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -265,6 +337,15 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	cost = 12
+
+/datum/uplink_item/dangerous/sniper
+	name = "Sniper Rifle"
+	desc = "Ranged fury, syndicate style. guaranteed to cause shock and awe or your TC back!"
+	item = /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
+	cost = 16
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 25
+
 
 // AMMUNITION
 
@@ -288,14 +369,22 @@ var/list/uplink_items = list()
 	name = "SMG Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
-	cost = 2
+	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+
+/datum/uplink_item/ammo/smgammo
+	name = "Ammo Duffelbag - C20r Ammo Grab Bag"
+	desc = "A duffelbag filled with C20r to kit out an entire team, at a discounted price."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
+	cost = 20 //get about 2 mags for free this shit is imba as fuck Normal price 27
+	gamemodes = list(/datum/game_mode/nuclear)
+
 
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
-	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
+	cost = 12 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullslug
@@ -337,23 +426,50 @@ var/list/uplink_items = list()
 	name = "Toploader Magazine - 5.56"
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
-	cost = 2
+	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
 	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
-	cost = 4
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/fireteam
+	name = "Ammo Duffelbag - Fireteam Ammo Grab Bag"
+	desc = "A duffelbag filled with ammo to kit out a fireteam, contains four C20r magazines, two M90gl magazines, a box of 40mm grenades, and sniper ammunition at a discounted price." //M90gl ammo bag is too imba. fuck that.
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
+	cost = 24//you get 4 grenades for free. Normal price 29
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
 	name = "Box Magazine - 7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 12
+	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
+
+/datum/uplink_item/ammo/machinegun/bleeding
+	name = "Box Magazine - Bleeding 7.62x51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun equipped with special properties to induce internal bleeding on targets."
+	item = /obj/item/ammo_box/magazine/m762/bleeding
+
+/datum/uplink_item/ammo/machinegun/hollow
+	name = "Box Magazine - Hollow 7.62x51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun equipped with hollow-tips to help with the unarmored masses of crew."
+	item = /obj/item/ammo_box/magazine/m762/hollow
+
+/datum/uplink_item/ammo/machinegun/ap
+	name = "Box Magazine - Armor Penetrating 7.62x51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun equipped with special properties to puncture even the most durable armor."
+	item = /obj/item/ammo_box/magazine/m762/ap
+
+/datum/uplink_item/ammo/machinegun/incen
+	name = "Box Magazine - Incendiary 7.62x51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun, tipped with a special flammable mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
+	item = /obj/item/ammo_box/magazine/m762/incen
 
 /datum/uplink_item/ammo/toydarts //This used to only be for nuke ops, but had the cost lowered and made available to traitors because >a box of foam darts is more expensive than four carbine magazines
 	name = "Box of Riot Darts"
@@ -361,6 +477,36 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/foambox/riot
 	cost = 2
 	surplus = 0
+
+/datum/uplink_item/ammo/sniper
+	name = "Sniper Magazine - .50"
+	desc = "An additional 6-round .50 magazine for use in the syndicate sniper rifle."
+	item = /obj/item/ammo_box/magazine/sniper_rounds
+	cost = 4 //70dmg rounds are no joke
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/sniper/soporific
+	name = "Sniper Magazine - Soporific Rounds"
+	desc = "A 3-round magazine of soporific ammo designed for use in the syndicate sniper rifle, put your enemies to sleep today!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
+	cost = 6
+
+/datum/uplink_item/ammo/sniper/haemorrhage
+	name = "Sniper Magazine - Haemorrhage Rounds"
+	desc = "A 5-round magazine of haemorrhage ammo designed for use in the syndicate sniper rifle, causes heavy bleeding in the target."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
+
+/datum/uplink_item/ammo/sniper/penetrator
+	name = "Sniper Magazine - Penetrator Rounds"
+	desc = "A 5-round magazine of penetrator ammo designed for use in the syndicate sniper rifle. Can pierce walls and multiple enemies."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	cost = 5
+
+/datum/uplink_item/ammo/sniper/accelerator
+	name = "Sniper Magazine - Accelerator Rounds"
+	desc = "A 5-round magazine of accelerator ammo designed for use in the syndicate sniper rifle. The shot is weak at close range, but gains more power the farther it flies."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/accelerator
+	cost = 4
 
 // STEALTHY WEAPONS
 
@@ -373,7 +519,6 @@ var/list/uplink_items = list()
 	desc = "A box of shurikens from ancient Earth martial arts. They are highly effective throwing weapons, and will embed into limbs when possible."
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -406,7 +551,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
-	desc = "An assortment of deadly chemicals packed into a compact box. Hard to utilize if there is no method of application."
+	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
@@ -441,9 +586,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate before use."
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
@@ -484,6 +629,7 @@ var/list/uplink_items = list()
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces, but the manufacturer guarantees they're somehow better than the normal ones."
 	cost = 4 //but they aren't
 	gamemodes = list(/datum/game_mode/nuclear)
+	excludefrom = list()
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -525,6 +671,14 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
+
+/datum/uplink_item/stealthy_tools/mulligan
+	name = "Mulligan"
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
+	item = /obj/item/weapon/reagent_containers/syringe/mulligan
+	cost = 4
+	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	surplus = 30
 
 // DEVICE AND TOOLS
 
@@ -582,6 +736,23 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
 	excludefrom = list(/datum/game_mode/gang)
+
+/datum/uplink_item/device_tools/elite_hardsuit
+	name = "Elite Syndicate Hardsuit"
+	desc = "The elite Syndicate hardsuit is worn by only the best nuclear agents. Features much better armoring and complete fireproofing, as well as a built in jetpack. \
+	When the built in helmet is deployed your identity will be protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit into combat mode \
+	will allow you all the mobility of a loose fitting uniform without sacrificing armoring. Additionally the suit is collapsible, small enough to fit within a backpack. \
+	Nanotrasen crewmembers are trained to report red space suit sightings; these suits in particular are known to drive employees into a panic."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/shielded_hardsuit
+	name = "Shielded Hardsuit"
+	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -673,11 +844,11 @@ var/list/uplink_items = list()
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/device_tools/teleporter
-	name = "Teleporter Circuit Board"
-	desc = "A printed circuit board that completes the teleporter onboard the mothership. It is advised you calibrate the teleporter before entering it, as malfunctions can occur."
-	item = /obj/item/weapon/circuitboard/teleporter
-	cost = 40
+/datum/uplink_item/device_tools/assault_pod
+	name = "Assault Pod Targetting Device"
+	desc = "Use to select the landing zone of your assault pod."
+	item = /obj/item/device/assault_pod
+	cost = 30
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -688,6 +859,13 @@ var/list/uplink_items = list()
 	cost = 16
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 20
+
+/datum/uplink_item/device_tools/medgun
+	name = "Medbeam Gun"
+	desc = "Medical Beam Gun, useful in prolonged firefights."
+	item = /obj/item/weapon/gun/medbeam
+	cost = 15
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 // IMPLANTS
@@ -793,7 +971,6 @@ var/list/uplink_items = list()
 	You can also play card games with them or leave them on your victims."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
-	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 40
 
 /datum/uplink_item/badass/syndiecash

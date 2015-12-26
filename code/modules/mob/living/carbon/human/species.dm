@@ -33,6 +33,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/need_nutrition = 1  //Does it need to eat food on a regular basis?
 	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
@@ -49,6 +50,7 @@
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
 	var/punchmod = 0	// adds to the punch damage
+	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -83,6 +85,14 @@
 	///////////
 	// PROCS //
 	///////////
+
+
+
+//Called when admins use the Set Species verb, let's species
+//do some init stuff on the mob that got SS'd if necessary
+/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
+	return
+
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
@@ -370,9 +380,9 @@
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
-				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
@@ -396,9 +406,9 @@
 
 			if(S.hasinner)
 				if(S.gender_specific)
-					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layer]"
 				else
-					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "m_[bodypart]inner_[S.icon_state]_[layer]"
 
 				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
@@ -613,7 +623,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD)
+	if (H.nutrition > 0 && H.stat != DEAD && !H.dna.species.need_nutrition)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -673,9 +683,6 @@
 		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
-
-		if(H.seer)
-			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
@@ -860,6 +867,10 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
+			if(H.l_hand)
+				. += H.l_hand.slowdown
+			if(H.r_hand)
+				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))
 				. += 1.5
@@ -882,7 +893,7 @@
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && H.check_shields(0, M.name))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
@@ -1003,8 +1014,8 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-	if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
-		return 0
+		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+			return 0
 
 	if(I.attack_verb && I.attack_verb.len)
 		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \

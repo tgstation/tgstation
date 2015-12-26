@@ -70,9 +70,16 @@
 	var/list/slime_mutation[4]
 
 /mob/living/simple_animal/slime/New()
+	var/datum/action/innate/slime/feed/F = new
+	F.Grant(src)
 	if(is_adult)
+		var/datum/action/innate/slime/reproduce/R = new
+		R.Grant(src)
 		health = 200
 		maxHealth = 200
+	else
+		var/datum/action/innate/slime/evolve/E = new
+		E.Grant(src)
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)
@@ -149,7 +156,7 @@
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(is_adult)
 				stat(null, "You can reproduce!")
 			else
@@ -223,7 +230,7 @@
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(10)
+		adjustBruteLoss(15)
 		discipline_slime(user)
 
 

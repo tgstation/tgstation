@@ -140,38 +140,40 @@ Pipelines + Other Objects -> Pipe network
 			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 			unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20, target = src) && !gc_destroyed)
+		if (do_after(user, 20/W.toolspeed, target = src) && !gc_destroyed)
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
 				"<span class='italics'>You hear ratchet.</span>")
 			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 
-			//You unwrenched a pipe full of pressure? let's splat you into the wall silly.
+			//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 			if(unsafe_wrenching)
-				unsafe_pressure_release(user,internal_pressure)
+				unsafe_pressure_release(user, internal_pressure)
 			Deconstruct()
 
 	else
 		return ..()
 
 
-//Called when an atmospherics object is unwrenched while having a large pressure difference
-//with it's locs air contents.
-/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user,pressures)
+// Throws the user when they unwrench a pipe with a major difference between the internal and environmental pressure.
+/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
 		return
-
 	if(!pressures)
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
-		pressures = int_air.return_pressure()-env_air.return_pressure()
+		pressures = int_air.return_pressure() - env_air.return_pressure()
 
-	var/fuck_you_dir = get_dir(src,user)
-	var/turf/general_direction = get_edge_target_turf(user,fuck_you_dir)
+	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
+	if(!fuck_you_dir)
+		fuck_you_dir = pick(cardinal)
+	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
+	var/range = pressures/250
+	var/speed = range/5
+
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
-	//Values based on 2*ONE_ATMOS (the unsafe pressure), resulting in 20 range and 4 speed
-	user.throw_at(general_direction,pressures/10,pressures/50)
+	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
@@ -246,7 +248,8 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handle entering and so on.
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
-			if(returnPipenet() != target_move.returnPipenet())
+			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+			if(pipenetdiff.len)
 				user.update_pipe_vision(target_move)
 			user.loc = target_move
 			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
@@ -272,3 +275,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
+
+/obj/machinery/atmospherics/proc/returnPipenets()
+	return list()
+

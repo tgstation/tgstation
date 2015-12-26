@@ -1,11 +1,3 @@
-/*
-Contains most of the procs that are called when a mob is attacked by something
-
-bullet_act
-emp_act
-*/
-
-
 /mob/living/carbon/human/getarmor(def_zone, type)
 	var/armorval = 0
 	var/organnum = 0
@@ -40,29 +32,30 @@ emp_act
 	dna.species.on_hit(proj_type, src)
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
-							"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
-			// Find a turf near or on the original location to bounce to
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(src)
+	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+				// Find a turf near or on the original location to bounce to
+				if(P.starting)
+					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/turf/curloc = get_turf(src)
 
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
+					// redirect the projectile
+					P.original = locate(new_x, new_y, P.z)
+					P.starting = curloc
+					P.current = curloc
+					P.firer = src
+					P.yo = new_y - curloc.y
+					P.xo = new_x - curloc.x
 
-			return -1 // complete projectile permutation
+				return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]", P, 0, P.armour_penetration))
-		P.on_hit(src, 100, def_zone)
-		return 2
+		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
@@ -77,45 +70,24 @@ emp_act
 			return 1
 	return 0
 
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0)
+	var/block_chance_modifier = round(damage / -3)
 
-//End Here
-
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
-	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
-	if(AM)
-		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
-			return 0
-	var/blocker
-	if(l_hand)
-		if(l_hand.IsShield())
-			block_chance -= Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100) //So armour piercing blades can still be parried by other blades, for example
-			if(prob(block_chance))
-				blocker = l_hand
-	if(r_hand)
-		if(r_hand.IsShield())
-			block_chance -= Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)
-			if(prob(block_chance))
-				blocker = r_hand
-	if(blocker)
-		visible_message("<span class='danger'>[src] blocks [attack_text] with [blocker]!</span>", \
-						"<span class='userdanger'>[src] blocks [attack_text] with [blocker]!</span>")
-		return 1
+	if(l_hand && !istype(l_hand, /obj/item/clothing))
+		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+			return 1
+	if(r_hand && !istype(r_hand, /obj/item/clothing))
+		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
+		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+			return 1
 	if(wear_suit)
-		if(wear_suit.IsShield() && (prob(50)))
-			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
-							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = new/list()
-			for(var/turf/T in orange(6, src))
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6, src))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			if(buckled)
-				buckled.unbuckle_mob()
-			forceMove(picked)
+		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+			return 1
+	if(w_uniform)
+		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	return 0
 
@@ -299,7 +271,7 @@ emp_act
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]", null, 0, M.armour_penetration))
+		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
@@ -375,7 +347,7 @@ emp_act
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(check_shields(throwpower, "\the [AM.name]", AM, 1))
+	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1

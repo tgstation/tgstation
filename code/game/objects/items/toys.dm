@@ -1,5 +1,5 @@
 /* Toys!
- * ContainsL
+ * Contains
  *		Balloons
  *		Fake singularity
  *		Toy gun
@@ -18,6 +18,7 @@
  *		Beach ball
  *		Toy xeno
  *      Kitty toys!
+ *		Snowballs
  */
 
 
@@ -197,7 +198,6 @@
 	item_state = "sword0"
 	var/active = 0
 	w_class = 2
-	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
@@ -270,7 +270,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 /*
@@ -288,7 +288,7 @@
 	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/weapon/twohanded/dualsaber/toy/IsShield()
+/obj/item/weapon/twohanded/dualsaber/toy/hit_reaction()
 	return 0
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
@@ -319,12 +319,13 @@
 	icon_state = "crayonred"
 	w_class = 1
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	var/paint_color = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
-	var/uses = 30 //0 for unlimited uses
+	var/uses = 30 //-1 or less for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
@@ -355,7 +356,7 @@
 
 /obj/item/toy/crayon/proc/update_window(mob/living/user)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
-	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
+	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter/number</a>"
 	dat += "<hr>"
 	dat += "<h3>Runes:</h3><br>"
 	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
@@ -386,7 +387,7 @@
 		if("random_letter")
 			temp = pick(letters)
 		if("letter")
-			temp = input("Choose the letter.", "Scribbles") in letters
+			temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
 		if("random_rune")
 			temp = "rune[rand(1,6)]"
 		if("random_graffiti")
@@ -413,6 +414,8 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+		else if(numerals.Find(drawtype))
+			temp = "number"
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -466,9 +469,9 @@
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon(target,paint_color,drawtype,temp,graf_rot)
 
-			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
+			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			if(uses < 0)
@@ -706,7 +709,7 @@
 
 
 /obj/item/toy/cards
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
@@ -732,6 +735,7 @@
 	icon_state = "deck_nanotrasen_full"
 	w_class = 2
 	var/cooldown = 0
+	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
 /obj/item/toy/cards/deck/New()
@@ -769,6 +773,8 @@
 		user << "<span class='warning'>There are no more cards to draw!</span>"
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
+	if(holo)
+		holo.spawned += H // track them leaving the holodeck
 	choice = cards[1]
 	H.cardname = choice
 	H.parentdeck = src
@@ -947,8 +953,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.burn_state == -1)
-		newobj.burn_state = -1
+	if(sourceobj.burn_state == FIRE_PROOF)
+		newobj.burn_state = FIRE_PROOF
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -1064,7 +1070,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 
 /*
  * Fake nuke
@@ -1121,17 +1127,18 @@
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
+	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/bitesound = 'sound/weapons/bite.ogg'
 
-// Attack mob
+//Attack mob
 /obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
+	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
 	return ..()
 
-// Attack self
+//Attack self
 /obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
 	user << "<span class='notice'>You pet [src]. D'awww.</span>"
@@ -1160,6 +1167,26 @@
 
 	else
 		user << "<span class='alert'>Nothing happens.</span>"
+
+/*
+ * Snowballs
+ */
+
+/obj/item/toy/snowball
+	name = "snowball"
+	desc = "A compact ball of snow. Good for throwing at people."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "snowball"
+	throwforce = 12 //pelt your enemies to death with lumps of snow
+
+/obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)
+
+/obj/item/toy/snowball/throw_impact(atom/hit_atom)
+	if(!..())
+		playsound(src, 'sound/effects/pop.ogg', 20, 1)
+		qdel(src)
 
 /*
  * Beach ball
@@ -1213,3 +1240,214 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
+	burn_state = FLAMMABLE
+
+
+/*
+ * Action Figures
+ */
+
+/obj/item/toy/figure
+	name = "Non-Specific Action Figure action figure"
+	desc = null
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "nuketoy"
+	var/cooldown = 0
+	var/toysay = "What the fuck did you do?"
+	var/toysound = 'sound/machines/click.ogg'
+
+/obj/item/toy/figure/New()
+    desc = "A \"Space Life\" brand [src]."
+
+/obj/item/toy/figure/attack_self(mob/user as mob)
+	if(cooldown <= world.time)
+		cooldown = world.time + 50
+		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
+		playsound(user, toysound, 20, 1)
+
+/obj/item/toy/figure/cmo
+	name = "Chief Medical Officer action figure"
+	icon_state = "cmo"
+	toysay = "Suit sensors!"
+
+/obj/item/toy/figure/assistant
+	name = "Assistant action figure"
+	icon_state = "assistant"
+	toysay = "Grey tide world wide!"
+
+/obj/item/toy/figure/atmos
+	name = "Atmospheric Technician action figure"
+	icon_state = "atmos"
+	toysay = "Glory to Atmosia!"
+
+/obj/item/toy/figure/bartender
+	name = "Bartender action figure"
+	icon_state = "bartender"
+	toysay = "Where is Pun Pun?"
+
+/obj/item/toy/figure/borg
+	name = "Cyborg action figure"
+	icon_state = "borg"
+	toysay = "I. LIVE. AGAIN."
+	toysound = 'sound/voice/liveagain.ogg'
+
+/obj/item/toy/figure/botanist
+	name = "Botanist action figure"
+	icon_state = "botanist"
+	toysay = "Dude, I see colors..."
+
+/obj/item/toy/figure/captain
+	name = "Captain action figure"
+	icon_state = "captain"
+	toysay = "Any heads of staff?"
+
+/obj/item/toy/figure/cargotech
+	name = "Cargo Technician action figure"
+	icon_state = "cargotech"
+	toysay = "For Cargonia!"
+
+/obj/item/toy/figure/ce
+	name = "Chief Engineer action figure"
+	icon_state = "ce"
+	toysay = "Wire the solars!"
+
+/obj/item/toy/figure/chaplain
+	name = "Chaplain action figure"
+	icon_state = "chaplain"
+	toysay = "Praise Space Jesus!"
+
+/obj/item/toy/figure/chef
+	name = "Chef action figure"
+	icon_state = "chef"
+	toysay = "Pun-Pun is a tasty burger."
+
+/obj/item/toy/figure/chemist
+	name = "Chemist action figure"
+	icon_state = "chemist"
+	toysay = "Get your pills!"
+
+/obj/item/toy/figure/clown
+	name = "Clown action figure"
+	icon_state = "clown"
+	toysay = "Honk!"
+	toysound = 'sound/items/bikehorn.ogg'
+
+/obj/item/toy/figure/ian
+	name = "Ian action figure"
+	icon_state = "ian"
+	toysay = "Arf!"
+
+/obj/item/toy/figure/detective
+	name = "Detective action figure"
+	icon_state = "detective"
+	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
+
+/obj/item/toy/figure/dsquad
+	name = "Death Squad Officer action figure"
+	icon_state = "dsquad"
+	toysay = "Eliminate all threats!"
+
+/obj/item/toy/figure/engineer
+	name = "Engineer action figure"
+	icon_state = "engineer"
+	toysay = "Oh god, the singularity is loose!"
+
+/obj/item/toy/figure/geneticist
+	name = "Geneticist action figure"
+	icon_state = "geneticist"
+	toysay = "Smash!"
+
+/obj/item/toy/figure/hop
+	name = "Head of Personel action figure"
+	icon_state = "hop"
+	toysay = "Giving out all access!"
+
+/obj/item/toy/figure/hos
+	name = "Head of Security action figure"
+	icon_state = "hos"
+	toysay = "Get the justice chamber ready, I think we got a joker here."
+
+/obj/item/toy/figure/qm
+	name = "Quartermaster action figure"
+	icon_state = "qm"
+	toysay = "Please sign this form in triplicate and we will see about geting you a welding mask within 3 business days."
+
+/obj/item/toy/figure/janitor
+	name = "Janitor action figure"
+	icon_state = "janitor"
+	toysay = "Look at the signs, you idiot."
+
+/obj/item/toy/figure/lawyer
+	name = "Lawyer action figure"
+	icon_state = "lawyer"
+	toysay = "My client is a dirty traitor!"
+
+/obj/item/toy/figure/librarian
+	name = "Librarian action figure"
+	icon_state = "librarian"
+	toysay = "One day while..."
+
+/obj/item/toy/figure/md
+	name = "Medical Doctor action figure"
+	icon_state = "md"
+	toysay = "The patient is already dead!"
+
+/obj/item/toy/figure/mime
+	name = "Mime action figure"
+	icon_state = "mime"
+	toysay = "..."
+	toysound = null
+
+/obj/item/toy/figure/miner
+	name = "Shaft Miner action figure"
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
+/obj/item/toy/figure/ninja
+	name = "Ninja action figure"
+	icon_state = "ninja"
+	toysay = "Oh god! Stop shooting, I'm friendly!"
+
+/obj/item/toy/figure/wizard
+	name = "Wizard action figure"
+	icon_state = "wizard"
+	toysay = "Ei Nath!"
+	toysound = 'sound/magic/Disintegrate.ogg'
+
+/obj/item/toy/figure/rd
+	name = "Research Director action figure"
+	icon_state = "rd"
+	toysay = "Blowing all of the borgs!"
+
+/obj/item/toy/figure/roboticist
+	name = "Roboticist action figure"
+	icon_state = "roboticist"
+	toysay = "Big stompy mechs!"
+	toysound = 'sound/mecha/mechstep.ogg'
+
+/obj/item/toy/figure/scientist
+	name = "Scientist action figure"
+	icon_state = "scientist"
+	toysay = "For science!"
+	toysound = 'sound/effects/explosionfar.ogg'
+
+/obj/item/toy/figure/syndie
+	name = "Nuclear Operative action figure"
+	icon_state = "syndie"
+	toysay = "Get that fucking disk!"
+
+/obj/item/toy/figure/secofficer
+	name = "Security Officer action figure"
+	icon_state = "secofficer"
+	toysay = "I am the law!"
+	toysound = 'sound/voice/complionator/dredd.ogg'
+
+/obj/item/toy/figure/virologist
+	name = "Virologist action figure"
+	icon_state = "virologist"
+	toysay = "The cure is potassium!"
+
+/obj/item/toy/figure/warden
+	name = "Warden action figure"
+	icon_state = "warden"
+	toysay = "Seventeen minutes for coughing at an officer!"

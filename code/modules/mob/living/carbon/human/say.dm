@@ -81,11 +81,6 @@
 				ears.talk_into(src, message, , spans)
 			return ITALICS | REDUCE_RANGE
 
-		if(MODE_SECURE_HEADSET)
-			if (ears)
-				ears.talk_into(src, message, 1, spans)
-			return ITALICS | REDUCE_RANGE
-
 		if(MODE_DEPARTMENT)
 			if (ears)
 				ears.talk_into(src, message, message_mode, spans)

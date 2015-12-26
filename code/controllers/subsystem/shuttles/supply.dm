@@ -219,7 +219,8 @@
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad
+		/obj/machinery/telepad,
+		/obj/machinery/clonepod
 	)
 	if(A)
 		if(is_type_in_list(A, blacklist))
@@ -546,7 +547,7 @@
 
 /obj/machinery/computer/supplycomp/proc/post_signal(command)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 

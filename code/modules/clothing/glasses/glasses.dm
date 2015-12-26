@@ -32,10 +32,12 @@
 	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/science
-	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items."
+	name = "science goggles"
+	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
+	origin_tech = "magnets=2;engineering=2"
+	scan_reagents = 1 //You can see reagents while wearing science goggles
 
 /obj/item/clothing/glasses/science/equipped(mob/user, slot)
 	if(slot == slot_glasses)
@@ -104,6 +106,12 @@
 	flash_protect = 1
 	tint = 1
 
+/obj/item/clothing/glasses/sunglasses/reagent
+	name = "beer goggles"
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
+	origin_tech = "magnets=2;engineering=2"
+	scan_reagents = 1
+
 /obj/item/clothing/glasses/sunglasses/garb
 	desc = "Go beyond impossible and kick reason to the curb!"
 	name = "black gar glasses"
@@ -150,6 +158,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
+	materials = list(MAT_METAL = 250)
 	flash_protect = 2
 	tint = 2
 	flags_cover = GLASSESCOVERSEYES

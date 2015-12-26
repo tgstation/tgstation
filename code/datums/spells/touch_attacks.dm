@@ -14,10 +14,10 @@
 		return 0
 	..()
 
-/obj/effect/proc_holder/spell/targeted/touch/cast(list/targets)
-	for(var/mob/living/carbon/user in targets)
+/obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
+	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
-			if(!ChargeHand(user))
+			if(!ChargeHand(C))
 				return 0
 	while(attached_hand) //hibernate untill the spell is actually used
 		charge_counter = 0

@@ -50,7 +50,7 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -68,7 +68,7 @@ var/list/doppler_arrays = list()
 		return
 
 	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(epicenter, zone)
+	var/direct = get_dir(zone, epicenter)
 
 	if(distance > max_dist)
 		return

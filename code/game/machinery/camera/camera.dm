@@ -1,4 +1,4 @@
-#define CAMERA_UPGRADE_XRAY 1 
+#define CAMERA_UPGRADE_XRAY 1
 #define CAMERA_UPGRADE_EMP_PROOF 2
 #define CAMERA_UPGRADE_MOTION 4
 
@@ -69,6 +69,8 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	if(!status)
+		return
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
@@ -105,10 +107,6 @@
 		return
 	else
 		..()
-	return
-
-/obj/machinery/camera/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
@@ -207,6 +205,8 @@
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
+				if(AI.control_disabled || (AI.stat == DEAD))
+					return
 				if(U.name == "Unknown")
 					AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				else
@@ -245,12 +245,12 @@
 	return
 
 /obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
+	status = !status
 	if(can_use())
 		cameranet.addCamera(src)
 	else
 		SetLuminosity(0)
 		cameranet.removeCamera(src)
-	status = !status
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(!status)

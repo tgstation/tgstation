@@ -256,9 +256,9 @@
 	link_power_station()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
@@ -287,6 +287,8 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
+	if(z == ZLEVEL_CENTCOM)
+		M << "You can't use this here."
 	if(power_station && power_station.engaged && !panel_open)
 		teleport(M)
 		use_power(5000)
@@ -352,8 +354,8 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)

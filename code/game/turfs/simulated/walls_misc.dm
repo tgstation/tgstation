@@ -7,6 +7,10 @@
 	builtin_sheet = null
 	canSmoothWith = null
 
+/turf/simulated/wall/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
+	..()
+
 /turf/simulated/wall/cult/break_wall()
 	new /obj/effect/decal/cleanable/blood(src)
 	return (new /obj/structure/cultgirder(src))
@@ -21,6 +25,15 @@
 /turf/simulated/wall/vault
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
+
+/turf/simulated/wall/ice
+	icon = 'icons/turf/walls/icedmetal_wall.dmi'
+	icon_state = "iced"
+	desc = "A wall covered in a thick sheet of ice."
+	walltype = "iced"
+	canSmoothWith = null
+	hardness = 35
+	slicing_duration = 150 //welding through the ice+metal
 
 /turf/simulated/wall/rust
 	name = "rusted wall"
@@ -38,8 +51,6 @@
 	walltype = "rrust"
 	hardness = 15
 
-
-
 /turf/simulated/wall/shuttle
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
@@ -51,7 +62,7 @@
 //won't get an underlay of the destination turf on shuttle move
 /turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
 	if(T.type != type)
-		T = new type(T)
+		T.ChangeTurf(type)
 		if(underlays.len)
 			T.underlays = underlays
 	if(T.icon_state != icon_state)

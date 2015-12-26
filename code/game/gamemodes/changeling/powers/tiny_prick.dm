@@ -74,6 +74,9 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
+	if(NOTRANSSTING in selected_dna.dna.species.specflags)
+		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
+		return
 	..()
 
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
@@ -98,7 +101,7 @@
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
-			user.real_name = NewDNA.real_name
+			C.real_name = NewDNA.real_name
 			NewDNA.transfer_identity(C, transfer_SE=1)
 			C.updateappearance(mutcolor_update=1)
 			C.domutcheck()
@@ -172,7 +175,7 @@
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_profile(target, user)
+		user.mind.changeling.add_new_profile(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 

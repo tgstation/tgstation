@@ -80,7 +80,7 @@
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/I.toolspeed, target = src))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
 			src.reagents.clear_reagents()
@@ -293,6 +293,8 @@
 				buckled_mob.pixel_x = -12
 				buckled_mob.pixel_y = 7
 
+//keys+attachables//
+
 /obj/item/key
 	name = "key"
 	desc = "A small grey key."
@@ -314,6 +316,8 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
 
+//secway//
+
 /obj/structure/bed/chair/janicart/secway
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
@@ -326,3 +330,44 @@
 	if(buckled_mob)
 		buckled_mob.dir = dir
 		buckled_mob.pixel_y = 4
+
+//atv//
+
+/obj/structure/bed/chair/janicart/atv
+	name = "atv"
+	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "atv"
+	callme = "All-terrain vehicle"
+	keytype = /obj/item/key
+	var/image/atvcover = null
+
+/obj/structure/bed/chair/janicart/atv/New()
+	atvcover = image("icons/obj/vehicles.dmi", "atvcover")
+	atvcover.layer = MOB_LAYER + 0.1
+	return ..()
+
+obj/structure/bed/chair/janicart/atv/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		overlays += atvcover
+	else
+		overlays -= atvcover
+
+/obj/structure/bed/chair/janicart/atv/update_mob()
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		buckled_mob.pixel_x = 0
+		buckled_mob.pixel_y = 4
+
+/obj/structure/bed/chair/janicart/atv/handle_rotation()
+	if(dir == SOUTH)
+		layer = FLY_LAYER
+	else
+		layer = OBJ_LAYER
+
+	if(buckled_mob)
+		if(buckled_mob.loc != loc)
+			buckled_mob.buckled = null //Temporary, so Move() succeeds.
+			buckled_mob.buckled = src //Restoring
+
+	update_mob()

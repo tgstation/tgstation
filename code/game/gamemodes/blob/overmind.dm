@@ -14,6 +14,7 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/storage_blobs = 0
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
@@ -25,11 +26,11 @@
 	real_name = new_name
 	last_attack = world.time
 	var/list/possible_reagents = list()
-	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
+	for(var/type in (subtypesof(/datum/reagent/blob)))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
-		blob_core.adjustcolors(blob_reagent_datum.color)
+		blob_core.update_icon()
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -53,14 +54,7 @@
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
-	src << "Your randomly chosen reagent is: <b>[blob_reagent_datum.name]</b>!"
-	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
-	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
-	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
-	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
-	src << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate."
-	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
-	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield"
+	blob_help()
 	update_health()
 
 /mob/camera/blob/proc/update_health()
@@ -97,7 +91,7 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))
@@ -126,3 +120,157 @@
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
 
+
+/obj/screen/blob
+	icon = 'icons/mob/blob.dmi'
+
+/obj/screen/blob/BlobHelp
+	icon_state = "ui_help"
+	name = "Blob Help"
+	desc = "Help on playing blob!"
+
+/obj/screen/blob/BlobHelp/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.blob_help()
+
+/obj/screen/blob/JumpToNode
+	icon_state = "ui_tonode"
+	name = "Jump to Node"
+	desc = "Moves your camera to a selected blob node."
+
+/obj/screen/blob/JumpToNode/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.jump_to_node()
+
+/obj/screen/blob/JumpToCore
+	icon_state = "ui_tocore"
+	name = "Jump to Core"
+	desc = "Moves your camera to your blob core."
+
+/obj/screen/blob/JumpToCore/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.transport_core()
+
+/obj/screen/blob/StorageBlob
+	icon_state = "ui_factory"
+	name = "Produce Storage Blob (20)"
+	desc = "Produces a storage blob for 20 points."
+
+/obj/screen/blob/StorageBlob/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.create_storage()
+
+/obj/screen/blob/ResourceBlob
+	icon_state = "ui_resource"
+	name = "Produce Resource Blob (40)"
+	desc = "Produces a resource blob for 40 points."
+
+/obj/screen/blob/ResourceBlob/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.create_resource()
+
+/obj/screen/blob/NodeBlob
+	icon_state = "ui_node"
+	name = "Produce Node Blob (60)"
+	desc = "Produces a node blob for 60 points."
+
+/obj/screen/blob/NodeBlob/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.create_node()
+
+/obj/screen/blob/FactoryBlob
+	icon_state = "ui_factory"
+	name = "Produce Factory Blob (60)"
+	desc = "Produces a resource blob for 60 points."
+
+/obj/screen/blob/FactoryBlob/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.create_factory()
+
+/obj/screen/blob/ReadaptChemical
+	icon_state = "ui_chemswap"
+	name = "Readapt Chemical (40)"
+	desc = "Randomly rerolls your chemical for 40 points."
+
+/obj/screen/blob/ReadaptChemical/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.chemical_reroll()
+
+/obj/screen/blob/RelocateCore
+	icon_state = "ui_swap"
+	name = "Relocate Core (80)"
+	desc = "Swaps a node and your core for 80 points."
+
+/obj/screen/blob/RelocateCore/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.relocate_core()
+
+/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+	adding = list()
+
+	var/obj/screen/using
+
+	blobpwrdisplay = new /obj/screen()
+	blobpwrdisplay.name = "blob power"
+	blobpwrdisplay.icon_state = "block"
+	blobpwrdisplay.screen_loc = ui_health
+	blobpwrdisplay.mouse_opacity = 0
+	blobpwrdisplay.layer = 20
+	adding += blobpwrdisplay
+
+	blobhealthdisplay = new /obj/screen()
+	blobhealthdisplay.name = "blob health"
+	blobhealthdisplay.icon_state = "block"
+	blobhealthdisplay.screen_loc = ui_internal
+	blobhealthdisplay.mouse_opacity = 0
+	blobhealthdisplay.layer = 20
+	adding += blobhealthdisplay
+
+	using = new /obj/screen/blob/BlobHelp()
+	using.screen_loc = "NORTH:-6,WEST:6"
+	adding += using
+
+	using = new /obj/screen/blob/JumpToNode()
+	using.screen_loc = ui_inventory
+	adding += using
+
+	using = new /obj/screen/blob/JumpToCore()
+	using.screen_loc = ui_zonesel
+	adding += using
+
+	using = new /obj/screen/blob/StorageBlob()
+	using.screen_loc = ui_belt
+	adding += using
+
+	using = new /obj/screen/blob/ResourceBlob()
+	using.screen_loc = ui_back
+	adding += using
+
+	using = new /obj/screen/blob/NodeBlob()
+	using.screen_loc = ui_lhand
+	adding += using
+
+	using = new /obj/screen/blob/FactoryBlob()
+	using.screen_loc = ui_rhand
+	adding += using
+
+	using = new /obj/screen/blob/ReadaptChemical()
+	using.screen_loc = ui_storage1
+	adding += using
+
+	using = new /obj/screen/blob/RelocateCore()
+	using.screen_loc = ui_storage2
+	adding += using
+
+	mymob.client.screen = list()
+	mymob.client.screen += mymob.client.void
+	mymob.client.screen += adding

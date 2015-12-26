@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flags = NOSHIELD
+	armour_penetration = 100
 	flag = "magic"
 
 /obj/item/projectile/magic/death
@@ -91,6 +91,9 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
+	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
+		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
+		/obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -101,7 +104,8 @@
 		CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
-	new /obj/structure/mineral_door/wood(T)
+	var/door_type = pick(door_types)
+	new door_type(T)
 	T.ChangeTurf(/turf/simulated/floor/plating)
 
 
@@ -225,7 +229,7 @@
 					var/mob/living/carbon/human/H = new_mob
 					if(prob(50))
 						var/list/all_species = list()
-						for(var/speciestype in typesof(/datum/species) - /datum/species)
+						for(var/speciestype in subtypesof(/datum/species))
 							var/datum/species/S = new speciestype()
 							if(!S.dangerous_existence)
 								all_species += speciestype

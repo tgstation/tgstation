@@ -10,7 +10,7 @@
 	for(var/datum/mind/M in ticker.mode.wizards)
 		if(!ishuman(M.current))	continue
 		var/mob/living/carbon/human/W = M.current
-		var/list/candidates = get_candidates(BE_WIZARD)
+		var/list/candidates = get_candidates(ROLE_WIZARD)
 		if(!candidates)	return //Sad Trombone
 		var/client/C = pick(candidates)
 
@@ -35,7 +35,7 @@
 		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-		ticker.mode.traitors += I.mind
+		ticker.mode.apprentices += I.mind
 		I.mind.special_role = "imposter"
 
 		var/datum/objective/protect/protect_objective = new /datum/objective/protect

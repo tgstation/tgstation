@@ -1,8 +1,12 @@
 //Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_EAST	16
-#define NORTH_WEST	32
-#define SOUTH_EAST	64
-#define SOUTH_WEST	128
+#define N_NORTH	2
+#define N_SOUTH	4
+#define N_EAST	16
+#define N_WEST	256
+#define N_NORTHEAST	32
+#define N_NORTHWEST	512
+#define N_SOUTHEAST	64
+#define N_SOUTHWEST	1024
 
 #define SMOOTH_FALSE	0 //not smooth
 #define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
@@ -15,12 +19,6 @@
 /atom/var/bottom_right_corner
 /atom/var/can_be_unanchored = 0
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-
-/atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
-	overlays -= top_right_corner
-	overlays -= bottom_right_corner
-	overlays -= bottom_left_corner
 
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
@@ -47,14 +45,14 @@
 			AM = find_type_in_direction(A, direction)
 			if(istype(AM))
 				if(AM.anchored)
-					adjacencies |= transform_dir(direction)
+					adjacencies |= 1 << direction
 			else
 				if(AM)
-					adjacencies |= transform_dir(direction)
+					adjacencies |= 1 << direction
 	else
 		for(var/direction in alldirs)
 			if(find_type_in_direction(A, direction))
-				adjacencies |= transform_dir(direction)
+				adjacencies |= 1 << direction
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
@@ -64,79 +62,77 @@
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
 
-			A.clear_smooth_overlays()
+			//NW CORNER
+			var/nw = "1-i"
+			if((adjacencies & N_NORTH) && (adjacencies & N_WEST))
+				if(adjacencies & N_NORTHWEST)
+					nw = "1-f"
+				else
+					nw = "1-nw"
+			else
+				if(adjacencies & N_NORTH)
+					nw = "1-n"
+				else if(adjacencies & N_WEST)
+					nw = "1-w"
 
-			A.top_left_corner = make_nw_corner(adjacencies)
-			A.top_right_corner = make_ne_corner(adjacencies)
-			A.bottom_left_corner = make_sw_corner(adjacencies)
-			A.bottom_right_corner = make_se_corner(adjacencies)
+			//NE CORNER
+			var/ne = "2-i"
+			if((adjacencies & N_NORTH) && (adjacencies & N_EAST))
+				if(adjacencies & N_NORTHEAST)
+					ne = "2-f"
+				else
+					ne = "2-ne"
+			else
+				if(adjacencies & N_NORTH)
+					ne = "2-n"
+				else if(adjacencies & N_EAST)
+					ne = "2-e"
 
-			A.overlays += A.top_left_corner
-			A.overlays += A.top_right_corner
-			A.overlays += A.bottom_right_corner
-			A.overlays += A.bottom_left_corner
+			//SW CORNER
+			var/sw = "3-i"
+			if((adjacencies & N_SOUTH) && (adjacencies & N_WEST))
+				if(adjacencies & N_SOUTHWEST)
+					sw = "3-f"
+				else
+					sw = "3-sw"
+			else
+				if(adjacencies & N_SOUTH)
+					sw = "3-s"
+				else if(adjacencies & N_WEST)
+					sw = "3-w"
 
-/proc/make_nw_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & NORTH) && (adjacencies & WEST))
-		if(adjacencies & NORTH_WEST)
-			sdir = "f"
-		else
-			sdir = "nw"
-	else
-		if(adjacencies & NORTH)
-			sdir = "n"
-		else if(adjacencies & WEST)
-			sdir = "w"
-	return "1-[sdir]"
+			//SE CORNER
+			var/se = "4-i"
+			if((adjacencies & N_SOUTH) && (adjacencies & N_EAST))
+				if(adjacencies & N_SOUTHEAST)
+					se = "4-f"
+				else
+					se = "4-se"
+			else
+				if(adjacencies & N_SOUTH)
+					se = "4-s"
+				else if(adjacencies & N_EAST)
+					se = "4-e"
 
-/proc/make_ne_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & NORTH) && (adjacencies & EAST))
-		if(adjacencies & NORTH_EAST)
-			sdir = "f"
-		else
-			sdir = "ne"
-	else
-		if(adjacencies & NORTH)
-			sdir = "n"
-		else if(adjacencies & EAST)
-			sdir = "e"
-	return "2-[sdir]"
+			if(A.top_left_corner != nw)
+				A.overlays -= A.top_left_corner
+				A.top_left_corner = nw
+				A.overlays += nw
 
-/proc/make_sw_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & SOUTH) && (adjacencies & WEST))
-		if(adjacencies & SOUTH_WEST)
-			sdir = "f"
-		else
-			sdir = "sw"
-	else
-		if(adjacencies & SOUTH)
-			sdir = "s"
-		else if(adjacencies & WEST)
-			sdir = "w"
-	return "3-[sdir]"
+			if(A.top_right_corner != ne)
+				A.overlays -= A.top_right_corner
+				A.top_right_corner = ne
+				A.overlays += ne
 
-/proc/make_se_corner(adjacencies)
-	var/sdir = "i"
-	if((adjacencies & SOUTH) && (adjacencies & EAST))
-		if(adjacencies & SOUTH_EAST)
-			sdir = "f"
-		else
-			sdir = "se"
-	else
-		if(adjacencies & SOUTH)
-			sdir = "s"
-		else
-			if(adjacencies & EAST)
-				sdir = "e"
-	return "4-[sdir]"
+			if(A.bottom_right_corner != sw)
+				A.overlays -= A.bottom_right_corner
+				A.bottom_right_corner = sw
+				A.overlays += sw
 
-/proc/smooth_icon_neighbors(atom/A)
-	for(var/atom/T in orange(1,A))
-		if(T.smooth)
-			smooth_icon(T)
+			if(A.bottom_left_corner != se)
+				A.overlays -= A.bottom_left_corner
+				A.bottom_left_corner = se
+				A.overlays += se
 
 /proc/find_type_in_direction(atom/source, direction, range=1)
 	var/x_offset = 0
@@ -177,15 +173,31 @@
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
 
-/proc/transform_dir(direction)
-	switch(direction)
-		if(NORTH,SOUTH,EAST,WEST)
-			return direction
-		if(NORTHEAST)
-			return NORTH_EAST
-		if(NORTHWEST)
-			return NORTH_WEST
-		if(SOUTHEAST)
-			return SOUTH_EAST
-		if(SOUTHWEST)
-			return SOUTH_WEST
+//Icon smoothing helpers
+
+/proc/smooth_icon_neighbors(atom/A)
+	for(var/V in orange(1,A))
+		var/atom/T = V
+		if(T.smooth)
+			smooth_icon(T)
+
+/proc/smooth_zlevel(var/zlevel)
+	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+	for(var/V in away_turfs)
+		var/turf/T = V
+		if(T.smooth)
+			smooth_icon(T)
+		for(var/R in T)
+			var/atom/A = R
+			if(A.smooth)
+				smooth_icon(A)
+
+/atom/proc/clear_smooth_overlays()
+	overlays -= top_left_corner
+	top_left_corner = null
+	overlays -= top_right_corner
+	top_right_corner = null
+	overlays -= bottom_right_corner
+	bottom_right_corner = null
+	overlays -= bottom_left_corner
+	bottom_left_corner = null

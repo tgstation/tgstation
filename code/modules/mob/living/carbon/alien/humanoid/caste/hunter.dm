@@ -63,14 +63,12 @@
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
-		return
-	if(lying)
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
@@ -91,7 +89,7 @@
 			var/blocked = 0
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, 1))
+				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")

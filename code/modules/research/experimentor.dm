@@ -457,10 +457,9 @@
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
-			spawn(0)
-				for(var/atom/movable/AM in oview(7,src))
-					if(!AM.anchored)
-						AM.throw_at(src,10,1)
+			for(var/atom/movable/AM in oview(7,src))
+				if(!AM.anchored)
+					AM.throw_at_fast(src,10,1)
 
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
@@ -470,10 +469,9 @@
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					throwAt.Add(AM)
-			spawn(0)
-				for(var/counter = 1, counter < throwAt.len, ++counter)
-					var/atom/movable/cast = throwAt[counter]
-					cast.throw_at(pick(throwAt),10,1)
+			for(var/counter = 1, counter < throwAt.len, ++counter)
+				var/atom/movable/cast = throwAt[counter]
+				cast.throw_at_fast(pick(throwAt),10,1)
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
@@ -693,8 +691,7 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		spawn()
-			R.throw_at(pick(oview(7,get_turf(src))),10,1)
+		R.throw_at_fast(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
 		for(counter = 1; counter <= dupes.len; counter++)

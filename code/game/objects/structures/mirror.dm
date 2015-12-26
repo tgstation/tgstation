@@ -70,7 +70,7 @@
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 10, target = src))
+				if(do_after(user, 10/I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"
@@ -131,7 +131,7 @@
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
 				choosable_races += S.id
@@ -142,7 +142,7 @@
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
-	for(var/speciestype in typesof(/datum/species) - /datum/species)
+	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		choosable_races += S.id
 	..()
@@ -164,6 +164,8 @@
 
 			H.real_name = newname
 			H.name = newname
+			if(H.dna)
+				H.dna.real_name = newname
 			if(H.mind)
 				H.mind.name = newname
 

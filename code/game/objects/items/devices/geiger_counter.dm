@@ -39,7 +39,7 @@
 		return 1
 	user << "<span class='info'>Alt-click it to clear stored radiation levels.</span>"
 	if(emagged)
-		user << "<span class='warning'>The display seems to be flickering at random radiation levels.</span>"
+		user << "<span class='warning'>The display seems to be incomprehensible.</span>"
 		return 1
 	switch(radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
@@ -80,11 +80,17 @@
 /obj/item/device/geiger_counter/rad_act(amount)
 	if(!amount && scanning)
 		return 0
+	if(emagged)
+		amount = Clamp(amount, 0, 25) //Emagged geiger counters can only accept 25 radiation at a time
 	radiation_count += amount
 	if(isliving(loc))
 		var/mob/living/M = loc
-		M << "<span class='boldannounce'>\icon[src] RADIATION PULSE DETECTED.</span>"
-		M << "<span class='boldannounce'>\icon[src] Severity: [amount]</span>"
+		if(!emagged)
+			M << "<span class='boldannounce'>\icon[src] RADIATION PULSE DETECTED.</span>"
+			M << "<span class='boldannounce'>\icon[src] Severity: [amount]</span>"
+		else
+			M << "<span class='boldannounce'>\icon[src] !@%$AT!(N P!LS! D/TEC?ED.</span>"
+			M << "<span class='boldannounce'>\icon[src] &!F2rity: <=[amount]#1</span>"
 	update_icon()
 
 /obj/item/device/geiger_counter/attack_self(mob/user)
@@ -116,7 +122,7 @@
 			return 0
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
 		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(!do_after(user, 40, target = user))
+		if(!do_after(user, 40/I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)

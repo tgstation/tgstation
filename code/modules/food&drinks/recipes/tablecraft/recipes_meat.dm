@@ -29,6 +29,15 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
 	category = CAT_FOOD
 
+/datum/table_recipe/tailkebab
+	name = "Lizard tail kebab"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/organ/severedtail = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tail
+	category = CAT_FOOD
+
 // see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////FISH////////////////////////////////////////////////

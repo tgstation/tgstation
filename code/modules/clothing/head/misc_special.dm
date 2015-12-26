@@ -25,7 +25,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	action_button_name = "Toggle Welding Helmet"
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -42,21 +42,21 @@
 /*
  * Cakehat
  */
-/obj/item/clothing/head/cakehat
-	name = "cake-hat"
-	desc = "It's tasty looking!"
-	icon_state = "cake0"
+/obj/item/clothing/head/hardhat/cakehat
+	name = "cakehat"
+	desc = "You put the cake on your head. Brilliant."
+	icon_state = "hardhat0_cakehat"
+	item_state = "hardhat0_cakehat"
+	item_color = "cakehat"
+	flags = BLOCKHAIR
+	flags_inv = HIDEEARS
+	action_button_name = "Toggle Candle"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	var/onfire = 0
-	var/status = 0
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
-	var/processing = 0 //I dont think this is used anywhere.
+	heat = 1000
 
-/obj/item/clothing/head/cakehat/process()
-	if(!onfire)
-		SSobj.processing.Remove(src)
-		return
-
+/obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/living/carbon/human/M = location
@@ -66,21 +66,20 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user)
-	if(status > 1)	return
-	src.onfire = !( src.onfire )
-	if (src.onfire)
-		src.force = 15
-		src.damtype = "fire"
-		src.icon_state = "cake1"
-		SSobj.processing |= src
-	else
-		src.force = null
-		src.damtype = "brute"
-		src.icon_state = "cake0"
-	return
+/obj/item/clothing/head/hardhat/cakehat/turn_on()
+	..()
+	force = 15
+	damtype = BURN
+	SSobj.processing |= src
 
+/obj/item/clothing/head/hardhat/cakehat/turn_off()
+	..()
+	force = 0
+	damtype = BRUTE
+	SSobj.processing -= src
 
+/obj/item/clothing/head/hardhat/cakehat/is_hot()
+	return on * heat
 /*
  * Ushanka
  */

@@ -1,0 +1,4 @@
+author: LanCartwright
+delete-after: True
+changes: 
+  - tweak: "Shotguns shells now have one extra pellet."

@@ -53,6 +53,8 @@
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
 	//Plasma fire properties
+#define OXYGEN_BURN_RATE_BASE				1.4
+#define PLASMA_BURN_RATE_DELTA				8
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
 #define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
@@ -61,7 +63,12 @@
 #define MIN_PLASMA_DAMAGE					1
 #define MAX_PLASMA_DAMAGE					10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
-
+	//Plasma fusion properties
+#define PLASMA_BINDING_ENERGY				3000000
+#define MAX_CARBON_EFFICENCY				9
+#define PLASMA_FUSED_COEFFICENT				0.08
+#define CARBON_CATALYST_COEFFICENT			0.01
+#define FUSION_PURITY_THRESHOLD				0.9
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -122,7 +129,7 @@
 #define QUATERNARY	4
 
 // this is the standard for loop used by all sorts of atmos machinery procs
-#define DEVICE_TYPE_LOOP	var/I = 1; I <= device_type; I++
+#define DEVICE_TYPE_LOOP	var/I in 1 to device_type
 
 // defines for the various machinery lists
 // NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP

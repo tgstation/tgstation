@@ -5,9 +5,9 @@
 	var/atom/target
 	var/ranged = 0
 	var/rapid = 0
-	var/projectiletype
+	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
-	var/casingtype
+	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 	var/list/emote_taunt = list()
@@ -182,7 +182,7 @@
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..(damage)
-	if(!ckey && !stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -218,46 +218,54 @@
 	LoseTarget()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(the_target)
+/mob/living/simple_animal/hostile/proc/summon_backup(distance)
+	do_alert_animation(src)
+	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
+	for(var/mob/living/simple_animal/hostile/M in oview(distance, src))
+		var/list/L = M.faction&faction
+		if(L.len)
+			if(M.AIStatus == AI_OFF)
+				return
+			else
+				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-	var/target = the_target
-	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>")
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+
+	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
 		spawn(1)
-			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			Shoot(A)
 		spawn(4)
-			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			Shoot(A)
 		spawn(6)
-			Shoot(target, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			Shoot(A)
 	else
-		Shoot(target, src.loc, src)
-		if(casingtype)
-			new casingtype
+		Shoot(A)
 	ranged_cooldown = ranged_cooldown_cap
 	return
 
-/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
-	if(target == start)
+/mob/living/simple_animal/hostile/proc/Shoot(atom/targeted_atom)
+	if(targeted_atom == src.loc)
 		return
-
-	var/obj/item/projectile/A = new projectiletype(src.loc)
-	playsound(user, projectilesound, 100, 1)
-	if(!A)	return
-	A.current = target
-	A.firer = src
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
-	if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
-		newtonian_move(get_dir(target, user))
-	A.original = target
-	A.fire()
+	var/turf/startloc = get_turf(src)
+	if(casingtype)
+		var/obj/item/ammo_casing/casing = new casingtype
+		playsound(src, projectilesound, 100, 1)
+		casing.fire(targeted_atom, src, zone_override = ran_zone())
+		casing.loc = startloc
+	else if(projectiletype)
+		var/obj/item/projectile/P = new projectiletype(src.loc)
+		playsound(src, projectilesound, 100, 1)
+		P.current = startloc
+		P.starting = startloc
+		P.firer = src
+		P.yo = targeted_atom.y - startloc.y
+		P.xo = targeted_atom.x - startloc.x
+		if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+			newtonian_move(get_dir(targeted_atom, src))
+		P.original = targeted_atom
+		P.fire()
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()

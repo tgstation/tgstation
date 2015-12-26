@@ -1,6 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -17,6 +17,7 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
+	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -24,7 +25,7 @@
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -34,7 +35,7 @@
 	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 //Glasses
 /obj/item/clothing/glasses
@@ -51,7 +52,7 @@
 	var/list/icon/current = list() //the current hud icons
 	strip_delay = 20
 	put_on_delay = 25
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -219,8 +220,6 @@ BLIND     // can't see anything
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
 
-
-
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -241,7 +240,7 @@ BLIND     // can't see anything
 	strip_delay = 50
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -263,7 +262,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 
 //Under clothing
 
@@ -472,36 +471,30 @@ BLIND     // can't see anything
 			H.update_inv_w_uniform()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(can_use(usr))
-		if(up)
-			up = !up
-			flags |= (visor_flags)
-			flags_inv |= (visor_flags_inv)
-			flags_cover = initial(flags_cover)
-			icon_state = initial(icon_state)
-			usr << "<span class='notice'>You pull \the [src] down.</span>"
-			flash_protect = initial(flash_protect)
-			tint = initial(tint)
-		else
-			up = !up
-			flags &= ~(visor_flags)
-			flags_inv &= ~(visor_flags_inv)
-			flags_cover &= 0
-			icon_state = "[initial(icon_state)]up"
-			usr << "<span class='notice'>You push \the [src] up.</span>"
-			flash_protect = 0
-			tint = 0
+	if(!can_use(usr))
+		return
 
-	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+	up ^= 1
+	flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	flags_cover ^= initial(flags_cover)
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	usr << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+	flash_protect ^= initial(flash_protect)
+	tint ^= initial(tint)
+
+	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update //this is awful
 		usr.update_inv_head()
 	if(istype(src, /obj/item/clothing/glasses))
 		usr.update_inv_glasses()
 	if(istype(src, /obj/item/clothing/mask))
 		usr.update_inv_wear_mask()
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.head_update(src, forced = 1)
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
 	return 0
-

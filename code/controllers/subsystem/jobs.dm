@@ -24,7 +24,7 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
-	var/list/all_jobs = typesof(/datum/job)
+	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
 		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
 		return 0
@@ -81,7 +81,7 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
-		if(flag && (!player.client.prefs.be_special & flag))
+		if(flag && (!(flag in player.client.prefs.be_special)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
 		if(player.mind && job.title in player.mind.restricted_roles)
@@ -174,14 +174,8 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/FillAIPosition()
 	var/ai_selected = 0
 	var/datum/job/job = GetJob("AI")
-	if(!job)	return 0
-	if(ticker.mode.name == "AI malfunction")	// malf. AIs are pre-selected before jobs
-		for (var/datum/mind/mAI in ticker.mode.malf_ai)
-			AssignRole(mAI.current, "AI")
-			ai_selected++
-		if(ai_selected)	return 1
+	if(!job)
 		return 0
-
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
@@ -191,7 +185,8 @@ var/datum/subsystem/job/SSjob
 				if(AssignRole(candidate, "AI"))
 					ai_selected++
 					break
-	if(ai_selected)	return 1
+	if(ai_selected)
+		return 1
 	return 0
 
 
@@ -342,12 +337,28 @@ var/datum/subsystem/job/SSjob
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
-			if(sloc.name != rank)	continue
-			if(locate(/mob/living) in sloc.loc)	continue
+			if(sloc.name != rank)
+				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
+				continue
+			if(locate(/mob/living) in sloc.loc)
+				continue
 			S = sloc
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+			world.log << "Couldn't find a round start spawn point for [rank]"
 			S = pick(latejoin)
+		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
+			world.log << "Couldn't find a round start latejoin spawn point."
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						S = T
+						continue
 		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
 			H.loc = S.loc
 

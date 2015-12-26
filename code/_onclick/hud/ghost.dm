@@ -38,7 +38,7 @@
 
 /datum/hud/proc/ghost_hud()
 	var/mob/dead/observer/G = mymob
-	if(!G.ghost_hud_enabled)
+	if(!G.client.prefs.ghost_hud)
 		mymob.client.screen -= adding
 		return
 

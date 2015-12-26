@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscdel: "The blob Split Consciousness ability has been removed."
+  - tweak: "The blob mode now spawns more roundstart blobs, instead."

@@ -5,6 +5,7 @@
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
+	maxbodytemp = INFINITY
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -77,6 +78,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
+	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
+				/obj/item/weapon/ore/diamond{layer = 4.1})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -103,14 +106,6 @@
 			adjustBruteLoss(140)
 		if(3)
 			adjustBruteLoss(110)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
-	var/counter
-	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
-	..(gibbed)
-
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -141,24 +136,28 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
 
-	var/list/ore_types_eaten = list()
 	var/alerted = 0
-	var/ore_eaten = 1
 	var/chase_time = 100
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/New()
+	..()
+	deathmessage = "[src] spits up the contents of its stomach before dying!"
+	var/i = rand(1,3)
+	while(i)
+		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		i--
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
-		if(istype(target, /obj/item/weapon/ore))
+		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-
 		else if(isliving(target))
 			Aggro()
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -168,12 +167,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
-		ore_eaten++
-		if(!(O.type in ore_types_eaten))
-			ore_types_eaten += O.type
-		qdel(O)
-	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
-		ore_eaten = 5
+		if(loot.len < 10)
+			loot += O.type
+			qdel(O)
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
@@ -184,26 +180,9 @@
 			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 			qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	if(!ore_eaten || ore_types_eaten.len == 0)
-		return
-	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
-	var/counter
-	for(var/R in ore_types_eaten)
-		for(counter=0, counter < ore_eaten, counter++)
-			new R(src.loc)
-	ore_types_eaten.Cut()
-	ore_eaten = 0
-
-
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
-
-/mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
-	alerted = 0
-	Reward()
-	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
 	idle_vision_range = 9
@@ -240,6 +219,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	loot = list(/obj/item/organ/internal/hivelord_core)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
@@ -252,7 +232,6 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/organ/internal/hivelord_core(src.loc)
 	mouse_opacity = 1
 	..(gibbed)
 
@@ -264,20 +243,21 @@
 	slot = "hivecore"
 	force = 0
 	var/inert = 0
+	var/preserved = 0
 
 /obj/item/organ/internal/hivelord_core/New()
 	..()
 	spawn(2400)
-		if(!owner)
+		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
-
-	owner.adjustBruteLoss(-1)
-	owner.adjustFireLoss(-1)
-	owner.adjustOxyLoss(-2)
+	if(owner)
+		owner.adjustBruteLoss(-1)
+		owner.adjustFireLoss(-1)
+		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
@@ -331,14 +311,12 @@
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
 		qdel(src)
-
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
-	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -372,6 +350,7 @@
 	anchored = 1 //Stays anchored until death as to be unpullable
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
+	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -455,11 +434,6 @@
 		spawn(50)
 			qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..(gibbed)
-
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
@@ -538,6 +512,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
+	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
@@ -604,8 +579,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()
-	var/obj/item/asteroid/fugu_gland/F = new /obj/item/asteroid/fugu_gland(src.loc)
-	F.layer = 4.1
 	..(gibbed)
 
 /obj/item/asteroid/fugu_gland

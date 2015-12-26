@@ -125,7 +125,7 @@
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	toner = 40
+	toner = tonermax
 	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -320,15 +320,6 @@
 /mob/living/silicon/robot/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/malfai in malf.malf_ai)
-				if(connected_ai)
-					if((connected_ai.mind == malfai) && (malf.apcs > 0))
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
-				else if(malf.malf_mode_declared && (malf.apcs > 0))
-					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 		if(cell)
 			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
 		else
@@ -429,7 +420,7 @@
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
 				user << "<span class='notice'>You start fixing youself...</span>"
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 50/W.toolspeed, target = src))
 					return
 
 			adjustBruteLoss(-30)
@@ -510,7 +501,7 @@
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
-			if(do_after(user, 50, target = src) && !cell)
+			if(do_after(user, 50/W.toolspeed, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
@@ -573,7 +564,7 @@
 		else
 			if(!user.drop_item())
 				return
-			toner = 40
+			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
@@ -598,7 +589,7 @@
 			var/ai_is_antag = 0
 			if(connected_ai && connected_ai.mind)
 				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+					ai_is_antag = (connected_ai.mind.special_role == "traitor")
 			if(ai_is_antag)
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
@@ -1160,3 +1151,22 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	return 1
+
+/mob/living/silicon/robot/updatehealth()
+	..()
+	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
+		if(uneq_module(module_state_3))
+			src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
+		if(health < 0)
+			if(uneq_module(module_state_2))
+				src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
+			if(health < -maxHealth*0.5)
+				if(uneq_module(module_state_1))
+					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
