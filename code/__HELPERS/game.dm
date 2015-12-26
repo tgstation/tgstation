@@ -389,22 +389,19 @@
 				continue
 		spawn(0)
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(alert(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No"))
-				if("Yes")
+			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+				if(1)
 					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+					if((world.time-time_passed)>poll_time)
 						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
 						G << 'sound/machines/buzz-sigh.ogg'
-						return
-					candidates += G
-				if("No")
+					else
+						candidates += G
+				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
-					return
-				else
-					return
 	sleep(poll_time)
 
-	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	//Check all our candidates, to make sure they didn't log off during the wait period.
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key || !G.client)
 			candidates.Remove(G)
