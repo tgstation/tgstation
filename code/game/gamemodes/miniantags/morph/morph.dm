@@ -77,9 +77,9 @@
 	form = target
 
 	appearance = target.appearance
-	transform = matrix()
-	pixel_y = 0
-	pixel_x = 0
+	transform = initial(transform)
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	//Morphed is weaker
