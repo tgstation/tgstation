@@ -55,6 +55,22 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
+	var/kill_streak = 0 //How many kills we have
+
+/datum/mind/proc/kill_streak_act()
+	switch(kill_streak)
+		if(3)
+			world << "<B>[name] is on a killing spree!</B>"
+		if(5)
+			world << "<B>[name] is dominating!</B>"
+		if(7)
+			world << "<B>[name] got a MEGA KILL!</B>"
+		if(9)
+			world << "<B>[name] is UNSTOPPABLE!</B>"
+		if(11)
+			world << "<B>[name] is WICKED SICK!!</B>"
+		if(13)
+			world << "<B>[name] is GODLIKE!</B>"
 
 /datum/mind/New(var/key)
 	src.key = key
