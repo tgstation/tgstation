@@ -286,6 +286,8 @@
 	last_moved = world.time
 	moving = 1
 
+	log_game("[usr ? key_name(usr) : "Something"] sent [name] ([type]) to [D.areaname]")
+
 	spawn(get_pre_flight_delay())
 		if(transit_port && get_transit_delay())
 			if(broadcast)
@@ -382,6 +384,8 @@
 
 				moved_shuttles |= S
 				S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
+
+		log_game("[name] ([type]) moved to [D.areaname]")
 
 		return 1
 
@@ -589,7 +593,7 @@
 		space.contents.Add(old_turf)
 		old_turf.change_area(linked_area,space)
 
-		//All objects which aren't going to be moved by the shuttle have their area changed to space!
+		//All objects which can't be moved by the shuttle have their area changed to space!
 		for(var/atom/movable/AM in old_turf.contents)
 			if(!AM.can_shuttle_move(src))
 				AM.change_area(linked_area,space)
@@ -646,7 +650,15 @@
 			if(!AM.can_shuttle_move(src))
 				continue
 
-			AM.forceMove(new_turf)
+			if(AM.bound_width > world.icon_size || AM.bound_height > world.icon_size) //If the moved object's bounding box is more than the default, move it after everything else (using spawn())
+				AM.loc = null //Without this, ALL neighbouring turfs attempt to move this object too, resulting in the object getting shifted to north/east
+
+				spawn()
+					AM.forceMove(new_turf)
+
+				//TODO: Make this compactible with bound_x and bound_y.
+			else
+				AM.forceMove(new_turf)
 
 			if(rotate)
 				AM.shuttle_rotate(rotate)

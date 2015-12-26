@@ -178,21 +178,21 @@ Class Procs:
 		to_chat(user, "<span class='info'>Its maintenance panel is open.</span>")
 
 /obj/machinery/Destroy()
-	if(src in machines)
-		machines.Remove(src)
-	if(src in power_machines)
-		power_machines.Remove(src)
-	if(src in atmos_machines)
-		atmos_machines.Remove(src)
-	if(src in fast_machines)
-		fast_machines.Remove(src)
+
+	machines.Remove(src)
+
+	power_machines.Remove(src)
+
+	atmos_machines.Remove(src)
+
+	fast_machines.Remove(src)
 /*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
 			AM.loc = loc
 			component_parts -= AM
 */
-		component_parts = null
+	component_parts = null
 
 	..()
 
