@@ -973,8 +973,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,5)
+		M.reagents.remove_reagent(R.id,5)
 	M.drowsyness += 2
 	if(M.jitteriness >= 3)
 		M.jitteriness -= 3
