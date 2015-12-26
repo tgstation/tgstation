@@ -77,8 +77,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond,
-				/obj/item/weapon/ore/diamond)
+	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
+				/obj/item/weapon/ore/diamond{layer = 4.1})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -349,7 +349,7 @@
 	anchored = 1 //Stays anchored until death as to be unpullable
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
-	loot = list(/obj/item/asteroid/goliath_hide)
+	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -511,7 +511,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
-	loot = list(/obj/item/asteroid/fugu_gland)
+	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
