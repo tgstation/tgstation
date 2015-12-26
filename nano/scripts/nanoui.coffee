@@ -6,7 +6,8 @@ class NanoUI
     @resizing = false
 
     try
-      @data = JSON.parse document.query("#data").getAttribute "data-initial"
+      data = document.query "meta[name='data']"
+      @data = JSON.parse data.getAttribute "content"
     catch error
       @error error
     if not (@data? and "data" of @data and "config" of @data)
