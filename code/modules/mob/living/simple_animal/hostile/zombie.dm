@@ -114,7 +114,7 @@
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("zombie")
-
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/spawner/zombie/lesser
 	name = "lesser corpse pit"
@@ -124,9 +124,9 @@
 	health = 200
 	maxHealth = 200
 
-/mob/living/simple_animal/hostile/spawner/zombie/death()
-	visible_message("<span class='danger'>[src] collapes, stopping the flow of zombies!</span>")
-	qdel(src)
+/mob/living/simple_animal/hostile/spawner/zombie/New()
+	..()
+	deathmessage = "[src] collapes, stopping the flow of zombies!"
 
 
 /obj/item/weapon/shovel/cursed
@@ -157,7 +157,7 @@
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
 	density = 0
-	
+
 /mob/living/simple_animal/hostile/zombie/holder/New()
 	..()
 	spawn(rand(800,1200))
