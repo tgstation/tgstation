@@ -226,12 +226,8 @@
 			"title" = title,
 			"status" = status,
 			"layout" = layout,
+			"window" = window_id,
 			"ref" = "\ref[src]",
-			"window" = list(
-				"width" = width,
-				"height" = height,
-				"ref" =	window_id
-			),
 			"user" = list(
 				"name" = user.name,
 				"fancy" = user.client.prefs.nanoui_fancy,
@@ -269,8 +265,8 @@
   * private
   *
   * Handle clicks from the NanoUI.
-  * Call the src_object's Topic() if status is NANO_INTERACTIVE.
-  * If the src_object's Topic() returns 1, update all UIs attacked to it.
+  * Call the src_object's ui_act() if status is NANO_INTERACTIVE.
+  * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/nanoui/Topic(href, href_list)
 	update_status(push = 0) // Update the window state.
@@ -280,10 +276,9 @@
 	var/action = href_list["nano"] // Pull the action out.
 	href_list -= "nano"
 
-	var/update = src_object.ui_act(action, href_list, state) // Call Topic() on the src_object.
-
+	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
 	if(src_object && update)
-		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.
+		SSnano.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
 
  /**
   * private
@@ -313,7 +308,7 @@
  **/
 /datum/nanoui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
-	if(status == NANO_DISABLED && !force)
+	if(status <= NANO_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	var/list/send_data = get_send_data(data) // Get the data to send.

@@ -22,7 +22,15 @@ class NanoUI
 
   update: (dataString) =>
     try
-      @data = JSON.parse dataString
+      data = JSON.parse dataString
+
+      if not data.data?
+        if @data.data?
+          data.data = @data.data
+        else
+          data.data = {}
+
+      @data = data
     catch error
       @error error
     @render @data
@@ -59,7 +67,7 @@ class NanoUI
     location.href = @href {nano_error: error}, null
 
   winset: (key, value, window) =>
-    window = @data.config.window.ref unless window?
+    window = @data.config.window unless window?
     location.href = @href {"#{window}.#{key}": value}, "winset"
   setPos: (x, y) =>
     @winset "pos", "#{x},#{y}"

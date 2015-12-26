@@ -62,7 +62,7 @@
 			<span class="bad bold">Warning: Cannot obtain air sample for analysis.</span>
 		</section>
 	{{?}}
-	{{? data.dangerous}}
+	{{? data.emagged}}
 		<hr />
 		<section>
 			<span class="bad bold">Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>

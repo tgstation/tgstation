@@ -194,13 +194,14 @@
 		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)
-	var/data = list()
-	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
-	data["screen"] = screen
-	data["dangerous"] = emagged
+	var/data = list(
+		"locked" = locked,
+		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"screen" = screen,
+		"emagged" = emagged
+	)
 	populate_status(data)
-	if (!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || user.has_unlimited_silicon_privilege)
 		populate_controls(data)
 	return data
 
