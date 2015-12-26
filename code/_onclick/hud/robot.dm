@@ -159,8 +159,8 @@
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = 'icons/mob/screen_cyborg.dmi'
+	mymob.zone_sel = new /obj/screen/zone_sel/large()
+	mymob.zone_sel.icon = 'icons/mob/screen_cyborg_sel.dmi'
 	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()

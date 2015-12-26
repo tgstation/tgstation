@@ -753,12 +753,13 @@
 						if(0 to 20)				H.healths.icon_state = "health5"
 						else					H.healths.icon_state = "health6"
 
-	if(H.healthdoll)
-		H.healthdoll.overlays.Cut()
+	if(H.zone_sel)
+		H.zone_sel.overlays.Cut()
+		H.zone_sel.update_icon() //readd the selector
 		if(H.stat == DEAD)
-			H.healthdoll.icon_state = "healthdoll_DEAD"
+			H.zone_sel.icon_state = "sel_DEAD"
 		else
-			H.healthdoll.icon_state = "healthdoll_OVERLAY"
+			H.zone_sel.icon_state = "sel_ALIVE"
 			for(var/obj/item/organ/limb/L in H.organs)
 				var/damage = L.burn_dam + L.brute_dam
 				var/comparison = (L.max_damage/5)
@@ -776,7 +777,7 @@
 				if(H.hal_screwyhud == 5)
 					icon_num = 0
 				if(icon_num)
-					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+					H.zone_sel.overlays += image('icons/mob/sel_large.dmi',"[L.name][icon_num]",layer=FLOAT_LAYER-1)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

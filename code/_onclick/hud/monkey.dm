@@ -1,4 +1,4 @@
-/datum/hud/proc/monkey_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/proc/monkey_hud(ui_style = 'icons/mob/screen_midnight.dmi', large_style = 'icons/mob/screen_midnight_sel.dmi')
 	adding = list()
 	other = list()
 
@@ -138,8 +138,8 @@
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
+	mymob.zone_sel = new /obj/screen/zone_sel/large()
+	mymob.zone_sel.icon = large_style
 	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()

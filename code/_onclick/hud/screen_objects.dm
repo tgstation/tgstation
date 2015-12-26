@@ -211,6 +211,8 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 
+// Zone Selection //
+
 /obj/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"
@@ -273,6 +275,72 @@
 /obj/screen/zone_sel/update_icon()
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
+
+// Large Selector //
+/obj/screen/zone_sel/large
+	var/selector = null
+
+/obj/screen/zone_sel/large/Click(location, control,params)
+	var/list/PL = params2list(params)
+	var/icon_x = text2num(PL["icon-x"])
+	var/icon_y = text2num(PL["icon-y"])
+	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
+
+	switch(icon_y)
+		if(4 to 25) //Legs
+			switch(icon_x)
+				if(10 to 15)
+					selecting = "r_leg"
+				if(17 to 22)
+					selecting = "l_leg"
+				else
+					return 1
+		if(26 to 29) //Hands and groin
+			switch(icon_x)
+				if(3 to 8)
+					selecting = "r_arm"
+				if(10 to 22)
+					selecting = "groin"
+				if(24 to 29)
+					selecting = "l_arm"
+				else
+					return 1
+		if(30 to 51) //Chest and arms to shoulders
+			switch(icon_x)
+				if(3 to 10)
+					selecting = "r_arm"
+				if(11 to 21)
+					selecting = "chest"
+				if(22 to 29)
+					selecting = "l_arm"
+				else
+					return 1
+		if(52 to 61) //Head, but we need to check for eye or mouth
+			if(icon_x in 12 to 20)
+				selecting = "head"
+				switch(icon_y)
+					if(53 to 54)
+						if(icon_x in 15 to 17)
+							selecting = "mouth"
+					if(55) //Eyeline, eyes are on 15 and 17
+						if(icon_x in 13 to 19)
+							selecting = "head"
+					if(56 to 57)
+						if(icon_x in 14 to 17)
+							selecting = "eyes"
+
+	if(old_selecting != selecting)
+		update_icon()
+	return 1
+
+/obj/screen/zone_sel/large/update_icon()
+	if(selector)
+		overlays -= selector
+	selector = image('icons/mob/sel_large.dmi', "[selecting]")
+	overlays += selector
+
+
+
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else

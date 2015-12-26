@@ -40,8 +40,8 @@
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel/alien()
-	mymob.zone_sel.icon = 'icons/mob/screen_alien.dmi'
+	mymob.zone_sel = new /obj/screen/zone_sel/large/alien()
+	mymob.zone_sel.icon = 'icons/mob/screen_alien_sel.dmi'
 	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()
