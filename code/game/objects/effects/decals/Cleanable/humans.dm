@@ -65,6 +65,9 @@
 	..()
 	reagents.add_reagent("liquidgibs", 5)
 
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return
+
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
 
@@ -186,6 +189,10 @@
 
 	user << .
 
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+		return
+	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
