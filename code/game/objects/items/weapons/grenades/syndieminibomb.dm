@@ -16,3 +16,8 @@
 	desc = "A compact shrapnel grenade meant to devestate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
 	icon_state = "concussion"
 	origin_tech = "materials=3;magnets=4;syndicate=2"
+
+/obj/item/weapon/grenade/syndieminibomb/concussion/prime()
+	update_mob()
+	explosion(src.loc,1,1,2,flame_range = 2)
+	qdel(src)
