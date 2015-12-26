@@ -23,8 +23,8 @@
 	attacktext = "attacks"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	environment_smash = 0
-
-	var/corpse = /obj/effect/landmark/mobcorpse/clown
+	del_on_death = 1
+	loot = list(/obj/effect/landmark/mobcorpse/clown)
 
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
@@ -36,10 +36,3 @@
 		adjustBruteLoss(10)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(15)
-
-/mob/living/simple_animal/hostile/retaliate/clown/death(gibbed)
-	..(gibbed)
-	if(corpse)
-		new corpse (src.loc)
-	qdel(src)
-	return

@@ -76,24 +76,12 @@
 	morphed = 1
 	form = target
 
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) No effect better than shit effect
-
-	//Todo : update to .appearance once 508 hits
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		overlays = H.get_overlays_copy(list(L_HAND_LAYER,R_HAND_LAYER))
-	else
-		overlays = target.overlays.Copy()
-
+	appearance = target.appearance
+	transform = initial(transform)
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
-
-	name = target.name
-	icon = target.icon
-	icon_state = target.icon_state
-	overlays = target.overlays
-
-
 	//Morphed is weaker
 	melee_damage_lower = 5
 	melee_damage_upper = 5

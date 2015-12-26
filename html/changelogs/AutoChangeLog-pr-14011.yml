@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Procedure 5-6 may be issued for biohazard containment under certain situations."
+  - tweak: "Blobs will now burst slightly later on average, and the nuke report with the nuke code will arrive slightly earlier."

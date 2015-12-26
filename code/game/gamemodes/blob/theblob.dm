@@ -206,6 +206,8 @@
 	take_damage(W.force, W.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
+	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -223,7 +225,7 @@
 	take_damage(damage, BRUTE, M)
 	return
 
-/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null)
+/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
 	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
 			damage = max(damage * brute_resist, 0)
@@ -233,7 +235,7 @@
 
 		else
 			damage = 0
-	if(overmind)
+	if(overmind && overmind_reagent_trigger)
 		damage = overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	health -= damage
 	update_icon()

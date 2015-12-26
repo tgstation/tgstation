@@ -310,7 +310,7 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
 
-	var/tc = 20
+	var/tc = 30
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0

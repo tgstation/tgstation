@@ -923,7 +923,10 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+	else if(istype(C, /obj/item/device/doorCharge))
+		if(!p_open)
+			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
+			return
 		if(emagged)
 			return
 		if(charge && !detonated)
