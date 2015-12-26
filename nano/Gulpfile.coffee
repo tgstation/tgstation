@@ -32,7 +32,7 @@ dotOpts =
   append:        true,
   selfcontained: true
 
-### Pacakages ###
+### Packages ###
 bower         = require "main-bower-files"
 child_process = require "child_process"
 del           = require "del"
@@ -120,7 +120,8 @@ gulp.task "default", ["clean"], ->
   all.pipe g.size()
 
 gulp.task "reload", ["default"], ->
-  child_process.exec "reload.bat", (err, stdout, stderr) -> console.log err if err
+  child_process.exec "reload.bat", (err, stdout, stderr) ->
+    console.log err if err
 
 gulp.task "watch", ->
   Object.keys(input).forEach (inp) ->
