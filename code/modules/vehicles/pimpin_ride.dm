@@ -40,16 +40,14 @@
 	icon_state = "upgrade"
 
 
-/obj/vehicle/janicart/Move(a, b, flag)
-	..()
+/obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
 	if(floorbuffer)
 		var/turf/tile = loc
 		if(isturf(tile))
 			tile.clean_blood()
 			for(var/A in tile)
-				if(istype(A, /obj/effect))
-					if(is_cleanable(A))
-						qdel(A)
+				if(is_cleanable(A))
+					qdel(A)
 
 
 /obj/vehicle/janicart/examine(mob/user)
