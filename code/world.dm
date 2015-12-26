@@ -151,7 +151,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 		return
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby. <A href='.reconnect'>Reconnect</A>.</span>", 1) //second parameter ensures only afk clients are kicked
 	#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
