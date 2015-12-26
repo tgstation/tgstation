@@ -140,7 +140,7 @@ Detective
 	name = "Detective"
 
 	belt = /obj/item/device/pda/detective
-	ears = /obj/item/device/radio/headset/headset_sec
+	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit

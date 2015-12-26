@@ -30,20 +30,9 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	layer = MOB_LAYER - 0.1
-	var/remains = /obj/effect/decal/remains/human
-	var/loot
-	var/deathmessage = "The skeleton collaspes into a pile of bones!"
-
-
-/mob/living/simple_animal/hostile/skeleton/death(gibbed)
-	..(gibbed)
-	if(remains)
-		new remains (src.loc)
-	if(loot)
-		new loot (src.loc)
-	visible_message("<span class='danger'>[deathmessage]</span>")
-	qdel(src)
-	return
+	deathmessage = "The skeleton collaspes into a pile of bones!"
+	del_on_death = 1
+	loot = list(/obj/effect/decal/remains/human)
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
@@ -58,7 +47,8 @@
 	melee_damage_lower = 17
 	melee_damage_upper = 20
 	deathmessage = "The skeleton collaspes into a pile of bones, its gear falling to the floor!"
-	loot = list(/obj/item/weapon/twohanded/spear,
+	loot = list(/obj/effect/decal/remains/human,
+				/obj/item/weapon/twohanded/spear,
 				/obj/item/clothing/shoes/winterboots,
 				/obj/item/clothing/suit/hooded/wintercoat)
 
@@ -75,14 +65,16 @@
 	speed = 2
 	gold_core_spawnable = 0
 	speak_chance = 1
-	speak = list("THE GODS WILL IT!","DUES VULT!","REMOVE KABAB!")
+	speak = list("THE GODS WILL IT!","DEUS VULT!","REMOVE KABAB!")
 	force_threshold = 10 //trying to simulate actually having armor
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	deathmessage = "The templar knight collaspes into a pile of bones, its gear clanging as it hits the ground!"
-	loot = list(/obj/item/clothing/suit/armor/riot/knight/templar,
+	loot = list(/obj/effect/decal/remains/human,
+				/obj/item/clothing/suit/armor/riot/knight/templar,
 				/obj/item/clothing/head/helmet/knight/templar,
 				/obj/item/weapon/claymore/hog{name = "holy sword"})
+
 /mob/living/simple_animal/hostile/skeleton/templar/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
@@ -100,4 +92,4 @@
 	maxHealth = 75
 	health = 75
 	color = rgb(114,228,250)
-	remains = /obj/effect/decal/remains/human{color = rgb(114,228,250)}
+	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})

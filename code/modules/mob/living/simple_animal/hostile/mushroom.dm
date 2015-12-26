@@ -58,6 +58,7 @@
 	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	health = maxHealth
+	deathmessage = "[src] fainted."
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
@@ -90,8 +91,6 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	if(!gibbed)
-		visible_message("[src] fainted.")
 	..(gibbed)
 	UpdateMushroomCap()
 
