@@ -966,7 +966,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
 	id = "haloperidol"
-	description = "Increases depletion rates for most stimulating/hallucinogenic drugs by 5. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. 20% chance of +1 BRAIN."
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of +1 BRAIN."
 	reagent_state = LIQUID
 	color = "#27870a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
@@ -982,6 +982,6 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 		M.hallucination -= 5
 	if(prob(20))
 		M.adjustBrainLoss(1*REM)
-	M.adjustStaminaLoss(-2.5*REM)
+	M.adjustStaminaLoss(2.5*REM)
 	..()
 	return
