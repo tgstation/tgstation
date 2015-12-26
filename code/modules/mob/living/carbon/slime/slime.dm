@@ -1,5 +1,6 @@
 /mob/living/carbon/slime
 	name = "baby slime"
+	desc = null
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
@@ -82,7 +83,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	name = text("[colour] baby slime ([rand(1, 1000)])")
+	name = text("[colour] slime ([rand(1, 1000)])")
+	desc = text("A baby [colour] slime.")
 	real_name = name
 	spawn (1)
 		regenerate_icons()
@@ -92,7 +94,8 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
-	name = text("[colour] adult slime ([rand(1,1000)])")
+	name = text("[colour] slime ([rand(1,1000)])")
+	desc = text("An adult [colour] slime.")
 	slime_mutation[1] = /mob/living/carbon/slime/orange
 	slime_mutation[2] = /mob/living/carbon/slime/metal
 	slime_mutation[3] = /mob/living/carbon/slime/blue

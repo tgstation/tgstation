@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+  - rscadd: Slimes now keep their names when they evolve or split.
+  - rscdel: Slimes are no longer named baby or adult due to the above. If you can't tell the difference you can examine the slime instead.
