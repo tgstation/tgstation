@@ -1,6 +1,6 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
-//NOTE: hidden packs only show up when the computer has been hacked.
+//NOTE: hidden packs only show up when the computer has been emagged.
 //ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
@@ -16,8 +16,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	var/containertype = null
 	var/containername = null
 	var/access = null
-	var/hidden = 0
-	var/contraband = 0
+	var/hidden = 0 //Emaggable
+	var/contraband = 0 //Hackable via tools
 	var/group = "Supplies"
 
 /datum/supply_packs/New()
@@ -423,6 +423,21 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Feminine clothing"
 	group = "Clothing"
 
+/datum/supply_packs/knight //why seperate them
+	name = "Knight Armor Crate"
+	contains = list(/obj/item/clothing/suit/armor/knight,
+					/obj/item/clothing/suit/armor/knight/red,
+					/obj/item/clothing/suit/armor/knight/yellow,
+					/obj/item/clothing/suit/armor/knight/blue,
+					/obj/item/clothing/head/helmet/knight,
+					/obj/item/clothing/head/helmet/knight/red,
+					/obj/item/clothing/head/helmet/knight/yellow,
+					/obj/item/clothing/head/helmet/knight/blue)
+	cost = 35
+	containertype = /obj/structure/closet/crate
+	containername = "knight armor crate"
+	group = "Clothing"
+
 //////SECURITY//////
 
 /datum/supply_packs/specialops
@@ -527,19 +542,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Riot gear crate"
 	access = access_armory
 	group = "Security"
-
-/datum/supply_packs/security/armory/knight //why seperate them
- 	name = "Knight Armor Crate"
- 	contains = list(/obj/item/clothing/suit/armor/knight,
- 					/obj/item/clothing/suit/armor/knight/red,
- 					/obj/item/clothing/suit/armor/knight/yellow,
- 					/obj/item/clothing/suit/armor/knight/blue,
- 					/obj/item/clothing/head/helmet/knight,
- 					/obj/item/clothing/head/helmet/knight/red,
- 					/obj/item/clothing/head/helmet/knight/yellow,
- 					/obj/item/clothing/head/helmet/knight/blue)
- 	cost = 35
- 	containername = "knight armor crate"
 
 /datum/supply_packs/loyalty
 	name = "Loyalty implant crate"
