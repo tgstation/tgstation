@@ -965,6 +965,8 @@ var/global/list/common_tools = list(
 		return 1
 	if(istype(W, /obj/item/weapon/kitchen/fork))
 		return 1
+	if(istype(W, /obj/item/wirebomb_spike))
+		return 1
 	else
 		return 0
 
@@ -1217,7 +1219,7 @@ B --><-- A
 	transform = shift
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-	
+
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	transform = initial_transform
 	while(orbiting && orbiting == A && A.loc)
@@ -1227,7 +1229,7 @@ B --><-- A
 		loc = targetloc
 		lastloc = loc
 		sleep(0.6)
-	
+
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
 		SpinAnimation(0,0)

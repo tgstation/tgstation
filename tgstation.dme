@@ -711,6 +711,7 @@
 #include "code\game\objects\items\weapons\grenades\smokebomb.dm"
 #include "code\game\objects\items\weapons\grenades\spawnergrenade.dm"
 #include "code\game\objects\items\weapons\grenades\syndieminibomb.dm"
+#include "code\game\objects\items\weapons\grenades\wirebomb.dm"
 #include "code\game\objects\items\weapons\implants\implant.dm"
 #include "code\game\objects\items\weapons\implants\implant_chem.dm"
 #include "code\game\objects\items\weapons\implants\implant_explosive.dm"
