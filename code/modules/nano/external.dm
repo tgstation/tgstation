@@ -89,7 +89,7 @@
 	var/datum/nanoui/ui = locate(uiref)
 
 	// If we found the UI, close it.
-	if (istype(ui))
+	if(istype(ui))
 		ui.close()
 		// If there is a custom ref, call that atom's Topic().
 		if(ui.ref)

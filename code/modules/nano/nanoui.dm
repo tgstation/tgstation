@@ -70,14 +70,14 @@
 
 	set_template(template)
 
-	if (title)
+	if(title)
 		src.title = sanitize(title)
-	if (width)
+	if(width)
 		src.width = width
-	if (height)
+	if(height)
 		src.height = height
 
-	if (ref)
+	if(ref)
 		src.ref = ref
 
 	src.master_ui = master_ui
@@ -100,16 +100,16 @@
 		return // Bail if there is no client.
 
 	update_status(push = 0) // Update the window status.
-	if (status == NANO_CLOSE)
+	if(status == NANO_CLOSE)
 		return // Bail if we should close.
 
-	if (!initial_data)
-		if (!data) // If we don't have initial_data and data was not passed, get data from the src_object.
+	if(!initial_data)
+		if(!data) // If we don't have initial_data and data was not passed, get data from the src_object.
 			data = src_object.get_ui_data(user)
 		set_initial_data(data) // Otherwise use the passed data.
 
 	var/window_size = ""
-	if (width && height) // If we have a width and height, use them.
+	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
 
 	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
@@ -260,7 +260,7 @@
 	var/list/send_data = list()
 
 	send_data["config"] = get_config_data()
-	if (!isnull(data))
+	if(!isnull(data))
 		send_data["data"] = data
 
 	return send_data
@@ -274,7 +274,7 @@
  **/
 /datum/nanoui/Topic(href, href_list)
 	update_status(push = 0) // Update the window state.
-	if (status != NANO_INTERACTIVE || user != usr)
+	if(status != NANO_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
 	var/action = href_list["nano"] // Pull the action out.
@@ -282,7 +282,7 @@
 
 	var/update = src_object.ui_act(action, href_list, state) // Call Topic() on the src_object.
 
-	if (src_object && update)
+	if(src_object && update)
 		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.
 
  /**
@@ -294,11 +294,11 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/nanoui/process(force = 0)
-	if (!src_object || !user) // If the object or user died (or something else), abort.
+	if(!src_object || !user) // If the object or user died (or something else), abort.
 		close()
 		return
 
-	if (status && (force || auto_update))
+	if(status && (force || auto_update))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.

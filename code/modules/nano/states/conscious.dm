@@ -7,6 +7,6 @@
 /var/global/datum/topic_state/conscious_state/conscious_state = new()
 
 /datum/topic_state/conscious_state/can_use_topic(atom/movable/src_object, mob/user)
-	if (user.stat == CONSCIOUS)
+	if(user.stat == CONSCIOUS)
 		return NANO_INTERACTIVE
 	return NANO_CLOSE

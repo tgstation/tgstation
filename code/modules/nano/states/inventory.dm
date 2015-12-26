@@ -7,6 +7,6 @@
 /var/global/datum/topic_state/inventory_state/inventory_state = new()
 
 /datum/topic_state/inventory_state/can_use_topic(atom/movable/src_object, mob/user)
-	if (!(src_object in user))
+	if(!(src_object in user))
 		return NANO_CLOSE
 	return user.shared_nano_interaction(src_object)

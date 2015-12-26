@@ -8,14 +8,14 @@
 
 /datum/topic_state/notcontained_state/can_use_topic(atom/movable/src_object, mob/user)
 	. = user.shared_nano_interaction(src_object)
-	if (. > NANO_CLOSE)
+	if(. > NANO_CLOSE)
 		return min(., user.notcontained_can_use_topic(src_object))
 
 /mob/proc/notcontained_can_use_topic(atom/movable/src_object)
 	return NANO_CLOSE
 
 /mob/living/notcontained_can_use_topic(atom/movable/src_object)
-	if (src_object.contains(src))
+	if(src_object.contains(src))
 		return NANO_CLOSE // Close if we're inside it.
 	return default_can_use_topic(src_object)
 
