@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+  - tweak: People who are turned into statues and shattered are now gibbed instead of turned to dust.
