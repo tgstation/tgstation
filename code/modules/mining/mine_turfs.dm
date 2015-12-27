@@ -701,6 +701,53 @@ var/global/list/rockTurfEdgeCache
 		drop_z = z+1
 
 
+
+/**********************Lavaland Turfs**************************/
+
+///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/chasm/straight_down/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/mineral/volcanic/lava_land_surface
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+///////Underground. The underground is deadly hot. You absolutely require a suit to be down here. The floors break to lava.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/mineral/volcanic/lava_land_underground
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
 #undef NORTH_EDGING
 #undef SOUTH_EDGING
 #undef EAST_EDGING
