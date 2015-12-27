@@ -3,6 +3,7 @@
 	w_class = 3
 	var/alarmed = 0
 	var/select = 1
+	var/tactical = 0
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
@@ -28,6 +29,14 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
+/obj/item/weapon/gun/projectile/automatic/AltClick()
+	if(!tactical)
+		tactical = 1
+		user << "<span class='notice'>You will now alert nearby persons of your tactical reloads with this weapon.</span>"
+	else
+		tactical = 0
+		user << "<span class='notice'>You will no longer alert nearby persons of your tactical reloads with this weapon.</span>"
+
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user, params)
 	. = ..()
 	if(.)
@@ -37,10 +46,11 @@
 		if(istype(AM, mag_type))
 			if(magazine)
 				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
-				user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()
 				magazine = null
+				if(tactical)
+					user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 			else
 				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
 			user.remove_from_mob(AM)
