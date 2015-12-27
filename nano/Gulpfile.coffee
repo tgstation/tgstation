@@ -96,10 +96,10 @@ css = ->
     .pipe g.less({paths: [input.images]})
     .pipe g.postcss([
       p.autoprefixer({browsers: ["last 2 versions", "ie >= 8"]}),
-      p.plsfilters({oldIE: true}),
-      p.rgba({oldie: true}),
-      p.opacity,
       p.gradient,
+      p.opacity,
+      p.rgba({oldie: true}),
+      p.plsfilters({oldIE: true}),
       p.fontweights
     ])
     .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
