@@ -243,7 +243,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 //i think this is used soley by verb/give(), cael
 proc/check_can_reach(atom/user, atom/target)
-	if(!in_range(user,target))
+	if(!in_range(target,user))
 		return 0
 	return CanReachThrough(get_turf(user), get_turf(target), target)
 

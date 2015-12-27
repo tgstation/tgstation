@@ -117,7 +117,7 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
-				if (in_range(src, victim))
+				if (Adjacent(victim))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V, notes="(Contact with [key_name(src)])")
 

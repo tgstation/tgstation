@@ -167,7 +167,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
-	if(in_range(user,src))
+	if(Adjacent(user))
 		if(contents)
 			to_chat(user, "You can just about make out some properties of the cryo's murky depths:")
 			for(var/atom/movable/floater in (contents - beaker))

@@ -34,7 +34,7 @@
 
 		var/input = stripped_input(usr,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-		if(src && input && !M.stat && in_range(M,src))
+		if(src && input && !M.stat && in_range(src,M))
 			name = input
 			to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 			return 1
