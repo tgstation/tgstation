@@ -336,7 +336,7 @@
 			qdel(E)
 	..()
 
-/turf/simulated/wall/ChangeTurf()
+/turf/simulated/wall/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0, var/allow = 1)
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
