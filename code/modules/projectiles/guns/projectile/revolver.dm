@@ -150,6 +150,13 @@
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
+/obj/item/weapon/gun/projectile/revolver/golden
+	name = "\improper Golden revolver"
+	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
+	icon_state = "goldrevolver"
+	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	recoil = 8
+	pin = /obj/item/device/firing_pin
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
