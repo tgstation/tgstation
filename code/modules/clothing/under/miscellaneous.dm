@@ -202,6 +202,7 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	_color = "overalls"
+	gender = PLURAL
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -389,6 +390,7 @@
 	_color = "simonpants"
 	item_state = "spants"
 	species_fit = list("Vox")
+	gender = PLURAL
 
 /obj/item/clothing/under/batmansuit
 	name = "batsuit"
