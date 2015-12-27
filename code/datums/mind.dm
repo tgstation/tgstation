@@ -61,13 +61,8 @@
 
 
 /datum/mind/proc/transfer_to(mob/new_character)
-	//if(!istype(new_character))
-	//	throw EXCEPTION("transfer_to(): new_character must be mob/living")
-	//	return
-
-	if(current)					//remove ourself from our old body's mind variable
+	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
-
 		SSnano.on_transfer(current, new_character)
 
 	if(key)
