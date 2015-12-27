@@ -4,9 +4,9 @@
   * Checks a number of things -- mostly physical distance for humans and view for robots.
  **/
 
-/var/global/datum/topic_state/default/default_state = new()
+/var/global/datum/nano_state/default/default_state = new()
 
-/datum/topic_state/default/can_use_topic(atom/movable/src_object, mob/user)
+/datum/nano_state/default/can_use_topic(atom/movable/src_object, mob/user)
 	return user.default_can_use_topic(src_object) // Call the individual mob-overriden procs.
 
 /mob/proc/default_can_use_topic(atom/movable/src_object)

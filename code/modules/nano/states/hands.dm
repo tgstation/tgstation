@@ -4,9 +4,9 @@
   * Checks that the src_object is in the user's hands.
  **/
 
-/var/global/datum/topic_state/hands_state/hands_state = new()
+/var/global/datum/nano_state/hands_state/hands_state = new()
 
-/datum/topic_state/hands_state/can_use_topic(atom/movable/src_object, mob/user)
+/datum/nano_state/hands_state/can_use_topic(atom/movable/src_object, mob/user)
 	. = user.shared_nano_interaction(src_object)
 	if(. > NANO_CLOSE)
 		return min(., user.hands_can_use_topic(src_object))

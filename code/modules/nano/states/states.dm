@@ -10,11 +10,11 @@
   * Checks if a user can use src_object's NanoUI, under the given state.
   *
   * required user mob The mob who opened/is using the NanoUI.
-  * required state datum/topic_state The state to check.
+  * required state datum/nano_state The state to check.
   *
   * return NANO_state The state of the UI.
  **/
-/atom/proc/nano_state(mob/user, datum/topic_state/state)
+/atom/proc/nano_state(mob/user, datum/nano_state/state)
 	var/src_object = nano_host()
 
 	if(istype(user, /mob/dead/observer)) // Special-case ghosts.
@@ -36,7 +36,7 @@
   *
   * return NANO_state The state of the UI.
  **/
-/datum/topic_state/proc/can_use_topic(atom/movable/src_object, mob/user)
+/datum/nano_state/proc/can_use_topic(atom/movable/src_object, mob/user)
 	return NANO_CLOSE // Don't allow interaction by default.
 
 

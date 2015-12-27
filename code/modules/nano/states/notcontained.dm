@@ -4,9 +4,9 @@
   * Checks that the user is not inside src_object, and then makes the default checks.
  **/
 
-/var/global/datum/topic_state/notcontained_state/notcontained_state = new()
+/var/global/datum/nano_state/notcontained_state/notcontained_state = new()
 
-/datum/topic_state/notcontained_state/can_use_topic(atom/movable/src_object, mob/user)
+/datum/nano_state/notcontained_state/can_use_topic(atom/movable/src_object, mob/user)
 	. = user.shared_nano_interaction(src_object)
 	if(. > NANO_CLOSE)
 		return min(., user.notcontained_can_use_topic(src_object))

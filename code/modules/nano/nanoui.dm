@@ -37,7 +37,7 @@
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
-	var/datum/topic_state/state = null // Topic state used to determine status. Topic states are in interactions/.
+	var/datum/nano_state/state = null // Topic state used to determine status. Topic states are in interactions/.
 	var/datum/nanoui/master_ui	 // The parent NanoUI.
 	var/list/datum/nanoui/children = list() // Children of this NanoUI.
 
@@ -55,14 +55,14 @@
   * optional height int The window height.
   * optional ref atom An extra ref to use when the window is closed.
   * optional master_ui datum/nanoui The parent NanoUI.
-  * optional state datum/topic_state The state used to determine status.
+  * optional state datum/nano_state The state used to determine status.
   *
   * return datum/nanoui The requested NanoUI.
  **/
 /datum/nanoui/New(mob/user, atom/movable/src_object, ui_key, template, \
 					title = 0, width = 0, height = 0, \
 					atom/ref = null, datum/nanoui/master_ui = null, \
-					datum/topic_state/state = default_state)
+					datum/nano_state/state = default_state)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
