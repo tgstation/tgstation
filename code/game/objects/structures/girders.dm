@@ -4,11 +4,12 @@
 	density = 1
 	layer = 2
 	var/state = 0
-	var/material = "/obj/item/stack/sheet/metal"
+	var/material = /obj/item/stack/sheet/metal
+
 /obj/structure/girder/wood
 	icon_state = "girder_wood"
 	name = "wooden girder"
-	material = "/obj/item/stack/sheet/wood"
+	material = /obj/item/stack/sheet/wood
 
 /obj/structure/girder/wood/update_icon()
 	if(anchored)
@@ -107,7 +108,7 @@
 			state = 0
 			update_icon()
 
-	else if(istype(W, /obj/item/stack/rods) && state == 0 && (istype(material,"/obj/item/stack/sheet/metal"))) //Inserting support struts, stage 0 to 1 (reinforced girder, replaces plasteel step)
+	else if(istype(W, /obj/item/stack/rods) && state == 0 && material == /obj/item/stack/sheet/metal) //Inserting support struts, stage 0 to 1 (reinforced girder, replaces plasteel step)
 		var/obj/item/stack/rods/R = W
 		if(R.amount < 2) //Do a first check BEFORE the user begins, in case he's using a single rod
 			to_chat(user, "<span class='warning'>You need more rods to finish the support struts</span>")
