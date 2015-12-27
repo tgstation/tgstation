@@ -314,12 +314,16 @@
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
-			if(istype(A,/mob/living))
-				if(A:lying) continue
-				src.throw_impact(A, speed, user)
-				if(src.throwing == 1)
+
+			if(isliving(A))
+				var/mob/living/L = A
+				if(L.lying) continue
+				src.throw_impact(L, speed, user)
+
+				if(src.throwing == 1) //If throwing == 1, the throw was weak and will stop when it hits a dude. If a hulk throws this item, throwing is set to 2 (so the item will pass through multiple mobs)
 					src.throwing = 0
-			if(isobj(A))
+
+			else if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
 					src.throw_impact(A, speed, user)
 					src.throwing = 0

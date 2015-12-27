@@ -119,8 +119,8 @@
 	_color = "johnny"
 
 /obj/item/clothing/under/rainbow
-	name = "rainbow"
-	desc = "rainbow"
+	name = "rainbow jumpsuit"
+	desc = "A fabulous jumpsuit."
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	_color = "rainbow"

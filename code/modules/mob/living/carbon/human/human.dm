@@ -1334,29 +1334,30 @@
 	set src in view(1)
 	var/self = 0
 
-	if(usr.isUnconscious() || usr.restrained() || !isliving(usr)) return
+	if(usr.isUnconscious() || usr.restrained() || !isliving(usr) || isanimal(usr) || isAI(usr)) return
 
 	if(usr == src)
 		self = 1
+
 	if(!self)
 		usr.visible_message("<span class='notice'>[usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
-		"You begin counting [src]'s pulse")
+		"<span class='info'>You begin counting [src]'s pulse.</span>")
 	else
 		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
-		"You begin counting your pulse.")
+		"<span class='info'>You begin counting your pulse.</span>")
 
 	if(src.pulse)
 		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
-		to_chat(usr, "<span class='warning'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
+		to_chat(usr, "<span class='warning'>[self ? "You have" : "[src] has"] no pulse!</span>")
 		return
 
-	to_chat(usr, "Don't move until counting is finished.")
+	to_chat(usr, "<span class='info'>Don't move until counting is finished.</span>")
 
 	if (do_mob(usr, src, 60))
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 	else
-		to_chat(usr, "You moved while counting. Try again.")
+		to_chat(usr, "<span class='info'>You moved while counting. Try again.</span>")
 
 /mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 
