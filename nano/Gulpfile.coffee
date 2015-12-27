@@ -108,7 +108,7 @@ css = ->
   combined
     .pipe g.concat(output.css)
     .pipe g.bytediff.start()
-    .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
+    .pipe g.if(f.min, g.cssnano({autoprefixer: {browsers: ["last 2 versions", "ie >= 8"]}, discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
     .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
