@@ -167,7 +167,7 @@ Proc for attack log creation, because really why not
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || user.last_move || target.loc != target_loc || target.last_move != null || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || user.last_move || target.loc != target_loc || target.last_move || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
 		sleep(1)
