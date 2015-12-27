@@ -149,8 +149,8 @@
 /obj/item/weapon/storage/belt/military/assault
 	name = "assault belt"
 	desc = "A tactical assault belt."
-	icon_state = "militarybelt"
-	item_state = "military"
+	icon_state = "assaultbelt"
+	item_state = "security"
 	storage_slots = 6
 
 
