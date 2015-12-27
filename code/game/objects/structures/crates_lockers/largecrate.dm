@@ -38,8 +38,8 @@
 			update_icon()
 		new /obj/item/stack/sheet/mineral/wood(src)
 		var/turf/T = get_turf(src)
-		for(var/obj/O in contents)
-			O.loc = T
+		for(var/atom/movable/AM in contents)
+			AM.loc = T
 		user.visible_message("[user] pries \the [src] open.", \
 							 "<span class='notice'>You pry open \the [src].</span>", \
 							 "<span class='italics'>You hear splitting wood.</span>")
