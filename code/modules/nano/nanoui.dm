@@ -314,7 +314,7 @@
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(JSON.stringify(send_data), "[window_id].browser:receiveUpdate")
+	user << output(url_encode(JSON.stringify(send_data)), "[window_id].browser:receiveUpdate")
 
 
  /**
