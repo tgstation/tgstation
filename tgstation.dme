@@ -1028,6 +1028,7 @@
 #include "code\modules\events\vent_clog.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\holiday\halloween.dm"
+#include "code\modules\events\holiday\vday.dm"
 #include "code\modules\events\holiday\xmas.dm"
 #include "code\modules\events\wizard\aid.dm"
 #include "code\modules\events\wizard\blobies.dm"
