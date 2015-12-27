@@ -45,7 +45,6 @@
 	icon_state = "buckler"
 	item_state = "buckler"
 	materials = list()
-	slot_flags = null
 	burn_state = FLAMMABLE
 	block_chance = 30
 
