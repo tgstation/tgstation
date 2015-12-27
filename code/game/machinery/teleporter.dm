@@ -289,7 +289,7 @@
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	if(z == ZLEVEL_CENTCOM)
 		M << "You can't use this here."
-	if(power_station && power_station.engaged && !panel_open)
+	if(is_ready())
 		teleport(M)
 		use_power(5000)
 	return
@@ -326,10 +326,17 @@
 /obj/machinery/teleport/hub/update_icon()
 	if(panel_open)
 		icon_state = "tele-o"
-	else if(power_station && power_station.engaged)
+	else if(is_ready())
 		icon_state = "tele1"
 	else
 		icon_state = "tele0"
+
+/obj/machinery/teleport/hub/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/teleport/hub/proc/is_ready()
+	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/New()
 	..()
