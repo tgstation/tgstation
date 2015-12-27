@@ -2,7 +2,7 @@
   "name": "nanoui",
   "private": true,
   "dependencies": {
-    "autoprefixer": "^6.1.2",
+    "autoprefixer": "^6.2.2",
     "coffee-script": "^1.10.0",
     "del": "^2.2.0",
     "gulp": "^3.9.0",
@@ -27,12 +27,12 @@
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "hexa-color-regex": "^1.0.0",
-    "main-bower-files": "^2.9.0",
+    "main-bower-files": "^2.11.0",
     "merge2": "^0.3.6",
     "pleeease-filters": "^2.0.0",
     "postcss-color-rgba-fallback": "git+https://github.com/postcss/postcss-color-rgba-fallback",
     "postcss-colorblind": "^0.4.0",
-    "postcss-filter-gradient": "^0.1.1",
+    "postcss-filter-gradient": "^0.2.1",
     "postcss-font-weights": "^2.0.1",
     "postcss-opacity": "^3.0.0"
   }
