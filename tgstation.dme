@@ -1459,6 +1459,7 @@
 #include "code\modules\projectiles\ammunition.dm"
 #include "code\modules\projectiles\firing.dm"
 #include "code\modules\projectiles\gun.dm"
+#include "code\modules\projectiles\gun_upgrades.dm"
 #include "code\modules\projectiles\pins.dm"
 #include "code\modules\projectiles\projectile.dm"
 #include "code\modules\projectiles\ammunition\ammo_casings.dm"

@@ -867,6 +867,13 @@ var/list/uplink_items = list()
 	cost = 15
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/recoil_compensator
+	name = "recoil compensator (Gun Upgrade)"
+	desc = "A miniaturized gravity generator, capable of reducing the weight of a gun as well as reducing recoil."
+	item = /obj/item/device/recoil_compensator
+	cost = 10
+	gamemodes = list(/datum/game_mode/nuclear)
+
 
 // IMPLANTS
 
