@@ -126,9 +126,9 @@
 	if(istype(target, /atom/movable))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
-		var/atom/target_anchored = 0
+		var/temp_anchored = target.anchored
 		M.throw_at(throw_target, 2, 1)
-		var/atom/target_anchored = 1
+		target.anchored = temp_anchored
 
 /obj/item/projectile/bullet/doorslug/New()
 	..()
