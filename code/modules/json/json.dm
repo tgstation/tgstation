@@ -12,7 +12,7 @@
 /datum/jsonHelper/proc/WriteValue(list/json, value)
 	. = json
 	if(isnum(value))
-		json += value // Consider num2text(value, 20) for maximum accuracy.
+		json += num2text(value, 20)
 	else if(isnull(value))
 		json += "null"
 	else if(istext(value))
