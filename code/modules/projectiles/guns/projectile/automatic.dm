@@ -29,7 +29,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/AltClick()
+/obj/item/weapon/gun/projectile/automatic/AltClick(mob/user)
 	if(!tactical)
 		tactical = 1
 		user << "<span class='notice'>You will now alert nearby persons of your tactical reloads with this weapon.</span>"
