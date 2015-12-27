@@ -349,9 +349,8 @@ var/global/ingredientLimit = 10
 	icon_state = "fryer_off"
 	icon_state_on = "fryer_on"
 	foodChoices = null
-	cookTime = 200
+	cookTime = 170
 	recursive_ingredients = 1
-
 	cks_max_volume = 400
 	cooks_in_reagents = 1
 
@@ -363,6 +362,7 @@ var/global/ingredientLimit = 10
 	reagents.update_total() //make the values refresh
 	if(ingredient)
 		icon_state = "fryer_on"
+		playsound(get_turf(src),'sound/machines/deep_fryer.ogg',100,1) // If cookSound is used, the sound starts when the cooking ends. We don't want that.
 	else if(reagents.total_volume < DEEPFRY_MINOIL)
 		icon_state = "fryer_empty"
 	else

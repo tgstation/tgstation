@@ -65,6 +65,7 @@
 		var/mob/living/simple_animal/borer/B = new (T)
 		B.transfer_personality(O.client)
 		// Play hatching noise here.
+		playsound(src.loc, 'sound/items/borer_hatch.ogg', 50, 1)
 		qdel(src)
 	else
 		src.visible_message("<span class='notice'>\The [name] calms down.</span>")

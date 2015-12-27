@@ -83,6 +83,7 @@
 					new /obj/item/weapon/gun/projectile/nagant(get_turf(H))
 				if("beegun")
 					new /obj/item/weapon/gun/gatling/beegun(get_turf(H))
+			playsound(get_turf(H),'sound/effects/summon_guns.ogg', 50, 1)
 		else
 			switch (randomizemagic)
 				if("fireball")
