@@ -107,6 +107,6 @@
 		return NANO_INTERACTIVE
 	else if(dist <= 2) // View only if 2-3 tiles away.
 		return NANO_UPDATE
-	else if(dist <= 4) // Disable if 4 tiles away.
+	else if(dist <= 5) // Disable if 5 tiles away.
 		return NANO_DISABLED
 	return NANO_CLOSE // Otherwise, we got nothing.

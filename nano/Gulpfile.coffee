@@ -18,7 +18,7 @@ output =
   js: "nanoui.js"
   css: "nanoui.css"
 
-# doT Settings
+# Processor Settings
 dotOpts =
   evaluate:      /\{\{([\s\S]+?)\}\}/g,
   interpolate:   /\{\{=([\s\S]+?)\}\}/g,
@@ -51,7 +51,6 @@ p =
   rgba:         require "postcss-color-rgba-fallback"
 
 ### Helpers ###
-
 glob = (path) ->
   "#{path}/*"
 
@@ -81,7 +80,7 @@ js = ->
   combined
     .pipe g.concat(output.js)
     .pipe g.bytediff.start()
-    .pipe g.if(f.min, g.uglify(), g.jsbeautifier())
+    .pipe g.if(f.min, g.uglify({mangle: true, compress: {unsafe: true, negate_iife: true, drop_console: true}}), g.jsbeautifier())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
     .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir

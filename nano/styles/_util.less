@@ -19,7 +19,7 @@
 // Text Styles
 .bold { font-weight: bold; }
 .italic { font-style: italic; }
-.fontReset {
+.fontReset() {
     color: @text;
     font-size: @fontsize;
     font-weight: normal;
@@ -28,7 +28,7 @@
 }
 
 // Fancy "Notice Me" Stripes
-.noticeStripes {
+.noticeStripes() {
     background-color: @notice1; // Fallback for old browers.
     background-image: repeating-linear-gradient(
       -45deg,

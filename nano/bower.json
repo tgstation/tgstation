@@ -6,14 +6,18 @@
     "es5-shim": "~4.3.1",
     "html5shiv": "~3.7.3",
     "IE8": "ie8#~2.9.10",
-    "mini-signals": "~1.1.0",
-    "normalize-css": "normalize.css#~3.0.3"
+    "mini-signals": "~1.1.0"
   },
   "overrides": {
     "IE8": {
       "main": "build/ie8.max.js"
     },
     "DOM4": {
+      "dependencies": {
+        "IE8": "*"
+      }
+    },
+    "mini-signals": {
       "dependencies": {
         "IE8": "*"
       }
