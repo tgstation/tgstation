@@ -7,6 +7,7 @@ f =
 
 # Project Paths
 input =
+  html:      "html"
   images:    "images"
   scripts:   "scripts"
   styles:    "styles"
@@ -17,7 +18,7 @@ output =
   js: "nanoui.js"
   css: "nanoui.css"
 
-# doT Settings
+# Processor Settings
 dotOpts =
   evaluate:      /\{\{([\s\S]+?)\}\}/g,
   interpolate:   /\{\{=([\s\S]+?)\}\}/g,
@@ -31,7 +32,7 @@ dotOpts =
   append:        true,
   selfcontained: true
 
-### Pacakages ###
+### Packages ###
 bower         = require "main-bower-files"
 child_process = require "child_process"
 del           = require "del"
@@ -50,31 +51,19 @@ p =
   rgba:         require "postcss-color-rgba-fallback"
 
 ### Helpers ###
-
 glob = (path) ->
   "#{path}/*"
 
 ### Tasks ###
-gulp.task "default", ["js", "css"]
+html = ->
+  gulp.src glob input.html
+    .pipe g.bytediff.start()
+    .pipe g.if(f.min, g.htmlmin({collapseWhitespace: true, minifyJS: true, minifyCSS: true, quoteCharacter: "'"}))
+    .pipe g.bytediff.stop()
+    .pipe gulp.dest output.dir
 
 
-gulp.task "clean", ->
-  del glob output.dir
-
-
-gulp.task "watch", ->
-  gulp.watch [glob input.images], ["reload"]
-  gulp.watch [glob input.scripts], ["reload"]
-  gulp.watch [glob input.styles], ["reload"]
-  gulp.watch [glob input.templates], ["reload"]
-
-
-gulp.task "reload", ["default"], ->
-  child_process.exec "reload.bat", (err, stdout, stderr) ->
-    return console.log err if err
-
-
-gulp.task "js", ["clean"], ->
+js = ->
   lib = gulp.src bower "**/*.js"
     .pipe g.if(f.sourcemaps, g.sourcemaps.init())
 
@@ -87,15 +76,17 @@ gulp.task "js", ["clean"], ->
     .pipe g.concat("templates")
     .pipe g.header("window.TMPL = {};\n")
 
-  combined = merge lib, main, templates
+  combined = merge lib, templates, main
   combined
     .pipe g.concat(output.js)
-    .pipe g.if(f.min, g.uglify(), g.jsbeautifier())
+    .pipe g.bytediff.start()
+    .pipe g.if(f.min, g.uglify({mangle: true, compress: {unsafe: true, negate_iife: true, drop_console: true}}), g.jsbeautifier())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
+    .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
 
 
-gulp.task "css", ["clean"], ->
+css = ->
   lib = gulp.src bower "**/*.css"
     .pipe g.if(f.sourcemaps, g.sourcemaps.init())
 
@@ -105,17 +96,34 @@ gulp.task "css", ["clean"], ->
     .pipe g.less({paths: [input.images]})
     .pipe g.postcss([
       p.autoprefixer({browsers: ["last 2 versions", "ie >= 8"]}),
-      p.plsfilters({oldIE: true}),
-      p.rgba({oldie: true}),
-      p.opacity,
       p.gradient,
+      p.opacity,
+      p.rgba({oldie: true}),
+      p.plsfilters({oldIE: true}),
       p.fontweights
     ])
     .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
 
   combined = merge lib, main
   combined
-    .pipe g.if(f.min, g.cssnano({discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.concat(output.css)
+    .pipe g.bytediff.start()
+    .pipe g.if(f.min, g.cssnano({autoprefixer: {browsers: ["last 2 versions", "ie >= 8"]}, discardComments: {removeAll: true}}), g.csscomb())
     .pipe g.if(f.sourcemaps, g.sourcemaps.write())
+    .pipe g.bytediff.stop()
     .pipe gulp.dest output.dir
+
+
+gulp.task "default", ["clean"], ->
+  all = merge js(), css(), html()
+  all.pipe g.size()
+
+gulp.task "reload", ["default"], ->
+  child_process.exec "reload.bat", (err, stdout, stderr) ->
+    console.log err if err
+
+gulp.task "watch", ->
+  Object.keys(input).forEach (inp) ->
+    gulp.watch [glob input[inp]], ["reload"]
+
+gulp.task "clean", -> del glob output.dir

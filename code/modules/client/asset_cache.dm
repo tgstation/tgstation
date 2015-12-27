@@ -175,8 +175,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/simple/nanoui
 	assets = list(
-		"nanoui.js"					= 'nano/assets/nanoui.js',
-		"nanoui.css"				= 'nano/assets/nanoui.css',
+		"nanoui.css"	= 'nano/assets/nanoui.css',
+		"nanoui.js"		= 'nano/assets/nanoui.js'
 	)
 
 /datum/asset/simple/pda

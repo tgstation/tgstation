@@ -20,11 +20,11 @@
   * optional ui datum/nanoui The UI to be updated, if it exists.
   * optional force_open bool If the UI should be re-opened instead of updated.
   * optional master_ui datum/nanoui The parent NanoUI.
-  * optional state datum/topic_state The state used to determine status.
+  * optional state datum/nano_state The state used to determine status.
  **/
 /atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, \
 								force_open = 0, datum/nano_ui/master_ui = null, \
-								datum/topic_state/state = default_state)
+								datum/nano_state/state = default_state)
 	return -1 // Sorta implemented.
 
  /**
@@ -60,7 +60,7 @@
   * private
   *
   * The NanoUI's host object (usually src_object).
-  * Used internally by topic_state(s).
+  * Used internally by nano_state(s).
  **/
 /atom/proc/nano_host()
 	return src
@@ -89,7 +89,7 @@
 	var/datum/nanoui/ui = locate(uiref)
 
 	// If we found the UI, close it.
-	if (istype(ui))
+	if(istype(ui))
 		ui.close()
 		// If there is a custom ref, call that atom's Topic().
 		if(ui.ref)
