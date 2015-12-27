@@ -28,57 +28,94 @@ What are the archived variables for?
 /datum/gas/volatile_fuel
 		specific_heat = 30
 
+var/list/gas_heats = list( //this is actually the list that decides what gases exist and in what order
+	20, //GAS_O2
+	20, //GAS_N2
+	30, //GAS_C02
+	200,//GAS_PLASMA
+	40, //GAS_N20
+	300,//GAS_AGENT_B
+	30, //GAS_V_FUEL
+)
+
+/proc/gaseslist()
+	. = new /list
+	for(var/specific_heat in gas_heats)
+		. += gaslist(specific_heat)
+
+/proc/gaslist(specific_heat)
+	. = new /list
+	. += 0				//MOLES
+	. += 0				//ARCHIVE
+	. += specific_heat	//SPECIFIC_HEAT
+
 
 /datum/gas_mixture
+	/*
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/toxins = 0
-
+	*/
 	var/volume = CELL_VOLUME
 
 	var/temperature = 0 //in Kelvin
 
 	var/last_share
 
-	var/list/datum/gas/trace_gases = list()
+	//var/list/datum/gas/trace_gases = list()
+	var/list/gases
 
-
+	/*
 	var/tmp/oxygen_archived
 	var/tmp/carbon_dioxide_archived
 	var/tmp/nitrogen_archived
 	var/tmp/toxins_archived
-
+	*/
 	var/tmp/temperature_archived
 
 	var/tmp/fuel_burnt = 0
 
+/datum/gas_mixture/New(volume = CELL_VOLUME)
+	src.volume = volume
+	gases = gaseslist()
+
 	//PV=nRT - related procedures
 /datum/gas_mixture/proc/heat_capacity()
+	for(var/gas in gases)
+		. += gas[MOLES]*gas[SPECIFIC_HEAT]
+	/*
 	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins)
 
 	for(var/gas in trace_gases)
 		var/datum/gas/trace_gas = gas
 		heat_capacity += trace_gas.moles*trace_gas.specific_heat
 	return heat_capacity
-
+	*/
 
 /datum/gas_mixture/proc/heat_capacity_archived()
+	for(var/gas in gases)
+		. += gas[ARCHIVE]*gas[SPECIFIC_HEAT]
+	/*
 	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,toxins_archived)
 
 	for(var/gas in trace_gases)
 		var/datum/gas/trace_gas = gas
 		heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
 	return heat_capacity_archived
-
+	*/
 
 /datum/gas_mixture/proc/total_moles()
+	for(var/gas in gases)
+		. += gas[MOLES]
+	/*
 	var/moles = oxygen + carbon_dioxide + nitrogen + toxins
 
 	for(var/gas in trace_gases)
 		var/datum/gas/trace_gas = gas
 		moles += trace_gas.moles
 	return moles
+	*/
 
 
 /datum/gas_mixture/proc/return_pressure()
@@ -114,7 +151,7 @@ What are the archived variables for?
 					var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, trace_gas.moles*0.05)
 
 					carbon_dioxide -= reaction_rate
-					oxygen += reaction_rate
+					gases[GAS_02][MOLES] += reaction_rate
 
 					trace_gas.moles -= reaction_rate*0.05
 
@@ -136,7 +173,7 @@ What are the archived variables for?
 			reaction_energy = max(reaction_energy+((carbon_efficency*toxins)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 			toxins = max(toxins-plasma_fused,0)
 			carbon_dioxide = max(carbon_dioxide-carbon_catalyzed,0)
-			oxygen = max(oxygen+oxygen_added,0)
+			gases[GAS_02][MOLES] = max(gases[GAS_02][MOLES]+oxygen_added,0)
 			nitrogen = max(nitrogen+nitrogen_added,0)
 			if(reaction_energy > 0)
 				reacting = 1
@@ -165,13 +202,13 @@ What are the archived variables for?
 	if(fuel_store) //General volatile gas burn
 		var/burned_fuel = 0
 
-		if(oxygen < fuel_store.moles)
-			burned_fuel = oxygen
+		if(gases[GAS_02][MOLES] < fuel_store.moles)
+			burned_fuel = gases[GAS_02][MOLES]
 			fuel_store.moles -= burned_fuel
-			oxygen = 0
+			gases[GAS_02][MOLES] = 0
 		else
 			burned_fuel = fuel_store.moles
-			oxygen -= fuel_store.moles
+			gases[GAS_02][MOLES] -= fuel_store.moles
 			trace_gases -= fuel_store
 			fuel_store = null
 
@@ -191,13 +228,13 @@ What are the archived variables for?
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
+			if(gases[GAS_02][MOLES] > toxins*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (toxins*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
-				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
+				plasma_burn_rate = (temperature_scale*(gases[GAS_02][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
 				toxins -= plasma_burn_rate
-				oxygen -= plasma_burn_rate*oxygen_burn_rate
+				gases[GAS_02][MOLES] -= plasma_burn_rate*oxygen_burn_rate
 				carbon_dioxide += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -250,7 +287,8 @@ What are the archived variables for?
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 
 /datum/gas_mixture/archive()
-	oxygen_archived = oxygen
+	/*
+	oxygen_archived = gases[GAS_02][MOLES]
 	carbon_dioxide_archived = carbon_dioxide
 	nitrogen_archived =  nitrogen
 	toxins_archived = toxins
@@ -258,10 +296,11 @@ What are the archived variables for?
 	for(var/gas in trace_gases)
 		var/datum/gas/trace_gas = gas
 		trace_gas.moles_archived = trace_gas.moles
-
+	*/
+	for(var/gas in gases)
+		gas[ARCHIVE] = gas[MOLES]
 	temperature_archived = temperature
-
-	return 1
+	. = 1
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
@@ -273,8 +312,8 @@ What are the archived variables for?
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
-
-	oxygen += giver.oxygen
+	/*
+	gases[GAS_02][MOLES] += giver.gases[GAS_02][MOLES]
 	carbon_dioxide += giver.carbon_dioxide
 	nitrogen += giver.nitrogen
 	toxins += giver.toxins
@@ -286,8 +325,11 @@ What are the archived variables for?
 			corresponding = new trace_gas.type()
 			trace_gases += corresponding
 		corresponding.moles += trace_gas.moles
+	*/
+	for(var/i in 1 to gases.len)
+		gases[i][MOLES] += giver.gases[i][MOLES]
 
-	return 1
+	. = 1
 
 /datum/gas_mixture/remove(amount)
 
@@ -297,14 +339,13 @@ What are the archived variables for?
 		return null
 
 	var/datum/gas_mixture/removed = new
-
-
-	removed.oxygen = QUANTIZE((oxygen/sum)*amount)
+	/*
+	removed.gases[GAS_02][MOLES] = QUANTIZE((gases[GAS_02][MOLES]/sum)*amount)
 	removed.nitrogen = QUANTIZE((nitrogen/sum)*amount)
 	removed.carbon_dioxide = QUANTIZE((carbon_dioxide/sum)*amount)
 	removed.toxins = QUANTIZE((toxins/sum)*amount)
 
-	oxygen -= removed.oxygen
+	gases[GAS_02][MOLES] -= removed.gases[GAS_02][MOLES]
 	nitrogen -= removed.nitrogen
 	carbon_dioxide -= removed.carbon_dioxide
 	toxins -= removed.toxins
@@ -316,10 +357,15 @@ What are the archived variables for?
 
 		corresponding.moles = (trace_gas.moles/sum)*amount
 		trace_gas.moles -= corresponding.moles
+	*/
+
+	for(var/i in 1 to gases.len)
+		removed.gases[i][MOLES] = QUANTIZE((gases[i][MOLES]/sum)*amount)
+		gases[i][MOLES] -= removed.gases[i][MOLES]
 
 	removed.temperature = temperature
 
-	return removed
+	. = removed
 
 /datum/gas_mixture/remove_ratio(ratio)
 
@@ -329,13 +375,13 @@ What are the archived variables for?
 	ratio = min(ratio, 1)
 
 	var/datum/gas_mixture/removed = new
-
-	removed.oxygen = QUANTIZE(oxygen*ratio)
+	/*
+	removed.gases[GAS_02][MOLES] = QUANTIZE(gases[GAS_02][MOLES]*ratio)
 	removed.nitrogen = QUANTIZE(nitrogen*ratio)
 	removed.carbon_dioxide = QUANTIZE(carbon_dioxide*ratio)
 	removed.toxins = QUANTIZE(toxins*ratio)
 
-	oxygen -= removed.oxygen
+	gases[GAS_02][MOLES] -= removed.gases[GAS_02][MOLES]
 	nitrogen -= removed.nitrogen
 	carbon_dioxide -= removed.carbon_dioxide
 	toxins -= removed.toxins
@@ -347,13 +393,18 @@ What are the archived variables for?
 
 		corresponding.moles = trace_gas.moles*ratio
 		trace_gas.moles -= corresponding.moles
+	*/
+	for(var/i in 1 to gases.len)
+		removed.gases[i][MOLES] = QUANTIZE(gas[i][MOLES]*ratio)
+		gases[i][MOLES] -= removed.gases[i][MOLES]
 
 	removed.temperature = temperature
 
-	return removed
+	. = removed
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	oxygen = sample.oxygen
+	/*
+	gases[GAS_02][MOLES] = sample.gases[GAS_02][MOLES]
 	carbon_dioxide = sample.carbon_dioxide
 	nitrogen = sample.nitrogen
 	toxins = sample.toxins
@@ -365,7 +416,9 @@ What are the archived variables for?
 		trace_gases += corresponding
 
 		corresponding.moles = trace_gas.moles
-
+	*/
+	for(var/i in 1 to gases.len)
+		gases[i][MOLES] = sample.gases[i][MOLES]
 	temperature = sample.temperature
 
 	return 1
@@ -417,12 +470,17 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	if(!sharer)	return 0
+	if(!sharer)
+		return 0
+	var/list/deltas = new
+	for(var/i in 1 to gases.len)
+		deltas += QUANTIZE(gases[i][ARCHIVE] - sharer.gases[i][ARCHIVE])/(atmos_adjacent_turfs+1)
+	/*
 	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
 	var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/(atmos_adjacent_turfs+1)
 	var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/(atmos_adjacent_turfs+1)
-
+	*/
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
 	var/old_self_heat_capacity = 0
@@ -432,7 +490,14 @@ What are the archived variables for?
 	var/heat_capacity_sharer_to_self = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-
+		for(var/i in 1 to gases.len)
+			if(deltas[i])
+				var/gas_heat_capacity = abs(gases[i][SPECIFIC_HEAT] * deltas[i])
+				if(deltas[i] > 0)
+					heat_capacity_self_to_sharer += gas_heat_capacity
+				else
+					heat_capacity_sharer_to_self += gas_heat_capacity
+		/*
 		var/delta_air = delta_oxygen+delta_nitrogen
 		if(delta_air)
 			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
@@ -454,10 +519,14 @@ What are the archived variables for?
 				heat_capacity_self_to_sharer += toxins_heat_capacity
 			else
 				heat_capacity_sharer_to_self -= toxins_heat_capacity
-
+		*/
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
+	for(var/i in 1 to gases.len)
+		gases[i][MOLES] -= deltas[i]
+		sharer.gases[i][MOLES] += deltas[i]
+	/*
 	oxygen -= delta_oxygen
 	sharer.oxygen += delta_oxygen
 
@@ -469,10 +538,12 @@ What are the archived variables for?
 
 	toxins -= delta_toxins
 	sharer.toxins += delta_toxins
-
-	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
-	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
-
+	*/
+	var/moved_moles = 0
+	for(var/delta in deltas)
+		moved_moles += delta
+		last_share += abs(delta)
+	/*
 	var/list/trace_types_considered = list()
 
 	for(var/gas in trace_gases)
@@ -522,7 +593,7 @@ What are the archived variables for?
 
 		moved_moles += -delta
 		last_share += abs(delta)
-
+	*/
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
@@ -646,6 +717,16 @@ What are the archived variables for?
 			sharer.temperature += heat/sharer.heat_capacity
 
 /datum/gas_mixture/compare(datum/gas_mixture/sample)
+	for(var/i in 1 to gases.len)
+		if((abs(gases[i][MOLES] - sample.gases[i][MOLES]) > MINIMUM_AIR_TO_SUSPEND && \
+			(\
+				(gases[i][MOLES] < (1-MINUMUM_AIR_RATIO_TO_SUSPEND)*sample.gases[i][MOLES]) || \
+				(gases[i][MOLES] > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.gases[i][MOLES])\
+			)\
+		))
+			return 0
+
+	/*
 	if((abs(oxygen-sample.oxygen) > MINIMUM_AIR_TO_SUSPEND) && \
 		((oxygen < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen) || (oxygen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen)))
 		return 0
@@ -658,12 +739,13 @@ What are the archived variables for?
 	if((abs(toxins-sample.toxins) > MINIMUM_AIR_TO_SUSPEND) && \
 		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
 		return 0
+	*/
 
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
 			return 0
-
+	/*
 	for(var/gas in sample.trace_gases)
 		var/datum/gas/trace_gas = gas
 		if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND)
@@ -685,6 +767,7 @@ What are the archived variables for?
 					return 0
 			else
 				return 0
+	*/
 	return 1
 
 

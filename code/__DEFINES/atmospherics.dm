@@ -8,11 +8,19 @@
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
+//indices of specific gases. used by listmos.
+#define GAS_O2 		1
+#define GAS_N2		2
+#define GAS_CO2		3
+#define GAS_PL		4
+#define GAS_N2O		5
+#define GAS_AGENT_B	6
+#define GAS_V_FUEL	7
+
+//indices of values in gas lists. used by listmos.
+#define MOLES			1
+#define ARCHIVE			2
+#define SPECIFIC_HEAT	3
 
 //stuff you should probably leave well alone!
 //ATMOS
