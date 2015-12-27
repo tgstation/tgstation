@@ -37,11 +37,27 @@
 	               "My love for you is like the singularity. It cannot be contained.",
 	               "Will you be my lusty xenomorph maid?",
 	               "We go together like the clown and the external airlock.",
-	               "Roses are red, liches are wizards, I love you more than a whole squad of lizards.",
+	               "Roses are red / Liches are wizards / I love you more than a whole squad of lizards.",
 	               "Be my valentine. Law 2.",
 	               "You must be a mime, because you leave me speechless.",
-	               "We make a better couple than Ian and the HoP."
-	               "You're hotter than a plasma fire in toxins.")
+	               "I love you like Ian loves the HoP.",
+	               "You're hotter than a plasma fire in toxins.",
+	               "Are you a rogue atmos tech? Because you're taking my breath away.",
+	               "Could I have all access... to your jumpsuit?",
+	               "Call me the CMO, because I'm here to inspect your johnson.",
+	               "Space is black. So is CO2. Be my Valentine. What the fuck is CO2?",
+	               "I'm not a changeling, but you make me extend my proboscis.",
+	               "I just can't get EI NATH of you.",
+	               "You must be a nuke op, because you make my heart explode.",
+	               "Roses are red / Botany's a farm / Not being my Valentine / causes human harm.",
+	               "I want you more than an assistant wants gloves.",
+	               "If I was a security officer, I'd brig you all shift.",
+	               "You know what you wanna do, right? You wanna put a banging donk in me.",
+	               "Are you the janitor? Because I think I've fallen for you.",
+	               "You're always valid to my heart.",
+	               "I'd risk the wrath of the gods to bwoink you.",
+	               "You look as beautiful now as the last time you were cloned.",
+	               )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
@@ -65,4 +81,13 @@
                 "A heart-shaped candy that reads: ERP",
                 "A heart-shaped candy that reads: LEWD",
                 "A heart-shaped candy that reads: LUSTY",
-                "A heart-shaped candy that reads: SPESS LOVE")
+                "A heart-shaped candy that reads: SPESS LOVE"
+                "A heart-shaped candy that reads: AYY LMAO",
+                "A heart-shaped candy that reads: TABLE ME",
+                "A heart-shaped candy that reads: HAND CUFFS",
+                "A heart-shaped candy that reads: SHAFT MINER",
+                "A heart-shaped candy that reads: BANGING DONK",
+                "A heart-shaped candy that reads: Y-YOU T-TOO",
+                "A heart-shaped candy that reads: GOT WOOD",
+                "A heart-shaped candy that reads: MEMES",
+                "A heart-shaped candy that reads: MURDER BONER")
