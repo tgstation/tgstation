@@ -5,7 +5,8 @@
 
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
-
+	
+	invisibility = 100
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
