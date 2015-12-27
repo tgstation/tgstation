@@ -184,17 +184,17 @@ var/datum/subsystem/air/SSair
 				if(!(T.atmos_adjacent_turfs & direction))
 					continue
 				var/turf/enemy_tile = get_step(T, direction)
+				var/datum/gas_mixture/enemy_air
 				if(istype(enemy_tile,/turf/simulated/))
 					var/turf/simulated/enemy_simulated = enemy_tile
-					if(!T.air.compare(enemy_simulated.air))
-						T.excited = 1
-						active_turfs |= T
-						break
+					enemy_air = enemy_simulated.air
 				else
-					if(!T.air.check_turf_total(enemy_tile))
-						T.excited = 1
-						active_turfs |= T
-						break
+					enemy_air = new
+					enemy_air.copy_from_turf(enemy_tile)
+				if(!T.air.compare(enemy_simulated.air))
+					T.excited = 1
+					active_turfs |= T
+					break
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/simulated/T in active_turfs)
