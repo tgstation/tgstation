@@ -1,4 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Long/timed actions will now cancel properly if you move and quickly move back to the right location."
