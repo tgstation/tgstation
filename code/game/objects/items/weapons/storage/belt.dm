@@ -139,7 +139,7 @@
 		"/obj/item/clothing/gloves/latex",
         "/obj/item/weapon/reagent_containers/hypospray/autoinjector",
 		"/obj/item/device/mass_spectrometer",
-		"/obj/item/device/gps/paramedic"
+		"/obj/item/device/gps/paramedic",
 		"/obj/item/device/antibody_scanner"
 	)
 
