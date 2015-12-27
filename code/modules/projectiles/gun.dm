@@ -35,9 +35,12 @@
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
 
-	var/unique_rename = 0 //allows renaming with a pen
-	var/unique_reskin = 0 //allows one-time reskinning
-	var/reskinned = 0 //whether or not the gun has been reskinned
+	var/spread = 0						//Spread induced by the gun itself.
+	var/randomspread = 1				//Set to 0 for shotguns.
+
+	var/unique_rename = 0				//allows renaming with a pen
+	var/unique_reskin = 0				//allows one-time reskinning
+	var/reskinned = 0					//whether or not the gun has been reskinned
 	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -61,14 +64,12 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
-
 /obj/item/weapon/gun/New()
 	..()
 	if(pin)
 		pin = new pin(src)
 
 	build_zooming()
-
 
 /obj/item/weapon/gun/CheckParts()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
@@ -86,6 +87,8 @@
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
 
+/obj/item/weapon/gun/proc/newshot()
+	return
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -198,8 +201,6 @@
 		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/newshot()
-	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
@@ -221,7 +222,12 @@ obj/item/weapon/gun/proc/newshot()
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
 			if(chambered)
-				if(!chambered.fire(target, user, params, , suppressed, zone_override))
+				var/sprd = 0
+				if(randomspread)
+					sprd = round((rand() - 0.5) * spread)
+				else //Smart spread
+					sprd = round((i / burst_size - 0.5) * spread)
+				if(!chambered.fire(target, user, params, suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -237,7 +243,7 @@ obj/item/weapon/gun/proc/newshot()
 			sleep(fire_delay)
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override))
+			if(!chambered.fire(target, user, params, suppressed, zone_override, spread))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -354,19 +360,16 @@ obj/item/weapon/gun/proc/newshot()
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
 
-
-/obj/item/weapon/gun/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
-		return
+/obj/item/weapon/gun/attack_hand(mob/user)
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-
+		return
+	..()
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
@@ -381,6 +384,15 @@ obj/item/weapon/gun/proc/newshot()
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		reskinned = 1
 		return
+
+
+/obj/item/weapon/gun/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(unique_reskin && !reskinned && loc == user)
+		reskin_gun(user)
 
 /obj/item/weapon/gun/proc/rename_gun(mob/M)
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
@@ -427,6 +439,7 @@ obj/item/weapon/gun/proc/newshot()
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, 1, params)
+
 
 
 /////////////

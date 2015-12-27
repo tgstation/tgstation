@@ -7,6 +7,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	flag = "laser"
 	eyeblur = 2
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 
 /obj/item/projectile/beam/practice
 	name = "practice laser"
@@ -59,6 +60,8 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	legacy = 1
+	animate_movement = SLIDE_STEPS
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
