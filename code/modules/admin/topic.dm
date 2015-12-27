@@ -1916,37 +1916,16 @@
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null
-		if(!input)	return
 
-		var/customname = input(src.owner, "Pick a title for the report", "Title") as text|null
+		var/sent = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null
+		if(!sent)	return
 
-		for(var/obj/machinery/faxmachine/F in allfaxes)
-			if(! (F.stat & (BROKEN|NOPOWER) ) )
+		var/sentname = input(src.owner, "Pick a title for the report", "Title") as text|null
 
-				// animate! it's alive!
-				flick("faxreceive", F)
-
-				// give the sprite some time to flick
-				spawn(20)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
-					P.name = "[command_name()]- [customname]"
-					P.info = input
-					P.update_icon()
-
-					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
-
-					// Stamps
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!P.stamped)
-						P.stamped = new
-					P.stamped += /obj/item/weapon/stamp
-					P.overlays += stampoverlay
-					P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+		SendFax(sent, sentname, centcomm = 1)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
-		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
+		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [sent]")
 		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]", 1)
 
 
