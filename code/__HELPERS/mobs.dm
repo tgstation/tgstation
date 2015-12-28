@@ -159,6 +159,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
+		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
@@ -169,7 +170,6 @@ Proc for attack log creation, because really why not
 		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
-		sleep(1)
 	if (progress)
 		qdel(progbar)
 
@@ -197,6 +197,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
+		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -218,6 +219,5 @@ Proc for attack log creation, because really why not
 			if(user.get_active_hand() != holding)
 				. = 0
 				break
-		sleep(1)
 	if (progress)
 		qdel(progbar)
