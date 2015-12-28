@@ -41,19 +41,20 @@
 		if(4)
 			if(prob(2))
 				affected_mob << "<span class='userdanger'>[pick("You feel your heart slowing...", "You slow your heartbeat.")]</span>"
-				affected_mob.adjustStaminaLoss(40)
-				if(affected_mob.getStaminaLoss() > 60 && !M.stat)
-					affected_mob.visible_message("<span class='warning'>[M] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
+				affected_mob.adjustStaminaLoss(70)
+			if(prob(10))
+					affected_mob.adjustStaminaLoss(100)
+					affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
 					affected_mob.sleeping += 5
 			if(prob(2))
 				affected_mob << "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>"
-				affected_mob.confused = min(100, M.confused + 8)
+				affected_mob.confused = min(100, affected_mob.confused + 8)
 			if(prob(15))
 				affected_mob.vomit(0, 1)
 			if(prob(3))
 				affected_mob << "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>"
 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
-				affected_mob.nutrition = max(M.nutrition - 100, 0)
+				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
 			if(prob(15))
 				affected_mob << "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>"
 				affected_mob.bodytemperature += 40
