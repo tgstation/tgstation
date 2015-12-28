@@ -2,20 +2,19 @@
 #define MODE_DELETING 2
 
 /obj/item/device/assembly/light_tile_control
-	name = "light tile controller"
-	short_name = "LT control"
+	name = "light tile remote"
+	short_name = "LT remote"
 
-	desc = "A device used to configure light floors from a distance. Whenever it's activated, "
+	desc = "A device used to configure light floors from a distance."
 	icon_state = "light_tiler"
 	starting_materials = list(MAT_IRON = 1500, MAT_GLASS = 200)
 	w_type = RECYK_ELECTRONIC
-	origin_tech = "magnets=1;programming=1"
+	origin_tech = "magnets=2;programming=2"
 
 	wires = WIRE_RECEIVE
 
-	secured = 0
-
 	accessible_values = list(
+		"Turn light floors on" = "set_state;number",\
 		"Red color"   = "color_r;number",\
 		"Green color" = "color_g;number",\
 		"Blue color"  = "color_b;number"
@@ -32,6 +31,8 @@
 	var/color_g = 255
 	var/color_b = 255
 
+	var/set_state = 1 //1 - turn the light floors on, 0 - turn them off
+
 	var/list/image/image_overlays = list() //This list stores "highlighter" images that show the user which floors are connected
 	var/highlighting_connected_floors = 0
 
@@ -41,9 +42,15 @@
 	change_floors()
 
 /obj/item/device/assembly/light_tile_control/afterattack(atom/A, mob/user, proximity_flag)
+	if(istype(A, /obj/item/stack/tile/light))
+		to_chat(user, "<span class='notice'>\The [A] must be installed into the floor before it can be controlled by \the [src]!</span>")
+		return
+
 	var/turf/simulated/floor/T = A
 	if(!istype(T)) return
-	if(!istype(T.floor_tile, /obj/item/stack/tile/light)) return
+	if(!istype(T.floor_tile, /obj/item/stack/tile/light))
+		to_chat(user, "<span class='notice'>\The [src] is only compactible with light tiles.</span>")
+		return
 
 	if(work_mode == MODE_ADDING)
 		if(connected_floors.Find(T))
@@ -62,10 +69,10 @@
 	dat += {"
 	<tt>[src]</tt><BR><BR>
 	<p>Connected to <b>[connected_floors.len]</b> floors</p>
-	<p><a href='?src=\ref[src];show_connections=1'>Show connected floors</a> | <a href='?src=\ref[src];toggle_mode=1'>Now [work_mode == MODE_ADDING ? "adding" : "removing"] floors</a> | <a href='?src=\ref[src];delete_all=1'>Remove all connections</a></p>
+	<p><a href='?src=\ref[src];show_connections=1'>Show connected floors for 10 seconds</a> | <a href='?src=\ref[src];toggle_mode=1'>Now [work_mode == MODE_ADDING ? "adding" : "removing"] floors</a> | <a href='?src=\ref[src];delete_all=1'>Remove all connections</a></p>
 	<BR>
-	<p>Selected color: [color_r] | [color_g] | [color_b]</p>
-	<p><a href='?src=\ref[src];change_color=1'>Change color</a></p>
+	<p><font color="[rgb(color_r,color_g,color_b)]">Selected color: <b>[color_r] | [color_g] | [color_b]</b></font></p>
+	<p><a href='?src=\ref[src];change_color=1'>Change color</a> | <a href='?src=\ref[src];toggle_set_state=1'>Light floors will be turned <b>ON</b></a></p>
 	<BR>
 	<p><a href='?src=\ref[src];apply=1'>Activate</a></p>
 	<p><a href='?src=\ref[src];refresh=1'>Refresh</a></p>
@@ -105,16 +112,27 @@
 	if(href_list["toggle_mode"])
 		if(work_mode == MODE_ADDING)
 			work_mode = MODE_DELETING
-			to_chat(usr, "<span class='info'>When applied to light floors, \the [src] will now disconnect them from itself.</span>")
+			to_chat(usr, "<span class='info'>When applied to light floors, \the [src] will now disconnect from them.</span>")
 		else
 			work_mode = MODE_ADDING
-			to_chat(usr, "<span class='info'>When applied to light floors, \the [src] will now connect them to itself.</span>")
+			to_chat(usr, "<span class='info'>When applied to light floors, \the [src] will now connect to them.</span>")
+
+		if(usr)
+			attack_self(usr)
+
+	if(href_list["toggle_set_state"])
+		set_state = !set_state
+
+		if(set_state)
+			to_chat(usr, "<span class='info'>Light floors will be turned on.</span>")
+		else
+			to_chat(usr, "<span class='info'>Light floors will be turned off.")
 
 		if(usr)
 			attack_self(usr)
 
 	if(href_list["delete_all"])
-		to_chat(usr, "<span class='notice'>Disconnected [connected_floors.len] from the network.</span>")
+		to_chat(usr, "<span class='notice'>Disconnected [connected_floors.len] tiles from the network.</span>")
 
 		connected_floors = list()
 
@@ -160,10 +178,8 @@
 			connected_floors.Remove(T)
 			continue
 
-		if(!light_tile.on) //Light tile off
-			continue
+		light_tile.on = src.set_state
 
-		//Hacky but not laggy
 		light_tile.color_r = src.color_r
 		light_tile.color_g = src.color_g
 		light_tile.color_b = src.color_b
