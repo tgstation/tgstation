@@ -112,5 +112,5 @@
 // Silicons
 
 /datum/job/mommi/New()
-	total_positions = 2
+	total_positions = 0 // Something about latejoin silicon is bugged.
 	spawn_positions = 2
