@@ -1609,6 +1609,11 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/potentham
 
+/datum/recipe/chococoin
+	reagents = list("milk" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
+
 /datum/recipe/claypot//it just works
 	reagents = list("water" = 10)
 	items = list(
