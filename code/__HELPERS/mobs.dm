@@ -156,10 +156,11 @@ Proc for attack log creation, because really why not
 		progbar = new(user, time, target)
 
 	var/endtime = world.time+time
+	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
 		if (progress)
-			progbar.update(endtime - world.time)
+			progbar.update(world.time - starttime)
 		if(!user || !target)
 			. = 0
 			break
