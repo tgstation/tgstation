@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
+	origin_tech = "programming=3;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
@@ -97,6 +98,12 @@
 				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
 			else
 				dat += "Uzi Ammo<br>"
+
+			dat += "(1 Influence) "
+			if(points >=1)
+				dat += "<a href='?src=\ref[src];purchase=necklace'>Dope Necklace</a><br>"
+			else
+				dat += "Dope Necklace<br>"
 
 			dat += "<br>"
 
@@ -209,6 +216,10 @@
 				if(gang.points >= 10)
 					item_type = /obj/item/weapon/switchblade
 					pointcost = 10
+			if("necklace")
+				if(gang.points >=1)
+					item_type = /obj/item/clothing/tie/dope_necklace
+					pointcost = 1
 			if("pistol")
 				if(gang.points >= 25)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
@@ -286,7 +297,8 @@
 						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
 						pointcost = 30
 				else
-					usr << "<span class='notice'>The <b>dominator</b> can be spawned only on territory controlled by your gang.</span>"
+					usr << "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>"
+					return
 
 		if(item_type)
 			gang.points -= pointcost

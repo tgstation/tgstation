@@ -625,6 +625,13 @@ for(var/t in test_times)
 					if(var_source.vars.Find(A))
 						. += A
 
-
+//assumes format #RRGGBB #rrggbb
+/proc/color_hex2num(A)
+	if(!A)
+		return 0
+	var/R = hex2num(copytext(A,2,4))
+	var/G = hex2num(copytext(A,4,6))
+	var/B = hex2num(copytext(A,6,0))
+	return R+G+B
 
 

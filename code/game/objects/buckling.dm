@@ -16,7 +16,7 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M))
+	if(can_buckle && istype(M) && !buckled_mob)
 		if(user_buckle_mob(M, user))
 			return 1
 
@@ -42,14 +42,14 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
-	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
 
 	return 1
 
 /obj/buckle_mob(mob/living/M, force = 0)
 	. = ..()
 	if(.)
-		if(burn_state == 1) //Sets the mob on fire if you buckle them to a burning atom/movableect
+		if(burn_state == ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 

@@ -8,16 +8,16 @@
 	var/sound1 = "sound/weapons/ZapBang.ogg"
 	var/sound2 = "sound/weapons/ZapBang.ogg"
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
+/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
 		revert_cast()
 		return
-	invocation(thearea)
+	invocation(thearea,user)
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
-	cast(targets,thearea)
+	cast(targets,thearea,user)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
@@ -32,8 +32,8 @@
 
 	return thearea
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea)
-	playsound(get_turf(usr), sound1, 50,1)
+/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
+	playsound(get_turf(user), sound1, 50,1)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -67,22 +67,22 @@
 
 		if(!success)
 			target.loc = pick(L)
-			playsound(get_turf(usr), sound2, 50,1)
+			playsound(get_turf(user), sound2, 50,1)
 
 	return
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null)
+/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/user = usr)
 	if(!invocation_area || !chosenarea)
 		..()
 	else
 		switch(invocation_type)
 			if("shout")
-				usr.say("[invocation] [uppertext(chosenarea.name)]")
-				if(usr.gender==MALE)
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+				user.say("[invocation] [uppertext(chosenarea.name)]")
+				if(user.gender==MALE)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 				else
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
-				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]")
 
 	return

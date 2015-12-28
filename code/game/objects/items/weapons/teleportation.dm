@@ -145,9 +145,9 @@ Frequency:
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
-				L["[com.id] (Active)"] = com.target
+				L["[get_area(com.target)] (Active)"] = com.target
 			else
-				L["[com.id] (Inactive)"] = com.target
+				L["[get_area(com.target)] (Inactive)"] = com.target
 	var/list/turfs = list(	)
 	for(var/turf/T in ultra_range(10, orange=1))
 		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb

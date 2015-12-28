@@ -24,6 +24,7 @@
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/mode = null
 	var/menu
@@ -37,7 +38,7 @@
 	var/list/stored_data = list()
 	var/current_channel
 
-	var/obj/machinery/bot/active_bot
+	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
 /obj/item/weapon/cartridge/engineering
@@ -89,6 +90,7 @@
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -215,6 +217,7 @@
 	access_quartermaster = 1
 	access_janitor = 1
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
@@ -248,7 +251,7 @@
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 
@@ -549,7 +552,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/obj/machinery/bot/cleanbot/B in SSbot.processing)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -710,7 +713,7 @@ Code:
 /obj/item/weapon/cartridge/proc/bot_control()
 
 
-	var/obj/machinery/bot/Bot
+	var/mob/living/simple_animal/bot/Bot
 
 //	if(!SC)
 //		menu = "Interlink Error - Please reinsert cartridge."
@@ -723,7 +726,7 @@ Code:
 
 		//MULEs!
 		if(active_bot.bot_type == MULE_BOT)
-			var/obj/machinery/bot/mulebot/MULE = active_bot
+			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
 			var/atom/Load = MULE.load
 			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=\ref[src];mule=unload'><i>unload</i></A>)" ]<BR>"
 			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=\ref[src];mule=destination'><i>set</i></A>)<BR>"
@@ -750,7 +753,7 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in SSbot.processing) //Git da botz
+		for(Bot in living_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

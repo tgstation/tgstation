@@ -119,25 +119,16 @@
 
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(atom/O)
+//Sped this up again for real this time
+/proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_atoms = list()
-
+	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-
 		if(A.flags & HEAR)
-			found_atoms |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
+			. += A
 		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_atoms
+		processing_list += A.contents
 
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
@@ -284,14 +275,14 @@
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
-/proc/get_candidates(be_special_flag=0,afk_bracket=3000, var/jobbanType)
+/proc/get_candidates(be_special_type, afk_bracket=3000, var/jobbanType)
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
 						if (jobbanType)
 							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
 								candidates += G.client

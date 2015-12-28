@@ -264,8 +264,7 @@ bool writeToFile()
 			outputFile << endl << "** Hard deletions **";
 			for(int i=0; i <= maxStorage; i++)
 			{
-				if(numHardDel[i] != 0) outputFile << endl << endl << "The following path has failed to GC " << numHardDel[i] << " time(s).\n";
-				if(storedHardDel[i] != "Blank") outputFile << storedHardDel[i] << endl;
+				if(numHardDel[i] != 0 && storedHardDel[i] != "Blank") outputFile << endl << storedHardDel[i] << " - " << numHardDel[i] << " time(s).\n";
 			}
 		}
 		outputFile.close();

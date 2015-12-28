@@ -20,7 +20,7 @@
 
 
 //filling the barsigns list
-	for(var/bartype in typesof(/datum/barsign) - /datum/barsign)
+	for(var/bartype in subtypesof(/datum/barsign))
 		var/datum/barsign/signinfo = new bartype
 		if(!signinfo.hidden)
 			barsigns += signinfo

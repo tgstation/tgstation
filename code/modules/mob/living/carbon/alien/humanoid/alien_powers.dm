@@ -241,8 +241,10 @@ Doesn't work on other aliens/AI.*/
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) return 0
-
+	if(!choice) 
+		return 0
+	if (!cost_check(check_turf,user))
+		return 0
 	user << "<span class='notice'>You shape a [choice].</span>"
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
@@ -285,6 +287,24 @@ Doesn't work on other aliens/AI.*/
 
 	return 1
 
+/obj/effect/proc_holder/alien/sneak
+	name = "Sneak"
+	desc = "Blend into the shadows to stalk your prey."
+	var/active = 0
+
+	action_icon_state = "alien_sneak"
+
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
+	if(!active)
+		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
+		user.sneaking = 1
+		active = 1
+		user << "<span class='noticealien'>You blend into the shadows...</span>"
+	else
+		user.alpha = initial(user.alpha)
+		user.sneaking = 0
+		active = 0
+		user << "<span class='noticealien'>You reveal yourself!</span>"
 
 
 /mob/living/carbon/proc/getPlasma()

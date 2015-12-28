@@ -13,7 +13,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
-	antag_flag = BE_REV
+	antag_flag = ROLE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 1
@@ -60,8 +60,10 @@
 
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
+	var/list/sec = get_living_sec()
+	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
-	while(heads.len < head_revolutionaries.len) //das vi danya
+	while(weighted_score < head_revolutionaries.len) //das vi danya
 		var/datum/mind/trotsky = pick(head_revolutionaries)
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
@@ -76,7 +78,6 @@
 		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		//	Removing revolutionary uplinks.	-Pete
 			equip_revolutionary(rev_mind.current)
-			update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -106,6 +107,7 @@
 
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
+	update_rev_icons_added(rev_mind)
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
@@ -170,13 +172,14 @@
 ////////////////////////////////////////////
 /datum/game_mode/revolution/proc/check_heads()
 	var/list/heads = get_all_heads()
+	var/list/sec = get_all_sec()
 	if(heads_to_kill.len < heads.len)
 		var/list/new_heads = heads - heads_to_kill
 		for(var/datum/mind/head_mind in new_heads)
 			for(var/datum/mind/rev_mind in head_revolutionaries)
 				mark_for_death(rev_mind, head_mind)
 
-	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < heads.len)
+	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 		latejoin_headrev()
 
 ///////////////////////////////
@@ -187,9 +190,9 @@
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
 			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
-				if(khrushchev.current.client.prefs.be_special & BE_REV)
+				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
-		if(promotable_revs)
+		if(promotable_revs.len)
 			var/datum/mind/stalin = pick(promotable_revs)
 			revolutionaries -= stalin
 			head_revolutionaries += stalin
@@ -246,6 +249,8 @@
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
+	if(jobban_isbanned(rev_mind.current, ROLE_REV))
+		replace_jobbaned_player(rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

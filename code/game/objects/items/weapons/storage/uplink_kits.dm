@@ -11,6 +11,8 @@
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/multitool/ai_detect(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
+			new /obj/item/weapon/switchblade(src)
 			return
 
 		if("stealth")
@@ -227,6 +229,7 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/coniine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/nuke

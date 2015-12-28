@@ -60,6 +60,9 @@
 /datum/spacevine_mutation/proc/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	return
 
+/datum/spacevine_mutation/proc/on_explosion(severity, target, obj/effect/spacevine/holder)
+	return
+
 
 /datum/spacevine_mutation/space_covering
 	name = "space protective"
@@ -137,10 +140,11 @@
 	name = "light"
 	hue = "#ffff00"
 	quality = POSITIVE
+	severity = 4
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
-	if(prob(10*severity))
-		holder.SetLuminosity(4)
+	if(holder.energy)
+		holder.SetLuminosity(severity, 3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -162,12 +166,18 @@
 	name = "explosive"
 	hue = "#ff0000"
 	quality = NEGATIVE
+	severity = 2
+
+/datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/effect/spacevine/holder)
+	if(explosion_severity < 3)
+		qdel(src)
+	else
+		. = 1
+		spawn(5)
+			qdel(src)
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
-	var/turf/T = holder.loc
-	src = T
-	spawn(10)
-		explosion(T, 0, 0, 2, 0, 0)
+	explosion(holder.loc, 0, 0, severity, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -194,9 +204,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
-	for(var/atom/A in target)
-		if(!istype(A, /obj/effect))
-			A.ex_act(severity)  //To not be the same as self-eating vine
+	target.ex_act(severity, src)
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
@@ -295,6 +303,24 @@
 		if(prob(chance))
 			qdel(holder)
 	return 1
+
+
+/datum/spacevine_mutation/flowering
+	name = "flowering"
+	hue = "#0A480D"
+	quality = NEGATIVE
+	severity = 10
+
+
+/datum/spacevine_mutation/flowering/on_grow(obj/effect/spacevine/holder)
+	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
+		var/obj/structure/alien/resin/flower_bud_enemy/FBE = new /obj/structure/alien/resin/flower_bud_enemy (get_turf(holder))
+		FBE.layer = holder.layer+0.1
+
+
+/datum/spacevine_mutation/flowering/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
+	holder.entangle(crosser)
+
 
 
 // SPACE VINES (Note that this code is very similar to Biomass code)
@@ -485,8 +511,6 @@
 			break
 
 	growth_queue = growth_queue + queue_end
-	//sleep(5)
-	//src.process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -503,13 +527,20 @@
 
 /obj/effect/spacevine/proc/entangle_mob()
 	if(!buckled_mob && prob(25))
-		for(var/mob/living/carbon/V in src.loc)
-			for(var/datum/spacevine_mutation/SM in mutations)
-				SM.on_buckle(src, V)
-			if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-				buckle_mob(V)
+		for(var/mob/living/V in src.loc)
+			entangle(V)
+			if(buckled_mob)
 				break //only capture one mob at a time
+
+
+/obj/effect/spacevine/proc/entangle(mob/living/V)
+	if(!V)
+		return
+	for(var/datum/spacevine_mutation/SM in mutations)
+		SM.on_buckle(src, V)
+	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
+		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
+		buckle_mob(V)
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
@@ -522,54 +553,14 @@
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 
-/*
-/obj/effect/spacevine/proc/Life()
-	if (!src) return
-	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
-	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated)) dogrowth = 0
-	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door/))
-			if(O:p_open == 0 && prob(50)) O:open()
-			else dogrowth = 0
-	if (dogrowth == 1)
-		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
-		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
-		spawn(20)
-			if(B)
-				B.Life()
-	src.growth += 1
-	if (src.growth == 10)
-		src.name = "Thick Space Kudzu"
-		src.icon_state = pick("vine-med1", "vine-med2", "vine-med3")
-		src.opacity = 1
-		src.waittime = 80
-	if (src.growth == 20)
-		src.name = "Dense Space Kudzu"
-		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = 1
-	spawn(src.waittime)
-		if (src.growth < 20) src.Life()
-
-*/
-
 /obj/effect/spacevine/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if (prob(90))
-				qdel(src)
-				return
-		if(3)
-			if (prob(50))
-				qdel(src)
-				return
-	return
+	if(istype(target, type)) //if its agressive spread vine dont do anything
+		return
+	var/i
+	for(var/datum/spacevine_mutation/SM in mutations)
+		i += SM.on_explosion(severity, target, src)
+	if(!i && prob(100/severity))
+		qdel(src)
 
 /obj/effect/spacevine/temperature_expose(null, temp, volume)
 	var/override = 0

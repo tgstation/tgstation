@@ -14,6 +14,7 @@
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/slash.ogg' //pls replace
+	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -125,3 +126,94 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/supermatter_sword
+	name = "supermatter sword"
+	desc = "In a station full of bad ideas, this might just be the worst."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "supermatter_sword"
+	item_state = "supermatter_sword"
+	slot_flags = null
+	w_class = 4
+	force = 0.001
+	armour_penetration = 1000
+	var/obj/machinery/power/supermatter_shard/shard
+	var/balanced = 1
+	origin_tech = "combat=5;materials=6"
+
+/obj/item/weapon/melee/supermatter_sword/New()
+	..()
+	shard = new /obj/machinery/power/supermatter_shard(src)
+	SSobj.processing += src
+	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
+
+/obj/item/weapon/melee/supermatter_sword/process()
+	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
+		return
+	if(!isturf(src.loc))
+		var/atom/target = src.loc
+		loc = target.loc
+		consume_everything(target)
+	else
+		var/turf/T = get_turf(src)
+		if(!istype(T,/turf/space))
+			consume_turf(T)
+
+/obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+	if(user && target == user)
+		user.drop_item()
+	if(proximity_flag)
+		consume_everything(target)
+	..()
+
+/obj/item/weapon/melee/supermatter_sword/throw_impact(target)
+	..()
+	if(ismob(target))
+		var/mob/M
+		if(src.loc == M) //target caught the sword
+			M.drop_item()
+	consume_everything(target)
+
+/obj/item/weapon/melee/supermatter_sword/pickup(user)
+	..()
+	balanced = 0
+
+/obj/item/weapon/melee/supermatter_sword/ex_act(severity, target)
+	visible_message("<span class='danger'>\The blast wave smacks into \the [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	consume_everything()
+
+/obj/item/weapon/melee/supermatter_sword/acid_act()
+	visible_message("<span class='danger'>\The acid smacks into \the [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	consume_everything()
+
+/obj/item/weapon/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
+	visible_message("<span class='danger'>[P] smacks into \the [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	consume_everything()
+
+/obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] touches the [src]'s blade. It looks like they're tired of waiting for the radiation to kill them!</span>")
+	user.drop_item()
+	shard.Bumped(user)
+
+/obj/item/weapon/melee/supermatter_sword/proc/consume_everything(target)
+	if(isnull(target))
+		shard.Consume()
+	else if(!isturf(target))
+		shard.Bumped(target)
+	else
+		consume_turf(target)
+
+/obj/item/weapon/melee/supermatter_sword/proc/consume_turf(turf/T)
+	if(istype(T, T.baseturf))	return //Can't void the void, baby!
+	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
+	T.visible_message("<span class='danger'>\The [T] smacks into \the [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	shard.Consume()
+	T.ChangeTurf(T.baseturf)
+	T.CalculateAdjacentTurfs()
+
+/obj/item/weapon/melee/supermatter_sword/add_blood()
+	return

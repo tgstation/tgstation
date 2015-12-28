@@ -154,11 +154,6 @@
 				ears.talk_into(src, message, , spans)
 			return ITALICS | REDUCE_RANGE
 
-		if(MODE_SECURE_HEADSET)
-			if (ears)
-				ears.talk_into(src, message, 1, spans)
-			return ITALICS | REDUCE_RANGE
-
 		if(MODE_DEPARTMENT)
 			if (ears)
 				ears.talk_into(src, message, message_mode, spans)
@@ -595,7 +590,8 @@
 /mob/living/simple_animal/parrot/movement_delay()
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
-	..()
+		//Because the most appropriate place to set icon_state is movement_delay(), clearly
+	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors

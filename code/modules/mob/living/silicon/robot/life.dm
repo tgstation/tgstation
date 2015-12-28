@@ -31,6 +31,7 @@
 		uneq_all()
 		stat = UNCONSCIOUS
 		update_headlamp(1)
+	diag_hud_set_borgcell()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -44,17 +45,8 @@
 
 		if(health <= -maxHealth) //die only once
 			death()
+			diag_hud_set_status()
 			return
-
-		if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
-			if(uneq_module(module_state_3))
-				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
-			if(health < 0)
-				if(uneq_module(module_state_2))
-					src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
-				if(health < -maxHealth*0.5)
-					if(uneq_module(module_state_1))
-						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
 		if(getOxyLoss() > maxHealth*0.5)
 			Paralyse(3)
@@ -62,6 +54,8 @@
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
 			update_headlamp()
+		diag_hud_set_health()
+		diag_hud_set_status()
 
 		return 1
 

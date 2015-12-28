@@ -9,6 +9,8 @@
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
+	var/list/temporary_mutations = list() //Timers for temporary mutations
+	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/carbon/holder
 
 /datum/dna/New(mob/living/carbon/new_holder)
@@ -22,6 +24,7 @@
 	destination.set_species(species.type, icon_update=0)
 	destination.dna.features = features
 	destination.dna.real_name = real_name
+	destination.dna.temporary_mutations = temporary_mutations
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
 

@@ -6,6 +6,7 @@
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	var/datum/mind/mind
+	var/list/datum/action/actions = list()
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -77,7 +78,6 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/shakecamera = 0
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
@@ -86,7 +86,6 @@
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
-	var/seer = 0 //for cult//Carbon, probably Human
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
@@ -124,17 +123,12 @@
 //List of active diseases
 
 	var/list/viruses = list() // replaces var/datum/disease/virus
-
-//Monkey/infected mode
 	var/list/resistances = list()
-	var/datum/disease/virus = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
-
-	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
@@ -148,6 +142,8 @@
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
+
+	var/remote_view = 0 // Set to 1 to prevent view resets on Life
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 

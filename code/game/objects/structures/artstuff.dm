@@ -9,7 +9,7 @@
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
 	density = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 15
 	var/obj/item/weapon/canvas/painting = null
 
@@ -52,7 +52,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	desc = "draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
 
 /obj/item/weapon/canvas/nineteenXnineteen
@@ -110,7 +110,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	//Drawing one pixel with a crayon
 	if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
-		DrawPixelOn(C.colour, pixX, pixY)
+		DrawPixelOn(C.paint_color, pixX, pixY)
 		return
 
 	..()

@@ -4,8 +4,9 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	can_fire = 1
 	priority = 0
+
+	can_fire = 1 // This needs to fire before round start.
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -20,7 +21,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-		//These bible variables should be a preference
+	//These bible variables should be a preference
 	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
 	var/Bible_item_state					//item_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
@@ -67,7 +68,7 @@ var/datum/subsystem/ticker/ticker
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
+			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
 			current_state = GAME_STATE_PREGAME
 
@@ -178,8 +179,7 @@ var/datum/subsystem/ticker/ticker
 	equip_characters()
 	data_core.manifest()
 
-	master_controller.roundHasStarted()
-
+	Master.RoundStart()
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
@@ -205,7 +205,7 @@ var/datum/subsystem/ticker/ticker
 	return 1
 
 
-	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
+//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 
@@ -261,8 +261,6 @@ var/datum/subsystem/ticker/ticker
 		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
-
-
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name

@@ -30,10 +30,10 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/jetpack
-	name = "a jetpack"
-	targetitem = /obj/item/weapon/tank/jetpack
-	difficulty = 3
-	excludefromjob = list("Chief Engineer")
+	name = "the Captain's jetpack"
+	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
+	difficulty = 5
+	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -59,8 +59,8 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/ablative
-	name = "an ablative armor vest"
+/datum/objective_item/steal/reflector
+	name = "a reflector vest"
 	targetitem = /obj/item/clothing/suit/armor/laserproof
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
@@ -82,7 +82,7 @@
 	difficulty = 15
 
 /datum/objective_item/steal/nuke_core/New()
-	special_equipment += new /obj/item/weapon/storage/box/syndie_kit/nuke()
+	special_equipment += /obj/item/weapon/storage/box/syndie_kit/nuke
 
 //Items with special checks!
 /datum/objective_item/steal/plasma

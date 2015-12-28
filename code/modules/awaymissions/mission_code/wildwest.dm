@@ -102,7 +102,7 @@
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
-				for(var/mob/living/simple_animal/hostile/faithless/F in world)
+				for(var/mob/living/simple_animal/hostile/faithless/F in mob_list)
 					F.health = -10
 					F.stat = 2
 					F.icon_state = "faithless_dead"
@@ -129,19 +129,19 @@
 
 /obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
 
-	if(triggered) return
+	if(triggered)
+		return
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
+	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
+		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		for(var/mob/O in viewers(world.view, src.loc))
-			s.set_up(3, 1, src)
-			s.start()
-			explosion(M, 1, 0, 0, 0)
-			qdel(src)
+		s.set_up(3, 1, src)
+		s.start()
+		explosion(M, 1, 0, 0, 0)
+		qdel(src)
 
 /////For the Wishgranter///////////
 

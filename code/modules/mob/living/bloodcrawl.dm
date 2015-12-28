@@ -1,6 +1,3 @@
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
-
 /obj/effect/dummy/slaughter //Can't use the wizard one, blocked by jaunt/slow
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
@@ -9,6 +6,8 @@
 	density = 0
 	anchored = 1
 	invisibility = 60
+	burn_state = LAVA_PROOF
+
 
 obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	if (!src.canmove || !direction) return
@@ -18,12 +17,12 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	spawn(1)
 		src.canmove = 1
 
-/obj/effect/dummy/slaughter/ex_act(blah)
+/obj/effect/dummy/slaughter/ex_act()
 	return
-/obj/effect/dummy/slaughter/bullet_act(blah)
+/obj/effect/dummy/slaughter/bullet_act()
 	return
 
-/obj/effect/dummy/slaughter/singularity_act(blah)
+/obj/effect/dummy/slaughter/singularity_act()
 	return
 
 /obj/effect/dummy/slaughter/Destroy()
@@ -52,8 +51,12 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 		var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
 		src.ExtinguishMob()
-		if(src.buckled)
-			src.buckled.unbuckle_mob()
+		if(buckled)
+			buckled.unbuckle_mob(force=1)
+		if(buckled_mob)
+			unbuckle_mob(force=1)
+		if(pulledby)
+			pulledby.stop_pulling()
 		if(src.pulling && src.bloodcrawl == BLOODCRAWL_EAT)
 			if(istype(src.pulling, /mob/living))
 				var/mob/living/victim = src.pulling
@@ -77,15 +80,8 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 				src.adjustFireLoss(-1000)
 				src.adjustOxyLoss(-1000)
 				src.adjustToxLoss(-1000)
-				if(istype(src, /mob/living/simple_animal/slaughter))
-					var/mob/living/simple_animal/slaughter/S = src
-					kidnapped << "<span class='userdanger'>You feel teeth sink into your flesh, and the--</span>"
-					kidnapped.adjustBruteLoss(1000)
-					kidnapped.loc = src
-					S.consumed_mobs.Add(kidnapped)
-				else
-					kidnapped.ghostize()
-					qdel(kidnapped)
+				kidnapped.ghostize()
+				qdel(kidnapped)
 			else
 				src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
 		src.notransform = 0

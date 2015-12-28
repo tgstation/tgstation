@@ -10,7 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
-	var/sound = "sound/weapons/badZap.ogg"
+	var/sound = null //The sound the spell makes when it is cast
 	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
@@ -41,6 +41,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/spell_level = 0 //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
+	var/player_lock = 1 //If it can be used by simple mobs
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -62,9 +63,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
-		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
-		return 0
+	if(player_lock)
+		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
+			user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
+			return 0
+	else
+		if(!(src in user.mob_spell_list))
+			return 0
 
 	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
@@ -170,15 +175,18 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
-	invocation()
-	user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
+	invocation(user)
+	if(user && user.ckey)
+		user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
+	if(sound)
+		playMagSound()
 	if(prob(critfailchance))
 		critfail(targets)
 	else
-		cast(targets)
+		cast(targets,user=user)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
@@ -225,7 +233,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				smoke.start()
 
 
-/obj/effect/proc_holder/spell/proc/cast(list/targets)
+/obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
@@ -295,7 +303,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+					M = input("Choose the target for the spell.", "Targeting") as null|mob in possible_targets
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
@@ -332,7 +340,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast(user)
 		return
 
-	perform(targets)
+	perform(targets,user=user)
 
 	return
 
@@ -347,7 +355,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast()
 		return
 
-	perform(targets)
+	perform(targets,user=user)
 
 	return
 
@@ -408,3 +416,30 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
 			return 0
 	return 1
+
+/obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
+	range = -1 //Duh
+
+/obj/effect/proc_holder/spell/self/choose_targets(mob/user = usr)
+	if(!user)
+		revert_cast()
+		return
+	perform(null,user=user)
+
+/obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
+	name = "Lesser Heal"
+	desc = "Heals a small amount of brute and burn damage."
+	human_req = 1
+	clothes_req = 0
+	charge_max = 100
+	cooldown_min = 50
+	invocation = "Victus sano!"
+	invocation_type = "whisper"
+	school = "restoration"
+	sound = 'sound/magic/Staff_Healing.ogg'
+
+/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
+	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
+	user.adjustBruteLoss(-10)
+	user.adjustFireLoss(-10)

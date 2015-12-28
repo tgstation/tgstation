@@ -16,7 +16,7 @@
 	name = "loyalty firing pin"
 	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
 	id = "pin_loyalty"
-	req_tech = list("combat" = 6, "materials" = 6, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 6, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
 	build_path = /obj/item/device/firing_pin/implant/loyalty

@@ -193,12 +193,12 @@
 	sec_hud_set_security_status()
 	..()
 
-/mob/living/carbon/human/head_update(obj/item/I)
-	if(I.flags & BLOCKHAIR)
+/mob/living/carbon/human/head_update(obj/item/I, forced)
+	if(I.flags & BLOCKHAIR || forced)
 		update_hair()
-	if(I.flags_inv & HIDEEYES)
+	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()
-	if(I.flags_inv & HIDEEARS)
+	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
 	sec_hud_set_security_status()
 	..()
@@ -278,8 +278,7 @@
 			Human.unEquip(src)
 
 		if(bomb)
-			for(var/obj/item/Item in contents) //Empty out the contents
-				Item.loc = src.loc
+			empty_object_contents()
 			spawn(1) //so the shreds aren't instantly deleted by the explosion
 				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
 				Shreds.desc = "The sad remains of what used to be [src.name]."
@@ -289,7 +288,7 @@
 
 	return shredded
 
-/mob/living/carbon/human/proc/equipOutfit(outfit)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -301,4 +300,4 @@
 	if(!O)
 		return 0
 
-	return O.equip(src)
+	return O.equip(src, visualsOnly)

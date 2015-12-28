@@ -32,13 +32,14 @@
 	throw_range = 5
 	w_class = 3
 	w_class_on = 5
-	flags = CONDUCT | NOSHIELD
+	flags = CONDUCT
+	armour_penetration = 100
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards \his head! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -50,17 +51,21 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
-	flags = NOSHIELD
+	sharpness = IS_SHARP
+	embed_chance = 75
+	embedded_impact_pain_multiplier = 10
+	armour_penetration = 50
 	origin_tech = "magnets=3;syndicate=4"
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/New()
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/melee/energy/sword/IsShield()
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
-		return 1
+		return ..()
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
@@ -72,6 +77,7 @@
 		force = force_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
+		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
@@ -85,6 +91,7 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
+		throw_speed = initial(throw_speed)
 		if(attack_verb_on.len)
 			attack_verb = list()
 		icon_state = initial(icon_state)
@@ -131,7 +138,7 @@
 	icon_state = "esaw_0"
 	item_color = null
 
-/obj/item/weapon/melee/energy/sword/cyborg/saw/IsShield()
+/obj/item/weapon/melee/energy/sword/cyborg/saw/hit_reaction()
 	return 0
 
 /obj/item/weapon/melee/energy/sword/saber
@@ -204,7 +211,6 @@
 	throw_speed = 3
 	throw_range = 1
 	w_class = 4//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD
 	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl

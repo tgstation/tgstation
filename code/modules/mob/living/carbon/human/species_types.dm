@@ -12,6 +12,7 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
+
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
 		return 1	//Pure humans are always allowed in all roles.
@@ -81,9 +82,12 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	return 1
 
 /datum/species/lizard/handle_speech(message)
-	// jesus christ why
+
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "s", "sss")
+		message = regEx_replaceall(message, "(?<!s)s(?!s)", "sss") //(?<!s) Not s before. (?!s) not s after. That way it only triples a single s instead of double ss.
+		message = regEx_replaceall(message, "(?<!s)ss(?!s)", "ssss")
+		message = regEx_replaceall(message, "(?<!S)S(?!S)", "SSS")
+		message = regEx_replaceall(message, "(?<!S)SS(?!S)", "SSSS")
 
 	return message
 
@@ -116,10 +120,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
-		var/area/A = T.loc
-		if(A)
-			if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5
-			else						light_amount =  5
+		light_amount = min(10,T.get_lumcount()) - 5
 		H.nutrition += light_amount
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
@@ -165,6 +166,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	name = "???"
 	id = "shadow"
 	darksight = 8
+	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
@@ -175,10 +177,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
-		var/area/A = T.loc
-		if(A)
-			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-			else						light_amount =  10
+		light_amount = T.get_lumcount()
+
 		if(light_amount > 2) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
 		else if (light_amount < 2) //heal in the dark
@@ -216,7 +216,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
+				H.nutrition -= 2.5
 		if(S.volume < 50)
 			if(prob(5))
 				H << "<span class='danger'>You feel drained!</span>"
@@ -244,6 +244,91 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
+	burnmod = 0.5
+	coldmod = 2
+	heatmod = 0.5
+
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	if(recently_changed)
+		var/datum/action/innate/split_body/S = new
+		S.Grant(H)
+
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume >= 200)
+			if(prob(5))
+				H << "<span class='notice'>You feel very bloated!</span>"
+		if(S.volume < 200)
+			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 2.5
+
+	..()
+
+/datum/action/innate/split_body
+	name = "Split Body"
+	check_flags = AB_CHECK_ALIVE
+	button_icon_state = "slimesplit"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/split_body/CheckRemoval()
+	var/mob/living/carbon/human/H = owner
+	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
+		return 1
+	return 0
+
+/datum/action/innate/split_body/Activate()
+	var/mob/living/carbon/human/H = owner
+	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
+	H.notransform = 1
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume >= 200)
+			var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
+			spare.underwear = "Nude"
+			H.dna.transfer_identity(spare, transfer_SE=1)
+			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+			spare.real_name = spare.dna.real_name
+			spare.name = spare.dna.real_name
+			spare.updateappearance(mutcolor_update=1)
+			spare.domutcheck()
+			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+			S.volume = 80
+			H.notransform = 0
+			var/datum/action/innate/swap_body/callforward = new /datum/action/innate/swap_body()
+			var/datum/action/innate/swap_body/callback = new /datum/action/innate/swap_body()
+			callforward.body = spare
+			callforward.Grant(H)
+			callback.body = H
+			callback.Grant(spare)
+			H.mind.transfer_to(spare)
+			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+			return
+
+	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
+	H.notransform = 0
+
+/datum/action/innate/swap_body
+	name = "Swap Body"
+	check_flags = AB_CHECK_ALIVE
+	button_icon_state = "slimeswap"
+	background_icon_state = "bg_alien"
+	var/mob/living/carbon/human/body
+
+/datum/action/innate/swap_body/CheckRemoval()
+	var/mob/living/carbon/human/H = owner
+	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
+		return 1
+	return 0
+
+/datum/action/innate/swap_body/Activate()
+	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
+		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
+		Remove(owner)
+		return
+	if(body.stat == UNCONSCIOUS)
+		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+		return
+
+	owner.mind.transfer_to(body)
 
 /*
  GOLEMS
@@ -256,8 +341,9 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
+	siemens_coeff = 0
 	punchmod = 5
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 
@@ -300,6 +386,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
 	say_mod = "rattles"
+	need_nutrition = 0
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
@@ -382,32 +469,39 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
 /datum/species/plasmaman
-	name = "Plasbone"
+	name = "Plasmaman"
 	id = "plasmaman"
 	say_mod = "rattles"
 	sexes = 0
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBLOOD,RADIMMUNE)
+	meat = /obj/item/stack/sheet/mineral/plasma
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
+	need_nutrition = 0 //Hard to eat through a helmet
+	burnmod = 2
+	heatmod = 2
+	speedmod = 1
 	var/skin = 0
 
 /datum/species/plasmaman/skin
 	name = "Skinbone"
 	skin = 1
+	roundstart = 0
 
 /datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
 	var/base = ..()
-	if(base == id)
-		base = "[base][skin]"
+	if(base == id && !skin)
+		base = "[base]_m"
+	else
+		base = "skinbone_m"
 	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/eva/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/plasmaman))
+	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
@@ -418,19 +512,211 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 					H.IgniteMob()
 	else
 		if(H.fire_stacks)
-			var/obj/item/clothing/suit/space/eva/plasmaman/P = H.wear_suit
+			var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 			if(istype(P))
 				P.Extinguish(H)
 	H.update_fire()
 
-//Heal from plasma
-/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "plasma")
-		H.adjustBruteLoss(-5)
-		H.adjustFireLoss(-5)
+/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
+	H.equipOutfit(O, visualsOnly)
+	return 0
+
+/datum/species/plasmaman/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	if(rank in security_positions)
+		return 0
+	if(rank == "Clown" || rank == "Mime")//No funny bussiness
+		return 0
+	return 1
+
+
+
+
+var/global/list/synth_flesh_disguises = list()
+
+/datum/species/synth
+	name = "Synth" //inherited from the real species, for health scanners and things
+	id = "synth"
+	say_mod = "beep boops" //inherited from a user's real species
+	sexes = 0
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //all of these + whatever we inherit from the real species
+	safe_oxygen_min = 0
+	safe_toxins_min = 0
+	safe_toxins_max = 0
+	safe_co2_max = 0
+	SA_para_min = 0
+	SA_sleep_min = 0
+	dangerous_existence = 1
+	need_nutrition = 0 //beep boop robots do not need sustinance
+	meat = null
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
+	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
+	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
+	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+
+
+/datum/species/synth/military
+	name = "Military Synth"
+	id = "military_synth"
+	armor = 25
+	punchmod = 10
+	disguise_fail_health = 50
+
+
+/datum/species/synth/admin_set_species(mob/living/carbon/human/H, old_species)
+	assume_disguise(old_species,H)
+
+
+/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "synthflesh")
+		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
+		handle_disguise(H) //and update flesh disguise
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
 
+/datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
+	if(S && !istype(S, type))
+		name = S.name
+		say_mod = S.say_mod
+		sexes = S.sexes
+		specflags = initial_specflags.Copy()
+		specflags.Add(S.specflags)
+		attack_verb = S.attack_verb
+		attack_sound = S.attack_sound
+		miss_sound = S.miss_sound
+		meat = S.meat
+		mutant_bodyparts = S.mutant_bodyparts.Copy()
+		default_features = S.default_features.Copy()
+		nojumpsuit = S.nojumpsuit
+		no_equip = S.no_equip.Copy()
+		fake_species = new S.type
+	else
+		name = initial(name)
+		say_mod = initial(say_mod)
+		specflags = initial_specflags.Copy()
+		attack_verb = initial(attack_verb)
+		attack_sound = initial(attack_sound)
+		miss_sound = initial(miss_sound)
+		mutant_bodyparts = list()
+		default_features = list()
+		nojumpsuit = initial(nojumpsuit)
+		no_equip = list()
+		qdel(fake_species)
+		fake_species = null
+		meat = initial(meat)
+
+	build_disguise(H)
+	handle_disguise(H)
 
 
+/datum/species/synth/proc/build_disguise(mob/living/carbon/human/H)
+	var/base = ""
+	if(fake_species)
+		base = fake_species.update_base_icon_state(H)
+		if(synth_flesh_disguises[base])
+			damaged_synth_flesh = synth_flesh_disguises[base]
+		else
+			var/icon/base_flesh = icon(H.icon,"[base]_s")
+			var/icon/damage = icon(H.icon,"synthflesh_damage")
+			base_flesh.Blend(damage,ICON_MULTIPLY) //damage the skin
+			damaged_synth_flesh = image(icon = base_flesh, layer= -SPECIES_LAYER)
+			synth_flesh_disguises[base] = damaged_synth_flesh
+	else
+		damaged_synth_flesh = null
+
+
+/datum/species/synth/proc/handle_disguise(mob/living/carbon/human/H)
+	if(H)
+		H.updatehealth()
+		var/add_overlay = FALSE
+		if(H.health < disguise_fail_health)
+			//clear these out, they look weird
+			H.underwear = ""
+			H.undershirt = ""
+			H.socks = ""
+			add_overlay = TRUE
+		else
+			H.overlays -= damaged_synth_flesh
+			if(H.overlays_standing[SPECIES_LAYER] == damaged_synth_flesh)
+				H.overlays_standing[SPECIES_LAYER] = null
+
+		H.regenerate_icons()
+		if(add_overlay)
+			H.remove_overlay(SPECIES_LAYER)
+
+			//Copy and colour the image for coloured species
+			var/image/I = image(layer = -SPECIES_LAYER)
+			I.appearance = damaged_synth_flesh.appearance
+			if(MUTCOLORS in specflags)
+				I.color = "#[H.dna.features["mcolor"]]"
+			damaged_synth_flesh = I
+
+			H.overlays_standing[SPECIES_LAYER] = damaged_synth_flesh
+			H.apply_overlay(SPECIES_LAYER)
+
+
+
+/datum/species/synth/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	. = ..()
+	handle_disguise(H)
+
+
+//Proc redirects:
+//Passing procs onto the fake_species, to ensure we look as much like them as possible
+
+/datum/species/synth/update_base_icon_state(mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			return fake_species.update_base_icon_state(H)
+		else
+			return ..()
+	else
+		. = ..()
+
+/datum/species/synth/update_color(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.update_color(H, forced_colour)
+
+
+/datum/species/synth/handle_hair(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_hair(H, forced_colour)
+
+
+/datum/species/synth/handle_body(mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_body(H)
+
+
+/datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			fake_species.handle_body(H,forced_colour)
+
+
+/datum/species/synth/get_spans()
+	if(fake_species)
+		return fake_species.get_spans()
+	return list()
+
+
+/datum/species/synth/handle_speech(message, mob/living/carbon/human/H)
+	H.updatehealth()
+	if(H.health > disguise_fail_health)
+		if(fake_species)
+			return fake_species.handle_speech(message,H)
+		else
+			return ..()
+	else
+		return ..()

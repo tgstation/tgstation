@@ -33,7 +33,7 @@
 								D << "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>"
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
-							if(do_after(user,30,needhand = 1, target = src))
+							if(do_after(user,30, 1, target = src))
 								adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
 								stat = CONSCIOUS
 								icon_state = icon_living
@@ -49,7 +49,7 @@
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
 								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
-								if(do_after(D, 60,5,0, target = src))
+								if(do_after(D, 60, 0, target = src))
 									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 									D.adjustBruteLoss(-src.maxHealth)
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
@@ -98,7 +98,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
-			if(do_after(user,80,target=user))
+			if(do_after(user,80/I.toolspeed,target=user))
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
@@ -110,7 +110,7 @@
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(!do_after(user, 50, target = src))
+		if(!do_after(user, 50/I.toolspeed, target = src))
 			return
 		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
 							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")

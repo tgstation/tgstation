@@ -19,7 +19,7 @@
 	starting_spells = null
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/trigger/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/trigger/cast(list/targets,mob/user = usr)
 	playMagSound()
 	for(var/mob/living/target in targets)
 		for(var/obj/effect/proc_holder/spell/spell in contents)

@@ -9,6 +9,8 @@
 			M.regenerate_icons()
 			is_adult = 0
 			maxHealth = 150
+			var/datum/action/innate/slime/evolve/E = new
+			E.Grant(src)
 			revive()
 			regenerate_icons()
 			number = rand(1, 1000)
@@ -33,3 +35,10 @@
 /mob/living/simple_animal/slime/gib()
 	death(1)
 	qdel(src)
+
+
+/mob/living/simple_animal/slime/Destroy()
+	for(var/obj/machinery/computer/camera_advanced/xenobio/X in machines)
+		if(src in X.stored_slimes)
+			X.stored_slimes -= src
+	return ..()

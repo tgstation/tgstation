@@ -28,14 +28,16 @@
 		src << "Only administrators may use this command."
 		return
 
+	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
+		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
 		return
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "<i>You hear [ticker.Bible_deity_name ? "the voice of " + ticker.Bible_deity_name : "a voice"] in your head... <b>[msg]</i></b>"
+				M << "<i>You hear a voice in your head... <b>[msg]</i></b>"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")
@@ -198,7 +200,7 @@
 		var/list/candidates = list()
 		for(var/mob/M in player_list)
 			if(M.stat != DEAD)		continue	//we are not dead!
-			if(!M.client.prefs.be_special & BE_ALIEN)	continue	//we don't want to be an alium
+			if(!(ROLE_ALIEN in M.client.prefs.be_special))	continue	//we don't want to be an alium
 			if(M.client.is_afk())	continue	//we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)	continue	//we have a live body we are tied to
 			candidates += M.ckey
@@ -918,11 +920,11 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	if(!holder) return
 
-	var/datum/atom_hud/magical = huds[ANTAG_HUD_WIZ]
-	var/adding_hud = (usr in magical.hudusers) ? 0 : 1
+	var/datum/atom_hud/A = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/adding_hud = (usr in A.hudusers) ? 0 : 1
 
 	for(var/datum/atom_hud/H in huds)
-		if(istype(H, /datum/atom_hud/antag))
+		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	usr << "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"]."

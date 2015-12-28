@@ -1,0 +1,49 @@
+@import "_config";
+@import "_util";
+
+
+.active(@color) {
+    background-color: @color;
+    &:hover {
+        background-color: lighten(@color, @hover);
+    }
+}
+
+
+// Basic Link (Button) Element
+span.link {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 22px;
+    margin: 1px;
+    padding: 2px 3px;
+    white-space: nowrap;
+
+    border: 1px solid @border;
+
+    .fontReset; // Reset font settings.
+
+    // Tweak spacing to fit icons.
+    .fa { margin-right: 3px; }
+    .iconed { padding-left: 3px; }
+
+    // Link colors:
+    background-color: @normal;
+    &.active {
+        .active(@normal);
+        &.selected { .active(@selected); }
+        &.caution { .active(@caution); }
+    	&.danger { .active(@danger); }
+    }
+    &.inactive {
+        background-color: @disabled;
+        &.selected { background-color: @selected; }
+        &.caution { background-color: @caution; }
+    	&.danger { background-color: @danger; }
+    }
+    &.disabled { background-color: @disabled; }
+
+    &.gridable {
+        width: 125px;
+    }
+}

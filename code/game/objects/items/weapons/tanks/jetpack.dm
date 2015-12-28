@@ -95,6 +95,14 @@
 	throw_range = 7
 	w_class = 3
 
+/obj/item/weapon/tank/jetpack/oxygen/captain
+	name = "\improper Captain's jetpack"
+	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
+	icon_state = "jetpack-captain"
+	item_state = "jetpack-captain"
+	w_class = 3
+	volume = 90
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."

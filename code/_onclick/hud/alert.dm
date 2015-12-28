@@ -97,7 +97,7 @@
 /obj/screen/alert/oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and gas mask in it."
+The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = "oxy"
 
 /obj/screen/alert/too_much_oxy
@@ -185,6 +185,11 @@ or something covering your eyes."
 If you're feeling frisky, click yourself in help intent to pull the object out."
 	icon_state = "embeddedobject"
 
+/obj/screen/alert/embeddedobject/Click()
+	if(isliving(usr))
+		var/mob/living/carbon/human/M = usr
+		return M.help_shake_act(M)
+
 /obj/screen/alert/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
@@ -269,7 +274,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 
 //GHOSTS
-//TODO: expand this system to replace the pollCandidates Yes/No messages
+//TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
 /obj/screen/alert/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
@@ -286,26 +291,39 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "A body was created. You can enter it."
 	icon_state = "ghost_frame"
 	timeout = 300
-	var/jump_target = null
+	var/atom/jump_target = null
+	var/attack_not_jump = null
 
 /obj/screen/alert/notify_jump/Click()
 	if(!usr || !usr.client) return
 	if(!jump_target) return
 	var/mob/dead/observer/G = usr
-	var/turf/T = get_turf(jump_target)
-	if(T && isturf(T))
-		G.loc = T
+	if(!istype(G)) return
+	if(attack_not_jump)
+		jump_target.attack_ghost(G)
+	else
+		var/turf/T = get_turf(jump_target)
+		if(T && isturf(T))
+			G.loc = T
 
 //OBJECT-BASED
 
-/obj/screen/alert/buckled
+/obj/screen/alert/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 
-/obj/screen/alert/handcuffed // Not used right now.
+/obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
+/obj/screen/alert/restrained/legcuffed
+	name = "Legcuffed"
+	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
+
+/obj/screen/alert/restrained/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		return L.resist()
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there

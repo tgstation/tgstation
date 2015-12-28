@@ -27,12 +27,7 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/mimic/death()
-	..(1)
-	visible_message("[src] stops moving!")
-	ghostize()
-	qdel(src)
+	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -119,6 +114,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
+	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 
@@ -235,8 +232,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		if(istype(G, /obj/item/weapon/gun/projectile))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
-			var/obj/item/ammo_casing/A = initial(M.ammo_type)
-			projectiletype = initial(A.projectile_type)
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/weapon/gun/energy))
 			Zapgun = G

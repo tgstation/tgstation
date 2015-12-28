@@ -11,6 +11,8 @@
 	var/autoadmin_rank = "Game Admin"
 
 /datum/configuration
+	var/name = "Configuration"			// datum name
+
 	var/server_name = null				// server name (the name of the game window)
 	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -43,7 +45,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
-	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -112,6 +113,8 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
+	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -182,10 +185,12 @@
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
 
+	// The object used for the clickable stat() button.
+	var/obj/effect/statclick/statclick
 
 
 /datum/configuration/New()
-	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
+	var/list/L = subtypesof(/datum/game_mode)
 	for(var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -331,8 +336,6 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
-				if("tickcomp")
-					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
@@ -522,6 +525,14 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("roundstart_races")
+					if(!cleared_default_races)
+						roundstart_species = list()
+						cleared_default_races = 1
+					var/race_id = lowertext(value)
+					for(var/species_id in species_list)
+						if(species_id == race_id)
+							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")
@@ -656,7 +667,7 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+	for(var/T in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
@@ -665,7 +676,7 @@
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+	for(var/T in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
@@ -681,7 +692,7 @@
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode - ticker.mode.type))
+	for(var/T in (subtypesof(/datum/game_mode) - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)
@@ -692,3 +703,9 @@
 		if(M.required_players <= crew)
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+
+/datum/configuration/proc/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug("Edit", src)
+
+	stat("[name]:", statclick)

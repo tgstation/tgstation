@@ -190,10 +190,10 @@
 	return
 
 
-/obj/item/weapon/flamethrower/proc/ignite_turf(turf/target)
+/obj/item/weapon/flamethrower/proc/ignite_turf(turf/target, release_amount = 0.05)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.05)
+	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
 	air_transfer.toxins = air_transfer.toxins * 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
@@ -218,3 +218,12 @@
 	..()
 	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()
+
+
+/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
+		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		var/target_turf = get_turf(owner)
+		ignite_turf(target_turf, 100)
+		qdel(ptank)
+		return 1 //It hit the flamethrower, not them

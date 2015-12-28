@@ -351,7 +351,7 @@
 				else
 					dat += "<tr><td><i>Nuclear Operative not found!</i></td></tr>"
 			dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-			for(var/obj/item/weapon/disk/nuclear/N in world)
+			for(var/obj/item/weapon/disk/nuclear/N in poi_list)
 				dat += "<tr><td>[N.name], "
 				var/atom/disk_loc = N.loc
 				while(!istype(disk_loc, /turf))
@@ -431,6 +431,18 @@
 					dat += "<tr><td><i>Wizard not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.apprentices.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Apprentice</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/apprentice in ticker.mode.apprentices)
+				var/mob/M = apprentice.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><i>Apprentice not found!</i></td></tr>"
+			dat += "</table>"
+
 		if(ticker.mode.cult.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.cult)
@@ -438,6 +450,54 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deities.len || ticker.mode.red_deity_prophets.len || ticker.mode.blue_deity_prophets.len || ticker.mode.red_deity_followers.len || ticker.mode.blue_deity_followers.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deities)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Red Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deities.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deities)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Blue Deity: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deity_prophets.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Prophets</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deity_prophets)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Red Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deity_prophets.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Prophets</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deity_prophets)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Blue Deity Prophet: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.red_deity_followers.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Red Deity Followers</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.red_deity_followers)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Red Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			dat += "</table>"
+
+		if(ticker.mode.blue_deity_followers.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blue Deity Followers</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.blue_deity_followers)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td>Blue Deity Followers: <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 			dat += "</table>"
 
 		if(ticker.mode.traitors.len > 0)
@@ -493,12 +553,18 @@
 						dat += "<tr><td><i>Abductee not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/blob))
-			var/datum/game_mode/blob/mode = ticker.mode
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			dat += "<tr><td><i>Progress: [blobs.len]/[mode.blobwincount]</i></td></tr>"
+		var/list/blob_minds = list()
+		for(var/mob/camera/blob/B in mob_list)
+			blob_minds |= B.mind
 
-			for(var/datum/mind/blob in mode.infected_crew)
+		if(istype(ticker.mode, /datum/game_mode/blob) || blob_minds.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
+			if(istype(ticker.mode,/datum/game_mode/blob))
+				var/datum/game_mode/blob/mode = ticker.mode
+				blob_minds |= mode.infected_crew
+				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
+
+			for(var/datum/mind/blob in blob_minds)
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -506,6 +572,7 @@
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
+
 
 		if(istype(ticker.mode, /datum/game_mode/monkey))
 			var/datum/game_mode/monkey/mode = ticker.mode

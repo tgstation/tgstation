@@ -391,7 +391,7 @@ var/time_last_changed_position = 0
 						t1 = newJob
 
 				else if(t1 == "Unassigned")
-					modify.access = list()
+					modify.access -= get_all_accesses()
 
 				else
 					var/datum/job/jobdatum

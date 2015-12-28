@@ -40,7 +40,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!src.buckled_mob)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)

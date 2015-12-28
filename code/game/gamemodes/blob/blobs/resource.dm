@@ -5,11 +5,9 @@
 	desc = "A thin spire of slightly swaying tendrils."
 	health = 60
 	maxhealth = 60
+	point_return = 15
 	var/resource_delay = 0
 
-/obj/effect/blob/resource/update_icon()
-	if(health <= 0)
-		qdel(src)
 
 /obj/effect/blob/resource/PulseAnimation(activate = 0)
 	if(activate)
@@ -23,7 +21,7 @@
 
 	PulseAnimation(1)
 
-	resource_delay = world.time + 40 // 4 seconds
+	resource_delay = world.time + 45 // 4 and a half seconds
 
 	if(overmind)
 		overmind.add_points(1)

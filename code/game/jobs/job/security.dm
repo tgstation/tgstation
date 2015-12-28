@@ -50,8 +50,12 @@ Head of Security
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
-/datum/outfit/job/hos/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/hos/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -101,8 +105,12 @@ Warden
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
-/datum/outfit/job/warden/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -132,7 +140,7 @@ Detective
 	name = "Detective"
 
 	belt = /obj/item/device/pda/detective
-	ears = /obj/item/device/radio/headset/headset_sec
+	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
@@ -145,10 +153,13 @@ Detective
 		/obj/item/weapon/melee/classic_baton/telescopic=1)
 	mask = /obj/item/clothing/mask/cigarette
 
-/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
 	cig.light("")
+
+	if(visualsOnly)
+		return
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -207,11 +218,13 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	var/destination = null
 	var/spawn_point = null
 
-/datum/outfit/job/security/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/security/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
 	if(sec_departments.len)
 		department = pick(sec_departments)
-		sec_departments -= department
+		if(!visualsOnly)
+			sec_departments -= department
 		switch(department)
 			if("supply")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
@@ -238,17 +251,20 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/science
 
-/datum/outfit/job/security/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	var/obj/item/clothing/under/U = H.w_uniform
+	if(tie)
+		U.attachTie(new tie)
+
+	if(visualsOnly)
+		return
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
-
-	var/obj/item/clothing/under/U = H.w_uniform
-	if(tie)
-		U.attachTie(new tie)
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access |= dep_access
@@ -271,7 +287,10 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 					continue
 				else
 					break
-	H << "<b>You have been assigned to [department]!</b>"
+	if(department)
+		H << "<b>You have been assigned to [department]!</b>"
+	else
+		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
 
 /obj/item/device/radio/headset/headset_sec/department/New()
 	wires = new(src)

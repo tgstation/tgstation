@@ -71,7 +71,10 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user)
+	interact(user)
+
+/obj/machinery/hologram/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
 	if(user.stat || stat & (NOPOWER|BROKEN))
@@ -108,7 +111,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	else if(href_list["mainmenu"])
 		temp = ""
 
-	updateUsrDialog()
+	updateDialog()
 	add_fingerprint(usr)
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
@@ -148,7 +151,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				master.show_message(rendered, 2)
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
-	var/obj/effect/overlay/h = new(T)//Spawn a blank effect at the location.
+	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.
 	h.icon = A.holo_icon
 	h.mouse_opacity = 0//So you can't click on it.
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
@@ -196,9 +199,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
 		step_to(masters[user], user.eyeobj) // So it turns.
-		var/obj/effect/overlay/H = masters[user]
+		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		H.loc = get_turf(user.eyeobj)
 		masters[user] = H
+	return 1
+
+
+/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
 	return 1
 
 /*
@@ -228,10 +235,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(3)
 			if (prob(5))
 				qdel(src)
-	return
-
-/obj/machinery/hologram/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/hologram/holopad/Destroy()

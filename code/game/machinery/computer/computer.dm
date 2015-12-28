@@ -64,13 +64,6 @@
 			set_broken()
 	..()
 
-
-/obj/machinery/computer/blob_act()
-	if (prob(75))
-		verbs.Cut()
-		set_broken()
-		density = 0
-
 /obj/machinery/computer/update_icon()
 	overlays.Cut()
 	if(stat & NOPOWER)
@@ -97,11 +90,11 @@
 		update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
+/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 20/I.toolspeed, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			A.circuit = circuit
 			A.anchored = 1

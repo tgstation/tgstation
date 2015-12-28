@@ -24,6 +24,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/seedarkness = 1
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -75,6 +76,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
+
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
 Works together with spawning an observer, noted above.
@@ -82,8 +84,9 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(can_reenter_corpse = 1)
 	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) //aghost
-			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
+			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+			SSnano.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
 			return ghost
@@ -108,8 +111,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	if (orbiting)
-		stop_orbit()
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -129,8 +130,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
 
-/mob/dead/observer/can_use_hands()	return 0
-/mob/dead/observer/is_active()		return 0
+/mob/dead/observer/is_active()
+	return 0
 
 /mob/dead/observer/Stat()
 	..()
@@ -138,13 +139,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
-				//world << "DEBUG: ticker not null"
-				if(ticker.mode.name == "AI malfunction")
-					var/datum/game_mode/malfunction/malf = ticker.mode
-					//world << "DEBUG: malf mode ticker test"
-					if(malf.malf_mode_declared && (malf.apcs > 0))
-						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(isnum(G.dom_timer))
 						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
@@ -162,6 +156,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
+	SSnano.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
 
@@ -209,7 +204,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getmobs()
+	var/list/mobs = getpois(skip_mindless=1)
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	ManualFollow(target)
@@ -227,7 +222,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
-	orbit(target,orbitsize,0)
+	var/rot_seg
+
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
+
+	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
 	..()
@@ -248,7 +257,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getmobs() //Fill list, prompt user with list
+		dest += getpois(mobs_only=1) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
@@ -387,21 +396,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(href_list["reenter"])
 			reenter_corpse()
 
-/mob/dead/observer/verb/toggle_ghosthud()
-	set name = "Toggle Ghost HUD"
-	set desc = "Toggles your ghost's on-screen HUD"
-	set category = "Ghost"
-	ghost_hud_enabled = !ghost_hud_enabled
-	hud_used.ghost_hud()
+//We don't want to update the current var
+//But we will still carry a mind.
+/mob/dead/observer/mind_initialize()
+	return
 
 /mob/dead/observer/proc/show_me_the_hud(hud_index)
 	var/datum/atom_hud/H = huds[hud_index]
 	H.add_hud_to(src)
 	data_hud_seen = hud_index
 
-/mob/dead/observer/verb/toggle_ghost_med_sec_hud()
-	set name = "Toggle Sec/Med HUD"
-	set desc = "Toggles whether you see medical/security HUDs"
+/mob/dead/observer/verb/toggle_ghost_med_sec_diag_hud()
+	set name = "Toggle Sec/Med/Diag HUD"
+	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
 	set category = "Ghost"
 
 	if(data_hud_seen) //remove old huds
@@ -411,7 +418,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	switch(data_hud_seen) //give new huds
 		if(0)
 			show_me_the_hud(DATA_HUD_SECURITY_BASIC)
+			src << "<span class='notice'>Security HUD set.</span>"
 		if(DATA_HUD_SECURITY_BASIC)
 			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
+			src << "<span class='notice'>Medical HUD set.</span>"
 		if(DATA_HUD_MEDICAL_ADVANCED)
+			show_me_the_hud(DATA_HUD_DIAGNOSTIC)
+			src << "<span class='notice'>Diagnostic HUD set.</span>"
+		if(DATA_HUD_DIAGNOSTIC)
 			data_hud_seen = 0
+			src << "<span class='notice'>HUDs disabled.</span>"
+
+/mob/dead/observer/canUseTopic()
+	if(check_rights(R_ADMIN, 0))
+		return 1
+	return

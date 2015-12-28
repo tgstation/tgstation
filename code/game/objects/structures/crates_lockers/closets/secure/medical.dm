@@ -58,7 +58,7 @@
 
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
-	new /obj/item/clothing/cloak/cmo(src)
+	new /obj/item/clothing/suit/cloak/cmo(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)

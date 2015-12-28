@@ -66,6 +66,12 @@
 	else if(ishuman(target) && user.zone_sel && user.zone_sel.selecting == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
+	else if(istype(target, /obj/structure/window))
+		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			user << "<span class='notice'>You clean \the [target.name].</span>"
+			target.color = initial(target.color)
+			target.SetOpacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))

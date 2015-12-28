@@ -165,7 +165,8 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
-	new material_drop(loc)
+	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
+		new material_drop(loc)
 	dump_contents()
 	qdel(src)
 	..()
@@ -213,7 +214,7 @@
 					return
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, cutting_sound, 40, 1)
-				if(do_after(user,40,5,1, target = src))
+				if(do_after(user,40/W.toolspeed,1, target = src))
 					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, cutting_sound, 50, 1)
@@ -233,7 +234,7 @@
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 				playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-				if(do_after(user,40,5,1, target = src))
+				if(do_after(user,40,1, target = src))
 					if(opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
@@ -280,7 +281,7 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
-		user << "<span class='notice'>It won't budge!</span>"
+		container_resist()
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
@@ -402,8 +403,8 @@
 		locked = 0
 		desc += " It appears to be broken."
 		update_icon()
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		if(user)
+			visible_message("<span class='warning'>The [name] has been broken by [user] with an electromagnetic card!</span>", "<span class='italics'>You hear a faint electrical spark.</span>")
 		overlays += "sparking"
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()

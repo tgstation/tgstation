@@ -118,8 +118,18 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	var/splash = 0
 
-obj/item/projectile/kinetic/New()
+/obj/item/projectile/kinetic/super
+	damage = 11
+	range = 4
+
+/obj/item/projectile/kinetic/hyper
+	damage = 12
+	range = 5
+	splash = 1
+
+/obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
@@ -130,11 +140,9 @@ obj/item/projectile/kinetic/New()
 		damage *= 4
 	..()
 
-/obj/item/projectile/kinetic/Range()
-	range--
-	if(range <= 0)
-		new /obj/item/effect/kinetic_blast(src.loc)
-		qdel(src)
+/obj/item/projectile/kinetic/on_range()
+	new /obj/item/effect/kinetic_blast(src.loc)
+	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
@@ -143,7 +151,11 @@ obj/item/projectile/kinetic/New()
 		var/turf/simulated/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-
+	if(src.splash)
+		for(var/turf/T in range(splash, target_turf))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
 
 
 /obj/item/effect/kinetic_blast
@@ -177,6 +189,8 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
+		var/turf/portal_destination = pick(orange(6, src))
+		do_teleport(target, portal_destination)
 		return ..()
 	if(!gun)
 		qdel(src)

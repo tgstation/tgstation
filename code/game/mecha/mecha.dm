@@ -19,6 +19,7 @@
 	layer = MOB_LAYER - 0.2//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
+	flags = HEAR
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -76,6 +77,7 @@
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
 
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 /obj/mecha/New()
 	..()
@@ -88,8 +90,16 @@
 	spark_system.attach(src)
 	add_cell()
 	SSobj.processing |= src
+	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
+
 	return
 
 /obj/mecha/Destroy()
@@ -130,6 +140,7 @@
 		if(internal_tank)
 			qdel(internal_tank)
 	SSobj.processing.Remove(src)
+	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null
@@ -314,15 +325,26 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-
+//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
 /obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text, , spans)
+	if(speaker == occupant)
+		if(radio.broadcasting)
+			radio.talk_into(speaker, text, , spans)
+		//flick speech bubble
+		var/list/speech_bubble_recipients = list()
+		for(var/mob/M in get_hearers_in_view(7,src))
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+		spawn(0)
+			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 	return
 
 ////////////////////////////
@@ -482,6 +504,7 @@
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -494,7 +517,7 @@
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-
+	diag_hud_set_mechstat()
 
 /////////////////////////////////////
 //////////// AI piloting ////////////
@@ -527,7 +550,7 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Except through death.
+			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
 				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
 				return
 			AI.aiRestorePowerRoutine = 0//So the AI initially has power.

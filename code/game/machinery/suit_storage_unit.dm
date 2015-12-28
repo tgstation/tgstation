@@ -65,7 +65,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/captain
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/captain
 	MASK_TYPE = /obj/item/clothing/mask/gas
-	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine
@@ -437,6 +437,12 @@
 	return
 
 
+/obj/machinery/suit_storage_unit/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	container_resist()
+
+
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
 	if(islocked)
@@ -524,7 +530,7 @@
 			user.visible_message("<span class='notice'>[user] starts removing [src]'s damaged wires.</span>", \
 								 "<span class='notice'>You begin removing the damaged wires from [src]...</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
-			if(!do_after(user, 30, target = src))
+			if(!do_after(user, 30/I.toolspeed, target = src))
 				return
 			user.visible_message("<span class='notice'>[user] removes the damaged wires from [src].</span>", \
 								 "<spna class='notice'>You remove the damaged wiring from [src].</span>")
@@ -554,7 +560,7 @@
 			user.visible_message("<span class='notice'>[user] starts removing [src]'s broken interior plating.</span>", \
 								 "<span class='notice'>You begin removing the damaged interior plating from [src]...</span>")
 			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
-			if(!do_after(user, 30, target = src))
+			if(!do_after(user, 30/I.toolspeed, target = src))
 				return
 			user.visible_message("<span class='notice'>[user] removes the damaged interior plating from [src].</span>", \
 								 "<spna class='notice'>You remove the damaged interior plating from [src].</span>")

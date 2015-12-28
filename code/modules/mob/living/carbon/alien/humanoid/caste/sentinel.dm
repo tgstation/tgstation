@@ -10,6 +10,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel
 	internal_organs += new /obj/item/organ/internal/alien/acid
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	AddAbility(new /obj/effect/proc_holder/alien/sneak)
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()

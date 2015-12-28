@@ -2,8 +2,8 @@
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_running"
-	icon_living = "alienh_running"
+	icon_state = "alienh_s"
+	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	response_help = "pokes"
@@ -29,12 +29,12 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
-	icon_state = "aliend_running"
-	icon_living = "aliend_running"
+	icon_state = "aliend_s"
+	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
 	health = 60
 	melee_damage_lower = 15
@@ -53,8 +53,8 @@
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens_running"
-	icon_living = "aliens_running"
+	icon_state = "aliens_s"
+	icon_living = "aliens_s"
 	icon_dead = "aliens_dead"
 	health = 120
 	melee_damage_lower = 15
@@ -68,8 +68,8 @@
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
-	icon_state = "alienq_running"
-	icon_living = "alienq_running"
+	icon_state = "alienq_s"
+	icon_living = "alienq_s"
 	icon_dead = "alienq_dead"
 	health = 250
 	maxHealth = 250
@@ -122,9 +122,9 @@
 /mob/living/simple_animal/hostile/alien/queen/large
 	name = "alien empress"
 	icon = 'icons/mob/alienqueen.dmi'
-	icon_state = "queen_s"
-	icon_living = "queen_s"
-	icon_dead = "queen_dead"
+	icon_state = "alienq"
+	icon_living = "alienq"
+	icon_dead = "alienq_dead"
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400

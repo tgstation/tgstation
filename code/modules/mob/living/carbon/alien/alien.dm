@@ -38,6 +38,9 @@
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
 
@@ -128,7 +131,6 @@
 
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -139,8 +141,10 @@
 	return
 
 /mob/living/carbon/alien/getTrail()
-	return "xltrails"
-
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

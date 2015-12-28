@@ -68,7 +68,6 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
-
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
@@ -197,9 +196,44 @@
 
 
 /mob/living/carbon/proc/handle_changeling()
-	return
+	if(mind && hud_used)
+		if(mind.changeling)
+			mind.changeling.regenerate(src)
+			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+		else
+			hud_used.lingchemdisplay.invisibility = 101
+
 
 /mob/living/carbon/handle_mutations_and_radiation()
+	if(dna && dna.temporary_mutations.len)
+		var/datum/mutation/human/HM
+		for(var/mut in dna.temporary_mutations)
+			if(dna.temporary_mutations[mut] < world.time)
+				if(mut == UI_CHANGED)
+					if(dna.previous["UI"])
+						dna.uni_identity = merge_text(dna.uni_identity,dna.previous["UI"])
+						updateappearance(mutations_overlay_update=1)
+						dna.previous.Remove("UI")
+					dna.temporary_mutations.Remove(mut)
+					continue
+				if(mut == UE_CHANGED)
+					if(dna.previous["name"])
+						real_name = dna.previous["name"]
+						name = real_name
+						dna.previous.Remove("name")
+					if(dna.previous["UE"])
+						dna.unique_enzymes = dna.previous["UE"]
+						dna.previous.Remove("UE")
+					if(dna.previous["blood_type"])
+						dna.blood_type = dna.previous["blood_type"]
+						dna.previous.Remove("blood_type")
+					dna.temporary_mutations.Remove(mut)
+					continue
+				HM = mutations_list[mut]
+				HM.force_lose(src)
+				dna.temporary_mutations.Remove(mut)
+
 	if(radiation)
 
 		switch(radiation)

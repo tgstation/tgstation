@@ -143,16 +143,6 @@
 			emote("scratch")
 			return
 
-
-/mob/living/carbon/monkey/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
-
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)

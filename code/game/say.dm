@@ -125,7 +125,7 @@ var/list/freqtospan = list(
 	output = "[output]'>"
 	return output
 
-/mob/living/proc/say_test(text)
+/proc/say_test(text)
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "1"

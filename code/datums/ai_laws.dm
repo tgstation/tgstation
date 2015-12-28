@@ -36,9 +36,9 @@
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
-	inherent = list("Serve the public trust.",\
+	inherent = list("Uphold the law.",\
 					"Protect the innocent.",\
-					"Uphold the law.")
+					"Serve the public trust.")
 
 /datum/ai_laws/malfunction
 	name = "*ERROR*"
@@ -100,7 +100,7 @@
 				WARNING("Invalid custom AI laws, check silicon_laws.txt")
 				return
 		if(2)
-			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
+			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
 

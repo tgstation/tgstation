@@ -121,6 +121,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
+		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+			blood_max += 3
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob

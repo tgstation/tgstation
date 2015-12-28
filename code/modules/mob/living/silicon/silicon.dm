@@ -14,6 +14,8 @@
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
 	var/obj/item/device/camera/siliconcam/aicamera = null //photography
+	//hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
@@ -25,8 +27,16 @@
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
+	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
 
 	var/law_change_counter = 0
+
+/mob/living/silicon/New()
+	..()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_status()
+	diag_hud_set_health()
 
 /mob/living/silicon/Destroy()
 	radio = null
@@ -338,8 +348,10 @@
 /mob/living/silicon/proc/remove_med_sec_hud()
 	var/datum/atom_hud/secsensor = huds[sec_hud]
 	var/datum/atom_hud/medsensor = huds[med_hud]
+	var/datum/atom_hud/diagsensor = huds[d_hud]
 	secsensor.remove_hud_from(src)
 	medsensor.remove_hud_from(src)
+	diagsensor.remove_hud_from(src)
 
 /mob/living/silicon/proc/add_sec_hud()
 	var/datum/atom_hud/secsensor = huds[sec_hud]
@@ -349,9 +361,13 @@
 	var/datum/atom_hud/medsensor = huds[med_hud]
 	medsensor.add_hud_to(src)
 
+/mob/living/silicon/proc/add_diag_hud()
+	var/datum/atom_hud/diagsensor = huds[d_hud]
+	diagsensor.add_hud_to(src)
+
 /mob/living/silicon/proc/sensor_mode()
 	set name = "Set Sensor Augmentation"
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")
@@ -360,6 +376,9 @@
 		if ("Medical")
 			add_med_hud()
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Diagnostic")
+			add_diag_hud()
+			src << "<span class='notice'>Robotics diagnostic overlay enabled.</span>"
 		if ("Disable")
 			src << "Sensor augmentations disabled."
 
@@ -449,6 +468,9 @@
 /mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
 		return ..()
+
+/mob/living/silicon/check_ear_prot()
+	return 1
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

@@ -52,9 +52,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	ordernum = rand(1,9000)
 
-	for(var/typepath in typesof(/datum/supply_packs))
-		if(typepath == /datum/supply_packs)
-			continue
+	for(var/typepath in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
@@ -232,7 +230,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	reqform.info += "RANK: [orderedbyRank]<br>"
 	reqform.info += "REASON: [comment]<br>"
 	reqform.info += "SUPPLY CRATE TYPE: [object.name]<br>"
-	reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(object.access))]<br>"
+	reqform.info += "ACCESS RESTRICTION: [get_access_desc(object.access)]<br>"
 	reqform.info += "CONTENTS:<br>"
 	reqform.info += object.manifest
 	reqform.info += "<hr>"

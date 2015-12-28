@@ -162,6 +162,7 @@
 	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
+	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
@@ -172,52 +173,30 @@
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
 		return..()
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != sentience_type)
+		user << "<span class='warning'>The potion won't work on [SM].</span>"
+		return ..()
 
-	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
+
+
+	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-
-	shuffle(candidates)
-
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		if(candidate in not_interested)
-			continue
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as [M.name]? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-				if("No")
-					if(!src)
-						return
-					not_interested += candidate
-
-	sleep(50)
-
-	if(!src)
-		return
-
-	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
-
-	if(consenting_candidates.len)
-		var/client/C = null
-		C = pick(consenting_candidates)
-		M.key = C.key
-		M.languages |= HUMAN
-		M.faction -= "neutral"
-		M << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
-		user << "<span class='notice'>[M] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/mob/dead/observer/theghost = null
+	if(candidates.len)
+		theghost = pick(candidates)
+		SM.key = theghost.key
+		SM.languages |= HUMAN
+		SM.faction = user.faction
+		SM.sentience_act()
+		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
-		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
+		user << "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
 
@@ -315,6 +294,35 @@
 	C.color = "#FF0000"
 	C.slowdown = 0
 	qdel(src)
+
+
+/obj/item/slimepotion/fireproof
+	name = "slime chill potion"
+	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle17"
+	var/uses = 3
+
+/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
+	..()
+	if(!uses)
+		qdel(src)
+		return
+	if(!istype(C))
+		user << "<span class='warning'>The potion can only be used on clothing!</span>"
+		return
+	if(C.max_heat_protection_temperature == FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+		user << "<span class='warning'>The [C] is already fireproof!</span>"
+		return..()
+	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
+	C.name = "fireproofed [C.name]"
+	C.color = "#000080"
+	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	C.heat_protection = C.body_parts_covered
+	C.burn_state = FIRE_PROOF
+	uses --
+	if(!uses)
+		qdel(src)
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -432,8 +440,9 @@
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 	if(user.mind.special_role)
-		message_admins("[G.real_name] has been summoned by [user.real_name], an antagonist.")
-	log_game("[G.real_name] ([G.key]) was made a golem by [user.real_name]([user.key]).")
+		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
+	log_game("[key_name(G)] was made a golem by [key_name(user)].")
+	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)
 
 
@@ -496,7 +505,7 @@
 
 
 /obj/effect/timestop/wizard
-	duration = 90
+	duration = 100
 
 
 /obj/item/stack/tile/bluespace
@@ -543,3 +552,18 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/obj/item/areaeditor/blueprints/slime
+	name = "cerulean prints"
+	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	color = "#2956B2"
+
+/obj/item/areaeditor/blueprints/slime/edit_area()
+	var/success = ..()
+	var/area/A = get_area(src)
+	if(success)
+		for(var/turf/T in A)
+			T.color = "#2956B2"
+		qdel(src)
+

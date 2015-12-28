@@ -30,6 +30,7 @@
 	master = src
 	uid = ++global_uid
 	related = list(src)
+	map_name = name // Save the initial (the name set in the map) name of the area.
 
 	if(requires_power)
 		luminosity = 0
@@ -37,8 +38,9 @@
 		power_light = 1
 		power_equip = 1
 		power_environ = 1
-		luminosity = 1
-		lighting_use_dynamic = 0
+
+		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
@@ -324,12 +326,6 @@
 
 	var/mob/living/L = A
 	if(!L.ckey)	return
-
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-
-	L.lastarea = newarea
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)

@@ -158,10 +158,10 @@
 		terminal.dismantle(user)
 
 	//crowbarring it !
-	default_deconstruction_crowbar(I)
-	message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("[src] has been deconstructed by [key_name(user)]")
-	investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+	if(default_deconstruction_crowbar(I))
+		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("[src] has been deconstructed by [key_name(user)]")
+		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -313,24 +313,22 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-
-/obj/machinery/power/smes/attack_ai(mob/user)
-	if(stat & BROKEN) return
-	ui_interact(user)
-
-
 /obj/machinery/power/smes/attack_hand(mob/user)
+	if (!user)
+		return
 	add_fingerprint(user)
-	if(stat & BROKEN) return
+	interact(user)
+
+/obj/machinery/power/smes/interact(mob/user)
+	if (stat & BROKEN)
+		return
 	ui_interact(user)
 
-
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!user)
-		return
-
-	// update the ui if it exists, create a new one if it doesn't
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "smes.tmpl", "SMES - [name]", 350, 560, 1)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "smes", name, 500, 455)
+		ui.open()
 
 /obj/machinery/power/smes/get_ui_data()
 	var/list/data = list(
@@ -352,68 +350,52 @@
 	)
 	return data
 
-/obj/machinery/power/smes/Topic(href, href_list)
-//	world << "[href] ; [href_list[href]]"
-
+/obj/machinery/power/smes/ui_act(action, params)
 	if(..())
 		return
 
-
-	else if( href_list["input_attempt"] )
-		input_attempt = text2num(href_list["input_attempt"])
-		if(!input_attempt)
-			inputting = 0
-		log_smes(usr.ckey)
-		update_icon()
-
-	else if( href_list["output_attempt"] )
-		output_attempt = text2num(href_list["output_attempt"])
-		if(!output_attempt)
-			outputting = 0
-		log_smes(usr.ckey)
-		update_icon()
-
-	else if( href_list["set_input_level"] )
-		switch(href_list["set_input_level"])
-			if("max")
-				input_level = input_level_max
-			if("custom")
-				var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
-				if(isnum(custom))
-					href_list["set_input_level"] = custom
-					.()
-			if("plus")
-				input_level += 10000
-			if("minus")
-				input_level -= 10000
-			else
-				var/n = text2num(href_list["set_input_level"])
-				if(isnum(n))
-					input_level = n
-
-		input_level = Clamp(input_level, 0, input_level_max)
-		log_smes(usr.ckey)
-
-	else if(href_list["set_output_level"])
-		switch(href_list["set_output_level"])
-			if("max")
-				output_level = output_level_max
-			if("custom")
-				var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
-				if(isnum(custom))
-					href_list["set_output_level"] = custom
-					.()
-			if("plus")
-				output_level += 10000
-			if("minus")
-				output_level -= 10000
-			else
-				var/n = text2num(href_list["set_output_level"])
-				if(isnum(n))
-					output_level = n
-
-		output_level = Clamp(output_level, 0, output_level_max)
-		log_smes(usr.ckey)
+	switch(action)
+		if("tryinput")
+			input_attempt = !input_attempt
+			log_smes(usr.ckey)
+			update_icon()
+		if("tryoutput")
+			output_attempt = !output_attempt
+			log_smes(usr.ckey)
+			update_icon()
+		if("input")
+			switch(params["set"])
+				if("custom")
+					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
+					if(custom)
+						input_level = custom
+				if("min")
+					input_level = 0
+				if("max")
+					input_level = input_level_max
+				if("plus")
+					input_level += 10000
+				if("minus")
+					input_level -= 10000
+			input_level = Clamp(input_level, 0, input_level_max)
+			log_smes(usr.ckey)
+		if("output")
+			switch(params["set"])
+				if("custom")
+					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
+					if(custom)
+						output_level = custom
+				if("min")
+					output_level = 0
+				if("max")
+					output_level = output_level_max
+				if("plus")
+					output_level += 10000
+				if("minus")
+					output_level -= 10000
+			output_level = Clamp(output_level, 0, output_level_max)
+			log_smes(usr.ckey)
+	return 1
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
 	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]","singulo")

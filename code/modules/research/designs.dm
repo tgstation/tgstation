@@ -175,8 +175,38 @@ other types of metals and chemistry for reagents).
 	id = "jackhammer"
 	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	category = list("Mining Designs")
+
+/datum/design/superaccelerator
+	name = "Super-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."
+	id = "superaccelerator"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/super
+	category = list("Mining Designs")
+
+/datum/design/hyperaccelerator
+	name = "Hyper-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
+	id = "hyperaccelerator"
+	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
+	category = list("Mining Designs")
+
+/datum/design/superresonator
+	name = "Upgraded Resonator"
+	desc = "An upgraded version of the resonator that allows more fields to be active at once."
+	id = "superresonator"
+	req_tech = list("materials" = 4, "powerstorage" = 3, "engineering" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/weapon/resonator/upgraded
 	category = list("Mining Designs")
 
 /////////////////////////////////////////
@@ -212,7 +242,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
 	reliability = 100
-	build_path = /obj/item/bluespace_crystal/artificial
+	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 
 /datum/design/telesci_gps
@@ -279,6 +309,26 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 1000, MAT_GOLD = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
+	category = list("Equipment")
+
+datum/design/diagnostic_hud
+	name = "Diagnostic HUD"
+	desc = "A HUD used to analyze and determine faults within robotic machinery."
+	id = "dianostic_hud"
+	req_tech = list("magnets" = 3, "engineering" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic
+	category = list("Equipment")
+
+datum/design/diagnostic_hud_night
+	name = "Night Vision Diagnostic HUD"
+	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
+	id = "dianostic_hud_night"
+	req_tech = list("magnets" = 5, "engineering" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$plasma" = 300)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
 /////////////////////////////////////////

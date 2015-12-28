@@ -201,7 +201,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] begins patching up [src] with [WT].</span>", \
 							 "<span class='notice'>You begin restoring the damage to [src]...</span>")
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 40/O.toolspeed, target = src))
 			return
 		if(!src || !WT.remove_fuel(1, user)) return
 		user.visible_message("<span class='notice'>[user] fixes [src]!</span>", \

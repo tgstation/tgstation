@@ -12,14 +12,15 @@
 
 /datum/round_event/abductor/start()
 	//spawn abductor team
+	processing = 0 //so it won't fire again in next subsystem tick
 	if(!makeAbductorTeam())
 		message_admins("Abductor event failed to find players. Retrying in 30s.")
-		spawn(30)
+		spawn(300)
 			makeAbductorTeam()
 
 /datum/round_event/abductor/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null, BE_ABDUCTOR )
-	
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null, ROLE_ABDUCTOR )
+
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
 		var/number =  ticker.mode.abductor_teams + 1
@@ -55,7 +56,7 @@
 
 		if(ticker.mode.config_tag != "abduction")
 			ticker.mode.abductors |= temp.abductors
-
+		processing = 1 //So it will get gc'd
 		return 1
 	else
 		return 0

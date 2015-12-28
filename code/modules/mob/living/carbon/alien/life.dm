@@ -64,3 +64,6 @@
 /mob/living/carbon/alien/CheckStamina()
 	setStaminaLoss(max((staminaloss - 2), 0))
 	return
+
+/mob/living/carbon/alien/handle_changeling()
+	return

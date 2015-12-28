@@ -15,11 +15,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 
 /area
-	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
-	var/party = null
 	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
@@ -27,13 +22,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	layer = 10
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
-	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+
+	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
 
 	var/eject = null
 
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -51,7 +56,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
-								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
 
@@ -91,12 +95,17 @@ var/list/teleportlocs = list()
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+
+/area/space/nearstation
+	icon_state = "space_near"
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
@@ -104,7 +113,7 @@ var/list/teleportlocs = list()
 	name = "Shuttle"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = 1
 	valid_territory = 0
 	icon_state = "shuttle"
@@ -142,6 +151,9 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 
+/area/shuttle/assault_pod
+	name = "Steel Rain"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 
@@ -150,7 +162,7 @@ var/list/teleportlocs = list()
 	icon_state = "start"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 // CENTCOM
@@ -160,6 +172,7 @@ var/list/teleportlocs = list()
 	icon_state = "centcom"
 	requires_power = 0
 	has_gravity = 1
+	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 
 /area/centcom/control
 	name = "Centcom Docks"
@@ -186,6 +199,7 @@ var/list/teleportlocs = list()
 	icon_state = "syndie-ship"
 	requires_power = 0
 	has_gravity = 1
+	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -202,6 +216,8 @@ var/list/teleportlocs = list()
 	icon_state = "asteroid"
 	requires_power = 0
 	has_gravity = 1
+	blob_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
+	valid_territory = 0
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -590,58 +606,6 @@ var/list/teleportlocs = list()
 	name = "Law Office"
 	icon_state = "law"
 
-
-
-
-
-
-
-/area/holodeck
-	name = "Holodeck"
-	icon_state = "Holodeck"
-	luminosity = 1
-	lighting_use_dynamic = 0
-
-/area/holodeck/alphadeck
-	name = "Holodeck Alpha"
-
-
-/area/holodeck/source_plating
-	name = "Holodeck - Off"
-	icon_state = "Holodeck"
-
-/area/holodeck/source_emptycourt
-	name = "Holodeck - Empty Court"
-
-/area/holodeck/source_boxingcourt
-	name = "Holodeck - Boxing Court"
-
-/area/holodeck/source_basketball
-	name = "Holodeck - Basketball Court"
-
-/area/holodeck/source_thunderdomecourt
-	name = "Holodeck - Thunderdome Court"
-
-/area/holodeck/source_beach
-	name = "Holodeck - Beach"
-	icon_state = "Holodeck" // Lazy.
-
-/area/holodeck/source_burntest
-	name = "Holodeck - Atmospheric Burn Test"
-
-/area/holodeck/source_wildlife
-	name = "Holodeck - Wildlife Simulation"
-
-
-
-
-
-
-
-
-
-
-
 //Engineering
 
 /area/engine
@@ -676,30 +640,30 @@ var/list/teleportlocs = list()
 /area/solar
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 
-	auxport
+/area/solar/auxport
 		name = "Fore Port Solar Array"
 		icon_state = "panelsA"
 
-	auxstarboard
+/area/solar/auxstarboard
 		name = "Fore Starboard Solar Array"
 		icon_state = "panelsA"
 
-	fore
+/area/solar/fore
 		name = "Fore Solar Array"
 		icon_state = "yellow"
 
-	aft
+/area/solar/aft
 		name = "Aft Solar Array"
 		icon_state = "aft"
 
-	starboard
+/area/solar/starboard
 		name = "Aft Starboard Solar Array"
 		icon_state = "panelsS"
 
-	port
+/area/solar/port
 		name = "Aft Port Solar Array"
 		icon_state = "panelsP"
 
@@ -1059,6 +1023,7 @@ var/list/teleportlocs = list()
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = 1
+	blob_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
 	name = "DJ Station Solars"
@@ -1070,6 +1035,7 @@ var/list/teleportlocs = list()
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
+	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
@@ -1209,7 +1175,7 @@ var/list/teleportlocs = list()
 	icon_state = "eva"
 
 /area/ai_monitored/storage/secure
-	name = "Secure Storage"
+	name = "AI Satellite Storage"
 	icon_state = "storage"
 
 /area/ai_monitored/storage/emergency
@@ -1252,25 +1218,25 @@ var/list/teleportlocs = list()
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/turret_protected/NewAIMain
 	name = "AI Main New"
@@ -1374,7 +1340,7 @@ var/list/teleportlocs = list()
 	name = "Beach"
 	icon_state = "away"
 	luminosity = 1
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')

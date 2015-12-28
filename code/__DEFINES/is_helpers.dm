@@ -58,7 +58,11 @@
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
+#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
+
 #define islimb(A) (istype(A, /obj/item/organ/limb))
+
+#define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
 // ASSEMBLY HELPERS
 

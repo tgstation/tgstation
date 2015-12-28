@@ -4,7 +4,7 @@
 
 	var/list/potentialRandomZlevels = list()
 	world << "<span class='boldannounce'>Searching for away missions...</span>"
-	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
+	var/list/Lines = file2list("config/awaymissionconfig.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)
@@ -39,6 +39,7 @@
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
+			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
 
 		map_transition_config.Add(AWAY_MISSION_LIST)

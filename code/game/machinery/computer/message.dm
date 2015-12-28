@@ -93,10 +93,8 @@
 				else
 					dat += "<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];viewr=1'>&#09;[++i]. View Request Console Logs </a></br></dd>"
-					dat += "<dd><A href='?src=\ref[src];viewc=1'>&#09;[++i]. View Chatroom Logs </a></br></dd>"
 					dat += "<dd><A href='?src=\ref[src];clear=1'>&#09;[++i]. Clear Message Logs</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];clearr=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>"
-					dat += "<dd><A href='?src=\ref[src];clearc=1'>&#09;[++i]. Clear Chatroom Logs</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"
 			else
@@ -217,24 +215,6 @@
 				<td width='15%'>[rc.rec_dpt]</td><td width='300px'>[rc.message]</td><td width='15%'>[rc.stamp]</td><td width='15%'>[rc.id_auth]</td><td width='15%'>[rc.priority]</td></tr>"}
 			dat += "</table>"
 
-		//Chatroom Logs
-		if(5)
-
-			var/index = 0
-			//var/sender = "Anon"
-			//var/channel = "ss13"
-			//var/message = "Blank"
-			dat += "<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>"
-			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Channel</th><th width='15%'>Nick</th><th width='300px' word-wrap: break-word>Message</th></tr>"
-			for(var/datum/data_chat_msg/msg in src.linkedServer.chat_msgs)
-				index++
-				if(index > 3000)
-					break
-				// Del - Channel - Sender - Message
-				// X   - #ss13   - bigdik - hi asl
-				dat += "<tr><td width = '5%'><center><A href='?src=\ref[src];delete=\ref[msg]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[msg.channel]</td><td width='15%'>[msg.sender]</td><td width='300px'>[msg.message]</td></tr>"
-			dat += "</table>"
-
 	message = defaultmsg
 	//user << browse(dat, "window=message;size=700x700")
 	//onclose(user, "message")
@@ -269,16 +249,19 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		//Authenticate
 		if (href_list["auth"])
-			if(auth)
-				auth = 0
-				screen = 0
+			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
+				message = noserver
 			else
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
-				if(dkey && dkey != "")
-					if(src.linkedServer.decryptkey == dkey)
-						auth = 1
-					else
-						message = incorrectkey
+				if(auth)
+					auth = 0
+					screen = 0
+				else
+					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					if(dkey && dkey != "")
+						if(src.linkedServer.decryptkey == dkey)
+							auth = 1
+						else
+							message = incorrectkey
 
 		//Turn the server on/off.
 		if (href_list["active"])
@@ -317,14 +300,6 @@
 			else
 				if(auth)
 					src.linkedServer.rc_msgs = list()
-					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
-		//Clears the chatroom logs - KEY REQUIRED
-		if (href_list["clearc"])
-			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
-				message = noserver
-			else
-				if(auth)
-					src.linkedServer.chat_msgs = list()
 					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
@@ -467,15 +442,6 @@
 			else
 				if(auth)
 					src.screen = 4
-		//Chatroom Logs - KEY REQUIRED
-		if(href_list["viewc"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
-				message = noserver
-			else
-				if(auth)
-					src.screen = 5
-
-			//usr << href_list["select"]
 
 		if (href_list["back"])
 			src.screen = 0

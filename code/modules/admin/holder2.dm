@@ -12,7 +12,7 @@ var/list/admin_datums = list()
 	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
-	var/admincaster_signature
+	var/admin_signature
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
@@ -26,7 +26,7 @@ var/list/admin_datums = list()
 		throw EXCEPTION("Admin datum created without a rank")
 		return
 	rank = R
-	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)

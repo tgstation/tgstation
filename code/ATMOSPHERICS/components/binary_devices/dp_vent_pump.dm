@@ -33,8 +33,8 @@ Acts like a normal vent, but has an input AND output.
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
@@ -117,10 +117,10 @@ Acts like a normal vent, but has an input AND output.
 	//Radio remote control
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -176,25 +176,13 @@ Acts like a normal vent, but has an input AND output.
 		pump_direction = 1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = Clamp(
-			text2num(signal.data["set_input_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		input_pressure_min = Clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = Clamp(
-			text2num(signal.data["set_output_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		output_pressure_max = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(
-			text2num(signal.data["set_external_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("status" in signal.data)
 		spawn(2)

@@ -55,10 +55,20 @@
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
 
+	//Zooming
+	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
+	var/zoomed = FALSE //Zoom toggle
+	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
+	var/datum/action/toggle_scope_zoom/azoom
+
+
 /obj/item/weapon/gun/New()
 	..()
 	if(pin)
 		pin = new pin(src)
+
+	build_zooming()
+
 
 /obj/item/weapon/gun/CheckParts()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
@@ -188,6 +198,8 @@
 		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
+obj/item/weapon/gun/proc/newshot()
+	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
@@ -260,9 +272,6 @@
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
 			if(!F)
-				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-					return
 				if(!user.unEquip(A))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
@@ -276,9 +285,6 @@
 
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
-			if(user.l_hand != src && user.r_hand != src)
-				user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-				return
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null
@@ -340,19 +346,27 @@
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
 			SetLuminosity(0)
+	if(azoom)
+		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+	zoom(user,FALSE)
+	if(azoom)
+		azoom.Remove(user)
 
 
-/obj/item/weapon/gun/attack_hand(mob/user)
+/obj/item/weapon/gun/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-		return
-	..()
+
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
@@ -413,3 +427,69 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, 1, params)
+
+
+/////////////
+// ZOOMING //
+/////////////
+
+/datum/action/toggle_scope_zoom
+	name = "Toggle Scope"
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	button_icon_state = "sniper_zoom"
+	var/obj/item/weapon/gun/gun = null
+
+/datum/action/toggle_scope_zoom/Trigger()
+	gun.zoom(owner)
+
+/datum/action/toggle_scope_zoom/IsAvailable()
+	. = ..()
+	if(!. && gun)
+		gun.zoom(owner, FALSE)
+
+/datum/action/toggle_scope_zoom/Remove(mob/living/L)
+	gun.zoom(L, FALSE)
+	..()
+
+
+
+/obj/item/weapon/gun/proc/zoom(mob/living/user, forced_zoom)
+	if(!user || !user.client)
+		return
+
+	switch(forced_zoom)
+		if(FALSE)
+			zoomed = FALSE
+		if(TRUE)
+			zoomed = TRUE
+		else
+			zoomed = !zoomed
+
+	if(zoomed)
+		var/_x = 0
+		var/_y = 0
+		switch(user.dir)
+			if(NORTH)
+				_y = zoom_amt
+			if(EAST)
+				_x = zoom_amt
+			if(SOUTH)
+				_y = -zoom_amt
+			if(WEST)
+				_x = -zoom_amt
+
+		user.client.pixel_x = world.icon_size*_x
+		user.client.pixel_y = world.icon_size*_y
+	else
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0
+
+
+//Proc, so that gun accessories/scopes/etc. can easily add zooming.
+/obj/item/weapon/gun/proc/build_zooming()
+	if(azoom)
+		return
+
+	if(zoomable)
+		azoom = new()
+		azoom.gun = src

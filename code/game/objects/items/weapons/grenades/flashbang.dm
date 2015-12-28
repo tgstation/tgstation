@@ -19,7 +19,7 @@
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
-	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
 
 //Checking for protection
 	var/ear_safety = M.check_ear_prot()
@@ -43,6 +43,7 @@
 		M.Stun(10)
 		M.Weaken(10)
 	if(!ear_safety)
+		M << sound('sound/weapons/flash_ring.ogg',0,1,0,100)
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
 		M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))

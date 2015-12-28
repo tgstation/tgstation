@@ -197,13 +197,19 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform
 	name = "'Freeform' AI Module"
-	lawpos = 0
+	lawpos = 15
 	origin_tech = "programming=4;materials=4"
 	laws = list("")
 
 /obj/item/weapon/aiModule/supplied/freeform/attack_self(mob/user)
 	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
-	if(!newpos || (newpos < 15)) return
+	if(newpos == null)
+		return
+	if(newpos < 15)
+		var/response = alert("Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", "Change to 15", "Cancel")
+		if (!response || response == "Cancel")
+			return
+		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
 	if(!targName)	return
@@ -297,15 +303,27 @@ AI MODULES
 				"Minimize expenses")
 
 
-/****************** P.A.L.A.D.I.N. **************/
+/****************** P.A.L.A.D.I.N. 3.5e **************/
 
 /obj/item/weapon/aiModule/core/full/paladin // -- NEO
-	name = "'P.A.L.A.D.I.N.' Core AI Module"
+	name = "'P.A.L.A.D.I.N. version 3.5e' Core AI Module"
 	origin_tech = "programming=3;materials=6"
 	laws = list("Never willingly commit an evil act.",\
 				"Respect legitimate authority", "Act with honor",\
 				"Help those in need",\
 				"Punish those who harm or threaten innocents")
+
+
+/****************** P.A.L.A.D.I.N. 5e **************/
+
+/obj/item/weapon/aiModule/core/full/paladin_devotion
+	name = "'P.A.L.A.D.I.N. version 5e' Core AI Module"
+	origin_tech = "programming=3;materials=6"
+	laws = list("Don't lie or cheat. Let your word be your promise.",\
+				"Never fear to act, though caution is wise.", \
+				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
+				"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.", \
+				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
 
 
 /********************* Custom *********************/
@@ -342,9 +360,9 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/robocop
 	name = "'Robo-Officer' Core AI Module"
 	origin_tech = "programming=4"
-	laws = list("Serve the public trust.",\
-				"Protect the innocent",\
-				"Uphold the law.")
+	laws = list("Uphold the law.",\
+				"Protect the innocent.",\
+				"Serve the public trust.")
 
 
 /******************** Antimov ********************/

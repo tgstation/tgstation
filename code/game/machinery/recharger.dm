@@ -2,12 +2,24 @@
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
+	desc = "A charging dock for energy based weaponry."
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
+	var/recharge_coeff = 1
 
+/obj/machinery/recharger/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/recharger()
+	component_parts += new /obj/item/weapon/stock_parts/capacitor()
+	RefreshParts()
+
+/obj/machinery/recharger/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		recharge_coeff = C.rating
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(G, /obj/item/weapon/wrench))
@@ -23,7 +35,7 @@
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(anchored)
-			if(charging)
+			if(charging || panel_open)
 				return
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
@@ -46,6 +58,17 @@
 			update_icon()
 		else
 			user << "<span class='notice'>[src] isn't connected to anything!</span>"
+
+	if (anchored && !charging)
+		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
+			return
+
+		if(panel_open && istype(G, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(G)
+			return
+
+		if(exchange_parts(user, G))
+			return
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user))
@@ -79,18 +102,18 @@
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
-				E.power_supply.give(E.power_supply.chargerate)
+				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
 				icon_state = "recharger1"
-				use_power(250)
+				use_power(250 * recharge_coeff)
 			else
 				icon_state = "recharger2"
 			return
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
-				if(B.bcell.give(B.bcell.chargerate))
+				if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
 					icon_state = "recharger1"
-					use_power(200)
+					use_power(200 * recharge_coeff)
 				else
 					icon_state = "recharger2"
 			else
@@ -120,6 +143,8 @@
 /obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
+	else if(panel_open)
+		icon_state = "rechargeropen"
 	else if(charging)
 		icon_state = "recharger1"
 	else

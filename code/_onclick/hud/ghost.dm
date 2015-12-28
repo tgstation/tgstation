@@ -1,6 +1,9 @@
 /obj/screen/ghost
 	icon = 'icons/mob/screen_ghost.dmi'
 
+/obj/screen/ghost/MouseEntered()
+	flick(icon_state + "_anim", src)
+
 /obj/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
@@ -35,7 +38,7 @@
 
 /datum/hud/proc/ghost_hud()
 	var/mob/dead/observer/G = mymob
-	if(!G.ghost_hud_enabled)
+	if(!G.client.prefs.ghost_hud)
 		mymob.client.screen -= adding
 		return
 

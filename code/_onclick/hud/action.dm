@@ -1,8 +1,3 @@
-#define AB_ITEM 1
-#define AB_SPELL 2
-#define AB_INNATE 3
-#define AB_GENERIC 4
-
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
 #define AB_CHECK_LYING 4
@@ -178,12 +173,12 @@
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
-	
+
 	var/coord_col = "+[col-1]"
 	var/coord_col_offset = 4+2*col
-	
+
 	var/coord_row = "[row ? -row : "+0"]"
-	
+
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-6"
 
 /datum/hud/proc/SetButtonCoords(obj/screen/button,number)
@@ -325,7 +320,6 @@
 	owner << "<span class='notice'> Research analyzer deactivated.</span>"
 
 /datum/action/innate/scan_mode/Grant(mob/living/T)
-	devices += 1
 	..(T)
 
 /datum/action/innate/scan_mode/CheckRemoval(mob/living/user)
@@ -335,4 +329,5 @@
 
 /datum/action/innate/scan_mode/Remove(mob/living/T)
 	owner.research_scanner = 0
+	active = 0
 	..(T)

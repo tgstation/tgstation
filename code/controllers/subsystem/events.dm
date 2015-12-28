@@ -8,8 +8,8 @@ var/datum/subsystem/events/SSevent
 	var/list/running = list()	//list of all existing /datum/round_event
 
 	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
-	var/frequency_lower = 3000	//5 minutes lower bound.
-	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 5 to 15 minutes.
+	var/frequency_lower = 1800	//3 minutes lower bound.
+	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
@@ -178,7 +178,7 @@ var/datum/subsystem/events/SSevent
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
 
-	for(var/H in typesof(/datum/holiday) - /datum/holiday)
+	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()
 		if(holiday.shouldCelebrate(DD, MM, YY))
 			holiday.celebrate()

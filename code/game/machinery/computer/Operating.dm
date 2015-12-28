@@ -5,7 +5,7 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/patient = null
-	var/obj/structure/optable/table = null
+	var/obj/structure/table/optable/table = null
 
 
 /obj/machinery/computer/operating/New()
@@ -18,7 +18,7 @@
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/dir in cardinal)
-		table = locate(/obj/structure/optable, get_step(src, dir))
+		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
 			break

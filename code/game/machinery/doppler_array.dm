@@ -7,6 +7,8 @@ var/list/doppler_arrays = list()
 	icon_state = "tdoppler"
 	density = 1
 	anchored = 1
+	var/integrated = 0
+	var/max_dist = 100
 	verb_say = "states coldly"
 
 /obj/machinery/doppler_array/New()
@@ -48,7 +50,7 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -56,38 +58,40 @@ var/list/doppler_arrays = list()
 	else
 		rotate()
 
-/obj/machinery/doppler_array/proc/sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,
+/obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
-	if(stat & NOPOWER)	return
-	if(z != z0)			return
+	if(stat & NOPOWER)
+		return
+	var/turf/zone = get_turf(src)
 
-	var/dx = abs(x0-x)
-	var/dy = abs(y0-y)
-	var/distance
-	var/direct
+	if(zone.z != epicenter.z)
+		return
 
-	if(dx > dy)
-		distance = dx
-		if(x0 > x)	direct = EAST
-		else		direct = WEST
-	else
-		distance = dy
-		if(y0 > y)	direct = NORTH
-		else		direct = SOUTH
+	var/distance = get_dist(epicenter, zone)
+	var/direct = get_dir(zone, epicenter)
 
-	if(distance > 100)		return
-	if(!(direct & dir))	return
+	if(distance > max_dist)
+		return
+	if(!(direct & dir) && !integrated)
+		return
+
 
 	var/list/messages = list("Explosive disturbance detected.", \
-							 "Epicenter at: grid ([x0],[y0]). Temporal displacement of tachyons: [took] seconds.", \
+							 "Epicenter at: grid ([epicenter.x],[epicenter.y]). Temporal displacement of tachyons: [took] seconds.", \
 							 "Factual: Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range].")
 
 	// If the bomb was capped, say it's theoretical size.
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
-	for(var/message in messages)
-		say(message)
+	if(integrated)
+		var/obj/item/clothing/head/helmet/space/hardsuit/helm = loc
+		if(!helm || !istype(helm, /obj/item/clothing/head/helmet/space/hardsuit))
+			return
+		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
+	else
+		for(var/message in messages)
+			say(message)
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
@@ -99,3 +103,10 @@ var/list/doppler_arrays = list()
 		else
 			icon_state = "[initial(icon_state)]-off"
 			stat |= NOPOWER
+
+//Portable version, built into EOD equipment. It simply provides an explosion's three damage levels.
+/obj/machinery/doppler_array/integrated
+	name = "integrated tachyon-doppler module"
+	integrated = 1
+	max_dist = 21 //Should detect most explosions in hearing range.
+	use_power = 0

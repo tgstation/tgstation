@@ -197,7 +197,7 @@
 
 		else
 			if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
-				var/difference = air.mimic(enemy_tile,,atmos_adjacent_turfs_amount)
+				var/difference = air.mimic(enemy_tile,atmos_adjacent_turfs_amount)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
