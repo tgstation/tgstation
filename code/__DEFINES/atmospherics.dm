@@ -21,6 +21,7 @@
 #define MOLES			1
 #define ARCHIVE			2
 #define SPECIFIC_HEAT	3
+#define GAS_INDEX		4
 
 //stuff you should probably leave well alone!
 //ATMOS
