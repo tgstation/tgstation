@@ -451,7 +451,7 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wresting tab.</span>"
+		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wrestling tab.</span>"
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
