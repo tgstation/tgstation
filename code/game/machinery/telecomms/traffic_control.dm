@@ -61,7 +61,7 @@
 	winset(editingcode, "tcscode", "is-disabled=false")
 
 	// If the player's not manning the keyboard anymore, adjust everything
-	if(!in_range(editingcode, src) && !issilicon(editingcode) || editingcode.machine != src)
+	if(!in_range(src,editingcode) && !issilicon(editingcode) || editingcode.machine != src)
 		winshow(editingcode, "Telecomms IDE", 0) // hide the window!
 		editingcode = null
 		return
@@ -76,7 +76,7 @@
 
 		for(var/mob/M in viewingcode)
 
-			if( (M.machine == src && in_range(M, src) ) || issilicon(M))
+			if( (M.machine == src && in_range(src,M) ) || issilicon(M))
 				winset(M, "tcscode", "is-disabled=true")
 				winset(M, "tcscode", "text=\"[showcode]\"")
 			else
@@ -295,6 +295,6 @@
 	src.updateUsrDialog()
 	return 1
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(issilicon(user) || in_range(src,user))
 		return 1
 	return 0

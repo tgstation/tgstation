@@ -375,6 +375,6 @@
 		return 0
 
 /obj/machinery/telecomms/proc/canAccess(var/mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(issilicon(user) || in_range(src,user))
 		return 1
 	return 0
