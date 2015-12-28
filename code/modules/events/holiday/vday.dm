@@ -57,8 +57,11 @@
 	               "You look as beautiful now as the last time you were cloned.",
 	               "Your love is more valuable than raw plasma ore.",
 	               "Someone check the gravitational generator, because I'm only attracted to you.",
-	               "If I were the warden I'd alwasys let you into my armory."
-	               )
+	               "If I were the warden I'd always let you into my armory.",
+	               "The virologist is rogue, and the only cure is a kiss from you.",
+	               "Would you spend some time in my upgraded sleeper?",
+	               "You must be a silicon, because you've unbolted my heart."
+	               "Are you Nar-Sie? Because there's nar-one else I sie." )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
