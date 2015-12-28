@@ -196,6 +196,3 @@ var/global/datum/controller/master/Master = new()
 
 	stat("Master Controller:", statclick.update("[round(Master.cost, 0.001)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
 
-
-#undef SPACE_LEVELS_TO_SEED
-#undef RUINS_PER_LEVEL
