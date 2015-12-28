@@ -33,14 +33,11 @@ var/next_mob_id = 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t+= "<span class='danger'>Temperature: [environment.temperature] \n</span>"
-	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
-	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
-	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
-	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
-	for(var/datum/gas/trace_gas in environment.trace_gases)
-		t+= "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
+	var/t =	"<span class='notice'>Coordinates: [x],[y] \n</span>"
+	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
+	for(var/gas in environment.gases)
+		if(gas[MOLES])
+			t+="<span class='notice'>[gas[GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr.show_message(t, 1)
 

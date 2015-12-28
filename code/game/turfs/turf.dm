@@ -141,11 +141,7 @@
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
-		var/aoxy = 0//Holders to assimilate air from nearby turfs
-		var/anitro = 0
-		var/aco = 0
-		var/atox = 0
-		var/atemp = 0
+		var/datum/gas_mixture/a_gas_mixture = new//Holders to assimilate air from nearby turfs
 		var/turf_count = 0
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
@@ -156,17 +152,13 @@
 			else if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
-					aoxy += S.air.oxygen
-					anitro += S.air.nitrogen
-					aco += S.air.carbon_dioxide
-					atox += S.air.toxins
-					atemp += S.air.temperature
+					for(var/gas in a_gas_mixture.gases)
+						gas[MOLES] += S.air.gases[gas[GAS_INDEX]][MOLES]
+					a_gas_mixture.temperature += S.air.temperature
 				turf_count ++
-		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-		air.nitrogen = (anitro/max(turf_count,1))
-		air.carbon_dioxide = (aco/max(turf_count,1))
-		air.toxins = (atox/max(turf_count,1))
-		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+		for(var/gas in air.gases)
+			gas[MOLES] = (a_gas_mixture.gases[gas[GAS_INDEX]][MOLES]/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+		air.temperature = (a_gas_mixture.temperature/max(turf_count,1))//Trace gases can get bant
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()

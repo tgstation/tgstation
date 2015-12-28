@@ -257,7 +257,7 @@
 	if(!location)
 		return
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.nitrogen + environment.carbon_dioxide + environment.toxins
+	var/total = environment.total_moles()
 
 	var/list/environment_data = list()
 	data["atmos_alarm"] = alarm_area.atmosalm
@@ -273,25 +273,25 @@
 		environment_data += list(list("name" = "Pressure", "value" = pressure, "unit" = "kPa", "danger_level" = pressure_danger))
 
 		cur_tlv = TLV["oxygen"]
-		var/oxygen_danger = cur_tlv.get_danger_level(environment.oxygen*partial_pressure)
-		environment_data += list(list("name" = "Oxygen", "value" = environment.oxygen / total * 100, "unit" = "%", "danger_level" = oxygen_danger))
+		var/oxygen_danger = cur_tlv.get_danger_level(environment.gases[GAS_O2][MOLES]*partial_pressure)
+		environment_data += list(list("name" = "Oxygen", "value" = environment.gases[GAS_O2][MOLES] / total * 100, "unit" = "%", "danger_level" = oxygen_danger))
 
 		cur_tlv = TLV["nitrogen"]
-		var/nitrogen_danger = cur_tlv.get_danger_level(environment.nitrogen*partial_pressure)
-		environment_data += list(list("name" = "Nitrogen", "value" = environment.nitrogen / total * 100, "unit" = "%", "danger_level" = nitrogen_danger))
+		var/nitrogen_danger = cur_tlv.get_danger_level(environment.gases[GAS_N2][MOLES]*partial_pressure)
+		environment_data += list(list("name" = "Nitrogen", "value" = environment.gases[GAS_N2][MOLES] / total * 100, "unit" = "%", "danger_level" = nitrogen_danger))
 
 		cur_tlv = TLV["carbon dioxide"]
-		var/carbon_dioxide_danger = cur_tlv.get_danger_level(environment.carbon_dioxide*partial_pressure)
-		environment_data += list(list("name" = "Carbon Dioxide", "value" = environment.carbon_dioxide / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
+		var/carbon_dioxide_danger = cur_tlv.get_danger_level(environment.gases[GAS_CO2][MOLES]*partial_pressure)
+		environment_data += list(list("name" = "Carbon Dioxide", "value" = environment.gases[GAS_CO2][MOLES] / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
 
 		cur_tlv = TLV["plasma"]
-		var/plasma_danger = cur_tlv.get_danger_level(environment.toxins*partial_pressure)
-		environment_data += list(list("name" = "Toxins", "value" = environment.toxins / total * 100, "unit" = "%", "danger_level" = plasma_danger))
+		var/plasma_danger = cur_tlv.get_danger_level(environment.gases[GAS_PL][MOLES]*partial_pressure)
+		environment_data += list(list("name" = "Toxins", "value" = environment.gases[GAS_PL][MOLES] / total * 100, "unit" = "%", "danger_level" = plasma_danger))
 
 		cur_tlv = TLV["other"]
 		var/other_moles = 0
-		for(var/datum/gas/G in environment.trace_gases)
-			other_moles+=G.moles
+		for(var/i in 5 to environment.gases.len)
+			other_moles+=environment.gases[i][MOLES]
 		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
 		environment_data += list(list("name" = "Other", "value" = other_moles / total * 100, "unit" = "%", "danger_level" = other_danger))
 
@@ -612,18 +612,18 @@
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.oxygen*GET_PP)
+	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.gases[GAS_O2][MOLES]*GET_PP)
 
 	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.carbon_dioxide*GET_PP)
+	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.gases[GAS_CO2][MOLES]*GET_PP)
 
 	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
+	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.gases[GAS_PL][MOLES]*GET_PP)
 
 	cur_tlv = TLV["other"]
 	var/other_moles = 0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
+	for(var/i in 5 to environment.gases.len)
+		other_moles+=environment.gases[i][MOLES]
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
 
 	cur_tlv = TLV["temperature"]

@@ -42,11 +42,11 @@
 	if(istype(src.loc, /turf/simulated))
 		var/turf/simulated/T = src.loc
 		if(T.air)
-			var/co2 = T.air.carbon_dioxide
+			var/co2 = T.air.gases[GAS_CO2][MOLES]
 			if(co2 > 0)
 				if(prob(25))
 					var/amt = min(co2, 9)
-					T.air.carbon_dioxide -= amt
+					T.air.gases[GAS_CO2][MOLES] -= amt
 					T.atmos_spawn_air(SPAWN_OXYGEN, amt)
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()

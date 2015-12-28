@@ -1,9 +1,10 @@
 #define FILTER_NOTHING			-1
-#define FILTER_PLASMA			0
-#define FILTER_OXYGEN			1
-#define FILTER_NITROGEN			2
-#define FILTER_CARBONDIOXIDE	3
-#define FILTER_NITROUSOXIDE		4
+//very cleverly using the gas index defines so as to simplify a bunch of logic
+#define FILTER_PLASMA			GAS_PL
+#define FILTER_OXYGEN			GAS_O2
+#define FILTER_NITROGEN			GAS_N2
+#define FILTER_CARBONDIOXIDE	GAS_CO2
+#define FILTER_NITROUSOXIDE		GAS_N2O
 
 /obj/machinery/atmospherics/components/trinary/filter
 	icon_state = "filter_off"
@@ -108,39 +109,14 @@ Filter types:
 		var/datum/gas_mixture/filtered_out = new
 		filtered_out.temperature = removed.temperature
 
-		switch(filter_type)
-			if(FILTER_PLASMA)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			if(FILTER_OXYGEN)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
-
-			if(FILTER_NITROGEN)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
-
-			if(FILTER_CARBONDIOXIDE)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
-
-			if(FILTER_NITROUSOXIDE)
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/sleeping_agent))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			else
-				filtered_out = null
-
+		if(filter_type > 0)
+			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			removed.gases[filter_type][MOLES] = 0
+			if(filter_type == FILTER_PLASMA)
+				filtered_out.gases[GAS_AGENT_B][MOLES] = removed.gases[GAS_AGENT_B][MOLES]
+				removed.gases[GAS_AGENT_B][MOLES] = 0
+		else
+			filtered_out = null
 
 		air2.merge(filtered_out)
 		air3.merge(removed)

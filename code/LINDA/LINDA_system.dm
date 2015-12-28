@@ -163,22 +163,20 @@ var/const/SPAWN_AIR = 256
 		G.temperature += 1000
 
 	if(flag & SPAWN_TOXINS)
-		G.toxins += amount
+		G.gases[GAS_PL][MOLES] += amount
 	if(flag & SPAWN_OXYGEN)
-		G.oxygen += amount
+		G.gases[GAS_O2][MOLES] += amount
 	if(flag & SPAWN_CO2)
-		G.carbon_dioxide += amount
+		G.gases[GAS_CO2][MOLES] += amount
 	if(flag & SPAWN_NITROGEN)
-		G.nitrogen += amount
+		G.gases[GAS_N2][MOLES] += amount
 
 	if(flag & SPAWN_N2O)
-		var/datum/gas/sleeping_agent/T = new
-		T.moles += amount
-		G.trace_gases += T
+		G.gases[GAS_N2O][MOLES] += amount
 
 	if(flag & SPAWN_AIR)
-		G.oxygen += MOLES_O2STANDARD * amount
-		G.nitrogen += MOLES_N2STANDARD * amount
+		G.gases[GAS_O2][MOLES] += MOLES_O2STANDARD * amount
+		G.gases[GAS_N2][MOLES] += MOLES_N2STANDARD * amount
 
 	air.merge(G)
 	SSair.add_to_active(src, 0)

@@ -105,9 +105,9 @@
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-	var/O2_partialpressure = (breath.oxygen/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath.toxins/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath.gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath.gases[GAS_PL][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath.gases[GAS_CO2][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -119,7 +119,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath.oxygen*ratio/6
+			oxygen_used = breath.gases[GAS_O2][MOLES]*ratio/6
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -128,11 +128,11 @@
 	else //Enough oxygen
 		failed_last_breath = 0
 		adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		oxygen_used = breath.gases[GAS_O2][MOLES]/6
 		clear_alert("oxy")
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	breath.gases[GAS_O2][MOLES] -= oxygen_used
+	breath.gases[GAS_CO2][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -151,24 +151,23 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath.toxins/safe_tox_max) * 10
+		var/ratio = (breath.gases[GAS_PL][MOLES]/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
-	//TRACE GASES
-	if(breath.trace_gases.len)
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_partialpressure = (SA.moles/breath.total_moles())*breath_pressure
-			if(SA_partialpressure > SA_para_min)
-				Paralyse(3)
-				if(SA_partialpressure > SA_sleep_min)
-					sleeping = max(sleeping+2, 10)
-			else if(SA_partialpressure > 0.01)
-				if(prob(20))
-					spawn(0) emote(pick("giggle","laugh"))
+	//NITROUS OXIDE
+	if(breath.gases[GAS_N2O][MOLES])
+		var/SA_partialpressure = (breath.gases[GAS_N2O][MOLES]/breath.total_moles())*breath_pressure
+		if(SA_partialpressure > SA_para_min)
+			Paralyse(3)
+			if(SA_partialpressure > SA_sleep_min)
+				sleeping = max(sleeping+2, 10)
+		else if(SA_partialpressure > 0.01)
+			if(prob(20))
+				spawn(0) emote(pick("giggle","laugh"))
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)

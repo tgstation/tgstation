@@ -130,20 +130,12 @@ var/pipenetwarnings = 10
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
+		member.air_temporary.copy_from(air)
 
-		member.air_temporary.oxygen = air.oxygen*member.volume/air.volume
-		member.air_temporary.nitrogen = air.nitrogen*member.volume/air.volume
-		member.air_temporary.toxins = air.toxins*member.volume/air.volume
-		member.air_temporary.carbon_dioxide = air.carbon_dioxide*member.volume/air.volume
+		for(var/gas in member.air_temporary.gases)
+			gas[MOLES] *= member.volume/air.volume
 
 		member.air_temporary.temperature = air.temperature
-
-		if(air.trace_gases.len)
-			for(var/datum/gas/trace_gas in air.trace_gases)
-				var/datum/gas/corresponding = new trace_gas.type()
-				member.air_temporary.trace_gases += corresponding
-
-				corresponding.moles = trace_gas.moles*member.volume/air.volume
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
@@ -215,56 +207,24 @@ var/pipenetwarnings = 10
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 
-	var/total_volume = 0
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
-	var/total_oxygen = 0
-	var/total_nitrogen = 0
-	var/total_toxins = 0
-	var/total_carbon_dioxide = 0
-	var/list/total_trace_gases = list()
+	var/datum/gas_mixture/total_gas_mixture = new
 
 	for(var/datum/gas_mixture/G in GL)
-		total_volume += G.volume
+		total_gas_mixture.volume += G.volume
+		total_gas_mixture.merge(G)
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()
 
-		total_oxygen += G.oxygen
-		total_nitrogen += G.nitrogen
-		total_toxins += G.toxins
-		total_carbon_dioxide += G.carbon_dioxide
+	if(total_heat_capacity > 0)
+		total_gas_mixture.temperature = total_thermal_energy/total_heat_capacity
+	else
+		total_gas_mixture.temperature = 0
 
-		if(G.trace_gases.len)
-			for(var/datum/gas/trace_gas in G.trace_gases)
-				var/datum/gas/corresponding = locate(trace_gas.type) in total_trace_gases
-				if(!corresponding)
-					corresponding = new trace_gas.type()
-					total_trace_gases += corresponding
-
-				corresponding.moles += trace_gas.moles
-
-	if(total_volume > 0)
-
-		//Calculate temperature
-		var/temperature = 0
-
-		if(total_heat_capacity > 0)
-			temperature = total_thermal_energy/total_heat_capacity
-
+	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/G in GL)
-			G.oxygen = total_oxygen*G.volume/total_volume
-			G.nitrogen = total_nitrogen*G.volume/total_volume
-			G.toxins = total_toxins*G.volume/total_volume
-			G.carbon_dioxide = total_carbon_dioxide*G.volume/total_volume
-
-			G.temperature = temperature
-
-			if(total_trace_gases.len)
-				for(var/datum/gas/trace_gas in total_trace_gases)
-					var/datum/gas/corresponding = locate(trace_gas.type) in G.trace_gases
-					if(!corresponding)
-						corresponding = new trace_gas.type()
-						G.trace_gases += corresponding
-
-					corresponding.moles = trace_gas.moles*G.volume/total_volume
+			G.copy_from(total_gas_mixture)
+			for(var/gas in G.gases)
+				gas[MOLES] *= G.volume/total_gas_mixture.volume

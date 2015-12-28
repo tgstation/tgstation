@@ -254,11 +254,7 @@
 		A.nitrogen = 82
 		A.carbon_dioxide = 0
 		A.toxins = 0
-		A.air.oxygen = 21
-		A.air.carbon_dioxide = 0
-		A.air.nitrogen = 82
-		A.air.toxins = 0
-		A.air.temperature = 293.15
+		A.air.copy_from_turf(A)
 		SSair.add_to_active(A)
 		A.overlays.Cut()
 

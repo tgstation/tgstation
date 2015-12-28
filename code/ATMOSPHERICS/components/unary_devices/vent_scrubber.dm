@@ -162,14 +162,21 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
-	if (!tile || !istype(tile))
+	if (!istype(tile))
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = AIR1
 
 	if(scrubbing & SCRUBBING)
-		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
+		var/should_we_scrub = FALSE
+		for(var/gas in environment.gases)
+			if(gas[GAS_INDEX] <= 2)
+				continue
+			if(gas[MOLES])
+				should_we_scrub = TRUE
+				break
+		if(should_we_scrub)
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
@@ -181,21 +188,17 @@
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 			if(scrub_Toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
+				filtered_out.gases[GAS_PL][MOLES] = removed.gases[GAS_PL][MOLES]
+				removed.gases[GAS_PL][MOLES] = 0
 			if(scrub_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
-
-			if(removed.trace_gases.len>0)
-				for(var/datum/gas/trace_gas in removed.trace_gases)
-					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-					else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-
+				filtered_out.gases[GAS_CO2][MOLES] = removed.gases[GAS_CO2][MOLES]
+				removed.gases[GAS_CO2][MOLES] = 0
+			if(TRUE) //no var for scrubbing agent b but I wanted the indentation to line up
+				filtered_out.gases[GAS_AGENT_B][MOLES] = removed.gases[GAS_AGENT_B][MOLES]
+				removed.gases[GAS_AGENT_B][MOLES] = 0
+			if(scrub_N2O)
+				filtered_out.gases[GAS_N2O][MOLES] = removed.gases[GAS_N2O][MOLES]
+				removed.gases[GAS_AGENT_B][MOLES] = 0
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)

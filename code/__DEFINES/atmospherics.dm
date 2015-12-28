@@ -20,8 +20,9 @@
 //indices of values in gas lists. used by listmos.
 #define MOLES			1
 #define ARCHIVE			2
-#define SPECIFIC_HEAT	3
-#define GAS_INDEX		4
+#define GAS_INDEX		3
+#define SPECIFIC_HEAT	4
+#define GAS_NAME		5
 
 //stuff you should probably leave well alone!
 //ATMOS

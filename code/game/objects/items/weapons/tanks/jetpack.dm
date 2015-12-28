@@ -54,7 +54,7 @@
 
 	var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-	var/allgases = G.carbon_dioxide + G.nitrogen + G.oxygen + G.toxins	//fuck trace gases	-Pete
+	var/allgases = G.total_moles()
 	if(allgases >= 0.005)
 		return 1
 
@@ -73,7 +73,7 @@
 
 /obj/item/weapon/tank/jetpack/void/New()
 	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.gases[GAS_O2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
 /obj/item/weapon/tank/jetpack/oxygen
@@ -84,7 +84,7 @@
 
 /obj/item/weapon/tank/jetpack/oxygen/New()
 	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.gases[GAS_O2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /obj/item/weapon/tank/jetpack/oxygen/harness
 	name = "jet harness (oxygen)"
@@ -114,7 +114,7 @@
 	..()
 	ion_trail = new /datum/effect_system/trail_follow/ion()
 	ion_trail.set_up(src)
-	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.gases[GAS_CO2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
 /obj/item/weapon/tank/jetpack/suit

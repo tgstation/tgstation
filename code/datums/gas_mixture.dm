@@ -29,29 +29,29 @@ What are the archived variables for?
 /datum/gas/volatile_fuel
 		specific_heat = 30
 
-var/list/gas_heats = list( //this is actually the list that decides what gases exist and in what order
-	20, //GAS_O2
-	20, //GAS_N2
-	30, //GAS_C02
-	200,//GAS_PLASMA
-	40, //GAS_N20
-	300,//GAS_AGENT_B
-	30, //GAS_V_FUEL
+var/list/meta_gas_info = list( //this is actually the list that decides what gases exist and in what order
+	list(20, "Oxygen"), 			//GAS_O2
+	list(20, "Nitrogen"), 			//GAS_N2
+	list(30, "Carbon Dioxide"),		//GAS_C02
+	list(200, "Plasma"),			//GAS_PLASMA
+	list(40, "Nitrous Oxide"),		//GAS_N20
+	list(300, "Oxygen Agent B"),	//GAS_AGENT_B
+	list(30, "Volatile Fuel")		//GAS_V_FUEL
 )
 
 var/list/cached_gases_list
 
 /proc/gaseslist()
 	. = new /list
-	for(var/i in 1 to gas_heats.len)
-		.[i] = gaslist(gas_heats[i], i)
+	for(var/i in 1 to meta_gas_info.len)
+		.[i] = gaslist(meta_gas_info[i], i)
 
-/proc/gaslist(specific_heat, index)
+/proc/gaslist(gas_info, index)
 	. = new /list
 	. += 0				//MOLES
 	. += 0				//ARCHIVE
-	. += specific_heat	//SPECIFIC_HEAT
 	. += index			//GAS_INDEX
+	. += gas_info		//all the rest
 
 /datum/gas_mixture
 	/*
@@ -257,6 +257,8 @@ var/list/cached_gases_list
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 
+/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient)
+
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
@@ -409,6 +411,17 @@ var/list/cached_gases_list
 
 			temperature -= heat/self_heat_capacity
 			sharer.temperature += heat/sharer_heat_capacity
+
+/datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
+	var/delta_temperature = (temperature - model.temperature)
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/self_heat_capacity = heat_capacity()
+
+		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
+			var/heat = conduction_coefficient*delta_temperature* \
+				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
+
+			temperature -= heat/self_heat_capacity
 
 /datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)

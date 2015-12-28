@@ -15,26 +15,14 @@
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.toxins = toxins
-
-	GM.temperature = temperature
+	GM.copy_from(src)
 
 	return GM
 
-/turf/remove_air(amount as num)
-	var/datum/gas_mixture/GM = new
+/turf/remove_air(amount)
+	var/datum/gas_mixture/GM = return_air()
 
-	var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-	if(sum>0)
-		GM.oxygen = (oxygen/sum)*amount
-		GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-		GM.nitrogen = (nitrogen/sum)*amount
-		GM.toxins = (toxins/sum)*amount
-
-	GM.temperature = temperature
+	GM.remove(amount)
 
 	return GM
 
@@ -61,11 +49,7 @@
 	visibilityChanged()
 	if(!blocks_air)
 		air = new
-		air.oxygen = oxygen
-		air.carbon_dioxide = carbon_dioxide
-		air.nitrogen = nitrogen
-		air.toxins = toxins
-		air.temperature = temperature
+		air.copy_from_turf(src)
 
 /turf/simulated/Destroy()
 	visibilityChanged()
@@ -254,11 +238,10 @@
 	return null
 
 /turf/simulated/proc/tile_graphic()
-	if(air.toxins > MOLES_PLASMA_VISIBLE)
+	if(air.gases[GAS_PL][MOLES] > MOLES_PLASMA_VISIBLE)
 		return "plasma"
 
-	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
-	if(sleeping_agent && (sleeping_agent.moles > 1))
+	if(air.gases[GAS_N2O][MOLES] > 1)
 		return "sleeping_agent"
 	return null
 
@@ -331,35 +314,14 @@
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
-	var/datum/gas/sleeping_agent/S = new
-	A.trace_gases += S
 	for(var/turf/simulated/T in turf_list)
-		A.oxygen 		+= T.air.oxygen
-		A.carbon_dioxide+= T.air.carbon_dioxide
-		A.nitrogen 		+= T.air.nitrogen
-		A.toxins 		+= T.air.toxins
-
-		if(T.air.trace_gases.len)
-			for(var/datum/gas/N in T.air.trace_gases)
-				S.moles += N.moles
+		A.merge(T.air)
 
 	for(var/turf/simulated/T in turf_list)
-		T.air.oxygen		= A.oxygen/turf_list.len
-		T.air.carbon_dioxide= A.carbon_dioxide/turf_list.len
-		T.air.nitrogen		= A.nitrogen/turf_list.len
-		T.air.toxins		= A.toxins/turf_list.len
-
-		if(S.moles > 0)
-			if(T.air.trace_gases.len)
-				for(var/datum/gas/G in T.air.trace_gases)
-					G.moles = S.moles/turf_list.len
-			else
-				var/datum/gas/sleeping_agent/G = new
-				G.moles = S.moles/turf_list.len
-				T.air.trace_gases += G
+		for(var/gas in T.air.gases)
+			gas[MOLES] = A.gases[gas[GAS_INDEX]][MOLES]/turf_list.len
 
 		T.update_visuals()
-
 
 /datum/excited_group/proc/dismantle()
 	for(var/turf/simulated/T in turf_list)

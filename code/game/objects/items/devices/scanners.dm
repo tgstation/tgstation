@@ -268,12 +268,11 @@ MASS SPECTROMETER
 	else
 		user.show_message("<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
 	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/plasma_concentration = environment.toxins/total_moles
+		var/o2_concentration = environment.gases[GAS_O2][MOLES]/total_moles
+		var/n2_concentration = environment.gases[GAS_N2][MOLES]/total_moles
+		var/co2_concentration = environment.gases[GAS_CO2][MOLES]/total_moles
+		var/plasma_concentration = environment.gases[GAS_PL][MOLES]/total_moles
 
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			user.show_message("<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>", 1)
 		else
@@ -292,8 +291,9 @@ MASS SPECTROMETER
 		if(plasma_concentration > 0.01)
 			user.show_message("<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>", 1)
 
-		if(unknown_concentration > 0.01)
-			user.show_message("<span class='alert'>Unknown: [round(unknown_concentration*100)] %</span>", 1)
+		for(var/i in 5 to environment.gases.len)
+			var/gas_concentration = environment.gases[i][MOLES]/total_moles
+			user.show_message("<span class='alert'>[environment.gases[i][GAS_NAME]]: [round(gas_concentration*100)] %</span>", 1)
 
 		user.show_message("<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>", 1)
 

@@ -46,7 +46,7 @@
 		var/added_oxygen = oxygen_content - total_moles
 
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
-		air_contents.oxygen += added_oxygen
+		air_contents.gases[GAS_O2][MOLES] += added_oxygen
 
 		update_parents()
 
