@@ -123,16 +123,3 @@
 		if(istype(M, /obj/machinery/door) && buckled_mob)
 			M.Bumped(buckled_mob)
 
-
-//TYPEFUCKERY
-//Because fuck updating all these maps
-
-
-/obj/structure/bed/chair/janicart/secway
-	parent_type = /obj/vehicle/secway
-
-/obj/structure/bed/chair/janicart
-	parent_type = /obj/vehicle/janicart
-
-/obj/structure/bed/chair/janicart/atv
-	parent_type = /obj/vehicle/atv
