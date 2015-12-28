@@ -441,6 +441,25 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/weapon/grenade/chem_grenade/tuberculosis
+ 	name = "Fungal tuberculosis grenade"
+ 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
+ 	stage = READY
+
+ /obj/item/weapon/grenade/chem_grenade/tuberculosis/New()
+ 	..()
+ 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+ 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+ 	B1.reagents.add_reagent("potassium", 50)
+ 	B1.reagents.add_reagent("phosphorus", 50)
+ 	B1.reagents.add_reagent("fungalspores", 200)
+ 	B2.reagents.add_reagent("blood", 250)
+ 	B2.reagents.add_reagent("sugar", 50)
+
+ 	beakers += B1
+ 	beakers += B2
+
 #undef EMPTY
 #undef WIRED
 #undef READY
