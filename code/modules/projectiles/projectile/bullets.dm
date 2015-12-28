@@ -10,11 +10,11 @@
 	damage = 70
 	armour_penetration = 10
 
-/obj/item/projectile/bullet/357mag
+/obj/item/projectile/bullet/magnum
 	damage = 60
 	armour_penetration = -10
 
-/obj/item/projectile/bullet/12gslug
+/obj/item/projectile/bullet/slug
 	damage = 65
 	armour_penetration = -10
 
