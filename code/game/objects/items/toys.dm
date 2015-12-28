@@ -395,7 +395,7 @@
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
 	var/temp = "a"
 	if(href_list["buffer"])
-		text_buffer = crayon_text_strip(stripped_input("Choose what to write.", "Scribbles"))
+		text_buffer = crayon_text_strip(stripped_input(usr,"Choose what to write.", "Scribbles",default = text_buffer))
 	if(href_list["type"])
 		switch(href_list["type"])
 			if("random_letter")
