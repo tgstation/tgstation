@@ -32,8 +32,8 @@
 		var/randomizemagic 			= pick(magiclist)
 		var/randomizemagicspecial 	= pick(magicspeciallist)
 		if(!summon_type)
+			var/obj/item/weapon/gun/G
 			switch (randomizeguns)
-				var/obj/item/weapon/gun/G
 				if("taser")
 					G = new /obj/item/weapon/gun/energy/gun/advtaser(get_turf(H))
 				if("egun")
