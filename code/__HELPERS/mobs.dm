@@ -140,3 +140,83 @@ Proc for attack log creation, because really why not
 	if(target && ismob(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]")
+
+
+
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
+	if(!user || !target)
+		return 0
+	var/user_loc = user.loc
+
+	var/target_loc = target.loc
+
+	var/holding = user.get_active_hand()
+	var/datum/progressbar/progbar
+	if (progress)
+		progbar = new(user, time, target)
+
+	var/endtime = world.time+time
+	. = 1
+	while (world.time < endtime)
+		if (progress)
+			progbar.update(endtime - world.time)
+		if(!user || !target)
+			. = 0
+			break
+		if(uninterruptible)
+			continue
+		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+			. = 0
+			break
+		sleep(1)
+	if (progress)
+		qdel(progbar)
+
+
+/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
+	if(!user)
+		return 0
+	var/atom/Tloc = null
+	if(target)
+		Tloc = target.loc
+
+	var/atom/Uloc = user.loc
+
+	var/holding = user.get_active_hand()
+
+	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	if(holding)
+		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+
+	var/datum/progressbar/progbar
+	if (progress)
+		progbar = new(user, delay, target)
+
+	var/endtime = world.time + delay
+	var/starttime = world.time
+	. = 1
+	while (world.time < endtime)
+		if (progress)
+			progbar.update(world.time - starttime)
+
+		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
+			. = 0
+			break
+
+		if(Tloc && (!target || Tloc != target.loc))
+			. = 0
+			break
+
+		if(needhand)
+			//This might seem like an odd check, but you can still need a hand even when it's empty
+			//i.e the hand is used to pull some item/tool out of the construction
+			if(!holdingnull)
+				if(!holding)
+					. = 0
+					break
+			if(user.get_active_hand() != holding)
+				. = 0
+				break
+		sleep(1)
+	if (progress)
+		qdel(progbar)
