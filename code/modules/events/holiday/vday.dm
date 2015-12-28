@@ -43,20 +43,21 @@
 	               "I love you like Ian loves the HoP.",
 	               "You're hotter than a plasma fire in toxins.",
 	               "Are you a rogue atmos tech? Because you're taking my breath away.",
-	               "Could I have all access... to your jumpsuit?",
+	               "Could I have all access... to your heart?",
 	               "Call me the CMO, because I'm here to inspect your johnson.",
-	               "Space is black. So is CO2. Be my Valentine. What the fuck is CO2?",
 	               "I'm not a changeling, but you make me extend my proboscis.",
 	               "I just can't get EI NATH of you.",
 	               "You must be a nuke op, because you make my heart explode.",
-	               "Roses are red / Botany's a farm / Not being my Valentine / causes human harm.",
-	               "I want you more than an assistant wants gloves.",
+	               "Roses are red / Chickens live on farms / Not being my Valentine / causes human harm.",
+	               "I want you more than an assistant wants insulated gloves.",
 	               "If I was a security officer, I'd brig you all shift.",
-	               "You know what you wanna do, right? You wanna put a banging donk in me.",
 	               "Are you the janitor? Because I think I've fallen for you.",
 	               "You're always valid to my heart.",
 	               "I'd risk the wrath of the gods to bwoink you.",
 	               "You look as beautiful now as the last time you were cloned.",
+	               "Your love is more valuable than raw plasma ore.",
+	               "Someone check the gravitational generator, because I'm only attracted to you.",
+	               "If I were the warden I'd alwasys let you into my armory."
 	               )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
@@ -75,7 +76,7 @@
 	list_reagents = list("sugar" = 4)
 	junkiness = 5
 
-/obj/item/weapon/valentine/New()
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/New()
 	..()
 	desc = pick("A heart-shaped candy that reads: HONK ME",
                 "A heart-shaped candy that reads: ERP",
@@ -89,5 +90,5 @@
                 "A heart-shaped candy that reads: BANGING DONK",
                 "A heart-shaped candy that reads: Y-YOU T-TOO",
                 "A heart-shaped candy that reads: GOT WOOD",
-                "A heart-shaped candy that reads: MEMES",
-                "A heart-shaped candy that reads: MURDER BONER")
+                "A heart-shaped candy that reads: TFW NO GF",
+                "A heart-shaped candy that reads: WAG MY TAIL")
