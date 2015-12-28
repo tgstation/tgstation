@@ -6,8 +6,11 @@ class NanoUI
     @resizing = false
 
     try
-      data = document.query "meta[name='data']"
-      @data = JSON.parse data.getAttribute "content"
+      dataHolder = document.query "meta[name='data']"
+      dataString = dataHolder.getAttribute "content"
+      dataString = dataString.replace /ÿ/g, ""
+      dataString = dataString.replace /\\improper/g, ""
+      @data = JSON.parse dataString
     catch error
       @error error
     if not (@data? and "data" of @data and "config" of @data)

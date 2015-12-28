@@ -80,7 +80,8 @@
 		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/atom/item in loc)
+	for(var/A in loc)
+		var/atom/item = A
 		if(item && item != src) // It's possible that the item is deleted in temperature_expose
 			item.fire_act(null, temperature, volume)
 	return 0

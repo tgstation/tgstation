@@ -60,7 +60,7 @@
   * return datum/nanoui The requested NanoUI.
  **/
 /datum/nanoui/New(mob/user, atom/movable/src_object, ui_key, template, \
-					title = 0, width = 0, height = 0, \
+					title, width = 0, height = 0, \
 					atom/ref = null, datum/nanoui/master_ui = null, \
 					datum/nano_state/state = default_state)
 	src.user = user
@@ -206,12 +206,12 @@
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
 	var/send_data_json = JSON.stringify(send_data)
-	// Strip junk.
-	send_data_json = replacetext(send_data_json, "'", "&apos;")
-	send_data_json = replacetext(send_data_json, "ÿ", "")
+	send_data_json = replacetextEx(send_data_json, "'", "&apos;")
+	send_data_json = replacetextEx(send_data_json, "\improper", "")
+	send_data_json = replacetextEx(send_data_json, "ÿ", "")
 
 	// Populate it.
-	var/send_html = replacetext(SSnano.html, "!!data!!", send_data_json)
+	var/send_html = replacetextEx(SSnano.html, "\[data]", send_data_json)
 	return send_html
 
  /**
@@ -314,7 +314,7 @@
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(JSON.stringify(send_data), "[window_id].browser:receiveUpdate")
+	user << output(url_encode(JSON.stringify(send_data)), "[window_id].browser:receiveUpdate")
 
 
  /**
