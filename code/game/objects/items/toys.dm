@@ -321,6 +321,7 @@
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 	var/drawtype = "rune"
+	var/text_buffer = ""
 	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
@@ -357,6 +358,7 @@
 /obj/item/toy/crayon/proc/update_window(mob/living/user)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
 	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter/number</a>"
+	dat += "<a href='?src=\ref[src];buffer=1'>Write</a>"
 	dat += "<hr>"
 	dat += "<h3>Runes:</h3><br>"
 	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
@@ -381,19 +383,30 @@
 	popup.open()
 	dat = ""
 
+/obj/item/toy/crayon/proc/crayon_text_strip(text)
+	var/list/base = text2list(lowertext(text),"")
+	var/list/out = list()
+	for(var/a in base)
+		if(a in (letters|numerals))
+			out += a
+	return list2text(out)
+
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
 	var/temp = "a"
-	switch(href_list["type"])
-		if("random_letter")
-			temp = pick(letters)
-		if("letter")
-			temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
-		if("random_rune")
-			temp = "rune[rand(1,6)]"
-		if("random_graffiti")
-			temp = pick(graffiti)
-		else
-			temp = href_list["type"]
+	if(href_list["buffer"])
+		text_buffer = crayon_text_strip(stripped_input(usr,"Choose what to write.", "Scribbles",default = text_buffer))
+	if(href_list["type"])
+		switch(href_list["type"])
+			if("random_letter")
+				temp = pick(letters)
+			if("letter")
+				temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
+			if("random_rune")
+				temp = "rune[rand(1,6)]"
+			if("random_graffiti")
+				temp = pick(graffiti)
+			else
+				temp = href_list["type"]
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	drawtype = temp
@@ -409,6 +422,7 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
+		
 		var/temp = "rune"
 		if(letters.Find(drawtype))
 			temp = "letter"
@@ -456,6 +470,10 @@
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if((instant>0) || do_after(user, 50, target = target))
+
+			if(length(text_buffer))
+				drawtype = copytext(text_buffer,1,2)
+				text_buffer = copytext(text_buffer,2)
 
 			//Gang functions
 			if(gangID)
