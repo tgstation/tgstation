@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/a357
 	desc = "A .357 bullet casing."
 	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/357mag
+	projectile_type = /obj/item/projectile/bullet/magnum
 
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
@@ -73,7 +73,7 @@
 	desc = "A 12 gauge lead slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
-	projectile_type = /obj/item/projectile/bullet/12gslug
+	projectile_type = /obj/item/projectile/bullet/slug
 	materials = list(MAT_METAL=4000)
 
 
