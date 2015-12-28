@@ -70,8 +70,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 
 /proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = potentialSpaceRuins)
-	if(ruin_number > potentialRuins.len)
-		ruin_number = potentialRuins.len //To avoid someone doing something dumb and entering an infinite loop
+	ruin_number = min(ruin_number, potentialRuins.len)
 
 	while(ruin_number)
 		var/sanity = 0
