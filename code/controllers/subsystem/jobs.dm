@@ -369,7 +369,7 @@ var/datum/subsystem/job/SSjob
 		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
 
 	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
-	return 1
+	return H
 
 
 /datum/subsystem/job/proc/setup_officer_positions()

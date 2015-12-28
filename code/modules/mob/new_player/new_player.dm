@@ -274,19 +274,21 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	character = SSjob.EquipRank(character, rank, 1)					//equips the human
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
-	if(character.mind.assigned_role != "Cyborg" || character.mind.assigned_role != "Mobile MMI")
-		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-		AnnounceArrival(character, rank)
+	//if(character.mind.assigned_role != "Cyborg" || character.mind.assigned_role != "Mobile MMI") // next three rows followed this tautology.
+	data_core.manifest_inject(character)
+	ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+	AnnounceArrival(character, rank)
+	
+	/*
 	else if (character.mind.assigned_role != "Cyborg")
 		character.Robotize()
 	else if (character.mind.assigned_role != "Mobile MMI")
-		character.Mommize()
+		character.Mommize() */
 
 	joined_player_list += character.ckey
 
