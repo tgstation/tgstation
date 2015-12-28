@@ -115,7 +115,7 @@
 					G = new /obj/item/weapon/gun/projectile/sniper_rifle(get_turf(H))
 				if("medibeam")
 					G = new /obj/item/weapon/gun/medbeam(get_turf(H))
-				G.unlock()
+			G.unlock()
 			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 
 		else
