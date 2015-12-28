@@ -592,6 +592,7 @@
 	usr << browse(out, "window=edit_memory[src];size=500x600")
 
 
+
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -627,8 +628,6 @@
 				return
 
 		var/datum/objective/new_objective = add_objective(src, new_obj_type)
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom","follower block (HOG)","build (HOG)","deicide (HOG)", "follower escape (HOG)", "sacrifice prophet (HOG)")
-		if (!new_obj_type) return
 
 		if (istype(new_objective, /datum/objective/custom)) //it's lame I know but this type is snowflaky by its very nature
 			var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
@@ -639,119 +638,6 @@
 		if (!new_objective)
 			usr << initial(new_obj_type.error_text)
 			return
-
-				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon)
-				if (objective&&(objective.type in objective_list) && objective:target)
-					def_target = objective:target.current
-
-				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
-				if (!new_target) return
-
-				var/objective_path = text2path("/datum/objective/[new_obj_type]")
-				if (new_target == "Free objective")
-					new_objective = new objective_path
-					new_objective.owner = src
-					new_objective:target = null
-					new_objective.explanation_text = "Free objective"
-				else
-					new_objective = new objective_path
-					new_objective.owner = src
-					new_objective:target = new_target:mind
-					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-					new_objective.update_explanation_text()
-
-			if ("destroy")
-				var/list/possible_targets = active_ais(1)
-				if(possible_targets.len)
-					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
-					new_objective = new /datum/objective/destroy
-					new_objective.target = new_target.mind
-					new_objective.owner = src
-					new_objective.update_explanation_text()
-				else
-					usr << "No active AIs with minds"
-
-			if ("prevent")
-				new_objective = new /datum/objective/block
-				new_objective.owner = src
-
-			if ("hijack")
-				new_objective = new /datum/objective/hijack
-				new_objective.owner = src
-
-			if ("escape")
-				new_objective = new /datum/objective/escape
-				new_objective.owner = src
-
-			if ("survive")
-				new_objective = new /datum/objective/survive
-				new_objective.owner = src
-
-			if("martyr")
-				new_objective = new /datum/objective/martyr
-				new_objective.owner = src
-
-			if ("nuclear")
-				new_objective = new /datum/objective/nuclear
-				new_objective.owner = src
-
-			if ("steal")
-				if (!istype(objective, /datum/objective/steal))
-					new_objective = new /datum/objective/steal
-					new_objective.owner = src
-				else
-					new_objective = objective
-				var/datum/objective/steal/steal = new_objective
-				if (!steal.select_target())
-					return
-
-			if("download","capture","absorb")
-				var/def_num
-				if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-					def_num = objective.target_amount
-
-				var/target_number = input("Input target number:", "Objective", def_num) as num|null
-				if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
-					return
-
-				switch(new_obj_type)
-					if("download")
-						new_objective = new /datum/objective/download
-						new_objective.explanation_text = "Download [target_number] research levels."
-					if("capture")
-						new_objective = new /datum/objective/capture
-						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."
-					if("absorb")
-						new_objective = new /datum/objective/absorb
-						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
-				new_objective.owner = src
-				new_objective.target_amount = target_number
-
-			if("follower block (HOG)")
-				new_objective = new /datum/objective/follower_block
-				new_objective.owner = src
-			if("build (HOG)")
-				new_objective = new /datum/objective/build
-				new_objective.owner = src
-			if("deicide (HOG)")
-				new_objective = new /datum/objective/deicide
-				new_objective.owner = src
-			if("follower escape (HOG)")
-				new_objective = new /datum/objective/escape_followers
-				new_objective.owner = src
-			if("sacrifice prophet (HOG)")
-				new_objective = new /datum/objective/sacrifice_prophet
-				new_objective.owner = src
-
-			if ("custom")
-				var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
-				if (!expl) return
-				new_objective = new /datum/objective
-				new_objective.owner = src
-				new_objective.explanation_text = expl
-
-		if (!new_objective) return
 
 		if (objective)
 			objectives -= objective
@@ -777,46 +663,6 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-
-	else if (href_list["handofgod"])
-		switch(href_list["handofgod"])
-			if("clear") //wipe handofgod status
-				if((src in ticker.mode.red_deity_followers) || (src in ticker.mode.blue_deity_followers) || (src in ticker.mode.red_deity_prophets) || (src in ticker.mode.blue_deity_prophets))
-					remove_hog_follower_prophet()
-					current << "<span class='danger'><B>You have been brainwashed... again! Your faith is no more!</B></span>"
-					message_admins("[key_name_admin(usr)] has de-hand of god'ed [current].")
-					log_admin("[key_name(usr)] has de-hand of god'ed [current].")
-
-			if("red follower")
-				make_Handofgod_follower("red")
-				message_admins("[key_name_admin(usr)] has red follower'ed [current].")
-				log_admin("[key_name(usr)] has red follower'ed [current].")
-
-			if("red prophet")
-				make_Handofgod_prophet("red")
-				message_admins("[key_name_admin(usr)] has red prophet'ed [current].")
-				log_admin("[key_name(usr)] has red prophet'ed [current].")
-
-			if("blue follower")
-				make_Handofgod_follower("blue")
-				message_admins("[key_name_admin(usr)] has blue follower'ed [current].")
-				log_admin("[key_name(usr)] has blue follower'ed [current].")
-
-			if("blue prophet")
-				make_Handofgod_prophet("blue")
-				message_admins("[key_name_admin(usr)] has blue prophet'ed [current].")
-				log_admin("[key_name(usr)] has blue prophet'ed [current].")
-
-			if("red god")
-				make_Handofgod_god("red")
-				message_admins("[key_name_admin(usr)] has red god'ed [current].")
-				log_admin("[key_name(usr)] has red god'ed [current].")
-
-			if("blue god")
-				make_Handofgod_god("blue")
-				message_admins("[key_name_admin(usr)] has blue god'ed [current].")
-				log_admin("[key_name(usr)] has blue god'ed [current].")
-
 
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
@@ -972,9 +818,31 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("equip")
+			if("tome")
+				var/mob/living/carbon/human/H = current
+				if (istype(H))
+					var/obj/item/weapon/tome/T = new(H)
+
+					var/list/slots = list (
+						"backpack" = slot_in_backpack,
+						"left pocket" = slot_l_store,
+						"right pocket" = slot_r_store,
+						"left hand" = slot_l_hand,
+						"right hand" = slot_r_hand,
+					)
+					var/where = H.equip_in_one_of_slots(T, slots)
+					if (!where)
+						usr << "<span class='danger'>Spawning tome failed!</span>"
+					else
+						H << "A tome, a message from your new master, appears in your [where]."
+						if(where == "backpack")
+							var/obj/item/weapon/storage/B = H.back
+							B.orient2hud(H)
+							B.show_to(H)
+
+			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
-					usr << "<span class='danger'>equip_cultist() failed! [current]'s starting equipment will be incomplete.</span>"
+					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1210,6 +1078,7 @@
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
+
 			if("unemag")
 				var/mob/living/silicon/robot/R = current
 				if (istype(R))

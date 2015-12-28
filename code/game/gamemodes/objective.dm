@@ -13,10 +13,11 @@
 /proc/generate_objectives(var/datum/mind/M, var/objectives_made = 2, var/has_escape = TRUE)
 	var/list/objective_types = (typesof(/datum/objective/default) - /datum/objective/default)
 	var/list/escape_objective_types = (typesof(/datum/objective/escape_obj) - /datum/objective/escape_obj)
-	for(var/datum/objective/O in objective_types)
-		if(O.required_role != M.special_role)
+	for(var/O in objective_types) // this is fucking hacky as shit but
+		var/datum/objective/obj = new O
+		if(M.special_role != obj.required_role && obj.required_role != null)
 			objective_types -= O
-		if(!O.randomgen)
+		if(!obj.randomgen)
 			objective_types -= O
 	for(var/i = 1, i <= objectives_made, i++)
 		if(i == objectives_made && has_escape)
@@ -147,6 +148,59 @@
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+
+/datum/objective/default/frame
+	var/target_role_type=0
+	dangerrating = 10
+	martyr_compatible = 1
+
+/datum/objective/default/frame/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
+	..()
+	return target
+
+
+/datum/objective/default/frame/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Frame [target.name], the [!target_role_type ? target.assigned_role : target.special_role] and ensure they are incarcerated by the end of the shift."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/default/frame/check_completion()
+	if(issilicon(target.current))
+		return 0
+	if(isbrain(target.current))
+		return 0
+	if(!target.current || target.current.stat == DEAD)
+		return 0
+	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
+		return 1
+	if(ticker.mode.station_was_nuked)
+		return 1
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 0
+	var/turf/location = get_turf(target.current)
+	var/area/loc_area = get_area(target.current)
+	if(!location)
+		return 0
+
+	if(istype(location, /turf/simulated/floor/plasteel/shuttle/red))
+		return 1
+	if(istype(loc_area, /area/security/brig))
+		return 1
+	if(istype(loc_area, /area/security/prison))
+		return 1
+	if(istype(loc_area, /area/prison/solitary)) // dunno if some maps still have solitary, if so this works
+		return 1
+	if(istype(loc_area, /area/mine/laborcamp))
+		return 1
+	if(istype(loc_area, /area/mine/laborcamp/security))
+		return 1
+	if(location.onCentcom() || location.onSyndieBase())
+		return 0
 
 
 /datum/objective/mutiny

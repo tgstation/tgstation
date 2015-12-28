@@ -92,12 +92,13 @@
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
 
 	equip_antag(M)
+	var/mob/living/carbon/human/H = usr
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
-	new_objective.target = usr:mind
-	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
+	new_objective.target = H.mind
+	new_objective.explanation_text = "Protect [H.real_name], the wizard."
 	ticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
@@ -156,8 +157,6 @@
 
 	var/list/nuke_candidates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
 	if(nuke_candidates.len > 0)
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
-	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(nuke_candidates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
