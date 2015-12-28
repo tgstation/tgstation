@@ -88,7 +88,7 @@
 	stage = 4
 /datum/disease2/effect/minttoxin/activate(var/mob/living/carbon/mob,var/multiplier)
 	if(istype(mob) && mob.reagents.get_reagent_amount("minttoxin") < 5)
-		to_chat(mob, "<span class = 'notice'>You feel a minty freshness")
+		to_chat(mob, "<span class='notice'>You feel a minty freshness</span>")
 		mob.reagents.add_reagent("minttoxin", 5)
 
 /datum/disease2/effect/gibbingtons
@@ -339,14 +339,21 @@
 /datum/disease2/effect/spawn
 	name = "Arachnogenesis Effect"
 	stage = 4
+	var/spawn_type=/mob/living/simple_animal/hostile/giant_spider/spiderling
+	var/spawn_name="spiderling"
 /datum/disease2/effect/spawn/activate(var/mob/living/carbon/mob,var/multiplier)
 	//var/mob/living/carbon/human/H = mob
 	var/placemob = locate(mob.x + pick(1,-1), mob.y, mob.z)
 	playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 
-	new /mob/living/simple_animal/hostile/giant_spider/spiderling(placemob)
-	mob.emote("me",1,"vomits up a live spiderling!")
+	new spawn_type(placemob)
+	mob.emote("me",1,"vomits up a live [spawn_name]!")
 
+/datum/disease2/effect/spawn/roach
+	name = "Blattogenesis Effect"
+	stage = 4
+	spawn_type=/mob/living/simple_animal/cockroach
+	spawn_name="cockroach"
 
 
 /datum/disease2/effect/orbweapon
