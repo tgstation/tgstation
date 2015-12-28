@@ -203,6 +203,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 	store_position()
 	on_uattack = new("owner"=src)
 
+	forceMove(loc) //Without this, area.Entered() isn't called when a mob is spawned inside area
+
 	if(flags & HEAR_ALWAYS)
 		getFromPool(/mob/virtualhearer, src)
 

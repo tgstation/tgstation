@@ -119,8 +119,8 @@
 	_color = "johnny"
 
 /obj/item/clothing/under/rainbow
-	name = "rainbow"
-	desc = "rainbow"
+	name = "rainbow jumpsuit"
+	desc = "A fabulous jumpsuit."
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	_color = "rainbow"
@@ -202,6 +202,7 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	_color = "overalls"
+	gender = PLURAL
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -389,6 +390,7 @@
 	_color = "simonpants"
 	item_state = "spants"
 	species_fit = list("Vox")
+	gender = PLURAL
 
 /obj/item/clothing/under/batmansuit
 	name = "batsuit"
