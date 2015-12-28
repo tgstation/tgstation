@@ -41,7 +41,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
-	ghostize()
+	ghostize(0)
 	//Fuck datums amirite
 	click_delayer = null
 	attack_delayer = null
