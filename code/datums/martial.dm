@@ -186,7 +186,7 @@
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
 
- /mob/living/carbon/human/proc/wrestling_help()
+/mob/living/carbon/human/proc/wrestling_help()
 	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
