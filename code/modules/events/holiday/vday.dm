@@ -71,6 +71,20 @@
 			name = "valentine - To: [recipient] From [sender]"
 	..()
 
+/obj/item/weapon/valentine/examine(mob/user)
+	if(in_range(user, src) || isobserver(user))
+		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
+		else
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[message]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
+	else
+		user << "<span class='notice'>It is too far away.</span>"
+
+/obj/item/weapon/valentine/attack_self(mob/user)
+	user.examinate(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/candyheart
 	name = "candy heart"
 	icon = 'icons/obj/holiday_misc.dmi'
