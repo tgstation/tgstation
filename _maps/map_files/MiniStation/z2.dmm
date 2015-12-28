@@ -200,48 +200,48 @@
 "dR" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "green"; dir = 4},/area/centcom/control)
 "dS" = (/turf/simulated/floor/plasteel{icon_state = "green"; dir = 8},/area/centcom/control)
 "dT" = (/turf/simulated/floor/plasteel{icon_state = "green"; dir = 4},/area/centcom/control)
-"dU" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/space)
-"dV" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/space)
-"dW" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f10"; dir = 2},/area/space)
+"dU" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape)
+"dV" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/shuttle/escape)
+"dW" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f10"; dir = 2},/area/shuttle/escape)
 "dX" = (/obj/machinery/door/poddoor{id = "CentComPort"; name = "security door"},/turf/simulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/control)
 "dY" = (/obj/machinery/door/airlock/centcom{name = "Centcom Security"; opacity = 1; req_access_txt = "101"},/turf/simulated/floor/plasteel/black,/area/centcom/control)
-"dZ" = (/turf/simulated/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/space)
-"ea" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/extinguisher,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"eb" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"ec" = (/obj/machinery/computer/emergency_shuttle,/turf/simulated/floor/plasteel/shuttle,/area/space)
-"ed" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"ee" = (/turf/simulated/wall/shuttle{dir = 2; icon_state = "swallc3"},/area/space)
+"dZ" = (/turf/simulated/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/shuttle/escape)
+"ea" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"eb" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/extinguisher,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"ec" = (/obj/machinery/computer/emergency_shuttle,/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"ed" = (/turf/simulated/wall/shuttle{dir = 2; icon_state = "swallc3"},/area/shuttle/escape)
+"ee" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "ef" = (/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "eg" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/centcom/control)
 "eh" = (/obj/machinery/door_control{desc = "A remote control switch for port-side blast doors."; icon_state = "doorctrl0"; id = "CentComPort"; name = "Security Doors"; pixel_y = 28; req_access_txt = "101"},/turf/simulated/floor/plasteel/black,/area/centcom/control)
-"ei" = (/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/space)
-"ej" = (/obj/machinery/computer/atmos_alert,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"ek" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"el" = (/turf/simulated/floor/plasteel/shuttle,/area/space)
-"em" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"en" = (/obj/machinery/computer/security,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"ei" = (/obj/machinery/computer/atmos_alert,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"ej" = (/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"ek" = (/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"el" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"em" = (/obj/machinery/computer/security,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"en" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
 "eo" = (/turf/simulated/floor{dir = 8; icon_state = "vault"},/area/centcom/control)
 "ep" = (/obj/structure/table/reinforced,/obj/machinery/door/window/brigdoor{base_state = "rightsecure"; dir = 4; icon_state = "rightsecure"; name = "Centcom Customs"; req_access_txt = "101"},/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "eq" = (/obj/structure/stool/bed/chair/office/dark{dir = 8},/turf/simulated/floor/plasteel/black,/area/centcom/control)
-"er" = (/obj/machinery/computer/crew,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"es" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"et" = (/obj/machinery/computer/communications,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"er" = (/obj/machinery/computer/crew,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"es" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"et" = (/obj/machinery/computer/communications,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "eu" = (/turf/indestructible/riveted,/area/centcom/ferry)
 "ev" = (/turf/simulated/wall,/area/centcom/ferry)
 "ew" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "ex" = (/obj/structure/table,/obj/item/weapon/stamp{pixel_x = -3; pixel_y = 3},/obj/item/weapon/stamp/denied{pixel_x = 4; pixel_y = -2},/obj/item/weapon/paper/centcom,/turf/simulated/floor/plasteel/black,/area/centcom/control)
-"ey" = (/turf/simulated/wall/shuttle{icon_state = "swall7"; dir = 2},/area/space)
-"ez" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/space)
-"eA" = (/obj/machinery/status_display,/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/space)
-"eB" = (/obj/machinery/door/airlock/glass_command{name = "Escape Shuttle Cockpit"; req_access_txt = "19"},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"eC" = (/turf/simulated/wall/shuttle{icon_state = "swall11"; dir = 2},/area/space)
+"ey" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
+"ez" = (/turf/simulated/wall/shuttle{icon_state = "swall7"; dir = 2},/area/shuttle/escape)
+"eA" = (/obj/machinery/status_display,/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
+"eB" = (/obj/machinery/door/airlock/glass_command{name = "Escape Shuttle Cockpit"; req_access_txt = "19"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"eC" = (/turf/simulated/wall/shuttle{icon_state = "swall11"; dir = 2},/area/shuttle/escape)
 "eD" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_y = 4},/obj/item/weapon/pen,/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eE" = (/obj/structure/mirror{pixel_y = 32},/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eF" = (/obj/structure/dresser,/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eG" = (/obj/machinery/door/poddoor/preopen{id = "CentComPort"; name = "security door"},/turf/simulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/control)
 "eH" = (/turf/indestructible/riveted,/area/centcom/evac)
-"eI" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"eJ" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"eI" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"eJ" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "eK" = (/obj/structure/stool,/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eL" = (/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eM" = (/turf/simulated/floor/grass,/area/space)
@@ -249,8 +249,8 @@
 "eO" = (/turf/simulated/floor/plasteel{icon_state = "bot"},/area/centcom/control)
 "eP" = (/turf/simulated/floor/grass,/area/centcom/control)
 "eQ" = (/turf/simulated/floor/grass,/area/centcom/evac)
-"eR" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"eS" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"eR" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"eS" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "eT" = (/turf/simulated/floor/plasteel,/area/centcom/evac)
 "eU" = (/obj/machinery/door/airlock/centcom{name = "Dressing Room"; opacity = 1; req_access_txt = "0"},/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eV" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/centcom/control)
@@ -260,7 +260,7 @@
 "eZ" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 8},/area/centcom/evac)
 "fa" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/centcom/evac)
 "fb" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 4},/area/centcom/evac)
-"fc" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"fc" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "fd" = (/turf/simulated/floor/plating,/area/centcom/ferry)
 "fe" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/ferry)
 "ff" = (/turf/simulated/floor{dir = 8; heat_capacity = 1; icon_state = "warning"},/area/centcom/ferry)
@@ -270,7 +270,7 @@
 "fj" = (/turf/simulated/floor/plasteel{icon_state = "greencorner"},/area/centcom/control)
 "fk" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel{icon_state = "green"; dir = 8},/area/centcom/evac)
 "fl" = (/turf/simulated/floor{dir = 4; heat_capacity = 1; icon_state = "warning"},/area/centcom/evac)
-"fm" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 8; dwidth = 12; height = 9; width = 21},/obj/docking_port/stationary{dir = 8; dwidth = 12; height = 9; id = "emergency_away"; name = "Centcom"; width = 21},/turf/simulated/floor/plating,/area/space)
+"fm" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 8; dwidth = 12; height = 9; width = 21},/obj/docking_port/stationary{dir = 8; dwidth = 12; height = 9; id = "emergency_away"; name = "Centcom"; width = 21},/turf/simulated/floor/plating,/area/shuttle/escape)
 "fn" = (/obj/machinery/door/airlock/external{name = "Arrival Airlock"},/turf/simulated/floor/plating,/area/centcom/evac)
 "fo" = (/turf/simulated/floor/plating,/area/centcom/evac)
 "fp" = (/obj/item/weapon/shard{color = "#008000"; icon_state = "small"},/obj/structure/grille{color = "#008000"; density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plating/airless,/area/wizard_station)
@@ -304,9 +304,9 @@
 "fR" = (/turf/indestructible/fakeglass,/area/centcom/ferry)
 "fS" = (/turf/simulated/floor/plasteel{icon_state = "greencorner"; dir = 1},/area/centcom/evac)
 "fT" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/evac)
-"fU" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/simulated/floor/plating,/area/space)
-"fV" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; req_access_txt = "0"},/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/space)
-"fW" = (/obj/structure/stool/bed/chair{dir = 8},/obj/item/device/radio/intercom{pixel_x = 25},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"fU" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/simulated/floor/plating,/area/shuttle/escape)
+"fV" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; req_access_txt = "0"},/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"fW" = (/obj/structure/stool/bed/chair{dir = 8},/obj/item/device/radio/intercom{pixel_x = 25},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "fX" = (/obj/structure/lattice,/obj/item/weapon/shard{color = "#008000"; icon_state = "medium"},/turf/space/transit,/area/wizard_station)
 "fY" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage2"; icon_state = "cultdamage2"},/area/wizard_station)
 "fZ" = (/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage3"; icon_state = "cultdamage3"},/area/wizard_station)
@@ -337,12 +337,12 @@
 "gy" = (/turf/simulated/floor/plating,/turf/simulated/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/transport)
 "gz" = (/turf/simulated/floor/plasteel{icon_state = "greencorner"},/area/centcom/ferry)
 "gA" = (/turf/simulated/floor/plasteel{icon_state = "greencorner"; dir = 8},/area/centcom/evac)
-"gB" = (/obj/structure/stool/bed/chair,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"gB" = (/obj/structure/stool/bed/chair,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "gC" = (/turf/indestructible/riveted{tag = "icon-uranium1"; icon_state = "uranium1"},/area/wizard_station)
 "gD" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage6"; icon_state = "cultdamage6"},/area/wizard_station)
 "gE" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage"; icon_state = "cultdamage"},/area/wizard_station)
 "gF" = (/obj/structure/mirror{pixel_x = 28},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
-"gG" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/simulated/floor/plasteel/shuttle,/area/space)
+"gG" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
 "gH" = (/turf/simulated/wall/shuttle{icon_state = "swall0"; dir = 2},/area/wizard_station)
 "gI" = (/turf/indestructible/fakedoor{name = "Squad 4 Pod"},/area/wizard_station)
 "gJ" = (/turf/simulated/wall/shuttle{icon_state = "swall4"; dir = 2},/area/wizard_station)
@@ -355,9 +355,9 @@
 "gQ" = (/turf/indestructible/fakedoor{name = "Shuttle Bay B"},/area/centcom/holding)
 "gR" = (/obj/machinery/door/airlock/centcom{name = "Centcom Security"; opacity = 1; req_access_txt = "0"},/turf/simulated/floor/plasteel/black,/area/centcom/evac)
 "gS" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/centcom/evac)
-"gT" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Escape Shuttle Infirmary"; req_access_txt = "0"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"gU" = (/obj/machinery/status_display,/turf/simulated/wall/shuttle{icon_state = "swall11"; dir = 2},/area/space)
-"gV" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
+"gT" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Escape Shuttle Infirmary"; req_access_txt = "0"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"gU" = (/obj/machinery/status_display,/turf/simulated/wall/shuttle{icon_state = "swall11"; dir = 2},/area/shuttle/escape)
+"gV" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "gW" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/space/transit,/area/wizard_station)
 "gX" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/turf/simulated/floor/plating/airless,/area/wizard_station)
 "gY" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor/plasteel,/area/wizard_station)
@@ -370,9 +370,9 @@
 "hf" = (/obj/structure/grille,/obj/machinery/door/poddoor/shutters{id = "syndieshutters"; name = "blast shutters"},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/shuttle/syndicate)
 "hg" = (/turf/simulated/floor/plating/snow,/turf/simulated/wall/shuttle{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/syndicate)
 "hh" = (/turf/simulated/floor/plasteel/black,/area/centcom/evac)
-"hi" = (/obj/machinery/sleeper{dir = 8; icon_state = "sleeper-open"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"hj" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/space,/area/space)
-"hk" = (/obj/machinery/door/airlock/glass_security{name = "Escape Shuttle Cell"; req_access_txt = "2"},/turf/simulated/floor/plasteel/shuttle,/area/space)
+"hi" = (/obj/machinery/sleeper{dir = 8; icon_state = "sleeper-open"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
+"hj" = (/obj/machinery/door/airlock/glass_security{name = "Escape Shuttle Cell"; req_access_txt = "2"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
+"hk" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; pixel_x = 28; req_access_txt = "0"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "hl" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/wizard_station)
 "hm" = (/turf/simulated/floor/plasteel/cult,/turf/simulated/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/wizard_station)
 "hn" = (/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage5"; icon_state = "cultdamage5"},/area/wizard_station)
@@ -395,10 +395,10 @@
 "hE" = (/obj/machinery/door/airlock/centcom{name = "Thunderdome"; opacity = 1; req_access_txt = "101"},/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/tdome/tdomeobserve)
 "hF" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 8},/area/tdome/tdomeobserve)
 "hG" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 5},/area/tdome/tdomeobserve)
-"hH" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; pixel_x = 28; req_access_txt = "0"},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"hI" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle/red,/area/space)
-"hJ" = (/turf/simulated/floor/plasteel/shuttle/red,/area/space)
-"hK" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle/red,/area/space)
+"hH" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"hI" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"hJ" = (/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"hK" = (/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 6},/obj/item/weapon/storage/firstaid/regular{pixel_x = -2; pixel_y = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "hL" = (/obj/structure/lattice,/obj/effect/forcefield,/turf/space/transit,/area/wizard_station)
 "hM" = (/obj/machinery/vending/magivend,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "hN" = (/obj/machinery/vending/snack,/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage"; icon_state = "cultdamage"},/area/wizard_station)
@@ -417,8 +417,8 @@
 "ia" = (/obj/structure/table/reinforced,/turf/simulated/floor/plasteel/black,/area/centcom/evac)
 "ib" = (/obj/structure/table/reinforced,/obj/item/weapon/pen,/turf/simulated/floor/plasteel/black,/area/centcom/evac)
 "ic" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/turf/simulated/floor/plasteel/black,/area/centcom/evac)
-"id" = (/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 6},/obj/item/weapon/storage/firstaid/regular{pixel_x = -2; pixel_y = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/space)
-"ie" = (/turf/simulated/wall/shuttle{icon_state = "swall1"; dir = 2},/area/space)
+"id" = (/turf/simulated/wall/shuttle{icon_state = "swall1"; dir = 2},/area/shuttle/escape)
+"ie" = (/turf/simulated/wall/shuttle{icon_state = "swall14"; dir = 2},/area/shuttle/escape)
 "if" = (/turf/indestructible/riveted{tag = "icon-uranium8"; icon_state = "uranium8"},/area/wizard_station)
 "ig" = (/obj/structure/door_assembly{anchored = 1; icon_state = "door_as_uranium1"; name = "Break Room"},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "ih" = (/turf/indestructible/riveted{tag = "icon-uranium4"; icon_state = "uranium4"},/area/wizard_station)
@@ -442,10 +442,10 @@
 "iz" = (/obj/structure/stool/bed/chair/office/dark{dir = 8},/turf/simulated/floor/plasteel,/area/tdome/tdomeobserve)
 "iA" = (/obj/structure/table/reinforced,/obj/item/weapon/clipboard,/turf/simulated/floor/plasteel/black,/area/centcom/evac)
 "iB" = (/obj/structure/stool/bed/chair/office/dark{dir = 1},/turf/simulated/floor/plasteel/black,/area/centcom/evac)
-"iC" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/space)
-"iD" = (/turf/simulated/wall/shuttle{icon_state = "swall14"; dir = 2},/area/space)
-"iE" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/space)
-"iF" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/space)
+"iC" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape)
+"iD" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/escape)
+"iE" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape)
+"iF" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/shuttle/escape)
 "iG" = (/obj/structure/stool/bed/chair/wood/wings,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "iH" = (/obj/structure/table/wood,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/ointment,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "iI" = (/obj/structure/table/wood,/obj/item/weapon/retractor,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
@@ -464,7 +464,6 @@
 "iV" = (/obj/machinery/door/airlock/centcom{name = "Study"; opacity = 1; req_access_txt = "150"},/turf/simulated/floor/plasteel/bar,/area/syndicate_mothership)
 "iW" = (/turf/simulated/floor/plasteel/grimy,/area/syndicate_mothership)
 "iX" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/tdome/tdomeobserve)
-"iY" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/space)
 "iZ" = (/turf/indestructible/fakeglass{color = "#008000"; dir = 1; icon_state = "fakewindows"},/area/wizard_station)
 "ja" = (/obj/structure/cult/tome,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "jb" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/head/wizard/red,/obj/item/weapon/staff,/obj/item/clothing/shoes/sandal,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
@@ -861,26 +860,26 @@ abababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababdldmdndodpabababdldmdndodpababababababababababababababababababababdKdPdKdPdKdPdKdPdKdPdKdPdKdPdKdPdKabababdFdQdIdIdIdRdFabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKabababdFdSdIdIdIdTdFabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdKdPdKdPdKdPdKdPdKdPdKdPdKdPdKdPdKabababdFdSdIdIdIdTdFabababababababababababdUdVdVdVdVdVdWabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKabababdFdFdXdFdFdYdFababababababababababdUdZeaebecebedeedWababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdFefegehefdFababababababababababeiejekelelelemeneiababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdFeoepeqefdFababababababababababeierekelelesemeteiababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueueveueuababdFefegewexdFababababababababababeyezezeAeBezezezeCababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueDeEeFeuaddFdFeGdFdFdFdFdFeHeHeHeHeHeHabababeieIeJeJeleJeJeIeiababeHeHeHeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueKeLeLeueMeNdIeOeOeOeOeNePeHeQeQeQeQeHeHababeieReleleleleleSeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueueueueueueueueueueueueueueueueUeueuePeVdIeWeXeYeOeVePeHeZfafafafbeHeHeHeieReleSfceReleSeieZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeufdfdfdfdfdfdfdfdfdfdfdfdfdfefffgfheuePeVfidIdIdIfjeVePeHfkeTeTfleTeTeTeHeieleleSdVeRelelfmfnfofneTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafpfqfrfsaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftftftftftftftftftftftftftftftftftftftftftftftftftftftftftftabababababababababababababababeufdfufvfvfwfvfvfvfxfvfvfyfdfzfffgfheuePeVdSdIdIdIdTfAePeHfkeTeTfleTeTeTeHeieReleSdVeReleSeieZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafBaafCfDfEfFfGaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfIfHfHfHfJfKfHfHfHfJfHfHfHfHfHfHfJfHfHftabababababababababababababababeufLfMfNfOfPfPfPfPfPfPfPfwfQfRfffgfheuePfAdSdIdIdIdNdFegeHfSeTeTfleTeTeTfTfUeReleSfVeRelfWeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafBfXfYfZfEgagbaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfIfHfHfHfHfHfHfHfHfHfHfHfJfHfHfHfHfHfJfHfHfHfHfHftabababababababababababababababeufLgcgdgdgdgdgdgdgdgdgdgegffdfgfgggeugheudMdIdIdIdIdIdIeTeTeTeTfleTeTeTgifUeReleSdVeReleSfUababgjeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafsgkglgagmgngbaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHgofHfHfHfHfHfIfHfHfKfJfHfHfJfHfHfJfKfHfJfHftabababababababababababababababeufLgpgqgqgqgqgqgqgqgqgqfwfQfefffgfggrfgfgdIdIdIdIdIdIdIeTeTeTeTfleTeTeTgsfUeReleSdVeReleSeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafFfGgtgugtgvgwaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfIfHfHfJfKfHfHfJfHfKftabababababababababababababababeufdgxfvfvfwfvfvfvfxfvfvgyfdfzfffggzeugheufidIdIdIfjdFegeHgAeTeTfleTeTeTeHeieReleSgBeReleSeieZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaaaafBfBgCgDgEgFgCaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfIfHfHfHfHfHfKfHfJfKfHfJfHftabababababababababababababababeufdfdfdfdfdfdfdfdfdfdfdfdfdfRfffgfheuePeNdQdIdIdIdReNePeHfkeTeTfleTeTeTeHeielelelelelelelgGfnfofneTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaaaagHgIgJgKgLgMfEgNfBaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHgOgOgOgOgOgOgOfHfHfHfHfHfHfHfJfHfHgofKfHfHfHftabababababababababababababababgPgPgPgPgPgPgPgPgPgPgPgPgPgPgPgPgQgPgPePeVdQdIdIdIdReVePeHeZfbgRgSeHeTeTeHeigTdVdVgUeJelgVeieZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaaaagWgXgYgZhagLfEglhbhcfBfBaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhdhehfhfhfhfhfhehgfHfHfHfHgofHgOfIgOfIfHfJfHfJftabababababababababababababababababababababababababababababababababgPePfAdQdIdIdIdRfAePeHhhhhhhhheHeTeTeHeieJeJhieihjhkdVeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaafBaagJhlhlhmgLfEhnglhcaahohpaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhehqhrhshthuhvhvhehwfHfHgOftfthxhyftftgOhzhAgOftabababababababababababababababababababababababababababababababababgPhBhBhChDhEhFhGhBhBeHhhhhhhhheHeTeTeHeieJeJhHeihIhJhKeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaaaaaagNfBaaaafBhLhMfZhNfZgNfBfBaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhehOhrhrhPhrhrhrhehwfHhQftfthRhShShRftftftftftftftftabababababababababababababababababababababababababababababababgPhThUhVhWhXhYhVhUhTeHhZiaibiceHeTeTeHeiideJhiiehIhJhKeiababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaagvifigihiiijiiiiifikihiiiiijiiifaafBaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHheilhrhrhrimhrinhehwgohQftioipipipipiqirisitiuiviwftabababababababababababababababababababababababababababababababgPhUixiyhWhXhYiyizhUeHhhiAiBhheHeTeTeHiCiDiEiEiEiEiEiDiFababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abababababababaaaaaaaaaaaaaagCiGfEfEiGgCiHiIfEfEfEiJiKgCiLiMgNiNfBfBaaaaaaababababababababababababababababababababababftfHfHfHfHfHiOheheheiPheheheiQfHfHiRftiSipiTiTiUipipipiViWiWiWftabababababababababababababababababababababababababababababababgPiXhUiXhWhXhYiXhUiXeHhhhhhhhheHeTeTeHabiCiYiYiYiYiYiFabababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKdKabababdFdFdXdFdFdYdFababababababababababdUdZebeaeceaeeeddWababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdFefegehefdFababababababababababejeielekekekenemejababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababdFeoepeqefdFababababababababababejerelekekesenetejababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueueveueuababdFefegewexdFababababababababababezeyeyeAeBeyeyeyeCababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueDeEeFeuaddFdFeGdFdFdFdFdFeHeHeHeHeHeHabababejeIeJeJekeJeJeIejababeHeHeHeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueKeLeLeueMeNdIeOeOeOeOeNePeHeQeQeQeQeHeHababejeRekekekekekeSejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeueueueueueueueueueueueueueueueueUeueuePeVdIeWeXeYeOeVePeHeZfafafafbeHeHeHejeRekeSfceRekeSejeZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababeufdfdfdfdfdfdfdfdfdfdfdfdfdfefffgfheuePeVfidIdIdIfjeVePeHfkeTeTfleTeTeTeHejekekeSdVeRekekfmfnfofneTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafpfqfrfsaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftftftftftftftftftftftftftftftftftftftftftftftftftftftftftftabababababababababababababababeufdfufvfvfwfvfvfvfxfvfvfyfdfzfffgfheuePeVdSdIdIdIdTfAePeHfkeTeTfleTeTeTeHejeRekeSdVeRekeSejeZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafBaafCfDfEfFfGaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfIfHfHfHfJfKfHfHfHfJfHfHfHfHfHfHfJfHfHftabababababababababababababababeufLfMfNfOfPfPfPfPfPfPfPfwfQfRfffgfheuePfAdSdIdIdIdNdFegeHfSeTeTfleTeTeTfTfUeRekeSfVeRekfWejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafBfXfYfZfEgagbaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfIfHfHfHfHfHfHfHfHfHfHfHfJfHfHfHfHfHfJfHfHfHfHfHftabababababababababababababababeufLgcgdgdgdgdgdgdgdgdgdgegffdfgfgggeugheudMdIdIdIdIdIdIeTeTeTeTfleTeTeTgifUeRekeSdVeRekeSfUababgjeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafsgkglgagmgngbaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHgofHfHfHfHfHfIfHfHfKfJfHfHfJfHfHfJfKfHfJfHftabababababababababababababababeufLgpgqgqgqgqgqgqgqgqgqfwfQfefffgfggrfgfgdIdIdIdIdIdIdIeTeTeTeTfleTeTeTgsfUeRekeSdVeRekeSejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaaaafFfGgtgugtgvgwaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfIfHfHfJfKfHfHfJfHfKftabababababababababababababababeufdgxfvfvfwfvfvfvfxfvfvgyfdfzfffggzeugheufidIdIdIfjdFegeHgAeTeTfleTeTeTeHejeRekeSgBeRekeSejeZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaaaafBfBgCgDgEgFgCaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHfHfHfHfHfHfHfHfHfIfHfHfHfHfHfKfHfJfKfHfJfHftabababababababababababababababeufdfdfdfdfdfdfdfdfdfdfdfdfdfRfffgfheuePeNdQdIdIdIdReNePeHfkeTeTfleTeTeTeHejekekekekekekekgGfnfofneTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaaaagHgIgJgKgLgMfEgNfBaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHgOgOgOgOgOgOgOfHfHfHfHfHfHfHfJfHfHgofKfHfHfHftabababababababababababababababgPgPgPgPgPgPgPgPgPgPgPgPgPgPgPgPgQgPgPePeVdQdIdIdIdReVePeHeZfbgRgSeHeTeTeHejgTdVdVgUeJekgVejeZfafbeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaaaagWgXgYgZhagLfEglhbhcfBfBaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhdhehfhfhfhfhfhehgfHfHfHfHgofHgOfIgOfIfHfJfHfJftabababababababababababababababababababababababababababababababababgPePfAdQdIdIdIdRfAePeHhhhhhhhheHeTeTeHejeJeJhiejdVhjdVejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaafBaagJhlhlhmgLfEhnglhcaahohpaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhehqhrhshthuhvhvhehwfHfHgOftfthxhyftftgOhzhAgOftabababababababababababababababababababababababababababababababababgPhBhBhChDhEhFhGhBhBeHhhhhhhhheHeTeTeHejeJeJhkejhHhJhIejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaaaaaagNfBaaaafBhLhMfZhNfZgNfBfBaaaaaaaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHhehOhrhrhPhrhrhrhehwfHhQftfthRhShShRftftftftftftftftabababababababababababababababababababababababababababababababgPhThUhVhWhXhYhVhUhTeHhZiaibiceHeTeTeHejhKeJhiidhHhJhIejababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaagvifigihiiijiiiiifikihiiiiijiiifaafBaaaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHheilhrhrhrimhrinhehwgohQftioipipipipiqirisitiuiviwftabababababababababababababababababababababababababababababababgPhUixiyhWhXhYiyizhUeHhhiAiBhheHeTeTeHiCieiDiDiDiDiDieiEababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababaaaaaaaaaaaaaagCiGfEfEiGgCiHiIfEfEfEiJiKgCiLiMgNiNfBfBaaaaaaababababababababababababababababababababababftfHfHfHfHfHiOheheheiPheheheiQfHfHiRftiSipiTiTiUipipipiViWiWiWftabababababababababababababababababababababababababababababababgPiXhUiXhWhXhYiXhUiXeHhhhhhhhheHeTeTeHabiCiFiFiFiFiFiEabababeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaaiZjafEfEjagtiNiNfEfEfEfEjbiZjcjdhlhljeaaaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHhejfhrjghejhgOgOgOjiftipiTjjjkiTipjljmitjnjoftftabababababababababababababababababababababababababababababababgPjphUhUhWhXhYhUhUjqeHhhhhhhjreHeTeTeHeHeHeHeHeHeHeHeHeHeHeHeHeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaajsjtfEglfEjuhnglfEjvfEfEjwjsjxjyjzjAjBjCaaaaaaababababababababababababababababababababababftfHfHfHfHfHfHfHhejDhrjEhejFjGjGjGhyftipiTjHjIiTipjljJftftftftababababababababababababababababababababababababababababababababgPjKjLjLhWhXhYjMjMjNeHeHjOeHeHeHeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 abababababababaaaaaaaaaaaaaajPjafEfZhnjQfZfEfEjRfEfEfEjPjSjTjejUgHaaaaaaaaababababababababababababababababababababababftfHfHhdhehehehehejDhrjEhejVjWjWjWjWjXipipipipipipjljJftftftftababababababababababababababababababababababababababababababababgPhBhBhBhBhXhBhBhBhBhBababababeHeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeTeHababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
@@ -971,3 +970,4 @@ abababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 "}
+
