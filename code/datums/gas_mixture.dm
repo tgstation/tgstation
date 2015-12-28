@@ -84,39 +84,14 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 /datum/gas_mixture/proc/heat_capacity()
 	for(var/gas in gases)
 		. += gas[MOLES]*gas[SPECIFIC_HEAT]
-	/*
-	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins)
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		heat_capacity += trace_gas.moles*trace_gas.specific_heat
-	return heat_capacity
-	*/
 
 /datum/gas_mixture/proc/heat_capacity_archived()
 	for(var/gas in gases)
 		. += gas[ARCHIVE]*gas[SPECIFIC_HEAT]
-	/*
-	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,toxins_archived)
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
-	return heat_capacity_archived
-	*/
 
 /datum/gas_mixture/proc/total_moles()
 	for(var/gas in gases)
 		. += gas[MOLES]
-	/*
-	var/moles = oxygen + carbon_dioxide + nitrogen + toxins
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		moles += trace_gas.moles
-	return moles
-	*/
-
 
 /datum/gas_mixture/proc/return_pressure()
 	if(volume>0)
@@ -284,16 +259,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	//Copies all gas info from the turf into the gas list along with copying temperature, then archives
 
 /datum/gas_mixture/archive()
-	/*
-	oxygen_archived = gases[GAS_02][MOLES]
-	carbon_dioxide_archived = carbon_dioxide
-	nitrogen_archived =  nitrogen
-	toxins_archived = toxins
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		trace_gas.moles_archived = trace_gas.moles
-	*/
 	for(var/gas in gases)
 		gas[ARCHIVE] = gas[MOLES]
 	temperature_archived = temperature
@@ -309,20 +274,7 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
-	/*
-	gases[GAS_02][MOLES] += giver.gases[GAS_02][MOLES]
-	carbon_dioxide += giver.carbon_dioxide
-	nitrogen += giver.nitrogen
-	toxins += giver.toxins
 
-	for(var/gas in giver.trace_gases)
-		var/datum/gas/trace_gas = gas
-		var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
-		if(!corresponding)
-			corresponding = new trace_gas.type()
-			trace_gases += corresponding
-		corresponding.moles += trace_gas.moles
-	*/
 	for(var/i in 1 to gases.len)
 		gases[i][MOLES] += giver.gases[i][MOLES]
 
@@ -336,25 +288,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 		return null
 
 	var/datum/gas_mixture/removed = new
-	/*
-	removed.gases[GAS_02][MOLES] = QUANTIZE((gases[GAS_02][MOLES]/sum)*amount)
-	removed.nitrogen = QUANTIZE((nitrogen/sum)*amount)
-	removed.carbon_dioxide = QUANTIZE((carbon_dioxide/sum)*amount)
-	removed.toxins = QUANTIZE((toxins/sum)*amount)
-
-	gases[GAS_02][MOLES] -= removed.gases[GAS_02][MOLES]
-	nitrogen -= removed.nitrogen
-	carbon_dioxide -= removed.carbon_dioxide
-	toxins -= removed.toxins
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		var/datum/gas/corresponding = new trace_gas.type()
-		removed.trace_gases += corresponding
-
-		corresponding.moles = (trace_gas.moles/sum)*amount
-		trace_gas.moles -= corresponding.moles
-	*/
 
 	for(var/i in 1 to gases.len)
 		removed.gases[i][MOLES] = QUANTIZE((gases[i][MOLES]/sum)*amount)
@@ -372,25 +305,7 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	ratio = min(ratio, 1)
 
 	var/datum/gas_mixture/removed = new
-	/*
-	removed.gases[GAS_02][MOLES] = QUANTIZE(gases[GAS_02][MOLES]*ratio)
-	removed.nitrogen = QUANTIZE(nitrogen*ratio)
-	removed.carbon_dioxide = QUANTIZE(carbon_dioxide*ratio)
-	removed.toxins = QUANTIZE(toxins*ratio)
 
-	gases[GAS_02][MOLES] -= removed.gases[GAS_02][MOLES]
-	nitrogen -= removed.nitrogen
-	carbon_dioxide -= removed.carbon_dioxide
-	toxins -= removed.toxins
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		var/datum/gas/corresponding = new trace_gas.type()
-		removed.trace_gases += corresponding
-
-		corresponding.moles = trace_gas.moles*ratio
-		trace_gas.moles -= corresponding.moles
-	*/
 	for(var/i in 1 to gases.len)
 		removed.gases[i][MOLES] = QUANTIZE(gases[i][MOLES]*ratio)
 		gases[i][MOLES] -= removed.gases[i][MOLES]
@@ -400,20 +315,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	. = removed
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	/*
-	gases[GAS_02][MOLES] = sample.gases[GAS_02][MOLES]
-	carbon_dioxide = sample.carbon_dioxide
-	nitrogen = sample.nitrogen
-	toxins = sample.toxins
-
-	trace_gases.len=null
-	for(var/gas in sample.trace_gases)
-		var/datum/gas/trace_gas = gas
-		var/datum/gas/corresponding = new trace_gas.type()
-		trace_gases += corresponding
-
-		corresponding.moles = trace_gas.moles
-	*/
 	for(var/i in 1 to gases.len)
 		gases[i][MOLES] = sample.gases[i][MOLES]
 	temperature = sample.temperature
@@ -424,29 +325,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	var/datum/gas_mixture/copied = new
 	copied.copy_from_turf(model)
 	. = compare(copied, datatype = ARCHIVE, adjacents = atmos_adjacent_turfs)
-	/*
-	var/delta_oxygen = (oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
-	var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
-	var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
-	var/delta_toxins = (toxins_archived - model.toxins)/(atmos_adjacent_turfs+1)
-
-	var/delta_temperature = (temperature_archived - model.temperature)
-
-	if(((abs(delta_oxygen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_oxygen) >= oxygen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_carbon_dioxide) >= carbon_dioxide_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_nitrogen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_nitrogen) >= nitrogen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_toxins) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_toxins) >= toxins_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)))
-		return 0
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-		return 0
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
-			return 0
-
-	return 1
-	*/
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = 0
@@ -455,12 +333,7 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	var/list/deltas = new
 	for(var/i in 1 to gases.len)
 		deltas += QUANTIZE(gases[i][ARCHIVE] - sharer.gases[i][ARCHIVE])/(atmos_adjacent_turfs+1)
-	/*
-	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
-	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
-	var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/(atmos_adjacent_turfs+1)
-	var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/(atmos_adjacent_turfs+1)
-	*/
+
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
 	var/old_self_heat_capacity = 0
@@ -477,103 +350,19 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 					heat_capacity_self_to_sharer += gas_heat_capacity
 				else
 					heat_capacity_sharer_to_self += gas_heat_capacity
-		/*
-		var/delta_air = delta_oxygen+delta_nitrogen
-		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
-			if(delta_air > 0)
-				heat_capacity_self_to_sharer += air_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= air_heat_capacity
 
-		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
-			if(delta_carbon_dioxide > 0)
-				heat_capacity_self_to_sharer += carbon_dioxide_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= carbon_dioxide_heat_capacity
-
-		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
-			if(delta_toxins > 0)
-				heat_capacity_self_to_sharer += toxins_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= toxins_heat_capacity
-		*/
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
 	for(var/i in 1 to gases.len)
 		gases[i][MOLES] -= deltas[i]
 		sharer.gases[i][MOLES] += deltas[i]
-	/*
-	oxygen -= delta_oxygen
-	sharer.oxygen += delta_oxygen
 
-	carbon_dioxide -= delta_carbon_dioxide
-	sharer.carbon_dioxide += delta_carbon_dioxide
-
-	nitrogen -= delta_nitrogen
-	sharer.nitrogen += delta_nitrogen
-
-	toxins -= delta_toxins
-	sharer.toxins += delta_toxins
-	*/
 	var/moved_moles = 0
 	for(var/delta in deltas)
 		moved_moles += delta
 		last_share += abs(delta)
-	/*
-	var/list/trace_types_considered = list()
 
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		var/datum/gas/corresponding = locate(trace_gas.type) in sharer.trace_gases
-		var/delta = 0
-
-		if(corresponding)
-			delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/(atmos_adjacent_turfs+1)
-		else
-			corresponding = new trace_gas.type()
-			sharer.trace_gases += corresponding
-
-			delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
-
-		trace_gas.moles -= delta
-		corresponding.moles += delta
-
-		if(delta)
-			var/individual_heat_capacity = trace_gas.specific_heat*delta
-			if(delta > 0)
-				heat_capacity_self_to_sharer += individual_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= individual_heat_capacity
-
-		moved_moles += delta
-		last_share += abs(delta)
-
-		trace_types_considered += trace_gas.type
-
-	for(var/datum/gas/trace_gas in sharer.trace_gases)
-		if(trace_gas.type in trace_types_considered)
-			continue
-		var/datum/gas/corresponding
-		var/delta = 0
-		corresponding = new trace_gas.type()
-		trace_gases += corresponding
-
-		delta = trace_gas.moles_archived/5
-
-		trace_gas.moles -= delta
-		corresponding.moles += delta
-
-		//Guaranteed transfer from sharer to self
-		var/individual_heat_capacity = trace_gas.specific_heat*delta
-		heat_capacity_sharer_to_self += individual_heat_capacity
-
-		moved_moles += -delta
-		last_share += abs(delta)
-	*/
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
@@ -596,73 +385,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	var/datum/gas_mixture/copied = new
 	copied.copy_from_turf(model)
 	. = share(copied, atmos_adjacent_turfs)
-	/*
-	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
-	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
-	var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
-	var/delta_toxins = QUANTIZE(toxins_archived - model.toxins)/(atmos_adjacent_turfs+1)
-
-	var/delta_temperature = (temperature_archived - model.temperature)
-
-	var/heat_transferred = 0
-	var/old_self_heat_capacity = 0
-	var/heat_capacity_transferred = 0
-
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-
-		var/delta_air = delta_oxygen+delta_nitrogen
-		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
-			heat_transferred -= air_heat_capacity*model.temperature
-			heat_capacity_transferred -= air_heat_capacity
-
-		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
-			heat_transferred -= carbon_dioxide_heat_capacity*model.temperature
-			heat_capacity_transferred -= carbon_dioxide_heat_capacity
-
-		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
-			heat_transferred -= toxins_heat_capacity*model.temperature
-			heat_capacity_transferred -= toxins_heat_capacity
-
-		old_self_heat_capacity = heat_capacity()
-
-	oxygen -= delta_oxygen
-	carbon_dioxide -= delta_carbon_dioxide
-	nitrogen -= delta_nitrogen
-	toxins -= delta_toxins
-
-	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
-	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
-
-	if(trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
-			var/delta = 0
-
-			delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
-
-			trace_gas.moles -= delta
-
-			var/heat_cap_transferred = delta*trace_gas.specific_heat
-			heat_transferred += heat_cap_transferred*temperature_archived
-			heat_capacity_transferred += heat_cap_transferred
-			moved_moles += delta
-			moved_moles += abs(delta)
-
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred
-		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
-
-		temperature_mimic(model, model.thermal_conductivity)
-
-	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
-		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
-	else
-		return 0
-	*/
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 
@@ -677,18 +399,7 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 
 			temperature -= heat/self_heat_capacity
 			sharer.temperature += heat/sharer_heat_capacity
-/*
-/datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
-	var/delta_temperature = (temperature - model.temperature)
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()
 
-		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
-			var/heat = conduction_coefficient*delta_temperature* \
-				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
-
-			temperature -= heat/self_heat_capacity
-*/
 /datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -707,28 +418,7 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 		var/delta = abs(gases[i][datatype] - sample.gases[i][datatype])/(adjacents+1)
 		if(delta > MINIMUM_AIR_TO_SUSPEND && \
 			delta > gases[i][datatype]*MINIMUM_AIR_RATIO_TO_SUSPEND)
-			/*
-			(\
-				(gases[i][datatype] < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.gases[i][datatype]) || \
-				(gases[i][datatype] > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.gases[i][datatype])\
-			)\
-		))*/
 			return
-
-	/*
-	if((abs(oxygen-sample.oxygen) > MINIMUM_AIR_TO_SUSPEND) && \
-		((oxygen < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen) || (oxygen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen)))
-		return 0
-	if((abs(nitrogen-sample.nitrogen) > MINIMUM_AIR_TO_SUSPEND) && \
-		((nitrogen < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.nitrogen) || (nitrogen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.nitrogen)))
-		return 0
-	if((abs(carbon_dioxide-sample.carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && \
-		((carbon_dioxide < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.carbon_dioxide) || (oxygen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.carbon_dioxide)))
-		return 0
-	if((abs(toxins-sample.toxins) > MINIMUM_AIR_TO_SUSPEND) && \
-		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
-		return 0
-	*/
 
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		var/temp
@@ -744,29 +434,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 		if((delta_temperature > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			delta_temperature > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND*temp)
 			return
-	/*
-	for(var/gas in sample.trace_gases)
-		var/datum/gas/trace_gas = gas
-		if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND)
-			var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
-			if(corresponding)
-				if((abs(trace_gas.moles - corresponding.moles) > MINIMUM_AIR_TO_SUSPEND) && \
-					((corresponding.moles < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*trace_gas.moles) || (corresponding.moles > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*trace_gas.moles)))
-					return 0
-			else
-				return 0
-
-	for(var/gas in trace_gases)
-		var/datum/gas/trace_gas = gas
-		if(trace_gas.moles > MINIMUM_AIR_TO_SUSPEND)
-			var/datum/gas/corresponding = locate(trace_gas.type) in sample.trace_gases
-			if(corresponding)
-				if((abs(trace_gas.moles - corresponding.moles) > MINIMUM_AIR_TO_SUSPEND) && \
-					((trace_gas.moles < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*corresponding.moles) || (trace_gas.moles > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*corresponding.moles)))
-					return 0
-			else
-				return 0
-	*/
 	. = 1
 
 
@@ -778,14 +445,6 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 	for(var/i in 5 to gases.len)
 		gases[i][MOLES] = 0 //turfs don't account for anything other than the four old hardcoded gases
 	temperature = model.temperature
-/*
-/turf/proc/copy_from_gas_mixture(datum/gas_mixture/model)
-	oxygen = model.gases[GAS_O2][MOLES]
-	nitrogen = model.gases[GAS_N2][MOLES]
-	toxins = model.gases[GAS_PL][MOLES]
-	carbon_dioxide = model.gases[GAS_CO2][MOLES]
-	temperature = model.temperature
-*/
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
