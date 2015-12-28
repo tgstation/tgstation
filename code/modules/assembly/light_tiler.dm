@@ -85,7 +85,7 @@
 	onclose(user, "\ref[src]")
 
 /obj/item/device/assembly/light_tile_control/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	if(href_list["show_connections"]) //Highlight all connected floors for 10 seconds
 		if(last_used + cooldown_max > world.time)
