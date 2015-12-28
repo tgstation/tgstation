@@ -158,8 +158,8 @@
 						reagentreference.trans_to(target, bitesize)
 					else
 						reagentreference.trans_to(target, reagentreference.total_volume)
-				bitecount++
-				On_Consume(target)
+					bitecount++
+					On_Consume(target)
 			return 1
 
 	return 0
