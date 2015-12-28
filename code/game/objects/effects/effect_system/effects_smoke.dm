@@ -163,9 +163,10 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				if(G.gases[GAS_PL][MOLES])
-					G.gases[GAS_N2][MOLES] += (G.gases[GAS_PL][MOLES])
-					G.gases[GAS_PL][MOLES] = 0
+				var/list/G_gases = G.gases
+				if(G_gases[GAS_PL][MOLES])
+					G_gases[GAS_N2][MOLES] += (G_gases[GAS_PL][MOLES])
+					G_gases[GAS_PL][MOLES] = 0
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 				U.welded = 1

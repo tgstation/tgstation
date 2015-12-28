@@ -84,7 +84,7 @@ var/list/cached_gases_list
 	src.volume = volume
 	if(!cached_gases_list)
 		cached_gases_list = gaseslist()
-	gases = cached_gases_list
+	gases = cached_gases_list.Copy()
 
 	//PV=nRT - related procedures
 /datum/gas_mixture/proc/heat_capacity()
@@ -120,7 +120,7 @@ var/list/cached_gases_list
 
 
 /datum/gas_mixture/proc/react(atom/dump_location)
-	var/procgases = gases //this speeds things up because >byond
+	var/list/procgases = gases //this speeds things up because >byond
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 	if(temperature < TCMB)
 		temperature = TCMB
@@ -253,11 +253,9 @@ var/list/cached_gases_list
 /datum/gas_mixture/proc/check_turf(turf/model)
 	//Returns: 0 if self-check failed or 1 if check passes
 
-//datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient) //I want this proc to die a painful death
+/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient) //I want this proc to die a painful death
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-
-/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient)
 
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 

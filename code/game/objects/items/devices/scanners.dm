@@ -268,10 +268,11 @@ MASS SPECTROMETER
 	else
 		user.show_message("<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
 	if(total_moles)
-		var/o2_concentration = environment.gases[GAS_O2][MOLES]/total_moles
-		var/n2_concentration = environment.gases[GAS_N2][MOLES]/total_moles
-		var/co2_concentration = environment.gases[GAS_CO2][MOLES]/total_moles
-		var/plasma_concentration = environment.gases[GAS_PL][MOLES]/total_moles
+		var/list/env_gases = environment.gases
+		var/o2_concentration = env_gases[GAS_O2][MOLES]/total_moles
+		var/n2_concentration = env_gases[GAS_N2][MOLES]/total_moles
+		var/co2_concentration = env_gases[GAS_CO2][MOLES]/total_moles
+		var/plasma_concentration = env_gases[GAS_PL][MOLES]/total_moles
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			user.show_message("<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>", 1)

@@ -314,12 +314,13 @@
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
+	var/list/A_gases = A.gases
 	for(var/turf/simulated/T in turf_list)
 		A.merge(T.air)
 
 	for(var/turf/simulated/T in turf_list)
 		for(var/gas in T.air.gases)
-			gas[MOLES] = A.gases[gas[GAS_INDEX]][MOLES]/turf_list.len
+			gas[MOLES] = A_gases[gas[GAS_INDEX]][MOLES]/turf_list.len
 
 		T.update_visuals()
 

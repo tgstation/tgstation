@@ -290,12 +290,13 @@
 					var/turf/simulated/floor/F = random_location
 					if(F.air)
 						var/datum/gas_mixture/A = F.air
+						var/list/A_gases = A.gases
 						var/trace_gases
-						for(var/i in 5 to A.gases.len)
-							if(A.gases[i][MOLES])
+						for(var/i in 5 to A_gases.len)
+							if(A_gases[i][MOLES])
 								trace_gases = TRUE
 								break
-						if(A.gases[GAS_O2][MOLES] >= 16 && !A.gases[GAS_PL][MOLES] && A.gases[GAS_CO2][MOLES] < 10 && !trace_gases)//Can most things breathe in this location?
+						if(A_gases[GAS_O2][MOLES] >= 16 && !A_gases[GAS_PL][MOLES] && A_gases[GAS_CO2][MOLES] < 10 && !trace_gases)//Can most things breathe in this location?
 							if((A.temperature > 270) && (A.temperature < 360))//Not too hot, not too cold
 								var/pressure = A.return_pressure()
 								if((pressure > 20) && (pressure < 550))//Account for crushing pressure or vaccuums

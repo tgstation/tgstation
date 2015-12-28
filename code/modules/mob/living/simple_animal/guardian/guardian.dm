@@ -386,12 +386,14 @@
 			if(src.beacon) //Check that the beacon still exists and is in a safe place. No instant kills.
 				if(beacon.air)
 					var/datum/gas_mixture/Z = beacon.air
-					var/trace_gases
+					var/list/Z_gases = Z.gases
+					var/trace_gases = FALSE
+
 					for(var/i in 5 to Z.gases.len)
-						if(Z.gases[i][MOLES])
+						if(Z_gases[i][MOLES])
 							trace_gases = TRUE
 							break
-					if(Z.gases[GAS_O2][MOLES] >= 16 && !Z.gases[GAS_PL][MOLES] && Z.gases[GAS_CO2][MOLES] < 10 && !trace_gases)
+					if(Z_gases[GAS_O2][MOLES] >= 16 && !Z_gases[GAS_PL][MOLES] && Z_gases[GAS_CO2][MOLES] < 10 && !trace_gases)
 						if((Z.temperature > 270) && (Z.temperature < 360))
 							var/pressure = Z.return_pressure()
 							if((pressure > 20) && (pressure < 550))

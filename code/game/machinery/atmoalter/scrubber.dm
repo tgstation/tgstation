@@ -72,21 +72,23 @@
 	//Filter it
 	if (removed)
 		var/datum/gas_mixture/filtered_out = new
+		var/list/filtered_gases = filtered_out.gases
+		var/list/removed_gases = removed.gases
 
 		filtered_out.temperature = removed.temperature
 
 
-		filtered_out.gases[GAS_PL][MOLES] = removed.gases[GAS_PL][MOLES]
-		removed.gases[GAS_PL][MOLES] = 0
+		filtered_gases[GAS_PL][MOLES] = removed_gases[GAS_PL][MOLES]
+		removed_gases[GAS_PL][MOLES] = 0
 
-		filtered_out.gases[GAS_CO2][MOLES] = removed.gases[GAS_CO2][MOLES]
-		removed.gases[GAS_CO2][MOLES] = 0
+		filtered_gases[GAS_CO2][MOLES] = removed_gases[GAS_CO2][MOLES]
+		removed_gases[GAS_CO2][MOLES] = 0
 
-		filtered_out.gases[GAS_AGENT_B][MOLES] = removed.gases[GAS_AGENT_B][MOLES]
-		removed.gases[GAS_AGENT_B][MOLES] = 0
+		filtered_gases[GAS_AGENT_B][MOLES] = removed_gases[GAS_AGENT_B][MOLES]
+		removed_gases[GAS_AGENT_B][MOLES] = 0
 
-		filtered_out.gases[GAS_N2O][MOLES] = removed.gases[GAS_N2O][MOLES]
-		removed.gases[GAS_AGENT_B][MOLES] = 0
+		filtered_gases[GAS_N2O][MOLES] = removed_gases[GAS_N2O][MOLES]
+		removed_gases[GAS_AGENT_B][MOLES] = 0
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)
