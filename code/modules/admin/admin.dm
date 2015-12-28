@@ -398,7 +398,10 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x180")
+	if(marked_datum && istype(marked_datum, /atom))
+		dat += "<A href='?src=\ref[src];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+
+	usr << browse(dat, "window=admin2;size=210x200")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
