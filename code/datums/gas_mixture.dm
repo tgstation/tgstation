@@ -13,7 +13,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-
+/*
 /datum/gas
 	var/moles = 0
 	var/specific_heat = 0
@@ -28,8 +28,8 @@ What are the archived variables for?
 
 /datum/gas/volatile_fuel
 		specific_heat = 30
-
-var/list/meta_gas_info = list( //this is actually the list that decides what gases exist and in what order
+*/
+var/list/meta_gas_info = list( //this is also the list that decides what gases exist and in what order
 	list(20, "Oxygen"), 			//GAS_O2
 	list(20, "Nitrogen"), 			//GAS_N2
 	list(30, "Carbon Dioxide"),		//GAS_C02
@@ -39,19 +39,28 @@ var/list/meta_gas_info = list( //this is actually the list that decides what gas
 	list(30, "Volatile Fuel")		//GAS_V_FUEL
 )
 
-var/list/cached_gases_list
+var/list/cached_gases_list = null
+
 
 /proc/gaseslist()
-	. = new /list
-	for(var/i in 1 to meta_gas_info.len)
-		.[i] = gaslist(meta_gas_info[i], i)
+	var/gascount = meta_gas_info.len
+	. = new /list(gascount)
+	for (var/i in 1 to gascount)
+		.[i] = gaslist(i)
 
-/proc/gaslist(gas_info, index)
-	. = new /list
-	. += 0				//MOLES
-	. += 0				//ARCHIVE
-	. += index			//GAS_INDEX
-	. += gas_info		//all the rest
+
+/proc/gaslist(gasid)
+	if (!cached_gases_list)
+		cached_gases_list = new /list(meta_gas_info.len)
+	if (!cached_gases_list[gasid])
+		cached_gases_list[gasid] = list (
+			0,					//MOLES
+			0,					//ARCHIVE
+			gasid,				//GAS_INDEX
+		)
+		cached_gases_list[gasid] += meta_gas_info[gasid]	//All the rest
+	var/list/gas = cached_gases_list[gasid]
+	. = gas.Copy()
 
 /datum/gas_mixture
 	/*
@@ -62,7 +71,7 @@ var/list/cached_gases_list
 	*/
 	var/volume = CELL_VOLUME
 
-	var/temperature = 0 //in Kelvin
+	var/temperature //in Kelvin
 
 	var/last_share
 
@@ -77,14 +86,16 @@ var/list/cached_gases_list
 	*/
 	var/tmp/temperature_archived
 
-	var/tmp/fuel_burnt = 0
+	var/tmp/fuel_burnt
 
-/datum/gas_mixture/New(volume = CELL_VOLUME)
+/datum/gas_mixture/New(Volume = CELL_VOLUME)
 	. = ..()
-	src.volume = volume
-	if(!cached_gases_list)
-		cached_gases_list = gaseslist()
-	gases = cached_gases_list
+	gases = gaseslist()
+	temperature = 0
+	temperature_archived = 0
+	volume = Volume
+	last_share = 0
+	fuel_burnt = 0
 
 	//PV=nRT - related procedures
 /datum/gas_mixture/proc/heat_capacity()
@@ -341,40 +352,39 @@ var/list/cached_gases_list
 	. = 0
 	if(!sharer)
 		return
-	var/list/deltas = new
-	var/list/sharer_gases = sharer.gases //accessing datum vars is slower than proc vars
-	for(var/gas in gases)
-		deltas += QUANTIZE(gas[ARCHIVE] - sharer_gases[gas[GAS_INDEX]][ARCHIVE])/(atmos_adjacent_turfs+1)
+
+	var/moved_moles = 0
+	var/abs_moved_moles = 0
+	//make this local to the proc for sanic speed
+	var/list/sharercache = sharer.gases
 
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
 	var/old_self_heat_capacity = 0
 	var/old_sharer_heat_capacity = 0
 
-	var/heat_capacity_self_to_sharer = 0
-	var/heat_capacity_sharer_to_self = 0
-
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		for(var/gas in gases)
-			if(deltas[gas[GAS_INDEX]])
-				var/gas_heat_capacity = abs(gas[SPECIFIC_HEAT] * deltas[gas[GAS_INDEX]])
-				if(deltas[gas[GAS_INDEX]] > 0)
-					heat_capacity_self_to_sharer += gas_heat_capacity
-				else
-					heat_capacity_sharer_to_self += gas_heat_capacity
-
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
+	var/heat_capacity_self_to_sharer = 0
+	var/heat_capacity_sharer_to_self = 0
 	for(var/gas in gases)
-		gas[MOLES] -= deltas[gas[GAS_INDEX]]
-		sharer_gases[gas[GAS_INDEX]][MOLES] += deltas[gas[GAS_INDEX]]
+		var/sharergas = sharercache[gas[GAS_INDEX]]
+		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1)
 
-	var/moved_moles = 0
-	for(var/delta in deltas)
+		if(delta && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			var/gas_heat_capacity = abs(gas[MOLES] * gas[SPECIFIC_HEAT])
+			if(delta > 0)
+				heat_capacity_self_to_sharer += gas_heat_capacity
+			else
+				heat_capacity_sharer_to_self += gas_heat_capacity
+		gas[MOLES] -= delta
+		sharergas[MOLES] += delta
 		moved_moles += delta
-		last_share += abs(delta)
+		abs_moved_moles += abs(delta)
 
+	last_share = abs_moved_moles
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
@@ -391,7 +401,7 @@ var/list/cached_gases_list
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
-		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
+		. = delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
 /datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new

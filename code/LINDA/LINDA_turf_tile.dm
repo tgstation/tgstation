@@ -15,7 +15,7 @@
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 
-	GM.copy_from(src)
+	GM.copy_from_turf(src)
 
 	return GM
 
