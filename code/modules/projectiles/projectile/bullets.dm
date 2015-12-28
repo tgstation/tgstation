@@ -6,6 +6,18 @@
 	nodamage = 0
 	flag = "bullet"
 
+/obj/item/projectile/bullet/deagleAE
+	damage = 70
+	armour_penetration = 10
+
+/obj/item/projectile/bullet/357mag
+	damage = 60
+	armour_penetration = -10
+
+/obj/item/projectile/bullet/12gslug
+	damage = 65
+	armour_penetration = -10
+
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
 	stamina = 80
@@ -16,7 +28,8 @@
 	stamina = 50
 
 /obj/item/projectile/bullet/weakbullet3
-	damage = 20
+	damage = 35
+	armour_penetration = -20
 
 /obj/item/projectile/bullet/toxinbullet
 	damage = 15
@@ -26,12 +39,13 @@
 	damage = 10
 
 /obj/item/projectile/bullet/armourpiercing
-	damage = 17
+	damage = 25
 	armour_penetration = 10
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = 20
+	armour_penetration = -15
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
@@ -40,7 +54,8 @@
 	damage = rand(10)
 
 /obj/item/projectile/bullet/midbullet
-	damage = 20
+	damage = 33
+	armour_penetration = -20
 	stamina = 65 //two round bursts from the c20r knocks people down
 
 
@@ -48,7 +63,8 @@
 	damage = 25
 
 /obj/item/projectile/bullet/midbullet3
-	damage = 30
+	damage = 40
+	armour_penetration = -15
 
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
@@ -96,7 +112,8 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
-	damage = 30
+	damage = 75
+	armour_penetration = -30
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'

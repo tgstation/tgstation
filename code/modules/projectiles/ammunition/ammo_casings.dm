@@ -1,12 +1,12 @@
 /obj/item/ammo_casing/a357
 	desc = "A .357 bullet casing."
 	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/357mag
 
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/deagleAE
 
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
@@ -73,7 +73,7 @@
 	desc = "A 12 gauge lead slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/12gslug
 	materials = list(MAT_METAL=4000)
 
 
@@ -82,7 +82,7 @@
 	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
-	pellets = 5
+	pellets = 6
 	variance = 0.8
 
 /obj/item/ammo_casing/shotgun/rubbershot
@@ -90,7 +90,7 @@
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/rpellet
-	pellets = 5
+	pellets = 6
 	variance = 0.8
 	materials = list(MAT_METAL=4000)
 
