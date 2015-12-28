@@ -807,8 +807,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = new/list()
 	for(var/area/N in world)
 		if(istype(N, areatype))
-			for(var/turf/T in N)
-				for(var/turf/T in N) turfs += T
+			for(var/turf/T in N) turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
