@@ -1,4 +1,4 @@
-@NANO =
+module.exports =
   INTERACTIVE: 2
   UPDATE: 1
   DISABLED: 0

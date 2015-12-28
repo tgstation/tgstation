@@ -35,9 +35,9 @@
 	var/layout = "nanotrasen" // The layout to be used for this UI.
 	var/template // The template to be used for this UI.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
-	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
+	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI.
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
-	var/datum/nano_state/state = null // Topic state used to determine status. Topic states are in interactions/.
+	var/datum/nano_state/state = null // Topic state used to determine status/interactability.
 	var/datum/nanoui/master_ui	 // The parent NanoUI.
 	var/list/datum/nanoui/children = list() // Children of this NanoUI.
 

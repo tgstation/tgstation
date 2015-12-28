@@ -1,0 +1,14 @@
+{
+  "input": {
+    "html": "html/nanoui.html",
+    "images": "images/*",
+    "scripts": "scripts/main.coffee",
+    "styles": "styles/main.less"
+  },
+  "images": "images/",
+  "output": {
+    "dir": "assets",
+    "js": "nanoui.js",
+    "css": "nanoui.css"
+  }
+}

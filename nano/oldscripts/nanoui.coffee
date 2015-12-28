@@ -1,4 +1,8 @@
-class NanoUI
+MiniSignal = require "mini-signals"
+helpers = require "./helpers"
+Chrome = require "./chrome"
+
+module.exports = class NanoUI
   constructor: ->
     @laidout = false
 
@@ -85,6 +89,3 @@ class NanoUI
     location.href = @href {command: "nanoclose #{@data.config.ref}"}, "winset"
   minimize: =>
     @winset "is-minimized", "true"
-
-
-@nanoui = new NanoUI

@@ -1,4 +1,6 @@
-class @Chrome
+NANO = require "./constants"
+
+module.exports = class Chrome
   constructor: (@nanoui, data) ->
     @nanoui.updated.add @linkStatus
     @nanoui.updated.add @windowStatus
@@ -33,17 +35,17 @@ class @Chrome
       statusicon.classList.remove "good", "bad", "average"
       statusicon.classList.add klass
 
-  handleLinks: (data) ->
-    onClick = ->
-      action = @getAttribute "data-action"
-      params = JSON.parse @getAttribute "data-params"
+  handleLinks: (data) =>
+    click = (event = window.event) =>
+      action = event.target.getAttribute "data-action"
+      params = JSON.parse event.target.getAttribute "data-params"
       if action? and params? and data.config.status is NANO.INTERACTIVE
-        nanoui.act action, params
+        @nanoui.act action, params
 
     document.queryAll(".link.active").forEach (link) ->
-      link.addEventListener "click", onClick
+      link.addEventListener "click", click
 
-  switchChrome: ->
+  switchChrome: =>
     @nanoui.winset "titlebar", 0
     @nanoui.winset "can-resize", 0
     fancy = document.queryAll ".fancy"
@@ -58,13 +60,13 @@ class @Chrome
     @yOffset = window.screenTop
     @nanoui.setPos @xOriginal - @xOffset, @yOriginal - @yOffset # Put the window back.
 
-  handleButtons: ->
+  handleButtons: =>
     closers = document.queryAll ".close"
-    closers.forEach (closer) ->
+    closers.forEach (closer) =>
       closer.addEventListener "click", => @nanoui.close()
 
     minimizers = document.queryAll ".minimize"
-    minimizers.forEach (minimizer) ->
+    minimizers.forEach (minimizer) =>
       minimizer.addEventListener "click", => @nanoui.minimize()
 
   handleDrag: =>

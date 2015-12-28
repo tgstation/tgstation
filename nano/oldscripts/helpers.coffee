@@ -1,4 +1,4 @@
-@helpers =
+module.exports =
   link: (text = "", icon = "", action = "", params = {}, status = "", klass = "") ->
     params = JSON.stringify params
 
