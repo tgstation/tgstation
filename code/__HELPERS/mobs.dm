@@ -147,10 +147,8 @@ Proc for attack log creation, because really why not
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
-	user.last_move = null
 
 	var/target_loc = target.loc
-	target.last_move = null
 
 	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
@@ -167,7 +165,7 @@ Proc for attack log creation, because really why not
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || user.last_move || target.loc != target_loc || target.last_move || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
 		sleep(1)
@@ -181,13 +179,9 @@ Proc for attack log creation, because really why not
 	var/atom/Tloc = null
 	if(target)
 		Tloc = target.loc
-	var/atom/movable/AMtarget
-	if(istype(target,/atom/movable))
-		AMtarget = target
-		AMtarget.last_move = null
 
 	var/atom/Uloc = user.loc
-	user.last_move = null
+
 	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
@@ -205,11 +199,11 @@ Proc for attack log creation, because really why not
 		if (progress)
 			progbar.update(world.time - starttime)
 
-		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc || user.last_move)
+		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
 			. = 0
 			break
 
-		if(Tloc && (!target || Tloc != target.loc || (AMtarget && AMtarget.last_move)))
+		if(Tloc && (!target || Tloc != target.loc))
 			. = 0
 			break
 
