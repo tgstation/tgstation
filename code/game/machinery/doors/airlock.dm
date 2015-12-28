@@ -1164,13 +1164,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
-		update_icon(AIRLOCK_EMAG)
+		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
 		if(qdeleted(src))
 			return
 		operating = 0
 		if(!open())
-			update_icon(AIRLOCK_CLOSED)
+			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0

@@ -1,0 +1,6 @@
+author: neersighted
+delete-after: True
+changes: 
+  - bugfix: "Make NanoUIs transfer upon (un)ghosting."
+  - bugfix: "Fix NanoUIs jumping when resized/dragged."
+  - bugfix: "Lots of other NanoUI bugs."

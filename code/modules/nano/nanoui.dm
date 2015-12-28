@@ -37,7 +37,7 @@
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
-	var/datum/topic_state/state = null // Topic state used to determine status. Topic states are in interactions/.
+	var/datum/nano_state/state = null // Topic state used to determine status. Topic states are in interactions/.
 	var/datum/nanoui/master_ui	 // The parent NanoUI.
 	var/list/datum/nanoui/children = list() // Children of this NanoUI.
 
@@ -55,14 +55,14 @@
   * optional height int The window height.
   * optional ref atom An extra ref to use when the window is closed.
   * optional master_ui datum/nanoui The parent NanoUI.
-  * optional state datum/topic_state The state used to determine status.
+  * optional state datum/nano_state The state used to determine status.
   *
   * return datum/nanoui The requested NanoUI.
  **/
 /datum/nanoui/New(mob/user, atom/movable/src_object, ui_key, template, \
 					title = 0, width = 0, height = 0, \
 					atom/ref = null, datum/nanoui/master_ui = null, \
-					datum/topic_state/state = default_state)
+					datum/nano_state/state = default_state)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
@@ -70,14 +70,14 @@
 
 	set_template(template)
 
-	if (title)
+	if(title)
 		src.title = sanitize(title)
-	if (width)
+	if(width)
 		src.width = width
-	if (height)
+	if(height)
 		src.height = height
 
-	if (ref)
+	if(ref)
 		src.ref = ref
 
 	src.master_ui = master_ui
@@ -98,18 +98,19 @@
 /datum/nanoui/proc/open(list/data = null)
 	if(!user.client)
 		return // Bail if there is no client.
-	if (status == NANO_CLOSE)
+
+	update_status(push = 0) // Update the window status.
+	if(status == NANO_CLOSE)
 		return // Bail if we should close.
 
-	if (!initial_data)
-		if (!data) // If we don't have initial_data and data was not passed, get data from the src_object.
+	if(!initial_data)
+		if(!data) // If we don't have initial_data and data was not passed, get data from the src_object.
 			data = src_object.get_ui_data(user)
 		set_initial_data(data) // Otherwise use the passed data.
 
 	var/window_size = ""
-	if (width && height) // If we have a width and height, use them.
+	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
-	update_status(push = 0) // Update the window state.
 
 	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
 	winset(user, window_id, "on-close=\"nanoclose \ref[src]\"") // Instruct the client to signal NanoUI when the window is closed.
@@ -137,7 +138,6 @@
   * Close the NanoUI, and all its children.
  **/
 /datum/nanoui/proc/close()
-	set_auto_update(0) // Disable auto-updates.
 	user << browse(null, "window=[window_id]") // Close the window.
 	SSnano.on_close(src)
 	for(var/datum/nanoui/child in children) // Loop through and close all children.
@@ -203,51 +203,16 @@
   * return string NanoUI HTML output.
  **/
 /datum/nanoui/proc/get_html()
-	// Generate <script> and <link> tags.
-	var/script_html = {"
-<script type='text/javascript' src='nanoui.js'></script>
-	"}
-	var/stylesheet_html = {"
-<link rel='stylesheet' type='text/css' href='http://css-spinners.com/css/spinner/hexdots.css' />
-<link rel='stylesheet' type='text/css' href='nanoui.css' />
-<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
-	"}
-
 	// Generate JSON.
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(JSON.stringify(send_data), "'", "&apos;")
+	var/send_data_json = JSON.stringify(send_data)
+	// Strip junk.
+	send_data_json = replacetext(send_data_json, "'", "&apos;")
+	send_data_json = replacetext(send_data_json, "ÿ", "")
 
-	// Generate the HTML document.
-	return {"
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-		<script type='text/javascript'>
-			function receiveUpdate(dataString) {
-				if (typeof NanoBus !== 'undefined') {
-					NanoBus.emit('serverUpdate', dataString);
-				}
-			};
-		</script>
-		[stylesheet_html]
-		[script_html]
-	</head>
-	<body class='[layout]'>
-		<div id='data' data-initial='[initial_data_json]'></div>
-		<div id='layout'>
-			<div class='hexdots-loader' style='position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);'>
-				Sending Resources...
-			</div>
-		</div>
-		<noscript>
-			<h1>Javascript Required</h1>
-			<p>Javascript is required in order to use this NanoUI interface.</p>
-			<p>Please enable Javascript in Internet Explorer, and restart your game.</p>
-		</noscript>
-	</body>
-</html>
-	"}
+	// Populate it.
+	var/send_html = replacetext(SSnano.html, "!!data!!", send_data_json)
+	return send_html
 
  /**
   * private
@@ -260,12 +225,9 @@
 	var/list/config_data = list(
 			"title" = title,
 			"status" = status,
+			"layout" = layout,
+			"window" = window_id,
 			"ref" = "\ref[src]",
-			"window" = list(
-				"width" = width,
-				"height" = height,
-				"ref" =	window_id
-			),
 			"user" = list(
 				"name" = user.name,
 				"fancy" = user.client.prefs.nanoui_fancy,
@@ -294,7 +256,7 @@
 	var/list/send_data = list()
 
 	send_data["config"] = get_config_data()
-	if (!isnull(data))
+	if(!isnull(data))
 		send_data["data"] = data
 
 	return send_data
@@ -303,21 +265,20 @@
   * private
   *
   * Handle clicks from the NanoUI.
-  * Call the src_object's Topic() if status is NANO_INTERACTIVE.
-  * If the src_object's Topic() returns 1, update all UIs attacked to it.
+  * Call the src_object's ui_act() if status is NANO_INTERACTIVE.
+  * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/nanoui/Topic(href, href_list)
 	update_status(push = 0) // Update the window state.
-	if (status != NANO_INTERACTIVE || user != usr)
+	if(status != NANO_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
 	var/action = href_list["nano"] // Pull the action out.
 	href_list -= "nano"
 
-	var/update = src_object.ui_act(action, href_list, state) // Call Topic() on the src_object.
-
-	if (src_object && update)
-		SSnano.update_uis(src_object) // If we have a src_object and its Topic() told us to update.
+	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
+	if(src_object && update)
+		SSnano.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
 
  /**
   * private
@@ -328,11 +289,11 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/nanoui/process(force = 0)
-	if (!src_object || !user) // If the object or user died (or something else), abort.
+	if(!src_object || !user) // If the object or user died (or something else), abort.
 		close()
 		return
 
-	if (status && (force || auto_update))
+	if(status && (force || auto_update))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.
@@ -347,13 +308,13 @@
  **/
 /datum/nanoui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
-	if (status == NANO_DISABLED && !force)
+	if(status <= NANO_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	var/list/send_data = get_send_data(data) // Get the data to send.
 
 	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(list2params(list(JSON.stringify(send_data))), "[window_id].browser:receiveUpdate")
+	user << output(url_encode(JSON.stringify(send_data)), "[window_id].browser:receiveUpdate")
 
 
  /**
@@ -379,25 +340,26 @@
 	if(master_ui)
 		new_status = min(new_status, master_ui.status)
 
-	set_status(new_status, push)
 	if(new_status == NANO_CLOSE)
 		close()
+	else
+		set_status(new_status, push)
 
  /**
   * private
   *
   * Set the status/visibility of the NanoUI.
   *
-  * required state int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
+  * required status int The status to set (NANO_CLOSE/NANO_DISABLED/NANO_UPDATE/NANO_INTERACTIVE).
   * optional push bool Push an update to the UI (an update is always sent for NANO_DISABLED).
  **/
-/datum/nanoui/proc/set_status(state, push = 0)
-	if (state != status) // Only update if status has changed.
-		if (status == NANO_DISABLED)
-			status = state
-			if (push)
+/datum/nanoui/proc/set_status(status, push = 0)
+	if(src.status != status) // Only update if status has changed.
+		if(src.status == NANO_DISABLED)
+			src.status = status
+			if(push)
 				update()
 		else
-			status = state
-			if (push || status == 0) // Force an update if NANO_DISABLED.
-				push_data(null, 1)
+			src.status = status
+			if(status == NANO_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
+				push_data(null, force = 1)

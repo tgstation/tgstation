@@ -3,13 +3,10 @@
   "private": true,
   "dependencies": {
     "DOM4": "dom4#~1.5.2",
-    "eddy-js": "~0.7.0",
-    "es5-shim": "~4.3.1",
-    "IE8": "ie8#~2.9.10",
+    "es5-shim": "~4.4.1",
     "html5shiv": "~3.7.3",
-    "json3": "~3.3.2",
-    "jsurl": "*",
-    "normalize-css": "normalize.css#~3.0.3"
+    "IE8": "ie8#~2.9.10",
+    "mini-signals": "~1.1.0"
   },
   "overrides": {
     "IE8": {
@@ -20,16 +17,9 @@
         "IE8": "*"
       }
     },
-    "eddy-js": {
-      "main": "build/eddy.dom.max.js",
+    "mini-signals": {
       "dependencies": {
-        "IE8": "*",
-        "DOM4": "*"
-      }
-    },
-    "jsurl": {
-      "dependencies": {
-        "es5-shim": "*"
+        "IE8": "*"
       }
     }
   }

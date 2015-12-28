@@ -964,3 +964,25 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustCloneLoss(-3*REM)
 	..()
 	return
+
+/datum/reagent/medicine/haloperidol
+	name = "Haloperidol"
+	id = "haloperidol"
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
+	reagent_state = LIQUID
+	color = "#27870a"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,5)
+	M.drowsyness += 2
+	if(M.jitteriness >= 3)
+		M.jitteriness -= 3
+	if (M.hallucination >= 5)
+		M.hallucination -= 5
+	if(prob(20))
+		M.adjustBrainLoss(1*REM)
+	M.adjustStaminaLoss(2.5*REM)
+	..()
+	return
