@@ -122,7 +122,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "A brutally simple syndicate revolver that fires .357 Magnum cartridges and has 7 chambers."
+	desc = "A brutally simple syndicate revolver that fires .44 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 13
 	surplus = 50
@@ -260,7 +260,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-	
+
 /datum/uplink_item/dangerous/reinforcement/spawn_item()
 	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
 	if(istype(T))

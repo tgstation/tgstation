@@ -21,7 +21,7 @@ Contains:
 	desc = "A special helmet designed for only the most fashionable of military figureheads."
 	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 25, bomb = 50, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
@@ -30,7 +30,7 @@ Contains:
 	item_state = "capspacesuit"
 	w_class = 4
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 25, bomb = 50, bio = 100, rad = 50)
 
 
 	//Death squad armored space suits, not hardsuits!

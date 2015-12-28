@@ -1,5 +1,5 @@
 /obj/item/ammo_casing/a357
-	desc = "A .357 bullet casing."
+	desc = "A .44 Magnum bullet casing."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/magnum
 

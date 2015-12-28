@@ -4,6 +4,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)//when you're operating but dont wanna sacrifice tactical for tacticool
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	action_button_name = "Change"
 	origin_tech = "syndicate=3"

@@ -25,11 +25,12 @@
 	hop
 		item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
 	ce
-		item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+		item_color = "chief"	//Exists for washing machines. Is not different from brown shoes in any way.
 	rd
 		item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
 	cmo
-		item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+		item_color = "medical"	//Quality of life fixes for CMOs that don't want to get acided.
+		unacidable = 1
 	cmo
 		item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
@@ -69,6 +70,7 @@
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	item_color = "white"
+	unacidable = 1
 
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"

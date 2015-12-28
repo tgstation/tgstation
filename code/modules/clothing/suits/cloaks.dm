@@ -28,6 +28,7 @@
 	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay. It's slightly shielded from contaminants."
 	icon_state = "cmocloak"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 25, rad = 0)
+	unacidable = 1
 
 /obj/item/clothing/suit/cloak/ce
 	name = "chief engineer's cloak"

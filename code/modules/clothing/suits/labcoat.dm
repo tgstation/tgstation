@@ -14,6 +14,7 @@
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
 	item_state = "labcoat_cmo"
+	unacidable = 1
 
 /obj/item/clothing/suit/toggle/labcoat/emt
 	name = "EMT's jacket"
