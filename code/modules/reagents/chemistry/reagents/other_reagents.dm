@@ -770,7 +770,7 @@
 	color = "#92D17D" // rgb: 146, 209, 125
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/Tuberculosis(0))
+		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
