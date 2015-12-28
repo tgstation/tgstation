@@ -40,8 +40,8 @@ var/list/gas_heats = list( //this is actually the list that decides what gases e
 
 /proc/gaseslist()
 	. = new /list
-	for(var/specific_heat in gas_heats)
-		. += gaslist(specific_heat)
+	for(var/i in 1 to gas_heats.len)
+		.[i] = gaslist(gas_heats[i])
 
 /proc/gaslist(specific_heat)
 	. = new /list

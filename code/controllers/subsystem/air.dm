@@ -191,7 +191,7 @@ var/datum/subsystem/air/SSair
 				else
 					enemy_air = new
 					enemy_air.copy_from_turf(enemy_tile)
-				if(!T.air.compare(enemy_simulated.air))
+				if(!T.air.compare(enemy_air))
 					T.excited = 1
 					active_turfs |= T
 					break
