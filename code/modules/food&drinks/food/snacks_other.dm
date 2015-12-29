@@ -320,3 +320,11 @@
 	filling_color = "#FFD700"
 	volume = 80
 	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
+	name = "Deep Fried Foods Holder Obj"
+	desc = "If you can see this description the code for the deep fryer fucked up."
+	icon_state = "deepfried_holder_icon"
+	filling_color = "#FFAD33"
+	list_reagents = list("nutriment" = 1)
+	bitesize = 2
