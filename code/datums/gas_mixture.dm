@@ -7,38 +7,23 @@ What are the archived variables for?
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
-var/list/meta_gas_info = list( //this is the list that decides what gases exist and all their meta information
-	"o2"		=	list("o2",		20,		"Oxygen"),			//GAS_O2
-	"n2"		=	list("n2",		20,		"Nitrogen"),		//GAS_N2
-	"co2"		=	list("co2",		30,		"Carbon Dioxide"),	//GAS_C02
-	"plasma"	=	list("plasma",	200,	"Plasma"),			//GAS_PLASMA
-	"n2o"		=	list("n2o",		40,		"Nitrous Oxide"),	//GAS_N20
-	"agent_b"	=	list("agent_b",	300,	"Oxygen Agent B"),	//GAS_AGENT_B
-	"v_fuel"	=	list("v_fuel",	30,		"Volatile Fuel")	//GAS_V_FUEL
-)
-
-var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
-
+var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 var/list/cached_gases_list = null
-
-/proc/gaseslist()
-	var/gascount = meta_gas_info.len
-	. = new /list(gascount)
-	for (var/i in 1 to gascount)
-		.[i] = gaslist(i)
-
 
 /proc/gaslist(gasid)
 	if(!cached_gases_list)
 		cached_gases_list = new /list(meta_gas_info.len)
+
 	if(!cached_gases_list[gasid])
 		if(!meta_gas_info[gasid])
 			CRASH("Error: no such gas type! Type : [gasid]")
+
 		cached_gases_list[gasid] = list (
 			0,					//MOLES
 			0,					//ARCHIVE
 		)
 		cached_gases_list[gasid][GAS_META] = meta_gas_info[gasid]	//All the rest
+
 	var/list/gas = cached_gases_list[gasid]
 	. = gas.Copy()
 
@@ -64,7 +49,7 @@ var/list/cached_gases_list = null
 	var/cached_gases = gases
 	if(cached_gases[gas_id])
 		return
-	cached_gases[gas_id] = gaslist(gas_id)
+	cached_gases[gas_id] = gaslist(gas_id) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture/proc/assert_gases()
 	for(var/id in args)
