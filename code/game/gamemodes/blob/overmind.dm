@@ -154,15 +154,15 @@
 		var/mob/camera/blob/B = usr
 		B.transport_core()
 
-/obj/screen/blob/StorageBlob
-	icon_state = "ui_factory"
-	name = "Produce Storage Blob (20)"
-	desc = "Produces a storage blob for 20 points."
+/obj/screen/blob/Blobbernaut
+	icon_state = "ui_blobbernaut"
+	name = "Produce Blobbernaut (20)"
+	desc = "Produces a blobbernaut for 20 points."
 
-/obj/screen/blob/StorageBlob/Click()
+/obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_storage()
+		B.create_blobbernaut()
 
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
@@ -247,7 +247,7 @@
 	using.screen_loc = ui_zonesel
 	adding += using
 
-	using = new /obj/screen/blob/StorageBlob()
+	using = new /obj/screen/blob/Blobbernaut()
 	using.screen_loc = ui_belt
 	adding += using
 

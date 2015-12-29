@@ -74,46 +74,40 @@
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
 	createSpecial(60, /obj/effect/blob/factory, 7)
 
-/mob/camera/blob/verb/create_storage()
-	set category = "Blob"
-	set name = "Create Storage Blob (20)"
-	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
-	createSpecial(20, /obj/effect/blob/storage, 3)
-
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut (20)"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
+	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
 	if(!B)
-		src << "<span class='warning'>You must be on a blob!</span>"
-		return
-	if(!istype(B, /obj/effect/blob/factory))
-		src << "<span class='warning'>Unable to use this blob, find a factory blob.</span>"
+		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
 	if(B.health < B.maxhealth*0.6) //if it's at less than 60% of its health, you can't blobbernaut it
 		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
 	if(!can_buy(20))
 		return
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
-	var/obj/effect/blob/factory/F = B
-	F.take_damage(F.maxhealth*0.6, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
-	F.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-	F.spore_delay = world.time + 600 //one minute before it can spawn spores again
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+	B.take_damage(B.maxhealth*0.6, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
+	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	blobber.overmind = src
 	blobber.update_icons()
+	blobber.AIStatus = AI_OFF
 	blob_mobs.Add(blobber)
-	var/list/candidates = get_candidates(ROLE_BLOB, ALIEN_AFK_BRACKET)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	var/client/C = null
-	if(candidates.len) //if we got a candidate, they're a blobbernaut now.
+	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		C = pick(candidates)
 		blobber.key = C.key
 		blobber << 'sound/effects/blobattack.ogg'
+		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
+	else
+		blobber.AIStatus = AI_ON //otherwise, they reactivate AI and continue
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -238,19 +232,20 @@
 	src << "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions."
 	src << "<b>You can upgrade normal blobs into the following types of blob:</b>"
 	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
-	src << "<i>Storage Blobs</i> are blobs which allow you to store 50 more resources. These blobs do not need to be near nodes to function."
 	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
 	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
+	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become briefly fragile and unable to produce spores."
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
+	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
 
-/datum/action/innate/blob_burst
-	name = "Burst"
+/datum/action/innate/blob_earlyhelp
+	name = "Blob Help"
 	button_icon_state = "blob"
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/blob_burst/CheckRemoval()
+/datum/action/innate/blob_earlyhelp/CheckRemoval()
 	if(ticker.mode.name != "blob" || !ishuman(owner))
 		return 1
 	var/datum/game_mode/blob/B = ticker.mode
@@ -258,7 +253,8 @@
 		return 1
 	return 0
 
-/datum/action/innate/blob_burst/Activate()
-	var/datum/game_mode/blob/B = ticker.mode
-	B.burst_blob(owner.mind)
-	Remove(owner)
+/datum/action/innate/blob_earlyhelp/Activate()
+	owner << "<b>You are a blob!</b>"
+	owner << "You will shortly burst, and should find a quiet place to do so, out of sight of the station."
+	owner << "Alternatively, you could burst near a place that would hinder the station, such as telecomms or science."
+	owner << "Once you burst, you can get additional information by <b>pressing this button again.</b>"
