@@ -1,10 +1,10 @@
-#define FILTER_NOTHING			-1
-//very cleverly using the gas index defines so as to simplify a bunch of logic
-#define FILTER_PLASMA			GAS_PL
-#define FILTER_OXYGEN			GAS_O2
-#define FILTER_NITROGEN			GAS_N2
-#define FILTER_CARBONDIOXIDE	GAS_CO2
-#define FILTER_NITROUSOXIDE		GAS_N2O
+#define FILTER_NOTHING			""
+//very cleverly using the gas IDs so as to simplify a bunch of logic
+#define FILTER_PLASMA			"plasma"
+#define FILTER_OXYGEN			"o2"
+#define FILTER_NITROGEN			"n2"
+#define FILTER_CARBONDIOXIDE	"co2"
+#define FILTER_NITROUSOXIDE		"n2o"
 
 /obj/machinery/atmospherics/components/trinary/filter
 	icon_state = "filter_off"
@@ -109,12 +109,15 @@ Filter types:
 		var/datum/gas_mixture/filtered_out = new
 		filtered_out.temperature = removed.temperature
 
-		if(filter_type > 0)
+		if(filter_type && removed.gases[filter_type])
+			filtered_out.assert_gas(filter_type)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 			removed.gases[filter_type][MOLES] = 0
-			if(filter_type == FILTER_PLASMA)
-				filtered_out.gases[GAS_AGENT_B][MOLES] = removed.gases[GAS_AGENT_B][MOLES]
-				removed.gases[GAS_AGENT_B][MOLES] = 0
+			if(filter_type == FILTER_PLASMA && removed.gases["agent_b"])
+				filtered_out.assert_gas("agent_b")
+				filtered_out.gases["agent_b"][MOLES] = removed.gases["agent_b"][MOLES]
+				removed.gases["agent_b"][MOLES] = 0
+			removed.garbage_collect()
 		else
 			filtered_out = null
 

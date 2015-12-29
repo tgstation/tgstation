@@ -11,8 +11,9 @@
 /obj/structure/transit_tube_pod/New(loc)
 	..(loc)
 
-	air_contents.gases[GAS_O2][MOLES] = MOLES_O2STANDARD * 2
-	air_contents.gases[GAS_N2][MOLES] = MOLES_N2STANDARD
+	air_contents.assert_gases("o2", "n2")
+	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
+	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving

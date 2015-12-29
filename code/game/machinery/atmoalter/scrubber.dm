@@ -75,20 +75,26 @@
 		var/list/filtered_gases = filtered_out.gases
 		var/list/removed_gases = removed.gases
 
+		filtered_out.assert_gases(arglist(hardcoded_gases))
+		removed.assert_gases(arglist(hardcoded_gases))
+
 		filtered_out.temperature = removed.temperature
 
 
-		filtered_gases[GAS_PL][MOLES] = removed_gases[GAS_PL][MOLES]
-		removed_gases[GAS_PL][MOLES] = 0
+		filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+		removed_gases["plasma"][MOLES] = 0
 
-		filtered_gases[GAS_CO2][MOLES] = removed_gases[GAS_CO2][MOLES]
-		removed_gases[GAS_CO2][MOLES] = 0
+		filtered_gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+		removed_gases["co2"][MOLES] = 0
 
-		filtered_gases[GAS_AGENT_B][MOLES] = removed_gases[GAS_AGENT_B][MOLES]
-		removed_gases[GAS_AGENT_B][MOLES] = 0
+		filtered_gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
+		removed_gases["agent_b"][MOLES] = 0
 
-		filtered_gases[GAS_N2O][MOLES] = removed_gases[GAS_N2O][MOLES]
-		removed_gases[GAS_AGENT_B][MOLES] = 0
+		filtered_gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+		removed_gases["n2o"][MOLES] = 0
+
+		filtered_out.garbage_collect()
+		removed.garbage_collect()
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)

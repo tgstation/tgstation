@@ -536,7 +536,7 @@
 		if (total_moles)
 			for(var/gas in environment.gases)
 				var/gas_level = gas[MOLES]/total_moles
-				if(gas[GAS_INDEX] <= 4 || gas_level > 0.01)
+				if(gas[GAS_ID] in hardcoded_gases || gas_level > 0.01)
 					dat += "[gas[GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"

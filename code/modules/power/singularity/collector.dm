@@ -26,12 +26,12 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/process()
 	if(P)
-		if(P.air_contents.gases[GAS_PL][MOLES] <= 0)
+		if(!P.air_contents.gases["plasma"])
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
-			P.air_contents.gases[GAS_PL][MOLES] = 0
 			eject()
 		else
-			P.air_contents.gases[GAS_PL][MOLES] -= 0.001*drainratio
+			P.air_contents.gases["plasma"][MOLES] -= 0.001*drainratio
+			P.air_contents.garbage_collect()
 	return
 
 
@@ -43,7 +43,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gases[GAS_PL][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -129,8 +129,8 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(P && active)
-		var/power_produced = 0
-		power_produced = P.air_contents.gases[GAS_PL][MOLES]*pulse_strength*20
+		var/power_produced = P.air_contents.gases["plasma"] ? P.air_contents.gases["plasma"][MOLES] : 0
+		power_produced *= pulse_strength*20
 		add_avail(power_produced)
 		last_power = power_produced
 		return

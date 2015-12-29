@@ -135,7 +135,8 @@
 	..()
 	var/datum/gas_mixture/adding = new
 
-	adding.gases[GAS_N2O][MOLES] = 6000
+	adding.assert_gas("n2o")
+	adding.gases["n2o"][MOLES] = 6000
 	adding.temperature = T20C
 
 	assume_air(adding)

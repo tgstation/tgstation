@@ -20,7 +20,8 @@
 
 /obj/item/weapon/tank/internals/oxygen/New()
 	..()
-	air_contents.gases[GAS_O2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -45,8 +46,9 @@
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
-	air_contents.gases[GAS_O2][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[GAS_N2O][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.assert_gases("o2", "n2o")
+	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases["n2o"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 /*
@@ -61,9 +63,9 @@
 
 /obj/item/weapon/tank/internals/air/New()
 	..()
-
-	air_contents.gases[GAS_O2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[GAS_N2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.assert_gases("o2","n2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases["n2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 
@@ -81,8 +83,8 @@
 
 /obj/item/weapon/tank/internals/plasma/New()
 	..()
-
-	air_contents.gases[GAS_PL][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
@@ -100,7 +102,8 @@
 
 /obj/item/weapon/tank/internals/plasma/full/New()
 	..()
-	air_contents.gases[GAS_PL][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -115,14 +118,14 @@
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
-
-	air_contents.gases[GAS_PL][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/plasmaman/full/New()
 	..()
-
-	air_contents.gases[GAS_PL][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -134,8 +137,8 @@
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
-
-	air_contents.gases[GAS_PL][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -157,7 +160,8 @@
 
 /obj/item/weapon/tank/internals/emergency_oxygen/New()
 	..()
-	air_contents.gases[GAS_O2][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/emergency_oxygen/engi

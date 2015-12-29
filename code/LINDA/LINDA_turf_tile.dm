@@ -238,10 +238,10 @@
 	return null
 
 /turf/simulated/proc/tile_graphic()
-	if(air.gases[GAS_PL][MOLES] > MOLES_PLASMA_VISIBLE)
+	if(air.gases["plasma"] && air.gases["plasma"][MOLES] > MOLES_PLASMA_VISIBLE)
 		return "plasma"
 
-	if(air.gases[GAS_N2O][MOLES] > 1)
+	if(air.gases["n2o"] && air.gases["n2o"][MOLES] > 1)
 		return "sleeping_agent"
 	return null
 
@@ -320,7 +320,7 @@
 
 	for(var/turf/simulated/T in turf_list)
 		for(var/gas in T.air.gases)
-			gas[MOLES] = A_gases[gas[GAS_INDEX]][MOLES]/turf_list.len
+			gas[MOLES] = A_gases[gas[GAS_ID]][MOLES]/turf_list.len
 
 		T.update_visuals()
 

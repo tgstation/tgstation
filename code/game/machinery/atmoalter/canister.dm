@@ -22,6 +22,7 @@
 	use_power = 0
 	var/release_log = ""
 	var/update_flag = 0
+	var/gas_type
 
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
@@ -30,18 +31,21 @@
 	icon_state = "redws"
 	canister_color = "redws"
 	can_label = 0
+	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "canister: \[N2\]"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
 	can_label = 0
+	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "canister: \[O2\]"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
 	can_label = 0
+	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "canister \[Plasma\]"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
@@ -54,6 +58,7 @@
 	icon_state = "black"
 	canister_color = "black"
 	can_label = 0
+	gas_type = "co2"
 /obj/machinery/portable_atmospherics/canister/air
 	name = "canister \[Air\]"
 	desc = "Pre-mixed air."
@@ -344,10 +349,10 @@ update_flag
 					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the [holding]<br>"
 				else
 					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the <span class='boldannounce'>air</span><br>"
-					if(air_contents.gases[GAS_PL][MOLES] > 0)
+					if(air_contents.gases["plasma"])
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains plasma! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains plasma at [x], [y], [z]")
-					if(air_contents.gases[GAS_N2O][MOLES] > 1)
+					if(air_contents.gases["n2o"])
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains N2O! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains N2O at [x], [y], [z]")
 			investigate_log(logmsg, "atmos")
@@ -363,37 +368,22 @@ update_flag
 	update_icon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/toxins/New()
+/obj/machinery/portable_atmospherics/canister/New()
 	..()
 
-	air_contents.gases[GAS_PL][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/oxygen/New()
-	..()
-
-	air_contents.gases[GAS_O2][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
-	..()
-
-	air_contents.gases[GAS_N2O][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	update_icon()
 	return 1
 
 //Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-/*
+
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller/New()
 	..()
 
-	var/datum/gas/sleeping_agent/trace_gas = air_contents.trace_gases[1]
-	trace_gas.moles = 9*4000
+	air_contents.gases["n2o"][MOLES] = 9*4000
 	spawn(10)
 		var/turf/simulated/location = src.loc
 		if (istype(src.loc))
@@ -402,31 +392,9 @@ update_flag
 			location.assume_air(air_contents)
 			air_contents = new
 	return 1
-*/
-
-/obj/machinery/portable_atmospherics/canister/nitrogen/New()
-
-	..()
-
-	air_contents.gases[GAS_N2][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
-
-	..()
-	air_contents.gases[GAS_CO2][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	update_icon()
-	return 1
-
 
 /obj/machinery/portable_atmospherics/canister/air/New()
-
-	..()
-	air_contents.gases[GAS_O2][MOLES] = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	air_contents.gases[GAS_N2][MOLES] = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	update_icon()
-	return 1
+	. = ..()
+	air_contents.assert_gases("o2","n2")
+	air_contents.gases["o2"][MOLES] = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.gases["n2"][MOLES] = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)

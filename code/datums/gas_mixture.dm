@@ -3,44 +3,23 @@ What are the archived variables for?
 	Calculations are done using the archived variables with the results merged into the regular variables.
 	This prevents race conditions that arise based on the order of tile processing.
 */
-
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-/*
-/datum/gas
-	var/moles = 0
-	var/specific_heat = 0
 
-	var/moles_archived = 0
-
-/datum/gas/sleeping_agent
-		specific_heat = 40
-
-/datum/gas/oxygen_agent_b
-		specific_heat = 300
-
-/datum/gas/volatile_fuel
-		specific_heat = 30
-*/
-var/list/meta_gas_info = list( //this is also the list that decides what gases exist and in what order
-	list(20, "Oxygen"), 			//GAS_O2
-	list(20, "Nitrogen"), 			//GAS_N2
-	list(30, "Carbon Dioxide"),		//GAS_C02
-	list(200, "Plasma"),			//GAS_PLASMA
-	list(40, "Nitrous Oxide"),		//GAS_N20
-	list(300, "Oxygen Agent B"),	//GAS_AGENT_B
-	list(30, "Volatile Fuel")		//GAS_V_FUEL
+var/list/meta_gas_info = list( //this is the list that decides what gases exist and all their meta information
+	"o2"		=	list("o2",		20,		"Oxygen"),			//GAS_O2
+	"n2"		=	list("n2",		20,		"Nitrogen"),		//GAS_N2
+	"co2"		=	list("co2",		30,		"Carbon Dioxide"),	//GAS_C02
+	"plasma"	=	list("plasma",	200,	"Plasma"),			//GAS_PLASMA
+	"n2o"		=	list("n2o",		40,		"Nitrous Oxide"),	//GAS_N20
+	"agent_b"	=	list("agent_b",	300,	"Oxygen Agent B"),	//GAS_AGENT_B
+	"v_fuel"	=	list("v_fuel",	30,		"Volatile Fuel")	//GAS_V_FUEL
 )
 
-var/list/cached_gases_list = null
+var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
 
+var/list/cached_gases_list = null
 
 /proc/gaseslist()
 	var/gascount = meta_gas_info.len
@@ -50,52 +29,52 @@ var/list/cached_gases_list = null
 
 
 /proc/gaslist(gasid)
-	if (!cached_gases_list)
+	if(!cached_gases_list)
 		cached_gases_list = new /list(meta_gas_info.len)
-	if (!cached_gases_list[gasid])
+	if(!cached_gases_list[gasid])
+		if(!meta_gas_info[gasid])
+			CRASH("Error: no such gas type! Type : [gasid]")
 		cached_gases_list[gasid] = list (
 			0,					//MOLES
 			0,					//ARCHIVE
-			gasid,				//GAS_INDEX
 		)
-		cached_gases_list[gasid] += meta_gas_info[gasid]	//All the rest
+		cached_gases_list[gasid][GAS_META] = meta_gas_info[gasid]	//All the rest
 	var/list/gas = cached_gases_list[gasid]
 	. = gas.Copy()
 
 /datum/gas_mixture
-	/*
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-	*/
-	var/volume = CELL_VOLUME
-
-	var/temperature //in Kelvin
-
-	var/last_share
-
-	//var/list/datum/gas/trace_gases = list()
 	var/list/gases
-
-	/*
-	var/tmp/oxygen_archived
-	var/tmp/carbon_dioxide_archived
-	var/tmp/nitrogen_archived
-	var/tmp/toxins_archived
-	*/
+	var/temperature //in Kelvin
 	var/tmp/temperature_archived
-
+	var/volume
+	var/last_share
 	var/tmp/fuel_burnt
 
 /datum/gas_mixture/New(Volume = CELL_VOLUME)
 	. = ..()
-	gases = gaseslist()
+	gases = new
 	temperature = 0
 	temperature_archived = 0
 	volume = Volume
 	last_share = 0
 	fuel_burnt = 0
+
+	//listmos procs
+/datum/gas_mixture/proc/assert_gas(gas_id)
+	var/cached_gases = gases
+	if(cached_gases[gas_id])
+		return
+	cached_gases[gas_id] = gaslist(gas_id)
+
+/datum/gas_mixture/proc/assert_gases()
+	for(var/id in args)
+		assert_gas(id)
+
+/datum/gas_mixture/proc/garbage_collect()
+	for(var/gas in gases)
+		if(QUANTIZE(gas[MOLES]) <= 0 && QUANTIZE(gas[ARCHIVE]) <= 0)
+			gases -= gas
+
 	//PV=nRT - related procedures
 /datum/gas_mixture/proc/heat_capacity()
 	for(var/gas in gases)
@@ -134,51 +113,61 @@ var/list/cached_gases_list = null
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 	if(temperature < TCMB)
 		temperature = TCMB
-	if(temperature > 900)
-		if(procgases[GAS_PL][MOLES] > MINIMUM_HEAT_CAPACITY && procgases[GAS_CO2][MOLES] > MINIMUM_HEAT_CAPACITY)
-			if(procgases[GAS_AGENT_B][MOLES])
-				var/reaction_rate = min(procgases[GAS_CO2][MOLES]*0.75, procgases[GAS_PL][MOLES]*0.25, procgases[GAS_AGENT_B][MOLES]*0.05)
-				procgases[GAS_CO2][MOLES] -= reaction_rate
-				procgases[GAS_O2][MOLES] += reaction_rate
+	if(procgases["agent_b"] && temperature > 900 && procgases["plasma"] && procgases["co2"])
+		if(procgases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && procgases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY)
+			var/reaction_rate = min(procgases["co2"][MOLES]*0.75, procgases["plasma"][MOLES]*0.25, procgases["agent_b"][MOLES]*0.05)
 
-				procgases[GAS_AGENT_B][MOLES] -= reaction_rate*0.05
+			procgases["co2"][MOLES] -= reaction_rate
 
-				temperature -= (reaction_rate*20000)/heat_capacity()
+			assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
+			procgases["o2"][MOLES] += reaction_rate
 
-				reacting = 1
+			procgases["agent_b"][MOLES] -= reaction_rate*0.05
+
+			temperature -= (reaction_rate*20000)/heat_capacity()
+
+			garbage_collect()
+
+			reacting = 1
 	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
-		if(procgases[GAS_PL][MOLES] > MINIMUM_HEAT_CAPACITY && procgases[GAS_CO2][MOLES] > MINIMUM_HEAT_CAPACITY && (procgases[GAS_PL][MOLES]+procgases[GAS_CO2][MOLES])/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
-			//world << "pre [temperature, [toxins], [carbon_dioxide]
+		if(procgases["plasma"] && procgases["co2"] && procgases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && procgases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY && (procgases["plasma"][MOLES]+procgases["co2"][MOLES])/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
+			//world << "pre [temperature, [procgases["plasma"][MOLES]], [procgases["co2"][MOLES]]
 			var/old_heat_capacity = heat_capacity()
-			var/carbon_efficency = min(procgases[GAS_PL][MOLES]/procgases[GAS_CO2][MOLES],MAX_CARBON_EFFICENCY)
+			var/carbon_efficency = min(procgases["plasma"][MOLES]/procgases["co2"][MOLES],MAX_CARBON_EFFICENCY)
 			var/reaction_energy = thermal_energy()
-			var/moles_impurities = total_moles()-(procgases[GAS_PL][MOLES]+procgases[GAS_CO2][MOLES])
+			var/moles_impurities = total_moles()-(procgases["plasma"][MOLES]+procgases["co2"][MOLES])
+
 			var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 			var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 			var/oxygen_added = carbon_catalyzed
 			var/nitrogen_added = (plasma_fused-oxygen_added)-(thermal_energy()/PLASMA_BINDING_ENERGY)
 
-			reaction_energy = max(reaction_energy+((carbon_efficency*procgases[GAS_PL][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
-			procgases[GAS_PL][MOLES] = max(procgases[GAS_PL][MOLES]-plasma_fused,0)
-			procgases[GAS_CO2][MOLES] = max(procgases[GAS_CO2][MOLES]-carbon_catalyzed,0)
-			procgases[GAS_O2][MOLES] = max(procgases[GAS_O2][MOLES]+oxygen_added,0)
-			procgases[GAS_N2][MOLES] = max(procgases[GAS_N2][MOLES]+nitrogen_added,0)
+			reaction_energy = max(reaction_energy+((carbon_efficency*procgases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
+
+			assert_gas("o2")
+			assert_gas("n2")
+
+			procgases["plasma"][MOLES] -= plasma_fused
+			procgases["co2"][MOLES] -= carbon_catalyzed
+			procgases["o2"][MOLES] += oxygen_added
+			procgases["n2"][MOLES] += nitrogen_added
+
+			garbage_collect()
+
 			if(reaction_energy > 0)
 				reacting = 1
 				var/new_heat_capacity = heat_capacity()
 				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 					temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
-				//world << "post [temperature], [toxins], [carbon_dioxide]
-
-
+				//world << "post [temperature], [procgases["plasma"][MOLES]], [procgases["co2"][MOLES]]
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		//world << "pre [temperature], [oxygen], [toxins]"
+		//world << "pre [temperature], [procgases["o2"][MOLES]], [procgases["plasma"][MOLES]]"
 		if(fire())
 			reacting = 1
-		//world << "post [temperature], [oxygen], [toxins]"
+		//world << "post [temperature], [procgases["o2"][MOLES]], [procgases["plasma"][MOLES]]"
 
 	return reacting
 
@@ -187,23 +176,29 @@ var/list/cached_gases_list = null
 	var/old_heat_capacity = heat_capacity()
 	var/list/procgases = gases //this speeds things up because accessing datum vars is slow
 
-	if(procgases[GAS_V_FUEL][MOLES]) //General volatile gas burn
-		var/burned_fuel = 0
+	if(procgases["v_fuel"] && procgases["v_fuel"][MOLES]) //General volatile gas burn
+		var/burned_fuel
 
-		if(procgases[GAS_O2][MOLES] < procgases[GAS_V_FUEL][MOLES])
-			burned_fuel = procgases[GAS_O2][MOLES]
-			procgases[GAS_V_FUEL][MOLES] -= burned_fuel
-			procgases[GAS_O2][MOLES] = 0
+		if(!procgases["o2"])
+			burned_fuel = 0
+		else if(procgases["o2"][MOLES] < procgases["v_fuel"][MOLES])
+			burned_fuel = procgases["o2"][MOLES]
+			procgases["v_fuel"][MOLES] -= burned_fuel
+			procgases["o2"][MOLES] = 0
 		else
-			burned_fuel = procgases[GAS_V_FUEL][MOLES]
-			procgases[GAS_O2][MOLES] -= procgases[GAS_V_FUEL][MOLES]
+			burned_fuel = procgases["v_fuel"][MOLES]
+			procgases["o2"][MOLES] -= procgases["v_fuel"][MOLES]
 
-		energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
-		procgases[GAS_CO2][MOLES] += burned_fuel
-		fuel_burnt += burned_fuel
+		if(burned_fuel)
+			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
+
+			assert_gas("co2")
+			procgases["co2"][MOLES] += burned_fuel
+
+			fuel_burnt += burned_fuel
 
 	//Handle plasma burning
-	if(procgases[GAS_PL][MOLES] > MINIMUM_HEAT_CAPACITY)
+	if(procgases["plasma"] && procgases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
 		//more plasma released at higher temperatures
@@ -213,19 +208,22 @@ var/list/cached_gases_list = null
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
+			assert_gas("o2")
+			assert_gas("co2")
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(procgases[GAS_O2][MOLES] > procgases[GAS_PL][MOLES]*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (procgases[GAS_PL][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
+			if(procgases["o2"][MOLES] > procgases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (procgases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
-				plasma_burn_rate = (temperature_scale*(procgases[GAS_O2][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
+				plasma_burn_rate = (temperature_scale*(procgases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				procgases[GAS_PL][MOLES] -= plasma_burn_rate
-				procgases[GAS_O2][MOLES] -= plasma_burn_rate*oxygen_burn_rate
-				procgases[GAS_CO2][MOLES] += plasma_burn_rate
+				procgases["plasma"][MOLES] -= plasma_burn_rate
+				procgases["o2"][MOLES] -= plasma_burn_rate*oxygen_burn_rate
+				procgases["co2"][MOLES] += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
 				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+				garbage_collect()
 
 	if(energy_released > 0)
 		var/new_heat_capacity = heat_capacity()
@@ -291,9 +289,10 @@ var/list/cached_gases_list = null
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
-	var/list/giver_gases = giver.gases //accessing datum vars is slower than proc vars
-	for(var/gas in gases)
-		gas[MOLES] += giver_gases[gas[GAS_INDEX]][MOLES]
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	for(var/giver_gas in giver.gases)
+		assert_gas(giver_gas[GAS_ID])
+		cached_gases[giver_gas[GAS_ID]][MOLES] += giver_gas[MOLES]
 
 	. = 1
 
@@ -301,41 +300,54 @@ var/list/cached_gases_list = null
 
 	var/sum = total_moles()
 	amount = min(amount,sum) //Can not take more air than tile has!
-	if(amount <= 0)
-		return null
+
+	ASSERT(amount > 0)
 
 	var/datum/gas_mixture/removed = new
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	for(var/gas in gases)
-		removed_gases[gas[GAS_INDEX]][MOLES] = QUANTIZE((gas[MOLES]/sum)*amount)
-		gas[MOLES] -= removed_gases[gas[GAS_INDEX]][MOLES]
+		removed.assert_gas(gas[GAS_ID])
+		removed_gases[gas[GAS_ID]][MOLES] = QUANTIZE((gas[MOLES]/sum)*amount)
+		gas[MOLES] -= removed_gases[gas[GAS_ID]][MOLES]
 
 	removed.temperature = temperature
+
+	garbage_collect()
 
 	. = removed
 
 /datum/gas_mixture/remove_ratio(ratio)
-
-	if(ratio <= 0)
-		return null
+	ASSERT(ratio > 0)
 
 	ratio = min(ratio, 1)
 
 	var/datum/gas_mixture/removed = new
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 	for(var/gas in gases)
-		removed_gases[gas[GAS_INDEX]][MOLES] = QUANTIZE(gas[MOLES]*ratio)
-		gas[MOLES] -= removed_gases[gas[GAS_INDEX]][MOLES]
+		removed.assert_gas(gas[GAS_ID])
+		removed_gases[gas[GAS_ID]][MOLES] = QUANTIZE(gas[MOLES]*ratio)
+		gas[MOLES] -= removed_gases[gas[GAS_ID]][MOLES]
 
 	removed.temperature = temperature
+
+	garbage_collect()
 
 	. = removed
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
-	for(var/gas in gases)
-		gas[MOLES] = sample_gases[gas[GAS_INDEX]][MOLES]
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	var/list/copied_gases
+	for(var/sample_gas in sample.gases)
+		cached_gases[sample_gas[GAS_ID]][MOLES] = sample_gas[MOLES]
+		copied_gases += sample_gas[GAS_ID]
+	for(var/gas in cached_gases)
+		if(gas[GAS_ID] in copied_gases)
+			continue
+		gas[MOLES] = 0
+
+	garbage_collect()
+
 	temperature = sample.temperature
 
 	return 1
@@ -366,8 +378,11 @@ var/list/cached_gases_list = null
 
 	var/heat_capacity_self_to_sharer = 0
 	var/heat_capacity_sharer_to_self = 0
+	for(var/sharer_gas in sharercache)
+		assert_gas(sharer_gas[GAS_ID])
 	for(var/gas in gases)
-		var/sharergas = sharercache[gas[GAS_INDEX]]
+		sharer.assert_gas(gas[GAS_ID])
+		var/sharergas = sharercache[gas[GAS_ID]]
 		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1)
 
 		if(delta && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -399,6 +414,8 @@ var/list/cached_gases_list = null
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		. = delta_pressure*R_IDEAL_GAS_EQUATION/volume
+
+	garbage_collect()
 
 /datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new
@@ -445,10 +462,23 @@ var/list/cached_gases_list = null
 /datum/gas_mixture/compare(datum/gas_mixture/sample, datatype = MOLES, adjacents = 0)
 	. = 0
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
-	for(var/gas in gases)
-		var/delta = abs(gas[datatype] - sample_gases[gas[GAS_INDEX]][datatype])/(adjacents+1)
+	var/list/cached_gases = gases
+	var/list/gases_considered = new
+	for(var/gas in cached_gases)
+		var/sample_moles = sample_gases[gas[GAS_ID]][datatype] ? sample_gases[gas[GAS_ID]][datatype] : 0
+		var/delta = abs(gas[datatype] - sample_moles)/(adjacents+1)
 		if(delta > MINIMUM_AIR_TO_SUSPEND && \
 			delta > gas[datatype]*MINIMUM_AIR_RATIO_TO_SUSPEND)
+			return
+		gases_considered += gas[GAS_ID]
+
+	for(var/sample_gas in sample_gases) //I'd rather have copy-paste than slow this down with a proc call... is there a better solution?
+		if(sample_gas[GAS_ID] in gases_considered)
+			continue
+		var/gas_moles = cached_gases[sample_gas[GAS_ID]][datatype] ? cached_gases[sample_gas[GAS_ID]][datatype] : 0
+		var/delta = abs(sample_gas[datatype] - gas_moles)/(adjacents+1)
+		if(delta > MINIMUM_AIR_TO_SUSPEND && \
+			delta > sample_gas[datatype]*MINIMUM_AIR_RATIO_TO_SUSPEND)
 			return
 
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
@@ -469,12 +499,14 @@ var/list/cached_gases_list = null
 
 
 /datum/gas_mixture/copy_from_turf(turf/model)
-	gases[GAS_O2][MOLES] = model.oxygen
-	gases[GAS_N2][MOLES] = model.nitrogen
-	gases[GAS_PL][MOLES] = model.toxins
-	gases[GAS_CO2][MOLES] = model.carbon_dioxide
-	for(var/i in 5 to gases.len)
-		gases[i][MOLES] = 0 //turfs don't account for anything other than the four old hardcoded gases
+	gases["o2"][MOLES] = model.oxygen
+	gases["n2"][MOLES] = model.nitrogen
+	gases["plasma"][MOLES] = model.toxins
+	gases["co2"][MOLES] = model.carbon_dioxide
+	for(var/gas in gases)
+		if(gas[GAS_ID] in hardcoded_gases)
+			continue
+		gas[MOLES] = 0 //turfs don't account for anything other than the four old hardcoded gases
 	temperature = model.temperature
 
 //Takes the amount of the gas you want to PP as an argument

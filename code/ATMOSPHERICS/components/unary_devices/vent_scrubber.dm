@@ -171,7 +171,7 @@
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
 		for(var/gas in environment.gases)
-			if(gas[GAS_INDEX] <= 2)
+			if(gas[GAS_ID] == "nitrogen" || gas[GAS_ID] == "oxygen")
 				continue
 			if(gas[MOLES])
 				should_we_scrub = TRUE
@@ -181,24 +181,36 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
+			var/list/removed_gases = removed.gases
 			if (isnull(removed)) //in space
 				return
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
+			var/list/filtered_gases = filtered_out.gases
 			filtered_out.temperature = removed.temperature
-			if(scrub_Toxins)
-				filtered_out.gases[GAS_PL][MOLES] = removed.gases[GAS_PL][MOLES]
-				removed.gases[GAS_PL][MOLES] = 0
-			if(scrub_CO2)
-				filtered_out.gases[GAS_CO2][MOLES] = removed.gases[GAS_CO2][MOLES]
-				removed.gases[GAS_CO2][MOLES] = 0
-			if(TRUE) //no var for scrubbing agent b but I wanted the indentation to line up
-				filtered_out.gases[GAS_AGENT_B][MOLES] = removed.gases[GAS_AGENT_B][MOLES]
-				removed.gases[GAS_AGENT_B][MOLES] = 0
-			if(scrub_N2O)
-				filtered_out.gases[GAS_N2O][MOLES] = removed.gases[GAS_N2O][MOLES]
-				removed.gases[GAS_AGENT_B][MOLES] = 0
+
+			if(scrub_Toxins && removed_gases["plasma"])
+				filtered_out.assert_gas("plasma")
+				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+				removed.gases["plasma"][MOLES] = 0
+
+			if(scrub_CO2 && removed_gases["co2"])
+				filtered_out.assert_gas("co2")
+				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				removed.gases["co2"][MOLES] = 0
+
+			if(removed_gases["agent_b"])
+				filtered_out.assert_gas("agent_b")
+				filtered_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
+				removed.gases["agent_b"][MOLES] = 0
+
+			if(scrub_N2O && removed_gases["n2o"])
+				filtered_out.assert_gas("n2o")
+				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				removed.gases["n2o"][MOLES] = 0
+
+			removed.garbage_collect()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)

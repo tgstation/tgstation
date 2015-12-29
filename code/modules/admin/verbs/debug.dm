@@ -190,7 +190,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/t = ""
 	for(var/gas in env.gases)
-		if(gas[GAS_INDEX] <= 4 || gas[MOLES])
+		if(gas[GAS_ID] in hardcoded_gases || gas[MOLES])
 			t+= "[gas[GAS_NAME]] : [gas[MOLES]]\n"
 
 	usr.show_message(t, 1)
@@ -630,7 +630,8 @@ var/global/list/g_fancy_list_of_types = null
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
-				Plasma.air_contents.gases[GAS_PL][MOLES] = 70
+				Plasma.air_contents.assert_gas("plasma")
+				Plasma.air_contents.gases["plasma"][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad
