@@ -137,8 +137,10 @@
 	if(!input) return
 
 	for(var/mob/M in mob_list)
-		if(M == summoner || (M in dead_mob_list))
+		if(M == summoner)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+		if(M in dead_mob_list)
+			M << "<a href=?src=\ref[M];follow=\ref[src]>(F) </a><span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [input]")
 
@@ -159,7 +161,7 @@
 			if(G.summoner == src)
 				G << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 		else if (M in dead_mob_list)
-			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+			M << "<a href=?src=\ref[M];follow=\ref[src]> (F)<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
 

@@ -21,8 +21,10 @@
 	else
 		user.whisper(message)
 	for(var/mob/M in mob_list)
-		if(iscultist(M) || (M in dead_mob_list))
+		if(iscultist(M))
 			M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+		if(M in dead_mob_list)
+			M << "<a href=?src=\ref[M];follow=\ref[user]>(F)</a> <span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
