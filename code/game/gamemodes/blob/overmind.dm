@@ -91,7 +91,7 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))
