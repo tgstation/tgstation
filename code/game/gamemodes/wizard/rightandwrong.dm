@@ -117,7 +117,7 @@
 					G = new /obj/item/weapon/gun/medbeam(get_turf(H))
 				if("scatterbeam")
 					G = new /obj/item/weapon/gun/energy/laser/scatter(get_turf(H))
-				G.unlock()
+			G.unlock()
 			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 
 		else
