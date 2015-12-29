@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Added a changelog editing system that should cause fewer conflicts and more accurate timestamps.
-  - rscdel: Killed innocent kittens.
+- rscadd: Added a changelog editing system that should cause fewer conflicts and more accurate timestamps.
+- rscdel: Killed innocent kittens.
