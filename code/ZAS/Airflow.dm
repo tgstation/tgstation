@@ -377,6 +377,8 @@ atom/movable/proc/airflow_hit(atom/A)
 	airflow_dest = null
 
 mob/airflow_hit(atom/A)
+	if(size == SIZE_TINY) return //Slamming into a mouse/roach doesn't make much sense
+
 	if(!sound_override)
 		for(var/mob/M in hearers(src))
 			M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='warning'>You hear a loud slam!</span>",2)
