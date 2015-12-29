@@ -209,6 +209,7 @@
 /datum/objective/default/debrain//I want braaaainssss
 	var/target_role_type=0
 	dangerrating = 20
+	randomgen = 0
 
 /datum/objective/default/debrain/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
