@@ -191,16 +191,6 @@
 		M.s_active.handle_item_insertion(src)
 		return 1
 
-	if(istype(M, /mob/living/simple_animal/drone))
-		var/mob/living/simple_animal/drone/D = M
-		var/obj/item/weapon/storage/T = D.internal_storage
-		if (!T)
-			if (D.equip_to_slot_if_possible(src, slot_drone_storage, 0, 1, 1))
-				return 1
-		else if (istype(T) && T.can_be_inserted(src,1)) //If carrying storage item like toolbox
-			T.handle_item_insertion(src)
-			return 1
-
 	var/obj/item/weapon/storage/S = M.get_inactive_hand()
 	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
 		S.handle_item_insertion(src)
@@ -210,6 +200,10 @@
 	if(istype(S) && S.can_be_inserted(src,1))		//else we put in belt
 		S.handle_item_insertion(src)
 		return 1
+
+	S = M.get_item_by_slot(slot_drone_storage)	//else we put in whatever is in drone storage
+	if(istype(S) && S.can_be_inserted(src,1))
+		S.handle_item_insertion(src)
 
 	S = M.get_item_by_slot(slot_back)	//else we put in backpack
 	if(istype(S) && S.can_be_inserted(src,1))
