@@ -15,7 +15,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -23,7 +23,7 @@
 	icon_state = "hos"
 	item_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 40, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -39,18 +39,19 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	desc = "A red jacket with silver rank pips and body armor strapped on top. Contains liquid trauma plates to help deal with unruly prisoners."
 	icon_state = "warden_jacket"
-	item_state = "armor"
+	item_state = "wardenarmor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
+	armor = list(melee = 35, bullet = 20, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 70
 	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets, and a pouch full of liquid plates."
 	icon_state = "warden_alt"
 
 /obj/item/clothing/suit/armor/vest/leather
@@ -68,7 +69,7 @@
 	icon_state = "capcarapace"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
-	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 50, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)//ceramic plates fuck up in heat (laser)
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -95,7 +96,7 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 15, bullet = 80, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
+	armor = list(melee = 15, bullet = 65, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
 	strip_delay = 70
 	put_on_delay = 50
 

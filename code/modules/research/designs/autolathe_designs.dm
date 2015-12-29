@@ -516,7 +516,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Ammo box (.357)"
+	name = "Ammo box (.44 magnum)"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)

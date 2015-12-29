@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/revolver
-	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
+	name = "\improper .44 revolver"
+	desc = "A suspicious revolver. Uses .44 Magnum." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
@@ -49,7 +49,7 @@
 	if (num_unloaded)
 		user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		user << "<span class='warning'>[src] is empty!</span>"//do you feel lucky, punk?
 
 /obj/item/weapon/gun/projectile/revolver/verb/spin()
 	set name = "Spin Chamber"

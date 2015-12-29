@@ -1,5 +1,5 @@
 /obj/item/ammo_box/a357
-	name = "speed loader (.357)"
+	name = "speed loader (.44)"
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
