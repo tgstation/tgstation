@@ -1,0 +1,5 @@
+author: TheEliminator16
+delete-after: True
+changes:
+  - rscadd: Added a new child of bear called "Skrite". Adminbus only mob that hits like a bear and is twice as tough as one.
+  - imageadd: Added skrite sprites to animal.dmi
