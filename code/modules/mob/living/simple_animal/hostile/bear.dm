@@ -57,6 +57,8 @@
 	icon_living = "skrite"
 	icon_dead = "skrite_dead"
 	icon_gib = "skrite_dead"
+	default_icon_floor = "skritefloor"
+	default_icon_space = "skrite"
 	speak = list("SKREEEEEEEE!","SKRAAAAAAAAW!","KREEEEEEEEE!")
 	speak_emote = list("screams", "shrieks")
 	emote_hear = list("snarls")
@@ -65,10 +67,6 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 200
 	health = 200
 	melee_damage_lower = 20
