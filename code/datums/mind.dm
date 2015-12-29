@@ -645,7 +645,6 @@
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 		else
-			objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 
