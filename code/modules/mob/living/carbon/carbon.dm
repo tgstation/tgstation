@@ -87,8 +87,7 @@
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
-	//src.burn_skin(shock_damage)
-	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
+	//src.adjustFireLoss(shock_damage)
 	//src.updatehealth()
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
