@@ -360,9 +360,9 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/robocop
 	name = "'Robo-Officer' Core AI Module"
 	origin_tech = "programming=4"
-	laws = list("Uphold the law.",\
-				"Protect the innocent.",\
-				"Serve the public trust.")
+	laws = list("Serve the public trust.",\
+				"Protect the innocent",\
+				"Uphold the law.")
 
 
 /******************** Antimov ********************/
