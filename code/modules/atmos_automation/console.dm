@@ -249,19 +249,21 @@
 			if(istype(to_connect)) //User's active hand holds an assembly
 				if(usr.drop_item(to_connect, src)) //Stick it in and connect it
 					linked_assemblies[id] = to_connect
+			else
+				to_chat(usr, "<span class='info'>Hold the assembly in your hand and press this button to connect it.</span>")
 
 		else //Something connected - eject it
 			linked_assemblies[id] = null
 			A.forceMove(get_turf(src))
 
-			to_chat(usr, "<span class='info'>You eject \the [A] from socket [id].</span>")
+			to_chat(usr, "<span class='info'>You eject \the [A] from socket #[id].</span>")
 
 		href_list["view_assemblies"] = 1 //Update the window!
 
-	if(href_list["view_assemblies"])
-		var/dat = ""
+	if(href_list["view_assemblies"]) //Open a separate window that lists connected assemblies
+		var/dat = "<h2>Connected assemblies</h2>"
 		for(var/i = 1 to max_linked_assembly_amount)
-			dat += "<p>[i]) <a href=\"?src=\ref[src];connect_assembly=[i]\">[isnull(linked_assemblies[i]) ? "-----" : linked_assemblies[i]]</a></p>"
+			dat += "<p>[i]) <a href=\"?src=\ref[src];connect_assembly=[i]\">[isnull(linked_assemblies[i]) ? "-click to insert-" : linked_assemblies[i]]</a></p>"
 
 		var/datum/browser/popup = new(usr, "AAC_assemblies", "[src]", 500, 300, src)
 		popup.set_content(dat)
