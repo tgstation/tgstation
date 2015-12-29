@@ -285,13 +285,9 @@
 
 /obj/item/weapon/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
-		var/count = 0
-		for (var/slot in slot_equipment_priority)
-			count++
-			if (slot == slot_head)
-				slot[count] = null
-				break
+		var/index = slot_equipment_priority.Find(slot_head)
+		slot_equipment_priority.Remove(slot_head)
 		. = ..()
-		slot_equipment_priority[count] = slot_head
+		slot_equipment_priority.Insert(index, slot_head)
 		return
 	return ..()
