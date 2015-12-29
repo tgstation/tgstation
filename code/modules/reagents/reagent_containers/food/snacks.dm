@@ -3908,5 +3908,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chococoin/proc/Unwrap(mob/user)
 	icon_state = "chococoin_unwrapped"
+	desc = "A thin wafer of milky, chocolatey, melt-in-your-mouth goodness. That alone is already worth a hoard."
 	to_chat(user, "<span class='notice'>You remove the golden foil from \the [src].</span>")
 	wrapped = 0

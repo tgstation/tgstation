@@ -31,7 +31,7 @@
 	endWhen	= rand(30, 60) //From thirty seconds to one minute
 
 /datum/event/meteor_shower/announce()
-	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately", "Meteor Alert")
+	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately.", "Meteor Alert")
 
 //Meteor showers are lighter and more common
 //Usually a single wave, rarely two, so anywhere from 5 to 20 small meteors
@@ -39,7 +39,7 @@
 	meteor_wave(rand(5, 10), max_size = 1) //Much more clement
 
 /datum/event/meteor_shower/end()
-	command_alert("The station has cleared the meteor shower", "Meteor Alert")
+	command_alert("The station has cleared the meteor shower.", "Meteor Alert")
 
 var/global/list/thing_storm_types = list(
 	"meaty gore storm" = list(
@@ -75,7 +75,7 @@ var/global/list/thing_storm_types = list(
 	storm_name=pick(possible_names)
 
 /datum/event/thing_storm/announce()
-	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately", "Meteor Alert")
+	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately.", "Meteor Alert")
 
 //Meteor showers are lighter and more common
 //Since this isn't rocks of pure pain and explosion, we have more, anywhere from 10 to 40 items
