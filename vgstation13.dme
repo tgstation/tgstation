@@ -940,6 +940,7 @@
 #include "code\modules\assembly\logic\write.dm"
 #include "code\modules\atmos_automation\console.dm"
 #include "code\modules\atmos_automation\statements.dm"
+#include "code\modules\atmos_automation\implementation\assemblies.dm"
 #include "code\modules\atmos_automation\implementation\digital_valves.dm"
 #include "code\modules\atmos_automation\implementation\emitters.dm"
 #include "code\modules\atmos_automation\implementation\injectors.dm"
