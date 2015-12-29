@@ -102,6 +102,25 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
+	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+	var/list/slot_equipment_priority = list( \
+			slot_back,\
+			slot_wear_id,\
+			slot_w_uniform,\
+			slot_wear_suit,\
+			slot_wear_mask,\
+			slot_head,\
+			slot_shoes,\
+			slot_gloves,\
+			slot_ears,\
+			slot_glasses,\
+			slot_belt,\
+			slot_s_store,\
+			slot_l_store,\
+			slot_r_store,\
+			slot_drone_storage\
+		)
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
