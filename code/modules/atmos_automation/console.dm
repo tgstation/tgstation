@@ -14,10 +14,21 @@
 	var/register_amount = 10//Determines the maximal registers you can have.
 	var/list/registers = list()//Stores the register values, registers can't be named so this is enough.
 
+	var/list/linked_assemblies = list() //Can have up to 5 assemblies connected. AAC scripts can pulse them
+	var/const/max_linked_assembly_amount = 5
+
 /obj/machinery/computer/general_air_control/atmos_automation/New()
 	..()
 	for(var/i = 1, i <= register_amount, i++)//Fill the registers
 		registers.Add(list(0))
+
+	for(var/i = 1 to max_linked_assembly_amount)
+		linked_assemblies.Add(null)
+
+/obj/machinery/computer/general_air_control/atmos_automation/Destroy()
+	linked_assemblies = null
+
+	..()
 
 /obj/machinery/computer/general_air_control/atmos_automation/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -81,6 +92,8 @@
 		out += "<a href=\"?src=\ref[src];on=1\" style=\"font-size:large;font-weight:bold;color:red;\">RUNNING</a>"
 	else
 		out += "<a href=\"?src=\ref[src];on=1\" style=\"font-size:large;font-weight:bold;color:green;\">STOPPED</a>"
+
+	out += "<p><a href=\"?src=\ref[src];view_assemblies=1\">View connected assemblies</a></p>"
 
 	out += {"
 		<h2>Automations</h2>
@@ -222,6 +235,42 @@
 		investigation_log(I_ATMOS,"had the [registerid]\th registerID changed from [oldreg] to [registers[registerid]] by [key_name(usr)]")
 		updateUsrDialog()
 		return 1
+
+	//Assembly stuff
+
+	if(href_list["connect_assembly"])
+		var/id = text2num(href_list["connect_assembly"])
+
+		var/obj/item/device/assembly/A = linked_assemblies[id]
+
+		if(isnull(A)) //Nothing connected in the specified socket - take assembly from hand and connect it
+			var/obj/item/device/assembly/to_connect = usr.get_active_hand()
+
+			if(istype(to_connect)) //User's active hand holds an assembly
+				if(usr.drop_item(to_connect, src)) //Stick it in and connect it
+					linked_assemblies[id] = to_connect
+			else
+				to_chat(usr, "<span class='info'>Hold the assembly in your hand and press this button to connect it.</span>")
+
+		else //Something connected - eject it
+			linked_assemblies[id] = null
+			A.forceMove(get_turf(src))
+
+			to_chat(usr, "<span class='info'>You eject \the [A] from socket #[id].</span>")
+
+		href_list["view_assemblies"] = 1 //Update the window!
+
+	if(href_list["view_assemblies"]) //Open a separate window that lists connected assemblies
+		var/dat = "<h2>Connected assemblies</h2>"
+		for(var/i = 1 to max_linked_assembly_amount)
+			dat += "<p>[i]) <a href=\"?src=\ref[src];connect_assembly=[i]\">[isnull(linked_assemblies[i]) ? "-click to insert-" : linked_assemblies[i]]</a></p>"
+
+		var/datum/browser/popup = new(usr, "AAC_assemblies", "[src]", 500, 300, src)
+		popup.set_content(dat)
+		popup.open()
+
+		onclose(usr, "AAC_assemblies")
+
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/MakeCompare(var/datum/automation/a, var/datum/automation/b, var/comparetype)
 	var/datum/automation/compare/compare=new(src)
