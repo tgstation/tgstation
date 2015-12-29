@@ -429,8 +429,10 @@ obj/item/weapon/gun/proc/newshot()
 	process_fire(target, user, 1, params)
 
 /obj/item/weapon/gun/proc/unlock() //used in summon guns and as a convience for admins
-	if(pin)	qdel(pin)
+	if(pin)
+		qdel(pin)
 	pin = new /obj/item/device/firing_pin
+
 /////////////
 // ZOOMING //
 /////////////
