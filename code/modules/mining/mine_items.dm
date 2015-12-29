@@ -243,7 +243,9 @@
 	threshhold.nitrogen = 82
 	threshhold.carbon_dioxide = 0
 	threshhold.toxins = 0
-	L.contents += threshhold
+	var/area/ZZ = get_area(threshhold)
+	if(!(istype(ZZ, /area/shuttle)))
+		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
@@ -261,4 +263,6 @@
 		A.air.temperature = 293.15
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-		L.contents += A
+		var/area/Z = get_area(A)
+		if(!(istype(Z, /area/shuttle)))
+			L.contents += A
