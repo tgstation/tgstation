@@ -1,0 +1,3 @@
+<article class='notice'>
+  {{yield}}
+</article>

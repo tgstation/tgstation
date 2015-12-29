@@ -8,9 +8,9 @@ gulp    = require "gulp"
 postcss = require "postcss"
 
 module.exports = ->
-  gulp.src p.input.styles
-    .pipe g.if(f.debug, g.sourcemaps.init())
-    .pipe g.less({paths: [p.images]})
+  gulp.src p.css.dir + p.css.main
+    .pipe g.if(f.debug, g.sourcemaps.init({loadMaps: true}))
+    .pipe g.stylus({url: 'data-url', paths: [p.img.dir]})
     .pipe g.postcss([
       s.autoprefixer({browsers: ["last 2 versions", "ie >= 8"]}),
       s.gradient,
@@ -19,11 +19,11 @@ module.exports = ->
       s.plsfilters({oldIE: true}),
       s.fontweights
     ])
-    .pipe g.concat(p.output.css)
+    .pipe g.concat(p.css.out)
     .pipe g.bytediff.start()
     .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
     .pipe g.if(f.min, g.cssnano({autoprefixer: {browsers: ["last 2 versions", "ie >= 8"]}, discardComments: {removeAll: true}}))
-    .pipe g.if(f.debug, g.sourcemaps.write())
+    .pipe g.if(f.debug, g.sourcemaps.write(sourceRoot: "/source/styles/"))
     .pipe g.bytediff.stop()
-    .pipe gulp.dest p.output.dir
+    .pipe gulp.dest p.out
 module.exports.displayName = "css"

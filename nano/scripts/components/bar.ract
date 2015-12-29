@@ -1,0 +1,15 @@
+<script type='text/coffeescript'>
+component.exports =
+  computed:
+    percentage: ->
+      min = @get "min"
+      max = @get "max"
+      value = Math.clamp @get("value"), min, max
+
+      Math.round (value - min) / (max - min) * 100
+</script>
+
+<div class='bar'>
+  <span class='barFill {{state}}' style='width: {{percentage}}%'></span>
+  <span class='barText'>{{yield}}</span>
+</div>

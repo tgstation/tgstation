@@ -1,0 +1,17 @@
+@require "display"
+
+article.notice
+  @extend article.display, $noticeStripes
+  margin: 8px 2px
+
+  box-shadow: none
+
+  color: colors.textinverse
+  font-weight: bold
+  font-style: italic
+
+  section
+    padding: 0 0 2px 0;
+
+  .label
+    color: colors.textinverse

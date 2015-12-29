@@ -19,7 +19,6 @@ env:
 cache:
   directories:
     - nano/node_modules
-    - nano/bower_components
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
 
 
@@ -35,13 +34,12 @@ addons:
 
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $NODE_VERSION
-  - npm install -g gulp bower
+  - npm install -g gulp-cli
   - pip install --user PyYaml -q
   - pip install --user beautifulsoup4 -q
 
 before_script:
   - cd nano && npm install && cd ..
-  - cd nano && bower install && cd ..
   - chmod +x ./install-byond.sh
   - ./install-byond.sh
 

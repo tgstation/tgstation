@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='data' content='[data]'></div>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='data' content='[data]' />
     <script type='text/javascript'>
       function receiveUpdate(dataString) {
         if (typeof nanoui !== 'undefined') {
-          nanoui.incoming.dispatch(dataString);
+          nanoui.set(JSON.parse(dataString));
         }
       };
     </script>
@@ -14,8 +14,8 @@
     <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
   </head>
   <body>
-    <div id='layout'>
-      <div class='loader'>Loading...</div>
+    <div id='container' class='container'>
+      <div class='loading'>Loading...</div>
     </div>
     <noscript>
       <h1>Javascript Required</h1>

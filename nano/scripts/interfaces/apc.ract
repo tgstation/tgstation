@@ -1,0 +1,153 @@
+<script type='text/coffeescript'>
+component.exports =
+  computed:
+    visualPowerCellStatus: ->
+      status = @get "data.powerCellStatus"
+      if status >= 50 then "good"
+      else if status >= 25 then "average"
+      else "bad"
+</script>
+
+<n-notice>
+  {{#if data.siliconUser}}
+    <n-section label='Interface Lock'>
+      <n-button icon='{{data.locked ? "lock" : "unlock"}}' state='{{data.locked ? "selected" : null}}' action='lock'>Engaged</n-button>
+      <n-button icon='{{data.locked ? "unlock" : "lock"}}' state='{{data.locked ? null : "caution"}}' action='lock'>Disengaged</n-button>
+    </n-section>
+  {{else}}
+    <span>Swipe an ID card to {{data.locked ? 'unlock' : 'lock'}} this interface.</span>
+  {{/if}}
+</n-notice>
+<n-display title='Power Status'>
+  <n-section label='Main Breaker'>
+    {{#if data.locked && !data.siliconUser}}
+      {{#if data.isOperating}}
+        <span class='good'>On</span>
+      {{else}}
+        <span class='bad'>Off</span>
+      {{/if}}
+    {{else}}
+      {{#if data.isOperating}}
+        <n-button icon='power-off' style='selected' action='breaker'>On</n-button>
+      {{else}}
+        <n-button icon='close' action='breaker'>Off</n-button>
+      {{/if}}
+    {{/if}}
+  </n-section>
+  <n-section label='External Power'>
+    {{#if data.externalPower == 2}}
+      <span class='good'>Good</span>
+    {{elseif data.externalPower == 1}}
+      <span class='average'>Low</span>
+    {{else}}
+      <span class='bad'>None</span>
+    {{/if}}
+  </n-section>
+  <n-section label='Power Cell'>
+    {{#if data.powerCellStatus != null}}
+      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{visualPowerCellStatus}}'>{{Math.fixed(data.powerCellStatus)}}%</n-bar>
+    {{else}}
+      <span class='bad'>Power cell removed.</span>
+    {{/if}}
+  </n-section>
+  {{#if data.powerCellStatus != null}}
+    <n-section label='Charge Mode'>
+      {{#if data.locked && !data.siliconUser}}
+        {{#if data.chargeMode}}
+          <span class='good'>Auto</span>
+        {{else}}
+          <span class='bad'>Off</span>
+        {{/if}}
+      {{else}}
+        {{#if data.chargeMode}}
+          <n-button icon='refresh' action='chargemode'>Auto</n-button>
+        {{else}}
+          <n-button icon='close' action='chargemode'>Off</n-button>
+        {{/if}}
+      {{/if}}
+      &nbsp;
+      {{#if data.chargingStatus > 1}}
+        [<span class='good'>Fully Charged</span>]
+      {{elseif data.chargingStatus == 1}}
+        [<span class='average'>Charging</span>]
+      {{else}}
+        [<span class='bad'>Not Charging</span>]
+      {{/if}}
+    </n-section>
+  {{/if}}
+</n-display>
+<n-display title='Power Channels'>
+  <table class='grow'>
+    {{#each data.powerChannels}}
+      <tr>
+        <th>{{title}}:</th>
+        <td>{{Math.round(powerLoad)}} W</td>
+        <td>
+          {{#if status <= 1}}
+            <span class='bad'>Off</span>
+          {{elseif status >= 2}}
+            <span class='good'>On</span>
+          {{/if}}
+        </td>
+        <td>
+          {{#if status == 1 || status == 3}}
+            [Auto]
+          {{else}}
+            [Manual]
+          {{/if}}
+        </td>
+        <td class='floatRight'>
+          {{#if !data.locked || data.siliconUser}}
+            <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}' action='channel' params='{{topicParams.auto}}'>Auto</n-button>
+            <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel' params='{{topicParams.on}}'>On</n-button>
+            <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel' params='{{topicParams.off}}'>Off</n-button>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+    <tr>
+      <th>Total Load:</th>
+      <td class='bold'>{{Math.round(data.totalLoad)}} W</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</n-display>
+{{#if data.siliconUser}}
+  <n-display title='System Overrides'>
+    <n-section>
+      <n-button icon='lightbulb-o' action='overload'>Overload</n-button>
+    </n-section>
+    {{#if data.malfStatus}}
+      <n-section>
+        {{#if data.malfStatus == 1}}
+          <n-button icon='terminal' action='hack'>Override Programming</n-button>
+        {{elseif data.malfStatus == 2}}
+          <n-button icon='caret-square-o-down' action='occupy'>Shut Core Process</n-button>
+        {{elseif data.malfStatus == 3}}
+          <n-button icon='carat-square-o-left' action='deoccupy'>Return to Main Core</n-button>
+        {{elseif data.malfStatus == 4}}
+          <n-button icon='caret-square-o-down' state='disabled'>Shut Core Process</n-button>
+        {{/if}}
+      </n-section>
+    {{/if}}
+  </n-display>
+{{/if}}
+<n-notice>
+  <n-section label='Cover Lock'>
+    {{#if data.locked && !data.siliconUser}}
+      {{#if data.coverLocked}}
+        <span>Engaged</span>
+      {{else}}
+        <span>Disengaged</span>
+      {{/if}}
+    {{else}}
+    {{#if data.coverLocked}}
+      <n-button icon='lock' action='cover'>Engaged</n-button>
+    {{else}}
+      <n-button icon='unlock' style='danger' action='cover'>Disengaged</n-button>
+    {{/if}}
+    {{/if}}
+  </n-section>
+</n-notice>

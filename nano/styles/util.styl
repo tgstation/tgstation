@@ -1,0 +1,59 @@
+// Reset font options.
+$fontReset
+  color: colors.text
+  font-size: fontsize
+  font-weight: normal
+  font-style: normal
+  text-decoration: none
+
+// Fancy "Notice Me" stripes.
+$noticeStripes
+  background-color: colors.notice1 // Fallback for old browers.
+  background-image: repeating-linear-gradient(
+    -45deg,
+    colors.notice1,
+    colors.notice1 10px,
+    colors.notice2 10px,
+    colors.notice2 20px
+  )
+
+// Loading doesn't fit anywhere else...
+.loading
+  @extend $noticeStripes
+
+  padding: 8px
+
+// Text Styles
+.bold
+  font-weight: bold
+.italic
+  font-style: italic
+
+// General Helpers
+.hidden
+  display: none !important
+
+.clearBoth
+  clear: both
+.clearLeft
+  clear: left
+.clearRight
+  clear: right
+
+.floatNone
+  float: none
+.floatLeft
+  float: left
+.floatRight
+  float: right
+
+.alignTop
+  vertical-align: top
+.alignBottom
+  vertical-align: bottom
+.alignLeft
+  text-align: left
+.alignCenter
+  text-align: center
+.alignRight
+  text-align: right

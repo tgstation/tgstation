@@ -1,0 +1,27 @@
+<script type='text/coffeescript'>
+byond = require "../byond"
+
+component.exports =
+  oninit: ->
+    @on "act", (event) ->
+      action = @get "action"
+      params = @get "params"
+      byond.act @get("config.ref"), action, params if action?
+  computed:
+    enabled: ->
+      status    = @get "config.status"
+      constants = require "../constants"
+      true if status is constants.NANO_INTERACTIVE
+      false
+</script>
+
+<span
+    on-click='act'
+    unselectable='true'
+    class='button
+        {{^state}}active{{/}}
+        {{#state}}inactive {{state}}{{/}}
+        {{#style}}{{style}}{{/}}'>
+    {{#icon}}<i class='fa fa-fw fa-{{icon}}'></i>{{/}}
+    {{yield}}
+</span>

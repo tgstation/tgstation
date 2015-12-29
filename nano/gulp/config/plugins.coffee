@@ -3,6 +3,7 @@ module.exports =
     aliasify:     require "aliasify"
     coffeeify:    require "coffeeify"
     componentify: require "ractive-componentify"
+    globify:      require "require-globify"
   gulp: require("gulp-load-plugins")({replaceString: /^gulp(-|\.)|-/g})
   postcss:
     autoprefixer: require "autoprefixer"

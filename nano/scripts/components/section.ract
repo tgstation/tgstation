@@ -1,0 +1,8 @@
+<section>
+  {{#if label}}
+    <span class='label'>{{label}}:</span>
+  {{/if}}
+  <div class='content'>
+    {{yield}}
+  </div>
+</section>

@@ -1,7 +1,3 @@
-c = require "./config"
-p = c.paths
-g = c.plugins.gulp
-
 gulp = require "gulp"
 
 build  = require "./tasks/build"

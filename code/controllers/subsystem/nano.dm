@@ -14,7 +14,7 @@ var/datum/subsystem/nano/SSnano
 
 
 /datum/subsystem/nano/New()
-	html = file2text('nano/assets/nanoui.html') // Read the HTML from disk.
+	html = file2text('nano/nanoui.html') // Read the HTML from disk.
 
 	NEW_SS_GLOBAL(SSnano)
 

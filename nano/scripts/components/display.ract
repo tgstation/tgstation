@@ -1,0 +1,6 @@
+<article class='display'>
+  {{#if title}}
+    <header><h2>{{title}}</h2></header>
+  {{/if}}
+  {{yield}}
+</article>

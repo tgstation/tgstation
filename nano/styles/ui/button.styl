@@ -1,0 +1,38 @@
+active(color)
+  background-color: color
+  &:hover
+    background-color: lighten(color, colors.hover)
+
+span.button
+  @extend $fontReset
+  display: inline-block
+  box-sizing: border-box
+  height: 22px
+  margin: 1px
+  padding: 2px 3px
+  white-space: nowrap
+
+  border: 1px solid colors.border
+
+  transition: background-color
+  background-color: colors.normal
+  &.active
+    &.selected
+      active(colors.selected)
+    &.caution
+      active(colors.caution)
+    &.danger
+      active(colors.danger)
+    &.disabled
+      active(colors.disabled)
+  &.inactive
+    &.selected
+      background-color: colors.selected
+    &.caution
+      background-color: colors.caution
+    &.danger
+      background-color: colors.danger
+    &.disabled
+      background-color: colors.disabled
+  &.gridable
+    width: 125px

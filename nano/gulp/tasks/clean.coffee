@@ -5,5 +5,5 @@ del = require "del"
 
 
 module.exports = ->
-  del "#{p.output.dir}/*"
+  del "#{p.out}/*"
 module.exports.displayName = "clean"

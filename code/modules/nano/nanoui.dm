@@ -32,8 +32,8 @@
 	  "auto_format" = 0
 	)
 	var/atom/ref = null // An extra ref to call when the window is closed.
-	var/layout = "nanotrasen" // The layout to be used for this UI.
-	var/template // The template to be used for this UI.
+	var/style = "nanotrasen" // The style to be used for this UI.
+	var/interface // The interface (template) to be used for this UI.
 	var/auto_update = 1 // Update the NanoUI every MC tick.
 	var/list/initial_data // The data (and datastructure) used to initialize the NanoUI.
 	var/status = NANO_INTERACTIVE // The status/visibility of the NanoUI.
@@ -49,7 +49,7 @@
   * required user mob The mob who opened/is using the NanoUI.
   * required src_object atom/movable The object which owns the NanoUI.
   * required ui_key string The ui_key of the NanoUI.
-  * required template string The template to render the NanoUI content with.
+  * required interface string The interface used to render the UI.
   * optional title string The title of the NanoUI.
   * optional width int The window width.
   * optional height int The window height.
@@ -59,7 +59,7 @@
   *
   * return datum/nanoui The requested NanoUI.
  **/
-/datum/nanoui/New(mob/user, atom/movable/src_object, ui_key, template, \
+/datum/nanoui/New(mob/user, atom/movable/src_object, ui_key, interface, \
 					title, width = 0, height = 0, \
 					atom/ref = null, datum/nanoui/master_ui = null, \
 					datum/nano_state/state = default_state)
@@ -68,7 +68,7 @@
 	src.ui_key = ui_key
 	src.window_id = "\ref[src_object]-[ui_key]"
 
-	set_template(template)
+	set_interface(interface)
 
 	if(title)
 		src.title = sanitize(title)
@@ -120,14 +120,14 @@
   * public
   *
   * Reinitialize the NanoUI.
-  * (Possibly with a new template and/or data).
+  * (Possibly with a new interface and/or data).
   *
-  * optional template string The filename of the new template.
+  * optional template string The name of the new interface.
   * optional data list The new initial data.
  **/
-/datum/nanoui/proc/reinitialize(template, list/data)
-	if(template)
-		set_template(template) // Set a new template.
+/datum/nanoui/proc/reinitialize(interface, list/data)
+	if(interface)
+		set_interface(interface) // Set a new interface.
 	if(data)
 		set_initial_data(data) // Replace the initial_data.
 	open()
@@ -156,23 +156,22 @@
  /**
   * public
   *
-  * Set the layout for this NanoUI.
-  * This loads custom layout styles and templates for this NanoUI.
+  * Set the style for this NanoUI.
   *
-  * required layout string The new UI layout.
+  * required style string The new UI style.
  **/
-/datum/nanoui/proc/set_layout(layout)
-	src.layout = lowertext(layout)
+/datum/nanoui/proc/set_style(style)
+	src.style = lowertext(style)
 
  /**
   * public
   *
-  * Set the template for this NanoUI.
+  * Set the interface (template) for this NanoUI.
   *
-  * required template string The new UI template.
+  * required interface string The new UI interface.
  **/
-/datum/nanoui/proc/set_template(template)
-	src.template = lowertext(template)
+/datum/nanoui/proc/set_interface(interface)
+	src.interface = lowertext(interface)
 
  /**
   * public
@@ -223,23 +222,20 @@
  **/
 /datum/nanoui/proc/get_config_data()
 	var/list/config_data = list(
-			"title" = title,
-			"status" = status,
-			"layout" = layout,
-			"window" = window_id,
-			"ref" = "\ref[src]",
-			"user" = list(
+			"title"      = title,
+			"status"     = status,
+			"style"      = style,
+			"interface"  = interface,
+			"fancy"      = user.client.prefs.nanoui_fancy,
+			"window"     = window_id,
+			"ref"        = "\ref[src]",
+			"user"       = list(
 				"name" = user.name,
-				"fancy" = user.client.prefs.nanoui_fancy,
-				"ref" = "\ref[user]"
+				"ref"  = "\ref[user]"
 			),
-			"srcObject" = list(
+			"srcObject"  = list(
 				"name" = src_object.name,
-				"ref" = "\ref[src_object]"
-			),
-			"templates" = list(
-				"layout" = "_[layout]",
-				"content" = "[template]"
+				"ref"  = "\ref[src_object]"
 			)
 		)
 	return config_data
@@ -273,8 +269,8 @@
 	if(status != NANO_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
-	var/action = href_list["nano"] // Pull the action out.
-	href_list -= "nano"
+	var/action = href_list["action"] // Pull the action out.
+	href_list -= "action"
 
 	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
 	if(src_object && update)
@@ -283,8 +279,8 @@
  /**
   * private
   *
-  * Update the NanoUI. Only updates the contents/layout if update is true,
-  * otherwise only updates the status.
+  * Update the NanoUI.
+  * Only updates the data if update is true, otherwise only updates the status.
   *
   * optional force bool If the UI should be forced to update.
  **/
