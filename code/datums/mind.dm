@@ -663,6 +663,44 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
+	else if (href_list["handofgod"])
+		switch(href_list["handofgod"])
+			if("clear") //wipe handofgod status
+				if((src in ticker.mode.red_deity_followers) || (src in ticker.mode.blue_deity_followers) || (src in ticker.mode.red_deity_prophets) || (src in ticker.mode.blue_deity_prophets))
+					remove_hog_follower_prophet()
+					current << "<span class='danger'><B>You have been brainwashed... again! Your faith is no more!</B></span>"
+					message_admins("[key_name_admin(usr)] has de-hand of god'ed [current].")
+					log_admin("[key_name(usr)] has de-hand of god'ed [current].")
+
+			if("red follower")
+				make_Handofgod_follower("red")
+				message_admins("[key_name_admin(usr)] has red follower'ed [current].")
+				log_admin("[key_name(usr)] has red follower'ed [current].")
+
+			if("red prophet")
+				make_Handofgod_prophet("red")
+				message_admins("[key_name_admin(usr)] has red prophet'ed [current].")
+				log_admin("[key_name(usr)] has red prophet'ed [current].")
+
+			if("blue follower")
+				make_Handofgod_follower("blue")
+				message_admins("[key_name_admin(usr)] has blue follower'ed [current].")
+				log_admin("[key_name(usr)] has blue follower'ed [current].")
+
+			if("blue prophet")
+				make_Handofgod_prophet("blue")
+				message_admins("[key_name_admin(usr)] has blue prophet'ed [current].")
+				log_admin("[key_name(usr)] has blue prophet'ed [current].")
+
+			if("red god")
+				make_Handofgod_god("red")
+				message_admins("[key_name_admin(usr)] has red god'ed [current].")
+				log_admin("[key_name(usr)] has red god'ed [current].")
+
+			if("blue god")
+				make_Handofgod_god("blue")
+				message_admins("[key_name_admin(usr)] has blue god'ed [current].")
+				log_admin("[key_name(usr)] has blue god'ed [current].")
 
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
@@ -818,31 +856,10 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("tome")
-				var/mob/living/carbon/human/H = current
-				if (istype(H))
-					var/obj/item/weapon/tome/T = new(H)
 
-					var/list/slots = list (
-						"backpack" = slot_in_backpack,
-						"left pocket" = slot_l_store,
-						"right pocket" = slot_r_store,
-						"left hand" = slot_l_hand,
-						"right hand" = slot_r_hand,
-					)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						usr << "<span class='danger'>Spawning tome failed!</span>"
-					else
-						H << "A tome, a message from your new master, appears in your [where]."
-						if(where == "backpack")
-							var/obj/item/weapon/storage/B = H.back
-							B.orient2hud(H)
-							B.show_to(H)
-
-			if("amulet")
+			if("equip")
 				if (!ticker.mode.equip_cultist(current))
-					usr << "<span class='danger'>Spawning amulet failed!</span>"
+					usr << "equip_cultist() failed! [current]'s starting equipment will be incomplete.</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])

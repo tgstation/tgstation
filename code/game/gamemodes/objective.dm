@@ -1,4 +1,4 @@
-/datum/objective/
+/datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
@@ -148,59 +148,6 @@
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
-
-
-/datum/objective/default/frame
-	var/target_role_type=0
-	dangerrating = 10
-	martyr_compatible = 1
-
-/datum/objective/default/frame/find_target_by_role(role, role_type=0, invert=0)
-	if(!invert)
-		target_role_type = role_type
-	..()
-	return target
-
-
-/datum/objective/default/frame/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Frame [target.name], the [!target_role_type ? target.assigned_role : target.special_role] and ensure they are incarcerated by the end of the shift."
-	else
-		explanation_text = "Free Objective"
-
-/datum/objective/default/frame/check_completion()
-	if(issilicon(target.current))
-		return 0
-	if(isbrain(target.current))
-		return 0
-	if(!target.current || target.current.stat == DEAD)
-		return 0
-	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
-		return 1
-	if(ticker.mode.station_was_nuked)
-		return 1
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
-		return 0
-	var/turf/location = get_turf(target.current)
-	var/area/loc_area = get_area(target.current)
-	if(!location)
-		return 0
-
-	if(istype(location, /turf/simulated/floor/plasteel/shuttle/red))
-		return 1
-	if(istype(loc_area, /area/security/brig))
-		return 1
-	if(istype(loc_area, /area/security/prison))
-		return 1
-	if(istype(loc_area, /area/prison/solitary)) // dunno if some maps still have solitary, if so this works
-		return 1
-	if(istype(loc_area, /area/mine/laborcamp))
-		return 1
-	if(istype(loc_area, /area/mine/laborcamp/security))
-		return 1
-	if(location.onCentcom() || location.onSyndieBase())
-		return 0
 
 
 /datum/objective/mutiny
@@ -499,6 +446,10 @@
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
+/datum/objective/nuclear/check_completion()
+	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
+		return 1
+	return 0
 
 var/global/list/possible_items = list()
 /datum/objective/default/steal
