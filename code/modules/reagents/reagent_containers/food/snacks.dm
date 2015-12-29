@@ -29,10 +29,12 @@
 	volume = 100 //Double amount snacks can carry, so that food prepared from excellent items can contain all the nutriments it deserves
 
 //Proc for effects that trigger on eating that aren't directly tied to the reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user, var/datum/reagents/reagentreference)
 	if(!user)
 		return
-	if(!reagents.total_volume) //Are we done eating (determined by the amount of reagents left, here 0)
+	if(reagents)
+		reagentreference = reagents
+	if(!reagentreference || !reagentreference.total_volume) //Are we done eating (determined by the amount of reagents left, here 0)
 		user.visible_message("<span class='notice'>[user] finishes eating \the [src].</span>", \
 		"<span class='notice'>You finish eating \the [src].</span>")
 		score["foodeaten"]++ //For post-round score
@@ -159,7 +161,7 @@
 					else
 						reagentreference.trans_to(target, reagentreference.total_volume)
 					bitecount++
-					On_Consume(target)
+					On_Consume(target, reagentreference)
 			return 1
 
 	return 0
