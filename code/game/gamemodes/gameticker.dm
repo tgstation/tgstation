@@ -398,7 +398,7 @@ var/global/datum/controller/gameticker/ticker
 				for(var/key in maps)
 					choices.Add(key)
 				var/mapname=pick(choices)
-				chosen_map = ismapvote[mapname]
+				vote.chosen_map = maps[mapname] // Hack, but at this point I could not give a shit.
 				watchdog.chosen_map = copytext(mapname,1,(length(mapname)))
 				log_game("Server chose [watchdog.chosen_map]!")
 
