@@ -296,6 +296,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return out
 
 	Topic(href,href_list)
+		if(..()) return 1
 		if(href_list["add"])
 			var/new_child=selectValidChildFor(usr)
 			if(!new_child) return 1
@@ -430,6 +431,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return out
 
 	Topic(href,href_list)
+		if(..()) return 1
 		if(href_list["set_comparator"])
 			comparator = input("Select a comparison operator:", "Compare", "Greater Than") in list("Greater Than","Greater Than or Equal to","Less Than","Less Than or Equal to","Equal to","NOT Equal To")
 			parent.updateUsrDialog()
@@ -470,6 +472,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return "<a href=\"?src=\ref[src];set_value=1\">[value]</a>"
 
 	Topic(href,href_list)
+		if(..()) return 1
 		if(href_list["set_value"])
 			value = input("Set a value:", "Static Value", value) as num
 			parent.updateUsrDialog()
@@ -587,6 +590,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return out
 
 	Topic(href,href_list)
+		if(..()) return 1
 		if(href_list["set_field"])
 			var/idx = text2num(href_list["set_field"])
 			var/new_child = selectValidChildFor(usr)
