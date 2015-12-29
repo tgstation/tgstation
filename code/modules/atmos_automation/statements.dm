@@ -3,6 +3,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 #define AUTOM_RT_NULL    0
 #define AUTOM_RT_NUM     1
 #define AUTOM_RT_STRING  2
+
 /datum/automation
 	// Name of the Automation
 	var/name="Base Automation"
@@ -473,3 +474,169 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			value = input("Set a value:", "Static Value", value) as num
 			parent.updateUsrDialog()
 			return 1
+
+
+
+///////////////////////////////////////////
+// add
+///////////////////////////////////////////
+
+/datum/automation/sum
+	name = "sum statement"
+	returntype=AUTOM_RT_NUM
+	valid_child_returntypes=list(AUTOM_RT_NUM)
+
+	Evaluate()
+		if(children.len==0) return 0
+		var/out=0
+		for(var/datum/automation/stmt in children)
+			out += stmt.Evaluate()
+		return out
+
+	GetText()
+		var/out="SUM (<a href=\"?src=\ref[src];add=1\">Add</a>)"
+		if(children.len>0)
+			out += "<ul>"
+			for(var/datum/automation/stmt in children)
+				out += {"<li>
+							\[<a href="?src=\ref[src];reset=\ref[stmt]">Reset</a> |
+							<a href="?src=\ref[src];remove=\ref[stmt]">&times;</a>\]
+							[stmt.GetText()]
+						</li>"}
+			out += "</ul>"
+		else
+			out += "<blockquote><i>No statements to evaluate.</i></blockquote>"
+		return out
+
+
+///////////////////////////////////////////
+// average
+///////////////////////////////////////////
+
+/datum/automation/avg
+	name = "avg statement"
+	returntype=AUTOM_RT_NUM
+	valid_child_returntypes=list(AUTOM_RT_NUM)
+
+	Evaluate()
+		if(children.len==0) return 0
+		var/out=0
+		for(var/datum/automation/stmt in children)
+			out += stmt.Evaluate()
+		return out/children.len
+
+	GetText()
+		var/out="AVG (<a href=\"?src=\ref[src];add=1\">Add</a>)"
+		if(children.len>0)
+			out += "<ul>"
+			for(var/datum/automation/stmt in children)
+				out += {"<li>
+							\[<a href="?src=\ref[src];reset=\ref[stmt]">Reset</a> |
+							<a href="?src=\ref[src];remove=\ref[stmt]">&times;</a>\]
+							[stmt.GetText()]
+						</li>"}
+			out += "</ul>"
+		else
+			out += "<blockquote><i>No statements to evaluate.</i></blockquote>"
+		return out
+
+
+///////////////////////////////////////////
+// binary operators (left and right)
+///////////////////////////////////////////
+
+/datum/automation/binary
+	name = "binary statement"
+	returntype=null
+	valid_child_returntypes=list(AUTOM_RT_NUM)
+
+	var/operator="???"
+
+	New()
+		..()
+		children=list(null,null)
+
+	Evaluate()
+		if(children.len!=2) return 0
+		var/datum/automation/a = children[1]
+		var/datum/automation/b = children[2]
+		if(!a || !b)
+			return 0
+		return do_operation(a.Evaluate(),b.Evaluate())
+
+	proc/do_operation(var/a,var/b)
+		return 0
+
+	GetText()
+		var/datum/automation/left =children[1]
+		var/datum/automation/right=children[2]
+
+		var/out = "<a href=\"?src=\ref[src];set_field=1\">(Set Left)</a> ("
+		if(left==null)
+			out += "-----"
+		else
+			out += left.GetText()
+
+		out += ") [operator]  <a href=\"?src=\ref[src];set_field=2\">(Set Right)</a> ("
+
+		if(right==null)
+			out += "-----"
+		else
+			out += right.GetText()
+		out +=")"
+		return out
+
+	Topic(href,href_list)
+		if(href_list["set_field"])
+			var/idx = text2num(href_list["set_field"])
+			var/new_child = selectValidChildFor(usr)
+			if(!new_child)
+				return 1
+			children[idx] = new_child
+			parent.updateUsrDialog()
+			return 1
+
+
+/datum/automation/binary/add
+	name="add"
+	returntype=AUTOM_RT_NUM
+	operator="+"
+
+	do_operation(var/a,var/b)
+		return a+b
+
+/datum/automation/binary/subtract
+	name="subtract"
+	returntype=AUTOM_RT_NUM
+	operator="-"
+
+	do_operation(var/a,var/b)
+		return a-b
+
+/datum/automation/binary/multiply
+	name="multiply"
+	returntype=AUTOM_RT_NUM
+	operator="*"
+
+	do_operation(var/a,var/b)
+		return a*b
+
+/datum/automation/binary/divide
+	name="divide"
+	returntype=AUTOM_RT_NUM
+	operator="/"
+
+	do_operation(var/a,var/b)
+		if(b==0)
+			return INFINITY
+		return a/b
+
+/datum/automation/binary/modulus
+	name="modulus"
+	returntype=AUTOM_RT_NUM
+	operator="%"
+
+	do_operation(var/a,var/b)
+		if(b==0)
+			return INFINITY
+		return a%b
