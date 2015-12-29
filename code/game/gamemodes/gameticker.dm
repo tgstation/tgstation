@@ -393,9 +393,19 @@ var/global/datum/controller/gameticker/ticker
 		spawn
 			declare_completion()
 			if(config.map_voting)
-				vote.initiate_vote("map","The Server", popup = 1)
-				var/options = list2text(vote.choices, " ")
-				feedback_set("map vote choices", options)
+				var/list/maps = get_maps()
+				var/list/choices=list()
+				for(var/key in maps)
+					choices.Add(key)
+				var/mapname=pick(choices)
+				chosen_map = ismapvote[mapname]
+				watchdog.chosen_map = copytext(mapname,1,(length(mapname)))
+				log_game("Server chose [watchdog.chosen_map]!")
+
+				////testing("Vote picked [chosen_map]")
+				//vote.initiate_vote("map","The Server", popup = 1)
+				//var/options = list2text(vote.choices, " ")
+				//feedback_set("map vote choices", options)
 
 
 		spawn(50)
