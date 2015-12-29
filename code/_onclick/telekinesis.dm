@@ -114,6 +114,9 @@ var/const/tk_maxrange = 15
 		focus_object(target, user)
 		return
 
+	if(focus.anchored)
+		qdel(src)
+
 	if(target == focus)
 		target.attack_self_tk(user)
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
