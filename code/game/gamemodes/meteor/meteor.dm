@@ -80,7 +80,7 @@
 
 /datum/game_mode/meteor/process()
 	if(meteors_allowed)
-		var/meteors_in_wave = rand(50, 100) //Between 25 and 50 meteors per wave
+		var/meteors_in_wave = rand(60, 125) //Between 60 and 125 meteors per wave
 		meteor_wave(meteors_in_wave, 3)
 	return
 
