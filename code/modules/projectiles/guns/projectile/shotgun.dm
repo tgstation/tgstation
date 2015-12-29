@@ -113,6 +113,34 @@
 	..()
 	user << "The bolt is [bolt_open ? "open" : "closed"]."
 
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
+	name = "enchanted bolt action rifle"
+	desc = "Careful not to lose your head."
+	var/guns_left = 30
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	..()
+	user.drop_item()
+	if(guns_left)
+		user.swap_hand()
+		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted(src)
+		GUN.guns_left = src.guns_left
+		GUN.guns_left--
+		src.guns_left = 0
+		user.put_in_hands(GUN)
+		src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+		GUN.bolt_open = 1
+		GUN.pump()
+		user.visible_message("<span class='warning'>[user] tosses aside the spent [src]!</span>")
+
+
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted
+	max_ammo =1
+
+
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
