@@ -202,16 +202,8 @@
   * return string NanoUI HTML output.
  **/
 /datum/nanoui/proc/get_html()
-	// Generate JSON.
-	var/list/send_data = get_send_data(initial_data)
-	var/send_data_json = JSON.stringify(send_data)
-	send_data_json = replacetextEx(send_data_json, "'", "&apos;")
-	send_data_json = replacetextEx(send_data_json, "\improper", "")
-	send_data_json = replacetextEx(send_data_json, "ÿ", "")
-
-	// Populate it.
-	var/send_html = replacetextEx(SSnano.html, "\[data]", send_data_json)
-	return send_html
+	// Poplate HTML with JSON.
+	return replacetextEx(SSnano.html, "{}", get_json(initial_data))
 
  /**
   * private
@@ -243,19 +235,23 @@
  /**
   * private
   *
-  * Package the data to send to the UI.
-  * This is the (regular) data and config data, bundled together.
+  * Package the data to send to the UI, as JSON.
+  * This includes the UI data and config_data.
   *
-  * return list The packaged data.
+  * return string The packaged JSON.
  **/
-/datum/nanoui/proc/get_send_data(list/data)
-	var/list/send_data = list()
+/datum/nanoui/proc/get_json(list/data)
+	var/list/json_data = list()
 
-	send_data["config"] = get_config_data()
+	json_data["config"] = get_config_data()
 	if(!isnull(data))
-		send_data["data"] = data
+		json_data["data"] = data
 
-	return send_data
+	// Generate the JSON; replace bad characters.
+	var/json = JSON.stringify(json_data)
+	json = replacetextEx(json, "\improper", "")
+
+	return json
 
  /**
   * private
@@ -307,10 +303,8 @@
 	if(status <= NANO_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
-	var/list/send_data = get_send_data(data) // Get the data to send.
-
-	// Send the new data to the recieveUpdate() Javascript function.
-	user << output(url_encode(JSON.stringify(send_data)), "[window_id].browser:receiveUpdate")
+	// Send the new JSON to the recieveUpdate() Javascript function.
+	user << output(url_encode(get_json(data)), "[window_id].browser:receiveUpdate")
 
 
  /**

@@ -1,17 +1,15 @@
 <script type='text/coffeescript'>
+animate = require "../animate"
 component.exports =
   oninit: ->
-    @observe "data.totalLoad", (newkey, oldkey, keypath) ->
-      @animate "aniTotalLoad", newkey
-    @observe "data.powerChannels", (newkey, oldkey, keypath) ->
-      @animate "aniPowerChannels", newkey
+    animate(@, ["data.totalLoad", "data.powerCellStatus", "data.powerChannels"])
   data:
     powerStatus: (status) ->
       if status is 2 then "good"
       else if status is 1 then "average"
       else "bad"
   computed:
-    visualPowerCellStatus: ->
+    "visual.powerCellStatus": ->
       status = @get "data.powerCellStatus"
       if status >= 50 then "good"
       else if status >= 25 then "average"
@@ -24,7 +22,7 @@ component.exports =
       <n-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</n-button>
     </n-section>
   {{else}}
-    <span>Swipe an ID card to {{data.locked ? 'unlock' : 'lock'}} this interface.</span>
+    <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
   {{/if}}
 </n-notice>
 <n-display title='Power Status'>
@@ -40,7 +38,7 @@ component.exports =
   </n-section>
   <n-section label='Power Cell'>
     {{#if data.powerCellStatus != null}}
-      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{visualPowerCellStatus}}'>{{Math.fixed(data.powerCellStatus)}}%</n-bar>
+      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{visual.powerCellStatus}}'>{{Math.fixed(animated.powerCellStatus)}}%</n-bar>
     {{else}}
       <span class='bad'>Power cell removed.</span>
     {{/if}}
@@ -53,13 +51,13 @@ component.exports =
         <n-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}' action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</n-button>
       {{/if}}
       &nbsp;
-      [<span class='{{powerStatus(data.chargingStatus)}}'>{{data.externalPower == 2 ? "Fully Charged" : data.externalPower == 1 ? "Charging" : "Not Charging"}}</span>]
+      [<span class='{{powerStatus(data.chargingStatus)}}'>{{data.chargingStatus == 2 ? "Fully Charged" : data.chargingStatus == 1 ? "Charging" : "Not Charging"}}</span>]
     </n-section>
   {{/if}}
 </n-display>
 <n-display title='Power Channels'>
   <table class='grow'>
-    {{#each aniPowerChannels}}
+    {{#each animated.powerChannels}}
       <tr>
         <th>{{title}}:</th>
         <td>{{Math.round(powerLoad)}} W</td>
@@ -80,7 +78,7 @@ component.exports =
     {{/each}}
     <tr>
       <th>Total Load:</th>
-      <td class='bold'>{{Math.round(aniTotalLoad)}} W</td>
+      <td class='bold'>{{Math.round(animated.totalLoad)}} W</td>
       <td></td>
       <td></td>
       <td></td>

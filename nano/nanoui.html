@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta name='data' content='[data]' />
+    <script id='data' type='application/json'>
+      {}
+    </script>
     <script type='text/javascript'>
       function receiveUpdate(dataString) {
         if (typeof nanoui !== 'undefined') {
@@ -11,16 +13,16 @@
       };
     </script>
     <link rel='stylesheet' type='text/css' href='nanoui.css' />
-    <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
   </head>
   <body>
     <div id='container' class='container'>
       <div class='loading'>Loading...</div>
     </div>
     <noscript>
-      <h1>Javascript Required</h1>
-      <p>Javascript is required in order to use this interface.</p>
-      <p>Please enable Javascript and restart the game.</p>
+      <article class='notice'>
+        <span>Javascript is required in order to use this interface.</span>
+        <span>Please enable Javascript and restart the game.</span>
+      </article>
     </noscript>
     <script type='text/javascript' src='nanoui.js'></script>
   </body>

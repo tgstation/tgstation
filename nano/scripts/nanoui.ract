@@ -2,7 +2,7 @@
 <link rel='ractive' href='./components/resize.ract'>
 <link rel='ractive' href='./components/titlebar.ract'>
 
-<titlebar>{{config.title}}</titlebar>
+<titlebar>{{{config.title}}}</titlebar>
 <content>
   <interface />
 </content>
