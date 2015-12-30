@@ -15,16 +15,12 @@
 	burntime = 20
 
  /obj/item/weapon/storage/briefcase/New()
-    ..()
-    new /obj/item/weapon/pen(src)
-    new /obj/item/weapon/stamp/law(src)
-    var/obj/item/weapon/folder/blue/folder = new(src)
-    	new /obj/item/weapon/paper(folder)
-    	new /obj/item/weapon/paper(folder)
-    	new /obj/item/weapon/paper(folder)
-    	new /obj/item/weapon/paper(folder)
-    	new /obj/item/weapon/paper(folder)
-    	new /obj/item/weapon/paper(folder)
+	..()
+	new /obj/item/weapon/pen(src)
+	new /obj/item/weapon/stamp/law(src)
+	var/obj/item/weapon/folder/blue/folder = new(src)
+	for(var/i = 0, i < folder.storage_slots, i++)
+	new /obj/item/weapon/paper(folder)
 
 
 /obj/item/weapon/storage/briefcase/sniperbundle
