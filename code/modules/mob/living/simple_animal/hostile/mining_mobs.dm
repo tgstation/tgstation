@@ -220,12 +220,16 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/internal/hivelord_core)
+	var/next_brood = 0
+	var/brood_cooldown = 20
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
+	if(world.time >= next_brood)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+		A.GiveTarget(target)
+		A.friends = friends
+		A.faction = faction
+		next_brood = world.time + brood_cooldown
 	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
