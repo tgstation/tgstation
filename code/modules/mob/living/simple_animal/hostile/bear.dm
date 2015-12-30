@@ -49,6 +49,35 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
 
+//Skrites. Completely unrelated to bears aside from stealing most of their code
+/mob/living/simple_animal/hostile/bear/skrite
+	name = "skrite"
+	desc = "A highly predatory being with two dripping claws."
+	icon_state = "skrite"
+	icon_living = "skrite"
+	icon_dead = "skrite_dead"
+	icon_gib = "skrite_dead"
+	default_icon_floor = "skritefloor"
+	default_icon_space = "skrite"
+	speak = list("SKREEEEEEEE!","SKRAAAAAAAAW!","KREEEEEEEEE!")
+	speak_emote = list("screams", "shrieks")
+	emote_hear = list("snarls")
+	emote_see = list("lets out a scream", "rubs its claws together")
+	speak_chance = 20
+	turns_per_move = 5
+	see_in_dark = 6
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	maxHealth = 150
+	health = 150
+	melee_damage_lower = 10
+	melee_damage_upper = 30
+	attack_sound = 'sound/effects/lingstabs.ogg'
+	attacktext = "uses its blades to stab"
+	projectiletype = /obj/item/projectile/energy/neurotox
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged = 1
+	move_to_delay = 7
+
 /mob/living/simple_animal/hostile/bear/panda
 	name = "space panda"
 	desc = "Endangered even in space. A lack of bamboo has driven them somewhat mad."
@@ -74,6 +103,11 @@
 	health = 75
 	melee_damage_lower=10
 	melee_damage_upper=40
+
+/obj/item/projectile/energy/neurotox
+	damage = 10
+	damage_type = TOX
+	icon_state = "toxin"
 
 /mob/living/simple_animal/hostile/bear/Move()
 	..()
