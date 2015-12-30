@@ -316,3 +316,7 @@ a {
 	if (isobj(loc))
 		var/obj/location = loc
 		location.on_log()
+
+// Dummy to give items special techlist for the purposes of the Device Analyser, in case you'd ever need them to give them different tech levels depending on special checks.
+/obj/proc/give_tech_list()
+	return null
