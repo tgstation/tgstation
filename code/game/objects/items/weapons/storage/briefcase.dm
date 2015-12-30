@@ -16,13 +16,16 @@
 
 /obj/item/weapon/storage/briefcase/New()
 	..()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	new /obj/item/weapon/folder/blue/New()
+		..()
+		new /obj/item/weapon/paper(src)
+		new /obj/item/weapon/paper(src)
+		new /obj/item/weapon/paper(src)
+		new /obj/item/weapon/paper(src)
+		new /obj/item/weapon/paper(src)
+		new /obj/item/weapon/paper(src)
+
 
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
