@@ -17,7 +17,7 @@
 /obj/item/weapon/storage/briefcase/New()
 	..()
 	new /obj/item/weapon/pen(src)
-	var/obj/item/weapon/folder/blue/folder = new(src)
+	var/obj/item/weapon/folder/yellow/folder = new(src)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
