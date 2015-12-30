@@ -32,8 +32,10 @@
 	var/backup_body =""
 	var/backup_author =""
 	var/is_admin_message = 0
+
 	var/icon/img = null
 	var/icon/backup_img
+	var/img_info = "" //Stuff like "You can see Honkers on the photo. Honkins looks hurt..."
 
 /datum/feed_channel
 	var/channel_name=""
@@ -407,7 +409,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
-								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+								dat+="<a href='?src=\ref[src];show_photo_info=\ref[MESSAGE]'><img src='tmp_photo[i].png' width = '180'></a><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 
 				// AUTOFIXED BY fix_string_idiocy.py
@@ -714,9 +716,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					if(istype(photo,/obj/item/weapon/photo))
 						var/obj/item/weapon/photo/P = photo
 						newMsg.img = P.img
+						newMsg.img_info = P.info
 					else if(istype(photo,/datum/picture))
 						var/datum/picture/P = photo
 						newMsg.img = P.fields["img"]
+						newMsg.img_info = P.fields["info"]
 				feedback_inc("newscaster_stories",1)
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == src.channel_name)
@@ -959,6 +963,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			var/datum/feed_channel/FC = locate(href_list["pick_censor_channel"])
 			src.viewing_channel = FC
 			src.screen = NEWSCASTER_CENSORSHIP_CHANNEL
+			src.updateUsrDialog()
+
+		else if(href_list["show_photo_info"])
+			var/datum/feed_message/FM = locate(href_list["show_photo_info"])
+
+			if(istype(FM) && FM.img_info)
+				usr.show_message("<span class='info'>[FM.img_info]</span>", MESSAGE_SEE)
+
 			src.updateUsrDialog()
 
 		else if(href_list["refresh"])

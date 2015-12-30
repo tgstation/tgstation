@@ -132,6 +132,7 @@
 						p.pixel_x = rand(-10, 10)
 						p.pixel_y = rand(-10, 10)
 						p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
+						p.info = photocopy.info
 
 						sleep(15)
 					else
