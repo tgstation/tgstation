@@ -72,18 +72,18 @@
 			loc = get_turf(summoner)
 
 
-/mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
+/mob/living/simple_animal/hostile/guardian/adjustCloneLoss(amount) //The spirit is invincible, but passes on damage to the summoner
 	var/damage = amount * damage_transfer
 	if (summoner)
 		if(loc == summoner)
 			return
-		summoner.adjustBruteLoss(damage)
+		summoner.adjustCloneLoss(damage)
 		if(damage)
-			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
-			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
+			summoner << "<span class='danger'><B>Your [name] is under attack! You feel weaker!</span></B>"
+			summoner.visible_message("<span class='danger'><B>[summoner] weakens as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(damage/2)
+			summoner.adjustCloneLoss(damage/2) //50% extra damage while in crit
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
@@ -91,10 +91,10 @@
 			gib()
 			return
 		if (2)
-			adjustBruteLoss(60)
+			adjustCloneLoss(60)
 
 		if(3)
-			adjustBruteLoss(30)
+			adjustCloneLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
@@ -311,6 +311,7 @@
 			C.adjustFireLoss(-5)
 			C.adjustOxyLoss(-5)
 			C.adjustToxLoss(-5)
+			C.adjustCloneLoss(-5)
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
