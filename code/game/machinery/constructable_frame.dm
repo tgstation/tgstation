@@ -440,7 +440,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=1"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/item/weapon/circuitboard/tesla_coil
 	name = "circuit board (Tesla Coil)"

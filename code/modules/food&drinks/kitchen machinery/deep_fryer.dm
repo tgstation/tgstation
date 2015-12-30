@@ -18,7 +18,7 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/deep_fryer(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	RefreshParts()
 
 /obj/machinery/deepfryer/RefreshParts()
@@ -57,7 +57,10 @@
 			S.icon_state = frying.icon_state
 			S.name = "deep fried [frying.name]"
 			S.desc = I.desc
-			qdel(frying)
+			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
+				qdel(frying)
+			else
+				frying.loc = S
 
 		icon_state = "fryer_off"
 		on = FALSE
