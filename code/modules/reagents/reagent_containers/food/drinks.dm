@@ -767,13 +767,15 @@
 	name = "Shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
+	origin_tech = "materials=1"
 	amount_per_transfer_from_this = 10
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "Captain's Flask"
-	desc = "A metal flask belonging to the captain"
+	desc = "A metal flask belonging to the captain."
 	icon_state = "flask"
+	origin_tech = "materials=1"
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask

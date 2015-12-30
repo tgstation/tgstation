@@ -81,16 +81,22 @@
 	if((O.mech_flags & MECH_SCAN_FAIL)==MECH_SCAN_FAIL)
 		return 0
 
-	var/list/techlist
+	var/list/techlist = O.give_tech_list() //Some items may have a specific techlist. Currently only used for solar assemblies, since they don't hold a circuitboard.
+	if(techlist)
+		return 1
+
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
+
 		if(user && (!M.allowed(user) && M.mech_flags & MECH_SCAN_ACCESS) && !src.access_avoidance) //if we require access, and don't have it, and the scanner can't bypass it
 			return -2
+
 		if(M.component_parts)
 			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
 				if(istype(CB))
 					techlist = ConvertReqString2List(CB.origin_tech)
 					break
+
 		else if(istype(M, /obj/machinery/computer))
 			var/obj/machinery/computer/C = M
 			if(C.circuit)

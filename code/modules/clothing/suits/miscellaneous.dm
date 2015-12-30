@@ -14,6 +14,7 @@
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
+	origin_tech = "materials=1;magnets=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 	siemens_coefficient = 3.0
@@ -24,6 +25,7 @@
 	icon_state = "redtag"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
+	origin_tech = "materials=1;magnets=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 	siemens_coefficient = 3.0
@@ -191,6 +193,7 @@
 	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
+	origin_tech = "biotech=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 

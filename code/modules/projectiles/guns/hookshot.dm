@@ -6,6 +6,7 @@
 	item_state = "hookshot"
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;engineering=3;magnets=2"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 0
 	flags = FPRINT

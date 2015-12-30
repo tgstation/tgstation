@@ -52,7 +52,7 @@
 
 /datum/design/superior_welding_goggles
 	name = "Superior Welding Goggles"
-	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles."
 	id = "superior_welding_goggles"
 	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE

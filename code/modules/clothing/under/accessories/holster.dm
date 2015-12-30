@@ -3,6 +3,7 @@
 	desc = "A handgun holster."
 	icon_state = "holster"
 	_color = "holster"
+	origin_tech = "combat=2"
 	var/obj/item/weapon/gun/holstered = null
 	accessory_exclusion = HOLSTER
 
@@ -13,7 +14,7 @@
 
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"
-	desc = "A worn-out handgun holster. Perfect for concealed carry"
+	desc = "A worn-out handgun holster. Perfect for concealed carry."
 	icon_state = "holster"
 	_color = "holster"
 

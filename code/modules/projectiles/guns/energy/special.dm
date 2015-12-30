@@ -118,6 +118,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/floramut"
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	modifystate = "floramut"
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost, 2 = emag-mutate

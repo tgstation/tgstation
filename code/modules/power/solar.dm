@@ -30,7 +30,7 @@ var/list/solars_list = list()
 //Solar Assembly - For construction of solar arrays
 /obj/machinery/power/solar_assembly
 	name = "solar panel assembly"
-	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker"
+	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	anchored = 0
@@ -95,3 +95,6 @@ var/list/solars_list = list()
 			"<span class='notice'>You take the electronics out of [src].</span>")
 			return 1
 	..()
+
+/obj/machinery/power/solar_assembly/give_tech_list()
+	return "power=3"

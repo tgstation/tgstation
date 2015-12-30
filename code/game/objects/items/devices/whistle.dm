@@ -3,6 +3,7 @@
 	desc = "Used by obese officers to save their breath for running."
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	origin_tech = "magnets=1;combat=1"
 	w_class = 1.0
 	flags = FPRINT
 	siemens_coefficient = 1
