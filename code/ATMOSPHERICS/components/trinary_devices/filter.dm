@@ -18,7 +18,7 @@
 
 	var/target_pressure = ONE_ATMOSPHERE
 
-	var/filter_type = 0
+	var/filter_type = FILTER_PLASMA
 /*
 Filter types:
 -1: Nothing
