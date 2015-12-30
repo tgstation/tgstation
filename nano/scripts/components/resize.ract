@@ -6,15 +6,16 @@ component.exports =
     @observe "config.fancy", (newkey, oldkey, keypath) ->
       byond.winset @get("config.window"), "can-resize", !!!newkey
 
-    @on "startresize", -> @toggle "resize"; false
-    @on "endresize", -> @set "resize"; @set "x"; @set "y"; false
-    @on "resize", (event) ->
-      if @get "x"
-        x = Math.max 100, (event.original.screenX - @get "x") + window.innerWidth
-        y = Math.max 100, (event.original.screenY - @get "y") + window.innerHeight
-        byond.winset @get("config.window"), "size", "#{x},#{y}"
-      @set x: event.original.screenX, y: event.original.screenY
-      false
+    @on
+      startresize: -> @toggle "resize"; false
+      endresize: -> @set "resize"; @set "x"; @set "y"; false
+      resize: (event) ->
+        if @get "x"
+          x = Math.max 100, (event.original.screenX - @get "x") + window.innerWidth
+          y = Math.max 100, (event.original.screenY - @get "y") + window.innerHeight
+          byond.winset @get("config.window"), "size", "#{x},#{y}"
+        @set x: event.original.screenX, y: event.original.screenY
+        false
 </script>
 
 {{#if config.fancy}}

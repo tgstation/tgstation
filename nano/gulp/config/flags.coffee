@@ -1,5 +1,7 @@
-util = require "gulp-util"
+gutil = require "gulp-util"
+
+
 module.exports =
-  colorblind: util.env.colorblind || util.env.c
-  min: util.env.min || util.env.m
-  debug: util.env.debug || util.env.d
+  colorblind: gutil.env.colorblind || gutil.env.c
+  debug: gutil.env.debug || gutil.env.d
+  min: gutil.env.min || gutil.env.m

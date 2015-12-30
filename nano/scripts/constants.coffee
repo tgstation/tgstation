@@ -1,3 +1,4 @@
+# Constants used in NanoUI; these are mirrored from the BYOND code.
 module.exports =
   NANO_INTERACTIVE: 2
   NANO_UPDATE: 1

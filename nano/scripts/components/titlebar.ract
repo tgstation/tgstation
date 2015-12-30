@@ -13,21 +13,23 @@ component.exports =
     @observe "config.fancy", (newkey, oldkey, keypath) ->
       byond.winset @get("config.window"), "titlebar", !!!newkey
 
-    @on "close", ->
-      byond.winset @get("config.window"), "is-visible", "false"
-      location.href = byond.href {command: "nanoclose #{@get "config.ref"}"}, "winset"
-    @on "minimize", ->
-      byond.winset @get("config.window"), "is-minimized", "true"
+    @on
+      startdrag: -> @toggle "drag"; false
+      enddrag: -> @set "drag"; @set "x"; @set "y"; false
+      drag: (event) ->
+        if @get "x"
+          x = (event.original.screenX - @get "x") + window.screenLeft
+          y = (event.original.screenY - @get "y") + window.screenTop
+          byond.winset @get("config.window"), "pos", "#{x},#{y}"
+        @set x: event.original.screenX, y: event.original.screenY
+        false
 
-    @on "startdrag", -> @toggle "drag"; false
-    @on "enddrag", -> @set "drag"; @set "x"; @set "y"; false
-    @on "drag", (event) ->
-      if @get "x"
-        x = (event.original.screenX - @get "x") + window.screenLeft
-        y = (event.original.screenY - @get "y") + window.screenTop
-        byond.winset @get("config.window"), "pos", "#{x},#{y}"
-      @set x: event.original.screenX, y: event.original.screenY
-      false
+    @on
+      close: ->
+        byond.winset @get("config.window"), "is-visible", "false"
+        location.href = byond.href {command: "nanoclose #{@get "config.ref"}"}, "winset"
+      minimize: ->
+        byond.winset @get("config.window"), "is-minimized", "true"
 </script>
 
 <header class='titlebar' on-mousedown='startdrag' on-mouseup-mouseleave='enddrag' on-mousemove='{{#drag}}drag{{/}}'>
