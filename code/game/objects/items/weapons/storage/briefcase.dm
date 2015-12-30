@@ -16,15 +16,28 @@
 
 /obj/item/weapon/storage/briefcase/New()
 	..()
+	if(!contents.len)
+		new /obj/item/weapon/pen(src)
+		var/obj/item/weapon/folder/folder = new(src)
+		new /obj/item/weapon/paper(folder)
+		new /obj/item/weapon/paper(folder)
+		new /obj/item/weapon/paper(folder)
+		new /obj/item/weapon/paper(folder)
+		new /obj/item/weapon/paper(folder)
+		new /obj/item/weapon/paper(folder)
+	
+/obj/item/weapon/storage/briefcase/lawyer/New()
+	new/obj/item/weapon/stamp/law
 	new /obj/item/weapon/pen(src)
-	var/obj/item/weapon/folder/yellow/folder = new(src)
+	var/obj/item/weapon/folder/blue/folder = new(src)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
 	new /obj/item/weapon/paper(folder)
-
+	..()
+	
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
 	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
