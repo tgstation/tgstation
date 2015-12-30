@@ -295,3 +295,8 @@
 	if(buckled_mob == mover)
 		return 1
 	return ..()
+
+/atom/movable/proc/call_crossed()
+	for(var/V in loc)
+		var/atom/movable/A = V
+		A.Crossed(src)
