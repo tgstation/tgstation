@@ -32,6 +32,7 @@
 			return
 		else
 			var/datum/objective/holder_obj = pick(objective_types)
+			objective_types -= holder_obj
 			var/datum/objective/O = new holder_obj
 			if(!O.martyr_compatible)
 				escape_objective_types -= list(/datum/objective/escape_obj/martyr)

@@ -623,7 +623,7 @@
 		var/datum/objective/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in (typesof(/datum/objective) - list(/datum/objective, /datum/objective/default, /datum/objective/escape_obj, /datum/objective/changeling_team_objective)) //keep out the abstract ones
 		if (!new_obj_type)
 			return
-		if (initial(new_obj_type.required_role) != special_role)
+		if (initial(new_obj_type.required_role) != special_role && initial(new_obj_type.required_role) != null)
 			if(alert("The objective requires a special_role that this mind does not have. The player may not be able to complete the objective. Are you sure you want to continue?","uh oh" ,"Yes", "No") == "No")
 				return
 
