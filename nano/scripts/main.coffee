@@ -2,10 +2,14 @@ require "ie8"
 require "dom4"
 require "es5-shim"
 require "html5shiv"
+require "./math"
 
 Ractive = require "ractive"
-Math    = require "./math"
 WebFont = require "webfontloader"
+
+
+# Set Ractive debug mode based on if we're minified or not.
+Ractive.DEBUG = /minified/.test (minified) ->
 
 
 # Load FontAwesome asynchronously from CDNJS.
@@ -14,11 +18,13 @@ WebFont.load
     families: ["FontAwesome"]
     urls: ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"]
 
+
 # Load initial data from the server.
 data = document.query "#data"
 data = JSON.parse data.textContent
 if not data? or not (data.data? and data.config?)
   alert "Initial data did not load correctly."
+
 
 # Load the base component and all interfaces.
 NanoUI     = require "./nanoui"
@@ -28,6 +34,7 @@ interfaces = require "./interfaces/*", mode: "hash"
 iface = interfaces[data.config.interface]
 # Override the interface with a fallback if it does not exist.
 iface = require "./interfaces/error" unless iface?
+
 
 # Create the NanoUI; this is just a Ractive component.
 window.nanoui = new NanoUI

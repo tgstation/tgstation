@@ -1,5 +1,6 @@
 <script type='text/coffeescript'>
 animate = require "../animate"
+
 component.exports =
   data:
     powerStatus: (status) ->
