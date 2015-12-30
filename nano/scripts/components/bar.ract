@@ -1,12 +1,11 @@
 <script type='text/coffeescript'>
 component.exports =
-  computed:
-    percentage: ->
+  oninit: ->
+    @observe "value", (newkey, oldkey, keypath) ->
       min = @get "min"
       max = @get "max"
-      value = Math.clamp @get("value"), min, max
-
-      Math.round (value - min) / (max - min) * 100
+      value = Math.clamp newkey, min, max
+      @animate "percentage", Math.round (value - min) / (max - min) * 100
 </script>
 
 <div class='bar'>

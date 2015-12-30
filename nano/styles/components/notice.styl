@@ -1,5 +1,15 @@
 @require "display"
 
+$noticeStripes
+  background-color: colors.notice1 // Fallback for old browers.
+  background-image: repeating-linear-gradient(
+    -45deg,
+    colors.notice1,
+    colors.notice1 10px,
+    colors.notice2 10px,
+    colors.notice2 20px
+  )
+
 article.notice
   @extend article.display, $noticeStripes
   margin: 8px 2px

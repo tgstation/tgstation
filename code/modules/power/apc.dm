@@ -747,6 +747,9 @@
 	if(!can_use(usr, 1))
 		return
 
+	if(locked && !usr.has_unlimited_silicon_privilege)
+		return
+
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
@@ -759,7 +762,7 @@
 			coverlocked = !coverlocked
 		if("breaker")
 			toggle_breaker()
-		if("chargemode")
+		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0

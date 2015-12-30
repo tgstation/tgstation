@@ -1,5 +1,15 @@
 <script type='text/coffeescript'>
 component.exports =
+  oninit: ->
+    @observe "data.totalLoad", (newkey, oldkey, keypath) ->
+      @animate "aniTotalLoad", newkey
+    @observe "data.powerChannels", (newkey, oldkey, keypath) ->
+      @animate "aniPowerChannels", newkey
+  data:
+    powerStatus: (status) ->
+      if status is 2 then "good"
+      else if status is 1 then "average"
+      else "bad"
   computed:
     visualPowerCellStatus: ->
       status = @get "data.powerCellStatus"
@@ -11,8 +21,7 @@ component.exports =
 <n-notice>
   {{#if data.siliconUser}}
     <n-section label='Interface Lock'>
-      <n-button icon='{{data.locked ? "lock" : "unlock"}}' state='{{data.locked ? "selected" : null}}' action='lock'>Engaged</n-button>
-      <n-button icon='{{data.locked ? "unlock" : "lock"}}' state='{{data.locked ? null : "caution"}}' action='lock'>Disengaged</n-button>
+      <n-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</n-button>
     </n-section>
   {{else}}
     <span>Swipe an ID card to {{data.locked ? 'unlock' : 'lock'}} this interface.</span>
@@ -21,27 +30,13 @@ component.exports =
 <n-display title='Power Status'>
   <n-section label='Main Breaker'>
     {{#if data.locked && !data.siliconUser}}
-      {{#if data.isOperating}}
-        <span class='good'>On</span>
-      {{else}}
-        <span class='bad'>Off</span>
-      {{/if}}
+      <span class='{{data.isOperating ? "good" : "bad"}}'>{{data.isOperating ? "On" : "Off"}}</span>
     {{else}}
-      {{#if data.isOperating}}
-        <n-button icon='power-off' style='selected' action='breaker'>On</n-button>
-      {{else}}
-        <n-button icon='close' action='breaker'>Off</n-button>
-      {{/if}}
+      <n-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}' action='breaker'>{{data.isOperating ? "On" : "Off"}}</n-button>
     {{/if}}
   </n-section>
   <n-section label='External Power'>
-    {{#if data.externalPower == 2}}
-      <span class='good'>Good</span>
-    {{elseif data.externalPower == 1}}
-      <span class='average'>Low</span>
-    {{else}}
-      <span class='bad'>None</span>
-    {{/if}}
+    <span class='{{powerStatus(data.externalPower)}}'>{{data.externalPower == 2 ? "Good" : data.externalPower == 1 ? "Low" : "None"}}</span>
   </n-section>
   <n-section label='Power Cell'>
     {{#if data.powerCellStatus != null}}
@@ -53,50 +48,28 @@ component.exports =
   {{#if data.powerCellStatus != null}}
     <n-section label='Charge Mode'>
       {{#if data.locked && !data.siliconUser}}
-        {{#if data.chargeMode}}
-          <span class='good'>Auto</span>
-        {{else}}
-          <span class='bad'>Off</span>
-        {{/if}}
+        <span class='{{data.chargeMode ? "good" : "bad"}}'>{{data.chargeMode ? "Auto" : "Off"}}</span>
       {{else}}
-        {{#if data.chargeMode}}
-          <n-button icon='refresh' action='chargemode'>Auto</n-button>
-        {{else}}
-          <n-button icon='close' action='chargemode'>Off</n-button>
-        {{/if}}
+        <n-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}' action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</n-button>
       {{/if}}
       &nbsp;
-      {{#if data.chargingStatus > 1}}
-        [<span class='good'>Fully Charged</span>]
-      {{elseif data.chargingStatus == 1}}
-        [<span class='average'>Charging</span>]
-      {{else}}
-        [<span class='bad'>Not Charging</span>]
-      {{/if}}
+      [<span class='{{powerStatus(data.chargingStatus)}}'>{{data.externalPower == 2 ? "Fully Charged" : data.externalPower == 1 ? "Charging" : "Not Charging"}}</span>]
     </n-section>
   {{/if}}
 </n-display>
 <n-display title='Power Channels'>
   <table class='grow'>
-    {{#each data.powerChannels}}
+    {{#each aniPowerChannels}}
       <tr>
         <th>{{title}}:</th>
         <td>{{Math.round(powerLoad)}} W</td>
         <td>
-          {{#if status <= 1}}
-            <span class='bad'>Off</span>
-          {{elseif status >= 2}}
-            <span class='good'>On</span>
-          {{/if}}
+          <span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span>
         </td>
         <td>
-          {{#if status == 1 || status == 3}}
-            [Auto]
-          {{else}}
-            [Manual]
-          {{/if}}
+          [<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]
         </td>
-        <td class='floatRight'>
+        <td style='float:right'>
           {{#if !data.locked || data.siliconUser}}
             <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}' action='channel' params='{{topicParams.auto}}'>Auto</n-button>
             <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel' params='{{topicParams.on}}'>On</n-button>
@@ -107,7 +80,7 @@ component.exports =
     {{/each}}
     <tr>
       <th>Total Load:</th>
-      <td class='bold'>{{Math.round(data.totalLoad)}} W</td>
+      <td class='bold'>{{Math.round(aniTotalLoad)}} W</td>
       <td></td>
       <td></td>
       <td></td>
@@ -137,17 +110,9 @@ component.exports =
 <n-notice>
   <n-section label='Cover Lock'>
     {{#if data.locked && !data.siliconUser}}
-      {{#if data.coverLocked}}
-        <span>Engaged</span>
-      {{else}}
-        <span>Disengaged</span>
-      {{/if}}
+      <span>{{data.coverLocked ? "Engaged" : "Disengaged"}}</span>
     {{else}}
-    {{#if data.coverLocked}}
-      <n-button icon='lock' action='cover'>Engaged</n-button>
-    {{else}}
-      <n-button icon='unlock' style='danger' action='cover'>Disengaged</n-button>
-    {{/if}}
+      <n-button icon='{{data.coverLocked ? "lock" : "unlock"}}' action='cover'>{{data.coverLocked ? "Engaged" : "Disengaged"}}</n-button>
     {{/if}}
   </n-section>
 </n-notice>
