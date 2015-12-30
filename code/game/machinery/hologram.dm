@@ -35,6 +35,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	name = "\improper AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
+	layer = 3.1
 	flags = HEAR
 	languages = ROBOT | HUMAN
 	var/list/masters = list()//List of AIs that use the holopad
