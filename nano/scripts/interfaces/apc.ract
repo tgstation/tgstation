@@ -1,8 +1,6 @@
 <script type='text/coffeescript'>
 animate = require "../animate"
 component.exports =
-  oninit: ->
-    animate(@, ["data.totalLoad", "data.powerCellStatus", "data.powerChannels"])
   data:
     powerStatus: (status) ->
       if status is 2 then "good"
@@ -14,6 +12,8 @@ component.exports =
       if status >= 50 then "good"
       else if status >= 25 then "average"
       else "bad"
+  oninit: ->
+    animate(@, ["data.totalLoad", "data.powerCellStatus", "data.powerChannels"])
 </script>
 
 <n-notice>

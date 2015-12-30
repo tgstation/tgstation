@@ -10,15 +10,8 @@ gulp       = require "gulp"
 through    = require "through2"
 
 
-aliasify =
-  aliases:
-    dom4: "dom4/build/dom4.max"
-    ie8: "ie8/build/ie8.max"
-    ractive: "ractive/ractive.runtime"
-    "es5-sham": "es5-shim/es5-sham"
-  replacements: {}
-
 b.componentify.compilers["text/coffeescript"] = require "../compilers/coffeescript"
+b.componentify.compilers["text/stylus"] = require "../compilers/stylus"
 
 bundle = ->
   through.obj (file, enc, next) ->
@@ -27,7 +20,7 @@ bundle = ->
       debug: f.debug
     .transform b.coffeeify
     .transform b.componentify
-    .transform b.aliasify, aliasify
+    .transform b.aliasify
     .transform b.globify
     .bundle (err, res) ->
       return next err if err

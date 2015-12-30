@@ -2,6 +2,13 @@
 byond = require "../byond"
 
 component.exports =
+  computed:
+    visualStatus: ->
+      status    = @get "config.status"
+      constants = require "../constants"
+      if status is constants.NANO_INTERACTIVE then "good"
+      else if status is constants.NANO_UPDATE then "average"
+      else if status is constants.NANO_DISABLED then "bad"
   oninit: ->
     @observe "config.fancy", (newkey, oldkey, keypath) ->
       byond.winset @get("config.window"), "titlebar", !!!newkey
@@ -21,13 +28,6 @@ component.exports =
         byond.winset @get("config.window"), "pos", "#{x},#{y}"
       @set x: event.original.screenX, y: event.original.screenY
       false
-  computed:
-    visualStatus: ->
-      status    = @get "config.status"
-      constants = require "../constants"
-      if status is constants.NANO_INTERACTIVE then "good"
-      else if status is constants.NANO_UPDATE then "average"
-      else if status is constants.NANO_DISABLED then "bad"
 </script>
 
 <header class='titlebar' on-mousedown='startdrag' on-mouseup-mouseleave='enddrag' on-mousemove='{{#drag}}drag{{/}}'>

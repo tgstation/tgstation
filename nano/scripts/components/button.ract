@@ -1,27 +1,28 @@
 <script type='text/coffeescript'>
-byond = require "../byond"
+byond     = require "../byond"
+constants = require "../constants"
 
 component.exports =
+  computed:
+    enabled: ->
+      if @get("config.status") is constants.NANO_INTERACTIVE then true
+      else false
+    styles: ->
+      enabled = @get "enabled"
+      state   = @get "state"
+      style   = @get "style"
+      if enabled
+        if not state then "active #{style}"
+        else "inactive #{state} #{style}"
+      else "inactive"
   oninit: ->
     @on "act", (event) ->
       action = @get "action"
       params = @get "params"
       byond.act @get("config.ref"), action, params if action?
-  computed:
-    enabled: ->
-      status    = @get "config.status"
-      constants = require "../constants"
-      true if status is constants.NANO_INTERACTIVE
-      false
 </script>
 
-<span
-    on-click='act'
-    unselectable='true'
-    class='button
-        {{^state}}active{{/}}
-        {{#state}}inactive {{state}}{{/}}
-        {{#style}}{{style}}{{/}}'>
+<span class='button {{styles}}' unselectable='true' on-click='act'>
     {{#icon}}<i class='fa fa-fw fa-{{icon}}'></i>{{/}}
     {{yield}}
 </span>

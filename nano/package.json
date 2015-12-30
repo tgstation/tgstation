@@ -38,7 +38,22 @@
     "ractive-componentify": "^0.2.2",
     "require-globify": "^1.3.0",
     "rfr": "^1.2.3",
+    "stylus": "^0.53.0",
     "through2": "^2.0.0",
     "webfontloader": "^1.6.16"
+  },
+  "aliasify": {
+    "aliases": {
+      "dom4": "dom4/build/dom4.max",
+      "ie8": "ie8/build/ie8.max",
+      "ractive": "ractive/ractive.runtime"
+    },
+    "appliesTo": {
+      "includeExtensions": [
+        ".js",
+        ".coffee",
+        ".ract"
+      ]
+    }
   }
 }
