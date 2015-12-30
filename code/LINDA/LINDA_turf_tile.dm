@@ -39,7 +39,7 @@
 
 	var/temperature_archived //USED ONLY FOR SOLIDS
 
-	var/atmos_overlay_type = "" //current active overlay
+	var/atmos_overlay_types = list() //gas IDs of current active overlays
 
 /turf/simulated/New()
 	..()
@@ -152,22 +152,22 @@
 							excited_group.merge_groups(enemy_simulated.excited_group) //combine groups
 						share_air(enemy_simulated) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							excited_group.add_turf(enemy_simulated) //add enemy to our group
 							share_air(enemy_simulated) //share
 				else
 					if(enemy_simulated.excited_group)
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							enemy_simulated.excited_group.add_turf(src) //join self to enemy group
 							share_air(enemy_simulated) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_simulated)
 							share_air(enemy_simulated) //share
 			else
-				if(!air.compare(enemy_simulated.air)) //compare if
+				if(air.compare(enemy_simulated.air)) //compare if
 					SSair.add_to_active(enemy_simulated) //excite enemy
 					if(excited_group)
 						excited_group.add_turf(enemy_simulated) //add enemy to group
@@ -217,33 +217,28 @@
 	archived_cycle = SSair.times_fired
 
 /turf/simulated/proc/update_visuals()
-	var/new_overlay_type = tile_graphic()
-	if (new_overlay_type == atmos_overlay_type)
-		return
-	var/atmos_overlay = get_atmos_overlay_by_name(atmos_overlay_type)
-	if (atmos_overlay)
-		overlays -= atmos_overlay
+	var/list/new_overlay_types = tile_graphic()
 
-	atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
-	if (atmos_overlay)
-		overlays += atmos_overlay
-	atmos_overlay_type = new_overlay_type
+	for(var/overlay in atmos_overlay_types)
+		if(overlay in new_overlay_types)
+			continue //doesn't remove overlays that would only be added
+		overlays -= overlay
+		atmos_overlay_types -= overlay
 
-/turf/simulated/proc/get_atmos_overlay_by_name(var/name)
-	switch(name)
-		if("plasma")
-			return SSair.plasma_overlay
-		if("sleeping_agent")
-			return SSair.sleeptoxin_overlay
-	return null
+	for(var/overlay in new_overlay_types)
+		if(overlay in atmos_overlay_types)
+			continue //doesn't add overlays that already exist
+		overlays += overlay
+
+	atmos_overlay_types = new_overlay_types
 
 /turf/simulated/proc/tile_graphic()
-	if(air.gases["plasma"] && air.gases["plasma"][MOLES] > MOLES_PLASMA_VISIBLE)
-		return "plasma"
-
-	if(air.gases["n2o"] && air.gases["n2o"][MOLES] > 1)
-		return "sleeping_agent"
-	return null
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		var/gas = gases[id]
+		if(gas[GAS_OVERLAY] && gas[MOLES] > gas[MOLES_VISIBLE])
+			. += gas[GAS_OVERLAY]
 
 /turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
@@ -319,8 +314,9 @@
 		A.merge(T.air)
 
 	for(var/turf/simulated/T in turf_list)
-		for(var/gas in T.air.gases)
-			gas[MOLES] = A_gases[gas[GAS_ID]][MOLES]/turf_list.len
+		var/T_gases = T.air.gases
+		for(var/id in T_gases)
+			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
 

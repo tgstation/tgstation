@@ -295,10 +295,10 @@
 
 		cur_tlv = TLV["other"]
 		var/other_moles = 0
-		for(var/gas in env_gases)
-			if(gas[GAS_ID] in hardcoded_gases)
+		for(var/id in env_gases)
+			if(id in hardcoded_gases)
 				continue
-			other_moles += gas[MOLES]
+			other_moles += env_gases[id][MOLES]
 		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
 		environment_data += list(list("name" = "Other", "value" = other_moles / total * 100, "unit" = "%", "danger_level" = other_danger))
 
@@ -634,10 +634,10 @@
 
 	cur_tlv = TLV["other"]
 	var/other_moles = 0
-	for(var/gas in env_gases)
-		if(gas[GAS_ID] in hardcoded_gases)
+	for(var/id in env_gases)
+		if(id in hardcoded_gases)
 			continue
-		other_moles += gas[MOLES]
+		other_moles += env_gases[id][MOLES]
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
 
 	cur_tlv = TLV["temperature"]

@@ -52,6 +52,7 @@
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
+	gas_type = "plasma"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "canister \[CO2\]"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"

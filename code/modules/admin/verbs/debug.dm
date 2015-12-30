@@ -187,11 +187,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
+	var/list/env_gases = env.gases
 
 	var/t = ""
-	for(var/gas in env.gases)
-		if(gas[GAS_ID] in hardcoded_gases || gas[MOLES])
-			t+= "[gas[GAS_NAME]] : [gas[MOLES]]\n"
+	for(var/id in env_gases)
+		if(id in hardcoded_gases || env_gases[id][MOLES])
+			t+= "[env_gases[id][GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

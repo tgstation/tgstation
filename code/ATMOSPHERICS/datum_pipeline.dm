@@ -131,9 +131,10 @@ var/pipenetwarnings = 10
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
 		member.air_temporary.copy_from(air)
+		var/member_gases = member.air_temporary.gases
 
-		for(var/gas in member.air_temporary.gases)
-			gas[MOLES] *= member.volume/air.volume
+		for(var/id in member_gases)
+			member_gases[id][MOLES] *= member.volume/air.volume
 
 		member.air_temporary.temperature = air.temperature
 
@@ -226,5 +227,6 @@ var/pipenetwarnings = 10
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/G in GL)
 			G.copy_from(total_gas_mixture)
-			for(var/gas in G.gases)
-				gas[MOLES] *= G.volume/total_gas_mixture.volume
+			var/list/G_gases = G.gases
+			for(var/id in G_gases)
+				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume

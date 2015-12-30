@@ -6,6 +6,7 @@
 		return
 
 	var/datum/gas_mixture/GM = target.return_air()
+	var/list/GM_gases
 	var/burning = 0
 	if(istype(target, /turf/simulated))
 		var/turf/simulated/T = target
@@ -13,9 +14,9 @@
 			burning = 1
 
 	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
-	for(var/gas in GM.gases)
-		if(gas[GAS_ID] in hardcoded_gases || gas[MOLES])
-			usr << "[gas[GAS_NAME]]: [gas[MOLES]]"
+	for(var/id in GM_gases)
+		if(id in hardcoded_gases || GM_gases[id][MOLES])
+			usr << "[GM_gases[id][GAS_NAME]]: [GM_gases[id][MOLES]]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()

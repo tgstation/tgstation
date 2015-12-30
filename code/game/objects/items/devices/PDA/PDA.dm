@@ -414,6 +414,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Unable to obtain a reading.<br>"
 				else
 					var/datum/gas_mixture/environment = T.return_air()
+					var/list/env_gases = environment.gases
 
 					var/pressure = environment.return_pressure()
 					var/total_moles = environment.total_moles()
@@ -421,10 +422,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 					if (total_moles)
-						for(var/gas in environment.gases)
-							var/gas_level = gas[MOLES]/total_moles
-							if(gas[GAS_ID] in hardcoded_gases || gas_level > 0.01)
-								dat += "[gas[GAS_NAME]]: [round(gas_level*100)]%<br>"
+						for(var/id in env_gases)
+							var/gas_level = env_gases[id][MOLES]/total_moles
+							if(id in hardcoded_gases || gas_level > 0.01)
+								dat += "[env_gases[id][GAS_NAME]]: [round(gas_level*100)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"

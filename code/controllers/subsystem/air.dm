@@ -18,9 +18,6 @@ var/datum/subsystem/air/SSair
 	var/cost_pipenets = 0
 	var/cost_atmos_machinery = 0
 
-	var/obj/effect/overlay/plasma_overlay			//overlay for plasma
-	var/obj/effect/overlay/sleeptoxin_overlay		//overlay for sleeptoxin
-
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
@@ -35,9 +32,6 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
-
-	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
-	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -169,32 +163,39 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_allturfs(z_level)
 	var/z_start = 1
 	var/z_finish = world.maxz
+
 	if(1 <= z_level && z_level <= world.maxz)
 		z_level = round(z_level)
 		z_start = z_level
 		z_finish = z_level
+
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		T.excited = 0
 		active_turfs -= T
-		if(!T.blocks_air)
-			T.update_visuals()
-			for(var/direction in cardinal)
-				if(!(T.atmos_adjacent_turfs & direction))
-					continue
-				var/turf/enemy_tile = get_step(T, direction)
-				var/datum/gas_mixture/enemy_air
-				if(istype(enemy_tile,/turf/simulated/))
-					var/turf/simulated/enemy_simulated = enemy_tile
-					enemy_air = enemy_simulated.air
-				else
-					enemy_air = new
-					enemy_air.copy_from_turf(enemy_tile)
-				if(!T.air.compare(enemy_air))
-					T.excited = 1
-					active_turfs |= T
-					break
+
+		if(T.blocks_air)
+			continue
+
+		T.update_visuals()
+
+		for(var/direction in cardinal)
+			if(!(T.atmos_adjacent_turfs & direction))
+				continue
+
+			var/turf/enemy_tile = get_step(T, direction)
+			var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
+
+			var/is_active = T.air.compare(enemy_air)
+
+			if(is_active)
+				testing("Active turf found. Return value of compare(): [is_active]")
+				T.excited = 1
+				active_turfs |= T
+				break
+
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/simulated/T in active_turfs)

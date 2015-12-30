@@ -167,13 +167,14 @@
 
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = AIR1
+	var/list/env_gases = environment.gases
 
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
-		for(var/gas in environment.gases)
-			if(gas[GAS_ID] == "nitrogen" || gas[GAS_ID] == "oxygen")
+		for(var/id in env_gases)
+			if(id == "n2" || id == "o2")
 				continue
-			if(gas[MOLES])
+			if(env_gases[id][MOLES])
 				should_we_scrub = TRUE
 				break
 		if(should_we_scrub)

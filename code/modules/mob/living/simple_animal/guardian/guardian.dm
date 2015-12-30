@@ -389,8 +389,8 @@
 					var/list/Z_gases = Z.gases
 					var/trace_gases = FALSE
 
-					for(var/gas in Z_gases)
-						if(gas[GAS_ID] in hardcoded_gases)
+					for(var/id in Z_gases)
+						if(id in hardcoded_gases)
 							continue
 						trace_gases = TRUE
 						break

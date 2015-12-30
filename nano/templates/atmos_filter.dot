@@ -16,12 +16,12 @@
 	<section>
 		<span class="label">Filter:</span>
 		<div class="content">
-			{{=helper.link('Nothing', null, 'filter', {'mode': -1}, data.filter_type ==  -1 ? 'selected' : null)}}
-			{{=helper.link('Plasma', null, 'filter', {'mode': 0}, data.filter_type ==  0 ? 'selected' : null)}}
-			{{=helper.link('O2', null, 'filter', {'mode': 1}, data.filter_type ==  1 ? 'selected' : null)}}
-			{{=helper.link('N2', null, 'filter', {'mode': 2}, data.filter_type ==  2 ? 'selected' : null)}}
-			{{=helper.link('CO2', null, 'filter', {'mode': 3}, data.filter_type ==  3 ? 'selected' : null)}}
-			{{=helper.link('N2O', null, 'filter', {'mode': 4}, data.filter_type ==  4 ? 'selected' : null)}}
+			{{=helper.link('Nothing', null, 'filter', {'mode': ""}, data.filter_type ==  -1 ? 'selected' : null)}}
+			{{=helper.link('Plasma', null, 'filter', {'mode': "plasma"}, data.filter_type ==  0 ? 'selected' : null)}}
+			{{=helper.link('O2', null, 'filter', {'mode': "o2"}, data.filter_type ==  1 ? 'selected' : null)}}
+			{{=helper.link('N2', null, 'filter', {'mode': "n2"}, data.filter_type ==  2 ? 'selected' : null)}}
+			{{=helper.link('CO2', null, 'filter', {'mode': "co2"}, data.filter_type ==  3 ? 'selected' : null)}}
+			{{=helper.link('N2O', null, 'filter', {'mode': "c2o"}, data.filter_type ==  4 ? 'selected' : null)}}
 		</div>
 	</section>
 </article>

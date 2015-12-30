@@ -1,5 +1,6 @@
 #define DEBUG					//Enables byond profiling and full runtime logs - note, this may also be defined in your .dme file
-//#define TESTING				//Enables in-depth debug messages to runtime log (used for debugging)								//By using the testing("message") proc you can create debug-feedback for people with this
+								//Enables in-depth debug messages to runtime log (used for debugging)
+//#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
 #define PRELOAD_RSC	1			/*set to:

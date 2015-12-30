@@ -154,12 +154,14 @@
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
 					var/list/S_gases = S.air.gases
-					for(var/gas in a_gases)
-						gas[MOLES] += S_gases[gas[GAS_ID]][MOLES]
+					for(var/id in a_gases)
+						a_gases[id][MOLES] += S_gases[id][MOLES]
 					a_gas_mixture.temperature += S.air.temperature
 				turf_count ++
-		for(var/gas in air.gases)
-			gas[MOLES] = (a_gases[gas[GAS_ID]][MOLES]/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+		var/list/air_gases = air.gases
+		for(var/id in air_gases)
+			var/a_gas_moles = a_gases[id] ? a_gases[id][MOLES] : 0
+			air_gases[id][MOLES] = (a_gas_moles/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
 		air.temperature = (a_gas_mixture.temperature/max(turf_count,1))//Trace gases can get bant
 		SSair.add_to_active(src)
 

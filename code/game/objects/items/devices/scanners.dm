@@ -295,11 +295,11 @@ MASS SPECTROMETER
 		if(plasma_concentration > 0.01)
 			user.show_message("<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>", 1)
 
-		for(var/gas in env_gases)
-			if(gas[GAS_ID] in hardcoded_gases)
+		for(var/id in env_gases)
+			if(id in hardcoded_gases)
 				continue
-			var/gas_concentration = gas[MOLES]/total_moles
-			user.show_message("<span class='alert'>[gas[GAS_NAME]]: [round(gas_concentration*100)] %</span>", 1)
+			var/gas_concentration = env_gases[id][MOLES]/total_moles
+			user.show_message("<span class='alert'>[env_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>", 1)
 
 		user.show_message("<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>", 1)
 
