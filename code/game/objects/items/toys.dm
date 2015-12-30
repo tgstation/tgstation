@@ -102,6 +102,19 @@
 	item_state = "syndballoon"
 	w_class = 4
 
+/obj/item/toy/syndicateballoon/attack_self(mob/living/user)
+	if(!user.canUseTopic(src))
+		return 0
+	if(flags & NODROP) //Tie the string around your wrist! Makes it so you can't drop it.
+		user.visible_message("<span class='notice'>[user] unties [src]'s string from their wrist.</span>", \
+							"<span class='notice'>You untie the balloon's string from your wrist.</span>")
+		flags &= ~NODROP
+	else
+		user.visible_message("<span class='notice'>[user] ties [src]'s string around their wrist.</span>", \
+							"<span class='notice'>You tie the balloon's string around your wrist.</span>")
+		flags |= NODROP
+	return 1
+
 /*
  * Fake singularity
  */
@@ -422,7 +435,7 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		
+
 		var/temp = "rune"
 		if(letters.Find(drawtype))
 			temp = "letter"
