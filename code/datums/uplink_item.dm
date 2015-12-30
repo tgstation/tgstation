@@ -1,33 +1,59 @@
+#define LIST_FIRST 1
+#define LIST_NORMALLY 0
+#define LIST_LAST -1
+
+
 var/list/uplink_items = list()
 
 /proc/get_uplink_items(var/gamemode_override=null)
 	// If not already initialized..
 	if(!uplink_items.len)
+		var/list/uncategorized_list = list()
+		for(var/item in subtypesof(/datum/uplink_item))
+			var/datum/uplink_item/I = new item()
+			uncategorized_list += I
+
+		var/discounted_items = 0
+		while(discounted_items < 3)
+			var/datum/uplink_item/U = pick(uncategorized_list)
+			if(U.discount || !U.item || U.cost <= 1)
+				continue
+			U.discount = pick(4;0.75,2;0.5,1;0.25)
+			U.category = "Limited Time Discounts"
+			U.cost = max(round(U.cost * U.discount),1)
+			if(U.cost * U.discount < 1)
+				U.desc += " Normally costs [initial(U.cost)] TC, just 1 TC today!"
+			else
+				U.desc += " Normally costs [initial(U.cost)] TC, [(1-U.discount)*100]% off today!"
+			U.position = LIST_FIRST
+			discounted_items++
 
 		// Fill in the list	and order it like this:
 		// A keyed list, acting as categories, which are lists to the datum.
 
-		var/list/last = list()
-		for(var/item in subtypesof(/datum/uplink_item))
-
-			var/datum/uplink_item/I = new item()
+		var/list/first	= list()
+		var/list/normal = list()
+		var/list/last	= list()
+		for(var/datum/uplink_item/I in uncategorized_list)
 			if(!I.item)
 				continue
-			if(I.last)
-				last += I
-				continue
+			switch(I.position)
+				if(LIST_FIRST)
+					first += I
+					continue
+				if(LIST_NORMALLY)
+					normal += I
+					continue
+				if(LIST_LAST)
+					last += I
+					continue
 
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
+		for(var/list/L in list(first, normal, last))
+			for(var/datum/uplink_item/I in L)
+				if(!uplink_items[I.category])
+					uplink_items[I.category] = list()
 
-			uplink_items[I.category] += I
-
-		for(var/datum/uplink_item/I in last)
-
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
-
-			uplink_items[I.category] += I
+				uplink_items[I.category] += I
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
@@ -59,7 +85,8 @@ var/list/uplink_items = list()
 	var/desc = "item description"
 	var/item = null
 	var/cost = 0
-	var/last = 0 // Appear last
+	var/discount = 0 //Set on a datum to prevent it from being put on discount, or set during discounting in game
+	var/position = LIST_NORMALLY
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
@@ -109,10 +136,16 @@ var/list/uplink_items = list()
 //
 */
 
+//Discounts (dynamically filled above)
+
+/datum/uplink_item/discounts
+	category = "Limited Time Discounts"
+
 //Operator special offers
 
 /datum/uplink_item/specoffer
 	category = "Special offer roles"
+	discount = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/specoffer/c20r
@@ -885,6 +918,7 @@ var/list/uplink_items = list()
 	way to detect the ipmlant, makes this excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 14
+	discount = 1
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal
@@ -950,7 +984,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
-	last = 1
+	position = LIST_LAST
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
@@ -963,6 +997,7 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 20 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
+	discount = 1
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/badass/syndiecards
@@ -984,6 +1019,7 @@ var/list/uplink_items = list()
 	name = "For showing that you are THE BOSS"
 	desc = "A useless red balloon with the Syndicate logo on it. Can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
+	discount = 1
 	cost = 20
 
 /datum/uplink_item/implants/macrobomb
@@ -1022,6 +1058,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Surplus Crate"
 	desc = "A crate containing 50 telecrystals worth of random syndicate leftovers."
 	cost = 20
+	discount = 1
 	item = /obj/item/weapon/storage/box/syndicate
 	excludefrom = list(/datum/game_mode/nuclear)
 
