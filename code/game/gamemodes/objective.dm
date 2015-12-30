@@ -19,6 +19,12 @@
 			objective_types -= O
 		if(!obj.randomgen)
 			objective_types -= O
+	for(var/E in escape_objective_types)
+		var/datum/objective/obj = new E
+		if(M.special_role != obj.required_role && obj.required_role != null)
+			objective_types -= E
+		if(!obj.randomgen)
+			objective_types -= E
 	for(var/i = 1, i <= objectives_made, i++)
 		if(i == objectives_made && has_escape)
 			var/datum/objective/holder_obj = pick(escape_objective_types)
@@ -332,6 +338,7 @@
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 	dangerrating = 25
 	martyr_compatible = 1
+	randomgen = 0
 
 /datum/objective/escape_obj/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
@@ -385,6 +392,7 @@
 	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
+	required_role = "changeling"
 
 /datum/objective/escape_obj/escape/escape_with_identity/find_target()
 	target = ..()
