@@ -261,5 +261,4 @@
 		A.air.temperature = 293.15
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-
 		L.contents += A

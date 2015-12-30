@@ -10,14 +10,14 @@
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Jump to Core"
-	set desc = "Transport back to your core."
+	set desc = "Move your camera to your core."
 	if(blob_core)
 		src.loc = blob_core.loc
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
 	set name = "Jump to Node"
-	set desc = "Transport back to a selected node."
+	set desc = "Move your camera to a selected node."
 	if(blob_nodes.len)
 		var/list/nodes = list()
 		for(var/i = 1; i <= blob_nodes.len; i++)
@@ -44,14 +44,13 @@
 				return
 	if(!can_buy(price))
 		return
-	B.color = blob_reagent_datum.color
 	var/obj/effect/blob/N = B.change_to(blobType, src)
 	return N
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Create Shield Blob (10)"
-	set desc = "Create a shield blob."
+	set desc = "Create a shield blob, which will block fire and is hard to kill."
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
@@ -66,13 +65,13 @@
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
-	set desc = "Create a Node."
+	set desc = "Create a node, which will power nearby factory and resource blobs."
 	createSpecial(60, /obj/effect/blob/node, 5)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
-	set desc = "Create a Spore producing blob."
+	set desc = "Create a spore tower that will spawn spores to harass your enemies."
 	createSpecial(60, /obj/effect/blob/factory, 7)
 
 /mob/camera/blob/verb/create_storage()
@@ -84,7 +83,7 @@
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut (20)"
-	set desc = "Create a powerful blob-being, a Blobbernaut"
+	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
@@ -93,19 +92,33 @@
 	if(!istype(B, /obj/effect/blob/factory))
 		src << "<span class='warning'>Unable to use this blob, find a factory blob.</span>"
 		return
+	if(B.health < B.maxhealth*0.6) //if it's at less than 60% of its health, you can't blobbernaut it
+		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
+		return
 	if(!can_buy(20))
 		return
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
-	if(blobber)
-		qdel(B)
+	var/obj/effect/blob/factory/F = B
+	F.take_damage(F.maxhealth*0.6, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
+	F.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+	F.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	blobber.overmind = src
 	blobber.update_icons()
 	blob_mobs.Add(blobber)
+	var/list/candidates = get_candidates(ROLE_BLOB, ALIEN_AFK_BRACKET)
+	var/client/C = null
+	if(candidates.len) //if we got a candidate, they're a blobbernaut now.
+		C = pick(candidates)
+		blobber.key = C.key
+		blobber << 'sound/effects/blobattack.ogg'
+		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
 	set name = "Relocate Core (80)"
-	set desc = "Relocates your core to the node you are on, your old core will be turned into a node."
+	set desc = "Swaps the locations of your core and the selected node."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
 	if(!B)
@@ -143,7 +156,7 @@
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
 	set name = "Expand/Attack Blob (5)"
-	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
+	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
@@ -172,7 +185,7 @@
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
 	set name = "Rally Spores"
-	set desc = "Rally the spores to move to your location."
+	set desc = "Rally your spores to move to a target location."
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
@@ -182,32 +195,14 @@
 	if(!surrounding_turfs.len)
 		return
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in living_mob_list)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(BS.overmind == src && isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
-
-/mob/camera/blob/verb/split_consciousness()
-	set category = "Blob"
-	set name = "Split consciousness (100) (One use)"
-	set desc = "Expend resources to attempt to produce another sentient overmind"
-	var/turf/T = get_turf(src)
-	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
-	if(!B)
-		src << "<span class='warning'>You must be on a blob node!</span>"
-		return
-	if(!can_buy(100))
-		return
-	verbs -= /mob/camera/blob/verb/split_consciousness
-	new/obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, 1)
-	qdel(B)
-	if(ticker && ticker.mode.name == "blob")
-		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount += initial(BL.blobwincount) //Increase the victory condition by the set amount
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
 	set name = "Blob Broadcast"
-	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces. This action is free."
+	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
 	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
 	if(!speak_text)
 		return
@@ -220,7 +215,7 @@
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
 	set name = "Reactive Chemical Adaptation (40)"
-	set desc = "Replaces your chemical with a different one"
+	set desc = "Replaces your chemical with a random, different one."
 	if(!can_buy(40))
 		return
 	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))

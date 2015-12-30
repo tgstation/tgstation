@@ -8,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
@@ -39,6 +39,15 @@
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
 
+/obj/item/weapon/shield/riot/buckler
+	name = "wooden buckler"
+	desc = "A medieval wooden buckler."
+	icon_state = "buckler"
+	item_state = "buckler"
+	materials = list()
+	burn_state = FLAMMABLE
+	block_chance = 30
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."
@@ -54,8 +63,6 @@
 	var/active = 0
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active)
-		return ..()
 	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()

@@ -278,30 +278,12 @@ var/next_mob_id = 0
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
 	equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
-//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_ears,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
-	)
-
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
 
-	for(var/slot in slot_equipment_priority)
+	for(var/slot in W.slot_equipment_priority)
 		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
@@ -676,10 +658,16 @@ var/list/slot_equipment_priority = list( \
 			listed_turf = null
 		else
 			statpanel(listed_turf.name, null, listed_turf)
+			var/list/overrides = list()
+			for(var/image/I in client.images)
+				if(I.loc && I.loc.loc == listed_turf && I.override)
+					overrides = I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
 				if(A.invisibility > see_invisible)
+					continue
+				if(overrides.len && (A in overrides))
 					continue
 				statpanel(listed_turf.name, null, A)
 

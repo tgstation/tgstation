@@ -212,6 +212,3 @@ var/list/world_uplinks = list()
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20
-
-
-

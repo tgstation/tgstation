@@ -78,7 +78,6 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/shakecamera = 0
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null

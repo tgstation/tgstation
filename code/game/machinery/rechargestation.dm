@@ -140,5 +140,5 @@
 	if(occupant)
 		var/mob/living/silicon/robot/R = occupant
 		if(R && R.module)
-			var/coeff = recharge_speed / 200
+			var/coeff = recharge_speed * 0.005
 			R.module.respawn_consumable(R, coeff)

@@ -29,6 +29,9 @@
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return ..()
+	if(iscultist(M))
+		user << "<span class='cultlarge'>You shouldn't do that.</span>"
+		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	if(iscultist(user) && M && M.mind)

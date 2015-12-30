@@ -25,7 +25,7 @@
 ////////////////
 
 /mob/living/simple_animal/hostile/blob/blobspore
-	name = "blob"
+	name = "blob spore"
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
@@ -77,8 +77,8 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage_lower += 8
+	melee_damage_upper += 11
 	icon = H.icon
 	speak_emote = list("groans")
 	icon_state = "zombie_s"
@@ -130,6 +130,13 @@
 		color = initial(color)//looks better.
 		overlays += I
 
+/mob/living/simple_animal/hostile/blob/blobspore/weak
+	name = "fragile blob spore"
+	health = 20
+	maxHealth = 20
+	melee_damage_lower = 1
+	melee_damage_upper = 2
+
 /////////////////
 // BLOBBERNAUT //
 /////////////////
@@ -150,7 +157,6 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	force_threshold = 10
-	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 
@@ -160,7 +166,8 @@
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
 			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	..()
+	if(target)
+		..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()

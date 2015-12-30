@@ -69,6 +69,10 @@
 
 	var/sentience_type = SENTIENCE_ORGANIC // Sentience type, for slime potions
 
+	var/list/loot = list() //list of things spawned at mob's loc when it dies
+	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
+	var/deathmessage = ""
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -390,12 +394,24 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
-	health = 0
-	icon_state = icon_dead
-	stat = DEAD
-	density = 0
-	if(!gibbed)
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc)
+	if(deathmessage && !gibbed)
+		visible_message("<span class='danger'>[deathmessage]</span>")
+	else if(!del_on_death)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+	if(del_on_death)
+		ghostize()
+		qdel(src)
+	else
+		health = 0
+		icon_state = icon_dead
+		stat = DEAD
+		density = 0
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)

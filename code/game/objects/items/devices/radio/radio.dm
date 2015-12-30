@@ -40,6 +40,9 @@
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
+	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
+	var/use_command = FALSE
+
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
@@ -154,8 +157,8 @@
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+= text_wires()
-	//user << browse(dat, "window=radio")
-	//onclose(user, "radio")
+	if (command)
+		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold=1'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold=1'>Disengaged</A>"]<BR>"
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -205,6 +208,8 @@
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
+	else if (href_list["bold"])
+		use_command = !use_command
 	if (!( master ))
 		if (istype(loc, /mob))
 			interact(loc)
@@ -232,6 +237,9 @@
 
 	if(!M.IsVocal())
 		return
+
+	if(use_command)
+		spans |= SPAN_COMMAND
 
 	/* Quick introduction:
 		This new radio system uses a very robust FTL signaling technology unoriginally
