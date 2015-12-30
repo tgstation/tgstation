@@ -286,24 +286,24 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
 		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
 	return 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/New()
+/obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
 	processing_objects.Add(src)
 
 
-/obj/item/weapon/gun/energy/laser/bluetag/Destroy()
+/obj/item/weapon/gun/energy/laser/redtag/Destroy()
 	processing_objects.Remove(src)
 	..()
 
 
-/obj/item/weapon/gun/energy/laser/bluetag/process()
+/obj/item/weapon/gun/energy/laser/redtag/process()
 	charge_tick++
 	if(charge_tick < 4) return 0
 	charge_tick = 0
