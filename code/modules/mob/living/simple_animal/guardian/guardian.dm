@@ -684,7 +684,7 @@
 	name = "Holoparasite Guide"
 	icon_state = "alienpaper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
-	
+
  <br>
  <b>Chaos</b>: Ignites mobs on touch. teleports them at random on attack. Automatically extinguishes the user if they catch fire.<br>
  <br>
