@@ -149,7 +149,9 @@
 			playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagentreference.total_volume)
 				reagentreference.reaction(target, INGEST)
-				spawn(5) //WHY IS THIS SPAWN() HERE
+				spawn() //WHY IS THIS SPAWN() HERE
+					if(gcDestroyed)
+						return
 					if(reagentreference.total_volume > bitesize)
 						/*
 						 * I totally cannot understand what this code supposed to do.
