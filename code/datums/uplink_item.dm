@@ -81,7 +81,7 @@ var/list/uplink_items = list()
 		return 0
 
 	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	if ((U.loc in user.contents) || (in_range(U.loc, user) && istype(U.loc.loc, /turf)))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0
