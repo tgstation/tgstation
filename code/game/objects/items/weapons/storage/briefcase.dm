@@ -13,29 +13,20 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	burn_state = FLAMMABLE
 	burntime = 20
+	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
 
 /obj/item/weapon/storage/briefcase/New()
 	..()
-	if(!contents.len)
-		new /obj/item/weapon/pen(src)
-		var/obj/item/weapon/folder/folder = new(src)
-		new /obj/item/weapon/paper(folder)
-		new /obj/item/weapon/paper(folder)
-		new /obj/item/weapon/paper(folder)
-		new /obj/item/weapon/paper(folder)
-		new /obj/item/weapon/paper(folder)
-		new /obj/item/weapon/paper(folder)
-	
-/obj/item/weapon/storage/briefcase/lawyer/New()
-	new/obj/item/weapon/stamp/law
 	new /obj/item/weapon/pen(src)
-	var/obj/item/weapon/folder/blue/folder = new(src)
-	new /obj/item/weapon/paper(folder)
-	new /obj/item/weapon/paper(folder)
-	new /obj/item/weapon/paper(folder)
-	new /obj/item/weapon/paper(folder)
-	new /obj/item/weapon/paper(folder)
-	new /obj/item/weapon/paper(folder)
+	var/obj/item/weapon/folder/folder = new folder_path(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/paper(folder)
+
+/obj/item/weapon/storage/briefcase/lawyer
+	folder_path = obj/item/weapon/folder/blue
+
+/obj/item/weapon/storage/briefcase/lawyer/New()
+	new/obj/item/weapon/stamp/law(src)
 	..()
 	
 /obj/item/weapon/storage/briefcase/sniperbundle
