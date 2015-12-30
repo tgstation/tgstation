@@ -35,10 +35,10 @@
 			if(L.gender == "female")
 				icon_state = "human_female"
 		else if(ismonkey(L))
-			name = "statue of a monkey"
+			name = "statue of [L.name]"
 			icon_state = "monkey"
 		else if(iscorgi(L))
-			name = "statue of a corgi"
+			name = "statue of [L.name]"
 			icon_state = "corgi"
 			desc = "If it takes forever, I will wait for you..."
 
@@ -140,9 +140,9 @@
 
 /obj/structure/closet/statue/proc/shatter(mob/user as mob)
 	if (user)
-		user.dust()
+		user.gib()
 	dump_contents()
-	visible_message("<span class='warning'>[src] shatters!. </span>")
+	visible_message("<span class='warning'>[src] shatters into pieces!. </span>")
 	qdel(src)
 
 /obj/structure/closet/statue/container_resist()
