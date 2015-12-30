@@ -23,10 +23,10 @@
 		new /obj/item/weapon/paper(folder)
 
 /obj/item/weapon/storage/briefcase/lawyer
-	folder_path = obj/item/weapon/folder/blue
+	folder_path = /obj/item/weapon/folder/blue
 
 /obj/item/weapon/storage/briefcase/lawyer/New()
-	new/obj/item/weapon/stamp/law(src)
+	new /obj/item/weapon/stamp/law(src)
 	..()
 	
 /obj/item/weapon/storage/briefcase/sniperbundle
