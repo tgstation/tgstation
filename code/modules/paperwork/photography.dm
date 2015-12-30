@@ -16,6 +16,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1.0
+	origin_tech = "materials=1;programming=1"
 
 
 /*
@@ -105,6 +106,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
+	origin_tech = "materials=1;programming=1"
 	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_ELECTRONIC
 	min_harm_label = 3
@@ -124,6 +126,7 @@
 	item_state = "sepia-polaroid"
 	icon_on = "sepia-camera"
 	icon_off = "sepia-camera_off"
+	mech_flags = MECH_SCAN_FAIL
 
 /obj/item/device/camera/examine(mob/user)
 	..()

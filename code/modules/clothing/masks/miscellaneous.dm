@@ -7,6 +7,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	species_fit = list("Vox")
+	origin_tech = "biotech=2"
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)

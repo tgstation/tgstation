@@ -3,6 +3,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	item_state = "labeler0"
+	origin_tech = "materials=1"
 	var/label = null
 	var/chars_left = 250 //Like in an actual label maker, uses an amount per character rather than per label.
 	var/mode = 0	//off or on.

@@ -59,6 +59,7 @@
 	desc = "nothing"
 	icon_state = "purple"
 	item_state = "glasses"
+	origin_tech = "materials=1"
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
@@ -123,6 +124,7 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
+	origin_tech = "combat=2"
 	darkness_view = -1
 	eyeprot = 1
 	species_fit = list("Vox")
@@ -132,6 +134,7 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
+	origin_tech = "combat=2"
 	darkness_view = -1
 	species_fit = list("Vox")
 
@@ -140,6 +143,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
+	origin_tech = "engineering=1;materials=2"
 	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
 	eyeprot = 3
@@ -182,6 +186,7 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
+	origin_tech = "engineering=3;materials=3"
 
 /obj/item/clothing/glasses/welding/superior/getMask()
 	return null
