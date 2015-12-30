@@ -14,7 +14,7 @@
 	burn_state = FLAMMABLE
 	burntime = 20
 
- /obj/item/weapon/storage/briefcase/New()
+/obj/item/weapon/storage/briefcase/New()
 	..()
 	new /obj/item/weapon/pen(src)
 	new /obj/item/weapon/stamp/law(src)
