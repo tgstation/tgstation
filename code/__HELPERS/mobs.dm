@@ -218,7 +218,7 @@ Proc for attack log creation, because really why not
 				drifting = 0
 				Uloc = user.loc
 				
-		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc)
+		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc))
 			. = 0
 			break
 
