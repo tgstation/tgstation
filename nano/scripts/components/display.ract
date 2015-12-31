@@ -1,4 +1,4 @@
-<article class='display'>
+<div class='display'>
   {{#if title}}
     <header>
       <div style='float:left'>{{yield left}}</div>
@@ -6,5 +6,7 @@
       <div style='float:right'>{{yield right}}</div>
     </header>
   {{/if}}
-  {{yield}}
-</article>
+  <article>
+    {{yield}}
+  </article>
+</div>

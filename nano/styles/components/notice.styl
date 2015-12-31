@@ -10,9 +10,9 @@ $noticeStripes
     colors.notice2 20px
   )
 
-article.notice
-  @extend article.display, $noticeStripes
-  margin: 8px 2px
+div.notice
+  @extend div.display, $noticeStripes
+  margin: 8px 0
 
   box-shadow: none
 
@@ -20,8 +20,8 @@ article.notice
   font-weight: bold
   font-style: italic
 
-  section
-    padding: 0 0 2px 0;
+  .button
+    outline: 1px solid colors.border
 
   .label
     color: colors.textinverse

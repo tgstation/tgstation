@@ -1,24 +1,29 @@
 $cell
-  display: inline-block
+  display: table-cell
   margin: 0
+  text-align: left
+  vertical-align: middle
 
 section
+  display: table-row
   width: 100%
   padding: 3px 0
 
+  &:not(first-child)
+    padding-top: 4px
+
   .label
     @extend $cell
-    width: 33%
-    vertical-align: top
+    width: 1%
+    padding-right: 32px
+    white-space: nowrap
 
     color: colors.label
 
   .content
     @extend $cell
-    width: 66%
-
-    span
-      line-height: font-size + 5px
+    &:not(:last-child)
+      padding-right: 16px
 
   .line
     @extend $cell

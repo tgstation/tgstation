@@ -1,12 +1,17 @@
-// Reset font options.
+// Helper to reset font options to default.
 $fontReset
   color: colors.text
   font-size: fontsize
   font-weight: normal
   font-style: normal
   text-decoration: none
-// Text Styles
+
+// Utility classes to set font styles.
 .bold
   font-weight: bold
 .italic
   font-style: italic
+
+// Make 'unselectable' text unselectable on all browsers.
+[unselectable]
+  user-select: none

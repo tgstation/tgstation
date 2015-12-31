@@ -1,3 +1,3 @@
-<article class='notice'>
+<div class='notice'>
   {{yield}}
-</article>
+</div>

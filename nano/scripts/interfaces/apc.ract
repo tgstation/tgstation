@@ -9,6 +9,22 @@ component.exports =
       if status is 2 then "good"
       else if status is 1 then "average"
       else "bad"
+  computed:
+    malfIcon: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "terminal"
+      else if status is 2 or 4 then "caret-square-o-down"
+      else if status is 3 then "caret-square-o-left"
+    malfAction: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "hack"
+      else if status is 2 then "occupy"
+      else if status is 3 then "deoccupy"
+    malfButton: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "Override Programming"
+      else if status is 2 or 4 then "Shunt Core Process"
+      else if status is 3 then "Return to Main Core"
 </script>
 
 <n-notice>
@@ -53,55 +69,32 @@ component.exports =
   {{/if}}
 </n-display>
 <n-display title='Power Channels'>
-  <table class='grow'>
-    {{#each adata.powerChannels}}
-      <tr>
-        <th>{{title}}:</th>
-        <td>{{Math.round(powerLoad)}} W</td>
-        <td>
-          <span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span>
-        </td>
-        <td>
-          [<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]
-        </td>
-        <td style='float:right'>
-          {{#if !data.locked || data.siliconUser}}
-            <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
-              action='channel' params='{{topicParams.auto}}'>Auto</n-button>
-            <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
-              params='{{topicParams.on}}'>On</n-button>
-            <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
-              params='{{topicParams.off}}'>Off</n-button>
-          {{/if}}
-        </td>
-      </tr>
-    {{/each}}
-    <tr>
-      <th>Total Load:</th>
-      <td class='bold'>{{Math.round(adata.totalLoad)}} W</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
+  {{#each adata.powerChannels}}
+    <n-section label='{{title}}' nowrap='true'>
+      <div class='content'>{{Math.round(powerLoad)}} W</div>
+      <div class='content'><span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span></div>
+      <div class='content'>[<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]</div>
+      <div class='content' style='float:right'>
+        {{#if !data.locked || data.siliconUser}}
+          <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
+            action='channel' params='{{topicParams.auto}}'>Auto</n-button>
+          <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
+            params='{{topicParams.on}}'>On</n-button>
+          <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
+            params='{{topicParams.off}}'>Off</n-button>
+        {{/if}}
+      </div>
+    </n-section>
+  {{/each}}
+  <n-section label='Total Load'>
+    <span class='bold'>{{Math.round(adata.totalLoad)}} W</span>
+  </n-section>
 </n-display>
 {{#if data.siliconUser}}
   <n-display title='System Overrides'>
-    <n-section>
-      <n-button icon='lightbulb-o' action='overload'>Overload</n-button>
-    </n-section>
+    <n-button icon='lightbulb-o' action='overload'>Overload</n-button>
     {{#if data.malfStatus}}
-      <n-section>
-        {{#if data.malfStatus == 1}}
-          <n-button icon='terminal' action='hack'>Override Programming</n-button>
-        {{elseif data.malfStatus == 2}}
-          <n-button icon='caret-square-o-down' action='occupy'>Shut Core Process</n-button>
-        {{elseif data.malfStatus == 3}}
-          <n-button icon='carat-square-o-left' action='deoccupy'>Return to Main Core</n-button>
-        {{elseif data.malfStatus == 4}}
-          <n-button icon='caret-square-o-down' state='disabled'>Shut Core Process</n-button>
-        {{/if}}
-      </n-section>
+      <n-button icon='{{malfIcon}}' state='{{data.malfStatus == 4 ? "disabled" : null}}' action='{{malfAction}}'>{{malfButton}}</n-button>
     {{/if}}
   </n-display>
 {{/if}}

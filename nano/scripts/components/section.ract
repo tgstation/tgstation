@@ -1,9 +1,13 @@
 <section>
   {{#if label}}
     <span class='label'>{{label}}:</span>
-    <div class='content'>
+    {{#if nowrap}}
       {{yield}}
-    </div>
+    {{else}}
+      <div class='content'>
+        {{yield}}
+      </div>
+    {{/if}}
   {{else}}
     {{yield}}
   {{/if}}

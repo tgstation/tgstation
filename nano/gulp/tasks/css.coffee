@@ -7,6 +7,13 @@ s = c.plugins.postcss
 gulp    = require "gulp"
 postcss = require "postcss"
 
+
+cssnano =
+  autoprefixer:
+    browsers: ["last 2 versions", "ie >= 8"]
+    discardComments:
+      removeAll: true
+
 module.exports = ->
   gulp.src p.css.dir + p.css.main
     .pipe g.if(f.debug, g.sourcemaps.init({loadMaps: true}))
@@ -22,8 +29,8 @@ module.exports = ->
     .pipe g.concat(p.css.out)
     .pipe g.bytediff.start()
     .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
-    .pipe g.if(f.min, g.cssnano({autoprefixer: {browsers: ["last 2 versions", "ie >= 8"]}, discardComments: {removeAll: true}}))
-    .pipe g.if(f.debug, g.sourcemaps.write(sourceRoot: "/source/styles/"))
+    .pipe g.if(f.min, g.cssnano(cssnano))
+    .pipe g.if(f.debug, g.sourcemaps.write(sourceRoot: "/source/#{p.css.dir}"))
     .pipe g.bytediff.stop()
     .pipe gulp.dest p.out
 module.exports.displayName = "css"

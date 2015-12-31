@@ -12,9 +12,9 @@ component.exports =
       state   = @get "state"
       style   = @get "style"
       if enabled
-        if not state then "active #{style}"
-        else "inactive #{state}"
-      else "inactive"
+        if not state then "normal #{[style]}"
+        else "#{state}"
+      else "disabled"
   oninit: ->
     @on "act", (event) ->
       action = @get "action"
@@ -24,7 +24,7 @@ component.exports =
 
 <span class='button {{styles}} {{#grid}}gridable{{/}}' unselectable='true' on-click='{{#if enabled && !state}}act{{/if}}'>
   {{#if icon}}
-    <i class='fa fa-fw fa-{{icon}}'></i>
+    <i class='fa fa-{{icon}}'></i>
   {{/if}}
   {{yield}}
 </span>

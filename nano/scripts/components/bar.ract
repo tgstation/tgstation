@@ -9,6 +9,6 @@ component.exports =
 </script>
 
 <div class='bar'>
-  <span class='barFill {{state}}' style='width: {{percentage}}%'></span>
+  <div class='barFill {{state}}' style='width: {{percentage}}%'></div>
   <span class='barText'>{{yield}}</span>
 </div>

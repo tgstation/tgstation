@@ -1,9 +1,8 @@
-<link rel='ractive' href='./components/content.ract'>
 <link rel='ractive' href='./components/resize.ract'>
 <link rel='ractive' href='./components/titlebar.ract'>
 
 <titlebar>{{{config.title}}}</titlebar>
-<content>
+<main>
   <interface />
-</content>
+</main>
 <resize />

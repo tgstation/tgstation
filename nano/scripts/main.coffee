@@ -48,6 +48,8 @@ window.nanoui = new NanoUI
     "n-section": require "./components/section"
     "n-bar": require "./components/bar"
     "n-button": require "./components/button"
+  transitions:
+    fade: require "ractive-transitions-fade"
   onrender: ->
     @observe "config.style", (newkey, oldkey, keypath) -> # Change body style to match config
       @el.classList.remove oldkey; @el.classList.add newkey

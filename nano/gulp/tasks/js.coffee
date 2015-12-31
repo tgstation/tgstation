@@ -22,6 +22,7 @@ bundle = ->
     .transform b.componentify
     .transform b.aliasify
     .transform b.globify
+    .transform b.strictify
     .bundle (err, res) ->
       return next err if err
       file.contents = res

@@ -28,8 +28,8 @@
     {{#if data.isBeakerLoaded}}
       <span>{{Math.round(adata.beakerCurrentVolume)}}/{{data.beakerMaxVolume}} Units</span>
       <br />
-      {{#each data.beakerContents}}
-        <span class='highlight'>{{volume}} units of {{name}}</span><br />
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br />
       {{else}}
         <span class='bad'>Beaker Empty</span>
       {{/each}}
