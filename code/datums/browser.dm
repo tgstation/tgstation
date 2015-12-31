@@ -102,10 +102,10 @@
 	if (use_onclose)
 		spawn(0)
 			//winexists sleeps, so we don't need to.
-		for (var/i in 1 to 10)
-			if (user && winexists(user, window_id))
-				onclose(user, window_id, ref)
-				break
+			for (var/i in 1 to 10)
+				if (user && winexists(user, window_id))
+					onclose(user, window_id, ref)
+					break
 
 
 /datum/browser/proc/close()
@@ -129,7 +129,7 @@
 		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=1">[Button1]</a>"}
+		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=3">[Button3]</a>"}
 
 	output += {"</div>"}
 
