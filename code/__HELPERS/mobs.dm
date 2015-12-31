@@ -173,8 +173,8 @@ Proc for attack log creation, because really why not
 			continue
 		
 		if(drifting && !user.inertia_dir)
-				drifting = 0
-				user_loc = user.loc
+			drifting = 0
+			user_loc = user.loc
 		
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
@@ -215,8 +215,8 @@ Proc for attack log creation, because really why not
 			progbar.update(world.time - starttime)
 		
 		if(drifting && !user.inertia_dir)
-				drifting = 0
-				Uloc = user.loc
+			drifting = 0
+			Uloc = user.loc
 				
 		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc))
 			. = 0
