@@ -158,7 +158,7 @@
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+= text_wires()
 	if (command)
-		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold'>Disengaged</A>"]<BR>"
+		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold=1'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold=1'>Disengaged</A>"]<BR>"
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

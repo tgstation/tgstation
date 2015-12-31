@@ -367,6 +367,8 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
+		if(!isobserver(usr))
+			message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
