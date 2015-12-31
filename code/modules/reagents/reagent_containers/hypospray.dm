@@ -106,7 +106,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/leppen //basilisks were buffed
 	name = "leporazine medipen"
-	desc = "A rapid way to stabalise your body's temperature and reducing burn wounds."
+	desc = "A rapid way to stabilize your body's temperature and reduce burn wounds."
 	icon_state = "stimpen"
 	volume = 20
 	amount_per_transfer_from_this = 20
