@@ -183,7 +183,8 @@
 /obj/screen/resist/Click()
 	if(isliving(usr))
 		var/mob/living/L = usr
-		L.resist()
+		if(!L.stat)
+			L.resist()
 
 /obj/screen/storage
 	name = "storage"
