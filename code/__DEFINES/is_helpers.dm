@@ -26,7 +26,17 @@
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
+#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
+
+#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+
+#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
+
+#define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
+
+#define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
 
@@ -41,8 +51,6 @@
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
 #define isnewplayer(A) (istype(A, /mob/new_player))
-
-#define isblobmob(A) (istype(A, /mob/living/simple_animal/hostile/blob))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
