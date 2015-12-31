@@ -74,9 +74,11 @@
 /obj/screen/ai/call_shuttle/Click()
 	var/mob/living/silicon/ai/AI = usr
 	if(SSshuttle.emergency.mode < SHUTTLE_CALL)
-		AI.ai_call_shuttle()
+		if(alert("Attempt to call the shuttle?", "Hail Shuttle", "Yes", "No") == "Yes")
+			AI.ai_call_shuttle()
 	else
-		AI.ai_cancel_call()
+		if(alert("Attempt to recall the shuttle?", "Dismiss Shuttle", "Yes", "No") == "Yes")
+			AI.ai_cancel_call()
 
 /obj/screen/ai/state_laws
 	name = "State Laws"
