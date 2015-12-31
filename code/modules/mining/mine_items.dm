@@ -245,7 +245,7 @@
 	threshhold.carbon_dioxide = 0
 	threshhold.toxins = 0
 	var/area/ZZ = get_area(threshhold)
-	if(!(ZZ.type in blacklist))
+	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
 	threshhold.overlays.Cut()
 
@@ -265,5 +265,5 @@
 		SSair.add_to_active(A)
 		A.overlays.Cut()
 		var/area/Z = get_area(A)
-		if(!(Z.type in blacklist))
+		if(!is_type_in_list(Z, blacklist))
 			L.contents += A
