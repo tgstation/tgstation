@@ -228,6 +228,9 @@
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		var/oldlying = C.lying
+		var/obj/structure/table/T = locate(/obj/structure/table,src)
+		if(T && (!O || T.layer > O.layer))
+			return 0
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
