@@ -28,13 +28,10 @@
 		if(FEMALE)	return pick(undershirt_f)
 		else		return pick(undershirt_list)
 
-/proc/random_socks(gender)
+/proc/random_socks()
 	if(!socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list, socks_m, socks_f)
-	switch(gender)
-		if(MALE)	return pick(socks_m)
-		if(FEMALE)	return pick(socks_f)
-		else		return pick(socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
+	return pick(socks_list)
 
 /proc/random_features()
 	if(!tails_list_human.len)
