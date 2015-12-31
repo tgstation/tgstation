@@ -120,20 +120,26 @@
 	var/guns_left = 30
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/New()
+	..()
+	bolt_open = 1
+	pump()
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
+	guns_left = 0
+
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	..()
-	user.drop_item()
 	if(guns_left)
+		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new
+		GUN.guns_left = src.guns_left - 1
+		user.drop_item()
 		user.swap_hand()
-		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted(src)
-		GUN.guns_left = src.guns_left
-		GUN.guns_left--
-		src.guns_left = 0
 		user.put_in_hands(GUN)
-		src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
-		GUN.bolt_open = 1
-		GUN.pump()
-		user.visible_message("<span class='warning'>[user] tosses aside the spent [src]!</span>")
+	else
+		user.drop_item()
+	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted

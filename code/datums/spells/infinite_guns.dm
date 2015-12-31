@@ -18,7 +18,5 @@
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
-		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
+		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new
 		C.put_in_hands(GUN)
-		GUN.bolt_open = 1
-		GUN.pump()
