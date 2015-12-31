@@ -1,0 +1,53 @@
+<n-notice>
+  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a tank.</span>
+</n-notice>
+<n-display title='Canister'>
+  {{#partial right}}
+    <n-button icon='pencil' state='{{data.canLabel ? null : "disabled"}}' action='relable'>Relabel</n-button>
+  {{/partial}}
+  <n-section label='Pressure'>
+    <span>{{Math.round(adata.tankPressure)}} kPa</span>
+  </n-section>
+  <n-section label='Port'>
+    <span class='{{data.portConnected ? "good" : "average"}}'>{{data.portConnected ? "Connected" : "Not Connected"}}</span>
+  </n-section>
+</n-display>
+<n-display title='Valve'>
+  <n-section label='Release Pressure'>
+    <n-bar min='{{data.minReleasePressure}}' max='{{data.maxReleasePressure}}'
+      value='{{data.releasePressure}}'>{{Math.round(adata.releasePressure)}} kPa</n-bar>
+  </n-section>
+  <n-section label='Pressure Regulator'>
+    <n-button icon='refresh' state='{{data.releasePressure != data.defaultReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "reset"}'>Reset</n-button>
+    <n-button icon='minus' state='{{data.releasePressure > data.minReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "min"}'>Min</n-button>
+    <n-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</n-button>
+    <n-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "max"}'>Max</n-button>
+  </n-section>
+  <n-section label='Valve'>
+    <n-button icon='{{data.valveOpen ? "unlock" : "lock"}}'
+      style='{{data.valveOpen ? data.hasHoldingTank ? "caution" : "danger" : null}}'
+      action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</n-button>
+  </n-section>
+</n-display>
+<n-display title='Holding Tank'>
+  {{#partial right}}
+    {{#if data.hasHoldingTank}}
+      <n-button icon='eject' style='{{data.valveOpen ? "danger" : null}}' action='eject'>Eject</n-button>
+    {{/if}}
+  {{/partial}}
+  {{#if data.hasHoldingTank}}
+		<n-section label='Label'>
+			{{data.holdingTank.name}}
+		</n-section>
+		<n-section label='Pressure'>
+			{{Math.round(adata.holdingTank.tankPressure)}} kPa
+		</n-section>
+	{{else}}
+		<n-section>
+			<span class='average'>No Holding Tank</span>
+		</n-section>
+	{{/if}}
+</n-display>

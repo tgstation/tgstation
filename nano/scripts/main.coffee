@@ -24,6 +24,7 @@ data = document.query "#data"
 data = JSON.parse data.textContent
 if not data? or not (data.data? and data.config?)
   alert "Initial data did not load correctly."
+data.adata = data.data # Spoof animated data as this is the first load.
 
 
 # Load the base component and all interfaces.

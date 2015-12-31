@@ -1,6 +1,10 @@
 <article class='display'>
   {{#if title}}
-    <header><h2>{{title}}</h2></header>
+    <header>
+      <div style='float:left'>{{yield left}}</div>
+      <h3>{{title}}</h3>
+      <div style='float:right'>{{yield right}}</div>
+    </header>
   {{/if}}
   {{yield}}
 </article>

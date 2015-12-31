@@ -1,0 +1,29 @@
+<n-display title='Thermostat'>
+  <n-section label='Power'>
+    <n-button icon='{{data.isActive ? "power-off" : "close"}}'
+		style='{{data.isActive ? "selected" : null}}'
+		state='{{data.isBeakerLoaded ? null : "disabled"}}'
+		action='power'>{{data.isActive ? "On" : "Off"}}</n-button>
+  </n-section>
+  <n-section label='Target'>
+	  <n-button icon='pencil' action='temperature'>{{Math.round(adata.targetTemp)}} K</n-button>
+  </n-section>
+</n-display>
+<n-display title='Beaker'>
+  {{#partial right}}
+    <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</n-button>
+  {{/partial}}
+  <n-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      <span>Temperature: {{Math.round(adata.currentTemp)}} K</span>
+      <br />
+      {{#each data.beakerContents}}
+        <span class='highlight'>{{volume}} units of {{name}}</span><br />
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </n-section>
+</n-display>

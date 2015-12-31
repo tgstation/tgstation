@@ -13,7 +13,7 @@ component.exports =
       style   = @get "style"
       if enabled
         if not state then "active #{style}"
-        else "inactive #{state} #{style}"
+        else "inactive #{state}"
       else "inactive"
   oninit: ->
     @on "act", (event) ->
@@ -22,7 +22,9 @@ component.exports =
       byond.act @get("config.ref"), action, params if action?
 </script>
 
-<span class='button {{styles}}' unselectable='true' on-click='act'>
-    {{#icon}}<i class='fa fa-fw fa-{{icon}}'></i>{{/}}
-    {{yield}}
+<span class='button {{styles}} {{#grid}}gridable{{/}}' unselectable='true' on-click='{{#if enabled && !state}}act{{/if}}'>
+  {{#if icon}}
+    <i class='fa fa-fw fa-{{icon}}'></i>
+  {{/if}}
+  {{yield}}
 </span>

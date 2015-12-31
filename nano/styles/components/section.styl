@@ -1,3 +1,7 @@
+$cell
+  display: inline-block
+  margin: 0
+
 section
   width: 100%
   padding: 3px 0
@@ -5,12 +9,16 @@ section
   .label
     @extend $cell
     width: 33%
+    vertical-align: top
 
     color: colors.label
 
   .content
     @extend $cell
     width: 66%
+
+    span
+      line-height: font-size + 5px
 
   .line
     @extend $cell

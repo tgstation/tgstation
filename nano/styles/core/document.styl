@@ -16,6 +16,7 @@ body
   color: colors.text
 
 $h
+  display: inline-block
   margin: 0
   padding: 6px 0
 h1
@@ -27,6 +28,9 @@ h2
 h3
   @extend $h
   font-size: fontsize + 2px
+h4
+  @extend $h
+  font-size: fontsize
 
 hr
   background-color: colors.rule

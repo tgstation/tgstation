@@ -6,9 +6,16 @@
       {}
     </script>
     <script type='text/javascript'>
+      "use strict";
+      var data;
       function receiveUpdate(dataString) {
+        data = JSON.parse(dataString);
         if (typeof nanoui !== 'undefined') {
-          nanoui.set(JSON.parse(dataString));
+          nanoui.set("config", data.config);
+          if (typeof data.data !== 'undefined') {
+            nanoui.set("data", data.data);
+            nanoui.animate("adata", data.data);
+          }
         }
       };
     </script>

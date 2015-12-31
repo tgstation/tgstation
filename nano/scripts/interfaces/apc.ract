@@ -1,20 +1,14 @@
 <script type='text/coffeescript'>
-animate = require "../animate"
-
 component.exports =
   data:
-    powerStatus: (status) ->
+    cellState: (percentage) ->
+      if percentage >= 50 then "good"
+      else if percentage >= 25 then "average"
+      else "bad"
+    powerState: (status) ->
       if status is 2 then "good"
       else if status is 1 then "average"
       else "bad"
-  computed:
-    "visual.powerCellStatus": ->
-      status = @get "data.powerCellStatus"
-      if status >= 50 then "good"
-      else if status >= 25 then "average"
-      else "bad"
-  oninit: ->
-    animate(@, ["data.totalLoad", "data.powerCellStatus", "data.powerChannels"])
 </script>
 
 <n-notice>
@@ -31,15 +25,16 @@ component.exports =
     {{#if data.locked && !data.siliconUser}}
       <span class='{{data.isOperating ? "good" : "bad"}}'>{{data.isOperating ? "On" : "Off"}}</span>
     {{else}}
-      <n-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}' action='breaker'>{{data.isOperating ? "On" : "Off"}}</n-button>
+      <n-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}'
+        action='breaker'>{{data.isOperating ? "On" : "Off"}}</n-button>
     {{/if}}
   </n-section>
   <n-section label='External Power'>
-    <span class='{{powerStatus(data.externalPower)}}'>{{data.externalPower == 2 ? "Good" : data.externalPower == 1 ? "Low" : "None"}}</span>
+    <span class='{{powerState(data.externalPower)}}'>{{data.externalPower == 2 ? "Good" : data.externalPower == 1 ? "Low" : "None"}}</span>
   </n-section>
   <n-section label='Power Cell'>
     {{#if data.powerCellStatus != null}}
-      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{visual.powerCellStatus}}'>{{Math.fixed(animated.powerCellStatus)}}%</n-bar>
+      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{cellState(data.powerCellStatus)}}'>{{Math.fixed(adata.powerCellStatus)}}%</n-bar>
     {{else}}
       <span class='bad'>Power cell removed.</span>
     {{/if}}
@@ -49,16 +44,17 @@ component.exports =
       {{#if data.locked && !data.siliconUser}}
         <span class='{{data.chargeMode ? "good" : "bad"}}'>{{data.chargeMode ? "Auto" : "Off"}}</span>
       {{else}}
-        <n-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}' action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</n-button>
+        <n-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}'
+          action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</n-button>
       {{/if}}
       &nbsp;
-      [<span class='{{powerStatus(data.chargingStatus)}}'>{{data.chargingStatus == 2 ? "Fully Charged" : data.chargingStatus == 1 ? "Charging" : "Not Charging"}}</span>]
+      [<span class='{{powerState(data.chargingStatus)}}'>{{data.chargingStatus == 2 ? "Fully Charged" : data.chargingStatus == 1 ? "Charging" : "Not Charging"}}</span>]
     </n-section>
   {{/if}}
 </n-display>
 <n-display title='Power Channels'>
   <table class='grow'>
-    {{#each animated.powerChannels}}
+    {{#each adata.powerChannels}}
       <tr>
         <th>{{title}}:</th>
         <td>{{Math.round(powerLoad)}} W</td>
@@ -70,16 +66,19 @@ component.exports =
         </td>
         <td style='float:right'>
           {{#if !data.locked || data.siliconUser}}
-            <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}' action='channel' params='{{topicParams.auto}}'>Auto</n-button>
-            <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel' params='{{topicParams.on}}'>On</n-button>
-            <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel' params='{{topicParams.off}}'>Off</n-button>
+            <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
+              action='channel' params='{{topicParams.auto}}'>Auto</n-button>
+            <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
+              params='{{topicParams.on}}'>On</n-button>
+            <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
+              params='{{topicParams.off}}'>Off</n-button>
           {{/if}}
         </td>
       </tr>
     {{/each}}
     <tr>
       <th>Total Load:</th>
-      <td class='bold'>{{Math.round(animated.totalLoad)}} W</td>
+      <td class='bold'>{{Math.round(adata.totalLoad)}} W</td>
       <td></td>
       <td></td>
       <td></td>
