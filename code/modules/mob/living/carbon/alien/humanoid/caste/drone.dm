@@ -44,6 +44,7 @@
 				var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
 				mind.transfer_to(new_xeno)
 				transferImplantsTo(new_xeno)
+				transferBorers(new_xeno)
 				qdel(src)
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")

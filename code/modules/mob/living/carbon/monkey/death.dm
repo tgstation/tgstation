@@ -17,6 +17,8 @@
 	icon = null
 	invisibility = 101
 
+	dropBorers(1)
+
 	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-m", sleeptime = 15)
 	new /obj/effect/decal/cleanable/ash(loc)
 

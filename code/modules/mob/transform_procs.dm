@@ -7,7 +7,7 @@
 			continue
 		drop_from_inventory(W)
 	regenerate_icons()
-
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
 	delayNextAttack(50)
@@ -53,6 +53,7 @@
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -95,6 +96,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -172,6 +174,7 @@
 			qdel(W)
 		else
 			drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -218,6 +221,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -266,6 +270,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -298,6 +303,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -335,6 +341,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -366,6 +373,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 
 	regenerate_icons()
 	monkeyizing = 1

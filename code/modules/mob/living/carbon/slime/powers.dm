@@ -187,6 +187,7 @@
 			new_slime.name = src.name
 			new_slime.real_name = src.real_name
 			transferImplantsTo(new_slime)
+			transferBorers(new_slime)
 
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
 			qdel(src)
@@ -237,6 +238,7 @@
 			else
 				new_slime.key = src.key
 			transferImplantsTo(new_slime)
+			transferBorers(new_slime)
 
 			to_chat(new_slime, "<B>You are now a slime!</B>")
 			qdel(src)

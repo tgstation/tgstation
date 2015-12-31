@@ -132,7 +132,7 @@
 
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if (B && B.controlling) // Borer
-		to_chat(src, "You cannot suicide as your host, you dick.")
+		to_chat(src, "Your can't suicide while controlling your host, you dick.")
 		return
 
 

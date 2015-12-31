@@ -24,6 +24,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(mind && mind.current == src)
 		mind.current = null
 	spellremove(src)
+	if(istype(src,/mob/living/carbon))//iscarbon is defined at the mob/living level
+		var/mob/living/carbon/Ca = src
+		Ca.dropBorers(1)//sanity checking for borers that haven't been qdel'd yet
 	if(client)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			returnToPool(spell_master)
