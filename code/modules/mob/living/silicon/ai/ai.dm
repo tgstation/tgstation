@@ -335,7 +335,6 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
-	set category = "Malfunction"
 	if(stat == 2)
 		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
