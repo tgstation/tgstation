@@ -59,16 +59,17 @@ var/list/cached_gases_list = null
 	for(var/id in args)
 		assert_gas(id)
 
-		//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
+		//add_gas(gas_id, gas_list) - similar to assert_gas(), but does not check for an existing
 			//gas list for this id.
 		//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
-/datum/gas_mixture/proc/add_gas(gas_id)
-	gases[gas_id] = gaslist(gas_id)
+		//Inlined for maximum speed.
+#define add_gas(gas_id, gas_list)	gas_list[gas_id] = gaslist(gas_id)
 
 		//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
+	var/list/cached_gases = gases
 	for(var/id in args)
-		add_gas(id)
+		add_gas(id, cached_gases)
 
 		//garbage_collect() - removes any gas list which is empty.
 		//Must be used after subtracting from a gas. Must be used after assert_gas()
@@ -362,9 +363,7 @@ var/list/cached_gases_list = null
 		assert_gas(sample_id)
 		cached_gases[sample_id][MOLES] = sample_gases[sample_id][MOLES]
 		copied_gases += sample_id
-	for(var/id in cached_gases)
-		if(id in copied_gases)
-			continue
+	for(var/id in cached_gases-copied_gases)
 		assert_gas(id)
 		cached_gases[id][MOLES] = 0
 
@@ -403,7 +402,7 @@ var/list/cached_gases_list = null
 	var/heat_capacity_sharer_to_self = 0
 
 	for(var/sharer_id in sharercache-selfcache)
-		add_gas(sharer_id) //we can use add_gas() because we're looping only through the IDs not in our cache
+		add_gas(sharer_id, selfcache) //we can use add_gas() because we're looping only through the IDs not in our cache
 
 	for(var/id in selfcache)
 		var/gas = selfcache[id]
@@ -418,14 +417,14 @@ var/list/cached_gases_list = null
 			else
 				heat_capacity_sharer_to_self += gas_heat_capacity
 
-		if(delta > 0 && !sharergas)
+		if(!sharercache[id])
 			//checking here instead of just calling assert_gas()
 			//prevents an extra proc call if the check fails
-			sharer.add_gas(id)
+			add_gas(id, sharercache)
 			sharergas = sharercache[id]
 
-		gas[MOLES]			-= delta
 		sharergas[MOLES]	+= delta
+		gas[MOLES]			-= delta
 		moved_moles			+= delta
 		abs_moved_moles		+= abs(delta)
 
@@ -468,8 +467,8 @@ var/list/cached_gases_list = null
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			temperature -= heat/self_heat_capacity
-			sharer.temperature += heat/sharer_heat_capacity
+			temperature -= QUANTIZE(heat/self_heat_capacity)
+			sharer.temperature += QUANTIZE(heat/sharer_heat_capacity)
 
 /datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (temperature - model.temperature)
@@ -537,6 +536,8 @@ var/list/cached_gases_list = null
 		cached_gases[id][MOLES] = 0 //turfs don't account for anything other than the four old hardcoded gases
 
 	temperature = model.temperature
+
+	garbage_collect()
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
