@@ -100,9 +100,12 @@
 			flame_turf(turflist)
 
 		if(prob(15))
-			to_chat(user, "<span class='danger'>[src] flies out of your hands.</span>")
-			user.take_organ_damage(0,10)
-			user.drop_item(src)
+			if(user.drop_item(src))
+				to_chat(user, "<span class='danger'>\The [src] flies out of your hands.</span>")
+				user.take_organ_damage(0,10)
+			else
+				to_chat(user, "<span class='notice'>\The [src] almost flies out of your hands!</span>")
+
 	Fire(A,user,params, "struggle" = struggle)
 	return 1
 

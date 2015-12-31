@@ -155,8 +155,8 @@ var/list/alldepartments = list("Central Command")
 		else
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_item(I, src)
-				scan = I
+				if(usr.drop_item(I, src))
+					scan = I
 		authenticated = 0
 
 	if(href_list["dept"])
@@ -180,11 +180,11 @@ var/list/alldepartments = list("Central Command")
 
 	if(istype(O, /obj/item/weapon/paper))
 		if(!tofax)
-			user.drop_item(O, src)
-			tofax = O
-			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
-			flick("faxsend", src)
-			updateUsrDialog()
+			if(user.drop_item(O, src))
+				tofax = O
+				to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
+				flick("faxsend", src)
+				updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 
@@ -192,8 +192,8 @@ var/list/alldepartments = list("Central Command")
 
 		var/obj/item/weapon/card/id/idcard = O
 		if(!scan)
-			usr.drop_item(idcard, src)
-			scan = idcard
+			if(usr.drop_item(idcard, src))
+				scan = idcard
 
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)

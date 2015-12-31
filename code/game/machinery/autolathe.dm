@@ -177,9 +177,10 @@
 			else
 				to_chat(user, "You cannot recycle your built in tools.")
 				return 1
-		user.drop_item(I, src)
-		materials.removeFrom(I.materials)
-		user.visible_message("[user] puts \the [I] into \the [src]'s recycling unit.",
-							"You put \the [I] in \the [src]'s reycling unit.")
-		qdel(I)
+
+		if(user.drop_item(I, src))
+			materials.removeFrom(I.materials)
+			user.visible_message("[user] puts \the [I] into \the [src]'s recycling unit.",
+								"You put \the [I] in \the [src]'s reycling unit.")
+			qdel(I)
 		return 1

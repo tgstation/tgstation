@@ -86,10 +86,10 @@
 		if (src.holding)
 			return 0
 		var/obj/item/weapon/tank/T = W
-		user.drop_item(T, src)
-		src.holding = T
-		update_icon()
-		return 1
+		if(user.drop_item(T, src))
+			src.holding = T
+			update_icon()
+			return 1
 
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)

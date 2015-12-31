@@ -41,12 +41,15 @@
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		var/obj/item/weapon/virusdish/D = I
+
+		if(!c.drop_item(D, src)) return 1
+
 		if(!D.analysed)
 			if(!dish)
 				dish = D
 			else
 				toscan += D
-		if(!c.drop_item(D, src)) return 1
+
 		visible_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name].</span>", 3)
 		src.updateUsrDialog()
 

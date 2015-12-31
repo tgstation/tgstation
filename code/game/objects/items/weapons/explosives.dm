@@ -74,13 +74,27 @@
 		user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of explosive on [target.name]!</span>")
 
 	if(do_after(user, target, 50) && user.Adjacent(target))
-		user.drop_item(src)
-		src.target = target
+		var/glue_act = 0 //If 1, the C4 is superglued to the guy's hands - produce a funny message
+
+		if(user.drop_item(src)) //User can't drop this normally -> stick it to him (but drop it anyways, to prevent unintended features)
+			src.target = target
+			user.drop_item(src, force_drop = 1)
+		else
+			to_chat(user, "<span class='danger'><h1>\The [src] is glued to your hands!</h1></span>") //Honk
+			src.target = user
+			glue_act = 1
+
 		loc = null
+
 		if (ismob(target))
 			var/mob/M=target
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("<span class='warning'>[user.name] finished planting an explosive on [target.name]!</span>")
+
+			if(!glue_act)
+				user.visible_message("<span class='warning'>[user.name] finished planting an explosive on [target.name]!</span>")
+			else
+				user.visible_message("<span class='warning'>[user] found \himself unable to drop \the [src] after setting the timer on it!</span>")
+
 			playsound(get_turf(src), 'sound/weapons/c4armed.ogg', 60, 1)
 			if(!iscarbon(user))
 				M.LAssailant = null

@@ -127,14 +127,14 @@
 				to_chat(user, "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>")
 				return TRUE
 
-			building=1
-			update_icon()
-			user.drop_item(O, src)
-			mmi.icon = null
-			mmi.invisibility = 101
-			spawn(50)
-				makeMoMMI(mmi.brainmob)
-			return TRUE
+			if(user.drop_item(O, src))
+				building=1
+				update_icon()
+				mmi.icon = null
+				mmi.invisibility = 101
+				spawn(50)
+					makeMoMMI(mmi.brainmob)
+				return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
 	var/turf/T = get_turf(src)

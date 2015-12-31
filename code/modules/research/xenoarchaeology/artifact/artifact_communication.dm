@@ -15,8 +15,8 @@
 /obj/machinery/communication/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/commstone))
 		if((W in allstones) && remaining < 6)
-			user.drop_item(W, src)
-			to_chat(user, "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>")
+			if(user.drop_item(W, src))
+				to_chat(user, "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>")
 	..()
 
 /obj/machinery/communication/attack_ghost(mob/user as mob)

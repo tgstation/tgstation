@@ -110,19 +110,17 @@
 				if (inserted_cores > 0)
 					to_chat(user, "<span class='warning'> This type of grenade cannot hold more than one slime core.</span>")
 				else
+					if(user.drop_item(W, src))
+						to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
+						beakers += W
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+			else if(W.reagents.total_volume)
+				if(user.drop_item(W, src))
 					to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
-					user.drop_item(W, src)
 					beakers += W
-					E = W
-					inserted_cores++
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
-			else if(W.reagents.total_volume)
-				to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
-				user.drop_item(W, src)
-				beakers += W
-				stage = 1
-				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
 				to_chat(user, "<span class='warning'> \the [W] is empty.</span>")
 	else if (istype(W,/obj/item/slime_extract))
@@ -313,22 +311,17 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 				if (inserted_cores > 1)
 					to_chat(user, "<span class='warning'> You cannot fit more than two slime cores in this grenade.</span>")
 				else
-					to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
-					user.drop_item(W, src)
-					beakers += W
-					if (E == null)//E = first slime extract, C = second slime extract
-						E = W
-					else
-						C = W
-					inserted_cores++
-					stage = 1
-					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+					if(user.drop_item(W, src))
+						to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
+						beakers += W
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else if(W.reagents.total_volume)
-				to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
-				user.drop_item(W, src)
-				beakers += W
-				stage = 1
-				name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				if(user.drop_item(W, src))
+					to_chat(user, "<span class='notice'> You add \the [W] to the assembly.</span>")
+					beakers += W
+					stage = 1
+					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
 				to_chat(user, "<span class='warning'> \the [W] is empty.</span>")
 

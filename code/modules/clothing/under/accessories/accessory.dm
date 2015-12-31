@@ -28,9 +28,9 @@
 		return
 	has_suit = S
 	if(user)
-		user.drop_item(src, has_suit)
-		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
-		src.add_fingerprint(user)
+		if(user.drop_item(src, has_suit))
+			to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
+			src.add_fingerprint(user)
 	else
 		loc = has_suit
 	has_suit.overlays += inv_overlay

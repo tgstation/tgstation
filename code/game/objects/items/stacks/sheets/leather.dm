@@ -66,7 +66,7 @@
 		var/obj/item/stack/cable_coil/C = W
 
 		if(C.use(5))
-			user.drop_item(src)
+			user.drop_item(src, force_drop = 1)
 
 			var/obj/item/clothing/mask/necklace/xeno_claw/X = new(get_turf(src))
 			user.put_in_active_hand(X)

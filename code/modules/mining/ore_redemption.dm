@@ -39,8 +39,8 @@
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item(I, src)
-			inserted_id = I
+			if(usr.drop_item(I, src))
+				inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
@@ -142,8 +142,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item(I, src)
-				inserted_id = I
+				if(usr.drop_item(I, src))
+					inserted_id = I
 			else
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 				return 1

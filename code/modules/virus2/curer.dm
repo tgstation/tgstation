@@ -13,8 +13,8 @@
 	if(istype(I,/obj/item/weapon/reagent_containers))
 		var/mob/living/carbon/C = user
 		if(!container)
-			container = I
-			C.drop_item(I, src)
+			if(C.drop_item(I, src))
+				container = I
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")

@@ -46,8 +46,8 @@
 /datum/context_click/pipe_planner/action(obj/item/used_item, mob/user, params)
 	if(istype(used_item, /obj/item/pipe))
 		var/obj/item/pipe/pipe = used_item
-		user.drop_item(pipe, get_turf(holder))
-		var/dis = PIPING_LAYER_DEFAULT + (PIPING_LAYER_INCREMENT * return_clicked_id_by_params(params))
-		pipe.setPipingLayer(dis)
-		return 1
+		if(user.drop_item(pipe, get_turf(holder)))
+			var/dis = PIPING_LAYER_DEFAULT + (PIPING_LAYER_INCREMENT * return_clicked_id_by_params(params))
+			pipe.setPipingLayer(dis)
+			return 1
 	return 0

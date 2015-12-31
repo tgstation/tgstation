@@ -220,7 +220,7 @@
 				oldhat = hat
 				hat = null
 			hat = H
-			usr.drop_item(hat, src)
+			usr.drop_item(hat, src, 1)
 			regenerate_icons()
 			if (oldhat)
 				usr.put_in_hands(oldhat)
@@ -238,7 +238,7 @@
 				olduniform = uniform
 				uniform = null
 			uniform = C
-			usr.drop_item(uniform, src)
+			usr.drop_item(uniform, src, 1)
 			regenerate_icons()
 			if (olduniform)
 				usr.put_in_hands(olduniform)
@@ -256,7 +256,7 @@
 				oldglasses = glasses
 				glasses = null
 			glasses = G
-			usr.drop_item(glasses, src)
+			usr.drop_item(glasses, src, 1)
 			regenerate_icons()
 			if (oldglasses)
 				usr.put_in_hands(oldglasses)

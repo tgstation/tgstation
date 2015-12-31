@@ -41,11 +41,11 @@
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
-				icon_state = "1"
-				circuit = P
-				user.drop_item(P, src)
+				if(user.drop_item(P, src))
+					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+					icon_state = "1"
+					circuit = P
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
@@ -133,6 +133,10 @@
 
 				if(jobban_isbanned(P:brainmob, "AI"))
 					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
+					return
+
+				if(!user.drop_item(P, src))
+					user << "<span class='warning'>You can't let go of \the [P]!</span>"
 					return
 
 				if(P:brainmob.mind)

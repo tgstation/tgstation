@@ -14,7 +14,7 @@
 		var/obj/item/found = locate(tool_state) in src.module.modules
 		if(!found && tool_state != src.module.emag)
 			var/obj/item/TS = tool_state
-			drop_item(TS)
+			drop_item(TS, force_drop = 1)
 	qdel(src)
 
 /mob/living/silicon/robot/mommi/dust()

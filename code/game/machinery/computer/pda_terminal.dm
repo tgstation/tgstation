@@ -54,9 +54,9 @@
 		return ..()
 
 	if(!pda_device)
-		user.drop_item(user_pda, src)
-		pda_device = user_pda
-		update_icon()
+		if(user.drop_item(user_pda, src))
+			pda_device = user_pda
+			update_icon()
 
 	nanomanager.update_uis(src)
 	attack_hand(user)
@@ -119,8 +119,8 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/device/pda))
-					usr.drop_item(I, src)
-					pda_device = I
+					if(usr.drop_item(I, src))
+						pda_device = I
 			update_icon()
 
 		if ("purchase")

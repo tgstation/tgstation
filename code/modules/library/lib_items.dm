@@ -225,10 +225,10 @@
 	if(carved)
 		if(!store)
 			if(W.w_class < 3)
-				user.drop_item(W, src)
-				store = W
-				to_chat(user, "<span class='notice'>You put [W] in [title].</span>")
-				return
+				if(user.drop_item(W, src))
+					store = W
+					to_chat(user, "<span class='notice'>You put [W] in [title].</span>")
+					return
 			else
 				to_chat(user, "<span class='notice'>[W] won't fit in [title].</span>")
 				return

@@ -311,10 +311,9 @@
 		else if(panel_open)
 			to_chat(user, "<span class='rose'>The biogenerator's maintenance panel must be closed first.</span>")
 		else
-			user.before_take_item(O)
-			O.loc = src
-			beaker = O
-			updateUsrDialog()
+			if(user.drop_item(O, src))
+				beaker = O
+				updateUsrDialog()
 	else if(processing)
 		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
@@ -343,9 +342,8 @@
 		if(i >= 20)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
 		else
-			user.before_take_item(O)
-			O.loc = src
-			to_chat(user, "<span class='notice'>You put [O.name] in [src.name]</span>")
+			if(user.drop_item(O, src))
+				to_chat(user, "<span class='notice'>You put [O.name] in [src.name]</span>")
 	update_icon()
 	return
 

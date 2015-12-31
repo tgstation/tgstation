@@ -101,7 +101,7 @@
 	if(result == 1)
 		to_chat(user, "<span class='danger'>Rocks fall, you die.</span>")
 		user.gib()
-		user.drop_item(src)
+		user.drop_item(src, force_drop = 1)
 	else
 		triggered = 1
 		visible_message("<span class='notice'>You hear a quiet click.</span>")

@@ -136,6 +136,10 @@ var/global/list/available_paintings = list(
 			desc = "a blank painting."
 
 /obj/item/mounted/frame/painting/do_build(turf/on_wall, mob/user)
+	if(!user.drop_item(src))
+		to_chat(user, "<span class='warning'>You can't let go of \the [src]!</span>")
+		return
+
 	to_chat(user, "<span class='notice'>You hang the [src] on \the [on_wall]...</span>")
 
 	add_fingerprint(user)
@@ -159,7 +163,6 @@ var/global/list/available_paintings = list(
 
 	playsound(on_wall, 'sound/items/Deconstruct.ogg', 25, 1)
 
-	user.drop_item(src)
 	qdel(src)
 
 /obj/item/mounted/frame/painting/blank

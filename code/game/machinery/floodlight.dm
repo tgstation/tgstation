@@ -77,8 +77,8 @@
 				to_chat(user, "<span class='warning'>There already is a power cell already installed.</span>")
 				return
 			else
-				user.drop_item(W, src)
-				cell = W
-				user.visible_message("<span class='notice'>[user] inserts \the [src] into \the [src].</span>", \
-				"<span class='notice'>You insert \the [src] into \the [src].</span>")
-				update_icon()
+				if(user.drop_item(W, src))
+					cell = W
+					user.visible_message("<span class='notice'>[user] inserts \the [src] into \the [src].</span>", \
+					"<span class='notice'>You insert \the [src] into \the [src].</span>")
+					update_icon()

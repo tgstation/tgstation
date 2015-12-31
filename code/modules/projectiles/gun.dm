@@ -78,7 +78,7 @@
 			if ((M_CLUMSY in M.mutations) && prob(50))
 				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
-				M.drop_item(src)
+				M.drop_item(src, force_drop = 1)
 				qdel(src)
 				return
 

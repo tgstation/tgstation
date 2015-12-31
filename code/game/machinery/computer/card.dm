@@ -105,14 +105,14 @@
 		return ..()
 
 	if(!is_centcom() && !scan && (access_change_ids in id_card.access))
-		user.drop_item(id_card, src)
-		scan = id_card
+		if(user.drop_item(id_card, src))
+			scan = id_card
 	else if(is_centcom() && !scan && ((access_cent_creed in id_card.access) || (access_cent_captain in id_card.access)))
-		user.drop_item(id_card, src)
-		scan = id_card
+		if(user.drop_item(id_card, src))
+			scan = id_card
 	else if(!modify)
-		user.drop_item(id_card, src)
-		modify = id_card
+		if(user.drop_item(id_card, src))
+			modify = id_card
 
 	nanomanager.update_uis(src)
 	attack_hand(user)
@@ -215,8 +215,8 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item(I, src)
-					modify = I
+					if(usr.drop_item(I, src))
+						modify = I
 
 		if ("scan")
 			if (scan)
@@ -231,8 +231,8 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item(I, src)
-					scan = I
+					if(usr.drop_item(I, src))
+						scan = I
 
 		if("access")
 			if(href_list["allowed"])

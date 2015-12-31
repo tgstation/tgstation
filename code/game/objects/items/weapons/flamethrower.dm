@@ -102,19 +102,19 @@
 		var/obj/item/device/assembly/igniter/I = W
 		if(I.secured)	return
 		if(igniter)		return
-		user.drop_item(I, src)
-		igniter = I
-		update_icon()
-		return
+		if(user.drop_item(I, src))
+			igniter = I
+			update_icon()
+			return
 
 	if(istype(W,/obj/item/weapon/tank/plasma))
 		if(ptank)
 			to_chat(user, "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>")
 			return
-		user.drop_item(W, src)
-		ptank = W
-		update_icon()
-		return
+		if(user.drop_item(W, src))
+			ptank = W
+			update_icon()
+			return
 
 	if(istype(W, /obj/item/device/analyzer) && ptank)
 		var/obj/item/device/analyzer/analyzer = W

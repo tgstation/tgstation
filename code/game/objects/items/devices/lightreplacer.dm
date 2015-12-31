@@ -144,15 +144,15 @@
 
 	if(istype(W, /obj/item/weapon/storage/box/lights))
 		if(!supply)
-			user.drop_item(W, src)
-			user.visible_message("[user] inserts \a [W] into \the [src]", "You insert \the [W] into \the [src] to be used as the supply container.")
-			supply = W
-			return
+			if(user.drop_item(W, src))
+				user.visible_message("[user] inserts \a [W] into \the [src]", "You insert \the [W] into \the [src] to be used as the supply container.")
+				supply = W
+				return
 		else if(!waste)
-			user.drop_item(W, src)
-			user.visible_message("[user] inserts \a [W] into \the [src]", "You insert \the [W] into \the [src] to be used as the waste container.")
-			waste = W
-			return
+			if(user.drop_item(W, src))
+				user.visible_message("[user] inserts \a [W] into \the [src]", "You insert \the [W] into \the [src] to be used as the waste container.")
+				waste = W
+				return
 		else
 			var/obj/item/weapon/storage/box/lights/lsource = W
 			if(!lsource.contents.len)
@@ -206,7 +206,7 @@
 		var/list/light_type_cur
 		var/list/to_dump_5  //I guess I could do this without this variable, but it would involve more string concatenation, and nobody wants that.
 		var/list/to_dump_all//This too
-	
+
 		for(var/T in light_types)
 			light_type_cur = light_types[T] //The way you'd expect to be the good way to do this doesn't work. This is dumb, but necessary.
 			to_dump_5 = list()
@@ -226,7 +226,7 @@
 
 	if(waste)
 		dat += {"<br><br><br><h3>Waste Container:</h3>
-	
+
 		<b>Filled: </b>[waste.contents.len]/[waste.storage_slots]<br>
 		<b><a href='?src=\ref[src];eject=waste'>Eject Waste Container</a></b>
 		"}
@@ -276,7 +276,7 @@
 		var/list/light_type_cur
 		var/list/to_dump_5//I guess I could do this without this variable, but it would include more string concatenation, and nobody wants that.
 		var/list/to_dump_all //This too
-	
+
 		for(var/T in light_types)
 			to_dump_5 = list()
 			to_dump_all = list()
@@ -294,7 +294,7 @@
 
 	if(waste)
 		dat += {"<br><br><br><h3>Waste Container:</h3>
-	
+
 		<b>Filled: </b>[waste.contents.len]/[waste.storage_slots]<br>
 		<b><a href='?src=\ref[src];recycle=1'>Recycle Contents</a></b>
 		"}
@@ -378,7 +378,7 @@
 //If the light works, attempts to place it in the supply box. Otherwise, attempts to place it in the waste box.
 //Fails if the light cannot be placed into the correct box for any reason.
 //Returns 1 if the light is successfully inserted into the correct box, 0 if the insertion fails, and null if the item to be inserted is not a light or something very strange happens.
-/obj/item/device/lightreplacer/proc/insert_if_possible(var/obj/item/weapon/light/L) 
+/obj/item/device/lightreplacer/proc/insert_if_possible(var/obj/item/weapon/light/L)
 	if(!istype(L))
 		return
 	if(L.status == LIGHT_OK)

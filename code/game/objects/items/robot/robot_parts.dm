@@ -129,34 +129,34 @@
 		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
-		user.drop_item(W, src)
-		src.l_leg = W
-		src.updateicon()
+		if(user.drop_item(W, src))
+			src.l_leg = W
+			src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
 		if(src.r_leg)	return
-		user.drop_item(W, src)
-		src.r_leg = W
-		src.updateicon()
+		if(user.drop_item(W, src))
+			src.r_leg = W
+			src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
 		if(src.l_arm)	return
-		user.drop_item(W, src)
-		src.l_arm = W
-		src.updateicon()
+		if(user.drop_item(W, src))
+			src.l_arm = W
+			src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
 		if(src.r_arm)	return
-		user.drop_item(W, src)
-		src.r_arm = W
-		src.updateicon()
+		if(user.drop_item(W, src))
+			src.r_arm = W
+			src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/chest))
 		if(src.chest)	return
 		if(W:wires && W:cell)
-			user.drop_item(W, src)
-			src.chest = W
-			src.updateicon()
+			if(user.drop_item(W, src))
+				src.chest = W
+				src.updateicon()
 		else if(!W:wires)
 			to_chat(user, "<span class='notice'>You need to attach wires to it first!</span>")
 		else
@@ -165,9 +165,9 @@
 	if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)	return
 		if(W:flash2 && W:flash1)
-			user.drop_item(W, src)
-			src.head = W
-			src.updateicon()
+			if(user.drop_item(W, src))
+				src.head = W
+				src.updateicon()
 		else
 			to_chat(user, "<span class='notice'>You need to attach a flash to it first!</span>")
 
@@ -198,6 +198,9 @@
 				to_chat(user, "<span class='warning'>This [W] does not seem to fit.</span>")
 				return
 
+			if(!user.drop_item(W))
+				return
+
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
 
 			for(var/P in M.mommi_assembly_parts) //Let's give back all those mommi creation components
@@ -207,8 +210,6 @@
 						M.contents -= L
 
 			if(!O)	return
-
-			user.drop_item(W)
 
 			O.mmi = W
 			O.invisibility = 0
@@ -257,9 +258,9 @@
 			to_chat(user, "<span class='notice'>You have already inserted a cell!</span>")
 			return
 		else
-			user.drop_item(W, src)
-			src.cell = W
-			to_chat(user, "<span class='notice'>You insert the cell!</span>")
+			if(user.drop_item(W, src))
+				src.cell = W
+				to_chat(user, "<span class='notice'>You insert the cell!</span>")
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
 			to_chat(user, "<span class='notice'>You have already inserted wire!</span>")
@@ -278,21 +279,21 @@
 			to_chat(user, "<span class='notice'>You have already inserted the eyes!</span>")
 			return
 		else if(src.flash1)
-			user.drop_item(W, src)
-			src.flash2 = W
-			to_chat(user, "<span class='notice'>You insert the flash into the eye socket!</span>")
+			if(user.drop_item(W, src))
+				src.flash2 = W
+				to_chat(user, "<span class='notice'>You insert the flash into the eye socket!</span>")
 		else
-			user.drop_item(W, src)
-			src.flash1 = W
-			to_chat(user, "<span class='notice'>You insert the flash into the eye socket!</span>")
+			if(user.drop_item(W, src))
+				src.flash1 = W
+				to_chat(user, "<span class='notice'>You insert the flash into the eye socket!</span>")
 	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
-		to_chat(user, "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>")
-		new /mob/living/simple_animal/spiderbot(get_turf(loc))
-		user.drop_item(W)
-		qdel(W)
-		W = null
-		qdel(src)
-		return
+		if(user.drop_item(W))
+			to_chat(user, "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>")
+			new /mob/living/simple_animal/spiderbot(get_turf(loc))
+			qdel(W)
+			W = null
+			qdel(src)
+			return
 	return
 
 /obj/item/robot_parts/attackby(obj/item/W as obj, mob/user as mob)

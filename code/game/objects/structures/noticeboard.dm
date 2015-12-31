@@ -27,7 +27,7 @@
 		if(notices < 5)
 			O.add_fingerprint(user)
 			add_fingerprint(user)
-			user.drop_item(O,src)
+			user.drop_item(O,src, force_drop = 1)
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
 			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")

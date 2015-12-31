@@ -95,7 +95,7 @@
 		if(S.seed && S.seed.immutable > 0)
 			to_chat(user, "That seed is not compatible with our genetics technology.")
 		else
-			user.drop_item(S, src)
+			user.drop_item(S, src, force_drop = 1)
 			loaded_seed = W
 			to_chat(user, "You load [W] into [src].")
 			nanomanager.update_uis(src)
@@ -117,7 +117,9 @@
 					to_chat(user, "That disk does not have any gene data loaded.")
 					return
 
-			user.drop_item(W, src)
+			if(!user.drop_item(W, src))
+				return
+
 			loaded_disk = W
 			to_chat(user, "You load [W] into [src].")
 			nanomanager.update_uis(src)

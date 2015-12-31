@@ -2143,15 +2143,15 @@ obj/item/device/pda/AltClick()
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item(I, src)
-				id = I
+				if(user.drop_item(I, src))
+					id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item(I, src)
-			id = I
-			user.put_in_hands(old_id)
+			if(user.drop_item(I, src))
+				id = I
+				user.put_in_hands(old_id)
 	if(id && incoming_transactions.len)
 		receive_incoming_transactions(id)
 	return
@@ -2160,11 +2160,11 @@ obj/item/device/pda/AltClick()
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		cartridge = C
-		user.drop_item(C, src)
-		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
-		if(cartridge.radio)
-			cartridge.radio.hostpda = src
+		if(user.drop_item(C, src))
+			cartridge = C
+			to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
+			if(cartridge.radio)
+				cartridge.radio.hostpda = src
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
@@ -2188,17 +2188,17 @@ obj/item/device/pda/AltClick()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		user.drop_item(C, src)
-		pai = C
-		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
-		updateUsrDialog()
+		if(user.drop_item(C, src))
+			pai = C
+			to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
+			updateUsrDialog()
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
 			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
-			user.drop_item(C, src)
-			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
+			if(user.drop_item(C, src))
+				to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	else if(istype(C,/obj/item/weapon/spacecash))
 		if(!id)
 			to_chat(user, "\icon[src]<span class='warning'>There is no ID in the PDA!</span>")

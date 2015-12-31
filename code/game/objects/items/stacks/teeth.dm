@@ -35,7 +35,7 @@
 			return
 
 		if(C.use(5))
-			user.drop_item(src)
+			user.drop_item(src, force_drop = 1)
 
 			var/obj/item/clothing/mask/necklace/teeth/X = new(get_turf(src))
 
