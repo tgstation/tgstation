@@ -14,7 +14,6 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
-	var/storage_blobs = 0
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
@@ -91,10 +90,10 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
-	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M))
+	for(var/mob/M in mob_list)
+		if(isovermind(M) || isobserver(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M.show_message(rendered, 2)
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
@@ -154,15 +153,15 @@
 		var/mob/camera/blob/B = usr
 		B.transport_core()
 
-/obj/screen/blob/StorageBlob
-	icon_state = "ui_factory"
-	name = "Produce Storage Blob (20)"
-	desc = "Produces a storage blob for 20 points."
+/obj/screen/blob/Blobbernaut
+	icon_state = "ui_blobbernaut"
+	name = "Produce Blobbernaut (20)"
+	desc = "Produces a blobbernaut for 20 points."
 
-/obj/screen/blob/StorageBlob/Click()
+/obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_storage()
+		B.create_blobbernaut()
 
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
@@ -247,7 +246,7 @@
 	using.screen_loc = ui_zonesel
 	adding += using
 
-	using = new /obj/screen/blob/StorageBlob()
+	using = new /obj/screen/blob/Blobbernaut()
 	using.screen_loc = ui_belt
 	adding += using
 
