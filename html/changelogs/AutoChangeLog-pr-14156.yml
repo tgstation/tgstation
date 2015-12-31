@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - imageadd: "Replaced every book sprite in the game with new, consistent versions."
-  - imageadd: "Except the one-use wizard spellbooks, which already got new sprites."
