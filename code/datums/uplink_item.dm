@@ -559,7 +559,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/traitor_virus_kit
 	name = "Virus Kit"
-	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) autoinjector for rapid application on upto two targets each, a syringe, and a bottle containing the BVAK solution."
+	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing the BVAK solution."
 	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
 	cost = 9
 	surplus = 50
