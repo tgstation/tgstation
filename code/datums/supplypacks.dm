@@ -434,7 +434,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/clothing/head/helmet/knight/yellow,
 					/obj/item/clothing/head/helmet/knight/blue)
 	cost = 35
-	containertype = /obj/structure/closet/crate/secure
+	containertype = /obj/structure/closet/crate
 	containername = "knight armor crate"
 	group = "Clothing"
 
