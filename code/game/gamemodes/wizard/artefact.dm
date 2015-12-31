@@ -254,7 +254,7 @@ var/global/list/multiverse = list()
 					evil = TRUE
 				else
 					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
-					var/datum/objective/survive/new_objective = new /datum/objective/survive
+					var/datum/objective/escape_obj/survive/new_objective = new /datum/objective/escape_obj/survive
 					new_objective.owner = usr.mind
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
 					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
@@ -295,15 +295,15 @@ var/global/list/multiverse = list()
 	equip_copy(M)
 
 	if(evil)
-		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-		hijack_objective.owner = M.mind
-		M.mind.objectives += hijack_objective
-		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
+		var/datum/objective/hijackclone/new_objective = add_objective(M.mind, /datum/objective/hijackclone)
+		new_objective.owner = M.mind
+		M.mind.objectives += new_objective
+		new_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
+		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
 		new_objective.owner = M.mind
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
