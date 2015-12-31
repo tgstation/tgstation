@@ -75,15 +75,22 @@
 
 /datum/reagent/proc/reaction_obj(var/obj/O, var/volume)
 
+	src = null
+
 	if(!istype(O))
 		return 1
 
 /datum/reagent/proc/reaction_turf(var/turf/simulated/T, var/volume)
 
+	src = null
+
 	if(!istype(T))
 		return 1
 
 /datum/reagent/proc/on_mob_life(var/mob/living/M, var/alien)
+
+	if(!istype(M))
+		return 1
 
 	if(overdose && volume >= overdose) //This is the current overdose system
 		M.adjustToxLoss(overdose_dam)
@@ -91,6 +98,9 @@
 	holder.remove_reagent(src.id, custom_metabolism) //Trigger metabolism
 
 /datum/reagent/proc/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
+
+	if(!istype(T))
+		return 1
 
 	holder.remove_reagent(src.id, custom_plant_metabolism)
 
