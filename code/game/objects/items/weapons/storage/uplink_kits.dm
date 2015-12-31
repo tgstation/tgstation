@@ -254,7 +254,7 @@
  	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
  	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
  	new /obj/item/weapon/reagent_containers/syringe
- 	new	/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
  	return
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
