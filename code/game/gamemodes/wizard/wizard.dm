@@ -9,7 +9,7 @@
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
-	enemy_minimum_age = 14
+	enemy_type = SOLO
 	round_ends_with_antag_death = 1
 	var/use_huds = 0
 	var/finished = 0

@@ -5,7 +5,7 @@
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
-
+	enemy_type = SOLO
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 6 // Six additional traitors
 
