@@ -102,8 +102,10 @@
 	if (use_onclose)
 		spawn(0)
 			//winexists sleeps, so we don't need to.
-			for (var/i = 0, !winexists(user, window_id) && i < 3, i++)
+		for (var/i in 1 to 10)
+			if (user && winexists(user, window_id))
 				onclose(user, window_id, ref)
+				break
 
 
 /datum/browser/proc/close()
@@ -118,15 +120,18 @@
 /datum/browser/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
 	if (!User)
 		return
+
 	var/output =  {"<center><b>[Message]</b></center><br />
-		<a style="font-size:large;float:left" href="?src=\ref[src];button=1">[Button1]</a>"}
+		<div style="text-align:center">
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=\ref[src];button=1">[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=2">[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
 
 	if (Button3)
-		EXCEPTION("button 3 is not impimented yet")
+		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=1">[Button1]</a>"}
 
+	output += {"</div>"}
 
 	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src)
 	set_content(output)
@@ -147,11 +152,13 @@
 
 		//waits for the window to show up client side before attempting to un-focus it
 		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
-		for (var/i = 0, user && !winexists(user, window_id) && i < 10, i++)
-			if (focusedwindow)
-				winset(user, focusedwindow, "focus=true")
-			else
-				winset(user, "mapwindow", "focus=true")
+		for (var/i in 1 to 10)
+			if (user && winexists(user, window_id))
+				if (focusedwindow)
+					winset(user, focusedwindow, "focus=true")
+				else
+					winset(user, "mapwindow", "focus=true")
+				break
 	if (timeout)
 		spawn(timeout)
 			close()
@@ -175,7 +182,19 @@
 	opentime = 0
 	close()
 
+//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+	if (!User)
+		User = usr
+	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+		if (1)
+			return Button1
+		if (2)
+			return Button2
+		if (3)
+			return Button3
 
+//Same shit, but it returns the button number, could at some point support unlimited button amounts.
 /proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!istype(User))
 		if (istype(User, /client/))
@@ -188,18 +207,6 @@
 	A.wait()
 	if (A.selectedbutton)
 		return A.selectedbutton
-
-//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-	if (!User)
-		User = usr
-	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
-		if (1)
-			return Button1
-		if (2)
-			return Button2
-		if (3)
-			return Button3
 
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
