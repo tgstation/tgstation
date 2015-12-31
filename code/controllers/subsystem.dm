@@ -74,3 +74,9 @@
 //usually called via datum/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
 /datum/subsystem/proc/Recover()
+
+//this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
+/datum/subsystem/on_varedit(edited_var)
+	if (edited_var == "can_fire" && can_fire)
+		next_fire = world.time + wait
+	

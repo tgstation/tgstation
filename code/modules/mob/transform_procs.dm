@@ -295,9 +295,8 @@
 	O << {"Use say ":b to speak to your cyborgs through binary."} //"
 	O << "For department channels, use the following say commands:"
 	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
-		O.show_laws()
-		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	O.show_laws()
+	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange

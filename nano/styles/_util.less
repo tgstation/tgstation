@@ -1,0 +1,57 @@
+@import "_config";
+
+
+// Colors
+.color(@color) { // Explort a given color as a class.
+    &.@{color} {
+        color: @@color;
+    }
+}
+
+.color(normal);
+.color(good);
+.color(average);
+.color(bad);
+.color(label);
+.color(highlight);
+.color(dark);
+
+// Text Styles
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+.fontReset() {
+    color: @text;
+    font-size: @fontsize;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+// Fancy "Notice Me" Stripes
+.noticeStripes() {
+    background-color: @notice1; // Fallback for old browers.
+    background-image: repeating-linear-gradient(
+      -45deg,
+      @notice1,
+      @notice1 10px,
+      @notice2 10px,
+      @notice2 20px
+    );
+}
+
+// General Helpers
+.hidden { display: none !important; }
+
+.clearBoth { clear: both; }
+.clearLeft { clear: left; }
+.clearRight { clear: right; }
+
+.floatNone { float: none; }
+.floatLeft { float: left; }
+.floatRight { float: right; }
+
+.alignTop { vertical-align: top; }
+.alignBottom { vertical-align: bottom; }
+.alignLeft { text-align: left; }
+.alignCenter { text-align: center; }
+.alignRight { text-align: right; }

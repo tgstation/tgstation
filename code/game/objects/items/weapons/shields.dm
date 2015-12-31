@@ -8,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
@@ -28,11 +28,25 @@
 	else
 		..()
 
+/obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 30
+	return ..()
+
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/riot/buckler
+	name = "wooden buckler"
+	desc = "A medieval wooden buckler."
+	icon_state = "buckler"
+	item_state = "buckler"
+	materials = list()
+	burn_state = FLAMMABLE
+	block_chance = 30
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -49,8 +63,6 @@
 	var/active = 0
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(active)
-		return ..()
 	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()

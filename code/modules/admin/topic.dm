@@ -59,13 +59,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a cult.")
-			if("5")
-				if(src.makeMalfAImode())
-					message_admins("[key_name(usr)] caused an AI to malfunction.")
-					log_admin("[key_name(usr)] caused an AI to malfunction.")
-				else
-					message_admins("[key_name_admin(usr)] tried to cause an AI to malfunction. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to cause an AI to malfunction.")
 			if("6")
 				message_admins("[key_name(usr)] is creating a wizard...")
 				if(src.makeWizard())
@@ -246,6 +239,7 @@
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
 		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		add_note(banckey, banreason, null, usr.ckey, 0)
 
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
@@ -1477,12 +1471,12 @@
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
 
-		var/mob/M = locate(href_list["adminplayerobservefollow"])
+		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
 		if(!isobserver(usr))	C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
-		A.ManualFollow(M)
+		A.ManualFollow(AM)
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
@@ -1720,6 +1714,10 @@
 	else if(href_list["create_mob"])
 		if(!check_rights(R_SPAWN))	return
 		return create_mob(usr)
+
+	else if(href_list["dupe_marked_datum"])
+		if(!check_rights(R_SPAWN))	return
+		return DuplicateObject(marked_datum, perfectcopy=1, newloc=get_turf(usr))
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return

@@ -57,6 +57,9 @@
 
 	//Structure conversion/capture
 	if(istype(I, /obj/item/weapon/godstaff))
+		if(!is_handofgod_cultist(user))
+			user << "<span class='notice'>You're not quite sure what the hell you're even doing.</span>"
+			return
 		var/obj/item/weapon/godstaff/G = I
 		if(G.god && deity != G.god)
 			assign_deity(G.god, alert_old_deity = TRUE)

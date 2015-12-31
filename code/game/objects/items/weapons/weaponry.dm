@@ -238,7 +238,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
-	flags = NOSHIELD
+	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	burn_state = FLAMMABLE
 
@@ -260,7 +260,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
-	flags = NOSHIELD
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
@@ -278,7 +277,7 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	flags = ABSTRACT | NODROP
+	flags = NODROP | ABSTRACT
 	w_class = 5.0
 	force = 21
 	throwforce = 0
@@ -287,3 +286,24 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
+
+/obj/item/weapon/mounted_chainsaw/dropped()
+	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
+	qdel(src)
+
+/obj/item/weapon/tailclub
+	name = "tail club"
+	desc = "For the beating to death of lizards with their own tails."
+	icon_state = "tailclub"
+	force = 14
+	throwforce = 1 // why are you throwing a club do you even weapon
+	throw_speed = 1
+	throw_range = 1
+	attack_verb = list("clubbed", "bludgeoned")
+
+/obj/item/weapon/melee/chainofcommand/tailwhip
+	name = "liz o' nine tails"
+	desc = "A whip fashioned from the severed tails of lizards."
+	icon_state = "tailwhip"
+	origin_tech = "combat=1"
+	needs_permit = 0

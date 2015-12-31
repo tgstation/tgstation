@@ -271,13 +271,12 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if (src.destroyed)
 		return
-	add_fingerprint(user)
 	ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "canister.tmpl", name, 470, 400, state = physical_state)
+		ui = new(user, src, ui_key, "canister", name, 470, 470, state = physical_state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()
@@ -299,71 +298,71 @@ update_flag
 		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
 	return data
 
-/obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["toggle"])
-		var/logmsg
-		if (valve_open)
-			if (holding)
-				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the [holding]<br>"
-			else
-				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the <span class='boldannounce'>air</span><br>"
-		else
-			if (holding)
-				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the [holding]<br>"
-			else
-				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the <span class='boldannounce'>air</span><br>"
-				if(air_contents.toxins > 0)
-					message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains plasma! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-					log_admin("[key_name(usr)] opened a canister that contains plasma at [x], [y], [z]")
-				var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air_contents.trace_gases
-				if(sleeping_agent && (sleeping_agent.moles > 1))
-					message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains N2O! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-					log_admin("[key_name(usr)] opened a canister that contains N2O at [x], [y], [z]")
-		investigate_log(logmsg, "atmos")
-		release_log += logmsg
-		valve_open = !valve_open
 
-	if (href_list["remove_tank"])
-		if(holding)
+	switch(action)
+		if("relabel")
+			if (can_label)
+				var/list/colors = list(\
+					"\[N2O\]" = "redws", \
+					"\[N2\]" = "red", \
+					"\[O2\]" = "blue", \
+					"\[Plasma\]" = "orange", \
+					"\[CO2\]" = "black", \
+					"\[Air\]" = "grey", \
+					"\[CAUTION\]" = "yellow", \
+				)
+				var/label = input("Label canister:", "Gas Canister") as null|anything in colors
+				if(label)
+					src.canister_color = colors[label]
+					src.icon_state = colors[label]
+					src.name = "canister: [label]"
+		if("pressure")
+			switch(params["set"])
+				if("custom")
+					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
+					if(custom)
+						release_pressure = custom
+				if("reset")
+					release_pressure = CAN_DEFAULT_RELEASE_PRESSURE
+				if("min")
+					release_pressure = CAN_MIN_RELEASE_PRESSURE
+				if("max")
+					release_pressure = CAN_MAX_RELEASE_PRESSURE
+			release_pressure = Clamp(round(release_pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+		if("valve")
+			var/logmsg
 			if (valve_open)
-				investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
-			holding.loc = loc
-			holding = null
-	if (href_list["release_p"])
-		if (href_list["release_p"] == "custom")
-			var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
-			if(isnum(custom))
-				href_list["release_p"] = custom
-				.()
-		else if (href_list["release_p"] == "reset")
-			release_pressure = CAN_DEFAULT_RELEASE_PRESSURE
-		else if (href_list["release_p"] == "min")
-			release_pressure = CAN_MIN_RELEASE_PRESSURE
-		else if (href_list["release_p"] == "max")
-			release_pressure = CAN_MAX_RELEASE_PRESSURE
-		else
-			release_pressure = text2num(href_list["release_p"])
-		release_pressure = min(max(round(release_pressure), CAN_MIN_RELEASE_PRESSURE), CAN_MAX_RELEASE_PRESSURE)
-	if (href_list["relabel"])
-		if (can_label)
-			var/list/colors = list(\
-				"\[N2O\]" = "redws", \
-				"\[N2\]" = "red", \
-				"\[O2\]" = "blue", \
-				"\[Plasma\]" = "orange", \
-				"\[CO2\]" = "black", \
-				"\[Air\]" = "grey", \
-				"\[CAUTION\]" = "yellow", \
-			)
-			var/label = input("Choose canister label", "Gas canister") as null|anything in colors
-			if (label)
-				src.canister_color = colors[label]
-				src.icon_state = colors[label]
-				src.name = "canister: [label]"
-
+				if (holding)
+					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the [holding]<br>"
+				else
+					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the <span class='boldannounce'>air</span><br>"
+			else
+				if (holding)
+					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the [holding]<br>"
+				else
+					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the <span class='boldannounce'>air</span><br>"
+					if(air_contents.toxins > 0)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains plasma! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains plasma at [x], [y], [z]")
+					var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air_contents.trace_gases
+					if(sleeping_agent && (sleeping_agent.moles > 1))
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains N2O! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains N2O at [x], [y], [z]")
+			investigate_log(logmsg, "atmos")
+			release_log += logmsg
+			valve_open = !valve_open
+		if("eject")
+			if(holding)
+				if (valve_open)
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
+				holding.loc = loc
+				holding = null
+	add_fingerprint(usr)
 	update_icon()
+	return 1
 
 /obj/machinery/portable_atmospherics/canister/toxins/New()
 	..()

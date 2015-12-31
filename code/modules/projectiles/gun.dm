@@ -198,6 +198,8 @@
 		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
+obj/item/weapon/gun/proc/newshot()
+	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
@@ -356,11 +358,15 @@
 	if(azoom)
 		azoom.Remove(user)
 
-/obj/item/weapon/gun/attack_hand(mob/user)
+
+/obj/item/weapon/gun/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-		return
-	..()
+
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
@@ -422,6 +428,10 @@
 
 	process_fire(target, user, 1, params)
 
+/obj/item/weapon/gun/proc/unlock() //used in summon guns and as a convience for admins
+	if(pin)
+		qdel(pin)
+	pin = new /obj/item/device/firing_pin
 
 /////////////
 // ZOOMING //

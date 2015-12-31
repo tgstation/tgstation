@@ -248,7 +248,8 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handle entering and so on.
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
-			if(returnPipenet() != target_move.returnPipenet())
+			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+			if(pipenetdiff.len)
 				user.update_pipe_vision(target_move)
 			user.loc = target_move
 			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
@@ -274,3 +275,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
+
+/obj/machinery/atmospherics/proc/returnPipenets()
+	return list()
+

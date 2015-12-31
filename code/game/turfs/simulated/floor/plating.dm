@@ -214,8 +214,9 @@
 		else if (istype(AM, /mob/living))
 			var/mob/living/L = AM
 			L.adjustFireLoss(20)
-			L.adjust_fire_stacks(20)
-			L.IgniteMob()
+			if(L) //mobs turning into object corpses could get deleted here.
+				L.adjust_fire_stacks(20)
+				L.IgniteMob()
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return

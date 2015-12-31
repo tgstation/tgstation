@@ -103,7 +103,8 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = 4
-	flags = CONDUCT | NOSHIELD
+	flags = CONDUCT
+	armour_penetration = 20
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")

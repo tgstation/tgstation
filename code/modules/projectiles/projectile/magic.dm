@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flags = NOSHIELD
+	armour_penetration = 100
 	flag = "magic"
 
 /obj/item/projectile/magic/death

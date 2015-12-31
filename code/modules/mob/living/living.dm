@@ -386,7 +386,7 @@ Sorry Giacom. Please don't be mad :(
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)

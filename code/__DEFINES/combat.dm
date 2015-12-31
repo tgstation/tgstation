@@ -61,3 +61,11 @@
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+
+
+//Attack types for checking shields/hit reactions
+
+#define MELEE_ATTACK 1
+#define UNARMED_ATTACK 2
+#define PROJECTILE_ATTACK 3
+#define THROWN_PROJECTILE_ATTACK 4

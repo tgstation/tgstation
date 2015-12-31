@@ -103,7 +103,7 @@
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
-	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 170K for it to metabolise correctly."
+	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
@@ -782,6 +782,41 @@
 	..()
 	return
 
+/datum/reagent/medicine/stimulants/longterm
+	name = "Stimulants"
+	id = "stimulants_longterm"
+	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Higly addictive."
+	color = "#00ff00"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 0
+	addiction_threshold = 5
+
+/datum/reagent/medicine/stimulants/longterm/addiction_act_stage1(mob/living/M)
+	M.adjustToxLoss(5*REM)
+	M.adjustStaminaLoss(5*REM)
+	..()
+	return
+/datum/reagent/medicine/stimulants/longterm/addiction_act_stage2(mob/living/M)
+	M.adjustToxLoss(6*REM)
+	M.adjustStaminaLoss(5*REM)
+	M.Stun(2)
+	..()
+	return
+/datum/reagent/medicine/stimulants/longterm/addiction_act_stage3(mob/living/M)
+	M.adjustToxLoss(7*REM)
+	M.adjustStaminaLoss(5*REM)
+	M.adjustBrainLoss(1*REM)
+	M.Stun(2)
+	..()
+	return
+/datum/reagent/medicine/stimulants/longterm/addiction_act_stage4(mob/living/M)
+	M.adjustToxLoss(8*REM)
+	M.adjustStaminaLoss(5*REM)
+	M.adjustBrainLoss(2*REM)
+	M.Stun(2)
+	..()
+	return
+
 /datum/reagent/medicine/insulin
 	name = "Insulin"
 	id = "insulin"
@@ -927,5 +962,27 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM)
+	..()
+	return
+
+/datum/reagent/medicine/haloperidol
+	name = "Haloperidol"
+	id = "haloperidol"
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
+	reagent_state = LIQUID
+	color = "#27870a"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,5)
+	M.drowsyness += 2
+	if(M.jitteriness >= 3)
+		M.jitteriness -= 3
+	if (M.hallucination >= 5)
+		M.hallucination -= 5
+	if(prob(20))
+		M.adjustBrainLoss(1*REM)
+	M.adjustStaminaLoss(2.5*REM)
 	..()
 	return

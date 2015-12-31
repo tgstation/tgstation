@@ -96,13 +96,13 @@ About the new airlock wires panel:
 // You can find code for the airlock wires in the wire datum folder.
 
 /obj/machinery/door/airlock/proc/bolt()
-	if(locked || operating)
+	if(locked)
 		return
 	locked = 1
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
-	if(!locked || operating)
+	if(!locked)
 		return
 	locked = 0
 	update_icon()
@@ -225,7 +225,9 @@ About the new airlock wires panel:
 	else
 		return 0
 
-/obj/machinery/door/airlock/update_icon(state=0)
+/obj/machinery/door/airlock/update_icon(state=0, override=0)
+	if(operating && !override)
+		return
 	switch(state)
 		if(0)
 			if(density)
@@ -816,7 +818,7 @@ About the new airlock wires panel:
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40/C.toolspeed,5,1, target = src))
+			if(do_after(user,40/C.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
 						return
@@ -921,7 +923,10 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+	else if(istype(C, /obj/item/device/doorCharge))
+		if(!p_open)
+			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
+			return
 		if(emagged)
 			return
 		if(charge && !detonated)
@@ -999,14 +1004,13 @@ About the new airlock wires panel:
 	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
-
-	update_icon(AIRLOCK_OPENING)
+	update_icon(AIRLOCK_OPENING, 1)
 	src.SetOpacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = 2.7
-	update_icon()
+	update_icon(AIRLOCK_OPEN, 1)
 	SetOpacity(0)
 	operating = 0
 	air_update_turf(1)
@@ -1047,14 +1051,14 @@ About the new airlock wires panel:
 	if(density)
 		return 1
 	operating = 1
-	update_icon(AIRLOCK_CLOSING)
+	update_icon(AIRLOCK_CLOSING, 1)
 	src.layer = 3.1
 	sleep(5)
 	src.density = 1
 	if(!safe)
 		crush()
 	sleep(9)
-	update_icon(AIRLOCK_CLOSED)
+	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		SetOpacity(1)
 	operating = 0
@@ -1160,13 +1164,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
-		update_icon(AIRLOCK_EMAG)
+		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
 		if(qdeleted(src))
 			return
 		operating = 0
 		if(!open())
-			update_icon(AIRLOCK_CLOSED)
+			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0

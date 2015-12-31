@@ -1,0 +1,86 @@
+@import "_config";
+@import "_util";
+
+
+div.loading {
+    .noticeStripes;
+
+    padding: 8px;
+}
+
+div.content {
+    margin: 32px 4px 0 4px;
+    &.titlebared {
+        padding-top: 3px;
+    }
+}
+
+header.titlebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+
+    background-color: @titlebar;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+
+    .statusicon {
+        position: absolute;
+        top: 4px;
+        left: 12px;
+    }
+
+    .title {
+        position: absolute;
+        top: 6px;
+        left: 46px;
+
+        color: @title;
+        font-size: 16px;
+        white-space: nowrap;
+    }
+
+    .titlebutton() {
+        display: inline-block;
+        position: relative;
+        padding: 7px; // To make a bigger clickable area.
+        margin: -7px;
+
+        color: @title;
+
+        &:hover {
+            color: lighten(@title, @hover);
+        }
+    }
+    .minimize {
+        .titlebutton;
+        position: absolute;
+        top: 6px;
+        right: 46px;
+    }
+    .close {
+        .titlebutton;
+        position: absolute;
+        top: 4px;
+        right: 12px;
+    }
+}
+
+div.resize {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+
+    border-style: solid;
+    border-width: 0 0 30px 30px;
+    border-color: transparent transparent @resize transparent;
+
+    transform: rotate(360deg);
+}
+
+.fancy {
+    .hidden;
+}

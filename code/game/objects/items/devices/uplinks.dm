@@ -175,8 +175,8 @@ var/list/world_uplinks = list()
 	return 0
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
 /obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
-		var/obj/item/weapon/antag_spawner/borg_tele/S = W
+	if(istype(W, /obj/item/weapon/antag_spawner/nuke_ops))
+		var/obj/item/weapon/antag_spawner/nuke_ops/S = W
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
 			qdel(S)
@@ -212,6 +212,3 @@ var/list/world_uplinks = list()
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20
-
-
-

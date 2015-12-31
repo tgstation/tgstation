@@ -142,9 +142,14 @@
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	typetext = "maintenance"
 	icontext = "mai"
+	glass_type = /obj/machinery/door/airlock/glass_maintenance
 	airlock_type = /obj/machinery/door/airlock/maintenance
 	anchored = 1
 	state = 1
+
+/obj/structure/door_assembly/door_assembly_mai/glass
+	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_ext
 	name = "external airlock assembly"
@@ -152,9 +157,14 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	typetext = "external"
 	icontext = "ext"
+	glass_type = /obj/machinery/door/airlock/glass_external
 	airlock_type = /obj/machinery/door/airlock/external
 	anchored = 1
 	state = 1
+
+/obj/structure/door_assembly/door_assembly_ext/glass
+	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_fre
 	name = "freezer airlock assembly"

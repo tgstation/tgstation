@@ -80,7 +80,7 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
@@ -98,11 +98,13 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	Stun(2)
+	if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+		Stun(2)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		Stun(3)
-		Weaken(3)
+		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+			Stun(3)
+			Weaken(3)
 	if(override)
 		return override
 	else
@@ -386,7 +388,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, needhand = 0, target = src))
+		if(do_after(src, 600, 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -429,7 +431,7 @@ var/const/GALOSHES_DONT_HELP = 4
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10, 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src))
 			if(I.loc != src || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
@@ -455,7 +457,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, needhand = 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src))
 			if(!I.loc || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to break [I]!</span>")

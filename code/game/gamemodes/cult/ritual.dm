@@ -11,15 +11,15 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	set category = "Cultist"
 	set name = "Communion"
 
-	if(!iscultist(usr))		//they shouldn't have this verb, but just to be sure...
+	if(!iscultist(usr) || usr.incapacitated())
 		return
-
-	if(usr.incapacitated())
-		return	//dead men tell no tales
 
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-	if(!input)					// TO-DO: Add some kind of filter to corrupt the inputted text
+	if(!input)
 		return
+
+	if(!iscultist(usr) || usr.incapacitated())
+		return	//we do this again because input() sleeps
 
 	cultist_commune(usr, 0, input)
 	return
@@ -189,6 +189,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name) == entered_rune_name)
@@ -200,6 +202,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				chosen_keyword = the_keyword
 			break
 	if(!rune_to_scribe)
+		return
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")

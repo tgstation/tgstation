@@ -1,0 +1,80 @@
+<article class="notice">
+	{{? data.hasHoldingTank }}
+		<span>The regulator is connected to a tank.</span>
+	{{??}}
+		<span>The regulator is not connected to a tank.</span>
+	{{?}}
+</article>
+<article class="display">
+	<header><h2>Canister</h2></header>
+	<section>
+		{{=helper.link('Relabel', 'pencil', 'relabel', null, data.canLabel ? null : 'disabled')}}
+	</section>
+	<section>
+		<span class="label">Pressure:</span>
+		<div class="content">
+			<span>{{=data.tankPressure}} kPa</span>
+		</div>
+	</section>
+	<section>
+		<span class="label">
+			Port:
+		</span>
+		<div class="content">
+			{{? data.portConnected}}
+				<span class="good">Connected</span>
+			{{??}}
+				<span class="bad">Disconnected</span>
+			{{?}}
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Valve</h2></header>
+	<section>
+		<span class="label">Release Pressure:</span>
+		<div class="content">
+			{{=helper.bar(data.releasePressure, data.minReleasePressure, data.maxReleasePressure, null, data.releasePressure + ' kPa')}}
+		</div>
+	</section>
+	<section>
+		<div class="label">Pressure Regulator:</div>
+		<div class="content">
+			{{=helper.link('Reset', 'refresh', 'pressure', {'set': 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Min', 'minus', 'pressure', {'set': 'min'}, (data.releasePressure > data.minReleasePressure) ? null : 'disabled')}}
+			{{=helper.link('Set', 'pencil', 'pressure', {'set': 'custom'}, null)}}
+			{{=helper.link('Max', 'plus', 'pressure', {'set': 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+		</div>
+	</section>
+	<section>
+		<div class="label">Valve:</div>
+		<div class="content">
+			{{=helper.link('Open', 'unlock', 'valve', null, data.valveOpen ? 'selected' : null)}}
+			{{=helper.link('Close', 'lock', 'valve', null, data.valveOpen ? null : 'selected')}}
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Holding Tank</h2></header>
+	{{? data.hasHoldingTank}}
+		<section>
+			{{=helper.link('Eject', 'eject', 'eject')}}
+		</section>
+		<section>
+			<span class="label">Label:</span>
+			<div class="content">
+				{{=data.holdingTank.name}}
+			</div>
+		</section>
+		<section>
+			<span class="label">Tank Pressure:</span>
+			<div class="content">
+				{{=data.holdingTank.tankPressure}} kPa
+			</div>
+		</section>
+	{{??}}
+		<section>
+			<span class="average">No Holding Tank</span>
+		</section>
+	{{?}}
+</article>

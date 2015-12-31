@@ -100,7 +100,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "atmos_pump.tmpl", name, 400, 100)
+		ui = new(user, src, ui_key, "atmos_pump", name, 400, 115)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/get_ui_data()
@@ -144,28 +144,28 @@ Passive gate is similar to the regular pump except:
 	return
 
 
-
 /obj/machinery/atmospherics/components/binary/passive_gate/attack_hand(mob/user)
 	if(..() || !user)
 		return
-	add_fingerprint(usr)
 	interact(user)
 
-/obj/machinery/atmospherics/components/binary/passive_gate/Topic(href, href_list)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["power"])
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	if(href_list["set_press"])
-		switch(href_list["set_press"])
-			if ("max")
-				target_pressure = MAX_OUTPUT_PRESSURE
-			if ("set")
-				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 
+	switch(action)
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(params["set"])
+				if ("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if ("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/components/binary/passive_gate/power_change()
 	..()

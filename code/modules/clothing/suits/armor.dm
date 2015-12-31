@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat)
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -100,7 +100,7 @@
 	put_on_delay = 50
 
 /obj/item/clothing/suit/armor/laserproof
-	name = "ablative armor vest"
+	name = "reflector vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as occasionally reflecting them."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
@@ -118,7 +118,7 @@
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton/telescopic)
 	burn_state = FLAMMABLE
 
 
@@ -172,13 +172,13 @@
 				continue
 			turfs += T
 		if(!turfs.len)
-			turfs += pick(/turf in orange(6, src))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked))
-				return
-			if(H.buckled)
-				H.buckled.unbuckle_mob()
-			H.forceMove(picked)
+			turfs += pick(/turf in orange(6, H))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked))
+			return
+		if(H.buckled)
+			H.buckled.unbuckle_mob()
+		H.forceMove(picked)
 		return 1
 	return 0
 
@@ -200,10 +200,6 @@
 	return 0
 
 
-
-
-
-
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
 
@@ -221,10 +217,21 @@
 			owner.alpha = initial(owner.alpha)
 		return 1
 
+/obj/item/clothing/suit/armor/reactive/tesla
+	name = "reactive tesla armor"
 
-
-
-
+/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
+		for(var/mob/living/M in view(6, owner))
+			if(M == owner)
+				continue
+			owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+			M.adjustFireLoss(25)
+			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		return 1
 //All of the armor below is mostly unused
 
 
