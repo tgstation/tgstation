@@ -279,7 +279,7 @@
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
-	if( !( character.mind.assigned_role in list( "Cyborg" ,  "Mobile MMI" , "AI") )
+	if( !( character.mind.assigned_role in list( "Cyborg" ,  "Mobile MMI" , "AI") ) )
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
