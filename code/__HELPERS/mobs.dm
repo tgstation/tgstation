@@ -147,6 +147,10 @@ Proc for attack log creation, because really why not
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
+	
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1 
 
 	var/target_loc = target.loc
 
@@ -167,7 +171,12 @@ Proc for attack log creation, because really why not
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		
+		if(drifting && !user.inertia_dir)
+				drifting = 0
+				user_loc = user.loc
+		
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
 	if (progress)
@@ -182,7 +191,11 @@ Proc for attack log creation, because really why not
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
-
+	
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1 
+		
 	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
@@ -200,8 +213,12 @@ Proc for attack log creation, because really why not
 		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
-
-		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
+		
+		if(drifting && !user.inertia_dir)
+				drifting = 0
+				Uloc = user.loc
+				
+		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc)
 			. = 0
 			break
 
