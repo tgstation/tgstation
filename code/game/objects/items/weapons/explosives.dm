@@ -76,13 +76,14 @@
 	if(do_after(user, target, 50) && user.Adjacent(target))
 		var/glue_act = 0 //If 1, the C4 is superglued to the guy's hands - produce a funny message
 
-		if(user.drop_item(src)) //User can't drop this normally -> stick it to him (but drop it anyways, to prevent unintended features)
+		if(user.drop_item(src))
 			src.target = target
-			user.drop_item(src, force_drop = 1)
-		else
-			to_chat(user, "<span class='danger'><h1>\The [src] is glued to your hands!</h1></span>") //Honk
+		else //User can't drop this normally -> stick it to him (but drop it anyways, to prevent unintended features)
+			to_chat(user, "<span class='danger'>\The [src] are glued to your hands!</span>") //Honk
 			src.target = user
+			target = user
 			glue_act = 1
+			user.drop_item(src, force_drop = 1)
 
 		loc = null
 
@@ -93,9 +94,9 @@
 			if(!glue_act)
 				user.visible_message("<span class='warning'>[user.name] finished planting an explosive on [target.name]!</span>")
 			else
-				user.visible_message("<span class='warning'>[user] found \himself unable to drop \the [src] after setting the timer on it!</span>")
+				user.visible_message("<span class='warning'>[user] found \himself unable to drop \the [src] after setting the timer on them!</span>")
 
-			playsound(get_turf(src), 'sound/weapons/c4armed.ogg', 60, 1)
+			playsound(get_turf(target), 'sound/weapons/c4armed.ogg', 60, 1)
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
