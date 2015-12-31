@@ -22,7 +22,7 @@
 			if(prob(2))
 				affected_mob << "<span class='danger'>Your stomach violently rumbles!</span>"
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a cavity in your lung forming.</span>"
+				affected_mob << "<span class='danger'>You feel a sharp pain from your lower chest!</span>"
 				affected_mob.adjustOxyLoss(5)
 				affected_mob.emote("gasp")
 			if(prob(5))
@@ -40,7 +40,7 @@
 
 		if(4)
 			if(prob(2))
-				affected_mob << "<span class='userdanger'>[pick("You feel your heart slowing...", "You slow your heartbeat.")]</span>"
+				affected_mob << "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>"
 				affected_mob.adjustStaminaLoss(70)
 			if(prob(10))
 				affected_mob.adjustStaminaLoss(100)
