@@ -591,31 +591,10 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-<<<<<<< 636687c2a83b23b7efc3a052c68c16a6ced66ca8
-					user.drop_item(W)
-					qdel(W)
-					src.build_step++
-					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
-					src.name = "First aid/robot arm/health analyzer assembly"
-					src.overlays += image('icons/obj/aibots.dmi', "na_scanner")
-
-			if(1)
-				if(isprox(W))
-					user.drop_item(W)
-					qdel(W)
-					src.build_step++
-					to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
-					var/turf/T = get_turf(src)
-					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
-					S.skin = src.skin
-					S.name = src.created_name
-					user.drop_from_inventory(src)
-					qdel(src)
-=======
 					if(user.drop_item(W))
 						qdel(W)
 						src.build_step++
-						user << "<span class='notice'>You add the health sensor to [src].</span>"
+						to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
 						src.name = "First aid/robot arm/health analyzer assembly"
 						src.overlays += image('icons/obj/aibots.dmi', "na_scanner")
 
@@ -624,14 +603,13 @@
 					if(user.drop_item(W))
 						qdel(W)
 						src.build_step++
-						user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+						to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
 						var/turf/T = get_turf(src)
 						var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 						S.skin = src.skin
 						S.name = src.created_name
 						user.drop_from_inventory(src)
-						del(src)
->>>>>>> adds clown glue
+						qdel(src)
 
 
 /obj/machinery/bot/medbot/declare()

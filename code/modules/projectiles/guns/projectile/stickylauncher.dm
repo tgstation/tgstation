@@ -66,15 +66,9 @@
 			if(loaded.len >= 6)
 				to_chat(user, "<span class='warning'>You cannot fit any more stickybombs in there!</span>")
 			else
-<<<<<<< 636687c2a83b23b7efc3a052c68c16a6ced66ca8
-				user.drop_item(A, src)
-				to_chat(user, "<span class='notice'>You load \the [A] into \the [src].</span>")
-				loaded += A
-=======
 				if(user.drop_item(A, src))
-					user << "<span class='notice'>You load \the [A] into \the [src].</span>"
+					to_chat(user, "<span class='notice'>You load \the [A] into \the [src].</span>")
 					loaded += A
->>>>>>> adds clown glue
 	else
 		..()
 

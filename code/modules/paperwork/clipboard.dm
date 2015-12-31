@@ -97,15 +97,9 @@
 			if(!haspen)
 				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = usr.get_active_hand()
-<<<<<<< 636687c2a83b23b7efc3a052c68c16a6ced66ca8
-					usr.drop_item(W, src)
-					haspen = W
-					to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
-=======
 					if(usr.drop_item(W, src))
 						haspen = W
-						usr << "<span class='notice'>You slot the pen into \the [src].</span>"
->>>>>>> adds clown glue
+						to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
