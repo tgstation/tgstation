@@ -638,16 +638,17 @@
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
+	var/picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 	switch (theme)
 		if("magic")
-			G.name = "[mob_name] [capitalize(picked_color)]"
+			G.name = "[picked_name] [capitalize(picked_color)]"
 			G.color = color2hex(picked_color)
-			G.real_name = "[mob_name] [capitalize(picked_color)]"
+			G.real_name = "[picked_name] [capitalize(picked_color)]"
 			user << "[G.magic_fluff_string]."
 		if("tech")
 			var/colour = pick("orange", "neon", "pink", "red", "blue", "green")
-			G.name = "[mob_name] [capitalize(colour)]"
-			G.real_name = "[mob_name] [capitalize(colour)]"
+			G.name = "[picked_name] [capitalize(colour)]"
+			G.real_name = "[picked_name] [capitalize(colour)]"
 			G.icon_living = "parasite[colour]"
 			G.icon_state = "parasite[colour]"
 			G.icon_dead = "parasite[colour]"
