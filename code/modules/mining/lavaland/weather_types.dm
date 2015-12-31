@@ -36,7 +36,7 @@
 	duration_upper = 60 //1 minute
 	duration_message = "This isn't average everyday darkness...this is advanced darkness!"
 	wind_down = 100 // 10 seconds
-	wind_down_message = "The darkness is receding. Thank  [ticker.Bible_deity_name]."
+	wind_down_message = "The darkness is receding. Thank god."
 	purely_aesthetic = TRUE
 
 	target_z = 1
