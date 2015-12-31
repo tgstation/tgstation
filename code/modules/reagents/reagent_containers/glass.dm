@@ -216,7 +216,7 @@
 	materials = list(MAT_GLASS=5000)
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -253,7 +253,7 @@
 	materials = list(MAT_METAL=200)
 	w_class = 3
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(5,10,20,25,30,50,70)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
 	volume = 70
 	flags = OPENCONTAINER | BLOCKHAIR
 	slot_flags = SLOT_HEAD
