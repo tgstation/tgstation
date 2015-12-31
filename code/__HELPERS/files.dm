@@ -26,15 +26,38 @@
 		//The DMB that has the map we want.
 		var/binary
 		//Looking for a binary
+		var/min = -1
+		var/max = -1
+		var/skipping = 0
 		for(var/binaries in flist(path))
 			//testing("Checking file [binaries]")
+			if(copytext(binaries,-15,0 == "playercount.txt"))
+				var/list/lines = file2list(path+binaries)
+				for(var/line in lines)
+					if(findtext(line,"max")) max = text2num(copytext(line,5,0))
+					else if(findtext(line,"min")) min = text2num(copytext(line,5,0))
+					else warning("Our file had excessive lines, skipping.")
+				if(!isnull(min) && !isnull(max))
+					if((min != -1) && clients.len < min)
+						skipping = 1
+					else if((max != -1) && clients.len > max)
+						skipping = 2
 			if(copytext(binaries,-4,0) == ".dmb")
+				if(binary)
+					warning("Extra DMB [binary] in map folder, skipping.")
+					continue
 				binary = binaries
-				break
+				continue
+		if(skipping)
+			message_admins("Skipping map [binary] due to [skipping == 1 ? "not enough players." : "too many players."]")
+			warning("Skipping map [binary] due to [skipping == 1 ? "not enough players." : "too many players."]")
+			binary = null
+			continue
 		if(!binary)
 			warning("Map folder [path] does not contain a valid byond binary, skipping.")
 		else
 			maps[potential] = path + binary
+			binary = null
 		recursion_limit--
 	return maps
 
