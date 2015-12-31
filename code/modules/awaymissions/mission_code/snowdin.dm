@@ -237,6 +237,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
+	implants = list(/obj/item/weapon/implant/exile)
 	faction = "syndicate"
 	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
 	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
