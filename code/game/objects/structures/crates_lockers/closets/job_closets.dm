@@ -25,7 +25,7 @@
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/storage/box/rubbershot(src)
 	new /obj/item/clothing/suit/armor/vest(src)
-	new	/obj/item/clothing/glasses/sunglasses/reagent(src)
+	new /obj/item/clothing/glasses/sunglasses/reagent(src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
