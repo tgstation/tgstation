@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - bugfix: "Fixes successive generations of grey tide clones not despawning."
-  - tweak: "Using challenge ops now delays shuttle refuel."

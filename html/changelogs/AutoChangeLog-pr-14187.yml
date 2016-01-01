@@ -1,5 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - tweak: "Long actions (like resisting out of handcuffs) will no longer count space/nograv drifting as the user moving."
-  - tweak: "This does not apply to the target of a long action if that target isn't you. Pulling something while space drifting and working on it intentionally won't work."
