@@ -1,6 +1,33 @@
 <link rel='ractive' href='./components/resize.ract'>
 <link rel='ractive' href='./components/titlebar.ract'>
 
+<script type='text/coffeescript'>
+component.exports =
+  components:
+    "n-bar": require "./components/bar"
+    "n-button": require "./components/button"
+    "n-display": require "./components/display"
+    "n-notice": require "./components/notice"
+    "n-section": require "./components/section"
+    "n-subdisplay": require "./components/subdisplay"
+  events:
+    enter: (require "ractive-events-keys").enter
+    space: (require "ractive-events-keys").space
+  transitions:
+    fade: require "ractive-transitions-fade"
+  onconfig: ->
+    requested  = @get "config.interface"
+    interfaces = require "./interfaces/*", mode: "hash"
+    if interfaces[requested]?
+      @components.interface = interfaces[requested] # Use the interface specified in the config...
+    else
+      @components.interface = require "./interfaces/error" unless @components.interface? # ...unless it does not exist.
+  onrender: ->
+    @observe "config.style", (newkey, oldkey, keypath) -> # Change style to match config.
+      @el.classList.remove oldkey oldkey if oldkey?
+      @el.classList.add newkey newkey if newkey?
+</script>
+
 <titlebar>{{{config.title}}}</titlebar>
 <main>
   <interface />

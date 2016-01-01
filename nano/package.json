@@ -58,5 +58,14 @@
         ".ract"
       ]
     }
+  },
+  "require-globify": {
+    "appliesTo": {
+      "includeExtensions": [
+        ".js",
+        ".coffee",
+        ".ract"
+      ]
+    }
   }
 }
