@@ -193,7 +193,7 @@
 		SSobj.processing |= src
 
 /turf/simulated/floor/plating/lava/process()
-	if(!contents)
+	if(contents.len <=1) //Only the light on the tile
 		processing = 0
 		SSobj.processing.Remove(src)
 		return
