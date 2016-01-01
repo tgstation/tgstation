@@ -9,6 +9,7 @@
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom = 0
+	var/reset_stretch = 0
 	var/smoke = 5
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
@@ -59,6 +60,7 @@
 
 /obj/mecha/combat/marauder/go_out()
 	if(src.occupant && src.occupant.client)
+		winset(src.occupant.client, "mapwindow.map", "icon-size=[src.reset_stretch]")
 		src.occupant.client.view = world.view
 		src.zoom = 0
 	..()
@@ -162,6 +164,8 @@
 		M.log_message("Toggled zoom mode.")
 		M.occupant_message("<font color='[M.zoom?"blue":"red"]'>Zoom mode [M.zoom?"en":"dis"]abled.</font>")
 		if(M.zoom)
+			M.reset_stretch = winget(M.occupant.client, "mapwindow.map", "icon-size")
+			winset(M.occupant.client, "mapwindow.map", "icon-size=0")
 			owner.client.view = 12
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else

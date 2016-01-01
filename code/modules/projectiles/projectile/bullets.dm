@@ -5,6 +5,7 @@
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
+	hitsound_wall = "ricochet"
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
