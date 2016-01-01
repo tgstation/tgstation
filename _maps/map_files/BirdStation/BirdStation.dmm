@@ -2606,7 +2606,7 @@
 "aYg" = (/obj/machinery/computer/secure_data,/turf/simulated/floor/wood,/area/security/brig)
 "aYh" = (/obj/machinery/computer/med_data,/turf/simulated/floor/wood,/area/security/brig)
 "aYi" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker/large{pixel_y = 0},/turf/simulated/floor/plasteel/white,/area/medical/virology)
-"aYj" = (/obj/machinery/smartfridge/chemistry/virology,/turf/simulated/floor/plasteel/white,/area/medical/virology)
+"aYj" = (/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aYk" = (/obj/machinery/button/door{id = "viro shutter"; name = "virology shutter button"; pixel_y = 24},/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aYl" = (/obj/machinery/power/apc{dir = 1; name = "Virology APC"; pixel_y = 24},/obj/structure/cable/cyan{icon_state = "0-4"},/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aYm" = (/obj/structure/cable/cyan{icon_state = "4-8"},/turf/simulated/floor/plasteel/white,/area/medical/virology)

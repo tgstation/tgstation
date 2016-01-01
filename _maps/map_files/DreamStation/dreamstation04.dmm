@@ -1078,7 +1078,7 @@
 "auL" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_virology{name = "Isolation B"; req_access_txt = "39"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/virology)
 "auM" = (/obj/machinery/alarm{pixel_y = 23},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{tag = "icon-manifold-r-f (NORTH)"; dir = 1},/turf/simulated/floor/plasteel{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
 "auN" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 8; frequency = 1439; id_tag = null; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/structure/sink{pixel_y = 24},/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
-"auO" = (/obj/machinery/smartfridge/chemistry/virology,/turf/simulated/floor/plasteel{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
+"auO" = (/turf/simulated/floor/plasteel{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
 "auP" = (/turf/simulated/wall,/area/medical/virology)
 "auQ" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreencorner"},/area/medical/virology)
 "auR" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/components/unary/vent_pump{dir = 2; on = 1},/mob/living/carbon/monkey,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/virology)

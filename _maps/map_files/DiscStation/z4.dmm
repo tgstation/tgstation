@@ -942,7 +942,7 @@
 "st" = (/turf/simulated/floor/plasteel/airless{dir = 5; icon_state = "warning"},/area/derelict/secret)
 "su" = (/turf/simulated/floor/plasteel/airless{dir = 9; icon_state = "warning"},/area/derelict/secret)
 "sv" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/airless,/area/derelict/storage/equipment)
-"sw" = (/obj/machinery/smartfridge/chemistry/virology,/turf/simulated/floor/plasteel{icon_state = "white"},/area/derelict/medical)
+"sw" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/derelict/medical)
 "sx" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/derelict/medical)
 "sy" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_virology{name = "Isolation A"; req_access_txt = "39"},/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/medical)
 "sz" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_virology{name = "Isolation B"; req_access_txt = "39"},/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/medical)

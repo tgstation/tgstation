@@ -4897,7 +4897,7 @@
 "bQi" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plasteel{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
 "bQj" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 4; on = 1},/obj/machinery/camera{c_tag = "Virology Access"},/obj/structure/closet/l3closet,/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
 "bQk" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/obj/structure/closet/l3closet,/turf/simulated/floor/plasteel{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
-"bQl" = (/obj/machinery/smartfridge/chemistry/virology,/turf/simulated/floor/plasteel{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
+"bQl" = (/turf/simulated/floor/plasteel{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
 "bQm" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/obj/structure/sign/deathsposal{pixel_y = 32},/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
 "bQn" = (/obj/structure/table/glass,/obj/item/weapon/paper_bin{pixel_x = -2; pixel_y = 5},/obj/item/weapon/pen/red,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
 "bQo" = (/obj/structure/table/glass,/obj/item/weapon/storage/box/beakers{pixel_x = 2; pixel_y = 2},/obj/item/weapon/storage/box/syringes,/obj/structure/sink/kitchen{pixel_y = 32},/turf/simulated/floor/plasteel{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
