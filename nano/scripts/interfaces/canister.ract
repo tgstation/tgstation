@@ -32,7 +32,7 @@
       action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</n-button>
   </n-section>
 </n-display>
-<n-display title='Holding Tank'>
+<n-display title='Holding Tank' extraright>
   {{#partial right}}
     {{#if data.hasHoldingTank}}
       <n-button icon='eject' style='{{data.valveOpen ? "danger" : null}}' action='eject'>Eject</n-button>

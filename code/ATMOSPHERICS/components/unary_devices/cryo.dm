@@ -152,11 +152,6 @@
 
 	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
-	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
-		data["cellTemperatureStatus"] = "bad"
-	else if(air_contents.temperature > 225)
-		data["cellTemperatureStatus"] = "average"
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	var beakerContents[0]
@@ -171,17 +166,18 @@
 		return
 
 	switch(action)
-		if("open")
-			open_machine()
-		if("close")
-			close_machine()
+		if("power")
+			if(on)
+				on = FALSE
+			else if(!state_open)
+				on = TRUE
+		if("door")
+			if(state_open)
+				close_machine()
+			else
+				open_machine()
 		if("autoeject")
 			autoEject = !autoEject
-		if("on")
-			if(!state_open)
-				on = 1
-		if("off")
-			on = 0
 		if("ejectbeaker")
 			if(beaker)
 				beaker.loc = get_step(loc, SOUTH)

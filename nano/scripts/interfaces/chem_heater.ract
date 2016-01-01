@@ -9,7 +9,7 @@
 	  <n-button icon='pencil' action='temperature'>{{Math.round(adata.targetTemp)}} K</n-button>
   </n-section>
 </n-display>
-<n-display title='Beaker'>
+<n-display title='Beaker' extraright>
   {{#partial right}}
     <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</n-button>
   {{/partial}}

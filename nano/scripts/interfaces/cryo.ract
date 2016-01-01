@@ -1,0 +1,68 @@
+<script type='text/coffeescript'>
+component.exports =
+  data:
+    statState: (stat) ->
+      if stat is 0 then "good"
+      else if stat is 1 then "average"
+      else "bad"
+    tempState: (temp) ->
+        if temp < 225 then "good"
+        else if temp < 273.15 then "average"
+        else "bad"
+</script>
+
+<n-display title='Occupant'>
+  <n-section label='Occupant'>
+	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+  </n-section>
+  {{#if data.hasOccupant}}
+    <n-section label='State'>
+      <span class='{{statState(data.occupant.stat)}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
+  	</n-section>
+  	<n-section label='Temperature'>
+  	  <span>{{Math.round(adata.occupant.bodyTemperature)}} K</span>
+  	</n-section>
+    <n-section label='Health'>
+      <n-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+        state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</n-bar>
+    </n-section>
+    {{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
+      <n-section label='{{label}}'>
+        <n-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</n-bar>
+      </n-section>
+    {{/each}}
+  {{/if}}
+</n-display>
+<n-display title='Cell'>
+  <n-section label='Power'>
+    <n-button icon='{{data.isOperating ? "power-off" : "close"}}'
+      style='{{data.isOperating ? "selected" : null}}'
+      state='{{data.isOpen ? "disabled" : null}}'
+      action='power'>{{data.isOperating ? "On" : "Off"}}</n-button>
+  </n-section>
+  <n-section label='Temperature'>
+		<span class='{{tempState(data.cellTemperature)}}'>{{Math.round(adata.cellTemperature)}} K</span>
+	</n-section>
+	<n-section label='Door'>
+    <n-button icon='{{data.isOpen ? "unlock" : "lock"}}'
+      action='door'>{{data.isOpen ? "Open" : "Closed"}}</n-button>
+    <n-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}'
+      action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</n-button>
+	</n-section>
+</n-display>
+<n-display title='Beaker' extraright>
+  {{#partial right}}
+    <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='ejectbeaker'>Eject</n-button>
+  {{/partial}}
+  <n-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br />
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </n-section>
+</n-display>

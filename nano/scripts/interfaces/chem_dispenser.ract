@@ -2,28 +2,32 @@
   <n-section label='Energy'>
     <n-bar min='0' max='{{data.maxEnergy}}' value='{{data.energy}}'>{{Math.fixed(adata.energy)}} Units</n-bar>
   </n-section>
-  <n-section label='Amount'>
-    {{#each data.beakerTransferAmounts}}
-      <n-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"amount": {{.}}}'>{{.}}</n-button>
-    {{/each}}
-  </n-section>
+  {{#if data.beakerTransferAmounts}}
+    <n-section label='Amount'>
+      {{#each data.beakerTransferAmounts}}
+        <n-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"amount": {{.}}}'>{{.}}</n-button>
+      {{/each}}
+    </n-section>
+  {{/if}}
 </n-display>
 <n-display title='Dispense'>
   <n-section>
     {{#each data.chemicals}}
-      <n-button icon='tint' grid='true' action='dispense' params='{"reagent": "{{id}}"}'>{{title}}</n-button>
+      <n-button grid icon='tint' action='dispense' params='{"reagent": "{{id}}"}'>{{title}}</n-button>
     {{/each}}
   </n-section>
 </n-display>
-<n-display title='Beaker'>
+<n-display title='Beaker' extraright>
   {{#partial right}}
     <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</n-button>
   {{/partial}}
-  <n-section label='Remove'>
-    {{#each data.beakerTransferAmounts}}
-      <n-button icon='minus' action='remove' params='{"amount": {{.}}}'>{{.}}</n-button>
-    {{/each}}
-  </n-section>
+  {{#if data.beakerTransferAmounts}}
+    <n-section label='Remove'>
+      {{#each data.beakerTransferAmounts}}
+        <n-button icon='minus' action='remove' params='{"amount": {{.}}}'>{{.}}</n-button>
+      {{/each}}
+    </n-section>
+  {{/if}}
   <n-section label='Contents'>
     {{#if data.isBeakerLoaded}}
       <span>{{Math.round(adata.beakerCurrentVolume)}}/{{data.beakerMaxVolume}} Units</span>
