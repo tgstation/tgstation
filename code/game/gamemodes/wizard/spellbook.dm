@@ -396,7 +396,7 @@
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(ticker.current_state < GAME_STATE_PLAYING) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
@@ -415,7 +415,7 @@
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(ticker.current_state < GAME_STATE_PLAYING) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
@@ -436,7 +436,7 @@
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(ticker.current_state < GAME_STATE_PLAYING) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
@@ -462,7 +462,7 @@
 	cost = 8
 
 /datum/spellbook_entry/summon/multisword/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(ticker.current_state < GAME_STATE_PLAYING) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 

@@ -12,7 +12,7 @@ Contents:
 	set category = null
 	set name = "Make Space Ninja"
 
-	if (!ticker.mode)
+	if (ticker.current_state < GAME_STATE_PLAYING)
 		alert("Wait until the game starts")
 		return
 
@@ -42,7 +42,7 @@ Contents:
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	if(!ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		alert("The game hasn't started yet!")
 		return
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")

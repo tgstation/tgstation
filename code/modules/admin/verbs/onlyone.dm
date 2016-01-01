@@ -1,5 +1,5 @@
 /client/proc/only_one()
-	if(!ticker || !ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		alert("The game hasn't started yet!")
 		return
 
@@ -39,7 +39,7 @@
 
 
 /proc/only_me()
-	if(!ticker || !ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		alert("The game hasn't started yet!")
 		return
 

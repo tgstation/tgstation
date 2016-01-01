@@ -1001,8 +1001,6 @@ About the new airlock wires panel:
 
 	if(!density)
 		return 1
-	if(!ticker || !ticker.mode)
-		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
 	src.SetOpacity(0)

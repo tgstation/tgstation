@@ -687,7 +687,7 @@ Sorry Giacom. Please don't be mad :(
 	return name
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker || !ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(has_gravity)
 		clear_alert("weightless")

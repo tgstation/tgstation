@@ -56,6 +56,8 @@
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 
+	var/list/antag_roles = list() //list of datums
+
 /datum/mind/New(var/key)
 	src.key = key
 
@@ -184,13 +186,8 @@
 			R.traitor_frequency = 0
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
-	remove_changeling()
-	remove_traitor()
-	remove_nukeop()
-	remove_wizard()
-	remove_cultist()
-	remove_rev()
-	remove_gang()
+	for(var/datum/role/R in antag_roles)
+		R.lose_role()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -208,7 +205,7 @@
 	else		recipient << "<i>[output]</i>"
 
 /datum/mind/proc/edit_memory()
-	if(!ticker || !ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		alert("Not before round-start!", "Alert")
 		return
 

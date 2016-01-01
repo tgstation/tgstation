@@ -710,7 +710,7 @@ var/global/BSACooldown = 0
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(ticker && !ticker.mode)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 

@@ -199,10 +199,6 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return
-
 	if(M.buckled)
 		if(M == buckled_mob)
 			M.Feedstop()
@@ -230,14 +226,6 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return 0
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return 0
-
 	if (M.a_intent == "harm")
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
@@ -275,14 +263,6 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return 0
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return 0
-
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")

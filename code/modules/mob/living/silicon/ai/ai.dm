@@ -464,14 +464,6 @@ var/list/ai_list = list()
 	return 2
 
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return
-
-	..()
-	return
-
 /mob/living/silicon/ai/reset_view(atom/A)
 	if (camera_light_on)
 		light_cameras()

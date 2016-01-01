@@ -27,7 +27,7 @@
 		stickyban(href_list["stickyban"],href_list)
 
 	else if(href_list["makeAntag"])
-		if (!ticker.mode)
+		if (ticker.current_state < GAME_STATE_PLAYING)
 			usr << "<span class='danger'>Not until the round starts!</span>"
 			return
 		switch(href_list["makeAntag"])
@@ -1689,7 +1689,7 @@
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))	return
 
-		if(!ticker || !ticker.mode)
+		if(ticker.current_state < GAME_STATE_PLAYING)
 			alert("The game hasn't started yet!")
 			return
 
