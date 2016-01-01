@@ -92,7 +92,7 @@
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
-	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
+	desc = "A therapeutic gel pack with bandages which treats blunt force trauma."
 	icon_state = "brutepack"
 	heal_brute = 40
 	origin_tech = "biotech=1"
