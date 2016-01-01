@@ -81,7 +81,7 @@ var/list/uplink_items = list()
 		return 0
 
 	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	if ((U.loc in user.contents) || (in_range(U.loc, user) && istype(U.loc.loc, /turf)))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0
@@ -291,6 +291,14 @@ var/list/uplink_items = list()
 	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 0
+
+/datum/uplink_item/stealthy_weapons/operator_virus_grenade
+	name = "Fungal Tuberculosis grenade"
+	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
+	cost = 12
+	surplus = 35
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
@@ -549,6 +557,14 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/traitor_virus_kit
+	name = "Virus Kit"
+	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
+	cost = 20 //because nobody knows jack shit about virology
+	surplus = 50
+	excludefrom = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -760,7 +776,7 @@ var/list/uplink_items = list()
 	They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. \
 	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks." //THEN WHY CANT THEY SEE PLASMA FIRES????
 	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 6
+	cost = 4
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"

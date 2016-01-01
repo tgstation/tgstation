@@ -40,7 +40,7 @@
 
 	var/eldergod = 0
 	var/orbs_needed = 3
-	var/large_shell_summoned = 0
+	var/obj/structure/constructshell/large/large_shell_reference = null
 	var/attempts_left = 3
 
 /datum/game_mode/cult/announce()

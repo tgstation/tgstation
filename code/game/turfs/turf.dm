@@ -27,7 +27,6 @@
 	flags = 0
 
 	var/image/obscured	//camerachunks
-
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)

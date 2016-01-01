@@ -254,7 +254,7 @@ var/global/list/multiverse = list()
 					evil = TRUE
 				else
 					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
-					var/datum/objective/survive/new_objective = new /datum/objective/survive
+					var/datum/objective/escape_obj/survive/new_objective = new /datum/objective/escape_obj/survive
 					new_objective.owner = usr.mind
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
 					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
@@ -279,22 +279,15 @@ var/global/list/multiverse = list()
 		user << "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
 
 
-/obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
+/obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/living/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M, icon_updates=0)
+	user.client.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
 	M.mind.name = usr.real_name
 	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")
-	if(prob(50))
-		var/list/all_species = list()
-		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
-				all_species += speciestype
-		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
 	M.update_hair()
 	M.update_mutcolor()
@@ -302,15 +295,15 @@ var/global/list/multiverse = list()
 	equip_copy(M)
 
 	if(evil)
-		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-		hijack_objective.owner = M.mind
-		M.mind.objectives += hijack_objective
-		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
+		var/datum/objective/hijackclone/new_objective = add_objective(M.mind, /datum/objective/hijackclone)
+		new_objective.owner = M.mind
+		M.mind.objectives += new_objective
+		new_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
+		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
 		new_objective.owner = M.mind
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."

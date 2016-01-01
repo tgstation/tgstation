@@ -283,9 +283,11 @@
 	result = /obj/item/clothing/head/lizard
 	time = 20
 	reqs = list(/obj/item/organ/severedtail = 1)
+	category = CAT_MISC
 
 /datum/table_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 20
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	category = CAT_MISC

@@ -8,7 +8,6 @@
   * All core systems are subsystems.
   * They are process()'d by this Master Controller.
  **/
-
 var/global/datum/controller/master/Master = new()
 
 /datum/controller/master
@@ -196,3 +195,4 @@ var/global/datum/controller/master/Master = new()
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	stat("Master Controller:", statclick.update("[round(Master.cost, 0.001)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
+

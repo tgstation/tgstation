@@ -151,25 +151,40 @@
 		return ..()
 	if(ticker.mode.name != "cult")
 		return
+	var/turf/T = get_turf(user)
+	if(T.z != ZLEVEL_STATION)
+		user << "<span class='cultlarge'>You shouldn't do this here. Go back.</span>"
+		return
 	var/datum/game_mode/cult/cult = ticker.mode
 	if(!cult.attempts_left)
 		user << "<span class='notice'>You attempt to call out to the Geometer, but there is no answer...</span>"
 		return
-	switch(alert(user,"Are you sure you wish to summon the large construct shell? [cult.attempts_left] attempts left!","Summoning Large Shell","Yes","No"))
-		if("Yes")
-			cult.attempts_left--
-			place_down_large_shell(user)
-			qdel(src)
+	if(cult.eldergod)
+		user << "<span class='cultlarge>The Geometer is already among us.</span>"
+		return
+	if(cult.large_shell_reference)
+		var/obj/S = cult.large_shell_reference
+		if(S.anchored)
+			var/area/A = get_area(S)
+			user << "<span class='cult'>The Geometer has already started manifesting in [initial(A.name)]. You can no longer move Her shell.</span>"
+			return
+		switch(alert(user,"The Geometer's shell has already been manifested. Do you wish to summon it to your location?","Summoning Large Shell","Yes","No"))
+			if("Yes")
+				S.visible_message("<span class='cultlarge'>The shell suddenly vanishes.</span>")
+				S.loc = user.loc
+	else
+		switch(alert(user,"Are you sure you wish to summon the large construct shell? [cult.attempts_left] attempts left!","Summoning Large Shell","Yes","No"))
+			if("Yes")
+				cult.attempts_left--
+				place_down_large_shell(user)
+				qdel(src)
 
 /obj/item/summoning_orb/proc/place_down_large_shell(mob/user)
 	if(!(ticker.mode.name == "cult"))
 		user << "<span class='notice'>You attempt to call out to the Geometer for Her shell, but you fail...</span>"
 		return
 	var/datum/game_mode/cult/cult = ticker.mode
-	if(cult.large_shell_summoned)
-		user << "<span class='cult'>Another Acolyte has already summoned Her shell. You must go forth and contact them.</span>"
-		return
 	if(cult.attempts_left <= 0)
 		user << "<span class='cultlarge'>The Geometer is no longer interested in you.</span>"
-	new /obj/structure/constructshell/large(get_turf(src))
-	cult.large_shell_summoned = 1
+	var/A = new /obj/structure/constructshell/large(get_turf(src))
+	cult.large_shell_reference = A

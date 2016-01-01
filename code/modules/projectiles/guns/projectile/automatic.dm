@@ -37,6 +37,7 @@
 		if(istype(AM, mag_type))
 			if(magazine)
 				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
+				user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()
 				magazine = null
@@ -118,9 +119,7 @@
 	fire_delay = 2
 	can_suppress = 0
 	burst_size = 0
-
-/obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
-	return
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
 	..()
