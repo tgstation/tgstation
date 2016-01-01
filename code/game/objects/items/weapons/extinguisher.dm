@@ -151,9 +151,6 @@
 						if(isliving(atm)) //For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()
-						if(istype(atm,/obj/item))
-							var/obj/item/Item = atm
-							Item.extinguish()
 					if(W.loc == my_target) break
 					sleep(2)
 

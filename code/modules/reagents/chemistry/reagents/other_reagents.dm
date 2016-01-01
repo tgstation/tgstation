@@ -141,9 +141,8 @@
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item))
-		var/obj/item/Item = O
-		Item.extinguish()
+	if(istype(O))
+		O.extinguish()
 
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
