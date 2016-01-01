@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes:
-  - tweak: Subjugation no longer lasts for upwards of 10 minutes. It now lasts 3 minutes per cast.
