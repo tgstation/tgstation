@@ -156,7 +156,7 @@
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "space_heater", name, 490, 340, state = physical_state)
+		ui = new(user, src, ui_key, "space_heater", name, 400, 305, state = physical_state)
 		ui.open()
 
 /obj/machinery/space_heater/ui_act(action, params)

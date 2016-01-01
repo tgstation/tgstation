@@ -629,7 +629,7 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/tgui/ui = null, force_open = 0)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "apc", name, 550, 560)
+		ui = new(user, src, ui_key, "apc", name, 460, 515)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)

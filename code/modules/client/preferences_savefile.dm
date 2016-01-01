@@ -102,7 +102,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 12)
 		ignoring = list()
 
-
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
@@ -165,14 +164,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["nanoui_fancy"]		>> tgui_fancy
-	S["be_special"]			>> be_special
+	S["tgui_fancy"]			>> tgui_fancy
 
 	if(islist(S["be_special"]))
-		S["be_special"] >> be_special
+		S["be_special"] 	>> be_special
 	else //force update and store the old bitflag version of be_special
 		needs_update = 11
-		S["be_special"] >> old_be_special
+		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -213,7 +211,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["nanoui_fancy"]		<< tgui_fancy
+	S["tgui_fancy"]			<< tgui_fancy
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
