@@ -21,18 +21,32 @@
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult = ticker.mode
 		orbs_needed = cult.orbs_needed
+		if(cult.eldergod || (cult.large_shell_reference && cult.large_shell_reference != src))
+			qdel(src)
+			return
+	else
+		qdel(src)
+		return
 	black_overlay = image('icons/obj/cult_large.dmi', "shell_narsie_black")
+	SSshuttle.emergencyNoEscape = 1
 
 /obj/structure/constructshell/large/Destroy()
-	priority_announce("The extra-dimensional flow has ceased. All personnel should return to their routine activities.","Central Command Higher Dimensions Affairs")
-	if(get_security_level() == "delta")
-		set_security_level("red")
+	var/go_to_red = 1
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult = ticker.mode
 		cult.large_shell_reference = null
+		if(cult.eldergod)
+			go_to_red = 0
+	if(go_to_red)
+		priority_announce("The extra-dimensional flow has ceased. All personnel should return to their routine activities.","Central Command Higher Dimensions Affairs")
+		if(get_security_level() == "delta")
+			set_security_level("red")
 	black_overlay = null
 	if(timer_id)
 		deltimer(timer_id)
+	SSshuttle.emergencyNoEscape = 0
+	SSshuttle.emergency.mode = SHUTTLE_DOCKED
+	SSshuttle.emergency.timer = world.time
 	..()
 
 /obj/structure/constructshell/large/examine(mob/user)

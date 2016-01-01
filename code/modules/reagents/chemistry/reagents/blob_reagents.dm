@@ -2,6 +2,7 @@
 /datum/reagent/blob
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
+	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
@@ -41,6 +42,7 @@
 	name = "Sporing Pods"
 	id = "sporing_pods"
 	description = "will do low toxin damage and produce fragile spores when killed or on expanding."
+	shortdesc = "will do low toxin damage."
 	color = "#E88D5D"
 	message_living = ", and you feel sick"
 
@@ -70,6 +72,7 @@
 	name = "Replicating Foam"
 	id = "replicating_foam"
 	description = "will do medium brute damage and replicate when damaged."
+	shortdesc = "will do medium brute damage."
 	color = "#7B5A57"
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -93,7 +96,8 @@
 /datum/reagent/blob/energized_fibers
 	name = "Energized Fibers"
 	id = "energized_fibers"
-	description = "will do low burn, high stamina damage, and react to stamina damage."
+	description = "will do low burn and high stamina damage, and react to stamina damage."
+	shortdesc = "will do low burn and high stamina damage."
 	color = "#FFDC73"
 	blobbernaut_message = "shocks"
 	message_living = ", and you feel a strong tingling sensation"
@@ -153,7 +157,7 @@
 /datum/reagent/blob/envenomed_filaments
 	name = "Envenomed Filaments"
 	id = "envenomed_filaments"
-	description = "will cause medium toxin damage, stamina damage, and inject targets with toxins."
+	description = "will cause medium toxin and stamina damage, and inject targets with toxins."
 	color = "#9ACD32"
 	message_living = ", and you feel sick and nauseated"
 
@@ -170,7 +174,7 @@
 /datum/reagent/blob/lexorin_jelly
 	name = "Lexorin Jelly"
 	id = "lexorin_jelly"
-	description = "will cause low brute damage, high oxygen damage, and cause targets to be unable to breathe."
+	description = "will cause low brute and high oxygen damage, and cause targets to be unable to breathe."
 	color = "#00E5B1"
 	message_living = ", and your lungs feel heavy and weak"
 
@@ -208,7 +212,7 @@
 /datum/reagent/blob/cryogenic_liquid
 	name = "Cryogenic Liquid"
 	id = "cryogenic_liquid"
-	description = "will do low burn damage, stamina damage, and cause targets to freeze."
+	description = "will do low burn and stamina damage, and cause targets to freeze."
 	color = "#8BA6E9"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with an icy liquid"
@@ -229,6 +233,7 @@
 	name = "Synchronous Mesh"
 	id = "synchronous_mesh"
 	description = "will do brute damage for each nearby blob and spread damage between nearby blobs."
+	shortdesc = "will do brute damage for each nearby blob."
 	color = "#65ADA2"
 	blobbernaut_message = "synchronously strikes"
 	message = "The blobs strike you"
@@ -259,7 +264,8 @@
 /datum/reagent/blob/pressurized_slime
 	name = "Pressurized Slime"
 	id = "pressurized_slime"
-	description = "will do low brute damage, oxygen damage, stamina damage, and wet tiles when damaged or killed."
+	description = "will do low brute, oxygen, and stamina damage, and wet tiles when damaged or killed."
+	shortdesc = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	color = "#AAAABB"
 	blobbernaut_message = "emits slime at"
 	message = "The blob splashes into you"

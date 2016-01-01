@@ -7,7 +7,12 @@ import collections
 import time
 import pickle
 import socket
+import sys
 import threading
+
+
+def print_err(*msg):
+    print(*msg, file=sys.stderr)
 
 
 def setup_irc_socket():
@@ -18,14 +23,15 @@ def setup_irc_socket():
         try:
             s.connect((server, port))
         except socket.error:
-            print("Unable to connect to server {0}:{1}, attempting to reconnect in 20 seconds.".format(server, port))
+            print_err("Unable to connect to server {0}:{1}, attempting to reconnect in 20 seconds.".format(server, port))
             time.sleep(20)
         else:
-            print("Connection established to server {0}:{1}.".format(server, port))
+            print_err("Connection established to server {0}:{1}.".format(server, port))
             break
 
     s.send(bytes("NICK {0}\r\n".format(nick), "UTF-8"))
     s.send(bytes("USER {0} {1} {2} :{3}\r\n".format(ident, server, name, realname), "UTF-8"))
+    time.sleep(5)
     s.send(bytes("PRIVMSG NickServ :IDENTIFY {0}\r\n".format(password), "UTF-8"))
     time.sleep(5)
     for channel in channels:
@@ -50,12 +56,13 @@ def nudge_handler(irc):
             try:
                 s, ip = nudge.accept()
             except:
-                print("Nudge socket lost, attempting to reopen.")
+                print_err("Nudge socket lost, attempting to reopen.")
                 nudge = setup_nudge_socket()
                 continue
             rawdata = s.recv(1024)
             s.close()
             data = pickle.loads(rawdata)
+            print(data)
             if data["ip"][0] == "#":
                 message = "{0} :AUTOMATIC ANNOUNCEMENT : {1}\r\n".format(data["ip"], str(" ".join(data["data"])))
             else:
@@ -63,8 +70,8 @@ def nudge_handler(irc):
         try:
             irc.send(bytes("PRIVMSG {0}".format(message), "UTF-8"))
         except:
-            print("Nudge received without IRC socket, appending to queue.")
-            print("Message: {0}".format(message))
+            print_err("Nudge received without IRC socket, appending to queue.")
+            print_err("Message: {0}".format(message))
             message_queue.append(message)
 
 
@@ -73,6 +80,7 @@ def irc_handler(irc):
         try:
             buf = irc.recv(1024).decode("UTF-8").split("\n")
             for i in buf:
+                print(i)
                 if i[0:4] == "PING":
                     irc.send(bytes("PONG {0}\r\n".format(i[5:]), "UTF-8"))
                 else:
@@ -80,12 +88,12 @@ def irc_handler(irc):
                     if len(l) < 2:
                         continue
                     elif l[1] == "477":
-                        print("Error: Nickname was not registered when joining {0}. Reauthing and retrying...".format(l[3]))
+                        print_err("Error: Nickname was not registered when joining {0}. Reauthing and retrying...".format(l[3]))
                         irc.send(bytes("PRIVMSG NickServ :IDENTIFY {0}\r\n".format(password), "UTF-8"))
                         time.sleep(5)
                         s.send(bytes("JOIN {0}\r\n".format(l[3]), "UTF-8"))
                     elif l[1] == "433":
-                        print("Error: Nickname already in use. Attempting to use alt nickname if available, sleeping 60s otherwise...")
+                        print_err("Error: Nickname already in use. Attempting to use alt nickname if available, sleeping 60s otherwise...")
                         if(altnick):
                             s.send(bytes("NICK {0}\r\n".format(altnick), "UTF-8"))
                         else:

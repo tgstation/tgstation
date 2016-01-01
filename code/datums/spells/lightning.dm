@@ -28,7 +28,7 @@
 	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
 	user.overlays.Add(halo)
 	playsound(get_turf(user), Snd, 50, 0)
-	if(do_mob(user,user,100,uninterruptible=1))
+	if(do_mob(user,user,100,1))
 		if(ready && cast_check(skipcharge=1))
 			choose_targets()
 		else

@@ -42,6 +42,11 @@ header.titlebar {
     }
 
     .titlebutton() {
+        display: inline-block;
+        position: relative;
+        padding: 7px; // To make a bigger clickable area.
+        margin: -7px;
+
         color: @title;
 
         &:hover {
