@@ -1,8 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscdel: "Storage Blobs are gone; they were effectively a waste of resources, as there are more or less no points at which you should need them, unless you were winning excessively hard."
-  - rscdel: "Blobs can no longer burst early; instead, the button gives some early help and serves to indicate you're a blob."
-  - wip: "Blobbernauts now poll candidates instead of grabbing a candidate immediately. The poll is 5 seconds, so that there's no significant pause between making a blobbernaut and it doing stuff."
-  - rscadd: "Blobbernaut creation replaces Storage Blob creation on the blob HUD."
-  - tweak: "Overmind communication is now much larger and easier to see, and blob mobs, such as blobbernauts, will hear it."
