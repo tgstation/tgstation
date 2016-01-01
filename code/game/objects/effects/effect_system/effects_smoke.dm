@@ -122,11 +122,12 @@
 	lifetime = 8
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
-	if(..())
-		M.drop_item()
-		M.adjustOxyLoss(1)
-		M.emote("cough")
-		return 1
+	if (!(NOBREATH in M.dna.species.specflags))
+		if(..())
+			M.drop_item()
+			M.adjustOxyLoss(1)
+			M.emote("cough")
+			return 1
 
 /obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
