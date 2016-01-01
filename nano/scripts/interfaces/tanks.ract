@@ -1,7 +1,8 @@
 <script type='text/coffeescript'>
 component.exports =
   data:
-    pressureState: (pressure) ->
+    tankPressureState: ->
+      pressure = @get "data.tankPressureState"
       if pressure >= 200 then "good"
       else if pressure >= 100 then "average"
       else "bad"
@@ -13,7 +14,7 @@ component.exports =
 <n-display>
   <n-section label='Tank Pressure'>
       <n-bar min='0' max='1013' value='{{data.tankPressure}}'
-        state='{{pressureState(data.tankPressure)}}'>{{Math.round(adata.tankPressure)}} kPa</n-bar>
+        state='{{tankPressureState}}'>{{Math.round(adata.tankPressure)}} kPa</n-bar>
   </n-section>
   <n-section label='Release Pressure'>
     <n-bar min='{{data.minReleasePressure}}' max='{{data.maxReleasePressure}}'

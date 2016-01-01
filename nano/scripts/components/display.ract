@@ -1,9 +1,8 @@
 <div class='display'>
   {{#if title}}
     <header>
-      {{#if extraleft}}<div style='float:left'>{{yield left}}</div>{{/if}}
       <h3>{{title}}</h3>
-      {{#if extraright}}<div style='float:right'>{{yield right}}</div>{{/if}}
+      {{#if button}}{{yield button}}{{/if}}
     </header>
   {{/if}}
   <article>

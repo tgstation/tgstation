@@ -1,14 +1,16 @@
 <script type='text/coffeescript'>
 component.exports =
-  data:
-    statState: (stat) ->
-      if stat is 0 then "good"
-      else if stat is 1 then "average"
-      else "bad"
-    tempState: (temp) ->
+  computed:
+    cellTemperatureState: ->
+        temp = @get "data.cellTemperature"
         if temp < 225 then "good"
         else if temp < 273.15 then "average"
         else "bad"
+    occupantStatState: ->
+      stat = @get "data.occupant.stat"
+      if stat is 0 then "good"
+      else if stat is 1 then "average"
+      else "bad"
 </script>
 
 <n-display title='Occupant'>
@@ -17,7 +19,7 @@ component.exports =
   </n-section>
   {{#if data.hasOccupant}}
     <n-section label='State'>
-      <span class='{{statState(data.occupant.stat)}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
+      <span class='{{occupantStatState}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
   	</n-section>
   	<n-section label='Temperature'>
   	  <span>{{Math.round(adata.occupant.bodyTemperature)}} K</span>
@@ -41,7 +43,7 @@ component.exports =
       action='power'>{{data.isOperating ? "On" : "Off"}}</n-button>
   </n-section>
   <n-section label='Temperature'>
-		<span class='{{tempState(data.cellTemperature)}}'>{{Math.round(adata.cellTemperature)}} K</span>
+		<span class='{{cellTemperatureState}}'>{{Math.round(adata.cellTemperature)}} K</span>
 	</n-section>
 	<n-section label='Door'>
     <n-button icon='{{data.isOpen ? "unlock" : "lock"}}'
@@ -50,8 +52,8 @@ component.exports =
       action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</n-button>
 	</n-section>
 </n-display>
-<n-display title='Beaker' extraright>
-  {{#partial right}}
+<n-display title='Beaker' button>
+  {{#partial button}}
     <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='ejectbeaker'>Eject</n-button>
   {{/partial}}
   <n-section label='Contents'>

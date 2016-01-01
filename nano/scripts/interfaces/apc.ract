@@ -1,20 +1,11 @@
 <script type='text/coffeescript'>
 component.exports =
   data:
-    cellState: (percentage) ->
-      if percentage >= 50 then "good"
-      else if percentage >= 25 then "average"
-      else "bad"
     powerState: (status) ->
       if status is 2 then "good"
       else if status is 1 then "average"
       else "bad"
   computed:
-    malfIcon: ->
-      status = @get "data.malfStatus"
-      if status is 1 then "terminal"
-      else if status is 2 or 4 then "caret-square-o-down"
-      else if status is 3 then "caret-square-o-left"
     malfAction: ->
       status = @get "data.malfStatus"
       if status is 1 then "hack"
@@ -25,6 +16,16 @@ component.exports =
       if status is 1 then "Override Programming"
       else if status is 2 or 4 then "Shunt Core Process"
       else if status is 3 then "Return to Main Core"
+    malfIcon: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "terminal"
+      else if status is 2 or 4 then "caret-square-o-down"
+      else if status is 3 then "caret-square-o-left"
+    powerCellStatusState: ->
+      status = @get "data.powerCellStatus"
+      if status > 50 then "good"
+      else if status > 25 then "average"
+      else "bad"
 </script>
 
 <n-notice>
@@ -50,7 +51,7 @@ component.exports =
   </n-section>
   <n-section label='Power Cell'>
     {{#if data.powerCellStatus != null}}
-      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{cellState(data.powerCellStatus)}}'>{{Math.fixed(adata.powerCellStatus)}}%</n-bar>
+      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{powerCellStatusState}}'>{{Math.fixed(adata.powerCellStatus)}}%</n-bar>
     {{else}}
       <span class='bad'>Power cell removed.</span>
     {{/if}}

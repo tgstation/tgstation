@@ -1,8 +1,8 @@
 <n-notice>
   <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a tank.</span>
 </n-notice>
-<n-display title='Canister'>
-  {{#partial right}}
+<n-display title='Canister' button>
+  {{#partial button}}
     <n-button icon='pencil' state='{{data.canLabel ? null : "disabled"}}' action='relable'>Relabel</n-button>
   {{/partial}}
   <n-section label='Pressure'>
@@ -32,8 +32,8 @@
       action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</n-button>
   </n-section>
 </n-display>
-<n-display title='Holding Tank' extraright>
-  {{#partial right}}
+<n-display title='Holding Tank' button>
+  {{#partial button}}
     {{#if data.hasHoldingTank}}
       <n-button icon='eject' style='{{data.valveOpen ? "danger" : null}}' action='eject'>Eject</n-button>
     {{/if}}
