@@ -31,10 +31,10 @@
 /datum/weather/advanced_darkness
 	name = "advanced darkness"
 	start_up_time = 100 //10 seconds
-	start_up_message = "The lights begin to dim...is power going out?"
+	start_up_message = "The lights begin to dim... is power going out?"
 	duration_lower = 45
 	duration_upper = 60 //1 minute
-	duration_message = "This isn't average everyday darkness...this is advanced darkness!"
+	duration_message = "This isn't average everyday darkness... this is advanced darkness!"
 	wind_down = 100 // 10 seconds
 	wind_down_message = "The darkness is receding. Thank god."
 	purely_aesthetic = TRUE
@@ -43,8 +43,8 @@
 	exclude_walls = TRUE
 	area_type = /area
 
-	start_up_overlay = "darkness"
-	duration_overlay = "darkness"
+	start_up_overlay = ""
+	duration_overlay = ""
 	overlay_layer = 10
 
 /datum/weather/advanced_darkness/advanced_darkness/update_areas()

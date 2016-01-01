@@ -6,9 +6,9 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/darkness
-
-	endWhen = 10
+	endWhen = 0
 
 /datum/round_event/wizard/darkness/start()
-	var/datum/weather/advanced_darkness/darkness = new /datum/weather/advanced_darkness
+	var/datum/weather/advanced_darkness/darkness = new
 	darkness.weather_start_up()
+	return
