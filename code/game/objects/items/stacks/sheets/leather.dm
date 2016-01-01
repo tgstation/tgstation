@@ -114,25 +114,18 @@
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(	istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife) || \
-		istype(W, /obj/item/weapon/fireaxe) || \
-		istype(W, /obj/item/weapon/hatchet) )
+	if(	W.is_sharp() >= 1.2 )
 
 		//visible message on mobs is defined as visible_message(var/message, var/self_message, var/blind_message)
-		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
-		if(do_after(user, src,50))
-			to_chat(usr, "<span class='notice'>You cut the hair from this [src.singular_name]</span>")
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/hairlesshide/HS in usr.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/hairlesshide/HS = new(usr.loc)
-			HS.amount = 1
-			src.use(1)
+		user.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
+
+		spawn()
+			if(do_after(user, src, 50))
+				to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name]</span>")
+
+				if(src.use(1))
+					drop_stack(/obj/item/stack/sheet/hairlesshide, user.loc, 1, user)
+		return 1
 	else
 		..()
 
@@ -145,15 +138,7 @@
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
 		if(wetness == 0)
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/leather/HS in src.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					wetness = initial(wetness)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/leather/HS = new(src.loc)
-			HS.amount = 1
-			wetness = initial(wetness)
-			src.use(1)
+
+			if(src.use(1))
+				drop_stack(/obj/item/stack/sheet/leather, src.loc, 1)
+				wetness = initial(wetness)

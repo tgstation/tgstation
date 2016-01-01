@@ -18,6 +18,8 @@
 	pixel_y = rand(-24,24)
 
 /obj/item/stack/teeth/can_stack_with(obj/item/other_stack)
+	if(!istype(other_stack)) return 0
+
 	if(src.type == other_stack.type)
 		var/obj/item/stack/teeth/T = other_stack
 		if(src.animal_type == T.animal_type)

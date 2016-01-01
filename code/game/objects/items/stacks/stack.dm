@@ -1,4 +1,4 @@
-#define CORRECT_STACK_NAME ((irregular_plural && amount > 1) ? irregular_plural : "[singular_name]\s")
+#define CORRECT_STACK_NAME(stack) ((stack.irregular_plural && stack.amount > 1) ? stack.irregular_plural : "[stack.singular_name]\s")
 
 /* Stack type objects!
  * Contains:
@@ -37,7 +37,7 @@
 	var/be = "are"
 	if(amount == 1) be = "is"
 
-	to_chat(user, "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME] in the stack.</span>")
+	to_chat(user, "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME(src)] in the stack.</span>")
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
@@ -89,7 +89,7 @@
 			else
 				title+= "[R.title]"
 			//title+= " ([R.req_amount] [src.singular_name]\s)"
-			title+= " ([R.req_amount] [CORRECT_STACK_NAME]"
+			title+= " ([R.req_amount] [CORRECT_STACK_NAME(src)]"
 
 			if (can_build)
 				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i]'>[title]</A>)")
@@ -225,7 +225,9 @@
 		break
 
 /obj/item/stack/proc/can_stack_with(obj/item/other_stack)
-	return src.type == other_stack.type
+	if(ispath(other_stack)) return (src.type == other_stack)
+
+	return (src.type == other_stack.type)
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
@@ -248,7 +250,7 @@
 	if (can_stack_with(target))
 		var/obj/item/stack/S = target
 		if (amount >= max_amount)
-			to_chat(user, "\The [src] cannot hold anymore [CORRECT_STACK_NAME].")
+			to_chat(user, "\The [src] cannot hold anymore [CORRECT_STACK_NAME(src)].")
 			return 1
 		var/to_transfer as num
 		if (user.get_inactive_hand()==S)
@@ -256,7 +258,7 @@
 		else
 			to_transfer = min(S.amount, max_amount-amount)
 		amount+=to_transfer
-		to_chat(user, "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME].")
+		to_chat(user, "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME(src)].")
 		if (S && user.machine==S)
 			spawn(0) interact(user)
 		S.use(to_transfer)
@@ -273,6 +275,33 @@
 	src.fingerprintshidden  = from.fingerprintshidden
 	src.fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
+
+/*
+ drop_stack() helper proc
+
+ Arguments:
+   - new_stack_type = type of stack to spawn (for example /obj/item/stack/tile/light)
+   - loc = where to spawn the stack
+   - add_amount = how much items to create in the stack
+   - user = non-essential, whom to send the messages to
+
+ This proc sees if there are any stacks of the same type in *loc. If there are, and it's possible to add *amount items to them,
+ add *amount items to them and return.
+ If unable to add to any already existing stack, create a new instance of *new_stack_type
+
+ */
+
+/proc/drop_stack(new_stack_type = /obj/item/stack, turf/loc, add_amount = 1, mob/user)
+	for(var/obj/item/stack/S in loc)
+		if(S.can_stack_with(new_stack_type))
+			if(S.max_amount >= S.amount + add_amount)
+				S.amount += add_amount
+
+				to_chat(user, "<span class='info'>You add [add_amount] item\s to the stack. It now contains [S.amount] [CORRECT_STACK_NAME(S)].</span>")
+				return 1
+
+	var/obj/item/stack/S = getFromPool(new_stack_type, loc)
+	S.amount = add_amount
 
 /*
  * Recipe datum
