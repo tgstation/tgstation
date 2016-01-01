@@ -1,0 +1,11 @@
+<div class='display'>
+  {{#if title}}
+    <header>
+      <h3>{{title}}</h3>
+      {{#if button}}{{yield button}}{{/if}}
+    </header>
+  {{/if}}
+  <article>
+    {{yield}}
+  </article>
+</div>
