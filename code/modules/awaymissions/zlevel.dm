@@ -22,6 +22,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
+			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
 
 		map_transition_config.Add(AWAY_MISSION_LIST)
