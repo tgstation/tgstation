@@ -306,6 +306,8 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
+	if(NOBREATH in dna.species.specflags)
+		. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/obj/item/organ/limb/L in organs)
