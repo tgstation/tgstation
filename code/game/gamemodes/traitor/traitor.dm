@@ -122,13 +122,6 @@
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
-		var/mob/living/silicon/ai/B = traitor.current
-		for(var/mob/living/silicon/robot/R in B.connected_robots)
-			if(R.lawupdate)
-				R.lawsync()
-				R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
-				R.show_laws()
-				R.law_change_counter++
 	else
 		equip_traitor(traitor.current)
 	return
@@ -160,6 +153,11 @@
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
+	for(var/mob/living/silicon/robot/R in killer.connected_robots)
+			if(R.lawupdate)
+				R.lawsync()
+				R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
+				R.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
