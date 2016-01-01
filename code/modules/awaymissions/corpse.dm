@@ -32,6 +32,7 @@
 	var/death = TRUE
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
+	var/list/implants = list()
 	density = 1
 
 /obj/effect/landmark/corpse/initialize()
@@ -105,6 +106,11 @@
 		W.registered_name = M.real_name
 		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
+
+	for(var/I in implants)
+		var/obj/item/weapon/implant/X = new I
+		X.implant(M)
+
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
@@ -358,3 +364,11 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
+
+/obj/effect/landmark/corpse/abductor
+	name = "abductor"
+	mobname = "???"
+	mob_species = /datum/species/abductor
+	corpseuniform = /obj/item/clothing/under/color/grey
+	corpseshoes = /obj/item/clothing/shoes/combat

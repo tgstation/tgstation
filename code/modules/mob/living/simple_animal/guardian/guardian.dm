@@ -9,6 +9,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand"
+	icon_dead = "stand"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -71,6 +72,13 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
 
+/mob/living/mob/living/simple_animal/hostile/guardian/canSuicide()
+	return 0
+
+/mob/living/simple_animal/hostile/guardian/death()
+	..()
+	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
+	summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
 	var/damage = amount * damage_transfer
@@ -626,6 +634,7 @@
 	G << "You are capable of manifesting or recalling to your master with verbs in the Guardian tab. You will also find a verb to communicate with them privately there."
 	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
 	G << "[G.playstyle_string]"
+	G.faction = user.faction
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
@@ -641,6 +650,7 @@
 			G.real_name = "[mob_name] [capitalize(colour)]"
 			G.icon_living = "parasite[colour]"
 			G.icon_state = "parasite[colour]"
+			G.icon_dead = "parasite[colour]"
 			G.animated_manifest = TRUE
 			user << "[G.tech_fluff_string]."
 			G.speak_emote = list("states")
@@ -648,6 +658,7 @@
 			user << "[G.bio_fluff_string]."
 			G.attacktext = "swarms"
 			G.speak_emote = list("chitters")
+	G.mind.name = "[G.real_name]"
 
 /obj/item/weapon/guardiancreator/choose
 	random = FALSE

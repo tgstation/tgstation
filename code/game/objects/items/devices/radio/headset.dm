@@ -47,6 +47,10 @@
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 
+/obj/item/device/radio/headset/syndicate/alt/leader
+	name = "team leader headset"
+	command = TRUE
+
 /obj/item/device/radio/headset/syndicate/New()
 	..()
 	make_syndie()
@@ -114,6 +118,9 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
+
+/obj/item/device/radio/headset/heads
+	command = TRUE
 
 /obj/item/device/radio/headset/heads/captain
 	name = "\proper the captain's headset"

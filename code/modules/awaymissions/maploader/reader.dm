@@ -81,7 +81,9 @@ var/global/dmm_suite/preloader/_preloader = null
 
 			//fill the current square using the model map
 			xcrd=0
-			for(var/mpos=1;mpos<=x_depth;mpos+=key_len)
+
+
+			for(var/mpos in 1 to x_depth step key_len)
 				xcrd++
 				var/model_key = copytext(grid_line,mpos,mpos+key_len)
 				parse_grid(grid_models[model_key],xcrd+x_offset,ycrd+y_offset,zcrd+z_offset)
@@ -175,7 +177,9 @@ var/global/dmm_suite/preloader/_preloader = null
 	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
 
 	instance = locate(members[index])
-	instance.contents.Add(locate(xcrd,ycrd,zcrd))
+	var/turf/crds = locate(xcrd,ycrd,zcrd)
+	if(crds)
+		instance.contents.Add(crds)
 
 	if(_preloader && instance)
 		_preloader.load(instance)
@@ -191,17 +195,18 @@ var/global/dmm_suite/preloader/_preloader = null
 	//instanciate the first /turf
 	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
 
-	//if others /turf are presents, simulates the underlays piling effect
-	index = first_turf_index + 1
-	while(index <= members.len)
-		turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
-		var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
-		add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
-		T = UT
-		index++
+	if(T)
+		//if others /turf are presents, simulates the underlays piling effect
+		index = first_turf_index + 1
+		while(index <= members.len)
+			turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
+			var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+			add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
+			T = UT
+			index++
 
 	//finally instance all remainings objects/mobs
-	for(index=1,index < first_turf_index,index++)
+	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
 
 ////////////////
@@ -213,7 +218,9 @@ var/global/dmm_suite/preloader/_preloader = null
 	var/atom/instance
 	_preloader = new(attributes, path)
 
-	instance = new path (locate(x,y,z))//first preloader pass
+	var/turf/T = locate(x,y,z)
+	if(T)
+		instance = new path (T)//first preloader pass
 
 	if(_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)

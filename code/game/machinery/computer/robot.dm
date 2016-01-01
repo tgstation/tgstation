@@ -59,7 +59,7 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon))
+		if (istype(user, /mob/living/silicon) || IsAdminGhost(usr))
 			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(usr)) && !R.emagged)
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "

@@ -19,15 +19,10 @@
 	viruses = null
 	return ..()
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
+	if (C.blood_DNA)
+		blood_DNA |= C.blood_DNA.Copy()
 	..()
-	if(src.type == /obj/effect/decal/cleanable/blood)
-		if(src.loc && isturf(src.loc))
-			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-				if(B != src)
-					if (B.blood_DNA)
-						blood_DNA |= B.blood_DNA.Copy()
-					qdel(B)
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -69,6 +64,9 @@
 /obj/effect/decal/cleanable/blood/gibs/New()
 	..()
 	reagents.add_reagent("liquidgibs", 5)
+
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -191,6 +189,10 @@
 
 	user << .
 
+/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
+	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+		return
+	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

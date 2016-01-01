@@ -104,7 +104,8 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
-
+	if(temperature < TCMB)
+		temperature = TCMB
 	if(trace_gases.len > 0)
 		if(temperature > 900)
 			if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
@@ -132,11 +133,11 @@ What are the archived variables for?
 			var/oxygen_added = carbon_catalyzed
 			var/nitrogen_added = (plasma_fused-oxygen_added)-(thermal_energy()/PLASMA_BINDING_ENERGY)
 
-			reaction_energy += ((carbon_efficency*toxins)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY)
+			reaction_energy = max(reaction_energy+((carbon_efficency*toxins)/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 			toxins = max(toxins-plasma_fused,0)
 			carbon_dioxide = max(carbon_dioxide-carbon_catalyzed,0)
-			oxygen+=oxygen_added
-			nitrogen+=nitrogen_added
+			oxygen = max(oxygen+oxygen_added,0)
+			nitrogen = max(nitrogen+nitrogen_added,0)
 			if(reaction_energy > 0)
 				reacting = 1
 				var/new_heat_capacity = heat_capacity()
@@ -502,7 +503,8 @@ What are the archived variables for?
 
 		trace_types_considered += trace_gas.type
 
-	for(var/datum/gas/trace_gas in sharer.trace_gases)
+	for(var/gas in sharer.trace_gases)
+		var/datum/gas/trace_gas = gas
 		if(trace_gas.type in trace_types_considered)
 			continue
 		var/datum/gas/corresponding
@@ -581,7 +583,8 @@ What are the archived variables for?
 	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
 
 	if(trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/gas in trace_gases)
+			var/datum/gas/trace_gas = gas
 			var/delta = 0
 
 			delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)

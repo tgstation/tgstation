@@ -10,9 +10,12 @@ var/datum/subsystem/nano/SSnano
 
 	var/list/open_uis = list() // A list of open NanoUIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing NanoUIs, not grouped.
+	var/html // The HTML template used by new UIs; minus initial data.
 
 
 /datum/subsystem/nano/New()
+	html = file2text('nano/assets/nanoui.html') // Read the HTML from disk.
+
 	NEW_SS_GLOBAL(SSnano)
 
 /datum/subsystem/nano/stat_entry()

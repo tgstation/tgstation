@@ -157,7 +157,6 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	force_threshold = 10
-	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 
@@ -167,7 +166,8 @@
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
 			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	..()
+	if(target)
+		..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
