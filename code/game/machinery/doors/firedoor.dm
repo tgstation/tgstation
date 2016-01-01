@@ -282,7 +282,7 @@ var/global/list/alert_overlays_global = list()
 
 	if(alarmed && density && lockdown && !access_granted/* && !( users_name in users_to_open ) */)
 		// Too many shitters on /vg/ for the honor system to work.
-		to_chat(user, "<span class='warning'>Access denied.  Please wait for authorities to arrive, or for the alert to clear.</span>")
+		to_chat(user, "<span class='warning'>Access denied. Please wait for authorities to arrive, or for the alert to clear.</span>")
 		return
 		// End anti-shitter system
 		/*

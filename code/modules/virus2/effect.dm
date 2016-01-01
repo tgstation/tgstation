@@ -246,7 +246,7 @@
 	if(!ishuman(mob)) return 0
 	var/mob/living/carbon/human/H = mob
 	mob.reagents.add_reagent("pacid", 10)
-	to_chat(mob, "<span class = 'warning'> Your body burns as your cells break down.</span>")
+	to_chat(mob, "<span class = 'warning'>Your body burns as your cells break down.</span>")
 	shake_camera(mob,5*multiplier)
 
 	for (var/datum/organ/external/E in H.organs)
@@ -330,7 +330,7 @@
 	name = "Delightful Effect"
 	stage = 4
 /datum/disease2/effect/delightful/activate(var/mob/living/carbon/mob,var/multiplier)
-	to_chat(mob, "<span class = 'notice'> You feel delightful!</span>")
+	to_chat(mob, "<span class = 'notice'>You feel delightful!</span>")
 	if (mob.reagents.get_reagent_amount("doctorsdelight") < 1)
 		mob.reagents.add_reagent("doctorsdelight", 1)
 
@@ -854,7 +854,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Headache"
 	stage = 1
 /datum/disease2/effect/headache/activate(var/mob/living/carbon/mob,var/multiplier)
-	to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
+	to_chat(mob, "<span class = 'notice'>Your head hurts a bit</span>")
 
 /datum/disease2/effect/itching
 	name = "Itching"
@@ -885,6 +885,6 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Full Glass Syndrome"
 	stage = 1
 /datum/disease2/effect/optimistic/activate(var/mob/living/carbon/mob,var/multiplier)
-	to_chat(mob, "<span class = 'notice'> You feel optimistic!</span>")
+	to_chat(mob, "<span class = 'notice'>You feel optimistic!</span>")
 	if (mob.reagents.get_reagent_amount("tricordrazine") < 1)
 		mob.reagents.add_reagent("tricordrazine", 1)

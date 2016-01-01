@@ -1054,7 +1054,7 @@
 	else if(src.operation_allowed(usr))
 		passed = 1
 	if(!passed)
-		to_chat(usr, "<span class='warning'>Access denied</span>")
+		to_chat(usr, "<span class='warning'>Access Denied.</span>")
 		src.log_append_to_last("Permission denied.")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))

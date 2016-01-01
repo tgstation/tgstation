@@ -176,7 +176,7 @@
 	if(istype(C))
 		if(!(C.parentdeck || src.parentdeck) || C.parentdeck == src.parentdeck)
 			if(currenthand.len >= max_hand_size)
-				to_chat(user, "<span class = 'warning'> You can't add any more cards to this hand.</span>")
+				to_chat(user, "<span class = 'warning'>You can't add any more cards to this hand.</span>")
 				return
 			if(user.drop_item(C, src))
 				hand_click.action(C, user, params)
@@ -184,7 +184,7 @@
 									 "<span class = 'notice'>You add the [C.cardname] to your hand.</span>")
 				update_icon()
 		else
-			to_chat(user, "<span class = 'warning'> You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class = 'warning'>You can't mix cards from other decks.</span>")
 		return 1
 	if(istype(C, /obj/item/toy/cards)) //shuffle us in
 		return C.attackby(src, user)

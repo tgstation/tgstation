@@ -39,7 +39,7 @@
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 		else
-			to_chat(user, "<span class='warning'>Access Denied</span>")
+			to_chat(user, "<span class='warning'>Access Denied.</span>")
 	else if(istype(W, /obj/item/weapon/card/emag) && !src.broken)
 		broken = 1
 		locked = 0

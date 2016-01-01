@@ -54,7 +54,7 @@
 		else
 			src.icon_state = src.icon_closed
 	else
-		to_chat(user, "<span class='notice'>Access Denied</span>")
+		to_chat(user, "<span class='notice'>Access Denied.</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)

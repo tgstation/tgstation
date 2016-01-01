@@ -560,18 +560,18 @@
 			return ..()
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
+				to_chat(user, "<span class='notice'>Now weakening the reinforced table.</span>")
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
-					to_chat(user, "<span class='notice'>Table weakened</span>")
+					to_chat(user, "<span class='notice'>Table weakened.</span>")
 					src.status = 1
 			else
-				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
+				to_chat(user, "<span class='notice'>Now strengthening the reinforced table.</span>")
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
-					to_chat(user, "<span class='notice'>Table strengthened</span>")
+					to_chat(user, "<span class='notice'>Table strengthened.</span>")
 					src.status = 2
 			return
 		return
@@ -688,4 +688,3 @@
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
-

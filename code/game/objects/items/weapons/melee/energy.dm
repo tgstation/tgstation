@@ -67,7 +67,7 @@
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50) && active) //only an on blade can cut
-		to_chat(user, "<span class='danger'> You accidentally cut yourself with [src].</span>")
+		to_chat(user, "<span class='danger'>You accidentally cut yourself with [src].</span>")
 		user.take_organ_damage(5,5)
 		return
 	toggleActive(user)
