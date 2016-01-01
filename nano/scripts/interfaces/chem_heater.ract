@@ -18,7 +18,7 @@
       <span>Temperature: {{Math.round(adata.currentTemp)}} K</span>
       <br />
       {{#each adata.beakerContents}}
-        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br />
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
       {{else}}
         <span class='bad'>Beaker Empty</span>
       {{/each}}

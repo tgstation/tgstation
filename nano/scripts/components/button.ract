@@ -22,7 +22,7 @@ component.exports =
       byond.act @get("config.ref"), action, params if action?
 </script>
 
-<span class='button {{styles}} {{#grid}}gridable{{/}}' unselectable='true' on-click='{{#if enabled && !state}}act{{/if}}'>
+<span class='button {{styles}} {{#grid}}gridable{{/}}' tabindex='0' unselectable='true' on-click-enter='{{#if enabled && !state}}act{{/if}}'>
   {{#if icon}}
     <i class='fa fa-{{icon}}'></i>
   {{/if}}

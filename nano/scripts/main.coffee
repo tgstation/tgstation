@@ -48,6 +48,9 @@ window.nanoui = new NanoUI
     "n-section": require "./components/section"
     "n-bar": require "./components/bar"
     "n-button": require "./components/button"
+  events:
+    enter: (require "ractive-events-keys").enter
+    space: (require "ractive-events-keys").space
   transitions:
     fade: require "ractive-transitions-fade"
   onrender: ->

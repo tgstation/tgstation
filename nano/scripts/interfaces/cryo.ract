@@ -46,10 +46,8 @@ component.exports =
 		<span class='{{cellTemperatureState}}'>{{Math.round(adata.cellTemperature)}} K</span>
 	</n-section>
 	<n-section label='Door'>
-    <n-button icon='{{data.isOpen ? "unlock" : "lock"}}'
-      action='door'>{{data.isOpen ? "Open" : "Closed"}}</n-button>
-    <n-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}'
-      action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</n-button>
+    <n-button icon='{{data.isOpen ? "unlock" : "lock"}}' action='door'>{{data.isOpen ? "Open" : "Closed"}}</n-button>
+    <n-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}' action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</n-button>
 	</n-section>
 </n-display>
 <n-display title='Beaker' button>
@@ -59,7 +57,7 @@ component.exports =
   <n-section label='Contents'>
     {{#if data.isBeakerLoaded}}
       {{#each adata.beakerContents}}
-        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br />
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
       {{else}}
         <span class='bad'>Beaker Empty</span>
       {{/each}}
