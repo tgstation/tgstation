@@ -5,8 +5,7 @@
 	
 	var/datum/mind/exchange_red
 	var/datum/mind/exchange_blue
-	
-	var/mob/living/silicon/ai/B
+
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -123,7 +122,7 @@
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
-		var/mob/living/silicon/ai/B = traitor.curent
+		var/mob/living/silicon/ai/B = traitor.current
 		for(var/mob/living/silicon/robot/R in B.connected_robots)
 			if(R.lawupdate)
 				R.lawsync()
