@@ -17,12 +17,12 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	spawn(1)
 		src.canmove = 1
 
-/obj/effect/dummy/slaughter/ex_act()
+/obj/effect/dummy/slaughter/ex_act(blah)
 	return
-/obj/effect/dummy/slaughter/bullet_act()
+/obj/effect/dummy/slaughter/bullet_act(blah)
 	return
 
-/obj/effect/dummy/slaughter/singularity_act()
+/obj/effect/dummy/slaughter/singularity_act(blah)
 	return
 
 /obj/effect/dummy/slaughter/Destroy()
