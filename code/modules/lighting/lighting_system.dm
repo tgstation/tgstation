@@ -133,6 +133,8 @@
 			break
 
 	owner.luminosity = range
+	if (!range)
+		return 0
 	var/center_strength = 0
 	if (cap <= 0)
 		center_strength = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*(luminosity)
@@ -340,17 +342,10 @@
 	lighting_changed = 0
 
 /turf/proc/get_lumcount()
-	var/light_amount
-	if(!src || !istype(src))
-		return
+	. = LIGHTING_CAP
 	var/area/A = src.loc
-	if(!A || !istype(src))
-		return
 	if(IS_DYNAMIC_LIGHTING(A))
-		light_amount = src.lighting_lumcount
-	else
-		light_amount =  LIGHTING_CAP
-	return light_amount
+		. = src.lighting_lumcount
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright

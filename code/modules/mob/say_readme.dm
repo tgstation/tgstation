@@ -155,7 +155,7 @@ eventually results in broadcast_message() being called.
 Broadcast_message() does NOT call say() on radios, but rather calls Hear() on everyone in range of a radio.
 This is because the system does not like repeating says.
 
-Furthermore, I changed radios to not be in the radio_controller. Instead, they are in a global list called all_radios.
+Furthermore, I changed radios to not be in the SSradio. Instead, they are in a global list called all_radios.
 This is an associative list, and the numbers as strings are the keys. The values are lists of radios that can hear said frequency.
 
 To add a radio, simply use add_radio(radio, frequency). To remove a radio, use remove_radio(radio, frequency).

@@ -1,0 +1,89 @@
+<article class="display">
+	<header><h2>Storage</h2></header>
+	<section>
+		<span class="label">Stored Energy:</span>
+		<div class="content">
+			{{=helper.bar(data.capacityPercent, 0, 100, data.capacityPercent >= 50 ? 'good' : data.capacityPercent >= 15 ? 'average' : 'bad', helper.round(data.capacityPercent) + '%')}}
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Input</h2></header>
+	<section>
+		<span class="label">Charge Mode:</span>
+		<div class="content">
+			{{=helper.link('Auto', 'refresh', 'tryinput', null, data.inputAttempt ? 'selected' : null)}}
+			{{=helper.link('Off', 'close', 'tryinput', null, data.inputAttempt ? null : 'selected')}}
+			&nbsp;
+			{{? data.capacityPercent >= 99}}
+				[<span class='good'>Fully Charged</span>]
+			{{?? data.inputting}}
+				[<span class='average'>Charging</span>]
+			{{??}}
+				[<span class='bad'>Not Charging</span>]
+			{{?}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Input Setting:</span>
+		<div class="content">
+			{{=helper.bar(data.inputLevel, 0, data.inputLevelMax, null, data.inputLevel + ' W')}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Adjust Input:</span>
+		<div class="content">
+			{{=helper.link('', 'fast-backward', 'input', {'set': 'min'}, data.inputLevel ? null : 'selected')}}
+			{{=helper.link('', 'backward', 'input', {'set': 'minus'}, data.inputLevel ? null : 'disabled')}}
+			{{=helper.link('Set', 'pencil', 'input', {'set': 'custom'}, null)}}
+			{{=helper.link('', 'forward', 'input', {'set': 'plus'}, data.inputLevel == data.inputLevelMax ? 'disabled' : null)}}
+			{{=helper.link('', 'fast-forward', 'input', {'set': 'max'}, data.inputLevel == data.inputLevelMax ? 'selected' : null)}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Available:</span>
+		<div class="content">
+			<span>{{=data.inputAvailable}} W</span>
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Output</h2></header>
+	<section>
+		<span class="label">Charge Mode:</span>
+		<div class="content">
+			{{=helper.link('On', 'power-off', 'tryoutput', null, data.outputAttempt ? 'selected' : null)}}
+			{{=helper.link('Off', 'close', 'tryoutput', null, data.outputAttempt ? null : 'selected')}}
+			&nbsp;
+			{{? data.outputting}}
+				[<span class="good">Sending</span>]
+			{{?? data.charge > 0}}
+				[<span class="average">Not Sending</span>]
+			{{??}}
+				[<span class="bad">No Charge</span>]
+			{{?}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Output Setting:</span>
+		<div class="content">
+			{{=helper.bar(data.outputLevel, 0, data.outputLevelMax, null, data.outputLevel + ' W')}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Adjust Output:</span>
+		<div class="content">
+			{{=helper.link('', 'fast-backward', 'output', {'set': 'min'}, data.outputLevel ? null : 'selected')}}
+			{{=helper.link('', 'backward', 'output', {'set': 'minus'}, data.outputLevel ? null : 'disabled')}}
+			{{=helper.link('Set', 'pencil', 'output', {'set': 'custom'}, null)}}
+			{{=helper.link('', 'forward', 'output', {'set': 'plus'}, data.outputLevel == data.outputLevelMax ? 'disabled' : null)}}
+			{{=helper.link('', 'fast-forward', 'output', {'set': 'max'}, data.outputLevel == data.outputLevelMax ? 'selected' : null)}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Outputting:</span>
+		<div class="content">
+			<span>{{=data.outputUsed}} W</span>
+		</div>
+	</section>
+</article>

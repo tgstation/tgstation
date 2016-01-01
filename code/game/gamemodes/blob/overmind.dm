@@ -29,7 +29,7 @@
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
-		blob_core.adjustcolors(blob_reagent_datum.color)
+		blob_core.update_icon()
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -90,10 +90,10 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
-	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M))
+	for(var/mob/M in mob_list)
+		if(isovermind(M) || isobserver(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M.show_message(rendered, 2)
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
@@ -153,15 +153,15 @@
 		var/mob/camera/blob/B = usr
 		B.transport_core()
 
-/obj/screen/blob/StorageBlob
-	icon_state = "ui_factory"
-	name = "Produce Storage Blob (20)"
-	desc = "Produces a storage blob for 20 points."
+/obj/screen/blob/Blobbernaut
+	icon_state = "ui_blobbernaut"
+	name = "Produce Blobbernaut (20)"
+	desc = "Produces a blobbernaut for 20 points."
 
-/obj/screen/blob/StorageBlob/Click()
+/obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_storage()
+		B.create_blobbernaut()
 
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
@@ -246,7 +246,7 @@
 	using.screen_loc = ui_zonesel
 	adding += using
 
-	using = new /obj/screen/blob/StorageBlob()
+	using = new /obj/screen/blob/Blobbernaut()
 	using.screen_loc = ui_belt
 	adding += using
 

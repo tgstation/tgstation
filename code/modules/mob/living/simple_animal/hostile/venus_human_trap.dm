@@ -65,7 +65,7 @@
 	var/grasp_chance = 20
 	var/grasp_pull_chance = 85
 	var/grasp_range = 4
-
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/venus_human_trap/handle_automated_action()
 	if(..())
@@ -107,8 +107,3 @@
 	if(.)
 		if(the_target in grasping)
 			return 0
-
-
-
-/mob/living/simple_animal/hostile/venus_human_trap/death()
-	qdel(src)

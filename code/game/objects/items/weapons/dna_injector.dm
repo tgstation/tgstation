@@ -6,6 +6,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1
+	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
 	var/list/fields
@@ -271,19 +272,6 @@
 	New()
 		..()
 		remove_mutations.Add(mutations_list[RACEMUT])
-
-/obj/item/weapon/dnainjector/antistealth
-	name = "\improper DNA injector (Anti-Cloak Of Darkness)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[STEALTH])
-
-/obj/item/weapon/dnainjector/stealthmut
-	name = "\improper DNA injector (Cloak of Darkness)"
-	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
-	New()
-		..()
-		add_mutations.Add(mutations_list[STEALTH])
 
 /obj/item/weapon/dnainjector/antichameleon
 	name = "\improper DNA injector (Anti-Chameleon)"

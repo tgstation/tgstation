@@ -1,5 +1,5 @@
 /obj/structure/flora
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 30
 
 //trees
@@ -218,20 +218,35 @@
 /obj/structure/flora/rock
 	name = "rock"
 	desc = "a rock"
-	icon_state = "rock1"
+	icon_state = "rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	anchored = 1
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
+	density = 1
 
 /obj/structure/flora/rock/New()
 	..()
-	icon_state = "rock[rand(1,5)]"
+	icon_state = "[icon_state][rand(1,5)]"
 
 /obj/structure/flora/rock/pile
 	name = "rocks"
 	desc = "some rocks"
-	icon_state = "rockpile1"
+	icon_state = "rockpile"
+	density = 0
 
-/obj/structure/flora/rock/pile/New()
+
+/obj/structure/flora/rock/volcanic
+	icon_state = "basalt"
+	desc = "A volcanic rock"
+
+
+/obj/structure/flora/rock/volcanic/New()
 	..()
-	icon_state = "rockpile[rand(1,5)]"
+	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/rock/pile/volcanic
+	icon_state = "lavarocks"
+
+/obj/structure/flora/rock/pile/volcanic/New()
+	..()
+	icon_state = "[icon_state][rand(1,3)]"

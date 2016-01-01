@@ -6,6 +6,7 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
+	var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -61,6 +62,8 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(help_verb)
+		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
 	if(H.martial_art && H.martial_art.temporary)
@@ -75,6 +78,8 @@
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
+	if(help_verb)
+		H.verbs -= help_verb
 
 /datum/martial_art/boxing
 	name = "Boxing"
@@ -125,6 +130,12 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
+	help_verb = /mob/living/carbon/human/proc/wrestling_help
+
+//	combo refence since wrestling uses a different format to sleeping carp and plasma fist.
+//	Clinch "G"
+//	Suplex "GD"
+//	Advanced grab "G"
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.grabbedby(A,1)
@@ -175,12 +186,24 @@
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
 
+/mob/living/carbon/human/proc/wrestling_help()
+	set name = "Recall Teachings"
+	set desc = "Remember how to wrestle."
+	set category = "Wrestling"
+
+	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
+	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
+	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
+	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone."
+
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
 #define PLASMA_COMBO "HDDDH"
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
@@ -235,26 +258,35 @@
 	return
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H")
+	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D")
+	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G")
+	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
+/mob/living/carbon/human/proc/plasma_fist_help()
+	set name = "Recall Teachings"
+	set desc = "Remember the martial techniques of the Plasma Fist."
+	set category = "Plasma Fist"
+
+	usr << "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
+	usr << "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back."
+	usr << "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them."
+	usr << "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body."
 
 //Used by the gang of the same name. Uses combos. Basic attacks bypass armor and never miss
 #define WRIST_WRENCH_COMBO "DD"
@@ -265,6 +297,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -345,7 +378,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G")
+	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
 	..()
@@ -354,7 +387,7 @@
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H")
+	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
@@ -369,7 +402,7 @@
 
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D")
+	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
 	return ..()
@@ -380,6 +413,7 @@
 	set category = "Sleeping Carp"
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
+
 	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
 	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
 	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
@@ -417,6 +451,7 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
+		user << "<span class='sciradio'>You have an urge to flex your muscles and get into a fight. You have the knowledge of a thousand wrestlers before you. You can remember more by using the Recall teaching verb in the wrestling tab.</span>"
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
@@ -425,6 +460,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_belt) == src)
 		style.remove(H)
+		user << "<span class='sciradio'>You no longer have an urge to flex your muscles.</span>"
 	return
 
 /obj/item/weapon/plasma_fist_scroll
@@ -461,7 +497,6 @@
 		return 0
 	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
 	user.drop_item()
@@ -482,6 +517,7 @@
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
+	block_chance = 50
 
 /obj/item/weapon/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
@@ -539,8 +575,7 @@
 			return ..()
 	return ..()
 
-/obj/item/weapon/twohanded/bostaff/IsShield()
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(wielded)
-		return 1
-	else
-		return 0
+		return ..()
+	return 0

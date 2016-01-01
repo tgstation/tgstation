@@ -529,6 +529,22 @@ var/global/list/rockTurfEdgeCache
 	nitrogen = 0.01
 	temperature = TCMB
 
+/turf/simulated/floor/plating/asteroid/snow
+	name = "snow"
+	desc = "Looks cold."
+	icon = 'icons/turf/snow.dmi'
+	baseturf = /turf/simulated/floor/plating/asteroid/snow
+	icon_state = "snow"
+	icon_plating = "snow"
+	temperature = 180
+	slowdown = 2
+	environment_type = "snow"
+
+/turf/simulated/floor/plating/asteroid/snow/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/floor/plating/asteroid/New()
 	var/proper_name = name
 	..()
@@ -609,6 +625,7 @@ var/global/list/rockTurfEdgeCache
 	dug = 1
 	icon_plating = "[environment_type]_dug"
 	icon_state = "[environment_type]_dug"
+	slowdown = 0
 	return
 
 /turf/simulated/floor/plating/asteroid/singularity_act()
@@ -639,6 +656,97 @@ var/global/list/rockTurfEdgeCache
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
 
+
+
+
+
+
+
+
+//////////////CHASM//////////////////
+
+/turf/simulated/chasm
+	name = "chasm"
+	desc = "Watch your step."
+	baseturf = /turf/simulated/chasm
+	smooth = SMOOTH_TRUE
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
+	var/drop_x = 1
+	var/drop_y = 1
+	var/drop_z = 1
+
+
+/turf/simulated/chasm/Entered(atom/movable/AM)
+	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
+		return
+	drop(AM)
+
+
+/turf/simulated/chasm/proc/drop(atom/movable/AM)
+	visible_message("[AM] falls into [src]!")
+	AM.Move(locate(drop_x, drop_y, drop_z))
+	AM.visible_message("[AM] falls from above!")
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.adjustBruteLoss(30)
+
+
+
+/turf/simulated/chasm/straight_down/New()
+	..()
+	drop_x = x
+	drop_y = y
+	if(z+1 <= world.maxz)
+		drop_z = z+1
+
+
+
+/**********************Lavaland Turfs**************************/
+
+///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/chasm/straight_down/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/mineral/volcanic/lava_land_surface
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+///////Underground. The underground is deadly hot. You absolutely require a suit to be down here. The floors break to lava.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/mineral/volcanic/lava_land_underground
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
 
 #undef NORTH_EDGING
 #undef SOUTH_EDGING

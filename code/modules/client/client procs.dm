@@ -22,18 +22,23 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
+	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
 		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
-	//Admin PM
+	// Admin PM
 	if(href_list["priv_msg"])
 		if (href_list["ahelp_reply"])
 			cmd_ahelp_reply(href_list["priv_msg"])
 			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
+	// NanoUI
+	if(href_list["nano_error"])
+		src << href_list["nano_error"]
+		throw EXCEPTION("NanoUI: [href_list["nano_error"]]")
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
@@ -179,7 +184,7 @@ var/next_external_rsc = 0
 
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
-		
+
 	sync_client_with_db()
 
 	send_resources()
@@ -314,7 +319,10 @@ var/next_external_rsc = 0
 // See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
 /client/Stat()
 	. = ..()
-	sleep(1)
+	if (holder)
+		sleep(1)
+	else
+		sleep(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -328,4 +336,4 @@ var/next_external_rsc = 0
 		)
 	spawn (10)
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, asset_cache, register_asset = FALSE)
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

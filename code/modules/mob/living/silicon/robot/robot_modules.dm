@@ -236,6 +236,7 @@
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
+	var/obj/item/weapon/reagent_containers/spray/drying_agent
 
 /obj/item/weapon/robot_module/janitor/New()
 	..()
@@ -244,6 +245,11 @@
 	modules += new /obj/item/weapon/mop/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
+	drying_agent = new(src)
+	drying_agent.reagents.add_reagent("drying_agent", 250)
+	drying_agent.name = "drying agent spray"
+	drying_agent.color = "#A000A0"
+	modules += drying_agent
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -256,6 +262,8 @@
 	if(LR)
 		for(var/i = 1, i <= coeff, i++)
 			LR.Charge(R)
+
+	drying_agent.reagents.add_reagent("drying_agent", 5 * coeff)
 
 	if(R.emagged && istype(emag, /obj/item/weapon/reagent_containers/spray))
 		emag.reagents.add_reagent("lube", 2 * coeff)

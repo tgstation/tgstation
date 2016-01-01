@@ -230,7 +230,7 @@
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(10)
+		adjustBruteLoss(15)
 		discipline_slime(user)
 
 

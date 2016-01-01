@@ -1,0 +1,55 @@
+<article class="display">
+	<header><h2>Status</h2></header>
+	<section>
+		<span class="label">Energy:</span>
+		<div class="content">
+			{{=helper.bar(data.energy, 0, data.maxEnergy, null, data.energy + ' Units')}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Amount:</span>
+		<div class="content">
+			{{~ data.beakerTransferAmounts :amount:i}}
+				{{=helper.link(amount, 'plus', 'amount', {'set': amount}, (data.amount == amount) ? 'selected' : null)}}
+			{{~}}
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Dispense</h2></header>
+	<section>
+		{{~ data.chemicals :chem:i}}
+			{{=helper.link(chem.title, 'tint', 'dispense', chem.commands, null, 'gridable')}}
+		{{~}}
+	</section>
+</article>
+<article class="display">
+	<header><h2>Beaker</h2></header>
+	<section>
+		<div class="label">
+			{{=helper.link('Eject', 'eject', 'eject', null, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+		<div class="content">
+			{{~ data.beakerTransferAmounts :amount:i}}
+				{{=helper.link(amount, 'minus', 'remove', {'amount': amount})}}
+			{{~}}
+		</div>
+	</section>
+	<section>
+		<div class="label">Contents:</div>
+		<div class="content">
+			{{? data.isBeakerLoaded}}
+				{{? data.beakerContents.length}}
+					<span>{{=data.beakerCurrentVolume}}/{{=data.beakerMaxVolume}} Units</span><br />
+					{{~ data.beakerContents :reagent:i}}
+						<span class="highlight">{{=reagent.volume}} units of {{=reagent.name}}</span><br />
+					{{~}}
+				{{??}}
+					<span class="bad">Beaker Empty</span>
+				{{?}}
+			{{??}}
+				<span class="average">No Beaker Loaded</span>
+			{{?}}
+		</div>
+	</section>
+</article>

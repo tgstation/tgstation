@@ -33,10 +33,6 @@
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
 		addtimer(src, "forceplacenexus", 1200, FALSE)
 
-	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage
-	updateallghostimages()
-
 
 //Rebuilds the list based on the gamemode's lists
 //As they are the most accurate each tick
@@ -77,6 +73,13 @@
 
 /mob/camera/god/update_icons()
 	icon_state = "[initial(icon_state)]-[side]"
+	
+	if(ghostimage)
+		ghost_darkness_images -= ghostimage
+	
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
 
 
 /mob/camera/god/Stat()

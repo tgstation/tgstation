@@ -205,7 +205,7 @@
 		src.ambience_playing = 0
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 
-var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
+var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
@@ -222,6 +222,22 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 		if(istype(mob,/mob/dead/observer))
 			mob.icon_state = new_form
 
+var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
+
+/client/verb/pick_ghost_orbit()
+	set name = "Choose Ghost Orbit"
+	set category = "Preferences"
+	set desc = "Choose your preferred ghostly orbit."
+	if(!is_content_unlocked())
+		return
+	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
+	if(new_orbit)
+		prefs.ghost_orbit = new_orbit
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.ghost_orbit = new_orbit
+
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
 	set category = "Preferences"
@@ -237,3 +253,26 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
 	prefs.current_tab = 1
 	prefs.ShowChoices(usr)
+
+/client/verb/toggle_ghost_hud_pref()
+	set name = "Toggle Ghost HUD"
+	set category = "Preferences"
+	set desc = "Hide/Show Ghost HUD"
+	
+	prefs.ghost_hud = !prefs.ghost_hud
+	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
+	prefs.save_preferences()
+	if(istype(mob,/mob/dead/observer))
+		mob.hud_used.ghost_hud()
+
+/client/verb/toggle_inquisition() // warning: unexpected inquisition
+	set name = "Toggle Inquisitiveness"
+	set desc = "Sets whether your ghost examines everything on click by default"
+	set category = "Preferences"
+
+	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
+	prefs.save_preferences()
+	if(prefs.inquisitive_ghost)
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
+	else
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"

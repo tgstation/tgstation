@@ -27,7 +27,7 @@
 		/obj/item/weapon/dice = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
+	result = /obj/item/weapon/reagent_containers/food/snacks/fudgedice
 	category = CAT_FOOD
 
 /datum/table_recipe/chocoorange

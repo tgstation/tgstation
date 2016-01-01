@@ -453,14 +453,16 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.Parent_Turret = src	//assign the cover its Parent_Turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN) && !always_up)
-		//if the turret has no power or is broken, make the turret pop down if it hasn't already
-		popDown()
+	if(stat & (NOPOWER|BROKEN))
+		if(!always_up)
+			//if the turret has no power or is broken, make the turret pop down if it hasn't already
+			popDown()
 		return
 
-	if(!on && !always_up)
-		//if the turret is off, make it pop down
-		popDown()
+	if(!on)
+		if(!always_up)
+			//if the turret is off, make it pop down
+			popDown()
 		return
 
 	var/list/targets = list()			//list of primary targets
@@ -468,8 +470,9 @@
 
 	if(check_anomalies)	//if it's set to check for xenos/simpleanimals
 		for(var/mob/living/simple_animal/SA in turretview)
-			if(!SA.stat && (!SA.has_unlimited_silicon_privilege || !(faction in SA.faction))) //don't target dead animals or NT maint drones.
-				targets += SA
+			if(SA.stat || (faction in SA.faction) || SA.has_unlimited_silicon_privilege) //don't target dead animals or NT maint drones.
+				continue
+			targets += SA
 
 	for(var/mob/living/carbon/C in turretview)	//loops through all carbon-based lifeforms in view(7)
 		if(emagged && C.stat != DEAD)	//if emagged, every living carbon is a target.
@@ -892,7 +895,7 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	return Parent_Turret.attack_ai(user)
 
 
@@ -984,6 +987,11 @@
 		return 0
 	return 10
 
+/obj/machinery/porta_turret/syndicate/pod
+	health = 40
+	projectile = /obj/item/projectile/bullet/weakbullet3
+	eprojectile = /obj/item/projectile/bullet/weakbullet3
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////
@@ -1019,7 +1027,7 @@
 			if(A.name == control_area)
 				control_area = A
 				break
-	
+
 	if(!control_area)
 		var/area/CA = get_area(src)
 		if(CA.master && CA.master != CA)
@@ -1070,14 +1078,14 @@
 			src.attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock)
+	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
 		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
-		if ( !issilicon(user) )
+		if ( !(issilicon(user) || IsAdminGhost(user)) )
 			user << "<span class='notice'>You are too far away.</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -1093,10 +1101,10 @@
 	var/area/area = loc
 	var/t = ""
 
-	if(src.locked && (!istype(user, /mob/living/silicon)))
+	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if (!istype(user, /mob/living/silicon))
+		if (!istype(user, /mob/living/silicon) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
@@ -1112,7 +1120,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!istype(usr, /mob/living/silicon))
+		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

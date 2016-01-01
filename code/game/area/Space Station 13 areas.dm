@@ -151,6 +151,9 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 
+/area/shuttle/assault_pod
+	name = "Steel Rain"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 
@@ -1172,7 +1175,7 @@ var/list/teleportlocs = list()
 	icon_state = "eva"
 
 /area/ai_monitored/storage/secure
-	name = "Secure Storage"
+	name = "AI Satellite Storage"
 	icon_state = "storage"
 
 /area/ai_monitored/storage/emergency
