@@ -15,9 +15,9 @@
 
 	accessible_values = list(
 		"Turn light floors on" = "set_state;number",\
-		"Red color"   = "color_r;number",\
-		"Green color" = "color_g;number",\
-		"Blue color"  = "color_b;number"
+		"Red color"   = "color_r;number;0;255",\
+		"Green color" = "color_g;number;0;255",\
+		"Blue color"  = "color_b;number;0;255"
 	)
 
 	var/list/connected_floors = list()
@@ -208,12 +208,6 @@
 
 	image_overlays += tmp_overlay
 	user.client.images += tmp_overlay
-
-/obj/item/device/assembly/light_tile_control/set_value(var_name, new_value)
-	if(var_name in list("color_r","color_g","color_b"))
-		new_value = Clamp(new_value, 0, 255)
-
-	..()
 
 #undef MODE_ADDING
 #undef MODE_DELETING

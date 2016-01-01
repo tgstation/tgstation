@@ -1,5 +1,7 @@
 #define VALUE_VARIABLE_NAME 1 //See var/list/accessible_values below!
 #define VALUE_VARIABLE_TYPE 2
+#define VALUE_VARIABLE_MIN  3 //Minimum possible number value
+#define VALUE_VARIABLE_MAX  4 //Maximum possible number value
 
 /obj/item/device/assembly
 	name = "assembly"
@@ -102,6 +104,9 @@
 	if(L[VALUE_VARIABLE_TYPE] == "number")
 		if(!isnum(new_value)) //Attempted to write a non-number to a number var - abort!
 			return
+
+		if(L.len >= VALUE_VARIABLE_MAX)
+			new_value = Clamp(new_value, L[VALUE_VARIABLE_MIN], L[VALUE_VARIABLE_MAX])
 	else
 		if(!istext(new_value))  //Attempted to write a non-string to a string var - convert the non-string into a string and continue
 			new_value = "[new_value]"

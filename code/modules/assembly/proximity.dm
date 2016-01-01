@@ -28,7 +28,7 @@
 	var/range = 2
 
 	accessible_values = list("Scanning" = "scanning;number",\
-		"Scan range" = "range;number",\
+		"Scan range" = "range;number;1;5",\
 		"Remaining time" = "time;number",\
 		"Default time" = "default_time;number",\
 		"Timing" = "timing;number")
@@ -166,7 +166,7 @@
 	if(href_list["range"])
 		var/r = text2num(href_list["range"])
 		range += r
-		range = min(max(range, 1), 5)
+		range = Clamp(range, 1, 5)
 
 	if(href_list["set_default_time"])
 		default_time = time
