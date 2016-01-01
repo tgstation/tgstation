@@ -2658,7 +2658,7 @@
 "aZg" = (/obj/structure/cable/cyan{icon_state = "1-2"},/obj/machinery/camera/autoname{icon_state = "camera"; dir = 5},/turf/simulated/floor/wood,/area/security/brig)
 "aZh" = (/obj/structure/closet/secure_closet/detective,/obj/item/device/camera{desc = "A one use - polaroid camera. 30 photos left."; name = "detective's camera"; pictures_left = 30},/turf/simulated/floor/wood,/area/security/brig)
 "aZi" = (/obj/structure/table/wood,/turf/simulated/floor/wood,/area/security/brig)
-"aZj" = (/obj/machinery/computer/pandemic{layer = 2.5; pixel_x = -4},/turf/simulated/floor/plasteel/white,/area/medical/virology)
+"aZj" = (/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aZk" = (/obj/structure/reagent_dispensers/virusfood{density = 0; pixel_y = -32},/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aZl" = (/obj/structure/table,/obj/machinery/reagentgrinder{pixel_x = 0; pixel_y = 8},/obj/machinery/camera/autoname{dir = 1; network = list("SS13")},/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aZm" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/melee/baton/cattleprod,/turf/simulated/floor/plasteel/white,/area/medical/virology)
