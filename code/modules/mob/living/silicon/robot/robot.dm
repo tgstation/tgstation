@@ -320,15 +320,6 @@
 /mob/living/silicon/robot/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/malfai in malf.malf_ai)
-				if(connected_ai)
-					if((connected_ai.mind == malfai) && (malf.apcs > 0))
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
-				else if(malf.malf_mode_declared && (malf.apcs > 0))
-					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 		if(cell)
 			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
 		else
@@ -598,7 +589,7 @@
 			var/ai_is_antag = 0
 			if(connected_ai && connected_ai.mind)
 				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+					ai_is_antag = (connected_ai.mind.special_role == "traitor")
 			if(ai_is_antag)
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
@@ -1167,3 +1158,15 @@
 	if(be_close && !in_range(M, src))
 		return
 	return 1
+
+/mob/living/silicon/robot/updatehealth()
+	..()
+	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
+		if(uneq_module(module_state_3))
+			src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
+		if(health < 0)
+			if(uneq_module(module_state_2))
+				src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
+			if(health < -maxHealth*0.5)
+				if(uneq_module(module_state_1))
+					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"

@@ -380,9 +380,9 @@
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
-				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
@@ -406,9 +406,9 @@
 
 			if(S.hasinner)
 				if(S.gender_specific)
-					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layer]"
 				else
-					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "m_[bodypart]inner_[S.icon_state]_[layer]"
 
 				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
@@ -1014,7 +1014,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	if(I.attack_verb && I.attack_verb.len)

@@ -29,7 +29,13 @@
 /obj/item/weapon/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	user.say(catchphrase)
 	playsound(get_turf(user), on_use_sound,50,1)
-	attached_spell.attached_hand = null
+	if(attached_spell)
+		attached_spell.attached_hand = null
+	qdel(src)
+
+/obj/item/weapon/melee/touch_attack/dropped()
+	if(attached_spell)
+		attached_spell.attached_hand = null
 	qdel(src)
 
 /obj/item/weapon/melee/touch_attack/disintegrate

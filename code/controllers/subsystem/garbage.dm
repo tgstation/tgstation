@@ -29,6 +29,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 
+#ifdef TESTING
+	var/list/qdel_list = list()	// list of all types that have been qdel()eted
+#endif
+
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
@@ -102,6 +106,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /proc/qdel(var/datum/A)
 	if (!A)
 		return
+#ifdef TESTING
+	SSgarbage.qdel_list += "[A.type]"
+#endif
 	if (!istype(A))
 		del(A)
 	else if (isnull(A.gc_destroyed))
@@ -225,4 +232,22 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	qdel(src)
 	if(!running_find_references)
 		find_references()
+
+/client/verb/show_qdeleted()
+	set category = "Debug"
+	set name = "Show qdel() Log"
+	set desc = "Render the qdel() log and display it"
+
+	var/dat = "<B>List of things that have been qdel()eted this round</B><BR><BR>"
+
+	var/tmplist = list()
+	for(var/elem in SSgarbage.qdel_list)
+		if(!(elem in tmplist))
+			tmplist[elem] = 0
+		tmplist[elem]++
+
+	for(var/path in tmplist)
+		dat += "[path] - [tmplist[path]] times<BR>"
+
+	usr << browse(dat, "window=qdeletedlog")
 #endif

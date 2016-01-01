@@ -21,6 +21,10 @@
 	pixel_y = rand(-10,10)
 	icon_state = "giftcrate[rand(1,5)]"
 
+/obj/item/weapon/a_gift/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] peeks inside the [src.name] and cries \himself to death! It looks like they were on the naughty list...</span>")
+	return (BRUTELOSS)
+
 /obj/item/weapon/a_gift/attack_self(mob/M)
 	if(M && M.mind && M.mind.special_role == "Santa")
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
@@ -63,7 +67,7 @@
 		/obj/item/clothing/head/snowman)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
-	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
+	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
 
 	var/gift_type = pick(gift_type_list)
 

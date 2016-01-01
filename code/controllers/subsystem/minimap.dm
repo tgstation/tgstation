@@ -19,9 +19,9 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/Initialize(timeofday, zlevel)
 	if (zlevel)
 		return ..()
-	for(var/z = 1 to world.maxz)
+	for(var/z = 1 to ZLEVEL_SPACEMAX)
 		generate(z)
-	for (var/z = 1 to world.maxz)
+	for (var/z = 1 to ZLEVEL_SPACEMAX)
 		register_asset("minimap_[z].png", file("[getMinimapFile(z)].png"))
 	..()
 
@@ -170,7 +170,7 @@ var/datum/subsystem/minimap/SSminimap
 		text2file(hash, hash_path)
 
 /datum/subsystem/minimap/proc/getMinimapFile(zlevel)
-	return "data/minimaps/map_[zlevel]"
+	return "data/minimaps/[MAP_NAME]_[zlevel]"
 
 /datum/subsystem/minimap/proc/sendMinimaps(client/client)
 	for (var/z = 1 to world.maxz)

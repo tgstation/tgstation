@@ -176,13 +176,19 @@ var/list/teleport_runes = list()
 /obj/effect/rune/teleport/invoke(mob/living/user)
 	var/list/potential_runes = list()
 	for(var/obj/effect/rune/teleport/T in teleport_runes)
-		if(T.keyword == src.keyword && T != src)
+		if(T.keyword == src.keyword && T != src && (T.z <= ZLEVEL_SPACEMAX))
 			potential_runes.Add(T)
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no runes with the same keyword!</span>"
 		fail_invoke()
 		log_game("Teleport rune failed - no candidates with matching keyword")
+		return
+
+	if(user.z > ZLEVEL_SPACEMAX)
+		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
+		fail_invoke()
+		log_game("Teleport rune failed - user in away mission")
 		return
 
 	var/obj/effect/rune/selected_rune = pick(potential_runes)
@@ -214,13 +220,19 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/teleport_other/invoke(mob/living/user)
 	var/list/potential_runes = list()
 	for(var/obj/effect/rune/teleport_other/T in teleport_other_runes)
-		if(T.keyword == src.keyword && T != src)
+		if(T.keyword == src.keyword && T != src && (T.z <= ZLEVEL_SPACEMAX))
 			potential_runes.Add(T)
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no runes with the same keyword!</span>"
 		fail_invoke()
 		log_game("Teleport Other rune failed - no candidates with matching keyword")
+		return
+
+	if(user.z > ZLEVEL_SPACEMAX)
+		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
+		fail_invoke()
+		log_game("Teleport rune failed - user in away mission")
 		return
 
 	var/obj/effect/rune/selected_rune = pick(potential_runes)
@@ -237,6 +249,8 @@ var/list/teleport_other_runes = list()
 		return
 	if(targets.len > 1)
 		target = input(user, "Choose a person to teleport.", "Rite of Forced Translocation") as null|anything in targets - user
+		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+			return
 		if(!target)
 			fail_invoke()
 			return
@@ -273,6 +287,8 @@ var/list/teleport_other_runes = list()
 	var/mob/offering
 	if(possible_targets.len > 1) //If there's more than one target, allow choice
 		offering = input(user, "Choose an offering to sacrifice.", "Unholy Tribute") as null|anything in possible_targets
+		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+			return
 	else if(possible_targets.len) //Otherwise, if there's a target at all, pick the only one
 		offering = possible_targets[possible_targets.len]
 	if(!offering)
@@ -356,6 +372,8 @@ var/list/teleport_other_runes = list()
 		log_game("Raise Dead rune failed - no catalyst corpse")
 		return
 	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
 			potential_revive_mobs.Add(M)
@@ -366,6 +384,8 @@ var/list/teleport_other_runes = list()
 		log_game("Raise Dead rune failed - no corpse to revived")
 		return
 	mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
 	revive(mob_to_revive, mob_to_sacrifice, user, T)
 
 	//Begin revival
@@ -607,6 +627,8 @@ var/list/teleport_other_runes = list()
 	for(var/datum/mind/M in ticker.mode.cult)
 		cultists.Add(M.current)
 	var/mob/living/cultist_to_summon = input("Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
 	if(!cultist_to_summon)
 		user << "<span class='cultitalic'>You require a summoning target!</span>"
 		fail_invoke()
@@ -616,6 +638,11 @@ var/list/teleport_other_runes = list()
 		user << "<span class='cultitalic'>[cultist_to_summon] is not a follower of the Geometer!</span>"
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
+		return
+	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
+		user << "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>"
+		fail_invoke()
+		log_game("Summon Cultist rune failed - target in away mission")
 		return
 	if(cultist_to_summon.buckled)
 		cultist_to_summon.buckled.unbuckle_mob()

@@ -376,6 +376,20 @@
 		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 	return 1
 
+/datum/reagent/mulligan
+	name = "Mulligan Toxin"
+	id = "mulligan"
+	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = INFINITY
+
+/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
+	..()
+	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	H.visible_message("<b>[H]</b> suddenly transforms!")
+	randomize_human(H)
+	return 1
+
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
@@ -748,6 +762,16 @@
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
+
+/datum/reagent/fungalspores
+	name = "Tubercle bacillus Cosmosis microbes"
+	id = "fungalspores"
+	description = "Active fungal spores."
+	color = "#92D17D" // rgb: 146, 209, 125
+
+/datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

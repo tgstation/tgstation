@@ -1,0 +1,38 @@
+<article class="display">
+	<header><h2>Status</h2></header>
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
+			{{=helper.link(data.isActive ? 'On' : 'Off', data.isActive ? 'power-off' : 'close', 'power', null, data.isBeakerLoaded ? null : 'disabled')}}
+		</div>
+	</section>
+	<section>
+		<span class="label">Target:</span>
+		<div class="content">
+			{{=helper.link(data.targetTemp + 'K', 'pencil', 'temperature')}}
+		</div>
+	</section>
+</article>
+<article class="display">
+	<header><h2>Beaker</h2></header>
+	<section>
+		{{=helper.link('Eject', 'eject', 'eject', null, data.isBeakerLoaded ? null : 'disabled')}}
+	</section>
+	<section>
+		<span class="label">Contents:</span>
+		<div class="content">
+			{{? data.isBeakerLoaded}}
+				Temperature: {{=data.currentTemp}}K<br />
+				{{? data.beakerContents.length}}
+					{{~ data.beakerContents :reagent:i}}
+						<span class="highlight">{{=reagent.volume}} units of {{=reagent.name}}</span><br />
+					{{~}}
+				{{??}}
+					<span class="bad">Beaker Empty</span>
+				{{?}}
+			{{??}}
+				<span class="average">No Beaker Loaded</span>
+			{{?}}
+		</div>
+	</section>
+</div>

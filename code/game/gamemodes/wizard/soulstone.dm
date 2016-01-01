@@ -29,6 +29,9 @@
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return ..()
+	if(iscultist(M))
+		user << "<span class='cultlarge'>You shouldn't do that.</span>"
+		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	if(iscultist(user) && M && M.mind)
@@ -235,27 +238,11 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/list/candidates = get_candidates(ROLE_CULTIST)
 
-	shuffle(candidates)
-
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as a Shade? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-
-	sleep(50)
+	var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
 
 	if(!T) //target mob got soulstoned or gibbed during sleep(50)
 		return 0
-	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
 
 	if(consenting_candidates.len)
 		var/client/ghost = null

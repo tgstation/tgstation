@@ -181,6 +181,8 @@
 #define ZLEVEL_ABANDONNEDTSAT 3
 #define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+#define ZLEVEL_LAVALAND 5
+#define ZLEVEL_UNDERGROUND 6
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -271,6 +273,7 @@ var/list/bloody_footprints_cache = list()
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
 #define TURF_WET_LUBE	2
+#define TURF_WET_ICE	3
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -309,3 +312,15 @@ var/list/bloody_footprints_cache = list()
 #define FIRE_PROOF -1
 #define FLAMMABLE 0
 #define ON_FIRE 1
+
+
+//Ghost orbit types:
+#define GHOST_ORBIT_CIRCLE		"circle"
+#define GHOST_ORBIT_TRIANGLE	"triangle"
+#define GHOST_ORBIT_HEXAGON		"hexagon"
+#define GHOST_ORBIT_SQUARE		"square"
+#define GHOST_ORBIT_PENTAGON	"pentagon"
+
+//Bloodcrawling
+#define BLOODCRAWL 1
+#define BLOODCRAWL_EAT 2

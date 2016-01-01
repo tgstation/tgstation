@@ -18,7 +18,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	. = ..()
 
 	// Add appropriate CSS and set the default layout.
-	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"nanotrasen.css\" />"
+	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"hi-nanotrasen.css\" />"
 	src.updateLayout("")
 
 /datum/html_interface/nanotrasen/updateLayout(layout)
@@ -32,7 +32,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 /datum/html_interface/nanotrasen/registerResources(var/list/resources = list())
 	resources["uiBg.png"] = 'uiBg.png'
 	resources["uiBgcenter.png"] = 'uiBgcenter.png'
-	resources["nanotrasen.css"] = 'nanotrasen.css'
+	resources["hi-nanotrasen.css"] = 'hi-nanotrasen.css'
 	..(resources)
 
 /datum/html_interface/nanotrasen/createWindow(datum/html_interface_client/hclient)

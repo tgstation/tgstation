@@ -132,3 +132,58 @@
 		H.drip(100)
 
 	return ..()
+
+
+//penetrator ammo
+/obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	name = "sniper rounds (penetrator)"
+	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
+	ammo_type = /obj/item/ammo_casing/penetrator
+	max_ammo = 5
+
+/obj/item/ammo_casing/penetrator
+	desc = "A .50 caliber penetrator round casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
+	icon_state = ".50"
+
+/obj/item/projectile/bullet/sniper/penetrator
+	name = "penetrator round"
+	damage = 60
+	forcedodge = 1
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+
+
+//Accelerator ammo
+
+/obj/item/ammo_box/magazine/sniper_rounds/accelerator
+	name = "sniper rounds (accelerator)"
+	desc = "An advanced round which gains more power the farther it flies."
+	ammo_type = /obj/item/ammo_casing/accelerator
+	max_ammo = 5
+
+/obj/item/ammo_casing/accelerator
+	desc = "A .50 caliber accelerator round casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/accelerator
+	icon_state = ".50"
+
+/obj/item/projectile/bullet/sniper/accelerator
+	icon_state = "red_laser"
+	name = "accelerator round"
+	damage = 5
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/accelerator/Range()
+	..()
+	damage += 5
+	if(damage > 40)
+		icon_state = "heavylaser"
+		breakthings = TRUE
+	else if(damage > 25)
+		icon_state = "laser"

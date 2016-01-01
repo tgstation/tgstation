@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	use_power = 1
 	idle_power_usage = 40
+	interact_offline = 1
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -87,7 +88,7 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", name, 500, 650)
+		ui = new(user, src, ui_key, "chem_dispenser", name, 530, 700)
 		ui.open()
 
 /obj/machinery/chem_dispenser/get_ui_data()
@@ -118,42 +119,39 @@
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("reagent" = temp.id))))
 	data["chemicals"] = chemicals
 	return data
 
-/obj/machinery/chem_dispenser/Topic(href, href_list)
+/obj/machinery/chem_dispenser/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["amount"])
-		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
-			amount = 0
-		if (amount > 100)
-			amount = 100
+	switch(action)
+		if("amount")
+			amount = round(text2num(params["set"]), 5) // round to nearest 5
+			if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
+				amount = 0
+			if (amount > 100)
+				amount = 100
+		if("dispense")
+			if(beaker && dispensable_reagents.Find(params["reagent"]))
+				var/datum/reagents/R = beaker.reagents
+				var/space = R.maximum_volume - R.total_volume
 
-	if(href_list["dispense"])
-		if(beaker && dispensable_reagents.Find(href_list["dispense"]))
-			var/datum/reagents/R = beaker.reagents
-			var/space = R.maximum_volume - R.total_volume
-
-			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
-			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
-
-	if(href_list["remove"])
-		if(beaker)
-			var/amount = text2num(href_list["remove"])
-			if(isnum(amount) && (amount > 0) && (amount in beaker.possible_transfer_amounts))
-				beaker.reagents.remove_all(amount)
-
-	if(href_list["ejectBeaker"])
-		if(beaker)
-			beaker.loc = loc
-			beaker = null
-			overlays.Cut()
-
-	add_fingerprint(usr)
+				R.add_reagent(params["reagent"], min(amount, energy * 10, space))
+				energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+		if("remove")
+			if(beaker)
+				var/amount = text2num(params["amount"])
+				if(isnum(amount) && (amount > 0) && (amount in beaker.possible_transfer_amounts))
+					beaker.reagents.remove_all(amount)
+		if("eject")
+			if(beaker)
+				beaker.loc = loc
+				beaker = null
+				overlays.Cut()
+	return 1
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))

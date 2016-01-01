@@ -266,6 +266,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
+	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
@@ -312,6 +313,8 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user) 
+		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \

@@ -92,7 +92,7 @@
 	update_inv_wear_mask()
 
 //handle stuff to update when a mob equips/unequips a headgear.
-/mob/living/carbon/proc/head_update(obj/item/I)
-	if(I.flags_inv & HIDEMASK)
+/mob/living/carbon/proc/head_update(obj/item/I, forced)
+	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()

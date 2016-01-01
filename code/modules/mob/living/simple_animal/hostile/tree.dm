@@ -33,8 +33,9 @@
 	maxbodytemp = 1200
 
 	faction = list("hostile")
-	var/drop_type = /obj/item/stack/sheet/mineral/wood
+	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = 1
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
@@ -57,12 +58,9 @@
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
-/mob/living/simple_animal/hostile/tree/death(gibbed)
-	..(1)
-	visible_message("<span class='danger'>[src] is hacked into pieces!</span>")
-	new drop_type(loc)
-	ghostize()
-	qdel(src)
+/mob/living/simple_animal/hostile/tree/New()
+	..()
+	deathmessage = "[src] is hacked into pieces!"
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -71,6 +69,5 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
-	drop_type = /obj/item/stack/rods
+	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
-

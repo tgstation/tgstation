@@ -1,0 +1,14 @@
+<div id='container' class='container'>
+  <header id='titlebar' class='titlebar' unselectable='on'>
+  	<i class='statusicon fa fa-eye fa-2x good' unselectable='on'></i>
+  	<span class='title' unselectable='on'>{{=config.title}}</span>
+  	<i class='minimize fancy fa fa-minus fa-2x' unselectable='on'></i>
+  	<i class='close fancy fa fa-close fa-2x' unselectable='on'></i>
+  </header>
+
+  <div id='content' class='content titlebared resizeable' unselectable='on'>
+  	<div class='loading'>Initiating...</div>
+  </div>
+
+  <div id='resize' class='resize fancy' unselectable='on'></div>
+</div>

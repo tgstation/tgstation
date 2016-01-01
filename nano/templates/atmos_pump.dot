@@ -1,0 +1,27 @@
+<article class="display">
+	<section>
+		<span class="label">Power:</span>
+		<div class="content">
+			{{=helper.link(data.on? 'On' : 'Off', data.on? 'power-off' : 'close', 'power')}}
+		</div>
+	</section>
+	{{? data.max_rate}}
+		<section>
+			<span class="label">Transfer Rate:</span>
+			<div class="content">
+				{{=helper.link('Set', 'pencil', 'transfer', {'set': 'custom'})}}
+				{{=helper.link('Max', 'plus', 'transfer', {'set' : 'max'}, data.transfer_rate == data.max_rate ? 'disabled' : null)}}
+				<span class="buttoninfo">{{=data.transfer_rate}} L/s</span>
+			</div>
+		</section>
+	{{??}}
+		<section>
+			<span class="label">Output Pressure:</span>
+			<div class="content">
+				{{=helper.link('Set', 'pencil', 'pressure', {'set': 'custom'})}}
+				{{=helper.link('Max', 'plus', 'pressure', {'set' : 'max'}, data.set_pressure == data.max_pressure ? 'disabled' : null)}}
+				<span class="buttoninfo">{{=data.set_pressure}} kPa</span>
+			</div>
+		</section>
+	{{?}}
+</article>

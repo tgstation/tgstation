@@ -243,6 +243,12 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+	if(istype(D, /atom/movable))
+		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+	else
+		var/atom/A = D
+		if(istype(A))
+			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 
@@ -606,14 +612,19 @@ body
 			M << "Control of your mob has been offered to dead players."
 			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
+			var/poll_message = "Do you want to play as [M.real_name]?"
+			if(M.mind && M.mind.assigned_role)
+				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+			if(M.mind && M.mind.special_role)
+				poll_message = "[poll_message] Status:[M.mind.special_role]."
+			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
 			var/mob/dead/observer/theghost = null
 
 			if(candidates.len)
 				theghost = pick(candidates)
 				M << "Your mob has been taken over by a ghost!"
 				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize()
+				M.ghostize(0)
 				M.key = theghost.key
 			else
 				M << "There were no ghosts willing to take control."
