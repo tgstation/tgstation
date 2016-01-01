@@ -683,6 +683,9 @@
 		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
+		
+		if(H.seer)
+			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))

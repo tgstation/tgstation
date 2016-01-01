@@ -48,7 +48,10 @@
 		return
 	icon_state = "paper"
 
-
+	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+		if(!iscultist(user) && !user.stat)
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			return
 /obj/item/weapon/paper/examine(mob/user)
 	..()
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
