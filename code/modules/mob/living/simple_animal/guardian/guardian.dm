@@ -85,13 +85,14 @@
 	if (summoner)
 		if(loc == summoner)
 			return
-		summoner.adjustBruteLoss(damage)
+		summoner.adjustBruteLoss(damage*0.8)
+		summoner.adjustCloneLoss(damage/5)
 		if(damage)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(damage/2)
+			summoner.adjustCloneLoss(damage/2) // extra clone damage while in crit
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
@@ -99,10 +100,12 @@
 			gib()
 			return
 		if (2)
-			adjustBruteLoss(60)
+			adjustBruteLoss(48)
+			adjustCloneLoss(12)
 
 		if(3)
-			adjustBruteLoss(30)
+			adjustBruteLoss(24)
+			adjustCloneloss(6)
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
@@ -321,6 +324,7 @@
 			C.adjustFireLoss(-5)
 			C.adjustOxyLoss(-5)
 			C.adjustToxLoss(-5)
+			C.adjustCloneLoss(-5)
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
