@@ -19,7 +19,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
-	accessible_values = list("Code (1 to 100)" = "code;number",\
+	accessible_values = list("Code (1 to 100)" = "code;number;1;100",\
 		"Frequency" = "frequency;number")
 
 /obj/item/device/assembly/signaler/New()
@@ -274,7 +274,5 @@
 /obj/item/device/assembly/signaler/set_value(var/var_name, var/new_value)
 	if(var_name == "frequency")
 		new_value = sanitize_frequency(new_value)
-	else if(var_name == "code")
-		new_value = Clamp(new_value, 1, 100)
 
 	return ..(var_name, new_value)
