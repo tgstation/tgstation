@@ -469,12 +469,16 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			if(health < maxHealth)
 				if(MED.use(1))
 					adjustBruteLoss(-MED.heal_brute)
-					src.visible_message("<span class='notice'>[user] applies \the [MED] on [src].</span>")
+					src.visible_message("<span class='notice'>[user] applies \the [MED] to \the [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
+			to_chat(user, "<span class='notice'>This [src] is dead, medical items won't bring it back to life.</span>")
 	else if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(O.is_sharp())
-			butcher()
+			if(user.a_intent != I_HELP)
+				to_chat(user, "<span class='info'>You must be on <b>help</b> intent to do this!</span>")
+			else
+				butcher()
+				return 1
 	else
 		user.delayNextAttack(8)
 		if(O.force)
