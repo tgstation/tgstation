@@ -189,7 +189,7 @@ Filter types:
 			on=!on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
-			switch(params["set"])
+			switch(params["pressure"])
 				if("max")
 					target_pressure = MAX_OUTPUT_PRESSURE
 				if("custom")

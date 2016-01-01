@@ -43,11 +43,12 @@ window.nanoui = new NanoUI
   el: "#container"
   components: # Components used in building NanoUIs; interfaces depend on these.
     interface: iface
+    "n-bar": require "./components/bar"
+    "n-button": require "./components/button"
     "n-display": require "./components/display"
     "n-notice": require "./components/notice"
     "n-section": require "./components/section"
-    "n-bar": require "./components/bar"
-    "n-button": require "./components/button"
+    "n-subdisplay": require "./components/subdisplay"
   events:
     enter: (require "ractive-events-keys").enter
     space: (require "ractive-events-keys").space

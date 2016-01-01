@@ -164,7 +164,7 @@ Thus, the two variables affect pump operation are set in New():
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("transfer")
-			switch(params)
+			switch(params["rate"])
 				if ("max")
 					transfer_rate = MAX_TRANSFER_RATE
 				if ("custom")

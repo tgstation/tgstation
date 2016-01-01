@@ -20,8 +20,8 @@ component.exports =
       else "disabled"
   oninit: ->
     @on "act", (event) ->
-      action = @get "action"
-      params = @get "params"
+      event.node.blur()
+      {action, params} = @get()
       byond.act @get("config.ref"), action, params if action?
 </script>
 
