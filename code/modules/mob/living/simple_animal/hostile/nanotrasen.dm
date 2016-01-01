@@ -21,8 +21,7 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/corpse/nanotrasensoldier
-	var/weapon
+	loot = list(/obj/effect/landmark/mobcorpse/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("nanotrasenprivate")
@@ -37,16 +36,6 @@
 	say("411 in progress, requesting backup!")
 
 
-/mob/living/simple_animal/hostile/nanotrasen/death(gibbed)
-	..(gibbed)
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon)
-		new weapon (src.loc)
-	qdel(src)
-	return
-
-
 /mob/living/simple_animal/hostile/nanotrasen/ranged
 	icon_state = "nanotrasenranged"
 	icon_living = "nanotrasenranged"
@@ -55,7 +44,8 @@
 	minimum_distance = 5
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot.ogg'
-	weapon = /obj/item/weapon/gun/projectile/automatic/pistol/m1911
+	loot = list(/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+				/obj/effect/landmark/mobcorpse/nanotrasensoldier)
 
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg
@@ -64,4 +54,5 @@
 	rapid = 1
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	weapon = /obj/item/weapon/gun/projectile/automatic/wt550
+	loot = list(/obj/item/weapon/gun/projectile/automatic/wt550,
+				/obj/effect/landmark/mobcorpse/nanotrasensoldier)
