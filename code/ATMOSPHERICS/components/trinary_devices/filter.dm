@@ -166,8 +166,8 @@ Filter types:
 		return
 	ui_interact(user)
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "atmos_filter", name, 450, 145)
 		ui.open()

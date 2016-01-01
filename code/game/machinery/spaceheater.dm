@@ -132,7 +132,7 @@
 					C.add_fingerprint(usr)
 
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
-					SSnano.update_uis(src)
+					SStgui.update_uis(src)
 		else
 			user << "<span class='warning'>The hatch must be open to insert a power cell!</span>"
 			return
@@ -153,8 +153,8 @@
 /obj/machinery/space_heater/interact(mob/user)
 	ui_interact(user)
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "space_heater", name, 490, 340, state = physical_state)
 		ui.open()

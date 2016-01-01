@@ -119,8 +119,8 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "tanks", name, 530, 220, state = inventory_state)
 		ui.open()
