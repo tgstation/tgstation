@@ -27,7 +27,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 2
-	enemy_minimum_age = 14
+	enemy_type = TEAM
 
 ///////////////////////////
 //Announces the game type//

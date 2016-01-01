@@ -188,6 +188,10 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/min_solo_antag_age = 7
+
+	var/min_team_antag_age = 14
+
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -563,6 +567,10 @@
 					MAX_EX_LIGHT_RANGE = BombCap
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
+				if("min_solo_antag_age")
+					config.min_solo_antag_age = text2num(value)
+				if("min_team_antag_age")
+					config.min_team_antag_age = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

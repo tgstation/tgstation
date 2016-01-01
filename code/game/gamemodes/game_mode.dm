@@ -10,6 +10,8 @@
  * 2. Conditions of finishing the round.
  *
  */
+#define SOLO 1
+#define TEAM 2
 
 
 /datum/game_mode
@@ -33,7 +35,7 @@
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
-	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
+	var/enemy_type = SOLO
 
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
@@ -513,8 +515,11 @@
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
-	if(!isnum(enemy_minimum_age))
-		return 0
+	var/enemy_minimum_age = 0
+	if(enemy_type == SOLO)
+		enemy_minimum_age = config.min_solo_antag_age
+	if(enemy_type == TEAM)
+		enemy_minimum_age = config.min_team_antag_age
 
 	return max(0, enemy_minimum_age - C.player_age)
 

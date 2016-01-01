@@ -324,5 +324,8 @@ BOMBCAP 14
 ## LagHell (7,14,28)
 #BOMBCAP 28
 
+## Minimum player age, in days, for playing solo antagonists (traitor, double agent, changeling, etc). Default is 7
+MIN_SOLO_ANTAG_AGE 7
 
-
+## Minimum player age, in days, for playing team antagonists (nuke, rev, gang, cult, etc). Default is 14
+MIN_TEAM_ANTAG_AGE 14

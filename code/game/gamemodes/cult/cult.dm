@@ -36,7 +36,7 @@
 	required_players = 10
 	required_enemies = 2
 	recommended_enemies = 2
-	enemy_minimum_age = 14
+	enemy_type = TEAM
 
 	var/eldergod = 0
 	var/orbs_needed = 3
