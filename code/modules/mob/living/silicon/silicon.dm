@@ -307,4 +307,4 @@
 	return 0
 
 /mob/living/silicon/spook()
-	to_chat(src, "<i>[pick(boo_phrases)]</i>")
+	to_chat(src, "<i>[pick(boo_phrases_silicon)]</i>")
