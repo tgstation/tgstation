@@ -93,8 +93,6 @@
 		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 						"<span class='userdanger'>[name] bites [ML]!</span>")
 		if(armor >= 2) return
-		for(var/datum/disease/D in viruses)
-			ML.ForceContractDisease(D)
 	else
 		ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
 

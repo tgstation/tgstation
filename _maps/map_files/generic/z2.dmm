@@ -124,7 +124,7 @@
 "ct" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/holodeck/rec_center/dodgeball)
 "cu" = (/obj/structure/bed,/obj/item/weapon/bedsheet/medical,/turf/simulated/floor/holofloor{icon_state = "warnwhite"; dir = 9},/area/holodeck/rec_center/medical)
 "cv" = (/obj/structure/window{icon_state = "rwindow"; dir = 8},/obj/structure/bed,/obj/item/weapon/bedsheet/medical,/turf/simulated/floor/holofloor{icon_state = "warnwhite"; dir = 5},/area/holodeck/rec_center/medical)
-"cw" = (/obj/structure/window{icon_state = "rwindow"; dir = 8},/obj/structure/window,/obj/machinery/computer/pandemic,/turf/simulated/floor/holofloor{icon_state = "white"},/area/holodeck/rec_center/medical)
+"cw" = (/obj/structure/window{icon_state = "rwindow"; dir = 8},/turf/simulated/floor/holofloor{icon_state = "white"},/area/holodeck/rec_center/medical)
 "cx" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/rec_center/basketball)
 "cy" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "green"},/area/holodeck/rec_center/dodgeball)
 "cz" = (/obj/machinery/door/window/westleft,/turf/simulated/floor/holofloor{icon_state = "warnwhitecorner"; dir = 8},/area/holodeck/rec_center/medical)

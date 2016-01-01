@@ -60,16 +60,6 @@
 	build_path = /obj/item/weapon/circuitboard/operating
 	category = list("Computer Boards")
 
-/datum/design/pandemic
-	name = "Computer Design (PanD.E.M.I.C. 2200)"
-	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
-	id = "pandemic"
-	req_tech = list("programming" = 2, "biotech" = 2)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pandemic
-	category = list("Computer Boards")
-
 /datum/design/scan_console
 	name = "Computer Design (DNA Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."

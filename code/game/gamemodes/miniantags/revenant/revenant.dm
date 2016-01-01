@@ -287,7 +287,6 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 
 
 /mob/living/simple_animal/revenant/death()

@@ -130,16 +130,11 @@
 		name = "appendix"
 
 /obj/item/organ/internal/appendix/Remove(mob/living/carbon/M, special = 0)
-	for(var/datum/disease/appendicitis/A in M.viruses)
-		A.cure()
-		inflamed = 1
 	update_icon()
 	..()
 
 /obj/item/organ/internal/appendix/Insert(mob/living/carbon/M, special = 0)
 	..()
-	if(inflamed)
-		M.AddDisease(new /datum/disease/appendicitis)
 
 /obj/item/organ/internal/appendix/prepare_eat()
 	var/obj/S = ..()

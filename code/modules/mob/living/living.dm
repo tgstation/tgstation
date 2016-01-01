@@ -451,8 +451,6 @@ Sorry Giacom. Please don't be mad :(
 			for(var/datum/reagent/R in C.reagents.reagent_list)
 				C.reagents.clear_reagents()
 			C.reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
 	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src

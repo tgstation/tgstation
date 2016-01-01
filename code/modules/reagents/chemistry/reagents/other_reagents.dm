@@ -5,47 +5,6 @@
 			id = "blood"
 			color = "#C80000" // rgb: 200, 0, 0
 
-/datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
-
-			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
-				continue
-
-			if(method == TOUCH || method == VAPOR)
-				M.ContractDisease(D)
-			else //ingest, patch or inject
-				M.ForceContractDisease(D)
-
-/datum/reagent/blood/on_new(list/data)
-	if(istype(data))
-		SetViruses(src, data)
-
-/datum/reagent/blood/on_merge(list/mix_data)
-	if(data && mix_data)
-		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
-		if(data["viruses"] || mix_data["viruses"])
-
-			var/list/mix1 = data["viruses"]
-			var/list/mix2 = mix_data["viruses"]
-
-			// Stop issues with the list changing during mixing.
-			var/list/to_mix = list()
-
-			for(var/datum/disease/advance/AD in mix1)
-				to_mix += AD
-			for(var/datum/disease/advance/AD in mix2)
-				to_mix += AD
-
-			var/datum/disease/advance/AD = Advance_Mix(to_mix)
-			if(AD)
-				var/list/preserve = list(AD)
-				for(var/D in data["viruses"])
-					if(!istype(D, /datum/disease/advance))
-						preserve += D
-				data["viruses"] = preserve
-	return 1
-
 /datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
@@ -57,10 +16,6 @@
 			blood_prop = new(T)
 			blood_prop.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
 
 	else if(istype(data["donor"], /mob/living/carbon/monkey))
@@ -68,20 +23,12 @@
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
 	else if(istype(data["donor"], /mob/living/carbon/alien))
 		var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 	return
 
 /datum/reagent/liquidgibs
@@ -89,23 +36,6 @@
 	id = "liquidgibs"
 	color = "#FF9966"
 	description = "You don't even want to think about what's in here."
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	id = "vaccine"
-	color = "#C81040" // rgb: 200, 16, 64
-
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/datum/disease/D in M.viruses)
-			if(D.GetDiseaseID() in data)
-				D.cure()
-		M.resistances |= data
-
-/datum/reagent/vaccine/on_merge(list/data)
-	if(istype(data))
-		src.data |= data.Copy()
 
 /datum/reagent/water
 	name = "Water"
@@ -395,10 +325,6 @@
 	id = "amutationtoxin"
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
-
-/datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(method != TOUCH)
-		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -742,36 +668,6 @@
 	if(prob(10)) M.emote("drool")
 	..()
 	return
-
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanomachines"
-	description = "Microscopic construction robots."
-	color = "#535E66" // rgb: 83, 94, 102
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
-
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	color = "#535E66" // rgb: 83, 94, 102
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ContractDisease(new /datum/disease/transformation/xeno(0))
-
-/datum/reagent/fungalspores
-	name = "Tubercle bacillus Cosmosis microbes"
-	id = "fungalspores"
-	description = "Active fungal spores."
-	color = "#92D17D" // rgb: 146, 209, 125
-
-/datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

@@ -123,25 +123,6 @@
 	owner.ventcrawler = 2
 	return
 
-
-/obj/item/organ/internal/gland/viral
-	origin_tech = "materials=4;biotech=6"
-	cooldown_low = 1800
-	cooldown_high = 2400
-	uses = 1
-	icon_state = "viral"
-
-/obj/item/organ/internal/gland/viral/activate()
-	owner << "<span class='warning'>You feel sick.</span>"
-	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
-	var/datum/disease/D = new virus_type()
-	D.carrier = 1
-	owner.viruses += D
-	D.affected_mob = owner
-	D.holder = owner
-	owner.med_hud_set_status()
-
-
 /obj/item/organ/internal/gland/emp //TODO : Replace with something more interesting
 	origin_tech = "materials=4;biotech=5;magnets=3"
 	cooldown_low = 900

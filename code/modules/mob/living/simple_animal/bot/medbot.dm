@@ -153,7 +153,7 @@
 		dat += "Critical Patient Alerts: <a href='?src=\ref[src];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
 		dat += "Patrol Station: <a href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
 		dat += "Stationary Mode: <a href='?src=\ref[src];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
-	
+
 	return dat
 
 /mob/living/simple_animal/bot/medbot/Topic(href, href_list)
@@ -361,18 +361,6 @@
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-	if(treat_virus)
-		for(var/datum/disease/D in C.viruses)
-			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
-			if(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC)
-				return 0
-			if(D.severity == NONTHREAT) // medibot doesn't try to heal truly harmless viruses
-				return 0
-			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
-
-				if (!C.reagents.has_reagent(treatment_virus))
-					return 1 //STOP DISEASE FOREVER
-
 	return 0
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
@@ -408,19 +396,6 @@
 		reagent_id = "toxin"
 
 	else
-		if(treat_virus)
-			var/virus = 0
-			for(var/datum/disease/D in C.viruses)
-				//detectable virus
-				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
-					if(D.severity != NONTHREAT)      //virus is harmful
-						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
-							virus = 1
-
-			if (!reagent_id && (virus))
-				if(!C.reagents.has_reagent(treatment_virus))
-					reagent_id = treatment_virus
-
 		if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_brute))
 				reagent_id = treatment_brute

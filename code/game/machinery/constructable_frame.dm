@@ -494,8 +494,7 @@ to destroy them and players will be able to make replacements.
 		var/list/fridges = list(/obj/machinery/smartfridge = "default",
 									 /obj/machinery/smartfridge/drinks = "drinks",
 									 /obj/machinery/smartfridge/extract = "slimes",
-									 /obj/machinery/smartfridge/chemistry = "chems",
-									 /obj/machinery/smartfridge/chemistry/virology = "viruses")
+									 /obj/machinery/smartfridge/chemistry = "chems")
 
 		var/position = fridges.Find(build_path, fridges)
 		position = (position == fridges.len) ? 1 : (position + 1)

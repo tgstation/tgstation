@@ -503,17 +503,10 @@
 		if (istype(current, /mob/living/carbon/human))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
 		else if (istype(current, /mob/living/carbon/monkey))
-			var/found = 0
-			for(var/datum/disease/D in current.viruses)
-				if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
-
-			if(found)
-				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
-			else
-				text += "<b>HEALTHY</b>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
+			text += "<b>HEALTHY</b>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
 
 		else
-			text += "healthy|infected|human|<b>OTHER</b>"
+			text += "healthy|human|<b>OTHER</b>"
 
 		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
@@ -1060,32 +1053,11 @@
 						M = H.monkeyize()
 						src = M.mind
 						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
-					else if (istype(M) && length(M.viruses))
-						for(var/datum/disease/D in M.viruses)
-							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
-			if("infected")
-				if (check_rights(R_ADMIN, 0))
-					var/mob/living/carbon/human/H = current
-					var/mob/living/carbon/monkey/M = current
-					if (istype(H))
-						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
-						src = null
-						M = H.monkeyize()
-						src = M.mind
-						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
-					else if (istype(M))
-						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 			if("human")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/transformation/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)

@@ -13,11 +13,6 @@
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = MAX_SHOE_BLOODINESS
 
-/obj/effect/decal/cleanable/blood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
@@ -93,11 +88,7 @@
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-				for(var/datum/disease/D in src.viruses)
-					var/datum/disease/ND = D.Copy(1)
-					b.viruses += ND
-					ND.holder = b
+				new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 			if (step_to(src, get_step(src, direction), 0))
 				break
 

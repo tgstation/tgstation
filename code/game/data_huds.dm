@@ -59,13 +59,6 @@
 
 //HELPERS
 
-//called when a carbon changes virus
-/mob/living/carbon/proc/check_virus()
-	for(var/datum/disease/D in viruses)
-		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
-			return 1
-	return 0
-
 //helper for getting the appropriate health status
 /proc/RoundHealth(health)
 	switch(health)
@@ -117,8 +110,6 @@
 		holder.icon_state = "huddead"
 	else if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
-	else if(check_virus())
-		holder.icon_state = "hudill"
 	else
 		holder.icon_state = "hudhealthy"
 

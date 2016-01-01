@@ -97,12 +97,6 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-				//Virsuses
-				if(viruses.len)
-					stat("Viruses:", null)
-					for(var/datum/disease/D in viruses)
-						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
-
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
 	var/b_loss = null

@@ -173,10 +173,6 @@ MASS SPECTROMETER
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
 
-	for(var/datum/disease/D in M.viruses)
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			user << "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>"
-
 	// Blood Level
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

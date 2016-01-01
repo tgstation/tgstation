@@ -499,17 +499,6 @@ var/list/admin_verbs_hideable = list(
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
 
-/client/proc/give_disease(mob/T in mob_list)
-	set category = "Fun"
-	set name = "Give Disease"
-	set desc = "Gives a Disease to a mob."
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
-	if(!D) return
-	T.ForceContractDisease(new D)
-	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
-
 /client/proc/object_say(obj/O in world)
 	set category = "Special Verbs"
 	set name = "OSay"

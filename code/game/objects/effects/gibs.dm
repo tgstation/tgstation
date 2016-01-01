@@ -43,13 +43,6 @@
 					var/mob/living/carbon/digester = location
 					digester.stomach_contents += gib
 
-				if(viruses.len > 0)
-					for(var/datum/disease/D in viruses)
-						if(prob(virusProb))
-							var/datum/disease/viruus = D.Copy(1)
-							gib.viruses += viruus
-							viruus.holder = gib
-
 				if(MobDNA)
 					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
 				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey

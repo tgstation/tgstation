@@ -22,7 +22,5 @@
 	user.reagents.add_reagent("potass_iodide", 10)
 	user.reagents.add_reagent("charcoal", 20)
 
-	for(var/datum/disease/D in user.viruses)
-		D.cure()
 	feedback_add_details("changeling_powers","AP")
 	return 1

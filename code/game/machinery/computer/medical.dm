@@ -156,14 +156,6 @@
 					dat += "<tr><td><A href='?src=\ref[src];screen=2'>Back</A></td></tr>"
 					dat += "</table>"
 				if(5)
-					dat += "<CENTER><B>Virus Database</B></CENTER>"
-					for(var/Dt in typesof(/datum/disease/))
-						var/datum/disease/Dis = new Dt(0)
-						if(istype(Dis, /datum/disease/advance))
-							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
-						if(!Dis.desc)
-							continue
-						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
 					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
 				if(6)
 					dat += "<center><b>Medical Robot Monitor</b></center>"
@@ -270,22 +262,6 @@
 
 				src.active1 = null
 				src.active2 = null
-
-			else if(href_list["vir"])
-				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
-				var/AfS = ""
-				for(var/mob/M in Dis.viable_mobtypes)
-					AfS += " [initial(M.name)];"
-				src.temp = {"<b>Name:</b> [Dis.name]
-<BR><b>Number of stages:</b> [Dis.max_stages]
-<BR><b>Spread:</b> [Dis.spread_text] Transmission
-<BR><b>Possible Cure:</b> [(Dis.cure_text||"none")]
-<BR><b>Affected Lifeforms:</b>[AfS]
-<BR>
-<BR><b>Notes:</b> [Dis.desc]
-<BR>
-<BR><b>Severity:</b> [Dis.severity]"}
 
 			else if(href_list["del_all"])
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
