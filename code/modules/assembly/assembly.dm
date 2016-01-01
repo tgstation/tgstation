@@ -106,7 +106,7 @@
 			return
 
 		if(L.len >= VALUE_VARIABLE_MAX)
-			new_value = Clamp(new_value, L[VALUE_VARIABLE_MIN], L[VALUE_VARIABLE_MAX])
+			new_value = Clamp(new_value, text2num(L[VALUE_VARIABLE_MIN]), text2num(L[VALUE_VARIABLE_MAX]))
 	else
 		if(!istext(new_value))  //Attempted to write a non-string to a string var - convert the non-string into a string and continue
 			new_value = "[new_value]"
