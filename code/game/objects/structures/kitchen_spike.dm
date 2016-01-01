@@ -74,6 +74,7 @@
 					m180.Turn(180)
 					animate(H, transform = m180, time = 3)
 					H.pixel_y = H.get_standard_pixel_y_offset(180)
+					qdel(G)
 					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
 		return
