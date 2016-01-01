@@ -154,10 +154,10 @@
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
 	for(var/mob/living/silicon/robot/R in killer.connected_robots)
-			if(R.lawupdate)
-				R.lawsync()
-				R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
-				R.show_laws()
+		if(R.lawupdate)
+			R.lawsync()
+			R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
+			R.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
