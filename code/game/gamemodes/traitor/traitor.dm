@@ -2,9 +2,11 @@
 	// this includes admin-appointed traitors and multitraitors. Easy!
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
-
+	
 	var/datum/mind/exchange_red
 	var/datum/mind/exchange_blue
+	
+	var/mob/living/silicon/ai/B
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -121,6 +123,13 @@
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		var/mob/living/silicon/ai/B = traitor.curent
+		for(var/mob/living/silicon/robot/R in B.connected_robots)
+			if(R.lawupdate)
+				R.lawsync()
+				R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
+				R.show_laws()
+				R.law_change_counter++
 	else
 		equip_traitor(traitor.current)
 	return
