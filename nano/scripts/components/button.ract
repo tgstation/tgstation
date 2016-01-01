@@ -4,6 +4,9 @@ constants = require "../constants"
 
 component.exports =
   computed:
+    clickable: ->
+      if @get("enabled") && not @get "state" then true
+      else false
     enabled: ->
       if @get("config.status") is constants.NANO_INTERACTIVE then true
       else false
@@ -22,7 +25,10 @@ component.exports =
       byond.act @get("config.ref"), action, params if action?
 </script>
 
-<span class='button {{styles}} {{#grid}}gridable{{/}}' tabindex='0' unselectable='true' on-click-enter='{{#if enabled && !state}}act{{/if}}'>
+<span class='button {{styles}} {{#grid}}gridable{{/}}'
+  unselectable='true'
+  {{#clickable}}tabindex='0'{{/}}
+  on-click-enter='{{#clickable}}act{{/}}'>
   {{#if icon}}
     <i class='fa fa-{{icon}}'></i>
   {{/if}}
