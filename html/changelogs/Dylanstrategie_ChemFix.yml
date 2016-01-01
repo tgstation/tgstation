@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+- bugfix: Chemistry has been broken for nineteen days, so badly that you couldn't splash reagents on people, objects or turfs. Nineteen fucking days, and it took Sarah fucking Johnson to come back from the dead to report it

@@ -31,90 +31,76 @@
 
 /datum/reagent/proc/reaction_mob(var/mob/living/M, var/method = TOUCH, var/volume)
 
-	if(!holder)
-		return 1
-	if(!istype(M))
-		return 1
-
 	var/datum/reagent/self = src //Note : You need to declare self again (before the parent call) to use it in your chemical, see blood
 	src = null
 
-	//If the chemicals are in a smoke cloud, do not let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
-	if(self.holder && !istype(self.holder.my_atom, /obj/effect/effect/smoke/chem))
-		if(method == TOUCH)
-
-			var/chance = 1
-			var/block  = 0
-
-			for(var/obj/item/clothing/C in M.get_equipped_items())
-				if(C.permeability_coefficient < chance)
-					chance = C.permeability_coefficient
-
-				//Hardcode, but convenient until protection is fixed
-				if(istype(C, /obj/item/clothing/suit/bio_suit))
-					if(prob(75))
-						block = 1
-
-				if(istype(C, /obj/item/clothing/head/bio_hood))
-					if(prob(75))
-						block = 1
-
-			chance = chance * 100
-
-			if(prob(chance) && !block)
-				if(M.reagents)
-					M.reagents.add_reagent(self.id, self.volume/2) //Hardcoded, transfer half of volume
-
-/datum/reagent/proc/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
-
-	if(!holder)
-		return 1
 	if(!istype(M))
 		return 1
 
+	//If the chemicals are in a smoke cloud, do not let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
+	if(method == TOUCH)
+
+		var/chance = 1
+		var/block  = 0
+
+		for(var/obj/item/clothing/C in M.get_equipped_items())
+			if(C.permeability_coefficient < chance)
+				chance = C.permeability_coefficient
+
+			//Hardcode, but convenient until protection is fixed
+			if(istype(C, /obj/item/clothing/suit/bio_suit))
+				if(prob(75))
+					block = 1
+
+			if(istype(C, /obj/item/clothing/head/bio_hood))
+				if(prob(75))
+					block = 1
+
+		chance *= 100
+
+		if(prob(chance) && !block)
+			if(M.reagents)
+				M.reagents.add_reagent(self.id, self.volume/2) //Hardcoded, transfer half of volume
+
+/datum/reagent/proc/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+
+
 	var/datum/reagent/self = src
 	src = null
+
+	if(!istype(M))
+		return 1
 
 	M.reagent_act(self.id, method, volume)
 
 /datum/reagent/proc/reaction_obj(var/obj/O, var/volume)
 
-	if(!holder)
-		return 1
+	src = null
+
 	if(!istype(O))
 		return 1
 
-	src = null
-
 /datum/reagent/proc/reaction_turf(var/turf/simulated/T, var/volume)
 
-	if(!holder)
-		return 1
+	src = null
+
 	if(!istype(T))
 		return 1
 
-	src = null
-
 /datum/reagent/proc/on_mob_life(var/mob/living/M, var/alien)
 
-	if(!holder)
+	if(!istype(M))
 		return 1
-	if(!M)
-		M = holder.my_atom //Try to find the mob through the holder
-	if(!istype(M)) //Still can't find it, abort
-		return 1
+
 	if(overdose && volume >= overdose) //This is the current overdose system
 		M.adjustToxLoss(overdose_dam)
 
 	holder.remove_reagent(src.id, custom_metabolism) //Trigger metabolism
 
 /datum/reagent/proc/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
-	if(!holder)
-		return
-	if(!T)
-		T = holder.my_atom //Try to find the mob through the holder
-	if(!istype(T)) //Still can't find it, abort
-		return
+
+	if(!istype(T))
+		return 1
 
 	holder.remove_reagent(src.id, custom_plant_metabolism)
 
