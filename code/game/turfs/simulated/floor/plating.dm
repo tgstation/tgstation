@@ -193,30 +193,32 @@
 		SSobj.processing |= src
 
 /turf/simulated/floor/plating/lava/process()
-	if(!contents)
+	if(!burn_stuff())
 		processing = 0
 		SSobj.processing.Remove(src)
-		return
-	burn_stuff()
+	
 
 /turf/simulated/floor/plating/lava/proc/burn_stuff()
+	. = 0
 	for(var/atom/movable/AM in contents)
-		if(!istype(AM))
-			return
 		if(istype(AM, /obj))
 			var/obj/O = AM
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
-				return
+				continue
+			. = 1
 			if(O.burn_state == FIRE_PROOF)
 				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
 			O.fire_act()
+			
 		else if (istype(AM, /mob/living))
+			. = 1
 			var/mob/living/L = AM
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
+			
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
