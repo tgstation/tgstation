@@ -1,0 +1,5 @@
+author: DeadPoolJ
+changes: 
+  - rscadd: Made a new admin verb, Send Fax, which lets admins send a fax without having to reply to one first.
+  - rscadd: Made faxes and prayers show up in the special window if admins have it enabled.)
+delete-after: true

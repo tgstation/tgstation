@@ -24,7 +24,10 @@
 
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_PRAYER)
-			to_chat(C, msg)
+			if(C.prefs.special_popup)
+				C << output(msg, "window1.msay_output")//if i get told to make this a proc imma be fuckin mad
+			else
+				to_chat(C, msg)
 			to_chat(C, 'sound/effects/prayer.ogg')
 
 	if(!stat)
