@@ -213,14 +213,10 @@
 			return
 		CC.use(2)
 		src.use(1)
+
 		to_chat(user, "<span class='notice'>You attach some wires to the [name].</span></span>")
-		var/obj/item/stack/light_w/L=locate(/obj/item/stack/light_w) in get_turf(user)
-		if(L && L.amount<L.max_amount)
-			L.amount++
-			to_chat(user, "You add [L] to the stack. It now contains [L.amount] tiles.")
-			return
-		else
-			new /obj/item/stack/light_w(user.loc)
+
+		drop_stack(/obj/item/stack/light_w, get_turf(user), 1, user)
 	else
 		return ..()
 

@@ -39,13 +39,9 @@
 /obj/item/stack/tile/mineral/uranium/safe/attackby(obj/item/W as obj, mob/user as mob)
 	if(iscrowbar(W))
 		to_chat(user, "You pry off the layer of reinforced glass from [src].")
-		use(1)
-		var/obj/item/stack/tile/mineral/uranium/U = locate(/obj/item/stack/tile/mineral/uranium) in user.loc
-		if(U && U.type==/obj/item/stack/tile/mineral/uranium && U.amount<U.max_amount)
-			U.amount++
-			to_chat(user, "You add a uranium tile to the stack. It now has [U.amount] tiles.")
-			return
-		U = new(user.loc)
+
+		if(use(1))
+			drop_stack(/obj/item/stack/tile/mineral/uranium, user.loc, 1, user)
 		return
 
 /obj/item/stack/tile/mineral/uranium/attackby(obj/item/W as obj, mob/user as mob)
@@ -54,12 +50,8 @@
 		to_chat(user, "You add a layer of reinforced glass to [src].")
 		G.use(1)
 		src.use(1)
-		var/obj/item/stack/tile/mineral/uranium/safe/U = locate(/obj/item/stack/tile/mineral/uranium/safe) in user.loc
-		if(U && U.amount<U.max_amount)
-			U.amount++
-			to_chat(user, "You add an isolated uranium tile to the stack. It now has [U.amount] tiles.")
-			return
-		U = new(user.loc)
+
+		drop_stack(/obj/item/stack/tile/mineral/uranium/safe, user.loc, 1, user)
 		return
 
 /obj/item/stack/tile/mineral/gold
