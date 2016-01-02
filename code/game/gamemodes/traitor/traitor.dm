@@ -153,7 +153,7 @@
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
-	killer.syncborgs()
+	killer.synchborgs()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
