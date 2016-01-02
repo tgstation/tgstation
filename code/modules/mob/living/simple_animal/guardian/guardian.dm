@@ -73,10 +73,6 @@
 /mob/living/mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
-/mob/living/simple_animal/hostile/guardian/float()
-	animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-	return
-
 /mob/living/simple_animal/hostile/guardian/death()
 	..()
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
