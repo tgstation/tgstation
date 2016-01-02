@@ -48,7 +48,7 @@ module.exports = ->
   gulp.src p.js.dir + p.js.main
     .pipe bundle()
     .pipe g.if(f.debug, g.sourcemaps.init({loadMaps: true}))
-    .pipe g.concat(p.js.out)
+    .pipe g.rename(p.js.out)
     .pipe g.bytediff.start()
     .pipe g.if(f.min, g.uglify({mangle: true, compress: {unsafe: true}}))
     .pipe g.if(f.debug, g.sourcemaps.write())

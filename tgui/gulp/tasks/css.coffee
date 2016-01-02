@@ -26,7 +26,7 @@ module.exports = ->
       s.plsfilters({oldIE: true}),
       s.fontweights
     ])
-    .pipe g.concat(p.css.out)
+    .pipe g.rename(p.css.out)
     .pipe g.bytediff.start()
     .pipe g.if(f.colorblind, g.postcss([s.colorblind]))
     .pipe g.if(f.min, g.cssnano(cssnano))
