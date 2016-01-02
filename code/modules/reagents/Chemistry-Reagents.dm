@@ -30,6 +30,7 @@
 	var/alpha = 255
 
 /datum/reagent/proc/reaction_mob(var/mob/living/M, var/method = TOUCH, var/volume)
+	set waitfor = 0
 
 	if(!holder)
 		return 1
@@ -66,6 +67,7 @@
 					M.reagents.add_reagent(self.id, self.volume/2) //Hardcoded, transfer half of volume
 
 /datum/reagent/proc/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+	set waitfor = 0
 
 	if(!holder)
 		return 1
@@ -78,6 +80,7 @@
 	M.reagent_act(self.id, method, volume)
 
 /datum/reagent/proc/reaction_obj(var/obj/O, var/volume)
+	set waitfor = 0
 
 	if(!holder)
 		return 1
@@ -87,6 +90,7 @@
 	src = null
 
 /datum/reagent/proc/reaction_turf(var/turf/simulated/T, var/volume)
+	set waitfor = 0
 
 	if(!holder)
 		return 1
@@ -96,6 +100,7 @@
 	src = null
 
 /datum/reagent/proc/on_mob_life(var/mob/living/M, var/alien)
+	set waitfor = 0
 
 	if(!holder)
 		return 1

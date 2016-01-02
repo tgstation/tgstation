@@ -11,8 +11,7 @@
 				if(/datum/species/diona)	alien = IS_DIONA
 				if(/datum/species/vox)	alien = IS_VOX
 				if(/datum/species/plasmaman)	alien = IS_PLASMA
-		spawn()
-			reagents.metabolize(src,alien)
+		reagents.metabolize(src,alien)
 
 	var/total_plasmaloss = 0
 	for(var/obj/item/I in src)
