@@ -850,7 +850,7 @@ var/list/ai_list = list()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/synchborgs()
+/mob/living/silicon/ai/proc/synchborgs()
 	for(var/mob/living/silicon/robot/R in connected_robots)
 		if(R.lawupdate)
 			R.lawsynch()
