@@ -159,12 +159,17 @@
 		if(A)
 			sticked_to = A
 			locsave = loc
-			anchored = 1
+			//anchored = 1
 			if(ishuman(A))
 				A.hitby(src)
 				var/datum/beam/wire = new(owner, A, beam_icon_state="spikewire", time=9999999, maxdistance=owner.spike_range, btype=/obj/effect/ebeam/spikewire)
 				spawn(0)
 					wire.Start()
+			else if(isobj(A))
+				var/obj/O = A
+				O.glue_object(src)
+			else
+				anchored = 1
 			break
 		sleep(1)
 
@@ -182,8 +187,9 @@
 		explosion(get_turf(src), 0, 1, 2, 3)
 
 /obj/item/wirebomb_spike/Destroy()
-	owner.spikes -= src
-	owner = null
+	if(owner)
+		owner.spikes -= src
+		owner = null
 	return ..()
 
 /obj/item/wirebomb_spike/singularity_pull(S, current_size)
@@ -196,7 +202,7 @@
 		owner.detonate()
 	else if(!sticked_to)
 		anchored = 0
-	if(!anchored)
+	if(!anchored && !glued_to)
 		..()
 	else
 		user << "<span class='warning'>It's wedged into [sticked_to]. You can't pick it up.</span>"
