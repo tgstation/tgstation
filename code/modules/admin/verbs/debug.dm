@@ -72,7 +72,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 			return
 		else
-			procpath = text2path(procname)
+			var/procpath = text2path(procname)
 			if (!procpath)
 				usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
 				return
