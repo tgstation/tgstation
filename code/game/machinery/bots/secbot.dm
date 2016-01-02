@@ -274,7 +274,7 @@ Auto Patrol: []"},
 						if(declare_arrests)
 							declare()
 						target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
-						"<span class='userdanger'>[target] has been stunned by [src]!</span>")
+						"<span class='userdanger'>You have been stunned by [src]!</span>")
 						maxstuns--
 						if(maxstuns <= 0)
 							target = null
