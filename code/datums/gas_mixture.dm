@@ -59,17 +59,16 @@ var/list/cached_gases_list = null
 	for(var/id in args)
 		assert_gas(id)
 
-		//add_gas(gas_id, gas_list) - similar to assert_gas(), but does not check for an existing
+		//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
 			//gas list for this id.
 		//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
-		//Inlined for maximum speed.
-#define add_gas(gas_id, gas_list)	gas_list[gas_id] = gaslist(gas_id)
+/datum/gas_mixture/proc/add_gas(gas_id)
+	gases[gas_id] = gaslist(gas_id)
 
 		//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
-	var/list/cached_gases = gases
 	for(var/id in args)
-		add_gas(id, cached_gases)
+		add_gas(id)
 
 		//garbage_collect() - removes any gas list which is empty.
 		//Must be used after subtracting from a gas. Must be used after assert_gas()
@@ -402,13 +401,16 @@ var/list/cached_gases_list = null
 	var/heat_capacity_sharer_to_self = 0
 
 	for(var/sharer_id in sharercache-selfcache)
-		add_gas(sharer_id, selfcache) //we can use add_gas() because we're looping only through the IDs not in our cache
+		add_gas(sharer_id) //we can use add_gas() because we're looping only through the IDs not in our cache
 
 	for(var/id in selfcache)
+		if(!sharercache[id]) //checking here prevents an uneeded proc call if the check fails.
+			sharer.add_gas(id)
+
 		var/gas = selfcache[id]
 		var/sharergas = sharercache[id]
 
-		var/delta = QUANTIZE(gas[ARCHIVE] - (sharergas ? sharergas[ARCHIVE] : 0))/(atmos_adjacent_turfs+1)
+		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1)
 
 		if(delta && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			var/gas_heat_capacity = abs(gas[MOLES] * gas[SPECIFIC_HEAT])
@@ -417,14 +419,8 @@ var/list/cached_gases_list = null
 			else
 				heat_capacity_sharer_to_self += gas_heat_capacity
 
-		if(!sharercache[id])
-			//checking here instead of just calling assert_gas()
-			//prevents an extra proc call if the check fails
-			add_gas(id, sharercache)
-			sharergas = sharercache[id]
-
-		sharergas[MOLES]	+= delta
 		gas[MOLES]			-= delta
+		sharergas[MOLES]	+= delta
 		moved_moles			+= delta
 		abs_moved_moles		+= abs(delta)
 
@@ -467,8 +463,8 @@ var/list/cached_gases_list = null
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			temperature -= QUANTIZE(heat/self_heat_capacity)
-			sharer.temperature += QUANTIZE(heat/sharer_heat_capacity)
+			temperature = max(temperature - heat/self_heat_capacity, TCMB)
+			sharer.temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
 
 /datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (temperature - model.temperature)
@@ -479,7 +475,7 @@ var/list/cached_gases_list = null
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
-			temperature -= heat/self_heat_capacity
+			temperature = max(temperature - heat/self_heat_capacity, TCMB)
 
 /datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
@@ -490,8 +486,8 @@ var/list/cached_gases_list = null
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
 
-			temperature -= heat/self_heat_capacity
-			sharer.temperature += heat/sharer.heat_capacity
+			temperature = max(temperature - heat/self_heat_capacity, TCMB)
+			sharer.temperature = max(sharer.temperature + heat/sharer.heat_capacity, TCMB)
 
 /datum/gas_mixture/compare(datum/gas_mixture/sample, datatype = MOLES, adjacents = 0)
 	. = ""
@@ -538,7 +534,6 @@ var/list/cached_gases_list = null
 	temperature = model.temperature
 
 	garbage_collect()
-
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
 
