@@ -11,7 +11,10 @@
 /obj/effect/forcefield/CanAtmosPass(turf/T)
 	return !density
 
-
+/obj/effect/forcefield/cult
+	desc = "An unholy shield that blocks all attacks."
+	name = "glowing wall"
+	icon_state = "cultshield"
 
 ///////////Mimewalls///////////
 

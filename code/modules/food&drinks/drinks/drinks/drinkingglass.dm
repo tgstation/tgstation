@@ -6,7 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	spillable = 1
 

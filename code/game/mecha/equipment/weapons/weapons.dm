@@ -285,8 +285,7 @@
 	log_message("Launched a [O.name] from [name], targeting [target].")
 	projectiles--
 	proj_init(O)
-	spawn(0)
-		O.throw_at(target, missile_range, missile_speed, spin = 0)
+	O.throw_at_fast(target, missile_range, missile_speed, spin = 0)
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging

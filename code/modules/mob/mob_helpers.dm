@@ -187,20 +187,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	spawn(0)
-		if(!M || !M.client || M.shakecamera)
-			return
-		var/oldeye=M.client.eye
-		var/x
-		M.shakecamera = 1
-		for(x=0; x<duration, x++)
-			if(M && M.client)
-				M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
-				sleep(1)
-		if(M)
-			M.shakecamera = 0
-			if(M.client)
-				M.client.eye=oldeye
+	if(!M || !M.client || duration <= 0)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	for(var/i in 0 to duration-1)
+		if (i == 0)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+		else
+			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+	animate(pixel_x=oldx, pixel_y=oldy, time=1)
+
 
 
 /proc/findname(msg)
@@ -289,8 +290,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				if(ticker.mode.config_tag == "malfunction" && M.mind in ticker.mode.malf_ai)//Malf law is a law 0
-					return 2
 				return 1
 		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
@@ -309,6 +308,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					return 2
 			if("wizard")
 				if(M.mind in ticker.mode.wizards)
+					return 2
+			if("apprentice")
+				if(M.mind in ticker.mode.apprentices)
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
@@ -370,3 +372,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		return
 
+/proc/IsAdminGhost(var/mob/user)
+	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
+		return 1
+	else
+		return 0

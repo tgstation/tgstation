@@ -74,11 +74,19 @@
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
 
+/obj/item/weapon/pickaxe/silver
+	name = "silver-plated pickaxe"
+	icon_state = "spickaxe"
+	item_state = "spickaxe"
+	digspeed = 30 //mines faster than a normal pickaxe, bought from mining vendor
+	origin_tech = "materials=3;engineering=2"
+	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 20 //mines twice as fast as a normal pickaxe, bought from mining vendor
+	digspeed = 20
 	origin_tech = "materials=4;engineering=3"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 
@@ -167,8 +175,8 @@
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "pill3"
-	icon = 'icons/obj/chemical.dmi'
+	icon_state = "capsule"
+	icon = 'icons/obj/mining.dmi'
 	w_class = 1
 	var/used = FALSE
 
@@ -183,6 +191,7 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
+	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
 	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
@@ -235,7 +244,9 @@
 	threshhold.nitrogen = 82
 	threshhold.carbon_dioxide = 0
 	threshhold.toxins = 0
-	L.contents += threshhold
+	var/area/ZZ = get_area(threshhold)
+	if(!is_type_in_list(ZZ, blacklist))
+		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
@@ -253,5 +264,6 @@
 		A.air.temperature = 293.15
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-
-		L.contents += A
+		var/area/Z = get_area(A)
+		if(!is_type_in_list(Z, blacklist))
+			L.contents += A

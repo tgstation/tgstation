@@ -48,10 +48,10 @@
 	s.set_up(12, 1, src)
 	s.start()
 	if(buckled_mob)
-		buckled_mob.burn_skin(85)
+		buckled_mob.electrocute_act(85, src, 1)
 		buckled_mob << "<span class='userdanger'>You feel a deep shock course through your body!</span>"
 		sleep(1)
-		buckled_mob.burn_skin(85)
+		buckled_mob.electrocute_act(85, src, 1)
 	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")
 
 	A.power_light = light

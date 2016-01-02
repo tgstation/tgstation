@@ -118,10 +118,13 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
+		var/mob/pilot = mecha.occupant
 		var/list/occupant = list()
-		occupant |= mecha.occupant
+		occupant |= pilot
+		pilot.sight |= SEE_TURFS
 		scanning = 1
 		mineral_scan_pulse(occupant,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
+			pilot.sight -= SEE_TURFS
 

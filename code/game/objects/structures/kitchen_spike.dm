@@ -40,7 +40,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!src.buckled_mob)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
@@ -74,6 +74,7 @@
 					m180.Turn(180)
 					animate(H, transform = m180, time = 3)
 					H.pixel_y = H.get_standard_pixel_y_offset(180)
+					qdel(G)
 					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
 		return

@@ -34,12 +34,9 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
-	LoadBansjob()
 	if(config.usewhitelist)
 		load_whitelist()
-	jobban_loadbanfile()
 	appearance_loadbanfile()
-	jobban_updatelegacybans()
 	LoadBans()
 	investigate_reset()
 
@@ -57,9 +54,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	data_core = new /datum/datacore()
 
-
 	spawn(-1)
-		master_controller.setup()
+		Master.Setup()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically

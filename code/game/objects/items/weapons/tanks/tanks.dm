@@ -1,4 +1,5 @@
-#define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
 
 /obj/item/weapon/tank
@@ -99,7 +100,7 @@
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
@@ -110,16 +111,19 @@
 		bomb_assemble(W,user)
 
 /obj/item/weapon/tank/attack_self(mob/user)
-	if (!(src.air_contents))
+	if (!user)
 		return
+	interact(user)
 
+/obj/item/weapon/tank/interact(mob/user)
+	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/weapon/tank/interact(mob/user, ui_key = "main")
-	SSnano.try_update_ui(user, src, ui_key, null, src.get_ui_data())
-
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "tanks.tmpl", "Tank", 500, 300, 0)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "tanks", name, 400, 200, state = inventory_state)
+		ui.open()
 
 /obj/item/weapon/tank/get_ui_data()
 	var/mob/living/carbon/location = null
@@ -133,41 +137,43 @@
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
 	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
 	data["valveOpen"] = 0
 	data["maskConnected"] = 0
 
 	if(istype(location))
 		var/mask_check = 0
-
 		if(location.internal == src)	// if tank is current internal
 			mask_check = 1
 			data["valveOpen"] = 1
 		else if(src in location)		// or if tank is in the mobs possession
 			if(!location.internal)		// and they do not have any active internals
 				mask_check = 1
-
 		if(mask_check)
 			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 				data["maskConnected"] = 1
 	return data
 
-/obj/item/weapon/tank/Topic(href, href_list)
-	..()
-	if (usr.stat|| usr.restrained())
+/obj/item/weapon/tank/ui_act(action, params)
+	if (..())
 		return
-	if (src.loc == usr)
-		usr.set_machine(src)
-		if (href_list["dist_p"])
-			if (href_list["dist_p"] == "reset")
-				src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-			else if (href_list["dist_p"] == "max")
-				src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
-			else
-				var/cp = text2num(href_list["dist_p"])
-				src.distribute_pressure += cp
-			src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-		if (href_list["stat"])
+
+	switch(action)
+		if("pressure")
+			switch(params["pressure"])
+				if("custom")
+					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
+					if(isnum(custom))
+						distribute_pressure = custom
+				if("reset")
+					distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				if("min")
+					distribute_pressure = TANK_MIN_RELEASE_PRESSURE
+				if("max")
+					distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+			distribute_pressure = Clamp(round(distribute_pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+		if("valve")
 			if(istype(loc,/mob/living/carbon))
 				var/mob/living/carbon/location = loc
 				if(location.internal == src)
@@ -184,19 +190,7 @@
 							location.internals.icon_state = "internal1"
 					else
 						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
-
-		src.add_fingerprint(usr)
-/*
- * the following is needed for a tank lying on the floor. But currently we restrict players to use not weared tanks as intrals. --rastaf
-		for(var/mob/M in viewers(1, src.loc))
-			if ((M.client && M.machine == src))
-				src.attack_self(M)
-*/
-		src.attack_self(usr)
-	else
-		usr << browse(null, "window=tank")
-		return
-	return
+	return 1
 
 
 /obj/item/weapon/tank/remove_air(amount)
@@ -238,8 +232,8 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
+			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()

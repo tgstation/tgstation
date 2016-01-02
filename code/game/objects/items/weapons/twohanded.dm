@@ -115,13 +115,16 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+/obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
 	var/mob/user = loc
-	if(!istype(user)) return 0
+	if(!istype(user))
+		return 0
 	var/obj/item/I = user.get_active_hand()
-	if(I == src) I = user.get_inactive_hand()
-	if(!I) return 0
-	return I.IsShield()
+	if(I == src)
+		I = user.get_inactive_hand()
+	if(!I)
+		return 0
+	return I.hit_reaction()
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -177,17 +180,15 @@
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		qdel(A)
+			W.spawnfragments() // this will qdel and spawn shards
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			G.health = -6
+			G.destroyed += prob(25) // If this is set, healthcheck will completely remove the grille
+			G.healthcheck()
 
 
 /*
@@ -207,10 +208,11 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	flags = NOSHIELD
+	armour_penetration = 75
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -233,6 +235,8 @@
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
+				if(i == 8)
+					user.emote("flip")
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
@@ -242,11 +246,10 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/IsShield()
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(wielded)
-		return 1
-	else
-		return 0
+		return ..()
+	return 0
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
@@ -302,7 +305,7 @@
 	throwforce = 20
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
-	flags = NOSHIELD
+	armour_penetration = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -408,3 +411,30 @@
 	if(src == user.get_active_hand()) //update inhands
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
+
+
+//GREY TIDE
+/obj/item/weapon/twohanded/spear/grey_tide
+	icon_state = "spearglass0"
+	name = "\improper Grey Tide"
+	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
+	force_unwielded = 15
+	force_wielded = 25
+	throwforce = 20
+	throw_speed = 4
+	attack_verb = list("gored")
+
+/obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+	..()
+	if(!proximity)
+		return
+	user.faction |= "greytide(\ref[user])"
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		if(istype (L, /mob/living/simple_animal/hostile/illusion))
+			return
+		if(!L.stat && prob(50))
+			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
+			M.faction = user.faction.Copy()
+			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.GiveTarget(L)

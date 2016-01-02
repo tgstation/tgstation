@@ -6,7 +6,7 @@
 	var/list/organs = list()
 	switch(operation)
 		if("add organ")
-			for(var/path in typesof(/obj/item/organ/internal) - /obj/item/organ/internal)
+			for(var/path in subtypesof(/obj/item/organ/internal))
 				var/dat = replacetext("[path]", "/obj/item/organ/internal/", ":")
 				organs[dat] = path
 
@@ -16,7 +16,7 @@
 			organ.Insert(C)
 
 		if("add implant")
-			for(var/path in typesof(/obj/item/weapon/implant) - /obj/item/weapon/implant)
+			for(var/path in subtypesof(/obj/item/weapon/implant))
 				var/dat = replacetext("[path]", "/obj/item/weapon/implant/", ":")
 				organs[dat] = path
 

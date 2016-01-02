@@ -116,12 +116,11 @@
 	add_logs(user, target, "fired at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
-		spawn(0)
-			loadedItems.Remove(ITD)
-			loadedWeightClass -= ITD.w_class
-			ITD.throw_speed = pressureSetting * 2
-			ITD.loc = get_turf(src)
-			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
+		loadedItems.Remove(ITD)
+		loadedWeightClass -= ITD.w_class
+		ITD.throw_speed = pressureSetting * 2
+		ITD.loc = get_turf(src)
+		ITD.throw_at_fast(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)

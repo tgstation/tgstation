@@ -2,6 +2,8 @@
 var/global/list/global_handofgod_traptypes = list()
 var/global/list/global_handofgod_structuretypes = list()
 
+#define CONDUIT_RANGE	15
+
 
 /datum/game_mode
 	var/list/datum/mind/red_deities = list()
@@ -47,16 +49,12 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs) //Remove heads and junk
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/F in 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/follower = pick_n_take(antag_candidates)
 		unassigned_followers += follower
+		follower.restricted_roles = restricted_jobs
 		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")
 
 	while(unassigned_followers.len > (required_enemies / 2))
@@ -87,7 +85,6 @@ var/global/list/global_handofgod_structuretypes = list()
 	var/datum/mind/red_god = pick_n_take(red_god_possibilities)
 	if(red_god)
 		red_god.current.become_god("red")
-		ticker.mode.forge_deity_objectives(red_god)
 		remove_hog_follower(red_god,0)
 		add_god(red_god,"red")
 
@@ -101,9 +98,18 @@ var/global/list/global_handofgod_structuretypes = list()
 	var/datum/mind/blue_god = pick_n_take(blue_god_possibilities)
 	if(blue_god)
 		blue_god.current.become_god("blue")
-		ticker.mode.forge_deity_objectives(blue_god)
 		remove_hog_follower(blue_god,0)
 		add_god(blue_god,"blue")
+
+
+	//Forge objectives
+	//This is done here so that both gods exist
+	if(red_god)
+		ticker.mode.forge_deity_objectives(red_god)
+	if(blue_god)
+		ticker.mode.forge_deity_objectives(blue_god)
+
+
 	..()
 
 ///////////////////

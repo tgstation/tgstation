@@ -207,6 +207,11 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
 	log_name = "LB"
 
+/datum/spellbook_entry/infinite_guns
+	name = "Lesser Summon Guns"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	log_name = "IG"
+
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -268,7 +273,7 @@
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
-	desc = "A particular staff that can mold solid metal into ornate wooden doors. Useful for getting around in the absence of other transportation. Does not work on glass."
+	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/door
 	log_name = "SD"
 	cost = 1
@@ -350,33 +355,17 @@
 	limit = 3
 	category = "Assistance"
 
-/datum/spellbook_entry/item/super_matter
-	name = "Super Matter Sword"
-	desc = "Buying this is an incredibly bad idea. The radiation will kill you within minutes. Please consider other options."
-	item_path = /obj/item/weapon/melee/supermatter_sword
-	log_name = "SX"
-	category = "Weapons"
-
-/datum/spellbook_entry/item/veil_render
-	name = "Veil Render"
-	desc = "A sword that can cut through reality itself, leading to mass destruction. Remember to run after you use it!"
-	item_path = /obj/item/weapon/veilrender
-	log_name = "VR"
-	category = "Weapons"
-
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/weapon/twohanded/mjollnir
 	log_name = "MJ"
-	category = "Weapons"
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
-	category = "Weapons"
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -510,7 +499,7 @@
 		user << "It appears to have no author."
 
 /obj/item/weapon/spellbook/proc/Initialize()
-	var/entry_types = typesof(/datum/spellbook_entry) - /datum/spellbook_entry - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
+	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
 		if(E.IsAvailible())
@@ -782,28 +771,8 @@
 		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
 		return
 
-	if(user.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs -= V
-
-	if(stored_swap.mind.special_verbs.len)
-		for(var/V in stored_swap.mind.special_verbs)
-			stored_swap.verbs -= V
-
-	var/mob/dead/observer/ghost = stored_swap.ghostize(0)
-
-	user.mind.transfer_to(stored_swap)
-
-	if(stored_swap.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs += V
-
-	ghost.mind.transfer_to(user)
-	user.key = ghost.key
-
-	if(user.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs += V
+	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
+	swapper.cast(user, stored_swap, 1)
 
 	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
 	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
@@ -874,4 +843,9 @@
 /obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
+	qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/random/New()
+	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
+	new real_type(loc)
 	qdel(src)

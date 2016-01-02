@@ -165,7 +165,8 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
-	new material_drop(loc)
+	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
+		new material_drop(loc)
 	dump_contents()
 	qdel(src)
 	..()
@@ -213,7 +214,7 @@
 					return
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, cutting_sound, 40, 1)
-				if(do_after(user,40,5,1, target = src))
+				if(do_after(user,40/W.toolspeed,1, target = src))
 					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, cutting_sound, 50, 1)
@@ -233,7 +234,7 @@
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 				playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-				if(do_after(user,40,5,1, target = src))
+				if(do_after(user,40,1, target = src))
 					if(opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)

@@ -281,29 +281,31 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1)
 	target = T
 	var/image/A = null
-	var/kind = rand(1,3)
+	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H == target)
 			continue
-		if(H in view(target))
+		if(skip_nearby && (H in view(target)))
 			continue
 		switch(kind)
-			if(1)//Clown
+			if("clown")//Clown
 				A = image('icons/mob/animal.dmi',H,"clown")
-			if(2)//Carp
+			if("carp")//Carp
 				A = image('icons/mob/animal.dmi',H,"carp")
-			if(3)//Corgi
+			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
-			if(4)//Skeletons
+			if("skeleton")//Skeletons
 				A = image('icons/mob/human.dmi',H,"skeleton_s")
+			if("demon")//Demon
+				A = image('icons/mob/mob.dmi',H,"daemon")
 		A.override = 1
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(300)
+	sleep(duration)
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)

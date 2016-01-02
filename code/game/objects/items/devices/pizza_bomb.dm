@@ -3,7 +3,8 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
-	burn_state = 0 //Burnable
+	item_state = "pizzabox"
+	burn_state = FLAMMABLE
 	var/timer = 10 //Adjustable timer
 	var/timer_set = 0
 	var/primed = 0
@@ -76,7 +77,7 @@
 				user << "<span class='warning'>You can't see the box well enough to cut the wires out!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] starts removing the payload and wires from \the [src].</span>", "<span class='notice'>You start removing the payload and wires from \the [src]...</span>")
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40/I.toolspeed, target = src))
 				playsound(src, 'sound/items/Wirecutter.ogg', 50, 1, 1)
 				user.unEquip(src)
 				user.visible_message("<span class='notice'>[user] removes the insides of \the [src]!</span>", "<span class='notice'>You remove the insides of \the [src].</span>")

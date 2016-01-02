@@ -61,7 +61,7 @@
 		if(!brainmob.dna)
 			brainmob.dna = new /datum/dna(brainmob)
 		C.dna.copy_dna(brainmob.dna)
-	if(L.mind)
+	if(L.mind && L.mind.current && (L.mind.current.stat == DEAD))
 		L.mind.transfer_to(brainmob)
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 

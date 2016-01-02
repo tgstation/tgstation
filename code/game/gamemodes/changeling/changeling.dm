@@ -80,7 +80,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = typesof(/datum/objective/changeling_team_objective) - /datum/objective/changeling_team_objective
+	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 	var/list/possible_team_objectives = list()
 	for(var/T in team_objectives)
 		var/datum/objective/changeling_team_objective/CTO = T
@@ -113,9 +113,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
-	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
-	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
-
 	var/escape_objective_possible = TRUE
 
 	//if there's a team objective, check if it's compatible with escape objectives
@@ -124,63 +121,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			escape_objective_possible = FALSE
 			break
 
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(6, 8)
-	changeling.objectives += absorb_objective
-
-	if(prob(60))
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = changeling
-		steal_objective.find_target()
-		changeling.objectives += steal_objective
-
-	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/joined_player_list.len))
-		var/datum/objective/destroy/destroy_objective = new
-		destroy_objective.owner = changeling
-		destroy_objective.find_target()
-		changeling.objectives += destroy_objective
-	else
-		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = changeling
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
-			else
-				kill_objective.find_target()
-			changeling.objectives += kill_objective
-		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = changeling
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
-			else
-				maroon_objective.find_target()
-			changeling.objectives += maroon_objective
-
-			if (!(locate(/datum/objective/escape) in changeling.objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = changeling
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
-				changeling.objectives += identity_theft
-				escape_objective_possible = FALSE
-
-	if (!(locate(/datum/objective/escape) in changeling.objectives) && escape_objective_possible)
-		if(prob(50))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = changeling
-			changeling.objectives += escape_objective
-		else
-			var/datum/objective/escape/escape_with_identity/identity_theft = new
-			identity_theft.owner = changeling
-			if(team_mode)
-				identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
-			else
-				identity_theft.find_target()
-			changeling.objectives += identity_theft
-		escape_objective_possible = FALSE
+	generate_objectives(changeling, 4, escape_objective_possible)
 
 
 
@@ -358,12 +299,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return
 	return 1
 
-/datum/changeling/proc/add_profile(var/mob/living/carbon/human/H, var/mob/living/carbon/user, protect = 0)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
-
-	var/datum/changelingprofile/prof = new()
+/datum/changeling/proc/create_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
+	var/datum/changelingprofile/prof = new
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
 	var/datum/dna/new_dna = new H.dna.type
@@ -391,12 +328,22 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		else
 			continue
 
+	return prof
+
+/datum/changeling/proc/add_profile(datum/changelingprofile/prof)
+	if(stored_profiles.len > dna_max)
+		if(!push_out_profile())
+			return
+
 	stored_profiles += prof
 	absorbedcount++
 
+/datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
+	var/datum/changelingprofile/prof = create_profile(H, protect)
+	add_profile(prof)
 	return prof
 
-/datum/changeling/proc/remove_profile(var/mob/living/carbon/human/H, force = 0)
+/datum/changeling/proc/remove_profile(mob/living/carbon/human/H, force = 0)
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		if(H.real_name == prof.name)
 			if(prof.protected && !force)
@@ -416,7 +363,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return 1
 	return 0
 
-/proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
+/proc/changeling_transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
 	user.underwear = chosen_prof.underwear
@@ -477,3 +424,18 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/changelingprofile/Destroy()
 	qdel(dna)
 	return ..()
+
+/datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
+	newprofile.name = name
+	newprofile.protected = protected
+	newprofile.dna = new dna.type
+	dna.copy_dna(newprofile.dna)
+	newprofile.name_list = name_list.Copy()
+	newprofile.appearance_list = appearance_list.Copy()
+	newprofile.flags_cover_list = flags_cover_list.Copy()
+	newprofile.exists_list = exists_list.Copy()
+	newprofile.item_color_list = item_color_list.Copy()
+	newprofile.item_state_list = item_state_list.Copy()
+	newprofile.underwear = underwear
+	newprofile.undershirt = undershirt
+	newprofile.socks = socks

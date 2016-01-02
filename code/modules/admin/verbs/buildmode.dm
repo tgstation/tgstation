@@ -185,7 +185,7 @@
 					if("turf-reference")
 						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
 			if(AREA_BUILDMODE)
-				var/list/gen_paths = typesof(/datum/mapGenerator) - /datum/mapGenerator
+				var/list/gen_paths = subtypesof(/datum/mapGenerator)
 
 				var/type = input(usr,"Select Generator Type","Type") as null|anything in gen_paths
 				if(!type) return

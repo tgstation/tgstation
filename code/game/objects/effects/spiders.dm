@@ -79,6 +79,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
@@ -93,6 +94,7 @@
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
+			S.faction = faction.Copy()
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -111,6 +113,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
@@ -197,35 +200,13 @@
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
+			S.faction = faction.Copy()
 			if(player_spiders)
-				var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
-
-				shuffle(candidates)
-
-				var/time_passed = world.time
-				var/list/consenting_candidates = list()
-
-				for(var/candidate in candidates)
-
-					spawn(0)
-						switch(alert(candidate, "Would you like to play as [S.name]? Please choose quickly!","Confirmation","Yes","No"))
-							if("Yes")
-								if((world.time-time_passed)>=50 || !src)
-									return
-								consenting_candidates += candidate
-
-				sleep(50)
-
-				if(!src)
-					return
-
-				listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
-
-
-				if(consenting_candidates.len)
-					var/client/C = null
-					C = pick(consenting_candidates)
-					S.key = C.key
+				var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [S.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+				var/mob/dead/observer/theghost = null
+				if(candidates.len)
+					theghost = pick(candidates)
+					S.key = theghost.key
 			qdel(src)
 
 

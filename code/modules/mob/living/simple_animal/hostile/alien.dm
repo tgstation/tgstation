@@ -29,7 +29,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

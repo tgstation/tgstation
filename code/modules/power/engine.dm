@@ -14,10 +14,3 @@
 				ChangeTurf(src.baseturf)
 		else
 			return
-
-/turf/simulated/floor/engine/blob_act()
-	if (prob(25))
-		ChangeTurf(src.baseturf)
-		qdel(src)
-		return
-	return

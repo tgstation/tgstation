@@ -210,6 +210,8 @@ var/datum/global_hud/global_hud = new()
 		hoggod_hud()
 	else if(isguardian(mymob))
 		guardian_hud()
+	else if(isovermind(mymob))
+		blob_hud()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)

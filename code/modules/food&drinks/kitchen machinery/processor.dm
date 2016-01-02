@@ -86,7 +86,7 @@
 		S.loc = loc
 		S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 		return
-	for(var/i = 1, i <= C + processor.rating_amount, i++)
+	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
 		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
@@ -127,7 +127,7 @@
 /datum/food_processor_process/mob/monkey/output = null
 
 /obj/machinery/processor/proc/select_recipe(X)
-	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
+	for (var/Type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))
 			continue

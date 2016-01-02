@@ -89,7 +89,7 @@
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20, target = src))
+				if(do_after(user,20/I.toolspeed, target = src))
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
@@ -258,9 +258,7 @@
 
 			AM.loc = src.loc
 			AM.pipe_eject(0)
-			spawn(1)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM.throw_at_fast(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)

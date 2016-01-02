@@ -117,7 +117,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	burn_state = 0 //burnable
+	burn_state = FLAMMABLE
 
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)

@@ -9,7 +9,7 @@
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		new/obj/effect/overlay/temp/emp/pulse(epicenter)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, epicenter)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range

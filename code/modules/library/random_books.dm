@@ -1,6 +1,6 @@
 /obj/item/weapon/book/manual/random/New()
-	var/static/banned_books = list(/obj/item/weapon/book/manual,/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
-	var/newtype = pick(typesof(/obj/item/weapon/book/manual) - banned_books)
+	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
+	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
 	qdel(src)
 
@@ -39,7 +39,7 @@
 			B.title		=	query.item[3]
 			B.dat		=	query.item[4]
 			B.name		=	"Book: [B.title]"
-			B.icon_state=	"book[rand(1,7)]"
+			B.icon_state=	"book[rand(1,8)]"
 	else
 		log_game("SQL ERROR populating library bookshelf.  Category: \[[category]\], Count: [book_count], Error: \[[query.ErrorMsg()]\]\n")
 	update_icon()

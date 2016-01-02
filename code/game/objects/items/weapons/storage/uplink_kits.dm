@@ -11,6 +11,8 @@
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/multitool/ai_detect(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
+			new /obj/item/weapon/switchblade(src)
 			return
 
 		if("stealth")
@@ -238,3 +240,31 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
+
+
+/obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
+ 	name = "boxed virus grenade kit"
+
+/obj/item/weapon/storage/box/virus_kit/tuberculosisgrenade/New()
+ 	..()
+ 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/syringe(src)
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
+ 	return
+
+/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
+ 	name = "boxed virus kit"
+
+/obj/item/weapon/storage/box/virus_kit/tuberculosiskit/New()
+ 	..()
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/syringe(src)
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
+ 	return
+

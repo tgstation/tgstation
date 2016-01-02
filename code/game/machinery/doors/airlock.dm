@@ -96,13 +96,13 @@ About the new airlock wires panel:
 // You can find code for the airlock wires in the wire datum folder.
 
 /obj/machinery/door/airlock/proc/bolt()
-	if(locked || operating)
+	if(locked)
 		return
 	locked = 1
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
-	if(!locked || operating)
+	if(!locked)
 		return
 	locked = 0
 	update_icon()
@@ -225,7 +225,9 @@ About the new airlock wires panel:
 	else
 		return 0
 
-/obj/machinery/door/airlock/update_icon(state=0)
+/obj/machinery/door/airlock/update_icon(state=0, override=0)
+	if(operating && !override)
+		return
 	switch(state)
 		if(0)
 			if(density)
@@ -546,7 +548,7 @@ About the new airlock wires panel:
 	return src.attack_hand(user)
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(!istype(user, /mob/living/silicon))
+	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
@@ -579,7 +581,7 @@ About the new airlock wires panel:
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(usr.stat || usr.restrained())
+	if((usr.stat || usr.restrained()) && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -593,7 +595,7 @@ About the new airlock wires panel:
 
 
 
-	if(istype(usr, /mob/living/silicon) && src.canAIControl())
+	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access
@@ -797,8 +799,8 @@ About the new airlock wires panel:
 		updateUsrDialog()
 	return
 
-/obj/machinery/door/airlock/attackby(obj/C, mob/user, params)
-	if(!istype(usr, /mob/living/silicon))
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
+	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
@@ -816,7 +818,7 @@ About the new airlock wires panel:
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40,5,1, target = src))
+			if(do_after(user,40/C.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
 						return
@@ -847,7 +849,7 @@ About the new airlock wires panel:
 		if(p_open && charge)
 			user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(!do_after(user, 150, target = src))
+			if(!do_after(user, 150/C.toolspeed, target = src))
 				user << "<span class='warning'>You slip and [charge] detonates!</span>"
 				charge.ex_act(1)
 				user.Weaken(3)
@@ -861,7 +863,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-			if(do_after(user,40, target = src))
+			if(do_after(user,40/C.toolspeed, target = src))
 				if(src.loc)
 					if(src.doortype)
 						var/obj/structure/door_assembly/A = new src.doortype(src.loc)
@@ -880,10 +882,10 @@ About the new airlock wires panel:
 					if(!electronics)
 						ae = new/obj/item/weapon/electronics/airlock( src.loc )
 						if(req_one_access)
-							ae.use_one_access = 1
-							ae.conf_access = src.req_one_access
+							ae.one_access = 1
+							ae.accesses = src.req_one_access
 						else
-							ae.conf_access = src.req_access
+							ae.accesses = src.req_access
 					else
 						ae = electronics
 						electronics = null
@@ -921,7 +923,10 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+	else if(istype(C, /obj/item/device/doorCharge))
+		if(!p_open)
+			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
+			return
 		if(emagged)
 			return
 		if(charge && !detonated)
@@ -999,14 +1004,13 @@ About the new airlock wires panel:
 	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
-
-	do_animate("opening")
+	update_icon(AIRLOCK_OPENING, 1)
 	src.SetOpacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = 2.7
-	update_icon()
+	update_icon(AIRLOCK_OPEN, 1)
 	SetOpacity(0)
 	operating = 0
 	air_update_turf(1)
@@ -1047,14 +1051,14 @@ About the new airlock wires panel:
 	if(density)
 		return 1
 	operating = 1
-	update_icon(AIRLOCK_CLOSING)
+	update_icon(AIRLOCK_CLOSING, 1)
 	src.layer = 3.1
 	sleep(5)
 	src.density = 1
 	if(!safe)
 		crush()
 	sleep(9)
-	update_icon()
+	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		SetOpacity(1)
 	operating = 0
@@ -1062,6 +1066,7 @@ About the new airlock wires panel:
 	update_freelook_sight()
 	if(safe)
 		if(locate(/mob/living) in get_turf(src))
+			sleep(1)
 			open()
 	return 1
 
@@ -1148,8 +1153,8 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut)
-	return !density || (check_access(ID) && !locked)
+//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
 	for (var/obj/A in contents)
@@ -1159,13 +1164,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
-		update_icon(AIRLOCK_EMAG)
+		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
 		if(qdeleted(src))
 			return
 		operating = 0
 		if(!open())
-			update_icon(AIRLOCK_CLOSED)
+			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0

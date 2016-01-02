@@ -578,3 +578,11 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	build_path = /obj/item/device/geiger_counter
 	category = list("initial", "Tools")
+
+/datum/design/turret_control_frame
+	name = "Turret control frame"
+	id = "turret_control"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 12000)
+	build_path = /obj/item/wallframe/turret_control
+	category = list("initial", "Construction")

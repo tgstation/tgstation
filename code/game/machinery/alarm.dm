@@ -80,12 +80,13 @@
 
 	// breathable air according to human/Life()
 	var/list/TLV = list(
-		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
-		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
+		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
+		"temperature"    = new/datum/tlv(T0C,T0C+10,T0C+40,T0C+66), // K
 	)
 
 /*
@@ -96,22 +97,24 @@
 /obj/machinery/alarm/server
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1, -1,-1,-1), /* kpa */
-		"temperature"    = new/datum/tlv(-1, -1,-1,-1), // K
+		"oxygen"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1,-1,-1,-1), /* kpa */
+		"temperature"    = new/datum/tlv(-1,-1,-1,-1), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room
 	TLV = list(
-		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
-		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
+		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
+		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
+		"temperature"    = new/datum/tlv(200,210,273.15,283.15), // K
 	)
 
 //all air alarms in area are connected via magic
@@ -146,8 +149,8 @@
 		src.initialize()
 
 /obj/machinery/alarm/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()
@@ -169,49 +172,36 @@
 	return 0
 
 /obj/machinery/alarm/attack_hand(mob/user)
-	if (..())
+	if (..() || !user) return
+	if (buildstage != 2) return
+
+	interact(user)
+
+/obj/machinery/alarm/interact(mob/user)
+	if (user.has_unlimited_silicon_privilege && src.aidisabled)
+		user << "AI control for this Air Alarm interface has been disabled."
 		return
 
-	if (buildstage != 2)
-		return
-
-	user.set_machine(src)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=air_alarm")
-			user << browse(null, "window=AAlarmwires")
-			return
-
-
-		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
-			user << "AI control for this Air Alarm interface has been disabled."
-			user << browse(null, "window=air_alarm")
-			return
-
-	if(!shorted)
+	if(panel_open && !istype(user, /mob/living/silicon/ai))
+		wires.Interact(user)
+	else if (!shorted)
 		ui_interact(user)
 
-	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
-		wires.Interact(user)
-
-	return
-
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 1)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "air_alarm", name, 480, 660)
+		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)
-	var/data = list()
-	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
-	data["screen"] = screen
-	data["dangerous"] = emagged
+	var/data = list(
+		"locked" = locked,
+		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"screen" = screen,
+		"emagged" = emagged
+	)
 	populate_status(data)
-	if (!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || user.has_unlimited_silicon_privilege)
 		populate_controls(data)
 	return data
 
@@ -241,9 +231,9 @@
 		send_signal(id_tag, list("status") )
 
 /obj/machinery/alarm/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
@@ -267,7 +257,7 @@
 	if(!location)
 		return
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
+	var/total = environment.oxygen + environment.nitrogen + environment.carbon_dioxide + environment.toxins
 
 	var/list/environment_data = list()
 	data["atmos_alarm"] = alarm_area.atmosalm
@@ -286,9 +276,13 @@
 		var/oxygen_danger = cur_tlv.get_danger_level(environment.oxygen*partial_pressure)
 		environment_data += list(list("name" = "Oxygen", "value" = environment.oxygen / total * 100, "unit" = "%", "danger_level" = oxygen_danger))
 
+		cur_tlv = TLV["nitrogen"]
+		var/nitrogen_danger = cur_tlv.get_danger_level(environment.nitrogen*partial_pressure)
+		environment_data += list(list("name" = "Nitrogen", "value" = environment.nitrogen / total * 100, "unit" = "%", "danger_level" = nitrogen_danger))
+
 		cur_tlv = TLV["carbon dioxide"]
 		var/carbon_dioxide_danger = cur_tlv.get_danger_level(environment.carbon_dioxide*partial_pressure)
-		environment_data += list(list("name" = "Carbon dioxide", "value" = environment.carbon_dioxide / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
+		environment_data += list(list("name" = "Carbon Dioxide", "value" = environment.carbon_dioxide / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
 
 		cur_tlv = TLV["plasma"]
 		var/plasma_danger = cur_tlv.get_danger_level(environment.toxins*partial_pressure)
@@ -304,6 +298,7 @@
 		cur_tlv = TLV["temperature"]
 		var/temperature_danger = cur_tlv.get_danger_level(environment.temperature)
 		environment_data += list(list("name" = "Temperature", "value" = environment.temperature, "unit" = "K ([round(environment.temperature - T0C, 0.1)]C)", "danger_level" = temperature_danger))
+
 		data["environment_data"] = environment_data
 
 /obj/machinery/alarm/proc/populate_controls(list/data)
@@ -325,7 +320,8 @@
 						"excheck"	= info["checks"]&1,
 						"incheck"	= info["checks"]&2,
 						"direction"	= info["direction"],
-						"external"	= info["external"]
+						"external"	= info["external"],
+						"extdefault"= (info["external"] == ONE_ATMOSPHERE)
 					))
 		if(AALARM_SCREEN_SCRUB)
 			data["scrubbers"] = list()
@@ -362,10 +358,11 @@
 			var/list/thresholds = list()
 
 			var/list/gas_names = list(
-				"oxygen"         = "O<sub>2</sub>",
-				"carbon dioxide" = "CO<sub>2</sub>",
-				"plasma"         = "Toxin",
-				"other"          = "Other")
+				"oxygen"        	= "Oxygen",
+				"nitrogen"			= "Nitrogen",
+				"carbon dioxide"	= "Carbon Dioxide",
+				"plasma"        	= "Toxin",
+				"other"         	= "Other")
 			for (var/g in gas_names)
 				thresholds += list(list("name" = gas_names[g], "settings" = list()))
 				selected = TLV[g]
@@ -391,108 +388,77 @@
 
 			data["thresholds"] = thresholds
 
-/obj/machinery/alarm/Topic(href, href_list)
+/obj/machinery/alarm/ui_act(action, params)
 	if(..())
 		return
 
 	if (buildstage != 2)
 		return
 
-	usr.set_machine(src)
-
 	if (locked && !usr.has_unlimited_silicon_privilege)
 		return
 
-	if ( (get_dist(src, usr) > 1 ))
-		if (!istype(usr, /mob/living/silicon))
-			usr.unset_machine()
-			usr << browse(null, "window=air_alarm")
-			return
+	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
+		return
 
-	if(href_list["toggleaccess"])
-		if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
-			locked = !locked
-
-	if(href_list["command"])
-		var/device_id = href_list["id_tag"]
-		switch(href_list["command"])
-			if("set_external_pressure")
-				var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
-				if(isnum(input_pressure))
-					send_signal(device_id, list(href_list["command"] = input_pressure))
-				return 1
-
-			if("reset_external_pressure")
-				send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
-				return 1
-			if(
-				"power",
-				"adjust_external_pressure",
-				"co2_scrub",
-				"tox_scrub",
-				"n2o_scrub",
-				"widenet",
-				"scrubbing"
-			)
-				send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
-				spawn(3)
-					src.updateUsrDialog()
-
-			if ("excheck")
-				send_signal(device_id, list ("checks" = text2num(href_list["val"])^1))
-
-			if ("incheck")
-				send_signal(device_id, list ("checks" = text2num(href_list["val"])^2))
-
-			//if("adjust_threshold") //was a good idea but required very wide window
-			if("set_threshold")
-				var/env = href_list["env"]
-				var/varname = href_list["var"]
-				var/datum/tlv/tlv = TLV[env]
-				var/newval = input("Enter [varname] for [env]", "Alarm triggers", tlv.vars[varname]) as num|null
-
-				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
-					return
-				if (newval<0)
-					tlv.vars[varname] = -1
-				else if (env=="temperature" && newval>5000)
-					tlv.vars[varname] = 5000
-				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-					tlv.vars[varname] = 50*ONE_ATMOSPHERE
-				else if (env!="temperature" && env!="pressure" && newval>200)
-					tlv.vars[varname] = 200
-				else
-					newval = round(newval,0.01)
-					tlv.vars[varname] = newval
-				spawn(1)
-					src.updateUsrDialog()
-
-	if(href_list["screen"])
-		screen = text2num(href_list["screen"])
-		spawn(1)
-			src.updateUsrDialog()
-
-
-	if(href_list["atmos_alarm"])
-		if (alarm_area.atmosalert(2,src))
-			post_alert(2)
-		spawn(1)
-			src.updateUsrDialog()
-		update_icon()
-	if(href_list["atmos_reset"])
-		if (alarm_area.atmosalert(0,src))
-			post_alert(0)
-		spawn(1)
-			src.updateUsrDialog()
-		update_icon()
-
-	if(href_list["mode"])
-		mode = text2num(href_list["mode"])
-		apply_mode()
-		spawn(5)
-			src.updateUsrDialog()
-
-	return
+	var/device_id = params["id_tag"]
+	switch(action)
+		if("lock")
+			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+				locked = !locked
+		if(
+			"power",
+			"co2_scrub",
+			"tox_scrub",
+			"n2o_scrub",
+			"widenet",
+			"scrubbing"
+		)
+			send_signal(device_id, list("[action]" = text2num(params["val"])))
+		if("excheck")
+			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+		if("incheck")
+			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+		if("external_pressure")
+			switch(params["pressure"])
+				if("reset")
+					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
+				else if("custom")
+					var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
+					if(isnum(input_pressure))
+						send_signal(device_id, list("set_external_pressure" = input_pressure))
+		if("threshold")
+			var/env = params["env"]
+			var/varname = params["var"]
+			var/datum/tlv/tlv = TLV[env]
+			var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
+			if (isnull(newval))
+				return
+			if (newval<0)
+				tlv.vars[varname] = -1
+			else if (env=="temperature" && newval>5000)
+				tlv.vars[varname] = 5000
+			else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+				tlv.vars[varname] = 50*ONE_ATMOSPHERE
+			else if (env!="temperature" && env!="pressure" && newval>200)
+				tlv.vars[varname] = 200
+			else
+				newval = round(newval,0.01)
+				tlv.vars[varname] = newval
+		if("screen")
+			screen = text2num(params["screen"])
+		if("mode")
+			mode = text2num(params["mode"])
+			apply_mode()
+		if("alarm")
+			if(alarm_area.atmosalert(2, src))
+				post_alert(2)
+			update_icon()
+		if("reset")
+			if(alarm_area.atmosalert(0, src))
+				post_alert(0)
+			update_icon()
+	return 1
 
 /obj/machinery/alarm/proc/apply_mode()
 	switch(mode)
@@ -683,7 +649,7 @@
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
 	if(!frequency) return
 
@@ -749,7 +715,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if (do_after(user, 20, target = src))
+				if (do_after(user, 20/W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/electronics/airalarm( src.loc )
@@ -971,7 +937,7 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20, target = src))
+					if(do_after(user, 20/W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
@@ -1025,7 +991,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1165,7 +1131,7 @@ Handheld fire alarm frame, for placing on walls
 	desc = "Cuban Pete is in the house!"
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)

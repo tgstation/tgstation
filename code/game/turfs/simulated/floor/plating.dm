@@ -98,7 +98,7 @@
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/simulated/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
@@ -123,6 +123,10 @@
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"
+
+/turf/simulated/floor/engine/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
+	..()
 
 /turf/simulated/floor/engine/cult/narsie_act()
 	return
@@ -159,14 +163,6 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/plating/lava
-	icon_state = "lava"
-
-/turf/simulated/floor/plating/lava/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
-
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
@@ -174,3 +170,75 @@
 /turf/simulated/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
+
+///LAVA
+
+/turf/simulated/floor/plating/lava
+	name = "lava"
+	icon_state = "lava"
+	baseturf = /turf/simulated/floor/plating/lava //lava all the way down
+	slowdown = 2
+	var/processing = 0
+	luminosity = 1
+
+/turf/simulated/floor/plating/lava/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
+/turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
+	burn_stuff()
+	if(!processing)
+		processing = 1
+		SSobj.processing |= src
+
+/turf/simulated/floor/plating/lava/process()
+	if(!contents)
+		processing = 0
+		SSobj.processing.Remove(src)
+		return
+	burn_stuff()
+
+/turf/simulated/floor/plating/lava/proc/burn_stuff()
+	for(var/atom/movable/AM in contents)
+		if(!istype(AM))
+			return
+		if(istype(AM, /obj))
+			var/obj/O = AM
+			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
+				qdel(O)
+				return
+			if(O.burn_state == FIRE_PROOF)
+				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
+			O.fire_act()
+		else if (istype(AM, /mob/living))
+			var/mob/living/L = AM
+			L.adjustFireLoss(20)
+			if(L) //mobs turning into object corpses could get deleted here.
+				L.adjust_fire_stacks(20)
+				L.IgniteMob()
+
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return
+
+/turf/simulated/floor/plating/lava/break_tile()
+	return
+
+/turf/simulated/floor/plating/lava/burn_tile()
+	return
+
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return
+
+/turf/simulated/floor/plating/lava/smooth
+	name = "lava"
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	smooth = SMOOTH_TRUE
+	icon = 'icons/turf/floors/lava.dmi'
+	icon_state = "smooth"
+	canSmoothWith = list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/floor/plating/lava/smooth)
+
+/turf/simulated/floor/plating/lava/smooth/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB

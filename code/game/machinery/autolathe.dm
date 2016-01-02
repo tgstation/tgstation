@@ -226,8 +226,7 @@
 						var/list/materials_used = list(MAT_METAL=metal_cost/coeff, MAT_GLASS=glass_cost/coeff)
 						materials.use_amount(materials_used)
 						var/obj/item/new_item = new being_built.build_path(T)
-						new_item.materials[MAT_METAL] /= coeff
-						new_item.materials[MAT_GLASS] /= coeff
+						new_item.materials = materials_used.Copy()
 						new_item.autolathe_crafted(src)
 					busy = 0
 					src.updateUsrDialog()

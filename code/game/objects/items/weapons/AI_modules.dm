@@ -197,13 +197,19 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform
 	name = "'Freeform' AI Module"
-	lawpos = 0
+	lawpos = 15
 	origin_tech = "programming=4;materials=4"
 	laws = list("")
 
 /obj/item/weapon/aiModule/supplied/freeform/attack_self(mob/user)
 	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
-	if(!newpos || (newpos < 15)) return
+	if(newpos == null)
+		return
+	if(newpos < 15)
+		var/response = alert("Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", "Change to 15", "Cancel")
+		if (!response || response == "Cancel")
+			return
+		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
 	if(!targName)	return

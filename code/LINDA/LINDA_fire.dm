@@ -80,7 +80,8 @@
 		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/atom/item in loc)
+	for(var/A in loc)
+		var/atom/item = A
 		if(item && item != src) // It's possible that the item is deleted in temperature_expose
 			item.fire_act(null, temperature, volume)
 	return 0
@@ -142,7 +143,6 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	..()
 	SetLuminosity(0)
 	SSair.hotspots -= src
 	DestroyTurf()
@@ -151,6 +151,7 @@
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	..()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()

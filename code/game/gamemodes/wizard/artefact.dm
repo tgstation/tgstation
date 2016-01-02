@@ -14,7 +14,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/narsie/wizard
+	var/spawn_type = /obj/singularity/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -81,6 +81,26 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+////TEAR IN REALITY
+
+/obj/singularity/wizard
+	name = "tear in the fabric of reality"
+	desc = "This isn't right."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "singularity_s1"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "reality"
+	pixel_x = -96
+	pixel_y = -96
+	grav_pull = 6
+	consume_range = 3
+	current_size = STAGE_FOUR
+	allowed_size = STAGE_FOUR
+
+/obj/singularity/wizard/process()
+	move()
+	eat()
+	return
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/weapon/scrying
@@ -234,7 +254,7 @@ var/global/list/multiverse = list()
 					evil = TRUE
 				else
 					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
-					var/datum/objective/survive/new_objective = new /datum/objective/survive
+					var/datum/objective/escape_obj/survive/new_objective = new /datum/objective/escape_obj/survive
 					new_objective.owner = usr.mind
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
 					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
@@ -270,7 +290,7 @@ var/global/list/multiverse = list()
 	M.faction = list("[usr.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!S.dangerous_existence)
 				all_species += speciestype
@@ -282,15 +302,15 @@ var/global/list/multiverse = list()
 	equip_copy(M)
 
 	if(evil)
-		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-		hijack_objective.owner = M.mind
-		M.mind.objectives += hijack_objective
-		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
+		var/datum/objective/hijackclone/new_objective = add_objective(M.mind, /datum/objective/hijackclone)
+		new_objective.owner = M.mind
+		M.mind.objectives += new_objective
+		new_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
+		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
 		new_objective.owner = M.mind
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
@@ -475,7 +495,7 @@ var/global/list/multiverse = list()
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	burntime = 0
-	burn_state = 0
+	burn_state = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)

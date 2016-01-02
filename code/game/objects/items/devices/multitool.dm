@@ -15,8 +15,9 @@
 	throw_speed = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	origin_tech = "magnets=1;engineering=1"
-	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
+	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
+	toolspeed = 1
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.

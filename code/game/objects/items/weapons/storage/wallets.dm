@@ -4,7 +4,7 @@
 	storage_slots = 4
 	icon_state = "wallet"
 	w_class = 2
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,
@@ -30,21 +30,31 @@
 	slot_flags = SLOT_ID
 
 	var/obj/item/weapon/card/id/front_id = null
+	var/list/combined_access = list()
 
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
 	. = ..(W, new_location)
 	if(.)
-		if(W == front_id)
-			front_id = null
+		if(istype(W, /obj/item/weapon/card/id))
+			if(W == front_id)
+				front_id = null
+			refreshID()
 			update_icon()
+
+/obj/item/weapon/storage/wallet/proc/refreshID()
+	combined_access.Cut()
+	for(var/obj/item/weapon/card/id/I in contents)
+		if(!front_id)
+			front_id = I
+			update_icon()
+		combined_access |= I.access
 
 /obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	. = ..(W, prevent_warning)
 	if(.)
-		if(!front_id && istype(W, /obj/item/weapon/card/id))
-			front_id = W
-			update_icon()
+		if(istype(W, /obj/item/weapon/card/id))
+			refreshID()
 
 /obj/item/weapon/storage/wallet/update_icon()
 
@@ -69,9 +79,8 @@
 	return front_id
 
 /obj/item/weapon/storage/wallet/GetAccess()
-	var/obj/item/I = GetID()
-	if(I)
-		return I.GetAccess()
+	if(combined_access.len)
+		return combined_access
 	else
 		return ..()
 

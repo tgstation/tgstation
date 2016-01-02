@@ -26,20 +26,23 @@
 		Colored lights
 */
 
-#define LIGHTING_CIRCULAR 1									//comment this out to use old square lighting effects.
+#define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
 #define LIGHTING_LAYER 15									//Drawing layer for lighting
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
 #define LIGHTING_ICON_STATE "white"
-#define LIGHTING_TIME 1.2									//Time to do any lighting change. Actual number pulled out of my ass
-#define LIGHTING_DARKEST_VISIBLE_ALPHA 230					//Anything darker than this is so dark, we'll just consider the whole tile unlit
+#define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
+#define LIGHTING_DARKEST_VISIBLE_ALPHA 250					//Anything darker than this is so dark, we'll just consider the whole tile unlit
+#define LIGHTING_LUM_FOR_FULL_BRIGHT 6						//Anything who's lum is lower then this starts off less bright.
+#define LIGHTING_MIN_RADIUS 4								//Lowest radius a light source can effect.
 
 /datum/light_source
 	var/atom/owner
 	var/radius = 0
+	var/luminosity = 0
 	var/cap = 0
-	var/changed = 1
+	var/changed = 0
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
 	var/__y = 0		//y coordinate at last update
@@ -49,19 +52,32 @@
 		CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 	..()
 	owner = A
-	radius = A.luminosity
-	__x = owner.x
-	__y = owner.y
-	SSlighting.changed_lights |= src
+	UpdateLuminosity(A.luminosity)
 
 /datum/light_source/Destroy()
 	if(owner && owner.light == src)
 		remove_effect()
 		owner.light = null
+		owner.luminosity = 0
 		owner = null
 	if(changed)
 		SSlighting.changed_lights -= src
 	return ..()
+
+/datum/light_source/proc/UpdateLuminosity(new_luminosity, new_cap)
+	if(new_luminosity < 0)
+		new_luminosity = 0
+
+	if(luminosity == new_luminosity && (new_cap == null || cap == new_cap))
+		return
+
+	radius = max(LIGHTING_MIN_RADIUS, new_luminosity)
+	luminosity = new_luminosity
+	if (new_cap != null)
+		cap = new_cap
+
+	changed()
+
 
 //Check a light to see if its effect needs reprocessing. If it does, remove any old effect and create a new one
 /datum/light_source/proc/check()
@@ -95,45 +111,55 @@
 
 	effect.Cut()
 
-//Apply a new effect
+//Apply a new effect.
 /datum/light_source/proc/add_effect()
 	// only do this if the light is turned on and is on the map
-	if(owner && owner.loc && radius > 0)
-		effect = list()
-		var/turf/To = get_turf(owner)
-		var/range = owner.get_light_range(radius)
-		for(var/atom/movable/AM in To)
-			if(AM == owner)
-				continue
-			if(AM.opacity)
-				range = 0
-				break
-
-		for(var/turf/T in view(range, To))
-			var/delta_lumcount = T.lumen(src)
-			if(delta_lumcount > 0)
-				effect[T] = delta_lumcount
-				T.update_lumcount(delta_lumcount)
-
-				if(!T.affecting_lights)
-					T.affecting_lights = list()
-				T.affecting_lights |= src
-
-		return 1
-	else
+	if(!owner || !owner.loc)
+		return 0
+	var/range = owner.get_light_range(radius)
+	if(range <= 0 || luminosity <= 0)
+		owner.luminosity = 0
 		return 0
 
-//How much light light_source L should apply to src
-/turf/proc/lumen(datum/light_source/L)
-	var/distance = 0
-#ifdef LIGHTING_CIRCULAR
-	distance = cheap_hypotenuse(x, y, L.__x, L.__y)
-#else
-	distance = max(abs(x - L.__x), abs(y - L.__y))
-#endif
-	return ( L.cap ? L.cap : LIGHTING_CAP ) * (L.radius - distance) / L.radius
-//LIGHTING_CAP == strength for now
+	effect = list()
+	var/turf/To = get_turf(owner)
 
+
+	for(var/atom/movable/AM in To)
+		if(AM == owner)
+			continue
+		if(AM.opacity)
+			range = 0
+			break
+
+	owner.luminosity = range
+	if (!range)
+		return 0
+	var/center_strength = 0
+	if (cap <= 0)
+		center_strength = LIGHTING_CAP/LIGHTING_LUM_FOR_FULL_BRIGHT*(luminosity)
+	else
+		center_strength = cap
+
+	for(var/turf/T in view(range+1, To))
+
+#ifdef LIGHTING_CIRCULAR
+		var/distance = cheap_hypotenuse(T.x, T.y, __x, __y)
+#else
+		var/distance = max(abs(T,x - __x), abs(T.y - __y))
+#endif
+
+		var/delta_lumcount = Clamp(center_strength * (range - distance) / range, 0, LIGHTING_CAP)
+
+		if(delta_lumcount > 0)
+			effect[T] = delta_lumcount
+			T.update_lumcount(delta_lumcount)
+
+			if(!T.affecting_lights)
+				T.affecting_lights = list()
+			T.affecting_lights |= src
+
+	return 1
 
 /atom
 	var/datum/light_source/light
@@ -145,7 +171,6 @@
 	..()
 	if(luminosity)
 		light = new(src)
-//		luminosity = 0
 
 //Movable atoms with opacity when they are constructed will trigger nearby lights to update
 //Movable atoms with luminosity when they are constructed will create a light_source automatically
@@ -155,7 +180,6 @@
 		UpdateAffectingLights()
 	if(luminosity)
 		light = new(src)
-//		luminosity = 0
 
 //Objects with opacity will trigger nearby lights to update at next SSlighting fire
 /atom/movable/Destroy()
@@ -179,27 +203,19 @@
 //If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its
 //queues are complete.
 //if we have a light already it is merely updated, rather than making a new one.
-//The second arg allows you to scale the light cap for calculating falloff. (0 for default, null for no change)
-/atom/proc/SetLuminosity(new_luminosity, new_cap)
-	if(new_luminosity < 0)
-		new_luminosity = 0
+//The second arg allows you to scale the light cap for calculating falloff.
 
-	if(!light)
-		if(!new_luminosity)
+/atom/proc/SetLuminosity(new_luminosity, new_cap)
+	if (!light)
+		if (new_luminosity <= 0)
 			return
 		light = new(src)
-	else
-		if(light.radius == new_luminosity && (new_cap == null || light.cap == new_cap))
-			return
-	light.radius = new_luminosity
-	luminosity = new_luminosity
-	if (new_cap != null)
-		light.cap = new_cap
-	light.changed()
+
+	light.UpdateLuminosity(new_luminosity, new_cap)
 
 /atom/proc/AddLuminosity(delta_luminosity)
 	if(light)
-		SetLuminosity(light.radius + delta_luminosity)
+		SetLuminosity(light.luminosity + delta_luminosity)
 	else
 		SetLuminosity(delta_luminosity)
 
@@ -312,29 +328,24 @@
 				newalpha = 255-num
 			else //if(lighting_lumcount >= LIGHTING_CAP)
 				newalpha = 0
-
+		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
+			newalpha = 255
 		if(lighting_object.alpha != newalpha)
 			if(instantly)
 				lighting_object.alpha = newalpha
 			else
 				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
-			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA) //Doesn't actually make it darker or anything, just tells byond you can't see the tile
+			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
+				lighting_object.luminosity = 0
 
 	lighting_changed = 0
 
 /turf/proc/get_lumcount()
-	var/light_amount
-	if(!src || !istype(src))
-		return
+	. = LIGHTING_CAP
 	var/area/A = src.loc
-	if(!A || !istype(src))
-		return
 	if(IS_DYNAMIC_LIGHTING(A))
-		light_amount = src.lighting_lumcount
-	else
-		light_amount =  LIGHTING_CAP
-	return light_amount
+		. = src.lighting_lumcount
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
@@ -360,6 +371,8 @@
 #undef LIGHTING_CAP
 #undef LIGHTING_CAP_FRAC
 #undef LIGHTING_DARKEST_VISIBLE_ALPHA
+#undef LIGHTING_LUM_FOR_FULL_BRIGHT
+#undef LIGHTING_MIN_RADIUS
 
 
 //set the changed status of all lights which could have possibly lit this atom.
@@ -378,8 +391,8 @@
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
-#define LIGHTING_MAX_LUMINOSITY_MOBILE	5	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
-#define LIGHTING_MAX_LUMINOSITY_MOB		5
+#define LIGHTING_MAX_LUMINOSITY_MOBILE	7	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
+#define LIGHTING_MAX_LUMINOSITY_MOB		6
 #define LIGHTING_MAX_LUMINOSITY_TURF	8	//turfs are static too, why was this 1?!
 
 //caps luminosity effects max-range based on what type the light's owner is.

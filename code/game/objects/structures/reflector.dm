@@ -5,7 +5,7 @@
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
 	anchored = 0
 	density = 1
-	layer = 2
+	layer = 2.9
 	var/finished = 0
 	var/admin = 0 //Can't be rotated or deconstructed
 
@@ -30,7 +30,7 @@
 	P.current = reflector_turf
 	P.yo = reflect_turf.y - reflector_turf.y
 	P.xo = reflect_turf.x - reflector_turf.x
-	P.kill_count = 50 //Keep the projectile healthy as long as its bouncing off things
+	P.range = initial(P.range) //Keep the projectile healthy as long as its bouncing off things
 	new_dir = 0
 	return - 1
 
@@ -41,7 +41,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user << "Unweld the [src] first!"
-		if(do_after(user, 80, target = src))
+		if(do_after(user, 80/W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "You dismantle the [src]."
 			qdel(src)
@@ -54,7 +54,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored = 1
@@ -65,7 +65,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored  = 0

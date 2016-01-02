@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Photo
@@ -28,7 +28,7 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
@@ -94,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Camera
@@ -416,7 +416,13 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc))
+		return
+	if(user.Adjacent(target))
+		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
+		if(is_type_in_list(target, bad_targets))
+			return
+
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)

@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
-				if (!do_after(usr, 30, target = src))
+				if (!do_after(usr, 30/W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \
@@ -219,7 +219,7 @@
 
 	update_icon()
 	if(on)
-		if(!light || light.radius != brightness)
+		if(!light || light.luminosity != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -523,14 +523,6 @@
 			if(3)
 				if(prob(25))
 					broken()
-
-//blob effect
-
-/obj/machinery/light/blob_act()
-	if(prob(75))
-		broken()
-
-
 
 // called when area power state changes
 /obj/machinery/light/power_change()
