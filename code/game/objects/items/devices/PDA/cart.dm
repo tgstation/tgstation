@@ -241,11 +241,12 @@
 /obj/item/weapon/cartridge/proc/print_to_host(text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
-	loc:cart = text
+	var/obj/item/device/pda/P = loc
+	P.cart = text
 
 	for (var/mob/M in viewers(1, loc.loc))
 		if (M.client && M.machine == loc)
-			loc:attack_self(M)
+			P.attack_self(M)
 
 	return
 
@@ -611,7 +612,7 @@ Code:
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], data_core.medical)
-			loc:mode = 441
+			pda.mode = 441
 			mode = 441
 			if(!active2)
 				active1 = null
@@ -620,25 +621,28 @@ Code:
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], data_core.security)
-			loc:mode = 451
+			pda.mode = 451
 			mode = 451
 			if(!active3)
 				active1 = null
 
 		if("Send Signal")
 			spawn( 0 )
-				radio:send_signal("ACTIVATE")
+				var/obj/item/radio/integrated/signal/S
+				S.send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/new_frequency = sanitize_frequency(radio:frequency + text2num(href_list["sfreq"]))
-			radio:set_frequency(new_frequency)
+			var/obj/item/radio/integrated/signal/S
+			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
+			S.set_frequency(new_frequency)
 
 		if("Signal Code")
-			radio:code += text2num(href_list["scode"])
-			radio:code = round(radio:code)
-			radio:code = min(100, radio:code)
-			radio:code = max(1, radio:code)
+			var/obj/item/radio/integrated/signal/S
+			S.code += text2num(href_list["scode"])
+			S.code = round(S.code)
+			S.code = min(100, S.code)
+			S.code = max(1, S.code)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -657,7 +661,7 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			loc:mode = 433
+			pda.mode = 433
 			mode = 433
 
 		if("Supply Orders")
