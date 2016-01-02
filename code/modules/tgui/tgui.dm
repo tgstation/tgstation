@@ -196,7 +196,7 @@
  **/
 /datum/tgui/proc/get_html()
 	// Poplate HTML with JSON.
-	return replacetextEx(SStgui.html, "{}", get_json(initial_data))
+	return replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
 
  /**
   * private
