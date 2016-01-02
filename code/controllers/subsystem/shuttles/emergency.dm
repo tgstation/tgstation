@@ -126,7 +126,8 @@
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					M.dock(SSshuttle.getDock("[M.id]_away"))
+					if(M.z == ZLEVEL_CENTCOM)
+						M.dock(SSshuttle.getDock("[M.id]_away"))
 				//now move the actual emergency shuttle to centcomm
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_end.ogg'
@@ -150,7 +151,7 @@
 	height = 4
 
 /obj/docking_port/mobile/pod/request()
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
+	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && z == ZLEVEL_STATION)
 		return ..()
 
 /obj/docking_port/mobile/pod/New()
