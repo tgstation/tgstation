@@ -228,8 +228,7 @@
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		var/oldlying = C.lying
-		var/obj/structure/table/T = locate(/obj/structure/table,src)
-		if(T && (!O || T.layer > O.layer))
+		if(flags & NOSLIP_TURF)
 			return 0
 		if(C.buckled)
 			buckled_obj = C.buckled

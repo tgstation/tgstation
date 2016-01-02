@@ -36,6 +36,7 @@
 
 //turf-only flags
 #define NOJAUNT		1
+#define NOSLIP_TURF 2
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

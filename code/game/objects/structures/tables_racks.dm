@@ -37,6 +37,15 @@
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
 			qdel(T)
+	var/turf/T = loc
+	if(istype(T))
+		T.flags |= NOSLIP_TURF
+
+/obj/structure/table/Destroy()
+	. = ..()
+	var/turf/T = loc
+	if(istype(T))
+		T.flags &= ~NOSLIP_TURF
 
 /obj/structure/table/update_icon()
 	if(smooth)
