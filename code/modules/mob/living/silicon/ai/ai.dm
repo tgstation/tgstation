@@ -851,9 +851,10 @@ var/list/ai_list = list()
 	show_message(rendered, 2)
 
 /mob/living/silicon/ai/proc/synchborgs()
-	for(var/mob/living/silicon/robot/R in connected_robots)
-		if(R.lawupdate)
-			R.lawsynch()
-			R << "<span class='danger'>[message] ... LAWS SYNCHRONIZED </span>"
-			R.show_laws()
-			R.law_change_counter++
+	for(var/mob/living/silicon/robot/I in connected_robots)
+		if(I.lawupdate)
+			I.lawsync()
+			I << "From now on, these are your laws:
+			I.show_laws()
+			I.law_change_counter++
+	return
