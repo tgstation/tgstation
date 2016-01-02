@@ -1,7 +1,8 @@
 c = require "../config"
 p = c.paths
 
-gulp = require "gulp"
+debounce = require "debounce"
+gulp     = require "gulp"
 
 build  = require "./build"
 clean  = require "./clean"
@@ -13,5 +14,5 @@ module.exports = ->
   for i,path of p
     paths.push "#{path.dir}**" if path.dir
 
-  gulp.watch paths, gulp.series clean, build, reload
+  gulp.watch paths, debounce(gulp.series(clean, build, reload), 1000)
 module.exports.displayName = "watch"
