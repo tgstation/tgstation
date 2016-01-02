@@ -34,6 +34,7 @@ bundle = ->
     browserify file.path,
       extensions: [".coffee", ".ract"]
       debug: f.debug
+    .plugin b.resolutions, "*"
     .transform b.coffeeify
     .transform b.componentify
     .transform b.aliasify
