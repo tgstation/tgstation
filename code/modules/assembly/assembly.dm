@@ -1,6 +1,8 @@
 #define VALUE_VARIABLE_NAME 1 //See var/list/accessible_values below!
 #define VALUE_VARIABLE_TYPE 2
 
+var/global/list/assembly_short_name_to_type = list() //Please, I beg you, don't give two different types of assembly the same short_name
+
 /obj/item/device/assembly
 	name = "assembly"
 	var/short_name //Short name of the assembly. If the name is "remote signalling device", short_name must be something like "signaler"
