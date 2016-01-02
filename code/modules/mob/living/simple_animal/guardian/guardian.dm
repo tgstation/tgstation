@@ -2,13 +2,13 @@
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by it's charge, ever vigilant."
-	speak_emote = list("intones")
+	speak_emote = list("hisses")
 	response_help  = "passes through"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "stand"
-	icon_living = "stand"
+	icon = 'icons/mob/guardian.dmi'
+	icon_state = "guardianorange"
+	icon_living = "guardianorange"
 	icon_dead = "stand"
 	speed = 0
 	a_intent = "harm"
@@ -34,7 +34,6 @@
 	var/playstyle_string = "You are a standard Guardian. You shouldn't exist!"
 	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
-	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
@@ -217,7 +216,6 @@
 	environment_smash = 1
 	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
 	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holoparasite swarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, ready to sow havoc at random."
 
 /mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
 	..()
@@ -265,7 +263,6 @@
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
 	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online."
-	bio_fluff_string = "Your scarab swarm stirs to life, ready to tear apart your enemies."
 	var/battlecry = "AT"
 
 /mob/living/simple_animal/hostile/guardian/punch/verb/Battlecry()
@@ -299,7 +296,6 @@
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
 	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
 	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds and travelling via bluespace."
 	var/turf/simulated/floor/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
@@ -424,7 +420,6 @@
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
 	var/list/snares = list()
 	var/toggle = FALSE
 
@@ -502,7 +497,6 @@
 	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
 	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of stealthily booby trapping items."
 	var/bomb_cooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
@@ -609,7 +603,6 @@
 	else
 		gaurdiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
 	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
-	var/picked_color = randomColor(0)
 	switch(gaurdiantype)
 
 		if("Chaos")
@@ -638,27 +631,20 @@
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
+
 	var/picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
+	var/colour = pick("orange", "pink", "red", "blue", "green")
+	G.name = "[picked_name] [capitalize(colour)]"
+	G.real_name = "[picked_name] [capitalize(colour)]"
+	G.icon_living = "guardian[colour]"
+	G.icon_state = "guardian[colour]"
+	G.icon_dead = "guardian[colour]"
+
 	switch (theme)
 		if("magic")
-			G.name = "[picked_name] [capitalize(picked_color)]"
-			G.color = color2hex(picked_color)
-			G.real_name = "[picked_name] [capitalize(picked_color)]"
 			user << "[G.magic_fluff_string]."
 		if("tech")
-			var/colour = pick("orange", "neon", "pink", "red", "blue", "green")
-			G.name = "[picked_name] [capitalize(colour)]"
-			G.real_name = "[picked_name] [capitalize(colour)]"
-			G.icon_living = "parasite[colour]"
-			G.icon_state = "parasite[colour]"
-			G.icon_dead = "parasite[colour]"
-			G.animated_manifest = TRUE
 			user << "[G.tech_fluff_string]."
-			G.speak_emote = list("states")
-		if("bio")
-			user << "[G.bio_fluff_string]."
-			G.attacktext = "swarms"
-			G.speak_emote = list("chitters")
 	G.mind.name = "[G.real_name]"
 
 /obj/item/weapon/guardiancreator/choose
@@ -678,21 +664,6 @@
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
-
-/obj/item/weapon/guardiancreator/biological
-	name = "scarab egg cluster"
-	desc = "A parasitic species that will nest in the closest living creature upon birth. While not great for your health, they'll defend their new 'hive' to the death."
-	icon = 'icons/obj/syringe.dmi'
-	icon_state = "combat_hypo"
-	theme = "bio"
-	mob_name = "Scarab Swarm"
-	use_message = "The eggs begin to twitch..."
-	used_message = "The cluster already hatched."
-	failure_message = "<B>...but soon settles again. Guess they weren't ready to hatch after all.</B>"
-
-/obj/item/weapon/guardiancreator/biological/choose
-	random = FALSE
-
 
 /obj/item/weapon/paper/guardian
 	name = "Holoparasite Guide"
@@ -725,11 +696,6 @@
 	return
 
 
-
-
-
-
-
 ///HUD
 
 /datum/hud/proc/guardian_hud(ui_style = 'icons/mob/screen_midnight.dmi')
@@ -760,8 +726,6 @@
 	mymob.client.screen = list()
 	mymob.client.screen += mymob.client.void
 	mymob.client.screen += adding
-
-
 
 
 //HUD BUTTONS
