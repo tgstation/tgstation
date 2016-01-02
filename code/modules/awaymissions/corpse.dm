@@ -32,6 +32,7 @@
 	var/death = TRUE
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
+	var/list/implants = list()
 	density = 1
 
 /obj/effect/landmark/corpse/initialize()
@@ -105,6 +106,11 @@
 		W.registered_name = M.real_name
 		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
+
+	for(var/I in implants)
+		var/obj/item/weapon/implant/X = new I
+		X.implant(M)
+
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"

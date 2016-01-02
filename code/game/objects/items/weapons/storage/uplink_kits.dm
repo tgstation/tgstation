@@ -247,14 +247,14 @@
 
 /obj/item/weapon/storage/box/virus_kit/tuberculosisgrenade/New()
  	..()
- 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/syringe
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
+ 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/syringe(src)
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
  	return
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
@@ -262,10 +262,9 @@
 
 /obj/item/weapon/storage/box/virus_kit/tuberculosiskit/New()
  	..()
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
- 	new /obj/item/weapon/reagent_containers/syringe
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
+ 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+ 	new /obj/item/weapon/reagent_containers/syringe(src)
+ 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
  	return
-
 

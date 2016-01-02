@@ -114,12 +114,14 @@
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_REV in applicant.client.prefs.be_special)
 			if(applicant.stat == CONSCIOUS)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+				var/turf/T = get_turf(applicant)
+				if(T.z == ZLEVEL_STATION)
+					if(applicant.mind)
+						if(!applicant.mind.special_role)
+							if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
+								if(temp.age_check(applicant.client))
+									if(!(applicant.job in temp.restricted_jobs))
+										candidates += applicant
 
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)

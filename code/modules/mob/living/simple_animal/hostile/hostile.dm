@@ -155,6 +155,9 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
+		if(!Process_Spacemove()) // Drifting
+			walk(src,0)
+			return 1
 		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)

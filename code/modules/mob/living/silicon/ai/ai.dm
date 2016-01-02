@@ -843,3 +843,9 @@ var/list/ai_list = list()
 	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
+
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
+	var/name_used = speaker.GetVoice()
+	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	show_message(rendered, 2)

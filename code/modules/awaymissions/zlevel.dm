@@ -66,7 +66,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 		potentialMaps.Add(t)
 
-		return potentialMaps
+	return potentialMaps
 
 
 /proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = potentialSpaceRuins)
