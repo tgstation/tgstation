@@ -849,3 +849,11 @@ var/list/ai_list = list()
 	var/name_used = speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)
+
+/mob/living/silicon/ai/synchborgs()
+	for(var/mob/living/silicon/robot/R in connected_robots)
+		if(R.lawupdate)
+			R.lawsynch()
+			R << "<span class='danger'>[message] ... LAWS SYNCHRONIZED </span>"
+			R.show_laws()
+			R.law_change_counter++
