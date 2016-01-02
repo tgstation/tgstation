@@ -16,7 +16,7 @@
 </ui-notice>
 <status/>
 {{#if !data.locked || data.siliconUser}}
-	{{#if data.screen == 1}}
+  {{#if data.screen == 1}}
     <controls/>
 	{{elseif data.screen == 2}}
     <vents/>
