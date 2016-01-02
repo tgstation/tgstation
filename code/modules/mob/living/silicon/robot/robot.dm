@@ -1170,3 +1170,6 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+
+/mob/living/silicon/robot/proc/synchborgs()
+	return
