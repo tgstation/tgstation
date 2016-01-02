@@ -147,19 +147,20 @@ obj/item/proc/get_clamped_volume()
 		if(!(user in viewers(M, null)))
 			showname = "."
 
+		//make not the same mistake as me, these messages are only for slimes
 		if(istype(I.attack_verb,/list) && I.attack_verb.len)
-			M.visible_message("<span class='danger'>[M] has been [pick(I.attack_verb)] with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been [pick(attack_verb)] with [src][showname]!</span>")
+			M.visible_message("<span class='danger'>[M] has been [pick(I.attack_verb)] with [I][showname]</span>", \
+				"<span class='userdanger'>You have been [pick(attack_verb)] with [I][showname]</span>")
 		else if(I.force == 0)
-			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>")
+			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>", \
+				"<span class='userdanger'>You have been [pick("tapped","patted")] with [I][showname]</span>")
 		else
-			M.visible_message("<span class='danger'>[M] has been attacked with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been attacked with [I][showname]</span>")
+			M.visible_message("<span class='danger'>[M] has been attacked with [I][showname]</span>", \
+				"<span class='userdanger'>You have been attacked with [I][showname]</span>")
 
 		if(!showname && user)
 			if(user.client)
-				to_chat(user, "<span class='danger'>You attack [M] with [I]. </span>")
+				to_chat(user, "<span class='warning'>You attack [M] with [I]!</span>")
 
 
 	if(istype(M, /mob/living/carbon/human))

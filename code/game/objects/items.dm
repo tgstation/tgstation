@@ -738,13 +738,13 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("<span class='attack'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-			to_chat(M, "<span class='attack'>[user] stabs you in the eye with [src]!</span>")
+				O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			to_chat(M, "<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 			to_chat(user, "<span class='attack'>You stab [M] in the eye with [src]!</span>")
 		else
 			user.visible_message( \
 				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
-				"<span class='attack'>You stab yourself in the eyes with [src]!</span>" \
+				"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)

@@ -148,8 +148,9 @@
 		L.Weaken(stunforce)
 		L.apply_effect(STUTTER, stunforce)
 
-		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>",
-			self_drugged_message="<span class='danger'>The [src.name] absorbs [L]'s life!</span>")
+		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>",\
+			"<span class='userdanger'>You have been stunned with [src] by [user]!</span>",\
+			self_drugged_message="<span class='userdanger'>[user]'s [src.name] sucks the life right out of you!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 		if(isrobot(loc))
