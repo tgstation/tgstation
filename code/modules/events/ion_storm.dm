@@ -35,7 +35,7 @@
 				M << "<br>"
 				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
 				M << "<br>"
-				M.synchborgs
+				M.synchborgs()
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
