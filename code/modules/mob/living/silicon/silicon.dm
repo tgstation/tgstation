@@ -483,6 +483,3 @@
 	if(changed)
 		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
 	return ..()
-
-/mob/living/silicon/proc/synchborgs()
-	return
