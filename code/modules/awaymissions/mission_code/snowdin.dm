@@ -8,30 +8,30 @@
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
-	name = "\improper Snowdin Outpost"
+	name = "Snowdin Outpost"
 	requires_power = 1
 
 /area/awaymission/snowdin/igloo
-	name = "\improper Snowdin Igloos"
+	name = "Snowdin Igloos"
 	icon_state = "away2"
 
 /area/awaymission/snowdin/cave
-	name = "\improper Snowdin Caves"
+	name = "Snowdin Caves"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/base
-	name = "\improper Snowdin Main Base"
+	name = "Snowdin Main Base"
 	icon_state = "away3"
 	requires_power = 1
 
 /area/awaymission/snowdin/dungeon1
-	name = "\improper Snowdin Depths"
+	name = "Snowdin Depths"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/sekret
-	name = "\improper Snowdin Operations"
+	name = "Snowdin Operations"
 	icon_state = "away3"
 	requires_power = 1
 
