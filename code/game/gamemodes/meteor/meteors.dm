@@ -276,7 +276,7 @@
 
 /obj/effect/meteor/big/cluster/Bump(atom/A)
 
-	explosion(get_turf(src), 1, 0, 0, 0, 0, 1, 0) //Enough to destroy whatever was in the way
+	explosion(get_turf(A), 1, 0, 0, 0, 0, 1, 0) //Enough to destroy whatever was in the way
 	var/failcount = 0
 	for(var/i = 0, i < 3, i++)
 		if(failcount >= 5)
