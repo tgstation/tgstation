@@ -17,7 +17,7 @@
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
-	if(everyone == 0)
+	if(!everyone)
 		for(var/mob/living/silicon/robot/R in connected_robots)
 			if(R.lawupdate)
 				R.lawsync()
