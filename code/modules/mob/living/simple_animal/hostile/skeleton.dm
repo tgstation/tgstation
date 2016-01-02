@@ -60,8 +60,8 @@
 	icon_state = "templar"
 	icon_living = "templar"
 	icon_dead = "templar_dead"
-	maxHealth = 125
-	health = 125
+	maxHealth = 150
+	health = 150
 	speed = 2
 	gold_core_spawnable = 0
 	speak_chance = 1
@@ -74,16 +74,6 @@
 				/obj/item/clothing/suit/armor/riot/knight/templar,
 				/obj/item/clothing/head/helmet/knight/templar,
 				/obj/item/weapon/claymore/hog{name = "holy sword"})
-
-/mob/living/simple_animal/hostile/skeleton/templar/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	if(prob(50))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.health -= Proj.damage
-	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its sword!</span>")
-	return 0
 
 /mob/living/simple_animal/hostile/skeleton/ice
 	name = "ice skeleton"

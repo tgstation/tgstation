@@ -1,7 +1,7 @@
 //Snow Valley Areas//--
 
 /area/awaymission/snowdin
-	name = "\improper Snowdin Tundra Plains"
+	name = "Snowdin Tundra Plains"
 	icon_state = "away"
 	requires_power = 0
 	luminosity = 1
