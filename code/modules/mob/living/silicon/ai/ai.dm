@@ -844,13 +844,12 @@ var/list/ai_list = list()
 		return
 	return
 
-/mob/living/silicon/ai/synchborgs() //I know its misspeled bite me
+/mob/living/silicon/ai/synchborgs()
 	for(var/mob/living/silicon/robot/R in connected_robots)
-					if(R.lawupdate)
-						R.lawsync()
-						R << "<br>"
-						R << "<span class='danger'>[message] ...LAWS SYNCHRONIZED</span>"
-						R << "<br>"
-						R.show_laws()
-						R.law_change_counter++
-		
+		if(R.lawupdate)
+		R.lawsync()
+		R << "<br>"
+		R << "<span class='danger'>[message] ...LAWS SYNCHRONIZED</span>"
+		R << "<br>"
+		R.show_laws()
+		R.law_change_counter++
