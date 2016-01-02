@@ -10,9 +10,8 @@ reload = require "./reload"
 
 
 module.exports = ->
-  paths = []
-  for i,path of p
-    paths.push "#{path.dir}**" if path.dir
-
-  gulp.watch paths, debounce(gulp.series(clean, build, reload), 1000)
+  gulp.watch(
+    Object.keys(p).filter((path) -> p[path].dir?).map((path) -> p[path].dir + "**"),
+    debounce gulp.series(clean, build, reload), 1000
+  )
 module.exports.displayName = "watch"
