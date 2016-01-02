@@ -60,7 +60,7 @@ AI MODULES
 	user << "Upload complete. [reciever]'s laws have been modified."
 	reciever.show_laws()
 	reciever.law_change_counter++
-	reciever.synchborgs
+	reciever.synchborgs()
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [reciever.name]([reciever.key]).[law2log ? " The law specified [law2log]" : ""]")
