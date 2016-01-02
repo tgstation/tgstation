@@ -5,12 +5,11 @@
 
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
-	
+
 	invisibility = 100
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
-
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -80,7 +79,6 @@
 	if (user.camera_light_on)
 		user.light_cameras()
 
-
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
 
@@ -107,10 +105,6 @@
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
 
-
 /mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		raw_message = ai.lang_treat(speaker, message_langs, raw_message, spans)
-		var/name_used = speaker.GetVoice()
-		var/rendered = "<i><span class='game say'>Enhanced Camera: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
-		ai.show_message(rendered, 2)
+		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
