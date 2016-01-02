@@ -6444,7 +6444,7 @@
 "ctV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc{dir = 4; name = "MiniSat Foyer APC"; pixel_x = 27; pixel_y = 0},/obj/structure/bed/chair,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/turret_protected/aisat_interior)
 "ctW" = (/obj/machinery/computer/teleporter,/turf/simulated/floor/plating,/area/turret_protected/aisat_interior)
 "ctX" = (/obj/machinery/camera{c_tag = "MiniSat Teleporter"; dir = 1; network = list("MiniSat"); pixel_x = 0; pixel_y = 0; start_active = 1},/obj/machinery/atmospherics/components/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor/plasteel{icon_state = "warndark"; dir = 4},/area/turret_protected/aisat_interior)
-"ctY" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible,/turf/simulated/wall/r_wall,/area/turret_protected/AIsatextAS{name = "AI Satellite Atmospherics"})
+"ctY" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible,/obj/machinery/meter,/turf/simulated/wall/r_wall,/area/turret_protected/AIsatextAS{name = "AI Satellite Atmospherics"})
 "ctZ" = (/turf/simulated/wall/r_wall,/area/turret_protected/AIsatextAS{name = "AI Satellite Atmospherics"})
 "cua" = (/turf/simulated/wall,/area/turret_protected/aisat_interior)
 "cub" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -29},/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/turret_protected/aisat_interior)
