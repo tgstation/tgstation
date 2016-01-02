@@ -378,7 +378,10 @@
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
 		ranged_cooldown = ranged_cooldown_cap
-		icon_state = icon_aggro
+		if(stat)
+			icon_state = icon_dead
+		else
+			icon_state = icon_aggro
 		pre_attack = 0
 	return
 
