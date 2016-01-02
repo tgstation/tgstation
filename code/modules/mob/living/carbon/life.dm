@@ -36,6 +36,7 @@
 		return
 
 	var/datum/gas_mixture/environment
+	var/internal = 0
 	if(loc)
 		environment = loc.return_air()
 
@@ -55,6 +56,7 @@
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
+		internal = 1
 
 		if(!breath)
 
@@ -76,7 +78,10 @@
 	check_breath(breath)
 
 	if(breath)
-		loc.assume_air(breath)
+		if(internal)
+			exhale_to_internal(breath)
+		else
+			loc.assume_air(breath)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	return 0
@@ -189,6 +194,21 @@
 			if (internals)
 				internals.icon_state = "internal1"
 			return internal.remove_air_volume(volume_needed)
+		else
+			if (internals)
+				internals.icon_state = "internal0"
+	return
+
+/mob/living/carbon/proc/exhale_to_internal(datum/gas_mixture/breath)
+	if(internal)
+		if (!contents.Find(internal))
+			internal = null
+		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+			internal = null
+		if(internal)
+			if (internals)
+				internals.icon_state = "internal1"
+			return internal.assume_air(breath)
 		else
 			if (internals)
 				internals.icon_state = "internal0"
