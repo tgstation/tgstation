@@ -26,7 +26,7 @@
 	unsuitable_atmos_damage = 15
 	faction = list("nanotrasenprivate")
 	status_flags = CANPUSH
-	speak = list("Stop resisting!", "I AM THE LAW!", "Face the wraith of the golden bolt!", "Stop breaking the law, asshole!")
+	speak = list("Stop resisting!", "I AM THE LAW!", "Face the wrath of the golden bolt!", "Stop breaking the law, asshole!")
 	search_objects = 1
 
 
