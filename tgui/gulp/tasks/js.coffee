@@ -5,13 +5,29 @@ b = c.plugins.browserify
 g = c.plugins.gulp
 
 
-browserify = require "browserify"
-gulp       = require "gulp"
-through    = require "through2"
+browserify   = require "browserify"
+coffeescript = require "coffee-script"
+gulp         = require "gulp"
+stylus       = require "stylus"
+through      = require "through2"
 
 
-b.componentify.compilers["text/coffeescript"] = require "../compilers/coffeescript"
-b.componentify.compilers["text/stylus"] = require "../compilers/stylus"
+b.componentify.compilers["text/coffeescript"] = (source, file) ->
+  compiled = coffeescript.compile source,
+    bare: true
+    sourceMap: true
+    inline: true
+
+  output =
+    source: compiled.js
+    map: JSON.parse compiled.v3SourceMap
+
+b.componentify.compilers["text/stylus"] = (source, file) ->
+  source = stylus source
+    .set "filename", file
+  output =
+    source: source.render()
+
 
 bundle = ->
   through.obj (file, enc, next) ->
