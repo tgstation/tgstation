@@ -237,6 +237,15 @@
 		"gal'h'rfikk", "harfrandid", "mud'gib", "fuu", "ma'jin", "dedo", "ol'btoh", "n'ath", "reth", "sh'yro", "eth", \
 		"d'rekkathnor", "khari'd", "gual'te", "nikka", "nikt'o", "barada", "kla'atu", "barhah", "hra" ,"zar'garis")
 
+/datum/language/mouse
+	name = "Mouse"
+	desc = "Literally just squeaks"
+	speech_verb = "squeaks"
+	colour = "say_quote"
+	key = "9"
+	space_chance = 80
+	syllables = list("squeak")
+	flags = RESTRICTED
 
 // Language handling.
 /mob/proc/add_language(var/language)

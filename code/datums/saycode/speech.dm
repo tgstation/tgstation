@@ -56,7 +56,10 @@
 
 /datum/speech/proc/scramble()
 	var/datum/speech/clone = clone()
-	clone.message = language.scramble(message)
+	if(language)
+		clone.message = language.scramble(message)
+	else
+		clone.message = stars(message, 10)
 	return clone
 
 /datum/speech/proc/render_wrapper_classes(var/sep=" ")
