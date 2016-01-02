@@ -137,6 +137,7 @@
 				return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
+	if(!user.client) return // Player has already been made into another mob before this one spawned, so don't make a new one
 	var/turf/T = get_turf(src)
 
 	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi/soviet(T)
